@@ -4,9 +4,7 @@
     :alt="banner.image?.alt ?? ''"
     class="w-full object-cover"
     :style="{
-      filter: banner.image?.brightness
-        ? 'brightness(' + (banner.image?.brightness ?? 1) + ')'
-        : '',
+      filter: banner.image?.brightness ? 'brightness(' + (banner.image?.brightness ?? 1) + ')' : '',
       height: getImageHeight(),
     }"
     :loading="props.index > 0 ? 'lazy' : 'eager'"
@@ -27,9 +25,7 @@
     <div
       :class="bannerContentClass"
       :style="{
-        backgroundColor: banner.text.background
-          ? hexToRgba(banner.text.bgcolor, banner.text.bgopacity)
-          : '',
+        backgroundColor: banner.text.background ? hexToRgba(banner.text.bgcolor, banner.text.bgopacity) : '',
       }"
       :data-testid="'banner-content-' + props.index"
     >
@@ -87,7 +83,7 @@ const isMobile = computed(() => viewport.isLessThan('lg'));
 
 const props = defineProps<BannerProps>();
 
-const banner = computed(() => props.content)
+const banner = computed(() => props.content);
 
 const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
   const cleanHex = hex.replace('#', '');

@@ -222,11 +222,15 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
-import type { TextCardProps } from './types';
-const { data } = useHomepage();
-const { blockIndex } = useSiteConfiguration();
+import { TextCardContent } from './types';
+import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
-const textCardBlock = computed(() => (data.value.blocks[blockIndex.value].content || {}) as TextCardProps);
+const { data } = useHomepage();
+const { blockUuid } = useSiteConfiguration();
+const { findBlockByUuid } = useBlockManager();
+
+const textCardBlock = computed(() => (findBlockByUuid(data.value, blockUuid.value)?.content || {}) as TextCardContent);
+
 const textSettings = ref(false);
 const buttonSettings = ref(false);
 </script>

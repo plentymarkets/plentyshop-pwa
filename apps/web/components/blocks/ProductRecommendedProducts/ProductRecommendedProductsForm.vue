@@ -118,14 +118,20 @@
 </template>
 
 <script setup lang="ts">
-import type { ProductRecommendedProductsProps } from '../ProductRecommendedProducts/types';
+import {
+  ProductRecommendedProductsContent,
+  ProductRecommendedProductsProps,
+} from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
+import { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
 const { data } = useHomepage();
-const { blockIndex } = useSiteConfiguration();
+const { blockUuid } = useSiteConfiguration();
+const { findBlockByUuid } = useBlockManager();
 
 const recommendedBlock = computed(
   () =>
-    (data.value.blocks[blockIndex.value].content || {
+    (findBlockByUuid(data.value, blockUuid.value)?.content || {
       text: {
         pretitle: '',
         title: '',
@@ -135,6 +141,6 @@ const recommendedBlock = computed(
         textAlignment: 'left',
       },
       categoryId: '',
-    }) as ProductRecommendedProductsProps,
+    }) as ProductRecommendedProductsContent,
 );
 </script>

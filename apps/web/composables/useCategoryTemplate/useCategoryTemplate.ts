@@ -3,13 +3,23 @@ import type {
   UseCategoryTemplateReturn,
   UseCategoryTemplateState,
   SetCategoryTemplate,
+  GetBlocks,
 } from '~/composables/useCategoryTemplate/types';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
-    data: null,
+    data: [],
+    categoryTemplateData: null,
     loading: false,
   }));
+
+  const getBlocks: GetBlocks = async (identifier, type) => {
+    state.value.loading = true;
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
+
+    state.value.loading = false;
+    state.value.data = data?.value?.data ?? state.value.data;
+  };
 
   /**
    * @description Function for fetching the category template from a category id
@@ -24,17 +34,15 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
    */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }), {
-      lazy: true,
-    });
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
 
     state.value.loading = false;
-    state.value.data = data?.value?.data ?? state.value.data;
+    state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
   const setCategoryTemplate: SetCategoryTemplate = async (categoryId: number, content: string) => {
     state.value.loading = true;
-    console.log('content:', content)
+
     try {
       const { data } = await useAsyncData(() =>
         useSdk().plentysystems.doSaveBlocks({
@@ -54,6 +62,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   return {
     fetchCategoryTemplate,
     setCategoryTemplate,
+    getBlocks,
     ...toRefs(state.value),
   };
 };

@@ -2,13 +2,13 @@
   <div>
     <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlockList" />
     <Editor
-      v-if="isEditing && currentBlockIndex !== null"
-      :index="currentBlockIndex"
+      v-if="isEditing && currentBlockUuid !== null"
+      :uuid="currentBlockUuid"
       :block="currentBlock"
       @update="updateBlock"
     />
     <div v-else class="content">
-      <template v-for="(block, index) in data.blocks" :key="index">
+      <template v-for="(block, index) in data" :key="index">
         <PageBlock
           :index="index"
           :block="block"
@@ -21,9 +21,11 @@
           :tablet-edit="tabletEdit"
           :add-new-block="openBlockList"
           :change-block-position="changeBlockPosition"
-          :is-last-block="isLastBlock"
-          :handle-edit="handleEdit"
-          :delete-block="deleteBlock"
+          :class="[
+            {
+              'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+            },
+          ]"
         />
       </template>
     </div>
@@ -32,26 +34,21 @@
 <script lang="ts" setup>
 const {
   currentBlock,
-  currentBlockIndex,
+  currentBlockUuid,
   isClicked,
   clickedBlockIndex,
   isTablet,
   isPreview,
   blockHasData,
   tabletEdit,
-  handleEdit,
-  deleteBlock,
   updateBlock,
   changeBlockPosition,
-  isLastBlock,
   togglePlaceholder,
 } = useBlockManager();
 
 const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
-
-console.log('data.blocks: ', data.value.blocks)
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();

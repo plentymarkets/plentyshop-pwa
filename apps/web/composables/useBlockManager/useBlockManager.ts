@@ -16,11 +16,11 @@ const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data, initialBlocks } = useHomepage();
+  const { data, initialBlocks, updateBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
 
   const currentBlock = ref<Block | null>(null);
-  const currentBlockIndex = ref<number | null>(null);
+  const currentBlockUuid = ref<string | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
 
@@ -28,7 +28,6 @@ export const useBlockManager = () => {
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
   const isPreview = ref(false);
-  const experimentalBlockEditForm = ref(useRuntimeConfig().public.experimentalBlockEditForm);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
@@ -39,17 +38,18 @@ export const useBlockManager = () => {
   };
 
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
-    const updatedBlocks = [...data.value.blocks];
+    const updatedBlocks = [...data.value];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
 
     updatedBlocks.splice(position, 0, newBlock);
-    data.value.blocks = updatedBlocks;
+
+    updateBlocks(updatedBlocks);
     visiblePlaceholder.value = { index: null, position: null };
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
-    const updatedBlocks = [...data.value.blocks];
+    const updatedBlocks = [...data.value];
     const newIndex = index + position;
 
     if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
@@ -57,12 +57,12 @@ export const useBlockManager = () => {
     const blockToChange = updatedBlocks.splice(index, 1)[0];
     updatedBlocks.splice(newIndex, 0, blockToChange);
 
-    data.value.blocks = updatedBlocks;
+    updateBlocks(updatedBlocks);
 
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value);
   };
 
-  const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
+  const isLastBlock = (index: number) => index === data.value.length - 1;
 
   onMounted(() => {
     const config = useRuntimeConfig().public;
@@ -71,6 +71,26 @@ export const useBlockManager = () => {
     isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
   });
 
+  const findBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
+    blocks: Block[],
+    targetUuid: string,
+    deleteBlock = false,
+  ) => {
+    for (const [index, block] of blocks.entries()) {
+      if (block.meta && block.meta.uuid === targetUuid) {
+        if (deleteBlock) {
+          blocks.splice(index, 1);
+        }
+        return block;
+      }
+      if (Array.isArray(block.content)) {
+        const result = findBlockByUuid(block.content, targetUuid, deleteBlock);
+        if (result) return result;
+      }
+    }
+    return null;
+  };
+
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
       isClicked.value = !isClicked.value;
@@ -78,22 +98,18 @@ export const useBlockManager = () => {
     }
   };
 
-  const handleEdit = (index: number) => {
-    if (data.value.blocks && data.value.blocks.length > index) {
-      if (experimentalBlockEditForm.value) {
-        // TODO: Implement new block edit form
-      } else {
-        currentBlockIndex.value = index;
-        currentBlock.value = data.value.blocks[index];
-        isEditing.value = true;
-      }
+  const handleEdit = (uuid: string) => {
+    if (data.value) {
+      currentBlockUuid.value = uuid;
+      currentBlock.value = findBlockByUuid(data.value, uuid);
+      isEditing.value = true;
     }
   };
 
-  const deleteBlock = (index: number) => {
-    if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-      data.value.blocks.splice(index, 1);
-      isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  const deleteBlock = (uuid: string) => {
+    if (data.value && uuid !== null) {
+      findBlockByUuid(data.value, uuid, true);
+      isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value);
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
@@ -101,14 +117,14 @@ export const useBlockManager = () => {
   };
 
   const updateBlock = (index: number, updatedBlock: Block) => {
-    if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-      data.value.blocks[index] = updatedBlock;
+    if (data.value && index !== null && index < data.value.length) {
+      data.value[index] = updatedBlock;
     }
   };
 
   return {
     currentBlock,
-    currentBlockIndex,
+    currentBlockUuid,
     isClicked,
     clickedBlockIndex,
     isTablet,
@@ -123,5 +139,6 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
+    findBlockByUuid,
   };
 };

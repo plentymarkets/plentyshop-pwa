@@ -1,7 +1,4 @@
-import type { BannerProps, BannerSlide } from '~/components/blocks/BannerCarousel/types';
-import type { TextCardProps } from '~/components/blocks/TextCard/types';
-import type { NewsletterSubscribeProps } from '~/components/blocks/NewsletterSubscribe/types';
-import type { ProductRecommendedProductsProps } from '~/components/blocks/ProductRecommendedProducts/types';
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 
 interface ImageProps {
   lg: string;
@@ -38,20 +35,14 @@ export interface SlideControls {
   color: string;
 }
 
-export type BlockOptions =
-  | BannerSlide
-  | BannerProps
-  | UiHeroCarouselOptions
-  | UiMediaCardOptions
-  | TextCardProps
-  | ProductRecommendedProductsProps
-  | NewsletterSubscribeProps;
-
 export interface Block {
   name: string;
   type: string;
   configuration?: unknown;
-  content: BlockOptions;
+  meta: {
+    uuid: string;
+  };
+  content: unknown;
 }
 
 export interface HomepageData {
@@ -60,11 +51,11 @@ export interface HomepageData {
 }
 
 export interface ActiveSlideIndex {
-  [key: number]: number;
+  [key: string]: number;
 }
 
 export interface UseHomepageDataState {
-  data: HomepageData;
+  data: Block[];
   initialBlocks: Block[];
   dataIsEmpty: boolean;
   loading: boolean;
@@ -72,8 +63,9 @@ export interface UseHomepageDataState {
   activeSlideIndex: ActiveSlideIndex;
 }
 
-export type UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => void;
-export type SetIndex = (blockIndex: number, slideIndex: number) => void;
+export type UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => void;
+export type SetIndex = (blockUuid: string, slideIndex: number) => void;
+export type UpdateBlocks = (blocks: Block[]) => void;
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
@@ -85,6 +77,7 @@ export interface UseHomepage {
   fetchPageTemplate: () => void;
   updateBannerItems: UpdateBannerItems;
   setIndex: SetIndex;
+  updateBlocks: UpdateBlocks;
 }
 
 export type UseHomepageDataReturn = () => UseHomepage;

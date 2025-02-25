@@ -1,23 +1,23 @@
 <template>
   <div
     class="relative mt-5 p-4 sm:p-10 text-center"
-    :style="{ backgroundColor: props.text?.bgColor ?? '#f5f5f5' }"
+    :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
     <h2
       class="typography-headline-4 sm:typography-headline-3 font-bold mb-2"
       data-testid="newsletter-title"
-      v-html="props.text?.title ?? t('newsletter.heading')"
+      v-html="props.content.text?.title ?? t('newsletter.heading')"
     />
     <p
       class="typography-text-sm sm:typography-text-base my-2 mb-4"
       data-testid="newsletter-description"
-      v-html="props.text?.htmlDescription ?? t('newsletter.info')"
+      v-html="props.content.text?.htmlDescription ?? t('newsletter.info')"
     />
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div
-        v-if="props.input?.displayNameInput"
+        v-if="props.content.input?.displayNameInput"
         class="grid grid-cols-1 sm:grid-cols-2"
         data-testid="newsletter-display-name"
       >
@@ -29,7 +29,7 @@
               id="newsletter-first-name"
               v-model="firstName"
               :invalid="Boolean(errors['firstName'])"
-              :placeholder="`${t('newsletter.firstName')} ${props.input?.nameIsRequired ? '**' : ''}`"
+              :placeholder="`${t('newsletter.firstName')} ${props.content.input?.nameIsRequired ? '**' : ''}`"
               :wrapper-class="wrapperClass"
               type="text"
               name="firstName"
@@ -48,7 +48,7 @@
               id="newsletter-last-name"
               v-model="lastName"
               :invalid="Boolean(errors['lastName'])"
-              :placeholder="`${t('newsletter.lastName')} ${props.input?.nameIsRequired ? '**' : ''}`"
+              :placeholder="`${t('newsletter.lastName')} ${props.content.input?.nameIsRequired ? '**' : ''}`"
               :wrapper-class="wrapperClass"
               type="text"
               name="lastName"
@@ -113,7 +113,7 @@
       <div class="flex flex-col items-center">
         <UiButton type="submit" size="lg" :disabled="loading" data-testid="newsletter-button">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-          <template v-else>{{ props.button?.label ?? t('newsletter.subscribe') }}</template>
+          <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
         </UiButton>
 
         <NuxtTurnstile
@@ -154,10 +154,10 @@ const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
   object({
-    firstName: props.input?.nameIsRequired
+    firstName: props.content.input?.nameIsRequired
       ? string().required(t('errorMessages.newsletter.firstNameRequired')).default('')
       : string().optional().default(''),
-    lastName: props.input?.nameIsRequired
+    lastName: props.content.input?.nameIsRequired
       ? string().required(t('errorMessages.newsletter.lastNameRequired')).default('')
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),

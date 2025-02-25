@@ -1,5 +1,17 @@
 export type TextCardProps = {
+  name: string;
+  type: string;
+  content: TextCardContent;
+  configuration?: {
+    controls: {
+      color: string;
+      displayArrows: boolean;
+    };
+  };
   index?: number;
+};
+
+export type TextCardContent = {
   text: {
     pretitle?: string;
     title?: string;

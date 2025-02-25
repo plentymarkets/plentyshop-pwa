@@ -23,8 +23,8 @@ export type HeroContentProps = {
 };
 
 export type BannerProps = {
-  name: string,
-  type: string,
+  name: string;
+  type: string;
   content: {
     image: {
       wideScreen?: string;
@@ -52,8 +52,11 @@ export type BannerProps = {
       link?: string;
       variant?: 'primary' | 'secondary';
     };
-  }
-  index
+  };
+  index: number;
+  meta: {
+    uuid: string;
+  };
 };
 
 export interface BannerSlide {

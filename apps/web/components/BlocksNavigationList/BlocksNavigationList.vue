@@ -17,7 +17,7 @@
             @click="
               addBlock(category.category, variationIndex);
               drawerOpen = false;
-              tempOpenDrawerCondition(category.blockName);
+              tempOpenDrawerCondition(variation.template[locale as 'en' | 'de']);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -32,6 +32,7 @@
 import { blocksLists } from '~/blocks/blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
+const { locale } = useI18n();
 const { addNewBlock } = useBlockManager();
 const { newBlockPosition, drawerOpen, openDrawerWithView } = useSiteConfiguration();
 
@@ -39,9 +40,9 @@ const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, newBlockPosition.value);
 };
 
-const tempOpenDrawerCondition = (blockName: string) => {
+const tempOpenDrawerCondition = (block: Block) => {
   if (useRuntimeConfig().public.experimentalBlockEditForm) {
-    openDrawerWithView('blocksSettings', blockName, newBlockPosition.value);
+    openDrawerWithView('blocksSettings', block);
   }
 };
 </script>

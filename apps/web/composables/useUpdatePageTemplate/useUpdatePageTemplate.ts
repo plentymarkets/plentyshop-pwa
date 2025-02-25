@@ -20,7 +20,7 @@ const updatePageTemplate = async (): Promise<void> => {
   } finally {
     loading.value = false;
     isEditingEnabled.value = false;
-    initialBlocks.value = data.value.blocks.map((block) => toRaw(block));
+    initialBlocks.value = data.value.map((block) => toRaw(block));
   }
 };
 

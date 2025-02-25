@@ -1,27 +1,24 @@
 export type ImageTextProps = {
+  name: string;
+  type: string;
+  content: ImageTextContent;
+  configuration?: {
+    controls: {
+      color: string;
+      displayArrows: boolean;
+    };
+  };
   index?: number;
-  image: {
-    wideScreen?: string;
-    desktop?: string;
-    tablet?: string;
-    mobile?: string;
-    alt: string;
-    imageAlignment: 'left' | 'right';
-  };
+};
 
-  text: {
-    pretitle?: string;
-    title?: string;
-    subtitle?: string;
-    htmlDescription?: string;
-    color?: string;
-    textAlignment?: 'left' | 'center' | 'right';
-  };
-  button: {
-    label?: string;
-    link?: string;
-    variant?: 'primary' | 'secondary';
-  };
+export type ImageTextContent = {
+  index?: number;
+  wideScreen?: string;
+  desktop?: string;
+  tablet?: string;
+  mobile?: string;
+  alt: string;
+  imageAlignment: 'left' | 'right';
 };
 
 export interface ImageDimensions {

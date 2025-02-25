@@ -116,13 +116,18 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { NewsletterSubscribeProps } from './types';
+import { NewsletterSubscribeContent } from './types';
+import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);
 const settingsGroup = ref(true);
-const { data } = useHomepage();
-const { blockIndex } = useSiteConfiguration();
 
-const newsletterBlock = computed(() => (data.value.blocks[blockIndex.value].content || {}) as NewsletterSubscribeProps);
+const { data } = useHomepage();
+const { blockUuid } = useSiteConfiguration();
+const { findBlockByUuid } = useBlockManager();
+
+const newsletterBlock = computed(
+  () => (findBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent,
+);
 </script>

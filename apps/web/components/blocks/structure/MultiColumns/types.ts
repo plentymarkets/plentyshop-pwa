@@ -1,9 +1,9 @@
 export type MultiColumnsProps = {
-  name: string,
-  type: string,
-  content: unknown[],
+  name: string;
+  type: string;
+  content: unknown[];
   configuration: {
-    columnWidths: number[],
-  },
-  index?: number,
+    columnWidths: number[];
+  };
+  index?: number;
 };

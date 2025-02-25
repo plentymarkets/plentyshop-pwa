@@ -223,7 +223,12 @@
 
           <div class="mb-6">
             <UiFormLabel class="mb-1">Alt</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].content.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
+            <SfInput
+              v-model="slides[activeSlide].content.image.alt"
+              name="alt"
+              type="text"
+              data-testid="slide-alt-text"
+            />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Alternative image text</div>
           </div>
         </div>
@@ -291,7 +296,12 @@
                   :style="{ backgroundColor: slides[activeSlide].content.text.color }"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
-                  <input id="text-color" v-model="slides[activeSlide].content.text.color" type="color" class="invisible w-8" />
+                  <input
+                    id="text-color"
+                    v-model="slides[activeSlide].content.text.color"
+                    type="color"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -363,7 +373,9 @@
               <div
                 for="align-top"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'top' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'top',
+                }"
                 data-testid="slider-textbox-align-top"
                 @click="slides[activeSlide].content.text.justify = 'top'"
               >
@@ -377,7 +389,9 @@
               <div
                 for="align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'center' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'center',
+                }"
                 data-testid="slider-textbox-align-center"
                 @click="slides[activeSlide].content.text.justify = 'center'"
               >
@@ -391,7 +405,9 @@
               <div
                 for="align-bottom"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'bottom' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'bottom',
+                }"
                 data-testid="slider-textbox-align-bottom"
                 @click="slides[activeSlide].content.text.justify = 'bottom'"
               >
@@ -413,7 +429,9 @@
               <div
                 for="textbox-align-left"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'left' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'left',
+                }"
                 data-testid="slider-textbox-y-align-left"
                 @click="slides[activeSlide].content.text.align = 'left'"
               >
@@ -427,7 +445,9 @@
               <div
                 for="textbox-align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'center' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'center',
+                }"
                 data-testid="slider-textbox-y-align-center"
                 @click="slides[activeSlide].content.text.align = 'center'"
               >
@@ -441,7 +461,9 @@
               <div
                 for="textbox-align-right"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'right' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'right',
+                }"
                 data-testid="slider-textbox-y-align-right"
                 @click="slides[activeSlide].content.text.align = 'right'"
               >
@@ -479,7 +501,8 @@
                 for="text-align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.textAlignment === 'center',
+                  'bg-gray-100 text-gray-900 font-semibold':
+                    slides[activeSlide].content.text.textAlignment === 'center',
                 }"
                 data-testid="slider-text-align-center"
                 @click="slides[activeSlide].content.text.textAlignment = 'center'"
@@ -550,7 +573,9 @@
             >
               <div
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.button.variant === 'primary' }"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.button.variant === 'primary',
+                }"
                 data-testid="slider-button-primary"
                 @click="slides[activeSlide].content.button.variant = 'primary'"
               >
@@ -579,33 +604,6 @@
           </div>
         </div>
       </UiAccordionItem>
-      <UiAccordionItem
-        v-model="controlsOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Controls</h2>
-        </template>
-
-        <div class="controls">
-          <div class="mb-6 mt-4">
-            <UiFormLabel class="mb-1">Slider Controls Color</UiFormLabel>
-
-            <SfInput v-model="controls.color" type="text">
-              <template #suffix>
-                <label
-                  for="controls-color"
-                  :style="{ backgroundColor: controls.color }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
-          </div>
-        </div>
-      </UiAccordionItem>
     </div>
   </div>
 </template>
@@ -629,30 +627,29 @@ import {
   SfIconClose,
 } from '@storefront-ui/vue';
 import type { BannerProps, BannerSlide } from './types';
+import { v4 as uuid } from 'uuid';
 
 const { isOpen, open, close } = useDisclosure();
-const { blockIndex } = useSiteConfiguration();
+const { blockUuid } = useSiteConfiguration();
 const { data, updateBannerItems, setIndex, activeSlideIndex } = useHomepage();
+const { findBlockByUuid } = useBlockManager();
 
-const activeSlide = computed(() => activeSlideIndex.value[blockIndex.value]);
-const sliderBlock = computed(() => (data.value.blocks[blockIndex.value].content || {}) as BannerSlide);
+const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
+const bannerBlock = computed(() => (findBlockByUuid(data.value, blockUuid.value)?.content || {}) as BannerSlide);
 
 const slides = computed({
   get: () => {
-    return sliderBlock.value?.content || [];
+    return bannerBlock.value?.content || [];
   },
-  set: (value) => updateBannerItems(value, blockIndex.value),
+  set: (value) => updateBannerItems(value, blockUuid.value),
 });
-
-const controls = computed(() => sliderBlock.value.controls);
 
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-const controlsOpen = ref(true);
 
 const slideClick = (index: number) => {
-  setIndex(blockIndex.value, index);
+  setIndex(blockUuid.value, index);
 };
 
 const clampBrightness = (event: Event, type: string) => {
@@ -669,8 +666,8 @@ const clampBrightness = (event: Event, type: string) => {
 
 const addSlide = async () => {
   const newSlide: BannerProps = {
-    name: "Banner",
-    type: "content",
+    name: 'Banner',
+    type: 'content',
     content: {
       image: {
         wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -699,14 +696,17 @@ const addSlide = async () => {
         variant: 'primary',
       },
     },
-    index: blockIndex.value
+    meta: {
+      uuid: uuid(),
+    },
+    index: slides.value.length,
   };
 
   slides.value = [...slides.value, newSlide];
 
   await nextTick();
 
-  setIndex(blockIndex.value, slides.value.length - 1);
+  setIndex(blockUuid.value, slides.value.length - 1);
   close();
 };
 
@@ -714,7 +714,7 @@ const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
   slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
   if (activeSlide.value === index) {
-    setIndex(blockIndex.value, index - 1);
+    setIndex(blockUuid.value, index - 1);
   }
   close();
   await nextTick();
@@ -731,7 +731,7 @@ const moveSlideUp = async (index: number) => {
   await nextTick();
 
   if (activeSlide.value === index) {
-    setIndex(blockIndex.value, index - 1);
+    setIndex(blockUuid.value, index - 1);
   }
 };
 
@@ -746,7 +746,7 @@ const moveSlideDown = async (index: number) => {
   await nextTick();
 
   if (activeSlide.value === index) {
-    setIndex(blockIndex.value, index + 1);
+    setIndex(blockUuid.value, index + 1);
   }
 };
 </script>

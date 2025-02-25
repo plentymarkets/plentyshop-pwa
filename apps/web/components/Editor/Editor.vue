@@ -30,7 +30,7 @@ import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<{
   block: Block | null;
-  index: number;
+  uuid: string;
 }>();
 
 const emit = defineEmits(['update']);
@@ -39,7 +39,7 @@ const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncSc
 );
 
 const closeEditor = () => {
-  emit('update', props.index, JSON.parse(jsonText.value));
+  emit('update', props.uuid, JSON.parse(jsonText.value));
   const { isEditing } = useEditor();
   isEditing.value = false;
 };
@@ -56,7 +56,7 @@ watchDebounced(
   () => jsonText.value,
   () => {
     if (jsonText.value !== '') {
-      emit('update', props.index, JSON.parse(jsonText.value));
+      emit('update', props.uuid, JSON.parse(jsonText.value));
     }
   },
   { debounce: 100 },

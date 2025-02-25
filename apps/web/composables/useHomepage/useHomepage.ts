@@ -1,15 +1,14 @@
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
-import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex, ActiveSlideIndex } from './types';
+import type { UseHomepageDataReturn, UseHomepageDataState, SetIndex, ActiveSlideIndex, UpdateBlocks } from './types';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
-import type { ProductRecommendedProductsProps } from '~/components/blocks/ProductRecommendedProducts/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);
+  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
-    data: { blocks: [] as Block[], meta: { isDefault: null } } as HomepageData,
+    data: [],
     initialBlocks: [],
     dataIsEmpty: false,
     loading: false,
@@ -20,50 +19,24 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const { $i18n } = useNuxtApp();
   const currentLocale = ref($i18n.locale.value);
 
-  const runtimeConfig = useRuntimeConfig();
-  const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-
-  const { fetchCategoryTemplate } = useCategoryTemplate();
-  const { fetchHomepageTemplate } = useFetchHome();
-
-  const fetchRecommendedProducts = async () => {
-    state.value.data.blocks.forEach((block) => {
-      if (block.name === 'ProductRecommendedProducts') {
-        const options = block.content as ProductRecommendedProductsProps;
-        const id = options.categoryId;
-
-        if (tryUseNuxtApp()) {
-          const { fetchProductRecommended } = useProductRecommended(id);
-          fetchProductRecommended(id);
-        }
-      }
-    });
-  };
+  const { data, getBlocks } = useCategoryTemplate();
 
   const initializeHomepageTemplate = async () => {
-    if (typeof homepageCategoryId === 'number') {
-      await fetchCategoryTemplate(homepageCategoryId);
-      state.value.data = fetchHomepageTemplate();
-      if (
-        (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
-        state.value.data.meta?.isDefault === null
-      ) {
-        state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
-      }
-    } else {
+    await getBlocks('index', 'immutable');
+    state.value.data = data.value;
+
+    if (!state.value.data || state.value.data.length === 0) {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
-    state.value.initialBlocks = state.value.data.blocks.map((block) => toRaw(block));
-
-    await fetchRecommendedProducts();
+    state.value.initialBlocks = state.value.data.map((block) => toRaw(block));
   };
 
   const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
 
     await initializeHomepageTemplate();
-    state.value.dataIsEmpty = !state.value.data.blocks || state.value.data.blocks.length === 0;
+    state.value.dataIsEmpty = !state.value.data || state.value.data.length === 0;
 
     state.value.loading = false;
   };
@@ -79,30 +52,33 @@ export const useHomepage: UseHomepageDataReturn = () => {
   watch(
     () => state.value.data,
     (updatedData) => {
-      if (updatedData.meta?.isDefault === null) {
-        updatedData.meta.isDefault = false;
-      }
-      state.value.data = updatedData;
-      state.value.dataIsEmpty = !updatedData.blocks || updatedData.blocks.length === 0;
+      state.value.dataIsEmpty = !updatedData || updatedData.length === 0;
     },
     { deep: true },
   );
 
-  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => {
-    const carouselBlock = state.value.data.blocks[blockIndex];
+  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
+    const { findBlockByUuid } = useBlockManager();
+    const carouselBlock = findBlockByUuid(state.value.data, blockUuid);
+
     if (carouselBlock) {
-      carouselBlock.content = { ...carouselBlock.content, ...newBannerItems };
+      carouselBlock.content = { ...(carouselBlock.content as BannerProps[]), ...newBannerItems };
     }
   };
 
-  const setIndex: SetIndex = (blockIndex: number, slideIndex: number) => {
-    state.value.activeSlideIndex[blockIndex] = slideIndex;
+  const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
+    state.value.activeSlideIndex[blockUuid] = slideIndex;
+  };
+
+  const updateBlocks: UpdateBlocks = (blocks) => {
+    state.value.data = blocks;
   };
 
   return {
     fetchPageTemplate,
     updateBannerItems,
     setIndex,
+    updateBlocks,
     ...toRefs(state.value),
   };
 };
