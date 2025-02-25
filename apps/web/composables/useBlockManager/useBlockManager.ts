@@ -18,7 +18,6 @@ export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
   const { isEditingEnabled } = useEditor();
-  const { closeDrawer, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
@@ -79,6 +78,8 @@ export const useBlockManager = () => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
       isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+
+      const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
     }
   };
