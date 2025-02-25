@@ -1,5 +1,5 @@
 <template>
-  <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
+  <UiToolbar v-if="isPreview && isEditablePage()" :style="`font-family: ${config.font}`" />
   <div
     class="w-100 relative"
     :class="{
@@ -43,6 +43,11 @@ const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
+
+const { data: dataProduct } = useProducts();
+const isEditablePage = () => {
+  return dataProduct.value.category?.type === 'content' || route.path === '/';
+};
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
