@@ -1,5 +1,18 @@
 # Changelog PlentyONE Shop
 
+# v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Benachrichtigungen beim erfolgreichen oder fehlgeschlagenen Speichern von Änderungen im Editor hinzugefügt.
+
+### Behoben
+
+- Anzeige der empfohlenen Produkte auf Produktseiten korrigiert.
+- Problem behoben, bei dem der Speichern-Button bei nachfolgenden Bearbeitungen nicht wieder aktiviert wurde.
+- Problem behoben, bei dem eine leere anfängliche Kategorievorlage nicht bearbeitet werden konnte.
+- Problem behoben, bei dem empfohlene Produkt-Blöcke im Editor falsche Daten abriefen, wenn ein neuer Block hinzugefügt wurde.
+
 # v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 - Problem behoben, bei dem während des Bauens Sprachdateien in den falschen Pfad geschrieben werden.
