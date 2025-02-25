@@ -6,6 +6,10 @@
 
 - Added feedback notifications for 'Save changes' button.
 
+### 👷 Changed
+
+- The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
+
 ### 🩹 Fixed
 
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
