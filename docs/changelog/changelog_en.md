@@ -5,6 +5,7 @@
 ### New
 
 - Added feedback notifications for 'Save changes' button.
+- The editor toolbar should be available only for the homepage and content categories.
 
 ### Fixed
 

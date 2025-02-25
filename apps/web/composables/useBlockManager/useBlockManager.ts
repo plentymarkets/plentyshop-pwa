@@ -1,3 +1,4 @@
+import { deepEqual } from '~/utils/jsonHelper';
 import { blocksLists } from '~/blocks/blocksLists';
 
 const isEmptyBlock = (block: Block): boolean => {
@@ -15,7 +16,8 @@ const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data } = useHomepage();
+  const { data, initialBlocks } = useHomepage();
+  const { isEditingEnabled } = useEditor();
 
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
@@ -39,6 +41,7 @@ export const useBlockManager = () => {
     updatedBlocks.splice(position, 0, newBlock);
     data.value.blocks = updatedBlocks;
     visiblePlaceholder.value = { index: null, position: null };
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -51,6 +54,8 @@ export const useBlockManager = () => {
     updatedBlocks.splice(newIndex, 0, blockToChange);
 
     data.value.blocks = updatedBlocks;
+
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
@@ -72,6 +77,7 @@ export const useBlockManager = () => {
   const deleteBlock = (index: number) => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
+      isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
@@ -82,6 +88,13 @@ export const useBlockManager = () => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks[index] = updatedBlock;
     }
+  };
+
+  const openBlockList = (index: number, position: number) => {
+    const insertIndex = (position === -1 ? index : index + 1) || 0;
+    togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
+    updateNewBlockPosition(insertIndex);
+    openDrawerWithView('blocksList');
   };
 
   return {
@@ -98,5 +111,6 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
+    openBlockList,
   };
 };
