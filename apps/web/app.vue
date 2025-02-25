@@ -43,11 +43,7 @@ const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
-
-const { data: dataProduct } = useProducts();
-const isEditablePage = () => {
-  return dataProduct.value.category?.type === 'content' || route.path === '/';
-};
+const { isEditablePage } = useToolbar();
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
