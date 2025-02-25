@@ -125,7 +125,7 @@ import {
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 import { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
-const { data } = useHomepage();
+const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findBlockByUuid } = useBlockManager();
 

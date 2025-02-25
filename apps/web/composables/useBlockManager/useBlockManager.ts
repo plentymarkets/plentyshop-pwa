@@ -16,7 +16,7 @@ const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data, initialBlocks, updateBlocks } = useHomepage();
+  const { data, cleanData, updateBlocks } = useCategoryTemplate();
   const { isEditing, isEditingEnabled } = useEditor();
 
   const currentBlock = ref<Block | null>(null);
@@ -45,7 +45,7 @@ export const useBlockManager = () => {
 
     updateBlocks(updatedBlocks);
     visiblePlaceholder.value = { index: null, position: null };
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value);
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -59,7 +59,7 @@ export const useBlockManager = () => {
 
     updateBlocks(updatedBlocks);
 
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value);
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
   const isLastBlock = (index: number) => index === data.value.length - 1;
@@ -109,7 +109,7 @@ export const useBlockManager = () => {
   const deleteBlock = (uuid: string) => {
     if (data.value && uuid !== null) {
       findBlockByUuid(data.value, uuid, true);
-      isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value);
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();

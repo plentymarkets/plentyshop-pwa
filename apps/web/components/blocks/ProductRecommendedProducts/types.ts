@@ -1,5 +1,3 @@
-import { ImageTextContent } from '~/components/blocks/Image/types';
-
 export type ProductRecommendedProductsProps = {
   name: string;
   type: string;
@@ -11,6 +9,9 @@ export type ProductRecommendedProductsProps = {
     };
   };
   index?: number;
+  meta: {
+    uuid: string;
+  }
 };
 
 export type ProductRecommendedProductsContent = {

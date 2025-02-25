@@ -103,7 +103,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       return;
     }
 
-    const { setIndex } = useHomepage();
+    const { setIndex } = useCarousel();
 
     setIndex(block.meta.uuid, 0);
 

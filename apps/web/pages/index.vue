@@ -8,7 +8,9 @@
       @update="updateBlock"
     />
     <div v-else class="content">
-      <template v-for="(block, index) in data" :key="index">
+
+      <template v-if="data.length" v-for="(block, index) in data" :key="index">
+
         <PageBlock
           :index="index"
           :block="block"
@@ -48,10 +50,15 @@ const {
 
 const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
-const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
+const { data, getBlocks } = useCategoryTemplate();
+
+const dataIsEmpty = computed(() => data.value.length === 0);
+
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
+
+getBlocks('index', 'immutable');
 
 const openBlockList = (index: number, position: number) => {
   const insertIndex = (position === -1 ? index : index + 1) || 0;
@@ -60,8 +67,6 @@ const openBlockList = (index: number, position: number) => {
   openDrawerWithView('blocksList');
 };
 
-await getRobots();
-setRobotForStaticPage('Homepage');
 
 onMounted(() => {
   isEditingEnabled.value = false;
@@ -81,5 +86,7 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   event.preventDefault();
 };
 
-fetchPageTemplate();
+await getRobots();
+setRobotForStaticPage('Homepage');
+
 </script>

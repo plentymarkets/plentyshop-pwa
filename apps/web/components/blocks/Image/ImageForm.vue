@@ -104,7 +104,7 @@
 import { ImageTextContent } from './types';
 import { SfInput } from '@storefront-ui/vue';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
-const { data } = useHomepage();
+const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findBlockByUuid } = useBlockManager();
 

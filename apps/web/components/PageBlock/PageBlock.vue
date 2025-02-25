@@ -45,7 +45,7 @@
         :block="block"
         @change-position="changeBlockPosition"
       />
-
+{{block}}
       <component :is="getBlockComponent" v-bind="block" :index="index">
         <template v-if="block.type === 'structure'" v-slot:content="{ blo }">
           <PageBlock

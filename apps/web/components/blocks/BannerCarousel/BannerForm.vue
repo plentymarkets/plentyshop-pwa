@@ -631,7 +631,8 @@ import { v4 as uuid } from 'uuid';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
-const { data, updateBannerItems, setIndex, activeSlideIndex } = useHomepage();
+const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
+const { data } = useCategoryTemplate();
 const { findBlockByUuid } = useBlockManager();
 
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);

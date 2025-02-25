@@ -43,12 +43,16 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
-import type { SlideControls } from '~/composables/useHomepage/types';
 
-const { activeSlideIndex, setIndex } = useHomepage();
-const { handleArrows } = useCarousel();
+const { activeSlideIndex, setIndex } = useCarousel();
 const { blockUuid } = useSiteConfiguration();
 const { content, index, configuration } = defineProps<CarouselStructureProps>();
+
+const handleArrows = () => {
+  const viewport = useViewport();
+  return !viewport.isLessThan('md');
+};
+
 
 const enableModules = computed(() => content.length > 1);
 

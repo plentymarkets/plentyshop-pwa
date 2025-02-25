@@ -50,9 +50,7 @@ export interface HomepageData {
   meta?: { isDefault: boolean | null };
 }
 
-export interface ActiveSlideIndex {
-  [key: string]: number;
-}
+
 
 export interface UseHomepageDataState {
   data: Block[];
@@ -75,8 +73,6 @@ export interface UseHomepage {
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
-  updateBannerItems: UpdateBannerItems;
-  setIndex: SetIndex;
   updateBlocks: UpdateBlocks;
 }
 

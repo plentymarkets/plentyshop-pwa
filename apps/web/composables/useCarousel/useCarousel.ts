@@ -1,37 +1,30 @@
-const handleArrows = () => {
-  const viewport = useViewport();
-  return !viewport.isLessThan('md');
-};
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import {UseCarouselState} from "~/composables/useCarousel/types";
 
-const applyPaginationStyles = () => {
-  const activePagination = document.querySelector('.swiper-pagination-bullet-active');
+export const useCarousel: UseCarouselReturn = () => {
+  const state = useState<UseCarouselState>('useCarousel', () => ({
+    data: [],
+    loading: false,
+    activeSlideIndex: {} as ActiveSlideIndex,
+  }));
 
-  if (activePagination) {
-    activePagination.classList.add('!bg-primary-500');
-  }
-};
 
-const onSlideChange = () => {
-  const paginationBullets = document.querySelectorAll('.swiper-pagination-bullet');
-  paginationBullets.forEach((bullet) => {
-    bullet.classList.remove('!bg-primary-500');
-  });
+  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
+    const { findBlockByUuid } = useBlockManager();
+    const carouselBlock = findBlockByUuid(state.value.data, blockUuid);
 
-  const linkActivePagination = document.querySelector('.swiper-pagination-bullet-active');
-  if (linkActivePagination) {
-    linkActivePagination.classList.add('!bg-primary-500');
-  }
-};
+    if (carouselBlock) {
+      carouselBlock.content = { ...(carouselBlock.content as BannerProps[]), ...newBannerItems };
+    }
+  };
 
-export const useCarousel = () => {
-  onMounted(() => {
-    applyPaginationStyles();
-    window.addEventListener('resize', applyPaginationStyles);
-  });
+  const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
+    state.value.activeSlideIndex[blockUuid] = slideIndex;
+  };
 
   return {
-    handleArrows,
-    applyPaginationStyles,
-    onSlideChange,
+    updateBannerItems,
+    setIndex,
+    ...toRefs(state.value),
   };
 };

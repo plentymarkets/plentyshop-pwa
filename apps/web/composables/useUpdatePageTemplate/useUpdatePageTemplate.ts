@@ -7,20 +7,14 @@ const stripArrayBrackets = (jsonString: string): string => {
 };
 
 const updatePageTemplate = async (): Promise<void> => {
-  const { setCategoryTemplate } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
-  const { initialBlocks } = useHomepage();
-  const runtimeConfig = useRuntimeConfig();
-  const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-  const { data, loading } = useHomepage();
-  loading.value = true;
+  const { saveBlocks, data } = useCategoryTemplate();
+
   try {
     const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
-    await setCategoryTemplate(homepageCategoryId, cleanedData);
+    await saveBlocks('index', 'immutable', cleanedData);
   } finally {
-    loading.value = false;
     isEditingEnabled.value = false;
-    initialBlocks.value = data.value.map((block) => toRaw(block));
   }
 };
 

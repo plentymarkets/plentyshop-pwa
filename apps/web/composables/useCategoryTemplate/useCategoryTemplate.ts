@@ -2,23 +2,43 @@ import type {
   FetchCategoryTemplate,
   UseCategoryTemplateReturn,
   UseCategoryTemplateState,
-  SetCategoryTemplate,
-  GetBlocks,
+  GetBlocks, SaveBlocks,
 } from '~/composables/useCategoryTemplate/types';
+import homepageTemplateDataDe from "~/composables/useHomepage/homepageTemplateDataDe.json";
+import homepageTemplateDataEn from "~/composables/useHomepage/homepageTemplateDataEn.json";
+
+const useLocaleSpecificHomepageTemplate = (locale: string) =>
+    locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
     data: [],
+    cleanData: [],
     categoryTemplateData: null,
     loading: false,
   }));
 
+  const { $i18n } = useNuxtApp();
+  const currentLocale = ref($i18n.locale.value);
+
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
+
     const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
 
     state.value.loading = false;
+
     state.value.data = data?.value?.data ?? state.value.data;
+
+    if (!data?.value?.data.length) {
+      state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
+    }
+
+    state.value.cleanData = { ...{}, ...state.value.data }
+  };
+
+  const updateBlocks: UpdateBlocks = (blocks) => {
+    state.value.data = blocks;
   };
 
   /**
@@ -40,18 +60,20 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
-  const setCategoryTemplate: SetCategoryTemplate = async (categoryId: number, content: string) => {
+  const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     state.value.loading = true;
 
     try {
       const { data } = await useAsyncData(() =>
         useSdk().plentysystems.doSaveBlocks({
-          url: 'index',
-          entityType: 'immutable',
+          identifier: identifier,
+          entityType: type,
           blocks: content,
         }),
       );
       state.value.data = data?.value?.data ?? state.value.data;
+
+      state.value.cleanData = { ...{}, ...state.value.data }
     } catch (error) {
       throw new Error(error as string);
     } finally {
@@ -59,10 +81,19 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     }
   };
 
+  watch(
+      () => currentLocale.value,
+      async (newLocale) => {
+        currentLocale.value = newLocale;
+        await getBlocks('index', 'immutable');
+      },
+  );
+
   return {
     fetchCategoryTemplate,
-    setCategoryTemplate,
+    saveBlocks,
     getBlocks,
+    updateBlocks,
     ...toRefs(state.value),
   };
 };

@@ -66,7 +66,7 @@ import { savePath } from '~/assets/icons/paths/save';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
-const { loading } = useHomepage();
+const { loading } = useCategoryTemplate();
 const {
   drawerView,
   openDrawerWithView,

@@ -123,7 +123,7 @@ const textGroup = ref(true);
 const buttonGroup = ref(true);
 const settingsGroup = ref(true);
 
-const { data } = useHomepage();
+const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findBlockByUuid } = useBlockManager();
 

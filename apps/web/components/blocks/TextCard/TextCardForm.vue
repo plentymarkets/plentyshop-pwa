@@ -225,7 +225,7 @@ import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { TextCardContent } from './types';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
-const { data } = useHomepage();
+const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findBlockByUuid } = useBlockManager();
 
