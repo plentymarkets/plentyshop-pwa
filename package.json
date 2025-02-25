@@ -45,7 +45,6 @@
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
-    "vite-bundle-visualizer": "^1.2.1",
     "vue-multiselect": "^3.2.0"
   },
   "devDependencies": {
@@ -74,7 +73,6 @@
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "rollup": "^4.34.1",
-    "rollup-plugin-visualizer": "^5.14.0",
     "turbo": "^2.4.0",
     "typescript": "5.7.3",
     "vitest": "^3.0.5",

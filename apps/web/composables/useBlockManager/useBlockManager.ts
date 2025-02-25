@@ -38,7 +38,6 @@ export const useBlockManager = () => {
     }
   };
 
-
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists.value[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
