@@ -138,7 +138,6 @@
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
-// import fonts from '~/fonts/meta.json';
 import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
 const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =

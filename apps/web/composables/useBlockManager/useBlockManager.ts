@@ -1,4 +1,3 @@
-import { ref, onMounted } from 'vue';
 import type { BlocksList } from '../../components/BlocksNavigationList/types';
 const blocksLists = ref<BlocksList>({});
 
