@@ -1,4 +1,10 @@
-import type { ApiError, RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import type {
+  ApiError,
+  RegisterParams,
+  SessionResult,
+  UserChangePasswordParams,
+  userGetters,
+} from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 import type {
@@ -202,26 +208,13 @@ export const useCustomer: UseCustomerReturn = () => {
     return !error.value;
   };
 
-  const isValidEmailAddress = (email: string): boolean => {
-    const maxEmailLength = 254;
-    const maxLocalPartLength = 64;
-
-    if (email.length > maxEmailLength) return false;
-
-    const emailPattern = /^[a-zA-Z0-9](?:[a-zA-Z0-9.]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    const [localPart] = email.split('@');
-
-    if (localPart.length > maxLocalPartLength) return false;
-
-    return emailPattern.test(email);
-  };
-
   const emailValidationSchema = toTypedSchema(
     object({
       customerEmail: string()
         .required($i18n.t('errorMessages.email.required'))
-        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) => isValidEmailAddress(email))
+        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) =>
+          userGetters.isValidEmailAddress(email),
+        )
         .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
     }),
   );
