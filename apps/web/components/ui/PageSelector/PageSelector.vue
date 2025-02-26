@@ -11,28 +11,15 @@
         <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
       </div>
     </div>
-
-    <!-- <UiPagesList v-if="isOpen"/> -->
-     <UiPageSearch v-if="isOpen" />
+    <UiPageSearch v-if="isOpen" />
   </div>
 </template>
 
 <script setup lang="ts">
-// import { getCategoryTree } from '@plentymarkets/shop-api';
 import { UiPageSearch } from '#components';
 import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
 const { isEditing, disableActions } = useEditor();
-const isOpen = ref(false)
+const isOpen = ref(false);
 
-const toggleDropdown = () => (isOpen.value = !isOpen.value)
-
-const router = useRouter();
-const routes = router.getRoutes();
-
-// Sdk method 
-// getCategoryTree().then((data) => {
-//   console.log(data);
-// });
-
-console.log(routes);
+const toggleDropdown = () => (isOpen.value = !isOpen.value);
 </script>

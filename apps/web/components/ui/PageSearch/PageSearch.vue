@@ -52,7 +52,7 @@
         <li class="p-2 text-gray-500 hover:text-gray-900 cursor-pointer flex items-center" @click="goBack">
           <SfIconChevronLeft class="w-3 h-3" /> {{ currentParent.name }}
         </li>
-        <li v-for="subPage in currentParent.children" :key="subPage.name" class="">
+        <li v-for="subPage in currentParent.children" :key="subPage.name" @click="handleClick(subPage)">
           <SfListItem
             tag="button"
             type="button"
@@ -88,6 +88,26 @@ const inputRef = ref();
 const dropdownListRef = ref();
 const currentParent = ref<{ name: string; children?: { name: string; path: string }[] } | null>(null);
 
+const { getCategoryTree } = useCategoryTree();
+
+const data = await getCategoryTree();
+
+interface Category {
+  details: { name: string; nameUrl: string }[];
+  children?: Category[];
+}
+
+const transformData = (
+  data: Category[],
+): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
+  return data.map((item: Category) => ({
+    name: item.details[0].name,
+    path: `/${item.details[0].nameUrl}`,
+    children: item.children ? (transformData(item.children) as { name: string; path: string }[]) : undefined,
+  }));
+};
+
+const pages = ref(transformData(data));
 const { isOpen, close, open } = useDisclosure();
 const { referenceRef } = useDropdown({
   isOpen,
@@ -101,18 +121,6 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
   activeState: isOpen,
   initialFocus: false,
 });
-
-const pages = ref([
-  { name: 'About Page', path: '/about' },
-  {
-    name: 'Product page',
-    children: [
-      { name: 'Product 1', path: '/product-1' },
-      { name: 'Product 2', path: '/product-2' },
-      { name: 'Product 3', path: '/product-3' },
-    ],
-  },
-]);
 
 const handleClick = (page: { name: string; path?: string; children?: { name: string; path: string }[] }) => {
   if (page.children) {
