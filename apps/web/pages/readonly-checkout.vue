@@ -9,7 +9,7 @@
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
         <UiDivider :class="dividerClass" />
-        <ContactInformation id="contact-information" :disabled="true" />
+        <ContactInformation disabled />
         <UiDivider :class="dividerClass" />
         <AddressContainer id="shipping-address" :key="0" :disabled="false" :type="AddressType.Shipping" />
         <UiDivider :class="dividerClass" />
