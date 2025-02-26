@@ -1,10 +1,10 @@
 <template>
-  <div class="absolute left-0 top-full mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
 
     <ul
       v-if="!currentParent"
       class="p-2 transition-all duration-300"
       :class="{ 'translate-x-full opacity-0': currentParent }"
+      ref="dropdownListRef"
     >
       <li
         v-for="page in pages"
@@ -34,7 +34,6 @@
         {{ subPage.name }}
       </li>
     </ul>
-  </div>
 </template>
 
 <script setup>

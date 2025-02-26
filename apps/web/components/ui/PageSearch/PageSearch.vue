@@ -1,5 +1,7 @@
 <template>
-  <div class="p-2 absolute left-0 top-full mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+  <div
+    class="p-2 absolute left-0 top-full mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden"
+  >
     <form ref="referenceRef" role="search" @submit.prevent="submit">
       <SfInput
         ref="inputRef"
@@ -25,21 +27,40 @@
 
     <div>
       <ul
-        ref="dropdownListRef"
-        class="left-0 top-full mt-2 w-64 bg-white shadow-lg rounded-lg  overflow-hidden"
+        v-if="!currentParent"
+        class="p-2 transition-all duration-300"
+        :class="{ 'translate-x-full opacity-0': currentParent }"
       >
-        <li v-for="{ highlight, rest, product } in filteredSnippets" :key="product.id">
+        <li v-for="page in filteredPages" :key="page.name" @click="handleClick(page)">
           <SfListItem
             tag="button"
             type="button"
-            class="flex justify-start"
-            @click="() => selectValue(product.name)"
-            @keydown.enter.space.prevent="selectValue(product.name)"
+            class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer flex justify-between text-left"
+            @click="() => selectValue(page.name)"
+            @keydown.enter.space.prevent="selectValue(page.name)"
           >
-            <p class="text-left">
-              <span>{{ highlight }}</span>
-              <span class="font-medium">{{ rest }}</span>
-            </p>
+            <span>{{ page.name }}<SfIconChevronRight v-if="page.children" class="w-3 h3" /></span>
+          </SfListItem>
+        </li>
+      </ul>
+
+      <ul
+        v-if="currentParent"
+        class="p-2 transition-all duration-300"
+        :class="{ 'translate-x-0 opacity-100': currentParent, '-translate-x-full opacity-0': !currentParent }"
+      >
+        <li class="p-2 text-gray-500 hover:text-gray-900 cursor-pointer flex items-center" @click="goBack">
+          <SfIconChevronLeft class="w-3 h-3" /> {{ currentParent.name }}
+        </li>
+        <li v-for="subPage in currentParent.children" :key="subPage.name" class="">
+          <SfListItem
+            tag="button"
+            type="button"
+            class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer text-left"
+            @click="() => selectValue(subPage.name)"
+            @keydown.enter.space.prevent="selectValue(subPage.name)"
+          >
+            {{ subPage.name }}
           </SfListItem>
         </li>
       </ul>
@@ -49,7 +70,6 @@
 
 <script lang="ts" setup>
 import { offset } from '@floating-ui/vue';
-import { watchDebounced } from '@vueuse/shared';
 import { unrefElement } from '@vueuse/core';
 import {
   SfIconCancel,
@@ -59,13 +79,15 @@ import {
   useDisclosure,
   useDropdown,
   useTrapFocus,
+  SfIconChevronLeft,
+  SfIconChevronRight,
 } from '@storefront-ui/vue';
 
 const inputModel = ref('');
 const inputRef = ref();
 const dropdownListRef = ref();
-const isLoadingSnippets = ref(false);
-const snippets = ref<{ highlight: string; rest: string; product: Product }[]>([]);
+const currentParent = ref<{ name: string; children?: { name: string; path: string }[] } | null>(null);
+
 const { isOpen, close, open } = useDisclosure();
 const { referenceRef } = useDropdown({
   isOpen,
@@ -80,11 +102,34 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
   initialFocus: false,
 });
 
-const filteredSnippets = computed(() => {
-  if (!inputModel.value) {
-    return snippets.value;
+const pages = ref([
+  { name: 'About Page', path: '/about' },
+  {
+    name: 'Product page',
+    children: [
+      { name: 'Product 1', path: '/product-1' },
+      { name: 'Product 2', path: '/product-2' },
+      { name: 'Product 3', path: '/product-3' },
+    ],
+  },
+]);
+
+const handleClick = (page: { name: string; path?: string; children?: { name: string; path: string }[] }) => {
+  if (page.children) {
+    currentParent.value = page;
+  } else {
+    navigateTo(page.path);
   }
-  return snippets.value.filter(({ product }) => product.name.toLowerCase().startsWith(inputModel.value.toLowerCase()));
+};
+
+const goBack = () => {
+  currentParent.value = null;
+};
+const filteredPages = computed(() => {
+  if (!inputModel.value) {
+    return pages.value;
+  }
+  return pages.value.filter((page) => page.name.toLowerCase().includes(inputModel.value.toLowerCase()));
 });
 
 const submit = () => {
@@ -103,8 +148,8 @@ const reset = () => {
   focusInput();
 };
 
-const selectValue = (phrase: string) => {
-  inputModel.value = phrase;
+const selectValue = (name: string) => {
+  inputModel.value = name;
   close();
   focusInput();
 };
@@ -130,64 +175,4 @@ watch(inputModel, () => {
     reset();
   }
 });
-
-watchDebounced(
-  inputModel,
-  () => {
-    if (inputModel.value) {
-      const getSnippets = async () => {
-        open();
-        isLoadingSnippets.value = true;
-        try {
-          const data = await mockAutocompleteRequest(inputModel.value);
-          snippets.value = data;
-        } catch (error) {
-          close();
-          console.error(error);
-        }
-        isLoadingSnippets.value = false;
-      };
-
-      getSnippets();
-    }
-  },
-  { debounce: 500 },
-);
-
-interface Product {
-  id: string;
-  name: string;
-}
-const mockProducts: Product[] = [
-  { id: 'ip-14', name: 'iPhone 14' },
-  { id: 'ip-14-pro', name: 'iPhone 14 Pro' },
-  { id: 'ip-14-pro-max', name: 'iPhone 14 Pro Max' },
-  { id: 'ip-14-plus', name: 'iPhone 14 Plus' },
-  { id: 'ip-13', name: 'iPhone 13' },
-  { id: 'ip-13-mini', name: 'iPhone 13 mini' },
-  { id: 'ip-12', name: 'iPhone 12' },
-  { id: 'ip-11', name: 'iPhone 11' },
-  { id: 'mb-air', name: 'MacBook Air' },
-  { id: 'mb-pro-13', name: 'MacBook Pro 13"' },
-  { id: 'mb-pro-14', name: 'MacBook Pro 14"' },
-  { id: 'mb-pro-16', name: 'MacBook Pro 16"' },
-];
-// Just for presentation purposes. Replace mock request with the actual API call.
-const delay = () => new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
-const mockAutocompleteRequest = async (phrase: string) => {
-  await delay();
-  const results = mockProducts.map((product) => {
-    const highlight = product.name.substring(0, phrase.length);
-    const rest = product.name.substring(phrase.length);
-    return { highlight, rest, product };
-  });
-  return results;
-};
-
-// Initialize snippets with all products
-snippets.value = mockProducts.map((product) => ({
-  highlight: '',
-  rest: product.name,
-  product,
-}));
 </script>
