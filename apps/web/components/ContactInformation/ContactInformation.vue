@@ -18,7 +18,7 @@
       </UiButton>
     </div>
 
-    <div v-if="isGuest" class="w-full mt-2 flex flex-col sm:flex-row">
+    <div v-if="guestLoginEnabled && isGuest" class="w-full mt-2 flex flex-col sm:flex-row">
       <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openLoginModal">
         {{ $t('auth.signup.logInLinkLabel') }}
@@ -45,10 +45,14 @@
         >
           <SfIconClose />
         </UiButton>
-        <h3 id="contact-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+        <h3
+          id="contact-modal-title"
+          :class="{ 'mb-4': !guestLoginEnabled }"
+          class="text-neutral-900 text-lg md:text-2xl font-bold"
+        >
           {{ $t('contactInfo.heading') }}
         </h3>
-        <div class="w-full flex flex-col sm:flex-row mb-4">
+        <div v-if="guestLoginEnabled" class="w-full flex flex-col sm:flex-row mb-4">
           <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
           <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openLoginModal">
             {{ $t('auth.signup.logInLinkLabel') }}
@@ -81,10 +85,10 @@
 </template>
 
 <script lang="ts" setup>
-import { SfIconBase, SfIconClose, SfLink, useDisclosure } from '@storefront-ui/vue';
-import type { ContactInformationProps } from './types';
-import { penPath } from '~/assets/icons/paths/pen';
 import { AddressType } from '@plentymarkets/shop-api';
+import { SfIconBase, SfIconClose, SfLink, useDisclosure } from '@storefront-ui/vue';
+import { penPath } from '~/assets/icons/paths/pen';
+import type { ContactInformationProps } from './types';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
 
@@ -95,6 +99,7 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
 const cart = ref({ customerEmail: sessionData.value?.user?.email ?? sessionData.value?.user?.guestMail ?? '' });
 const isMobile = computed(() => viewport.isLessThan('md'));
+const guestLoginEnabled = process.env.GUEST_LOGIN_ENABLED ?? false;
 
 const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
