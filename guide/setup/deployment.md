@@ -11,7 +11,7 @@ The following sections describe the steps in detail.
 ## PlentyONE system
 
 1. Log into your PlentyONE system.
-2. Go to **CMS » Deployment**.
+2. Go to **Shop » Management**.
 3. Click on :heavy_plus_sign: to add a new application.
 4. Fill in the required information.
 5. **Create** the application.
@@ -111,7 +111,7 @@ The workflow takes several minutes to complete. You can monitor the progress in 
 ## Activation
 
 1. Log into your PlentyONE system.
-2. Go to **CMS » Deployment**.
+2. Go to **Shop » Management**.
 3. For the configured domain, open the further actions menu (three dots).
 4. Click on **Activate application**.
 
@@ -121,7 +121,7 @@ It can take up to 1 hour for the changes to take effect.
 ## Preview
 
 1. Log into your PlentyONE system.
-2. Go to **CMS » Deployment**.
+2. Go to **Shop » Management**.
 3. Click on the **URL** of the app you want to preview.
 
 ## Live
@@ -131,7 +131,7 @@ It can take up to 1 hour for the changes to take effect.
 :::
 
 1. Log into your PlentyONE system.
-2. Go to **CMS » Deployment**.
+2. Go to **Shop » Management**.
 3. For the configuration domain, open the further actions menu (three dots).
 4. Click on **Activate live mode**.
 

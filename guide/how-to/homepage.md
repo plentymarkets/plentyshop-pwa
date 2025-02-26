@@ -27,7 +27,7 @@ The shop only uses the template of the homepage category. You don't have to upda
 
 ### App configuration
 
-1. Go to **CMS » Deployment**.
+1. Go to **Shop » Management**.
 2. Open the further actions menu (three dots).
 3. Click on **Settings**.
 4. Click on **Online Store**.

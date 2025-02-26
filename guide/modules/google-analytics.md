@@ -16,14 +16,13 @@ When using Google Analytics, you are obliged to inform visitors about the type o
 ## Settings
 You can manage Google Analytics settings in the backend, go to:
 
-**CMS » Deployment** → Select your application → Click on **Settings**.
+**Shop » Management** → Select your application → Click on **Settings**.
 
-In the left sidebar, navigate to the `SEO` tab, where you'll find the Google Analytics settings.
+In the left sidebar, navigate to the **SEO** tab, where you'll find the Google Analytics settings.
 
 - **Enable Google Analytics** – Activate or deactivate Google Analytics for your shop.
 - **Tracking ID** – Enter your Google Analytics Tracking ID (e.g., `UA-12345678-9`). Without this, tracking won't work.
 - **Send Gross Prices** – Choose whether to send gross prices to Google Analytics (default is net prices).
-- **Anonymize IP** – Enable this to anonymize visitor IPs for privacy compliance.
 - **Cookie Group** – Assign a cookie group for Google Analytics. We recommend using the Marketing group.
 - **Register Cookie as Opt-Out** – Mark the Google Analytics cookie as an opt-out option. (*Only available if the cookie group is not set to `Necessary`.*)
 

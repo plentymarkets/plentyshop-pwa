@@ -15,12 +15,12 @@ Create a `.env` file in the `apps/web` directory.
 To access the environment information of your system, carry out the following steps:
 
 1. Log into your PlentyONE system.
-1. Go to **CMS » Deployment**.
+1. Go to **Shop » Management**.
 1. Copy (:clipboard:) the environment information to your clipboard.
 1. Paste the environment information into your `.env` file.
 
 ::: tip
-To view detailed environment information in PlentyONE, go to **CMS » Deployment**, open the further actions menu and click on :information_source: **View environment information**.
+To view detailed environment information in PlentyONE, go to **Shop » Management**, open the further actions menu and click on :information_source: **View environment information**.
 :::
 
 For additional details, refer to the following guide:
