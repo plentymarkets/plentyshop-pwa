@@ -33,7 +33,7 @@ export const useBlockManager = () => {
       }
       blocksLists.value = await response.json();
     } catch (error) {
-      console.error('Failed to fetch blocksLists:', error);
+      throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -112,6 +112,5 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
-    getBlocksLists,
   };
 };
