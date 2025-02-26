@@ -63,10 +63,10 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
-const runtimeConfig = useRuntimeConfig();
+import {deepEqual} from "~/utils/jsonHelper";
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
-const { loading } = useCategoryTemplate();
+const { data, loading, cleanData } = useCategoryTemplate();
 const {
   drawerView,
   openDrawerWithView,
@@ -77,14 +77,10 @@ const {
 } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
-const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-
-const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
-
-const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
+const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
 
 const save = () => {
-  if (!isLocalTemplate.value && isEditingEnabled.value) {
+  if (isEditingEnabled.value) {
     updatePageTemplate();
   }
 
@@ -104,4 +100,12 @@ const toggleEdit = () => {
     isEditing.value = false;
   }
 };
+
+watch(
+    () => data.value,
+    async () => {
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value)
+    },
+    {deep: true}
+);
 </script>

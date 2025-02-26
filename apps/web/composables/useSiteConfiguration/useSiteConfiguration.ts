@@ -99,19 +99,17 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   );
 
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
-    if (!block) {
-      return;
+    if (block) {
+      const { setIndex } = useCarousel();
+
+      setIndex(block.meta.uuid, 0);
+
+      state.value.blockType = block.name;
+      state.value.blockUuid = block.meta.uuid;
     }
-
-    const { setIndex } = useCarousel();
-
-    setIndex(block.meta.uuid, 0);
 
     state.value.drawerView = view;
     state.value.drawerOpen = true;
-
-    state.value.blockType = block.name;
-    state.value.blockUuid = block.meta.uuid;
 
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };

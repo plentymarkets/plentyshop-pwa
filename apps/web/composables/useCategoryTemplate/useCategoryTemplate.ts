@@ -20,7 +20,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
   const { $i18n } = useNuxtApp();
   const currentLocale = ref($i18n.locale.value);
-  const { isEditingEnabled } = useEditor();
 
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
@@ -35,7 +34,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
-    state.value.cleanData = { ...{}, ...state.value.data }
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
   };
 
   const updateBlocks: UpdateBlocks = (blocks) => {
@@ -74,7 +73,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
       );
       state.value.data = data?.value?.data ?? state.value.data;
 
-      state.value.cleanData = { ...{}, ...state.value.data }
+      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
     } catch (error) {
       throw new Error(error as string);
     } finally {
@@ -87,13 +86,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
       async (newLocale) => {
         currentLocale.value = newLocale;
         await getBlocks('index', 'immutable');
-      },
-  );
-
-  watch(
-      () => state.value.data,
-      async () => {
-        isEditingEnabled.value = true;
       },
   );
 

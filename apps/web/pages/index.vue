@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlockList" />
+    <EmptyBlock v-if="dataIsEmpty" />
     <Editor
       v-if="isEditing && currentBlockUuid !== null"
       :uuid="currentBlockUuid"
@@ -18,7 +18,6 @@
           :is-tablet="isTablet"
           :block-has-data="blockHasData"
           :tablet-edit="tabletEdit"
-          :add-new-block="openBlockList"
           :change-block-position="changeBlockPosition"
           :class="[
             {
@@ -44,7 +43,7 @@ const {
   togglePlaceholder,
 } = useBlockManager();
 
-const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
+const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
 
 const { data, getBlocks } = useCategoryTemplate();
 
@@ -54,15 +53,7 @@ const dataIsEmpty = computed(() => data.value.length === 0);
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
-getBlocks('index', 'immutable');
-
-const openBlockList = (index: number, position: number) => {
-  const insertIndex = (position === -1 ? index : index + 1) || 0;
-  togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
-  updateNewBlockPosition(insertIndex);
-  openDrawerWithView('blocksList');
-};
-
+await getBlocks('index', 'immutable');
 
 onMounted(() => {
   isEditingEnabled.value = false;

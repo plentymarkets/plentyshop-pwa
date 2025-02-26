@@ -1,4 +1,4 @@
-export type MultiColumnsProps = {
+export type MultiGridProps = {
   name: string;
   type: string;
   content: unknown[];

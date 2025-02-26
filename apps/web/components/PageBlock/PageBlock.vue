@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <UiBlockPlaceholder v-if="displayTopPlaceholder(index)" />
+    <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :class="[
         'relative group',
@@ -26,7 +26,7 @@
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
         data-testid="top-add-block"
         aria-label="top add block"
-        @click.stop="addNewBlock(index, -1)"
+        @click.stop="addNewBlock(block, 'top')"
       >
         <SfIconAdd class="cursor-pointer" />
       </button>
@@ -58,7 +58,6 @@
             :is-tablet="isTablet"
             :block-has-data="blockHasData"
             :tablet-edit="tabletEdit"
-            :add-new-block="addNewBlock"
             :change-block-position="changeBlockPosition"
           />
         </template>
@@ -70,12 +69,12 @@
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
         data-testid="bottom-add-block"
         aria-label="bottom add block"
-        @click.stop="addNewBlock(index, 1)"
+        @click.stop="addNewBlock(block, 'bottom')"
       >
         <SfIconAdd class="cursor-pointer" />
       </button>
     </div>
-    <UiBlockPlaceholder v-if="displayBottomPlaceholder(index)" />
+    <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
   </div>
 </template>
 
@@ -91,14 +90,13 @@ interface Props {
   isTablet: boolean;
   blockHasData?: (block: Block) => boolean;
   tabletEdit: (index: number) => void;
-  addNewBlock: (index: number, position: number) => void;
   changeBlockPosition: (index: number, position: number) => void;
 }
 
 const props = defineProps<Props>();
 
-const { blockSize, drawerOpen, drawerView } = useSiteConfiguration();
-const { visiblePlaceholder } = useBlockManager();
+const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { visiblePlaceholder, togglePlaceholder } = useBlockManager();
 
 const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
   string,
@@ -118,27 +116,32 @@ const getBlockComponent = computed(() => {
   return '';
 });
 
-const displayTopPlaceholder = (index: number): boolean => {
+const displayTopPlaceholder = (uuid: string): boolean => {
   const visiblePlaceholderState = visiblePlaceholder.value;
 
   return (
     visiblePlaceholderState.position === 'top' &&
-    visiblePlaceholderState.index === index &&
+    visiblePlaceholderState.uuid === uuid &&
     drawerOpen.value &&
     drawerView.value === 'blocksList'
   );
 };
 
-const displayBottomPlaceholder = (index: number): boolean => {
+const displayBottomPlaceholder = (uuid: string): boolean => {
   const visiblePlaceholderState = visiblePlaceholder.value;
 
   return (
     visiblePlaceholderState.position === 'bottom' &&
-    visiblePlaceholderState.index === index &&
+    visiblePlaceholderState.uuid === uuid &&
     drawerOpen.value &&
     drawerView.value === 'blocksList'
   );
 };
+
+const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
+  togglePlaceholder(block.meta.uuid, position);
+  openDrawerWithView('blocksList');
+}
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;

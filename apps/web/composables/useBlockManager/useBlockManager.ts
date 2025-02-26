@@ -1,17 +1,18 @@
 import { deepEqual } from '~/utils/jsonHelper';
 import { blocksLists } from '~/blocks/blocksLists';
+import { v4 as uuid } from 'uuid';
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.content;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom' | null }>({
-  index: null,
-  position: null,
+const visiblePlaceholder = ref<{ uuid: string; position: 'top' | 'bottom' }>({
+  uuid: '',
+  position: 'top',
 });
-const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
-  visiblePlaceholder.value = { index, position };
+const togglePlaceholder = (uuid: string, position: 'top' | 'bottom') => {
+  visiblePlaceholder.value = { uuid, position };
 };
 
 export const useBlockManager = () => {
@@ -35,15 +36,30 @@ export const useBlockManager = () => {
     return lang === 'de' ? variationTemplate.de : variationTemplate.en;
   };
 
-  const addNewBlock = (category: string, variationIndex: number, position: number) => {
-    const updatedBlocks = [...data.value];
+  const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: 'top' | 'bottom') => {
+    if (!data.value) return;
+
+    const copiedData = JSON.parse(JSON.stringify(data.value));
+    const parentInfo = findBlockParent(copiedData, targetUuid);
+
+    if (!parentInfo) {
+      console.error('block not found');
+      return;
+    }
+
+    const { parent, index } = parentInfo;
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    newBlock.meta.uuid = uuid();
 
-    updatedBlocks.splice(position, 0, newBlock);
+    setUuid(newBlock.content as Block[])
 
-    updateBlocks(updatedBlocks);
-    visiblePlaceholder.value = { index: null, position: null };
-    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+    const insertIndex = position === 'top' ? index : index + 1;
+
+    parent.splice(insertIndex, 0, newBlock);
+
+    updateBlocks(copiedData);
+    visiblePlaceholder.value = { uuid: '', position: 'top' };
+    isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -61,6 +77,28 @@ export const useBlockManager = () => {
   };
 
   const isLastBlock = (index: number) => index === data.value.length - 1;
+
+  const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[], index: number } | null => {
+    for (const [index, block] of blocks.entries()) {
+      if (block.meta?.uuid === targetUuid) {
+        return { parent: blocks, index };
+      }
+      if (Array.isArray(block.content)) {
+        const result = findBlockParent(block.content, targetUuid);
+        if (result) return result;
+      }
+    }
+    return null;
+  };
+
+  const setUuid = (blocks: Block[]) => {
+    for (const [index, block] of blocks.entries()) {
+      block.meta.uuid = uuid();
+      if (Array.isArray(block.content)) {
+        setUuid(block.content);
+      }
+    }
+  };
 
   const findBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
     blocks: Block[],
@@ -93,7 +131,7 @@ export const useBlockManager = () => {
     if (data.value) {
       currentBlockUuid.value = uuid;
       currentBlock.value = findBlockByUuid(data.value, uuid);
-      isEditing.value = true;
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
     }
   };
 

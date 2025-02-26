@@ -33,11 +33,11 @@ import { blocksLists } from '~/blocks/blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const { locale } = useI18n();
-const { addNewBlock } = useBlockManager();
-const { newBlockPosition, drawerOpen, openDrawerWithView } = useSiteConfiguration();
+const { addNewBlock, visiblePlaceholder } = useBlockManager();
+const { drawerOpen, openDrawerWithView } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
-  addNewBlock(category, variationIndex, newBlockPosition.value);
+  addNewBlock(category, variationIndex, visiblePlaceholder.value.uuid, visiblePlaceholder.value.position);
 };
 
 const tempOpenDrawerCondition = (block: Block) => {

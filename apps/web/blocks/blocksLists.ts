@@ -476,7 +476,7 @@ export const blocksLists: BlocksList = {
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png',
         template: {
           en: {
-            name: 'MultiColumns',
+            name: 'MultiGrid',
             type: 'structure',
             meta: { uuid: '34343434-3434-4343-8434-343434343434' },
             configuration: {
@@ -488,14 +488,11 @@ export const blocksLists: BlocksList = {
                 type: 'content',
                 meta: { uuid: '45454545-4545-4455-8455-454545454545' },
                 content: {
-                  image: {
-                    wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    alt: 'alt text',
-                    imageAlignment: 'right',
-                  },
+                  wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  alt: 'alt text',
                 },
               },
               {
@@ -520,7 +517,7 @@ export const blocksLists: BlocksList = {
             ],
           },
           de: {
-            name: 'MultiColumns',
+            name: 'MultiGrid',
             type: 'structure',
             meta: { uuid: '67676767-6767-4676-8767-676767676767' },
             configuration: {
@@ -532,14 +529,11 @@ export const blocksLists: BlocksList = {
                 type: 'content',
                 meta: { uuid: '78787878-7878-4787-8787-787878787878' },
                 content: {
-                  image: {
-                    wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    alt: 'Headphones',
-                    imageAlignment: 'left',
-                  },
+                  wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  alt: 'Headphones',
                 },
               },
               {
@@ -570,7 +564,7 @@ export const blocksLists: BlocksList = {
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png',
         template: {
           en: {
-            name: 'MultiColumns',
+            name: 'MultiGrid',
             type: 'structure',
             meta: { uuid: '9a9a9a9a-9a9a-49a9-89a9-9a9a9a9a9a9a' },
             configuration: {
@@ -601,20 +595,17 @@ export const blocksLists: BlocksList = {
                 type: 'content',
                 meta: { uuid: 'cbcbcbcb-cbcb-4bcb-8bcb-cbcbcbcbcbcb' },
                 content: {
-                  image: {
-                    wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    alt: 'Headphones',
-                    imageAlignment: 'left',
-                  },
+                  wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  alt: 'Headphones',
                 },
               },
             ],
           },
           de: {
-            name: 'MultiColumns',
+            name: 'MultiGrid',
             type: 'structure',
             meta: { uuid: 'dcdcdcdc-dcdc-4cdc-8cdc-dcdcdcdcdcdc' },
             configuration: {
@@ -645,14 +636,11 @@ export const blocksLists: BlocksList = {
                 type: 'content',
                 meta: { uuid: 'fefefefe-fefe-4fef-8fef-fefefefefefe' },
                 content: {
-                  image: {
-                    wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-                    alt: 'Headphones',
-                    imageAlignment: 'left',
-                  },
+                  wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+                  alt: 'Headphones',
                 },
               },
             ],

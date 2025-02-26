@@ -21,7 +21,6 @@ export const useCarousel: UseCarouselReturn = () => {
   };
 
   const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
-    console.log('slideIndex: ', blockUuid, slideIndex)
     state.value.activeSlideIndex[blockUuid] = slideIndex;
   };
 

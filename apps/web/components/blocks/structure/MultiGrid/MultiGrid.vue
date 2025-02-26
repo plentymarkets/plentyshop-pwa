@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { MultiColumnsProps } from '~/components/blocks/structure/MultiColumns/types';
+import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 
-const { content, configuration } = defineProps<MultiColumnsProps>();
+const { content, configuration } = defineProps<MultiGridProps>();
 </script>

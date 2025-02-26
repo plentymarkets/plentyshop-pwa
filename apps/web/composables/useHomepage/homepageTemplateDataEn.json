@@ -121,7 +121,7 @@
     }
   },
   {
-    "name": "MultiColumns",
+    "name": "MultiGrid",
     "type": "structure",
     "meta": {
       "uuid": "9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a"
