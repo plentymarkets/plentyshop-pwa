@@ -11,6 +11,9 @@ import type {
   UseCustomerReturn,
   UseCustomerState,
 } from '~/composables/useCustomer/types';
+import { scrollToHTMLObject } from '~/utils/scollHelper';
+
+const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
@@ -230,6 +233,28 @@ export const useCustomer: UseCustomerReturn = () => {
     }),
   );
 
+  const backToContactInformation = (): boolean => {
+    const classList = ['bg-primary-50', 'rounded-md'];
+    const opacityClass = 'opacity-0';
+    const targetId = CONTACT_INFORMATION;
+
+    const targetElement = document.querySelector(targetId);
+    const firstDivider = document.querySelector('#top-contact-information-divider');
+    const secondDivider = document.querySelector('#top-shipping-divider');
+
+    scrollToHTMLObject(targetId);
+
+    targetElement?.classList.add(...classList);
+    [firstDivider, secondDivider].forEach((divider) => divider?.classList.add(opacityClass));
+
+    setTimeout(() => {
+      targetElement?.classList.remove(...classList);
+      [firstDivider, secondDivider].forEach((divider) => divider?.classList.remove(opacityClass));
+    }, 1000);
+
+    return false;
+  };
+
   return {
     setUser,
     getSession,
@@ -239,6 +264,7 @@ export const useCustomer: UseCustomerReturn = () => {
     loginAsGuest,
     changePassword,
     emailValidationSchema,
+    backToContactInformation,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };

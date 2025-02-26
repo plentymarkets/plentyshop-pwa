@@ -7,7 +7,7 @@
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider id="top-contact-information-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation id="contact-information" />
         <UiDivider id="top-shipping-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer id="shipping-address" :key="0" :type="AddressType.Shipping" />
@@ -120,7 +120,7 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { emit } = usePlentyEvent();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
-const { isGuest, validGuestEmail } = useCustomer();
+const { isGuest, isAuthorized, validGuestEmail, backToContactInformation } = useCustomer();
 const {
   cart,
   cartIsEmpty,
@@ -134,7 +134,6 @@ const {
   backToFormEditing,
   validateTerms,
   scrollToShippingAddress,
-  scrollToContactInformation,
 } = useCheckout();
 
 const {
@@ -212,9 +211,8 @@ const paypalApplePayPaymentId = computed(() => {
 });
 
 const readyToBuy = () => {
-  if (isGuest.value && !validGuestEmail.value) {
-    scrollToContactInformation();
-    return false;
+  if ((!isAuthorized.value && !isGuest.value) || (isGuest.value && !validGuestEmail.value)) {
+    return backToContactInformation();
   }
 
   if (anyAddressFormIsOpen.value) {
