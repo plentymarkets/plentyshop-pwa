@@ -1,14 +1,20 @@
 # Changelog PlentyONE Shop
 
-# v1.xx.x (2025-xx-xx)
+# v1.xx.x (xxxx-xx-xx)
 
-### New
+### 🩹 Fixed
 
-- Added feedback notifications for 'Save changes' button.
+- Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 
 ### 👷 Changed
 
 - The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
+
+# v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Added success and error notifications when saving changes in the editor.
 
 ### 🩹 Fixed
 
