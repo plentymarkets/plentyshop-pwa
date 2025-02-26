@@ -1,10 +1,10 @@
 # Changelog PlentyONE Shop
 
-# v1.xx.x (2025-xx-xx)
+# v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
-- Added feedback notifications for 'Save changes' button.
+- Added success and error notifications when saving changes in the editor.
 
 ### 👷 Changed
 
