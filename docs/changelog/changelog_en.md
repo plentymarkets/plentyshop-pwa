@@ -8,6 +8,7 @@
 
 ### 👷 Changed
 
+- Auto-save implemented for email address in the guest checkout flow.
 - The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
 
 ### 🩹 Fixed
