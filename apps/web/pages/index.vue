@@ -8,13 +8,10 @@
       @update="updateBlock"
     />
     <div v-else class="content">
-
       <template v-if="data.length" v-for="(block, index) in data" :key="index">
-
         <PageBlock
           :index="index"
           :block="block"
-          :is-preview="isPreview"
           :disable-actions="disableActions"
           :is-clicked="isClicked"
           :clicked-block-index="clickedBlockIndex"
@@ -40,7 +37,6 @@ const {
   isClicked,
   clickedBlockIndex,
   isTablet,
-  isPreview,
   blockHasData,
   tabletEdit,
   updateBlock,

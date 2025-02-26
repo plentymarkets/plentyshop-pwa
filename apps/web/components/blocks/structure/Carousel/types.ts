@@ -9,4 +9,7 @@ export type CarouselStructureProps = {
     };
   };
   index: number;
+  meta: {
+    uuid: string
+  }
 };

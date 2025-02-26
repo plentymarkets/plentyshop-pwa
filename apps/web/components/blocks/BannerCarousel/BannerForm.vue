@@ -3,126 +3,6 @@
     data-testid="banner-carousel-form"
     class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
   >
-    <div class="mb-6">
-      <div class="flex item-center justify-between mb-4 p-4 pr-2">
-        <h2>Slides</h2>
-        <div class="flex item-center">
-          <button
-            data-testid="quick-add-slide-button"
-            class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
-            @click="addSlide"
-          >
-            <SfIconAdd class="text-neutral-500" />
-          </button>
-          <div class="relative">
-            <button
-              v-if="slides.length >= 2"
-              data-testid="open-slide-actions"
-              class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
-              @click="open"
-            >
-              <SfIconMoreHoriz class="text-neutral-500" />
-            </button>
-
-            <div
-              v-if="isOpen && slides.length >= 2"
-              class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-50"
-            >
-              <div class="flex justify-end p-2">
-                <SfIconClose class="cursor-pointer" @click="close" />
-              </div>
-              <hr />
-              <div class="p-2">
-                <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
-                  <div class="flex items-center">
-                    <SfIconArrowUpward
-                      v-if="index !== 0"
-                      :data-testid="`actions-move-slide-up-${index}`"
-                      class="cursor-pointer text-neutral-500 mr-2"
-                      size="sm"
-                      @click.stop="moveSlideUp(index)"
-                    />
-                    <SfIconArrowUpward
-                      v-else
-                      class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
-                      size="sm"
-                    />
-
-                    <SfIconArrowDownward
-                      v-if="index + 1 !== slides.length"
-                      :data-testid="`actions-move-slide-down-${index}`"
-                      class="cursor-pointer text-neutral-500 mr-2"
-                      size="sm"
-                      @click.stop="moveSlideDown(index)"
-                    />
-                    <SfIconArrowDownward
-                      v-else
-                      class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
-                      size="sm"
-                    />
-                    <span>Slide {{ index + 1 }}</span>
-                  </div>
-                  <button
-                    :data-testid="`actions-delete-slide-${index}`"
-                    class="text-red-500 hover:text-red-700"
-                    :disabled="slides.length === 1"
-                    @click="deleteSlide(index)"
-                  >
-                    <SfIconDelete class="text-neutral-500" />
-                  </button>
-                </div>
-                <hr />
-                <div class="pl-2 pr-2 pt-2 flex justify-between items-center">
-                  <p>Add Slide</p>
-                  <button
-                    data-testid="actions-add-slide-button"
-                    class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
-                    @click="addSlide"
-                  >
-                    <SfIconAdd class="text-neutral-500" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <SfScrollable
-        class="items-center w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-      >
-        <template #previousButton="defaultProps">
-          <button
-            v-bind="defaultProps"
-            class="p-1 text-gray-500 hover:text-primary-600 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <SfIconChevronLeft class="text-neutral-500" />
-          </button>
-        </template>
-
-        <template #nextButton="defaultProps">
-          <button
-            v-bind="defaultProps"
-            class="p-1 text-gray-500 hover:text-primary-600 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <SfIconChevronRight class="text-neutral-500" />
-          </button>
-        </template>
-
-        <div class="flex items-center gap-2 flex-nowrap">
-          <button
-            v-for="(_, index) in slides"
-            :key="index"
-            :data-testid="`slide-settings-${index}`"
-            class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
-            :class="activeSlide === index ? 'bg-editor-button text-white' : ''"
-            @click="slideClick(index)"
-          >
-            Slide {{ index + 1 }}
-          </button>
-        </div>
-      </SfScrollable>
-    </div>
-
     <div :data-testid="`slide-settings-${activeSlide}`">
       <UiAccordionItem
         v-model="imagesOpen"
@@ -139,7 +19,7 @@
             <label>
               <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
               <SfInput
-                v-model="slides[activeSlide].content.image.wideScreen"
+                v-model="banner.content.image.wideScreen"
                 name="desktopImage"
                 data-testid="slide-4xl-image-input"
                 type="text"
@@ -154,7 +34,7 @@
             <label>
               <UiFormLabel class="mb-1">Image L (Desktop)</UiFormLabel>
               <SfInput
-                v-model="slides[activeSlide].content.image.desktop"
+                v-model="banner.content.image.desktop"
                 name="desktopImage"
                 data-testid="slide-desktop-image-input"
                 type="text"
@@ -168,7 +48,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Image M (Tablet)</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.image.tablet"
+              v-model="banner.content.image.tablet"
               name="desktopImage"
               type="text"
               placeholder="Enter URL of image"
@@ -180,7 +60,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Image S (Mobile)</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.image.mobile"
+              v-model="banner.content.image.mobile"
               name="desktopImage"
               type="text"
               placeholder="Enter URL of image"
@@ -199,7 +79,7 @@
                   <span>100%</span>
                 </div>
                 <input
-                  v-model.number="slides[activeSlide].content.image.brightness"
+                  v-model.number="banner.content.image.brightness"
                   type="range"
                   min="0"
                   max="1"
@@ -210,7 +90,7 @@
 
               <div class="relative">
                 <input
-                  v-model.number="slides[activeSlide].content.image.brightness"
+                  v-model.number="banner.content.image.brightness"
                   type="number"
                   min="0"
                   max="1"
@@ -224,7 +104,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Alt</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.image.alt"
+              v-model="banner.content.image.alt"
               name="alt"
               type="text"
               data-testid="slide-alt-text"
@@ -248,7 +128,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Pre-title</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.text.pretitle"
+              v-model="banner.content.text.pretitle"
               name="preTitle"
               type="text"
               placeholder="PreTitle"
@@ -258,7 +138,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Main title</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.text.title"
+              v-model="banner.content.text.title"
               name="mainTitle"
               type="text"
               placeholder="Title"
@@ -268,7 +148,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Subtitle</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.text.subtitle"
+              v-model="banner.content.text.subtitle"
               name="subtitle"
               type="text"
               placeholder="SubTitle"
@@ -278,7 +158,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Description</UiFormLabel>
             <SfTextarea
-              v-model="slides[activeSlide].content.text.htmlDescription"
+              v-model="banner.content.text.htmlDescription"
               name="description"
               data-testid="banner-text-content"
               type="text"
@@ -289,16 +169,16 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Text Color</UiFormLabel>
 
-            <SfInput v-model="slides[activeSlide].content.text.color" type="text">
+            <SfInput v-model="banner.content.text.color" type="text">
               <template #suffix>
                 <label
                   for="text-color"
-                  :style="{ backgroundColor: slides[activeSlide].content.text.color }"
+                  :style="{ backgroundColor: banner.content.text.color }"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input
                     id="text-color"
-                    v-model="slides[activeSlide].content.text.color"
+                    v-model="banner.content.text.color"
                     type="color"
                     class="invisible w-8"
                   />
@@ -309,23 +189,23 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
             <SfSwitch
-              v-model="slides[activeSlide].content.text.background"
+              v-model="banner.content.text.background"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
-          <div v-if="slides[activeSlide].content.text.background" class="mb-6">
+          <div v-if="banner.content.text.background" class="mb-6">
             <UiFormLabel class="mb-1">Textbox Color</UiFormLabel>
 
-            <SfInput v-model="slides[activeSlide].content.text.bgcolor" type="text">
+            <SfInput v-model="banner.content.text.bgcolor" type="text">
               <template #suffix>
                 <label
                   for="text-bg-color"
-                  :style="{ backgroundColor: slides[activeSlide].content.text.bgcolor }"
+                  :style="{ backgroundColor: banner.content.text.bgcolor }"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input
                     id="text-bg-color"
-                    v-model="slides[activeSlide].content.text.bgcolor"
+                    v-model="banner.content.text.bgcolor"
                     type="color"
                     class="invisible w-8"
                   />
@@ -333,7 +213,7 @@
               </template>
             </SfInput>
           </div>
-          <div v-if="slides[activeSlide].content.text.background" class="mb-6">
+          <div v-if="banner.content.text.background" class="mb-6">
             <label class="block text-sm font-medium mb-4">Textbox Opacity</label>
             <div class="flex items-center gap-4">
               <div class="flex-1 space-y-1">
@@ -342,7 +222,7 @@
                   <span>100%</span>
                 </div>
                 <input
-                  v-model.number="slides[activeSlide].content.text.bgopacity"
+                  v-model.number="banner.content.text.bgopacity"
                   type="range"
                   min="0"
                   max="1"
@@ -353,7 +233,7 @@
 
               <div class="relative">
                 <input
-                  v-model.number="slides[activeSlide].content.text.bgopacity"
+                  v-model.number="banner.content.text.bgopacity"
                   type="number"
                   min="0"
                   max="1"
@@ -374,14 +254,14 @@
                 for="align-top"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'top',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'top',
                 }"
                 data-testid="slider-textbox-align-top"
-                @click="slides[activeSlide].content.text.justify = 'top'"
+                @click="banner.content.text.justify = 'top'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.justify !== 'top' }"
+                  :class="{ invisible: banner.content.text.justify !== 'top' }"
                 />
                 Top
               </div>
@@ -390,14 +270,14 @@
                 for="align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'center',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'center',
                 }"
                 data-testid="slider-textbox-align-center"
-                @click="slides[activeSlide].content.text.justify = 'center'"
+                @click="banner.content.text.justify = 'center'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.justify !== 'center' }"
+                  :class="{ invisible: banner.content.text.justify !== 'center' }"
                 />
                 Center
               </div>
@@ -406,14 +286,14 @@
                 for="align-bottom"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.justify === 'bottom',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'bottom',
                 }"
                 data-testid="slider-textbox-align-bottom"
-                @click="slides[activeSlide].content.text.justify = 'bottom'"
+                @click="banner.content.text.justify = 'bottom'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.justify !== 'bottom' }"
+                  :class="{ invisible: banner.content.text.justify !== 'bottom' }"
                 />
                 Bottom
               </div>
@@ -430,14 +310,14 @@
                 for="textbox-align-left"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'left',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.align === 'left',
                 }"
                 data-testid="slider-textbox-y-align-left"
-                @click="slides[activeSlide].content.text.align = 'left'"
+                @click="banner.content.text.align = 'left'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.align !== 'left' }"
+                  :class="{ invisible: banner.content.text.align !== 'left' }"
                 />
                 Left
               </div>
@@ -446,14 +326,14 @@
                 for="textbox-align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'center',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.align === 'center',
                 }"
                 data-testid="slider-textbox-y-align-center"
-                @click="slides[activeSlide].content.text.align = 'center'"
+                @click="banner.content.text.align = 'center'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.align !== 'center' }"
+                  :class="{ invisible: banner.content.text.align !== 'center' }"
                 />
                 Center
               </div>
@@ -462,14 +342,14 @@
                 for="textbox-align-right"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.align === 'right',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.align === 'right',
                 }"
                 data-testid="slider-textbox-y-align-right"
-                @click="slides[activeSlide].content.text.align = 'right'"
+                @click="banner.content.text.align = 'right'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.align !== 'right' }"
+                  :class="{ invisible: banner.content.text.align !== 'right' }"
                 />
                 Right
               </div>
@@ -485,14 +365,14 @@
                 for="text-align-left"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.textAlignment === 'left',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'left',
                 }"
                 data-testid="slider-text-align-left"
-                @click="slides[activeSlide].content.text.textAlignment = 'left'"
+                @click="banner.content.text.textAlignment = 'left'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.textAlignment !== 'left' }"
+                  :class="{ invisible: banner.content.text.textAlignment !== 'left' }"
                 />
                 Left
               </div>
@@ -502,14 +382,14 @@
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold':
-                    slides[activeSlide].content.text.textAlignment === 'center',
+                    banner.content.text.textAlignment === 'center',
                 }"
                 data-testid="slider-text-align-center"
-                @click="slides[activeSlide].content.text.textAlignment = 'center'"
+                @click="banner.content.text.textAlignment = 'center'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.textAlignment !== 'center' }"
+                  :class="{ invisible: banner.content.text.textAlignment !== 'center' }"
                 />
                 Center
               </div>
@@ -518,14 +398,14 @@
                 for="text-align-right"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.text.textAlignment === 'right',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'right',
                 }"
                 data-testid="slider-text-align-right"
-                @click="slides[activeSlide].content.text.textAlignment = 'right'"
+                @click="banner.content.text.textAlignment = 'right'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.text.textAlignment !== 'right' }"
+                  :class="{ invisible: banner.content.text.textAlignment !== 'right' }"
                 />
                 Right
               </div>
@@ -548,7 +428,7 @@
             <label>
               <UiFormLabel class="mb-1">Label</UiFormLabel>
               <SfInput
-                v-model="slides[activeSlide].content.button.label"
+                v-model="banner.content.button.label"
                 data-testid="slider-button-label"
                 name="label"
                 type="text"
@@ -559,7 +439,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Link Target</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].content.button.link"
+              v-model="banner.content.button.link"
               name="link"
               data-testid="slider-button-link"
               type="text"
@@ -574,14 +454,14 @@
               <div
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.button.variant === 'primary',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.variant === 'primary',
                 }"
                 data-testid="slider-button-primary"
-                @click="slides[activeSlide].content.button.variant = 'primary'"
+                @click="banner.content.button.variant = 'primary'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.button.variant !== 'primary' }"
+                  :class="{ invisible: banner.content.button.variant !== 'primary' }"
                 />
                 Primary
               </div>
@@ -589,14 +469,14 @@
               <div
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].content.button.variant === 'secondary',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.variant === 'secondary',
                 }"
                 data-testid="slider-button-secondary"
-                @click="slides[activeSlide].content.button.variant = 'secondary'"
+                @click="banner.content.button.variant = 'secondary'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: slides[activeSlide].content.button.variant !== 'secondary' }"
+                  :class="{ invisible: banner.content.button.variant !== 'secondary' }"
                 />
                 Secondary
               </div>
@@ -612,142 +492,35 @@
 import { clamp } from '@storefront-ui/shared';
 import {
   SfTextarea,
-  SfScrollable,
-  SfIconChevronLeft,
-  SfIconChevronRight,
-  SfIconDelete,
   SfInput,
-  SfIconMoreHoriz,
-  SfIconArrowUpward,
-  SfIconArrowDownward,
-  SfIconAdd,
   SfIconCheck,
   SfSwitch,
   useDisclosure,
-  SfIconClose,
 } from '@storefront-ui/vue';
-import type { BannerProps, BannerSlide } from './types';
-import { v4 as uuid } from 'uuid';
+import type { BannerProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
-const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
+const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findBlockByUuid } = useBlockManager();
 
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
-const bannerBlock = computed(() => (findBlockByUuid(data.value, blockUuid.value)?.content || {}) as BannerSlide);
-
-const slides = computed({
-  get: () => {
-    return bannerBlock.value?.content || [];
-  },
-  set: (value) => updateBannerItems(value, blockUuid.value),
-});
+const banner = computed(() => (findBlockByUuid(data.value, blockUuid.value) || {}) as BannerProps);
 
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-
-const slideClick = (index: number) => {
-  setIndex(blockUuid.value, index);
-};
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
 
   if (type === 'image') {
-    slides.value[activeSlide.value].content.image.brightness = clamp(nextValue, 0, 1);
+    banner.value.content.image.brightness = clamp(nextValue, 0, 1);
   }
   if (type === 'text') {
-    slides.value[activeSlide.value].content.text.bgopacity = clamp(nextValue, 0, 1);
-  }
-};
-
-const addSlide = async () => {
-  const newSlide: BannerProps = {
-    name: 'Banner',
-    type: 'content',
-    content: {
-      image: {
-        wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        brightness: 0.5,
-        alt: '',
-      },
-      text: {
-        pretitle: 'PreTitle',
-        title: 'Title',
-        subtitle: 'SubTitle',
-        htmlDescription: 'Text that supports HTML formatting',
-        color: '#000',
-        bgcolor: '#fff',
-        bgopacity: 1,
-        textAlignment: 'left',
-        justify: 'center',
-        align: 'left',
-        background: false,
-      },
-      button: {
-        label: 'Button',
-        link: '/',
-        variant: 'primary',
-      },
-    },
-    meta: {
-      uuid: uuid(),
-    },
-    index: slides.value.length,
-  };
-
-  slides.value = [...slides.value, newSlide];
-
-  await nextTick();
-
-  setIndex(blockUuid.value, slides.value.length - 1);
-  close();
-};
-
-const deleteSlide = async (index: number) => {
-  if (slides.value.length <= 1) return;
-  slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
-  if (activeSlide.value === index) {
-    setIndex(blockUuid.value, index - 1);
-  }
-  close();
-  await nextTick();
-};
-
-const moveSlideUp = async (index: number) => {
-  if (index <= 0) return;
-
-  const newSlides = [...slides.value];
-
-  [newSlides[index - 1], newSlides[index]] = [newSlides[index], newSlides[index - 1]];
-  slides.value = newSlides;
-
-  await nextTick();
-
-  if (activeSlide.value === index) {
-    setIndex(blockUuid.value, index - 1);
-  }
-};
-
-const moveSlideDown = async (index: number) => {
-  if (index >= slides.value.length - 1) return;
-
-  const newSlides = [...slides.value];
-
-  [newSlides[index], newSlides[index + 1]] = [newSlides[index + 1], newSlides[index]];
-  slides.value = newSlides;
-
-  await nextTick();
-
-  if (activeSlide.value === index) {
-    setIndex(blockUuid.value, index + 1);
+    banner.value.content.text.bgopacity = clamp(nextValue, 0, 1);
   }
 };
 </script>

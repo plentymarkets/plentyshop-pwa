@@ -58,8 +58,3 @@ export type BannerProps = {
     uuid: string;
   };
 };
-
-export interface BannerSlide {
-  content: BannerProps[];
-  controls: SlideControls;
-}

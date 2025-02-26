@@ -20,6 +20,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
   const { $i18n } = useNuxtApp();
   const currentLocale = ref($i18n.locale.value);
+  const { isEditingEnabled } = useEditor();
 
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
@@ -86,6 +87,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
       async (newLocale) => {
         currentLocale.value = newLocale;
         await getBlocks('index', 'immutable');
+      },
+  );
+
+  watch(
+      () => state.value.data,
+      async () => {
+        isEditingEnabled.value = true;
       },
   );
 

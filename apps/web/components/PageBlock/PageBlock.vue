@@ -45,7 +45,7 @@
         :block="block"
         @change-position="changeBlockPosition"
       />
-{{block}}
+
       <component :is="getBlockComponent" v-bind="block" :index="index">
         <template v-if="block.type === 'structure'" v-slot:content="{ blo }">
           <PageBlock
@@ -85,7 +85,6 @@ import { SfIconAdd } from '@storefront-ui/vue';
 interface Props {
   index: number;
   block: Block;
-  isPreview: boolean;
   disableActions: boolean;
   isClicked: boolean;
   clickedBlockIndex: number | null;
@@ -140,4 +139,13 @@ const displayBottomPlaceholder = (index: number): boolean => {
     drawerView.value === 'blocksList'
   );
 };
+
+const isPreview = ref(false);
+const config = useRuntimeConfig().public;
+const showConfigurationDrawer = config.showConfigurationDrawer;
+onMounted(() => {
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
+
 </script>

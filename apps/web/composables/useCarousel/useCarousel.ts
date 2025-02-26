@@ -8,17 +8,20 @@ export const useCarousel: UseCarouselReturn = () => {
     activeSlideIndex: {} as ActiveSlideIndex,
   }));
 
+  const { findBlockByUuid } = useBlockManager();
+  const { data } = useCategoryTemplate();
+
 
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
-    const { findBlockByUuid } = useBlockManager();
-    const carouselBlock = findBlockByUuid(state.value.data, blockUuid);
+    const carouselBlock = findBlockByUuid(data.value, blockUuid);
 
     if (carouselBlock) {
-      carouselBlock.content = { ...(carouselBlock.content as BannerProps[]), ...newBannerItems };
+      carouselBlock.content = [ ...newBannerItems  ];
     }
   };
 
   const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
+    console.log('slideIndex: ', blockUuid, slideIndex)
     state.value.activeSlideIndex[blockUuid] = slideIndex;
   };
 

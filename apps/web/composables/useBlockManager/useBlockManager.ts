@@ -27,8 +27,6 @@ export const useBlockManager = () => {
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-  const isPreview = ref(false);
-
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
@@ -63,13 +61,6 @@ export const useBlockManager = () => {
   };
 
   const isLastBlock = (index: number) => index === data.value.length - 1;
-
-  onMounted(() => {
-    const config = useRuntimeConfig().public;
-    const showConfigurationDrawer = config.showConfigurationDrawer;
-    const pwaCookie = useCookie('pwa');
-    isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-  });
 
   const findBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
     blocks: Block[],
@@ -128,7 +119,6 @@ export const useBlockManager = () => {
     isClicked,
     clickedBlockIndex,
     isTablet,
-    isPreview,
     blockHasData,
     tabletEdit,
     handleEdit,

@@ -11,7 +11,7 @@ const updatePageTemplate = async (): Promise<void> => {
   const { saveBlocks, data } = useCategoryTemplate();
 
   try {
-    const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
+    const cleanedData = JSON.stringify(data.value);
     await saveBlocks('index', 'immutable', cleanedData);
   } finally {
     isEditingEnabled.value = false;
