@@ -84,7 +84,7 @@ watchDebounced(
   () => data.value.blocks,
   () => {
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-    console.log('Shit here we go again', isEditingEnabled.value)
+    console.log('Shit here we go again', isEditingEnabled.value);
   },
   { debounce: 100, deep: true },
 );

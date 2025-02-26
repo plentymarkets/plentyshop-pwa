@@ -11,7 +11,7 @@
       size="2xl"
     />
     <template v-if="isEditablePage">
-      <EditablePage/>
+      <EditablePage />
     </template>
     <template v-else>
       <CategoryPageContent
