@@ -1,13 +1,15 @@
-import type { RegisterParams, SessionResult, UserChangePasswordParams, ApiError } from '@plentymarkets/shop-api';
+import type { ApiError, RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import { toTypedSchema } from '@vee-validate/yup';
+import { object, string } from 'yup';
 import type {
+  ChangePassword,
+  GetSession,
+  Login,
+  LoginAsGuest,
+  Logout,
+  Register,
   UseCustomerReturn,
   UseCustomerState,
-  GetSession,
-  LoginAsGuest,
-  Login,
-  Register,
-  Logout,
-  ChangePassword,
 } from '~/composables/useCustomer/types';
 
 /**
@@ -22,11 +24,13 @@ import type {
  */
 export const useCustomer: UseCustomerReturn = () => {
   const { emit } = usePlentyEvent();
+  const { $i18n } = useNuxtApp();
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
     data: {} as SessionResult,
     loading: false,
     isAuthorized: false,
     isGuest: false,
+    validGuestEmail: false,
   }));
 
   /** Function for checking if user is guest or authorized
@@ -38,17 +42,20 @@ export const useCustomer: UseCustomerReturn = () => {
   const checkUserState = () => {
     if (state.value.data?.user?.guestMail) {
       state.value.isGuest = true;
+      state.value.validGuestEmail = true;
       state.value.isAuthorized = false;
       return;
     }
 
     if (state.value.data?.user?.email) {
       state.value.isGuest = false;
+      state.value.validGuestEmail = false;
       state.value.isAuthorized = true;
       return;
     }
 
     state.value.isGuest = false;
+    state.value.validGuestEmail = false;
     state.value.isAuthorized = false;
   };
 
@@ -199,6 +206,30 @@ export const useCustomer: UseCustomerReturn = () => {
     return !error.value;
   };
 
+  const isValidEmailAddress = (email: string): boolean => {
+    const maxEmailLength = 254;
+    const maxLocalPartLength = 64;
+
+    if (email.length > maxEmailLength) return false;
+
+    const emailPattern = /^[a-zA-Z0-9](?:[a-zA-Z0-9.]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const [localPart] = email.split('@');
+
+    if (localPart.length > maxLocalPartLength) return false;
+
+    return emailPattern.test(email);
+  };
+
+  const emailValidationSchema = toTypedSchema(
+    object({
+      customerEmail: string()
+        .required($i18n.t('errorMessages.email.required'))
+        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) => isValidEmailAddress(email))
+        .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
+    }),
+  );
+
   return {
     setUser,
     getSession,
@@ -207,6 +238,7 @@ export const useCustomer: UseCustomerReturn = () => {
     register,
     loginAsGuest,
     changePassword,
+    emailValidationSchema,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };

@@ -1,9 +1,14 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import { scrollToHTMLObject } from '~/utils/scollHelper';
 
+const CONTACT_INFORMATION = '#contact-information';
 const ID_CHECKBOX = '#terms-checkbox';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 const ID_BILLING_ADDRESS = '#billing-address';
+
+const scrollToContactInformation = () => {
+  scrollToHTMLObject(CONTACT_INFORMATION);
+};
 
 const scrollToShippingAddress = () => {
   scrollToHTMLObject(ID_SHIPPING_ADDRESS);
@@ -119,5 +124,6 @@ export const useCheckout = (cacheKey = '') => {
     backToFormEditing,
     validateTerms,
     scrollToShippingAddress,
+    scrollToContactInformation,
   };
 };

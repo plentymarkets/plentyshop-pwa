@@ -56,40 +56,39 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLink, useDisclosure } from '@storefront-ui/vue';
-import { toTypedSchema } from '@vee-validate/yup';
 import { ErrorMessage, useForm } from 'vee-validate';
-import { object, string } from 'yup';
 import type { ContactInformationProps } from './types';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
 
 const { t } = useI18n();
-const { data: sessionData, loginAsGuest, getSession, isAuthorized, isGuest } = useCustomer();
+const {
+  data: sessionData,
+  loginAsGuest,
+  getSession,
+  isAuthorized,
+  isGuest,
+  validGuestEmail,
+  emailValidationSchema,
+} = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
-const guestEmail = ref(sessionData.value?.user?.guestMail ?? '');
 
-const emailSchema = toTypedSchema(
-  object({
-    customerEmail: string()
-      .email(t('errorMessages.email.valid'))
-      .required(t('errorMessages.email.required'))
-      .default(sessionData.value?.user?.email ?? guestEmail.value),
-  }),
-);
-
-const { errors, defineField, validate } = useForm({ validationSchema: emailSchema });
+const { errors, defineField, validate } = useForm({ validationSchema: emailValidationSchema });
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
 
 const validateAndSubmitEmail = async () => {
   const formData = await validate();
-  const updatedEmail = customerEmail.value as string;
-  const shouldSaveEmail = updatedEmail.trim().toLowerCase() !== guestEmail.value.trim().toLowerCase();
 
-  if (formData.valid && shouldSaveEmail) {
-    await saveContactInformation(updatedEmail);
-    guestEmail.value = updatedEmail;
-  }
+  validGuestEmail.value = formData.valid;
+  if (!validGuestEmail.value) return;
+
+  const updatedEmail = customerEmail.value as string;
+  const shouldUpdateEmail =
+    !sessionData.value.user?.guestMail ||
+    updatedEmail.trim().toLowerCase() !== sessionData.value.user.guestMail.trim().toLowerCase();
+
+  if (shouldUpdateEmail) await saveContactInformation(updatedEmail);
 };
 
 const saveContactInformation = async (email: string) => {
