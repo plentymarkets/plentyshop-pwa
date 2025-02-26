@@ -1,19 +1,25 @@
 # Changelog PlentyONE Shop
 
+# v1.xx.x (xxxx-xx-xx)
+
+### 🩹 Fixed
+
+- Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
+
+### 👷 Changed
+
+- Auto-save implemented for email address in the guest checkout flow.
+- Added login option for a guest user in the checkout flow.
+- The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
+
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
 - Added success and error notifications when saving changes in the editor.
 
-### 👷 Changed
-
-- Auto-save implemented for email address in the guest checkout flow.
-- The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
-
 ### 🩹 Fixed
 
-- Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 - Fixed displayed the recommended products on product pages.
 - Fixed the save button not being re-enabled on subsequent edits.
 - Fixed an issue where an empty initial category template couldn't get edited.

@@ -4,7 +4,7 @@
       {{ t('contactInfo.heading') }}
     </h2>
 
-    <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mb-4">
+    <div v-if="guestLoginEnabled && !disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mb-4">
       <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
         {{ t('auth.signup.logInLinkLabel') }}
@@ -73,6 +73,7 @@ const {
 } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
+const guestLoginEnabled = process.env.GUEST_LOGIN_ENABLED ?? false;
 
 const { errors, defineField, validate } = useForm({ validationSchema: emailValidationSchema });
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
