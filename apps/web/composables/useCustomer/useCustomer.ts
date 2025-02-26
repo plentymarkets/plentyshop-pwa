@@ -50,16 +50,9 @@ export const useCustomer: UseCustomerReturn = () => {
       return;
     }
 
-    if (state.value.data?.user?.email) {
-      state.value.isGuest = false;
-      state.value.validGuestEmail = false;
-      state.value.isAuthorized = true;
-      return;
-    }
-
     state.value.isGuest = false;
     state.value.validGuestEmail = false;
-    state.value.isAuthorized = false;
+    state.value.isAuthorized = state.value.data?.user?.email ? true : false;
   };
 
   /** Function for getting current user/cart data from session
