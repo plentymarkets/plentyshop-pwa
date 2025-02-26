@@ -1,6 +1,6 @@
 # Changelog PlentyONE Shop
 
-# v1.xx.x (xxxx-xx-xx) 
+# v1.xx.x (xxxx-xx-xx)
 
 ### 🩹 Fixed
 
