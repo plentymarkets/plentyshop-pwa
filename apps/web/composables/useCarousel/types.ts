@@ -1,5 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type {BannerProps} from "~/components/blocks/BannerCarousel/types";
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 
 export interface ActiveSlideIndex {
   [key: string]: number;
@@ -8,7 +8,7 @@ export interface ActiveSlideIndex {
 export interface UseCarouselState {
   data: Block[];
   loading: boolean;
-  activeSlideIndex: ActiveSlideIndex,
+  activeSlideIndex: ActiveSlideIndex;
 }
 
 export type UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => void;

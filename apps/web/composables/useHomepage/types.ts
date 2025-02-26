@@ -50,8 +50,6 @@ export interface HomepageData {
   meta?: { isDefault: boolean | null };
 }
 
-
-
 export interface UseHomepageDataState {
   data: Block[];
   initialBlocks: Block[];

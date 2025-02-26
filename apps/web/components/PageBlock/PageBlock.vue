@@ -141,7 +141,7 @@ const displayBottomPlaceholder = (uuid: string): boolean => {
 const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
-}
+};
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
@@ -150,5 +150,4 @@ onMounted(() => {
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 });
-
 </script>

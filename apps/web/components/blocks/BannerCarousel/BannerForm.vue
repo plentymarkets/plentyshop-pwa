@@ -103,12 +103,7 @@
 
           <div class="mb-6">
             <UiFormLabel class="mb-1">Alt</UiFormLabel>
-            <SfInput
-              v-model="banner.content.image.alt"
-              name="alt"
-              type="text"
-              data-testid="slide-alt-text"
-            />
+            <SfInput v-model="banner.content.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Alternative image text</div>
           </div>
         </div>
@@ -176,12 +171,7 @@
                   :style="{ backgroundColor: banner.content.text.color }"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
-                  <input
-                    id="text-color"
-                    v-model="banner.content.text.color"
-                    type="color"
-                    class="invisible w-8"
-                  />
+                  <input id="text-color" v-model="banner.content.text.color" type="color" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -203,12 +193,7 @@
                   :style="{ backgroundColor: banner.content.text.bgcolor }"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
-                  <input
-                    id="text-bg-color"
-                    v-model="banner.content.text.bgcolor"
-                    type="color"
-                    class="invisible w-8"
-                  />
+                  <input id="text-bg-color" v-model="banner.content.text.bgcolor" type="color" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -259,10 +244,7 @@
                 data-testid="slider-textbox-align-top"
                 @click="banner.content.text.justify = 'top'"
               >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.justify !== 'top' }"
-                />
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'top' }" />
                 Top
               </div>
 
@@ -275,10 +257,7 @@
                 data-testid="slider-textbox-align-center"
                 @click="banner.content.text.justify = 'center'"
               >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.justify !== 'center' }"
-                />
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'center' }" />
                 Center
               </div>
 
@@ -291,10 +270,7 @@
                 data-testid="slider-textbox-align-bottom"
                 @click="banner.content.text.justify = 'bottom'"
               >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.justify !== 'bottom' }"
-                />
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'bottom' }" />
                 Bottom
               </div>
             </div>
@@ -315,10 +291,7 @@
                 data-testid="slider-textbox-y-align-left"
                 @click="banner.content.text.align = 'left'"
               >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.align !== 'left' }"
-                />
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'left' }" />
                 Left
               </div>
 
@@ -331,10 +304,7 @@
                 data-testid="slider-textbox-y-align-center"
                 @click="banner.content.text.align = 'center'"
               >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.align !== 'center' }"
-                />
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'center' }" />
                 Center
               </div>
 
@@ -347,10 +317,7 @@
                 data-testid="slider-textbox-y-align-right"
                 @click="banner.content.text.align = 'right'"
               >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.align !== 'right' }"
-                />
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'right' }" />
                 Right
               </div>
             </div>
@@ -381,8 +348,7 @@
                 for="text-align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold':
-                    banner.content.text.textAlignment === 'center',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'center',
                 }"
                 data-testid="slider-text-align-center"
                 @click="banner.content.text.textAlignment = 'center'"
@@ -490,13 +456,7 @@
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import {
-  SfTextarea,
-  SfInput,
-  SfIconCheck,
-  SfSwitch,
-  useDisclosure,
-} from '@storefront-ui/vue';
+import { SfTextarea, SfInput, SfIconCheck, SfSwitch, useDisclosure } from '@storefront-ui/vue';
 import type { BannerProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();

@@ -53,7 +53,6 @@ const handleArrows = () => {
   return !viewport.isLessThan('md');
 };
 
-
 const enableModules = computed(() => content.length > 1);
 
 let slider: SwiperType | null = null;

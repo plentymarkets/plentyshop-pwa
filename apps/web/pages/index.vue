@@ -49,7 +49,6 @@ const { data, getBlocks } = useCategoryTemplate();
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
-
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
@@ -75,5 +74,4 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
 
 await getRobots();
 setRobotForStaticPage('Homepage');
-
 </script>

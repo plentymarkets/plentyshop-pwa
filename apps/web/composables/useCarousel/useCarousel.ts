@@ -1,5 +1,5 @@
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
-import {UseCarouselState} from "~/composables/useCarousel/types";
+import { UseCarouselState } from '~/composables/useCarousel/types';
 
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({
@@ -11,12 +11,11 @@ export const useCarousel: UseCarouselReturn = () => {
   const { findBlockByUuid } = useBlockManager();
   const { data } = useCategoryTemplate();
 
-
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findBlockByUuid(data.value, blockUuid);
 
     if (carouselBlock) {
-      carouselBlock.content = [ ...newBannerItems  ];
+      carouselBlock.content = [...newBannerItems];
     }
   };
 

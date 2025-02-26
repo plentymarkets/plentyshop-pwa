@@ -11,7 +11,7 @@ export type ProductRecommendedProductsProps = {
   index?: number;
   meta: {
     uuid: string;
-  }
+  };
 };
 
 export type ProductRecommendedProductsContent = {

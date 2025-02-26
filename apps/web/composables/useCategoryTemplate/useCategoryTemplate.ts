@@ -2,13 +2,14 @@ import type {
   FetchCategoryTemplate,
   UseCategoryTemplateReturn,
   UseCategoryTemplateState,
-  GetBlocks, SaveBlocks,
+  GetBlocks,
+  SaveBlocks,
 } from '~/composables/useCategoryTemplate/types';
-import homepageTemplateDataDe from "~/composables/useHomepage/homepageTemplateDataDe.json";
-import homepageTemplateDataEn from "~/composables/useHomepage/homepageTemplateDataEn.json";
+import homepageTemplateDataDe from '~/composables/useHomepage/homepageTemplateDataDe.json';
+import homepageTemplateDataEn from '~/composables/useHomepage/homepageTemplateDataEn.json';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
-    locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
+  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
@@ -82,11 +83,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   };
 
   watch(
-      () => currentLocale.value,
-      async (newLocale) => {
-        currentLocale.value = newLocale;
-        await getBlocks('index', 'immutable');
-      },
+    () => currentLocale.value,
+    async (newLocale) => {
+      currentLocale.value = newLocale;
+      await getBlocks('index', 'immutable');
+    },
   );
 
   return {

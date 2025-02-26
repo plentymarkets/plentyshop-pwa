@@ -63,7 +63,7 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
-import {deepEqual} from "~/utils/jsonHelper";
+import { deepEqual } from '~/utils/jsonHelper';
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { data, loading, cleanData } = useCategoryTemplate();
@@ -102,10 +102,10 @@ const toggleEdit = () => {
 };
 
 watch(
-    () => data.value,
-    async () => {
-      isEditingEnabled.value = !deepEqual(cleanData.value, data.value)
-    },
-    {deep: true}
+  () => data.value,
+  async () => {
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+  },
+  { deep: true },
 );
 </script>
