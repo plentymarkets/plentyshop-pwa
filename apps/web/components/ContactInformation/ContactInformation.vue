@@ -4,7 +4,10 @@
       {{ t('contactInfo.heading') }}
     </h2>
 
-    <div v-if="guestLoginEnabled && !disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mb-4">
+    <div
+      v-if="guestLoginEnabled && !disabled && (isGuest || (!isAuthorized && !isGuest))"
+      class="w-full flex flex-col sm:flex-row mb-4"
+    >
       <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
         {{ t('auth.signup.logInLinkLabel') }}
