@@ -9,6 +9,9 @@
 ### 👷 Changed
 
 - The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
+
+### 🩹 Fixed
+
 - Fixed displayed the recommended products on product pages.
 - Fixed the save button not being re-enabled on subsequent edits.
 - Fixed an issue where an empty initial category template couldn't get edited.
