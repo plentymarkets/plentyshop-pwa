@@ -64,11 +64,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     state.value.loading = true;
 
-        const { data, error } = await useAsyncData(() =>
+    const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doSaveBlocks({
         identifier: identifier,
         entityType: type,
-          blocks: content,
+        blocks: content,
       }),
     );
     if (error.value) {
