@@ -9,6 +9,8 @@
 ### 🩹 Fixed
 
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
+- Reduced chunck size by moving heavy files to public folder fetching the data instead of importing it
+- Reduced chunk size by removing the lodash library completly and using custom js functions
 
 ### 👷 Changed
 
