@@ -1,20 +1,23 @@
 <template>
-  <aside class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] mb-3 h-screen w-[54px] min-w-[54px]" data-testid="edit-mode-toolbar">
+  <aside
+    class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] mb-3 h-screen w-[54px] min-w-[54px]"
+    data-testid="edit-mode-toolbar"
+  >
     <div class="relative flex flex-col px-1 py-1">
       <button
         type="button"
         class="editor-button relative py-2"
-        :class="{'bg-editor-button text-white rounded-md': drawerView === 'PagesView'}"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
         aria-label="Open pages drawer"
         data-testid="open-pages-drawer"
-        @click="openDrawerWithView( 'PagesView')"
+        @click="openDrawerWithView('PagesView')"
       >
         <SfIconSort />
       </button>
       <button
         type="button"
         class="editor-button relative py-2 flex justify-center"
-        :class="{'bg-editor-button text-white rounded-md': drawerView === 'DesignView'}"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'DesignView' }"
         aria-label="Open design drawer"
         data-testid="open-design-drawer"
         @click="openDrawerWithView('DesignView')"
@@ -25,7 +28,7 @@
       <button
         type="button"
         class="editor-button relative py-2 flex justify-center"
-        :class="{'bg-editor-button text-white rounded-md': drawerView === 'SettingsView'}"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"
         aria-label="Open settings drawer"
         data-testid="open-settings-drawer"
         @click="openDrawerWithView('SettingsView')"
@@ -36,10 +39,10 @@
       <button
         type="button"
         class="editor-button relative py-2"
-        :class="{'bg-editor-button text-white rounded-md': drawerView === 'SeoView'}"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SeoView' }"
         aria-label="Open seo drawer"
         data-testid="open-seo-drawer"
-        @click="openDrawerWithView( 'SeoView')"
+        @click="openDrawerWithView('SeoView')"
       >
         <SfIconSearch />
       </button>
@@ -48,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import {SfIconSort, SfIconSearch} from '@storefront-ui/vue';
+import { SfIconSort, SfIconSearch } from '@storefront-ui/vue';
 
 const { drawerView, openDrawerWithView } = useSiteConfiguration();
 </script>

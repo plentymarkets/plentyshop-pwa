@@ -6,7 +6,7 @@
       'lg:flex-row-reverse': placement !== 'left',
     }"
   >
-    <SettingsToolbar :class="{ 'mr-3': placement === 'left' && !drawerOpen }"/>
+    <SettingsToolbar :class="{ 'mr-3': placement === 'left' && !drawerOpen }" />
 
     <SiteConfigurationDrawer
       v-if="drawerOpen"

@@ -56,11 +56,7 @@ const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const {
-  closeDrawer,
-  settingsIsDirty,
-  loading: settingsLoading,
-} = useSiteConfiguration();
+const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
 const { save } = useToolbar();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
