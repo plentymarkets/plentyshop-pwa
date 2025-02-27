@@ -6,7 +6,13 @@
     <SfIconHome v-if="currentPageIcon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
     <SfIconSell v-else-if="currentPageIcon === 'sell'" class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
-      <button @click="toggleDropdown">{{ currentPageName }}</button>
+      <button
+        :disabled="isEditing || disableActions"
+        :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
+        @click="toggleDropdown"
+      >
+        {{ currentPageName }}
+      </button>
 
       <div class="flex items-center">
         <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
