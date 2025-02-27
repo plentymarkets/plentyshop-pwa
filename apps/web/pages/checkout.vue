@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { keyBy } from 'lodash-es';
+import { keyBy } from '~/utils/keyBy';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import {
   PayPalCreditCardPaymentKey,

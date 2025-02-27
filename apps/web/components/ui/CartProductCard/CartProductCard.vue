@@ -129,7 +129,7 @@ import { productGetters, productBundleGetters, cartGetters } from '@plentymarket
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
-import { debounce } from 'lodash-es';
+import { debounce } from '../../../utils/debounce';
 
 const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
