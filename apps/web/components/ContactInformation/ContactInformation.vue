@@ -5,7 +5,7 @@
     </h2>
 
     <div
-      v-if="guestLoginEnabled && !disabled && (isGuest || (!isAuthorized && !isGuest))"
+      v-if="enableGuestLogin && !disabled && (isGuest || (!isAuthorized && !isGuest))"
       class="w-full flex flex-col sm:flex-row mb-4"
     >
       <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
@@ -76,7 +76,7 @@ const {
 } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
-const guestLoginEnabled = process.env.GUEST_LOGIN_ENABLED ?? false;
+const enableGuestLogin = useRuntimeConfig().public.enableGuestLogin;
 
 const { errors, defineField, validate } = useForm({ validationSchema: emailValidationSchema });
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
