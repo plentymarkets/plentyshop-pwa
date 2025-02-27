@@ -77,8 +77,8 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('block-add-image-with-text-0');
   }
 
-  get siteSettingsButton(){
-    return cy.getByTestId('open-settings-drawer');
+  get designSettingsButton(){
+    return cy.getByTestId('open-design-drawer');
   }
 
   blockIsBanner(el: JQuery<HTMLElement>) {
@@ -100,8 +100,8 @@ export class EditorObject extends PageObject {
     return this;
   }
 
-  toggleSiteSettings() {
-    this.siteSettingsButton.should('be.visible').click();
+  toggleDesignSettings() {
+    this.designSettingsButton.should('be.visible').click();
     return this;
   }
 
