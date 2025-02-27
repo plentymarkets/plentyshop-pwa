@@ -6,7 +6,7 @@
       'lg:flex-row-reverse': placement !== 'left',
     }"
   >
-    <SettingsToolbar :class="{ 'mr-3': placement === 'left' && !drawerOpen }" />
+    <SettingsToolbar v-if="disableActions" :class="{ 'mr-3': placement === 'left' && !drawerOpen }" />
 
     <SiteConfigurationDrawer
       v-if="drawerOpen"
@@ -15,7 +15,10 @@
       :style="`font-family: ${config.font}`"
     />
 
-    <div class="bg-white" :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': !drawerOpen }">
+    <div
+      class="bg-white w-full"
+      :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': !drawerOpen && disableActions }"
+    >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" data-testid="body" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
@@ -40,6 +43,7 @@ const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
+const { disableActions } = useEditor();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
