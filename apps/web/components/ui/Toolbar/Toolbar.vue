@@ -62,7 +62,6 @@
 </template>
 
 <script setup lang="ts">
-import { UiPageSelector } from '#components';
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';

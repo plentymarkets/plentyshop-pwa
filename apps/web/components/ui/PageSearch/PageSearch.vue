@@ -39,7 +39,7 @@
             @click="() => selectValue(page.name)"
             @keydown.enter.space.prevent="selectValue(page.name)"
           >
-            <span>{{ page.name }}<SfIconChevronRight v-if="page.children" class="w-3 h3" /></span>
+            <span>{{ page.name }}<SfIconChevronRight v-if="page.children && page.children.length > 0" class="w-3 h3" /></span>
           </SfListItem>
         </li>
       </ul>
@@ -91,7 +91,6 @@ const currentParent = ref<{ name: string; children?: { name: string; path: strin
 const { getCategoryTree } = useCategoryTree();
 
 const data = await getCategoryTree();
-
 interface Category {
   details: { name: string; nameUrl: string }[];
   children?: Category[];
