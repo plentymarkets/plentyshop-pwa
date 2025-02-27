@@ -37,7 +37,7 @@ describe('AssetDownloader', () => {
     it('should download the favicon if the URL is an icon', () => {
       vi.spyOn(FileTypeValidator, 'isIcon').mockReturnValue(true);
       const url = 'http://example.com/favicon.ico';
-      const expectedPath = path.resolve(__dirname, `../../../public/favicon.ico`);
+      const expectedPath = path.resolve(__dirname, `../../../public/_plenty/favicon.ico`);
 
       assetDownloader.downloadFavicon(url);
 
