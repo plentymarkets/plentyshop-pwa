@@ -523,7 +523,7 @@
     "editor": {
       "save": {
         "success": "Die Änderungen wurden gespeichert.",
-        "editor": "Änderungen am Seiteninhalt werden sofort veröffentlicht.",
+        "editor": "Änderungen am Seiteninhalt werden sofort veröffentlicht, wenn die Homepage-Kategorie mit dem Live-Shop verknüpft ist.",
         "settings": "Um Einstellungen zu veröffentlichen, baue den Shop und schalte die Instanz live.",
         "error": "Die Änderungen konnten nicht gespeichert werden. Falls die aktuelle Sitzung abgelaufen ist, starte eine neue Sitzung. Öffne dazu den Editor erneut."
       }
