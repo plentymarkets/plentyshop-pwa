@@ -35,7 +35,7 @@
         :data-testid="'banner-pretitle-' + props.index"
         v-html="banner.text.pretitle"
       />
-      <template v-if="!rootIndex">
+      <template v-if="!props.rootIndex">
         <h1
           v-if="banner.text.title"
           class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"

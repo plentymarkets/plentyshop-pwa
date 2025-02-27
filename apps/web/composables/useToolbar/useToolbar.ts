@@ -23,7 +23,7 @@ export const useToolbar = () => {
     };
 
     if (!isLocalTemplate.value && isEditingEnabled.value) {
-      await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
+      // await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
     }
 
     if (settingsIsDirty.value) {

@@ -162,6 +162,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastBlock,
     addNewBlock,
+    handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
     findBlockByUuid,
