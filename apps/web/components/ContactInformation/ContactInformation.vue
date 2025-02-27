@@ -18,7 +18,7 @@
       </UiButton>
     </div>
 
-    <div v-if="guestLoginEnabled && isGuest" class="w-full mt-2 flex flex-col sm:flex-row">
+    <div v-if="enableGuestLogin && isGuest" class="w-full mt-2 flex flex-col sm:flex-row">
       <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openLoginModal">
         {{ $t('auth.signup.logInLinkLabel') }}
@@ -47,12 +47,12 @@
         </UiButton>
         <h3
           id="contact-modal-title"
-          :class="{ 'mb-4': !guestLoginEnabled }"
+          :class="{ 'mb-4': !enableGuestLogin }"
           class="text-neutral-900 text-lg md:text-2xl font-bold"
         >
           {{ $t('contactInfo.heading') }}
         </h3>
-        <div v-if="guestLoginEnabled" class="w-full flex flex-col sm:flex-row mb-4">
+        <div v-if="enableGuestLogin" class="w-full flex flex-col sm:flex-row mb-4">
           <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
           <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openLoginModal">
             {{ $t('auth.signup.logInLinkLabel') }}
@@ -99,7 +99,7 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
 const cart = ref({ customerEmail: sessionData.value?.user?.email ?? sessionData.value?.user?.guestMail ?? '' });
 const isMobile = computed(() => viewport.isLessThan('md'));
-const guestLoginEnabled = process.env.GUEST_LOGIN_ENABLED ?? false;
+const enableGuestLogin = useRuntimeConfig().public.enableGuestLogin;
 
 const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
