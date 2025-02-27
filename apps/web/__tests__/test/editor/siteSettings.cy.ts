@@ -19,7 +19,7 @@ describe('SiteSettings', () => {
   it('should change the font', () => {
     editor.isToolbarVisible();
     editor.toggleEditMode();
-    editor.toggleSiteSettings();
+    editor.toggleDesignSettings();
 
     siteSettings
       .checkDrawerVisible()
@@ -28,15 +28,15 @@ describe('SiteSettings', () => {
       .changeFont(font)
       .checkFontPreview(font)
       .checkSaveButtonEnabled()
+      .closeDrawer()
 
-    editor.toggleSiteSettings();
     siteSettings.checkDrawerNotVisible()
   });
 
   it('should change the theme colors', () => {
     editor.isToolbarVisible();
     editor.toggleEditMode();
-    editor.toggleSiteSettings();
+    editor.toggleDesignSettings();
 
     siteSettings
       .checkDrawerVisible()
@@ -45,15 +45,15 @@ describe('SiteSettings', () => {
       .changeColor(primaryColor, secondaryColor)
       .checkColorPreview(primaryColor)
       .checkSaveButtonEnabled()
+      .closeDrawer()
 
-    editor.toggleSiteSettings();
     siteSettings.checkDrawerNotVisible()
   });
 
   it('should change the spacing', () => {
     editor.isToolbarVisible();
     editor.toggleEditMode();
-    editor.toggleSiteSettings();
+    editor.toggleDesignSettings();
 
     siteSettings
       .checkDrawerVisible()
@@ -62,8 +62,8 @@ describe('SiteSettings', () => {
       .changeBlockSpacing(blockSpacing)
       .checkBlockSpacingPreview(blockSpacingMargin)
       .checkSaveButtonEnabled()
+      .closeDrawer()
 
-    editor.toggleSiteSettings();
     siteSettings.checkDrawerNotVisible()
   });
 });
