@@ -1,8 +1,8 @@
-import type {
-  ApiError,
-  RegisterParams,
-  SessionResult,
-  UserChangePasswordParams,
+import {
+  type ApiError,
+  type RegisterParams,
+  type SessionResult,
+  type UserChangePasswordParams,
   userGetters,
 } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
