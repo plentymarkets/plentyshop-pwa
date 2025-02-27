@@ -1,6 +1,6 @@
 <template>
   <div data-testid="text-card" :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]">
-    <TextContent :text="props.content.text" :button="props.content.button" />
+    <TextContent :text="props.content.text" :button="props.content.button" :index="props.index" />
   </div>
 </template>
 

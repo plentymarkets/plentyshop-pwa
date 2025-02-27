@@ -1,4 +1,3 @@
-import { deepEqual } from '~/utils/jsonHelper';
 import { blocksLists } from '~/blocks/blocksLists';
 import { v4 as uuid } from 'uuid';
 
@@ -24,7 +23,6 @@ export const useBlockManager = () => {
   const currentBlockUuid = ref<string | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
-
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
@@ -159,7 +157,6 @@ export const useBlockManager = () => {
     isTablet,
     blockHasData,
     tabletEdit,
-    handleEdit,
     deleteBlock,
     updateBlock,
     changeBlockPosition,

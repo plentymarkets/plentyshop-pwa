@@ -65,12 +65,9 @@ const { openDrawerWithView } = useSiteConfiguration();
 const { handleEdit, deleteBlock, isLastBlock } = useBlockManager();
 
 const triggerEdit = () => {
-  if (useRuntimeConfig().public.experimentalBlockEditForm) {
-    openDrawerWithView('blocksSettings', props.block);
-  } else {
-    handleEdit(props.block.meta.uuid);
-  }
+  openDrawerWithView('blocksSettings', props.block);
 };
+
 const triggerDelete = () => {
   deleteBlock(props.block.meta.uuid);
 };

@@ -136,11 +136,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     );
   });
 
-  const saveSettings: SaveSettings = async () => {
-    if (!settingsIsDirty.value) {
-      return;
-    }
-
+  const saveSettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
 
     const settings = [
@@ -161,8 +157,12 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         value: state.value.secondaryColor,
       },
     ];
+    const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
-    await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+    if (error.value) {
+      state.value.loading = false;
+      return false;
+    }
 
     state.value.initialData = {
       blockSize: state.value.blockSize,
@@ -172,6 +172,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     };
 
     state.value.loading = false;
+    return true;
   };
 
   return {

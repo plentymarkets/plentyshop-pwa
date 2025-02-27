@@ -1,13 +1,7 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <Editor
-      v-if="isEditing && currentBlockUuid !== null"
-      :uuid="currentBlockUuid"
-      :block="currentBlock"
-      @update="updateBlock"
-    />
-    <div v-else class="content">
+    <div class="content">
       <template v-if="data.length" v-for="(block, index) in data" :key="index">
         <PageBlock
           :index="index"

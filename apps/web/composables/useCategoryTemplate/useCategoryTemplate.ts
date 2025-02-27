@@ -64,22 +64,20 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     state.value.loading = true;
 
-    try {
-      const { data } = await useAsyncData(() =>
-        useSdk().plentysystems.doSaveBlocks({
-          identifier: identifier,
-          entityType: type,
+        const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.doSaveBlocks({
+        identifier: identifier,
+        entityType: type,
           blocks: content,
-        }),
-      );
-      state.value.data = data?.value?.data ?? state.value.data;
-
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
-    } catch (error) {
-      throw new Error(error as string);
-    } finally {
-      state.value.loading = false;
+      }),
+    );
+    if (error.value) {
+      throw new Error(error.value.message);
     }
+    state.value.data = data?.value?.data ?? state.value.data;
+
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+    state.value.loading = false;
   };
 
   watch(

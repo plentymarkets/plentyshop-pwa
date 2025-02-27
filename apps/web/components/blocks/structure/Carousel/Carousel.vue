@@ -12,7 +12,7 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
-        <slot name="content" :blo="banner" />
+        <slot name="content" :blo="banner" :root-index="index" />
       </SwiperSlide>
       <div
         v-if="enableModules"

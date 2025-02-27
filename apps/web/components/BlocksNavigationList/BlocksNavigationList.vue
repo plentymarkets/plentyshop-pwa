@@ -17,7 +17,7 @@
             @click="
               addBlock(category.category, variationIndex);
               drawerOpen = false;
-              tempOpenDrawerCondition(variation.template[locale as 'en' | 'de']);
+              openSettingsDrawer(variation.template[locale as 'en' | 'de']);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -40,9 +40,7 @@ const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, visiblePlaceholder.value.uuid, visiblePlaceholder.value.position);
 };
 
-const tempOpenDrawerCondition = (block: Block) => {
-  if (useRuntimeConfig().public.experimentalBlockEditForm) {
-    openDrawerWithView('blocksSettings', block);
-  }
+const openSettingsDrawer = (block: Block) => {
+  openDrawerWithView('blocksSettings', block);
 };
 </script>

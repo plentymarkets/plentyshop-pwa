@@ -35,13 +35,23 @@
         :data-testid="'banner-pretitle-' + props.index"
         v-html="banner.text.pretitle"
       />
-      <h1
-        v-if="banner.text.title"
-        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-        :data-testid="'banner-title-' + props.index"
-        v-html="banner.text.title"
-      />
+      <template v-if="!rootIndex">
+        <h1
+          v-if="banner.text.title"
+          class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+          :data-testid="'banner-title-' + props.index"
+          v-html="banner.text.title"
+        />
+      </template>
 
+      <template v-else>
+        <h2
+          v-if="banner.text.title"
+          class="text-2xl font-semibold mb-4"
+          :data-testid="'banner-title-' + props.index"
+          v-html="banner.text.title"
+        />
+      </template>
       <div
         v-if="banner.text.subtitle"
         class="typography-headline-6 font-bold tracking-widest mb-4"
