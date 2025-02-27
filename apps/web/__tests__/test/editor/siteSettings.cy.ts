@@ -18,7 +18,6 @@ describe('SiteSettings', () => {
 
   it('should change the font', () => {
     editor.isToolbarVisible();
-    editor.toggleEditMode();
     editor.toggleDesignSettings();
 
     siteSettings
@@ -35,7 +34,6 @@ describe('SiteSettings', () => {
 
   it('should change the theme colors', () => {
     editor.isToolbarVisible();
-    editor.toggleEditMode();
     editor.toggleDesignSettings();
 
     siteSettings
@@ -52,7 +50,6 @@ describe('SiteSettings', () => {
 
   it('should change the spacing', () => {
     editor.isToolbarVisible();
-    editor.toggleEditMode();
     editor.toggleDesignSettings();
 
     siteSettings
