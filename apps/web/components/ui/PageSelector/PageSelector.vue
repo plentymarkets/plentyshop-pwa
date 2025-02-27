@@ -3,7 +3,8 @@
     class="relative flex items-center space-x-1 md:space-x-2"
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
-    <SfIconHome class="w-4 h-4 md:w-6 md:h-6" />
+    <SfIconHome v-if="currentPageIcon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
+    <SfIconSell v-else-if="currentPageIcon === 'sell'" class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
       <button @click="toggleDropdown">{{ currentPageName }}</button>
 
@@ -16,16 +17,17 @@
 </template>
 
 <script setup lang="ts">
-import { UiPageSearch } from '#components';
-import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+import { SfIconHome, SfIconExpandMore, SfIconSell } from '@storefront-ui/vue';
 const currentPageName = ref('Homepage');
+const currentPageIcon = ref('home');
 
 const { isEditing, disableActions } = useEditor();
 const isOpen = ref(false);
 
 const toggleDropdown = () => (isOpen.value = !isOpen.value);
 
-const handlePageSelected = (pageName: string) => {
-  currentPageName.value = pageName;
+const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
+  currentPageName.value = name;
+  currentPageIcon.value = icon;
 };
 </script>

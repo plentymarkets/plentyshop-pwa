@@ -39,7 +39,12 @@
             @click="() => selectValue(page.name)"
             @keydown.enter.space.prevent="selectValue(page.name)"
           >
-            <span>{{ page.name }}<SfIconChevronRight v-if="page.children && page.children.length > 0" class="w-3 h3" /></span>
+            <span>
+              <SfIconHome v-if="page.name === 'Homepage'" class="w-4 h-4 mr-2" />
+              <SfIconSell v-else class="w-4 h-4 mr-2" />
+              {{ page.name }}
+              <SfIconChevronRight v-if="page.children && page.children.length > 0" class="w-3 h3" />
+            </span>
           </SfListItem>
         </li>
       </ul>
@@ -81,6 +86,8 @@ import {
   useTrapFocus,
   SfIconChevronLeft,
   SfIconChevronRight,
+  SfIconSell,
+  SfIconHome,
 } from '@storefront-ui/vue';
 const { t } = useI18n();
 const emit = defineEmits(['pageSelected']);
@@ -99,18 +106,21 @@ interface Category {
 }
 const transformData = (
   data: Category[],
+  isRoot = true,
 ): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
   const transformedData = data.map((item: Category) => ({
     name: item.details[0].name,
     path: `/${item.details[0].nameUrl}`,
-    children: item.children ? (transformData(item.children) as { name: string; path: string }[]) : undefined,
+    children: item.children ? transformData(item.children, false) : undefined,
   }));
 
-  transformedData.unshift({
-    name: t('homepage.homepagetitle'),
-    path: '/',
-    children: undefined,
-  });
+  if (isRoot && !transformedData.some((page) => page.name === 'Homepage')) {
+    transformedData.unshift({
+      name: t('homepage.homepagetitle'),
+      path: '/',
+      children: undefined,
+    });
+  }
 
   return transformedData;
 };
@@ -131,10 +141,11 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
 });
 
 const handleClick = (page: { name: string; path?: string; children?: { name: string; path: string }[] }) => {
+  const icon = page.name === 'Homepage' ? 'home' : 'sell';
   if (page.children && page.children.length > 0) {
     currentParent.value = page;
   } else {
-    emit('pageSelected', page.name);
+    emit('pageSelected', { name: page.name, icon });
     navigateTo(page.path);
   }
 };
