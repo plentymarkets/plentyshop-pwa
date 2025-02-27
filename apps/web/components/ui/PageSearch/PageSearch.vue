@@ -82,6 +82,7 @@ import {
   SfIconChevronLeft,
   SfIconChevronRight,
 } from '@storefront-ui/vue';
+const { t } = useI18n();
 const emit = defineEmits(['pageSelected']);
 
 const inputModel = ref('');
@@ -96,15 +97,22 @@ interface Category {
   details: { name: string; nameUrl: string }[];
   children?: Category[];
 }
-
 const transformData = (
   data: Category[],
 ): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
-  return data.map((item: Category) => ({
+  const transformedData = data.map((item: Category) => ({
     name: item.details[0].name,
     path: `/${item.details[0].nameUrl}`,
     children: item.children ? (transformData(item.children) as { name: string; path: string }[]) : undefined,
   }));
+
+  transformedData.unshift({
+    name: t('homepage.homepagetitle'),
+    path: '/',
+    children: undefined,
+  });
+
+  return transformedData;
 };
 
 const pages = ref(transformData(data));
