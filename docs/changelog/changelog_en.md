@@ -2,6 +2,10 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
+### New
+
+- Added site settings toolbar.
+
 ### 🩹 Fixed
 
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.

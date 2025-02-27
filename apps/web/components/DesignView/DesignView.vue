@@ -2,7 +2,7 @@
   <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
-      <button class="!p-0" @click="drawerOpen = false">
+      <button class="!p-0" @click="closeDrawer">
         <SfIconClose />
       </button>
     </header>
@@ -141,7 +141,7 @@ import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue'
 import fonts from '~/fonts/meta.json';
 import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
-const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =
+const { closeDrawer, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =
   useSiteConfiguration();
 
 const fontsOpen = ref(false);
