@@ -5,21 +5,27 @@
   >
     <SfIconHome class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
-      <button @click="toggleDropdown">Homepage</button>
+      <button @click="toggleDropdown">{{ currentPageName }}</button>
 
       <div class="flex items-center">
         <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
       </div>
     </div>
-    <UiPageSearch v-if="isOpen" />
+    <UiPageSearch v-if="isOpen" @page-selected="handlePageSelected" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { UiPageSearch } from '#components';
 import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+const currentPageName = ref('Homepage');
+
 const { isEditing, disableActions } = useEditor();
 const isOpen = ref(false);
 
 const toggleDropdown = () => (isOpen.value = !isOpen.value);
+
+const handlePageSelected = (pageName: string) => {
+  currentPageName.value = pageName;
+};
 </script>

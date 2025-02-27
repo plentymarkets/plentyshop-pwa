@@ -82,6 +82,7 @@ import {
   SfIconChevronLeft,
   SfIconChevronRight,
 } from '@storefront-ui/vue';
+const emit = defineEmits(['pageSelected']);
 
 const inputModel = ref('');
 const inputRef = ref();
@@ -125,6 +126,7 @@ const handleClick = (page: { name: string; path?: string; children?: { name: str
   if (page.children && page.children.length > 0) {
     currentParent.value = page;
   } else {
+    emit('pageSelected', page.name);
     navigateTo(page.path);
   }
 };
