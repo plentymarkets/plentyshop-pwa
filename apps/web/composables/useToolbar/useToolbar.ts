@@ -9,6 +9,7 @@ export const useToolbar = () => {
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
   const route = useRoute();
+  const { isHomepageRoute } = useHomepage();
 
   const save = async () => {
     const messageList: string[] = [];
@@ -48,7 +49,7 @@ export const useToolbar = () => {
   };
 
   const isEditablePage = computed(() => {
-    return dataProduct.value.category?.type === 'content' || route.path === '/';
+    return isHomepageRoute(route.path) || dataProduct.value.category?.type === 'content';
   });
 
   return { save, isEditablePage };
