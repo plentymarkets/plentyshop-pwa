@@ -6,25 +6,15 @@ const stripArrayBrackets = (jsonString: string): string => {
   return jsonString;
 };
 
-const updatePageTemplate = async (): Promise<boolean> => {
-  const { setCategoryTemplate } = useCategoryTemplate();
+const updatePageTemplate = async (): Promise<void> => {
   const { isEditingEnabled } = useEditor();
-  const { initialBlocks } = useHomepage();
-  const runtimeConfig = useRuntimeConfig();
-  const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-  const { data, loading } = useHomepage();
-  loading.value = true;
+  const { saveBlocks, data } = useCategoryTemplate();
+
   try {
-    const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
-    await setCategoryTemplate(homepageCategoryId, cleanedData);
-    return true;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error: unknown) {
-    return false;
+    const cleanedData = JSON.stringify(data.value);
+    await saveBlocks('index', 'immutable', cleanedData);
   } finally {
-    loading.value = false;
     isEditingEnabled.value = false;
-    initialBlocks.value = structuredClone(toRaw(data.value.blocks));
   }
 };
 

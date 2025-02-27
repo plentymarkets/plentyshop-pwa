@@ -1,4 +1,18 @@
+import { ImageTextContent } from '~/components/blocks/Image/types';
+
 export type NewsletterSubscribeProps = {
+  name: string;
+  type: string;
+  content: NewsletterSubscribeContent;
+  configuration?: {
+    controls: {
+      color: string;
+      displayArrows: boolean;
+    };
+  };
+  index?: number;
+};
+export type NewsletterSubscribeContent = {
   index?: number;
   text: {
     bgColor?: string;

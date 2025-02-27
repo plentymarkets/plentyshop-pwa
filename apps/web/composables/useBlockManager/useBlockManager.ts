@@ -1,28 +1,30 @@
 import { blocksLists } from '~/blocks/blocksLists';
+import { v4 as uuid } from 'uuid';
 
 const isEmptyBlock = (block: Block): boolean => {
-  const options = block?.options;
+  const options = block?.content;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom' | null }>({
-  index: null,
-  position: null,
+const visiblePlaceholder = ref<{ uuid: string; position: 'top' | 'bottom' }>({
+  uuid: '',
+  position: 'top',
 });
-const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
-  visiblePlaceholder.value = { index, position };
+const togglePlaceholder = (uuid: string, position: 'top' | 'bottom') => {
+  visiblePlaceholder.value = { uuid, position };
 };
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data } = useHomepage();
+  const { data, cleanData, updateBlocks } = useCategoryTemplate();
+  const { isEditing, isEditingEnabled } = useEditor();
 
+  const currentBlock = ref<Block | null>(null);
+  const currentBlockUuid = ref<string | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
-
-  const isPreview = ref(false);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
@@ -32,17 +34,34 @@ export const useBlockManager = () => {
     return lang === 'de' ? variationTemplate.de : variationTemplate.en;
   };
 
-  const addNewBlock = (category: string, variationIndex: number, position: number) => {
-    const updatedBlocks = [...data.value.blocks];
-    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+  const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: 'top' | 'bottom') => {
+    if (!data.value) return;
 
-    updatedBlocks.splice(position, 0, newBlock);
-    data.value.blocks = updatedBlocks;
-    visiblePlaceholder.value = { index: null, position: null };
+    const copiedData = JSON.parse(JSON.stringify(data.value));
+    const parentInfo = findBlockParent(copiedData, targetUuid);
+
+    if (!parentInfo) {
+      console.error('block not found');
+      return;
+    }
+
+    const { parent, index } = parentInfo;
+    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    newBlock.meta.uuid = uuid();
+
+    setUuid(newBlock.content as Block[]);
+
+    const insertIndex = position === 'top' ? index : index + 1;
+
+    parent.splice(insertIndex, 0, newBlock);
+
+    updateBlocks(copiedData);
+    visiblePlaceholder.value = { uuid: '', position: 'top' };
+    isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
-    const updatedBlocks = [...data.value.blocks];
+    const updatedBlocks = [...data.value];
     const newIndex = index + position;
 
     if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
@@ -50,17 +69,54 @@ export const useBlockManager = () => {
     const blockToChange = updatedBlocks.splice(index, 1)[0];
     updatedBlocks.splice(newIndex, 0, blockToChange);
 
-    data.value.blocks = updatedBlocks;
+    updateBlocks(updatedBlocks);
+
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
-  const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
+  const isLastBlock = (index: number) => index === data.value.length - 1;
 
-  onMounted(() => {
-    const config = useRuntimeConfig().public;
-    const showConfigurationDrawer = config.showConfigurationDrawer;
-    const pwaCookie = useCookie('pwa');
-    isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-  });
+  const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
+    for (const [index, block] of blocks.entries()) {
+      if (block.meta?.uuid === targetUuid) {
+        return { parent: blocks, index };
+      }
+      if (Array.isArray(block.content)) {
+        const result = findBlockParent(block.content, targetUuid);
+        if (result) return result;
+      }
+    }
+    return null;
+  };
+
+  const setUuid = (blocks: Block[]) => {
+    for (const [index, block] of blocks.entries()) {
+      block.meta.uuid = uuid();
+      if (Array.isArray(block.content)) {
+        setUuid(block.content);
+      }
+    }
+  };
+
+  const findBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
+    blocks: Block[],
+    targetUuid: string,
+    deleteBlock = false,
+  ) => {
+    for (const [index, block] of blocks.entries()) {
+      if (block.meta && block.meta.uuid === targetUuid) {
+        if (deleteBlock) {
+          blocks.splice(index, 1);
+        }
+        return block;
+      }
+      if (Array.isArray(block.content)) {
+        const result = findBlockByUuid(block.content, targetUuid, deleteBlock);
+        if (result) return result;
+      }
+    }
+    return null;
+  };
 
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
@@ -69,9 +125,18 @@ export const useBlockManager = () => {
     }
   };
 
-  const deleteBlock = (index: number) => {
-    if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-      data.value.blocks.splice(index, 1);
+  const handleEdit = (uuid: string) => {
+    if (data.value) {
+      currentBlockUuid.value = uuid;
+      currentBlock.value = findBlockByUuid(data.value, uuid);
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+    }
+  };
+
+  const deleteBlock = (uuid: string) => {
+    if (data.value && uuid !== null) {
+      findBlockByUuid(data.value, uuid, true);
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
@@ -79,16 +144,17 @@ export const useBlockManager = () => {
   };
 
   const updateBlock = (index: number, updatedBlock: Block) => {
-    if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-      data.value.blocks[index] = updatedBlock;
+    if (data.value && index !== null && index < data.value.length) {
+      data.value[index] = updatedBlock;
     }
   };
 
   return {
+    currentBlock,
+    currentBlockUuid,
     isClicked,
     clickedBlockIndex,
     isTablet,
-    isPreview,
     blockHasData,
     tabletEdit,
     deleteBlock,
@@ -98,5 +164,6 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
+    findBlockByUuid,
   };
 };
