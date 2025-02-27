@@ -122,7 +122,7 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
 });
 
 const handleClick = (page: { name: string; path?: string; children?: { name: string; path: string }[] }) => {
-  if (page.children) {
+  if (page.children && page.children.length > 0) {
     currentParent.value = page;
   } else {
     navigateTo(page.path);
