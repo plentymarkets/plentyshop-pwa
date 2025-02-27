@@ -31,9 +31,9 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/_plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/_plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/_plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
+    '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
@@ -51,7 +51,7 @@ export default defineNuxtConfig({
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
-      headerLogo: process.env.LOGO || '/_plenty/images/logo.svg',
+      headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
@@ -91,7 +91,7 @@ export default defineNuxtConfig({
       weights: [300, 400, 500, 700],
     },
     assets: {
-      prefix: '/_plenty/fonts/',
+      prefix: '/_nuxt-plenty/fonts/',
     },
   },
   image: {
@@ -181,7 +181,7 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     workbox: {
       navigateFallback: null,
-      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_plenty/icons/*'],
+      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
       globIgnores: ['manifest**.webmanifest'],
       additionalManifestEntries: [
         {

@@ -17,7 +17,7 @@
               ref="img"
               :src="
                 addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
-                '/_plenty/images/placeholder.png'
+                '/_nuxt-plenty/images/placeholder.png'
               "
               class="h-auto border rounded-md border-neutral-200"
               width="300"

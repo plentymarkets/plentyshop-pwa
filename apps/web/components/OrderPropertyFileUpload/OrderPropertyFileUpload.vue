@@ -34,7 +34,7 @@
             @click="openUploadModal"
           >
             <NuxtImg
-              src="/_plenty/images/file-upload.svg"
+              src="/_nuxt-plenty/images/file-upload.svg"
               :alt="t('orderProperties.upload.uploadFile')"
               loading="lazy"
             />
