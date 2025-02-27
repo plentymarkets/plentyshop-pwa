@@ -1,6 +1,13 @@
 <template>
   <SfTooltip :label="tooltipLabel">
-    <UiButton :disabled="disabled" variant="secondary" @click="handleAddressButtonTrigger">{{ buttonLabel }}</UiButton>
+    <UiButton
+      :disabled="disabled"
+      variant="secondary"
+      :data-testid="'address-select-' + type"
+      @click="handleAddressButtonTrigger"
+    >
+      {{ buttonLabel }}
+    </UiButton>
   </SfTooltip>
 
   <UiModal
@@ -46,10 +53,10 @@
 </template>
 
 <script setup lang="ts">
-import type { AddressSelectProps } from './types';
-import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import type { Address } from '@plentymarkets/shop-api';
-import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
+import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, SfTooltip, useDisclosure } from '@storefront-ui/vue';
+import type { AddressSelectProps } from './types';
 
 const { disabled = false, type } = defineProps<AddressSelectProps>();
 
