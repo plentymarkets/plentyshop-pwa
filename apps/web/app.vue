@@ -1,5 +1,5 @@
 <template>
-  <UiToolbar v-if="isPreview && isEditablePage" :style="`font-family: ${config.font}`" />
+  <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
   <div
     class="w-100 relative"
     :class="{
@@ -38,7 +38,6 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
-const { isEditablePage } = useToolbar();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;

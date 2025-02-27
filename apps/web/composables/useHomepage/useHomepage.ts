@@ -24,17 +24,25 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   const { fetchCategoryTemplate } = useCategoryTemplate();
   const { fetchHomepageTemplate } = useFetchHome();
+  const route = useRoute();
+  const { data: dataProducts } = useProducts();
+
+  const shouldUseLocaleSpecificTemplate = (data: HomepageData) =>
+    (!data.blocks || data.blocks.length === 0) && data.meta?.isDefault === null;
+
+  const loadCategoryTemplate = async (categoryId: number) => {
+    await fetchCategoryTemplate(categoryId);
+    const template = fetchHomepageTemplate();
+    return shouldUseLocaleSpecificTemplate(template)
+      ? useLocaleSpecificHomepageTemplate(currentLocale.value)
+      : template;
+  };
 
   const initializeHomepageTemplate = async () => {
-    if (typeof homepageCategoryId === 'number') {
-      await fetchCategoryTemplate(homepageCategoryId);
-      state.value.data = fetchHomepageTemplate();
-      if (
-        (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
-        state.value.data.meta?.isDefault === null
-      ) {
-        state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
-      }
+    if (isHomepageRoute(route.path) && typeof homepageCategoryId === 'number') {
+      state.value.data = await loadCategoryTemplate(homepageCategoryId);
+    } else if (dataProducts.value.category.type === 'content') {
+      state.value.data = await loadCategoryTemplate(dataProducts.value.category.id);
     } else {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
@@ -45,11 +53,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
 
-    // TODO: Remove this part here so we enable the save button for every EditablePage
-    const route = useRoute();
-    if (route.path === '/') {
-      await initializeHomepageTemplate();
-    }
+    await initializeHomepageTemplate();
+
     state.value.dataIsEmpty = !state.value.data.blocks || state.value.data.blocks.length === 0;
 
     state.value.loading = false;
@@ -86,10 +91,13 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.activeSlideIndex[blockIndex] = slideIndex;
   };
 
+  const isHomepageRoute = (path: string) => /^\/([a-z]{2})?$/.test(path);
+
   return {
     fetchPageTemplate,
     updateBannerItems,
     setIndex,
+    isHomepageRoute,
     ...toRefs(state.value),
   };
 };

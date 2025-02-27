@@ -9,14 +9,17 @@ const stripArrayBrackets = (jsonString: string): string => {
 const updatePageTemplate = async (): Promise<boolean> => {
   const { setCategoryTemplate } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
-  const { initialBlocks } = useHomepage();
+  const { initialBlocks, isHomepageRoute } = useHomepage();
   const runtimeConfig = useRuntimeConfig();
   const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
   const { data, loading } = useHomepage();
+  const { data: dataProducts } = useProducts();
+  const route = useRoute();
+  const categoryId = isHomepageRoute(route.path) ? homepageCategoryId : dataProducts.value.category.id;
   loading.value = true;
   try {
     const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
-    await setCategoryTemplate(homepageCategoryId, cleanedData);
+    await setCategoryTemplate(categoryId, cleanedData);
     return true;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: unknown) {
