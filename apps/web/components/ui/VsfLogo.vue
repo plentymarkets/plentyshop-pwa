@@ -30,7 +30,7 @@
 const runtimeConfig = useRuntimeConfig();
 const storeName = runtimeConfig.public.storeName;
 const imageExtension = runtimeConfig.public.headerLogo.split('.').pop();
-const imagePath = '/images/logo.' + imageExtension;
+const imagePath = '/_plenty/images/logo.' + imageExtension;
 const logo = ref<HTMLImageElement | null>(null);
 const imgWidth = ref<string>('');
 const imgHeight = ref<string>('');
