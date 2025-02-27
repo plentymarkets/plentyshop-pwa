@@ -3,7 +3,6 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
-import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -32,9 +31,9 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/images/**': { headers: { 'cache-control': `max-age=604800` } },
+    '/_plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
@@ -52,7 +51,7 @@ export default defineNuxtConfig({
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
-      headerLogo: process.env.LOGO || '/images/logo.svg',
+      headerLogo: process.env.LOGO || '/_plenty/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
@@ -69,9 +68,9 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-module-gtag',
     '@plentymarkets/shop-core',
     '@nuxt/eslint',
+    '@nuxt/fonts',
     '@nuxt/image',
     '@nuxt/test-utils/module',
-    '@nuxtjs/google-fonts',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
@@ -87,6 +86,14 @@ export default defineNuxtConfig({
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
     },
   },
+  fonts: {
+    defaults: {
+      weights: [300, 400, 500, 700],
+    },
+    assets: {
+      prefix: '/_plenty/fonts/',
+    },
+  },
   image: {
     screens: {
       '4xl': 1920,
@@ -100,7 +107,6 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  googleFonts: fontFamilyNuxtConfig,
   i18n: nuxtI18nOptions,
   sitemap: {
     autoLastmod: true,
@@ -175,7 +181,7 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     workbox: {
       navigateFallback: null,
-      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', 'icons/*'],
+      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_plenty/icons/*'],
       globIgnores: ['manifest**.webmanifest'],
       additionalManifestEntries: [
         {

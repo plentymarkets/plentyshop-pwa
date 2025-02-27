@@ -13,7 +13,8 @@
         <NuxtImg
           ref="img"
           :src="
-            addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
+            addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
+            '/_plenty/images/placeholder.png'
           "
           :alt="orderGetters.getItemName(orderItem)"
           class="h-auto border rounded-md border-neutral-200"

@@ -61,7 +61,7 @@ const filteredOffer = computed(() => {
 });
 
 const getImageSource = (variationId: string) => {
-  return props.offer.itemImages[variationId] || '/images/placeholder.png';
+  return props.offer.itemImages[variationId] || '/_plenty/images/placeholder.png';
 };
 
 const formatPrice = (price: number) => {

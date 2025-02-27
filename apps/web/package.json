@@ -25,6 +25,7 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
+    "@nuxt/fonts": "^0.10.3",
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@vue-storefront/sdk": "^1.5.0",
     "@vueuse/core": "^10.11.0",
@@ -37,7 +38,6 @@
     "@nuxt/eslint": "^0.7.2",
     "@nuxt/image": "^1.7.0",
     "@nuxt/test-utils": "^3.15.4",
-    "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/i18n": "9.1.5",
     "@nuxtjs/sitemap": "^5.2.2",
     "@nuxtjs/tailwindcss": "^6.12.0",

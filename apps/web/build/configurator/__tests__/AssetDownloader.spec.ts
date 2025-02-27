@@ -60,7 +60,7 @@ describe('AssetDownloader', () => {
     it('should download the logo if the URL is an image', () => {
       vi.spyOn(FileTypeValidator, 'isImage').mockReturnValue(true);
       const url = 'http://example.com/logo.png';
-      const expectedPath = path.resolve(__dirname, `../../../public/images/logo.png`);
+      const expectedPath = path.resolve(__dirname, `../../../public/_plenty/images/logo.png`);
 
       assetDownloader.downloadLogo(url);
 

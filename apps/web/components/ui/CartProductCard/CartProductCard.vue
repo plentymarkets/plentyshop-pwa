@@ -4,7 +4,7 @@
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
           ref="img"
-          :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
+          :src="addModernImageExtension(cartItemImage) || '/_plenty/images/placeholder.png'"
           :alt="cartGetters.getItemName(cartItem)"
           width="300"
           height="300"

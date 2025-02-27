@@ -33,7 +33,11 @@
             variant="tertiary"
             @click="openUploadModal"
           >
-            <NuxtImg src="/images/file-upload.svg" :alt="t('orderProperties.upload.uploadFile')" loading="lazy" />
+            <NuxtImg
+              src="/_plenty/images/file-upload.svg"
+              :alt="t('orderProperties.upload.uploadFile')"
+              loading="lazy"
+            />
             <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload" scope="global">
               <template #uploadFile>
                 <div class="underline">
