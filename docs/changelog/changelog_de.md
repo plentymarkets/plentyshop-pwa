@@ -1,5 +1,20 @@
 # Changelog PlentyONE Shop
 
+# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+Gerne, hier ist die Übersetzung der Aufzählungspunkte ins Deutsche:
+
+### 👷 Geändert
+
+* Die Schaltflächen zum Speichern der Adresse wurden an das Ende des Formulars verschoben, um die Benutzerfreundlichkeit zu verbessern.
+* Die Chunk-Größe wurde reduziert, indem große Dateien in den Ordner `public` verschoben und die Daten jetzt abgerufen statt importiert werden.
+* Die Chunk-Größe wurde reduziert, indem die Lodash-Bibliothek vollständig entfernt und benutzerdefinierte JS-Funktionen verwendet wurden.
+
+### 🩹 Behoben
+
+* Ein Problem wurde behoben, bei dem das Löschen der Checkout-Adresse als Gast einen unbekannten Fehler auslöste.
+* Es wurde behoben, dass Website-Einstellungen beim erneuten Bauen nicht beibehalten wurden.
+
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu
