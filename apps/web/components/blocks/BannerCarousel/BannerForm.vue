@@ -457,7 +457,7 @@
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch, useDisclosure } from '@storefront-ui/vue';
-import type { BannerProps } from './types';
+import { BannerFormProps, BannerProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
@@ -465,8 +465,10 @@ const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findBlockByUuid } = useBlockManager();
 
-const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
-const banner = computed(() => (findBlockByUuid(data.value, blockUuid.value) || {}) as BannerProps);
+const props = defineProps<BannerFormProps>();
+
+const activeSlide = computed(() => activeSlideIndex.value[props.uuid || blockUuid.value]);
+const banner = computed(() => (findBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as BannerProps);
 
 const imagesOpen = ref(true);
 const textOpen = ref(true);

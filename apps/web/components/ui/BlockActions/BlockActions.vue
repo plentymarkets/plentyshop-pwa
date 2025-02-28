@@ -62,7 +62,7 @@ const props = defineProps<{ index: number; block: Block }>();
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 
 const { openDrawerWithView } = useSiteConfiguration();
-const { handleEdit, deleteBlock, isLastBlock } = useBlockManager();
+const { deleteBlock, isLastBlock } = useBlockManager();
 
 const triggerEdit = () => {
   openDrawerWithView('blocksSettings', props.block);

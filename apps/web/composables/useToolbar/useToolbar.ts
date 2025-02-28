@@ -3,8 +3,6 @@ export const useToolbar = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const homepageCategoryId = useRuntimeConfig().public.homepageCategoryId;
-  const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
   const { updatePageTemplate } = useUpdatePageTemplate();
 
@@ -22,8 +20,8 @@ export const useToolbar = () => {
       }
     };
 
-    if (!isLocalTemplate.value && isEditingEnabled.value) {
-      // await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
+    if (isEditingEnabled.value) {
+      await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
     }
 
     if (settingsIsDirty.value) {

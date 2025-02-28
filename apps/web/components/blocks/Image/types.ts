@@ -9,6 +9,9 @@ export type ImageTextProps = {
     };
   };
   index?: number;
+  meta: {
+    uuid: string;
+  };
 };
 
 export type ImageTextContent = {
@@ -29,4 +32,8 @@ export interface ImageDimensions {
 export interface ImageDimensions {
   width: number;
   height: number;
+}
+
+export interface ImageFormProps {
+  uuid?: string;
 }

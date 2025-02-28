@@ -141,7 +141,8 @@
           "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "alt": "Headphones"
+          "alt": "Headphones",
+          "imageAlignment": "left"
         }
       }
     ]

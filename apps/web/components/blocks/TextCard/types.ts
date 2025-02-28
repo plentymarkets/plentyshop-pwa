@@ -9,6 +9,9 @@ export type TextCardProps = {
     };
   };
   index?: number;
+  meta: {
+    uuid: string;
+  };
 };
 
 export type TextCardContent = {
@@ -25,4 +28,8 @@ export type TextCardContent = {
     link?: string;
     variant?: 'primary' | 'secondary';
   };
+};
+
+export type TextCardFormProps = {
+  uuid?: string;
 };

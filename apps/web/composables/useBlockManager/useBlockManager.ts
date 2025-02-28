@@ -36,6 +36,14 @@ export const useBlockManager = () => {
 
   const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: 'top' | 'bottom') => {
     if (!data.value) return;
+    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    newBlock.meta.uuid = uuid();
+
+    if (data.value.length === 0) {
+      updateBlocks([newBlock]);
+
+      return;
+    }
 
     const copiedData = JSON.parse(JSON.stringify(data.value));
     const parentInfo = findBlockParent(copiedData, targetUuid);
@@ -46,8 +54,7 @@ export const useBlockManager = () => {
     }
 
     const { parent, index } = parentInfo;
-    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
-    newBlock.meta.uuid = uuid();
+
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);

@@ -124,7 +124,6 @@
     </div>
 
     <div :data-testid="`slide-settings-${activeSlide}`">
-      <BlocksBannerCarouselBannerForm :uuid="slides[activeSlide].meta.uuid" />
       <UiAccordionItem
         v-model="controlsOpen"
         summary-active-class="bg-neutral-100"

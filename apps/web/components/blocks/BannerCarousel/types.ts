@@ -59,3 +59,7 @@ export type BannerProps = {
     uuid: string;
   };
 };
+
+export type BannerFormProps = {
+  uuid?: string;
+};

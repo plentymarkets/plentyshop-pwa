@@ -72,22 +72,11 @@ const {
   openDrawerWithView,
   closeDrawer,
   settingsIsDirty,
-  saveSettings,
   loading: settingsLoading,
 } = useSiteConfiguration();
-const { updatePageTemplate } = useUpdatePageTemplate();
+const { save } = useToolbar();
 
 const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
-
-const save = () => {
-  if (isEditingEnabled.value) {
-    updatePageTemplate();
-  }
-
-  if (settingsIsDirty.value) {
-    saveSettings();
-  }
-};
 
 const toggleSettingsDrawer = () => {
   drawerView.value === 'settings' ? closeDrawer() : openDrawerWithView('settings');

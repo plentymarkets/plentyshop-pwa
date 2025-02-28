@@ -5,23 +5,23 @@
       :class="[
         'relative group',
         {
-          'mb-s': blockSize === 's',
-          'mb-m': blockSize === 'm',
-          'mb-l': blockSize === 'l',
-          'mb-xl': blockSize === 'xl',
+          'mb-s': blockSize === 's' && root,
+          'mb-m': blockSize === 'm' && root,
+          'mb-l': blockSize === 'l' && root,
+          'mb-xl': blockSize === 'xl' && root,
         },
 
         {
           'outline outline-4 outline-[#538AEA]':
             isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
         },
-        { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
+        { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet && root },
       ]"
       data-testid="block-wrapper"
       @click="tabletEdit(index)"
     >
       <button
-        v-if="disableActions && isPreview"
+        v-if="disableActions && isPreview && root"
         class="z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
         data-testid="top-add-block"
@@ -31,15 +31,16 @@
         <SfIconAdd class="cursor-pointer" />
       </button>
       <UiBlockActions
+        v-if="root"
         :class="[
           'opacity-0',
           {
             'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
             'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
           },
-          {
-            'max-w-max max-h-max bottom-0 left-0 m-auto': block.type === 'content',
-          },
+          // {
+          //   'max-w-max max-h-max bottom-0 left-0 m-auto': block.type === 'content',
+          // },
         ]"
         :index="index"
         :block="block"
@@ -51,6 +52,7 @@
           <PageBlock
             :index="index"
             :block="blo"
+            :root="false"
             :is-preview="isPreview"
             :disable-actions="disableActions"
             :is-clicked="isClicked"
@@ -64,7 +66,7 @@
       </component>
 
       <button
-        v-if="disableActions && isPreview"
+        v-if="disableActions && isPreview && root"
         class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
         data-testid="bottom-add-block"
@@ -85,6 +87,7 @@ interface Props {
   index: number;
   block: Block;
   disableActions: boolean;
+  root: boolean;
   isClicked: boolean;
   clickedBlockIndex: number | null;
   isTablet: boolean;
