@@ -30,9 +30,9 @@
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
-import type { Category } from './types';
+import { BlocksList } from './types';
 
-const blocksLists = ref<Category[]>([]);
+const blocksLists = ref<BlocksList>({});
 
 const getBlocksLists = async () => {
   try {

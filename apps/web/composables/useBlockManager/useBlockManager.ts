@@ -68,7 +68,6 @@ export const useBlockManager = () => {
 
     const { parent, index } = parentInfo;
 
-
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }
