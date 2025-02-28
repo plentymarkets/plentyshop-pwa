@@ -177,6 +177,7 @@ export const useBlockManager = () => {
     isClicked,
     clickedBlockIndex,
     isTablet,
+    getBlocksLists,
     blockHasData,
     tabletEdit,
     deleteBlock,
