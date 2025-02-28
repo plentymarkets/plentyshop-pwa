@@ -8,11 +8,10 @@
 - Reduced chunck size by moving heavy files to public folder fetching the data instead of importing it
 - Reduced chunk size by removing the lodash library completly and using custom js functions
 - Fixed discrepancies between languages in default homepage template.
+- Fixed site settings not persisting on rebuild.
 
 ### 👷 Changed
 
-- Auto-save implemented for email address in the guest checkout flow.
-- Added login option for a guest user in the checkout flow.
 - The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
 
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
