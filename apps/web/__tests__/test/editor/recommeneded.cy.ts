@@ -9,7 +9,7 @@ describe('Recommended Block Form', () => {
         cy.getByTestId('recommended-block')
             .closest('[data-testid="block-wrapper"]')
             .find('[data-testid="open-editor-button"]')
-            .first()
+            .last()
             .click();
     }
 
@@ -20,7 +20,7 @@ describe('Recommended Block Form', () => {
     const checkIfRecommendedBlockHasText = (field: string, text: string) => {
         cy.getByTestId('recommended-block')
             .find(`[data-testid="text-${field}"]`)
-            .first()
+            .last()
             .should('have.text', text);
     };
 
@@ -39,7 +39,10 @@ describe('Recommended Block Form', () => {
     }
 
     const checkStyleOnRecommendedBlock = () => {
-        cy.getByTestId('recommended-block').should('have.css', 'color', 'rgb(0, 255, 0)');
+        cy.getByTestId('recommended-block')
+            .find(`[data-testid="text-title"]`)
+            .last()
+            .should('have.css', 'color', 'rgb(0, 255, 0)');
     }
 
     beforeEach(() => {
@@ -87,7 +90,7 @@ describe('Recommended Block Form', () => {
         cy.intercept('/plentysystems/getFacet').as('getFacet')
         typeInRecommendedForm('categoryid', categoryId);
         cy.wait('@getFacet');
-        cy.getByTestId('product-slider').first().should('exist').within(() => {
+        cy.getByTestId('product-slider').last().should('exist').within(() => {
             cy.get('[data-testid="productcard-name"]').first().invoke('text').then((text) => {
                 expect(text.trim()).to.equal(firstProductTitle);
             });
