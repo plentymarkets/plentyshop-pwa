@@ -49,7 +49,9 @@ export const useBlockManager = () => {
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    setUuid(newBlock.content as Block[]);
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
 
     const insertIndex = position === 'top' ? index : index + 1;
 
@@ -81,7 +83,7 @@ export const useBlockManager = () => {
       if (block.meta?.uuid === targetUuid) {
         return { parent: blocks, index };
       }
-      if (Array.isArray(block.content)) {
+      if (Array.isArray(block.content) && block.content.length) {
         const result = findBlockParent(block.content, targetUuid);
         if (result) return result;
       }
