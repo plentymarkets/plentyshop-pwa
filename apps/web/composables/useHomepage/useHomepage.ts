@@ -24,19 +24,27 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   const { fetchCategoryTemplate } = useCategoryTemplate();
   const { fetchHomepageTemplate } = useFetchHome();
+  const route = useRoute();
+  const { data: dataProducts } = useProducts();
+
+  const shouldUseLocaleSpecificTemplate = (data: HomepageData) =>
+    (!data.blocks || data.blocks.length === 0) && data.meta?.isDefault === null;
+
+  const loadCategoryTemplate = async (categoryId: number) => {
+    await fetchCategoryTemplate(categoryId);
+    const template = fetchHomepageTemplate();
+    return shouldUseLocaleSpecificTemplate(template)
+      ? useLocaleSpecificHomepageTemplate(currentLocale.value)
+      : template;
+  };
 
   const initializeHomepageTemplate = async () => {
-    if (typeof homepageCategoryId === 'number') {
-      await fetchCategoryTemplate(homepageCategoryId);
-      state.value.data = fetchHomepageTemplate();
-      if (
-        (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
-        state.value.data.meta?.isDefault === null
-      ) {
-        state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
-      }
-    } else {
+    if (isHomepageRoute(route.path) && typeof homepageCategoryId === 'number') {
+      state.value.data = await loadCategoryTemplate(homepageCategoryId);
+    } else if (isHomepageRoute(route.path) && typeof homepageCategoryId !== 'number') {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
+    } else if (dataProducts.value.category.type === 'content') {
+      state.value.data = await loadCategoryTemplate(dataProducts.value.category.id);
     }
 
     state.value.initialBlocks = structuredClone(toRaw(state.value.data.blocks));
@@ -46,6 +54,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.loading = true;
 
     await initializeHomepageTemplate();
+
     state.value.dataIsEmpty = !state.value.data.blocks || state.value.data.blocks.length === 0;
 
     state.value.loading = false;
@@ -82,10 +91,13 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.activeSlideIndex[blockIndex] = slideIndex;
   };
 
+  const isHomepageRoute = (path: string) => /^\/([a-z]{2})?$/.test(path);
+
   return {
     fetchPageTemplate,
     updateBannerItems,
     setIndex,
+    isHomepageRoute,
     ...toRefs(state.value),
   };
 };
