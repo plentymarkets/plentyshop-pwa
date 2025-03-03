@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center space-x-1 md:space-x-2"
+    class="flex items-center space-x-1 md:space-x-2 "
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
     <SfIconLanguage class="w-4 h-4 md:w-6 md:h-6" />
@@ -9,7 +9,7 @@
         v-model="currentLocale"
         class="form-select focus:outline-none focus:ring-0 focus:border-transparent text-sm md:text-base appearance-none"
         :disabled="isEditing || disableActions"
-        :class="{ 'cursor-not-allowed': isEditing || disableActions }"
+        :class="{ 'cursor-not-allowed': isEditing || disableActions, 'cursor-pointer': !isEditing && !disableActions }"
         data-testid="editor-language-select"
         @change="switchLanguage(currentLocale)"
       >
