@@ -47,5 +47,6 @@ const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
   useCookie(foundCookies[index]).value = null;
   bannerIsHidden.value = true;
   foundCookies.splice(index, 1);
+  window.location.reload();
 };
 </script>
