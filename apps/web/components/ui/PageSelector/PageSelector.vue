@@ -3,8 +3,8 @@
     class="relative flex items-center space-x-1 md:space-x-2"
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
-    <SfIconHome v-if="currentPageIcon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
-    <SfIconSell v-else-if="currentPageIcon === 'sell'" class="w-4 h-4 md:w-6 md:h-6" />
+    <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
+    <SfIconSell v-else class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
       <button
         :disabled="isEditing || disableActions"
