@@ -57,7 +57,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  data.value.blocks = []; // Reset the saved blocks
   initialBlocks.value = []; // Reset the initial blocks
   closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);

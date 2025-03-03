@@ -41,10 +41,10 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const initializeHomepageTemplate = async () => {
     if (isHomepageRoute(route.path) && typeof homepageCategoryId === 'number') {
       state.value.data = await loadCategoryTemplate(homepageCategoryId);
+    } else if (isHomepageRoute(route.path) && typeof homepageCategoryId !== 'number') {
+      state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     } else if (dataProducts.value.category.type === 'content') {
       state.value.data = await loadCategoryTemplate(dataProducts.value.category.id);
-    } else {
-      state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
     state.value.initialBlocks = structuredClone(toRaw(state.value.data.blocks));
