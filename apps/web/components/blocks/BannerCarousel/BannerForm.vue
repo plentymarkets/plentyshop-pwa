@@ -456,7 +456,7 @@
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfTextarea, SfInput, SfIconCheck, SfSwitch, useDisclosure } from '@storefront-ui/vue';
+import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
 
 const { blockUuid } = useSiteConfiguration();
