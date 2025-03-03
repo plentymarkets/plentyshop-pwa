@@ -9,12 +9,6 @@ export const usePageMeta = () => {
   watch(
     () => route.path,
     (newPath) => {
-      if (newPath === '/de') {
-        pageMeta.value.name = 'Starseite';
-        pageMeta.value.icon = 'home';
-        return;
-      }
-
       let rawName = newPath.split('/').pop() || t('homepage.homepagetitle');
 
       const match = rawName.match(/[_-](\d+)$/);
@@ -26,7 +20,18 @@ export const usePageMeta = () => {
 
       switch (newPath) {
         case '/':
+          pageMeta.value.name = 'Homepage';
           pageMeta.value.icon = 'home';
+          break;
+        case '/de':
+          pageMeta.value.name = 'Startseite';
+          pageMeta.value.icon = 'home';
+          break;
+        case '/de/shipping':
+          pageMeta.value.name = 'Versand';
+          break;
+        case '/de/checkout':
+          pageMeta.value.name = 'Kasse';
           break;
         default:
           pageMeta.value.icon = 'sell';
