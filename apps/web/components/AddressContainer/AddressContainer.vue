@@ -8,36 +8,20 @@
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect
           v-if="showAdressSelection"
-          :data-testid="'address-select-' + type"
           :type="type"
           :disabled="disabled"
           @new="showNewForm = true"
           @edit="edit"
         />
 
-        <UiButton
-          v-if="showAddressSaveButton"
-          :data-testid="'save-address-' + type"
-          :disabled="formIsLoading"
-          variant="secondary"
-          @click="validateAndSubmitForm"
-        >
-          {{ t('saveAddress') }}
-        </UiButton>
-
-        <SfTooltip
-          v-if="showTooltip"
-          :class="{ 'ml-2': addTooltipClass }"
-          :label="!editing && !showNewForm && !disabled ? t('editAddress') : ''"
-        >
+        <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAdressSelection }" :label="t('editAddress')">
           <UiButton
-            :disabled="formIsLoading || disabled"
+            :disabled="!hasCheckoutAddress || formIsLoading || disabled"
             variant="secondary"
             :data-testid="'edit-address-' + type"
             @click="edit(checkoutAddress)"
           >
-            <template v-if="!editing && !showNewForm">{{ t('contactInfo.edit') }}</template>
-            <SfIconClose v-else />
+            {{ t('contactInfo.edit') }}
           </UiButton>
         </SfTooltip>
       </div>
@@ -45,18 +29,18 @@
 
     <div class="mt-2">
       <template v-if="isShipping">
-        <AddressFormShipping v-if="showNewForm" ref="addressFormShipping" add-address />
+        <AddressFormShipping v-if="showNewForm" :disabled="disabled" add-address />
         <template v-else-if="hasCheckoutAddress">
-          <AddressFormShipping v-if="editing" ref="addressFormShipping" :address="addressToEdit" />
+          <AddressFormShipping v-if="editing" :disabled="disabled" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
         <div v-else class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
       </template>
 
       <template v-if="isBilling">
-        <AddressFormBilling v-if="showNewForm" ref="addressFormBilling" add-address />
+        <AddressFormBilling v-if="showNewForm" :disabled="disabled" add-address />
         <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
-          <AddressFormBilling v-if="editing" ref="addressFormBilling" :address="addressToEdit" />
+          <AddressFormBilling v-if="editing" :disabled="disabled" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
         <div v-if="showDynamicAddressText" :data-testid="'address-info-text-' + type" class="mt-2">
@@ -68,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfTooltip } from '@storefront-ui/vue';
+import { SfTooltip } from '@storefront-ui/vue';
 import type { AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 
@@ -81,14 +65,8 @@ const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized } = useCustomer();
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const addressFormShipping = ref(null as any);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const addressFormBilling = ref(null as any);
 
 const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
-const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
-const addTooltipClass = computed(() => isAuthorized.value || editing.value || showNewForm.value);
 
 const sameAsShippingAddress = computed(() =>
   isBilling
@@ -106,10 +84,8 @@ const showDynamicAddressText = computed(
     showSameAsShippingText.value || (!hasCheckoutAddress.value && !showSameAsShippingText.value && !showNewForm.value),
 );
 
-const showTooltip = computed(
-  () =>
-    (isAuthorized.value && (showNewForm.value || hasCheckoutAddress.value)) ||
-    (!isAuthorized.value && hasCheckoutAddress.value),
+const showEditAddressTooltip = computed(
+  () => !editing.value && hasCheckoutAddress.value && !showNewForm.value && !disabled,
 );
 
 const dynamicAddressText = computed(() =>
@@ -121,17 +97,6 @@ const edit = (address: Address) => {
   addressToEdit.value = editing.value || showNewForm.value ? ({} as Address) : address;
   editing.value = !(editing.value || showNewForm.value);
   showNewForm.value = false;
-};
-
-const validateAndSubmitForm = async () => {
-  const formData = isShipping
-    ? await addressFormShipping.value?.validate()
-    : await addressFormBilling.value?.validate();
-
-  if (formData.valid) {
-    isShipping ? await addressFormShipping.value?.submitForm() : await addressFormBilling.value?.submitForm();
-    if (showNewForm.value) showNewForm.value = false;
-  }
 };
 
 watch(shippingAsBilling, () => {

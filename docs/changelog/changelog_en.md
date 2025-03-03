@@ -1,5 +1,18 @@
 # Changelog PlentyONE Shop
 
+# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 👷 Changed
+
+- The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
+- Reduced chunck size by moving heavy files to public folder fetching the data instead of importing it
+- Reduced chunk size by removing the lodash library completely and using custom js functions
+
+### 🩹 Fixed
+
+- Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
+- Fixed site settings not persisting on rebuild.
+
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
@@ -7,7 +20,7 @@
 - Added success and error notifications when saving changes in the editor.
 - The editor toolbar now supports all the editable pages.
 
-### Fixed
+### 🩹 Fixed
 
 - Fixed displayed the recommended products on product pages.
 - Fixed the save button not being re-enabled on subsequent edits.

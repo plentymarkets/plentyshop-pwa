@@ -108,11 +108,11 @@
           "variant": "primary"
         },
         "image": {
-          "xl": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "lg": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "md": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "sm": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "alt": "Headphones",
+          "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "alt": "Kopfhörer",
           "imageAlignment": "left"
         }
       }
