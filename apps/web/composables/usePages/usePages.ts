@@ -1,12 +1,10 @@
+import type { Category } from './types';
 export const usePages = async () => {
   const { t } = useI18n();
   const { getCategoryTree } = useCategoryTree();
 
   const data = await getCategoryTree();
-  interface Category {
-    details: { name: string; nameUrl: string }[];
-    children?: Category[];
-  }
+
   const transformData = (
     data: Category[],
     isRoot = true,
