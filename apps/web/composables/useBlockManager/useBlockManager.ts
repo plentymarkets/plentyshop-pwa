@@ -18,7 +18,8 @@ const togglePlaceholder = (uuid: string, position: 'top' | 'bottom') => {
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
-  const { isEditing, isEditingEnabled } = useEditor();
+  const { isEditingEnabled } = useEditor();
+  const { openDrawerWithView } = useSiteConfiguration();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -77,6 +78,7 @@ export const useBlockManager = () => {
     parent.splice(insertIndex, 0, newBlock);
 
     updateBlocks(copiedData);
+    openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
   };

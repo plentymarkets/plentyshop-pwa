@@ -20,7 +20,9 @@ export const useCarousel: UseCarouselReturn = () => {
   };
 
   const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
-    state.value.activeSlideIndex[blockUuid] = slideIndex;
+    if (blockUuid) {
+      state.value.activeSlideIndex[blockUuid] = slideIndex;
+    }
   };
 
   return {

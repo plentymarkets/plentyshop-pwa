@@ -26,25 +26,21 @@
 </template>
 <script lang="ts" setup>
 const {
-  currentBlock,
-  currentBlockUuid,
   isClicked,
   clickedBlockIndex,
   isTablet,
   blockHasData,
   tabletEdit,
-  updateBlock,
   changeBlockPosition,
-  togglePlaceholder,
 } = useBlockManager();
 
-const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
+const { settingsIsDirty } = useSiteConfiguration();
 
 const { data, getBlocks } = useCategoryTemplate();
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
-const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
 await getBlocks('index', 'immutable');

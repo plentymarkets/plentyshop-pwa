@@ -15,9 +15,8 @@
             ]"
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
-              addBlock(category.category, variationIndex);
               drawerOpen = false;
-              openSettingsDrawer(variation.template[locale as 'en' | 'de']);
+              addBlock(category.category, variationIndex);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -53,9 +52,5 @@ const { drawerOpen, openDrawerWithView } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, visiblePlaceholder.value.uuid, visiblePlaceholder.value.position);
-};
-
-const openSettingsDrawer = (block: Block) => {
-  openDrawerWithView('blocksSettings', block);
 };
 </script>

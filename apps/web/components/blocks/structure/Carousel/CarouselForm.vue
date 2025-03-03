@@ -196,8 +196,9 @@ const slides = computed({
 
 const controlsOpen = ref(true);
 
-const slideClick = (index: number) => {
+const slideClick = async (index: number) => {
   setIndex(blockUuid.value, index);
+  await nextTick();
 };
 
 const addSlide = async () => {

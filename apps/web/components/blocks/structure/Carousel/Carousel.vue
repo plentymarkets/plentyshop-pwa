@@ -45,8 +45,7 @@ import { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
-const { blockUuid } = useSiteConfiguration();
-const { content, index, configuration } = defineProps<CarouselStructureProps>();
+const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 
 const handleArrows = () => {
   const viewport = useViewport();
@@ -82,20 +81,21 @@ const navigationConfig = computed(() => {
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
 
-  setIndex(blockUuid.value, swiper.realIndex);
+  setIndex(meta.uuid, swiper.realIndex);
 };
 
 const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeSlideIndex.value[blockUuid.value]) {
+  if (swiper.realIndex !== activeSlideIndex.value[meta.uuid]) {
     await nextTick();
     swiper.update();
 
-    setIndex(blockUuid.value, swiper.realIndex);
+
+    setIndex(meta.uuid, swiper.realIndex);
   }
 };
 
 watch(
-  () => activeSlideIndex.value[blockUuid.value],
+  () => activeSlideIndex.value[meta.uuid],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
       slider.update();

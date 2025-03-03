@@ -100,9 +100,11 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
     if (block) {
-      const { setIndex } = useCarousel();
+      if (block.name === 'Carousel') {
+        const { setIndex } = useCarousel();
 
-      setIndex(block.meta.uuid, 0);
+        setIndex(block.meta.uuid, 0);
+      }
 
       state.value.blockType = block.name;
       state.value.blockUuid = block.meta.uuid;

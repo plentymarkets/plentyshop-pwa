@@ -25,15 +25,15 @@ const swap = (arr: unknown[], from: number, to: number) => {
   arr.splice(from, 1, arr.splice(to, 1, arr[from])[0]);
 };
 
-const alignment = computed(() => imageBlock.value.content.imageAlignment);
+const alignment = computed(() => imageBlock?.value?.content?.imageAlignment || 'left');
 
 watch(
   alignment,
   () => {
-    if (alignment.value === 'right' && content[0].name === 'Image') {
+    if (alignment.value === 'right' && content[0]?.name === 'Image') {
       swap(content, 0, 1);
     }
-    if (alignment.value === 'left' && content[0].name !== 'Image') {
+    if (alignment.value === 'left' && content[0]?.name !== 'Image') {
       swap(content, 0, 1);
     }
   },
