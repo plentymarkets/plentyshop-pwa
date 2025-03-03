@@ -1,5 +1,5 @@
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
-import { UseCarouselState } from '~/composables/useCarousel/types';
+import type { UseCarouselState } from '~/composables/useCarousel/types';
 
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({

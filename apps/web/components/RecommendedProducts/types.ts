@@ -1,5 +1,5 @@
 export type RecommendedProductsProps = {
   categoryId: string;
-  text: {};
+  text: object;
   cacheKey?: string;
 };

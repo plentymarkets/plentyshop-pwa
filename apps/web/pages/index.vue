@@ -1,8 +1,8 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <div class="content">
-      <template v-if="data.length" v-for="(block, index) in data" :key="index">
+    <div v-if="data.length" class="content">
+      <template v-for="(block, index) in data" :key="index">
         <PageBlock
           :index="index"
           :block="block"

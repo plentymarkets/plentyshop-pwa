@@ -169,9 +169,9 @@ import {
   useDisclosure,
   SfIconClose,
 } from '@storefront-ui/vue';
-import { CarouselStructureProps } from './types';
+import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
-import { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();

@@ -20,17 +20,6 @@ interface HeroContentProps {
   link: string;
 }
 
-interface UiHeroCarouselOptions {
-  hero: HeroContentProps[];
-}
-
-interface UiMediaCardOptions {
-  text?: string;
-  image?: string;
-  alt?: string;
-  alignment?: string;
-}
-
 export interface SlideControls {
   color: string;
 }

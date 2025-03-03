@@ -1,6 +1,7 @@
 import type { BlocksList } from '../../components/BlocksNavigationList/types';
-const blocksLists = ref<BlocksList>({});
 import { v4 as uuid } from 'uuid';
+
+const blocksLists = ref<BlocksList>({});
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.content;
@@ -113,7 +114,7 @@ export const useBlockManager = () => {
   };
 
   const setUuid = (blocks: Block[]) => {
-    for (const [index, block] of blocks.entries()) {
+    for (const block of blocks.entries()) {
       block.meta.uuid = uuid();
       if (Array.isArray(block.content)) {
         setUuid(block.content);

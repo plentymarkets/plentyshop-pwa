@@ -8,6 +8,7 @@ const updatePageTemplate = async (): Promise<boolean> => {
 
     return true;
   } catch (e) {
+    console.error(e)
     return false;
   } finally {
     isEditingEnabled.value = false;

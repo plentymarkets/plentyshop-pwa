@@ -457,9 +457,8 @@
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch, useDisclosure } from '@storefront-ui/vue';
-import { BannerFormProps, BannerProps } from './types';
+import type { BannerFormProps, BannerProps } from './types';
 
-const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();

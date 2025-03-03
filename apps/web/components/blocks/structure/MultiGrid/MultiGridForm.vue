@@ -5,8 +5,9 @@
 
 <script setup lang="ts">
 import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
-import { TextCardProps } from '~/components/blocks/TextCard/types';
-import { ImageTextProps } from '~/components/blocks/Image/types';
+import type { TextCardProps } from '~/components/blocks/TextCard/types';
+import type { ImageTextProps } from '~/components/blocks/Image/types';
+
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findBlockByUuid } = useBlockManager();

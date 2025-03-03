@@ -118,13 +118,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ProductRecommendedProductsContent,
-  ProductRecommendedProductsProps,
-} from '../ProductRecommendedProducts/types';
+import type { ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
-import { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findBlockByUuid } = useBlockManager();

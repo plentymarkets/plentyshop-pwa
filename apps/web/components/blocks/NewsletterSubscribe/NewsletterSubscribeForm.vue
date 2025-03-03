@@ -116,7 +116,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import { NewsletterSubscribeContent } from './types';
+import type { NewsletterSubscribeContent } from './types';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
 const textGroup = ref(true);

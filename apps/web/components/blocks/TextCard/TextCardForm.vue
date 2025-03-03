@@ -201,7 +201,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
-import { TextCardFormProps, TextCardContent } from './types';
+import type { TextCardFormProps, TextCardContent } from './types';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
 const { data } = useCategoryTemplate();

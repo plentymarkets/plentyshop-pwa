@@ -48,7 +48,7 @@
       />
 
       <component :is="getBlockComponent" v-bind="block" :index="index">
-        <template v-if="block.type === 'structure'" v-slot:content="{ blo }">
+        <template v-if="block.type === 'structure'" #content="{ blo }">
           <PageBlock
             :index="index"
             :block="blo"

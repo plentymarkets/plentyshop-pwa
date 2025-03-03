@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
-import { BlocksList } from './types';
+import type { BlocksList } from './types';
 
 const blocksLists = ref<BlocksList>({});
 
@@ -46,9 +46,8 @@ const getBlocksLists = async () => {
 };
 getBlocksLists();
 
-const { locale } = useI18n();
 const { addNewBlock, visiblePlaceholder } = useBlockManager();
-const { drawerOpen, openDrawerWithView } = useSiteConfiguration();
+const { drawerOpen } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, visiblePlaceholder.value.uuid, visiblePlaceholder.value.position);

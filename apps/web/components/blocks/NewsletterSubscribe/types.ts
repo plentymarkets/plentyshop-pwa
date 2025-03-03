@@ -1,5 +1,3 @@
-import { ImageTextContent } from '~/components/blocks/Image/types';
-
 export type NewsletterSubscribeProps = {
   name: string;
   type: string;

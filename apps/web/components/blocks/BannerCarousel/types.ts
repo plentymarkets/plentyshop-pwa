@@ -1,5 +1,3 @@
-import type { SlideControls } from '~/composables/useHomepage/types';
-
 export type Size = {
   width: string;
   height: string;

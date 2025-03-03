@@ -126,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import { ImageFormProps, ImageTextContent } from './types';
+import type { ImageFormProps, ImageTextContent } from './types';
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
