@@ -1,25 +1,14 @@
-import {
-  type ApiError,
-  type RegisterParams,
-  type SessionResult,
-  type UserChangePasswordParams,
-  userGetters,
-} from '@plentymarkets/shop-api';
-import { toTypedSchema } from '@vee-validate/yup';
-import { object, string } from 'yup';
+import type { RegisterParams, SessionResult, UserChangePasswordParams, ApiError } from '@plentymarkets/shop-api';
 import type {
-  ChangePassword,
-  GetSession,
-  Login,
-  LoginAsGuest,
-  Logout,
-  Register,
   UseCustomerReturn,
   UseCustomerState,
+  GetSession,
+  LoginAsGuest,
+  Login,
+  Register,
+  Logout,
+  ChangePassword,
 } from '~/composables/useCustomer/types';
-import { scrollToHTMLObject } from '~/utils/scollHelper';
-
-const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
@@ -33,13 +22,11 @@ const CONTACT_INFORMATION = '#contact-information';
  */
 export const useCustomer: UseCustomerReturn = () => {
   const { emit } = usePlentyEvent();
-  const { $i18n } = useNuxtApp();
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
     data: {} as SessionResult,
     loading: false,
     isAuthorized: false,
     isGuest: false,
-    validGuestEmail: false,
   }));
 
   /** Function for checking if user is guest or authorized
@@ -51,14 +38,18 @@ export const useCustomer: UseCustomerReturn = () => {
   const checkUserState = () => {
     if (state.value.data?.user?.guestMail) {
       state.value.isGuest = true;
-      state.value.validGuestEmail = true;
       state.value.isAuthorized = false;
       return;
     }
 
+    if (state.value.data?.user?.email) {
+      state.value.isGuest = false;
+      state.value.isAuthorized = true;
+      return;
+    }
+
     state.value.isGuest = false;
-    state.value.validGuestEmail = false;
-    state.value.isAuthorized = state.value.data?.user?.email ? true : false;
+    state.value.isAuthorized = false;
   };
 
   /** Function for getting current user/cart data from session
@@ -208,39 +199,6 @@ export const useCustomer: UseCustomerReturn = () => {
     return !error.value;
   };
 
-  const emailValidationSchema = toTypedSchema(
-    object({
-      customerEmail: string()
-        .required($i18n.t('errorMessages.email.required'))
-        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) =>
-          userGetters.isValidEmailAddress(email),
-        )
-        .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
-    }),
-  );
-
-  const backToContactInformation = (): boolean => {
-    const classList = ['bg-primary-50', 'rounded-md'];
-    const opacityClass = 'opacity-0';
-    const targetId = CONTACT_INFORMATION;
-
-    const targetElement = document.querySelector(targetId);
-    const firstDivider = document.querySelector('#top-contact-information-divider');
-    const secondDivider = document.querySelector('#top-shipping-divider');
-
-    scrollToHTMLObject(targetId);
-
-    targetElement?.classList.add(...classList);
-    [firstDivider, secondDivider].forEach((divider) => divider?.classList.add(opacityClass));
-
-    setTimeout(() => {
-      targetElement?.classList.remove(...classList);
-      [firstDivider, secondDivider].forEach((divider) => divider?.classList.remove(opacityClass));
-    }, 1000);
-
-    return false;
-  };
-
   return {
     setUser,
     getSession,
@@ -249,8 +207,6 @@ export const useCustomer: UseCustomerReturn = () => {
     register,
     loginAsGuest,
     changePassword,
-    emailValidationSchema,
-    backToContactInformation,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };
