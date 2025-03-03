@@ -89,7 +89,6 @@ const onSlideChange = async (swiper: SwiperType) => {
     await nextTick();
     swiper.update();
 
-
     setIndex(meta.uuid, swiper.realIndex);
   }
 };

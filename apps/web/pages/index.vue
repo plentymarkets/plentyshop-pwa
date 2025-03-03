@@ -25,14 +25,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-const {
-  isClicked,
-  clickedBlockIndex,
-  isTablet,
-  blockHasData,
-  tabletEdit,
-  changeBlockPosition,
-} = useBlockManager();
+const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
 const { settingsIsDirty } = useSiteConfiguration();
 
