@@ -9,6 +9,7 @@ import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<RecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
+fetchProductRecommended(props.categoryId);
 
 watchDebounced(
   () => props.categoryId,
@@ -17,6 +18,6 @@ watchDebounced(
       fetchProductRecommended(props.categoryId);
     }
   },
-  { debounce: 500, immediate: true },
+  { debounce: 500 },
 );
 </script>
