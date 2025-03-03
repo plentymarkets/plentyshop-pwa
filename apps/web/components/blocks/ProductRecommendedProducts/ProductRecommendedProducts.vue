@@ -12,6 +12,10 @@ const { data: recommendedProducts, fetchProductRecommended } = useProductRecomme
   props.content.categoryId + props.content.cacheKey,
 );
 
+if (props.content.categoryId) {
+  fetchProductRecommended(props.content.categoryId);
+}
+
 watchDebounced(
   () => props.content.categoryId,
   () => {
@@ -19,6 +23,6 @@ watchDebounced(
       fetchProductRecommended(props.content.categoryId);
     }
   },
-  { debounce: 500, immediate: true },
+  { immediate: true },
 );
 </script>
