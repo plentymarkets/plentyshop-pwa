@@ -40,7 +40,7 @@
             @keydown.enter.space.prevent="selectValue(page.name)"
           >
             <span>
-              <SfIconHome v-if="page.name === 'Homepage'" class="w-4 h-4 mr-2" />
+              <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
               <SfIconSell v-else class="w-4 h-4 mr-2" />
               {{ page.name }}
               <SfIconChevronRight v-if="page.children && page.children.length > 0" class="w-3 h3" />
@@ -112,13 +112,15 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
   initialFocus: false,
 });
 
+const { locale } = useI18n();
+const { t } = useI18n();
 const handleClick = (page: { name: string; path?: string; children?: { name: string; path: string }[] }) => {
-  const icon = page.name === 'Homepage' ? 'home' : 'sell';
+  const icon = page.name === t('homepage.homepagetitle') ? 'home' : 'sell';
   if (page.children && page.children.length > 0) {
     currentParent.value = page;
   } else {
     emit('pageSelected', { name: page.name, icon });
-    navigateTo(page.path);
+    navigateTo(`/${locale.value}${page.path}`);
   }
 };
 

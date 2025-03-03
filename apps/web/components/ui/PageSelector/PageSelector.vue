@@ -11,7 +11,7 @@
         :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
         @click="toggleDropdown"
       >
-        {{ currentPageName }}
+        {{ pageMeta.name }}
       </button>
 
       <div class="flex items-center">
@@ -36,4 +36,6 @@ const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
   currentPageName.value = name;
   currentPageIcon.value = icon;
 };
+
+const pageMeta = usePageMeta();
 </script>
