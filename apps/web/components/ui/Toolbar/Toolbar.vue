@@ -13,7 +13,6 @@
         <SfIconTune />
       </button>
 
- 
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">
         <UiLanguageEditor />
         <UiPageSelector />
