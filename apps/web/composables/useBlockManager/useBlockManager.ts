@@ -114,7 +114,7 @@ export const useBlockManager = () => {
   };
 
   const setUuid = (blocks: Block[]) => {
-    for (const block of blocks.entries()) {
+    for (const block of blocks) {
       block.meta.uuid = uuid();
       if (Array.isArray(block.content)) {
         setUuid(block.content);
