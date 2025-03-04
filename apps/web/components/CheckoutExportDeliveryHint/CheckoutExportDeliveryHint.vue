@@ -17,16 +17,18 @@
 
 <script setup lang="ts">
 import { SfIconWarning } from '@storefront-ui/vue';
-import {} from '@plentymarkets/shop-api';
+import { cartGetters } from '@plentymarkets/shop-api';
 
 const { t } = useI18n();
 const { data: cart } = useCart();
 const { default: shippingCountries } = useAggregatedCountries();
 
 const shopCountry = computed(() => {
-  return shippingCountries.value.find((country) => country.id === cart.value.shopCountryId)?.currLangName;
+  return shippingCountries.value.find((country) => country.id === cartGetters.getShopCountryId(cart.value))
+    ?.currLangName;
 });
 const deliveryCountry = computed(() => {
-  return shippingCountries.value.find((country) => country.id === cart.value.shippingCountryId)?.currLangName;
+  return shippingCountries.value.find((country) => country.id === cartGetters.getShippingCountryId(cart.value))
+    ?.currLangName;
 });
 </script>
