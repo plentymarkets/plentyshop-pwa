@@ -4,7 +4,6 @@
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
     <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
-    <SfIconSell v-else class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
       <button
         :disabled="isEditing || disableActions"
@@ -24,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconHome, SfIconExpandMore, SfIconSell } from '@storefront-ui/vue';
+import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
 const { pageMeta } = usePageMeta();
 const currentPageName = ref('Homepage');
 const currentPageIcon = ref('home');

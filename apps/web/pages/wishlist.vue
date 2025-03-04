@@ -14,10 +14,9 @@ const { setPageMeta } = usePageMeta();
 
 const localePath = useLocalePath();
 
-
 const { t } = useI18n();
 
-const icon = 'home';
+const icon = 'page';
 setPageMeta(t('account.wishlist.heading'), icon);
 
 const breadcrumbs = computed(() => [

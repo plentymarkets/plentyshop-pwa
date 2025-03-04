@@ -65,14 +65,11 @@ const { open, openDrawer } = useProductLegalDetailsDrawer();
 
 const { setPageMeta } = usePageMeta();
 
-
 const productName = computed(() => productGetters.getName(product.value));
-const icon = "sell";
+const icon = 'sell';
 setPageMeta(productName.value, icon);
 
-
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
-
 
 await fetchProduct(productParams);
 
@@ -133,7 +130,7 @@ watch(
   () => route.params,
   () => {
     const productName = computed(() => productGetters.getName(product.value));
-    const icon = "sell";
+    const icon = 'sell';
     setPageMeta(productName.value, icon);
   },
   { immediate: true },

@@ -58,9 +58,8 @@ const breadcrumbs = computed(() => {
 
 const { setPageMeta } = usePageMeta();
 
-
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
-const icon = "sell";
+const icon = 'sell';
 setPageMeta(categoryName.value, icon);
 
 watch(

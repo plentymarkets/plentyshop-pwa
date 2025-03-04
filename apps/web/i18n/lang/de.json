@@ -222,6 +222,7 @@
       "createAccountLinkLabel": "Jetzt anmelden!",
       "forgotPasswordLabel": "Passwort vergessen?",
       "heading": "In ihr Konto einloggen",
+      "headingSuccess": "Passwort erfolgreich zurücksetzen",
       "loginAndContinue": "Einloggen und fortfahren",
       "openLoginForm": "Login Form öffnen",
       "rememberMeLabel": "An mich erinnern",
