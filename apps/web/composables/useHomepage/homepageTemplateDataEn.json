@@ -105,22 +105,6 @@
     }
   },
   {
-    "name": "ProductRecommendedProducts",
-    "type": "content",
-    "meta": {
-      "uuid": "f7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
-    },
-    "content": {
-      "categoryId": "73",
-      "text": {
-        "pretitle": "More than just technology",
-        "title": "Discover our fashion collection",
-        "subtitle": "Sporty fashion and accessories for everyone.",
-        "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
-      }
-    }
-  },
-  {
     "name": "MultiGrid",
     "type": "structure",
     "meta": {
@@ -170,22 +154,6 @@
         }
       }
     ]
-  },
-  {
-    "name": "ProductRecommendedProducts",
-    "type": "content",
-    "meta": {
-      "uuid": "7a8b9c0d-1e2f-4a3b-8c9d-0e1f2a3b4c5d"
-    },
-    "content": {
-      "categoryId": "49",
-      "text": {
-        "pretitle": "More than just technology",
-        "title": "Explore our fashion collection",
-        "subtitle": "Sportive fashion and accessoires for everybody.",
-        "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
-      }
-    }
   },
   {
     "name": "NewsletterSubscribe",
