@@ -10,7 +10,6 @@
         :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
         @click="toggleDropdown"
       >
-        <!-- {{ pageMeta.name }} -->
         {{ pageMeta.name }}
       </button>
 
