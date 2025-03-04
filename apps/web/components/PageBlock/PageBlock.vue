@@ -101,6 +101,8 @@ interface Props {
   changeBlockPosition: (index: number, position: number) => void;
 }
 
+defineProps<Props>();
+
 const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { visiblePlaceholder, togglePlaceholder, getBlockComponent } = useBlockManager();
 
