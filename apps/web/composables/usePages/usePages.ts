@@ -11,18 +11,23 @@ export const usePages = async () => {
   const fetchPages = async () => {
     const transformData = (
       data: CategoryTreeItem[],
+      parentPath = '',
       isRoot = true,
     ): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
+
+
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
             return null;
           }
 
+          const currentPath = `${parentPath}/${item.details[0].nameUrl}`;
+
           return {
             name: item.details[0].name,
-            path: `/${item.details[0].nameUrl}`,
-            children: item.children ? transformData(item.children, false) : undefined,
+            path: currentPath,
+            children: item.children ? transformData(item.children, currentPath, false) : undefined,
           };
         })
         .filter(Boolean);
