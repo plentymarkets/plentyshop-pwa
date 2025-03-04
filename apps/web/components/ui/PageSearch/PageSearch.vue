@@ -25,10 +25,10 @@
       </SfInput>
     </form>
 
-    <div>
+    <div class="overflow-y-scroll">
       <ul
         v-if="!currentParent"
-        class="p-2 transition-all duration-300"
+        class="p-2 transition-all duration-300 max-h-[250px]"
         :class="{ 'translate-x-full opacity-0': currentParent }"
       >
         <li v-for="page in filteredPages" :key="page.name" @click="handleClick(page)">
@@ -70,6 +70,13 @@
         </li>
       </ul>
     </div>
+
+    <div class="px-1 mt-5">
+      <SfButton class="w-full">
+        <SfIconMenu />
+        Manage pages
+      </SfButton>
+    </div>
   </div>
 </template>
 
@@ -88,6 +95,8 @@ import {
   SfIconChevronRight,
   SfIconSell,
   SfIconHome,
+  SfIconMenu,
+  SfButton
 } from '@storefront-ui/vue';
 const emit = defineEmits(['pageSelected']);
 
