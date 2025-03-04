@@ -11,6 +11,7 @@
         :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
         @click="toggleDropdown"
       >
+        <!-- {{ pageMeta.name }} -->
         {{ pageMeta.name }}
       </button>
 
@@ -24,6 +25,7 @@
 
 <script setup lang="ts">
 import { SfIconHome, SfIconExpandMore, SfIconSell } from '@storefront-ui/vue';
+const { pageMeta } = usePageMeta();
 const currentPageName = ref('Homepage');
 const currentPageIcon = ref('home');
 
@@ -36,6 +38,4 @@ const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
   currentPageName.value = name;
   currentPageIcon.value = icon;
 };
-
-const pageMeta = usePageMeta();
 </script>
