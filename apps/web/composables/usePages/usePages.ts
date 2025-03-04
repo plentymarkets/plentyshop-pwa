@@ -1,9 +1,7 @@
-import type { Category } from './types';
-import { watch } from 'vue';
-
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 export const usePages = async () => {
   const { t, locale } = useI18n();
-  const { getCategoryTree } = useCategoryTree();
+  const { data } = useCategoryTree();
 
   const pages = useState<{ name: string; path: string; children?: { name: string; path: string }[] | undefined }[]>(
     'pages',
@@ -11,19 +9,25 @@ export const usePages = async () => {
   );
 
   const fetchPages = async () => {
-    const data = await getCategoryTree();
-
     const transformData = (
-      data: Category[],
+      data: CategoryTreeItem[],
       isRoot = true,
     ): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
-      const transformedData = data.map((item: Category) => ({
-        name: item.details[0].name,
-        path: `/${item.details[0].nameUrl}`,
-        children: item.children ? transformData(item.children, false) : undefined,
-      }));
+      const transformedData = data
+        .map((item: CategoryTreeItem) => {
+          if (!item.details || item.details.length === 0) {
+            return null;
+          }
 
-      if (isRoot && !transformedData.some((page) => page.name === 'Homepage')) {
+          return {
+            name: item.details[0].name,
+            path: `/${item.details[0].nameUrl}`,
+            children: item.children ? transformData(item.children, false) : undefined,
+          };
+        })
+        .filter(Boolean);
+
+      if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
         transformedData.unshift({
           name: t('homepage.homepagetitle'),
           path: '/',
@@ -31,10 +35,14 @@ export const usePages = async () => {
         });
       }
 
-      return transformedData;
+      return transformedData as {
+        name: string;
+        path: string;
+        children?: { name: string; path: string }[] | undefined;
+      }[];
     };
 
-    pages.value = transformData(data);
+    pages.value = transformData(data.value);
   };
 
   if (pages.value.length === 0) {
