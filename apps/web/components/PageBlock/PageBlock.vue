@@ -11,7 +11,7 @@
           'mb-xl': blockSize === 'xl' && root,
         },
         {
-          'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Carousel' && block.name !== 'Banner'
+          'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Carousel' && block.name !== 'Banner',
         },
         {
           'px-4 md:px-6': block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
