@@ -1,5 +1,11 @@
 # Changelog PlentyONE Shop
 
+# v x.xx.x (2025-xx-xx)
+
+### New
+
+- Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
+
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 👷 Changed
