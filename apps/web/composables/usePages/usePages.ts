@@ -53,6 +53,14 @@ export const usePages = async () => {
     await fetchPages();
   });
 
+  watch(data, async () => {
+    await fetchPages();
+  });
+
+  // onMounted(async () => {
+  //   await fetchPages();
+  // });
+
   return {
     pages,
   };
