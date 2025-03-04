@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :class="[
@@ -52,7 +52,7 @@
         @change-position="changeBlockPosition"
       />
 
-      <component :is="getBlockComponent" v-bind="block" :index="index">
+      <component :is="getBlockComponent(block)" v-bind="block" :index="index">
         <template v-if="block.type === 'structure'" #content="{ blo }">
           <PageBlock
             :index="index"
@@ -102,27 +102,10 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+console.log('PageBlock', Date.now());
 
 const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
-const { visiblePlaceholder, togglePlaceholder } = useBlockManager();
-
-const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
-const getBlockComponent = computed(() => {
-  if (!props.block.name) return null;
-  const regex = new RegExp(`${props.block.name}\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path));
-
-  if (matched) {
-    return defineAsyncComponent({
-      loader: modules[matched],
-    });
-  }
-  return '';
-});
+const { visiblePlaceholder, togglePlaceholder, getBlockComponent } = useBlockManager();
 
 const displayTopPlaceholder = (uuid: string): boolean => {
   const visiblePlaceholderState = visiblePlaceholder.value;

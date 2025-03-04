@@ -16,6 +16,11 @@ const togglePlaceholder = (uuid: string, position: 'top' | 'bottom') => {
   visiblePlaceholder.value = { uuid, position };
 };
 
+const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
@@ -173,6 +178,19 @@ export const useBlockManager = () => {
     }
   };
 
+  const getBlockComponent = (block: Block) => {
+    if (!block.name) return null;
+    const regex = new RegExp(`${block.name}\\.vue$`, 'i');
+    const matched = Object.keys(modules).find((path) => regex.test(path));
+
+    if (matched) {
+      return defineAsyncComponent({
+        loader: modules[matched],
+      });
+    }
+    return '';
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -191,5 +209,6 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findBlockByUuid,
+    getBlockComponent,
   };
 };

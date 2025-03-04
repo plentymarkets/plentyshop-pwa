@@ -1,7 +1,7 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <div v-if="data.length" class="content">
+    <div class="content">
       <template v-for="(block, index) in data" :key="index">
         <PageBlock
           :index="index"
@@ -35,7 +35,6 @@ const dataIsEmpty = computed(() => data.value.length === 0);
 
 const { isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
-
 await getBlocks('index', 'immutable');
 
 onMounted(() => {
@@ -56,6 +55,6 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   event.preventDefault();
 };
 
-await getRobots();
+getRobots();
 setRobotForStaticPage('Homepage');
 </script>

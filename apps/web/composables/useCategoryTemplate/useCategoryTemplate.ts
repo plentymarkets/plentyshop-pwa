@@ -19,20 +19,21 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     loading: false,
   }));
 
-  const { $i18n } = useNuxtApp();
-  const currentLocale = ref($i18n.locale.value);
+  // const { $i18n } = useNuxtApp();
+  // const currentLocale = ref($i18n.locale.value);
 
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
 
     const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
 
+    console.log('data?.value?.data: ', data?.value?.data);
     state.value.loading = false;
 
-    state.value.data = data?.value?.data ?? state.value.data;
-
     if (!data?.value?.data.length) {
-      state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
+      state.value.data = useLocaleSpecificHomepageTemplate('en');
+    } else {
+      state.value.data = data?.value?.data ?? state.value.data;
     }
 
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
@@ -80,13 +81,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     state.value.loading = false;
   };
 
-  watch(
-    () => currentLocale.value,
-    async (newLocale) => {
-      currentLocale.value = newLocale;
-      await getBlocks('index', 'immutable');
-    },
-  );
+  // watch(
+  //   () => currentLocale.value,
+  //   async (newLocale) => {
+  //     currentLocale.value = newLocale;
+  //     await getBlocks('index', 'immutable');
+  //   },
+  // );
 
   return {
     fetchCategoryTemplate,
