@@ -17,7 +17,6 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-import {onBeforeRouteUpdate} from "nuxt/app";
 
 const { getFacetsFromURL, updateSorting } = useCategoryFilter();
 const options = ref([

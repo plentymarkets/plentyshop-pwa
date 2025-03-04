@@ -64,9 +64,9 @@ function itemsPerPageQueryChanged() {
 }
 
 watch(
-    () => useNuxtApp().$router.currentRoute.value.query.itemsPerPage,
-    () => {
-      itemsPerPageQueryChanged();
-    },
+  () => useNuxtApp().$router.currentRoute.value.query.itemsPerPage,
+  () => {
+    itemsPerPageQueryChanged();
+  },
 );
 </script>
