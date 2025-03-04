@@ -1,20 +1,20 @@
 <template>
   <div class="flex justify-center">
     <NuxtImg
-        :src="getImageUrl()"
-        :alt="props.content?.alt"
-        :class="[
-      'object-cover',
-      'md:px-4',
+      :src="getImageUrl()"
+      :alt="props.content?.alt"
+      :class="[
+        'object-cover',
+        'md:px-4',
 
-      {
-        'lg:pr-4': props.content?.imageAlignment === 'left',
-        'lg:pl-4': props.content?.imageAlignment === 'right',
-      },
-    ]"
-        :width="getImageDimensions().width"
-        :height="getImageDimensions().height"
-        data-testid="image-block"
+        {
+          'lg:pr-4': props.content?.imageAlignment === 'left',
+          'lg:pl-4': props.content?.imageAlignment === 'right',
+        },
+      ]"
+      :width="getImageDimensions().width"
+      :height="getImageDimensions().height"
+      data-testid="image-block"
     />
   </div>
 </template>
