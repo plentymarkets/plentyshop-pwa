@@ -36,10 +36,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconCheck } from '@storefront-ui/vue';
+import { SfIconCheck, useDisclosure } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
-const { isOpen } = useLocalization();
 const viewport = useViewport();
 const { localeCodes, locale: currentLocale } = useI18n();
 const flagList: { [key: string]: string } = {};
@@ -47,4 +46,7 @@ const flagList: { [key: string]: string } = {};
 localeCodes.value.forEach((localeCode) => {
   if (flagImports[localeCode]) flagList[localeCode] = flagImports[localeCode];
 });
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { isOpen, toggle } = useDisclosure();
 </script>

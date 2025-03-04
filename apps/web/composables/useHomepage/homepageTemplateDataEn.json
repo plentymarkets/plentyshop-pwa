@@ -87,12 +87,6 @@
       }
     },
     {
-      "name": "ProductRecommendedProducts",
-      "options": {
-        "categoryId": "73"
-      }
-    },
-    {
       "name": "ImageText",
       "options": {
         "text": {
@@ -114,35 +108,6 @@
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "alt": "Headphones",
           "imageAlignment": "left"
-        }
-      }
-    },
-    {
-      "name": "ProductRecommendedProducts",
-      "options": {
-        "text": {
-          "pretitle": "More than just technology",
-          "title": "Explore our fashion collection",
-          "subtitle": "Sportive fashion and accessoires for everybody.",
-          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>"
-        },
-        "categoryId": "49"
-      }
-    },
-    {
-      "name": "NewsletterSubscribe",
-      "options": {
-        "text": {
-          "bgColor": "#f5f5f5",
-          "title": "Newsletter",
-          "htmlDescription": "Be aware of upcoming sales and events. Receive gifts and special offers!"
-        },
-        "input": {
-          "displayNameInput": true,
-          "nameIsRequired": false
-        },
-        "button": {
-          "label": "Subscribe"
         }
       }
     }

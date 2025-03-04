@@ -1,7 +1,6 @@
 import { createSharedComposable } from '@vueuse/core';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
-import { useDisclosure } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
 
 const setVsfLocale = (locale: Locale) => {
@@ -17,7 +16,6 @@ const setVsfLocale = (locale: Locale) => {
 };
 
 export const useLocalization = createSharedComposable(() => {
-  const { isOpen: isOpen, toggle } = useDisclosure();
   /**
    * @description Function for wrapping the category language path.
    *
@@ -101,15 +99,13 @@ export const useLocalization = createSharedComposable(() => {
    * @param hideMenu
    * @example switchLocale('en')
    */
-  const switchLocale = async (language: Locale, hideMenu = true) => {
+  const switchLocale = async (language: Locale) => {
     const { getCart } = useCart();
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 
     setVsfLocale(language);
-    if (hideMenu) {
-      toggle();
-    }
+
     await getCart().then(
       async () =>
         await navigateTo({
@@ -124,8 +120,6 @@ export const useLocalization = createSharedComposable(() => {
     buildCategoryMenuLink,
     buildCategoryLanguagePath,
     buildProductLanguagePath,
-    isOpen,
-    toggle,
     switchLocale,
     setVsfLocale,
   };
