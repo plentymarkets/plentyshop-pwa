@@ -38,7 +38,7 @@ const {
   togglePlaceholder,
 } = useBlockManager();
 
-const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
+const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition, closeDrawer } = useSiteConfiguration();
 
 const { data, fetchPageTemplate, dataIsEmpty, initialBlocks } = useHomepage();
 
@@ -61,6 +61,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
 

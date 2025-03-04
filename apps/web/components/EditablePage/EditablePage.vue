@@ -40,7 +40,7 @@ const {
 
 const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition, closeDrawer } = useSiteConfiguration();
 
-const { data, fetchPageTemplate, dataIsEmpty, initialBlocks } = useHomepage();
+const { data, dataIsEmpty, initialBlocks, fetchPageTemplate } = useCategoryPage();
 
 const { isEditingEnabled, disableActions } = useEditor();
 
@@ -57,7 +57,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  initialBlocks.value = []; // Reset the initial blocks
   closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
