@@ -41,7 +41,6 @@
           >
             <span>
               <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
-              <SfIconSell v-else class="w-4 h-4 mr-2" />
               {{ page.name }}
               <SfIconChevronRight v-if="page.children && page.children.length > 0" class="w-3 h3" />
             </span>
@@ -86,7 +85,6 @@ import {
   useTrapFocus,
   SfIconChevronLeft,
   SfIconChevronRight,
-  SfIconSell,
   SfIconHome,
 } from '@storefront-ui/vue';
 const emit = defineEmits(['pageSelected']);
