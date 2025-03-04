@@ -124,12 +124,36 @@ const handleClick = (page: { name: string; path?: string; children?: { name: str
 
 const goBack = () => {
   currentParent.value = null;
+  inputModel.value = '';
 };
+const recursiveFilter = (
+  pages: { name: string; path: string; children?: { name: string; path: string }[] }[],
+  query: string,
+): { name: string; path: string; children?: { name: string; path: string }[] }[] => {
+  return pages.reduce(
+    (acc, page) => {
+      const hasMatchingChildren = page.children ? recursiveFilter(page.children, query) : [];
+
+      const matchesQuery = page.name.toLowerCase().includes(query.toLowerCase()) || hasMatchingChildren.length > 0;
+
+      if (matchesQuery) {
+        acc.push({
+          ...page,
+          children: hasMatchingChildren.length > 0 ? hasMatchingChildren : undefined,
+        });
+      }
+      return acc;
+    },
+    [] as { name: string; path: string; children?: { name: string; path: string }[] }[],
+  );
+};
+
 const filteredPages = computed(() => {
   if (!inputModel.value) {
     return pages.value;
   }
-  return pages.value.filter((page) => page.name.toLowerCase().includes(inputModel.value.toLowerCase()));
+
+  return recursiveFilter(pages.value, inputModel.value);
 });
 
 const submit = () => {
@@ -173,6 +197,19 @@ const handleInputKeyDown = (event: KeyboardEvent) => {
 watch(inputModel, () => {
   if (inputModel.value === '') {
     reset();
+  }
+});
+
+watch(inputModel, (newQuery) => {
+  if (!newQuery) {
+    currentParent.value = null;
+  } else {
+    const foundPages = recursiveFilter(pages.value, newQuery);
+    if (foundPages.length === 1) {
+      currentParent.value = foundPages[0];
+    } else {
+      currentParent.value = null;
+    }
   }
 });
 </script>
