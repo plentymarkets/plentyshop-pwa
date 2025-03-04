@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="h-[380px] md:h-[442px] lg:h-[576px] w-full bg-gray-200 animate-pulse" />
+    <div class="h-[387px] md:h-[442px] lg:h-[576px] w-full bg-gray-200 animate-pulse" />
 
     <div class="absolute inset-0 p-4 md:p-10 flex flex-col justify-center self-center md:basis-2/4">
       <div class="p-4 md:p-6 rounded-lg md:max-w-[50%] bg-white bg-opacity-80">

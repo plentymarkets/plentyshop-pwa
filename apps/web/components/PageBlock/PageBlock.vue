@@ -10,7 +10,9 @@
           'mb-l': blockSize === 'l' && root,
           'mb-xl': blockSize === 'xl' && root,
         },
-
+        {
+          'px-4 md:px-6': block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
+        },
         {
           'outline outline-4 outline-[#538AEA]':
             isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,

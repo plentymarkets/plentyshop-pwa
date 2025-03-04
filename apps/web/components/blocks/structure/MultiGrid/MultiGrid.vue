@@ -1,8 +1,8 @@
 <template>
   <div
     data-testid="text-image-parent"
-    class="grid grid-flow-col gap-4 flex flex-col items-center"
-    :class="`grid-cols-${content.length}`"
+    class="grid grid-cols-1 gap-4 items-center"
+    :class="`md:grid-cols-${content.length}`"
     :style="{ color: textCardBlock?.content?.text?.color || '' }"
   >
     <div v-for="(column, index) in content" :key="index" :class="`col-${configuration.columnWidths[index]}`">
