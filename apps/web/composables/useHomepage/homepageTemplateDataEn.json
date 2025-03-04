@@ -173,14 +173,18 @@
   },
   {
     "name": "ProductRecommendedProducts",
-    "options": {
+    "type": "content",
+    "meta": {
+      "uuid": "g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
+    },
+    "content": {
+      "categoryId": "73",
       "text": {
         "pretitle": "More than just technology",
-        "title": "Explore our fashion collection",
-        "subtitle": "Sportive fashion and accessoires for everybody.",
-        "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>"
-      },
-      "categoryId": "49"
+        "title": "Discover our fashion collection",
+        "subtitle": "Sporty fashion and accessories for everyone.",
+        "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
+      }
     }
   },
   {

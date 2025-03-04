@@ -1,5 +1,5 @@
 <template>
-  <div :key="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :class="[
@@ -134,9 +134,9 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 
 const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-
-const pwaCookie = useCookie('pwa');
-isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+// const config = useRuntimeConfig().public;
+// const showConfigurationDrawer = config.showConfigurationDrawer;
+//
+// const pwaCookie = useCookie('pwa');
+// isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 </script>
