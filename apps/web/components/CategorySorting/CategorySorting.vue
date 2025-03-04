@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
+import {onBeforeRouteUpdate} from "nuxt/app";
 
 const { getFacetsFromURL, updateSorting } = useCategoryFilter();
 const options = ref([
@@ -52,8 +53,8 @@ function sortingChanged() {
 }
 
 function sortQueryChanged() {
-  const facets = getFacetsFromURL();
-  selected.value = facets.sort ?? options.value[0].value;
+  const sortByValue = useNuxtApp().$router.currentRoute.value.query.sort;
+  selected.value = typeof sortByValue === 'string' ? sortByValue : options.value[0].value;
 }
 
 sortQueryChanged();
