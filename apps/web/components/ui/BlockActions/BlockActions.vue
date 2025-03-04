@@ -73,5 +73,10 @@ const triggerDelete = () => {
 
 const changePosition = (position: number) => {
   emit('change-position', props.index, position);
+  const block = document.getElementById(`block-${props.index + position}`);
+  if (block) {
+    block.scrollIntoView(true);
+    window.scrollBy(0, -200);
+  }
 };
 </script>
