@@ -14,8 +14,6 @@ export const usePages = async () => {
       parentPath = '',
       isRoot = true,
     ): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
-
-
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
@@ -61,10 +59,6 @@ export const usePages = async () => {
   watch(data, async () => {
     await fetchPages();
   });
-
-  // onMounted(async () => {
-  //   await fetchPages();
-  // });
 
   return {
     pages,
