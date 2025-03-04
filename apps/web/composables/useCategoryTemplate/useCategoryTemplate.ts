@@ -27,7 +27,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
     const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
 
-    console.log('data?.value?.data: ', data?.value?.data);
     state.value.loading = false;
 
     if (!data?.value?.data.length) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="" :key="block.meta.uuid">
+  <div :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :class="[
@@ -100,9 +100,6 @@ interface Props {
   tabletEdit: (index: number) => void;
   changeBlockPosition: (index: number, position: number) => void;
 }
-
-const props = defineProps<Props>();
-console.log('PageBlock', Date.now());
 
 const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { visiblePlaceholder, togglePlaceholder, getBlockComponent } = useBlockManager();
