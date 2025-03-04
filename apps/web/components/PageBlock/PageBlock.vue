@@ -152,10 +152,4 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 
 const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-onMounted(() => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-});
 </script>
