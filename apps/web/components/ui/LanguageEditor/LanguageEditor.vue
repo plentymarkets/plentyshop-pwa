@@ -3,7 +3,6 @@
     class="flex items-center space-x-1 md:space-x-2"
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
-    {{ isEditing }}
     <SfIconLanguage class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative">
       <select

@@ -1,7 +1,7 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
   <div
-    class="w-100 relative lg:flex"
+    class="w-100 relative md:flex"
     :class="{
       'lg:flex-row-reverse': placement !== 'left',
     }"
