@@ -79,10 +79,14 @@ export const useCheckout = (cacheKey = '') => {
     setShippingInitialState();
     const cartAddress = ref();
     const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
+    console.log('cartShippingAddressId', cartShippingAddressId);
+
     const primaryAddress =
       shippingAddresses.value.length > 0 ? userAddressGetters.getDefault(shippingAddresses.value) : undefined;
 
     if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
+    console.log('cartAddress', cartAddress.value);
+
     if (cartAddress.value || primaryAddress) {
       await setShippingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
     } else {

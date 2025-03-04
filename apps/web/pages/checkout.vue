@@ -96,7 +96,6 @@
 <script setup lang="ts">
 import { AddressType, cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { keyBy } from '~/utils/keyBy';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import {
@@ -105,6 +104,7 @@ import {
   PayPalGooglePayKey,
   PayPalPaymentKey,
 } from '~/composables/usePayPal/types';
+import { keyBy } from '~/utils/keyBy';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',

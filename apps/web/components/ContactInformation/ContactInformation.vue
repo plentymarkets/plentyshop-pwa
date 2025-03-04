@@ -1,6 +1,6 @@
 <template>
   <div data-testid="contact-information" class="md:px-4 py-6">
-    <h2 class="w-full text-neutral-900 text-lg font-bold">
+    <h2 class="w-full text-neutral-900 text-lg font-bold" :class="{ 'mb-4': !enableGuestLogin }">
       {{ t('contactInfo.heading') }}
     </h2>
 
@@ -92,7 +92,19 @@ const validateAndSubmitEmail = async () => {
     !sessionData.value.user?.guestMail ||
     updatedEmail.trim().toLowerCase() !== sessionData.value.user.guestMail.trim().toLowerCase();
 
-  if (shouldUpdateEmail) await saveContactInformation(updatedEmail);
+  if (shouldUpdateEmail) {
+    await saveContactInformation(updatedEmail);
+    await useFetchAddress(AddressType.Shipping)
+      .fetchServer()
+      .then(() => persistShippingAddress());
+
+    await useFetchAddress(AddressType.Billing)
+      .fetchServer()
+      .then(() => persistBillingAddress())
+      .catch((error) => useHandleError(error));
+
+    await checkPayPalPaymentsEligible();
+  }
 };
 
 const saveContactInformation = async (email: string) => {
