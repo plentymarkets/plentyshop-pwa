@@ -78,11 +78,15 @@ const scrollToBlock = (newIndex: number) => {
     window.scrollBy(0, -200);
   }
 };
+let timeoutId: ReturnType<typeof setTimeout>;
 
 const changePosition = (position: number) => {
   emit('change-position', props.index, position);
-  setTimeout(() => {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  timeoutId = setTimeout(() => {
     scrollToBlock(props.index + position);
-  }, 50);
+  }, 100);
 };
 </script>
