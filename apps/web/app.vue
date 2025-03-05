@@ -5,7 +5,7 @@
     :class="{
       'lg:flex-row-reverse': placement !== 'left',
       'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen,
-      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen
+      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen,
     }"
   >
     <SettingsToolbar v-if="disableActions" :class="{ 'mr-3': placement === 'left' && !drawerOpen }" />
