@@ -7,12 +7,10 @@
       <UiBrandLogo />
 
       <button
-        type="button"
-        class="editor-button relative ml-4"
-        aria-label="Open configuration drawer"
-        data-testid="open-settings-drawer"
-        @click="toggleSettingsDrawer"
-      >
+          class="self-start text-[#062633] px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
+          data-testid="edit-preview-button"
+          @click="toggleEdit"
+        >
         <SfIconTune />
       </button>
 
