@@ -31,13 +31,13 @@
         class="p-2 transition-all duration-300"
         :class="{ 'translate-x-full opacity-0': currentParent }"
       >
-        <li v-for="page in filteredPages" :key="page.name" @click="handleClick(page)">
+        <li v-for="page in filteredPages" :key="page.name">
           <SfListItem
             tag="button"
             type="button"
             class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer flex justify-between text-left"
-            @click="() => selectValue(page.name)"
-            @keydown.enter.space.prevent="selectValue(page.name)"
+            @click="() => selectValue(page)"
+            @keydown.enter.space.prevent="selectValue(page)"
           >
             <span>
               <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
@@ -54,15 +54,22 @@
         :class="{ 'translate-x-0 opacity-100': currentParent, '-translate-x-full opacity-0': !currentParent }"
       >
         <li class="p-2 text-gray-500 hover:text-gray-900 cursor-pointer flex items-center" @click="goBack">
-          <SfIconChevronLeft class="w-3 h-3" /> {{ currentParent.name }}
+          <SfIconChevronLeft class="w-3 h-3" /> Back
+        </li>
+        <li
+          v-if="currentParent"
+          class="p-2 text-gray-900 hover:bg-gray-100 cursor-pointer flex items-center"
+          @click="navigateToParent(currentParent)"
+        >
+          {{ currentParent.name }}
         </li>
         <li v-for="subPage in currentParent.children" :key="subPage.name" @click="handleClick(subPage)">
           <SfListItem
             tag="button"
             type="button"
             class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer text-left"
-            @click="() => selectValue(subPage.name)"
-            @keydown.enter.space.prevent="selectValue(subPage.name)"
+            @click="() => selectValue(subPage)"
+            @keydown.enter.space.prevent="selectValue(subPage)"
           >
             {{ subPage.name }}
           </SfListItem>
@@ -92,7 +99,7 @@ const emit = defineEmits(['pageSelected']);
 const inputModel = ref('');
 const inputRef = ref();
 const dropdownListRef = ref();
-const currentParent = ref<{ name: string; children?: { name: string; path: string }[] } | null>(null);
+const currentParent = ref<{ name: string; path: string; children?: { name: string; path: string }[] } | null>(null);
 
 const { pages } = await usePages();
 
@@ -112,7 +119,7 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
 
 const { locale } = useI18n();
 const { t } = useI18n();
-const handleClick = (page: { name: string; path?: string; children?: { name: string; path: string }[] }) => {
+const handleClick = (page: { name: string; path: string; children?: { name: string; path: string }[] }) => {
   const icon = page.name === t('homepage.homepagetitle') ? 'home' : 'sell';
   if (page.children && page.children.length > 0) {
     currentParent.value = page;
@@ -120,6 +127,11 @@ const handleClick = (page: { name: string; path?: string; children?: { name: str
     emit('pageSelected', { name: page.name, icon });
     navigateTo(`/${locale.value}${page.path}`);
   }
+};
+
+const navigateToParent = (parent: { name: string; path: string }) => {
+  emit('pageSelected', { name: parent.name, icon: 'sell' });
+  navigateTo(`/${locale.value}${parent.path}`);
 };
 
 const goBack = () => {
@@ -172,10 +184,13 @@ const reset = () => {
   focusInput();
 };
 
-const selectValue = (name: string) => {
-  inputModel.value = name;
-  close();
-  focusInput();
+const selectValue = (page: { name: string; path: string; children?: { name: string; path: string }[] }) => {
+  if (page.children && page.children.length > 0) {
+    currentParent.value = page;
+  } else {
+    emit('pageSelected', { name: page.name, icon: page.name === t('homepage.homepagetitle') ? 'home' : 'sell' });
+    navigateTo(`/${locale.value}${page.path}`);
+  }
 };
 
 const handleInputKeyDown = (event: KeyboardEvent) => {

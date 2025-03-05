@@ -22,10 +22,12 @@ export const usePages = async () => {
 
           const currentPath = `${parentPath}/${item.details[0].nameUrl}`;
 
+          const children = item.children ? transformData(item.children, currentPath, false) : undefined;
+
           return {
             name: item.details[0].name,
             path: currentPath,
-            children: item.children ? transformData(item.children, currentPath, false) : undefined,
+            children,
           };
         })
         .filter(Boolean);
