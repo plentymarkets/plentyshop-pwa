@@ -72,12 +72,12 @@ const triggerDelete = () => {
 };
 
 const scrollToBlock = (newIndex: number) => {
-    const block = document.getElementById(`block-${newIndex}`);
-    if (block) {
-      block.scrollIntoView(true);
-      window.scrollBy(0, -200);
-    }
-}
+  const block = document.getElementById(`block-${newIndex}`);
+  if (block) {
+    block.scrollIntoView(true);
+    window.scrollBy(0, -200);
+  }
+};
 
 const changePosition = (position: number) => {
   emit('change-position', props.index, position);
