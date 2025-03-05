@@ -6,6 +6,10 @@
 
 - Added site settings toolbar.
 
+### 🩹 Fixed
+
+- Added scroll to block after changing block position.
+
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 👷 Changed
@@ -16,7 +20,6 @@
 
 ### 🩹 Fixed
 
-- Added scroll to block after changing block position.
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 - Fixed site settings not persisting on rebuild.
 
