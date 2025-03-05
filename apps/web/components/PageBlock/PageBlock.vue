@@ -1,6 +1,7 @@
 <template>
   <UiBlockPlaceholder v-if="displayTopPlaceholder(index)" />
   <div
+    :id="`block-${index}`"
     :class="[
       'relative group',
       {
