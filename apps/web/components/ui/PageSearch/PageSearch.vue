@@ -1,54 +1,55 @@
 <template>
-  <div
-  class="p-2 absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-auto min-w-max]"
-  >
-    <form ref="referenceRef" role="search" @submit.prevent="submit">
-      <SfInput
-        ref="inputRef"
-        v-model="inputModel"
-        aria-label="Search"
-        placeholder="Search"
-        @focus="open"
-        @keydown="handleInputKeyDown"
-      >
-        <template #prefix><SfIconSearch /></template>
-        <template #suffix>
-          <button
-            v-if="inputModel"
-            type="button"
-            aria-label="Reset search"
-            class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
-            @click="reset"
-          >
-            <SfIconCancel /></button
-        ></template>
-      </SfInput>
-    </form>
+<div
+  class="p-2 absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-auto min-w-max"
+>
+  <form ref="referenceRef" role="search" @submit.prevent="submit">
+    <SfInput
+      ref="inputRef"
+      v-model="inputModel"
+      aria-label="Search"
+      placeholder="Search"
+      @focus="open"
+      @keydown="handleInputKeyDown"
+    >
+      <template #prefix><SfIconSearch /></template>
+      <template #suffix>
+        <button
+          v-if="inputModel"
+          type="button"
+          aria-label="Reset search"
+          class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
+          @click="reset"
+        >
+          <SfIconCancel /></button
+      ></template>
+    </SfInput>
+  </form>
 
-    <div>
-      <ul class="p-2 transition-all duration-300 h-[300px] w-auto min-w-max overflow-y-auto">
-        <li v-for="page in flattenedPages" :key="page.name">
-          <SfListItem
-            tag="button"
-            type="button"
-            class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer flex justify-between text-left"
-            @click="() => selectValue(page)"
-            @keydown.enter.space.prevent="selectValue(page)"
-          >
-            <div class="flex items-center">
-              <span class="flex items-center">
-                <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
-                {{ page.name }}
-              </span>
-              <span v-if="page.path.split('/').length > 2">
-                {{ page.path }}
-              </span>
-            </div>
-          </SfListItem>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <ul class="p-2 transition-all duration-300 max-h-[300px] w-auto min-w-max overflow-y-auto">
+      <li v-for="page in flattenedPages" :key="page.name">
+        <SfListItem
+          tag="button"
+          type="button"
+          class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer flex justify-between text-left"
+          @click="() => selectValue(page)"
+          @keydown.enter.space.prevent="selectValue(page)"
+        >
+          <div class="flex items-center">
+            <span class="flex items-center">
+              <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
+              {{ page.name }}
+            </span>
+            <span v-if="page.path.split('/').length > 2">
+              {{ page.path }}
+            </span>
+          </div>
+        </SfListItem>
+      </li>
+    </ul>
   </div>
+</div>
+
 </template>
 
 <script lang="ts" setup>
