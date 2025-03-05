@@ -1,6 +1,9 @@
 <template>
-<div class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] h-[52px]" style="box-shadow: 0px 10px 5px 1px rgba(217, 219, 224, 1);" data-testid="edit-mode-toolbar">
-<div class="relative flex items-center pr-5 ">
+  <div
+    class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]"
+    data-testid="edit-mode-toolbar"
+  >
+    <div class="relative flex items-center pr-5">
       <UiBrandLogo />
 
       <button
