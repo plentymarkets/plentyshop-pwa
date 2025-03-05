@@ -81,6 +81,8 @@ const scrollToBlock = (newIndex: number) => {
 
 const changePosition = (position: number) => {
   emit('change-position', props.index, position);
-  scrollToBlock(props.index + position);
+  setTimeout(() => {
+    scrollToBlock(props.index + position);
+  }, 50);
 };
 </script>
