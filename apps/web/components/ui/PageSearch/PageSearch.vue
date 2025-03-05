@@ -26,7 +26,7 @@
   </form>
 
   <div>
-    <ul class="p-2 transition-all duration-300 max-h-[300px] w-auto min-w-max overflow-y-auto">
+    <ul v-if="flattenedPages.length > 0" class="p-2 transition-all duration-300 max-h-[300px] w-auto min-w-max overflow-y-auto">
       <li v-for="page in flattenedPages" :key="page.name">
         <SfListItem
           tag="button"
@@ -47,6 +47,7 @@
         </SfListItem>
       </li>
     </ul>
+    <div v-else class="p-2 text-gray-500">No results found.</div>
   </div>
 </div>
 
@@ -102,14 +103,23 @@ const flattenPages = (
       );
     }
   });
+  console.log('flatPages', flatPages);
   return flatPages;
 };
 
+// const filteredPages = computed(() => {
+//   const searchTerm = inputModel.value.toLowerCase();
+//   return flattenPages(pages.value).filter(
+//     (page) => page.name.toLowerCase().includes(searchTerm) || page.path.toLowerCase().includes(searchTerm),
+//   );
+// });
+
 const filteredPages = computed(() => {
   const searchTerm = inputModel.value.toLowerCase();
-  return flattenPages(pages.value).filter(
-    (page) => page.name.toLowerCase().includes(searchTerm) || page.path.toLowerCase().includes(searchTerm),
-  );
+  const allPages = flattenPages(pages.value).filter((page) =>
+    page.name.toLowerCase().includes(searchTerm) || page.path.toLowerCase().includes(searchTerm),);
+  console.log("allPages", allPages);
+  return allPages;
 });
 
 const flattenedPages = computed(() => filteredPages.value);
