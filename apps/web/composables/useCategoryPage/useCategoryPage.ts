@@ -1,4 +1,10 @@
-import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex, ActiveSlideIndex } from '../useHomepage/types';
+import type {
+  HomepageData,
+  UseHomepageDataReturn,
+  UseHomepageDataState,
+  SetIndex,
+  ActiveSlideIndex,
+} from '../useHomepage/types';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 
 export const useCategoryPage: UseHomepageDataReturn = () => {

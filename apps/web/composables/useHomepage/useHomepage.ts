@@ -26,6 +26,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const { fetchHomepageTemplate } = useFetchHome();
   const route = useRoute();
 
+  const isHomepageRoute = (path: string) => /^\/([a-z]{2})?$/.test(path);
+
   const shouldUseLocaleSpecificTemplate = (data: HomepageData) =>
     (!data.blocks || data.blocks.length === 0) && data.meta?.isDefault === null;
 
@@ -87,8 +89,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const setIndex: SetIndex = (blockIndex: number, slideIndex: number) => {
     state.value.activeSlideIndex[blockIndex] = slideIndex;
   };
-
-  const isHomepageRoute = (path: string) => /^\/([a-z]{2})?$/.test(path);
 
   return {
     fetchPageTemplate,
