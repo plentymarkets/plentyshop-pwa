@@ -15,8 +15,8 @@ export const appConfiguration = {
       { property: 'og:url', content: process.env.API_ENDPOINT },
     ],
     link: [
-      { rel: 'icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', href: '/favicon.ico' },
+      { rel: 'icon', href: '/_nuxt-plenty/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/_nuxt-plenty/favicon.ico' },
     ],
     title: process.env.STORENAME || 'plentyShop PWA',
   },
