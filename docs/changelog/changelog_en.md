@@ -6,6 +6,10 @@
 
 - Added site settings toolbar.
 
+### 🩹 Fixed
+
+- Toolbar language switch fix.
+
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 👷 Changed
