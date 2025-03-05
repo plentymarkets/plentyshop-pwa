@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-2 absolute left-0 top-full mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden"
+  class="p-2 absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-auto min-w-max]"
   >
     <form ref="referenceRef" role="search" @submit.prevent="submit">
       <SfInput
@@ -26,12 +26,8 @@
     </form>
 
     <div>
-      <ul
-        v-if="!currentParent"
-        class="p-2 transition-all duration-300"
-        :class="{ 'translate-x-full opacity-0': currentParent }"
-      >
-        <li v-for="page in filteredPages" :key="page.name">
+      <ul class="p-2 transition-all duration-300 h-[300px] w-auto min-w-max overflow-y-auto">
+        <li v-for="page in flattenedPages" :key="page.name">
           <SfListItem
             tag="button"
             type="button"
@@ -39,39 +35,15 @@
             @click="() => selectValue(page)"
             @keydown.enter.space.prevent="selectValue(page)"
           >
-            <span>
-              <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
-              {{ page.name }}
-              <SfIconChevronRight v-if="page.children && page.children.length > 0" class="w-3 h3" />
-            </span>
-          </SfListItem>
-        </li>
-      </ul>
-
-      <ul
-        v-if="currentParent"
-        class="p-2 transition-all duration-300"
-        :class="{ 'translate-x-0 opacity-100': currentParent, '-translate-x-full opacity-0': !currentParent }"
-      >
-        <li class="p-2 text-gray-500 hover:text-gray-900 cursor-pointer flex items-center" @click="goBack">
-          <SfIconChevronLeft class="w-3 h-3" /> Back
-        </li>
-        <li
-          v-if="currentParent"
-          class="p-2 text-gray-900 hover:bg-gray-100 cursor-pointer flex items-center"
-          @click="navigateToParent(currentParent)"
-        >
-          {{ currentParent.name }}
-        </li>
-        <li v-for="subPage in currentParent.children" :key="subPage.name" @click="handleClick(subPage)">
-          <SfListItem
-            tag="button"
-            type="button"
-            class="p-2 text-gray-900 hover:bg-gray-100 rounded-md cursor-pointer text-left"
-            @click="() => selectValue(subPage)"
-            @keydown.enter.space.prevent="selectValue(subPage)"
-          >
-            {{ subPage.name }}
+            <div class="flex items-center">
+              <span class="flex items-center">
+                <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
+                {{ page.name }}
+              </span>
+              <span v-if="page.path.split('/').length > 2">
+                {{ page.path }}
+              </span>
+            </div>
           </SfListItem>
         </li>
       </ul>
@@ -90,8 +62,6 @@ import {
   useDisclosure,
   useDropdown,
   useTrapFocus,
-  SfIconChevronLeft,
-  SfIconChevronRight,
   SfIconHome,
 } from '@storefront-ui/vue';
 const emit = defineEmits(['pageSelected']);
@@ -99,7 +69,6 @@ const emit = defineEmits(['pageSelected']);
 const inputModel = ref('');
 const inputRef = ref();
 const dropdownListRef = ref();
-const currentParent = ref<{ name: string; path: string; children?: { name: string; path: string }[] } | null>(null);
 
 const { pages } = await usePages();
 
@@ -119,54 +88,30 @@ const { focusables: focusableElements } = useTrapFocus(dropdownListRef as Ref<HT
 
 const { locale } = useI18n();
 const { t } = useI18n();
-const handleClick = (page: { name: string; path: string; children?: { name: string; path: string }[] }) => {
-  const icon = page.name === t('homepage.homepagetitle') ? 'home' : 'sell';
-  if (page.children && page.children.length > 0) {
-    currentParent.value = page;
-  } else {
-    emit('pageSelected', { name: page.name, icon });
-    navigateTo(`/${locale.value}${page.path}`);
-  }
-};
 
-const navigateToParent = (parent: { name: string; path: string }) => {
-  emit('pageSelected', { name: parent.name, icon: 'sell' });
-  navigateTo(`/${locale.value}${parent.path}`);
-};
-
-const goBack = () => {
-  currentParent.value = null;
-  inputModel.value = '';
-};
-const recursiveFilter = (
-  pages: { name: string; path: string; children?: { name: string; path: string }[] }[],
-  query: string,
-): { name: string; path: string; children?: { name: string; path: string }[] }[] => {
-  return pages.reduce(
-    (acc, page) => {
-      const hasMatchingChildren = page.children ? recursiveFilter(page.children, query) : [];
-
-      const matchesQuery = page.name.toLowerCase().includes(query.toLowerCase()) || hasMatchingChildren.length > 0;
-
-      if (matchesQuery) {
-        acc.push({
-          ...page,
-          children: hasMatchingChildren.length > 0 ? hasMatchingChildren : undefined,
-        });
-      }
-      return acc;
-    },
-    [] as { name: string; path: string; children?: { name: string; path: string }[] }[],
-  );
+const flattenPages = (
+  pages: { name: string; path: string; children?: unknown[] }[],
+): { name: string; path: string }[] => {
+  let flatPages: { name: string; path: string }[] = [];
+  pages.forEach((page) => {
+    flatPages.push({ name: page.name, path: page.path });
+    if (page.children) {
+      flatPages = flatPages.concat(
+        flattenPages(page.children as { name: string; path: string; children?: unknown[] }[]),
+      );
+    }
+  });
+  return flatPages;
 };
 
 const filteredPages = computed(() => {
-  if (!inputModel.value) {
-    return pages.value;
-  }
-
-  return recursiveFilter(pages.value, inputModel.value);
+  const searchTerm = inputModel.value.toLowerCase();
+  return flattenPages(pages.value).filter(
+    (page) => page.name.toLowerCase().includes(searchTerm) || page.path.toLowerCase().includes(searchTerm),
+  );
 });
+
+const flattenedPages = computed(() => filteredPages.value);
 
 const submit = () => {
   close();
@@ -184,13 +129,9 @@ const reset = () => {
   focusInput();
 };
 
-const selectValue = (page: { name: string; path: string; children?: { name: string; path: string }[] }) => {
-  if (page.children && page.children.length > 0) {
-    currentParent.value = page;
-  } else {
-    emit('pageSelected', { name: page.name, icon: page.name === t('homepage.homepagetitle') ? 'home' : 'sell' });
-    navigateTo(`/${locale.value}${page.path}`);
-  }
+const selectValue = (page: { name: string; path: string }) => {
+  emit('pageSelected', { name: page.name, icon: page.name === t('homepage.homepagetitle') ? 'home' : 'sell' });
+  navigateTo(`/${locale.value}${page.path}`);
 };
 
 const handleInputKeyDown = (event: KeyboardEvent) => {
@@ -212,19 +153,6 @@ const handleInputKeyDown = (event: KeyboardEvent) => {
 watch(inputModel, () => {
   if (inputModel.value === '') {
     reset();
-  }
-});
-
-watch(inputModel, (newQuery) => {
-  if (!newQuery) {
-    currentParent.value = null;
-  } else {
-    const foundPages = recursiveFilter(pages.value, newQuery);
-    if (foundPages.length === 1) {
-      currentParent.value = foundPages[0];
-    } else {
-      currentParent.value = null;
-    }
   }
 });
 </script>
