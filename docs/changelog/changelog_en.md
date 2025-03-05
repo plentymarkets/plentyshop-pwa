@@ -17,6 +17,7 @@
 
 ### New
 
+- Added scroll to block after changing block position.
 - Added success and error notifications when saving changes in the editor.
 
 ### 🩹 Fixed
