@@ -1,12 +1,15 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
   <div
-    class="w-100 relative"
+    class="w-100 relative md:flex"
     :class="{
-      'lg:flex': drawerOpen,
       'lg:flex-row-reverse': placement !== 'left',
+      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen,
+      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen,
     }"
   >
+    <SettingsToolbar v-if="disableActions" :class="{ 'mr-3': placement === 'left' && !drawerOpen }" />
+
     <SiteConfigurationDrawer
       v-if="drawerOpen"
       class="absolute lg:relative bg-white"
@@ -14,7 +17,10 @@
       :style="`font-family: ${config.font}`"
     />
 
-    <div class="w-100 bg-white" :class="{ 'lg:w-3/4': drawerOpen }">
+    <div
+      class="bg-white w-full"
+      :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': !drawerOpen && disableActions }"
+    >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" data-testid="body" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
@@ -39,6 +45,7 @@ const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
+const { disableActions } = useEditor();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;

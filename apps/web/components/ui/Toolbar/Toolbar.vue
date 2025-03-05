@@ -1,5 +1,8 @@
 <template>
-  <div class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] mb-3 h-[52px]" data-testid="edit-mode-toolbar">
+  <div
+    class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]"
+    data-testid="edit-mode-toolbar"
+  >
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
 
@@ -61,28 +64,18 @@
 </template>
 
 <script setup lang="ts">
-import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconBase, SfIconVisibility } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const {
-  drawerView,
-  openDrawerWithView,
-  closeDrawer,
-  settingsIsDirty,
-  loading: settingsLoading,
-} = useSiteConfiguration();
+const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
 const { save } = useToolbar();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
-
-const toggleSettingsDrawer = () => {
-  drawerView.value === 'settings' ? closeDrawer() : openDrawerWithView('settings');
-};
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
