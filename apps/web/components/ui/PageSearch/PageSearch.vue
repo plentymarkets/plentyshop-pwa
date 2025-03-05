@@ -1,29 +1,29 @@
 <template>
-<div
-  class="p-2 absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-auto min-w-max"
->
-  <form ref="referenceRef" role="search" @submit.prevent="submit">
-    <SfInput
-      ref="inputRef"
-      v-model="inputModel"
-      aria-label="Search"
-      placeholder="Search"
-      @focus="open"
-      @keydown="handleInputKeyDown"
-    >
-      <template #prefix><SfIconSearch /></template>
-      <template #suffix>
-        <button
-          v-if="inputModel"
-          type="button"
-          aria-label="Reset search"
-          class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
-          @click="reset"
-        >
-          <SfIconCancel /></button
-      ></template>
-    </SfInput>
-  </form>
+  <div
+    class="p-2 absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-auto min-w-max"
+  >
+    <form ref="referenceRef" role="search" @submit.prevent="submit">
+      <SfInput
+        ref="inputRef"
+        v-model="inputModel"
+        aria-label="Search"
+        placeholder="Search"
+        @focus="open"
+        @keydown="handleInputKeyDown"
+      >
+        <template #prefix><SfIconSearch /></template>
+        <template #suffix>
+          <button
+            v-if="inputModel"
+            type="button"
+            aria-label="Reset search"
+            class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
+            @click="reset"
+          >
+            <SfIconCancel /></button
+        ></template>
+      </SfInput>
+    </form>
 
   <div>
     <ul v-if="flattenedPages.length > 0" class="p-2 transition-all duration-300 max-h-[300px] w-auto min-w-max overflow-y-auto">
@@ -40,7 +40,7 @@
               <SfIconHome v-if="page.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2" />
               {{ page.name }}
             </span>
-            <span v-if="page.path.split('/').length > 2">
+            <span  v-if="page.path.split('/').length > 2"  class="text-xs font-bold ml-2">
               {{ page.path }}
             </span>
           </div>
