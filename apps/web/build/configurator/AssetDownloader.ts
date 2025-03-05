@@ -22,7 +22,7 @@ export class AssetDownloader {
       return;
     }
     this.logger.info('Downloading favicon...');
-    const iconPath = path.resolve(__dirname, `../../public/favicon.ico`);
+    const iconPath = path.resolve(__dirname, `../../public/_nuxt-plenty/favicon.ico`);
     this.writer.write(url, iconPath);
   }
 
@@ -33,7 +33,7 @@ export class AssetDownloader {
     }
     this.logger.info('Downloading logo...');
     const fileType = url.split('.').pop();
-    const logoPath = path.resolve(__dirname, `../../public/images/logo.${fileType}`);
+    const logoPath = path.resolve(__dirname, `../../public/_nuxt-plenty/images/logo.${fileType}`);
     this.writer.write(url, logoPath);
   }
 }
