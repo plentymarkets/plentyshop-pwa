@@ -17,7 +17,7 @@
         <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
       </div>
     </div>
-    <UiPageSearch v-if="isOpen" @page-selected="handlePageSelected" />
+    <UiPageSearch v-if="isOpen" @close="closeDropdown" @page-selected="handlePageSelected" />
   </div>
 </template>
 
@@ -33,7 +33,11 @@ const isOpen = ref(false);
 const toggleDropdown = () => (isOpen.value = !isOpen.value);
 
 const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
+  isOpen.value = false;
   currentPageName.value = name;
   currentPageIcon.value = icon;
+};
+const closeDropdown = () => {
+  isOpen.value = false;
 };
 </script>
