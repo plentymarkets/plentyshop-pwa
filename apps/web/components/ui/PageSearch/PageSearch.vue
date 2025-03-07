@@ -1,6 +1,8 @@
 <template>
-  <div class="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden max-w-[400px] w-full sm:w-4/5 md:w-3/4 lg:w-[400px] h-[300px]">
-  <Multiselect
+  <div
+    class="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
+  >
+    <Multiselect
       ref="multiselectRef"
       v-model="inputModel"
       data-testid="font-select"
@@ -11,10 +13,9 @@
       track-by="name"
       :close-on-select="true"
       :allow-empty="false"
-      option-height="40"
       select-label=""
       deselect-label="Selected"
-      class="w-full h-full"
+      class="w-full h-auto flex-grow"
       :open="isOpen"
       @close="closeDropdown"
       @select="selectValue"
@@ -22,7 +23,10 @@
       <template #option="{ option }">
         <div class="flex items-center px-2 max-h-[300px] w-auto">
           <span class="flex items-center">
-            <SfIconHome v-if="option.name === t('homepage.homepagetitle')" class="w-4 h-4 mr-2 font-bold text-gray-900" />
+            <SfIconHome
+              v-if="option.name === t('homepage.homepagetitle')"
+              class="w-4 h-4 mr-2 font-bold text-gray-900"
+            />
             {{ option.name }}
           </span>
           <span v-if="option.path.split('/').length > 2" class="text-xs ml-2">
@@ -31,6 +35,9 @@
         </div>
       </template>
     </Multiselect>
+    <div class="p-2 mt-auto bg-blue-600 text-white font-bold py-2 px-4 rounded">
+      <button>Confirm Selection</button>
+    </div>
   </div>
 </template>
 
@@ -69,12 +76,12 @@ const customLabel = ({ name, path }: { name: string; path: string }): string => 
 
 const open = () => {
   if (multiselectRef.value) {
-    (multiselectRef.value).activate();
+    multiselectRef.value.activate();
   }
 };
 
 const closeDropdown = () => {
-  emit ('close');
+  emit('close');
 };
 
 const selectValue = (page: { name: string; path: string }) => {
@@ -86,8 +93,8 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-:deep .multiselect__option--highlight  {
+:deep .multiselect__option--highlight {
   background-color: #f7fafc !important;
-  color: #1a202c
+  color: #1a202c;
 }
 </style>
