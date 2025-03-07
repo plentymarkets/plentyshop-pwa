@@ -5,6 +5,7 @@
 ### New
 
 - Added site settings toolbar.
+- Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
 
 #### Changed
 
