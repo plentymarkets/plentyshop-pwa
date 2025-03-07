@@ -92,19 +92,25 @@ const validateAndSubmitEmail = async () => {
     !sessionData.value.user?.guestMail ||
     updatedEmail.trim().toLowerCase() !== sessionData.value.user.guestMail.trim().toLowerCase();
 
-  if (shouldUpdateEmail) {
-    await saveContactInformation(updatedEmail);
-    await useFetchAddress(AddressType.Shipping)
-      .fetchServer()
-      .then(() => persistShippingAddress());
+  if (shouldUpdateEmail) await handleGuestEmailChange(updatedEmail);
+};
 
-    await useFetchAddress(AddressType.Billing)
-      .fetchServer()
-      .then(() => persistBillingAddress())
-      .catch((error) => useHandleError(error));
+const handleGuestEmailChange = async (updatedEmail: string) => {
+  await saveContactInformation(updatedEmail);
 
-    await checkPayPalPaymentsEligible();
-  }
+  useCheckoutAddress(AddressType.Shipping).clear();
+  useCheckoutAddress(AddressType.Billing).clear();
+
+  await useFetchAddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress());
+
+  await useFetchAddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
+
+  await checkPayPalPaymentsEligible();
 };
 
 const saveContactInformation = async (email: string) => {
