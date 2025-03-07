@@ -342,6 +342,7 @@
     "heading": "Payment method",
     "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },
+  "checkoutExportDelivery": "By placing the order I recognise that my order is shipped from {shopCountry} to {deliveryCountry}. The local VAT, costs of customs clearance and customs duties are not included in the total amount of the order and have to be settled with third parties. I bear the costs.",
   "clear": "Clear",
   "clearFilters": "Clear all filters",
   "closeDialog": "Close Dialog",
