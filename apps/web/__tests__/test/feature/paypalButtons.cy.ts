@@ -14,7 +14,10 @@ const myAccount: MyAccountPageObject = new MyAccountPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"CookieBar.essentials.label":{"CookieBar.essentials.cookies.plentyId.name":true,"CookieBar.essentials.cookies.vsfLocale.name":true,"CookieBar.essentials.cookies.consentCookie.name":true,"CookieBar.essentials.cookies.cloudflareTurnstile.name":true},"CookieBar.externalMedia.label":{},"CookieBar.functional.label":{"CookieBar.functional.cookies.scriptDemo.name":true,"CookieBar.essentials.cookies.payPal.name":true},"CookieBar.marketing.label":{}}');
+  cy.setCookie(
+    'consent-cookie',
+    '{"CookieBar.essentials.label":{"CookieBar.essentials.cookies.plentyId.name":true,"CookieBar.essentials.cookies.vsfLocale.name":true,"CookieBar.essentials.cookies.consentCookie.name":true,"CookieBar.essentials.cookies.cloudflareTurnstile.name":true},"CookieBar.externalMedia.label":{},"CookieBar.functional.label":{"CookieBar.functional.cookies.scriptDemo.name":true,"CookieBar.essentials.cookies.payPal.name":true},"CookieBar.marketing.label":{}}',
+  );
   cy.visitAndHydrate(paths.home);
 });
 
@@ -36,6 +39,6 @@ describe('Feature: PayPal button rendering', () => {
     cy.reload();
     cy.wait('@getPaymentProviders');
 
-    checkout.payPalButton.should("exist");
+    checkout.payPalButton.should('exist');
   });
 });

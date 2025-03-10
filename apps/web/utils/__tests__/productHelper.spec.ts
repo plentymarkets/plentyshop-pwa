@@ -1,6 +1,6 @@
-import { generateBreadcrumbs } from "../productHelper";
-import { CategoryTreeFixture } from "./__fixtures__/CategoryTree";
-import ProductFixture from "./__fixtures__/Product";
+import { generateBreadcrumbs } from '../productHelper';
+import { CategoryTreeFixture } from './__fixtures__/CategoryTree';
+import ProductFixture from './__fixtures__/Product';
 
 describe('product helper', () => {
   it('should generate breadcrumbs', () => {
@@ -9,7 +9,7 @@ describe('product helper', () => {
     expect(breadcrumbs).toStrictEqual([
       { name: 'home', link: '/' },
       { name: 'Gear', link: '/gear' },
-      { name: "Headphones Capybara", link: "#" }
+      { name: 'Headphones Capybara', link: '#' },
     ]);
-  })
-})
+  });
+});
