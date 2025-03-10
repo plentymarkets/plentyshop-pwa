@@ -15,7 +15,6 @@
       :allow-empty="false"
       select-label=""
       deselect-label="Selected"
-      class="w-full h-auto flex-grow"
       :open="isOpen"
       @close="closeDropdown"
       @select="selectValue"
@@ -96,5 +95,8 @@ onMounted(() => {
 :deep .multiselect__option--highlight {
   background-color: #f7fafc !important;
   color: #1a202c;
+}
+:deep .multiselect__content-wrapper {
+  max-height: 400px !important
 }
 </style>
