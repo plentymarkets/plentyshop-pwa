@@ -6,36 +6,36 @@ describe('Banner', () => {
   describe('with default settings', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-      name: 'Banner',
-      type: 'content',
-      content: {
-              image: {
-                  wideScreen: '/test-desktop.jpg',
-                  desktop: '/test-desktop.jpg',
-                  tablet: '/test-tablet.jpg',
-                  mobile: '/test-mobile.jpg',
-                  alt: 'test alt text',
-              },
-              text: {
-                  pretitle: 'Test pretitle',
-                  title: 'Test title',
-                  subtitle: 'Test subtitle',
-                  htmlDescription: '<p>Test description</p>',
-                  textAlignment: 'left',
-                  justify: 'top',
-                  align: 'left',
-                  background: true,
-              },
-              button: {
-                  label: 'Test button',
-                  link: '/test-link',
-                  variant: 'primary',
-              },
+        name: 'Banner',
+        type: 'content',
+        content: {
+          image: {
+            wideScreen: '/test-desktop.jpg',
+            desktop: '/test-desktop.jpg',
+            tablet: '/test-tablet.jpg',
+            mobile: '/test-mobile.jpg',
+            alt: 'test alt text',
           },
-          index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+          text: {
+            pretitle: 'Test pretitle',
+            title: 'Test title',
+            subtitle: 'Test subtitle',
+            htmlDescription: '<p>Test description</p>',
+            textAlignment: 'left',
+            justify: 'top',
+            align: 'left',
+            background: true,
+          },
+          button: {
+            label: 'Test button',
+            link: '/test-link',
+            variant: 'primary',
+          },
+        },
+        index: 0,
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -44,16 +44,7 @@ describe('Banner', () => {
     });
 
     it('should render all elements in the correct order', () => {
-      const expectedOrder = [
-        'image',
-        'overlay',
-        'content',
-        'pretitle',
-        'title',
-        'subtitle',
-        'description',
-        'button',
-      ];
+      const expectedOrder = ['image', 'overlay', 'content', 'pretitle', 'title', 'subtitle', 'description', 'button'];
       const elements = wrapper.findAll('[data-testid^="banner-"]');
       elements.forEach((element, index) => {
         expect(element.attributes('data-testid')).toContain(expectedOrder[index]);

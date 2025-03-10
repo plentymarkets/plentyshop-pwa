@@ -18,9 +18,9 @@ describe('Banner text', () => {
           button: {},
         },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -33,21 +33,21 @@ describe('Banner text', () => {
   it('should not render a title if no title is provided', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-          name: 'Banner',
-          type: 'content',
-          content: {
-              text: {
-                  pretitle: 'Test pretitle',
-                  subtitle: 'Test subtitle',
-                  htmlDescription: '<p>Test description</p>',
-              },
-              image: {},
-              button: {},
+        name: 'Banner',
+        type: 'content',
+        content: {
+          text: {
+            pretitle: 'Test pretitle',
+            subtitle: 'Test subtitle',
+            htmlDescription: '<p>Test description</p>',
           },
+          image: {},
+          button: {},
+        },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -60,21 +60,21 @@ describe('Banner text', () => {
   it('should not render a subtitle if no subtitle is provided', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-          name: 'Banner',
-          type: 'content',
-          content: {
-              text: {
-                  pretitle: 'Test pretitle',
-                  title: 'Test title',
-                  htmlDescription: '<p>Test description</p>',
-              },
-              image: {},
-              button: {},
+        name: 'Banner',
+        type: 'content',
+        content: {
+          text: {
+            pretitle: 'Test pretitle',
+            title: 'Test title',
+            htmlDescription: '<p>Test description</p>',
           },
+          image: {},
+          button: {},
+        },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -87,21 +87,21 @@ describe('Banner text', () => {
   it('should not render a description if no description is provided', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-          name: 'Banner',
-          type: 'content',
-          content: {
-              text: {
-                  pretitle: 'Test pretitle',
-                  title: 'Test title',
-                  subtitle: 'Test subtitle',
-              },
-              image: {},
-              button: {},
+        name: 'Banner',
+        type: 'content',
+        content: {
+          text: {
+            pretitle: 'Test pretitle',
+            title: 'Test title',
+            subtitle: 'Test subtitle',
           },
+          image: {},
+          button: {},
+        },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -114,23 +114,23 @@ describe('Banner text', () => {
   it('should set the given text color', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-          name: 'Banner',
-          type: 'content',
-          content: {
-              text: {
-                  pretitle: 'Test pretitle',
-                  title: 'Test title',
-                  subtitle: 'Test subtitle',
-                  htmlDescription: '<p>Test description</p>',
-                  color: 'red',
-              },
-              image: {},
-              button: {},
+        name: 'Banner',
+        type: 'content',
+        content: {
+          text: {
+            pretitle: 'Test pretitle',
+            title: 'Test title',
+            subtitle: 'Test subtitle',
+            htmlDescription: '<p>Test description</p>',
+            color: 'red',
           },
+          image: {},
+          button: {},
+        },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -141,24 +141,24 @@ describe('Banner text', () => {
   it('should set the given background color', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-          name: 'Banner',
-          type: 'content',
-          content: {
-              text: {
-                  pretitle: 'Test pretitle',
-                  title: 'Test title',
-                  subtitle: 'Test subtitle',
-                  htmlDescription: '<p>Test description</p>',
-                  bgcolor: '#0000FF',
-                  background: true,
-              },
-              image: {},
-              button: {},
+        name: 'Banner',
+        type: 'content',
+        content: {
+          text: {
+            pretitle: 'Test pretitle',
+            title: 'Test title',
+            subtitle: 'Test subtitle',
+            htmlDescription: '<p>Test description</p>',
+            bgcolor: '#0000FF',
+            background: true,
           },
+          image: {},
+          button: {},
+        },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -169,24 +169,24 @@ describe('Banner text', () => {
   it('should set the given background opacity', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-          name: 'Banner',
-          type: 'content',
-          content: {
-              text: {
-                  pretitle: 'Test pretitle',
-                  title: 'Test title',
-                  subtitle: 'Test subtitle',
-                  htmlDescription: '<p>Test description</p>',
-                  bgopacity: 0.5,
-                  background: true,
-              },
-              image: {},
-              button: {},
+        name: 'Banner',
+        type: 'content',
+        content: {
+          text: {
+            pretitle: 'Test pretitle',
+            title: 'Test title',
+            subtitle: 'Test subtitle',
+            htmlDescription: '<p>Test description</p>',
+            bgopacity: 0.5,
+            background: true,
           },
+          image: {},
+          button: {},
+        },
         index: 0,
-          meta: {
-              uuid: '11111111-1111-4111-8111-111111111111'
-          }
+        meta: {
+          uuid: '11111111-1111-4111-8111-111111111111',
+        },
       },
     });
 
@@ -198,22 +198,22 @@ describe('Banner text', () => {
     it('should align text to the left by default', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -224,23 +224,23 @@ describe('Banner text', () => {
     it('should align text to the center', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                    textAlignment: 'center',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              textAlignment: 'center',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -251,23 +251,23 @@ describe('Banner text', () => {
     it('should align text to the right', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                    textAlignment: 'right',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              textAlignment: 'right',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -280,22 +280,22 @@ describe('Banner text', () => {
     it('should justify content to the start by default', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -306,23 +306,23 @@ describe('Banner text', () => {
     it('should justify content to the center', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                    justify: 'center',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              justify: 'center',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -333,23 +333,23 @@ describe('Banner text', () => {
     it('should justify content to the end', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                    justify: 'bottom',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              justify: 'bottom',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -362,22 +362,22 @@ describe('Banner text', () => {
     it('should align items to the start by default', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -388,23 +388,23 @@ describe('Banner text', () => {
     it('should align items to the center', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                    align: 'center',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              align: 'center',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
@@ -415,23 +415,23 @@ describe('Banner text', () => {
     it('should align items to the end', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
-            name: 'Banner',
-            type: 'content',
-            content: {
-                text: {
-                    pretitle: 'Test pretitle',
-                    title: 'Test title',
-                    subtitle: 'Test subtitle',
-                    htmlDescription: '<p>Test description</p>',
-                    align: 'right',
-                },
-                image: {},
-                button: {},
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              align: 'right',
             },
+            image: {},
+            button: {},
+          },
           index: 0,
-            meta: {
-                uuid: '11111111-1111-4111-8111-111111111111'
-            }
+          meta: {
+            uuid: '11111111-1111-4111-8111-111111111111',
+          },
         },
       });
 
