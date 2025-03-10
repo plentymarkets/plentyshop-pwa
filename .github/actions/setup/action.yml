@@ -1,33 +1,14 @@
-name: 'Setup Node and Yarn'
-description: 'The default Node and Yarn setup for all workflows'
-inputs:
-  npm-auth-token:
-    description: 'NPM authentication token'
-    required: true
+name: 'Setup Node'
+description: 'The default Node setup for all workflows'
 runs:
   using: 'composite'
   steps:
-    - name: Enable corepack
-      run: corepack enable
-      shell: bash
-
     - name: Setup node
       uses: actions/setup-node@v4
       with:
         node-version-file: '.nvmrc'
-        cache: 'yarn'
-        registry-url: 'https://npm.pkg.github.com'
-
-    - name: Setup yarn (Unix)
-      if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
-      run: chmod +x ${{ github.workspace }}/yarn.sh && ${{ github.workspace }}/yarn.sh
+        cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install dependencies
+      run: npm ci
       shell: bash
-      env:
-        NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
-
-    - name: Setup yarn (Windows)
-      if: ${{ runner.os == 'Windows' }}
-      run: powershell -Command Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ${{ github.workspace }}/yarn.ps1
-      shell: pwsh
-      env:
-        NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}

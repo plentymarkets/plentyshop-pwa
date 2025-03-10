@@ -1,17 +1,19 @@
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
-import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState } from './types';
+import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex, ActiveSlideIndex } from './types';
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
+  locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);
 
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
-    data: { blocks: [], meta: { isDefault: null } } as HomepageData,
+    data: { blocks: [] as Block[], meta: { isDefault: null } } as HomepageData,
     initialBlocks: [],
     dataIsEmpty: false,
     loading: false,
     showErrors: false,
+    activeSlideIndex: {} as ActiveSlideIndex,
   }));
 
   const { $i18n } = useNuxtApp();
@@ -22,17 +24,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   const { fetchCategoryTemplate } = useCategoryTemplate();
   const { fetchHomepageTemplate } = useFetchHome();
-
-  const fetchRecommendedProducts = async () => {
-    state.value.data.blocks.forEach((block) => {
-      if (block.name === 'ProductRecommendedProducts') {
-        const options = block.options as ProductRecommendedProductsOptions;
-        const id = options.categoryId;
-        const { fetchProductRecommended } = useProductRecommended(id);
-        fetchProductRecommended(id);
-      }
-    });
-  };
 
   const initializeHomepageTemplate = async () => {
     if (typeof homepageCategoryId === 'number') {
@@ -48,9 +39,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
-    state.value.initialBlocks = state.value.data.blocks.map((block) => toRaw(block));
-
-    await fetchRecommendedProducts();
+    state.value.initialBlocks = structuredClone(toRaw(state.value.data.blocks));
   };
 
   const fetchPageTemplate = async (): Promise<void> => {
@@ -82,8 +71,21 @@ export const useHomepage: UseHomepageDataReturn = () => {
     { deep: true },
   );
 
+  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => {
+    const carouselBlock = state.value.data.blocks[blockIndex];
+    if (carouselBlock) {
+      carouselBlock.options = { ...carouselBlock.options, ...{ bannerItems: newBannerItems } };
+    }
+  };
+
+  const setIndex: SetIndex = (blockIndex: number, slideIndex: number) => {
+    state.value.activeSlideIndex[blockIndex] = slideIndex;
+  };
+
   return {
     fetchPageTemplate,
+    updateBannerItems,
+    setIndex,
     ...toRefs(state.value),
   };
 };

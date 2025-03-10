@@ -3,7 +3,7 @@
     novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="shipping-address-form"
-    @submit="submitForm"
+    @submit.prevent="validateAndSubmitForm"
   >
     <label>
       <UiFormLabel>
@@ -130,24 +130,61 @@
       </SfSelect>
       <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
+    <div
+      v-if="!restrictedAddresses || showAddressSaveButton"
+      class="md:col-span-3 flex flex-col sm:flex-row sm:justify-end sm:items-center"
+    >
+      <div v-if="showAddressSaveButton" class="flex items-center">
+        <UiButton
+          :data-testid="`save-address-${AddressType.Billing}`"
+          :disabled="formIsLoading"
+          variant="secondary"
+          type="submit"
+        >
+          {{ $t('saveAddress') }}
+        </UiButton>
+
+        <UiButton
+          v-if="hasCheckoutAddress"
+          :disabled="formIsLoading || disabled"
+          variant="secondary"
+          class="ml-2"
+          :data-testid="`close-address-${AddressType.Billing}`"
+          @click="edit"
+        >
+          <SfIconClose />
+        </UiButton>
+      </div>
+    </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
+import { SfInput, SfSelect, SfLink, SfIconClose } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
-import type { AddressFormProps } from './types';
+import type { AddressFormBillingProps } from './types';
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
-const { address, addAddress = false } = defineProps<AddressFormProps>();
+const { disabled, address, addAddress = false } = defineProps<AddressFormBillingProps>();
 
 const { isGuest } = useCustomer();
 const { shippingAsBilling } = useShippingAsBilling();
-const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAddressForm(AddressType.Billing);
+const {
+  isLoading: formIsLoading,
+  hasCompany,
+  addressToSave,
+  open: editing,
+  addressToEdit,
+  add: showNewForm,
+  save: saveAddress,
+  validationSchema: billingSchema,
+} = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
-const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
-const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
+const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
+const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: billingSchema });
 const { billingCountries } = useAggregatedCountries();
+const { restrictedAddresses } = useRestrictedAddress();
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -159,10 +196,12 @@ const [zipCode, zipCodeAttributes] = defineField('zipCode');
 const [companyName, companyNameAttributes] = defineField('companyName');
 const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 
-if (!addAddress) {
+const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
+
+if (!addAddress && address) {
   hasCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setValues(address as any);
+  setValues(address as unknown as Record<string, string>);
+
   if (!hasCompany.value) {
     companyName.value = '';
     vatNumber.value = '';
@@ -182,6 +221,15 @@ const syncCheckoutAddress = async () => {
   if (guestHasShippingAsBilling) shippingAsBilling.value = false;
 };
 
+const validateAndSubmitForm = async () => {
+  const formData = await validate();
+
+  if (formData.valid) {
+    await submitForm();
+    if (showNewForm.value) showNewForm.value = false;
+  }
+};
+
 const submitForm = handleSubmit((billingAddressForm) => {
   addressToSave.value = billingAddressForm as Address;
 
@@ -197,5 +245,10 @@ const submitForm = handleSubmit((billingAddressForm) => {
     .catch((error) => useHandleError(error));
 });
 
-defineExpose({ validate, submitForm });
+const edit = (address: Address) => {
+  if (disabled) return;
+  addressToEdit.value = editing.value || showNewForm.value ? ({} as Address) : address;
+  editing.value = !(editing.value || showNewForm.value);
+  showNewForm.value = false;
+};
 </script>

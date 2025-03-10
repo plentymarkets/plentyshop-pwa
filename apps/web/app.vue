@@ -1,13 +1,33 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
-  <div class="w-100 relative" :class="{ 'lg:flex': drawerOpen }">
+  <div
+    class="w-100 relative md:flex"
+    :class="{
+      'lg:flex-row-reverse': placement !== 'left',
+      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen,
+      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen,
+    }"
+  >
+    <SettingsToolbar
+      v-if="isPreview && disableActions"
+      :class="{
+        'order-first': placement === 'left',
+        'order-last': placement === 'right',
+        'mr-3': !drawerOpen || placement === 'right',
+      }"
+    />
+
     <SiteConfigurationDrawer
       v-if="drawerOpen"
-      class="sm:absolute lg:relative mr-3 bg-white"
+      class="absolute lg:relative bg-white"
+      :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
       :style="`font-family: ${config.font}`"
     />
 
-    <div class="w-100 bg-white" :class="{ 'lg:w-3/4': drawerOpen }">
+    <div
+      class="bg-white w-full"
+      :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
+    >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
@@ -20,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Locale } from '#i18n';
+
 const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
 const { getCategoryTree } = useCategoryTree();
@@ -29,16 +51,17 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
-const { currentFont } = useSiteConfiguration();
+const { drawerOpen, currentFont, placement } = useSiteConfiguration();
+const { disableActions } = useEditor();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
 
-const { drawerOpen } = useSiteConfiguration();
-
-const pwaCookie = useCookie('pwa');
-isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+onMounted(() => {
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
 
 await setInitialDataSSR();
 setVsfLocale(locale.value);
@@ -52,7 +75,7 @@ onNuxtReady(async () => {
 
 watch(
   () => locale.value,
-  async (locale: string) => {
+  async (locale: Locale) => {
     setVsfLocale(locale);
     await getCategoryTree();
   },

@@ -3,8 +3,6 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
-import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
-import { securityConfiguration } from './configuration/security.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -13,7 +11,6 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
   app: appConfiguration,
-  security: securityConfiguration,
   experimental: {
     asyncContext: true,
   },
@@ -34,9 +31,9 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/images/**': { headers: { 'cache-control': `max-age=604800` } },
+    '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
@@ -53,26 +50,27 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
-      primaryColor: process.env.PRIMARY || '#062633',
-      secondaryColor: process.env.SECONDARY || '#31687d',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
-      headerLogo: process.env.LOGO || '/images/logo.svg',
+      headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
-      isHero: process.env.IS_HERO === 'true',
-      font: process.env.TEXT || 'Red Hat Text',
-      showBlocksNavigation: process.env.SHOW_BLOCKS_NAVIGATION === '1',
+      isHero: true,
+      font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
+      blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
+      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
+      secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
     },
   },
   modules: [
-    'nuxt-security',
+    '@plentymarkets/shop-module-gtag',
+    '@plentymarkets/shop-core',
     '@nuxt/eslint',
+    '@nuxt/fonts',
     '@nuxt/image',
     '@nuxt/test-utils/module',
-    '@nuxtjs/google-fonts',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
@@ -83,9 +81,19 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
   ],
-  vsf: {
+  alokai: {
     middleware: {
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+      cdnCacheBustingId: 'no-cache-busting-id-set',
+      ssrApiUrl: '',
+    },
+  },
+  fonts: {
+    defaults: {
+      weights: [300, 400, 500, 700],
+    },
+    assets: {
+      prefix: '/_nuxt-plenty/fonts/',
     },
   },
   image: {
@@ -101,7 +109,6 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  googleFonts: fontFamilyNuxtConfig,
   i18n: nuxtI18nOptions,
   sitemap: {
     autoLastmod: true,
@@ -135,6 +142,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
+    exposeConfig: true,
   },
   turnstile: {
     siteKey: process.env?.TURNSTILESITEKEY,
@@ -145,11 +153,13 @@ export default defineNuxtConfig({
       sm: 640,
       md: 768,
       lg: 1024,
+      '4xl': 1920,
     },
     defaultBreakpoints: {
       mobile: 'sm',
       tablet: 'md',
       desktop: 'lg',
+      wideScreen: '4xl',
     },
     fallbackBreakpoint: 'lg',
     cookie: {
@@ -173,7 +183,7 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     workbox: {
       navigateFallback: null,
-      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', 'icons/*'],
+      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
       globIgnores: ['manifest**.webmanifest'],
       additionalManifestEntries: [
         {

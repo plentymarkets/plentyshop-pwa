@@ -1,5 +1,125 @@
 # Changelog PlentyONE Shop
 
+# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+Gerne, hier ist die Übersetzung der Aufzählungspunkte ins Deutsche:
+
+### 👷 Geändert
+
+- Die Schaltflächen zum Speichern der Adresse wurden an das Ende des Formulars verschoben, um die Benutzerfreundlichkeit zu verbessern.
+- Die Chunk-Größe wurde reduziert, indem große Dateien in den Ordner `public` verschoben und die Daten jetzt abgerufen statt importiert werden.
+- Die Chunk-Größe wurde reduziert, indem die Lodash-Bibliothek vollständig entfernt und benutzerdefinierte JS-Funktionen verwendet wurden.
+
+### 🩹 Behoben
+
+- Ein Problem wurde behoben, bei dem das Löschen der Checkout-Adresse als Gast einen unbekannten Fehler auslöste.
+- Es wurde behoben, dass Website-Einstellungen beim erneuten Bauen nicht beibehalten wurden.
+
+# v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Benachrichtigungen beim erfolgreichen oder fehlgeschlagenen Speichern von Änderungen im Editor hinzugefügt.
+
+### Behoben
+
+- Anzeige der empfohlenen Produkte auf Produktseiten korrigiert.
+- Problem behoben, bei dem der Speichern-Button bei nachfolgenden Bearbeitungen nicht wieder aktiviert wurde.
+- Problem behoben, bei dem eine leere anfängliche Kategorievorlage nicht bearbeitet werden konnte.
+- Problem behoben, bei dem empfohlene Produkt-Blöcke im Editor falsche Daten abriefen, wenn ein neuer Block hinzugefügt wurde.
+
+# v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+- Problem behoben, bei dem während des Bauens Sprachdateien in den falschen Pfad geschrieben werden.
+
+# v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+#### Editor
+
+- Die Homepage unterstützt jetzt ein verbessertes Blockmanagement. Benutzer können über die Seiten-Navigation Blöcke hinzufügen, während eine neue Platzhalter-Komponente die zukünftige Blockposition anzeigt.
+- Auf technischer Seite wurde die Bearbeitung von Blöcken durch dynamische Blockregistrierung verbessert.
+- Beim Bearbeiten von Blöcken werden jetzt Formulare genutzt, sodass Benutzer die zugrunde liegende Datenstruktur nicht mehr direkt manipulieren müssen.
+
+#### Module
+
+- Das Projekt verfügt jetzt über das neu integrierte `shop-core`-Modul, Dadurch werden API-Ereignisse direkt an das Kernmodul weitergeleitet. Diese Änderung ermöglicht die Kommunikation zwischen der Basisanwendung und Modul-Erweiterungen.
+- Der Shop integriert jetzt das Google Analytics-Modul `shop-module-gtag`, um die Tracking-Fähigkeiten zu verbessern. Zusätzlich können Benutzer nicht essentielle Cookies direkt über die Cookie-Leiste ablehnen, und das System entfernt Cookies automatisch, sobald die Einwilligung widerrufen wird.
+
+#### Verschiedenes
+
+- Für statische Seiten wurden Robots-Einstellungen hinzugefügt.
+- Falls die Versandseite nicht eingerichtet wurde, wird jetzt ein Standardtext ausgegeben.
+
+### 👷 Geändert
+
+#### Package Manager
+
+Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Hauptgründe für diese Änderung:
+
+1. NPM bietet bessere Werkzeuge, um Sicherheitslücken im Abhängigkeitsbaum zu überprüfen und zu beheben als Yarn.
+2. NPM bietet bessere Tools für das Versionsmanagement über [nvm](https://github.com/nvm-sh/nvm). Das ist wichtig, da es uns ermöglicht, von verschiedenen Anbietern erstellte Apps leichter zusammenzuführen.
+
+**_WICHTIG_**
+
+- `yarn` Befehle wurden durch ihre `npm`-Entsprechungen ersetzt. Zum Beispiel ist `yarn build` jetzt `npm run build`.
+- Überprüfe `.env.example` auf Aktualisierungen. Stelle sicher, dass die Umgebungsvariable `DEFAULTLANGUAGE` gesetzt ist.
+
+#### Checkout
+
+- Die Option **Gespeicherte Adressen** steht im Gast-Checkout nicht mehr zur Verfügung.
+- Ein unvollständiges PayPal-Setup löst jetzt keine Warnung mehr in der Benutzeroberfläche aus. Der Fehler wird unterdrückt und nur in der Browserkonsole protokolliert.
+
+#### Verschiedenes
+
+- Das Build-Skript liest jetzt die Konfiguration aus der Umgebung, anstatt sie vom System abzurufen.
+- Die Farbpalette des Shops wird jetzt zur Laufzeit statt zur Build-Zeit generiert.
+
+### 🩹 Behoben
+
+- Ein Problem behoben, bei dem sich Seitenelemente während der Navigation änderten.
+- Ein Problem behoben, bei dem die Ansicht der Site-Einstellungen nur beim zweiten Klick angezeigt wurde.
+- Ein Problem behoben, bei dem der neue Block-Platzhalter beim Bearbeiten der Site-Einstellungen angezeigt wurde.
+- Ein Problem behoben, bei dem mehrere Slider auf einer Seite nicht unabhängig über Steuerungspfeile gesteuert wurden.
+- Bulletpoints in der Slider-Navigations angepasst.
+- Barrierefreiheitsfehler im Bearbeitungsmodus behoben.
+- Falsche Standardfarben im Editor behoben.
+- Das Verhältnis von Bild zu Text im Image-Text-Block wurde korrigiert, sodass nun beide je 50% des verfügbaren Raums einnehmen.
+- Ein Indexfehler beim Hinzufügen des ersten Blocks behoben.
+- Der erste Block auf der Seite wird jetzt stets als `h1` angezeigt, während alle anderen Blöcke als `h2` dargestellt werden.
+
+## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 📙 Todo
+
+- Wir haben unsere Packages `shop-api` und `tailwind-colors` von GitHubs Registry zu NPMs Registry verschoben.
+  Ein GitHub-Token ist nicht mehr erforderlich, um auf diese Packages zuzugreifen.
+  - Führe `yarn setup:unix` oder `yarn setup:windows` aus und drücke y, um die `.yarnrc.yml` zu entfernen.
+  - Entferne den `NPM_AUTH_TOKEN` aus der `apps/web/.env` Datei.
+
+### Neu
+
+- Möglichkeit hinzugefügt, primäre und sekundäre Farben über den Seiten-Konfigurationsbereich zu ändern.
+- Seiten-Konfigurationsbereich hinzugefügt.
+- Block-Konfigurationsbereich hinzugefügt.
+- Multiselect-Komponente hinzugefügt, die das Durchsuchen der Optionen ermöglicht.
+- Vorschaufunktionalität für Blockgrößen hinzugefügt.
+- Wenn es ungespeicherte Änderungen im Editor gibt und der Benutzer versucht, die Seite zu schließen oder neu zu laden, zeigt der Browser jetzt eine Warnung an und fragt nach einer Bestätigung.
+
+### 👷 Geändert
+
+- Hintergrund des Footers für automatische Färbung geändert.
+- Logik zum Deaktivieren der Speichertaste im Editor geändert, um Änderungen in den Einstellungen zu berücksichtigen.
+
+### 🩹 Behoben
+
+- Ein Hydrationsfehler beim Abrufen empfohlener Produkte auf der Startseite behoben.
+- Ein Problem behoben, das die Speichertaste deaktivierte, obwohl der Benutzer die Startseite bearbeitet hatte.
+- Das `nuxt-security` Modul vorerst entfernt aufgrund von Problemen mit PayPal.
+- Ein Problem mit PayPal Express Checkout behoben, bei dem eine erneute Autorisierung der Zahlung erforderlich war.
+- Ein Barrierefreiheitsfehler in der Banner Komponente behoben.
+
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu

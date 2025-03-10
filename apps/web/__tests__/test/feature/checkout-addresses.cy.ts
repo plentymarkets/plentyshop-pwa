@@ -23,11 +23,25 @@ describe('Checkout Addresses', () => {
 
     cart.openCart();
     checkout
-        .goToCheckout()
-        .goToGuestCheckout()
-        .fillContactInformationForm()
-        .fillShippingAddressForm()
-        .shouldShowShippingAsBillingText();
+      .goToCheckout()
+      .goToGuestCheckout()
+      .fillContactInformationForm()
+      .fillShippingAddressForm()
+      .shouldShowShippingAsBillingText();
+  });
+
+  it('should not display shipping and billing address selection if a guest user creates his address', () => {
+    homePage.goToCategory();
+    productListPage.addToCart()
+    cart.openCart();
+
+    checkout
+      .goToCheckout()
+      .goToGuestCheckout()
+      .fillContactInformationForm()
+      .fillShippingAddressForm()
+      .shouldNotShowShippingAddressSelection()
+      .shouldNotShowBillingAddressSelection();
   });
 
   it('should be able to edit the billing address as a guest user if selected same as shipping', () => {
@@ -36,12 +50,12 @@ describe('Checkout Addresses', () => {
 
     cart.openCart();
     checkout
-        .goToCheckout()
-        .goToGuestCheckout()
-        .fillContactInformationForm()
-        .fillShippingAddressForm()
-        .shouldShowShippingAsBillingText()
-        .editBillingAddress();
+      .goToCheckout()
+      .goToGuestCheckout()
+      .fillContactInformationForm()
+      .fillShippingAddressForm()
+      .shouldShowShippingAsBillingText()
+      .editBillingAddress();
     checkout.firstNameInput.clear();
     checkout.firstNameInput.type('John Guest Edit');
     checkout.saveBilling.click({ force: true });

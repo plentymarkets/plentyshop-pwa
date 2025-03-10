@@ -10,7 +10,7 @@
     <div v-if="!data?.entries.length" class="col-span-3 text-center" data-testid="account-returns-content">
       <!-- TODO: add image when we find a suitable one in a format that works. -->
       <!--      <NuxtImg-->
-      <!--        src="/images/returns.png"-->
+      <!--        src="/_nuxt-plenty/images/returns.png"-->
       <!--        :alt="t('account.ordersAndReturns.returnsAltText')"-->
       <!--        width="192"-->
       <!--        height="192"-->

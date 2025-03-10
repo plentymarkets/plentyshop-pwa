@@ -14,16 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # When using Corepack and yarn on Windows, it's necessary to set up the node version twice. Otherwise the version doesn't match the engine specified in package.json.
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set environment
         run: |
@@ -34,8 +26,8 @@ jobs:
         shell: pwsh
 
       - name: Install dependencies
-        run: yarn --immutable
+        run: npm ci
 
       - name: Build app
         run: |
-          yarn build
+          npm run build

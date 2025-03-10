@@ -32,10 +32,8 @@ jobs:
         with:
           ref: ${{ inputs.tag-version || github.ref }}
 
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         run: |
@@ -47,10 +45,12 @@ jobs:
           EOT
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       - name: Install productive dependencies for server
-        run: yarn workspaces focus --production
+        run: |
+          npm install --production --workspace=apps/web
+          npm install --production --workspace=apps/server
 
       - name: Copy Middleware Server
         run: |

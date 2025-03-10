@@ -54,7 +54,7 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('checkout-edit-address-modal');
   }
 
-   editBillingAddress() {
+  editBillingAddress() {
     cy.getByTestId('edit-address-1').click();
     return this;
   }
@@ -105,6 +105,14 @@ export class CheckoutPageObject extends PageObject {
 
   get shippingAsBillingText() {
     return cy.getByTestId('address-info-text-1');
+  }
+
+  get billingAddressSelect() {
+    return cy.getByTestId('address-select-1');
+  }
+
+  get shippingAddressSelect() {
+    return cy.getByTestId('address-select-2');
   }
 
   goToGuestCheckout() {
@@ -203,6 +211,16 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  shouldNotShowBillingAddressSelection() {
+    this.billingAddressSelect.should('not.exist');
+    return this;
+  }
+
+  shouldNotShowShippingAddressSelection() {
+    this.shippingAddressSelect.should('not.exist');
+    return this;
+  }
+
   fillCreditCardForm() {
     cy.iframe('[title=paypal_card_number_field]').find('.card-field-number').first().type('4868719460707704');
 
@@ -214,7 +232,17 @@ export class CheckoutPageObject extends PageObject {
   }
 
   payCreditCard() {
+    cy.intercept('/plentysystems/doAdditionalInformation')
+      .as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment')
+      .intercept('/plentysystems/doCapturePayPalOrder')
+      .as('doCapturePayPalOrder')
+      .intercept('/plentysystems/getExecutePayPalOrder')
+      .as('getExecutePayPalOrder');
+
     cy.getByTestId('pay-creditcard-button').click();
+    cy.wait('@doAdditionalInformation').wait('@doPreparePayment').wait('@doCapturePayPalOrder').wait('@getExecutePayPalOrder');
     return this;
   }
 

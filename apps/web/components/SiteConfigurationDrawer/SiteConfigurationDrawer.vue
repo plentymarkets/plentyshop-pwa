@@ -2,11 +2,11 @@
   <SfDrawer
     ref="drawerRef"
     v-model="drawerOpen"
-    :placement="placement"
+    :placement="placement as SfDrawerPlacement"
     :disable-click-away="true"
     :class="[
       'bg-neutral-50',
-      'border',
+      'border-0',
       'border-gray-300',
       'z-[150]',
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
@@ -20,12 +20,11 @@
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
 
-const placement = ref<`${SfDrawerPlacement}`>('left');
-
-const { drawerOpen, drawerView } = useSiteConfiguration();
+const { drawerOpen, drawerView, placement } = useSiteConfiguration();
 
 const getDrawerView = (view: string) => {
-  if (view === 'settings') return resolveComponent('SiteSettingsView');
-  if (view === 'blocks') return resolveComponent('BlocksNavigation');
+  if (view === 'DesignView') return resolveComponent('DesignView');
+  if (view === 'blocksList') return resolveComponent('BlocksNavigation');
+  if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };
 </script>

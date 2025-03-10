@@ -27,4 +27,10 @@ describe('Smoke: Homepage', () => {
     cy.visitAndHydrate(paths.home);
     homePage.checkLanguage(locale_en, text_en);
   });
+
+  it('[smoke] Editor elements should not exist in live mode', () => {
+    homePage.topToolbarShouldNotExist();
+    homePage.sideToolbarShouldNotExist();
+    homePage.blockActionsShouldNotExist();
+  });
 });

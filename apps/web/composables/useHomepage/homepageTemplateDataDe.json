@@ -1,14 +1,18 @@
 {
   "blocks": [
     {
-      "name": "UiCarousel",
+      "name": "BannerCarousel",
       "options": {
+        "controls": {
+          "color": "#a39f9f"
+        },
         "bannerItems": [
           {
             "controls": {
-              "color": "#fff"
+              "color": "#a39f9f"
             },
             "image": {
+              "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
               "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
               "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
               "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif",
@@ -25,7 +29,8 @@
               "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
               "textAlignment": "left",
               "justify": "top",
-              "align": "start"
+              "align": "left",
+              "background": true
             },
             "button": {
               "label": "Capybara entdecken",
@@ -35,6 +40,7 @@
           },
           {
             "image": {
+              "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
               "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
               "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
               "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
@@ -50,7 +56,8 @@
               "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
               "textAlignment": "left",
               "justify": "top",
-              "align": "start"
+              "align": "left",
+              "background": true
             },
             "button": {
               "label": "Omega entdecken",
@@ -62,14 +69,15 @@
       }
     },
     {
-      "name": "UiTextCard",
+      "name": "TextCard",
       "options": {
         "text": {
           "htmlDescription": "<p>Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.</p><p>Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.</p>",
           "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
           "title": "Entdecke Technik & Style",
           "subtitle": "Innovative Technik trifft auf moderne Mode",
-          "textAlignment": "center"
+          "textAlignment": "center",
+          "color": "#000"
         },
         "button": {
           "buttonText": "Jetzt zuschlagen",
@@ -85,13 +93,14 @@
       }
     },
     {
-      "name": "UiImageText",
+      "name": "ImageText",
       "options": {
         "text": {
           "htmlDescription": "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
           "title": "Entdecken Sie Technik und Stil",
           "subtitle": "Innovative Technologie trifft moderne Fashion",
-          "textAlignment": "left"
+          "textAlignment": "left",
+          "color": "#000"
         },
         "button": {
           "label": "Zu unseren Kopfhörern",
@@ -99,10 +108,11 @@
           "variant": "primary"
         },
         "image": {
+          "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "alt": "Headphones",
+          "alt": "Kopfhörer",
           "imageAlignment": "left"
         }
       }
@@ -114,7 +124,7 @@
           "pretitle": "Mehr als nur Technik",
           "title": "Entdecken Sie unsere Modekollektion",
           "subtitle": "Sportive Mode und Accessories für alle.",
-          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>Zu unserer kompletten Kollektion.</a>"
+          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/kleidung' target='_self'>Zu unserer kompletten Kollektion.</a>"
         },
         "categoryId": "49"
       }
@@ -128,7 +138,7 @@
           "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
         },
         "input": {
-          "displayNameInput": false,
+          "displayNameInput": true,
           "nameIsRequired": false
         },
         "button": {

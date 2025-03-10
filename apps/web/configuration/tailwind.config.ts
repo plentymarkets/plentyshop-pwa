@@ -2,7 +2,8 @@ import sfTypography from '@storefront-ui/typography';
 import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import { fontFamilyText } from './fontFamily.config';
+
+const fontFamilyText = process.env.TEXT || 'Red Hat Text';
 
 export default {
   presets: [tailwindConfig],
@@ -67,6 +68,7 @@ export default {
         },
         editor: {
           'body-bg': '#F1F3F5',
+          button: '#062633',
         },
       },
       gridTemplateAreas: {
@@ -91,6 +93,12 @@ export default {
       },
       width: {
         '128': '32rem',
+      },
+      spacing: {
+        s: '1.875rem',
+        m: '2.5rem',
+        l: '3.125rem',
+        xl: '3.75rem',
       },
     },
   },

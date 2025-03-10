@@ -1,31 +1,4 @@
-export interface Cookie {
-  name: string;
-  accepted?: boolean;
-  Lifespan: string;
-  script?: string[];
-  Provider: string;
-  Status: string;
-  PrivacyPolicy: string;
-}
-export interface CookieGroup {
-  id?: number;
-  name: string;
-  accepted: boolean;
-  showMore?: boolean;
-  description: string;
-  cookies: Cookie[];
-}
-export interface CookieGroupFromNuxtConfig {
-  groups: CookieGroup[];
-  barTitle: string;
-  barDescription: string;
-}
-
-export type JsonCookie = {
-  [groupName: string]: {
-    [cookieName: string]: boolean;
-  };
-};
+import type { CookieGroupFromNuxtConfig } from '@plentymarkets/shop-core';
 
 export default {
   barTitle: 'CookieBar.about.label',
@@ -112,4 +85,4 @@ export default {
       cookies: [],
     },
   ],
-};
+} as CookieGroupFromNuxtConfig;

@@ -2,9 +2,9 @@
 
   <a href="https://plentyone.com" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
-      <img alt="PlentyONE logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
+      <source media="(prefers-color-scheme: dark)" srcset="./images/PlentyONE_Logo_White_RGB.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+      <img alt="PlentyONE logo" src="./images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
     </picture> 
   </a>
 
@@ -12,9 +12,9 @@
 
   <a href="https://alokai.com" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
-      <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="40px">
+      <source media="(prefers-color-scheme: dark)" srcset="./images/alokai-logo-light.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./images/alokai-logo-dark.svg">
+      <img alt="alokai logo" src="./images/alokai-logo-dark.svg" height="40px">
     </picture> 
   </a>
 
@@ -52,12 +52,11 @@ Create an environment file under `apps/web/.env`. The minimum required configura
 ```properties
 # apps/web/.env
 
-NPM_AUTH_TOKEN=
 API_ENDPOINT=
 API_SECURITY_TOKEN=
 ```
 
-Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using Yarn.
+Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using NPM.
 
 ```bash
 # installs nvm (Node Version Manager)
@@ -66,13 +65,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 # downloads and installs Node.js according to the project version in .nvmrc
 nvm install
 
-# downloads and installs Yarn according to the project version, and downloads, installs, and builds all dependencies
-npm run setup:unix
+# downloads and installs NPM according to the project version, and downloads, installs, and builds all dependencies
+npm install
 ```
 
 ### Start the app
 
-Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+Run `npm run dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ## Resources
 
