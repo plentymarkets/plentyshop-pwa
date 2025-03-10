@@ -1,0 +1,313 @@
+[
+  {
+    "message": "Request failed with status code 401",
+    "stack": "AxiosError: Request failed with status code 401\n    at settle (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/axios/lib/core/settle.js:19:12)\n    at Unzip.handleStreamEnd (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/axios/lib/adapters/http.js:599:11)\n    at Unzip.emit (node:events:526:35)\n    at endReadableNT (node:internal/streams/readable:1408:12)\n    at processTicksAndRejections (node:internal/process/task_queues:82:21)\n    at Axios.request (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/axios/lib/core/Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at doLogin (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@plentymarkets/shop-api/server/index.js:137:32)\n    at /Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@vue-storefront/middleware/lib/index.cjs.js:894:30\n    at handler (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@vue-storefront/middleware/lib/index.cjs.js:1000:30)\n    at callApiFunction (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@vue-storefront/middleware/lib/index.cjs.js:551:34)",
+    "timestamp": "2025-03-10T10:01:10.682Z"
+  },
+  {
+    "message": "Request failed with status code 401",
+    "stack": "AxiosError: Request failed with status code 401\n    at settle (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/axios/lib/core/settle.js:19:12)\n    at Unzip.handleStreamEnd (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/axios/lib/adapters/http.js:599:11)\n    at Unzip.emit (node:events:526:35)\n    at endReadableNT (node:internal/streams/readable:1408:12)\n    at processTicksAndRejections (node:internal/process/task_queues:82:21)\n    at Axios.request (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/axios/lib/core/Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at doLogin (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@plentymarkets/shop-api/server/index.js:137:32)\n    at /Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@vue-storefront/middleware/lib/index.cjs.js:894:30\n    at handler (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@vue-storefront/middleware/lib/index.cjs.js:1000:30)\n    at callApiFunction (/Users/maximilianroell/workspace/plentyshop-pwa/node_modules/@vue-storefront/middleware/lib/index.cjs.js:551:34)",
+    "timestamp": "2025-03-10T10:01:59.275Z"
+  },
+  {
+    "message": "Request failed with status code 401",
+    "stack": {
+      "events": {
+        "AfterBasketChanged": {
+          "basket": {
+            "sessionId": "CcC1BNYf6SKlAI2OOhIeG6UIcr7i0h4RXRJrFSz6",
+            "customerId": null,
+            "customerShippingAddressId": null,
+            "customerInvoiceAddressId": null,
+            "currency": "GBP",
+            "referrerId": 1,
+            "shippingCountryId": 1,
+            "methodOfPaymentId": 6000,
+            "shippingProfileId": 6,
+            "shippingProviderId": 101,
+            "orderId": null,
+            "itemSum": 0,
+            "itemSumNet": 0,
+            "basketAmount": 0,
+            "basketAmountNet": 0,
+            "shippingAmount": 0,
+            "shippingAmountNet": 0,
+            "paymentAmount": 0,
+            "couponCode": "",
+            "couponDiscount": 0,
+            "shippingDeleteByCoupon": false,
+            "basketRebate": 0,
+            "basketRebateType": 0,
+            "itemQuantity": 0,
+            "totalVats": [],
+            "subAmount": 0,
+            "isExportDelivery": false,
+            "shopCountryId": 1,
+            "itemWishListIds": [],
+            "maxDeliveryDays": []
+          },
+          "showNetPrices": false,
+          "basketItems": []
+        },
+        "CheckoutChanged": {
+          "checkout": {
+            "currency": "GBP",
+            "currencyList": [
+              {
+                "name": "AED",
+                "symbol": "AED"
+              },
+              {
+                "name": "ANG",
+                "symbol": "ANG"
+              },
+              {
+                "name": "ARS",
+                "symbol": "ARS"
+              },
+              {
+                "name": "AUD",
+                "symbol": "A$"
+              },
+              {
+                "name": "BGN",
+                "symbol": "BGN"
+              },
+              {
+                "name": "BHD",
+                "symbol": "BHD"
+              },
+              {
+                "name": "BRL",
+                "symbol": "R$"
+              },
+              {
+                "name": "CAD",
+                "symbol": "CA$"
+              },
+              {
+                "name": "CHF",
+                "symbol": "CHF"
+              },
+              {
+                "name": "CNY",
+                "symbol": "CN¥"
+              },
+              {
+                "name": "CZK",
+                "symbol": "CZK"
+              },
+              {
+                "name": "DKK",
+                "symbol": "DKK"
+              },
+              {
+                "name": "EUR",
+                "symbol": "€"
+              },
+              {
+                "name": "GBP",
+                "symbol": "£"
+              },
+              {
+                "name": "HKD",
+                "symbol": "HK$"
+              },
+              {
+                "name": "HRK",
+                "symbol": "HRK"
+              },
+              {
+                "name": "HUF",
+                "symbol": "HUF"
+              },
+              {
+                "name": "IDR",
+                "symbol": "IDR"
+              },
+              {
+                "name": "INR",
+                "symbol": "₹"
+              },
+              {
+                "name": "JPY",
+                "symbol": "JP¥"
+              },
+              {
+                "name": "KES",
+                "symbol": "KES"
+              },
+              {
+                "name": "MXN",
+                "symbol": "MX$"
+              },
+              {
+                "name": "MYR",
+                "symbol": "MYR"
+              },
+              {
+                "name": "NOK",
+                "symbol": "NOK"
+              },
+              {
+                "name": "NZD",
+                "symbol": "NZ$"
+              },
+              {
+                "name": "PHP",
+                "symbol": "PHP"
+              },
+              {
+                "name": "PLN",
+                "symbol": "PLN"
+              },
+              {
+                "name": "QAR",
+                "symbol": "QAR"
+              },
+              {
+                "name": "RON",
+                "symbol": "RON"
+              },
+              {
+                "name": "RUB",
+                "symbol": "RUB"
+              },
+              {
+                "name": "SEK",
+                "symbol": "SEK"
+              },
+              {
+                "name": "SGD",
+                "symbol": "SGD"
+              },
+              {
+                "name": "THB",
+                "symbol": "THB"
+              },
+              {
+                "name": "TRY",
+                "symbol": "TRY"
+              },
+              {
+                "name": "TWD",
+                "symbol": "NT$"
+              },
+              {
+                "name": "UAH",
+                "symbol": "UAH"
+              },
+              {
+                "name": "USD",
+                "symbol": "US$"
+              },
+              {
+                "name": "VND",
+                "symbol": "₫"
+              },
+              {
+                "name": "XCD",
+                "symbol": "EC$"
+              },
+              {
+                "name": "ZAR",
+                "symbol": "ZAR"
+              }
+            ],
+            "methodOfPaymentId": 6000,
+            "methodOfPaymentList": [
+              {
+                "id": 6001,
+                "pluginKey": "plentyPayPal",
+                "paymentKey": "PAYPAL",
+                "name": "PayPal",
+                "isDocumentBuilderActive": 1
+              },
+              {
+                "id": 6008,
+                "pluginKey": "plentyPayPal",
+                "paymentKey": "PAYPAL_UNBRANDED_CARD",
+                "name": "PAYPAL_UNBRANDED_CARD",
+                "isDocumentBuilderActive": 1
+              },
+              {
+                "id": 6000,
+                "pluginKey": "plenty",
+                "paymentKey": "PREPAYMENT",
+                "name": "prepayment",
+                "isDocumentBuilderActive": 1
+              },
+              {
+                "id": 4,
+                "pluginKey": "plenty",
+                "paymentKey": "CASH",
+                "name": "cash",
+                "isDocumentBuilderActive": 1
+              }
+            ],
+            "shippingCountryId": 1,
+            "shippingProfileId": 6,
+            "shippingProfileList": [],
+            "deliveryAddressId": 0,
+            "billingAddressId": null,
+            "paymentDataList": [
+              {
+                "id": 6001,
+                "name": "PayPal",
+                "fee": 0,
+                "icon": "https://cdn02.plentymarkets.com/mevofvd5omld/plugin/2/paypal/images/logos/de-pp-logo.png",
+                "description": "",
+                "sourceUrl": "",
+                "isSelectable": true,
+                "key": "plentyPayPal"
+              },
+              {
+                "id": 6008,
+                "name": "Credit card",
+                "fee": 0,
+                "icon": "https://cdn02.plentymarkets.com/mevofvd5omld/plugin/2/paypal/images/logos/smartPayment/PAYPAL_UNBRANDED_CARD.svg",
+                "description": "",
+                "sourceUrl": "",
+                "isSelectable": true,
+                "key": "plentyPayPal"
+              },
+              {
+                "id": 6000,
+                "name": "Cash In Advance",
+                "fee": 0,
+                "icon": "https://cdn02.plentymarkets.com/mevofvd5omld/plugin/2/prepayment/images/icon.png",
+                "description": "",
+                "sourceUrl": "",
+                "isSelectable": true,
+                "key": "plenty"
+              },
+              {
+                "id": 4,
+                "name": "Pay upon pickup",
+                "fee": 0,
+                "icon": "https://cdn02.plentymarkets.com/mevofvd5omld/plugin/2/payuponpickup/images/icon.png",
+                "description": "",
+                "sourceUrl": "",
+                "isSelectable": true,
+                "key": "plenty"
+              }
+            ],
+            "maxDeliveryDays": [],
+            "readOnly": false,
+            "contactWish": null
+          }
+        },
+        "AfterAccountAuthentication": {
+          "isSuccess": false,
+          "accountContact": null
+        }
+      },
+      "data": {
+        "key": "login.loginFailed",
+        "message": "login.loginFailed",
+        "errors": []
+      }
+    },
+    "timestamp": "2025-03-10T10:04:46.009Z"
+  }
+]

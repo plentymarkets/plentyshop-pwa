@@ -1,8 +1,30 @@
 import dotenv from 'dotenv';
 import * as path from 'path';
+import * as fs from 'fs';
+
 dotenv.config({
   path: path.resolve(__dirname, '../web/.env'),
 });
+
+const errorLogPath = path.resolve(__dirname, 'error-log.json');
+
+const storeError = (error: any) => {
+  const errorData = {
+    message: error.message,
+    stack: error.response.data,
+    timestamp: new Date().toISOString(),
+  };
+
+  let errors = [];
+  if (fs.existsSync(errorLogPath)) {
+    const fileContent = fs.readFileSync(errorLogPath, 'utf-8');
+    errors = JSON.parse(fileContent);
+  }
+
+  errors.push(errorData);
+
+  fs.writeFileSync(errorLogPath, JSON.stringify(errors, null, 2));
+};
 
 const config = {
   logger: {
@@ -18,6 +40,8 @@ const config = {
         },
       },
       errorHandler: (error: any, req: any, res: any) => {
+        storeError(error);
+
         // override the default error handler to preserve the original error response
         // https://docs.alokai.com/middleware/guides/custom-error-handler#customize-the-error-handler
         if (error?.response?.status) {
