@@ -1,6 +1,9 @@
 <template>
   <div
-    class="absolute p-2 left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
+    :class="[
+      'absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col',
+      isTablet ? 'right-0' : 'left-0',
+    ]"
   >
     <Multiselect
       ref="multiselectRef"
@@ -44,10 +47,12 @@
 import Multiselect from 'vue-multiselect';
 import { SfIconHome } from '@storefront-ui/vue';
 const emit = defineEmits(['pageSelected', 'close']);
-
 const inputModel = ref('');
 
 const { pages } = await usePages();
+
+const viewport = useViewport();
+const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
 const { locale } = useI18n();
 const { t } = useI18n();
