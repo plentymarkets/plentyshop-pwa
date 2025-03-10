@@ -305,18 +305,8 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillBillingForm(fixture: any) {
-    this.shippingAddressForm.within(() => {
-      this.firstNameInput.type(fixture.firstName);
-      this.lastNameInput.type(fixture.lastName);
-      this.countrySelect.select(fixture.country);
-      this.streetNameInput.type(fixture.streetName);
-      this.streetNumberInput.type(fixture.apartment);
-      this.cityInput.type(fixture.city);
-      // this.stateSelect.select(fixture.state);
-      this.postalCodeInput.type(fixture.zipCode);
-      this.useShippingAsBilling.uncheck();
-    }).then(() => {
-      this.billingAddressForm.within(() => {
+    this.shippingAddressForm
+      .within(() => {
         this.firstNameInput.type(fixture.firstName);
         this.lastNameInput.type(fixture.lastName);
         this.countrySelect.select(fixture.country);
@@ -325,9 +315,21 @@ export class CheckoutPageObject extends PageObject {
         this.cityInput.type(fixture.city);
         // this.stateSelect.select(fixture.state);
         this.postalCodeInput.type(fixture.zipCode);
-        this.saveBilling.click({ force: true });
+        this.useShippingAsBilling.uncheck();
+      })
+      .then(() => {
+        this.billingAddressForm.within(() => {
+          this.firstNameInput.type(fixture.firstName);
+          this.lastNameInput.type(fixture.lastName);
+          this.countrySelect.select(fixture.country);
+          this.streetNameInput.type(fixture.streetName);
+          this.streetNumberInput.type(fixture.apartment);
+          this.cityInput.type(fixture.city);
+          // this.stateSelect.select(fixture.state);
+          this.postalCodeInput.type(fixture.zipCode);
+          this.saveBilling.click({ force: true });
+        });
       });
-    });
 
     return this;
   }

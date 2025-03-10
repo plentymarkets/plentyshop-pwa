@@ -12,19 +12,20 @@ const productListPage = new ProductListPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
+  cy.setCookie(
+    'consent-cookie',
+    '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+  );
   cy.visitAndHydrate(paths.home);
 });
 
 describe('Smoke: Contact Information', () => {
   it('[smoke] Should scroll to contact information if email is invalid and buy button is clicked', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
     cart.openCart();
 
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout();
+    checkout.goToCheckout().goToGuestCheckout();
 
     checkout.contactInformationForm.type('invalid-email');
 
@@ -35,12 +36,10 @@ describe('Smoke: Contact Information', () => {
 
   it('[smoke] Should scroll to contact information if email is invalid and shipping address save is clicked', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
     cart.openCart();
 
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout();
+    checkout.goToCheckout().goToGuestCheckout();
 
     checkout.contactInformationForm.type('invalid-email');
     checkout.fillAddressForm('shipping');
@@ -49,12 +48,10 @@ describe('Smoke: Contact Information', () => {
 
   it('[smoke] Should scroll to contact information if email is invalid and billing address save is clicked', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
     cart.openCart();
 
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout();
+    checkout.goToCheckout().goToGuestCheckout();
 
     checkout.contactInformationForm.type('invalid-email');
     checkout.fillAddressForm('billing');
@@ -63,12 +60,10 @@ describe('Smoke: Contact Information', () => {
 
   it('[smoke] Should validate email input', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
     cart.openCart();
 
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout();
+    checkout.goToCheckout().goToGuestCheckout();
 
     checkout.contactInformationForm.type('invalid-email').blur();
     cy.get('#customerEmailError').should('exist');
@@ -76,7 +71,7 @@ describe('Smoke: Contact Information', () => {
 
   it('[smoke] Should be able to change the email after address is changed', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
     cart.openCart();
 
     checkout

@@ -67,9 +67,9 @@ Cypress.Commands.add('visitAndHydrate', (url, options) => {
 
 Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
   cy.get(element).should(($el) => {
-      const bottom = Cypress.config('viewportHeight');
-      const rect = $el[0].getBoundingClientRect();
+    const bottom = Cypress.config('viewportHeight');
+    const rect = $el[0].getBoundingClientRect();
 
-      expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
+    expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
   });
 });
