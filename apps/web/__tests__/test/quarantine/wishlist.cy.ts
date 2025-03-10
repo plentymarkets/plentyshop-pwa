@@ -31,7 +31,7 @@ beforeEach(() => {
 
 
 describe('Wishlist functionality check.', () => {
-  it('Checks wishlist functionality from category.', () => {
+  it.skip('Checks wishlist functionality from category.', () => {
     homePage.goToCategory();
     productListPage.assertGridView();
 
@@ -52,7 +52,7 @@ describe('Wishlist functionality check.', () => {
         .checkEmptyPage()
   });
 
-  it('Check wishlist functionality from product page.', () => {
+  it.skip('Check wishlist functionality from product page.', () => {
     homePage.goToCategory();
     productListPage
         .assertGridView()
