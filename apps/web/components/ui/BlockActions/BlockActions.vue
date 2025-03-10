@@ -72,7 +72,22 @@ const triggerDelete = () => {
   deleteBlock(props.block.meta.uuid);
 };
 
+const scrollToBlock = (newIndex: number) => {
+  const block = document.getElementById(`block-${newIndex}`);
+  if (block) {
+    block.scrollIntoView(true);
+    window.scrollBy(0, -200);
+  }
+};
+let timeoutId: ReturnType<typeof setTimeout>;
+
 const changePosition = (position: number) => {
   emit('change-position', props.index, position);
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  timeoutId = setTimeout(() => {
+    scrollToBlock(props.index + position);
+  }, 100);
 };
 </script>

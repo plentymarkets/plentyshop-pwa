@@ -29,6 +29,18 @@ export class HomePageObject extends PageObject {
     return cy.getByTestId('button').contains('Browse products');
   }
 
+  get topToolbar() {
+    return cy.getByTestId('edit-mode-toolbar');
+  }
+
+  get sideToolbar() {
+    return cy.getByTestId('edit-mode-side-toolbar');
+  }
+
+  get blockActions() {
+    return cy.getByTestId('edit-block-actions');
+  }
+
   get baseUrl() {
     return Cypress.config('baseUrl');
   }
@@ -81,6 +93,21 @@ export class HomePageObject extends PageObject {
     cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.getByTestId('category-button').first().click();
     cy.wait('@getFacet');
+    return this;
+  }
+
+  topToolbarShouldNotExist() {
+    this.topToolbar.should('not.exist');
+    return this;
+  }
+
+  sideToolbarShouldNotExist() {
+    this.sideToolbar.should('not.exist');
+    return this;
+  }
+
+  blockActionsShouldNotExist() {
+    this.blockActions.should('not.exist');
     return this;
   }
 }

@@ -6,7 +6,7 @@
     <SfIconLanguage class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative">
       <select
-        v-model="currentLocale"
+        :value="currentLocale"
         class="form-select focus:outline-none focus:ring-0 focus:border-transparent text-sm md:text-base appearance-none pr-4"
         style="
           background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuNzA3MTcsNC4yOTI4N0w4LjAwMDAxLDEwLjU4NTdsNi4yOTI4My02LjI5Mjg3IiBzdHJva2U9IiMwNjI2MzMiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4K')
@@ -16,7 +16,7 @@
         :disabled="isEditing || disableActions"
         :class="{ 'cursor-not-allowed': isEditing || disableActions }"
         data-testid="editor-language-select"
-        @change="switchLanguage(currentLocale)"
+        @input="(ev: any) => switchLanguage(ev.target.value)"
       >
         <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
           {{ $t(`lang.${locale}`) }}

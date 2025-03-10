@@ -7,7 +7,6 @@
           {
             "matchingUrlPattern": ".*",
             "assertions": {
-
               "categories:accessibility": ["warn", { "aggregationMethod": "pessimistic", "minScore": 1 }],
               "categories:best-practices": ["warn", { "aggregationMethod": "pessimistic", "minScore": 1 }],
               "categories:pwa": ["warn", { "aggregationMethod": "pessimistic", "minScore": 1 }],

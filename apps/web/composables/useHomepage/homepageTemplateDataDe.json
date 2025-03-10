@@ -25,16 +25,17 @@
             "color": "#000",
             "bgcolor": "#fff",
             "bgopacity": 0.9,
-            "pretitle": "Feel the music",
-            "title": "Your Sound, Elevated",
-            "htmlDescription": "Immserse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
+            "pretitle": "Kristalklare Klänge Genießen",
+            "title": "Ihr Sound",
+            "subtitle": "Auf höchstem Niveau",
+            "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
             "textAlignment": "left",
             "justify": "top",
             "align": "left",
             "background": true
           },
           "button": {
-            "label": "Discover Capybara",
+            "label": "Capybara entdecken",
             "link": "/gear/headphones-capybara_157",
             "variant": "primary"
           }
@@ -56,16 +57,16 @@
             "color": "#000",
             "bgcolor": "#fff",
             "bgopacity": 1,
-            "pretitle": "The Future of Aerial Photography",
+            "pretitle": "Die Zukunft der Luftbildfotografie",
             "title": "Drone Omega",
-            "htmlDescription": "A lightweight drone designed for stunning aerial footage. With a high-resolution camera on a 3-axis gimbal and up to 45 minutes of flight time, it's perfect for capturing smooth, stable video. Featuring GPS-assisted hover, obstacle avoidance, and easy portability, the Drone brings innovation and simplicity to your aerial shots.",
+            "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
             "textAlignment": "left",
             "justify": "top",
             "align": "left",
             "background": true
           },
           "button": {
-            "label": "Discover Omega",
+            "label": "Omega entdecken",
             "link": "/gear/drone-omega_154",
             "variant": "primary"
           }
@@ -78,15 +79,15 @@
     "type": "content",
     "content": {
       "text": {
-        "htmlDescription": "<p>Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.</p><p>Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.</p>",
-        "title": "Discover Tech & Style",
-        "subtitle": "Innovative technology meets modern fashion",
-        "pretitle": "Welcome to your new favorite shop",
+        "htmlDescription": "<p>Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.</p><p>Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.</p>",
+        "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
+        "title": "Entdecke Technik & Style",
+        "subtitle": "Innovative Technik trifft auf moderne Mode",
         "textAlignment": "center",
         "color": "#000"
       },
       "button": {
-        "label": "Get shopping",
+        "buttonText": "Jetzt zuschlagen",
         "link": "",
         "variant": "primary"
       }
@@ -97,12 +98,6 @@
     "type": "content",
     "content": {
       "categoryId": "73",
-      "text": {
-        "pretitle": "More than just technology",
-        "title": "Discover our fashion collection",
-        "subtitle": "Sporty fashion and accessories for everyone.",
-        "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
-      }
     }
   },
   {
@@ -120,15 +115,15 @@
         "type": "content",
         "content": {
           "text": {
-            "htmlDescription": "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
-            "title": "A New Listening Experience",
-            "subtitle": "Innovative technology meets modern fashion",
+            "htmlDescription": "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
+            "title": "Entdecken Sie Technik und Stil",
+            "subtitle": "Innovative Technologie trifft moderne Fashion",
             "textAlignment": "left",
             "color": "#000"
           },
           "button": {
-            "label": "To our headphones",
-            "link": "/gear/headphones-capybara_157",
+            "label": "Zu unseren Kopfhörern",
+            "link": "/technik/headphones-capybara_157",
             "variant": "primary"
           }
         }
@@ -141,7 +136,7 @@
           "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-          "alt": "Headphones",
+          "alt": "Kopfhörer",
           "imageAlignment": "left"
         }
       }
@@ -153,10 +148,10 @@
     "content": {
       "categoryId": "49",
       "text": {
-        "pretitle": "More than just technology",
-        "title": "Explore our fashion collection",
-        "subtitle": "Sportive fashion and accessoires for everybody.",
-        "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
+        "pretitle": "Mehr als nur Technik",
+        "title": "Entdecken Sie unsere Modekollektion",
+        "subtitle": "Sportive Mode und Accessories für alle.",
+        "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/kleidung' target='_self'>Zu unserer kompletten Kollektion.</a>"
       }
     }
   },
@@ -166,15 +161,15 @@
       "content": {
         "text": {
           "bgColor": "#f5f5f5",
-          "title": "Newsletter",
-          "htmlDescription": "Be aware of upcoming sales and events. Receive gifts and special offers!"
+          "title": "Abonnieren Sie unseren Newsletter",
+          "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
         },
         "input": {
           "displayNameInput": true,
           "nameIsRequired": false
         },
         "button": {
-          "label": "Subscribe"
+          "label": "Newsletter abonnieren"
         }
       }
     }
