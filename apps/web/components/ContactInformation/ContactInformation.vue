@@ -30,7 +30,12 @@
           autocomplete="email"
           @blur="validateAndSubmitEmail"
         />
-        <ErrorMessage as="span" name="customerEmail" class="flex text-negative-700 text-sm mt-2" />
+        <ErrorMessage
+          id="customerEmailError"
+          as="span"
+          name="customerEmail"
+          class="flex text-negative-700 text-sm mt-2"
+        />
       </label>
     </form>
 

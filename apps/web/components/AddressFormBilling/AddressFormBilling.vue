@@ -2,7 +2,7 @@
   <form
     novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
-    data-testid="shipping-address-form"
+    data-testid="billing-address-form"
     @submit.prevent="validateAndSubmitForm"
   >
     <label>
@@ -25,6 +25,7 @@
       </UiFormLabel>
       <SfInput
         v-model="lastName"
+        name="lastName"
         autocomplete="family-name"
         v-bind="lastNameAttributes"
         :invalid="Boolean(errors['lastName'])"
@@ -89,6 +90,7 @@
       <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="zipCode"
+        name="zipCode"
         autocomplete="postal-code"
         v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['zipCode'])"
