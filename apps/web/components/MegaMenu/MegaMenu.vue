@@ -73,7 +73,7 @@
               :style="style"
               class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
               tabindex="0"
-              @mouseleave="closeDrawer()"
+              @mouseleave="close()"
               @keydown.esc="focusTrigger(index)"
             >
               <template v-for="node in activeMenu.children" :key="node.id">
@@ -130,7 +130,7 @@
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
             <p class="typography-text-base font-medium">Browse products</p>
-            <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="ml-2" @click="closeDrawer()">
+            <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="ml-2" @click="close()">
               <SfIconClose class="text-neutral-500" />
             </UiButton>
           </div>
@@ -151,12 +151,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem
-                  size="lg"
-                  :tag="NuxtLink"
-                  :href="localePath(generateCategoryLink(node))"
-                  @click="closeDrawer()"
-                >
+                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))" @click="close()">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -166,11 +161,7 @@
               <li v-else>
                 <SfListItem size="lg" tag="button" type="button" class="!p-0">
                   <div class="flex items-center w-100">
-                    <NuxtLink
-                      class="flex-1 m-0 p-4 pr-0"
-                      :to="localePath(generateCategoryLink(node))"
-                      @click="closeDrawer()"
-                    >
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
                       <div class="flex items-center">
                         <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -284,9 +275,4 @@ watch(
 const headerClass = computed(() => ({
   'z-[10]': isOpen.value,
 }));
-
-const closeDrawer = () => {
-  close();
-  setDrawerOpen(false);
-};
 </script>
