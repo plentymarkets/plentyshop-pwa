@@ -1,5 +1,4 @@
 node_modules
-__tests__
 .nuxt
 .turbo
 *.min.css

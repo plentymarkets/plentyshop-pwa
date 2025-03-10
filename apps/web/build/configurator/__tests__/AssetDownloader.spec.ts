@@ -13,12 +13,12 @@ describe('AssetDownloader', () => {
   beforeEach(() => {
     writerMock = {
       write: vi.fn(),
-      writeMissing: vi.fn()
+      writeMissing: vi.fn(),
     };
     loggerMock = {
       info: vi.fn(),
       warn: vi.fn(),
-      error: vi.fn()
+      error: vi.fn(),
     };
     assetDownloader = new AssetDownloader(writerMock, loggerMock);
   });

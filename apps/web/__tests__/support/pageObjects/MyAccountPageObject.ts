@@ -1,5 +1,5 @@
 import { paths } from '../../../utils/paths';
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class MyAccountPageObject extends PageObject {
   get accountLayout() {
@@ -94,7 +94,7 @@ export class MyAccountPageObject extends PageObject {
     cy.intercept('/plentysystems/getAddresses').as('getAddresses');
     cy.get('a').contains('Billing addresses').click();
     cy.url().should('contain', paths.accountBillingDetails);
-    cy.wait("@getAddresses");
+    cy.wait('@getAddresses');
     this.accountLayout.getByTestId('account-billing-addresses-1').should('be.visible');
 
     return this;
@@ -104,7 +104,7 @@ export class MyAccountPageObject extends PageObject {
     cy.intercept('/plentysystems/getAddresses').as('getAddresses');
     cy.get('a').contains('Shipping addresses').click();
     cy.url().should('contain', paths.accountShippingDetails);
-    cy.wait("@getAddresses");
+    cy.wait('@getAddresses');
     this.accountLayout.getByTestId('account-billing-addresses-2').should('be.visible');
 
     return this;

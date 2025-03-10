@@ -17,4 +17,4 @@ describe('tailwind helper', () => {
     const palette = getPaletteFromColor('primary', hexColor);
     expect(palette).toEqual(expectedPalette);
   });
-})
+});

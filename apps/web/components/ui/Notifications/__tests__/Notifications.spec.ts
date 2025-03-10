@@ -5,6 +5,6 @@ describe('<Notifications />', () => {
   it('should render component', () => {
     const wrapper = mount(UiNotifications);
 
-    expect(wrapper.getByTestId('notifications'));    
+    expect(wrapper.getByTestId('notifications'));
   });
 });
