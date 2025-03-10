@@ -1,5 +1,5 @@
 <template>
-  <UiOverlay :visible="modelValue">
+  <UiOverlay :visible="modelValue" :class="overlayClasses">
     <SfModal class="md:max-h-[min(calc(100vh-32px),100%)]" v-bind="{ ...$attrs, ...props }">
       <slot />
     </SfModal>
