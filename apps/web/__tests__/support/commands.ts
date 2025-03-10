@@ -13,6 +13,7 @@ declare global {
       visitAndHydrate(options: Partial<Cypress.VisitOptions> & { url: string }): Cypress.Chainable | null;
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
+      isScrolledTo(): Cypress.Chainable;
     }
   }
 }
@@ -62,4 +63,13 @@ Cypress.Commands.add('visitAndHydrate', (url, options) => {
   cy.visit(url, options);
   // Wait until app is hydrated
   cy.get('body.hydrated');
+});
+
+Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
+  cy.get(element).should(($el) => {
+    const bottom = Cypress.config('viewportHeight');
+    const rect = $el[0].getBoundingClientRect();
+
+    expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
+  });
 });
