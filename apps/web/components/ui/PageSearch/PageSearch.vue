@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
+    class="absolute p-2 left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
   >
     <Multiselect
       ref="multiselectRef"
@@ -29,7 +29,7 @@
             {{ option.name }}
           </span>
           <span v-if="option.path.split('/').length > 2" class="text-xs ml-2">
-            {{ option.path }}
+            {{ trimPath(option.path) }}
           </span>
         </div>
       </template>
@@ -73,6 +73,16 @@ const customLabel = ({ name, path }: { name: string; path: string }): string => 
   return `${name} – ${path}`;
 };
 
+const trimPath = (path: string): string => {
+  const parts = path.split('/').filter(Boolean);
+
+  if (parts.length >= 2) {
+    return `/${parts.slice(0, -1).join('/')}/`;
+  }
+
+  return `/${parts[0] || ''}`;
+};
+
 const open = () => {
   if (multiselectRef.value) {
     multiselectRef.value.activate();
@@ -97,6 +107,6 @@ onMounted(() => {
   color: #1a202c;
 }
 :deep .multiselect__content-wrapper {
-  max-height: 400px !important
+  max-height: 400px !important;
 }
 </style>
