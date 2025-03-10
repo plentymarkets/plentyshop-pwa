@@ -81,9 +81,11 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
   ],
-  vsf: {
+  alokai: {
     middleware: {
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+      cdnCacheBustingId: 'no-cache-busting-id-set',
+      ssrApiUrl: '',
     },
   },
   fonts: {

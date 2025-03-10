@@ -26,7 +26,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get body() {
-    return cy.getByTestId('body');
+    return cy.get('body');
   }
 
   get navbar() {
