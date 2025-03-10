@@ -84,5 +84,5 @@ const toggleEdit = () => {
   }
 };
 
-const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'md:z-[10]' : 'md:z-[20]'));
+const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'z-10' : 'z-20'));
 </script>
