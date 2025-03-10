@@ -12,14 +12,17 @@ const productListPage = new ProductListPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
+  cy.setCookie(
+    'consent-cookie',
+    '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+  );
   cy.visitAndHydrate(paths.home);
 });
 
 describe('Checkout Addresses', () => {
   it('should display same as shipping text if a guest creates his shipping address with billing same as shipping checked', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
 
     cart.openCart();
     checkout
@@ -32,7 +35,7 @@ describe('Checkout Addresses', () => {
 
   it('should not display shipping and billing address selection if a guest user creates his address', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
     cart.openCart();
 
     checkout
@@ -46,7 +49,7 @@ describe('Checkout Addresses', () => {
 
   it('should be able to edit the billing address as a guest user if selected same as shipping', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
 
     cart.openCart();
     checkout

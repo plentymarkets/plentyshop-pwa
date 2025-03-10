@@ -3,14 +3,14 @@ import { paths } from '../../../utils/paths';
 describe('Newsletter Block Form', () => {
   const checkIfNewsletterBlockIsVisible = () => {
     cy.getByTestId('newsletter-block').should('be.visible');
-  }
+  };
 
   const clickOnNewsletterBlockEditButton = () => {
     cy.getByTestId('newsletter-block')
       .closest('[data-testid="block-wrapper"]')
       .find('[data-testid="open-editor-button"]')
       .click();
-  }
+  };
 
   const typeInNewsletterForm = (field: string, value: string) => {
     cy.getByTestId(`newsletter-form-${field}`).clear().type(value);
@@ -27,8 +27,16 @@ describe('Newsletter Block Form', () => {
   };
 
   const nameInputIsRequired = (state: boolean) => {
-    cy.getByTestId('newsletter-display-name').find('input[placeholder]').eq(0).invoke('attr', 'placeholder').should(state ? 'contain' : 'not.contain', '**');
-    cy.getByTestId('newsletter-display-name').find('input[placeholder]').eq(1).invoke('attr', 'placeholder').should(state ? 'contain' : 'not.contain', '**');
+    cy.getByTestId('newsletter-display-name')
+      .find('input[placeholder]')
+      .eq(0)
+      .invoke('attr', 'placeholder')
+      .should(state ? 'contain' : 'not.contain', '**');
+    cy.getByTestId('newsletter-display-name')
+      .find('input[placeholder]')
+      .eq(1)
+      .invoke('attr', 'placeholder')
+      .should(state ? 'contain' : 'not.contain', '**');
   };
 
   const changeBackgroundColor = () => {

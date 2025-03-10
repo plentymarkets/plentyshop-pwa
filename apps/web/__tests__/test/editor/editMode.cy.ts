@@ -19,7 +19,6 @@ describe('EditMode', () => {
   });
 
   it('should switch language and check editor content', () => {
-     editor.switchLanguage();
+    editor.switchLanguage();
   });
-
 });

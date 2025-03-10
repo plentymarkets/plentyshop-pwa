@@ -1,6 +1,6 @@
 import { paths } from '../../../utils/paths';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
-import { HomePageObject } from "../../support/pageObjects/HomePageObject";
+import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 
 const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();

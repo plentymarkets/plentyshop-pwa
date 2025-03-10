@@ -242,7 +242,10 @@ export class CheckoutPageObject extends PageObject {
       .as('getExecutePayPalOrder');
 
     cy.getByTestId('pay-creditcard-button').click();
-    cy.wait('@doAdditionalInformation').wait('@doPreparePayment').wait('@doCapturePayPalOrder').wait('@getExecutePayPalOrder');
+    cy.wait('@doAdditionalInformation')
+      .wait('@doPreparePayment')
+      .wait('@doCapturePayPalOrder')
+      .wait('@getExecutePayPalOrder');
     return this;
   }
 
@@ -262,7 +265,6 @@ export class CheckoutPageObject extends PageObject {
 
   fillAddressForm(fixtureOverride?: AddressFixtureOverride) {
     cy.getFixture('addressForm').then((fixture) => {
-
       if (fixtureOverride) {
         fixture = { ...fixture, ...fixtureOverride };
       }

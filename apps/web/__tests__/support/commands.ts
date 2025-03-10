@@ -17,9 +17,15 @@ declare global {
   }
 }
 
-Cypress.Commands.add('getByTestId', (testId: string, options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow> | undefined) => {
-  cy.get(`[data-testid="${testId}"]`, options);
-});
+Cypress.Commands.add(
+  'getByTestId',
+  (
+    testId: string,
+    options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow> | undefined,
+  ) => {
+    cy.get(`[data-testid="${testId}"]`, options);
+  },
+);
 
 Cypress.Commands.add('getByComponent', (Component: string) => {
   cy.get(`[Component="${Component}"]`);
