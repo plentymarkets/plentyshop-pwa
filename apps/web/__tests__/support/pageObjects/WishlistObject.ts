@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class WishlistObject extends PageObject {
   get wishlistIcon() {
@@ -23,19 +23,19 @@ export class WishlistObject extends PageObject {
 
   openWishlist() {
     this.wishlistIcon.click();
-    cy.wait('@getWishlist')
+    cy.wait('@getWishlist');
     return this;
   }
 
   addWishlistItem() {
     this.wishlistTrigger.first().click();
-    cy.wait('@doAddWishlistItem')
+    cy.wait('@doAddWishlistItem');
     return this;
   }
 
   removeWishlistItem() {
     this.wishlistTrigger.first().click();
-    cy.wait('@deleteWishlistItem')
+    cy.wait('@deleteWishlistItem');
     return this;
   }
 
@@ -46,8 +46,8 @@ export class WishlistObject extends PageObject {
 
   addToCart() {
     this.addToCartTrigger.first().click();
-    cy.wait(1000)
-    cy.getByTestId('quick-checkout-close').click()
+    cy.wait(1000);
+    cy.getByTestId('quick-checkout-close').click();
     return this;
   }
 

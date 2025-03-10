@@ -1,4 +1,4 @@
-import { PageObject } from "../../support/pageObjects/PageObject";
+import { PageObject } from '../../support/pageObjects/PageObject';
 
 export class BannerSliderObject extends PageObject {
   openSlideActions() {
@@ -17,18 +17,17 @@ export class BannerSliderObject extends PageObject {
     cy.get('[data-testid="actions-add-slide-button"]').click();
   }
 
-  deleteSlide(){
+  deleteSlide() {
     cy.get('[data-testid="actions-delete-slide-1"]').click();
   }
 
-  checkIfSlideIsDeleted(){
+  checkIfSlideIsDeleted() {
     cy.get('[data-testid="banner-image-1"]').should('not.exist');
     cy.get('[data-testid="open-slide-actions"]').should('not.exist');
   }
 
-  checkIfSlideActionsAreVisible(){
+  checkIfSlideActionsAreVisible() {
     cy.get('[data-testid="open-slide-actions"]').should('not.exist');
-
   }
   quickAddSlide() {
     cy.get('[data-testid="quick-add-slide-button"]').click();
@@ -58,132 +57,135 @@ export class BannerSliderObject extends PageObject {
     cy.get(`[data-testid="actions-move-slide-down-${index}"]`).click();
   }
 
-  openImageGroup(){
+  openImageGroup() {
     cy.get('[data-testid="banner-image-0"]').should('be.visible');
   }
 
-  changeBannerImage(){
-    cy.get('[data-testid="slide-4xl-image-input"]').should('be.visible').clear().type("https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png", { delay: 0 });
-    cy.get('[data-testid="slide-desktop-image-input"]').should('be.visible').clear().type("https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png", { delay: 0 });
+  changeBannerImage() {
+    cy.get('[data-testid="slide-4xl-image-input"]')
+      .should('be.visible')
+      .clear()
+      .type('https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png', { delay: 0 });
+    cy.get('[data-testid="slide-desktop-image-input"]')
+      .should('be.visible')
+      .clear()
+      .type('https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png', { delay: 0 });
   }
 
-  checkNewBannerImage(){
+  checkNewBannerImage() {
     cy.get('[data-testid="banner-image-0"]').should('be.visible');
-    cy.get('[data-testid="banner-image-0"]').should('have.attr', 'src', 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png');
+    cy.get('[data-testid="banner-image-0"]').should(
+      'have.attr',
+      'src',
+      'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+    );
   }
 
-  checkBannerAltText(){
+  checkBannerAltText() {
     cy.get('[data-testid="slide-alt-text"]').should('be.visible').clear().type('New Alt Text', { delay: 0 });
     cy.get('[data-testid="banner-image-0"]').should('have.attr', 'alt', 'New Alt Text');
   }
 
-  closeImageGroup(){
-      cy.get('[data-testid="slider-image-group-title"]').should('be.visible').click();
+  closeImageGroup() {
+    cy.get('[data-testid="slider-image-group-title"]').should('be.visible').click();
   }
 
-  openTextGroup(){
+  openTextGroup() {
     cy.get('[data-testid="banner-text-group"]').should('be.visible').scrollIntoView().click();
   }
 
-  changeTexts(){
+  changeTexts() {
     cy.get('[data-testid="banner-input-pre-title"]').should('be.visible').clear().type('New Pre-Title', { delay: 0 });
     cy.get('[data-testid="banner-input-title"]').should('be.visible').clear().type('New Title', { delay: 0 });
     cy.get('[data-testid="banner-input-sub-title"]').should('be.visible').clear().type('New Subtitle', { delay: 0 });
     cy.get('[data-testid="banner-text-content"]').should('be.visible').clear().type('New Text Content', { delay: 0 });
   }
 
-  checkNewTexts(){
+  checkNewTexts() {
     cy.get('[data-testid="banner-pretitle-0"]').should('have.text', 'New Pre-Title');
     cy.get('[data-testid="banner-title-0"]').should('have.text', 'New Title');
     cy.get('[data-testid="banner-subtitle-0"]').should('have.text', 'New Subtitle');
     cy.get('[data-testid="banner-description-0"]').should('have.text', 'New Text Content');
   }
 
-  scrollFormDown(){
+  scrollFormDown() {
     cy.get('[data-testid="banner-carousel-form"]').scrollTo('bottom');
   }
 
-  alignBoxCenterX(){
+  alignBoxCenterX() {
     cy.get('[data-testid="slider-textbox-align-center"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'justify-content', 'center');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'justify-content', 'center');
   }
 
-  alignBoxBottomX(){
+  alignBoxBottomX() {
     cy.get('[data-testid="slider-textbox-align-bottom"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'justify-content', 'flex-end');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'justify-content', 'flex-end');
   }
 
-  alignBoxTopX(){
+  alignBoxTopX() {
     cy.get('[data-testid="slider-textbox-align-top"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'justify-content', 'flex-start');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'justify-content', 'flex-start');
   }
 
-  alignBoxCenterY(){
+  alignBoxCenterY() {
     cy.get('[data-testid="slider-textbox-y-align-center"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'align-items', 'center');
-
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'align-items', 'center');
   }
 
-  alignBoxRightY(){
+  alignBoxRightY() {
     cy.get('[data-testid="slider-textbox-y-align-right"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'align-items', 'flex-end');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'align-items', 'flex-end');
   }
 
-  alignBoxLeftY(){
+  alignBoxLeftY() {
     cy.get('[data-testid="slider-textbox-y-align-left"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'align-items', 'flex-start');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'align-items', 'flex-start');
   }
 
-  textAlignCenter(){
+  textAlignCenter() {
     cy.get('[data-testid="slider-text-align-center"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'text-align', 'center');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'text-align', 'center');
   }
 
-  textAlignRight(){
+  textAlignRight() {
     cy.get('[data-testid="slider-text-align-right"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'text-align', 'right');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'text-align', 'right');
   }
 
-  textAlignLeft(){
+  textAlignLeft() {
     cy.get('[data-testid="slider-text-align-left"]').should('exist').click();
-    cy.get('[data-testid="banner-overlay-0"]')
-    .should('have.css', 'text-align', 'left');
+    cy.get('[data-testid="banner-overlay-0"]').should('have.css', 'text-align', 'left');
   }
 
-  closeTextGroup(){
+  closeTextGroup() {
     cy.get('[data-testid="slider-text-group-title"]').should('be.visible').click();
-}
+  }
 
-  openButtonGroup(){
-  cy.get('[data-testid="slider-button-group-title"]').should('be.visible').click();
-}
+  openButtonGroup() {
+    cy.get('[data-testid="slider-button-group-title"]').should('be.visible').click();
+  }
 
-  changeButtonLabelAndLink(){
-  cy.get('[data-testid="slider-button-label"]').should('be.visible').clear().type('New Button Label', { delay: 0 });
-  cy.get('[data-testid="slider-button-link"]').should('be.visible').clear().type('https://www.google.com', { delay: 0 });
-}
+  changeButtonLabelAndLink() {
+    cy.get('[data-testid="slider-button-label"]').should('be.visible').clear().type('New Button Label', { delay: 0 });
+    cy.get('[data-testid="slider-button-link"]')
+      .should('be.visible')
+      .clear()
+      .type('https://www.google.com', { delay: 0 });
+  }
 
-  checkButtonLabelAndLink(){
-  cy.get('[data-testid="banner-button-0"]').should('have.text', 'New Button Label').should('have.attr', 'href', 'https://www.google.com');
+  checkButtonLabelAndLink() {
+    cy.get('[data-testid="banner-button-0"]')
+      .should('have.text', 'New Button Label')
+      .should('have.attr', 'href', 'https://www.google.com');
+  }
 
-}
+  checkButtonSecondary() {
+    cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
+    cy.get('[data-testid="banner-button-0"]').should('have.class', 'active:text-primary-900');
+  }
 
-  checkButtonSecondary(){
-  cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
-  cy.get('[data-testid="banner-button-0"]').should('have.class', 'active:text-primary-900');
-}
-
-  checkButtonPrimary(){
-  cy.get('[data-testid="slider-button-primary"]').should('exist').click();
-  cy.get('[data-testid="banner-button-0"]').should('have.class', 'active:bg-primary-700');
-}
-
+  checkButtonPrimary() {
+    cy.get('[data-testid="slider-button-primary"]').should('exist').click();
+    cy.get('[data-testid="banner-button-0"]').should('have.class', 'active:bg-primary-700');
+  }
 }

@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class CategoryPageObject extends PageObject {
   get categoryFilter() {
@@ -7,8 +7,8 @@ export class CategoryPageObject extends PageObject {
 
   filterClickShouldReloadCategory = () => {
     cy.intercept('/plentysystems/getFacet').as('getFacet');
-    
+
     this.categoryFilter.first().click();
-    cy.wait('@getFacet').its('response.statusCode').should('eq', 200)
-  }
+    cy.wait('@getFacet').its('response.statusCode').should('eq', 200);
+  };
 }
