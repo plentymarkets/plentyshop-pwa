@@ -13,9 +13,7 @@
         </span>
         <SfCounter v-if="Number(count) > -1" class="md:text-sm font-normal">{{ count }}</SfCounter>
       </span>
-      <template #suffix>
-        <SfIconCheck v-if="selected" size="sm" class="text-primary-500" />
-      </template>
+      <SfIconCheck v-if="selected" size="sm" class="text-primary-500" />
     </NuxtLink>
   </SfListItem>
 </template>

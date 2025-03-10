@@ -28,7 +28,7 @@
       class="bg-white w-full"
       :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
     >
-      <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" data-testid="body" />
+      <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
