@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
+    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
   >
     <Multiselect
       ref="multiselectRef"
@@ -38,6 +38,7 @@
       <button>Confirm Selection</button>
     </div>
   </div>
+
 </template>
 
 <script lang="ts" setup>

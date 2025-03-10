@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]"
+    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]', drawerZIndexClass]"
     data-testid="edit-mode-toolbar"
   >
     <div class="relative flex items-center pr-5">
@@ -67,6 +67,7 @@ import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { isDrawerOpen } = useDrawerState();
 
 const { loading } = useHomepage();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
@@ -82,4 +83,6 @@ const toggleEdit = () => {
     isEditing.value = false;
   }
 };
+
+const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'md:z-[10]' : 'md:z-[20]'));
 </script>

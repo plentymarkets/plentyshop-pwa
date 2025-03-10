@@ -17,8 +17,8 @@
         <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
       </div>
     </div>
-    <UiPageSearch v-if="isOpen" @close="closeDropdown" @page-selected="handlePageSelected" />
   </div>
+  <UiPageSearch v-if="isOpen" @close="closeDropdown" @page-selected="handlePageSelected" />
 </template>
 
 <script setup lang="ts">
