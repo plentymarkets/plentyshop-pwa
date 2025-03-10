@@ -45,7 +45,7 @@ const useClassFor = (index: number): boolean => foundCookies.length > 1 && index
 const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
   const { public: config } = useRuntimeConfig();
   const domain = config.domain.replace('https://', '');
-  useCookie(foundCookies[index], {path: '/', domain: domain}).value = null;
+  useCookie(foundCookies[index], { path: '/', domain: domain }).value = null;
   bannerIsHidden.value = true;
   foundCookies.splice(index, 1);
   window.location.reload();
