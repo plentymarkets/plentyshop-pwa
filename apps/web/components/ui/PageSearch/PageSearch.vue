@@ -38,7 +38,6 @@
       <button>Confirm Selection</button>
     </div>
   </div>
-
 </template>
 
 <script lang="ts" setup>
