@@ -66,7 +66,7 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
-    "nuxt": "^3.15.4",
+    "nuxt": "^3.16.0",
     "nuxt-security": "2.1.5",
     "nuxt-viewport": "^2.1.5",
     "playwright-core": "^1.45.1",
@@ -74,7 +74,7 @@
     "rimraf": "^5.0.7",
     "rollup": "^4.34.1",
     "turbo": "^2.4.0",
-    "typescript": "5.7.3",
+    "typescript": "5.8.2",
     "vitest": "^3.0.5",
     "wait-on": "^7.2.0"
   },

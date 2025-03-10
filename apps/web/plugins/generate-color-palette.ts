@@ -28,7 +28,7 @@ export default defineNuxtPlugin(async () => {
     useHead({
       style: [
         {
-          children: `:root { ${styleString} }`,
+          innerHTML: `:root { ${styleString} }`,
         },
       ],
     });
