@@ -175,7 +175,7 @@ import type { AddressFormShippingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormShippingProps>();
 
-const { isGuest, validGuestEmail } = useCustomer();
+const { isGuest, validGuestEmail, backToContactInformation } = useCustomer();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { handleCartTotalChanges } = useCartTotalChange();
@@ -267,7 +267,8 @@ const handleBillingPrimaryAddress = async () => {
 const validateAndSubmitForm = async () => {
   const formData = await validate();
 
-  if (formIsLoading.value || (isGuest.value && !validGuestEmail.value)) return;
+  if (formIsLoading.value) return;
+  if (isGuest.value && !validGuestEmail.value) return backToContactInformation();
 
   if (formData.valid) {
     await submitForm();

@@ -168,7 +168,7 @@ import type { AddressFormBillingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormBillingProps>();
 
-const { isGuest, validGuestEmail } = useCustomer();
+const { isGuest, validGuestEmail, backToContactInformation } = useCustomer();
 const { shippingAsBilling } = useShippingAsBilling();
 const {
   isLoading: formIsLoading,
@@ -224,7 +224,8 @@ const syncCheckoutAddress = async () => {
 const validateAndSubmitForm = async () => {
   const formData = await validate();
 
-  if (formIsLoading.value || (isGuest.value && !validGuestEmail.value)) return;
+  if (formIsLoading.value) return;
+  if (isGuest.value && !validGuestEmail.value) return backToContactInformation();
 
   if (formData.valid) {
     await submitForm();
