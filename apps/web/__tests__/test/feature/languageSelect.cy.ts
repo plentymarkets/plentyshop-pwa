@@ -1,5 +1,5 @@
 import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
-import {CookieBarObject} from "../../support/pageObjects/CookieBarObject";
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 
 const languageSelect = new LanguageSelectObject();
@@ -41,37 +41,27 @@ describe('Feature: Language Selector', () => {
   });
 
   it('Should change language on mobile viewport from EN to DE', () => {
-    setMobileState()
+    setMobileState();
 
-    languageSelect
-        .openMobileModal()
-        .changeLanguage('de');
+    languageSelect.openMobileModal().changeLanguage('de');
   });
 
   it('Should open modal on mobile viewport and show languages with their flags', () => {
-    setMobileState()
+    setMobileState();
 
-    languageSelect
-        .openMobileModal()
-        .checkOptions()
-        .checkLanguageFlags();
+    languageSelect.openMobileModal().checkOptions().checkLanguageFlags();
   });
 
   it('Should open and close language modal on mobile viewport', () => {
     setMobileState();
 
-    languageSelect
-        .openMobileModal()
-        .closeModal();
+    languageSelect.openMobileModal().closeModal();
   });
 
-  function setMobileState(
-      width: number = 390,
-      height: number = 844,
-  ) {
+  function setMobileState(width: number = 390, height: number = 844) {
     cy.visitAndHydrate(paths.home);
-    cy.viewport(width, height)
-    
+    cy.viewport(width, height);
+
     cookieBar.acceptAll();
   }
 });

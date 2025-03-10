@@ -5,7 +5,10 @@ const category = new CategoryPageObject();
 describe('Smoke: Category Page', () => {
   beforeEach(() => {
     cy.clearCookies();
-    cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}')
+    cy.setCookie(
+      'consent-cookie',
+      '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+    );
   });
 
   it('[smoke] Category filters should trigger a product data reload', () => {
@@ -15,9 +18,9 @@ describe('Smoke: Category Page', () => {
     cy.visitAndHydrate('/living-room');
 
     category.filterClickShouldReloadCategory();
-  })
+  });
 
   it('[smoke] Category should load DE SSR on first visit where there are no browser cookies', () => {
     cy.visitAndHydrate('/de/wohnzimmer');
-  })
+  });
 });

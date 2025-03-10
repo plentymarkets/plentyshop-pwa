@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils';
 import { BlocksBannerCarouselBanner } from '#components';
 
 describe('Banner text', () => {
@@ -114,7 +114,7 @@ describe('Banner text', () => {
       },
     });
 
-    const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+    const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
     expect(overlay.attributes('style')).toContain('color: red');
   });
@@ -139,7 +139,7 @@ describe('Banner text', () => {
       },
     });
 
-    const content = wrapper.find('[data-testid="banner-content-0"]')
+    const content = wrapper.find('[data-testid="banner-content-0"]');
 
     expect(content.attributes('style')).toContain('background-color: rgba(0, 0, 255, 1)');
   });
@@ -164,7 +164,7 @@ describe('Banner text', () => {
       },
     });
 
-    const content = wrapper.find('[data-testid="banner-content-0"]')
+    const content = wrapper.find('[data-testid="banner-content-0"]');
 
     expect(content.attributes('style')).toContain('background-color: rgba(255, 255, 255, 0.5)');
   });
@@ -188,7 +188,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('text-align: left');
     });
@@ -212,7 +212,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('text-align: center');
     });
@@ -236,7 +236,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('text-align: right');
     });
@@ -261,7 +261,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('justify-content: flex-start');
     });
@@ -285,7 +285,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('justify-content: center');
     });
@@ -309,7 +309,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('justify-content: flex-end');
     });
@@ -334,7 +334,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('align-items: flex-start');
     });
@@ -358,7 +358,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('align-items: center');
     });
@@ -382,7 +382,7 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
 
       expect(overlay.attributes('style')).toContain('align-items: flex-end');
     });

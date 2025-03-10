@@ -13,7 +13,6 @@ beforeEach(() => {
 });
 
 describe('Smoke: Homepage', () => {
-
   it('[smoke] Check if Category button exists ', () => {
     homePage.checkHeaderCategory();
   });
