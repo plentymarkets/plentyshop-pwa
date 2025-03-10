@@ -1,7 +1,9 @@
 <template>
   <div class="site-settings-view sticky top-[52px]">
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">Block Editing</div>
+      <div class="flex items-center text-xl font-bold">
+        {{ getBlockTypeName(blockType) }}
+      </div>
       <button class="!p-0" @click="drawerOpen = false">
         <SfIconClose />
       </button>
@@ -32,5 +34,17 @@ const getComponent = (name: string) => {
   }
 
   return '';
+};
+
+const blockTypeNames: Record<string, string> = {
+  BannerCarousel: 'Image Banner',
+  NewsletterSubscribe: 'Newsletter',
+  ProductRecommendedProducts: 'Product Gallery',
+  TextCard: 'Rich Text',
+  ImageText: 'Image + Text',
+};
+
+const getBlockTypeName = (blockType: string) => {
+  return blockTypeNames[blockType] ?? blockType;
 };
 </script>

@@ -53,7 +53,7 @@ export const useAddressForm = (type: AddressType) => {
       }),
       country: string()
         .required($i18n.t('errorMessages.requiredField'))
-        .default(cartGetters.getShippingCountryId(customerData.value?.basket)),
+        .default(cartGetters.getShippingCountryId(customerData.value?.basket).toString()),
       streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
