@@ -1,11 +1,11 @@
-import type { ShippingProvider, ShippingMethod } from '@plentymarkets/shop-api';
+import type { Data, ShippingMethod, ShippingProvider } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import type {
-  UseCartShippingMethodsState,
-  UseCartShippingMethodsReturn,
   GetShippingMethods,
   SaveShippingMethod,
   SetSelectedMethod,
+  UseCartShippingMethodsReturn,
+  UseCartShippingMethodsState,
 } from '~/composables/useCartShippingMethods/types';
 
 /**
@@ -40,7 +40,9 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
 
     const { data: cart } = useCart();
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getShippingProvider());
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<ShippingProvider>> => useSdk().plentysystems.getShippingProvider(),
+    );
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
 

@@ -1,4 +1,4 @@
-import type { ReviewAverage } from '@plentymarkets/shop-api';
+import type { Data, ReviewAverage } from '@plentymarkets/shop-api';
 import type { FetchProductReviewAverage, UseProductReviewAverage, UseProductReviewAverageState } from './types';
 
 /**
@@ -26,7 +26,9 @@ export const useProductReviewAverage: UseProductReviewAverage = () => {
    */
   const fetchProductReviewAverage: FetchProductReviewAverage = async (itemId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getReviewAverage({ itemId }));
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<ReviewAverage>> => useSdk().plentysystems.getReviewAverage({ itemId }),
+    );
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     state.value.loading = false;

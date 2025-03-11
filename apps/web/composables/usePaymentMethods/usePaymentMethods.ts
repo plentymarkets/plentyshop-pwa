@@ -1,5 +1,5 @@
-import type { PaymentProviders } from '@plentymarkets/shop-api';
-import type { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, SavePaymentMethod } from './types';
+import type { Data, PaymentProviders } from '@plentymarkets/shop-api';
+import type { FetchPaymentMethods, SavePaymentMethod, UsePaymentMethodsReturn, UsePaymentMethodsState } from './types';
 
 /**
  * @description Composable for managing payment methods.
@@ -25,7 +25,9 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
    */
   const fetchPaymentMethods: FetchPaymentMethods = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPaymentProviders());
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<PaymentProviders>> => useSdk().plentysystems.getPaymentProviders(),
+    );
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
     state.value.loading = false;

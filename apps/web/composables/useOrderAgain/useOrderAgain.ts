@@ -1,11 +1,17 @@
-import type { DoAddItemParams, Order, BasketItemOrderParamsProperty } from '@plentymarkets/shop-api';
+import type {
+  BasketItemOrderParamsProperty,
+  Data,
+  DoAddItemParams,
+  GetOrderAgainInformationResponse,
+  Order,
+} from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-api';
 import type {
-  UseOrderAgainState,
   AddOrderToCart,
+  LoadOrderInformation,
   OpenOrderAgainModal,
   UseOrderAgainReturn,
-  LoadOrderInformation,
+  UseOrderAgainState,
 } from './types';
 
 /**
@@ -36,11 +42,12 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
    */
   const loadOrderInformation: LoadOrderInformation = async (orderId, accessKey) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doOrderAgainInformation({
-        orderId,
-        accessKey,
-      }),
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<GetOrderAgainInformationResponse>> =>
+        useSdk().plentysystems.doOrderAgainInformation({
+          orderId,
+          accessKey,
+        }),
     );
     useHandleError(error.value);
 

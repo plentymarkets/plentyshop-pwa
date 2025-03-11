@@ -1,11 +1,11 @@
-import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, cartGetters, Data, userAddressGetters } from '@plentymarkets/shop-api';
 import type {
   DeleteAddress,
-  SetDefault,
-  UseAddressReturn,
   GetAddresses,
   SaveAddress,
+  SetDefault,
   UseAddressMethodsState,
+  UseAddressReturn,
 } from './types';
 
 /**
@@ -133,10 +133,12 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
 
   const getAddresses: GetAddresses = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(type.toString(), () =>
-      useSdk().plentysystems.getAddresses({
-        typeId: type,
-      }),
+    const { data, error } = await useAsyncData(
+      type.toString(),
+      (): Promise<Data<Address[]>> =>
+        useSdk().plentysystems.getAddresses({
+          typeId: type,
+        }),
     );
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
@@ -150,11 +152,13 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   const saveAddress: SaveAddress = async (address: Address, combineShippingBilling = false) => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(type.toString(), () =>
-      useSdk().plentysystems.doSaveAddress({
-        typeId: type,
-        addressData: address,
-      }),
+    const { data, error } = await useAsyncData(
+      type.toString(),
+      (): Promise<Data<Address[]>> =>
+        useSdk().plentysystems.doSaveAddress({
+          typeId: type,
+          addressData: address,
+        }),
     );
 
     useHandleError(error.value);

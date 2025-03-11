@@ -1,21 +1,22 @@
 import type {
-  DoAddItemParams,
-  SetCartItemQuantityParams,
-  DeleteCartItemParams,
-  CartItem,
-  CartItemError,
   ApiError,
   Cart,
+  CartItem,
+  CartItemError,
+  Data,
+  DeleteCartItemParams,
+  DoAddItemParams,
   PlentyEvents,
+  SetCartItemQuantityParams,
 } from '@plentymarkets/shop-api';
 import type {
-  UseCartState,
-  UseCartReturn,
-  GetCart,
-  AddToCart,
   AddItemsToCart,
+  AddToCart,
   DeleteCartItem,
+  GetCart,
   SetCartItemQuantity,
+  UseCartReturn,
+  UseCartState,
 } from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
@@ -75,7 +76,7 @@ export const useCart: UseCartReturn = () => {
   const getCart: GetCart = async () => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getCart());
+      const { data, error } = await useAsyncData((): Promise<Data<Cart>> => useSdk().plentysystems.getCart());
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
 
@@ -219,12 +220,13 @@ export const useCart: UseCartReturn = () => {
   const setCartItemQuantity: SetCartItemQuantity = async (params: SetCartItemQuantityParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() =>
-        useSdk().plentysystems.setCartItemQuantity({
-          productId: params.productId,
-          quantity: params.quantity,
-          cartItemId: params.cartItemId,
-        }),
+      const { data, error } = await useAsyncData(
+        (): Promise<Data<Cart | CartItemError>> =>
+          useSdk().plentysystems.setCartItemQuantity({
+            productId: params.productId,
+            quantity: params.quantity,
+            cartItemId: params.cartItemId,
+          }),
       );
 
       useHandleError(error.value);
@@ -271,10 +273,11 @@ export const useCart: UseCartReturn = () => {
   const deleteCartItem: DeleteCartItem = async (params: DeleteCartItemParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() =>
-        useSdk().plentysystems.deleteCartItem({
-          cartItemId: params.cartItemId,
-        }),
+      const { data, error } = await useAsyncData(
+        (): Promise<Data<Cart>> =>
+          useSdk().plentysystems.deleteCartItem({
+            cartItemId: params.cartItemId,
+          }),
       );
 
       useHandleError(error.value);

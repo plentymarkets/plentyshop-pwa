@@ -1,4 +1,4 @@
-import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
+import type { CustomerContactEmailParams, Data } from '@plentymarkets/shop-api';
 import type { DoCustomerContactMail, UseCustomerContactReturn, UseCustomerContactState } from './types';
 
 /**
@@ -31,7 +31,9 @@ export const useCustomerContact: UseCustomerContactReturn = () => {
   const doCustomerContactMail: DoCustomerContactMail = async (params: CustomerContactEmailParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCustomerContactMail(params));
+      const { data, error } = await useAsyncData(
+        (): Promise<Data<null>> => useSdk().plentysystems.doCustomerContactMail(params),
+      );
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
 

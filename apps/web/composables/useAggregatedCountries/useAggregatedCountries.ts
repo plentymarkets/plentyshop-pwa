@@ -1,5 +1,5 @@
-import type { AggregatedCountries } from '@plentymarkets/shop-api';
-import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
+import type { AggregatedCountries, Data } from '@plentymarkets/shop-api';
+import type { FetchAggregatedCountries, UseAggregatedCountriesReturn, UseAggregatedCountriesState } from './types';
 
 /**
  * @description Composable for getting `AggregatedCountries`:
@@ -30,8 +30,9 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   const fetchAggregatedCountries: FetchAggregatedCountries = async () => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData('getAggregatedCountries', () =>
-      useSdk().plentysystems.getAggregatedCountries(),
+    const { data, error } = await useAsyncData(
+      'getAggregatedCountries',
+      (): Promise<Data<AggregatedCountries>> => useSdk().plentysystems.getAggregatedCountries(),
     );
 
     useHandleError(error.value);

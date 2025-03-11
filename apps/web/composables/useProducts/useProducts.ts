@@ -1,6 +1,6 @@
-import type { FacetSearchCriteria, Product, Facet } from '@plentymarkets/shop-api';
+import type { Data, Facet, FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
-import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
+import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 
 /**
  * @description Composable for managing products.
@@ -39,7 +39,10 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 
-    const { data } = await useAsyncData(`useProducts-${category}`, () => useSdk().plentysystems.getFacet(params));
+    const { data } = await useAsyncData(
+      `useProducts-${category}`,
+      (): Promise<Data<Facet>> => useSdk().plentysystems.getFacet(params),
+    );
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 

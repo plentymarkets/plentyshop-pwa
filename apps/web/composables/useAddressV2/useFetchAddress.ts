@@ -1,4 +1,4 @@
-import type { AddressType, ApiError } from '@plentymarkets/shop-api';
+import type { Address, AddressType, ApiError, Data } from '@plentymarkets/shop-api';
 
 export const useFetchAddress = (type: AddressType) => {
   const state = useState('useFetchAddress' + type, () => ({
@@ -21,8 +21,9 @@ export const useFetchAddress = (type: AddressType) => {
 
   const fetchServer = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(type.toString(), () =>
-      useSdk().plentysystems.getAddresses({ typeId: type }),
+    const { data, error } = await useAsyncData(
+      type.toString(),
+      (): Promise<Data<Address[]>> => useSdk().plentysystems.getAddresses({ typeId: type }),
     );
 
     useHandleError(error.value);

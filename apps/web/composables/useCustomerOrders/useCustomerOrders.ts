@@ -1,10 +1,10 @@
 import type {
+  FetchCustomerOrders,
   UseCustomerOrdersReturn,
   UseCustomerOrdersState,
-  FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
 
-import type { UseUserOrderSearchParams } from '@plentymarkets/shop-api';
+import type { Data, GetOrdersResponse, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing customer orders data
@@ -32,8 +32,9 @@ export const useCustomerOrders: UseCustomerOrdersReturn = () => {
    */
   const fetchCustomerOrders: FetchCustomerOrders = async (params: UseUserOrderSearchParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData((params.page ?? 1).toString(), () =>
-      useSdk().plentysystems.getOrders(params),
+    const { data, error } = await useAsyncData(
+      (params.page ?? 1).toString(),
+      (): Promise<Data<GetOrdersResponse>> => useSdk().plentysystems.getOrders(params),
     );
     useHandleError(error.value);
     state.value.data = data.value?.data ?? null;

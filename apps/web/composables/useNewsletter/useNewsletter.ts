@@ -1,5 +1,5 @@
-import type { NewsletterParams } from '@plentymarkets/shop-api';
-import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
+import type { Data, NewsletterParams, NewsletterSubscribeResponse } from '@plentymarkets/shop-api';
+import type { Subscribe, UseNewsletterReturn, UseNewsletterState } from '~/composables/useNewsletter/types';
 
 /**
  * @description Composable for subscribing/unsubscribing to newsletter.
@@ -28,7 +28,9 @@ export const useNewsletter: UseNewsletterReturn = () => {
    */
   const subscribe: Subscribe = async (params: NewsletterParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doSubscribeNewsletter(params));
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<NewsletterSubscribeResponse>> => useSdk().plentysystems.doSubscribeNewsletter(params),
+    );
     useHandleError(error.value);
 
     state.value.loading = false;

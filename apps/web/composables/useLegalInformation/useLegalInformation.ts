@@ -1,5 +1,5 @@
-import type { LegalInformationResponse, LegalTextsParams } from '@plentymarkets/shop-api';
-import type { UseLegalInformationState, UseLegalInformationMethodsReturn, GetLegalInformation } from './types';
+import type { Data, LegalInformationResponse, LegalTextsParams } from '@plentymarkets/shop-api';
+import type { GetLegalInformation, UseLegalInformationMethodsReturn, UseLegalInformationState } from './types';
 
 /**
  * @description Composable for managing the legal information.
@@ -43,7 +43,9 @@ export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
   const getLegalTexts: GetLegalInformation = async (params: LegalTextsParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getLegalTexts(params));
+      const { data, error } = await useAsyncData(
+        (): Promise<Data<LegalInformationResponse>> => useSdk().plentysystems.getLegalTexts(params),
+      );
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
       return state.value.data;

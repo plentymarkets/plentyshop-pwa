@@ -1,6 +1,6 @@
-import type { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
+import type { Data, ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
-import type { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
+import type { GetSearch, UseSearchReturn, UseSearchState } from '~/composables/useSearch/types';
 
 /**
  * @description Composable for managing products search.
@@ -30,7 +30,9 @@ export const useSearch: UseSearchReturn = () => {
    */
   const getSearch: GetSearch = async (params: ItemSearchParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSearch(params));
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<ItemSearchResult>> => useSdk().plentysystems.getSearch(params),
+    );
     useHandleError(error.value);
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;

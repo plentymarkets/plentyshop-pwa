@@ -77,10 +77,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       try {
-        await useSdk().plentysystems.doExecutePayment({
-          orderId: state.value.data.order.id,
-          paymentId: params.paymentId,
-        });
+        if (state.value.data) {
+          await useSdk().plentysystems.doExecutePayment({
+            orderId: state.value.data.order.id,
+            paymentId: params.paymentId,
+          });
+        }
       } catch (error) {
         return handleMakeOrderError(error);
       }

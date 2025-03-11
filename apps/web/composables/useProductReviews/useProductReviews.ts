@@ -1,13 +1,20 @@
-import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
 import type {
+  ApiError,
+  CreateReviewParams,
+  Data,
+  Review,
+  ReviewItem,
+  UpdateReviewParams,
+} from '@plentymarkets/shop-api';
+import { reviewGetters } from '@plentymarkets/shop-api';
+import type {
+  CreateProductReview,
+  DeleteProductReview,
   FetchProductReviews,
+  SetProductReview,
   UseProductReviews,
   UseProductReviewsState,
-  DeleteProductReview,
-  SetProductReview,
-  CreateProductReview,
 } from './types';
-import { reviewGetters } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing product reviews data
@@ -46,12 +53,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const config = useRuntimeConfig().public;
 
     try {
-      const { data, error } = await useAsyncData(() =>
-        useSdk().plentysystems.getReview({
-          itemId: itemId,
-          feedbacksPerPage: config.defaultItemsPerPage,
-          page: Number(route.query.feedbackPage) || 1,
-        }),
+      const { data, error } = await useAsyncData(
+        (): Promise<Data<Review>> =>
+          useSdk().plentysystems.getReview({
+            itemId: itemId,
+            feedbacksPerPage: config.defaultItemsPerPage,
+            page: Number(route.query.feedbackPage) || 1,
+          }),
       );
       useHandleError(error.value);
       state.value.data.feedbacks = data?.value?.data?.feedbacks ?? state.value.data.feedbacks;
@@ -75,7 +83,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doReview(params));
+    const { data, error } = await useAsyncData((): Promise<Data<Review>> => useSdk().plentysystems.doReview(params));
     useHandleError(error.value);
     if (data.value?.data && typeof data.value.data === 'string') {
       send({ type: 'negative', message: data.value.data });

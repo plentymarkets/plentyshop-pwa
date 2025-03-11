@@ -1,4 +1,4 @@
-import type { Cart, SessionResult, ApiError } from '@plentymarkets/shop-api';
+import type { ApiError, Cart, Data, InitResult, SessionResult } from '@plentymarkets/shop-api';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
 
@@ -46,7 +46,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
 
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
+    const { data } = await useAsyncData((): Promise<Data<InitResult>> => useSdk().plentysystems.getInit());
     if (data.value?.data) {
       setUser(data.value.data.session as SessionResult);
       setCart(data.value.data.session?.basket as Cart);

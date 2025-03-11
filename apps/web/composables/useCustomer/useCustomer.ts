@@ -1,13 +1,20 @@
-import type { RegisterParams, SessionResult, UserChangePasswordParams, ApiError } from '@plentymarkets/shop-api';
 import type {
+  ApiError,
+  Data,
+  RegisterParams,
+  SessionResult,
+  UserChangePasswordParams,
+  UserChangeResponse,
+} from '@plentymarkets/shop-api';
+import type {
+  ChangePassword,
+  GetSession,
+  Login,
+  LoginAsGuest,
+  Logout,
+  Register,
   UseCustomerReturn,
   UseCustomerState,
-  GetSession,
-  LoginAsGuest,
-  Login,
-  Register,
-  Logout,
-  ChangePassword,
 } from '~/composables/useCustomer/types';
 
 /**
@@ -60,7 +67,7 @@ export const useCustomer: UseCustomerReturn = () => {
    */
   const getSession: GetSession = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
+    const { data, error } = await useAsyncData((): Promise<Data<SessionResult>> => useSdk().plentysystems.getSession());
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
@@ -161,7 +168,9 @@ export const useCustomer: UseCustomerReturn = () => {
   const register: Register = async (params: RegisterParams) => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doRegisterUser(params));
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<UserChangeResponse>> => useSdk().plentysystems.doRegisterUser(params),
+    );
 
     useHandleError(error.value);
     state.value.loading = false;

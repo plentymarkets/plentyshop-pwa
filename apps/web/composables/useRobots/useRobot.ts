@@ -1,6 +1,6 @@
-import type { SetRobotForStaticPage, UseRobotReturn, UseRobotState } from './types';
-import type { RobotsStaticPages } from '@plentymarkets/shop-api';
+import type { Data, RobotsStaticPages } from '@plentymarkets/shop-api';
 import { robotGetters } from '@plentymarkets/shop-api';
+import type { SetRobotForStaticPage, UseRobotReturn, UseRobotState } from './types';
 
 export const useRobots: UseRobotReturn = () => {
   const state = useState<UseRobotState>(`useRobots`, () => ({
@@ -13,7 +13,9 @@ export const useRobots: UseRobotReturn = () => {
    */
   const getRobots: () => Promise<RobotsStaticPages> = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getRobots());
+    const { data, error } = await useAsyncData(
+      (): Promise<Data<RobotsStaticPages>> => useSdk().plentysystems.getRobots(),
+    );
     useHandleError(error.value);
 
     state.value.data = data.value?.data ?? state.value.data;

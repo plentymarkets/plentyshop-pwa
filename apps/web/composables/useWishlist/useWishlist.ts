@@ -1,18 +1,19 @@
 import type {
-  AddWishlistItemResponse,
-  WishlistItem,
   AddWishlistItemParams,
+  AddWishlistItemResponse,
+  Data,
   DeleteWishlistItemParams,
+  WishlistItem,
 } from '@plentymarkets/shop-api';
 import type {
+  AddWishlistItem,
+  DeleteWishlistItem,
   FetchWishlist,
+  InteractWithWishlist,
+  IsWishlistItem,
+  SetWishlistItemIds,
   UseWishlistReturn,
   UseWishlistState,
-  DeleteWishlistItem,
-  AddWishlistItem,
-  IsWishlistItem,
-  InteractWithWishlist,
-  SetWishlistItemIds,
 } from '~/composables/useWishlist/types';
 
 /**
@@ -45,7 +46,8 @@ export const useWishlist: UseWishlistReturn = () => {
 
     return await useSdk()
       .plentysystems.getWishlist()
-      .then(({ data }) => {
+      .then(async (response: Promise<Data<WishlistItem[]>>) => {
+        const { data } = await response;
         state.value.data = data ?? state.value.data;
         state.value.loading = false;
         return state.value.data;
@@ -89,7 +91,8 @@ export const useWishlist: UseWishlistReturn = () => {
 
     return await useSdk()
       .plentysystems.doAddWishlistItem(params)
-      .then(({ data }) => {
+      .then(async (response: Promise<Data<AddWishlistItemResponse>>) => {
+        const { data } = await response;
         setWishlistItemIds([...state.value.wishlistItemIds, params.variationId]);
         state.value.loading = false;
         emit('frontend:addToWishlist', { variationId: params.variationId });
@@ -113,7 +116,8 @@ export const useWishlist: UseWishlistReturn = () => {
 
     return await useSdk()
       .plentysystems.deleteWishlistItem(params)
-      .then(({ data }) => {
+      .then(async (response: Promise<Data<boolean>>) => {
+        const { data } = await response;
         setWishlistItemIds(state.value.wishlistItemIds.filter((id: number) => id !== params.variationId));
         state.value.loading = false;
         return !!data;

@@ -1,8 +1,14 @@
-import type { Order, PaginatedResult, UseUserOrderSearchParams, OrderReturnsResponse } from '@plentymarkets/shop-api';
 import type {
+  Data,
+  Order,
+  OrderReturnsResponse,
+  PaginatedResult,
+  UseUserOrderSearchParams,
+} from '@plentymarkets/shop-api';
+import type {
+  FetchCustomerReturns,
   UseCustomerReturnsReturn,
   UseCustomerReturnsState,
-  FetchCustomerReturns,
 } from '~/composables/useCustomerReturns/types';
 
 /**
@@ -32,8 +38,9 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
    */
   const fetchCustomerReturns: FetchCustomerReturns = async (params: UseUserOrderSearchParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData((params.page ?? 1).toString(), () =>
-      useSdk().plentysystems.getReturns(params),
+    const { data, error } = await useAsyncData(
+      (params.page ?? 1).toString(),
+      (): Promise<Data<PaginatedResult<Order>>> => useSdk().plentysystems.getReturns(params),
     );
     useHandleError(error.value);
     state.value.data = data.value?.data || state.value.data;

@@ -1,11 +1,18 @@
 import type {
+  BasketItemOrderParamsProperty,
+  Data,
+  OrderPropertyFileResponse,
+  Product,
+  ProductProperty,
+  UploadFileForOrderPropertyResponse,
+} from '@plentymarkets/shop-api';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
+import type {
   GetPropertiesPrice,
   SetProperties,
   UseProductOrderPropertiesReturn,
   UseProductOrderPropertiesState,
 } from '~/composables/useProductOrderProperties/types';
-import { productPropertyGetters } from '@plentymarkets/shop-api';
-import type { ProductProperty, BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
 
 const fileToBase64 = async (file: File): Promise<string | null> => {
   return new Promise((resolve) => {
@@ -154,12 +161,13 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
       return null;
     }
 
-    const { data } = await useAsyncData(() =>
-      useSdk().plentysystems.doUploadOrderPropertyFile({
-        base64: base64String,
-        filename: file.name,
-        type: file.type,
-      }),
+    const { data } = await useAsyncData(
+      (): Promise<Data<UploadFileForOrderPropertyResponse>> =>
+        useSdk().plentysystems.doUploadOrderPropertyFile({
+          base64: base64String,
+          filename: file.name,
+          type: file.type,
+        }),
     );
 
     state.value.loading = false;
@@ -169,11 +177,12 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
 
   const downloadFile = async (file: string) => {
     const split = file.split('/');
-    const { data } = await useAsyncData(() =>
-      useSdk().plentysystems.getOrderPropertyFile({
-        hash: split[0] ?? '',
-        fileName: split[1] ?? '',
-      }),
+    const { data } = await useAsyncData(
+      (): Promise<Data<OrderPropertyFileResponse>> =>
+        useSdk().plentysystems.getOrderPropertyFile({
+          hash: split[0] ?? '',
+          fileName: split[1] ?? '',
+        }),
     );
 
     if (data.value?.data) {

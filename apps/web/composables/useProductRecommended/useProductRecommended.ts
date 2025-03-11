@@ -1,7 +1,8 @@
+import { Data, Facet } from '@plentymarkets/shop-api';
 import type {
+  FetchProductRecommended,
   UseProductRecommendedReturn,
   UseProductRecommendedState,
-  FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
 
 /**
@@ -35,8 +36,9 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       sort: 'sorting.price.avg_asc',
     };
 
-    const { data, error } = await useAsyncData(`useProductRecommended-${categoryId}`, () =>
-      useSdk().plentysystems.getFacet(payload),
+    const { data, error } = await useAsyncData(
+      `useProductRecommended-${categoryId}`,
+      (): Promise<Data<Facet>> => useSdk().plentysystems.getFacet(payload),
     );
     useHandleError(error.value);
     state.value.data = data?.value?.data?.products ?? state.value.data;
