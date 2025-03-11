@@ -15,67 +15,97 @@
     </header>
 
     <p class="mb-6">Add name and type in order to add new page</p>
+    <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" novalidate @submit.prevent="onSubmit">
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">Page Name</UiFormLabel>
+        <SfInput
+          v-bind="pageNameAttributes"
+          v-model="pageName"
+          name="pageName"
+          type="text"
+          placeholder="Page Name"
+          data-testid="new-page-name"
+          :invalid="Boolean(errors['pageName'])"
+        />
+        <ErrorMessage as="div" name="pageName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+      </div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">Page Type</UiFormLabel>
+        <Multiselect
+          v-model="pageType"
+          data-testid="new-page-type"
+          :options="pageTypes"
+          placeholder="Select a page type"
+          :allow-empty="false"
+          class="cursor-pointer"
+          select-label=""
+          deselect-label="Selected"
+        />
+      </div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
+        <Multiselect
+          v-model="parentPage"
+          data-testid="new-parent-page"
+          :options="pageTypes"
+          placeholder="Select a parent page"
+          :allow-empty="false"
+          class="cursor-pointer"
+          select-label=""
+          deselect-label="Selected"
+        />
+      </div>
 
-    <div class="mb-6">
-      <UiFormLabel class="mb-1">Page Name</UiFormLabel>
-      <SfInput v-model="pageName" name="pageName" type="text" placeholder="Page Name" data-testid="new-page-name" />
-    </div>
-    <div class="mb-6">
-      <UiFormLabel class="mb-1">Page Type</UiFormLabel>
-      <Multiselect
-        v-model="pageType"
-        data-testid="new-page-type"
-        :options="pageTypes"
-        placeholder="Select a page type"
-        :allow-empty="false"
-        class="cursor-pointer"
-        select-label=""
-        deselect-label="Selected"
-      />
-    </div>
-    <div class="mb-6">
-      <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
-      <Multiselect
-        v-model="parentPage"
-        data-testid="new-parent-page"
-        :options="pageTypes"
-        placeholder="Select a parent page"
-        :allow-empty="false"
-        class="cursor-pointer"
-        select-label=""
-        deselect-label="Selected"
-      />
-    </div>
-
-    <div class="actions grid gap-4 grid-cols-2">
-      <button
-        type="button"
-        data-testid="block-spacing-btn"
-        class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
-        @click="togglePageModal(false)"
-      >
-        Cancel
-      </button>
-      <button
-        type="button"
-        data-testid="block-spacing-btn"
-        class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
-        @click="togglePageModal(false)"
-      >
-        Add New Page
-      </button>
-    </div>
+      <div class="actions grid gap-4 grid-cols-2">
+        <button
+          type="button"
+          data-testid="block-spacing-btn"
+          class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
+          @click="togglePageModal(false)"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          data-testid="block-spacing-btn"
+          class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
+        >
+          Add New Page
+        </button>
+      </div>
+    </form>
   </UiModal>
 </template>
 
 <script setup lang="ts">
 import { SfIconClose, SfInput } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
+import { object, string } from 'yup';
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
 
+const validationSchema = toTypedSchema(
+  object({
+    pageName: string().required('Please enter a name').default(''),
+  }),
+);
+
+const { errors, meta, defineField, handleSubmit } = useForm({
+  validationSchema: validationSchema,
+});
+
+const createNewPage = async () => {
+  if (!meta.value.valid) {
+    return;
+  }
+};
+
+const [pageName, pageNameAttributes] = defineField('pageName');
 const pageTypes = ref(['Content', 'Item category']);
-const pageName = ref('');
-const pageType = ref('');
+const pageType = ref('Content');
 const parentPage = ref('');
+
+const onSubmit = handleSubmit(() => createNewPage());
 </script>
