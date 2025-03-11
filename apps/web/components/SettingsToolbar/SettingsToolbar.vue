@@ -1,7 +1,7 @@
 <template>
   <aside
     class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] mb-3 h-screen w-[54px] min-w-[54px] border-r"
-    data-testid="edit-mode-toolbar"
+    data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
             <button

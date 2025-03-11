@@ -107,7 +107,7 @@ describe('useCheckoutPagePaymentAndShipping', () => {
       saveShippingMethod: saveShippingMethodMock,
       selectedMethod: ref({
         shippingPrivacyInformation: [{ showDataPrivacyAgreementHint: true }],
-        excludedPaymentMethodIds: []
+        excludedPaymentMethodIds: [],
       }),
     }));
 
@@ -188,7 +188,7 @@ describe('useCheckoutPagePaymentAndShipping', () => {
     const FirstAvailablePaymentMethodId = 2;
 
     usePaymentMethods.mockImplementation(() => ({
-      data: ref({ list: [{ id: ExcludedPaymentMethodId }, {id: FirstAvailablePaymentMethodId}] }),
+      data: ref({ list: [{ id: ExcludedPaymentMethodId }, { id: FirstAvailablePaymentMethodId }] }),
       fetchPaymentMethods: fetchPaymentMethodsMock,
       savePaymentMethod: savePaymentMethodMock,
     }));

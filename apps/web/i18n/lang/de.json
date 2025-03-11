@@ -222,6 +222,7 @@
       "createAccountLinkLabel": "Jetzt anmelden!",
       "forgotPasswordLabel": "Passwort vergessen?",
       "heading": "In ihr Konto einloggen",
+      "headingSuccess": "Passwort erfolgreich zurücksetzen",
       "loginAndContinue": "Einloggen und fortfahren",
       "openLoginForm": "Login Form öffnen",
       "rememberMeLabel": "An mich erinnern",
@@ -342,6 +343,7 @@
     "heading": "Zahlungsart",
     "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },
+  "checkoutExportDelivery": "Mit der Bestellung nehme ich zur Kenntnis, dass der Versand aus dem Land {shopCountry} in das Zielland {deliveryCountry} erfolgt. Die dortige Mehrwertsteuer, die Verzollungskosten und Zölle sind in der Endsumme der Bestellung nicht inbegriffen und sind Dritten zu bezahlen. Sie gehen zu meinen Lasten.",
   "clear": "Zurücksetzen",
   "clearFilters": "Alle Filter löschen",
   "closeDialog": "Dialogfenster schließen",
@@ -587,6 +589,7 @@
   "guestCheckout": "Gast Checkout",
   "home": "Startseite",
   "homepage": {
+    "homepagetitle": "Startseite",
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
     "emptyBlock": {
       "headline": "Hier den ersten Abschnitt hinzufügen."

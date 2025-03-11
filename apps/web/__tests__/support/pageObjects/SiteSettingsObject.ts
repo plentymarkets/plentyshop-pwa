@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class SiteSettingsObject extends PageObject {
   get closeButton() {
@@ -26,7 +26,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get body() {
-    return cy.getByTestId('body');
+    return cy.get('body');
   }
 
   get navbar() {

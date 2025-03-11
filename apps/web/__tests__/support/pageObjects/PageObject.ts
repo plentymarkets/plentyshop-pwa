@@ -1,6 +1,6 @@
 export class PageObject {
-    waitFor(intercepts: string[]) {
-        cy.wait(intercepts);
-        return this;
-    }
+  waitFor(intercepts: string[]) {
+    cy.wait(intercepts);
+    return this;
+  }
 }

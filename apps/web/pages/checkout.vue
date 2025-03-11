@@ -35,6 +35,7 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
+            <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
             <div v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableBuyButton"
@@ -143,6 +144,11 @@ const {
   handleShippingMethodUpdate,
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
+
+const { setPageMeta } = usePageMeta();
+
+const icon = 'page';
+setPageMeta(t('checkout'), icon);
 
 emit('frontend:beginCheckout', cart.value);
 
