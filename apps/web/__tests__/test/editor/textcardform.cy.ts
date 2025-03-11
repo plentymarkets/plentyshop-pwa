@@ -32,8 +32,8 @@ describe('Text Card Block Form', () => {
         .clear({ force: true })
         .type(text, { delay: 0, force: true });
     });
-    cy.get('[data-testid="text-card"]').scrollIntoView().should('exist');
-    cy.get('[data-testid="text-card"]').within(() => {
+    cy.get('[data-testid="text-card"]').first().scrollIntoView().should('exist');
+    cy.get('[data-testid="text-card"]').first().within(() => {
       const expectedTexts = [
         { selector: 'text-pretitle', text: 'Edited Pre-title' },
         { selector: 'text-title', text: 'Edited Main Title' },

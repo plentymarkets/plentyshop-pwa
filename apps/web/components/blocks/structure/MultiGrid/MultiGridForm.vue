@@ -1,6 +1,10 @@
 <template>
-  <BlocksImageForm :uuid="imageBlock?.meta?.uuid || ''" />
-  <BlocksTextCardForm :uuid="textCardBlock?.meta?.uuid || ''" />
+  <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
+    <div data-testid="image-text-form">
+      <BlocksImageForm :uuid="imageBlock?.meta?.uuid || ''" />
+      <BlocksTextCardForm :uuid="textCardBlock?.meta?.uuid || ''" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
