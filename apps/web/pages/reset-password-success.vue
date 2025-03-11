@@ -40,7 +40,7 @@ const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('auth.resetPassword.headingSuccess'), icon);
+setPageMeta(t('auth.resetPassword.title'), icon);
 
 const localePath = useLocalePath();
 

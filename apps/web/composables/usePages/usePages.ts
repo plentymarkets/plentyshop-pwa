@@ -8,7 +8,7 @@ export const usePages = async () => {
     () => [],
   );
 
-  const fetchPages = async () => {
+  const transformCategoryTreeToPages = () => {
     const transformData = (
       data: CategoryTreeItem[],
       parentPath = '',
@@ -51,15 +51,15 @@ export const usePages = async () => {
   };
 
   if (pages.value.length === 0) {
-    await fetchPages();
+    transformCategoryTreeToPages();
   }
 
   watch(locale, async () => {
-    await fetchPages();
+    await transformCategoryTreeToPages();
   });
 
   watch(data, async () => {
-    await fetchPages();
+    transformCategoryTreeToPages();
   });
 
   return {
