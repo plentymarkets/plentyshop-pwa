@@ -2,6 +2,9 @@
   {
     "name": "Carousel",
     "type": "structure",
+    "meta": {
+      "uuid": "3e1f8c9a-d2b4-4f8d-9c2b-8e1f3a7d5c9b"
+    },
     "configuration": {
       "controls": {
         "displayArrows": true,
@@ -12,6 +15,9 @@
       {
         "name": "Banner",
         "type": "content",
+        "meta": {
+          "uuid": "a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d"
+        },
         "content": {
           "image": {
             "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
@@ -44,6 +50,9 @@
       {
         "name": "Banner",
         "type": "content",
+        "meta": {
+          "uuid": "d4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a"
+        },
         "content": {
           "image": {
             "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
@@ -77,6 +86,9 @@
   {
     "name": "TextCard",
     "type": "content",
+    "meta": {
+      "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+    },
     "content": {
       "text": {
         "htmlDescription": "<p>Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.</p><p>Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.</p>",
@@ -96,6 +108,9 @@
   {
     "name": "ProductRecommendedProducts",
     "type": "content",
+    "meta": {
+      "uuid": "f7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
+    },
     "content": {
       "categoryId": "73"
     }
@@ -103,6 +118,9 @@
   {
     "name": "MultiGrid",
     "type": "structure",
+    "meta": {
+      "uuid": "9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a"
+    },
     "configuration": {
       "columnWidths": [
         4,
@@ -145,6 +163,9 @@
   {
     "name": "ProductRecommendedProducts",
     "type": "content",
+    "meta": {
+      "uuid": "g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
+    },
     "content": {
       "categoryId": "49",
       "text": {
@@ -158,6 +179,9 @@
   {
       "name": "NewsletterSubscribe",
       "type": "content",
+      "meta": {
+        "uuid": "0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f"
+      },
       "content": {
         "text": {
           "bgColor": "#f5f5f5",
