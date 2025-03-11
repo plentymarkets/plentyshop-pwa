@@ -22,10 +22,7 @@
       <template #option="{ option }">
         <div class="flex items-center px-2 max-h-[300px] w-auto">
           <span class="flex items-center">
-            <SfIconHome
-              v-if="option.name === t('homepage.homepagetitle')"
-              class="w-4 h-4 mr-2 font-bold text-gray-900"
-            />
+            <SfIconHome v-if="option.name === t('homepage.title')" class="w-4 h-4 mr-2 font-bold text-gray-900" />
             {{ option.name }}
           </span>
           <span v-if="option.path.split('/').length > 2" class="text-xs ml-2">
