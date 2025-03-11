@@ -9,7 +9,7 @@
   >
     <header class="flex items-center justify-between mb-2">
       <div class="flex items-center text-xl font-bold">Adding New Page</div>
-      <button class="absolute right-2 top-2 px-4 py-4" @click="togglePageModal(false)">
+      <button class="absolute right-2 top-2 px-4 py-4" @click="closeModal">
         <SfIconClose />
       </button>
     </header>
