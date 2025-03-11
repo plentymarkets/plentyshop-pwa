@@ -19,8 +19,8 @@ beforeEach(() => {
   cy.visitAndHydrate(paths.home);
 });
 
-describe('Smoke: Contact Information', () => {
-  it('[smoke] Should scroll to contact information if email is invalid and buy button is clicked', () => {
+describe('Contact Information', () => {
+  it('should scroll to contact information if email is invalid and buy button is clicked', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
@@ -34,7 +34,7 @@ describe('Smoke: Contact Information', () => {
     checkout.contactInformationForm.isScrolledTo();
   });
 
-  it('[smoke] Should scroll to contact information if email is invalid and shipping address save is clicked', () => {
+  it('should scroll to contact information if email is invalid and shipping address save is clicked', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
@@ -46,7 +46,7 @@ describe('Smoke: Contact Information', () => {
     checkout.contactInformationForm.isScrolledTo();
   });
 
-  it('[smoke] Should scroll to contact information if email is invalid and billing address save is clicked', () => {
+  it('should scroll to contact information if email is invalid and billing address save is clicked', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
@@ -58,7 +58,7 @@ describe('Smoke: Contact Information', () => {
     checkout.contactInformationForm.isScrolledTo();
   });
 
-  it('[smoke] Should validate email input', () => {
+  it('should validate email input', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
@@ -69,7 +69,7 @@ describe('Smoke: Contact Information', () => {
     cy.get('#customerEmailError').should('exist');
   });
 
-  it('[smoke] Should be able to change the email after address is changed', () => {
+  it('should be able to change the email after address is changed', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
