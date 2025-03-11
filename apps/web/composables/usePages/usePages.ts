@@ -8,7 +8,7 @@ export const usePages = async () => {
     () => [],
   );
 
-  const transformCategoryTreeToPages =  () => {
+  const transformCategoryTreeToPages = () => {
     const transformData = (
       data: CategoryTreeItem[],
       parentPath = '',

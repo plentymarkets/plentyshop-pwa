@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-  <UiPageSearch v-if="isOpen" @close="closeDropdown" @page-selected="handlePageSelected" />
+  <UiPageSearch v-if="isOpen" @close="toggleDropdown" @page-selected="handlePageSelected" />
 </template>
 
 <script setup lang="ts">
@@ -30,14 +30,29 @@ const currentPageIcon = ref('home');
 const { isEditing, disableActions } = useEditor();
 const isOpen = ref(false);
 
-const toggleDropdown = () => (isOpen.value = !isOpen.value);
-
 const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
   isOpen.value = false;
   currentPageName.value = name;
   currentPageIcon.value = icon;
 };
-const closeDropdown = () => {
-  isOpen.value = false;
+const toggleInProgress = ref(false);
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+const toggleDropdown = (event?: MouseEvent) => {
+  if (toggleInProgress.value) return;
+  toggleInProgress.value = true;
+
+  if (event) event.stopPropagation();
+
+  isOpen.value = !isOpen.value;
+
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+
+  timeoutId = setTimeout(() => {
+    toggleInProgress.value = false;
+    timeoutId = null;
+  }, 500);
 };
 </script>

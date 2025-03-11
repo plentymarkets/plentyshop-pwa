@@ -55,16 +55,13 @@ const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
 const flattenPages = (
   pages: { name: string; path: string; children?: unknown[] }[],
 ): { name: string; path: string }[] => {
-  let flatPages: { name: string; path: string }[] = [];
-  pages.forEach((page) => {
-    flatPages.push({ name: page.name, path: page.path });
+  return pages.reduce<{ name: string; path: string }[]>((acc, page) => {
+    acc.push({ name: page.name, path: page.path });
     if (page.children) {
-      flatPages = flatPages.concat(
-        flattenPages(page.children as { name: string; path: string; children?: unknown[] }[]),
-      );
+      acc.push(...flattenPages(page.children as { name: string; path: string; children?: unknown[] }[]));
     }
-  });
-  return flatPages;
+    return acc;
+  }, []);
 };
 const options = ref(flattenPages(pages.value));
 const customLabel = ({ name, path }: { name: string; path: string }): string => {
