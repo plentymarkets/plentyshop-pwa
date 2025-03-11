@@ -61,7 +61,7 @@
           type="button"
           data-testid="block-spacing-btn"
           class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
-          @click="togglePageModal(false)"
+          @click="closeModal"
         >
           Cancel
         </button>
@@ -92,7 +92,7 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { errors, meta, defineField, handleSubmit } = useForm({
+const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: validationSchema,
 });
 
@@ -100,6 +100,11 @@ const createNewPage = async () => {
   if (!meta.value.valid) {
     return;
   }
+};
+
+const closeModal = () => {
+  resetForm();
+  togglePageModal(false);
 };
 
 const [pageName, pageNameAttributes] = defineField('pageName');
