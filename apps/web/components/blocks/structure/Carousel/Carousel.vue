@@ -1,36 +1,41 @@
 <template>
-  <Swiper
-    :key="index"
-    :modules="enableModules ? [Pagination, Navigation] : []"
-    :slides-per-view="1"
-    :loop="true"
-    :pagination="paginationConfig"
-    :navigation="navigationConfig"
-    class="!z-0 !w-full !max-h-[85vh]"
-    @swiper="onSwiperInit"
-    @slide-change="onSlideChange"
-  >
-    <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
-      <slot name="content" :blo="banner" :root-index="index" />
-    </SwiperSlide>
-    <div
-      v-if="enableModules"
-      :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
-    />
-  </Swiper>
+  <ClientOnly>
+    <Swiper
+      :key="`${index} ${$i18n.locale}`"
+      :modules="enableModules ? [Pagination, Navigation] : []"
+      :slides-per-view="1"
+      :loop="true"
+      :pagination="paginationConfig"
+      :navigation="navigationConfig"
+      class="!z-0 !w-full !max-h-[85vh]"
+      @swiper="onSwiperInit"
+      @slide-change="onSlideChange"
+    >
+      <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
+        <slot name="content" :blo="banner" :root-index="index" />
+      </SwiperSlide>
+      <div
+        v-if="enableModules"
+        :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
+      />
+    </Swiper>
 
-  <div
-    v-if="enableModules && handleArrows()"
-    :key="`prev-${index}`"
-    :class="`swiper-button-prev swiper-button-prev-${index}`"
-    :style="{ color: configuration.controls.color + ' !important' }"
-  />
-  <div
-    v-if="enableModules && handleArrows()"
-    :key="`next-${index}`"
-    :class="`swiper-button-next swiper-button-next-${index}`"
-    :style="{ color: configuration.controls.color + ' !important' }"
-  />
+    <div
+      v-if="enableModules && handleArrows()"
+      :key="`prev-${index}`"
+      :class="`swiper-button-prev swiper-button-prev-${index}`"
+      :style="{ color: configuration.controls.color + ' !important' }"
+    />
+    <div
+      v-if="enableModules && handleArrows()"
+      :key="`next-${index}`"
+      :class="`swiper-button-next swiper-button-next-${index}`"
+      :style="{ color: configuration.controls.color + ' !important' }"
+    />
+    <template #fallback>
+      <BlocksBannerCarouselBannerSkeleton />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -41,6 +46,7 @@ import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
+const { $i18n } = useNuxtApp();
 
 const handleArrows = () => {
   const viewport = useViewport();

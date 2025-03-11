@@ -19,8 +19,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     loading: false,
   }));
 
-  // const { $i18n } = useNuxtApp();
-  // const currentLocale = ref($i18n.locale.value);
+  const { $i18n } = useNuxtApp();
 
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
@@ -30,7 +29,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     state.value.loading = false;
 
     if (!data?.value?.data.length) {
-      state.value.data = useLocaleSpecificHomepageTemplate('en');
+      state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     } else {
       state.value.data = data?.value?.data ?? state.value.data;
     }
@@ -83,6 +82,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   // watch(
   //   () => currentLocale.value,
   //   async (newLocale) => {
+  //     console.log('watch')
   //     currentLocale.value = newLocale;
   //     await getBlocks('index', 'immutable');
   //   },
