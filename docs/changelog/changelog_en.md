@@ -9,6 +9,8 @@
 
 #### Changed
 
+- Auto-save implemented for email address in the guest checkout flow.
+- Added login option for a guest user in the checkout flow.
 - Assets in the `apps/web/public` directory have been moved to a new `_nuxt-plenty/` subdirectory. Additionally, the [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) module has been replaced with the [@nuxt/fonts](https://fonts.nuxt.com/) module, which is similar in functionality, but provides more configuration options. Both of these changes make it easier to apply network routing rules on the back end.
 - Renamed block sections for editor.
 

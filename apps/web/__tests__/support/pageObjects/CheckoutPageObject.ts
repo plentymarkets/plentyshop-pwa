@@ -1,5 +1,5 @@
-import { PageObject } from './PageObject';
 import type { AddressFixtureOverride } from '~/__tests__/types';
+import { PageObject } from './PageObject';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -22,8 +22,18 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('button').contains('Add shipping address');
   }
 
+  get shippingAddressForm() {
+    return cy.getByTestId('shipping-address-form');
+  }
+
+  get billingAddressForm() {
+    return cy.getByTestId('billing-address-form');
+  }
+
   get contactInformationForm() {
-    return cy.getByTestId('contact-information-form').find('input');
+    const input = cy.getByTestId('contact-information-form').find('input');
+    input.clear();
+    return input;
   }
 
   get saveShipping() {
@@ -179,8 +189,9 @@ export class CheckoutPageObject extends PageObject {
   fillContactInformationForm() {
     cy.getFixture('addressForm').then(() => {
       const uniqueEmail = `test.order${new Date().getTime()}@plentymarkets.com`;
-      this.contactInformationForm.type(uniqueEmail);
+      this.contactInformationForm.type(uniqueEmail).blur();
     });
+
     return this;
   }
 
@@ -198,7 +209,7 @@ export class CheckoutPageObject extends PageObject {
       .intercept('/plentysystems/getPaymentProviders')
       .as('getPaymentProviders');
 
-    this.fillAddressForm(fixtureOverride);
+    this.fillAddressForm('shipping', fixtureOverride);
 
     cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
 
@@ -262,28 +273,64 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillAddressForm(fixtureOverride?: AddressFixtureOverride) {
+  fillAddressForm(addressType: string, fixtureOverride?: AddressFixtureOverride) {
     cy.getFixture('addressForm').then((fixture) => {
       if (fixtureOverride) {
         fixture = { ...fixture, ...fixtureOverride };
       }
 
-      this.fillForm(fixture);
+      addressType === 'shipping' ? this.fillShippingForm(fixture) : this.fillBillingForm(fixture);
     });
+
     return this;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fillForm(fixture: any) {
-    this.firstNameInput.type(fixture.firstName);
-    this.lastNameInput.type(fixture.lastName);
-    this.countrySelect.select(fixture.country);
-    this.streetNameInput.type(fixture.streetName);
-    this.streetNumberInput.type(fixture.apartment);
-    this.cityInput.type(fixture.city);
-    // this.stateSelect.select(fixture.state);
-    this.postalCodeInput.type(fixture.zipCode);
-    this.saveShipping.click({ force: true });
+  fillShippingForm(fixture: any) {
+    this.shippingAddressForm.within(() => {
+      this.firstNameInput.type(fixture.firstName);
+      this.lastNameInput.type(fixture.lastName);
+      this.countrySelect.select(fixture.country);
+      this.streetNameInput.type(fixture.streetName);
+      this.streetNumberInput.type(fixture.apartment);
+      this.cityInput.type(fixture.city);
+      // this.stateSelect.select(fixture.state);
+      this.postalCodeInput.type(fixture.zipCode);
+      this.useShippingAsBilling.check();
+      this.saveShipping.click({ force: true });
+    });
+
+    return this;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fillBillingForm(fixture: any) {
+    this.shippingAddressForm
+      .within(() => {
+        this.firstNameInput.type(fixture.firstName);
+        this.lastNameInput.type(fixture.lastName);
+        this.countrySelect.select(fixture.country);
+        this.streetNameInput.type(fixture.streetName);
+        this.streetNumberInput.type(fixture.apartment);
+        this.cityInput.type(fixture.city);
+        // this.stateSelect.select(fixture.state);
+        this.postalCodeInput.type(fixture.zipCode);
+        this.useShippingAsBilling.uncheck();
+      })
+      .then(() => {
+        this.billingAddressForm.within(() => {
+          this.firstNameInput.type(fixture.firstName);
+          this.lastNameInput.type(fixture.lastName);
+          this.countrySelect.select(fixture.country);
+          this.streetNameInput.type(fixture.streetName);
+          this.streetNumberInput.type(fixture.apartment);
+          this.cityInput.type(fixture.city);
+          // this.stateSelect.select(fixture.state);
+          this.postalCodeInput.type(fixture.zipCode);
+          this.saveBilling.click({ force: true });
+        });
+      });
+
     return this;
   }
 
