@@ -1,4 +1,4 @@
 export type PriceProps = {
-  price: number;
-  crossedPrice: number | null;
+  price: string | number;
+  crossedPrice: string | number | null;
 };

@@ -62,11 +62,11 @@
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
             {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
-          <span>{{ n(price, 'currency') }}</span>
+          <span>{{ price }}</span>
           <span>{{ t('asterisk') }} </span>
         </span>
         <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
-          {{ n(crossedPrice, 'currency') }}
+          {{ crossedPrice }}
         </span>
       </div>
       <UiButton

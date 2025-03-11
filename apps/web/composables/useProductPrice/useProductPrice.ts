@@ -1,5 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productPriceGetters } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing product prices.
@@ -15,16 +15,22 @@ export const useProductPrice = (product: Product) => {
 
   const price = computed(() =>
     specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
+      ? productPriceGetters.getSpecialOfferFormatted(product)
+      : productPriceGetters.getCheapestGraduatedPriceFormatted(product),
+  );
+  const priceValue = computed(() =>
+    specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
       ? specialOffer
-      : productGetters.getCheapestGraduatedPrice(product),
+      : productPriceGetters.getCheapestGraduatedPrice(product),
   );
 
   const crossedPrice = computed(() =>
-    specialOffer ? productGetters.getPrice(product) : productGetters.getCrossedPrice(product),
+    specialOffer ? productPriceGetters.getPriceFormatted(product) : productPriceGetters.getCrossedPriceFormatted(product),
   );
 
   return {
     price,
+    priceValue,
     crossedPrice,
   };
 };
