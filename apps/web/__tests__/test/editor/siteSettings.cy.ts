@@ -27,9 +27,9 @@ describe('SiteSettings', () => {
       .changeFont(font)
       .checkFontPreview(font)
       .checkSaveButtonEnabled()
-      .closeDrawer()
+      .closeDrawer();
 
-    siteSettings.checkDrawerNotVisible()
+    siteSettings.checkDrawerNotVisible();
   });
 
   it('should change the theme colors', () => {
@@ -43,9 +43,9 @@ describe('SiteSettings', () => {
       .changeColor(primaryColor, secondaryColor)
       .checkColorPreview(primaryColor)
       .checkSaveButtonEnabled()
-      .closeDrawer()
+      .closeDrawer();
 
-    siteSettings.checkDrawerNotVisible()
+    siteSettings.checkDrawerNotVisible();
   });
 
   it('should change the spacing', () => {
@@ -59,8 +59,8 @@ describe('SiteSettings', () => {
       .changeBlockSpacing(blockSpacing)
       .checkBlockSpacingPreview(blockSpacingMargin)
       .checkSaveButtonEnabled()
-      .closeDrawer()
+      .closeDrawer();
 
-    siteSettings.checkDrawerNotVisible()
+    siteSettings.checkDrawerNotVisible();
   });
 });

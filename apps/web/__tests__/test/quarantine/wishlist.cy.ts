@@ -1,9 +1,9 @@
 import { paths } from '../../../utils/paths';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
-import { WishlistObject } from "../../support/pageObjects/WishlistObject";
-import { CartPageObject } from "../../support/pageObjects/CartPageObject";
-import {ProductDetailPageObject} from "../../support/pageObjects/ProductDetailPageObject";
+import { WishlistObject } from '../../support/pageObjects/WishlistObject';
+import { CartPageObject } from '../../support/pageObjects/CartPageObject';
+import { ProductDetailPageObject } from '../../support/pageObjects/ProductDetailPageObject';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 
 const homePage = new HomePageObject();
@@ -20,7 +20,10 @@ beforeEach(() => {
 
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
+  cy.setCookie(
+    'consent-cookie',
+    '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+  );
 
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   cy.visitAndHydrate(paths.authLogin);
@@ -29,41 +32,24 @@ beforeEach(() => {
   cy.wait('@doLogin').visitAndHydrate(paths.home);
 });
 
-
 describe('Wishlist functionality check.', () => {
   it.skip('Checks wishlist functionality from category.', () => {
     homePage.goToCategory();
     productListPage.assertGridView();
 
-    wishlist
-        .addWishlistItem()
-        .openWishlist()
-        .checkItemExistence()
-        .addToCart();
+    wishlist.addWishlistItem().openWishlist().checkItemExistence().addToCart();
 
-    cart
-        .openCart()
-        .assertCartPreviewElements()
+    cart.openCart().assertCartPreviewElements();
 
     homePage.goToCategory();
-    wishlist
-        .removeWishlistItem()
-        .openWishlist()
-        .checkEmptyPage()
+    wishlist.removeWishlistItem().openWishlist().checkEmptyPage();
   });
 
   it.skip('Check wishlist functionality from product page.', () => {
     homePage.goToCategory();
-    productListPage
-        .assertGridView()
-        .goToProduct();
+    productListPage.assertGridView().goToProduct();
     productDetailPage.displayCheck();
 
-    wishlist
-        .addWishlistItem()
-        .openWishlist()
-        .checkItemExistence()
-        .removeWishlistItem()
-        .checkEmptyPage()
+    wishlist.addWishlistItem().openWishlist().checkItemExistence().removeWishlistItem().checkEmptyPage();
   });
 });

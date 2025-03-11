@@ -11,7 +11,7 @@ describe('<CategoryFilters />', () => {
             id: 1,
             name: 'Price Filter',
             type: 'price',
-          }
+          },
         ],
       },
     });

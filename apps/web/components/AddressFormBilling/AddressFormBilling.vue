@@ -2,7 +2,7 @@
   <form
     novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
-    data-testid="shipping-address-form"
+    data-testid="billing-address-form"
     @submit.prevent="validateAndSubmitForm"
   >
     <label>
@@ -25,6 +25,7 @@
       </UiFormLabel>
       <SfInput
         v-model="lastName"
+        name="lastName"
         autocomplete="family-name"
         v-bind="lastNameAttributes"
         :invalid="Boolean(errors['lastName'])"
@@ -89,6 +90,7 @@
       <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="zipCode"
+        name="zipCode"
         autocomplete="postal-code"
         v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['zipCode'])"
@@ -161,14 +163,14 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSelect, SfLink, SfIconClose } from '@storefront-ui/vue';
-import { useForm, ErrorMessage } from 'vee-validate';
-import type { AddressFormBillingProps } from './types';
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
+import { ErrorMessage, useForm } from 'vee-validate';
+import type { AddressFormBillingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormBillingProps>();
 
-const { isGuest } = useCustomer();
+const { isGuest, validGuestEmail, backToContactInformation } = useCustomer();
 const { shippingAsBilling } = useShippingAsBilling();
 const {
   isLoading: formIsLoading,
@@ -223,6 +225,9 @@ const syncCheckoutAddress = async () => {
 
 const validateAndSubmitForm = async () => {
   const formData = await validate();
+
+  if (formIsLoading.value) return;
+  if (isGuest.value && !validGuestEmail.value) return backToContactInformation();
 
   if (formData.valid) {
     await submitForm();
