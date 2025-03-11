@@ -222,7 +222,6 @@
       "createAccountLinkLabel": "Sign up now!",
       "forgotPasswordLabel": "Forgotten your password?",
       "heading": "Log in to your account",
-      "headingSuccess": "Reset password success",
       "loginAndContinue": "Login and continue",
       "openLoginForm": "Open login form",
       "rememberMeLabel": "Remember me",
@@ -230,6 +229,7 @@
       "success": "You have been logged in successfully"
     },
     "resetPassword": {
+      "title": "Reset password success",
       "anotherEmail": "I need to try another email address",
       "backToLogin": "Back to Login",
       "continue": "Continue",
@@ -589,7 +589,7 @@
   "guestCheckout": "Guest checkout",
   "home": "Home",
   "homepage": {
-    "homepagetitle": "Homepage",
+    "title": "Homepage",
     "background": "New Wireless Pro headphones with sleek design and modern features",
     "emptyBlock": {
       "headline": "Add the first block here."

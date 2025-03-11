@@ -48,8 +48,7 @@ const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'home';
-setPageMeta(t('homepage.homepagetitle'), icon);
-
+setPageMeta(t('homepage.title'), icon);
 const openBlockList = (index: number, position: number) => {
   const insertIndex = (position === -1 ? index : index + 1) || 0;
   togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
