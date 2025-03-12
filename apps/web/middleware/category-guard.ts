@@ -3,7 +3,8 @@
  *
  * If the user is not authenticated, the user will be redirected to the login page.
  */
-import { categoryTreeGetters, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+
 export default defineNuxtRouteMiddleware(async (to) => {
   const { data: categoryTree } = useCategoryTree();
   const localePath = useLocalePath();
