@@ -47,7 +47,8 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="pageTypes"
+          :options="categories"
+          :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
           class="cursor-pointer"
@@ -83,8 +84,10 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
+const { data: categoryTree } = useCategoryTree();
 
 const validationSchema = toTypedSchema(
   object({
@@ -106,6 +109,25 @@ const closeModal = () => {
   resetForm();
   togglePageModal(false);
 };
+
+const flattenCategories = (items: CategoryTreeItem[]) => {
+  let flat: CategoryTreeItem[] = [];
+  items.forEach((item: CategoryTreeItem) => {
+    if (item.type === 'item' || item.type === 'content') {
+      flat.push(item);
+    }
+    if (item.children && item.children.length) {
+      flat = flat.concat(flattenCategories(item.children));
+    }
+  });
+  return flat;
+};
+
+const getLabel = (option: CategoryTreeItem) => {
+  return option.details && option.details.length ? option.details[0].name : '';
+};
+
+const categories = computed(() => flattenCategories(categoryTree.value));
 
 const [pageName, pageNameAttributes] = defineField('pageName');
 const pageTypes = ref(['Content', 'Item category']);
