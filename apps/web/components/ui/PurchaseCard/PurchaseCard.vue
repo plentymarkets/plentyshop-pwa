@@ -32,7 +32,11 @@
             </div>
           </div>
           <div class="flex space-x-2">
-            <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+            <Price
+              :price="priceWithProperties"
+              :crossed-price="crossedPrice"
+              :crossed-price-value="crossedPriceValue"
+            />
             <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
               <UiTag :size="'sm'" :variant="'secondary'">{{
                 t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
@@ -131,7 +135,7 @@
             </div>
             <template v-if="showPayPalButtons">
               <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
-              <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+              <PayPalPayLaterBanner placement="product" :amount="priceWithPropertiesValue * quantitySelectorValue" />
             </template>
           </div>
         </section>
@@ -152,7 +156,7 @@ const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 const { showNetPrices } = useCustomer();
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
-const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
+const { getPropertiesForCart } = useProductOrderProperties();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
 const {
   validateAllFields: validateAllFieldsAttributes,
@@ -165,7 +169,8 @@ const { t } = useI18n();
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
-const { crossedPrice } = useProductPrice(product);
+const { basePriceSingleValue, crossedPrice, crossedPriceValue, priceWithProperties, priceWithPropertiesValue } =
+  useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 const localePath = useLocalePath();
 
@@ -177,19 +182,6 @@ onMounted(() => {
 onBeforeRouteLeave(() => {
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) clear();
 });
-
-const priceWithProperties = computed(
-  () =>
-    (productGetters.getSpecialOffer(product) ||
-      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
-      0) + getPropertiesPrice(product),
-);
-
-const basePriceSingleValue = computed(
-  () =>
-    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
-    productGetters.getDefaultBasePrice(product),
-);
 
 const handleValidationErrors = (): boolean => {
   send({

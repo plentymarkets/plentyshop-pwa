@@ -1,6 +1,6 @@
 <template>
   <div class="mb-3">
-    <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+    <Price :price="priceWithProperties" :crossed-price="crossedPrice" :crossed-price-value="crossedPriceValue" />
     <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
       <UiTag :size="'sm'" :variant="'secondary'">{{
         $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
@@ -17,26 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import { productBundleGetters, productGetters, cartGetters } from '@plentymarkets/shop-api';
+import { productBundleGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ProductPriceProps } from '~/components/ProductPrice/types';
 
 const props = defineProps<ProductPriceProps>();
 
-const { getPropertiesPrice } = useProductOrderProperties();
-const { crossedPrice } = useProductPrice(props.product);
-const { lastUpdatedCartItem } = useCart();
-
-const priceWithProperties = computed(
-  () =>
-    (productGetters.getSpecialOffer(props.product) ||
-      productGetters.getGraduatedPriceByQuantity(props.product, cartGetters.getItemQty(lastUpdatedCartItem.value))
-        ?.unitPrice.value ||
-      0) + getPropertiesPrice(props.product),
-);
-
-const basePriceSingleValue = computed(
-  () =>
-    productGetters.getGraduatedPriceByQuantity(props.product, cartGetters.getItemQty(lastUpdatedCartItem.value))
-      ?.basePrice ?? productGetters.getDefaultBasePrice(props.product),
-);
+const { basePriceSingleValue, crossedPrice, crossedPriceValue, priceWithProperties } = useProductPrice(props.product);
 </script>
