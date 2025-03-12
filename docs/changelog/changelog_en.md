@@ -16,6 +16,7 @@
 
 ### 🩹 Fixed
 
+- SVG logo size distorted fix.
 - Toolbar language switch fix.
 - Added scroll to block after changing block position.
 - Fixed side toolbar visibility.
