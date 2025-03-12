@@ -49,7 +49,7 @@ export const useSearch: UseSearchReturn = () => {
       ...additionalParams,
       type: 'tag',
       tagId: tagId,
-    }
+    };
 
     return await getSearch(params);
   };
