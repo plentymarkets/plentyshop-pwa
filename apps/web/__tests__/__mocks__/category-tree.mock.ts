@@ -5,6 +5,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
     id: 73,
     type: 'item',
     childCount: 0,
+    right: 'all',
     itemCount: [
       {
         categoryId: '73',
@@ -32,6 +33,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
     id: 48,
     type: 'item',
     childCount: 0,
+    right: 'all',
     itemCount: [
       {
         categoryId: '48',
@@ -59,6 +61,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
     id: 49,
     type: 'item',
     childCount: 2,
+    right: 'all',
     itemCount: [
       {
         categoryId: '49',
@@ -86,6 +89,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
         id: 51,
         type: 'item',
         childCount: 10,
+        right: 'all',
         itemCount: [
           {
             categoryId: '51',
@@ -113,6 +117,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 61,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '61',
@@ -140,6 +145,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 64,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '64',
@@ -167,6 +173,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 54,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '54',
@@ -194,6 +201,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 59,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '59',
@@ -221,6 +229,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 58,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '58',
@@ -248,6 +257,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 56,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '56',
@@ -275,6 +285,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 57,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '57',
@@ -302,6 +313,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 55,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '55',
@@ -329,6 +341,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 53,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '53',
@@ -356,6 +369,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 52,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '52',
@@ -385,6 +399,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
         id: 50,
         type: 'item',
         childCount: 10,
+        right: 'all',
         itemCount: [
           {
             categoryId: '50',
@@ -412,6 +427,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 66,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '66',
@@ -439,6 +455,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 72,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '72',
@@ -466,6 +483,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 70,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '70',
@@ -493,6 +511,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 60,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '60',
@@ -520,6 +539,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 67,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '67',
@@ -547,6 +567,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 68,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '68',
@@ -574,6 +595,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 63,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '63',
@@ -601,6 +623,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 69,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '69',
@@ -628,6 +651,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 71,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '71',
@@ -655,6 +679,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 65,
             type: 'item',
             childCount: 0,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '65',
@@ -686,6 +711,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
     id: 16,
     type: 'item',
     childCount: 3,
+    right: 'all',
     itemCount: [
       {
         categoryId: '16',
@@ -713,6 +739,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
         id: 18,
         type: 'item',
         childCount: 1,
+        right: 'all',
         itemCount: [
           {
             categoryId: '18',
@@ -740,6 +767,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
             id: 74,
             type: 'item',
             childCount: 1,
+            right: 'all',
             itemCount: [
               {
                 categoryId: '74',
@@ -767,6 +795,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
                 id: 75,
                 type: 'item',
                 childCount: 1,
+                right: 'all',
                 itemCount: [
                   {
                     categoryId: '75',
@@ -794,6 +823,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
                     id: 76,
                     type: 'item',
                     childCount: 1,
+                    right: 'all',
                     itemCount: [
                       {
                         categoryId: '76',
@@ -827,6 +857,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
         id: 17,
         type: 'item',
         childCount: 0,
+        right: 'all',
         itemCount: [
           {
             categoryId: '17',
@@ -854,6 +885,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
         id: 46,
         type: 'item',
         childCount: 0,
+        right: 'all',
         itemCount: [
           {
             categoryId: '46',
@@ -883,6 +915,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
     id: 19,
     type: 'item',
     childCount: 1,
+    right: 'all',
     itemCount: [
       {
         categoryId: '19',
@@ -910,6 +943,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
         id: 20,
         type: 'item',
         childCount: 0,
+        right: 'all',
         itemCount: [
           {
             categoryId: '20',
@@ -939,6 +973,7 @@ export const CategoryTreeMock: CategoryTreeItem[] = [
     id: 44,
     type: 'item',
     childCount: 0,
+    right: 'all',
     itemCount: [
       {
         categoryId: '44',
