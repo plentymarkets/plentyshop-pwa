@@ -32,8 +32,8 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
+    "@plentymarkets/shop-core": "file:/Users/cristi/workspace/shop-core",
     "@plentymarkets/shop-api": "^0.92.1",
-    "@plentymarkets/shop-core": "/Users/cristi/workspace/shop-core",
     "@plentymarkets/shop-module-gtag": "^1.1.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
@@ -44,6 +44,7 @@
     "country-flag-icons": "^1.5.12",
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
+    "mitt": "^3.0.1",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.2.0"
   },

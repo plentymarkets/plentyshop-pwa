@@ -2,9 +2,16 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "types": ["vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs", "@types/googlepay"],
+    "types": [
+      "vitest/globals",
+      "@vite-pwa/nuxt",
+      "@types/applepayjs",
+      "@types/googlepay",
+      "@plentymarkets/shop-api/server/types"
+    ],
     "verbatimModuleSyntax": false,
-    "noImplicitAny": true,
+    "noImplicitAny": true
+    // "typeRoots": ["./node_modules/@plentymarkets/shop-api/server/types", "./node_modules/@types"]
   },
   "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
   "typedocOptions": {

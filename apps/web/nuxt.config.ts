@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { validateApiUrl } from './utils/pathHelper';
+import { appConfiguration } from './configuration/app.config';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
-import { appConfiguration } from './configuration/app.config';
+import { validateApiUrl } from './utils/pathHelper';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -245,5 +245,10 @@ export default defineNuxtConfig({
     registerWebManifestInRouteRules: true,
   },
 
-  compatibilityDate: '2025-03-10',
+  alias: {
+    mitt: require.resolve('mitt'),
+    '@vue-storefront/sdk': require.resolve('@vue-storefront/sdk'),
+    axios: 'axios',
+    '@plentymarkets/shop-api': '@plentymarkets/shop-api',
+  },
 });

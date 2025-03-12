@@ -24,4 +24,22 @@ export default defineVitestConfig({
       }
     },
   },
+  optimizeDeps: {
+    include: ['mitt', '@vue-storefront/sdk', 'axios', '@plentymarkets/shop-api'],
+  },
+  build: {
+    rollupOptions: {
+      external: ['mitt', '@vue-storefront/sdk', 'axios', '@plentymarkets/shop-api'],
+    },
+  },
+  server: {
+    fs: {
+      strict: false,
+      allow: [
+        '/Users/cristi/workspace/plentymarkets-sdk', // Allow local SDK package
+        '/Users/cristi/workspace/plentyshop-pwa', // Allow your Nuxt project
+        '/Users/cristi/workspace/shop-core', // Allow shop-core package
+      ],
+    },
+  },
 });
