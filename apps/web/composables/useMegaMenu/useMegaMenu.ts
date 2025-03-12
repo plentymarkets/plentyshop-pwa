@@ -24,6 +24,7 @@ export const useMegaMenu: UseMegaMenuReturn = () => {
       id: 0,
       type: 'root',
       itemCount: [],
+      right: 'all',
       childCount: categoryTree.length,
       details: [],
       children: categoryTree,
