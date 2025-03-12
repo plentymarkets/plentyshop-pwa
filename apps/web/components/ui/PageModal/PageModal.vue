@@ -127,12 +127,20 @@ const getLabel = (option: CategoryTreeItem) => {
   return option.details && option.details.length ? option.details[0].name : '';
 };
 
-const categories = computed(() => flattenCategories(categoryTree.value));
+const emptyCategoryItem: CategoryTreeItem = {
+  id: 0,
+  type: 'none',
+  itemCount: [],
+  childCount: 0,
+  details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
+};
+
+const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
 
 const [pageName, pageNameAttributes] = defineField('pageName');
 const pageTypes = ref(['Content', 'Item category']);
 const pageType = ref('Content');
-const parentPage = ref('');
+const parentPage = ref(emptyCategoryItem);
 
 const onSubmit = handleSubmit(() => createNewPage());
 </script>
