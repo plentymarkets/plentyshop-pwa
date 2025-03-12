@@ -1,12 +1,13 @@
 <template>
   <div
-    class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]"
+    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]', drawerZIndexClass]"
     data-testid="edit-mode-toolbar"
   >
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
-      <div class="absolute left-1/2 transform -translate-x-1/2">
+      <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">
         <UiLanguageEditor />
+        <UiPageSelector />
       </div>
       <div class="ml-auto flex space-x-2">
         <button
@@ -57,6 +58,7 @@ import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { isDrawerOpen } = useDrawerState();
 
 const { loading } = useHomepage();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
@@ -72,4 +74,6 @@ const toggleEdit = () => {
     isEditing.value = false;
   }
 };
+
+const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'z-10' : 'z-20'));
 </script>

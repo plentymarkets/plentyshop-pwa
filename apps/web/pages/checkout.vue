@@ -146,6 +146,11 @@ const {
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
 
+const { setPageMeta } = usePageMeta();
+
+const icon = 'page';
+setPageMeta(t('checkout'), icon);
+
 emit('frontend:beginCheckout', cart.value);
 
 const checkPayPalPaymentsEligible = async () => {
