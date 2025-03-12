@@ -4,16 +4,16 @@
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
-      <!--      <button-->
-      <!--        type="button"-->
-      <!--        class="editor-button relative py-2"-->
-      <!--        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"-->
-      <!--        aria-label="Open pages drawer"-->
-      <!--        data-testid="open-pages-drawer"-->
-      <!--        @click="openDrawerWithView('PagesView')"-->
-      <!--      >-->
-      <!--        <SfIconSort />-->
-      <!--      </button>-->
+      <button
+        type="button"
+        class="editor-button relative py-2"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
+        aria-label="Open pages drawer"
+        data-testid="open-pages-drawer"
+        @click="openDrawerWithView('PagesView')"
+      >
+        <SfIconSort />
+      </button>
       <button
         type="button"
         class="editor-button relative py-2 flex justify-center"
@@ -54,6 +54,7 @@
 // import gearBlack from 'assets/icons/paths/gear-black.svg';
 // import gearWhite from 'assets/icons/paths/gear-white.svg';
 
+import { SfIconSort } from '@storefront-ui/vue';
 import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 

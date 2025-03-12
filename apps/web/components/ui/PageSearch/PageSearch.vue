@@ -1,8 +1,8 @@
 <template>
   <div
-    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] h-[500px] flex flex-col"
-  >
-    <Multiselect
+    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col">
+    <div >
+      <Multiselect
       ref="multiselectRef"
       v-model="inputModel"
       data-testid="page-select"
@@ -16,30 +16,35 @@
       select-label=""
       deselect-label="Selected"
       :open="isOpen"
-      @close="closeDropdown"
       @select="selectValue"
+      class="h-[450px]"
     >
-      <template #option="{ option }">
-        <div class="flex items-center px-2 max-h-[300px] w-auto">
-          <span class="flex items-center">
-            <SfIconHome v-if="option.name === t('homepage.title')" class="w-4 h-4 mr-2 font-bold text-gray-900" />
-            {{ option.name }}
-          </span>
-          <span v-if="option.path.split('/').length > 2" class="text-xs ml-2">
-            {{ trimPath(option.path) }}
-          </span>
-        </div>
-      </template>
-    </Multiselect>
-    <div class="p-2 mt-auto bg-blue-600 text-white font-bold py-2 px-4 rounded">
-      <button>Confirm Selection</button>
+        <template #option="{ option }">
+          <div class="flex items-center px-2 max-h-[300px] w-auto">
+            <span class="flex items-center">
+              <SfIconHome v-if="option.name === t('homepage.title')" class="w-4 h-4 mr-2 font-bold text-gray-900" />
+              {{ option.name }}
+            </span>
+            <span v-if="option.path.split('/').length > 2" class="text-xs ml-2">
+              {{ trimPath(option.path) }}
+            </span>
+          </div>
+        </template>
+      </Multiselect>
+    </div>
+    <div class="px-1 mt-5">
+      <SfButton @click="openDrawerWithView('PagesView')" class="w-full">
+        <SfIconMenu />
+        Manage pages
+      </SfButton>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+const { openDrawerWithView } = useSiteConfiguration();
 import Multiselect from 'vue-multiselect';
-import { SfIconHome } from '@storefront-ui/vue';
+import { SfIconHome, SfIconMenu, SfButton } from '@storefront-ui/vue';
 const emit = defineEmits(['pageSelected', 'close']);
 const inputModel = ref('');
 
