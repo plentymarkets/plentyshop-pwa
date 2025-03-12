@@ -5,7 +5,7 @@
         ref="logo"
         :src="imagePath"
         :alt="`${{ storeName }} logo`"
-        class="max-h-[100px] max-w-[130px]"
+        class="max-h-[100px] max-w-[200px]"
         :width="imgWidth"
         :height="imgHeight"
         preload
