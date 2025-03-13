@@ -1,8 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
 import { cartGetters, productGetters, productPriceGetters } from '@plentymarkets/shop-api';
-const { lastUpdatedCartItem } = useCart();
-const { getPropertiesPrice } = useProductOrderProperties();
-
 /**
  * @description Composable for managing product prices.
  * @example
@@ -21,6 +18,9 @@ export const useProductPrice = (product: Product) => {
     id: product.variation.id,
   }));
 
+  const { lastUpdatedCartItem } = useCart();
+  const { getPropertiesPrice } = useProductOrderProperties();
+  
   const specialOfferValue = productGetters.getSpecialOffer(product);
   const specialOffer = productPriceGetters.getSpecialOfferFormatted(product);
   const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
