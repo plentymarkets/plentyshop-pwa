@@ -73,7 +73,7 @@
           data-testid="block-spacing-btn"
           class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
         >
-          Add New Page
+          Add page
         </button>
       </div>
     </form>
