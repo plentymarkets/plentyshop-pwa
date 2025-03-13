@@ -28,15 +28,16 @@ export const useCategory: UseCategoryMethodsReturn = () => {
 
     state.value.loading = true;
     try {
-      const data = await useSdk().plentysystems.doAddCategory(params);
+      const { data } = await useAsyncData(() => useSdk().plentysystems.doAddCategory(params));
 
-      if (data?.data) {
+      const category = data?.value?.data;
+
+      if (category) {
         togglePageModal(false);
-        send({ message: 'New page added', type: 'positive' });
+        send({ message: `Added page ${params.name} (category ID: ${category.id})`, type: 'positive' });
       }
 
-      state.value.data = data?.data ?? state.value.data;
-      return state.value.data;
+      state.value.data = category ?? state.value.data;
     } catch (error) {
       throw error;
     } finally {

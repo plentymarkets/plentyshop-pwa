@@ -5,7 +5,8 @@ export interface UseCategoryState {
   loading: boolean;
 }
 
-export type AddCategory = (params: CategoryParams) => Category;
+export type AddCategory = (params: CategoryParams) => void;
+
 export interface UseCategoryMethods {
   data: Readonly<Ref<UseCategoryState['data']>>;
   loading: Readonly<Ref<boolean>>;
