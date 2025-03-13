@@ -6,13 +6,14 @@
     <div class="relative flex flex-col px-1 py-1">
       <button
         type="button"
-        class="editor-button relative py-2"
+        class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
         aria-label="Open pages drawer"
         data-testid="open-pages-drawer"
         @click="openDrawerWithView('PagesView')"
       >
-        <SfIconSort />
+        <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
+        <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
       </button>
       <button
         type="button"
@@ -53,10 +54,10 @@
 <script setup lang="ts">
 // import gearBlack from 'assets/icons/paths/gear-black.svg';
 // import gearWhite from 'assets/icons/paths/gear-white.svg';
-import { SfIconSort } from '@storefront-ui/vue';
 
 import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
-
+import pagesWhite from 'assets/icons/paths/pages-white.svg';
+import pagesBlack from 'assets/icons/paths/pages-black.svg';
 const { drawerView, openDrawerWithView } = useSiteConfiguration();
 </script>
