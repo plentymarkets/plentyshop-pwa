@@ -30,8 +30,6 @@ const currentPageIcon = ref('home');
 const { isEditing, disableActions } = useEditor();
 const isOpen = ref(false);
 
-const toggleDropdown = () => (isOpen.value = !isOpen.value);
-
 const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
   isOpen.value = false;
   currentPageName.value = name;
