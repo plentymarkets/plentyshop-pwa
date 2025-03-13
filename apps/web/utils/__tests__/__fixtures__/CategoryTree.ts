@@ -5,6 +5,7 @@ export const CategoryTreeFixture: CategoryTreeItem[] = [
     id: 73,
     type: 'item',
     childCount: 0,
+    right: 'all',
     itemCount: [
       {
         categoryId: '73',
