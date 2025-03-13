@@ -94,7 +94,7 @@ const { addCategory } = useCategory();
 
 const validationSchema = toTypedSchema(
   object({
-    pageName: string().required('Please enter a name').default(''),
+    pageName: string().required('Enter a page name').default(''),
   }),
 );
 
