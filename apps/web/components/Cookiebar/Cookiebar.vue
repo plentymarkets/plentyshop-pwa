@@ -10,8 +10,16 @@
       </div>
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
         <i18n-t v-if="cookieGroups.barDescription" :keypath="cookieGroups.barDescription">
-          <template #legal><SfLink :tag="NuxtLink" :to="legalDisclosure">{{ t('categories.legal.subcategories.legalDisclosure') }}</SfLink></template>
-          <template #policy><SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('categories.legal.subcategories.privacyPolicy') }}</SfLink></template>
+          <template #legal
+            ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{
+              t('categories.legal.subcategories.legalDisclosure')
+            }}</SfLink></template
+          >
+          <template #policy
+            ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{
+              t('categories.legal.subcategories.privacyPolicy')
+            }}</SfLink></template
+          >
         </i18n-t>
       </div>
       <!-- checkboxes -->
