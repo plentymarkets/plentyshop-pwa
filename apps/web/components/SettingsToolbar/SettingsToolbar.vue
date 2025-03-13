@@ -55,7 +55,6 @@
 // import gearBlack from 'assets/icons/paths/gear-black.svg';
 // import gearWhite from 'assets/icons/paths/gear-white.svg';
 
-import { SfIconSort } from '@storefront-ui/vue';
 import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';

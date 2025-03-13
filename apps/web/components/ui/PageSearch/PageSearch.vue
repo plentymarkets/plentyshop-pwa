@@ -1,24 +1,25 @@
 <template>
   <div
-    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col">
+    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
+  >
     <div>
       <Multiselect
-      ref="multiselectRef"
-      v-model="inputModel"
-      data-testid="page-select"
-      :options="options"
-      placeholder="Search"
-      label="name"
-      track-by="name"
-      :close-on-select="true"
-      :allow-empty="false"
-      select-label=""
-      @close="closeDropdown"
-      deselect-label="Selected"
-      :open="isOpen"
-      @select="selectValue"
-      class="h-[450px]"
-    >
+        ref="multiselectRef"
+        v-model="inputModel"
+        data-testid="page-select"
+        :options="options"
+        placeholder="Search"
+        label="name"
+        track-by="name"
+        :close-on-select="true"
+        :allow-empty="false"
+        select-label=""
+        deselect-label="Selected"
+        :open="isOpen"
+        class="h-[450px]"
+        @close="closeDropdown"
+        @select="selectValue"
+      >
         <template #option="{ option }">
           <div class="flex items-center px-2 max-h-[300px] w-auto">
             <span class="flex items-center">
@@ -33,7 +34,7 @@
       </Multiselect>
     </div>
     <div class="px-1 mt-5">
-      <SfButton @click="openPages" class="w-full">
+      <SfButton class="w-full" @click="openPages">
         <SfIconMenu />
         Manage pages
       </SfButton>
@@ -42,9 +43,9 @@
 </template>
 
 <script lang="ts" setup>
-const { openDrawerWithView } = useSiteConfiguration();
 import Multiselect from 'vue-multiselect';
 import { SfIconHome, SfIconMenu, SfButton } from '@storefront-ui/vue';
+const { openDrawerWithView } = useSiteConfiguration();
 const emit = defineEmits(['pageSelected', 'close']);
 const inputModel = ref('');
 
@@ -96,9 +97,9 @@ onMounted(() => {
 });
 
 const openPages = () => {
-  openDrawerWithView('PagesView')
+  openDrawerWithView('PagesView');
   emit('close');
-}
+};
 </script>
 <style scoped>
 :deep .multiselect__option--highlight {
