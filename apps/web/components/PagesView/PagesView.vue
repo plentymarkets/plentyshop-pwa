@@ -1,7 +1,7 @@
 <template>
   <div
     class="site-settings-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
-    data-testid="site-settings-drawer"
+    data-testid="site-pages-drawer"
   >
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
@@ -32,7 +32,7 @@
     </UiAccordionItem>
     <UiAccordionItem
       v-model="ProductPagesOpen"
-      data-testid="content-pages-section"
+      data-testid="product-pages-section"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
     >
