@@ -23,9 +23,18 @@ export const useCategory: UseCategoryMethodsReturn = () => {
    * ```
    */
   const addCategory = async (params: CategoryParams) => {
+    const { togglePageModal } = useSiteConfiguration();
+    const { send } = useNotification();
+
     state.value.loading = true;
     try {
       const data = await useSdk().plentysystems.doAddCategory(params);
+
+      if (data?.data) {
+        togglePageModal(false);
+        send({ message: 'New page added', type: 'positive' });
+      }
+
       state.value.data = data?.data ?? state.value.data;
       return state.value.data;
     } catch (error) {

@@ -35,6 +35,8 @@
           v-model="pageType"
           data-testid="new-page-type"
           :options="pageTypes"
+          label="label"
+          track-by="value"
           placeholder="Select a page type"
           :allow-empty="false"
           class="cursor-pointer"
@@ -106,10 +108,10 @@ const createNewPage = async () => {
   }
 
   addCategory({
-    type: pageName?.value || '',
-    name: pageType.value,
-    parentCategoryId: categoryTreeGetters.getId(parentPage.value)
-  })
+    name: pageName?.value || '',
+    type: pageType.value.value,
+    parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
+  });
 };
 
 const closeModal = () => {
@@ -146,8 +148,11 @@ const emptyCategoryItem: CategoryTreeItem = {
 const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
 
 const [pageName, pageNameAttributes] = defineField('pageName');
-const pageTypes = ref(['Content', 'Item category']);
-const pageType = ref('Content');
+const pageTypes = ref([
+  { label: 'Content', value: 'content' },
+  { label: 'Item category', value: 'item' },
+]);
+const pageType = ref(pageTypes.value[0]);
 const parentPage = ref(emptyCategoryItem);
 
 const onSubmit = handleSubmit(() => createNewPage());
