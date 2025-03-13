@@ -106,8 +106,8 @@ const createNewPage = async () => {
   }
 
   addCategory({
-    type: pageName?.value,
-    name: pageType,
+    type: pageName?.value || '',
+    name: pageType.value,
     parentCategoryId: categoryTreeGetters.getId(parentPage.value)
   })
 };
