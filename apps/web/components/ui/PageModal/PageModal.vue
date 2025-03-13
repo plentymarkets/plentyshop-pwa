@@ -8,7 +8,7 @@
     overlay-classes="z-[1000]"
   >
     <header class="flex items-center justify-between mb-2">
-      <div class="flex items-center text-xl font-bold">Adding New Page</div>
+      <div class="flex items-center text-xl font-bold">Add page</div>
       <button class="absolute right-2 top-2 px-4 py-4" @click="closeModal">
         <SfIconClose />
       </button>
