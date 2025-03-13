@@ -14,11 +14,16 @@
           :tablet-edit="tabletEdit"
           :change-block-position="changeBlockPosition"
           :root="true"
+          class="group"
           :class="[
             {
-              'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+            },
+            {
+              'px-4 md:px-6': block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
             },
           ]"
+          data-testid="block-wrapper"
         />
       </template>
     </div>

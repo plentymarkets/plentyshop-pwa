@@ -51,7 +51,7 @@ export const useBlockManager = () => {
     const variationToAdd = variationsInCategory.variations[variationIndex];
     const variationTemplate = variationToAdd.template;
 
-    return lang === 'de' ? variationTemplate.de : variationTemplate.en;
+    return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
   };
 
   const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: 'top' | 'bottom') => {
