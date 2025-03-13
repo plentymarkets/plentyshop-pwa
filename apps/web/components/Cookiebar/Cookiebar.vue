@@ -9,8 +9,10 @@
         {{ t(cookieGroups?.barTitle) }}
       </div>
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
-        {{ t(cookieGroups?.barDescription) }}
-        <SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</SfLink>
+        <i18n-t v-if="cookieGroups.barDescription" :keypath="cookieGroups.barDescription">
+          <template #legal><SfLink :tag="NuxtLink" :to="legalDisclosure">{{ t('categories.legal.subcategories.legalDisclosure') }}</SfLink></template>
+          <template #policy><SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('categories.legal.subcategories.privacyPolicy') }}</SfLink></template>
+        </i18n-t>
       </div>
       <!-- checkboxes -->
       <div v-if="cookieJson" class="flex flex-wrap gap-4 sm:grid sm:grid-cols-4 mt-2">
@@ -194,6 +196,7 @@ initializeCookies();
 const furtherSettingsOn = ref(false);
 
 const privacyPolicy = computed(() => localePath(paths.privacyPolicy));
+const legalDisclosure = computed(() => localePath(paths.legalDisclosure));
 
 const triggerCookieConsent = (group: CookieGroup) => {
   group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted);
