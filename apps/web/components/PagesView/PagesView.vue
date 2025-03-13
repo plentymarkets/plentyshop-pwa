@@ -15,7 +15,7 @@
       </button>
     </header>
 
-    <div class="mx-4">
+    <div class="mx-4 mb-4 mt-4">
       <button
         type="button"
         data-testid="add-page-btn"
