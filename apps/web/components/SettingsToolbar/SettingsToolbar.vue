@@ -12,8 +12,8 @@
         data-testid="open-pages-drawer"
         @click="openDrawerWithView('PagesView')"
       >
-        <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24px" :src="pagesWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
+        <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
+        <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
       </button>
       <button
         type="button"

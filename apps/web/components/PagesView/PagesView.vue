@@ -31,7 +31,7 @@
       </div>
     </UiAccordionItem>
     <UiAccordionItem
-      v-model="ProductPagesOpen"
+      v-model="productPagesOpen"
       data-testid="product-pages-section"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
@@ -58,7 +58,7 @@ const currentLocale = ref($i18n.locale.value);
 
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
-const ProductPagesOpen = ref(false);
+const productPagesOpen = ref(false);
 const { closeDrawer } = useSiteConfiguration();
 
 const splitItemsByType = (items: MenuItemType[]) => {

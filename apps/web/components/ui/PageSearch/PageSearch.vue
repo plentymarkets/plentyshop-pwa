@@ -86,7 +86,7 @@ const closeDropdown = () => {
 };
 
 const selectValue = (page: { name: string; path: string }) => {
-  emit('pageSelected', { name: page.name, icon: page.name === t('homepage.homepagetitle') ? 'home' : 'sell' });
+  emit('pageSelected', { name: page.name, icon: page.name === t('homepage.title') ? 'home' : 'sell' });
   navigateTo(`/${locale.value}${page.path}`);
 };
 onMounted(() => {
