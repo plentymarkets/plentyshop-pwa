@@ -84,10 +84,11 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
 const { data: categoryTree } = useCategoryTree();
+const { addCategory } = useCategory();
 
 const validationSchema = toTypedSchema(
   object({
@@ -103,6 +104,12 @@ const createNewPage = async () => {
   if (!meta.value.valid) {
     return;
   }
+
+  addCategory({
+    type: pageName?.value,
+    name: pageType,
+    parentCategoryId: categoryTreeGetters.getId(parentPage.value)
+  })
 };
 
 const closeModal = () => {
