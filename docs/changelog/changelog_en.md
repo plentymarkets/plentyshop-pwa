@@ -6,6 +6,7 @@
 
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
+- Added pages entry in the left side menu, where users can manage their pages.
 
 #### Changed
 
@@ -20,6 +21,7 @@
 - Toolbar language switch fix.
 - Added scroll to block after changing block position.
 - Fixed side toolbar visibility.
+- Category middleware refactored to use the rights from the category tree.
 
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
