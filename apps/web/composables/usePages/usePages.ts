@@ -3,7 +3,7 @@ export const usePages = async () => {
   const { t, locale } = useI18n();
   const { data } = useCategoryTree();
 
-  const pages = useState<{ name: string; path: string; children?: { name: string; path: string }[] | undefined }[]>(
+  const pages = useState<{ name: string; path: string; children?: { name: string; path: string }[], type: string | undefined }[]>(
     'pages',
     () => [],
   );
@@ -13,7 +13,7 @@ export const usePages = async () => {
       data: CategoryTreeItem[],
       parentPath = '',
       isRoot = true,
-    ): { name: string; path: string; children?: { name: string; path: string }[] | undefined }[] => {
+    ): { name: string; path: string; children?: { name: string; path: string }[]; type: string | undefined }[] => {
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
@@ -28,6 +28,7 @@ export const usePages = async () => {
             name: item.details[0].name,
             path: currentPath,
             children,
+            type: item.type,
           };
         })
         .filter(Boolean);
@@ -37,6 +38,7 @@ export const usePages = async () => {
           name: t('homepage.homepagetitle'),
           path: '/',
           children: undefined,
+          type:'content'
         });
       }
 
@@ -44,6 +46,7 @@ export const usePages = async () => {
         name: string;
         path: string;
         children?: { name: string; path: string }[] | undefined;
+        type: string;
       }[];
     };
 
