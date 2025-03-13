@@ -14,7 +14,7 @@
       </button>
     </header>
 
-    <p class="mb-6">Add name and type in order to add new page</p>
+    <p class="mb-6">Add name and type in order to add a new page</p>
     <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" novalidate @submit.prevent="onSubmit">
       <div class="mb-6">
         <UiFormLabel class="mb-1">Page Name</UiFormLabel>
