@@ -4,18 +4,17 @@
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
-            <button
-              type="button"
-              class="editor-button relative py-2 flex justify-center"
-              :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
-              aria-label="Open pages drawer"
-              data-testid="open-pages-drawer"
-              @click="openDrawerWithView('PagesView')"
-            >
-              <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24px" :src="pagesWhite" />
-              <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
-
-            </button>
+      <button
+        type="button"
+        class="editor-button relative py-2 flex justify-center"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
+        aria-label="Open pages drawer"
+        data-testid="open-pages-drawer"
+        @click="openDrawerWithView('PagesView')"
+      >
+        <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24px" :src="pagesWhite" />
+        <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
+      </button>
       <button
         type="button"
         class="editor-button relative py-2 flex justify-center"

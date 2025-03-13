@@ -3,10 +3,9 @@ export const usePages = async () => {
   const { t, locale } = useI18n();
   const { data } = useCategoryTree();
 
-  const pages = useState<{ name: string; path: string; children?: { name: string; path: string }[], type: string | undefined }[]>(
-    'pages',
-    () => [],
-  );
+  const pages = useState<
+    { name: string; path: string; children?: { name: string; path: string }[]; type: string | undefined }[]
+  >('pages', () => []);
 
   const transformCategoryTreeToPages = () => {
     const transformData = (
@@ -38,7 +37,7 @@ export const usePages = async () => {
           name: t('homepage.title'),
           path: '/',
           children: undefined,
-          type:'content'
+          type: 'content',
         });
       }
 

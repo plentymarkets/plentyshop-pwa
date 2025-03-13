@@ -1,13 +1,14 @@
 <template>
-  <div class="site-settings-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="site-settings-drawer">
+  <div
+    class="site-settings-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
+    data-testid="site-settings-drawer"
+  >
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">Pages
-        <SfTooltip
-          label="Open manual"
-          placement="left"
-          :show-arrow="true"
-          class="flex"
-        >   <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"/></SfTooltip>
+      <div class="flex items-center text-xl font-bold">
+        Pages
+        <SfTooltip label="Open manual" placement="left" :show-arrow="true" class="flex">
+          <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
+        /></SfTooltip>
       </div>
       <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
         <SfIconClose />
@@ -41,7 +42,7 @@
 
       <div class="mb-6 mt-4">
         <ul class="bg-white shadow-md rounded-lg">
-          <PagesItem v-for="item in itemItems" :key="item.path"  :item="item" />
+          <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
         </ul>
       </div>
     </UiAccordionItem>
@@ -86,5 +87,4 @@ const openHelpPage = () => {
   const targetUrl = currentLocale.value === 'de' ? urls.de : urls.en;
   window.open(targetUrl, '_blank');
 };
-
 </script>
