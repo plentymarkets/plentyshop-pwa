@@ -1,7 +1,7 @@
 <template>
   <div
     class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col">
-    <div >
+    <div>
       <Multiselect
       ref="multiselectRef"
       v-model="inputModel"
@@ -9,7 +9,6 @@
       :options="options"
       placeholder="Search"
       label="name"
-      :custom-label="customLabel"
       track-by="name"
       :close-on-select="true"
       :allow-empty="false"
@@ -33,7 +32,7 @@
       </Multiselect>
     </div>
     <div class="px-1 mt-5">
-      <SfButton @click="openDrawerWithView('PagesView')" class="w-full">
+      <SfButton @click="openPages" class="w-full">
         <SfIconMenu />
         Manage pages
       </SfButton>
@@ -66,9 +65,6 @@ const flattenPages = (
   }, []);
 };
 const options = ref(flattenPages(pages.value));
-const customLabel = ({ name, path }: { name: string; path: string }): string => {
-  return `${name} – ${path}`;
-};
 
 const trimPath = (path: string): string => {
   const parts = path.split('/').filter(Boolean);
@@ -97,12 +93,18 @@ const selectValue = (page: { name: string; path: string }) => {
 onMounted(() => {
   open();
 });
+
+const openPages = () => {
+  openDrawerWithView('PagesView')
+  emit('close');
+}
 </script>
 <style scoped>
 :deep .multiselect__option--highlight {
   background-color: #f7fafc !important;
   color: #1a202c;
 }
+
 :deep .multiselect__content-wrapper {
   max-height: 400px !important;
 }
