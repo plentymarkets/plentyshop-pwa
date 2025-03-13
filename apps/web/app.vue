@@ -1,12 +1,22 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
   <div
-    class="w-100 relative"
+    class="w-100 relative md:flex"
     :class="{
-      'lg:flex': drawerOpen,
       'lg:flex-row-reverse': placement !== 'left',
+      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen,
+      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen,
     }"
   >
+    <SettingsToolbar
+      v-if="isPreview && disableActions"
+      :class="{
+        'order-first': placement === 'left',
+        'order-last': placement === 'right',
+        'mr-3': !drawerOpen || placement === 'right',
+      }"
+    />
+
     <SiteConfigurationDrawer
       v-if="drawerOpen"
       class="absolute lg:relative bg-white"
@@ -14,8 +24,11 @@
       :style="`font-family: ${config.font}`"
     />
 
-    <div class="w-100 bg-white" :class="{ 'lg:w-3/4': drawerOpen }">
-      <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" data-testid="body" />
+    <div
+      class="bg-white w-full"
+      :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
+    >
+      <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
@@ -39,6 +52,7 @@ const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
+const { disableActions } = useEditor();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;

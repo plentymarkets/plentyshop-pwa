@@ -54,5 +54,4 @@ export class LanguageSelectObject extends PageObject {
     cy.getByTestId('modal').should('not.exist');
     return this;
   }
-
 }

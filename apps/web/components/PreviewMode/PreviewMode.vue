@@ -38,14 +38,16 @@ import { SfIconVisibility } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
 const bannerIsHidden = ref(true);
-
 const foundCookies = defaults.PREVIEW_COOKIES.filter((cookie) => !!useCookie(cookie).value);
 
 const useClassFor = (index: number): boolean => foundCookies.length > 1 && index !== 0;
 
 const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
-  useCookie(foundCookies[index]).value = null;
+  const { public: config } = useRuntimeConfig();
+  const domain = config.domain.replace('https://', '');
+  useCookie(foundCookies[index], { path: '/', domain: domain }).value = null;
   bannerIsHidden.value = true;
   foundCookies.splice(index, 1);
+  window.location.reload();
 };
 </script>

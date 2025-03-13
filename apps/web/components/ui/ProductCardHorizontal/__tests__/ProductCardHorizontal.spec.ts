@@ -31,6 +31,6 @@ describe('<ProductCardHorizontal />', () => {
       },
     });
 
-    expect(getByTestId('product-card-horizontal'));    
+    expect(getByTestId('product-card-horizontal'));
   });
 });

@@ -17,8 +17,8 @@ export const mockProductReviews: Review = {
           message: 'test',
           isVisible: 'test',
           createdAt: 'test',
-          updatedAt: 'test'
-        }
+          updatedAt: 'test',
+        },
       },
       feedbackRating: {
         ratingId: 'test',
@@ -29,8 +29,8 @@ export const mockProductReviews: Review = {
           ratingValue: 'test',
           isVisible: 'test',
           createdAt: 'test',
-          updatedAt: 'test'
-        }
+          updatedAt: 'test',
+        },
       },
       targetRelation: {
         feedbackId: 'test',
@@ -39,32 +39,34 @@ export const mockProductReviews: Review = {
         variationAttributes: [],
         targetRelationLabel: 'test',
         targetRelationName: [],
-        feedbackRelationParentTargetId: 1
+        feedbackRelationParentTargetId: 1,
       },
-      sourceRelation: [{
-        feedbackId: 'test',
-        feedbackRelationType: 'test',
-        feedbackRelationSourceId: 'test',
-        sourceRelationLabel: 'test',
-        sourceRelationTypeLabel: 'test',
-        feedback: {
-          id: 1,
-          title: 'test',
-          isVisible: true,
-          createdAt: 'test',
-          updatedAt: 'test',
-          authorName: 'test'
-        }
-      }],
-      replies: []
-    }
+      sourceRelation: [
+        {
+          feedbackId: 'test',
+          feedbackRelationType: 'test',
+          feedbackRelationSourceId: 'test',
+          sourceRelationLabel: 'test',
+          sourceRelationTypeLabel: 'test',
+          feedback: {
+            id: 1,
+            title: 'test',
+            isVisible: true,
+            createdAt: 'test',
+            updatedAt: 'test',
+            authorName: 'test',
+          },
+        },
+      ],
+      replies: [],
+    },
   ],
   itemAttributes: [],
   pagination: {
     page: '1',
     lastPage: 1,
     isLastPage: true,
-    totalCount: 1
+    totalCount: 1,
   },
   counts: {
     ratingsCountOf1: 0,
@@ -73,7 +75,7 @@ export const mockProductReviews: Review = {
     ratingsCountOf4: 0,
     ratingsCountOf5: 0,
     ratingsCountTotal: 0,
-    averageValue: "0.00",
+    averageValue: '0.00',
     highestCount: 0,
   },
-}
+};

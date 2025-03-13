@@ -9,6 +9,6 @@ describe('<Overlay />', () => {
       },
     });
 
-    expect(wrapper.getByTestId('overlay'));    
+    expect(wrapper.getByTestId('overlay'));
   });
 });

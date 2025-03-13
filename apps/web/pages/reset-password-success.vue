@@ -2,7 +2,7 @@
   <NuxtLayout name="auth">
     <div class="mx-auto text-center rounded-md border border-neutral-200 p-4 md:p-6 mt-2">
       <NuxtImg
-        src="/images/email-sent.png"
+        src="/_nuxt-plenty/images/email-sent.png"
         :alt="$t('auth.resetPassword.emailSent')"
         width="192"
         height="192"
@@ -36,6 +36,11 @@ definePageMeta({
   layout: false,
 });
 
+const { t } = useI18n();
+const { setPageMeta } = usePageMeta();
+
+const icon = 'page';
+setPageMeta(t('auth.resetPassword.title'), icon);
 const localePath = useLocalePath();
 
 const email = ref('hieronim.anonim@gmail.com');
