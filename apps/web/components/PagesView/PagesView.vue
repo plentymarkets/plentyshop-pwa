@@ -68,10 +68,13 @@ const splitItemsByType = (items: MenuItemType[]) => {
   };
 
   items.forEach((item) => {
-    if (item.type === 'content') {
-      result.contentItems.push(item);
-    } else if (item.type === 'item') {
-      result.itemItems.push(item);
+    switch (item.type) {
+      case 'content':
+        result.contentItems.push(item);
+        break;
+      case 'item':
+        result.itemItems.push(item);
+        break;
     }
   });
 
