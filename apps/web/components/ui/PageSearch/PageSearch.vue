@@ -13,6 +13,7 @@
       :close-on-select="true"
       :allow-empty="false"
       select-label=""
+      @close="closeDropdown"
       deselect-label="Selected"
       :open="isOpen"
       @select="selectValue"
