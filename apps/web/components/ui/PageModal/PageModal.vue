@@ -139,6 +139,7 @@ const emptyCategoryItem: CategoryTreeItem = {
   type: 'none',
   itemCount: [],
   childCount: 0,
+  right: 'all',
   details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
 };
 
