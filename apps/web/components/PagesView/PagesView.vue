@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="pages-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
-    data-testid="pages-management-drawer"
-  >
+  <div class="pages-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         Pages
