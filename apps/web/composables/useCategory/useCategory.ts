@@ -38,7 +38,7 @@ export const useCategory: UseCategoryMethodsReturn = () => {
       state.value.data = data?.data ?? state.value.data;
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      throw error;
     } finally {
       state.value.loading = false;
     }
