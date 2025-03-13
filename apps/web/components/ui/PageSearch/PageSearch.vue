@@ -5,7 +5,7 @@
     <Multiselect
       ref="multiselectRef"
       v-model="inputModel"
-      data-testid="font-select"
+      data-testid="page-select"
       :options="options"
       placeholder="Search"
       label="name"
@@ -22,10 +22,7 @@
       <template #option="{ option }">
         <div class="flex items-center px-2 max-h-[300px] w-auto">
           <span class="flex items-center">
-            <SfIconHome
-              v-if="option.name === t('homepage.homepagetitle')"
-              class="w-4 h-4 mr-2 font-bold text-gray-900"
-            />
+            <SfIconHome v-if="option.name === t('homepage.title')" class="w-4 h-4 mr-2 font-bold text-gray-900" />
             {{ option.name }}
           </span>
           <span v-if="option.path.split('/').length > 2" class="text-xs ml-2">
@@ -48,24 +45,20 @@ const inputModel = ref('');
 
 const { pages } = await usePages();
 
-const { locale } = useI18n();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const isOpen = ref(true);
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
 
 const flattenPages = (
   pages: { name: string; path: string; children?: unknown[] }[],
 ): { name: string; path: string }[] => {
-  let flatPages: { name: string; path: string }[] = [];
-  pages.forEach((page) => {
-    flatPages.push({ name: page.name, path: page.path });
+  return pages.reduce<{ name: string; path: string }[]>((acc, page) => {
+    acc.push({ name: page.name, path: page.path });
     if (page.children) {
-      flatPages = flatPages.concat(
-        flattenPages(page.children as { name: string; path: string; children?: unknown[] }[]),
-      );
+      acc.push(...flattenPages(page.children as { name: string; path: string; children?: unknown[] }[]));
     }
-  });
-  return flatPages;
+    return acc;
+  }, []);
 };
 const options = ref(flattenPages(pages.value));
 const customLabel = ({ name, path }: { name: string; path: string }): string => {

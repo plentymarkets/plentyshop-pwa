@@ -230,6 +230,7 @@
       "success": "You have been logged in successfully"
     },
     "resetPassword": {
+      "title": "Reset password success",
       "anotherEmail": "I need to try another email address",
       "backToLogin": "Back to Login",
       "continue": "Continue",
@@ -589,6 +590,7 @@
   "guestCheckout": "Guest checkout",
   "home": "Home",
   "homepage": {
+    "title": "Homepage",
     "homepagetitle": "Homepage",
     "background": "New Wireless Pro headphones with sleek design and modern features",
     "emptyBlock": {

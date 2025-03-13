@@ -230,6 +230,7 @@
       "success": "Sie wurden erfolgreich eingeloggt."
     },
     "resetPassword": {
+      "title": "Passwort erfolgreich zurücksetzen",
       "anotherEmail": "Ich muss eine andere E-Mail-Adresse ausprobieren",
       "backToLogin": "Zurück zum Login",
       "continue": "Weiter",
@@ -589,7 +590,7 @@
   "guestCheckout": "Gast Checkout",
   "home": "Startseite",
   "homepage": {
-    "homepagetitle": "Startseite",
+    "title": "Startseite",
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
     "emptyBlock": {
       "headline": "Hier den ersten Abschnitt hinzufügen."
