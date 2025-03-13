@@ -86,7 +86,7 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { categoryTreeGetters, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
 const { data: categoryTree } = useCategoryTree();
