@@ -10,7 +10,7 @@
     <div class="mx-4">
       <button
         type="button"
-        data-testid="block-spacing-btn"
+        data-testid="add-page-btn"
         class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
         @click="togglePageModal(true)"
       >
