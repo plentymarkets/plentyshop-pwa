@@ -6,7 +6,7 @@
     :style="{ color: textCardBlock?.content?.text?.color || '' }"
   >
     <div v-for="(column, index) in content" :key="index" :class="`col-${configuration.columnWidths[index]}`">
-      <slot name="content" :blo="column" />
+      <slot name="content" :content-block="column" />
     </div>
   </div>
 </template>

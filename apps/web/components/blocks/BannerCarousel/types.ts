@@ -53,6 +53,7 @@ export type BannerProps = {
   };
   index: number;
   rootIndex?: number;
+  contentIndex: number;
   meta: {
     uuid: string;
   };

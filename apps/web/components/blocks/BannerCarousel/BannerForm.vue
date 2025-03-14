@@ -1,8 +1,5 @@
 <template>
-  <div
-    data-testid="banner-carousel-form"
-    class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
-  >
+  <div class="block-slider-edit">
     <div :data-testid="`slide-settings-${activeSlide}`">
       <UiAccordionItem
         v-model="imagesOpen"

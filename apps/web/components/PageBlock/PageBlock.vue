@@ -46,11 +46,12 @@
         @change-position="changeBlockPosition"
       />
 
-      <component :is="getBlockComponent(block)" v-bind="block" :index="index">
-        <template v-if="block.type === 'structure'" #content="{ blo }">
+      <component :is="getBlockComponent(block)" v-bind="block" :index="index" :content-index="contentIndex">
+        <template v-if="block.type === 'structure'" #content="{ contentBlock, childIndex }">
           <PageBlock
             :index="index"
-            :block="blo"
+            :block="contentBlock"
+            :content-index="childIndex ?? index"
             :root="false"
             :is-preview="isPreview"
             :disable-actions="disableActions"
@@ -84,6 +85,7 @@ import { SfIconAdd } from '@storefront-ui/vue';
 
 interface Props {
   index: number;
+  contentIndex?: number;
   block: Block;
   disableActions: boolean;
   root: boolean;
