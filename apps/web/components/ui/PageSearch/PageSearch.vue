@@ -17,7 +17,6 @@
         deselect-label="Selected"
         :open="isOpen"
         class="h-[450px]"
-        @close="closeDropdown"
         @select="selectValue"
       >
         <template #option="{ option }">
@@ -82,10 +81,6 @@ const open = () => {
   if (multiselectRef.value) {
     multiselectRef.value.activate();
   }
-};
-
-const closeDropdown = () => {
-  emit('close');
 };
 
 const selectValue = (page: { name: string; path: string }) => {
