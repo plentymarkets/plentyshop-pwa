@@ -54,12 +54,6 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
-const { setPageMeta } = usePageMeta();
-
-const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
-const icon = 'sell';
-setPageMeta(categoryName.value, icon);
-
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
 
@@ -72,6 +66,11 @@ const handleQueryUpdate = async () => {
 };
 
 await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+
+const { setPageMeta } = usePageMeta();
+const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
+const icon = 'sell';
+setPageMeta(categoryName.value, icon);
 
 watch(
   () => locale.value,

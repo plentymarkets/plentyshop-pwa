@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="site-settings-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
-    data-testid="site-pages-drawer"
-  >
+  <div class="pages-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         Pages
@@ -10,10 +7,22 @@
           <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
         /></SfTooltip>
       </div>
-      <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
+      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
         <SfIconClose />
       </button>
     </header>
+
+    <div class="mx-4 mb-4 mt-4">
+      <button
+        type="button"
+        data-testid="add-page-btn"
+        class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+        @click="togglePageModal(true)"
+      >
+        <SfIconAdd /> Add Page
+      </button>
+    </div>
+
     <UiAccordionItem
       v-model="contentPagesOpen"
       data-testid="content-pages-section"
@@ -51,7 +60,7 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip } from '@storefront-ui/vue';
+import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
 const { $i18n } = useNuxtApp();
 const currentLocale = ref($i18n.locale.value);
@@ -59,7 +68,7 @@ const currentLocale = ref($i18n.locale.value);
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
-const { closeDrawer } = useSiteConfiguration();
+const { closeDrawer, togglePageModal } = useSiteConfiguration();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
