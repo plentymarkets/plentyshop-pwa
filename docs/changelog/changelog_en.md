@@ -7,9 +7,13 @@
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
 - Added the legal disclosure to the cookie bar description.
+- Added pages entry in the left side menu, where users can manage their pages.
+- Add design for adding a new page
+- Fix Page Selector state
 
 #### Changed
 
+- Added manange pages button in editor toolbar.
 - Auto-save implemented for email address in the guest checkout flow.
 - Added login option for a guest user in the checkout flow.
 - Assets in the `apps/web/public` directory have been moved to a new `_nuxt-plenty/` subdirectory. Additionally, the [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) module has been replaced with the [@nuxt/fonts](https://fonts.nuxt.com/) module, which is similar in functionality, but provides more configuration options. Both of these changes make it easier to apply network routing rules on the back end.
