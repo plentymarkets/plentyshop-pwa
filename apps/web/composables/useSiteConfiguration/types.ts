@@ -19,6 +19,7 @@ export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
   drawerOpen: boolean;
+  pageModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
   primaryColor: string;
@@ -39,11 +40,13 @@ export type SetTailwindColorProperties = (type: string, tailwindPalette: Tailwin
 export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
+export type TogglePageModal = (value: boolean) => void;
 
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
+  pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
   blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
@@ -62,6 +65,7 @@ export interface UseSiteConfiguration {
   updateBlockSize: UpdateBlockSize;
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
+  togglePageModal: TogglePageModal;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
 }

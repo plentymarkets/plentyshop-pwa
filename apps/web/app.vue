@@ -37,6 +37,7 @@
       </NuxtLayout>
     </div>
   </div>
+  <UiPageModal />
 </template>
 
 <script setup lang="ts">

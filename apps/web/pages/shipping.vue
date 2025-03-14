@@ -7,10 +7,15 @@
 definePageMeta({
   pageType: 'static',
 });
+const { setPageMeta } = usePageMeta();
+
 const { categoryTemplateData, fetchCategoryTemplate } = useCategoryTemplate();
 const runtimeConfig = useRuntimeConfig();
 await fetchCategoryTemplate(Number(runtimeConfig.public.shippingTextCategoryId));
 const { t } = useI18n();
+
+const icon = 'page';
+setPageMeta(t('orderConfirmation.shipping'), icon);
 
 const text = computed(() => categoryTemplateData?.value?.data);
 </script>

@@ -40,6 +40,12 @@ const dataIsEmpty = computed(() => data.value.length === 0);
 
 const { isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
+
+const { setPageMeta } = usePageMeta();
+
+const icon = 'home';
+setPageMeta(t('homepage.title'), icon);
+
 await getBlocks('index', 'immutable');
 
 onMounted(() => {

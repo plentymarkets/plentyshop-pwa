@@ -22,6 +22,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
     drawerOpen: false,
+    pageModalOpen: false,
     loading: false,
     placement: 'left',
     newBlockPosition: 0,
@@ -177,6 +178,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     return true;
   };
 
+  const togglePageModal = (value: boolean) => {
+    state.value.pageModalOpen = value;
+  };
+
   return {
     updatePrimaryColor,
     updateSecondaryColor,
@@ -188,5 +193,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     closeDrawer,
     settingsIsDirty,
     saveSettings,
+    togglePageModal,
   };
 };
