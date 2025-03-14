@@ -32,6 +32,7 @@
 <script lang="ts" setup>
 const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
+const { t } = useI18n();
 const { settingsIsDirty } = useSiteConfiguration();
 
 const { data, getBlocks } = useCategoryTemplate();
