@@ -6,6 +6,7 @@
 
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
+- Added the legal disclosure to the cookie bar description.
 - Added pages entry in the left side menu, where users can manage their pages.
 - Add design for adding a new page
 - Fix Page Selector state
