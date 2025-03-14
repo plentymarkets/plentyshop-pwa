@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex items-center space-x-1 md:space-x-2">
+  <div class="page-selector relative flex items-center space-x-1 md:space-x-2">
     <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
       <button @click="toggleDropdown">
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+
 const { pageMeta } = usePageMeta();
 const currentPageName = ref('Homepage');
 
@@ -31,4 +32,15 @@ const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
 const closeDropdown = () => {
   isOpen.value = false;
 };
+
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement;
+  if (!target.closest('.page-selector') && !target.closest('.page-search')) {
+    closeDropdown();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
 </script>
