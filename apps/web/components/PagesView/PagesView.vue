@@ -90,6 +90,7 @@ const splitItemsByType = (items: MenuItemType[]) => {
   return result;
 };
 const { contentItems, itemItems } = splitItemsByType(pages.value);
+
 const openHelpPage = () => {
   const urls = {
     en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
