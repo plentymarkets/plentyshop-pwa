@@ -32,15 +32,4 @@ const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
 const closeDropdown = () => {
   isOpen.value = false;
 };
-
-const handleClickOutside = (event: MouseEvent) => {
-  const target = event.target as HTMLElement;
-  if (!target.closest('.page-selector') && !target.closest('.page-search')) {
-    closeDropdown();
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
 </script>

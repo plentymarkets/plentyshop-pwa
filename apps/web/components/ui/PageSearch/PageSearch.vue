@@ -17,6 +17,7 @@
         deselect-label="Selected"
         :open="isOpen"
         class="h-[450px]"
+        @close="closeDropdown"
         @select="selectValue"
       >
         <template #option="{ option }">
@@ -53,6 +54,10 @@ const { pages } = await usePages();
 const { t, locale } = useI18n();
 const isOpen = ref(true);
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
+
+const closeDropdown = () => {
+  emit('close');
+};
 
 const flattenPages = (
   pages: { name: string; path: string; children?: unknown[] }[],
