@@ -1,5 +1,5 @@
 <template>
-  <div class="page-selector relative flex items-center space-x-1 md:space-x-2">
+  <div class="relative flex items-center space-x-1 md:space-x-2">
     <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
       <button @click="toggleDropdown">
