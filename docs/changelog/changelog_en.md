@@ -10,6 +10,7 @@
 - Added pages entry in the left side menu, where users can manage their pages.
 - Add design for adding a new page
 - Fix Page Selector state
+- Fix Page Selector closes when clicking outside the box
 
 #### Changed
 
