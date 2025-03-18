@@ -1,41 +1,36 @@
 <template>
-  <ClientOnly>
-    <Swiper
-      :key="`${index}`"
-      :modules="enableModules ? [Pagination, Navigation] : []"
-      :slides-per-view="1"
-      :loop="true"
-      :pagination="paginationConfig"
-      :navigation="navigationConfig"
-      class="!z-0 !w-full !max-h-[85vh]"
-      @swiper="onSwiperInit"
-      @slide-change="onSlideChange"
-    >
-      <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
-        <slot name="content" :content-block="banner" :slide-index="slideIndex" />
-      </SwiperSlide>
-      <div
-        v-if="enableModules"
-        :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
-      />
-    </Swiper>
+  <Swiper
+    :key="`${index}`"
+    :modules="enableModules ? [Pagination, Navigation] : []"
+    :slides-per-view="1"
+    :loop="true"
+    :pagination="paginationConfig"
+    :navigation="navigationConfig"
+    class="!z-0 !w-full !max-h-[85vh]"
+    @swiper="onSwiperInit"
+    @slide-change="onSlideChange"
+  >
+    <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
+      <slot name="content" :content-block="banner" :slide-index="slideIndex" />
+    </SwiperSlide>
+    <div
+      v-if="enableModules"
+      :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
+    />
+  </Swiper>
 
-    <div
-      v-if="enableModules && handleArrows()"
-      :key="`prev-${index}`"
-      :class="`swiper-button-prev swiper-button-prev-${index}`"
-      :style="{ color: configuration.controls.color + ' !important' }"
-    />
-    <div
-      v-if="enableModules && handleArrows()"
-      :key="`next-${index}`"
-      :class="`swiper-button-next swiper-button-next-${index}`"
-      :style="{ color: configuration.controls.color + ' !important' }"
-    />
-    <template #fallback>
-      <BlocksBannerCarouselBannerSkeleton />
-    </template>
-  </ClientOnly>
+  <div
+    v-if="enableModules && handleArrows()"
+    :key="`prev-${index}`"
+    :class="`swiper-button-prev swiper-button-prev-${index}`"
+    :style="{ color: configuration.controls.color + ' !important' }"
+  />
+  <div
+    v-if="enableModules && handleArrows()"
+    :key="`next-${index}`"
+    :class="`swiper-button-next swiper-button-next-${index}`"
+    :style="{ color: configuration.controls.color + ' !important' }"
+  />
 </template>
 
 <script setup lang="ts">

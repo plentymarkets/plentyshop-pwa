@@ -9,28 +9,36 @@ export const useToolbar = () => {
   const save = async () => {
     const messageList: string[] = [];
     let hasError = false;
+    let saved = null;
     const errorMessage = $i18n.t('errorMessages.editor.save.error');
 
-    const handleSave = async (saveFunction: () => Promise<boolean>, successMessage: string) => {
-      const saved = await saveFunction();
+    const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
+      saved = await saveFunction();
+
       if (saved) {
-        messageList.push(successMessage);
+        if (successMessage) {
+          messageList.push(successMessage);
+        }
       } else {
         hasError = true;
       }
     };
 
     if (isEditingEnabled.value) {
-      await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
+      await handleSave(updatePageTemplate);
     }
 
     if (settingsIsDirty.value) {
       await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
     }
 
-    if (messageList.length > 0) {
+    if (saved && !hasError) {
       send({
-        message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
+        message: [
+          $i18n.t('errorMessages.editor.save.success'),
+          ...messageList,
+          $i18n.t('errorMessages.editor.save.activateLiveMode'),
+        ],
         type: 'positive',
       });
     }
