@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute z-[0] md:z-[1] lg:z-[50] right-0 top-0 flex items-center space-x-4 border border-[#538AEA] bg-white p-2 shadow-md"
+    class="absolute z-[0] md:z-[1] lg:z-[9] right-0 top-0 flex items-center space-x-4 border border-[#538AEA] bg-white p-2 shadow-md"
     data-testid="edit-block-actions"
   >
     <button

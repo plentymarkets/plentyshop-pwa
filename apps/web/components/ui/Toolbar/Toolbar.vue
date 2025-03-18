@@ -1,6 +1,7 @@
 <template>
   <div
-    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]', drawerZIndexClass]"
+    class="mb-3"
+    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111]', drawerZIndexClass]"
     data-testid="edit-mode-toolbar"
   >
     <div class="relative flex items-center pr-5">
