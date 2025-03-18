@@ -14,7 +14,7 @@
             :aria-disabled="false"
             type="button"
             aria-label="button"
-            @click="removeLookupCookie(index)"
+            @click="bannerIsHidden = !bannerIsHidden"
           >
             {{ $t(`previewModeBar.${cookieName}`) }}
           </UiButton>
