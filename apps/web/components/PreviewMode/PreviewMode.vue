@@ -16,7 +16,7 @@
             aria-label="button"
             @click="removeLookupCookie(index)"
           >
-            {{ $t(`PreviewModeBar.${cookieName}`) }}
+            {{ $t(`previewModeBar.${cookieName}`) }}
           </UiButton>
         </div>
       </div>
