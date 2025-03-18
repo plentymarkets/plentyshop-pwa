@@ -34,11 +34,7 @@ export const useToolbar = () => {
 
     if (saved && !hasError) {
       send({
-        message: [
-          $i18n.t('errorMessages.editor.save.success'),
-          ...messageList,
-          $i18n.t('errorMessages.editor.save.activateLiveMode'),
-        ],
+        message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',
       });
     }

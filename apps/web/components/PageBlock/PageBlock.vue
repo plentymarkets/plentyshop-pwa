@@ -1,5 +1,5 @@
 <template>
-  <div :key="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
