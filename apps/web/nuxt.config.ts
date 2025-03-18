@@ -88,14 +88,9 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '@vue-storefront/nuxt',
   ],
-  alokai: {
-    middleware: {
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      cdnCacheBustingId: 'no-cache-busting-id-set',
-      ssrApiUrl: '',
-    },
+  shopCore: {
+    apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },
   fonts: {
     defaults: {
