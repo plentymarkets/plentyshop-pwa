@@ -11,6 +11,7 @@
 - Add design for adding a new page
 - Fix Page Selector state
 - Fix Page Selector closes when clicking outside the box
+- Fix Language switch arrow space
 
 #### Changed
 
