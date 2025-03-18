@@ -1,7 +1,7 @@
 export type CarouselStructureProps = {
   name: string;
   type: string;
-  content: unknown[];
+  content: Block[];
   configuration: {
     controls: {
       color: string;

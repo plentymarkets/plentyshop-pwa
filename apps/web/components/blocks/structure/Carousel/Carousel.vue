@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <Swiper
-      :key="`${index} ${$i18n.locale}`"
+      :key="`${index}`"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -12,7 +12,7 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
-        <slot name="content" :content-block="banner" :root-index="index" :child-index="slideIndex" />
+        <slot name="content" :content-block="banner" :slide-index="slideIndex" />
       </SwiperSlide>
       <div
         v-if="enableModules"
@@ -46,7 +46,6 @@ import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
-const { $i18n } = useNuxtApp();
 
 const handleArrows = () => {
   const viewport = useViewport();

@@ -1,6 +1,8 @@
 <template>
-  <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
-  <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+  <div v-bind="$attrs">
+    <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
+    <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+  </div>
 </template>
 
 <script setup lang="ts">

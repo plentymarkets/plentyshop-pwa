@@ -33,7 +33,7 @@ describe('Banner', () => {
           },
         },
         index: 0,
-        contentIndex: 0,
+        slideIndex: 0,
         meta: {
           uuid: '11111111-1111-4111-8111-111111111111',
         },

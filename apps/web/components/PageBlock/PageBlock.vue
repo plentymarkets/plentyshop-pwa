@@ -46,12 +46,11 @@
         @change-position="changeBlockPosition"
       />
 
-      <component :is="getBlockComponent(block)" v-bind="block" :index="index" :content-index="contentIndex">
-        <template v-if="block.type === 'structure'" #content="{ contentBlock, childIndex }">
+      <component :is="getBlockComponent" v-bind="contentProps" :index="index">
+        <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
             :index="index"
-            :block="contentBlock"
-            :content-index="childIndex ?? index"
+            :block="slotProps.contentBlock"
             :root="false"
             :is-preview="isPreview"
             :disable-actions="disableActions"
@@ -61,6 +60,7 @@
             :block-has-data="blockHasData"
             :tablet-edit="tabletEdit"
             :change-block-position="changeBlockPosition"
+            v-bind="slotProps"
           />
         </template>
       </component>
@@ -85,7 +85,6 @@ import { SfIconAdd } from '@storefront-ui/vue';
 
 interface Props {
   index: number;
-  contentIndex?: number;
   block: Block;
   disableActions: boolean;
   root: boolean;
@@ -97,10 +96,28 @@ interface Props {
   changeBlockPosition: (index: number, position: number) => void;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
-const { visiblePlaceholder, togglePlaceholder, getBlockComponent } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, modules } = useBlockManager();
+const attrs = useAttrs();
+
+const getBlockComponent = computed(() => {
+  if (!props.block.name) return null;
+  const regex = new RegExp(`${props.block.name}\\.vue$`, 'i');
+  const matched = Object.keys(modules).find((path) => regex.test(path));
+
+  if (matched) {
+    return defineAsyncComponent({
+      loader: modules[matched],
+    });
+  }
+  return '';
+});
+
+const contentProps = computed(() => {
+  return props.root ? { ...props.block } : { ...props.block, ...attrs };
+});
 
 const displayTopPlaceholder = (uuid: string): boolean => {
   const visiblePlaceholderState = visiblePlaceholder.value;

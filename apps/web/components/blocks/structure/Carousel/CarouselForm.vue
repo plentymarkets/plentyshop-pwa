@@ -237,7 +237,7 @@ const addSlide = async () => {
       uuid: uuid(),
     },
     index: slides.value.length,
-    contentIndex: slides.value.length,
+    slideIndex: slides.value.length,
   };
 
   slides.value = [...slides.value, newSlide] as BannerProps[];

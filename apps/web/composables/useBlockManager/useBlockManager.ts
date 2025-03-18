@@ -177,20 +177,6 @@ export const useBlockManager = () => {
       data.value[index] = updatedBlock;
     }
   };
-
-  const getBlockComponent = (block: Block) => {
-    if (!block.name) return null;
-    const regex = new RegExp(`${block.name}\\.vue$`, 'i');
-    const matched = Object.keys(modules).find((path) => regex.test(path));
-
-    if (matched) {
-      return defineAsyncComponent({
-        loader: modules[matched],
-      });
-    }
-    return '';
-  };
-
   return {
     currentBlock,
     currentBlockUuid,
@@ -209,6 +195,6 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findBlockByUuid,
-    getBlockComponent,
+    modules,
   };
 };
