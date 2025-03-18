@@ -75,7 +75,6 @@ export default defineNuxtConfig({
   },
   modules: [
     '@plentymarkets/shop-core',
-    '@plentymarkets/shop-module-gtag',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
