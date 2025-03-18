@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div v-if="true">
+    <div v-if="foundCookies.length > 0">
       <div
         v-if="!bannerIsHidden"
         class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
