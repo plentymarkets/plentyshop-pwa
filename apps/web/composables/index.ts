@@ -58,3 +58,4 @@ export * from './useAddressForm';
 export * from './useProcessingOrder';
 export * from './useModuleRendering';
 export * from './useRobots';
+export * from './usePreferredDelivery';
