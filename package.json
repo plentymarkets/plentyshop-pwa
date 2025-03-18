@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@plentymarkets/shop-api": "^0.94.1",
-    "@plentymarkets/shop-core": "/Users/maximilianroell/workspace/shop-core",
+    "@plentymarkets/shop-core": "1.3.0",
     "@plentymarkets/shop-module-gtag": "^1.1.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
