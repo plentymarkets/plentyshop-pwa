@@ -126,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageFormProps, ImageTextContent } from './types';
+import type { ImageFormProps, ImageContent } from './types';
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
@@ -137,7 +137,7 @@ const { findBlockByUuid } = useBlockManager();
 const props = defineProps<ImageFormProps>();
 
 const uiImageTextBlock = computed(
-  () => (findBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageTextContent,
+  () => (findBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
 );
 
 const imageGroupOpen = ref(false);

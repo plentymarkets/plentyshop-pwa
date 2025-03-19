@@ -1,7 +1,7 @@
 export type ImageTextProps = {
   name: string;
   type: string;
-  content: ImageTextContent;
+  content: ImageContent;
   configuration?: object;
   index?: number;
   meta: {
@@ -9,7 +9,7 @@ export type ImageTextProps = {
   };
 };
 
-export type ImageTextContent = {
+export type ImageContent = {
   index?: number;
   wideScreen?: string;
   desktop?: string;

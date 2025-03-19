@@ -31,7 +31,7 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <RecommendedProducts :text="{}" :category-id="productGetters.getCategoryIds(product)[0]" />
+          <RecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
