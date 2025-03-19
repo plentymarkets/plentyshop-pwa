@@ -2,7 +2,7 @@ export type TextCardProps = {
   name: string;
   type: string;
   content: TextCardContent;
-  configuration?: {};
+  configuration?: object;
   index?: number;
   meta: {
     uuid: string;

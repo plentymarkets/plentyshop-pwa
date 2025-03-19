@@ -2,7 +2,7 @@ export type NewsletterSubscribeProps = {
   name: string;
   type: string;
   content: NewsletterSubscribeContent;
-  configuration?: {};
+  configuration?: object;
   index?: number;
 };
 export type NewsletterSubscribeContent = {

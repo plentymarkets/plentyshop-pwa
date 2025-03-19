@@ -2,7 +2,7 @@ export type ProductRecommendedProductsProps = {
   name: string;
   type: string;
   content: ProductRecommendedProductsContent;
-  configuration?: {};
+  configuration?: object;
   index?: number;
   meta: {
     uuid: string;

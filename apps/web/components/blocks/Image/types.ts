@@ -2,7 +2,7 @@ export type ImageTextProps = {
   name: string;
   type: string;
   content: ImageTextContent;
-  configuration?: {};
+  configuration?: object;
   index?: number;
   meta: {
     uuid: string;
