@@ -148,11 +148,11 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         value: state.value.selectedFont.value,
       },
       {
-        key: 'primary',
+        key: 'primaryColor',
         value: state.value.primaryColor,
       },
       {
-        key: 'secondary',
+        key: 'secondaryColor',
         value: state.value.secondaryColor,
       },
     ];
