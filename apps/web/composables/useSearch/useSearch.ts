@@ -30,6 +30,7 @@ export const useSearch: UseSearchReturn = () => {
    */
   const getSearch: GetSearch = async (params: ItemSearchParams) => {
     state.value.loading = true;
+    params.type = 'search';
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSearch(params));
     useHandleError(error.value);
 
@@ -44,7 +45,7 @@ export const useSearch: UseSearchReturn = () => {
   };
 
   const searchByTag = async (tagId: string, additionalParams: ItemSearchParams = {}) => {
-    const params = {
+    const params: ItemSearchParams = {
       ...additionalParams,
       type: 'tag',
       tagId: tagId,

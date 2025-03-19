@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils';
 import { BlocksBannerCarouselBanner } from '#components';
 
 describe('Banner image', () => {
@@ -16,7 +16,6 @@ describe('Banner image', () => {
           image: {},
           button: {},
         },
-
 
         index: 0,
       },

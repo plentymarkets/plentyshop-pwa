@@ -13,12 +13,12 @@ describe('AssetDownloader', () => {
   beforeEach(() => {
     writerMock = {
       write: vi.fn(),
-      writeMissing: vi.fn()
+      writeMissing: vi.fn(),
     };
     loggerMock = {
       info: vi.fn(),
       warn: vi.fn(),
-      error: vi.fn()
+      error: vi.fn(),
     };
     assetDownloader = new AssetDownloader(writerMock, loggerMock);
   });
@@ -37,7 +37,7 @@ describe('AssetDownloader', () => {
     it('should download the favicon if the URL is an icon', () => {
       vi.spyOn(FileTypeValidator, 'isIcon').mockReturnValue(true);
       const url = 'http://example.com/favicon.ico';
-      const expectedPath = path.resolve(__dirname, `../../../public/favicon.ico`);
+      const expectedPath = path.resolve(__dirname, `../../../public/_nuxt-plenty/favicon.ico`);
 
       assetDownloader.downloadFavicon(url);
 
@@ -60,7 +60,7 @@ describe('AssetDownloader', () => {
     it('should download the logo if the URL is an image', () => {
       vi.spyOn(FileTypeValidator, 'isImage').mockReturnValue(true);
       const url = 'http://example.com/logo.png';
-      const expectedPath = path.resolve(__dirname, `../../../public/images/logo.png`);
+      const expectedPath = path.resolve(__dirname, `../../../public/_nuxt-plenty/images/logo.png`);
 
       assetDownloader.downloadLogo(url);
 

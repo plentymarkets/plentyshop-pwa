@@ -2,7 +2,6 @@ import type { Facet, FacetSearchCriteria, Product } from '@plentymarkets/shop-ap
 
 export interface UseProductsState {
   data: Facet;
-  checkingPermission: boolean;
   loading: boolean;
   productsPerPage: number;
   currentProduct: Product;
@@ -14,7 +13,6 @@ export type SetCurrentProduct = (product: Product) => void;
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  checkingPermission: Ref<boolean>;
   productsPerPage: Readonly<Ref<number>>;
   currentProduct: Readonly<Ref<UseProductsState['currentProduct']>>;
   fetchProducts: FetchProducts;

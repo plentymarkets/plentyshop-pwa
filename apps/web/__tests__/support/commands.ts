@@ -13,13 +13,20 @@ declare global {
       visitAndHydrate(options: Partial<Cypress.VisitOptions> & { url: string }): Cypress.Chainable | null;
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
+      isScrolledTo(): Cypress.Chainable;
     }
   }
 }
 
-Cypress.Commands.add('getByTestId', (testId: string, options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow> | undefined) => {
-  cy.get(`[data-testid="${testId}"]`, options);
-});
+Cypress.Commands.add(
+  'getByTestId',
+  (
+    testId: string,
+    options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow> | undefined,
+  ) => {
+    cy.get(`[data-testid="${testId}"]`, options);
+  },
+);
 
 Cypress.Commands.add('getByComponent', (Component: string) => {
   cy.get(`[Component="${Component}"]`);
@@ -56,4 +63,13 @@ Cypress.Commands.add('visitAndHydrate', (url, options) => {
   cy.visit(url, options);
   // Wait until app is hydrated
   cy.get('body.hydrated');
+});
+
+Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
+  cy.get(element).should(($el) => {
+    const bottom = Cypress.config('viewportHeight');
+    const rect = $el[0].getBoundingClientRect();
+
+    expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
+  });
 });

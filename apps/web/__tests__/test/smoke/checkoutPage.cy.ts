@@ -12,29 +12,32 @@ const productListPage = new ProductListPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
+  cy.setCookie(
+    'consent-cookie',
+    '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+  );
   cy.visitAndHydrate(paths.home);
 });
 
 describe('Smoke: Checkout Page', () => {
   it('[smoke] Display checkout and place order', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
 
     cart.openCart();
     checkout
-        .goToCheckout()
-        .goToGuestCheckout()
-        .fillContactInformationForm()
-        .fillShippingAddressForm()
-        .acceptTerms()
-        .placeOrderButton()
-        .displaySuccessPage();
+      .goToCheckout()
+      .goToGuestCheckout()
+      .fillContactInformationForm()
+      .fillShippingAddressForm()
+      .acceptTerms()
+      .placeOrderButton()
+      .displaySuccessPage();
   });
 
   it('[smoke] Display "no shipping methods available" when shipping country is Denmark', () => {
     homePage.goToCategory();
-    productListPage.addToCart()
+    productListPage.addToCart();
 
     cart.openCart();
     checkout
@@ -43,7 +46,7 @@ describe('Smoke: Checkout Page', () => {
       .fillContactInformationForm()
       .shouldShowShippingMethods()
       .fillShippingAddressForm({
-        country: '7'
+        country: '7',
       })
       .shouldNotShowShippingMethods();
   });

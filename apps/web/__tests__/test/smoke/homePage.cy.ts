@@ -13,7 +13,6 @@ beforeEach(() => {
 });
 
 describe('Smoke: Homepage', () => {
-
   it('[smoke] Check if Category button exists ', () => {
     homePage.checkHeaderCategory();
   });
@@ -26,5 +25,11 @@ describe('Smoke: Homepage', () => {
   it('[smoke] Check if EN on SSR works ', () => {
     cy.visitAndHydrate(paths.home);
     homePage.checkLanguage(locale_en, text_en);
+  });
+
+  it('[smoke] Editor elements should not exist in live mode', () => {
+    homePage.topToolbarShouldNotExist();
+    homePage.sideToolbarShouldNotExist();
+    homePage.blockActionsShouldNotExist();
   });
 });

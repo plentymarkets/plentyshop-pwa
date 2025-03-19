@@ -10,7 +10,7 @@
     "Reject All": "Reject All",
     "Show less": "Show less",
     "about": {
-      "description": "We use cookies and similar technologies on our website and process personal data of visitors to our website (e.g. IP address), e.g. to personalise content and advertisements, to integrate media from third-party providers or to analyse access to our website. Data processing only takes place when cookies are set. We share this data with third parties that we name in the settings. Data processing may be carried out with consent or on the basis of a legitimate interest. Consent can be given or refused. There is a right not to consent and to change or withdraw consent at a later date. We provide more information about the use of personal data and the services in our",
+      "description": "We use cookies and similar technologies on our website and process personal data of visitors to our website (e.g. IP address), e.g. to personalise content, to integrate media from third-party providers or to analyse access to our website. Data processing only takes place when cookies are set. We share this data with third parties that we name in the settings. Data processing may be carried out with consent or on the basis of a legitimate interest. Consent can be given or refused. There is a right not to consent and to change or withdraw consent at a later date. Please note our {legal} and additional information regarding the use of personal data in our {policy}.",
       "label": "We value your privacy"
     },
     "essentials": {
@@ -222,6 +222,7 @@
       "createAccountLinkLabel": "Sign up now!",
       "forgotPasswordLabel": "Forgotten your password?",
       "heading": "Log in to your account",
+      "headingSuccess": "Reset password success",
       "loginAndContinue": "Login and continue",
       "openLoginForm": "Open login form",
       "rememberMeLabel": "Remember me",
@@ -229,6 +230,7 @@
       "success": "You have been logged in successfully"
     },
     "resetPassword": {
+      "title": "Reset password success",
       "anotherEmail": "I need to try another email address",
       "backToLogin": "Back to Login",
       "continue": "Continue",
@@ -342,6 +344,7 @@
     "heading": "Payment method",
     "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },
+  "checkoutExportDelivery": "By placing the order I recognise that my order is shipped from {shopCountry} to {deliveryCountry}. The local VAT, costs of customs clearance and customs duties are not included in the total amount of the order and have to be settled with third parties. I bear the costs.",
   "clear": "Clear",
   "clearFilters": "Clear all filters",
   "closeDialog": "Close Dialog",
@@ -587,6 +590,7 @@
   "guestCheckout": "Guest checkout",
   "home": "Home",
   "homepage": {
+    "title": "Homepage",
     "background": "New Wireless Pro headphones with sleek design and modern features",
     "emptyBlock": {
       "headline": "Add the first block here."

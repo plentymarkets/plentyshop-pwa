@@ -1,16 +1,11 @@
-import { BannerSliderObject } from "../../support/pageObjects/BannerSliderObject";
-import { paths } from "../../../utils/paths";
-
-
+import { BannerSliderObject } from '../../support/pageObjects/BannerSliderObject';
+import { paths } from '../../../utils/paths';
 
 describe('Banner Slider Block Form', () => {
   const bannerSlider = new BannerSliderObject();
 
   const openSettingsForBannerSliderBlock = () => {
-    cy.get('[data-testid="open-editor-button"]')
-      .eq(0)
-      .should('exist')
-      .click();
+    cy.get('[data-testid="open-editor-button"]').eq(0).should('exist').click();
 
     cy.get('[data-testid="banner-carousel-form"]').should('exist');
   };
@@ -62,12 +57,12 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.moveSlideDown(1);
       bannerSlider.checkSlideSettings(2);
     });
-    
+
     it('should not move up the first slide', () => {
       bannerSlider.openSlideActions();
       bannerSlider.checkIsMoveSlideUpDisabled(0);
     });
-    
+
     it('should not move down the last slide', () => {
       bannerSlider.openSlideActions();
       bannerSlider.checkIsMoveSlideDownDisabled(1);
@@ -79,7 +74,6 @@ describe('Banner Slider Block Form', () => {
       cy.get('[data-testid="banner-image-0"]').should('be.visible');
       bannerSlider.openImageGroup();
     });
-
 
     it('should change the image', () => {
       bannerSlider.changeBannerImage();
@@ -103,8 +97,7 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.alignBoxCenterX();
       bannerSlider.alignBoxBottomX();
       bannerSlider.alignBoxTopX();
-      });
-
+    });
 
     it('should change the text box alignment y', () => {
       bannerSlider.closeImageGroup();
@@ -123,7 +116,6 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.textAlignRight();
       bannerSlider.textAlignLeft();
     });
-
   });
 
   describe('Button Settings', () => {
@@ -131,7 +123,7 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.closeImageGroup();
       bannerSlider.closeTextGroup();
       bannerSlider.changeButtonLabelAndLink();
-      bannerSlider.checkButtonLabelAndLink();      
+      bannerSlider.checkButtonLabelAndLink();
       bannerSlider.checkButtonSecondary();
       bannerSlider.checkButtonPrimary();
     });

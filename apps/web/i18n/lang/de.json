@@ -10,7 +10,7 @@
     "Reject All": "Alles ablehnen",
     "Show less": "Weniger anzeigen",
     "about": {
-      "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte und Anzeigen zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Weitere Informationen zur Verwendung personenbezogener Daten und den Diensten erklären wir in unserer",
+      "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Beachten Sie unser {legal} und weitere Hinweise zur Verwendung personenbezogener Daten in unserer {policy}.",
       "label": "Ihre Privatsphäre ist uns wichtig"
     },
     "essentials": {
@@ -222,6 +222,7 @@
       "createAccountLinkLabel": "Jetzt anmelden!",
       "forgotPasswordLabel": "Passwort vergessen?",
       "heading": "In ihr Konto einloggen",
+      "headingSuccess": "Passwort erfolgreich zurücksetzen",
       "loginAndContinue": "Einloggen und fortfahren",
       "openLoginForm": "Login Form öffnen",
       "rememberMeLabel": "An mich erinnern",
@@ -229,6 +230,7 @@
       "success": "Sie wurden erfolgreich eingeloggt."
     },
     "resetPassword": {
+      "title": "Passwort erfolgreich zurücksetzen",
       "anotherEmail": "Ich muss eine andere E-Mail-Adresse ausprobieren",
       "backToLogin": "Zurück zum Login",
       "continue": "Weiter",
@@ -342,6 +344,7 @@
     "heading": "Zahlungsart",
     "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },
+  "checkoutExportDelivery": "Mit der Bestellung nehme ich zur Kenntnis, dass der Versand aus dem Land {shopCountry} in das Zielland {deliveryCountry} erfolgt. Die dortige Mehrwertsteuer, die Verzollungskosten und Zölle sind in der Endsumme der Bestellung nicht inbegriffen und sind Dritten zu bezahlen. Sie gehen zu meinen Lasten.",
   "clear": "Zurücksetzen",
   "clearFilters": "Alle Filter löschen",
   "closeDialog": "Dialogfenster schließen",
@@ -587,6 +590,7 @@
   "guestCheckout": "Gast Checkout",
   "home": "Startseite",
   "homepage": {
+    "title": "Startseite",
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
     "emptyBlock": {
       "headline": "Hier den ersten Abschnitt hinzufügen."
