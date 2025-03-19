@@ -1,6 +1,5 @@
 # Changelog PlentyONE Shop
 
-
 # v1.x.x (yyyy-mm-dd)
 
 ### Neu
@@ -33,6 +32,7 @@
 - Umbenennung von Blockabschnitten für den Editor.
 
 ### 🩹 Behoben
+
 - Problem behoben, dass der Vorschaumodus nicht verlassen werden konnte.
 - Problem behoben, bei dem nach Änderung der Blockposition zum Block gescrollt wurde.
 - Problem behoben, bei dem der Sprachumschalter in der Symbolleiste nicht funktioniert hat.
