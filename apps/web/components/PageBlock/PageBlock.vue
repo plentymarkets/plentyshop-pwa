@@ -79,6 +79,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 interface Props {

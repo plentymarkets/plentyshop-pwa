@@ -1,4 +1,5 @@
 import type { BlocksList } from '../../components/BlocksNavigationList/types';
+import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
 const blocksLists = ref<BlocksList>({});

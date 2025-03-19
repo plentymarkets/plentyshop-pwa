@@ -3,6 +3,10 @@ export type Size = {
   height: string;
 };
 
+export interface SlideControls {
+  color: string;
+}
+
 export type SizeKey = 'lg' | 'md' | 'sm' | 'xs';
 
 export type Sizes = Record<SizeKey, { width: string; height: string }>;

@@ -7,6 +7,7 @@ import type {
   DrawerView,
   SaveSettings,
 } from '~/composables/useSiteConfiguration/types';
+import type { Block } from '@plentymarkets/shop-api';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
 

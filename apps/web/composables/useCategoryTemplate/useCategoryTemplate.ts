@@ -5,6 +5,8 @@ import type {
   GetBlocks,
   SaveBlocks,
 } from '~/composables/useCategoryTemplate/types';
+import type { Block } from '@plentymarkets/shop-api';
+
 import homepageTemplateDataDe from '~/composables/useHomepage/homepageTemplateDataDe.json';
 import homepageTemplateDataEn from '~/composables/useHomepage/homepageTemplateDataEn.json';
 

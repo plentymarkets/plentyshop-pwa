@@ -1,3 +1,4 @@
+import type { Block } from '@plentymarkets/shop-api';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 export type DrawerView =
   | 'SettingsView'

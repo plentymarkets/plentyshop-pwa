@@ -1,3 +1,5 @@
+import type { Block } from '@plentymarkets/shop-api';
+
 export type CarouselStructureProps = {
   name: string;
   type: string;

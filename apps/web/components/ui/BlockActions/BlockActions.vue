@@ -56,6 +56,7 @@
 <script lang="ts" setup>
 import { SfIconDelete, SfIconArrowUpward, SfIconArrowDownward, SfIconBase } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
+import type { Block } from '@plentymarkets/shop-api';
 
 const props = defineProps<{ index: number; block: Block }>();
 

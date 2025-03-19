@@ -1,3 +1,5 @@
+import type { Block } from '@plentymarkets/shop-api';
+
 export type BlocksList = {
   [key: string]: {
     category: string;
