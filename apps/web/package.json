@@ -27,7 +27,6 @@
   "dependencies": {
     "@nuxt/fonts": "^0.10.3",
     "@plentymarkets/tailwind-colors": "^1.0.1",
-    "@plentymarkets/shop-core": "^1.3.0",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
     "nuxt-lazy-hydrate": "^1.0.0",
