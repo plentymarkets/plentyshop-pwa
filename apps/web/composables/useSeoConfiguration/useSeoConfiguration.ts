@@ -25,11 +25,11 @@ export const useSeoConfiguration: UseSeoConfigurationReturn = () => {
     includeSitemap: false,
     drawerView: null,
     initialData: {
-      title: 'Seo Title',
-      description: 'Meta description',
-      keywords: 'Meta keywords',
+      title: '',
+      description: '',
+      keywords: '',
       robots: '',
-      canonical: 'Canonical URL',
+      canonical: '',
       includeSitemap: false,
     },
   }));
@@ -45,34 +45,34 @@ export const useSeoConfiguration: UseSeoConfigurationReturn = () => {
     );
   });
 
-//   const saveSeoSettings = async (): Promise<boolean> => {
-//     state.value.loading = true;
+  // const saveSeoSettings = async (): Promise<boolean> => {
+  //   state.value.loading = true;
 
-//     const settings = {
-//       title: state.value.title,
-//       description: state.value.description,
-//       keywords: state.value.keywords,
-//       robots: state.value.robots,
-//       canonical: state.value.canonical,
-//       includeSitemap: state.value.includeSitemap,
-//     };
+  //   const settings = {
+  //     title: state.value.title,
+  //     description: state.value.description,
+  //     keywords: state.value.keywords,
+  //     robots: state.value.robots,
+  //     canonical: state.value.canonical,
+  //     includeSitemap: state.value.includeSitemap,
+  //   };
 
-//     const { error } = await useAsyncData(() => useSdk().plentysystems.setSeoConfiguration({ settings }));
+  //   const { error } = await useAsyncData(() => useSdk().plentysystems.setSeoConfiguration({ settings }));
 
-//     if (error.value) {
-//       state.value.loading = false;
-//       return false;
-//     }
+  //   if (error.value) {
+  //     state.value.loading = false;
+  //     return false;
+  //   }
 
-//     state.value.initialData = { ...settings };
+  //   state.value.initialData = { ...settings };
 
-//     state.value.loading = false;
-//     return true;
-//   };
+  //   state.value.loading = false;
+  //   return true;
+  // };
 
   return {
     ...toRefs(state.value),
     seoSettingsIsDirty,
-  //  saveSeoSettings,
+    // saveSeoSettings,
   };
 };
