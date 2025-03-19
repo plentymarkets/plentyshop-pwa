@@ -3,7 +3,7 @@ import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
-const fontFamilyText = process.env.TEXT || 'Red Hat Text';
+const fontFamilyText = process.env.FONT || 'Red Hat Text';
 
 export default {
   presets: [tailwindConfig],

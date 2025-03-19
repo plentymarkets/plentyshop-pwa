@@ -26,6 +26,7 @@
 - Added scroll to block after changing block position.
 - Fixed side toolbar visibility.
 - Category middleware refactored to use the rights from the category tree.
+- Fixed the app storing and using the wrong configuration keys for color and font settings.
 
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
