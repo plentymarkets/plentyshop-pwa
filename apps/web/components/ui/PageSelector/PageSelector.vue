@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+
 const { pageMeta } = usePageMeta();
 const currentPageName = ref('Homepage');
 
