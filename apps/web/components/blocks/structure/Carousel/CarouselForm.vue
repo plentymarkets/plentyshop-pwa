@@ -180,6 +180,8 @@ const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findBlockByUuid } = useBlockManager();
 
+setIndex(blockUuid.value, 0);
+
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
 
 const carouselStructure = computed(

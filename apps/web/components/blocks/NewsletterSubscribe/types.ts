@@ -2,12 +2,7 @@ export type NewsletterSubscribeProps = {
   name: string;
   type: string;
   content: NewsletterSubscribeContent;
-  configuration?: {
-    controls: {
-      color: string;
-      displayArrows: boolean;
-    };
-  };
+  configuration?: {};
   index?: number;
 };
 export type NewsletterSubscribeContent = {

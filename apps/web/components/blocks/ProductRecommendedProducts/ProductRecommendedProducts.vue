@@ -25,6 +25,6 @@ watchDebounced(
       fetchProductRecommended(props.content.categoryId);
     }
   },
-  { immediate: true },
+  { immediate: true, debounce: 500 },
 );
 </script>

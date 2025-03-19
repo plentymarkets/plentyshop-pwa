@@ -2,12 +2,7 @@ export type ImageTextProps = {
   name: string;
   type: string;
   content: ImageTextContent;
-  configuration?: {
-    controls: {
-      color: string;
-      displayArrows: boolean;
-    };
-  };
+  configuration?: {};
   index?: number;
   meta: {
     uuid: string;

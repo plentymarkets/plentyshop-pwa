@@ -17,7 +17,6 @@
         },
         { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet && root },
       ]"
-      @click="tabletEdit(index)"
     >
       <button
         v-if="disableActions && isPreview && root"
@@ -58,7 +57,6 @@
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
             :block-has-data="blockHasData"
-            :tablet-edit="tabletEdit"
             :change-block-position="changeBlockPosition"
             v-bind="slotProps"
           />
@@ -92,7 +90,6 @@ interface Props {
   clickedBlockIndex: number | null;
   isTablet: boolean;
   blockHasData?: (block: Block) => boolean;
-  tabletEdit: (index: number) => void;
   changeBlockPosition: (index: number, position: number) => void;
 }
 

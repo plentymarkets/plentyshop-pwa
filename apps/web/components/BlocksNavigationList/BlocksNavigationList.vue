@@ -16,7 +16,7 @@
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               drawerOpen = false;
-              addBlock(category.category, variationIndex);
+              addNewBlock(category.category, variationIndex, visiblePlaceholder.uuid, visiblePlaceholder.position);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -48,8 +48,4 @@ getBlocksLists();
 
 const { addNewBlock, visiblePlaceholder } = useBlockManager();
 const { drawerOpen } = useSiteConfiguration();
-
-const addBlock = (category: string, variationIndex: number) => {
-  addNewBlock(category, variationIndex, visiblePlaceholder.value.uuid, visiblePlaceholder.value.position);
-};
 </script>

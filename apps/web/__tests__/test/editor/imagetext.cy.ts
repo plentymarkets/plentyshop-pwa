@@ -62,8 +62,8 @@ describe('Image Text Block Form', () => {
         .clear({ force: true })
         .type(text, { delay: 0, force: true });
     });
-    cy.get('[data-testid="text-image-parent"]').scrollIntoView().should('exist');
-    cy.get('[data-testid="text-image-parent"]').within(() => {
+    cy.get('[data-testid="multi-grid-structure"]').scrollIntoView().should('exist');
+    cy.get('[data-testid="multi-grid-structure"]').within(() => {
       const expectedTexts = [
         { selector: 'text-pretitle', text: 'New Pre title' },
         { selector: 'text-title', text: 'New title' },
@@ -80,7 +80,7 @@ describe('Image Text Block Form', () => {
   const changeTextColor = () => {
     cy.get('[data-testid="input-text-color"]').should('exist').clear().type('rgb(121, 12, 12)', { delay: 0 });
     cy.wait(1000);
-    cy.get('[data-testid="text-image-parent"]').should('have.css', 'color', 'rgb(121, 12, 12)');
+    cy.get('[data-testid="multi-grid-structure"]').should('have.css', 'color', 'rgb(121, 12, 12)');
   };
 
   const changeTextAlignment = () => {

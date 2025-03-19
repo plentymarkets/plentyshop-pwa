@@ -2,12 +2,7 @@ export type TextCardProps = {
   name: string;
   type: string;
   content: TextCardContent;
-  configuration?: {
-    controls: {
-      color: string;
-      displayArrows: boolean;
-    };
-  };
+  configuration?: {};
   index?: number;
   meta: {
     uuid: string;

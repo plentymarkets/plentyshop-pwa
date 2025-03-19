@@ -1,6 +1,6 @@
 <template>
   <div
-    data-testid="text-image-parent"
+    data-testid="multi-grid-structure"
     class="grid grid-cols-1 gap-4 items-center"
     :class="`lg:grid-cols-${content.length}`"
     :style="{ color: textCardBlock?.content?.text?.color || '' }"

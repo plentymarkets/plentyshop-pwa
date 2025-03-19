@@ -11,7 +11,6 @@
           :clicked-block-index="clickedBlockIndex"
           :is-tablet="isTablet"
           :block-has-data="blockHasData"
-          :tablet-edit="tabletEdit"
           :change-block-position="changeBlockPosition"
           :root="true"
           class="group"
@@ -25,6 +24,7 @@
             },
           ]"
           data-testid="block-wrapper"
+          @click="tabletEdit(index)"
         />
       </template>
     </div>

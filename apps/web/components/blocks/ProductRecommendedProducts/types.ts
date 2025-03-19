@@ -2,12 +2,7 @@ export type ProductRecommendedProductsProps = {
   name: string;
   type: string;
   content: ProductRecommendedProductsContent;
-  configuration?: {
-    controls: {
-      color: string;
-      displayArrows: boolean;
-    };
-  };
+  configuration?: {};
   index?: number;
   meta: {
     uuid: string;
