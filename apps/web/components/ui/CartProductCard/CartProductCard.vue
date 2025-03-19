@@ -26,6 +26,7 @@
 
       <div v-if="!cartItem.variation?.bundleComponents">
         {{ cartItem.variation?.prices?.default?.price.formatted }}
+        <span>{{ t('asterisk') }} </span>
       </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
@@ -109,6 +110,22 @@
           @change-quantity="debounceQuantity"
         />
       </div>
+
+      <div class="mt-4 typography-text-xs flex gap-1">
+        <span>{{ t('asterisk') }}</span>
+        <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
+        <i18n-t keypath="excludedShipping" scope="global">
+          <template #shipping>
+            <SfLink
+              :href="localePath(paths.shipping)"
+              target="_blank"
+              class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            >
+              {{ $t('delivery') }}
+            </SfLink>
+          </template>
+        </i18n-t>
+      </div>
     </div>
 
     <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
@@ -140,6 +157,7 @@ const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
+const { showNetPrices } = useCustomer();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { basePriceSingleValue } = useProductPrice(cartItem.variation ?? ({} as Product));
 const { send } = useNotification();
