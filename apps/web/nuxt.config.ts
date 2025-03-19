@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       },
     },
     optimizeDeps: {
-      include: ["dotenv"],
+      include: ['dotenv'],
     },
   },
   css: ['~/assets/style.scss'],
