@@ -23,6 +23,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     pageModalOpen: false,
+    unlinkModalOpen: false,
     loading: false,
     placement: 'left',
     newBlockPosition: 0,
@@ -175,7 +176,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const togglePageModal = (value: boolean) => {
-    state.value.pageModalOpen = value;
+    // state.value.pageModalOpen = value;
+    state.value.unlinkModalOpen = value;
   };
 
   return {

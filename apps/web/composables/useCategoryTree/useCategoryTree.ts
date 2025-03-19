@@ -32,6 +32,7 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
     } catch (error) {
       throw new Error(error as string);
     } finally {
+      console.log('finally', state.value.data);
       state.value.loading = false;
     }
   };

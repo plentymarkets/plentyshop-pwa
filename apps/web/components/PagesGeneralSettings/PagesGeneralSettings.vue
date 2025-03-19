@@ -106,19 +106,29 @@
             class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
           />
         </div>
+        <div class="mx-4 mb-4 mt-4">
+          <button
+            type="button"
+            data-testid="add-page-btn"
+            class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+            @click="togglePageModal(true)"
+          >
+            <SfIconAdd /> Add Page
+          </button>
+        </div>
       </UiAccordionItem>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput, SfSwitch } from '@storefront-ui/vue';
+import { SfIconAdd, SfIconClose, SfInput, SfSwitch } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
 const displayInHeader = ref(true);
 const loginNecessary = ref(true);
-const { closeDrawer } = useSiteConfiguration();
+const { closeDrawer, togglePageModal } = useSiteConfiguration();
 
 
 const data = {

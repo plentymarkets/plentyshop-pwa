@@ -1,0 +1,44 @@
+<template>
+  <UiModal
+    v-model="unlinkModalOpen"
+    aria-labelledby="page-modal"
+    tag="section"
+    role="dialog"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto page-modal"
+    overlay-classes="z-[1000]"
+  >
+    <header class="flex items-center justify-between mb-2">
+      <div class="flex items-center text-xl font-bold">Delete page?</div>
+      <button class="absolute right-2 top-2 px-4 py-4" @click="closeModal">
+        <SfIconClose />
+      </button>
+    </header>
+
+    <p class="mb-6">Loyalty page will be deleted</p>
+    <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate @submit.prevent="onSubmit">
+      <div class="actions grid gap-4 grid-cols-2">
+        <button
+          type="button"
+          data-testid="block-spacing-btn"
+          class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
+          @click="closeModal"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          data-testid="block-spacing-btn"
+          class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
+        >
+          Add page
+        </button>
+      </div>
+    </form>
+  </UiModal>
+</template>
+
+<script setup lang="ts">
+
+
+
+</script>

@@ -69,7 +69,6 @@ const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal } = useSiteConfiguration();
-
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
     contentItems: [] as MenuItemType[],
