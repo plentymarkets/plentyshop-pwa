@@ -96,9 +96,7 @@
           <span v-if="cartGetters.getCurrency(cartData) === 'GBP'">
             {{ cartGetters.getCurrency(cartData) }} {{ currentFullPrice.toFixed(2) }}
           </span>
-          <span v-else>
-            {{ currentFullPrice.toFixed(2) }} {{ cartGetters.getCurrency(cartData) }}
-          </span>
+          <span v-else> {{ currentFullPrice.toFixed(2) }} {{ cartGetters.getCurrency(cartData) }} </span>
         </span>
         <UiQuantitySelector
           ref="quantitySelectorReference"

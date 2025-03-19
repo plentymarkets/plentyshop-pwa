@@ -20,7 +20,7 @@ export const useProductPrice = (product: Product) => {
 
   const { lastUpdatedCartItem } = useCart();
   const { getPropertiesPrice } = useProductOrderProperties();
-  
+
   const specialOfferValue = productGetters.getSpecialOffer(product);
   const specialOffer = productPriceGetters.getSpecialOfferFormatted(product);
   const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
