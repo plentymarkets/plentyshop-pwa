@@ -34,6 +34,7 @@
 
 ### 🩹 Fixed
 
+- Fixed that the preview mode could not be exited.
 - Fixed scroll to block after changing block position.
 - Fixed toolbar language switch.
 - Fixed side toolbar visibility.
@@ -52,7 +53,6 @@
 
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 - Fixed site settings not persisting on rebuild.
-- Fixed that the preview mode could not be exited.
 
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
