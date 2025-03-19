@@ -4,7 +4,7 @@
 
 ### New
 
-- Added pages entry in the left side menu, where users can manage their pages.
+- Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
 
 ### 👷 Changed
@@ -33,6 +33,7 @@
 - Renamed block sections for editor.
 
 ### 🩹 Fixed
+
 - Fixed scroll to block after changing block position.
 - Fixed toolbar language switch.
 - Fixed side toolbar visibility.
