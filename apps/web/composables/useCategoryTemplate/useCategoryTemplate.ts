@@ -81,15 +81,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     state.value.loading = false;
   };
 
-  // watch(
-  //   () => currentLocale.value,
-  //   async (newLocale) => {
-  //     console.log('watch')
-  //     currentLocale.value = newLocale;
-  //     await getBlocks('index', 'immutable');
-  //   },
-  // );
-
   return {
     fetchCategoryTemplate,
     saveBlocks,
