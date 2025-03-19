@@ -21,6 +21,13 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
+  vite: {
+    server: {
+      fs: {
+        allow: ['../../..'], // relative to the current nuxt.config.ts
+      },
+    },
+  },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
