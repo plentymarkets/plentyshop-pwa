@@ -18,7 +18,7 @@
     />
 
     <SiteConfigurationDrawer
-      v-if="drawerExtraOpen"
+      v-if="drawerOpen"
       class="absolute lg:relative bg-white"
       :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
       :style="`font-family: ${config.font}`"
