@@ -6,6 +6,20 @@
         class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
         <div class="w-full flex flex-col">
+          <div v-if="hasUnsavedChanges()" class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4">
+            <SfIconWarning class="mt-4 mr-2 text-warning-700 shrink-0" />
+            <span class="py-2 mr-2">
+              <p>
+                You have unsaved changes.
+              </p>
+              <p>
+                Exiting the editor will discard them.
+              </p>
+            </span>
+          </div>
+          <UiButton v-if="hasUnsavedChanges()" variant="secondary" class="w-full my-2" @click="saveAndExit(0)">
+            Save changes and exit
+          </UiButton>
           <UiButton
             v-for="(cookieName, index) in foundCookies"
             :key="index"
@@ -27,7 +41,7 @@
         :aria-label="$t('previewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
-      <NuxtImg width="32px" height="32px" :src='storeBlack' />
+        <NuxtImg width="32px" height="32px" :src='storeBlack' />
       </UiButton>
     </div>
   </client-only>
@@ -35,10 +49,12 @@
 
 <script setup lang="ts">
 import storeBlack from '/assets/icons/paths/store-black.svg';
+import { SfIconWarning } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteConfiguration();
+const { save } = useToolbar();
 
 const hasUnsavedChanges = () => {
   return !isEditingEnabled.value && !settingsIsDirty.value;
@@ -50,8 +66,6 @@ const foundCookies = defaults.PREVIEW_COOKIES.filter((cookie) => !!useCookie(coo
 const useClassFor = (index: number): boolean => foundCookies.length > 1 && index !== 0;
 
 const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
-  if (hasUnsavedChanges()) return;
-  
   const { public: config } = useRuntimeConfig();
   const domain = config.domain.replace('https://', '');
   useCookie(foundCookies[index], { path: '/', domain: domain }).value = null;
@@ -59,4 +73,9 @@ const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
   foundCookies.splice(index, 1);
   window.location.reload();
 };
+
+const saveAndExit = (index: number): void => {
+  save();
+  removeLookupCookie(index);
+}
 </script>
