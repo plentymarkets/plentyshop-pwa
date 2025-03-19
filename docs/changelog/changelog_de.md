@@ -1,8 +1,46 @@
 # Changelog PlentyONE Shop
 
-# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-Gerne, hier ist die Übersetzung der Aufzählungspunkte ins Deutsche:
+# v1.x.x (yyyy-mm-dd)
+
+### Neu
+
+- Hinzufügen eines Eintrags für Seiten im linken Seitenmenü, wo Benutzer ihre Seiten verwalten können.
+- Hinzufügen eines Designs zum Hinzufügen einer neuen Seite.
+
+### 👷 Geändert
+
+- Hinzufügen einer Seitenverwaltungs-Schaltfläche in der Editor-Symbolleiste.
+- Der Editor verfügt nun über eine neue Komponente, die die Seitenavigation ermöglicht.
+
+### 🩹 Behoben
+
+- Behebung des Zustands des Seiten-Navigators.
+- Behebung des Problems, dass der Seiten-Navigator geschlossen wird, wenn außerhalb des Feldes geklickt wird.
+
+# v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Hinzufügen einer Symbolleiste für Seiten-Einstellungen.
+- Hinzufügen eines rechtlichen Hinweises im Checkout für "lokale Mehrwertsteuer, Kosten für Zollabfertigung und Zölle", falls erforderlich.
+- Hinzufügen der Impressumserklärung zur Beschreibung der Cookie-Leiste.
+
+### 👷 Geändert
+
+- Automatisches Speichern der E-Mail-Adresse im Gast-Checkout implementiert.
+- Assets im Verzeichnis `apps/web/public` wurden in ein neues Unterverzeichnis `_nuxt-plenty/` verschoben. Darüber hinaus wurde das [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) Modul durch das [@nuxt/fonts](https://fonts.nuxt.com/) Modul ersetzt, das ähnliche Funktionen bietet, aber mehr Konfigurationsoptionen bietet. Diese Änderungen erleichtern die Anwendung von Netzwerkrouting-Regeln auf der Backend-Seite.
+- Umbenennung von Blockabschnitten für den Editor.
+
+### 🩹 Behoben
+
+- Problem behoben, bei dem nach Änderung der Blockposition zum Block gescrollt wurde.
+- Problem behoben, bei dem der Sprachumschalter in der Symbolleiste nicht funktioniert hat.
+- Problem behoben, bei dem die Sichtbarkeit der Seitenleistensymbolleiste nicht korrekt war.
+- Kategorien-Middleware wurde überarbeitet, um die Rechte aus dem Kategoriebaum zu verwenden.
+- Problem behoben, bei dem die App die falschen Konfigurationsschlüssel für Farb- und Schrifteinstellungen speicherte und verwendete.
+
+# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert
 
