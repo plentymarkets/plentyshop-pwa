@@ -27,6 +27,9 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
+    optimizeDeps: {
+      include: ["dotenv"],
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
