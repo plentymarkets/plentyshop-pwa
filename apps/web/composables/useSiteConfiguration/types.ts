@@ -19,6 +19,7 @@ export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
   drawerOpen: boolean;
+  drawerExtraOpen: boolean;
   pageModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
@@ -46,6 +47,7 @@ export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
+  drawerExtraOpen: Readonly<Ref<UseSiteConfigurationState['drawerExtraOpen']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
   blockIndex: Readonly<Ref<UseSiteConfigurationState['blockIndex']>>;

@@ -9,6 +9,7 @@
       </span>
       <router-link :to="item.path" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
         <span v-if="item.name === 'Homepage'">
+          <button  @click="openDrawerWithView('SeoView')">open drawer</button>
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
         {{ item.name }}
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 import type { MenuItemType } from '~/components/PagesView/types';
 import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+const { openDrawerWithView } = useSiteConfiguration();
 
 const { item } = defineProps<{
   item: MenuItemType;
