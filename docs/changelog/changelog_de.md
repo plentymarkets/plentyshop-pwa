@@ -2,43 +2,38 @@
 
 # v1.x.x (yyyy-mm-dd)
 
-### Neu
 
-- Hinzufügen eines Eintrags für Seiten im linken Seitenmenü, wo Benutzer ihre Seiten verwalten können.
-- Hinzufügen eines Designs zum Hinzufügen einer neuen Seite.
+### Neu
+- Einträge für Seiten im linken Seitenmenü hinzugefügt, wo Benutzer ihre Seiten verwalten können.
+- Design für das Hinzufügen einer neuen Seite implementiert.
 
 ### 👷 Geändert
-
-- Hinzufügen einer Seitenverwaltungs-Schaltfläche in der Editor-Symbolleiste.
-- Der Editor verfügt nun über eine neue Komponente, die die Seitenavigation ermöglicht.
+- Schaltfläche "Seiten verwalten" in der Editor-Symbolleiste hinzugefügt.
+- Der Editor verfügt jetzt über eine neue Komponente, die die Seitennavigation ermöglicht.
 
 ### 🩹 Behoben
-
-- Behebung des Zustands des Seiten-Navigators.
-- Behebung des Problems, dass der Seiten-Navigator geschlossen wird, wenn außerhalb des Feldes geklickt wird.
+- Zustand des Seitenselektors behoben.
+- Seitenselektor schließt sich nun, wenn außerhalb der Box geklickt wird.
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu
-
-- Hinzufügen einer Symbolleiste für Seiten-Einstellungen.
-- Hinzufügen eines rechtlichen Hinweises im Checkout für "lokale Mehrwertsteuer, Kosten für Zollabfertigung und Zölle", falls erforderlich.
-- Hinzufügen der Impressumserklärung zur Beschreibung der Cookie-Leiste.
+- Symbolleiste für Seiteneinstellungen hinzugefügt.
+- Rechtlicher Hinweis im Checkout zu "lokaler Mehrwertsteuer, Kosten der Zollabfertigung und Zollgebühren" bei Bedarf hinzugefügt.
+- Rechtliche Hinweise zur Beschreibung der Cookie-Leiste hinzugefügt.
 
 ### 👷 Geändert
-
-- Automatisches Speichern der E-Mail-Adresse im Gast-Checkout implementiert.
-- Assets im Verzeichnis `apps/web/public` wurden in ein neues Unterverzeichnis `_nuxt-plenty/` verschoben. Darüber hinaus wurde das [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) Modul durch das [@nuxt/fonts](https://fonts.nuxt.com/) Modul ersetzt, das ähnliche Funktionen bietet, aber mehr Konfigurationsoptionen bietet. Diese Änderungen erleichtern die Anwendung von Netzwerkrouting-Regeln auf der Backend-Seite.
-- Umbenennung von Blockabschnitten für den Editor.
+- Automatisches Speichern für E-Mail-Adresse im Gastkauf-Prozess implementiert.
+- Assets im Verzeichnis `apps/web/public` wurden in ein neues Unterverzeichnis `_nuxt-plenty/` verschoben. Zusätzlich wurde das Modul [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) durch das Modul [@nuxt/fonts](https://fonts.nuxt.com/) ersetzt, das ähnliche Funktionalität bietet, aber mehr Konfigurationsoptionen ermöglicht. Beide Änderungen erleichtern die Anwendung von Netzwerk-Routing-Regeln auf dem Backend.
+- Block-Abschnitte für den Editor umbenannt.
 
 ### 🩹 Behoben
-
-- Problem behoben, dass der Vorschaumodus nicht verlassen werden konnte.
-- Problem behoben, bei dem nach Änderung der Blockposition zum Block gescrollt wurde.
-- Problem behoben, bei dem der Sprachumschalter in der Symbolleiste nicht funktioniert hat.
-- Problem behoben, bei dem die Sichtbarkeit der Seitenleistensymbolleiste nicht korrekt war.
-- Kategorien-Middleware wurde überarbeitet, um die Rechte aus dem Kategoriebaum zu verwenden.
-- Problem behoben, bei dem die App die falschen Konfigurationsschlüssel für Farb- und Schrifteinstellungen speicherte und verwendete.
+- Problem behoben, bei dem der Vorschaumodus nicht verlassen werden konnte.
+- Scrollen zu Blöcken nach Änderung der Blockposition korrigiert.
+- Sprachumschaltung in der Symbolleiste repariert.
+- Sichtbarkeit der seitlichen Symbolleiste korrigiert.
+- Kategorie-Middleware überarbeitet, um die Rechte aus dem Kategoriebaum zu verwenden.
+- Problem behoben, bei dem die App falsche Konfigurationsschlüssel für Farb- und Schrifteinstellungen gespeichert und verwendet hat.
 
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
