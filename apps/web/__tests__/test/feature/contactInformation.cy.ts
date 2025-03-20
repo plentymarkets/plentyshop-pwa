@@ -69,6 +69,17 @@ describe('Contact Information', () => {
     cy.get('#customerEmailError').should('exist');
   });
 
+  it('should validate email input with minus "-"', () => {
+    homePage.goToCategory();
+    productListPage.addToCart();
+    cart.openCart();
+
+    checkout.goToCheckout().goToGuestCheckout();
+
+    checkout.contactInformationForm.type('invalid-email@plentyone.com').blur();
+    cy.get('#customerEmailError').should('not.exist');
+  });
+
   it('should be able to change the email after address is changed', () => {
     homePage.goToCategory();
     productListPage.addToCart();
