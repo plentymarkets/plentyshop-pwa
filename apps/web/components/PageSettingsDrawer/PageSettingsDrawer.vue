@@ -15,6 +15,7 @@
     <component :is="getDrawerView(drawerView)" v-if="drawerView" />
   </SfDrawer>
 </template>
+ 
 
 <script setup lang="ts">
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
@@ -23,12 +24,6 @@ import { SfDrawer } from '@storefront-ui/vue';
 const { drawerOpen, drawerView, placement } = useSiteConfiguration();
 
 const getDrawerView = (view: string) => {
-  if (view === 'DesignView') return resolveComponent('DesignView');
-  if (view === 'PagesView') return resolveComponent('PagesView');
-  if (view === 'blocksList') return resolveComponent('BlocksNavigation');
-  if (view === 'blocksSettings') return resolveComponent('BlockEditView');
-  if (view === 'PagesView') return resolveComponent('PagesView');
   if (view === 'SeoView') return resolveComponent('SeoView');
-
 };
 </script>
