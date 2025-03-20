@@ -17,6 +17,7 @@
 - Fix displayment of large number of categories in navigation bar.
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
+- Fix checkout email validation.
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
