@@ -16,6 +16,7 @@
 
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
+- Fix checkout email validation.
 - Fix toolbar arrow
 - Fix Page Selector closes on second button click
 
