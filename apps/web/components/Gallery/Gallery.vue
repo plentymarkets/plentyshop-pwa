@@ -57,9 +57,8 @@
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index)"
-          class="w-20 h-[88px] relative shrink-0 pb-1 border-b-4 snap-start cursor-pointer transition-colors flex-grow-0"
-          :class="[activeIndex === index ? 'border-primary-500' : 'border-transparent']"
-          @mouseover="onChangeIndex(index)"
+          class="w-20 relative shrink-0 pb-1  snap-start cursor-pointer transition-colors flex-grow-0"
+          @click="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
