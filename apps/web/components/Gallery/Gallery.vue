@@ -57,7 +57,7 @@
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index)"
-          class="w-20 relative shrink-0 pb-1  snap-start cursor-pointer transition-colors flex-grow-0"
+          class="w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors flex-grow-0"
           @click="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
