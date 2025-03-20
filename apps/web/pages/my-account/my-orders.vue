@@ -40,9 +40,9 @@
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.amount') }}</p>
               <span class="block typography-text-sm mb-2">{{ n(orderGetters.getPrice(order), 'currency') }}</span>
             </li>
-            <li v-if="orderGetters.getShippingDate(order)">
+            <li v-if="orderGetters.getShippingDate(order, locale)">
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</p>
-              <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order) }}</span>
+              <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order, locale) }}</span>
             </li>
             <li class="flex flex-wrap items-center mb-2">
               <p class="block typography-text-sm -mb-1.5 font-medium flex-[100%]">
@@ -102,7 +102,7 @@
               <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
               <td class="lg:p-4 p-2">{{ n(orderGetters.getPrice(order), 'currency') }}</td>
-              <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
+              <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
                 <UiButton
