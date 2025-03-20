@@ -15,22 +15,29 @@
     </header>
 
     <p class="mb-6">Loyalty page will be deleted</p>
-    <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate @submit.prevent="onSubmit">
-      <div class="actions grid gap-4 grid-cols-2">
-        <button
-          type="button"
-          data-testid="block-spacing-btn"
-          class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
-          @click="closeModal"
-        >
-          Cancel
-        </button>
+    <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
+      <div class="actions flex flex-col gap-4">
         <button
           type="submit"
-          data-testid="block-spacing-btn"
-          class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
+          data-testid="cancel-btn"
+          class="border border-editor-button w-full py-2 rounded-md text-editor-button"
+          @click="closeModal"
         >
-          Add page
+          Delete page
+        </button>
+        <button
+          type="button"
+          data-testid="another-action-btn"
+          class="border border-editor-button w-full py-2 rounded-md text-editor-button"
+        >
+         Delete only english translations
+        </button>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          class="border border-editor-button bg-editor-button w-full py-2 rounded-md text-white"
+        >
+          Keep Page
         </button>
       </div>
     </form>
@@ -38,7 +45,21 @@
 </template>
 
 <script setup lang="ts">
+import { SfIconClose } from '@storefront-ui/vue';
+
+const { unlinkModalOpen, togglePageModal } = useSiteConfiguration();
 
 
+
+
+
+
+
+
+
+const closeModal = () => {
+  togglePageModal(false);
+};
 
 </script>
+
