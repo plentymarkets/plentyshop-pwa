@@ -15,7 +15,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     drawerOpen: false,
     drawerExtraOpen: false,
     id: '',
-    parentCateogryId: '',
+    parentCategoryId: '',
     sitemap: '',
     linkList: '',
     name: '',
@@ -30,7 +30,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     drawerView: null,
     initialData: {
       id: '',
-      parentCateogryId: '',
+      parentCategoryId: '',
       sitemap: '',
       linkList: '',
       name: '',
@@ -48,7 +48,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
   const categorySettingsIsDirty = computed(() => {
     return (
       state.value.id !== state.value.initialData.id ||
-      state.value.parentCateogryId !== state.value.initialData.parentCateogryId ||
+      state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
       state.value.sitemap !== state.value.initialData.sitemap ||
       state.value.linkList !== state.value.initialData.linkList ||
       state.value.name !== state.value.initialData.name ||
@@ -63,96 +63,95 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     );
   });
 
- // Uncomment here on types to make use of the save 
 
-//   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
-//     state.value.loading = true;
+  const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
+    state.value.loading = true;
   
-//     const settings = [
-//       {
-//         key: 'id',
-//         value: state.value.id,
-//       },
-//       {
-//         key: 'parentCategoryId',
-//         value: state.value.parentCateogryId,
-//       },
-//       {
-//         key: 'sitemap',
-//         value: state.value.sitemap,
-//       },
-//       {
-//         key: 'linkList',
-//         value: state.value.linkList,
-//       },
-//       {
-//         key: 'name',
-//         value: state.value.name,
-//       },
-//       {
-//         key: 'canonicalLink',
-//         value: state.value.cannonicalLink,
-//       },
-//       {
-//         key: 'position',
-//         value: state.value.position,
-//       },
-//       {
-//         key: 'title',
-//         value: state.value.title,
-//       },
-//       {
-//         key: 'description',
-//         value: state.value.description,
-//       },
-//       {
-//         key: 'keywords',
-//         value: state.value.keywords,
-//       },
-//       {
-//         key: 'robots',
-//         value: state.value.robots,
-//       },
-//       {
-//         key: 'canonical',
-//         value: state.value.canonical,
-//       },
-//       {
-//         key: 'includeSitemap',
-//         value: state.value.includeSitemap,
-//       },
-//     ];
+    const settings = [
+      {
+        key: 'id',
+        value: state.value.id,
+      },
+      {
+        key: 'parentCategoryId',
+        value: state.value.parentCategoryId,
+      },
+      {
+        key: 'sitemap',
+        value: state.value.sitemap,
+      },
+      {
+        key: 'linkList',
+        value: state.value.linkList,
+      },
+      {
+        key: 'name',
+        value: state.value.name,
+      },
+      {
+        key: 'canonicalLink',
+        value: state.value.cannonicalLink,
+      },
+      {
+        key: 'position',
+        value: state.value.position,
+      },
+      {
+        key: 'title',
+        value: state.value.title,
+      },
+      {
+        key: 'description',
+        value: state.value.description,
+      },
+      {
+        key: 'keywords',
+        value: state.value.keywords,
+      },
+      {
+        key: 'robots',
+        value: state.value.robots,
+      },
+      {
+        key: 'canonical',
+        value: state.value.canonical,
+      },
+      {
+        key: 'includeSitemap',
+        value: state.value.includeSitemap,
+      },
+    ];
   
-//     const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings({ settings }));
+    const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings({ settings }));
   
-//     if (error.value) {
-//       state.value.loading = false;
-//       return false;
-//     }
+    if (error.value) {
+      state.value.loading = false;
+      return false;
+    }
   
-//     state.value.initialData = {
-//       id: state.value.id,
-//       parentCateogryId: state.value.parentCateogryId,
-//       sitemap: state.value.sitemap,
-//       linkList: state.value.linkList,
-//       name: state.value.name,
-//       cannonicalLink: state.value.cannonicalLink,
-//       position: state.value.position,
-//       title: state.value.title,
-//       description: state.value.description,
-//       keywords: state.value.keywords,
-//       robots: state.value.robots,
-//       canonical: state.value.canonical,
-//       includeSitemap: state.value.includeSitemap,
-//     };
+    state.value.initialData = {
+      id: state.value.id,
+      parentCategoryId: state.value.parentCategoryId,
+      sitemap: state.value.sitemap,
+      linkList: state.value.linkList,
+      name: state.value.name,
+      cannonicalLink: state.value.cannonicalLink,
+      position: state.value.position,
+      title: state.value.title,
+      description: state.value.description,
+      keywords: state.value.keywords,
+      robots: state.value.robots,
+      canonical: state.value.canonical,
+      includeSitemap: state.value.includeSitemap,
+    };
   
-//     state.value.loading = false;
-//     return true;
-//   };
+    state.value.loading = false;
+    return true;
+  };
 
   return {
     ...toRefs(state.value),
     categorySettingsIsDirty,
-   //  saveCategorySettings,
+    saveCategorySettings,
   };
 };
