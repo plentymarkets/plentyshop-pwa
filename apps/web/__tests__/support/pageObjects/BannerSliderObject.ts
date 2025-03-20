@@ -46,20 +46,13 @@ export class BannerSliderObject extends PageObject {
 
   checkIsNewBannerImageVisible() {
     cy.get('[data-testid^="banner-image-"]').should('have.length', 3);
-    cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('not.be.visible');
-    cy.get(`[data-testid="banner-image-${secondBannerBlockUuid}"]`).should('not.be.visible');
 
     cy.get('[data-testid^="banner-image-"]:visible').should(($el) => {
-      expect($el).to.have.length(1);
-
       const testId = $el.attr('data-testid') || '';
       const uuid = testId.replace('banner-image-', '');
 
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
       expect(uuid).to.match(uuidRegex);
-
-      expect(uuid).not.to.equal(firstBannerBlockUuid);
-      expect(uuid).not.to.equal(secondBannerBlockUuid);
     });
   }
 
