@@ -6,6 +6,7 @@ export const useToolbar = () => {
   const homepageCategoryId = useRuntimeConfig().public.homepageCategoryId;
   const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
+  // const {saveCategories, categoriesIsDirty} = useCategories();
   const { updatePageTemplate } = useUpdatePageTemplate();
 
   const save = async () => {
