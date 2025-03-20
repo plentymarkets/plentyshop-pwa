@@ -1,4 +1,4 @@
-import {
+import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
@@ -183,7 +183,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const setSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => {
-    console.log('settingsType: ', settingsType);
     state.value.settingsType = settingsType || null;
     state.value.settingsCategory = category;
   };
