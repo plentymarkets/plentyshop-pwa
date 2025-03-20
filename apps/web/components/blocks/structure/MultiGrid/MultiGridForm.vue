@@ -14,9 +14,11 @@ import type { ImageTextProps } from '~/components/blocks/Image/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
-const { findBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const multiGridStructure = computed(() => (findBlockByUuid(data.value, blockUuid.value) || {}) as MultiGridProps);
+const multiGridStructure = computed(
+  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as MultiGridProps,
+);
 
 const imageBlock = computed(
   () => (multiGridStructure.value.content.find((block) => block.name === 'Image') || {}) as ImageTextProps,

@@ -178,14 +178,14 @@ const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
-const { findBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
 setIndex(blockUuid.value, 0);
 
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
 
 const carouselStructure = computed(
-  () => (findBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
+  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
 const controls = computed(() => carouselStructure.value.configuration.controls);
 

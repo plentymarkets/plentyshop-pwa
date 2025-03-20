@@ -125,9 +125,9 @@ const settingsGroup = ref(true);
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const newsletterBlock = computed(
-  () => (findBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent,
+  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent,
 );
 </script>

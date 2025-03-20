@@ -459,12 +459,14 @@ import type { BannerFormProps, BannerProps } from './types';
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
-const { findBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<BannerFormProps>();
 
 const activeSlide = computed(() => activeSlideIndex.value[props.uuid || blockUuid.value]);
-const banner = computed(() => (findBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as BannerProps);
+const banner = computed(
+  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as BannerProps,
+);
 
 const imagesOpen = ref(true);
 const textOpen = ref(true);

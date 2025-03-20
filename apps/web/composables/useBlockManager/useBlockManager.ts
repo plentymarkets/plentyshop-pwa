@@ -128,7 +128,7 @@ export const useBlockManager = () => {
     }
   };
 
-  const findBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
+  const findOrDeleteBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
     blocks: Block[],
     targetUuid: string,
     deleteBlock = false,
@@ -141,7 +141,7 @@ export const useBlockManager = () => {
         return block;
       }
       if (Array.isArray(block.content)) {
-        const result = findBlockByUuid(block.content, targetUuid, deleteBlock);
+        const result = findOrDeleteBlockByUuid(block.content, targetUuid, deleteBlock);
         if (result) return result;
       }
     }
@@ -158,14 +158,14 @@ export const useBlockManager = () => {
   const handleEdit = (uuid: string) => {
     if (data.value) {
       currentBlockUuid.value = uuid;
-      currentBlock.value = findBlockByUuid(data.value, uuid);
+      currentBlock.value = findOrDeleteBlockByUuid(data.value, uuid);
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
     }
   };
 
   const deleteBlock = (uuid: string) => {
     if (data.value && uuid !== null) {
-      findBlockByUuid(data.value, uuid, true);
+      findOrDeleteBlockByUuid(data.value, uuid, true);
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
 
       const { closeDrawer } = useSiteConfiguration();
@@ -195,7 +195,7 @@ export const useBlockManager = () => {
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
-    findBlockByUuid,
+    findOrDeleteBlockByUuid,
     modules,
   };
 };

@@ -132,12 +132,12 @@ import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<ImageFormProps>();
 
 const uiImageTextBlock = computed(
-  () => (findBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
+  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
 );
 
 const imageGroupOpen = ref(false);

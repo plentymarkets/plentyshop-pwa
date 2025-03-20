@@ -8,11 +8,11 @@ export const useCarousel: UseCarouselReturn = () => {
     activeSlideIndex: {} as ActiveSlideIndex,
   }));
 
-  const { findBlockByUuid } = useBlockManager();
+  const { findOrDeleteBlockByUuid } = useBlockManager();
   const { data } = useCategoryTemplate();
 
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
-    const carouselBlock = findBlockByUuid(data.value, blockUuid);
+    const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
     if (carouselBlock) {
       carouselBlock.content = [...newBannerItems];

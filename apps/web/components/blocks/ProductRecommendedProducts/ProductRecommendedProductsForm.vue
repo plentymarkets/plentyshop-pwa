@@ -123,11 +123,11 @@ import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const recommendedBlock = computed(
   () =>
-    (findBlockByUuid(data.value, blockUuid.value)?.content || {
+    (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
       text: {
         pretitle: '',
         title: '',
