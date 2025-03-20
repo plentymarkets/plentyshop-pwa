@@ -7,7 +7,7 @@
       <UiBrandLogo />
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">
         <UiLanguageEditor />
-        <UiPageSelector />
+        <UiPageSelector v-if="runtimeConfig.public.isDev" />
       </div>
       <div class="ml-auto flex space-x-2">
         <button
@@ -75,5 +75,5 @@ const toggleEdit = () => {
   }
 };
 
-const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'z-10' : 'z-20'));
+const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'lg:z-20 md:z-10' : 'md:z-20'));
 </script>
