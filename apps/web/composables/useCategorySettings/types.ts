@@ -6,6 +6,13 @@ export interface useCategoryConfigurationState {
     loading: boolean;
     drawerOpen: boolean;
     drawerExtraOpen: boolean;
+    id: string;
+    parentCateogryId: string;
+    sitemap: string;
+    linkList: string;
+    name: string;
+    cannonicalLink: string;
+    position: string;
     title: string;
     description: string;
     keywords: string;  
@@ -13,7 +20,15 @@ export interface useCategoryConfigurationState {
     canonical: string;
     includeSitemap: boolean;
     drawerView: DrawerView;
+
     initialData: {
+      id: string;
+      parentCateogryId: string;
+      sitemap: string;
+      linkList: string;
+      name: string;
+      cannonicalLink: string;
+      position: string;
       title: string;
       description: string;
       keywords: string;
@@ -36,6 +51,13 @@ export interface useCategoryConfigurationState {
     includeSitemap: Readonly<Ref<useCategoryConfigurationState['includeSitemap']>>;
     drawerView: Readonly<Ref<useCategoryConfigurationState['drawerView']>>;
     categorySettingsIsDirty: ComputedRef<boolean>;
+    id: Readonly<Ref<useCategoryConfigurationState['id']>>;
+    parentCateogryId: Readonly<Ref<useCategoryConfigurationState['parentCateogryId']>>;
+    sitemap: Readonly<Ref<useCategoryConfigurationState['sitemap']>>;
+    linkList: Readonly<Ref<useCategoryConfigurationState['linkList']>>;
+    name: Readonly<Ref<useCategoryConfigurationState['name']>>;
+    cannonicalLink: Readonly<Ref<useCategoryConfigurationState['cannonicalLink']>>;
+    position: Readonly<Ref<useCategoryConfigurationState['position']>>;
   //   saveCattegorySettings: () => Promise<boolean>;
   }
   
