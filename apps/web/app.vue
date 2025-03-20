@@ -59,7 +59,7 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
-const { drawerOpen, drawerExtraOpen, currentFont, placement } = useSiteConfiguration();
+const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { disableActions } = useEditor();
 
 const isPreview = ref(false);

@@ -62,14 +62,13 @@ const { isDrawerOpen } = useDrawerState();
 
 const { loading } = useHomepage();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
-const { seoSettingsIsDirty, loading: seoLoading } = useSeoConfiguration();
+const { loading: seoLoading } = useSeoConfiguration();
 
 const { save } = useToolbar();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
 const isTouched = computed(() => 
   settingsIsDirty.value || 
-  seoSettingsIsDirty.value || 
   (!isLocalTemplate.value && isEditingEnabled.value)
 );
 

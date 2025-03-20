@@ -30,6 +30,8 @@ export const useToolbar = () => {
       await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
     }
 
+    
+
     if (messageList.length > 0) {
       send({
         message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
