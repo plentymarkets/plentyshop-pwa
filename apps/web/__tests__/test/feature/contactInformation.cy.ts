@@ -76,7 +76,18 @@ describe('Contact Information', () => {
 
     checkout.goToCheckout().goToGuestCheckout();
 
-    checkout.contactInformationForm.type('invalid-email@plentyone.com').blur();
+    checkout.contactInformationForm.type('valid-email@plentyone.com').blur();
+    cy.get('#customerEmailError').should('not.exist');
+  });
+
+  it('should validate email input with dot "."', () => {
+    homePage.goToCategory();
+    productListPage.addToCart();
+    cart.openCart();
+
+    checkout.goToCheckout().goToGuestCheckout();
+
+    checkout.contactInformationForm.type('valid.email@plentyone.com').blur();
     cy.get('#customerEmailError').should('not.exist');
   });
 
