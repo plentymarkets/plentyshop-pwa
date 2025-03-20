@@ -18,6 +18,8 @@
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
 - Fix checkout email validation.
+- Fix toolbar arrow
+- Fix Page Selector closes on second button click
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -26,7 +28,6 @@
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
 - Added the legal disclosure to the cookie bar description.x
-- Fix toolbar arrow
 
 ### 👷 Changed
 
