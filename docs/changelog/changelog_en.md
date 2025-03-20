@@ -14,6 +14,7 @@
 
 ### 🩹 Fixed
 
+- Fix displayment of large number of categories in navigation bar.
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
 - Fix checkout email validation.
