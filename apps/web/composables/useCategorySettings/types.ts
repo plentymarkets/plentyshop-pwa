@@ -7,7 +7,7 @@ export interface useCategoryConfigurationState {
     drawerOpen: boolean;
     drawerExtraOpen: boolean;
     id: string;
-  parentCategoryId: string;
+    parentCategoryId: string;
     sitemap: string;
     linkList: string;
     name: string;
@@ -52,7 +52,7 @@ export interface useCategoryConfigurationState {
     drawerView: Readonly<Ref<useCategoryConfigurationState['drawerView']>>;
     categorySettingsIsDirty: ComputedRef<boolean>;
     id: Readonly<Ref<useCategoryConfigurationState['id']>>;
-    parentCateogryId: Readonly<Ref<useCategoryConfigurationState['parentCategoryId']>>;
+    parentCategoryId: Readonly<Ref<useCategoryConfigurationState['parentCategoryId']>>;
     sitemap: Readonly<Ref<useCategoryConfigurationState['sitemap']>>;
     linkList: Readonly<Ref<useCategoryConfigurationState['linkList']>>;
     name: Readonly<Ref<useCategoryConfigurationState['name']>>;
