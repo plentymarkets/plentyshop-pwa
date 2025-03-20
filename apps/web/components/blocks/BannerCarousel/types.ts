@@ -56,7 +56,7 @@ export type BannerProps = {
     };
   };
   index: number;
-  slideIndex: number;
+  lazyLoading: 'lazy' | 'eager';
   meta: {
     uuid: string;
   };

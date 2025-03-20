@@ -33,7 +33,11 @@
               </div>
               <hr />
               <div class="p-2">
-                <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
+                <div
+                  v-for="(slide, index) in slides"
+                  :key="index"
+                  class="flex items-center justify-between p-2 rounded"
+                >
                   <div class="flex items-center">
                     <SfIconArrowUpward
                       v-if="index !== 0"
@@ -50,7 +54,7 @@
 
                     <SfIconArrowDownward
                       v-if="index + 1 !== slides.length"
-                      :data-testid="`actions-move-slide-down-${index}`"
+                      :data-testid="`actions-move-slide-down-${slide.meta.uuid}`"
                       class="cursor-pointer text-neutral-500 mr-2"
                       size="sm"
                       @click.stop="moveSlideDown(index)"
@@ -238,8 +242,8 @@ const addSlide = async () => {
     meta: {
       uuid: uuid(),
     },
+    lazyLoading: 'eager',
     index: slides.value.length,
-    slideIndex: slides.value.length,
   };
 
   slides.value = [...slides.value, newSlide] as BannerProps[];
