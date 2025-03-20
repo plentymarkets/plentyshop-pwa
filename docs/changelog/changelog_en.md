@@ -23,7 +23,8 @@
 
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
-- Added the legal disclosure to the cookie bar description.
+- Added the legal disclosure to the cookie bar description.x
+- Fix toolbar arrow
 
 ### 👷 Changed
 
