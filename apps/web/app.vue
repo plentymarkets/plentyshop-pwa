@@ -65,7 +65,9 @@ const showConfigurationDrawer = config.showConfigurationDrawer;
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-  isPreview.value = isMobile.value ? false : isPreview.value;
+  if (pwaCookie.value) {
+    isPreview.value = isMobile.value ? false : true;
+  }
 });
 
 await setInitialDataSSR();
@@ -87,6 +89,9 @@ watch(
 );
 
 watch(isMobile, (newValue) => {
-  isPreview.value = newValue ? false : true;
+  const pwaCookie = useCookie('pwa');
+  if (pwaCookie.value) {
+    isPreview.value = newValue ? false : true;
+  }
 });
 </script>
