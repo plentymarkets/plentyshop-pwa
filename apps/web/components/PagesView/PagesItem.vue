@@ -7,7 +7,10 @@
       <span v-if="item.children && item.children.length > 0">
         <SfIconExpandMore />
       </span>
-      <router-link :to="item.path" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+      <router-link
+        :to="`${localePrefix}${item.path}`"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+      >
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
@@ -23,9 +26,13 @@
 import type { MenuItemType } from '~/components/PagesView/types';
 import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
 
+const { locale } = useI18n();
+const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
+
 const { item } = defineProps<{
   item: MenuItemType;
 }>();
+
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
 const route = useRoute();
