@@ -7,6 +7,8 @@ export const useToolbar = () => {
   const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
   const { updatePageTemplate } = useUpdatePageTemplate();
+  const {  categorySettingsIsDirty, saveCategorySettings } = useCategorySettings();
+
 
   const save = async () => {
     const messageList: string[] = [];
@@ -28,6 +30,10 @@ export const useToolbar = () => {
 
     if (settingsIsDirty.value) {
       await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
+    }
+    if (categorySettingsIsDirty.value) {
+      await handleSave(saveCategorySettings, $i18n.t('errorMessages.editor.save.settings'));
+
     }
 
     if (messageList.length > 0) {
