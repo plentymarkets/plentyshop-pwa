@@ -71,9 +71,9 @@
       "label": "Marketing"
     }
   },
-  "PreviewModeBar": {
-    "label": "Steuerung des Vorschaumodus",
-    "pwa": "plentyShop PWA Vorschau beenden"
+  "previewModeBar": {
+    "label": "Editor verlassen und zum Liveshop wechseln",
+    "pwa": "Editor verlassen und zum Liveshop wechseln"
   },
   "account": {
     "accountSettings": {

@@ -71,9 +71,9 @@
       "label": "Marketing"
     }
   },
-  "PreviewModeBar": {
-    "label": "Preview mode control",
-    "pwa": "Deactivate plentyShop PWA preview"
+  "previewModeBar": {
+    "label": "Exit editor and visit live shop",
+    "pwa": "Exit editor and visit live shop"
   },
   "account": {
     "accountSettings": {

@@ -6,6 +6,20 @@
         class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
         <div class="w-full flex flex-col">
+          <div v-if="hasUnsavedChanges()" class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4">
+            <SfIconWarning class="mt-4 mr-2 text-warning-700 shrink-0" />
+            <span class="py-2 mr-2">
+              <p>
+                You have unsaved changes.
+              </p>
+              <p>
+                Exiting the editor will discard them.
+              </p>
+            </span>
+          </div>
+          <UiButton v-if="hasUnsavedChanges()" variant="secondary" class="w-full my-2" @click="saveAndExit(0)">
+            Save changes and exit
+          </UiButton>
           <UiButton
             v-for="(cookieName, index) in foundCookies"
             :key="index"
@@ -16,7 +30,7 @@
             aria-label="button"
             @click="removeLookupCookie(index)"
           >
-            {{ $t(`PreviewModeBar.${cookieName}`) }}
+            {{ $t(`previewModeBar.${cookieName}`) }}
           </UiButton>
         </div>
       </div>
@@ -24,18 +38,27 @@
       <UiButton
         variant="secondary"
         class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-16 right-auto xl:right-16 xl:left-auto bg-white !py-1"
-        :aria-label="$t('PreviewModeBar.label')"
+        :aria-label="$t('previewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
-        <SfIconVisibility class="my-1" />
+        <NuxtImg width="32px" height="32px" :src='storeBlack' />
       </UiButton>
     </div>
   </client-only>
 </template>
 
 <script setup lang="ts">
-import { SfIconVisibility } from '@storefront-ui/vue';
+import storeBlack from '/assets/icons/paths/store-black.svg';
+import { SfIconWarning } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
+
+const { isEditingEnabled } = useEditor();
+const { settingsIsDirty } = useSiteConfiguration();
+const { save } = useToolbar();
+
+const hasUnsavedChanges = () => {
+  return !isEditingEnabled.value && !settingsIsDirty.value;
+};
 
 const bannerIsHidden = ref(true);
 const foundCookies = defaults.PREVIEW_COOKIES.filter((cookie) => !!useCookie(cookie).value);
@@ -50,4 +73,9 @@ const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
   foundCookies.splice(index, 1);
   window.location.reload();
 };
+
+const saveAndExit = (index: number): void => {
+  save();
+  removeLookupCookie(index);
+}
 </script>
