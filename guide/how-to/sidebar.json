@@ -4,6 +4,10 @@
         "collapsed": true,
         "items": [
             {
+                "text": "Product Cross-Selling",
+                "link": "/guide/how-to/cross-selling.md"
+            },
+            {
                 "text": "Middleware",
                 "link": "/guide/how-to/middleware.md"
             },
