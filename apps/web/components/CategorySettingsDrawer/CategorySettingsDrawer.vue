@@ -12,12 +12,13 @@
       { 'max-w-[370px]': placement === 'left' || placement === 'right' },
     ]"
   >
-    <div v-if="settingsType === 'general-settings'" class="flex justify-between items-center">
+    <header v-if="settingsType === 'general-settings'" class="flex justify-between items-center">
       <h3 class="font-bold typography-headline-3">
         {{ settingsType === 'general-settings' ? 'General Settings' : 'SEO Settings' }}
       </h3>
       <SfIconChevronLeft class="cursor-pointer" @click="closeDrawer" />
-    </div>
+    </header>
+    <PagesGeneralSettings v-if="settingsType === 'general-settings'" class="mt-2" />
   </SfDrawer>
 </template>
 

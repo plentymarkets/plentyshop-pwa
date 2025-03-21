@@ -1,13 +1,13 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
-    <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">
-        General Settings
-      </div>
-      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
-        <SfIconClose />
-      </button>
-    </header>
+<!--    <header class="flex items-center justify-between px-4 py-5 border-b">-->
+<!--      <div class="flex items-center text-xl font-bold">-->
+<!--        General Settings-->
+<!--      </div>-->
+<!--      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">-->
+<!--        <SfIconClose />-->
+<!--      </button>-->
+<!--    </header>-->
 
     <form data-testid="basic-settings-form" class="w-full absolute bg-white">
       <UiAccordionItem
