@@ -8,8 +8,8 @@
         filter: banner.image?.brightness ? 'brightness(' + (banner.image?.brightness ?? 1) + ')' : '',
         height: getImageHeight(),
       }"
-      :loading="props.slideIndex > 0 ? 'lazy' : 'eager'"
-      :data-testid="'banner-image-' + props.slideIndex"
+      :loading="props.lazyLoading"
+      :data-testid="'banner-image-' + meta.uuid"
     />
 
     <div
@@ -21,19 +21,19 @@
         alignItems: getContentPosition(banner.text.align ?? ''),
         justifyContent: getContentPosition(banner.text.justify ?? ''),
       }"
-      :data-testid="'banner-overlay-' + props.slideIndex"
+      :data-testid="'banner-overlay-' + meta.uuid"
     >
       <div
         :class="bannerContentClass"
         :style="{
           backgroundColor: banner.text.background ? hexToRgba(banner.text.bgcolor, banner.text.bgopacity) : '',
         }"
-        :data-testid="'banner-content-' + props.slideIndex"
+        :data-testid="'banner-content-' + meta.uuid"
       >
         <div
           v-if="banner.text.pretitle"
           class="typography-headline-6 font-bold tracking-widest"
-          :data-testid="'banner-pretitle-' + props.slideIndex"
+          :data-testid="'banner-pretitle-' + meta.uuid"
           v-html="banner.text.pretitle"
         />
 
@@ -41,7 +41,7 @@
           <h1
             v-if="banner.text.title"
             class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-            :data-testid="'banner-title-' + props.slideIndex"
+            :data-testid="'banner-title-' + meta.uuid"
             v-html="banner.text.title"
           />
         </template>
@@ -50,21 +50,21 @@
           <h2
             v-if="banner.text.title"
             class="text-2xl font-semibold mb-4"
-            :data-testid="'banner-title-' + props.slideIndex"
+            :data-testid="'banner-title-' + meta.uuid"
             v-html="banner.text.title"
           />
         </template>
         <div
           v-if="banner.text.subtitle"
           class="typography-headline-6 font-bold tracking-widest mb-4"
-          :data-testid="'banner-subtitle-' + props.slideIndex"
+          :data-testid="'banner-subtitle-' + meta.uuid"
           v-html="banner.text.subtitle"
         />
 
         <div
           v-if="banner.text.htmlDescription"
           class="typography-text-sm md:typography-text-lg font-normal"
-          :data-testid="'banner-description-' + props.slideIndex"
+          :data-testid="'banner-description-' + meta.uuid"
           v-html="banner.text.htmlDescription"
         />
 
@@ -75,7 +75,7 @@
           :to="localePath(banner.button.link ?? '')"
           :variant="banner.button.variant ?? 'primary'"
           size="lg"
-          :data-testid="'banner-button-' + props.slideIndex"
+          :data-testid="'banner-button-' + meta.uuid"
         >
           {{ banner.button.label }}
         </UiButton>

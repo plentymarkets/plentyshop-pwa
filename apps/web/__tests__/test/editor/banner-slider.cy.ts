@@ -1,4 +1,8 @@
-import { BannerSliderObject } from '../../support/pageObjects/BannerSliderObject';
+import {
+  BannerSliderObject,
+  firstBannerBlockUuid,
+  secondBannerBlockUuid,
+} from '../../support/pageObjects/BannerSliderObject';
 import { paths } from '../../../utils/paths';
 
 describe('Banner Slider Block Form', () => {
@@ -23,22 +27,22 @@ describe('Banner Slider Block Form', () => {
 
   describe('Slide Settings', () => {
     it('should display the slide whose settings are open', () => {
-      bannerSlider.checkIsBannerImageVisible(0);
+      bannerSlider.checkIsBannerImageVisible(firstBannerBlockUuid);
       bannerSlider.checkSlideSettings(0);
       bannerSlider.openSlideOneSettings();
-      bannerSlider.checkIsBannerImageVisible(1);
+      bannerSlider.checkIsBannerImageVisible(secondBannerBlockUuid);
       bannerSlider.checkSlideSettings(1);
     });
 
     it('should add a new slide via quick add', () => {
       bannerSlider.quickAddSlide();
-      bannerSlider.checkIsBannerImageVisible(2);
+      bannerSlider.checkIsNewBannerImageVisible();
     });
 
     it('should add a new slide via the actions menu', () => {
       bannerSlider.openSlideActions();
       bannerSlider.addSlide();
-      bannerSlider.checkIsBannerImageVisible(2);
+      bannerSlider.checkIsNewBannerImageVisible();
     });
 
     it('should remove a slide', () => {
@@ -77,7 +81,7 @@ describe('Banner Slider Block Form', () => {
 
   describe('Image Settings', () => {
     it('should open the image settings', () => {
-      cy.get('[data-testid="banner-image-0"]').should('be.visible');
+      cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('be.visible');
       bannerSlider.openImageGroup();
     });
 

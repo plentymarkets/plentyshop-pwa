@@ -33,7 +33,11 @@
               </div>
               <hr />
               <div class="p-2">
-                <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
+                <div
+                  v-for="(slide, index) in slides"
+                  :key="index"
+                  class="flex items-center justify-between p-2 rounded"
+                >
                   <div class="flex items-center">
                     <SfIconArrowUpward
                       v-if="index !== 0"
@@ -238,8 +242,8 @@ const addSlide = async () => {
     meta: {
       uuid: uuid(),
     },
+    lazyLoading: 'eager',
     index: slides.value.length,
-    slideIndex: slides.value.length,
   };
 
   slides.value = [...slides.value, newSlide] as BannerProps[];
