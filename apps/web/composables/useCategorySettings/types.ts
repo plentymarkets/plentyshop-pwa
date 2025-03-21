@@ -12,7 +12,7 @@ export interface useCategoryConfigurationState {
     linkList: string;
     name: string;
     canonicalLink: string;
-    position: string;
+    position: number;
     title: string;
     description: string;
     keywords: string;  
@@ -28,7 +28,7 @@ export interface useCategoryConfigurationState {
       linkList: string;
       name: string;
       canonicalLink: string;
-      position: string;
+      position: number;
       title: string;
       description: string;
       keywords: string;

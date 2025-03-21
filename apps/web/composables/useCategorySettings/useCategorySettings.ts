@@ -15,12 +15,12 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     drawerOpen: false,
     drawerExtraOpen: false,
     id: 1,
-    parentCategoryId: null,
+    parentCategoryId: 2,
     sitemap: '',
     linkList: '',
     name: '',
     canonicalLink: '',
-    position: '',
+    position: 1,
     title: '',
     description: '',
     keywords: '',
@@ -30,12 +30,12 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     drawerView: null,
     initialData: {
       id: 1,
-      parentCategoryId: null,
+      parentCategoryId: 2,
       sitemap: '',
       linkList: '',
       name: '',
       canonicalLink: '',
-      position: '',
+      position: 1,
       title: '',
       description: '',
       keywords: '',
@@ -63,72 +63,31 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     );
   });
 
-
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
-  
-    const settings = [
-      {
-        key: 'id',
-        value: state.value.id,
-      },
-      {
-        key: 'parentCategoryId',
-        value: state.value.parentCategoryId,
-      },
-      {
-        key: 'sitemap',
-        value: state.value.sitemap,
-      },
-      {
-        key: 'linkList',
-        value: state.value.linkList,
-      },
-      {
-        key: 'name',
-        value: state.value.name,
-      },
-      {
-        key: 'canonicalLink',
-        value: state.value.canonicalLink,
-      },
-      {
-        key: 'position',
-        value: state.value.position,
-      },
-      {
-        key: 'title',
-        value: state.value.title,
-      },
-      {
-        key: 'description',
-        value: state.value.description,
-      },
-      {
-        key: 'keywords',
-        value: state.value.keywords,
-      },
-      {
-        key: 'robots',
-        value: state.value.robots,
-      },
-      {
-        key: 'canonical',
-        value: state.value.canonical,
-      },
-      {
-        key: 'includeSitemap',
-        value: state.value.includeSitemap,
-      },
-    ];
-  
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings({ settings }));
-  
+
+    const settings = {
+      id: state.value.id,
+      parentCategoryId: state.value.parentCategoryId,
+      sitemap: state.value.sitemap,
+      linklist: state.value.linkList,
+      name: state.value.name,
+      canonicalLink: state.value.canonicalLink,
+      position: state.value.position,
+      title: state.value.title,
+      description: state.value.description,
+      keywords: state.value.keywords,
+      robots: state.value.robots,
+      canonical: state.value.canonical,
+      includeSitemap: state.value.includeSitemap,
+    };
+
+    const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
     if (error.value) {
       state.value.loading = false;
       return false;
     }
-  
+
     state.value.initialData = {
       id: state.value.id,
       parentCategoryId: state.value.parentCategoryId,
@@ -144,7 +103,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       canonical: state.value.canonical,
       includeSitemap: state.value.includeSitemap,
     };
-  
+
     state.value.loading = false;
     return true;
   };
