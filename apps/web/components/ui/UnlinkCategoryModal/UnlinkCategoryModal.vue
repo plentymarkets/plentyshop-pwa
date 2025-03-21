@@ -18,10 +18,9 @@
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
         <button
-          type="submit"
-          data-testid="cancel-btn"
-          class="border border-editor-button w-full py-2 rounded-md text-editor-button"
-          @click="closeModal"
+          type="button"
+          data-testid="delete-btn"
+          class="border border-editor-button bg-editor-button w-full py-2 rounded-md text-white"
         >
           Delete page
         </button>
@@ -33,9 +32,10 @@
          Delete only english translations
         </button>
         <button
-          type="button"
-          data-testid="delete-btn"
-          class="border border-editor-button bg-editor-button w-full py-2 rounded-md text-white"
+          type="submit"
+          data-testid="cancel-btn"
+          class="border border-editor-button w-full py-2 rounded-md text-editor-button"
+          @click="closeModal"
         >
           Keep Page
         </button>
@@ -48,15 +48,6 @@
 import { SfIconClose } from '@storefront-ui/vue';
 
 const { unlinkModalOpen, togglePageModal } = useSiteConfiguration();
-
-
-
-
-
-
-
-
-
 const closeModal = () => {
   togglePageModal(false);
 };
