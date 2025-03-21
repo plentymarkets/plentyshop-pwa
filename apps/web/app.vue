@@ -52,6 +52,9 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
+const viewport = useViewport();
+const isMobile = computed(() => viewport.isLessThan('md'));
+
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { disableActions } = useEditor();
 
@@ -62,6 +65,7 @@ const showConfigurationDrawer = config.showConfigurationDrawer;
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+  isPreview.value = isMobile.value ? false : isPreview.value;
 });
 
 await setInitialDataSSR();
@@ -81,4 +85,8 @@ watch(
     await getCategoryTree();
   },
 );
+
+watch(isMobile, (newValue) => {
+  isPreview.value = newValue ? false : true;
+});
 </script>
