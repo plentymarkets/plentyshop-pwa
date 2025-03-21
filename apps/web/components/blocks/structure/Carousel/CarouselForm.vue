@@ -54,7 +54,7 @@
 
                     <SfIconArrowDownward
                       v-if="index + 1 !== slides.length"
-                      :data-testid="`actions-move-slide-down-${slide.meta.uuid}`"
+                      :data-testid="`actions-move-slide-down-${index}`"
                       class="cursor-pointer text-neutral-500 mr-2"
                       size="sm"
                       @click.stop="moveSlideDown(index)"
