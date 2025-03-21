@@ -39,7 +39,7 @@ const {
 } = useBlockManager();
 
 const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
-
+const {  categorySettingsIsDirty } = useCategorySettings();
 const { data, fetchPageTemplate, dataIsEmpty, initialBlocks } = useHomepage();
 
 const { isEditingEnabled, disableActions } = useEditor();
@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
 });
 
 const hasUnsavedChanges = () => {
-  return !isEditingEnabled.value && !settingsIsDirty.value;
+  return !isEditingEnabled.value && !settingsIsDirty.value && !categorySettingsIsDirty.value;
 };
 
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
