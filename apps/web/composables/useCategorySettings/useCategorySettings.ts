@@ -14,12 +14,12 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     loading: false,
     drawerOpen: false,
     drawerExtraOpen: false,
-    id: '',
-    parentCategoryId: '',
+    id: 1,
+    parentCategoryId: null,
     sitemap: '',
     linkList: '',
     name: '',
-    cannonicalLink: '',
+    canonicalLink: '',
     position: '',
     title: '',
     description: '',
@@ -29,12 +29,12 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     includeSitemap: false,
     drawerView: null,
     initialData: {
-      id: '',
-      parentCategoryId: '',
+      id: 1,
+      parentCategoryId: null,
       sitemap: '',
       linkList: '',
       name: '',
-      cannonicalLink: '',
+      canonicalLink: '',
       position: '',
       title: '',
       description: '',
@@ -52,7 +52,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       state.value.sitemap !== state.value.initialData.sitemap ||
       state.value.linkList !== state.value.initialData.linkList ||
       state.value.name !== state.value.initialData.name ||
-      state.value.cannonicalLink !== state.value.initialData.cannonicalLink ||
+      state.value.canonicalLink !== state.value.initialData.canonicalLink ||
       state.value.position !== state.value.initialData.position ||
       state.value.title !== state.value.initialData.title ||
       state.value.description !== state.value.initialData.description ||
@@ -90,7 +90,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       },
       {
         key: 'canonicalLink',
-        value: state.value.cannonicalLink,
+        value: state.value.canonicalLink,
       },
       {
         key: 'position',
@@ -135,7 +135,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       sitemap: state.value.sitemap,
       linkList: state.value.linkList,
       name: state.value.name,
-      cannonicalLink: state.value.cannonicalLink,
+      canonicalLink: state.value.canonicalLink,
       position: state.value.position,
       title: state.value.title,
       description: state.value.description,

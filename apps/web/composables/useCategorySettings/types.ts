@@ -6,12 +6,12 @@ export interface useCategoryConfigurationState {
     loading: boolean;
     drawerOpen: boolean;
     drawerExtraOpen: boolean;
-    id: string;
-    parentCategoryId: string;
+    id: number;
+    parentCategoryId: number | null;
     sitemap: string;
     linkList: string;
     name: string;
-    cannonicalLink: string;
+    canonicalLink: string;
     position: string;
     title: string;
     description: string;
@@ -22,12 +22,12 @@ export interface useCategoryConfigurationState {
     drawerView: DrawerView;
 
     initialData: {
-      id: string;
-      parentCategoryId: string;
+      id: number;
+      parentCategoryId: number | null;
       sitemap: string;
       linkList: string;
       name: string;
-      cannonicalLink: string;
+      canonicalLink: string;
       position: string;
       title: string;
       description: string;
@@ -56,7 +56,7 @@ export interface useCategoryConfigurationState {
     sitemap: Readonly<Ref<useCategoryConfigurationState['sitemap']>>;
     linkList: Readonly<Ref<useCategoryConfigurationState['linkList']>>;
     name: Readonly<Ref<useCategoryConfigurationState['name']>>;
-    cannonicalLink: Readonly<Ref<useCategoryConfigurationState['cannonicalLink']>>;
+    canonicalLink: Readonly<Ref<useCategoryConfigurationState['canonicalLink']>>;
     position: Readonly<Ref<useCategoryConfigurationState['position']>>;
    // saveCategorySettings: () => Promise<boolean>;
   }
