@@ -112,14 +112,12 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
 const displayInHeader = ref(true);
 const loginNecessary = ref(true);
-const { closeDrawer } = useSiteConfiguration();
-
 
 const data = {
   id: 21,
