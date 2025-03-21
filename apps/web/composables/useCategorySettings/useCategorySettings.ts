@@ -66,21 +66,38 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
 
-    const settings = {
-      id: state.value.id,
-      parentCategoryId: state.value.parentCategoryId,
-      sitemap: state.value.sitemap,
-      linklist: state.value.linkList,
-      name: state.value.name,
-      canonicalLink: state.value.canonicalLink,
-      position: state.value.position,
-      title: state.value.title,
-      description: state.value.description,
-      keywords: state.value.keywords,
-      robots: state.value.robots,
-      canonical: state.value.canonical,
-      includeSitemap: state.value.includeSitemap,
+    // const settings = {
+    //   id: state.value.id,
+    //   parentCategoryId: state.value.parentCategoryId,
+    //   sitemap: state.value.sitemap,
+    //   linklist: state.value.linkList,
+    //   name: state.value.name,
+    //   canonicalLink: state.value.canonicalLink,
+    //   position: state.value.position,
+    //   title: state.value.title,
+    //   description: state.value.description,
+    //   keywords: state.value.keywords,
+    //   robots: state.value.robots,
+    //   canonical: state.value.canonical,
+    //   includeSitemap: state.value.includeSitemap,
+    // };
+
+        const settings = {
+          id: 23423432432,
+          parentCategoryId: 16,
+          linkList: 'N',
+          name: 'MEGA NEW',
+          canonicalLink: 'MEGA NEW',
+          position: 3,
+          metaTitle: 'MEGA NEW',
+          metaDescription: 'MEGA NEW',
+          metaKeywords: 'MEGA NEW',
+          metaRobots: '',
+          sitemap: 'N',
     };
+
+
+    
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
     if (error.value) {
@@ -88,21 +105,23 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       return false;
     }
 
-    state.value.initialData = {
-      id: state.value.id,
-      parentCategoryId: state.value.parentCategoryId,
-      sitemap: state.value.sitemap,
-      linkList: state.value.linkList,
-      name: state.value.name,
-      canonicalLink: state.value.canonicalLink,
-      position: state.value.position,
-      title: state.value.title,
-      description: state.value.description,
-      keywords: state.value.keywords,
-      robots: state.value.robots,
-      canonical: state.value.canonical,
-      includeSitemap: state.value.includeSitemap,
-    };
+    // state.value.initialData = {
+    //   id: state.value.id,
+    //   parentCategoryId: state.value.parentCategoryId,
+    //   sitemap: state.value.sitemap,
+    //   linkList: state.value.linkList,
+    //   name: state.value.name,
+    //   canonicalLink: state.value.canonicalLink,
+    //   position: state.value.position,
+    //   title: state.value.title,
+    //   description: state.value.description,
+    //   keywords: state.value.keywords,
+    //   robots: state.value.robots,
+    //   canonical: state.value.canonical,
+    //   includeSitemap: state.value.includeSitemap,
+    // };
+
+    
 
     state.value.loading = false;
     return true;
