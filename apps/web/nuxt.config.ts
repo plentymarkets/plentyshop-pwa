@@ -21,6 +21,13 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
+  vite: {
+    server: {
+      fs: {
+        allow: ['../../..'], // relative to the current nuxt.config.ts
+      },
+    },
+  },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
@@ -43,6 +50,7 @@ export default defineNuxtConfig({
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
+      isDev: process.env.NODE_ENV === 'development',
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true',
