@@ -37,11 +37,11 @@ const getComponent = (name: string) => {
 };
 
 const blockTypeNames: Record<string, string> = {
-  BannerCarousel: 'Image Banner',
+  Carousel: 'Image Banner',
   NewsletterSubscribe: 'Newsletter',
   ProductRecommendedProducts: 'Product Gallery',
   TextCard: 'Rich Text',
-  ImageText: 'Image + Text',
+  MultiGrid: 'Image + Text',
 };
 
 const getBlockTypeName = (blockType: string) => {

@@ -25,7 +25,7 @@
     />
 
     <div
-      class="bg-white w-full"
+      class="bg-white w-full relative"
       :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
@@ -51,6 +51,7 @@ const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
+const { getBlocksLists } = useBlockManager();
 
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { disableActions } = useEditor();
@@ -60,6 +61,7 @@ const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
 
 onMounted(() => {
+  getBlocksLists();
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 });

@@ -526,8 +526,7 @@
     "editor": {
       "save": {
         "success": "Your changes have been saved.",
-        "editor": "Changes to page content are published immediately if the homepage category is linked to the live shop.",
-        "settings": "To publish settings, build the shop and set the instance to live mode.",
+        "settings": "For settings changes to take effect, update your shop.",
         "error": "The changes couldn't be saved. Your session may have expired. Re-enter the editor to start a new session."
       }
     },

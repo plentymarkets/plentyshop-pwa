@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute z-[0] md:z-[1] lg:z-[50] right-0 top-0 flex items-center space-x-4 border border-[#538AEA] bg-white p-2 shadow-md"
+    class="absolute z-[0] md:z-[1] lg:z-[9] right-0 top-0 flex items-center space-x-4 border border-[#538AEA] bg-white p-2 shadow-md"
     data-testid="edit-block-actions"
   >
     <button
@@ -33,8 +33,8 @@
       class="text-black hover:bg-gray-100 p-1 rounded"
       data-testid="move-down-button"
       aria-label="move down button"
-      :disabled="isLastBlock"
-      :class="{ 'opacity-40 cursor-not-allowed': isLastBlock }"
+      :disabled="isLastBlock(index)"
+      :class="{ 'opacity-40 cursor-not-allowed': isLastBlock(index) }"
       @click="changePosition(1)"
     >
       <SfIconArrowDownward />
@@ -56,19 +56,21 @@
 <script lang="ts" setup>
 import { SfIconDelete, SfIconArrowUpward, SfIconArrowDownward, SfIconBase } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
+import type { Block } from '@plentymarkets/shop-api';
 
-const props = defineProps<{ index: number; isLastBlock: boolean; blocks: Block }>();
+const props = defineProps<{ index: number; block: Block }>();
 
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 
 const { openDrawerWithView } = useSiteConfiguration();
+const { deleteBlock, isLastBlock } = useBlockManager();
 
 const triggerEdit = () => {
-  openDrawerWithView('blocksSettings', props.blocks.name, props.index);
+  openDrawerWithView('blocksSettings', props.block);
 };
 
 const triggerDelete = () => {
-  emit('delete', props.index);
+  deleteBlock(props.block.meta.uuid);
 };
 
 const scrollToBlock = (newIndex: number) => {

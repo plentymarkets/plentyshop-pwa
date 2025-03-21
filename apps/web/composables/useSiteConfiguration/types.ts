@@ -1,3 +1,4 @@
+import type { Block } from '@plentymarkets/shop-api';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 export type DrawerView =
   | 'SettingsView'
@@ -29,7 +30,7 @@ export interface UseSiteConfigurationState {
   placement: string;
   drawerView: DrawerView;
   blockType: string;
-  blockIndex: number;
+  blockUuid: string;
   initialData: ConfigurationSettings;
 }
 
@@ -38,7 +39,7 @@ export type UpdateBlockSize = (size: string) => void;
 export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
-export type OpenDrawerView = (view: DrawerView, type?: string, blockIndex?: number) => void;
+export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
 
@@ -48,7 +49,7 @@ export interface UseSiteConfiguration {
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
-  blockIndex: Readonly<Ref<UseSiteConfigurationState['blockIndex']>>;
+  blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;

@@ -1,4 +1,11 @@
 export type NewsletterSubscribeProps = {
+  name: string;
+  type: string;
+  content: NewsletterSubscribeContent;
+  configuration?: object;
+  index?: number;
+};
+export type NewsletterSubscribeContent = {
   index?: number;
   text: {
     bgColor?: string;
