@@ -13,12 +13,9 @@
     ]"
   >
     <div v-if="settingsType === 'general-settings'" class="flex justify-between items-center">
-      <h3 class="font-bold typography-headline-3">General Settings</h3>
-      <SfIconChevronLeft class="cursor-pointer" @click="closeDrawer" />
-    </div>
-
-    <div v-if="settingsType === 'seo-settings'" class="flex justify-between items-center">
-      <h3 class="font-bold typography-headline-3">SEO Settings</h3>
+      <h3 class="font-bold typography-headline-3">
+        {{ settingsType === 'general-settings' ? 'General Settings' : 'SEO Settings' }}
+      </h3>
       <SfIconChevronLeft class="cursor-pointer" @click="closeDrawer" />
     </div>
   </SfDrawer>
