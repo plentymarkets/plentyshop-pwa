@@ -6,9 +6,11 @@ import type {
   SetColorPalette,
   DrawerView,
   SaveSettings,
+  SettingsType,
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing site configuration.
@@ -24,6 +26,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     drawerOpen: false,
     drawerExtraOpen: false,
     pageModalOpen: false,
+    settingsCategory: null,
+    settingsType: null,
     loading: false,
     placement: 'left',
     newBlockPosition: 0,
@@ -181,6 +185,11 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.pageModalOpen = value;
   };
 
+  const setSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => {
+    state.value.settingsType = settingsType || null;
+    state.value.settingsCategory = category;
+  };
+
   return {
     updatePrimaryColor,
     updateSecondaryColor,
@@ -193,5 +202,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     settingsIsDirty,
     saveSettings,
     togglePageModal,
+    setSettingsCategory,
   };
 };
