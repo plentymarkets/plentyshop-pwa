@@ -13,7 +13,6 @@
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
         <span v-if="item.name === 'Homepage'">
-          <button  @click="openDrawerWithView('SeoView')">open drawer</button>
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
         {{ item.name }}
@@ -59,8 +58,6 @@ import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
-import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
-const { openDrawerWithView } = useSiteConfiguration();
 
 const { item } = defineProps<{
   item: MenuItemType;
