@@ -9,7 +9,9 @@
           <div class="mb-4 text-center typography-text-lg font-bold">
             <h2>{{ $t('previewModeBar.title') }}</h2>
           </div>
-          <div class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4">
+          <div
+            class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+          >
             <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
             <span class="py-2 mr-2">
               <p>
@@ -45,7 +47,7 @@
         :aria-label="$t('previewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
-        <NuxtImg width="32px" height="32px" :src='storeBlack' />
+        <NuxtImg width="32px" height="32px" :src="storeBlack" />
       </UiButton>
     </div>
   </client-only>
@@ -84,5 +86,5 @@ const removeLookupCookie: RemoveLookupCookie = (): void => {
 const saveAndExit = async (): Promise<void> => {
   await save();
   removeLookupCookie();
-}
+};
 </script>
