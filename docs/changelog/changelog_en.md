@@ -32,7 +32,7 @@
 - Fix displayment of large number of categories in navigation bar.
 - Fix checkout email validation.
 - Fix my orders page shipping date's missing locale.
-- Fix production build error. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
+- Fix build error during shop deployment. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
