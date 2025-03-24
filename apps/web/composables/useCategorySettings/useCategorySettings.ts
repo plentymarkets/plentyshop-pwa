@@ -29,8 +29,8 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     includeSitemap: false,
     drawerView: null,
     initialData: {
-      id: 1,
-      parentCategoryId: 2,
+      id: 17,
+      parentCategoryId: 16,
       sitemap: '',
       linkList: '',
       name: '',
@@ -63,65 +63,129 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     );
   });
 
+  // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
+  //   state.value.loading = true;
+
+  //   const settings = {
+  //     id: 16,
+  //     parentCategoryId: 17,
+  //     linkList: state.value.linkList,
+  //     name: state.value.name,
+  //     canonicalLink: state.value.canonicalLink,
+  //     position: state.value.position,
+  //     metaTitle: state.value.title,
+  //     metaDescription: state.value.description,
+  //     metaKeywords: state.value.keywords,
+  //     metaRobots: state.value.robots,
+  //     sitemap: state.value.sitemap,
+  //   };
+
+  //   const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
+  //   if (error.value) {
+  //     state.value.loading = false;
+  //     return false;
+  //   }
+
+  //   state.value.initialData = {
+  //     id: state.value.id,
+  //     parentCategoryId: state.value.parentCategoryId,
+  //     sitemap: state.value.sitemap,
+  //     linkList: state.value.linkList,
+  //     name: state.value.name,
+  //     canonicalLink: state.value.canonicalLink,
+  //     position: state.value.position,
+  //     title: state.value.title,
+  //     description: state.value.description,
+  //     keywords: state.value.keywords,
+  //     robots: state.value.robots,
+  //     canonical: state.value.canonical,
+  //     includeSitemap: state.value.includeSitemap,
+  //   };
+
+  //   state.value.loading = false;
+  //   return true;
+  // };
+
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
 
-    // const settings = {
-    //   id: state.value.id,
-    //   parentCategoryId: state.value.parentCategoryId,
-    //   sitemap: state.value.sitemap,
-    //   linklist: state.value.linkList,
-    //   name: state.value.name,
-    //   canonicalLink: state.value.canonicalLink,
-    //   position: state.value.position,
-    //   title: state.value.title,
-    //   description: state.value.description,
-    //   keywords: state.value.keywords,
-    //   robots: state.value.robots,
-    //   canonical: state.value.canonical,
-    //   includeSitemap: state.value.includeSitemap,
-    // };
+    const settings = [
+      {
+        key: 'id',
+        value: '17',
+      },
+      {
+        key: 'parentCategoryId',
+        value: '16',
+      },
+      {
+        key: 'sitemap',
+        value: 'sitemap',
+      },
 
-        const settings = {
-          id: 23423432432,
-          parentCategoryId: 16,
-          linkList: 'N',
-          name: 'MEGA NEW',
-          canonicalLink: 'MEGA NEW',
-          position: 3,
-          metaTitle: 'MEGA NEW',
-          metaDescription: 'MEGA NEW',
-          metaKeywords: 'MEGA NEW',
-          metaRobots: '',
-          sitemap: 'N',
-    };
+      {
+        key: 'linkList',
+        value: 'linkList',
+      },
+      {
+        key: 'name',
+        value: 'name',
+      },
+      {
+        key: 'canonicalLink',
+        value: 'canonicalLink',
+      },
+      {
+        key: 'position',
+        value: state.value.position.toString(),
+      },
+      {
+        key: 'title',
+        value: 'title',
+      },
+      {
+        key: 'description',
+        value: 'description',
+      },
+      {
+        key: 'keywords',
+        value: 'keywords',
+      },
+      {
+        key: 'robots',
+        value: 'robots',
+      },
+      {
+        key: 'canonical',
+        value: 'canonical',
+      },
+      {
+        key: 'includeSitemap',
+        value: 'includeSitemap',
+      },
+    ];
+    const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
-
-    
-
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
     if (error.value) {
       state.value.loading = false;
       return false;
     }
 
-    // state.value.initialData = {
-    //   id: state.value.id,
-    //   parentCategoryId: state.value.parentCategoryId,
-    //   sitemap: state.value.sitemap,
-    //   linkList: state.value.linkList,
-    //   name: state.value.name,
-    //   canonicalLink: state.value.canonicalLink,
-    //   position: state.value.position,
-    //   title: state.value.title,
-    //   description: state.value.description,
-    //   keywords: state.value.keywords,
-    //   robots: state.value.robots,
-    //   canonical: state.value.canonical,
-    //   includeSitemap: state.value.includeSitemap,
-    // };
-
-    
+    state.value.initialData = {
+      id: 16,
+      parentCategoryId: 17,
+      sitemap: state.value.sitemap,
+      linkList: state.value.linkList,
+      name: state.value.name,
+      canonicalLink: state.value.canonicalLink,
+      position: state.value.position,
+      title: state.value.title,
+      description: state.value.description,
+      keywords: state.value.keywords,
+      robots: state.value.robots,
+      canonical: state.value.canonical,
+      includeSitemap: state.value.includeSitemap,
+    };
 
     state.value.loading = false;
     return true;
