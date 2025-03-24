@@ -1,7 +1,7 @@
 name: Release Notification
 on:
   release:
-    types: [created]
+    types: [published]
 jobs:
   notify:
     runs-on: ubuntu-latest
