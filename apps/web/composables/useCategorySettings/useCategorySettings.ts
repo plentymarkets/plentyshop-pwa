@@ -63,7 +63,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     );
   });
 
-  // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
+    // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
   //   state.value.loading = true;
 
   //   const settings = {
@@ -191,9 +191,14 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     return true;
   };
 
+  const setPageId = (id: number) => {
+    state.value.id = id;
+  };
+
   return {
     ...toRefs(state.value),
     categorySettingsIsDirty,
     saveCategorySettings,
+    setPageId,
   };
 };

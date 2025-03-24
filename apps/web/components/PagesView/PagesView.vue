@@ -66,6 +66,13 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
+import { useCategorySettings } from '~/composables/useCategorySettings/useCategorySettings';
+
+const { setPageId } = useCategorySettings();
+
+// Example of setting the page id
+setPageId(1);
+
 const { $i18n } = useNuxtApp();
 const currentLocale = ref($i18n.locale.value);
 

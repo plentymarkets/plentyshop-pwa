@@ -47,6 +47,8 @@
 </template>
 <script setup lang="ts">
 import type { MenuItemType } from '~/components/PagesView/types';
+import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+import { useCategorySettings } from '~/composables/useCategorySettings/useCategorySettings';
 import {
   SfIconHome,
   SfIconExpandMore,
@@ -85,4 +87,9 @@ const openSeoSettings = () => {
 const deletePage = () => {
   close();
 };
+
+const { setPageId } = useCategorySettings();
+
+// Example of setting the page id
+setPageId(item.id);
 </script>
