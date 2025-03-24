@@ -23,7 +23,8 @@
 - Fix toolbar arrow
 - Fix Page Selector closes on second button click
 - Fix my orders page shipping date's missing locale.
-- Fix left side menu german navigation
+- Fix left side menu german navigation.
+- Fix production build error. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
