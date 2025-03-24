@@ -1,1 +1,1 @@
-export type RemoveLookupCookie = (index: number) => void;
+export type RemoveLookupCookie = () => void;

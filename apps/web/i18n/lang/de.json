@@ -72,8 +72,12 @@
     }
   },
   "previewModeBar": {
-    "label": "Editor verlassen und zum Liveshop wechseln",
-    "pwa": "Editor verlassen und zum Liveshop wechseln"
+    "label": "Steuerelemente für Editor",
+    "title": "Editor verlassen und zum Liveshop wechseln?",
+    "exitEditor": "Editor verlassen und zum Liveshop wechseln",
+    "unsavedChangesWarning": "Es gibt ungespeicherte Änderungen.",
+    "saveAndExit": "Speichern und verlassen",
+    "exitWithoutSaving": "Ohne Speichern verlassen"
   },
   "account": {
     "accountSettings": {
