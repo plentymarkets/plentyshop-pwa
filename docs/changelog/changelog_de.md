@@ -4,7 +4,7 @@
 
 ### 👷 Geändert
 
-- Die Konfiguration von `useSdk` und das SDK werden nun von `@plentymarkets/shop-core` verwaltet und exportiert. Mit dieser Änderung wurde `@vue-storefront/nuxt` entfernt. Es gibt keine verändernden Änderungen.
+- Die Konfiguration von `useSdk` und das SDK werden nun von `@plentymarkets/shop-core` verwaltet und exportiert. Mit dieser Änderung wurde `@vue-storefront/nuxt` entfernt. Es gibt keine "Breaking-Changes".
 
 ### 🩹 Behoben
 
