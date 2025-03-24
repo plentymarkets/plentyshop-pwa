@@ -11,7 +11,7 @@
 - Behebung der Anzeige einer großen Anzahl von Kategorien in der Navigationsleiste.
 - Behebung der E-Mail-Validierung im Checkout.
 - Behebung des fehlenden Versanddatums auf der Seite "Meine Bestellungen".
-- Behebung eines Fehlers beim Produktions app build. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
+- Behebung eines Fehlers beim Bereitstellen des Shops. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
