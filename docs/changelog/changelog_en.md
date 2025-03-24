@@ -10,6 +10,7 @@
 
 ### 👷 Changed
 
+- `useSdk` and sdk setup are now maintained and exported from `@plentymarkets/shop-core`. With this change we also removed `@vue-storefront/nuxt`. There are no breaking changes.
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
 
