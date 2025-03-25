@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconCheckCircle, SfIconInfo, SfIconWarning, SfIconError } from '@storefront-ui/vue';
-import type { Notification } from '../../../composables/useNotification/types';
+import type { Notification } from '@plentymarkets/shop-core';
 const { data: notifications } = useNotification();
 
 const classMapper = {
