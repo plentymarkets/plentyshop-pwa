@@ -24,7 +24,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
     drawerOpen: false,
-    drawerExtraOpen: false,
     pageModalOpen: false,
     settingsCategory: null,
     settingsType: null,
@@ -112,8 +111,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.drawerView = view;
     state.value.drawerOpen = true;
 
-    state.value.drawerExtraOpen = true;
-
     state.value.blockType = type;
     state.value.blockIndex = blockIndex;
 
@@ -129,7 +126,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.blockSize = size;
   };
 
-  const updateNewBlockPosition = (position: number) => {
+  const updateNewBlockPosition = (position: number) => { 
     state.value.newBlockPosition = position;
   };
 

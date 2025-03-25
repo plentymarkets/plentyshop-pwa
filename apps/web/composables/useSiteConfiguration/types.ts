@@ -23,7 +23,6 @@ export interface UseSiteConfigurationState {
   settingsCategory: CategoryTreeItem | null;
   settingsType: SettingsType;
   drawerOpen: boolean;
-  drawerExtraOpen: boolean;
   pageModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
@@ -54,7 +53,6 @@ export interface UseSiteConfiguration {
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
   settingsCategory: Readonly<Ref<UseSiteConfigurationState['settingsCategory']>>;
   settingsType: Readonly<Ref<UseSiteConfigurationState['settingsType']>>;
-  drawerExtraOpen: Readonly<Ref<UseSiteConfigurationState['drawerExtraOpen']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
   blockIndex: Readonly<Ref<UseSiteConfigurationState['blockIndex']>>;
