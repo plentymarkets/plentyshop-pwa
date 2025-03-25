@@ -1,137 +1,196 @@
-{
-  "blocks": [
-    {
-      "name": "BannerCarousel",
-      "options": {
-        "controls": {
-          "color": "#a39f9f"
-        },
-        "bannerItems": [
-          {
-            "controls": {
-              "color": "#a39f9f"
-            },
-            "image": {
-              "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
-              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
-              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
-              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif",
-              "alt": "",
-              "brightness": 0.5
-            },
-            "text": {
-              "color": "#000",
-              "bgcolor": "#fff",
-              "bgopacity": 0.9,
-              "pretitle": "Kristalklare Klänge Genießen",
-              "title": "Ihr Sound",
-              "subtitle": "Auf höchstem Niveau",
-              "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
-              "textAlignment": "left",
-              "justify": "top",
-              "align": "left",
-              "background": true
-            },
-            "button": {
-              "label": "Capybara entdecken",
-              "link": "/gear/headphones-capybara_157",
-              "variant": "primary"
-            }
-          },
-          {
-            "image": {
-              "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
-              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
-              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
-              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
-              "alt": "",
-              "brightness": 0.75
-            },
-            "text": {
-              "color": "#000",
-              "bgcolor": "#fff",
-              "bgopacity": 1,
-              "pretitle": "Die Zukunft der Luftbildfotografie",
-              "title": "Drone Omega",
-              "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
-              "textAlignment": "left",
-              "justify": "top",
-              "align": "left",
-              "background": true
-            },
-            "button": {
-              "label": "Omega entdecken",
-              "link": "/gear/drone-omega_154",
-              "variant": "primary"
-            }
-          }
-        ]
+[
+  {
+    "name": "Carousel",
+    "type": "structure",
+    "meta": {
+      "uuid": "3e1f8c9a-d2b4-4f8d-9c2b-8e1f3a7d5c9b"
+    },
+    "configuration": {
+      "controls": {
+        "displayArrows": true,
+        "color": "#a39f9f"
       }
     },
-    {
-      "name": "TextCard",
-      "options": {
-        "text": {
-          "htmlDescription": "<p>Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.</p><p>Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.</p>",
-          "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
-          "title": "Entdecke Technik & Style",
-          "subtitle": "Innovative Technik trifft auf moderne Mode",
-          "textAlignment": "center",
-          "color": "#000"
+    "content": [
+      {
+        "name": "Banner",
+        "type": "content",
+        "meta": {
+          "uuid": "a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d"
         },
-        "button": {
-          "buttonText": "Jetzt zuschlagen",
-          "link": "",
-          "variant": "primary"
+        "content": {
+          "image": {
+            "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
+            "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
+            "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
+            "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif",
+            "alt": "",
+            "brightness": 0.5
+          },
+          "text": {
+            "color": "#000",
+            "bgcolor": "#fff",
+            "bgopacity": 0.9,
+            "pretitle": "Kristalklare Klänge Genießen",
+            "title": "Ihr Sound",
+            "subtitle": "Auf höchstem Niveau",
+            "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
+            "textAlignment": "left",
+            "justify": "top",
+            "align": "left",
+            "background": true
+          },
+          "button": {
+            "label": "Capybara entdecken",
+            "link": "/gear/headphones-capybara_157",
+            "variant": "primary"
+          }
+        }
+      },
+      {
+        "name": "Banner",
+        "type": "content",
+        "meta": {
+          "uuid": "d4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a"
+        },
+        "content": {
+          "image": {
+            "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+            "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+            "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
+            "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
+            "alt": "",
+            "brightness": 0.75
+          },
+          "text": {
+            "color": "#000",
+            "bgcolor": "#fff",
+            "bgopacity": 1,
+            "pretitle": "Die Zukunft der Luftbildfotografie",
+            "title": "Drone Omega",
+            "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
+            "textAlignment": "left",
+            "justify": "top",
+            "align": "left",
+            "background": true
+          },
+          "button": {
+            "label": "Omega entdecken",
+            "link": "/gear/drone-omega_154",
+            "variant": "primary"
+          }
         }
       }
+    ]
+  },
+  {
+    "name": "TextCard",
+    "type": "content",
+    "meta": {
+      "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
     },
-    {
-      "name": "ProductRecommendedProducts",
-      "options": {
-        "categoryId": "73"
+    "content": {
+      "text": {
+        "htmlDescription": "<p>Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.</p><p>Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.</p>",
+        "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
+        "title": "Entdecke Technik & Style",
+        "subtitle": "Innovative Technik trifft auf moderne Mode",
+        "textAlignment": "center",
+        "color": "#000"
+      },
+      "button": {
+        "buttonText": "Jetzt zuschlagen",
+        "link": "",
+        "variant": "primary"
       }
+    }
+  },
+  {
+    "name": "ProductRecommendedProducts",
+    "type": "content",
+    "meta": {
+      "uuid": "f7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
     },
-    {
-      "name": "ImageText",
-      "options": {
-        "text": {
-          "htmlDescription": "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
-          "title": "Entdecken Sie Technik und Stil",
-          "subtitle": "Innovative Technologie trifft moderne Fashion",
-          "textAlignment": "left",
-          "color": "#000"
+    "content": {
+      "categoryId": "73",
+      "text": {}
+    }
+  },
+  {
+    "name": "MultiGrid",
+    "type": "structure",
+    "meta": {
+      "uuid": "9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a"
+    },
+    "configuration": {
+      "columnWidths": [
+        4,
+        4
+      ]
+    },
+    "content": [
+      {
+        "name": "TextCard",
+        "type": "content",
+        "content": {
+          "text": {
+            "htmlDescription": "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
+            "title": "Entdecken Sie Technik und Stil",
+            "pretitle": "",
+            "subtitle": "Innovative Technologie trifft moderne Fashion",
+            "textAlignment": "left",
+            "color": "#000"
+          },
+          "button": {
+            "label": "Zu unseren Kopfhörern",
+            "link": "/technik/headphones-capybara_157",
+            "variant": "primary"
+          }
         },
-        "button": {
-          "label": "Zu unseren Kopfhörern",
-          "link": "/technik/headphones-capybara_157",
-          "variant": "primary"
-        },
-        "image": {
+        "meta": {
+          "uuid": "64f8c6ce-1503-4f29-b271-1d5c6a9a0adf"
+        }
+      },
+      {
+        "name": "Image",
+        "type": "content",
+        "content": {
           "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "alt": "Kopfhörer",
           "imageAlignment": "left"
+        },
+        "meta": {
+          "uuid": "ddbb44fc-3af6-49b1-9f2a-2e0a9e2f6a15"
         }
       }
+    ]
+  },
+  {
+    "name": "ProductRecommendedProducts",
+    "type": "content",
+    "meta": {
+      "uuid": "g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
     },
-    {
-      "name": "ProductRecommendedProducts",
-      "options": {
-        "text": {
-          "pretitle": "Mehr als nur Technik",
-          "title": "Entdecken Sie unsere Modekollektion",
-          "subtitle": "Sportive Mode und Accessories für alle.",
-          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/kleidung' target='_self'>Zu unserer kompletten Kollektion.</a>"
-        },
-        "categoryId": "49"
+    "content": {
+      "categoryId": "49",
+      "text": {
+        "pretitle": "Mehr als nur Technik",
+        "title": "Entdecken Sie unsere Modekollektion",
+        "subtitle": "Sportive Mode und Accessories für alle.",
+        "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/kleidung' target='_self'>Zu unserer kompletten Kollektion.</a>"
       }
-    },
-    {
+    }
+  },
+  {
       "name": "NewsletterSubscribe",
-      "options": {
+      "type": "content",
+      "meta": {
+        "uuid": "0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f"
+      },
+      "content": {
         "text": {
           "bgColor": "#f5f5f5",
           "title": "Abonnieren Sie unseren Newsletter",
@@ -146,8 +205,5 @@
         }
       }
     }
-  ],
-  "meta": {
-    "isDefault": null
-  }
-}
+]
+
