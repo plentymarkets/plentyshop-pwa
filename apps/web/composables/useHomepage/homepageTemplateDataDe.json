@@ -136,6 +136,7 @@
           "text": {
             "htmlDescription": "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
             "title": "Entdecken Sie Technik und Stil",
+            "pretitle": "",
             "subtitle": "Innovative Technologie trifft moderne Fashion",
             "textAlignment": "left",
             "color": "#000"
@@ -145,6 +146,9 @@
             "link": "/technik/headphones-capybara_157",
             "variant": "primary"
           }
+        },
+        "meta": {
+          "uuid": "64f8c6ce-1503-4f29-b271-1d5c6a9a0adf"
         }
       },
       {
@@ -157,6 +161,9 @@
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "alt": "Kopfhörer",
           "imageAlignment": "left"
+        },
+        "meta": {
+          "uuid": "ddbb44fc-3af6-49b1-9f2a-2e0a9e2f6a15"
         }
       }
     ]
