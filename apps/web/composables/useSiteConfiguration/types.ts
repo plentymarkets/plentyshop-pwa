@@ -1,6 +1,5 @@
-import type { Block } from '@plentymarkets/shop-api';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView =
   | 'SettingsView'
   | 'blocksList'
