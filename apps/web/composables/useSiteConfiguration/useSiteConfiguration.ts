@@ -126,7 +126,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.blockSize = size;
   };
 
-  const updateNewBlockPosition = (position: number) => { 
+  const updateNewBlockPosition = (position: number) => {
     state.value.newBlockPosition = position;
   };
 
