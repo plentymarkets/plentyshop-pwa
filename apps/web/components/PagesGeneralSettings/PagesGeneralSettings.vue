@@ -55,7 +55,7 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="data.type"
+            v-model="pageType"
             data-testid="new-page-type"
             :options="pageTypes"
             label="label"
@@ -107,10 +107,12 @@
             v-model="data.parent"
             data-testid="page-parent"
             :options="categories"
+            label="label"
             placeholder="Select a parent page"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
+            track-by="value"
             deselect-label="Selected"
           />
         </div>
@@ -183,10 +185,15 @@ const data = {
   image2Path: null,
   parent: 'Living room',
 };
-const categories = [{ name: 'Living room' }, { name: 'Armchairs & Stools' }, { name: 'Sofas' }];
+const categories = ref([
+  { label: 'Living room', value: 'living-room' },
+  { label: 'Armchairs & Stools', value: 'armchairs-stools' },
+  { label: 'Sofas', value: 'sofas' },
+]);
 const pageTypes = ref([
   { label: 'Content', value: 'content' },
   { label: 'Item category', value: 'item' },
 ]);
+const pageType = ref(pageTypes.value[0]);
 
 </script>
