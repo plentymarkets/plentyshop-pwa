@@ -27,6 +27,9 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
+    optimizeDeps: {
+      include: ['dotenv'],
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -74,8 +77,8 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@plentymarkets/shop-module-gtag',
     '@plentymarkets/shop-core',
+    '@plentymarkets/shop-module-gtag',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
@@ -88,14 +91,9 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '@vue-storefront/nuxt',
   ],
-  alokai: {
-    middleware: {
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      cdnCacheBustingId: 'no-cache-busting-id-set',
-      ssrApiUrl: '',
-    },
+  shopCore: {
+    apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },
   fonts: {
     defaults: {
