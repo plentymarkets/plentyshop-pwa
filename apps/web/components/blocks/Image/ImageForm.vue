@@ -128,7 +128,6 @@
 <script setup lang="ts">
 import type { ImageFormProps, ImageContent } from './types';
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
-import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();

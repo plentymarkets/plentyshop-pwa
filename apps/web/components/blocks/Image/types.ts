@@ -24,11 +24,6 @@ export interface ImageDimensions {
   height: number;
 }
 
-export interface ImageDimensions {
-  width: number;
-  height: number;
-}
-
 export interface ImageFormProps {
   uuid?: string;
 }

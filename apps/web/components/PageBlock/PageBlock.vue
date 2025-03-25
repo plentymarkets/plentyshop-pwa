@@ -12,8 +12,7 @@
           'mb-xl': blockSize === 'xl' && root,
         },
         {
-          'outline outline-4 outline-[#538AEA]':
-            isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
+          'outline outline-4 outline-[#538AEA]': showOutline,
         },
         { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet && root },
       ]"
@@ -117,6 +116,22 @@ const contentProps = computed(() => {
   return props.root ? { ...props.block } : { ...props.block, ...attrs };
 });
 
+const isPreview = ref(false);
+const config = useRuntimeConfig().public;
+const showConfigurationDrawer = config.showConfigurationDrawer;
+const pwaCookie = useCookie('pwa');
+isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+
+const showOutline = computed(() => {
+  return (
+    isPreview.value &&
+    props.disableActions &&
+    props.isClicked &&
+    props.isTablet &&
+    props.clickedBlockIndex === props.index
+  );
+});
+
 const displayTopPlaceholder = (uuid: string): boolean => {
   const visiblePlaceholderState = visiblePlaceholder.value;
 
@@ -143,11 +158,4 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
 };
-
-const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-
-const pwaCookie = useCookie('pwa');
-isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 </script>

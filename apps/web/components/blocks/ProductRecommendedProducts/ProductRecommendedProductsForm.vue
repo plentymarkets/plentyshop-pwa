@@ -120,7 +120,7 @@
 <script setup lang="ts">
 import type { ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
-import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
+
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();

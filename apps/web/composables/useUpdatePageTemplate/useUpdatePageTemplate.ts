@@ -1,5 +1,6 @@
 const updatePageTemplate = async (): Promise<boolean> => {
   const { isEditingEnabled } = useEditor();
+  const { send } = useNotification();
   const { saveBlocks, data } = useCategoryTemplate();
 
   try {
@@ -7,8 +8,14 @@ const updatePageTemplate = async (): Promise<boolean> => {
     await saveBlocks('index', 'immutable', cleanedData);
 
     return true;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    if (error) {
+      send({
+        message: error.toString(),
+        type: 'negative',
+      });
+      console.error(error);
+    }
     return false;
   } finally {
     isEditingEnabled.value = false;
