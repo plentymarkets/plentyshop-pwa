@@ -63,48 +63,15 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     );
   });
 
-    // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
-  //   state.value.loading = true;
+  const setPageId = (id: number, parentCategoryId?: number) => {
+    state.value.id = id;
+    if (parentCategoryId !== undefined) {
+      state.value.parentCategoryId = parentCategoryId;
+    }
 
-  //   const settings = {
-  //     id: 16,
-  //     parentCategoryId: 17,
-  //     linkList: state.value.linkList,
-  //     name: state.value.name,
-  //     canonicalLink: state.value.canonicalLink,
-  //     position: state.value.position,
-  //     metaTitle: state.value.title,
-  //     metaDescription: state.value.description,
-  //     metaKeywords: state.value.keywords,
-  //     metaRobots: state.value.robots,
-  //     sitemap: state.value.sitemap,
-  //   };
-
-  //   const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
-  //   if (error.value) {
-  //     state.value.loading = false;
-  //     return false;
-  //   }
-
-  //   state.value.initialData = {
-  //     id: state.value.id,
-  //     parentCategoryId: state.value.parentCategoryId,
-  //     sitemap: state.value.sitemap,
-  //     linkList: state.value.linkList,
-  //     name: state.value.name,
-  //     canonicalLink: state.value.canonicalLink,
-  //     position: state.value.position,
-  //     title: state.value.title,
-  //     description: state.value.description,
-  //     keywords: state.value.keywords,
-  //     robots: state.value.robots,
-  //     canonical: state.value.canonical,
-  //     includeSitemap: state.value.includeSitemap,
-  //   };
-
-  //   state.value.loading = false;
-  //   return true;
-  // };
+    console.log('id', id);
+    console.log('parentCategoryId', parentCategoryId);
+  };
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
@@ -112,7 +79,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     const settings = [
       {
         key: 'id',
-        value: '17',
+        value: state.value.id.toString(),
       },
       {
         key: 'parentCategoryId',
@@ -189,10 +156,6 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
 
     state.value.loading = false;
     return true;
-  };
-
-  const setPageId = (id: number) => {
-    state.value.id = id;
   };
 
   return {

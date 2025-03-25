@@ -58,7 +58,7 @@ export interface useCategoryConfigurationState {
     name: Readonly<Ref<useCategoryConfigurationState['name']>>;
     canonicalLink: Readonly<Ref<useCategoryConfigurationState['canonicalLink']>>;
     position: Readonly<Ref<useCategoryConfigurationState['position']>>;
-    setPageId: (id: number) => void;
+    setPageId: (id: number, parentId?: number) => void;
     saveCategorySettings: () => Promise<boolean>;
   }
   

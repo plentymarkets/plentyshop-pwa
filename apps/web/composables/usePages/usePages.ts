@@ -6,6 +6,7 @@ export const usePages = async () => {
   const pages = useState<
     {
       id: number;
+      parentId: number; 
       name: string;
       path: string;
       children?: { id: number; name: string; path: string }[];
@@ -20,9 +21,10 @@ export const usePages = async () => {
       isRoot = true,
     ): {
       id: number;
+      parentId: number;
       name: string;
       path: string;
-      children?: { id: number; name: string; path: string }[];
+      children?: { id: number;  name: string; path: string }[];
       type: string | undefined;
     }[] => {
       const transformedData = data
@@ -37,6 +39,7 @@ export const usePages = async () => {
 
           return {
             id: item.id,
+            parentId: item.parentId,
             name: item.details[0].name,
             path: currentPath,
             children,
@@ -48,6 +51,7 @@ export const usePages = async () => {
       if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
         transformedData.unshift({
           id: 1,
+          parentId: 2,
           name: t('homepage.title'),
           path: '/',
           children: undefined,
@@ -57,9 +61,10 @@ export const usePages = async () => {
 
       return transformedData as {
         id: number;
+        parentId: number;
         name: string;
         path: string;
-        children?: { id: number; name: string; path: string }[] | undefined;
+        children?: { id: number; parentId: number; name: string; path: string }[] | undefined;
         type: string;
       }[];
     };

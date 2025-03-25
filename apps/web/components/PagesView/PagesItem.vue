@@ -25,15 +25,16 @@
 
       <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
         <div class="p-2 rounded bg-white w-max">
-          <div class="p-1 flex" @click="openGeneralSettings()">
+          <div class="p-1 flex" @click="openGeneralSettings(); setPageId(item.id, parentId);">
             <NuxtImg width="24" height="24px" :src="gearBlack" />
             <span class="ml-2">General Settings</span>
           </div>
-          <div class="p-1 flex" @click="openSeoSettings()">
+          <div class="p-1 flex" @click="openSeoSettings(); setPageId(item.id, parentId);">
             <SfIconSearch />
+            <span>{{ item.children }}</span>
             <span class="ml-2">SEO Settings</span>
           </div>
-          <div class="p-1 flex" @click="deletePage()">
+          <div class="p-1 flex" @click="deletePage(); setPageId(item.id,  parentId);">
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
           </div>
@@ -41,13 +42,13 @@
       </SfDropdown>
     </div>
     <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">
-      <PagesItem v-for="child in item.children" :key="child.path" :item="child" />
+      <PagesItem v-for="child in item.children" :key="child.path" :item="child" :parent-id="item.id"/>
     </ul>
   </li>
 </template>
+
 <script setup lang="ts">
 import type { MenuItemType } from '~/components/PagesView/types';
-import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
 import { useCategorySettings } from '~/composables/useCategorySettings/useCategorySettings';
 import {
   SfIconHome,
@@ -64,8 +65,9 @@ import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
-const { item } = defineProps<{
+const { item, parentId } = defineProps<{
   item: MenuItemType;
+  parentId: number | undefined;
 }>();
 
 const { isOpen, open: openMenu, close } = useDisclosure();
@@ -90,6 +92,5 @@ const deletePage = () => {
 
 const { setPageId } = useCategorySettings();
 
-// Example of setting the page id
-setPageId(item.id);
+
 </script>
