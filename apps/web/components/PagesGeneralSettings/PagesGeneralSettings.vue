@@ -1,14 +1,5 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
-    <!--    <header class="flex items-center justify-between px-4 py-5 border-b">-->
-    <!--      <div class="flex items-center text-xl font-bold">-->
-    <!--        General Settings-->
-    <!--      </div>-->
-    <!--      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">-->
-    <!--        <SfIconClose />-->
-    <!--      </button>-->
-    <!--    </header>-->
-
     <form data-testid="basic-settings-form" class="w-full absolute bg-white">
       <UiAccordionItem
         v-model="basicSettingsOpen"
@@ -32,7 +23,13 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.id" type="text" data-testid="page-id" wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" disabled>
+            <SfInput
+              v-model="data.id"
+              type="text"
+              data-testid="page-id"
+              wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1"
+              disabled
+            >
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
                   <input id="page-id" v-model="data.id" type="text" class="invisible w-8" />
@@ -195,5 +192,4 @@ const pageTypes = ref([
   { label: 'Item category', value: 'item' },
 ]);
 const pageType = ref(pageTypes.value[0]);
-
 </script>
