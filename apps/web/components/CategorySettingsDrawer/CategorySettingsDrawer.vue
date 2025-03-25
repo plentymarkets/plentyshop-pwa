@@ -13,6 +13,8 @@
       <SfIconChevronLeft class="cursor-pointer" @click="closeDrawer" />
     </div>
     <PagesGeneralSettings v-if="settingsType === 'general-settings'" class="mt-2" />
+
+    <SeoView v-if="settingsType === 'seo-settings'" />
   </SfDrawer>
 </template>
 
