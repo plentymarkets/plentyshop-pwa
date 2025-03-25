@@ -8,6 +8,7 @@
 - Add design for adding a new page.
 - Added design for category settings.
 - Added form for general settings
+- Added form for SEO settings
 
 ### 👷 Changed
 
