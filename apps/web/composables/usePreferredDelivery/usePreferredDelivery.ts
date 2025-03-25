@@ -1,26 +1,41 @@
+import {
+  AddressType,
+  shippingProviderGetters,
+  type ApiError,
+  type DoSavePreferredDeliveryServiceParams,
+  type PreferredDeliveryServicesData,
+  type PreferredDeliveryShippingProfilesData,
+} from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 export const usePreferredDelivery = () => {
   const { $i18n } = useNuxtApp();
+  const { countryHasDelivery, checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
 
   const state = useState('usePreferredDelivery', () => ({
     loading: false,
     data: {
-      days: Array<{ date: string; dayNumber: string; dayName: string }>(),
+      preferredProfiles: {} as PreferredDeliveryShippingProfilesData,
+      preferredDays: [] as PreferredDay[],
+      shippingAmountChanged: false,
+      additionalCharge: null as number | null,
       day: {
+        enabled: false,
         checked: false,
         value: '',
-      },
+      } as PreferredOption,
       location: {
+        enabled: false,
         checked: false,
         value: '',
-      },
+      } as PreferredOption,
       neighbour: {
+        enabled: false,
         checked: false,
         name: '',
         address: '',
-      },
+      } as NeighbourOption,
     },
   }));
 
@@ -65,84 +80,139 @@ export const usePreferredDelivery = () => {
   );
 
   const dayCheckboxChange = () => {
-    if (state.value.data.day.checked && state.value.data.day.value === '') {
-      state.value.data.day.value = state.value.data.days[1].date;
-      return;
-    }
-
-    if (!state.value.data.day.checked && state.value.data.day.value !== '') {
-      state.value.data.day.value = state.value.data.days[0].date;
-      return;
-    }
-  };
-
-  const getPreferredDays = () => {
-    state.value.data.days = [
-      {
-        date: '',
-        dayNumber: '',
-        dayName: $i18n.t('PreferredDelivery.general.wunschtagNone'),
-      },
-      {
-        date: '2025-03-19',
-        dayNumber: '19',
-        dayName: $i18n.t('PreferredDelivery.general.days.Wednesday'),
-      },
-      {
-        date: '2025-03-20',
-        dayNumber: '20',
-        dayName: $i18n.t('PreferredDelivery.general.days.Thursday'),
-      },
-      {
-        date: '2025-03-21',
-        dayNumber: '21',
-        dayName: $i18n.t('PreferredDelivery.general.days.Friday'),
-      },
-      {
-        date: '2025-03-24',
-        dayNumber: '24',
-        dayName: $i18n.t('PreferredDelivery.general.days.Monday'),
-      },
-      {
-        date: '2025-03-25',
-        dayNumber: '25',
-        dayName: $i18n.t('PreferredDelivery.general.days.Tuesday'),
-      },
-    ];
-  };
-
-  const handleDayChange = (dayIndex: number) => {
-    if (dayIndex === 0) {
-      state.value.data.day.checked = false;
+    if (!state.value.data.day.checked) {
       state.value.data.day.value = '';
       return;
     }
 
-    const selectedDay = state.value.data.days[dayIndex];
+    state.value.data.day.value = state.value.data.preferredDays.find((day) => day.date)?.date ?? '';
+  };
 
-    if (selectedDay && state.value.data.day.value !== selectedDay.date) {
-      state.value.data.day.value = selectedDay.date;
-      state.value.data.day.checked = true;
+  const preferredDeliveryAvailable = computed(
+    () =>
+      countryHasDelivery.value &&
+      (state.value.data.day.enabled || state.value.data.location.enabled || state.value.data.neighbour.enabled),
+  );
+
+  const getPreferredProfiles = async () => {
+    try {
+      const { data } = await useSdk().plentysystems.getPreferredDeliveryShippingProfiles();
+      state.value.data.preferredProfiles = data;
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
     }
   };
 
-  const isDayDisabled = (dayIndex: number) => {
-    const selectedDay = state.value.data.days[dayIndex];
-    return false;
+  const getPreferredDeliveryServices = async () => {
+    const { data: cartData } = useCart();
+    const shippingProfileId = Number(shippingProviderGetters.getShippingProfileId(cartData.value));
+
+    try {
+      const { data } = await useSdk().plentysystems.getPreferredDeliveryServices({
+        shippingProfileId: shippingProfileId,
+        postalcode: shippingAddress.value.zipCode,
+      });
+
+      state.value.data.additionalCharge = data.additionalCharge;
+
+      if (typeof data.preferredDay !== 'boolean') {
+        state.value.data.preferredDays = [
+          {
+            date: '',
+            dayNumber: '',
+            dayName: $i18n.t('PreferredDelivery.general.wunschtagNone'),
+          },
+          ...Object.values(data.preferredDay),
+        ];
+      }
+
+      propagateEnabledOptions(shippingProfileId, data);
+    } catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error?.toString());
+
+      useNotification().send({
+        type: 'negative',
+        message: $i18n.t('PreferredDelivery.general.invalidPostalCodeMessage'),
+      });
+    }
+  };
+
+  const propagateEnabledOptions = (shippingProfileId: number, data: PreferredDeliveryServicesData) => {
+    const preferredIdProfile = state.value.data.preferredProfiles[shippingProfileId];
+
+    state.value.data.day.enabled =
+      preferredIdProfile?.includes('PreferredDay') && typeof data.preferredDay !== 'boolean';
+
+    state.value.data.location.enabled =
+      preferredIdProfile?.includes('PreferredLocation') && data.preferredLocation === true;
+
+    state.value.data.neighbour.enabled =
+      preferredIdProfile?.includes('PreferredNeighbour') && data.preferredNeighbour === true;
+  };
+
+  const handleDayChange = (dayIndex: number) => {
+    const selectedDay = state.value.data.preferredDays[dayIndex];
+
+    state.value.data.day.checked = !selectedDay || dayIndex === 0 ? false : true;
+    state.value.data.day.value = !selectedDay || dayIndex === 0 ? '' : selectedDay.date;
   };
 
   const isDayChecked = (dayIndex: number) => {
-    const selectedDay = state.value.data.days[dayIndex];
-    return selectedDay && !isDayDisabled(dayIndex) && selectedDay.date === state.value.data.day.value;
+    const selectedDay = state.value.data.preferredDays[dayIndex];
+    return selectedDay && selectedDay.date === state.value.data.day.value;
+  };
+
+  const usingPreferredDay = computed(() => state.value.data.day.enabled && state.value.data.day.checked);
+
+  const usingPreferredLocation = computed(() => state.value.data.location.enabled && state.value.data.location.checked);
+
+  const usingPreferredNeighbour = computed(
+    () => state.value.data.neighbour.enabled && state.value.data.neighbour.checked,
+  );
+
+  const submitForm = async () => {
+    const parameters = {} as DoSavePreferredDeliveryServiceParams;
+
+    if (usingPreferredDay.value) {
+      parameters.preferredDay = state.value.data.day.value;
+      parameters.surcharge = state.value.data.additionalCharge ?? 0;
+    }
+
+    if (usingPreferredLocation.value) {
+      parameters.preferredLocation = state.value.data.location.value;
+    }
+
+    if (usingPreferredNeighbour.value) {
+      parameters.preferredNeighbourName = state.value.data.neighbour.name;
+      parameters.preferredNeighbourAddress = state.value.data.neighbour.address;
+    }
+
+    try {
+      await useSdk().plentysystems.doSavePreferredDeliveryServices(parameters);
+      useNotification().send({
+        type: 'positive',
+        message: $i18n.t('PreferredDelivery.general.submitWunschpaketServices'),
+      });
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
+    }
+
+    if (state.value.data.shippingAmountChanged !== state.value.data.day.checked) {
+      await useCartTotalChange().handleCartTotalChanges();
+      state.value.data.shippingAmountChanged = state.value.data.day.checked;
+    }
   };
 
   return {
     validationSchema,
     dayCheckboxChange,
-    getPreferredDays,
+    preferredDeliveryAvailable,
+    getPreferredProfiles,
+    getPreferredDeliveryServices,
     handleDayChange,
-    isDayDisabled,
     isDayChecked,
+    submitForm,
     ...toRefs(state.value),
   };
 };

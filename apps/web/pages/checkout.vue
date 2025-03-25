@@ -22,8 +22,7 @@
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <PreferredDelivery />
-          <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <PreferredDelivery v-if="countryHasDelivery" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -124,6 +123,7 @@ const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { emit } = usePlentyEvent();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const { isGuest, isAuthorized, validGuestEmail, backToContactInformation } = useCustomer();
+const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
 const {
   cart,
   cartIsEmpty,
@@ -213,6 +213,7 @@ const paypalGooglePayPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
 });
+
 const paypalApplePayPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
