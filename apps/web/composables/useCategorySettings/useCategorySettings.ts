@@ -99,11 +99,11 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
 
     
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
-    if (error.value) {
-      state.value.loading = false;
-      return false;
-    }
+    // const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
+    // if (error.value) {
+    //   state.value.loading = false;
+    //   return false;
+    // }
 
     // state.value.initialData = {
     //   id: state.value.id,

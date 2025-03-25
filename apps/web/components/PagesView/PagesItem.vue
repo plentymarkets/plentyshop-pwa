@@ -58,7 +58,7 @@ const { item } = defineProps<{
 }>();
 
 const { isOpen, open: openMenu, close } = useDisclosure();
-const { setSettingsCategory } = useSiteConfiguration();
+const { setSettingsCategory, togglePageModal } = useSiteConfiguration();
 
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
@@ -75,5 +75,7 @@ const openSeoSettings = () => {
 };
 const deletePage = () => {
   close();
+  togglePageModal(true);
+
 };
 </script>
