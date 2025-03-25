@@ -142,7 +142,6 @@
 import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
-
 const title = ref('Title');
 const description = ref('Description');
 const keywords = ref('Keywords');
