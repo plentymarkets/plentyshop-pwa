@@ -24,13 +24,6 @@
       :style="`font-family: ${config.font}`"
     />
 
-    <!-- <PageSettingsDrawer
-      v-if="drawerExtraOpen"
-      class="absolute lg:relative bg-white"
-      :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'left' }"
-      :style="`font-family: ${config.font}`"
-    /> -->
-
     <div
       class="bg-white w-full"
       :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"

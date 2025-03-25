@@ -1,12 +1,5 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
-    <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">SEO Settings</div>
-      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
-        <SfIconChevronLeft />
-      </button>
-    </header>
-
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
       <UiAccordionItem
         v-model="metaData"
@@ -45,12 +38,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput
-              v-model="description"
-              type="text"
-              data-testid="seo-description"
-              placeholder="Enter description"
-            >
+            <SfInput v-model="description" type="text" data-testid="seo-description" placeholder="Enter description">
               <template #suffix>
                 <label for="page-type" class="rounded-lg cursor-pointer">
                   <input id="page-type" v-model="description" type="text" class="invisible w-8" />
@@ -90,11 +78,7 @@
         </template>
         <div class="py-2">
           <div class="flex justify-between">
-            <UiFormLabel class="mb-1"
-              >Robots
-              <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-                <SfIconInfo :size="'sm'" /> </SfTooltip
-            ></UiFormLabel>
+            <UiFormLabel class="mb-1">Robots </UiFormLabel>
             <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -155,19 +139,25 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSwitch, SfTooltip, SfIconInfo, SfIconChevronLeft } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { useSeoConfiguration } from '~/composables/useSeoConfiguration';
 
+
+const title = ref('Title');
+const description = ref('Description');
+const keywords = ref('Keywords');
+const canonical = ref('Canonical');
+const includeSitemap = ref(false);
+const robots = ref('all');
 const robotsDropdown = ref(false);
-const { title, description, keywords, robots, canonical, includeSitemap } = useSeoConfiguration();
-const { closeDrawer } = useSiteConfig();
 const metaData = ref(false);
 const furtherSettings = ref(false);
 const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];
 
 const titleTooltip = 'Title displayed in search results of search engines.';
-const robotsTooltip = 'This setting controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
-const keywordsTooltip = 'List of relevant terms, separated by commas. Some search engines may use them to improve discoverability,';
+const robotsTooltip =
+  'This setting controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
+const keywordsTooltip =
+  'List of relevant terms, separated by commas. Some search engines may use them to improve discoverability,';
 const canicalTooltip = 'Select a page to be used as the canonical URL for variations.';
 </script>

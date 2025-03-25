@@ -31,7 +31,7 @@
         <button
           class="self-start bg-[#062633] text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
           :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
-          :disabled="!isTouched || settingsLoading || seoLoading"
+          :disabled="!isTouched || settingsLoading"
           data-testid="edit-save-button"
           @click="save"
         >
@@ -62,15 +62,11 @@ const { isDrawerOpen } = useDrawerState();
 
 const { loading } = useHomepage();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
-const { loading: seoLoading } = useSeoConfiguration();
 
 const { save } = useToolbar();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
-const isTouched = computed(() => 
-  settingsIsDirty.value || 
-  (!isLocalTemplate.value && isEditingEnabled.value)
-);
+const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
