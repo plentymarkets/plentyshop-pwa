@@ -1,60 +1,64 @@
 <template>
-  <div class="pages-view sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-management-drawer">
-    <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">
-        Pages
-        <SfTooltip label="Open manual" placement="left" :show-arrow="true" class="flex">
-          <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
-        /></SfTooltip>
-      </div>
-      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
-        <SfIconClose />
-      </button>
-    </header>
+  <div class="relative">
+    <div class="pages-view sticky top-[52px] h-[calc(100vh-50px)] z-[2]" data-testid="pages-management-drawer">
+      <header class="flex items-center justify-between px-4 py-5 border-b">
+        <div class="flex items-center text-xl font-bold">
+          Pages
+          <SfTooltip label="Open manual" placement="left" :show-arrow="true" class="flex">
+            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
+          /></SfTooltip>
+        </div>
+        <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
+          <SfIconClose />
+        </button>
+      </header>
 
-    <div class="mx-4 mb-4 mt-4">
-      <button
-        type="button"
-        data-testid="add-page-btn"
-        class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
-        @click="togglePageModal(true)"
+      <div class="mx-4 mb-4 mt-4">
+        <button
+          type="button"
+          data-testid="add-page-btn"
+          class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          @click="togglePageModal(true)"
+        >
+          <SfIconAdd /> Add Page
+        </button>
+      </div>
+
+      <UiAccordionItem
+        v-model="contentPagesOpen"
+        data-testid="content-pages-section"
+        summary-active-class="bg-neutral-100 border-t-0"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
-        <SfIconAdd /> Add Page
-      </button>
+        <template #summary>
+          <h2>Content Pages</h2>
+        </template>
+
+        <div class="mb-6 mt-4">
+          <ul class="bg-white shadow-md rounded-lg">
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
+          </ul>
+        </div>
+      </UiAccordionItem>
+      <UiAccordionItem
+        v-model="productPagesOpen"
+        data-testid="product-pages-section"
+        summary-active-class="bg-neutral-100 border-t-0"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
+      >
+        <template #summary>
+          <h2>Product Categories</h2>
+        </template>
+
+        <div class="mb-6 mt-4">
+          <ul class="bg-white shadow-md rounded-lg">
+            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
+          </ul>
+        </div>
+      </UiAccordionItem>
     </div>
 
-    <UiAccordionItem
-      v-model="contentPagesOpen"
-      data-testid="content-pages-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
-    >
-      <template #summary>
-        <h2>Content Pages</h2>
-      </template>
-
-      <div class="mb-6 mt-4">
-        <ul class="bg-white shadow-md rounded-lg">
-          <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
-        </ul>
-      </div>
-    </UiAccordionItem>
-    <UiAccordionItem
-      v-model="productPagesOpen"
-      data-testid="product-pages-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
-    >
-      <template #summary>
-        <h2>Product Categories</h2>
-      </template>
-
-      <div class="mb-6 mt-4">
-        <ul class="bg-white shadow-md rounded-lg">
-          <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
-        </ul>
-      </div>
-    </UiAccordionItem>
+    <CategorySettingsDrawer v-if="settingsCategory" />
   </div>
 </template>
 
@@ -62,13 +66,11 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
-const { $i18n } = useNuxtApp();
-const currentLocale = ref($i18n.locale.value);
-
+const { locale } = useI18n();
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
-const { closeDrawer, togglePageModal } = useSiteConfiguration();
+const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
@@ -90,13 +92,17 @@ const splitItemsByType = (items: MenuItemType[]) => {
   return result;
 };
 const { contentItems, itemItems } = splitItemsByType(pages.value);
+
 const openHelpPage = () => {
   const urls = {
     en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = currentLocale.value === 'de' ? urls.de : urls.en;
-  window.open(targetUrl, '_blank');
+  const targetUrl = locale.value in urls ? urls[locale.value] : null;
+
+  if (targetUrl) {
+    window.open(targetUrl, '_blank');
+  }
 };
 </script>

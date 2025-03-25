@@ -1,21 +1,17 @@
 # Changelog PlentyONE Shop
 
-# v1.x.x (yyyy-mm-dd)
-
-### Neu
-
-- Einträge für Seiten im linken Seitenmenü hinzugefügt, wo Benutzer ihre Seiten verwalten können.
-- Design für das Hinzufügen einer neuen Seite implementiert.
+# v1.12.1 (2025-03-24) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert
 
-- Schaltfläche "Seiten verwalten" in der Editor-Symbolleiste hinzugefügt.
-- Der Editor verfügt jetzt über eine neue Komponente, die die Seitennavigation ermöglicht.
+- Die Konfiguration von `useSdk` und das SDK werden nun von `@plentymarkets/shop-core` verwaltet und exportiert. Mit dieser Änderung wurde `@vue-storefront/nuxt` entfernt. Es gibt keine "Breaking-Changes".
 
 ### 🩹 Behoben
 
-- Zustand des Seitenselektors behoben.
-- Seitenselektor schließt sich nun, wenn außerhalb der Box geklickt wird.
+- Behebung der Anzeige einer großen Anzahl von Kategorien in der Navigationsleiste.
+- Behebung der E-Mail-Validierung im Checkout.
+- Behebung des fehlenden Versanddatums auf der Seite "Meine Bestellungen".
+- Behebung eines Fehlers beim Bereitstellen des Shops. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 

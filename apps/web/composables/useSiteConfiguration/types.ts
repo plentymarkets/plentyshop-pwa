@@ -1,5 +1,6 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView =
   | 'SettingsView'
   | 'blocksList'
@@ -8,6 +9,7 @@ export type DrawerView =
   | 'PagesView'
   | 'blocksSettings'
   | null;
+export type SettingsType = 'general-settings' | 'seo-settings' | null;
 export type SelectedFont = { caption: string; value: string };
 export type ConfigurationSettings = {
   blockSize: string;
@@ -19,6 +21,8 @@ export type ConfigurationSettings = {
 export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
+  settingsCategory: CategoryTreeItem | null;
+  settingsType: SettingsType;
   drawerOpen: boolean;
   pageModalOpen: boolean;
   newBlockPosition: number;
@@ -42,11 +46,14 @@ export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
+export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
 
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
+  settingsCategory: Readonly<Ref<UseSiteConfigurationState['settingsCategory']>>;
+  settingsType: Readonly<Ref<UseSiteConfigurationState['settingsType']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
   blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
@@ -67,6 +74,7 @@ export interface UseSiteConfiguration {
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
   togglePageModal: TogglePageModal;
+  setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
 }
