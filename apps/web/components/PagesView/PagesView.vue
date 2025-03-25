@@ -66,9 +66,7 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
-const { $i18n } = useNuxtApp();
-const currentLocale = ref($i18n.locale.value);
-
+const { locale } = useI18n();
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
@@ -94,13 +92,17 @@ const splitItemsByType = (items: MenuItemType[]) => {
   return result;
 };
 const { contentItems, itemItems } = splitItemsByType(pages.value);
+
 const openHelpPage = () => {
   const urls = {
     en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = currentLocale.value === 'de' ? urls.de : urls.en;
-  window.open(targetUrl, '_blank');
+  const targetUrl = locale.value in urls ? urls[locale.value] : null;
+
+  if (targetUrl) {
+    window.open(targetUrl, '_blank');
+  }
 };
 </script>

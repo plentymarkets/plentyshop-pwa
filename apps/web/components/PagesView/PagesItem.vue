@@ -8,7 +8,10 @@
       <span v-if="item.children && item.children.length > 0">
         <SfIconExpandMore />
       </span>
-      <router-link :to="item.path" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+      <router-link
+        :to="`${localePrefix}${item.path}`"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+      >
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
@@ -52,6 +55,9 @@ import {
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+
+const { locale } = useI18n();
+const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
 const { item } = defineProps<{
   item: MenuItemType;
