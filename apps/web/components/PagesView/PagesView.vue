@@ -4,7 +4,7 @@
       <header class="flex items-center justify-between px-4 py-5 border-b">
         <div class="flex items-center text-xl font-bold">
           Pages
-          <SfTooltip label="Open manual" placement="left" :show-arrow="true" class="flex">
+          <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
             <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
           /></SfTooltip>
         </div>

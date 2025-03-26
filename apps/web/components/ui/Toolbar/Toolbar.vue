@@ -64,6 +64,7 @@ const { isDrawerOpen } = useDrawerState();
 
 const { data, loading, cleanData } = useCategoryTemplate();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
+
 const { save } = useToolbar();
 const { getBlocksLists } = useBlockManager();
 
