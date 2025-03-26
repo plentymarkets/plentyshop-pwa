@@ -47,19 +47,19 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
 
   const categorySettingsIsDirty = computed(() => {
     return (
-      state.value.id !== state.value.initialData.id ||
-      state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
-      state.value.sitemap !== state.value.initialData.sitemap ||
-      state.value.linkList !== state.value.initialData.linkList ||
-      state.value.name !== state.value.initialData.name ||
+      // state.value.id !== state.value.initialData.id ||
+      // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
+      // state.value.sitemap !== state.value.initialData.sitemap ||
+      // state.value.linkList !== state.value.initialData.linkList ||
+      // state.value.name !== state.value.initialData.name ||
       state.value.canonicalLink !== state.value.initialData.canonicalLink ||
-      state.value.position !== state.value.initialData.position ||
+      // state.value.position !== state.value.initialData.position ||
       state.value.title !== state.value.initialData.title ||
       state.value.description !== state.value.initialData.description ||
       state.value.keywords !== state.value.initialData.keywords ||
-      state.value.robots !== state.value.initialData.robots ||
-      state.value.canonical !== state.value.initialData.canonical ||
-      state.value.includeSitemap !== state.value.initialData.includeSitemap
+      state.value.robots !== state.value.initialData.robots
+      // state.value.canonical !== state.value.initialData.canonical ||
+      // state.value.includeSitemap !== state.value.initialData.includeSitemap
     );
   });
 
@@ -83,24 +83,24 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       },
       {
         key: 'parentCategoryId',
-        value: '16',
+        value: state.value.parentCategoryId?.toString() || '',
       },
       {
         key: 'sitemap',
-        value: 'sitemap',
+        value: state.value.sitemap,
       },
 
       {
         key: 'linkList',
-        value: 'linkList',
+        value: state.value.linkList,
       },
       {
         key: 'name',
-        value: 'name',
+        value: state.value.name,
       },
       {
         key: 'canonicalLink',
-        value: 'canonicalLink',
+        value: state.value.canonicalLink,
       },
       {
         key: 'position',
@@ -108,27 +108,27 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       },
       {
         key: 'title',
-        value: 'title',
+        value: state.value.title,
       },
       {
         key: 'description',
-        value: 'description',
+        value: state.value.description,
       },
       {
         key: 'keywords',
-        value: 'keywords',
+        value: state.value.keywords,
       },
       {
         key: 'robots',
-        value: 'robots',
+        value: state.value.robots,
       },
       {
         key: 'canonical',
-        value: 'canonical',
+        value: state.value.canonical,
       },
       {
         key: 'includeSitemap',
-        value: 'includeSitemap',
+        value: state.value.includeSitemap.toString(),
       },
     ];
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));

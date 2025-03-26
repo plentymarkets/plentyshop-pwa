@@ -24,7 +24,7 @@
         </button>
       </div>
 
-      <div class="mx-4 mb-4 mt-4">
+      <!-- <div class="mx-4 mb-4 mt-4">
         <button
           type="button"
           data-testid="add-page-btn"
@@ -33,21 +33,22 @@
         >
           <SfIconAdd /> Save Settings
         </button>
-      </div>
-      <!--
+      </div> -->
+
       <div class="mx-4 mb-4 mt-4">
         <button
           type="button"
           variant="primary"
           data-testid="add-page-btn"
-          class=" border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
-          :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
-          :disabled="!isTouched || settingsLoading"
-          @click="togglePageModal(true)"
+          class="border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          :class="{ 'opacity-40 cursor-not-allowed': !isTouched }"
+          :disabled="!isTouched"
+          @click="saveCategorySettings"
         >
-          <SfIconAdd /> Save Settings
+          <SfIconPackage />
+          Save Settings
         </button>
-      </div> -->
+      </div>
 
       <UiAccordionItem
         v-model="contentPagesOpen"
@@ -61,7 +62,8 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />          </ul>
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
+          </ul>
         </div>
       </UiAccordionItem>
       <UiAccordionItem
@@ -88,7 +90,7 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
+import { SfIconPackage, SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
 const { locale } = useI18n();
 const { pages } = await usePages();
@@ -96,9 +98,9 @@ const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 
-
 const { categorySettingsIsDirty, saveCategorySettings } = useCategorySettings();
 
+const isTouched = computed(() => categorySettingsIsDirty.value);
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {

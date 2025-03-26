@@ -117,7 +117,7 @@
             <SfInput v-model="canonical" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="canonical" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="canonicalLink" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -139,15 +139,18 @@
 </template>
 
 <script setup lang="ts">
+
 import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
-const title = ref('Title');
-const description = ref('Description');
-const keywords = ref('Keywords');
+const { title , description, keywords, robots, canonicalLink} = useCategorySettings();
+
+// const title = ref('Title');
+// const description = ref('Description');
+// const keywords = ref('Keywords');
 const canonical = ref('Canonical');
 const includeSitemap = ref(false);
-const robots = ref('all');
+// const robots = ref('all');
 const robotsDropdown = ref(false);
 const metaData = ref(false);
 const furtherSettings = ref(false);
