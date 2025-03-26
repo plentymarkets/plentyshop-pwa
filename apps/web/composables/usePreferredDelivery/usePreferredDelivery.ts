@@ -89,13 +89,15 @@ export const usePreferredDelivery = () => {
     state.value.data.day.value = state.value.data.preferredDays.find((day) => day.date)?.date ?? '';
   };
 
+  const shippingMethodHasPreferredDelivery = computed(() => {
+    const shippingProfileId = Number(shippingProviderGetters.getShippingProfileId(cartData.value));
+    return shippingProfileId in state.value.data.preferredProfiles;
+  });
+
   const preferredDeliveryAvailable = computed(
     () =>
       countryHasDelivery.value &&
-      Object.prototype.hasOwnProperty.call(
-        state.value.data.preferredProfiles,
-        Number(shippingProviderGetters.getShippingProfileId(cartData.value)),
-      ) &&
+      shippingMethodHasPreferredDelivery.value &&
       (state.value.data.day.enabled || state.value.data.location.enabled || state.value.data.neighbour.enabled),
   );
 
@@ -210,6 +212,7 @@ export const usePreferredDelivery = () => {
   return {
     validationSchema,
     dayCheckboxChange,
+    shippingMethodHasPreferredDelivery,
     preferredDeliveryAvailable,
     getPreferredProfiles,
     getPreferredDeliveryServices,

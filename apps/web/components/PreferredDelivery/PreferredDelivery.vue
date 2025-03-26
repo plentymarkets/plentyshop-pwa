@@ -161,6 +161,7 @@ const {
   isDayChecked,
   submitForm,
   validationSchema,
+  shippingMethodHasPreferredDelivery,
   preferredDeliveryAvailable,
 } = usePreferredDelivery();
 const { defineField, errors, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
@@ -168,7 +169,6 @@ const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Ship
 
 onNuxtReady(async () => {
   await getPreferredProfiles();
-  await getPreferredDeliveryServices();
 });
 
 const [locationValue, locationValueAttributes] = defineField('location.value');
@@ -215,6 +215,10 @@ watch(
     if (newZip !== oldZip) getPreferredDeliveryServices();
   },
 );
+
+watch(shippingMethodHasPreferredDelivery, async (newValue) => {
+  if (newValue) await getPreferredDeliveryServices();
+});
 
 const validateAndSubmitForm = async () => {
   const formData = await validate();
