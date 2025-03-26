@@ -21,7 +21,7 @@
         {{ item.name }}
       </router-link>
       <SfTooltip
-        v-if=" isTouched"
+        v-if="showFormWarning && isTouched"
         label="You have unsaved changes on this page"
         :placement="'top'"
         :show-arrow="true"
@@ -36,7 +36,7 @@
           <div
             class="p-1 flex"
             @click="
-              openGeneralSettings();
+              openGeneralSettings(item.id);
               setPageId(item.id, parentId);
             "
           >
@@ -46,7 +46,7 @@
           <div
             class="p-1 flex"
             @click="
-              openSeoSettings();
+              openSeoSettings(item.id);
               setPageId(item.id, parentId);
             "
           >
@@ -91,7 +91,8 @@ const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 const { categorySettingsIsDirty } = useCategorySettings();
 
-const isTouched = computed(() => categorySettingsIsDirty.value);
+const currentSeoPageId = ref<number | null>(null);
+const currentGeneralPageId = ref<number | null>(null);
 
 const { item } = defineProps<{
   item: MenuItemType;
@@ -108,14 +109,25 @@ const toggle = () => (open.value = !open.value);
 const route = useRoute();
 const isActive = computed(() => route.path === item.path);
 
-const openGeneralSettings = () => {
+const openGeneralSettings = (id: number) => {
   close();
+  currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-settings');
 };
-const openSeoSettings = () => {
+
+const openSeoSettings = (id: number) => {
   close();
+  currentSeoPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
 };
+
+
+const isTouched = computed(() => categorySettingsIsDirty.value);
+
+const showFormWarning = computed(() => {
+  return(currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id );
+});
+
 const deletePage = () => {
   close();
 };

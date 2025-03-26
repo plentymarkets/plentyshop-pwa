@@ -24,7 +24,7 @@
           </div>
           <label>
             <SfInput
-              v-model="data.id"
+              v-model="id"
               type="text"
               data-testid="page-id"
               wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1"
@@ -129,7 +129,7 @@
             <SfInput v-model="data.nameUrl" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="data.nameUrl" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="canonical" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -166,7 +166,11 @@ const basicSettingsOpen = ref(false);
 const displayInHeader = ref(true);
 const loginNecessary = ref(true);
 
+const { id, canonical } = useCategorySettings();
+
+
 const data = {
+
   id: 21,
   type: 'content',
   right: 'all',
