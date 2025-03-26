@@ -1079,6 +1079,7 @@
       "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
       "setPackstation": "Übernehmen",
       "moreDetails": "Details",
+      "postNumberPlaceholder": "Postnumber",
       "packstationAddedSuccessMessage": "Die Packstation/Postfiliale wurde als Lieferadresse übernommen.",
       "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",
       "postnumberRequired": "Die Postnummer ist eine Pflichtangabe. Bitte geben Sie Ihre DHL Postnummer ein.",
