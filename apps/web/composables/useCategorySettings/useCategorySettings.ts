@@ -51,14 +51,14 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
       // state.value.sitemap !== state.value.initialData.sitemap ||
       // state.value.linkList !== state.value.initialData.linkList ||
-      // state.value.name !== state.value.initialData.name ||
+       state.value.name !== state.value.initialData.name ||
+            // state.value.canonical !== state.value.initialData.canonical
       state.value.canonicalLink !== state.value.initialData.canonicalLink ||
       // state.value.position !== state.value.initialData.position ||
       state.value.title !== state.value.initialData.title ||
       state.value.description !== state.value.initialData.description ||
       state.value.keywords !== state.value.initialData.keywords ||
       state.value.robots !== state.value.initialData.robots
-      // state.value.canonical !== state.value.initialData.canonical ||
       // state.value.includeSitemap !== state.value.initialData.includeSitemap
     );
   });

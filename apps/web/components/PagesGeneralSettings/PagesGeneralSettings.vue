@@ -24,7 +24,6 @@
           </div>
           <label>
             <SfInput
-              v-model="id"
               type="text"
               data-testid="page-id"
               wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1"
@@ -78,10 +77,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.name" type="text" data-testid="page-name">
+            <SfInput v-model="name" type="text" data-testid="page-name">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="data.name" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="name" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -129,7 +128,7 @@
             <SfInput v-model="data.nameUrl" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="canonical" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="data.nameUrl" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -166,11 +165,9 @@ const basicSettingsOpen = ref(false);
 const displayInHeader = ref(true);
 const loginNecessary = ref(true);
 
-const { id, canonical } = useCategorySettings();
-
+const { name } = useCategorySettings();
 
 const data = {
-
   id: 21,
   type: 'content',
   right: 'all',

@@ -121,11 +121,10 @@ const openSeoSettings = (id: number) => {
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
 };
 
-
 const isTouched = computed(() => categorySettingsIsDirty.value);
 
 const showFormWarning = computed(() => {
-  return(currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id );
+  return currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id;
 });
 
 const deletePage = () => {
