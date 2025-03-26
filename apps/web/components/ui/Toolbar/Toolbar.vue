@@ -33,7 +33,7 @@
           :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
           :disabled="!isTouched || settingsLoading"
           data-testid="edit-save-button"
-          @click="saveCategorySettings"
+          @click="save"
         >
           <template v-if="loading">
             <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px] md:mr-[10px]" />
@@ -62,14 +62,12 @@ const { isDrawerOpen } = useDrawerState();
 
 const { loading } = useHomepage();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
-const {  categorySettingsIsDirty } = useCategorySettings();
-// const { save } = useToolbar();
-const { saveCategorySettings } = useCategorySettings();
+const { save } = useToolbar();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
-const isTouched = computed(() => categorySettingsIsDirty.value|| settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
-
+// const isTouched = computed(() => categorySettingsIsDirty.value|| settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
+const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
   closeDrawer();
