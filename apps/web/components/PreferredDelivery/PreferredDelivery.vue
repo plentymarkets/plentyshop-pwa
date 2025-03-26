@@ -6,12 +6,12 @@
     <header class="w-full">
       <NuxtImg
         ref="img"
-        src="/_nuxt-plenty/images/preferredDelivery/icon_plugin_sm.png"
+        src="/_nuxt-plenty/images/preferredDelivery/plugin-icon.svg"
         alt="dhl logo"
         width="256"
         height="auto"
         loading="lazy"
-        class="block rounded-lg"
+        class="block rounded-lg bg-[rgb(255,204,0)] p-3"
       />
       <h3 class="font-bold mt-4">{{ $t('PreferredDelivery.general.wunschpaketTitle') }}</h3>
     </header>
@@ -54,7 +54,7 @@
               @click="handleDayChange(index)"
             />
             <span
-              class="h-20 flex flex-col items-center justify-center py-4 px-1 cursor-pointer rounded-md border border-neutral-200 -outline-offset-2 hover:border-primary-50 hover:bg-primary-50 active:border-[rgb(255,204,0)] active:bg-[rgb(255,204,0)] peer-checked:border-[rgb(255,204,0)] peer-checked:bg-[rgb(255,204,0)] peer-disabled:opacity-50 peer-disabled:bg-neutral-100 peer-disabled:border-neutral-200 peer-disabled:cursor-not-allowed peer-disabled:[&_img]:grayscale select-none"
+              class="h-20 flex flex-col items-center justify-center py-4 px-1 cursor-pointer rounded-md border border-neutral-200 -outline-offset-2 hover:border-primary-50 hover:bg-primary-50 active:border-[rgb(255,204,0)] active:bg-[rgb(255,204,0)] peer-checked:border-[rgb(255,204,0)] peer-checked:bg-[rgb(255,204,0)] peer-disabled:opacity-50 peer-disabled:bg-neutral-100 peer-disabled:border-neutral-200 peer-disabled:cursor-not-allowed select-none"
             >
               {{ `${day.dayName} ${day.dayNumber}` }}
             </span>
