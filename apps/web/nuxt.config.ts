@@ -46,7 +46,7 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   image: {
-    provider: 'none'
+    provider: 'none',
   },
   site: {
     url: '',
