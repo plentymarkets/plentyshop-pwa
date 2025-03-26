@@ -12,6 +12,8 @@ import { object, string } from 'yup';
 export const usePreferredDelivery = () => {
   const { $i18n } = useNuxtApp();
   const { countryHasDelivery, checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
+  // const { selectedMethod } = useCartShippingMethods();
+  const { data: cartData } = useCart();
 
   const state = useState('usePreferredDelivery', () => ({
     loading: false,
@@ -91,6 +93,10 @@ export const usePreferredDelivery = () => {
   const preferredDeliveryAvailable = computed(
     () =>
       countryHasDelivery.value &&
+      Object.prototype.hasOwnProperty.call(
+        state.value.data.preferredProfiles,
+        Number(shippingProviderGetters.getShippingProfileId(cartData.value)),
+      ) &&
       (state.value.data.day.enabled || state.value.data.location.enabled || state.value.data.neighbour.enabled),
   );
 
@@ -104,7 +110,6 @@ export const usePreferredDelivery = () => {
   };
 
   const getPreferredDeliveryServices = async () => {
-    const { data: cartData } = useCart();
     const shippingProfileId = Number(shippingProviderGetters.getShippingProfileId(cartData.value));
 
     try {
@@ -176,7 +181,6 @@ export const usePreferredDelivery = () => {
 
     if (usingPreferredDay.value) {
       parameters.preferredDay = state.value.data.day.value;
-      parameters.surcharge = state.value.data.additionalCharge ? state.value.data.additionalCharge.toString() : '';
     }
 
     if (usingPreferredLocation.value) {
