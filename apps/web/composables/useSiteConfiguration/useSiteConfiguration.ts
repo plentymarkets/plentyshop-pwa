@@ -10,7 +10,7 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing site configuration.
@@ -35,7 +35,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     drawerView: null,
     blockType: '',
-    blockIndex: 0,
+    blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
@@ -103,16 +103,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   );
 
-  const openDrawerWithView = (view: DrawerView, type: string = '', blockIndex: number = 0) => {
-    const { setIndex } = useHomepage();
-
-    setIndex(blockIndex, 0);
+  const openDrawerWithView = (view: DrawerView, block?: Block) => {
+    if (block) {
+      state.value.blockType = block.name;
+      state.value.blockUuid = block.meta.uuid;
+    }
 
     state.value.drawerView = view;
     state.value.drawerOpen = true;
-
-    state.value.blockType = type;
-    state.value.blockIndex = blockIndex;
 
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
