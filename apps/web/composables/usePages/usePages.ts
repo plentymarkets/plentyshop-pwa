@@ -4,7 +4,13 @@ export const usePages = async () => {
   const { data } = useCategoryTree();
 
   const pages = useState<
-    { name: string; path: string; children?: { name: string; path: string }[]; type: string | undefined }[]
+    {
+      id: number;
+      name: string;
+      path: string;
+      children?: { id: number; name: string; path: string }[];
+      type: string | undefined;
+    }[]
   >('pages', () => []);
 
   const transformCategoryTreeToPages = () => {
@@ -12,7 +18,13 @@ export const usePages = async () => {
       data: CategoryTreeItem[],
       parentPath = '',
       isRoot = true,
-    ): { name: string; path: string; children?: { name: string; path: string }[]; type: string | undefined }[] => {
+    ): {
+      id: number;
+      name: string;
+      path: string;
+      children?: { id: number; name: string; path: string }[];
+      type: string | undefined;
+    }[] => {
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
@@ -24,6 +36,7 @@ export const usePages = async () => {
           const children = item.children ? transformData(item.children, currentPath, false) : undefined;
 
           return {
+            id: item.id,
             name: item.details[0].name,
             path: currentPath,
             children,
@@ -34,6 +47,7 @@ export const usePages = async () => {
 
       if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
         transformedData.unshift({
+          id: 1,
           name: t('homepage.title'),
           path: '/',
           children: undefined,
@@ -42,9 +56,10 @@ export const usePages = async () => {
       }
 
       return transformedData as {
+        id: number;
         name: string;
         path: string;
-        children?: { name: string; path: string }[] | undefined;
+        children?: { id: number; name: string; path: string }[] | undefined;
         type: string;
       }[];
     };

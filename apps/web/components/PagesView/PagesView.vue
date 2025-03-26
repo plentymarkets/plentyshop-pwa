@@ -24,6 +24,31 @@
         </button>
       </div>
 
+      <div class="mx-4 mb-4 mt-4">
+        <button
+          type="button"
+          data-testid="add-page-btn"
+          class="border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button opacity-40 cursor-not-allowed"
+          @click="saveCategorySettings"
+        >
+          <SfIconAdd /> Save Settings
+        </button>
+      </div>
+      <!--
+      <div class="mx-4 mb-4 mt-4">
+        <button
+          type="button"
+          variant="primary"
+          data-testid="add-page-btn"
+          class=" border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
+          :disabled="!isTouched || settingsLoading"
+          @click="togglePageModal(true)"
+        >
+          <SfIconAdd /> Save Settings
+        </button>
+      </div> -->
+
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"
@@ -36,8 +61,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
-          </ul>
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />          </ul>
         </div>
       </UiAccordionItem>
       <UiAccordionItem
@@ -52,7 +76,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -71,6 +95,10 @@ const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+
+
+const { categorySettingsIsDirty, saveCategorySettings } = useCategorySettings();
+
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
