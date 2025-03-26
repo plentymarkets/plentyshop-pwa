@@ -14,6 +14,7 @@
 
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
+- Changed the button icon and label for exiting the editor.
 
 ### 🩹 Fixed
 
