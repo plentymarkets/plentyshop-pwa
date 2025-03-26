@@ -12,7 +12,6 @@ import { object, string } from 'yup';
 export const usePreferredDelivery = () => {
   const { $i18n } = useNuxtApp();
   const { countryHasDelivery, checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
-  // const { selectedMethod } = useCartShippingMethods();
   const { data: cartData } = useCart();
 
   const state = useState('usePreferredDelivery', () => ({
