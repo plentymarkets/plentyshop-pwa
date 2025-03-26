@@ -66,7 +66,6 @@ const { save } = useToolbar();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
-// const isTouched = computed(() => categorySettingsIsDirty.value|| settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
