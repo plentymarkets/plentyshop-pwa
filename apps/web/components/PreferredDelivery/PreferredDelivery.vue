@@ -167,9 +167,7 @@ const {
 const { defineField, errors, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
 
-onNuxtReady(async () => {
-  await getPreferredProfiles();
-});
+onNuxtReady(() => getPreferredProfiles());
 
 const [locationValue, locationValueAttributes] = defineField('location.value');
 const [neighbourName, neighbourNameAttributes] = defineField('neighbour.name');
@@ -187,7 +185,7 @@ const resetPreferredOption = (option: PreferredOptionTypes) => {
   neighbourAddress.value = '';
 };
 
-const toggleOption = (option: 'location' | 'neighbour') => {
+const toggleOption = (option: PreferredOptionTypes) => {
   if (!data.value[option].checked) resetPreferredOption(option);
 
   if (data.value.location.checked && data.value.neighbour.checked) {
@@ -212,12 +210,12 @@ watch([neighbourName, neighbourAddress], ([newNeighbourName, newNeighbourAddress
 watch(
   () => shippingAddress.value.zipCode,
   (newZip, oldZip) => {
-    if (newZip !== oldZip) getPreferredDeliveryServices();
+    if (shippingMethodHasPreferredDelivery.value && newZip !== oldZip) getPreferredDeliveryServices();
   },
 );
 
-watch(shippingMethodHasPreferredDelivery, async (newValue) => {
-  if (newValue) await getPreferredDeliveryServices();
+watch(shippingMethodHasPreferredDelivery, (statusUpdated) => {
+  if (statusUpdated) getPreferredDeliveryServices();
 });
 
 const validateAndSubmitForm = async () => {

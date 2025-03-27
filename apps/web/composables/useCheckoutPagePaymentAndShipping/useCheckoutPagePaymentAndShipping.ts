@@ -37,6 +37,12 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const selectedPaymentId = computed(() => cart?.value?.methodOfPaymentId || 0);
 
   const handleShippingMethodUpdate = async (shippingMethodId: string) => {
+    const existingShippingMethod = selectedShippingMethod.value
+      ? shippingProviderGetters.getParcelServicePresetId(selectedShippingMethod.value)
+      : null;
+
+    if (existingShippingMethod === shippingMethodId) return;
+
     await saveShippingMethod(Number(shippingMethodId));
     await fetchPaymentMethods();
     await getCart();
@@ -45,6 +51,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
       selectedShippingMethod.value,
       selectedPaymentId.value,
     );
+
     const isPaymentMethodUnavailable = paymentProviderGetters.isPaymentMethodUnavailable(
       paymentMethods.value.list,
       selectedPaymentId.value,
