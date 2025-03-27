@@ -46,6 +46,7 @@ export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
+export type ToggleDeleteModal = (value: boolean) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
 
 export interface UseSiteConfiguration {
@@ -75,6 +76,7 @@ export interface UseSiteConfiguration {
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
   togglePageModal: TogglePageModal;
+  toggleDeleteModal: ToggleDeleteModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;

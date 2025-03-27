@@ -178,15 +178,12 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const togglePageModal = (value: boolean) => {
-    // state.value.pageModalOpen = value;
+    state.value.pageModalOpen = value;
+  };
+
+  const toggleDeleteModal = (value: boolean) => {
     state.value.unlinkModalOpen = value;
-  };
-
-  const setSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => {
-    state.value.settingsType = settingsType || null;
-    state.value.settingsCategory = category;
-  };
-
+  }
   const setSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => {
     state.value.settingsType = settingsType || null;
     state.value.settingsCategory = category;
@@ -205,5 +202,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
+    toggleDeleteModal
   };
 };
