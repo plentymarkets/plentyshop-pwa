@@ -183,7 +183,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const toggleDeleteModal = (value: boolean) => {
     state.value.unlinkModalOpen = value;
-  }
+  };
   const setSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => {
     state.value.settingsType = settingsType || null;
     state.value.settingsCategory = category;
@@ -202,6 +202,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
-    toggleDeleteModal
+    toggleDeleteModal,
   };
 };

@@ -17,11 +17,7 @@
     <p class="mb-6">{{ pageName }} page will be deleted</p>
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
-        <button
-          type="button"
-          data-testid="delete-btn"
-          class=" bg-editor-danger w-full py-2 rounded-md text-white"
-        >
+        <button type="button" data-testid="delete-btn" class="bg-editor-danger w-full py-2 rounded-md text-white">
           Delete page
         </button>
         <button
@@ -29,7 +25,7 @@
           data-testid="another-action-btn"
           class="border border-editor-button w-full py-2 rounded-md text-editor-button"
         >
-          Delete only {{language}} translations
+          Delete only {{ language }} translations
         </button>
         <button
           type="submit"
@@ -79,12 +75,15 @@ watch(
   },
   { immediate: true },
 );
-watch(locale, (newLocale) => {
-  language.value = (newLocale === 'en') ? 'english' : 'german';
-}, { immediate: true });
+watch(
+  locale,
+  (newLocale) => {
+    language.value = newLocale === 'en' ? 'english' : 'german';
+  },
+  { immediate: true },
+);
 
 const closeModal = () => {
-  toggleDeleteModal(false)
+  toggleDeleteModal(false);
 };
-console.log("lang", locale.value)
 </script>

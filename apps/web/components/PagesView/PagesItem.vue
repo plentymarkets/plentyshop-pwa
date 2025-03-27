@@ -102,7 +102,7 @@ const openSeoSettings = (id: number) => {
 };
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;
-  toggleDeleteModal(true)
+  toggleDeleteModal(true);
   close();
 };
 </script>
