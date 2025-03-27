@@ -1,7 +1,7 @@
 <template>
-  <ClientOnly>
+  <NuxtErrorBoundary>
     <Swiper
-      :key="index"
+      :key="`${index}`"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -11,8 +11,8 @@
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
     >
-      <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
-        <BlocksBannerCarouselBanner :banner-props="bannerItem" :index="slideIndex" :root-index="index" />
+      <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
+        <slot name="content" :content-block="banner" :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'" />
       </SwiperSlide>
       <div
         v-if="enableModules"
@@ -24,46 +24,43 @@
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
-      :style="{ color: controls.color + ' !important' }"
+      :style="{ color: configuration.controls.color + ' !important' }"
     />
     <div
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       :class="`swiper-button-next swiper-button-next-${index}`"
-      :style="{ color: controls.color + ' !important' }"
+      :style="{ color: configuration.controls.color + ' !important' }"
     />
-    <template #fallback>
-      <BlocksBannerCarouselBannerSkeleton />
-    </template>
-  </ClientOnly>
+  </NuxtErrorBoundary>
 </template>
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import type { BannerProps } from './types';
+import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
-import type { SlideControls } from '~/composables/useHomepage/types';
 
-const { activeSlideIndex, setIndex } = useHomepage();
-const { handleArrows } = useCarousel();
-const { bannerItems, index, controls } = defineProps<{
-  bannerItems: BannerProps[];
-  controls: SlideControls;
-  index: number;
-}>();
-const enableModules = computed(() => bannerItems.length > 1);
+const { activeSlideIndex, setIndex } = useCarousel();
+const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
+
+const handleArrows = () => {
+  const viewport = useViewport();
+  return !viewport.isLessThan('md');
+};
+
+const enableModules = computed(() => content.length > 1);
 
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
-  return enableModules.value && controls.color
+  return enableModules.value && configuration.controls.color
     ? {
         el: `.swiper-pagination-${index}`,
         clickable: true,
         bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary-500',
         renderBullet(index: number, className: string) {
-          return `<span key="dot-${index}" class="${className}" style="background-color: ${controls.color}!important;"></span>`;
+          return `<span key="dot-${index}" class="${className}" style="background-color: ${configuration.controls.color}!important;"></span>`;
         },
       }
     : false;
@@ -81,20 +78,20 @@ const navigationConfig = computed(() => {
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
 
-  setIndex(index, swiper.realIndex);
+  setIndex(meta.uuid, swiper.realIndex);
 };
 
 const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeSlideIndex.value[index]) {
+  if (swiper.realIndex !== activeSlideIndex.value[meta.uuid]) {
     await nextTick();
     swiper.update();
 
-    setIndex(index, swiper.realIndex);
+    setIndex(meta.uuid, swiper.realIndex);
   }
 };
 
 watch(
-  () => activeSlideIndex.value[index],
+  () => activeSlideIndex.value[meta.uuid],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
       slider.update();
@@ -105,7 +102,7 @@ watch(
 );
 
 watch(
-  () => controls.color,
+  () => configuration.controls.color,
   (newColor, oldColor) => {
     if (slider && !slider.destroyed && newColor !== oldColor) {
       slider.pagination.render();

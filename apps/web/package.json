@@ -1,8 +1,9 @@
 {
   "name": "web",
   "type": "module",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "private": true,
+  "license": "BSD-3-Clause",
   "scripts": {
     "build": "tsx ./build/index.ts && nuxt build",
     "dev": "tsx ./build/index.ts && nuxt dev",

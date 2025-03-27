@@ -28,19 +28,21 @@ describe('Text Card Block Form', () => {
         .clear({ force: true })
         .type(text, { delay: 0, force: true });
     });
-    cy.get('[data-testid="text-card"]').scrollIntoView().should('exist');
-    cy.get('[data-testid="text-card"]').within(() => {
-      const expectedTexts = [
-        { selector: 'text-pretitle', text: 'Edited Pre-title' },
-        { selector: 'text-title', text: 'Edited Main Title' },
-        { selector: 'text-subtitle', text: 'Edited Subtitle' },
-        { selector: 'text-html', text: 'Edited HTML Description' },
-      ];
+    cy.get('[data-testid="text-card"]').first().scrollIntoView().should('exist');
+    cy.get('[data-testid="text-card"]')
+      .first()
+      .within(() => {
+        const expectedTexts = [
+          { selector: 'text-pretitle', text: 'Edited Pre-title' },
+          { selector: 'text-title', text: 'Edited Main Title' },
+          { selector: 'text-subtitle', text: 'Edited Subtitle' },
+          { selector: 'text-html', text: 'Edited HTML Description' },
+        ];
 
-      expectedTexts.forEach(({ selector, text }) => {
-        cy.get(`[data-testid="${selector}"]`).should('have.text', text);
+        expectedTexts.forEach(({ selector, text }) => {
+          cy.get(`[data-testid="${selector}"]`).should('have.text', text);
+        });
       });
-    });
   };
   const changeTextColor = () => {
     cy.get('[data-testid="input-text-color"]').should('exist').clear().type('rgb(121, 12, 12)', { delay: 0 });
@@ -86,6 +88,12 @@ describe('Text Card Block Form', () => {
   };
 
   beforeEach(() => {
+    cy.clearCookies();
+    cy.setCookie('vsf-locale', 'en');
+    cy.setCookie(
+      'consent-cookie',
+      '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+    );
     cy.visitAndHydrate(paths.home);
     openSettingsForTextCardBlock();
   });

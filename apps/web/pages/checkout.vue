@@ -22,6 +22,7 @@
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <PreferredDelivery v-if="countryHasDelivery" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -58,7 +59,8 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
-
+const { isGuest, isAuthorized, validGuestEmail, backToContactInformation } = useCustomer();
+const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
 const {
   cart,
   cartIsEmpty,

@@ -1,8 +1,8 @@
 {
   "name": "@plentymarkets/plentyshop-pwa",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "private": true,
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "workspaces": [
     "apps/*"
   ],
