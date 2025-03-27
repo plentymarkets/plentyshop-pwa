@@ -182,6 +182,7 @@ export const usePreferredDelivery = () => {
 
     if (usingPreferredDay.value) {
       parameters.preferredDay = state.value.data.day.value;
+      parameters.surcharge = state.value.data.additionalCharge ? state.value.data.additionalCharge.toString() : '';
     }
 
     if (usingPreferredLocation.value) {
