@@ -176,13 +176,24 @@ interface PageOption {
 }
 const selectedPage = ref<PageOption | null>(null);
 const { getPageId, getParentCategoryId } = useCategorySettings();
-const findPageById = (id: number | string) => {
-  return pages.value.find((page) => page.id === id);
+const findPageById = (id: number | string, pagesList: Page[]): Page | undefined => {
+  for (const page of pagesList) {
+    if (page.id === id) {
+      return page;
+    }
+    if (page.children) {
+      const foundPage = findPageById(id, page.children);
+      if (foundPage) {
+        return foundPage;
+      }
+    }
+  }
+  return undefined;
 };
 watch(
   () => getPageId.value,
   (newId) => {
-    const foundPage = findPageById(newId);
+    const foundPage = findPageById(newId, pages.value);
     if (foundPage) {
       id.value = foundPage.id;
       type.value = foundPage.type || '';
