@@ -3,8 +3,6 @@ export const useToolbar = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const homepageCategoryId = useRuntimeConfig().public.homepageCategoryId;
-  const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const {  categorySettingsIsDirty, saveCategorySettings } = useCategorySettings();
@@ -13,19 +11,23 @@ export const useToolbar = () => {
   const save = async () => {
     const messageList: string[] = [];
     let hasError = false;
+    let saved = null;
     const errorMessage = $i18n.t('errorMessages.editor.save.error');
 
-    const handleSave = async (saveFunction: () => Promise<boolean>, successMessage: string) => {
-      const saved = await saveFunction();
+    const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
+      saved = await saveFunction();
+
       if (saved) {
-        messageList.push(successMessage);
+        if (successMessage) {
+          messageList.push(successMessage);
+        }
       } else {
         hasError = true;
       }
     };
 
-    if (!isLocalTemplate.value && isEditingEnabled.value) {
-      await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
+    if (isEditingEnabled.value) {
+      await handleSave(updatePageTemplate);
     }
 
     if (settingsIsDirty.value) {
@@ -36,7 +38,7 @@ export const useToolbar = () => {
 
     }
 
-    if (messageList.length > 0) {
+    if (saved && !hasError) {
       send({
         message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',

@@ -1,6 +1,7 @@
 <template>
   <div
-    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_10px_5px_1px_rgba(229,231,235,1)]', drawerZIndexClass]"
+    class="mb-3"
+    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111]', drawerZIndexClass]"
     data-testid="edit-mode-toolbar"
   >
     <div class="relative flex items-center pr-5">
@@ -33,7 +34,7 @@
           :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
           :disabled="!isTouched || settingsLoading"
           data-testid="edit-save-button"
-          @click="saveCategorySettings"
+          @click="save"
         >
           <template v-if="loading">
             <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px] md:mr-[10px]" />
@@ -56,19 +57,18 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
+import { deepEqual } from '~/utils/jsonHelper';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
-const { loading } = useHomepage();
+const { data, loading, cleanData } = useCategoryTemplate();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
-const {  categorySettingsIsDirty } = useCategorySettings();
-// const { save } = useToolbar();
-const { saveCategorySettings } = useCategorySettings();
 
-const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
-const isTouched = computed(() => categorySettingsIsDirty.value|| settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
+const { save } = useToolbar();
+const { getBlocksLists } = useBlockManager();
+
+const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
@@ -78,5 +78,17 @@ const toggleEdit = () => {
   }
 };
 
+onMounted(() => {
+  getBlocksLists();
+});
+
 const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'lg:z-20 md:z-10' : 'md:z-20'));
+
+watch(
+  () => data.value,
+  async () => {
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+  },
+  { deep: true },
+);
 </script>

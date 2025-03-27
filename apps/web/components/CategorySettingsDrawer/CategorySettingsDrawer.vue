@@ -1,24 +1,20 @@
 <template>
   <SfDrawer
     v-model="open"
-    class="category-drawer !absolute ml-[100%] w-max min-w-[300px]"
+    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[430px] min-w-[300px]"
     :placement="placement"
     :disable-click-away="true"
-    :class="[
-      'bg-white',
-      'p-3',
-      'border',
-      'border-gray-300',
-      { 'max-w-[370px]': placement === 'left' || placement === 'right' },
-    ]"
+    :class="[{ 'max-w-[370px]': placement === 'left' || placement === 'right' }]"
   >
-    <div v-if="settingsType === 'general-settings'" class="flex justify-between items-center">
+    <div class="px-4 py-5 border-b flex justify-between items-center">
       <h3 class="font-bold typography-headline-3">
         {{ settingsType === 'general-settings' ? 'General Settings' : 'SEO Settings' }}
       </h3>
       <SfIconChevronLeft class="cursor-pointer" @click="closeDrawer" />
     </div>
-    <PagesGeneralSettings v-if=" settingsType === 'general-settings'" class="mt-2"/>
+    <PagesGeneralSettings v-if="settingsType === 'general-settings'" class="mt-2" />
+
+    <SeoView v-if="settingsType === 'seo-settings'" />
   </SfDrawer>
 </template>
 

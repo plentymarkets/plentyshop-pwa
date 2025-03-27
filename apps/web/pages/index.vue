@@ -1,46 +1,44 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlockList" />
-    <div class="content">
-      <template v-for="(block, index) in data.blocks" :key="index">
+    <EmptyBlock v-if="dataIsEmpty" />
+    <div v-if="data.length" class="content">
+      <template v-for="(block, index) in data" :key="index">
         <PageBlock
           :index="index"
           :block="block"
-          :is-preview="isPreview"
           :disable-actions="disableActions"
           :is-clicked="isClicked"
           :clicked-block-index="clickedBlockIndex"
           :is-tablet="isTablet"
           :block-has-data="blockHasData"
-          :tablet-edit="tabletEdit"
-          :add-new-block="openBlockList"
           :change-block-position="changeBlockPosition"
-          :is-last-block="isLastBlock"
-          :delete-block="deleteBlock"
+          :root="true"
+          class="group"
+          :class="[
+            {
+              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+            },
+            {
+              'px-4 md:px-6':
+                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
+            },
+          ]"
+          data-testid="block-wrapper"
+          @click="tabletEdit(index)"
         />
       </template>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { watchDebounced } from '@vueuse/core';
-const { t } = useI18n();
-const {
-  isClicked,
-  clickedBlockIndex,
-  isTablet,
-  isPreview,
-  blockHasData,
-  tabletEdit,
-  deleteBlock,
-  changeBlockPosition,
-  isLastBlock,
-  togglePlaceholder,
-} = useBlockManager();
+const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
-const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
-const {  categorySettingsIsDirty } = useCategorySettings();
-const { data, fetchPageTemplate, dataIsEmpty, initialBlocks } = useHomepage();
+const { t } = useI18n();
+const { settingsIsDirty } = useSiteConfiguration();
+
+const { data, getBlocks } = useCategoryTemplate();
+
+const dataIsEmpty = computed(() => data.value.length === 0);
 
 const { isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
@@ -49,15 +47,8 @@ const { setPageMeta } = usePageMeta();
 
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
-const openBlockList = (index: number, position: number) => {
-  const insertIndex = (position === -1 ? index : index + 1) || 0;
-  togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
-  updateNewBlockPosition(insertIndex);
-  openDrawerWithView('blocksList');
-};
 
-await getRobots();
-setRobotForStaticPage('Homepage');
+await getBlocks('index', 'immutable');
 
 onMounted(() => {
   isEditingEnabled.value = false;
@@ -69,7 +60,7 @@ onBeforeUnmount(() => {
 });
 
 const hasUnsavedChanges = () => {
-  return !isEditingEnabled.value && !settingsIsDirty.value && !categorySettingsIsDirty.value;
+  return !isEditingEnabled.value && !settingsIsDirty.value;
 };
 
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -77,13 +68,6 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   event.preventDefault();
 };
 
-fetchPageTemplate();
-
-watchDebounced(
-  () => data.value.blocks,
-  () => {
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-  },
-  { debounce: 100, deep: true },
-);
+getRobots();
+setRobotForStaticPage('Homepage');
 </script>

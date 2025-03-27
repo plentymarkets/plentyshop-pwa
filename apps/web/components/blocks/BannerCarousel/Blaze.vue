@@ -41,8 +41,7 @@
 <script setup lang="ts">
 import BlazeSlider from 'blaze-slider';
 import 'blaze-slider/dist/blaze.css';
-import type { BannerProps } from './types';
-import type { SlideControls } from '~/composables/useHomepage/types';
+import type { BannerProps, SlideControls } from './types';
 
 const { bannerItems, controls } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls }>();
 const generalTextColor = ref('inherit');
