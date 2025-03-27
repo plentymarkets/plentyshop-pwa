@@ -87,7 +87,6 @@
             </SfInput>
           </label>
         </div>
-
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
@@ -101,18 +100,19 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="data.parent"
+            v-model="selectedPage"
             data-testid="page-parent"
-            :options="categories"
-            label="label"
+            :options="pageOptions"
+            label="name"
             placeholder="Select a parent page"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
-            track-by="value"
+            track-by="id"
             deselect-label="Selected"
           />
         </div>
+
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>URL Slug</UiFormLabel>
@@ -126,10 +126,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.nameUrl" type="text" data-testid="page-url-slug">
+            <SfInput v-model="data.path" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="data.nameUrl" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="data.path" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -139,7 +139,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="displayInHeader"
+              v-model="linklistValue"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -148,7 +148,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Login Necessary</UiFormLabel>
             <SfSwitch
-              v-model="loginNecessary"
+              v-model="rightValue"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -163,33 +163,62 @@ import { SfIconInfo, SfInput, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
-const displayInHeader = ref(true);
-const loginNecessary = ref(true);
-
-const data = {
-  id: 21,
-  type: 'content',
-  right: 'all',
-  childCount: 1,
-  itemCount: [],
-  details: [],
-  children: [],
-  lang: 'en',
-  name: 'Sofas',
-  nameUrl: 'sofas',
-  metaTitle: '',
-  imagePath: null,
-  image2Path: null,
-  parent: 'Living room',
+const { pages } = await usePages();
+const defaultData = {
+  id: 1,
+  type: '',
+  name: '',
+  path: '',
+  linklist: '',
+  right: '',
 };
-const categories = ref([
-  { label: 'Living room', value: 'living-room' },
-  { label: 'Armchairs & Stools', value: 'armchairs-stools' },
-  { label: 'Sofas', value: 'sofas' },
-]);
+const data = ref<Page>({ ...defaultData });
+interface PageOption {
+  id: number | null;
+  name: string;
+}
+const selectedPage = ref<PageOption | null>(null);
+const { getPageId, getParentCategoryId } = useCategorySettings();
+const findPageById = (id: number | string) => {
+  return pages.value.find((page) => page.id === id);
+};
+watch(
+  () => getPageId.value,
+  (newId) => {
+    const foundPage = findPageById(newId);
+    if (foundPage) {
+      data.value = {
+        ...foundPage,
+      };
+    }
+  },
+  { immediate: true }
+);
+
+console.log('datas', data.value);
 const pageTypes = ref([
   { label: 'Content', value: 'content' },
   { label: 'Item category', value: 'item' },
 ]);
-const pageType = ref(pageTypes.value[0]);
+const pageType = ref(data.value.type === 'content' ? pageTypes.value[0] : pageTypes.value[1]);
+const linklistValue = computed(() => {
+  return !!(data.value.linklist);
+});
+
+const rightValue = computed(() => {
+  return data.value.right === "all";
+});
+const pageOptions = computed(() => {
+  const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
+  options.unshift({ id: null, name: 'None' });
+  return options;
+});
+watch(getParentCategoryId, (newId) => {
+  if (newId) {
+    const matchedPage = pageOptions.value.find((page) => page.id === newId);
+    selectedPage.value = matchedPage || null;
+  } else {
+    selectedPage.value = { id: null, name: 'None' };
+  }
+}, { immediate: true });
 </script>
