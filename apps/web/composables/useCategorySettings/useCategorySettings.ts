@@ -71,9 +71,6 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     if (parentCategoryId !== undefined) {
       state.value.parentCategoryId = parentCategoryId;
     }
-
-    console.log('id', id);
-    console.log('parentCategoryId', parentCategoryId);
   };
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
