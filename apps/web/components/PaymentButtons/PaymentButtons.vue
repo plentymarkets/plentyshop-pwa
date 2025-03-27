@@ -1,8 +1,8 @@
 <template>
   <component
+    :is="component.componentName"
     v-for="(component, index) in filteredComponents"
     :key="index"
-    :is="component.componentName"
     :disabled="disableBuyButton"
     @click="validateOnClickComponents($event)"
   />
@@ -68,9 +68,9 @@ import {
   PayPalGooglePayKey,
   PayPalApplePayKey,
 } from '~/composables/usePayPal/types';
-import {PayPalAddToCartCallback} from "~/components/PayPal/types";
+import type {PayPalAddToCartCallback} from "~/components/PayPal/types";
 import {keyBy} from "~/utils/keyBy";
-import { PaymentButtonComponent } from "@plentymarkets/shop-core";
+import type { PaymentButtonComponent } from "@plentymarkets/shop-core";
 
 const { t } = useI18n();
 const { components } = useDynamicPaymentButtons();

@@ -59,7 +59,6 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
-const { isGuest, isAuthorized, validGuestEmail, backToContactInformation } = useCustomer();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
 const {
   cart,
