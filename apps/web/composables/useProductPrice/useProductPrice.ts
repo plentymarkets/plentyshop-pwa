@@ -17,14 +17,12 @@ export const useProductPrice = (product: Product) => {
   let price = computed(() => {
     if (graduatedPrices.length) {
       return specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
-          ? specialOffer
-          : productGetters.getCheapestGraduatedPrice(product);
+        ? specialOffer
+        : productGetters.getCheapestGraduatedPrice(product);
     }
 
     const priceValue = productGetters.getPrice(product) ?? 0;
-    return specialOffer && specialOffer < priceValue
-        ? specialOffer
-        : priceValue;
+    return specialOffer && specialOffer < priceValue ? specialOffer : priceValue;
   });
 
   const crossedPrice = computed(() =>
