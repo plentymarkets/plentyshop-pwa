@@ -80,7 +80,7 @@ const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value
 const { item } = defineProps<{
   item: MenuItemType;
   parentId: number | undefined;
-}>()
+}>();
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory } = useSiteConfiguration();

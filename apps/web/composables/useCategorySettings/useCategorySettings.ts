@@ -47,7 +47,6 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
   const getPageId = computed(() => state.value.id);
   const getParentCategoryId = computed(() => state.value.parentCategoryId);
 
-
   const categorySettingsIsDirty = computed(() => {
     return (
       // state.value.id !== state.value.initialData.id ||

@@ -5,5 +5,4 @@ export interface MenuItemType {
   path: string;
   children?: MenuItemType[];
   type?: string;
-
 }

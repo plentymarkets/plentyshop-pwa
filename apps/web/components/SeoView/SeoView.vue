@@ -167,7 +167,7 @@ watch(
       includeSitemap.value = foundPage.sitemap === 'y';
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const robotsDropdown = ref(false);
