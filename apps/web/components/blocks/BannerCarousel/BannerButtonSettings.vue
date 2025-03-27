@@ -35,9 +35,7 @@
 
       <div class="mb-6">
         <UiFormLabel class="mb-1">Variant</UiFormLabel>
-        <div
-          class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-        >
+        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
             :class="{
@@ -46,10 +44,7 @@
             data-testid="slider-button-primary"
             @click="banner.content.button.variant = 'primary'"
           >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: banner.content.button.variant !== 'primary' }"
-            />
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.button.variant !== 'primary' }" />
             Primary
           </div>
 
@@ -79,7 +74,7 @@ import { SfInput, SfIconCheck, SfAccordionItem as UiAccordionItem } from '@store
 import type { BannerProps } from './types';
 
 const props = defineProps<{
-  banner: BannerProps
+  banner: BannerProps;
 }>();
 const buttonOpen = ref(true);
 </script>

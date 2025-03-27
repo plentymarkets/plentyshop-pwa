@@ -32,11 +32,7 @@
             </div>
             <hr />
             <div class="p-2">
-              <div
-                v-for="(slide, index) in slides"
-                :key="index"
-                class="flex items-center justify-between p-2 rounded"
-              >
+              <div v-for="(slide, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                 <div class="flex items-center">
                   <!-- Move Slide Up -->
                   <SfIconArrowUpward
@@ -147,30 +143,27 @@ import {
   SfIconArrowDownward,
   SfIconAdd,
   SfIconClose,
-  useDisclosure
+  useDisclosure,
 } from '@storefront-ui/vue';
 import { PropType } from 'vue';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { CarouselStructureProps } from './types';
-const { isOpen, open, close } = useDisclosure();
 import { v4 as uuid } from 'uuid';
+const { isOpen, open, close } = useDisclosure();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
+const { updateBannerItems, setIndex, activeSlidesIndex, getCarouselStructureByBlockUid } = useCarousel();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 setIndex(blockUuid.value, 0);
 
-const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
-
-const carouselStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
-);
+const activeSlide = computed(() => activeSlidesIndex.value[blockUuid.value]);
+const carouselStructure = (getCarouselStructureByBlockUid(blockUuid.value) || {}) as CarouselStructureProps;
 
 const slides = computed({
   get: () => {
-    return (carouselStructure.value?.content || []) as BannerProps[];
+    return (carouselStructure?.content || []) as BannerProps[];
   },
   set: (value: BannerProps[]) => updateBannerItems(value, blockUuid.value),
 });

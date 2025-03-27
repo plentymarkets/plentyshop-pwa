@@ -64,4 +64,5 @@ export type BannerProps = {
 
 export type BannerFormProps = {
   uuid?: string;
+  activeSlideIndex: number;
 };
