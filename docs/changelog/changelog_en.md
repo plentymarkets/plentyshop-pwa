@@ -6,6 +6,9 @@
 
 - Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
+- Added design for category settings.
+- Added form for general settings
+- Added form for SEO settings
 
 ### 👷 Changed
 
@@ -16,7 +19,22 @@
 
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
+- Fix toolbar arrow.
+- Fix Page Selector closes on second button click
+- Fix left side menu german navigation.
+
+# v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 👷 Changed
+
+- `useSdk` and sdk setup are now maintained and exported from `@plentymarkets/shop-core`. With this change we also removed `@vue-storefront/nuxt`. There are no breaking changes.
+
+### 🩹 Fixed
+
+- Fix displayment of large number of categories in navigation bar.
 - Fix checkout email validation.
+- Fix my orders page shipping date's missing locale.
+- Fix build error during shop deployment. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -25,7 +43,6 @@
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
 - Added the legal disclosure to the cookie bar description.x
-- Fix toolbar arrow
 
 ### 👷 Changed
 
@@ -60,6 +77,7 @@
 ### New
 
 - Added success and error notifications when saving changes in the editor.
+- Added block structures and refactored the editor to support them, including adding api endpoint communication.
 
 ### 🩹 Fixed
 
