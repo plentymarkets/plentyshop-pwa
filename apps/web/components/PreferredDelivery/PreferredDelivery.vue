@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <div class="mt-2">
+        <div class="my-2">
           {{
             $t('PreferredDelivery.general.wunschpaketAdditionalCharge', {
               additionalCharge: data.additionalCharge,
