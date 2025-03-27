@@ -14,7 +14,8 @@
 
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
-- Changed how the useProductPrice composable calculates the price
+- Disabled local image optimization.
+- Changed how the useProductPrice composable calculates the price.
 
 ### 🩹 Fixed
 
