@@ -14,7 +14,7 @@ export const useProductPrice = (product: Product) => {
   const specialOffer = productGetters.getSpecialOffer(product);
   const graduatedPrices = productGetters.getGraduatedPrices(product);
 
-  let price = computed(() => {
+  const price = computed(() => {
     if (graduatedPrices.length) {
       return specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
         ? specialOffer
