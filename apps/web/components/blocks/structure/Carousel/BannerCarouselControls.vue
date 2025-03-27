@@ -27,12 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { SfInput } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
+
 const { getCarouselStructureByBlockUid } = useCarousel();
 const { blockUuid } = useSiteConfiguration();
 const carouselStructure = (getCarouselStructureByBlockUid(blockUuid.value) || {}) as CarouselStructureProps;
+
 const controlsOpen = ref(true);
 const controls = computed(() => carouselStructure.configuration.controls);
 </script>

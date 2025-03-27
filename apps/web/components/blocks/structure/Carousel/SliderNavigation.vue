@@ -145,16 +145,13 @@ import {
   SfIconClose,
   useDisclosure,
 } from '@storefront-ui/vue';
-import { PropType } from 'vue';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
 const { isOpen, open, close } = useDisclosure();
 
-const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlidesIndex, getCarouselStructureByBlockUid } = useCarousel();
-const { findOrDeleteBlockByUuid } = useBlockManager();
 
 setIndex(blockUuid.value, 0);
 

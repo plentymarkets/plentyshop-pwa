@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <UiAccordionItem
     v-model="buttonOpen"
@@ -69,11 +70,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps } from 'vue';
 import { SfInput, SfIconCheck, SfAccordionItem as UiAccordionItem } from '@storefront-ui/vue';
 import type { BannerProps } from './types';
-
-const props = defineProps<{
+defineProps<{
   banner: BannerProps;
 }>();
 const buttonOpen = ref(true);

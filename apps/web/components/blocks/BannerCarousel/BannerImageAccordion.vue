@@ -91,9 +91,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits, DeepReadonly, toRaw } from 'vue';
+import { ref, watch, defineProps, defineEmits } from 'vue';
 import { SfInput } from '@storefront-ui/vue';
-import { clamp } from '@storefront-ui/shared';
 
 const props = defineProps({
   open: {
