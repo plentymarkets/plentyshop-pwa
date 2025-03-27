@@ -36,7 +36,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -52,7 +52,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>

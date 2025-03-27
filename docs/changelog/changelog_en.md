@@ -4,11 +4,13 @@
 
 ### New
 
+- Added DHL preffered delivery
 - Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
 - Added design for category settings.
 - Added form for general settings
 - Added form for SEO settings
+- Updated general settings and seo settings to get data dynamically
 
 ### 👷 Changed
 
