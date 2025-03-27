@@ -44,11 +44,14 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       includeSitemap: false,
     },
   }));
+  const getPageId = computed(() => state.value.id);
+  const getParentCategoryId = computed(() => state.value.parentCategoryId);
 
   const categorySettingsIsDirty = computed(() => {
     return (
- 
-      state.value.sitemap !== state.value.initialData.sitemap ||
+      // state.value.id !== state.value.initialData.id ||
+      // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
+      // state.value.sitemap !== state.value.initialData.sitemap ||
       // state.value.linkList !== state.value.initialData.linkList ||
       state.value.name !== state.value.initialData.name ||
       // state.value.canonical !== state.value.initialData.canonical
@@ -68,9 +71,6 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       state.value.parentCategoryId = parentCategoryId;
     }
   };
-
-  const getPageId = computed(() => state.value.id);
-  const getParentCategoryId = computed(() => state.value.parentCategoryId);
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;

@@ -24,7 +24,7 @@
           </div>
           <label>
             <SfInput
-              v-model="data.id"
+              v-model="id"
               type="text"
               data-testid="page-id"
               wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1"
@@ -32,7 +32,7 @@
             >
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="data.id" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="id" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -78,10 +78,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.name" type="text" data-testid="page-name">
+            <SfInput v-model="name" type="text" data-testid="page-name">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="data.name" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="name" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -126,10 +126,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.path" type="text" data-testid="page-url-slug">
+            <SfInput v-model="path" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="data.path" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="path" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -139,7 +139,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="linklistValue"
+              v-model="linklist"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -148,7 +148,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Login Necessary</UiFormLabel>
             <SfSwitch
-              v-model="rightValue"
+              v-model="right"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -164,15 +164,12 @@ import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
 const { pages } = await usePages();
-const defaultData = {
-  id: 1,
-  type: '',
-  name: '',
-  path: '',
-  linklist: '',
-  right: '',
-};
-const data = ref<Page>({ ...defaultData });
+const id = ref(1);
+const type = ref('');
+const name = ref('');
+const path = ref('');
+const linklist = ref(false);
+const right = ref(false);
 interface PageOption {
   id: number | null;
   name: string;
@@ -187,9 +184,12 @@ watch(
   (newId) => {
     const foundPage = findPageById(newId);
     if (foundPage) {
-      data.value = {
-        ...foundPage,
-      };
+      id.value = foundPage.id;
+      type.value = foundPage.type || '';
+      name.value = foundPage.name || '';
+      path.value = foundPage.path || '';
+      linklist.value = foundPage.linklist === 'y';
+      right.value = foundPage.right === 'all';
     }
   },
   { immediate: true },
@@ -199,19 +199,13 @@ const pageTypes = ref([
   { label: 'Content', value: 'content' },
   { label: 'Item category', value: 'item' },
 ]);
-const pageType = ref(data.value.type === 'content' ? pageTypes.value[0] : pageTypes.value[1]);
-const linklistValue = computed(() => {
-  return !!data.value.linklist;
-});
-
-const rightValue = computed(() => {
-  return data.value.right === 'all';
-});
+const pageType = ref(type.value === 'content' ? pageTypes.value[0] : pageTypes.value[1]);
 const pageOptions = computed(() => {
   const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
   options.unshift({ id: null, name: 'None' });
   return options;
 });
+
 watch(
   getParentCategoryId,
   (newId) => {

@@ -6,11 +6,7 @@ export const usePages = async () => {
 
   const pages = useState<Page[]>('pages', () => []);
   const transformCategoryTreeToPages = () => {
-    const transformData = (
-      data: CategoryTreeItem[],
-      parentPath = '',
-      isRoot = true,
-    ): Page[] => {
+    const transformData = (data: CategoryTreeItem[], parentPath = '', isRoot = true): Page[] => {
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
@@ -34,7 +30,7 @@ export const usePages = async () => {
             canonicalLink: item.details[0].canonicalLink ? item.details[0].canonicalLink : '',
             position: item.details[0].position ? item.details[0].position : '',
             metaDescription: item.details[0].metaDescription ? item.details[0].metaDescription : '',
-            metaKeywords:  item.details[0].metaKeywords ? item.details[0].metaKeywords : '',
+            metaKeywords: item.details[0].metaKeywords ? item.details[0].metaKeywords : '',
             metaRobots: item.details[0].metaRobots ? item.details[0].metaRobots : '',
           };
         })

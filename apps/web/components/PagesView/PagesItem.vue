@@ -20,19 +20,11 @@
         </span>
         {{ item.name }}
       </router-link>
-      <SfTooltip
-        v-if="showFormWarning && isTouched"
-        label="You have unsaved changes on this page"
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
-        <SfIconError :size="'sm'" />
-      </SfTooltip>
+
       <SfIconMoreHoriz @click.prevent="openMenu" />
 
       <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
-        <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
+        <div class="p-2 rounded bg-white w-max">
           <div
             class="p-1 flex"
             @click="
@@ -101,6 +93,9 @@ const { item } = defineProps<{
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory } = useSiteConfiguration();
+const currentSeoPageId = ref<number | null>(null);
+const currentGeneralPageId = ref<number | null>(null);
+const { setPageId } = useCategorySettings();
 
 const { setPageId } = useCategorySettings();
 
@@ -114,7 +109,6 @@ const openGeneralSettings = (id: number) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-settings');
 };
-
 const openSeoSettings = (id: number) => {
   close();
   currentSeoPageId.value = id;
