@@ -7,6 +7,8 @@
 - Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
 - Added design for category settings.
+- Added form for general settings
+- Added form for SEO settings
 
 ### 👷 Changed
 
@@ -75,6 +77,7 @@
 ### New
 
 - Added success and error notifications when saving changes in the editor.
+- Added block structures and refactored the editor to support them, including adding api endpoint communication.
 
 ### 🩹 Fixed
 
