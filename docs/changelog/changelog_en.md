@@ -10,6 +10,7 @@
 - Added design for category settings.
 - Added form for general settings
 - Added form for SEO settings
+- Updated general settings and seo settings to get data dynamically
 
 ### 👷 Changed
 
