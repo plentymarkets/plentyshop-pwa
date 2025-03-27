@@ -1,7 +1,7 @@
 <template>
   <div
     data-testid="banner-carousel-form"
-    class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
+    class="sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
   >
     <SliderNavigation />
     <div :data-testid="`slide-settings-${activeSlideIndex}`">

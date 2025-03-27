@@ -10,7 +10,7 @@
       <h2 data-testid="slider-image-group-title">Images</h2>
     </template>
 
-    <div class="images">
+    <div class="images px-3">
       <div class="mb-6 mt-4">
         <label>
           <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>

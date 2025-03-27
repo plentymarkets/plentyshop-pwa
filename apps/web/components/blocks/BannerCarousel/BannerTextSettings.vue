@@ -10,7 +10,7 @@
       <h2 data-testid="slider-text-group-title">Text</h2>
     </template>
 
-    <div>
+    <div class="p-3">
       <div class="mb-6">
         <UiFormLabel class="mb-1">Pre-title</UiFormLabel>
         <SfInput

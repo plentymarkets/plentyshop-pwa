@@ -9,7 +9,7 @@
       <h2 data-testid="slider-button-group-title">Button</h2>
     </template>
 
-    <div class="images">
+    <div class="images px-3">
       <div class="mb-6 mt-4">
         <label>
           <UiFormLabel class="mb-1">Label</UiFormLabel>
@@ -78,3 +78,13 @@ defineProps<{
 }>();
 const buttonOpen = ref(true);
 </script>
+<style scoped>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>

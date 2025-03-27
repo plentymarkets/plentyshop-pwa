@@ -1,10 +1,8 @@
 <template>
-  <div class="block-slider-edit">
-    <div :data-testid="`slide-settings-${activeSlideIndex}`">
-      <BannerImagesSettings :banner="banner" @clamp-brightness="onClampBrightness" />
-      <BannerTextSettings :banner="banner" @clamp-brightness="onClampBrightness" />
-      <BannerButtonSettings :banner="banner" />
-    </div>
+  <div :data-testid="`slide-settings-${activeSlideIndex}`">
+    <BannerImagesSettings :banner="banner" @clamp-brightness="onClampBrightness" />
+    <BannerTextSettings :banner="banner" @clamp-brightness="onClampBrightness" />
+    <BannerButtonSettings :banner="banner" />
   </div>
 </template>
 
