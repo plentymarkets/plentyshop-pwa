@@ -9,12 +9,15 @@
 - Added design for category settings.
 - Added form for general settings
 - Added form for SEO settings
+- Updated general settings and seo settings to get data dynamically
 
 ### 👷 Changed
 
 - Refactored code for banner settings.
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
+- Disabled local image optimization.
+- Updated price calculation: If graduated prices are unavailable, the default price is used .
 
 ### 🩹 Fixed
 

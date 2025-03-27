@@ -45,6 +45,9 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
+  image: {
+    provider: 'none',
+  },
   site: {
     url: '',
   },
@@ -101,19 +104,6 @@ export default defineNuxtConfig({
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
-    },
-  },
-  image: {
-    screens: {
-      '4xl': 1920,
-      '3xl': 1536,
-      '2xl': 1366,
-      xl: 1280,
-      lg: 1024,
-      md: 768,
-      sm: 640,
-      xs: 376,
-      '2xs': 360,
     },
   },
   i18n: nuxtI18nOptions,
