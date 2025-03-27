@@ -149,7 +149,6 @@ const keywords = ref('');
 const canonical = ref('');
 const robots = ref('all');
 const includeSitemap = ref(false);
-// const data = ref<Page>({ ...defaultData });
 const { getPageId } = useCategorySettings();
 const findPageById = (id: number | string) => {
   return pages.value.find((page) => page.id === id);
@@ -166,12 +165,6 @@ watch(
       canonical.value = foundPage.canonicalLink || '';
       robots.value = foundPage.metaRobots || 'all';
       includeSitemap.value = foundPage.sitemap === 'y';
-    } else {
-
-      title.value = '';
-      description.value = '';
-      keywords.value = '';
-      canonical.value = '';
     }
   },
   { immediate: true }
