@@ -15,6 +15,7 @@
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
 - Disabled local image optimization.
+- Updated price calculation: If graduated prices are unavailable, the default price is used .
 
 ### 🩹 Fixed
 
