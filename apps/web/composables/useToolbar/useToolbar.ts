@@ -6,7 +6,6 @@ export const useToolbar = () => {
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
   const { updatePageTemplate } = useUpdatePageTemplate();
 
-
   const save = async () => {
     const messageList: string[] = [];
     let hasError = false;
