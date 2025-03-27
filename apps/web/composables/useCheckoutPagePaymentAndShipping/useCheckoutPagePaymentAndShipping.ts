@@ -44,6 +44,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
     if (existingShippingMethod === shippingMethodId) return;
 
     await saveShippingMethod(Number(shippingMethodId));
+    usePreferredDelivery().disableAllOptions();
     await fetchPaymentMethods();
     await getCart();
 

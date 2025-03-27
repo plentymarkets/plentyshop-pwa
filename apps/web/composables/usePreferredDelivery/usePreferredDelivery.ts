@@ -157,6 +157,14 @@ export const usePreferredDelivery = () => {
       preferredIdProfile?.includes('PreferredNeighbour') && data.preferredNeighbour === true;
   };
 
+  const disableAllOptions = () => {
+    if (Object.keys(state.value.data.preferredProfiles).length) {
+      state.value.data.day.enabled = false;
+      state.value.data.location.enabled = false;
+      state.value.data.neighbour.enabled = false;
+    }
+  };
+
   const handleDayChange = (dayIndex: number) => {
     const selectedDay = state.value.data.preferredDays[dayIndex];
 
@@ -217,6 +225,7 @@ export const usePreferredDelivery = () => {
     preferredDeliveryAvailable,
     getPreferredProfiles,
     getPreferredDeliveryServices,
+    disableAllOptions,
     handleDayChange,
     isDayChecked,
     submitForm,
