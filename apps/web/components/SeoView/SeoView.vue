@@ -139,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfIconInfo, SfInput, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
 const { title, description, keywords, robots, canonicalLink } = useCategorySettings();

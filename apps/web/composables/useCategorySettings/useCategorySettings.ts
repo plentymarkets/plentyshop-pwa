@@ -51,8 +51,8 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
       // state.value.sitemap !== state.value.initialData.sitemap ||
       // state.value.linkList !== state.value.initialData.linkList ||
-       state.value.name !== state.value.initialData.name ||
-            // state.value.canonical !== state.value.initialData.canonical
+      state.value.name !== state.value.initialData.name ||
+      // state.value.canonical !== state.value.initialData.canonical
       state.value.canonicalLink !== state.value.initialData.canonicalLink ||
       // state.value.position !== state.value.initialData.position ||
       state.value.title !== state.value.initialData.title ||
@@ -68,10 +68,9 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     if (parentCategoryId !== undefined) {
       state.value.parentCategoryId = parentCategoryId;
     }
-
-    console.log('id', id);
-    console.log('parentCategoryId', parentCategoryId);
   };
+
+  const getPageId = computed(() => state.value.id);
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
@@ -163,5 +162,6 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     categorySettingsIsDirty,
     saveCategorySettings,
     setPageId,
+    getPageId,
   };
 };

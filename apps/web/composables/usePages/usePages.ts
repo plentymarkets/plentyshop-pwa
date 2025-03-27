@@ -1,30 +1,16 @@
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { CategoryTreeItem } from '~/composables/usePages/types';
+
 export const usePages = async () => {
   const { t, locale } = useI18n();
   const { data } = useCategoryTree();
 
-  const pages = useState<
-    {
-      id: number;
-      name: string;
-      path: string;
-      children?: { id: number; name: string; path: string }[];
-      type: string | undefined;
-    }[]
-  >('pages', () => []);
-
+  const pages = useState<Page[]>('pages', () => []);
   const transformCategoryTreeToPages = () => {
     const transformData = (
       data: CategoryTreeItem[],
       parentPath = '',
       isRoot = true,
-    ): {
-      id: number;
-      name: string;
-      path: string;
-      children?: { id: number; name: string; path: string }[];
-      type: string | undefined;
-    }[] => {
+    ): Page[] => {
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
@@ -41,6 +27,15 @@ export const usePages = async () => {
             path: currentPath,
             children,
             type: item.type,
+            right: item.right,
+            parentCategoryId: item.parentCategoryId,
+            sitemap: item.sitemap,
+            linklist: item.linklist,
+            canonicalLink: item.details[0].canonicalLink ? item.details[0].canonicalLink : '',
+            position: item.details[0].position ? item.details[0].position : '',
+            metaDescription: item.details[0].metaDescription ? item.details[0].metaDescription : '',
+            metaKeywords:  item.details[0].metaKeywords ? item.details[0].metaKeywords : '',
+            metaRobots: item.details[0].metaRobots ? item.details[0].metaRobots : '',
           };
         })
         .filter(Boolean);
@@ -52,6 +47,15 @@ export const usePages = async () => {
           path: '/',
           children: undefined,
           type: 'content',
+          right: 'all',
+          parentCategoryId: '',
+          sitemap: '',
+          linklist: '',
+          canonicalLink: '',
+          position: '',
+          metaDescription: '',
+          metaKeywords: '',
+          metaRobots: '',
         });
       }
 
@@ -59,8 +63,17 @@ export const usePages = async () => {
         id: number;
         name: string;
         path: string;
-        children?: { id: number; name: string; path: string }[] | undefined;
+        children?: Page[];
         type: string;
+        right: string;
+        parentCategoryId: string;
+        sitemap: string;
+        linklist: string;
+        canonicalLink?: string;
+        position?: string;
+        metaDescription?: string;
+        metaKeywords?: string;
+        metaRobots?: string;
       }[];
     };
 
