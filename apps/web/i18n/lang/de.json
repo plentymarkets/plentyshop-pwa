@@ -976,7 +976,8 @@
       "loadOrdersFailed": "Die Bestellungen konnten nicht geladen werden.",
       "migrateUnauthorized": "Die Bestellung konnte nicht zu deinem Account hinzugefügt werden.",
       "notFound": "Die Bestellung existiert nicht.",
-      "softLoginFailed": "Die angegebenen Daten sind ungültig."
+      "softLoginFailed": "Die angegebenen Daten sind ungültig.",
+      "assignPaymentFailed": "Die Zahlung konnte nicht zugewiesen werden."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },

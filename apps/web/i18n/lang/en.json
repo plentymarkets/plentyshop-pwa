@@ -976,7 +976,8 @@
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
-      "softLoginFailed": "The provided data is invalid."
+      "softLoginFailed": "The provided data is invalid.",
+      "assignPaymentFailed": "The payment could not be assigned to the order."
     },
     "unknownError": "An unknown error has occurred."
   },
