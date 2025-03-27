@@ -18,10 +18,19 @@
         {{ item.name }}
       </router-link>
 
+      <SfTooltip
+        v-if=" isTouched"
+        label="You have unsaved changes on this page"
+        :placement="'top'"
+        :show-arrow="true"
+        class="ml-2 z-10"
+      >
+        <SfIconError :size="'sm'" />
+      </SfTooltip>
       <SfIconMoreHoriz @click.prevent="openMenu" />
 
       <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
-        <div class="p-2 rounded bg-white w-max">
+      <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
           <div
             class="p-1 flex"
             @click="
@@ -70,6 +79,8 @@ import {
   SfDropdown,
   SfIconDelete,
   SfIconSearch,
+  SfIconError,
+  SfTooltip,
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
@@ -81,6 +92,9 @@ const { item } = defineProps<{
   item: MenuItemType;
   parentId: number | undefined;
 }>();
+
+const { categorySettingsIsDirty } = useCategorySettings();
+const isTouched = computed(() => categorySettingsIsDirty.value);
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory } = useSiteConfiguration();
