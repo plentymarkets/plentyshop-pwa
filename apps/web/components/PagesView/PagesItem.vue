@@ -8,9 +8,6 @@
       <span v-if="item.children && item.children.length > 0">
         <SfIconExpandMore />
       </span>
-      <span>
-        {{ item.id }}
-      </span>
       <router-link
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
