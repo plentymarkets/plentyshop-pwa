@@ -19,7 +19,7 @@
       </router-link>
 
       <SfTooltip
-        v-if=" isTouched"
+        v-if="showFormWarning && isTouched"
         label="You have unsaved changes on this page"
         :placement="'top'"
         :show-arrow="true"
@@ -53,8 +53,10 @@
           </div>
           <div
             class="p-1 flex"
-            :class="{ 'opacity-50 cursor-not-allowed': item.name === 'Homepage' }"
-            @click="item.name !== 'Homepage' ? (deletePage(item.id), setPageId(item.id, parentId)) : null"
+            @click="
+              deletePage();
+              setPageId(item.id, parentId);
+            "
           >
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
@@ -86,13 +88,15 @@ import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
+const currentSeoPageId = ref<number | null>(null);
+const currentGeneralPageId = ref<number | null>(null);
+
 const { item } = defineProps<{
   item: MenuItemType;
   parentId: number | undefined;
 }>();
 
 const { categorySettingsIsDirty } = useCategorySettings();
-const isTouched = computed(() => categorySettingsIsDirty.value);
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
@@ -119,4 +123,11 @@ const deletePage = (id: number) => {
   toggleDeleteModal(true);
   close();
 };
+
+const isTouched = computed(() => categorySettingsIsDirty.value);
+
+const showFormWarning = computed(() => {
+  return currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id;
+});
+
 </script>
