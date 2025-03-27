@@ -5,7 +5,10 @@
   >
     <SliderNavigation />
     <div :data-testid="`slide-settings-${activeSlideIndex}`">
-      <BlocksBannerCarouselBannerForm :active-slide-index="activeSlideIndex" :uuid="slides[activeSlideIndex].meta.uuid" />
+      <BlocksBannerCarouselBannerForm
+        :active-slide-index="activeSlideIndex"
+        :uuid="slides[activeSlideIndex].meta.uuid"
+      />
       <BannerCarouselControls />
     </div>
   </div>
