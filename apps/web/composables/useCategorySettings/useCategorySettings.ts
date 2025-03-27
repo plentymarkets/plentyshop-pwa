@@ -44,8 +44,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       includeSitemap: false,
     },
   }));
-  const getPageId = computed(() => state.value.id);
-  const getParentCategoryId = computed(() => state.value.parentCategoryId);
+
 
   const categorySettingsIsDirty = computed(() => {
     return (
@@ -71,6 +70,9 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       state.value.parentCategoryId = parentCategoryId;
     }
   };
+
+  const getPageId = computed(() => state.value.id);
+  const getParentCategoryId = computed(() => state.value.parentCategoryId);
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
