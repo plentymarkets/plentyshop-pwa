@@ -1,9 +1,9 @@
 <template>
   <div class="block-slider-edit">
     <div :data-testid="`slide-settings-${activeSlide}`">
-      <BannerImagesSettings :banner.sync="banner" @clampBrightness="onClampBrightness" />
-      <BannerTextSettings :banner.sync="banner" @clampBrightness="onClampBrightness" />
-      <BannerButtonSettings :banner.sync="banner" />
+      <BannerImagesSettings :banner="banner" @clampBrightness="onClampBrightness" />
+      <BannerTextSettings :banner="banner" @clampBrightness="onClampBrightness" />
+      <BannerButtonSettings :banner="banner" />
     </div>
   </div>
 </template>

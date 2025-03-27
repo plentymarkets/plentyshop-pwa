@@ -1,6 +1,6 @@
 <template>
     <UiAccordionItem
-      v-model="localOpen"
+      v-model="controlsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -40,23 +40,16 @@
   import { SfInput } from '@storefront-ui/vue';;
   
   const props = defineProps({
-    open: {
-      type: Boolean,
-      default: true,
-    },
     color: {
       type: String,
       default: '#ffffff',
     },
   });
   
-  const emits = defineEmits(['update:open', 'update:color']);
-  const localOpen = ref(props.open);
+  const emits = defineEmits(['update:color']);
   const localColor = ref(props.color);
   
-  watch(localOpen, (newVal) => {
-    emits('update:open', newVal);
-  });
+  const controlsOpen = ref(true);
   
   watch(localColor, (newVal) => {
     emits('update:color', newVal);

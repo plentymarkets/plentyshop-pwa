@@ -13,7 +13,7 @@
         <label>
           <UiFormLabel class="mb-1">Label</UiFormLabel>
           <SfInput
-            v-model="localBanner.content.button.label"
+            v-model="banner.content.button.label"
             data-testid="slider-button-label"
             name="label"
             type="text"
@@ -25,7 +25,7 @@
       <div class="mb-6">
         <UiFormLabel class="mb-1">Link Target</UiFormLabel>
         <SfInput
-          v-model="localBanner.content.button.link"
+          v-model="banner.content.button.link"
           name="link"
           data-testid="slider-button-link"
           type="text"
@@ -41,14 +41,14 @@
           <div
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
             :class="{
-              'bg-gray-100 text-gray-900 font-semibold': localBanner.content.button.variant === 'primary',
+              'bg-gray-100 text-gray-900 font-semibold': banner.content.button.variant === 'primary',
             }"
             data-testid="slider-button-primary"
-            @click="localBanner.content.button.variant = 'primary'"
+            @click="banner.content.button.variant = 'primary'"
           >
             <SfIconCheck
               class="mr-1 w-[1.1rem]"
-              :class="{ invisible: localBanner.content.button.variant !== 'primary' }"
+              :class="{ invisible: banner.content.button.variant !== 'primary' }"
             />
             Primary
           </div>
@@ -56,14 +56,14 @@
           <div
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
             :class="{
-              'bg-gray-100 text-gray-900 font-semibold': localBanner.content.button.variant === 'secondary',
+              'bg-gray-100 text-gray-900 font-semibold': banner.content.button.variant === 'secondary',
             }"
             data-testid="slider-button-secondary"
-            @click="localBanner.content.button.variant = 'secondary'"
+            @click="banner.content.button.variant = 'secondary'"
           >
             <SfIconCheck
               class="mr-1 w-[1.1rem]"
-              :class="{ invisible: localBanner.content.button.variant !== 'secondary' }"
+              :class="{ invisible: banner.content.button.variant !== 'secondary' }"
             />
             Secondary
           </div>
@@ -74,19 +74,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 import { SfInput, SfIconCheck, SfAccordionItem as UiAccordionItem } from '@storefront-ui/vue';
 import type { BannerProps } from './types';
 
 const props = defineProps<{
   banner: BannerProps
 }>();
-
-const emit = defineEmits(['update:modelValue', 'update:banner']);
-
-// local copies
 const buttonOpen = ref(true);
-const localBanner = ref<BannerProps>(JSON.parse(JSON.stringify(props.banner)));
-
-watch(localBanner, (val) => emit('update:banner', val), { deep: true });
 </script>

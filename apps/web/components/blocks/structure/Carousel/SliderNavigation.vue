@@ -7,7 +7,7 @@
         <button
           data-testid="quick-add-slide-button"
           class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
-          @click="$emit('addSlide')"
+          @click="addSlide()"
         >
           <SfIconAdd class="text-neutral-500" />
         </button>
@@ -18,7 +18,7 @@
             v-if="slides.length >= 2"
             data-testid="open-slide-actions"
             class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
-            @click="$emit('open')"
+            @click="open()"
           >
             <SfIconMoreHoriz class="text-neutral-500" />
           </button>
@@ -28,7 +28,7 @@
             class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-50"
           >
             <div class="flex justify-end p-2">
-              <SfIconClose class="cursor-pointer" @click="$emit('close')" />
+              <SfIconClose class="cursor-pointer" @click="close()" />
             </div>
             <hr />
             <div class="p-2">
@@ -44,7 +44,7 @@
                     :data-testid="`actions-move-slide-up-${index}`"
                     class="cursor-pointer text-neutral-500 mr-2"
                     size="sm"
-                    @click.stop="$emit('moveSlideUp', index)"
+                    @click.stop="moveSlideUp(index)"
                   />
                   <SfIconArrowUpward
                     v-else
@@ -58,7 +58,7 @@
                     :data-testid="`actions-move-slide-down-${index}`"
                     class="cursor-pointer text-neutral-500 mr-2"
                     size="sm"
-                    @click.stop="$emit('moveSlideDown', index)"
+                    @click.stop="moveSlideDown(index)"
                   />
                   <SfIconArrowDownward
                     v-else
@@ -74,7 +74,7 @@
                   :data-testid="`actions-delete-slide-${index}`"
                   class="text-red-500 hover:text-red-700"
                   :disabled="slides.length === 1"
-                  @click="$emit('deleteSlide', index)"
+                  @click="deleteSlide(index)"
                 >
                   <SfIconDelete class="text-neutral-500" />
                 </button>
@@ -87,7 +87,7 @@
                 <button
                   data-testid="actions-add-slide-button"
                   class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
-                  @click="$emit('addSlide')"
+                  @click="addSlide()"
                 >
                   <SfIconAdd class="text-neutral-500" />
                 </button>
@@ -127,7 +127,7 @@
           :data-testid="`slide-settings-${index}`"
           class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
           :class="activeSlide === index ? 'bg-editor-button text-white' : ''"
-          @click="$emit('slideClick', index)"
+          @click="slideClick(index)"
         >
           Slide {{ index + 1 }}
         </button>
@@ -147,22 +147,117 @@ import {
   SfIconArrowDownward,
   SfIconAdd,
   SfIconClose,
+  useDisclosure
 } from '@storefront-ui/vue';
 import { PropType } from 'vue';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { CarouselStructureProps } from './types';
+const { isOpen, open, close } = useDisclosure();
+import { v4 as uuid } from 'uuid';
 
-const props = defineProps({
-  slides: {
-    type: Array as PropType<BannerProps[]>,
-    required: true,
+const { data } = useCategoryTemplate();
+const { blockUuid } = useSiteConfiguration();
+const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
+const { findOrDeleteBlockByUuid } = useBlockManager();
+
+setIndex(blockUuid.value, 0);
+
+const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
+
+const carouselStructure = computed(
+  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
+);
+
+const slides = computed({
+  get: () => {
+    return (carouselStructure.value?.content || []) as BannerProps[];
   },
-  activeSlide: {
-    type: Number,
-    default: 0,
-  },
-  isOpen: {
-    type: Boolean,
-    default: false,
-  },
+  set: (value: BannerProps[]) => updateBannerItems(value, blockUuid.value),
 });
+
+const slideClick = async (index: number) => {
+  setIndex(blockUuid.value, index);
+  await nextTick();
+};
+
+const addSlide = async () => {
+  const newSlide: BannerProps = {
+    name: 'Banner',
+    type: 'content',
+    content: {
+      image: {
+        wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+        desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+        tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+        mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+        brightness: 0.5,
+        alt: '',
+      },
+      text: {
+        pretitle: 'PreTitle',
+        title: 'Title',
+        subtitle: 'SubTitle',
+        htmlDescription: 'Text that supports HTML formatting',
+        color: '#000',
+        bgcolor: '#fff',
+        bgopacity: 1,
+        textAlignment: 'left',
+        justify: 'center',
+        align: 'left',
+        background: false,
+      },
+      button: {
+        label: 'Button',
+        link: '/',
+        variant: 'primary',
+      },
+    },
+    meta: {
+      uuid: uuid(),
+    },
+    lazyLoading: 'eager',
+    index: slides.value.length,
+  };
+
+  slides.value = [...slides.value, newSlide] as BannerProps[];
+
+  await nextTick();
+
+  setIndex(blockUuid.value, slides.value.length - 1);
+  close();
+};
+
+const deleteSlide = async (index: number) => {
+  if (slides.value.length <= 1) return;
+  slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
+  setIndex(blockUuid.value, 0);
+  await nextTick();
+  close();
+};
+
+const moveSlideUp = async (index: number) => {
+  if (index <= 0) return;
+
+  const newSlides = [...slides.value] as BannerProps[];
+
+  [newSlides[index - 1], newSlides[index]] = [newSlides[index], newSlides[index - 1]];
+  slides.value = newSlides;
+
+  await nextTick();
+
+  setIndex(blockUuid.value, index - 1);
+};
+
+const moveSlideDown = async (index: number) => {
+  if (index >= slides.value.length - 1) return;
+
+  const newSlides = [...slides.value] as BannerProps[];
+
+  [newSlides[index], newSlides[index + 1]] = [newSlides[index + 1], newSlides[index]];
+  slides.value = newSlides;
+
+  await nextTick();
+
+  setIndex(blockUuid.value, index + 1);
+};
 </script>
