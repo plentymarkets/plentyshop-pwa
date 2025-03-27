@@ -141,15 +141,36 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-
-const title = ref('Title');
-const description = ref('Description');
-const keywords = ref('Keywords');
-const canonical = ref('Canonical');
-const includeSitemap = ref(false);
-const robots = ref('all');
-const robotsDropdown = ref(false);
+const { pages } = await usePages();
 const metaData = ref(false);
+const title = ref('');
+const description = ref('');
+const keywords = ref('');
+const canonical = ref('');
+const robots = ref('all');
+const includeSitemap = ref(false);
+const { getPageId } = useCategorySettings();
+const findPageById = (id: number | string) => {
+  return pages.value.find((page) => page.id === id);
+};
+
+watch(
+  () => getPageId.value,
+  (newId) => {
+    const foundPage = findPageById(newId);
+    if (foundPage) {
+      title.value = foundPage.name;
+      description.value = foundPage.metaDescription || '';
+      keywords.value = foundPage.metaKeywords || '';
+      canonical.value = foundPage.canonicalLink || '';
+      robots.value = foundPage.metaRobots || 'all';
+      includeSitemap.value = foundPage.sitemap === 'y';
+    }
+  },
+  { immediate: true },
+);
+
+const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
 const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];
 
