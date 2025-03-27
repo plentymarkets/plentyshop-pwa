@@ -60,6 +60,7 @@ export interface useCategoryConfigurationState {
     position: Readonly<Ref<useCategoryConfigurationState['position']>>;
     setPageId: (id: number, parentId?: number) => void;
     getPageId: ComputedRef<number>;
+    getParentCategoryId: Readonly<ComputedRef<number | null>>;
     saveCategorySettings: () => Promise<boolean>;
   }
 
