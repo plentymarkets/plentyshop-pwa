@@ -8,9 +8,6 @@
       <span v-if="item.children && item.children.length > 0">
         <SfIconExpandMore />
       </span>
-      <span>
-        {{ item.id }}
-      </span>
       <router-link
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
@@ -73,18 +70,12 @@ import {
   SfDropdown,
   SfIconDelete,
   SfIconSearch,
-  SfIconError,
-  SfTooltip,
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
-const { categorySettingsIsDirty } = useCategorySettings();
-
-const currentSeoPageId = ref<number | null>(null);
-const currentGeneralPageId = ref<number | null>(null);
 
 const { item } = defineProps<{
   item: MenuItemType;
@@ -96,9 +87,6 @@ const { setSettingsCategory } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setPageId } = useCategorySettings();
-
-const { setPageId } = useCategorySettings();
-
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
 const route = useRoute();
@@ -114,13 +102,6 @@ const openSeoSettings = (id: number) => {
   currentSeoPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
 };
-
-const isTouched = computed(() => categorySettingsIsDirty.value);
-
-const showFormWarning = computed(() => {
-  return currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id;
-});
-
 const deletePage = () => {
   close();
 };
