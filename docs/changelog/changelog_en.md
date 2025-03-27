@@ -12,6 +12,7 @@
 
 ### 👷 Changed
 
+- Refactored code for banner settings.
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
 
