@@ -148,6 +148,7 @@ const description = ref('');
 const keywords = ref('');
 const canonical = ref('');
 const robots = ref('all');
+const includeSitemap = ref(false);
 // const data = ref<Page>({ ...defaultData });
 const { getPageId } = useCategorySettings();
 const findPageById = (id: number | string) => {
@@ -164,6 +165,7 @@ watch(
       keywords.value = foundPage.metaKeywords || '';
       canonical.value = foundPage.canonicalLink || '';
       robots.value = foundPage.metaRobots || 'all';
+      includeSitemap.value = foundPage.sitemap === 'y';
     } else {
 
       title.value = '';
@@ -175,7 +177,6 @@ watch(
   { immediate: true }
 );
 
-const includeSitemap = ref(false);
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
 const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];

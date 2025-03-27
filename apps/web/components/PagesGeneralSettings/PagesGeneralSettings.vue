@@ -192,33 +192,35 @@ watch(
       };
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
-console.log('datas', data.value);
 const pageTypes = ref([
   { label: 'Content', value: 'content' },
   { label: 'Item category', value: 'item' },
 ]);
 const pageType = ref(data.value.type === 'content' ? pageTypes.value[0] : pageTypes.value[1]);
 const linklistValue = computed(() => {
-  return !!(data.value.linklist);
+  return data.value.linklist === 'y';
 });
-
 const rightValue = computed(() => {
-  return data.value.right === "all";
+  return data.value.right === 'all';
 });
 const pageOptions = computed(() => {
   const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
   options.unshift({ id: null, name: 'None' });
   return options;
 });
-watch(getParentCategoryId, (newId) => {
-  if (newId) {
-    const matchedPage = pageOptions.value.find((page) => page.id === newId);
-    selectedPage.value = matchedPage || null;
-  } else {
-    selectedPage.value = { id: null, name: 'None' };
-  }
-}, { immediate: true });
+watch(
+  getParentCategoryId,
+  (newId) => {
+    if (newId) {
+      const matchedPage = pageOptions.value.find((page) => page.id === newId);
+      selectedPage.value = matchedPage || null;
+    } else {
+      selectedPage.value = { id: null, name: 'None' };
+    }
+  },
+  { immediate: true },
+);
 </script>
