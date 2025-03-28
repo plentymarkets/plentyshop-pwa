@@ -1,11 +1,11 @@
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
-import type { UseCarouselState } from '~/composables/useCarousel/types';
+import type { GetCarouselStructureByBlockUid, UseCarouselState } from '~/composables/useCarousel/types';
 
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({
     data: [],
     loading: false,
-    activeSlideIndex: {} as ActiveSlideIndex,
+    activeSlidesIndex: {} as ActiveSlidesIndex,
   }));
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -21,12 +21,17 @@ export const useCarousel: UseCarouselReturn = () => {
 
   const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
     if (blockUuid) {
-      state.value.activeSlideIndex[blockUuid] = slideIndex;
+      state.value.activeSlidesIndex[blockUuid] = slideIndex;
     }
+  };
+
+  const getCarouselStructureByBlockUid: GetCarouselStructureByBlockUid = (blockUuid: string) => {
+    return findOrDeleteBlockByUuid(data.value, blockUuid);
   };
 
   return {
     updateBannerItems,
+    getCarouselStructureByBlockUid,
     setIndex,
     ...toRefs(state.value),
   };
