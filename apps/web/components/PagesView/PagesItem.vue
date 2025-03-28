@@ -12,6 +12,9 @@
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
+        <span>
+          {{ item.id }}
+        </span>
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
@@ -19,7 +22,7 @@
       </router-link>
 
       <SfTooltip
-        v-if="showFormWarning && isTouched"
+        v-if="showFormWarning"
         label="You have unsaved changes on this page"
         :placement="'top'"
         :show-arrow="true"
@@ -30,7 +33,7 @@
       <SfIconMoreHoriz @click.prevent="openMenu" />
 
       <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
-      <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
+        <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
           <div
             class="p-1 flex"
             @click="
@@ -126,8 +129,8 @@ const deletePage = (id: number) => {
 
 const isTouched = computed(() => categorySettingsIsDirty.value);
 
+// Show form warning if the current page matches the active SEO or General settings page
 const showFormWarning = computed(() => {
-  return currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id;
+  return (currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id) && isTouched.value;
 });
-
 </script>

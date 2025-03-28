@@ -51,7 +51,8 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
       // state.value.id !== state.value.initialData.id ||
       // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
       // state.value.sitemap !== state.value.initialData.sitemap ||
-      // state.value.linkList !== state.value.initialData.linkList ||
+      // state.value.linkList !== 
+      // tate.value.initialData.linkList ||
       state.value.name !== state.value.initialData.name ||
       // state.value.canonical !== state.value.initialData.canonical
       state.value.canonicalLink !== state.value.initialData.canonicalLink ||
@@ -69,6 +70,10 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     if (parentCategoryId !== undefined) {
       state.value.parentCategoryId = parentCategoryId;
     }
+  };
+
+  const resetInitialData = () => {
+    state.value.initialData = { ...state.value };
   };
 
   const getPageId = computed(() => state.value.id);
@@ -166,5 +171,6 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     setPageId,
     getPageId,
     getParentCategoryId,
+    resetInitialData,
   };
 };
