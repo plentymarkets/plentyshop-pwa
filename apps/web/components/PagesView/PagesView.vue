@@ -94,15 +94,13 @@ const splitItemsByType = (items: MenuItemType[]) => {
 const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
-  const urls = {
+  const urls: Record<string, string> = {
     en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = locale.value in urls ? urls[locale.value as keyof typeof urls] : null;
+  const targetUrl = urls[locale.value] ?? null;
 
-  if (targetUrl) {
-    window.open(targetUrl, '_blank');
-  }
+  if (targetUrl) window.open(targetUrl, '_blank');
 };
 </script>
