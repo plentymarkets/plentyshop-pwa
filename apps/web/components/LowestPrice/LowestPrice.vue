@@ -11,9 +11,9 @@ import { useProductPrice } from '~/composables/useProductPrice';
 
 const props = defineProps<LowestPriceProps>();
 
-const { price } = useProductPrice(props.product);
+const { crossedPrice } = useProductPrice(props.product);
 
 const lowestPrice = computed(() => Number(productGetters.getLowestPrice(props.product)));
 
-const showLowestPrice = computed(() => lowestPrice.value && price.value && lowestPrice.value < price.value);
+const showLowestPrice = computed(() => lowestPrice.value && crossedPrice.value && lowestPrice.value < crossedPrice.value);
 </script>
