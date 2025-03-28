@@ -22,6 +22,7 @@
 
 ### 🩹 Fixed
 
+- Fix a TypeScript-specific syntax
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
 - Fix toolbar arrow.
