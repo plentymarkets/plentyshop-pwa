@@ -99,7 +99,7 @@ const openHelpPage = () => {
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = locale.value in urls ? urls[locale.value] : null;
+  const targetUrl = locale.value in urls ? urls[locale.value as keyof typeof urls] : null;
 
   if (targetUrl) {
     window.open(targetUrl, '_blank');
