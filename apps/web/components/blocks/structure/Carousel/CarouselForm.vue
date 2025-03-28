@@ -1,8 +1,5 @@
 <template>
-  <div
-    data-testid="banner-carousel-form"
-    class="sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
-  >
+  <div data-testid="banner-carousel-form" class="sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
     <SliderNavigation />
     <div :data-testid="`slide-settings-${activeSlideIndex}`">
       <BlocksBannerCarouselBannerForm
