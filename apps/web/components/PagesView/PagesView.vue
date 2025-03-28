@@ -95,7 +95,7 @@ const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
   const urls = {
-    en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
+    en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
