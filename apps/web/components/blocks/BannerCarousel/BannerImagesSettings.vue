@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <UiAccordionItem
-    v-model="imagesOpen"
+    v-model="controlsOpen"
     summary-active-class="bg-neutral-100"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     data-testid="slider-image-group"
@@ -10,7 +10,7 @@
       <h2 data-testid="slider-image-group-title">Images</h2>
     </template>
 
-    <div class="images px-3">
+    <div class="images">
       <div class="mb-6 mt-4">
         <label>
           <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
@@ -107,7 +107,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue';
-import { SfInput, SfAccordionItem as UiAccordionItem } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import type { BannerProps } from './types';
 
 defineProps<{
@@ -115,7 +115,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits(['clampBrightness']);
-const imagesOpen = ref(true);
+const controlsOpen = ref(true);
 
 const emitClampBrightness = (event: Event) => {
   const value = parseFloat((event.target as HTMLInputElement).value);

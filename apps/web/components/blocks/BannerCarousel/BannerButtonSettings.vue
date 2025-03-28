@@ -9,7 +9,7 @@
       <h2 data-testid="slider-button-group-title">Button</h2>
     </template>
 
-    <div class="images px-3">
+    <div class="images">
       <div class="mb-6 mt-4">
         <label>
           <UiFormLabel class="mb-1">Label</UiFormLabel>
@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
-import { SfInput, SfIconCheck, SfAccordionItem as UiAccordionItem } from '@storefront-ui/vue';
+import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { BannerProps } from './types';
 defineProps<{
   banner: BannerProps;
