@@ -1,5 +1,5 @@
 import type { TailwindPalette } from '~/utils/tailwindHelper';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView =
   | 'SettingsView'
   | 'blocksList'
@@ -24,6 +24,7 @@ export interface UseSiteConfigurationState {
   settingsType: SettingsType;
   drawerOpen: boolean;
   pageModalOpen: boolean;
+  unlinkModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
   primaryColor: string;
@@ -33,7 +34,7 @@ export interface UseSiteConfigurationState {
   placement: string;
   drawerView: DrawerView;
   blockType: string;
-  blockIndex: number;
+  blockUuid: string;
   initialData: ConfigurationSettings;
 }
 
@@ -42,9 +43,10 @@ export type UpdateBlockSize = (size: string) => void;
 export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
-export type OpenDrawerView = (view: DrawerView, type?: string, blockIndex?: number) => void;
+export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
+export type ToggleDeleteModal = (value: boolean) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
 
 export interface UseSiteConfiguration {
@@ -54,8 +56,9 @@ export interface UseSiteConfiguration {
   settingsCategory: Readonly<Ref<UseSiteConfigurationState['settingsCategory']>>;
   settingsType: Readonly<Ref<UseSiteConfigurationState['settingsType']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
+  unlinkModalOpen: Readonly<Ref<UseSiteConfigurationState['unlinkModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
-  blockIndex: Readonly<Ref<UseSiteConfigurationState['blockIndex']>>;
+  blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
@@ -73,6 +76,7 @@ export interface UseSiteConfiguration {
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
   togglePageModal: TogglePageModal;
+  toggleDeleteModal: ToggleDeleteModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;

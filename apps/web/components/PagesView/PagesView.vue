@@ -4,7 +4,7 @@
       <header class="flex items-center justify-between px-4 py-5 border-b">
         <div class="flex items-center text-xl font-bold">
           Pages
-          <SfTooltip label="Open manual" placement="left" :show-arrow="true" class="flex">
+          <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
             <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
           /></SfTooltip>
         </div>
@@ -36,7 +36,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -52,7 +52,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -66,9 +66,7 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
-const { $i18n } = useNuxtApp();
-const currentLocale = ref($i18n.locale.value);
-
+const { locale } = useI18n();
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
@@ -96,12 +94,13 @@ const splitItemsByType = (items: MenuItemType[]) => {
 const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
-  const urls = {
-    en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
+  const urls: Record<string, string> = {
+    en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = currentLocale.value === 'de' ? urls.de : urls.en;
-  window.open(targetUrl, '_blank');
+  const targetUrl = urls[locale.value] ?? urls['en'] ?? null;
+
+  if (targetUrl) window.open(targetUrl, '_blank');
 };
 </script>

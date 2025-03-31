@@ -12,12 +12,18 @@ import { productGetters } from '@plentymarkets/shop-api';
 
 export const useProductPrice = (product: Product) => {
   const specialOffer = productGetters.getSpecialOffer(product);
+  const graduatedPrices = productGetters.getGraduatedPrices(product);
 
-  const price = computed(() =>
-    specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
-      ? specialOffer
-      : productGetters.getCheapestGraduatedPrice(product),
-  );
+  const price = computed(() => {
+    if (graduatedPrices.length) {
+      return specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
+        ? specialOffer
+        : productGetters.getCheapestGraduatedPrice(product);
+    }
+
+    const priceValue = productGetters.getPrice(product) ?? 0;
+    return specialOffer && specialOffer < priceValue ? specialOffer : priceValue;
+  });
 
   const crossedPrice = computed(() =>
     specialOffer ? productGetters.getPrice(product) : productGetters.getCrossedPrice(product),
