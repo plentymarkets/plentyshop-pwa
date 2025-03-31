@@ -4,12 +4,14 @@
 
 ### New
 
+- Added DHL preffered delivery
 - Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
 - Added design for category settings.
 - Added form for general settings
 - Added form for SEO settings
 - Updated general settings and seo settings to get data dynamically
+- Added form for delete page
 
 ### 👷 Changed
 
@@ -20,11 +22,13 @@
 
 ### 🩹 Fixed
 
+- Fix typescript build error during shop deployment.
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
 - Fix toolbar arrow.
 - Fix Page Selector closes on second button click
 - Fix left side menu german navigation.
+- Fix item page image gallery overlap.
 
 # v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
