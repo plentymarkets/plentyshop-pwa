@@ -1030,7 +1030,7 @@
       "wunschortExample": "e.g. garage, terrace",
       "wunschnachbarExampleName": "Last name, first name",
       "wunschnachbarExampleAddress": "Street, house number, postcode, town",
-      "wunschpaketAdditionalCharge": "When using this service, a surcharge of EUR {additionalCharge} applies.*",
+      "wunschpaketAdditionalCharge": "When using this service, a surcharge of {additionalCharge} {currency} applies.*",
       "wunschtagNone": "None",
       "preferredDayAlertMessage": "Select the preferred day.",
       "preferredLocationAlertMessage": "Enter the preferred location.",
