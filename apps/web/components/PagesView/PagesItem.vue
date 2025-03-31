@@ -56,10 +56,8 @@
           </div>
           <div
             class="p-1 flex"
-            @click="
-              deletePage();
-              setPageId(item.id, parentId);
-            "
+            :class="{ 'opacity-50 cursor-not-allowed': item.name === 'Homepage' }"
+            @click="item.name !== 'Homepage' ? (deletePage(item.id), setPageId(item.id, parentId)) : null"
           >
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
@@ -103,8 +101,7 @@ const { categorySettingsIsDirty } = useCategorySettings();
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
-const currentSeoPageId = ref<number | null>(null);
-const currentGeneralPageId = ref<number | null>(null);
+
 const { setPageId } = useCategorySettings();
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
