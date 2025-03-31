@@ -57,6 +57,7 @@
     "cypress-wait-until": "^2.0.1",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "happy-dom": "^15.11.7",
     "msw": "^2.6.7",
     "nuxt": "^3.16.0",
