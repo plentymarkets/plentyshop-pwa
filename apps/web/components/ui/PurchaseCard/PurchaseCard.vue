@@ -72,8 +72,7 @@
             class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
             data-testid="product-description"
             v-html="productGetters.getShortDescription(product)"
-          >
-          </div>
+          />
 
           <ProductAttributes :product="product" />
           <BundleOrderItems v-if="product.bundleComponents" :product="product" />

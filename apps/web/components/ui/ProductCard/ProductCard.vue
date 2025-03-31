@@ -49,7 +49,7 @@
         v-if="productGetters.getShortDescription(product)"
         class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
       >
-        <div v-html="productGetters.getShortDescription(product)" class="line-clamp-3"></div>
+        <div class="line-clamp-3" v-html="productGetters.getShortDescription(product)"/>
       </div>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
