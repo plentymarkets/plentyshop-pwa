@@ -60,9 +60,6 @@
 
 ### 🩹 Fixed
 
-- SVG logo size distorted fix.
-- Toolbar language switch fix.
-- Added scroll to block after changing block position.
 - Fixed that the preview mode could not be exited.
 - Fixed scroll to block after changing block position.
 - Fixed toolbar language switch.
