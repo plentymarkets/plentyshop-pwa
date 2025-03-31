@@ -71,8 +71,8 @@
             v-if="productGetters.getShortDescription(product).length > 0"
             class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
             data-testid="product-description"
+            v-html="productGetters.getShortDescription(product)"
           >
-            {{ productGetters.getShortDescription(product) }}
           </div>
 
           <ProductAttributes :product="product" />

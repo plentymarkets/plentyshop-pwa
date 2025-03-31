@@ -48,9 +48,7 @@
 
         <ProductPrice :product="product" />
 
-        <div class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-          {{ productGetters.getShortDescription(product) }}
-        </div>
+        <div v-html="productGetters.getShortDescription(product)" class="mb-4 font-normal typography-text-sm" data-testid="product-description"></div>
 
         <div class="mt-4 typography-text-xs flex gap-1">
           <span>{{ t('asterisk') }}</span>

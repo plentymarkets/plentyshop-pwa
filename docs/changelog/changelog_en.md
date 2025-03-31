@@ -15,6 +15,7 @@
 
 ### 👷 Changed
 
+- Added v-html for short description of item.
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
 - Disabled local image optimization.
