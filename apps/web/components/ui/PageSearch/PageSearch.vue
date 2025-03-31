@@ -1,6 +1,6 @@
 <template>
   <div
-    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
+    class="page-search z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
   >
     <div>
       <Multiselect
@@ -96,13 +96,14 @@ const openPages = () => {
   emit('close');
 };
 </script>
+
 <style scoped>
-:deep .multiselect__option--highlight {
+:deep(.multiselect__option--highlight) {
   background-color: #f7fafc !important;
   color: #1a202c;
 }
 
-:deep .multiselect__content-wrapper {
+:deep(.multiselect__content-wrapper) {
   max-height: 400px !important;
 }
 </style>

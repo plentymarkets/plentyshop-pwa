@@ -4,18 +4,57 @@
 
 ### New
 
-- Added site settings toolbar.
-- Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
-- Added the legal disclosure to the cookie bar description.
-- Added pages entry in the left side menu, where users can manage their pages.
-- Add design for adding a new page
-- Fix Page Selector state
+- Added DHL preffered delivery
+- Added pages entry on the left side menu, where users can manage their pages.
+- Add design for adding a new page.
+- Added design for category settings.
+- Added form for general settings
+- Added form for SEO settings
+- Updated general settings and seo settings to get data dynamically
+- Added form for delete page
 
-#### Changed
+### 👷 Changed
 
 - Added manange pages button in editor toolbar.
+- The editor now has a new component that allows page navigation.
+- Disabled local image optimization.
+- Updated price calculation: If graduated prices are unavailable, the default price is used .
+
+### 🩹 Fixed
+
+- SVG logo size distorted fix.
+- Fix typescript build error during shop deployment.
+- Fix Page Selector state.
+- Fix Page Selector closes when clicking outside the box.
+- Fix toolbar arrow.
+- Fix Page Selector closes on second button click
+- Fix left side menu german navigation.
+- Fix item page image gallery overlap.
+
+# v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 👷 Changed
+
+- `useSdk` and sdk setup are now maintained and exported from `@plentymarkets/shop-core`. With this change we also removed `@vue-storefront/nuxt`. There are no breaking changes.
+
+### 🩹 Fixed
+
+- Fix displayment of large number of categories in navigation bar.
+- Fix checkout email validation.
+- Fix my orders page shipping date's missing locale.
+- Fix build error during shop deployment. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
+
+# v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Added site settings toolbar.
+- Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
+- Added the legal disclosure to the cookie bar description.x
+
+### 👷 Changed
+
 - Auto-save implemented for email address in the guest checkout flow.
-- Added login option for a guest user in the checkout flow.
 - Assets in the `apps/web/public` directory have been moved to a new `_nuxt-plenty/` subdirectory. Additionally, the [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) module has been replaced with the [@nuxt/fonts](https://fonts.nuxt.com/) module, which is similar in functionality, but provides more configuration options. Both of these changes make it easier to apply network routing rules on the back end.
 - Renamed block sections for editor.
 
@@ -24,8 +63,12 @@
 - SVG logo size distorted fix.
 - Toolbar language switch fix.
 - Added scroll to block after changing block position.
+- Fixed that the preview mode could not be exited.
+- Fixed scroll to block after changing block position.
+- Fixed toolbar language switch.
 - Fixed side toolbar visibility.
 - Category middleware refactored to use the rights from the category tree.
+- Fixed the app storing and using the wrong configuration keys for color and font settings.
 
 # v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -34,19 +77,18 @@
 - The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
 - Reduced chunck size by moving heavy files to public folder fetching the data instead of importing it
 - Reduced chunk size by removing the lodash library completely and using custom js functions
-- The editor now has a new component that allows page navigation
 
 ### 🩹 Fixed
 
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 - Fixed site settings not persisting on rebuild.
-- Fixed that the preview mode could not be exited.
 
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
 - Added success and error notifications when saving changes in the editor.
+- Added block structures and refactored the editor to support them, including adding api endpoint communication.
 
 ### 🩹 Fixed
 
