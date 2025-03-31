@@ -127,28 +127,29 @@ const {
   canonicalLink: canonical,
   robots,
   includeSitemap,
+  resetInitialData,
  // getPageId,
 } = useCategorySettings(getCategoryId);
 
-const findPageById = (id: number | string) => {
+const findPageById = (id: number | null) => {
   return pages.value.find((page) => page.id === id);
 };
 
 
-// Watch for changes in the page ID and update the form fields
 watch(
   () => getCategoryId.value,
   (newId) => {
-    const foundPage = newId !== null ? findPageById(newId) : null;
+    const foundPage = findPageById(newId);
     if (foundPage) {
-      if (title.value !== foundPage.name) title.value = foundPage.name;
-      if (description.value !== foundPage.metaDescription) description.value = foundPage.metaDescription || '';
-      if (keywords.value !== foundPage.metaKeywords) keywords.value = foundPage.metaKeywords || '';
-      if (canonical.value !== foundPage.canonicalLink) canonical.value = foundPage.canonicalLink || '';
-      if (robots.value !== foundPage.metaRobots) robots.value = foundPage.metaRobots || 'all';
-      if (includeSitemap.value !== (foundPage.sitemap === 'y')) includeSitemap.value = foundPage.sitemap === 'y';
-      
+      title.value = foundPage.name;
+      description.value = foundPage.metaDescription || '';
+      keywords.value = foundPage.metaKeywords || '';
+      canonical.value = foundPage.canonicalLink || '';
+      robots.value = foundPage.metaRobots || 'all';
+      includeSitemap.value = foundPage.sitemap === 'y';
     }
+
+    resetInitialData();
   },
   { immediate: true },
 );
