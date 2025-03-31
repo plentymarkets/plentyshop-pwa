@@ -8,8 +8,8 @@ import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~
  * const { title, description, keywords, robots, canonical, includeSitemap, saveSeoSettings, seoSettingsIsDirty } = useSeoConfiguration();
  * ```
  */
-export const useCategorySettings: useCategorySettingsReturn = () => {
-  const state = useState<useCategoryConfigurationState>('categoryConfiguration', () => ({
+export const useCategorySettings: useCategorySettingsReturn = (id) => {
+  const state = useState<useCategoryConfigurationState>(`categoryConfiguration-${id}`, () => ({
     data: [],
     loading: false,
     drawerOpen: false,
@@ -47,12 +47,15 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
 
 
   const categorySettingsIsDirty = computed(() => {
+    console.log('Current State:', state.value);
+    console.log('Initial Data:', state.value.initialData);
     return (
       // state.value.id !== state.value.initialData.id ||
       // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
       // state.value.sitemap !== state.value.initialData.sitemap ||
       // state.value.linkList !== 
       // tate.value.initialData.linkList ||
+      
       state.value.name !== state.value.initialData.name ||
       // state.value.canonical !== state.value.initialData.canonical
       state.value.canonicalLink !== state.value.initialData.canonicalLink ||
@@ -65,19 +68,19 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     );
   });
 
-  const setPageId = (id: number, parentCategoryId?: number) => {
-    state.value.id = id;
-    if (parentCategoryId !== undefined) {
-      state.value.parentCategoryId = parentCategoryId;
-    }
-  };
+  // const setPageId = (id: number, parentCategoryId?: number) => {
+  //   state.value.id = id;
+  //   if (parentCategoryId !== undefined) {
+  //     state.value.parentCategoryId = parentCategoryId;
+  //   }
+  // };
 
   const resetInitialData = () => {
     state.value.initialData = { ...state.value };
   };
 
-  const getPageId = computed(() => state.value.id);
-  const getParentCategoryId = computed(() => state.value.parentCategoryId);
+  // const getPageId = computed(() => state.value.id);
+  // const getParentCategoryId = computed(() => state.value.parentCategoryId);
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
@@ -168,9 +171,9 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     ...toRefs(state.value),
     categorySettingsIsDirty,
     saveCategorySettings,
-    setPageId,
-    getPageId,
-    getParentCategoryId,
+    // setPageId,
+    // getPageId,
+    // getParentCategoryId,
     resetInitialData,
   };
 };

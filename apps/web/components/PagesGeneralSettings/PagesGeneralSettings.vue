@@ -9,7 +9,6 @@
       >
         <template #summary>
           <h2>Text</h2>
-          {{getPageId }}
         </template>
         <div class="py-2">
           <div class="flex justify-between">
@@ -176,7 +175,8 @@ interface PageOption {
   name: string;
 }
 const selectedPage = ref<PageOption | null>(null);
-const { getPageId, getParentCategoryId } = useCategorySettings();
+  const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+
 const findPageById = (id: number | string, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
@@ -192,9 +192,9 @@ const findPageById = (id: number | string, pagesList: Page[]): Page | undefined 
   return undefined;
 };
 watch(
-  () => getPageId.value,
+  () => getCategoryId.value,
   (newId) => {
-    const foundPage = findPageById(newId, pages.value);
+    const foundPage = newId !== null ? findPageById(newId, pages.value) : undefined;
     if (foundPage) {
       id.value = foundPage.id;
       type.value = foundPage.type || '';

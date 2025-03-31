@@ -38,7 +38,7 @@
             class="p-1 flex"
             @click="
               openGeneralSettings(item.id);
-              setPageId(item.id, parentId);
+              setCategoryId(item.id, parentId);
             "
           >
             <NuxtImg width="24" height="24px" :src="gearBlack" />
@@ -48,7 +48,7 @@
             class="p-1 flex"
             @click="
               openSeoSettings(item.id);
-              setPageId(item.id, parentId);
+              setCategoryId(item.id, parentId);
             "
           >
             <SfIconSearch />
@@ -57,7 +57,7 @@
           <div
             class="p-1 flex"
             :class="{ 'opacity-50 cursor-not-allowed': item.name === 'Homepage' }"
-            @click="item.name !== 'Homepage' ? (deletePage(item.id), setPageId(item.id, parentId)) : null"
+            @click="item.name !== 'Homepage' ? (deletePage(item.id), setCategoryId(item.id, parentId)) : null"
           >
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
@@ -97,12 +97,13 @@ const { item } = defineProps<{
   parentId: number | undefined;
 }>();
 
-const { categorySettingsIsDirty } = useCategorySettings();
+const { setCategoryId, getCategoryId } = useCategoryIdHelper();
+
+const { categorySettingsIsDirty, resetInitialData } = useCategorySettings(getCategoryId);
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 
-const { setPageId } = useCategorySettings();
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
 const route = useRoute();
@@ -117,7 +118,9 @@ const openSeoSettings = (id: number) => {
   close();
   currentSeoPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
-};
+  nextTick(() => {
+    resetInitialData(); // Reset initial data after the DOM updates
+  });};
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;
   toggleDeleteModal(true);

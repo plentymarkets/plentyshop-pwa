@@ -44,7 +44,7 @@
 import { SfIconClose } from '@storefront-ui/vue';
 
 const { unlinkModalOpen, toggleDeleteModal } = useSiteConfiguration();
-const { getPageId } = useCategorySettings();
+const { getCategoryId } = useCategoryIdHelper();
 const { pages } = await usePages();
 const pageName = ref('');
 const id = ref(1);
@@ -65,9 +65,9 @@ const findPageById = (id: number | string, pagesList: Page[]): Page | undefined 
   return undefined;
 };
 watch(
-  () => getPageId.value,
+  () => getCategoryId.value,
   (newId) => {
-    const foundPage = findPageById(newId, pages.value);
+    const foundPage = newId !== null ? findPageById(newId, pages.value) : undefined;
     if (foundPage) {
       pageName.value = foundPage.name;
       id.value = foundPage.id;

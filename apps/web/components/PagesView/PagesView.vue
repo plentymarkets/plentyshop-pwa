@@ -86,8 +86,9 @@ const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+const { getCategoryId } = useCategoryIdHelper();
 
-const { categorySettingsIsDirty, saveCategorySettings } = useCategorySettings();
+const { categorySettingsIsDirty, saveCategorySettings } = useCategorySettings(getCategoryId);
 
 const isTouched = computed(() => categorySettingsIsDirty.value);
 

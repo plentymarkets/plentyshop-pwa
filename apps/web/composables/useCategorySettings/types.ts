@@ -57,11 +57,11 @@ export interface useCategorySettings {
   name: Readonly<Ref<useCategoryConfigurationState['name']>>;
   canonicalLink: Ref<useCategoryConfigurationState['canonicalLink']>;
   position: Readonly<Ref<useCategoryConfigurationState['position']>>;
-  setPageId: (id: number, parentId?: number) => void;
-  getPageId: Readonly<ComputedRef<number>>;
-  getParentCategoryId: Readonly<ComputedRef<number | null>>;
+  // setPageId: (id: number, parentId?: number) => void;
+  // getPageId: Readonly<ComputedRef<number>>;
+  // getParentCategoryId: Readonly<ComputedRef<number | null>>;
   saveCategorySettings: () => Promise<boolean>;
   resetInitialData: () => void;
 }
 
-export type useCategorySettingsReturn = () => useCategorySettings;
+export type useCategorySettingsReturn = (id: unknown) => useCategorySettings;

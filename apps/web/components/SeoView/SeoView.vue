@@ -10,8 +10,7 @@
       >
         <template #summary>
           <h2>Meta Data</h2>
-         {{getPageId }}
-        </template>
+       </template>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -118,6 +117,7 @@ import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 const { pages } = await usePages();
 const metaData = ref(false);
+const { getCategoryId } = useCategoryIdHelper();
 
 // Import state and methods from useCategorySettings
 const {
@@ -127,8 +127,8 @@ const {
   canonicalLink: canonical,
   robots,
   includeSitemap,
-  getPageId,
-} = useCategorySettings();
+ // getPageId,
+} = useCategorySettings(getCategoryId);
 
 const findPageById = (id: number | string) => {
   return pages.value.find((page) => page.id === id);
@@ -137,9 +137,9 @@ const findPageById = (id: number | string) => {
 
 // Watch for changes in the page ID and update the form fields
 watch(
-  () => getPageId.value,
+  () => getCategoryId.value,
   (newId) => {
-    const foundPage = findPageById(newId);
+    const foundPage = newId !== null ? findPageById(newId) : null;
     if (foundPage) {
       if (title.value !== foundPage.name) title.value = foundPage.name;
       if (description.value !== foundPage.metaDescription) description.value = foundPage.metaDescription || '';
