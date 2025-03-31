@@ -12,7 +12,7 @@
 - Added form for SEO settings
 - Updated general settings and seo settings to get data dynamically
 - Added form for delete page
-- Fix correct children data for Seo settings 
+- Fix correct children data for Seo settings
 
 ### 👷 Changed
 
