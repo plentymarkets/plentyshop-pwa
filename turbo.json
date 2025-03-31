@@ -4,12 +4,12 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "cache": false
+      "cache": true
     },
     "build:analyze": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "cache": false
+      "cache": true
     },
     "start": {
       "outputs": []
