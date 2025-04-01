@@ -9,7 +9,8 @@
       variantClasses[variant],
     ]"
     data-testid="button"
-    aria-label="button"
+    :aria-label="ariaLabel"
+    :aria-hidden="ariaLabelIsHidden"
   >
     <slot v-if="$slots.prefix" name="prefix" />
     <slot />
@@ -42,6 +43,10 @@ const props = defineProps({
     type: [String, Object] as PropType<string | ConcreteComponent>,
     default: undefined,
   },
+  ariaLabel: {
+    type: String,
+    default: '',
+  },
 });
 
 const { size, tag, square } = toRefs(props);
@@ -69,6 +74,7 @@ const type = computed(
       ? 'button'
       : undefined),
 );
+const ariaLabelIsHidden = computed(() => props.ariaLabel === '')
 </script>
 <script lang="ts">
 export const variantClasses = {
