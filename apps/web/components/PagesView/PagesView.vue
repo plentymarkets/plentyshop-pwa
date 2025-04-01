@@ -24,6 +24,17 @@
         </button>
       </div>
 
+      <div class="mx-4 mb-4 mt-4">
+        <button
+          type="button"
+          variant="primary"
+          data-testid="add-page-btn"
+          class="border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+        >
+          Save Settings
+        </button>
+      </div>
+
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"

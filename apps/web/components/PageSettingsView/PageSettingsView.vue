@@ -175,8 +175,8 @@ interface PageOption {
   name: string;
 }
 const selectedPage = ref<PageOption | null>(null);
-const { getPageId, getParentCategoryId } = useCategorySettings();
-const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
+const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
       return page;
@@ -190,18 +190,23 @@ const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
   }
   return undefined;
 };
+
 watch(
-  () => getPageId.value,
-  (newId) => {
-    const foundPage = findPageById(newId, pages.value);
-    if (foundPage) {
-      id.value = foundPage.id;
-      type.value = foundPage.type || '';
-      name.value = foundPage.name || '';
-      path.value = foundPage.path || '';
-      linklist.value = foundPage.linklist === 'y';
-      right.value = foundPage.right === 'all';
+  [getCategoryId, getParentCategoryId],
+  ([newCategoryId, newParentCategoryId]) => {
+    if (newCategoryId) {
+      const foundPage = findPageById(newCategoryId, pages.value);
+      if (foundPage) {
+        id.value = foundPage.id;
+        type.value = foundPage.type || '';
+        name.value = foundPage.name || '';
+        path.value = foundPage.path || '';
+        linklist.value = foundPage.linklist === 'y';
+        right.value = foundPage.right === 'all';
+      }
     }
+    console.log('Updated categoryId:', newCategoryId);
+    console.log('Updated parentCategoryId:', newParentCategoryId);
   },
   { immediate: true },
 );

@@ -8,14 +8,14 @@ import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~
  * const { title, description, keywords, robots, canonical, includeSitemap, saveSeoSettings, seoSettingsIsDirty } = useSeoConfiguration();
  * ```
  */
-export const useCategorySettings: useCategorySettingsReturn = () => {
-  const state = useState<useCategoryConfigurationState>('categoryConfiguration', () => ({
+export const useCategorySettings: useCategorySettingsReturn = (id, parentId) => {
+  const state = useState<useCategoryConfigurationState>(`categoryConfiguration-${id}`, () => ({
     data: [],
     loading: false,
     drawerOpen: false,
     drawerExtraOpen: false,
-    id: 1,
-    parentCategoryId: 2,
+    id: id,
+    parentCategoryId: parentId || null,
     sitemap: '',
     linkList: '',
     name: '',
@@ -29,8 +29,8 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
     includeSitemap: false,
     drawerView: null,
     initialData: {
-      id: 17,
-      parentCategoryId: 16,
+      id: id,
+      parentCategoryId: parentId || null,
       sitemap: '',
       linkList: '',
       name: '',
@@ -49,19 +49,12 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
 
   const categorySettingsIsDirty = computed(() => {
     return (
-      // state.value.id !== state.value.initialData.id ||
-      // state.value.parentCategoryId !== state.value.initialData.parentCategoryId ||
-      // state.value.sitemap !== state.value.initialData.sitemap ||
-      // state.value.linkList !== state.value.initialData.linkList ||
       state.value.name !== state.value.initialData.name ||
-      // state.value.canonical !== state.value.initialData.canonical
       state.value.canonicalLink !== state.value.initialData.canonicalLink ||
-      // state.value.position !== state.value.initialData.position ||
       state.value.title !== state.value.initialData.title ||
       state.value.description !== state.value.initialData.description ||
       state.value.keywords !== state.value.initialData.keywords ||
       state.value.robots !== state.value.initialData.robots
-      // state.value.includeSitemap !== state.value.initialData.includeSitemap
     );
   });
 

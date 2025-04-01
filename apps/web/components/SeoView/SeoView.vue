@@ -143,20 +143,20 @@ import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 const { pages } = await usePages();
 const metaData = ref(false);
-const title = ref('');
-const description = ref('');
-const keywords = ref('');
-const canonical = ref('');
-const robots = ref('all');
-const includeSitemap = ref(false);
-const { getPageId, getParentCategoryId } = useCategorySettings();
 
-interface PageOption {
-  id: number | null;
-  name: string;
-}
-const selectedPage = ref<PageOption | null>(null);
-const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
+const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+const categoryId = getCategoryId.value;
+const parentCategoryId = getParentCategoryId.value;
+
+const { title, description, keywords, canonical, robots, includeSitemap } = useCategorySettings(
+  categoryId || 0,
+  parentCategoryId || undefined,
+);
+
+console.log('categoryId', categoryId);
+console.log('parentCategoryId', parentCategoryId);
+
+const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
       return page;
@@ -172,39 +172,44 @@ const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
 };
 
 watch(
-  () => getPageId.value,
-  (newId) => {
-    const foundPage = findPageById(newId, pages.value);
-    if (foundPage) {
-      title.value = foundPage.name;
-      description.value = foundPage.metaDescription || '';
-      keywords.value = foundPage.metaKeywords || '';
-      canonical.value = foundPage.canonicalLink || '';
-      robots.value = foundPage.metaRobots || 'all';
-      includeSitemap.value = foundPage.sitemap === 'y';
+  [getCategoryId, getParentCategoryId],
+  ([newCategoryId, newParentCategoryId]) => {
+    if (newCategoryId) {
+      const foundPage = findPageById(newCategoryId, pages.value);
+      if (foundPage) {
+        title.value = foundPage.name;
+        description.value = foundPage.metaDescription || '';
+        keywords.value = foundPage.metaKeywords || '';
+        canonical.value = foundPage.canonicalLink || '';
+        robots.value = foundPage.metaRobots || 'all';
+        includeSitemap.value = foundPage.sitemap === 'y';
+      }
     }
+    console.log('Updated categoryId:', newCategoryId);
+    console.log('Updated parentCategoryId:', newParentCategoryId);
   },
-  { immediate: true },
+  { immediate: true }
 );
 
-const pageOptions = computed(() => {
-  const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
-  options.unshift({ id: null, name: 'None' });
-  return options;
-});
 
-watch(
-  getParentCategoryId,
-  (newId) => {
-    if (newId) {
-      const matchedPage = pageOptions.value.find((page) => page.id === newId);
-      selectedPage.value = matchedPage || null;
-    } else {
-      selectedPage.value = { id: null, name: 'None' };
-    }
-  },
-  { immediate: true },
-);
+// const pageOptions = computed(() => {
+//   const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
+//   options.unshift({ id: null, name: 'None' });
+//   return options;
+// });
+
+// watch(
+//   getParentCategoryId,
+//   (newId) => {
+//     if (newId) {
+//       const matchedPage = pageOptions.value.find((page) => page.id === newId);
+//       selectedPage.value = matchedPage || null;
+//     } else {
+//       selectedPage.value = { id: null, name: 'None' };
+//     }
+//   },
+//   { immediate: true },
+// );
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
