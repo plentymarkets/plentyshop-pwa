@@ -4,11 +4,13 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".output/**"],
+      "inputs": [".env"],
       "cache": true
     },
     "build:analyze": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".output/**"],
+      "inputs": [".env"],
       "cache": true
     },
     "start": {
