@@ -1,4 +1,8 @@
 <template>
+  
+</template>
+<script></script>
+<!-- <template>
   <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
     <form data-testid="basic-settings-form" class="w-full absolute bg-white">
       <UiAccordionItem
@@ -241,4 +245,4 @@ watch(
   },
   { immediate: true },
 );
-</script>
+</script> -->

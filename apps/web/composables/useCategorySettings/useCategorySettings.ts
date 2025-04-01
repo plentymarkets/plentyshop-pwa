@@ -1,4 +1,5 @@
 import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~/composables/useCategorySettings/types';
+import { categoryGetters } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing SEO configuration.
@@ -8,48 +9,44 @@ import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~
  * const { title, description, keywords, robots, canonical, includeSitemap, saveSeoSettings, seoSettingsIsDirty } = useSeoConfiguration();
  * ```
  */
-export const useCategorySettings: useCategorySettingsReturn = (id, parentId) => {
+export const useCategorySettings: useCategorySettingsReturn = (category, id) => {
   const state = useState<useCategoryConfigurationState>(`categoryConfiguration-${id}`, () => ({
     data: [],
     loading: false,
     drawerOpen: false,
     drawerExtraOpen: false,
-    id: id,
-    parentCategoryId: parentId || null,
-    sitemap: '',
-    linkList: false,
-    right: '',
-    name: '',
-    path: '',
-    canonicalLink: '',
-    position: 1,
-    title: '',
-    description: '',
-    keywords: '',
-    robots: '',
-    canonical: '',
-    includeSitemap: false,
+    id: categoryGetters.getId(category),
+    parentCategoryId: categoryGetters.getParentId(category),
+    sitemap: category.sitemap == "Y" ? true : false,
+    linkList: category.linklist == "Y" ? true : false,
+    right: categoryGetters.getCategoryRight(category),
+    name: categoryGetters.getCategoryName(category),
+    path: categoryGetters.getCategoryDetails(category)?.nameUrl || '',
+    canonicalLink: categoryGetters.getCategoryDetails(category)?.canonicalLink || '',
+    title: categoryGetters.getMetaTitle(category),
+    description: categoryGetters.getMetaDescription(category),
+    keywords: categoryGetters.getMetaKeywords(category),
+    robots: categoryGetters.getCategoryRobots(category),
     drawerView: null,
     initialData: {
-      id: id,
-      parentCategoryId: parentId || null,
-      sitemap: '',
-      linkList: false,
-      right: '',
-      name: '',
-      path: '',
-      canonicalLink: '',
-      position: 1,
-      title: '',
-      description: '',
-      keywords: '',
-      robots: '',
-      canonical: '',
-      includeSitemap: false,
+      id: categoryGetters.getId(category),
+      parentCategoryId: categoryGetters.getParentId(category),
+      sitemap: category.sitemap == "Y" ? true : false,
+      linkList: category.linklist == "Y" ? true : false,
+      right: categoryGetters.getCategoryRight(category),
+      name: categoryGetters.getCategoryName(category),
+      path: categoryGetters.getCategoryDetails(category)?.nameUrl || '',
+      canonicalLink: categoryGetters.getCategoryDetails(category)?.canonicalLink || '',
+      title: categoryGetters.getMetaTitle(category),
+      description: categoryGetters.getMetaDescription(category),
+      keywords: categoryGetters.getMetaKeywords(category),
+      robots: categoryGetters.getCategoryRobots(category),
     },
   }));
   const getPageId = computed(() => state.value.id);
   const getParentCategoryId = computed(() => state.value.parentCategoryId);
+
+
 
   const categorySettingsIsDirty = computed(() => {
     return (
@@ -83,12 +80,12 @@ export const useCategorySettings: useCategorySettingsReturn = (id, parentId) => 
       },
       {
         key: 'sitemap',
-        value: state.value.sitemap,
+        value: state.value.sitemap.toString(),
       },
 
       {
         key: 'linkList',
-        value: state.value.linkList,
+        value: state.value.linkList.toString(),
       },
       {
         key: 'name',
@@ -97,10 +94,6 @@ export const useCategorySettings: useCategorySettingsReturn = (id, parentId) => 
       {
         key: 'canonicalLink',
         value: state.value.canonicalLink,
-      },
-      {
-        key: 'position',
-        value: state.value.position.toString(),
       },
       {
         key: 'title',
@@ -117,15 +110,7 @@ export const useCategorySettings: useCategorySettingsReturn = (id, parentId) => 
       {
         key: 'robots',
         value: state.value.robots,
-      },
-      {
-        key: 'canonical',
-        value: state.value.canonical,
-      },
-      {
-        key: 'includeSitemap',
-        value: state.value.includeSitemap.toString(),
-      },
+      }
     ];
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
@@ -134,21 +119,21 @@ export const useCategorySettings: useCategorySettingsReturn = (id, parentId) => 
       return false;
     }
 
-    state.value.initialData = {
-      id: 16,
-      parentCategoryId: 17,
-      sitemap: state.value.sitemap,
-      linkList: state.value.linkList,
-      name: state.value.name,
-      canonicalLink: state.value.canonicalLink,
-      position: state.value.position,
-      title: state.value.title,
-      description: state.value.description,
-      keywords: state.value.keywords,
-      robots: state.value.robots,
-      canonical: state.value.canonical,
-      includeSitemap: state.value.includeSitemap,
-    };
+  //   state.value.initialData = {
+  //     id: 16,
+  //     parentCategoryId: 17,
+  //     sitemap: state.value.sitemap,
+  //     linkList: state.value.linkList,
+  //     name: state.value.name,
+  //     canonicalLink: state.value.canonicalLink,
+  //     position: state.value.position,
+  //     title: state.value.title,
+  //     description: state.value.description,
+  //     keywords: state.value.keywords,
+  //     robots: state.value.robots,
+  //  //   canonical: state.value.canonical,
+  //     includeSitemap: state.value.includeSitemap,
+  //   };
 
     state.value.loading = false;
     return true;

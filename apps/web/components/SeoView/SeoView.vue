@@ -114,10 +114,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="canonical" type="text" data-testid="seo-canonical" placeholder="Enter URL">
+            <SfInput v-model="canonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="canonical" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="canonicalLink" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -128,7 +128,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
             <SfSwitch
-              v-model="includeSitemap"
+              v-model="sitemap"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -140,17 +140,19 @@
 
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+
 import Multiselect from 'vue-multiselect';
-const { pages } = await usePages();
 const metaData = ref(false);
 
 const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
 const categoryId = getCategoryId.value;
 const parentCategoryId = getParentCategoryId.value;
 
-const { title, description, keywords, canonical, robots, includeSitemap } = useCategorySettings(
-  categoryId || 0,
-  parentCategoryId || undefined,
+const { data } = await useSdk().plentysystems.getFacet({ categoryId: String(categoryId || '') });
+
+const { title, description, keywords, canonicalLink, robots, sitemap } = useCategorySettings(
+  data.category,
+  categoryId ?? 0,
 );
 
 console.log('categoryId', categoryId);
@@ -171,28 +173,27 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   return undefined;
 };
 
-watch(
-  [getCategoryId, getParentCategoryId],
-  ([newCategoryId, newParentCategoryId]) => {
-    if (newCategoryId) {
-      const foundPage = findPageById(newCategoryId, pages.value);
-      if (foundPage) {
-        title.value = foundPage.name;
-        description.value = foundPage.metaDescription || '';
-        keywords.value = foundPage.metaKeywords || '';
-        canonical.value = foundPage.canonicalLink || '';
-        robots.value = foundPage.metaRobots || 'all';
-        includeSitemap.value = foundPage.sitemap === 'y';
-      }
-      useCategorySettings(newCategoryId || 0, newParentCategoryId || undefined);
+// watch(
+//   [getCategoryId, getParentCategoryId],
+//   ([newCategoryId, newParentCategoryId]) => {
+//     if (newCategoryId) {
+//       const foundPage = findPageById(newCategoryId, pages.value);
+//       if (foundPage) {
+//         title.value = foundPage.name;
+//         description.value = foundPage.metaDescription || '';
+//         keywords.value = foundPage.metaKeywords || '';
+//         canonicalLink.value = foundPage.canonicalLink || '';
+//         robots.value = foundPage.metaRobots || 'all';
+//         sitemap.value = foundPage.sitemap === 'y';
+//       }
+//       useCategorySettings(newCategoryId || 0);
 
-    }
-    console.log('Updated categoryId:', newCategoryId);
-    console.log('Updated parentCategoryId:', newParentCategoryId);
-  },
-  { immediate: true }
-);
-
+//     }
+//     console.log('Updated categoryId:', newCategoryId);
+//     console.log('Updated parentCategoryId:', newParentCategoryId);
+//   },
+//   { immediate: true }
+// );
 
 // const pageOptions = computed(() => {
 //   const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
