@@ -3,12 +3,12 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".output/**"],
+      "outputs": ["dist/**", ".output/**"],
       "cache": true
     },
     "build:analyze": {
       "dependsOn": ["^build"],
-      "outputs": [".output/**"],
+      "outputs": ["dist/**", ".output/**"],
       "cache": true
     },
     "start": {
