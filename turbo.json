@@ -4,13 +4,13 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".output/**"],
-      "inputs": [".env"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
       "cache": true
     },
     "build:analyze": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".output/**"],
-      "inputs": [".env"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
       "cache": true
     },
     "start": {
