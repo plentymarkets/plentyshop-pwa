@@ -1,4 +1,3 @@
-
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
@@ -118,20 +117,32 @@ import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 const { pages } = await usePages();
 const metaData = ref(false);
+const title = ref('');
+const description = ref('');
+const keywords = ref('');
+const canonical = ref('');
+const robots = ref('all');
+const includeSitemap = ref(false);
+const { getPageId, getParentCategoryId } = useCategorySettings();
 
-// Import state and methods from useCategorySettings
-const {
-  title,
-  description,
-  keywords,
-  canonicalLink: canonical,
-  robots,
-  includeSitemap,
-  getPageId,
-} = useCategorySettings();
-
-const findPageById = (id: number | string) => {
-  return pages.value.find((page) => page.id === id);
+interface PageOption {
+  id: number | null;
+  name: string;
+}
+const selectedPage = ref<PageOption | null>(null);
+const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
+  for (const page of pagesList) {
+    if (page.id === id) {
+      return page;
+    }
+    if (page.children) {
+      const foundPage = findPageById(id, page.children);
+      if (foundPage) {
+        return foundPage;
+      }
+    }
+  }
+  return undefined;
 };
 
 
@@ -139,19 +150,38 @@ const findPageById = (id: number | string) => {
 watch(
   () => getPageId.value,
   (newId) => {
-    const foundPage = findPageById(newId);
+    const foundPage = findPageById(newId, pages.value);
     if (foundPage) {
-      if (title.value !== foundPage.name) title.value = foundPage.name;
-      if (description.value !== foundPage.metaDescription) description.value = foundPage.metaDescription || '';
-      if (keywords.value !== foundPage.metaKeywords) keywords.value = foundPage.metaKeywords || '';
-      if (canonical.value !== foundPage.canonicalLink) canonical.value = foundPage.canonicalLink || '';
-      if (robots.value !== foundPage.metaRobots) robots.value = foundPage.metaRobots || 'all';
-      if (includeSitemap.value !== (foundPage.sitemap === 'y')) includeSitemap.value = foundPage.sitemap === 'y';
-      
+      title.value = foundPage.name;
+      description.value = foundPage.metaDescription || '';
+      keywords.value = foundPage.metaKeywords || '';
+      canonical.value = foundPage.canonicalLink || '';
+      robots.value = foundPage.metaRobots || 'all';
+      includeSitemap.value = foundPage.sitemap === 'y';
     }
   },
   { immediate: true },
 );
+
+const pageOptions = computed(() => {
+  const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
+  options.unshift({ id: null, name: 'None' });
+  return options;
+});
+
+watch(
+  getParentCategoryId,
+  (newId) => {
+    if (newId) {
+      const matchedPage = pageOptions.value.find((page) => page.id === newId);
+      selectedPage.value = matchedPage || null;
+    } else {
+      selectedPage.value = { id: null, name: 'None' };
+    }
+  },
+  { immediate: true },
+);
+
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
 const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];

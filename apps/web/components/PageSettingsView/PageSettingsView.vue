@@ -177,7 +177,7 @@ interface PageOption {
 }
 const selectedPage = ref<PageOption | null>(null);
 const { getPageId, getParentCategoryId } = useCategorySettings();
-const findPageById = (id: number | string, pagesList: Page[]): Page | undefined => {
+const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
       return page;
