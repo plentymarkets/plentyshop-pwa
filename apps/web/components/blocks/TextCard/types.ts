@@ -1,5 +1,15 @@
 export type TextCardProps = {
+  name: string;
+  type: string;
+  content: TextCardContent;
+  configuration?: object;
   index?: number;
+  meta: {
+    uuid: string;
+  };
+};
+
+export type TextCardContent = {
   text: {
     pretitle?: string;
     title?: string;
@@ -13,4 +23,8 @@ export type TextCardProps = {
     link?: string;
     variant?: 'primary' | 'secondary';
   };
+};
+
+export type TextCardFormProps = {
+  uuid?: string;
 };

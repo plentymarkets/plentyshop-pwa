@@ -1,8 +1,42 @@
 # Changelog PlentyONE Shop
 
-# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+# v1.12.1 (2025-03-24) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-Gerne, hier ist die Übersetzung der Aufzählungspunkte ins Deutsche:
+### 👷 Geändert
+
+- Die Konfiguration von `useSdk` und das SDK werden nun von `@plentymarkets/shop-core` verwaltet und exportiert. Mit dieser Änderung wurde `@vue-storefront/nuxt` entfernt. Es gibt keine "Breaking-Changes".
+
+### 🩹 Behoben
+
+- Behebung der Anzeige einer großen Anzahl von Kategorien in der Navigationsleiste.
+- Behebung der E-Mail-Validierung im Checkout.
+- Behebung des fehlenden Versanddatums auf der Seite "Meine Bestellungen".
+- Behebung eines Fehlers beim Bereitstellen des Shops. [#1151](https://github.com/plentymarkets/plentyshop-pwa/pull/1151)
+
+# v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Symbolleiste für Seiteneinstellungen hinzugefügt.
+- Rechtlicher Hinweis im Checkout zu "lokaler Mehrwertsteuer, Kosten der Zollabfertigung und Zollgebühren" bei Bedarf hinzugefügt.
+- Rechtliche Hinweise zur Beschreibung der Cookie-Leiste hinzugefügt.
+
+### 👷 Geändert
+
+- Automatisches Speichern für E-Mail-Adresse im Gastkauf-Prozess implementiert.
+- Assets im Verzeichnis `apps/web/public` wurden in ein neues Unterverzeichnis `_nuxt-plenty/` verschoben. Zusätzlich wurde das Modul [@nuxtjs/google-fonts](https://google-fonts.nuxtjs.org/) durch das Modul [@nuxt/fonts](https://fonts.nuxt.com/) ersetzt, das ähnliche Funktionalität bietet, aber mehr Konfigurationsoptionen ermöglicht. Beide Änderungen erleichtern die Anwendung von Netzwerk-Routing-Regeln auf dem Backend.
+- Block-Abschnitte für den Editor umbenannt.
+
+### 🩹 Behoben
+
+- Problem behoben, bei dem der Vorschaumodus nicht verlassen werden konnte.
+- Scrollen zu Blöcken nach Änderung der Blockposition korrigiert.
+- Sprachumschaltung in der Symbolleiste repariert.
+- Sichtbarkeit der seitlichen Symbolleiste korrigiert.
+- Kategorie-Middleware überarbeitet, um die Rechte aus dem Kategoriebaum zu verwenden.
+- Problem behoben, bei dem die App falsche Konfigurationsschlüssel für Farb- und Schrifteinstellungen gespeichert und verwendet hat.
+
+# v1.11.1 (2025-02-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.0...v1.11.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert
 

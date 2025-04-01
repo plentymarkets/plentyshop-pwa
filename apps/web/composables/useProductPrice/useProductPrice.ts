@@ -28,6 +28,7 @@ export const useProductPrice = (product: Product) => {
     product,
     cartGetters.getItemQty(lastUpdatedCartItem.value),
   )?.unitPrice.formatted;
+  const graduatedPrices = productGetters.getGraduatedPrices(product);
 
   const priceWithPropertiesBase = specialOffer || graduatedPriceByQuantity || '0';
   const priceWithPropertiesBaseComponents = priceWithPropertiesBase.split(/\s/);
@@ -62,15 +63,29 @@ export const useProductPrice = (product: Product) => {
       productGetters.getDefaultBasePrice(product),
   );
 
-  state.value.price =
-    specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
-      ? productPriceGetters.getSpecialOfferFormatted(product)
-      : productPriceGetters.getCheapestGraduatedPriceFormatted(product);
+  if (graduatedPrices.length) {
+    state.value.price =
+      specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
+        ? productPriceGetters.getSpecialOfferFormatted(product)
+        : productPriceGetters.getCheapestGraduatedPriceFormatted(product);
 
-  state.value.priceValue =
-    specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
-      ? specialOfferValue
-      : productPriceGetters.getCheapestGraduatedPrice(product);
+    state.value.priceValue =
+      specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
+        ? specialOfferValue
+        : productPriceGetters.getCheapestGraduatedPrice(product);
+  } else {
+    const priceValue = productGetters.getPrice(product) ?? 0;
+
+    state.value.price =
+      specialOfferValue && specialOfferValue < priceValue
+        ? productPriceGetters.getSpecialOfferFormatted(product)
+        : productPriceGetters.getPriceFormatted(product);
+
+    state.value.priceValue =
+      specialOfferValue && specialOfferValue < priceValue
+        ? specialOfferValue
+        : priceValue;
+  }
 
   state.value.crossedPrice = specialOfferValue
     ? productPriceGetters.getPriceFormatted(product)

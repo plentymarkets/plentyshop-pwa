@@ -27,6 +27,9 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
+    optimizeDeps: {
+      include: ['dotenv'],
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -41,6 +44,9 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
+  },
+  image: {
+    provider: 'none',
   },
   site: {
     url: '',
@@ -57,6 +63,7 @@ export default defineNuxtConfig({
       useWebp: process.env?.IMAGEWEBP === 'true',
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
+      useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
@@ -74,8 +81,8 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@plentymarkets/shop-module-gtag',
     '@plentymarkets/shop-core',
+    '@plentymarkets/shop-module-gtag',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
@@ -88,14 +95,9 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '@vue-storefront/nuxt',
   ],
-  alokai: {
-    middleware: {
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      cdnCacheBustingId: 'no-cache-busting-id-set',
-      ssrApiUrl: '',
-    },
+  shopCore: {
+    apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },
   fonts: {
     defaults: {
@@ -103,19 +105,6 @@ export default defineNuxtConfig({
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
-    },
-  },
-  image: {
-    screens: {
-      '4xl': 1920,
-      '3xl': 1536,
-      '2xl': 1366,
-      xl: 1280,
-      lg: 1024,
-      md: 768,
-      sm: 640,
-      xs: 376,
-      '2xs': 360,
     },
   },
   i18n: nuxtI18nOptions,

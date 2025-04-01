@@ -1,6 +1,6 @@
 <template>
   <div
-    class="z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
+    class="page-search z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
   >
     <div>
       <Multiselect
@@ -17,7 +17,6 @@
         deselect-label="Selected"
         :open="isOpen"
         class="h-[450px]"
-        @close="closeDropdown"
         @select="selectValue"
       >
         <template #option="{ option }">
@@ -54,10 +53,6 @@ const { pages } = await usePages();
 const { t, locale } = useI18n();
 const isOpen = ref(true);
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
-
-const closeDropdown = () => {
-  emit('close');
-};
 
 const flattenPages = (
   pages: { name: string; path: string; children?: unknown[] }[],
@@ -101,13 +96,14 @@ const openPages = () => {
   emit('close');
 };
 </script>
+
 <style scoped>
-:deep .multiselect__option--highlight {
+:deep(.multiselect__option--highlight) {
   background-color: #f7fafc !important;
   color: #1a202c;
 }
 
-:deep .multiselect__content-wrapper {
+:deep(.multiselect__content-wrapper) {
   max-height: 400px !important;
 }
 </style>
