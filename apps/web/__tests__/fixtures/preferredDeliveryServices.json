@@ -1,0 +1,45 @@
+{
+  "enabled": {
+    "preferredLocation": true,
+    "preferredNeighbour": true,
+    "additionalCharge": 1.99,
+    "preferredDay": {
+      "02-04-2025": {
+        "date": "2025-04-02",
+        "dayNumber": "02",
+        "dayName": "Wednesday"
+      },
+      "03-04-2025": {
+        "date": "2025-04-03",
+        "dayNumber": "03",
+        "dayName": "Thursday"
+      },
+      "04-04-2025": {
+        "date": "2025-04-04",
+        "dayNumber": "04",
+        "dayName": "Friday"
+      },
+      "05-04-2025": {
+        "date": "2025-04-05",
+        "dayNumber": "05",
+        "dayName": "Saturday"
+      },
+      "07-04-2025": {
+        "date": "2025-04-07",
+        "dayNumber": "07",
+        "dayName": "Monday"
+      },
+      "08-04-2025": {
+        "date": "2025-04-08",
+        "dayNumber": "08",
+        "dayName": "Tuesday"
+      }
+    }
+  },
+  "disabled": {
+    "preferredLocation": false,
+    "preferredNeighbour": false,
+    "additionalCharge": 1.99,
+    "preferredDay": false
+  }
+}
