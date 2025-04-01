@@ -24,6 +24,7 @@
 
 ### 🩹 Fixed
 
+- Fix an error while attempting to login from guest.
 - Fix typescript build error during shop deployment.
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.
