@@ -4,6 +4,7 @@
 
 ### New
 
+- Added posibility to toggle visibility of tags on category page based on env variable (USE_TAGS_ON_CATEGORY_PAGE=1).
 - Added DHL preffered delivery
 - Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
