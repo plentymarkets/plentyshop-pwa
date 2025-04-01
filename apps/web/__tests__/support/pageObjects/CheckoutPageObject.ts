@@ -239,7 +239,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   shouldShowPreferredDelivery(): this {
-    cy.getByTestId('preferred-delivery').should('exist');
+    this.preferredDeliveryContainer.should('exist');
     return this;
   }
 
