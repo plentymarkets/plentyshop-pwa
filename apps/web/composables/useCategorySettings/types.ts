@@ -8,10 +8,11 @@ export interface useCategoryConfigurationState {
   id: number;
   parentCategoryId: number | null;
   sitemap: string;
-  linkList: string;
+  linkList: boolean;
   name: string;
   canonicalLink: string;
   position: number;
+  right: string;
   title: string;
   description: string;
   keywords: string;
@@ -19,14 +20,16 @@ export interface useCategoryConfigurationState {
   canonical: string;
   includeSitemap: boolean;
   drawerView: DrawerView;
+  path:string;
 
   initialData: {
     id: number;
     parentCategoryId: number | null;
     sitemap: string;
-    linkList: string;
+    linkList: boolean;
     name: string;
     canonicalLink: string;
+    right: string;
     position: number;
     title: string;
     description: string;
@@ -34,6 +37,8 @@ export interface useCategoryConfigurationState {
     robots: string;
     canonical: string;
     includeSitemap: boolean;
+    path:string;
+
   };
 }
 
@@ -48,13 +53,15 @@ export interface useCategorySettings {
   robots: Ref<useCategoryConfigurationState['robots']>;
   canonical: Ref<useCategoryConfigurationState['canonical']>;
   includeSitemap: Ref<useCategoryConfigurationState['includeSitemap']>;
+  path: Ref<useCategoryConfigurationState['path']>;
   drawerView: Readonly<Ref<useCategoryConfigurationState['drawerView']>>;
   categorySettingsIsDirty: ComputedRef<boolean>;
   id: Readonly<Ref<useCategoryConfigurationState['id']>>;
   parentCategoryId: Readonly<Ref<useCategoryConfigurationState['parentCategoryId']>>;
   sitemap: Readonly<Ref<useCategoryConfigurationState['sitemap']>>;
-  linkList: Readonly<Ref<useCategoryConfigurationState['linkList']>>;
-  name: Readonly<Ref<useCategoryConfigurationState['name']>>;
+  linkList: Ref<useCategoryConfigurationState['linkList']>;
+  right: Ref<useCategoryConfigurationState['right']>;
+  name: Ref<useCategoryConfigurationState['name']>;
   canonicalLink: Readonly<Ref<useCategoryConfigurationState['canonicalLink']>>;
   position: Readonly<Ref<useCategoryConfigurationState['position']>>;
   setPageId: (id: number, parentId?: number) => void;

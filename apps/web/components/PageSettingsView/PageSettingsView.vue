@@ -139,7 +139,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="linklist"
+              v-model="linkList"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -164,18 +164,23 @@ import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
 const { pages } = await usePages();
-const id = ref(1);
-const type = ref('');
-const name = ref('');
-const path = ref('');
-const linklist = ref(false);
-const right = ref(false);
+
+const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+const categoryId = getCategoryId.value;
+const parentCategoryId = getParentCategoryId.value;
+
+console.log(pages);
+
+const { id, name, path, linkList, right } = useCategorySettings(
+  categoryId || 0,
+  parentCategoryId || undefined,
+);
+
 interface PageOption {
   id: number | null;
   name: string;
 }
 const selectedPage = ref<PageOption | null>(null);
-const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
 const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
@@ -201,9 +206,11 @@ watch(
         type.value = foundPage.type || '';
         name.value = foundPage.name || '';
         path.value = foundPage.path || '';
-        linklist.value = foundPage.linklist === 'y';
+        linkList.value = foundPage.linklist === 'y';
         right.value = foundPage.right === 'all';
       }
+      useCategorySettings(newCategoryId || 0, newParentCategoryId || undefined);
+
     }
     console.log('Updated categoryId:', newCategoryId);
     console.log('Updated parentCategoryId:', newParentCategoryId);

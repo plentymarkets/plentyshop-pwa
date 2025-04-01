@@ -184,6 +184,8 @@ watch(
         robots.value = foundPage.metaRobots || 'all';
         includeSitemap.value = foundPage.sitemap === 'y';
       }
+      useCategorySettings(newCategoryId || 0, newParentCategoryId || undefined);
+
     }
     console.log('Updated categoryId:', newCategoryId);
     console.log('Updated parentCategoryId:', newParentCategoryId);
