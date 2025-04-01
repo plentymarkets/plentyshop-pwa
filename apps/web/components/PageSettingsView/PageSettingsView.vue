@@ -175,9 +175,8 @@ interface PageOption {
   name: string;
 }
 const selectedPage = ref<PageOption | null>(null);
-  const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
-
-const findPageById = (id: number | string, pagesList: Page[]): Page | undefined => {
+const { getPageId, getParentCategoryId } = useCategorySettings();
+const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
       return page;
@@ -192,9 +191,9 @@ const findPageById = (id: number | string, pagesList: Page[]): Page | undefined 
   return undefined;
 };
 watch(
-  () => getCategoryId.value,
+  () => getPageId.value,
   (newId) => {
-    const foundPage = newId !== null ? findPageById(newId, pages.value) : undefined;
+    const foundPage = findPageById(newId, pages.value);
     if (foundPage) {
       id.value = foundPage.id;
       type.value = foundPage.type || '';

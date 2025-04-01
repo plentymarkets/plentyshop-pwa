@@ -1,4 +1,3 @@
-
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
@@ -137,9 +136,9 @@ const findPageById = (id: number | null) => {
 
 
 watch(
-  () => getCategoryId.value,
+  () => getPageId.value,
   (newId) => {
-    const foundPage = findPageById(newId);
+    const foundPage = findPageById(newId, pages.value);
     if (foundPage) {
       title.value = foundPage.name;
       description.value = foundPage.metaDescription || '';
@@ -153,6 +152,26 @@ watch(
   },
   { immediate: true },
 );
+
+const pageOptions = computed(() => {
+  const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
+  options.unshift({ id: null, name: 'None' });
+  return options;
+});
+
+watch(
+  getParentCategoryId,
+  (newId) => {
+    if (newId) {
+      const matchedPage = pageOptions.value.find((page) => page.id === newId);
+      selectedPage.value = matchedPage || null;
+    } else {
+      selectedPage.value = { id: null, name: 'None' };
+    }
+  },
+  { immediate: true },
+);
+
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
 const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];
