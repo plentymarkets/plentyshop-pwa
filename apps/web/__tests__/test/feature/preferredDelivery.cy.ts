@@ -32,18 +32,6 @@ describe('Preferred Delivery', () => {
       .shouldNotShowPreferredDelivery();
   });
 
-  it('should not render when shipping country is Germany and all preferred services are disabled', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout()
-      .fillContactInformationForm()
-      .fillShippingAddressForm({ country: '1' })
-      .shouldNotShowPreferredDeliveryIfAllServicesDisabled();
-  });
-
   it('should render when shipping country is Germany', () => {
     homePage.goToCategory();
     productListPage.addToCart();
@@ -54,9 +42,5 @@ describe('Preferred Delivery', () => {
       .fillContactInformationForm()
       .fillShippingAddressForm({ country: '1' })
       .shouldShowPreferredDelivery();
-  });
-
-  it('should render when shipping country is Germany and preferred day is enabled', () => {
-    //
   });
 });

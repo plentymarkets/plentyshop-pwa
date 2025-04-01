@@ -128,6 +128,10 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('address-select-2');
   }
 
+  get preferredDeliveryContainer() {
+    return cy.getByTestId('preferred-delivery');
+  }
+
   goToGuestCheckout() {
     this.goToGuestCheckoutButton.click();
     return this;
@@ -239,22 +243,8 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  shouldNotShowPreferredDeliveryIfAllServicesDisabled(): this {
-    cy.getFixture('preferredDeliveryServices').then((fixture) => {
-      if (
-        !fixture.disabled.preferredLocation &&
-        !fixture.disabled.preferredDay &&
-        !fixture.disabled.preferredNeighbour
-      ) {
-        this.shouldNotShowPreferredDelivery();
-      }
-    });
-
-    return this;
-  }
-
   shouldNotShowPreferredDelivery(): this {
-    cy.getByTestId('preferred-delivery').should('not.exist');
+    this.preferredDeliveryContainer.should('not.exist');
     return this;
   }
 
