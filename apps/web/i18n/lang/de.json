@@ -1030,7 +1030,7 @@
       "wunschortExample": "z.B. Garage, Terrasse",
       "wunschnachbarExampleName": "Nachname, Vorname",
       "wunschnachbarExampleAddress": "Straße, Hausnummer, PLZ und Ort",
-      "wunschpaketAdditionalCharge": "Für diesen Service fällt ein Aufpreis in Höhe von {additionalCharge} € an.*",
+      "wunschpaketAdditionalCharge": "Für diesen Service fällt ein Aufpreis in Höhe von {additionalCharge} {currency} an.*",
       "wunschtagNone": "Keiner",
       "preferredDayAlertMessage": "Liefertag wählen.",
       "preferredLocationAlertMessage": "Ablageort eingeben.",
