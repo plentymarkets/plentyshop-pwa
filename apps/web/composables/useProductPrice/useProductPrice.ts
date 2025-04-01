@@ -10,14 +10,6 @@ import { cartGetters, productGetters, productPriceGetters } from '@plentymarkets
  */
 
 export const useProductPrice = (product: Product) => {
-  const state = useState(`productPrice-${product.variation.id}`, () => ({
-    price: '',
-    priceValue: 0,
-    crossedPrice: '',
-    crossedPriceValue: 0,
-    id: product.variation.id,
-  }));
-
   const { lastUpdatedCartItem } = useCart();
   const { getPropertiesPrice } = useProductOrderProperties();
 
@@ -57,48 +49,60 @@ export const useProductPrice = (product: Product) => {
         0) + getPropertiesPrice(product),
   );
 
+  const unitPriceValue = productGetters.getPrice(product) ?? 0;
   const basePriceSingleValue = computed(
     () =>
       productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
       productGetters.getDefaultBasePrice(product),
   );
 
-  if (graduatedPrices.length) {
-    state.value.price =
-      specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
-        ? productPriceGetters.getSpecialOfferFormatted(product)
-        : productPriceGetters.getCheapestGraduatedPriceFormatted(product);
-
-    state.value.priceValue =
-      specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
-        ? specialOfferValue
-        : productPriceGetters.getCheapestGraduatedPrice(product);
-  } else {
-    const priceValue = productGetters.getPrice(product) ?? 0;
-
-    state.value.price =
-      specialOfferValue && specialOfferValue < priceValue
-        ? productPriceGetters.getSpecialOfferFormatted(product)
+  const price = computed(
+    () => {
+      if (graduatedPrices.length) {
+        return specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
+        ? specialOffer
         : productPriceGetters.getPriceFormatted(product);
+      }
 
-    state.value.priceValue =
-      specialOfferValue && specialOfferValue < priceValue
+      return specialOfferValue && specialOfferValue < unitPriceValue
+      ? productPriceGetters.getSpecialOfferFormatted(product)
+      : productPriceGetters.getPriceFormatted(product);
+    }
+  )
+
+  const priceValue = computed(
+    () => {
+      if (graduatedPrices.length) {
+        return specialOfferValue && specialOfferValue < productGetters.getCheapestGraduatedPrice(product)
+          ? specialOfferValue
+          : productPriceGetters.getCheapestGraduatedPrice(product);
+      }
+
+      return specialOfferValue && specialOfferValue < unitPriceValue
         ? specialOfferValue
-        : priceValue;
-  }
+        : unitPriceValue;
+    }
+  );
 
-  state.value.crossedPrice = specialOfferValue
-    ? productPriceGetters.getPriceFormatted(product)
-    : productPriceGetters.getCrossedPriceFormatted(product);
+  const crossedPrice = computed(
+    () => {
+      return specialOfferValue ? productPriceGetters.getPriceFormatted(product) : productPriceGetters.getCrossedPriceFormatted(product);
+    }
+  );
 
-  state.value.crossedPriceValue = specialOfferValue
-    ? productPriceGetters.getPrice(product) ?? 0
-    : productPriceGetters.getCrossedPrice(product) ?? 0;
+  const crossedPriceValue = computed(
+    () => {
+      return specialOfferValue ? productPriceGetters.getPrice(product) ?? 0 : productPriceGetters.getCrossedPrice(product) ?? 0;
+    }
+  );
 
   return {
     basePriceSingleValue,
     priceWithProperties,
     priceWithPropertiesValue,
-    ...toRefs(state.value),
+    price,
+    priceValue,
+    crossedPrice,
+    crossedPriceValue,
   };
 };
