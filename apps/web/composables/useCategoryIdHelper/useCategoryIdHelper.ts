@@ -1,4 +1,4 @@
-const currentCategoryId = ref<number | null>(null);
+const currentCategoryId = ref<number>();
 const currentParentCategoryId = ref<number | null>(null);
 
 export const useCategoryIdHelper = () => {

@@ -20,10 +20,10 @@
           </div>
 
           <label>
-            <SfInput v-model="title" type="text" data-testid="seo-title" placeholder="Enter title">
+            <SfInput v-model="computedTitle" type="text" data-testid="seo-title" placeholder="Enter title">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="title" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="computedTitle" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -38,10 +38,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="description" type="text" data-testid="seo-description" placeholder="Enter description">
+            <SfInput v-model="computedDescription" type="text" data-testid="seo-description" placeholder="Enter description">
               <template #suffix>
                 <label for="page-type" class="rounded-lg cursor-pointer">
-                  <input id="page-type" v-model="description" type="text" class="invisible w-8" />
+                  <input id="page-type" v-model="computedDescription" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -56,10 +56,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="keywords" type="text" data-testid="page-name" placeholder="Enter keywords">
+            <SfInput v-model="computedKeywords" type="text" data-testid="page-name" placeholder="Enter keywords">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="keywords" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="computedKeywords" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -85,7 +85,7 @@
           </div>
 
           <Multiselect
-            v-model="robots"
+            v-model="computedRobots"
             data-testid="page-parent"
             :options="robotNames"
             placeholder="Select a parent page"
@@ -114,10 +114,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="canonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
+            <SfInput v-model="computedCanonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="canonicalLink" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="computedCanonicalLink" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -128,7 +128,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
             <SfSwitch
-              v-model="sitemap"
+              v-model="computedSitemap"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -145,15 +145,46 @@ import Multiselect from 'vue-multiselect';
 const metaData = ref(false);
 
 const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+
+
 const categoryId = getCategoryId.value;
 const parentCategoryId = getParentCategoryId.value;
 
-const { data } = await useSdk().plentysystems.getFacet({ categoryId: String(categoryId || '') });
+const { data } = useCategorySettings();
 
-const { title, description, keywords, canonicalLink, robots, sitemap } = useCategorySettings(
-  data.category,
-  categoryId ?? 0,
+console.log('data', data.value);
+
+watch(
+  data,
+  (newValue) => {
+    if (newValue) {
+      console.log('data.value', newValue);
+    }
+  }
 );
+const computedTitle = computed(() => {
+  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.title || '' : '';
+});
+
+const computedDescription = computed(() => {
+  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.description || '' : '';
+});
+
+const computedKeywords = computed(() => {
+  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.keywords || '' : '';
+});
+
+const computedRobots = computed(() => {
+  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.robots || '' : '';
+});
+
+const computedCanonicalLink = computed(() => {
+  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.canonicalLink || '' : '';
+});
+
+const computedSitemap = computed(() => {
+  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.sitemap || false : false;
+});
 
 console.log('categoryId', categoryId);
 console.log('parentCategoryId', parentCategoryId);
@@ -172,6 +203,7 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   }
   return undefined;
 };
+
 
 // watch(
 //   [getCategoryId, getParentCategoryId],

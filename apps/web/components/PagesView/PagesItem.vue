@@ -91,8 +91,10 @@ const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
-// const { setPageId } = useCategorySettings();
-const { setCategoryId } = useCategoryIdHelper();
+  const { setCategoryId, getCategoryId } = useCategoryIdHelper();
+
+const { fetchCategorySettings } = useCategorySettings();
+
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
 const route = useRoute();
@@ -107,6 +109,9 @@ const openSeoSettings = (id: number) => {
   close();
   currentSeoPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
+  if (getCategoryId.value !== undefined) {
+    fetchCategorySettings(getCategoryId.value);
+  }
 };
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;

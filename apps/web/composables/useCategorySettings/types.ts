@@ -2,7 +2,7 @@ import type { DrawerView } from '~/composables/useSiteConfiguration/types';
 import type { Category } from '@plentymarkets/shop-api';
 
 export interface useCategoryConfigurationState {
-  data: [];
+  data: Record<number, any>;
   loading: boolean;
   drawerOpen: boolean;
   drawerExtraOpen: boolean;
@@ -37,7 +37,7 @@ export interface useCategoryConfigurationState {
 }
 
 export interface useCategorySettings {
-  data: Readonly<Ref<useCategoryConfigurationState['data']>>;
+  data: Ref<useCategoryConfigurationState['data']>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<useCategoryConfigurationState['drawerOpen']>>;
   drawerExtraOpen: Readonly<Ref<useCategoryConfigurationState['drawerExtraOpen']>>;
@@ -48,17 +48,18 @@ export interface useCategorySettings {
   path: Ref<useCategoryConfigurationState['path']>;
   drawerView: Readonly<Ref<useCategoryConfigurationState['drawerView']>>;
   categorySettingsIsDirty: ComputedRef<boolean>;
-  id: Readonly<Ref<useCategoryConfigurationState['id']>>;
-  parentCategoryId: Readonly<Ref<useCategoryConfigurationState['parentCategoryId']>>;
+  id: Ref<useCategoryConfigurationState['id']>;
+  parentCategoryId: Ref<useCategoryConfigurationState['parentCategoryId']>;
   sitemap: Ref<useCategoryConfigurationState['sitemap']>;
   linkList: Ref<useCategoryConfigurationState['linkList']>;
   right: Ref<useCategoryConfigurationState['right']>;
   name: Ref<useCategoryConfigurationState['name']>;
   canonicalLink: Ref<useCategoryConfigurationState['canonicalLink']>;
   setPageId: (id: number) => void;
-  getPageId: Readonly<ComputedRef<number>>;
-  getParentCategoryId: Readonly<ComputedRef<number | null>>;
+  getPageId: ComputedRef<number>;
+  getParentCategoryId: ComputedRef<number | null>;
   saveCategorySettings: () => Promise<boolean>;
+  fetchCategorySettings: (categoryId: number) => Promise<void>;
 }
 
-export type useCategorySettingsReturn = (category: Category, id:number) => useCategorySettings;
+export type useCategorySettingsReturn = () => useCategorySettings;
