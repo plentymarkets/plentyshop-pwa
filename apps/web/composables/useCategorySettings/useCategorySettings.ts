@@ -10,135 +10,39 @@ import type { Category } from '@plentymarkets/shop-api';
  * const { title, description, keywords, robots, canonical, includeSitemap, saveSeoSettings, seoSettingsIsDirty } = useSeoConfiguration();
  * ```
  */
-export const useCategorySettings: useCategorySettingsReturn = () => {
-  const state = useState<useCategoryConfigurationState>(`categoryConfiguration`, () => ({
+export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') => {
+  const state = useState<useCategoryConfigurationState>(`categoryConfiguration-${settingsId}`, () => ({
     data: {},
+    id: 0,
     loading: false,
     drawerOpen: false,
     drawerExtraOpen: false,
-    id: 0,
-    parentCategoryId: 0,
-    sitemap: false,
-    linkList: false,
-    name: '',
-    path: '',
-    canonicalLink: '',
-    title: '',
-    description: '',
-    keywords: '',
-    robots: '',
-    right: '', 
     drawerView: null,
-    initialData: {
-      id: 0,
-      parentCategoryId: 0,
-      sitemap: false,
-      linkList: false,
-      name: '',
-      path: '',
-      canonicalLink: '',
-      title: '',
-      description: '',
-      keywords: '',
-      robots: '',
-      right: '', 
-    },
+    initialData: {},
   }));
-  const getPageId = computed(() => state.value.id);
-  const getParentCategoryId = computed(() => state.value.parentCategoryId);
-
-  const categorySettingsIsDirty = computed(() => {
-    return (
-      state.value.name !== state.value.initialData.name ||
-      state.value.canonicalLink !== state.value.initialData.canonicalLink ||
-      state.value.title !== state.value.initialData.title ||
-      state.value.description !== state.value.initialData.description ||
-      state.value.keywords !== state.value.initialData.keywords ||
-      state.value.robots !== state.value.initialData.robots
-    );
-  });
 
   const fetchCategorySettings = async (categoryId: number) => {
-    state.value.loading = true;
-    if (!state.value.data[categoryId]) {
-      try {
-        const { data, fetchProducts } = useProducts();
-
-        await fetchProducts({ categoryId: categoryId.toString() });
-
-        if (data) {
-          state.value.data[categoryId] = {
-            id: categoryId,
-            parentCategoryId: data.value.category.parentCategoryId,
-            sitemap: data.value.category.sitemap,
-            linkList: data.value.category.linklist,
-            name: categoryGetters.getCategoryName(data.value.category),
-            path: categoryGetters.getCategoryDetails(data.value.category),
-            canonicalLink: categoryGetters.getCategoryDetails(data.value.category),
-            title: categoryGetters.getMetaTitle(data.value.category),
-            description: categoryGetters.getMetaDescription(data.value.category),
-            keywords: categoryGetters.getMetaKeywords(data.value.category) || '',
-            robots: data.value.category.robots,
-          };
-            state.value.initialData = {
-            ...state.value.initialData,
-            [categoryId]: {
-              id: categoryId,
-              parentCategoryId: data.value.category.parentCategoryId,
-              sitemap: data.value.category.sitemap,
-              linkList: data.value.category.linklist,
-              name: categoryGetters.getCategoryName(data.value.category),
-              path: categoryGetters.getCategoryDetails(data.value.category),
-              canonicalLink: categoryGetters.getCategoryDetails(data.value.category),
-              title: categoryGetters.getMetaTitle(data.value.category),
-              description: categoryGetters.getMetaDescription(data.value.category),
-              keywords: categoryGetters.getMetaKeywords(data.value.category) || '',
-              robots: data.value.category.robots,
-            },
-            };
-          state.value.id = categoryId;
-          state.value.parentCategoryId = data.value.category.parentCategoryId;
-          state.value.sitemap = data.value.category.sitemap === 'Y';
-          state.value.linkList = data.value.category.linklist === 'Y';
-          state.value.name = categoryGetters.getCategoryName(data.value.category!);
-          state.value.path = categoryGetters.getCategoryDetails(data.value.category)?.nameUrl || '';
-          state.value.canonicalLink = categoryGetters.getCategoryDetails(data.value.category)?.canonicalLink || '';
-          state.value.title = categoryGetters.getMetaTitle(data.value.category);
-          state.value.description = categoryGetters.getMetaDescription(data.value.category);
-          state.value.keywords = categoryGetters.getMetaKeywords(data.value.category);
-          state.value.robots = data.value.category.robots || '';
-
-          state.value.initialData = {
-            id: categoryId,
-            parentCategoryId: data.value.category.parentCategoryId,
-            sitemap: data.value.category.sitemap  === 'Y',
-            linkList: data.value.category.linklist === 'Y',
-            right:  data.value.category.right,
-            name: '',
-            path: categoryGetters.getCategoryDetails(data.value.category)?.nameUrl || '',
-            canonicalLink: categoryGetters.getCategoryDetails(data.value.category)?.canonicalLink || '',
-            title: categoryGetters.getMetaTitle(data.value.category),
-            description: categoryGetters.getMetaDescription(data.value.category),
-            keywords: categoryGetters.getMetaKeywords(data.value.category),
-            robots: data.value.category.robots  || '',
-          };
-        } else {
-          console.error('Invalid data structure returned by getFacet:', data);
-        }
-      } catch (err) {
-        console.error('Error fetching category settings:', err);
-      } finally {
-        state.value.loading = false;
-      }
+    try {
+      const { fetchProducts } = useProducts(settingsId);
+      const data = await fetchProducts({ categoryId: categoryId.toString() });
+      console.log('Data:', data.category);
+      state.value.data = data.category;
+      return state.value.data;
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loading = false;
     }
   };
 
-  const setPageId = (id: number, parentCategoryId?: number) => {
-    state.value.id = id;
-    if (parentCategoryId !== undefined) {
-      state.value.parentCategoryId = parentCategoryId;
-    }
-  };
+  watch(
+    () => state.value.id,
+    async (newId: number) => {
+      await fetchCategorySettings(newId);
+      console.log(newId);
+    },
+    { immediate: true },
+  );
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
@@ -199,11 +103,7 @@ export const useCategorySettings: useCategorySettingsReturn = () => {
 
   return {
     ...toRefs(state.value),
-    categorySettingsIsDirty,
     saveCategorySettings,
-    setPageId,
-    getPageId,
-    getParentCategoryId,
     fetchCategorySettings,
   };
 };

@@ -9,6 +9,8 @@
       >
         <template #summary>
           <h2>Meta Data</h2>
+
+          {{ data.id }}
         </template>
 
         <div class="py-2">
@@ -20,10 +22,10 @@
           </div>
 
           <label>
-            <SfInput v-model="computedTitle" type="text" data-testid="seo-title" placeholder="Enter title">
+            <SfInput v-model="data.details[0].metaTitle" type="text" data-testid="seo-title" placeholder="Enter title">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="computedTitle" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="data.details[0].metaTitle" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -38,10 +40,15 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="computedDescription" type="text" data-testid="seo-description" placeholder="Enter description">
+            <SfInput
+              v-model="data.details[0].metaDescription"
+              type="text"
+              data-testid="seo-description"
+              placeholder="Enter description"
+            >
               <template #suffix>
                 <label for="page-type" class="rounded-lg cursor-pointer">
-                  <input id="page-type" v-model="computedDescription" type="text" class="invisible w-8" />
+                  <input id="page-type" v-model="data.details[0].metaDescription" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -56,7 +63,12 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="computedKeywords" type="text" data-testid="page-name" placeholder="Enter keywords">
+            <SfInput
+              v-model="data.details[0].metaKeywords"
+              type="text"
+              data-testid="page-name"
+              placeholder="Enter keywords"
+            >
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
                   <input id="page-name" v-model="computedKeywords" type="text" class="invisible w-8" />
@@ -85,7 +97,7 @@
           </div>
 
           <Multiselect
-            v-model="computedRobots"
+            v-model="data.details[0].metaRobots"
             data-testid="page-parent"
             :options="robotNames"
             placeholder="Select a parent page"
@@ -114,10 +126,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="computedCanonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
+            <SfInput v-model="data.sitemap" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="computedCanonicalLink" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="data.sitemap" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -146,25 +158,15 @@ const metaData = ref(false);
 
 const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
 
+const { fetchCategorySettings } = useCategorySettings();
 
 const categoryId = getCategoryId.value;
 const parentCategoryId = getParentCategoryId.value;
 
+fetchCategorySettings(categoryId || 0);
+
 const { data } = useCategorySettings();
-
-console.log('data', data.value);
-
-watch(
-  data,
-  (newValue) => {
-    if (newValue) {
-      console.log('data.value', newValue);
-    }
-  }
-);
-const computedTitle = computed(() => {
-  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.title || '' : '';
-});
+console.log('data from seo', data);
 
 const computedDescription = computed(() => {
   return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.description || '' : '';
@@ -203,7 +205,6 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   }
   return undefined;
 };
-
 
 // watch(
 //   [getCategoryId, getParentCategoryId],

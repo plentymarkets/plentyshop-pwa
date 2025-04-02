@@ -12,7 +12,7 @@
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
-      {{ item.id }}
+        {{ item.id }}
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
@@ -91,9 +91,9 @@ const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
-  const { setCategoryId, getCategoryId } = useCategoryIdHelper();
+const { setCategoryId, getCategoryId } = useCategoryIdHelper();
 
-const { fetchCategorySettings } = useCategorySettings();
+const { id: categoryId, fetchCategorySettings } = useCategorySettings();
 
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
@@ -109,9 +109,7 @@ const openSeoSettings = (id: number) => {
   close();
   currentSeoPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
-  if (getCategoryId.value !== undefined) {
-    fetchCategorySettings(getCategoryId.value);
-  }
+  categoryId.value = id;
 };
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;
