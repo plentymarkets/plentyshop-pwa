@@ -47,6 +47,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  ariaHidden: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const { size, tag, square } = toRefs(props);
@@ -74,7 +78,7 @@ const type = computed(
       ? 'button'
       : undefined),
 );
-const ariaLabelIsHidden = computed(() => props.ariaLabel === '')
+const ariaLabelIsHidden = computed(() => props.ariaHidden || props.ariaLabel === '');
 </script>
 <script lang="ts">
 export const variantClasses = {
