@@ -12,8 +12,9 @@ To create a new page within your module, follow these steps:
 
 ```typescript
 // src/module.ts
-// in the setup function
+import type { NuxtPage } from '@nuxt/schema'
 
+// in the setup function
 extendPages((pages: NuxtPage[]) => {
     pages.push({
       name: 'page-name',
@@ -36,14 +37,32 @@ Example:
 
 ```typescript
 // src/module.ts
-// in the setup function
+import type { NuxtPage } from '@nuxt/schema'
 
+// in the setup function
 extendPages((pages: NuxtPage[]) => {
   const overridePage = pages.find((p) => p.name === 'page-to-override');
   if (overridePage) {
     overridePage.file = resolve('./runtime/pages/my-page.vue');
   }
+  
+  // Override the product page
+  const productPage = pages.find((p) => p.name === 'product-slug');
+  if (productPage) {
+    productPage.file = resolve('./runtime/pages/product/[slug].vue');
+  }
 });
 ```
-
 This will replace the page in your shop repository with your custom version.
+
+To make sure you get the correct page name, you can log all pages in the `extendRoutes` function: 
+
+```typescript
+// src/module.ts
+import type { NuxtPage } from '@nuxt/schema'
+
+// in the setup function
+extendPages((pages: NuxtPage[]) => {
+  console.log(pages);
+});
+```
