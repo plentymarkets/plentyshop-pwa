@@ -2,9 +2,9 @@
 
   <a href="https://plentyone.com" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./images/PlentyONE_Logo_White_RGB.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./images/PlentyONE_Logo_PlentyBlue_RGB.svg">
-      <img alt="PlentyONE logo" src="./images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
+      <source media="(prefers-color-scheme: dark)" srcset="./docs/images/PlentyONE_Logo_White_RGB.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./docs/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+      <img alt="PlentyONE logo" src="./docs/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
     </picture> 
   </a>
 
@@ -12,9 +12,9 @@
 
   <a href="https://alokai.com" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./images/alokai-logo-light.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./images/alokai-logo-dark.svg">
-      <img alt="alokai logo" src="./images/alokai-logo-dark.svg" height="40px">
+      <source media="(prefers-color-scheme: dark)" srcset="./docs/images/alokai-logo-light.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./docs/images/alokai-logo-dark.svg">
+      <img alt="alokai logo" src="./docs/images/alokai-logo-dark.svg" height="40px">
     </picture> 
   </a>
 
