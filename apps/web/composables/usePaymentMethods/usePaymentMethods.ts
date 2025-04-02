@@ -28,7 +28,9 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPaymentProviders());
 
     const klarnaPaymentKeys = ['klarna', 'klarnasliceit', 'klarnapaylater', 'klarnapaynow'];
-    const paymentListWithoutKlarna = data.value?.data?.list.filter((provider) => !(klarnaPaymentKeys.includes(provider.paymentKey) && provider.key === 'Mollie'));
+    const paymentListWithoutKlarna = data.value?.data?.list.filter(
+      (provider) => !(klarnaPaymentKeys.includes(provider.paymentKey) && provider.key === 'Mollie'),
+    );
 
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
