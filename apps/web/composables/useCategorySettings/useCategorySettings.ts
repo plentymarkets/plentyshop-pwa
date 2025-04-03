@@ -22,6 +22,8 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     initialData: {},
   }));
 
+  const ready = ref(false);
+
   const fetchCategorySettings = async (categoryId: number) => {
     if (cache.value[categoryId]) {
       console.log('Loaded from cache:', categoryId);
@@ -57,20 +59,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
   const hasChanges = computed(() => {
     return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
   });
-
-  const ready = ref(false);
-  watch(
-    () => state.value.id,
-    async (newId: number) => {
-      if (newId) {
-        ready.value = false;
-        await fetchCategorySettings(newId);
-        ready.value = true;
-        console.log('Category data ready for ID:', newId);
-      }
-    },
-    { immediate: true, once: true },
-  );
 
   // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
   //   state.value.loading = true;

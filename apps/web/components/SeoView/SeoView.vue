@@ -1,5 +1,9 @@
 <template>
-  <div v-if="ready" class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
+  <div
+    v-if="ready"
+    class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
+    data-testid="pages-general-settings-drawer"
+  >
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
       <UiAccordionItem
         v-model="metaData"
@@ -126,7 +130,12 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].canonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
+            <SfInput
+              v-model="data.details[0].canonicalLink"
+              type="text"
+              data-testid="seo-canonical"
+              placeholder="Enter URL"
+            >
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
                   <input id="page-id" v-model="data.sitemap" type="text" class="invisible w-8" />
@@ -156,16 +165,22 @@ import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 const metaData = ref(false);
 
-// const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+const { getCategoryId } = useCategoryIdHelper();
 
-const { data, ready } = useCategorySettings();
+const { data, ready, fetchCategorySettings } = useCategorySettings();
 
-console.log('SeoView Data:', data);
-// const categoryId = getCategoryId.value;
-// const parentCategoryId = getParentCategoryId.value;
-
-// console.log('categoryId', categoryId);
-// console.log('parentCategoryId', parentCategoryId);
+watch(
+  getCategoryId,
+  async (newId: number | undefined) => {
+    if (newId !== undefined) {
+      ready.value = false;
+      await fetchCategorySettings(newId);
+      ready.value = true;
+      console.log('Category data ready for ID:', newId);
+    }
+  },
+  { immediate: true },
+);
 
 const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
@@ -181,7 +196,6 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   }
   return undefined;
 };
-
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);

@@ -92,7 +92,6 @@ const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
-
 const { id: categoryId } = useCategorySettings();
 
 const open = ref(false);

@@ -1,5 +1,9 @@
 <template>
-  <div v-if="ready" class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
+  <div
+    v-if="ready"
+    class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
+    data-testid="pages-general-settings-drawer"
+  >
     <form data-testid="basic-settings-form" class="w-full absolute bg-white">
       <UiAccordionItem
         v-model="basicSettingsOpen"
@@ -9,6 +13,7 @@
       >
         <template #summary>
           <h2>Text</h2>
+          {{ data.id }}
         </template>
         <div class="py-2">
           <div class="flex justify-between">
@@ -156,7 +161,7 @@
       </UiAccordionItem>
     </form>
   </div>
-</template> 
+</template>
 
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip } from '@storefront-ui/vue';
@@ -164,9 +169,21 @@ import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
 
-const { data, ready } = useCategorySettings();
+const { getCategoryId } = useCategoryIdHelper();
+const { data, ready, fetchCategorySettings } = useCategorySettings();
 
-console.log(data);
+watch(
+  getCategoryId,
+  async (newId: number | undefined) => {
+    if (newId !== undefined) {
+      ready.value = false;
+      await fetchCategorySettings(newId);
+      ready.value = true;
+      console.log('Category data ready for ID:', newId);
+    }
+  },
+  { immediate: true },
+);
 
 const pageTypeOptions = [
   { label: 'Item', value: 'item' },
@@ -175,10 +192,9 @@ const pageTypeOptions = [
   { label: 'Blog', value: 'blog' },
 ];
 
-
 const selectedPageType = computed({
   get() {
-    return pageTypeOptions.find(option => option.value === data.value.type) || null;
+    return pageTypeOptions.find((option) => option.value === data.value.type) || null;
   },
   set(selectedOption) {
     data.value.type = selectedOption ? selectedOption.value : null;
@@ -199,5 +215,4 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   }
   return undefined;
 };
-
-</script> 
+</script>
