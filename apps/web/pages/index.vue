@@ -1,8 +1,15 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <div v-if="data.length" class="content">
-      <template v-for="(block, index) in data" :key="index">
+    <draggable
+      v-if="data.length"
+      v-model="data"
+      item-key="meta.uuid"
+      handle=".drag-handle"
+      @on-drag-start="handleDragUpdate"
+      class="content"
+    >
+      <template #item="{ element: block, index }">
         <PageBlock
           :index="index"
           :block="block"
@@ -27,14 +34,21 @@
           @click="tabletEdit(index)"
         />
       </template>
-    </div>
+
+    </draggable>
   </div>
 </template>
 <script lang="ts" setup>
+import draggable from 'vuedraggable'
 const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
 const { t } = useI18n();
 const { settingsIsDirty } = useSiteConfiguration();
+
+
+const handleDragUpdate = (evt: { newIndex: number; oldIndex: number }) => {
+  console.log('New order:', data.value)
+}
 
 const { data, getBlocks } = useCategoryTemplate();
 
