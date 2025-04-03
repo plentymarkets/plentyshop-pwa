@@ -17,6 +17,7 @@
 
 ### 👷 Changed
 
+- Refactored code for banner settings.
 - Short item descriptions now support HTML formatting.
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
