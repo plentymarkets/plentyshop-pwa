@@ -49,13 +49,6 @@
       "label": "External media"
     },
     "functional": {
-      "cookies": {
-        "scriptDemo": {
-          "name": "Script demo",
-          "provider": "plentysystems AG",
-          "status": "Usage example for loading a script after consent."
-        }
-      },
       "description": "These cookies are used to store preferred settings and certain options selected by the user.",
       "label": "Functional"
     },

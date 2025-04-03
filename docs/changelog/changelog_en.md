@@ -5,7 +5,7 @@
 ### New
 
 - Added posibility to toggle visibility of tags on category page based on env variable (USE_TAGS_ON_CATEGORY_PAGE=1).
-- Added DHL preffered delivery
+- Added DHL preffered delivery feature and corresponding tests.
 - Added pages entry on the left side menu, where users can manage their pages.
 - Add design for adding a new page.
 - Added design for category settings.
@@ -18,11 +18,13 @@
 
 ### 👷 Changed
 
+- Removed demo cookie from the Cookiebar.
 - Short item descriptions now support HTML formatting.
 - Added manange pages button in editor toolbar.
 - The editor now has a new component that allows page navigation.
 - Disabled local image optimization.
-- Updated price calculation: If graduated prices are unavailable, the default price is used .
+- Updated price calculation: If graduated prices are unavailable, the default price is used.
+- All Mollie Klarna payment methods are filtered out because they are not supported yet.
 
 ### 🩹 Fixed
 
@@ -33,6 +35,7 @@
 - Fix Page Selector closes on second button click
 - Fix left side menu german navigation.
 - Fix item page image gallery overlap.
+- Fix broken category filters and navigation.
 
 # v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
