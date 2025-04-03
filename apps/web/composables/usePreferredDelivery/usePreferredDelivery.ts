@@ -1,5 +1,6 @@
 import {
   AddressType,
+  cartGetters,
   shippingProviderGetters,
   type ApiError,
   type DoSavePreferredDeliveryServiceParams,
@@ -185,6 +186,10 @@ export const usePreferredDelivery = () => {
     () => state.value.data.neighbour.enabled && state.value.data.neighbour.checked,
   );
 
+  const currency = computed(
+    () => cartGetters.getCurrency(cartData.value) || (useAppConfig().fallbackCurrency as string),
+  );
+
   const submitForm = async () => {
     const parameters = {} as DoSavePreferredDeliveryServiceParams;
 
@@ -228,6 +233,7 @@ export const usePreferredDelivery = () => {
     disableAllOptions,
     handleDayChange,
     isDayChecked,
+    currency,
     submitForm,
     ...toRefs(state.value),
   };

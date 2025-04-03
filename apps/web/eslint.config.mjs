@@ -1,5 +1,6 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
 import { architecture, ecma } from "@vue-storefront/eslint-config";
+import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
 
 export default withNuxt(
   {
@@ -18,6 +19,7 @@ export default withNuxt(
   ecma({
     withImport: false,
   }),
+  ...pluginVueA11y.configs["flat/recommended"],
   {
     /**
      * Rules from other plugins
@@ -42,6 +44,13 @@ export default withNuxt(
       'vue/no-multiple-template-root': ['off'],
       'vue/no-v-html': ['off'],
       'vue/html-self-closing': ['error', { html: { void: 'always' } }],
+      'vuejs-accessibility/click-events-have-key-events': 'off',
+      'vuejs-accessibility/form-control-has-label': 'off',
+      'vuejs-accessibility/label-has-for': 'off',
+      'vuejs-accessibility/mouse-events-have-key-events': 'off',
+      'vuejs-accessibility/no-autofocus': 'off',
+      'vuejs-accessibility/no-redundant-roles': 'off',
+      'vuejs-accessibility/no-static-element-interactions': 'off',
     }
   },
 );

@@ -71,9 +71,8 @@
             v-if="productGetters.getShortDescription(product).length > 0"
             class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
             data-testid="product-description"
-          >
-            {{ productGetters.getShortDescription(product) }}
-          </div>
+            v-html="productGetters.getShortDescription(product)"
+          />
 
           <ProductAttributes :product="product" />
           <BundleOrderItems v-if="product.bundleComponents" :product="product" />
