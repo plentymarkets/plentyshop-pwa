@@ -147,6 +147,7 @@ export const usePreferredDelivery = () => {
 
   const propagateEnabledOptions = (shippingProfileId: number, data: PreferredDeliveryServicesData) => {
     const preferredIdProfile = state.value.data.preferredProfiles[shippingProfileId];
+    if (!preferredIdProfile) return;
 
     state.value.data.day.enabled =
       preferredIdProfile?.includes('PreferredDay') && typeof data.preferredDay !== 'boolean';

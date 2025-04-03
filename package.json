@@ -32,8 +32,8 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "1.3.4",
-    "@plentymarkets/shop-api": "0.98.0",
+    "@plentymarkets/shop-core": "1.3.6",
+    "@plentymarkets/shop-api": "0.98.3",
     "@plentymarkets/shop-module-gtag": "^1.1.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",

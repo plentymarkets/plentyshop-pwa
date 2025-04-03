@@ -22,7 +22,7 @@
 
     <form novalidate @submit.prevent="validateAndSubmitForm">
       <template v-if="data.day.enabled">
-        <div class="mt-3">
+        <div class="mt-3" data-testid="preferred-delivery-day">
           <div class="inline-flex items-center">
             <label
               for="wunschtag-title"
