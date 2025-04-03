@@ -25,6 +25,7 @@
 
 ### 🩹 Fixed
 
+- SVG logo size distorted fix.
 - Fix typescript build error during shop deployment.
 - Fix Page Selector state.
 - Fix Page Selector closes when clicking outside the box.

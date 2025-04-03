@@ -5,9 +5,9 @@
         ref="logo"
         :src="imagePath"
         :alt="`${{ storeName }} logo`"
-        class="w-100 h-10 py-2"
-        width="150"
-        height="40"
+        class="max-h-[100px] max-w-[200px]"
+        :width="imgWidth"
+        :height="imgHeight"
         preload
       />
     </template>
@@ -36,8 +36,8 @@ const imgWidth = ref<string>('');
 const imgHeight = ref<string>('');
 onMounted(() => {
   if (logo.value) {
-    imgWidth.value = logo.value.clientWidth + '';
-    imgHeight.value = logo.value.clientHeight + '';
+    imgWidth.value = logo.value.clientWidth ? logo.value.clientWidth + '' : '130';
+    imgHeight.value = logo.value.clientHeight ? logo.value.clientHeight + '' : '40';
   }
 });
 </script>
