@@ -49,13 +49,7 @@
       "label": "Externe Medien"
     },
     "functional": {
-      "cookies": {
-        "scriptDemo": {
-          "name": "Script-Demo",
-          "provider": "plentysystems AG",
-          "status": "Anwendungsbeispiel zum Laden eines Skripts nach Einwilligung."
-        }
-      },
+      "cookies": {},
       "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können.",
       "label": "Funktional"
     },
