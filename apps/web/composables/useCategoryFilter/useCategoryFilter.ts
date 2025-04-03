@@ -57,7 +57,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
     const { getCategoryUrlFromRoute } = useLocalization();
     const config = useRuntimeConfig().public;
 
-    const currentRoute = useNuxtApp().$router.currentRoute.value
+    const currentRoute = useNuxtApp().$router.currentRoute.value;
 
     return {
       categoryUrlPath: getCategoryUrlFromRoute(currentRoute.fullPath),
