@@ -62,11 +62,11 @@
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
-            :alt="productImageGetters.getImageAlternate(image)"
+            :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
             class="object-contain"
             :width="productImageGetters.getImageWidth(image) ?? 80"
             :height="productImageGetters.getImageHeight(image) ?? 80"
-            :src="productImageGetters.getImageUrlPreview(image)"
+            :src="productImageGetters.getImageUrlPreview(image) || defaultImage"
             :quality="80"
             loading="lazy"
           />
@@ -109,6 +109,7 @@ import { productImageGetters } from '@plentymarkets/shop-api';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { useTimeoutFn, useIntersectionObserver, unrefElement } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
+import defaultImage from 'assets/icons/paths/default-image.svg'
 
 const props = defineProps<{ images: ImagesData[] }>();
 

@@ -38,6 +38,7 @@ import { productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { ImagesData } from '@plentymarkets/shop-api';
 import type { ZoomableImageProps } from '~/components/ZoomableImage/types';
+import defaultImage from 'assets/icons/paths/default-image.svg'
 
 const props = defineProps<ZoomableImageProps>();
 
@@ -96,7 +97,7 @@ const nuxtImgProps = computed<Record<string, unknown>>(() => ({
     : { 'object-contain h-full w-full': true, [`demo-trigger-${index}`]: true },
   'data-zoom': imageUrl,
   quality: 80,
-  srcset: getSourceSet(image),
+  srcset: getSourceSet(image) || defaultImage,
   sizes: '2xs:370px xs:720px sm:740px md:1400px',
   draggable: 'false',
   loading: isFirstImage ? 'eager' : 'lazy',
