@@ -104,6 +104,7 @@ const openGeneralSettings = (id: number) => {
   close();
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-settings');
+  categoryId.value = id;
 };
 const openSeoSettings = (id: number) => {
   close();

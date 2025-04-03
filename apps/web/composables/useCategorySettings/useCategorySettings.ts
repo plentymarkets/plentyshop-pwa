@@ -26,6 +26,8 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     if (cache.value[categoryId]) {
       console.log('Loaded from cache:', categoryId);
       state.value.data = cache.value[categoryId];
+      state.value.initialData = JSON.parse(JSON.stringify(cache.value[categoryId]));
+
       return cache.value[categoryId];
     }
 
@@ -70,66 +72,66 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     { immediate: true },
   );
 
-  const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
-    state.value.loading = true;
+  // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
+  //   state.value.loading = true;
 
-    const settings = [
-      {
-        key: 'id',
-        value: state.value.id.toString(),
-      },
-      {
-        key: 'parentCategoryId',
-        value: state.value.parentCategoryId?.toString() || '',
-      },
-      {
-        key: 'sitemap',
-        value: state.value.sitemap.toString(),
-      },
+  //   const settings = [
+  //     {
+  //       key: 'id',
+  //       value: state.value.id.toString(),
+  //     },
+  //     {
+  //       key: 'parentCategoryId',
+  //       value: state.value.parentCategoryId?.toString() || '',
+  //     },
+  //     {
+  //       key: 'sitemap',
+  //       value: state.value.sitemap.toString(),
+  //     },
 
-      {
-        key: 'linkList',
-        value: state.value.linkList.toString(),
-      },
-      {
-        key: 'name',
-        value: state.value.name,
-      },
-      {
-        key: 'canonicalLink',
-        value: state.value.canonicalLink,
-      },
-      {
-        key: 'title',
-        value: state.value.title,
-      },
-      {
-        key: 'description',
-        value: state.value.description,
-      },
-      {
-        key: 'keywords',
-        value: state.value.keywords,
-      },
-      {
-        key: 'robots',
-        value: state.value.robots,
-      },
-    ];
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+  //     {
+  //       key: 'linkList',
+  //       value: state.value.linkList.toString(),
+  //     },
+  //     {
+  //       key: 'name',
+  //       value: state.value.name,
+  //     },
+  //     {
+  //       key: 'canonicalLink',
+  //       value: state.value.canonicalLink,
+  //     },
+  //     {
+  //       key: 'title',
+  //       value: state.value.title,
+  //     },
+  //     {
+  //       key: 'description',
+  //       value: state.value.description,
+  //     },
+  //     {
+  //       key: 'keywords',
+  //       value: state.value.keywords,
+  //     },
+  //     {
+  //       key: 'robots',
+  //       value: state.value.robots,
+  //     },
+  //   ];
+  //   const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
-    if (error.value) {
-      state.value.loading = false;
-      return false;
-    }
+  //   if (error.value) {
+  //     state.value.loading = false;
+  //     return false;
+  //   }
 
-    state.value.loading = false;
-    return true;
-  };
+  //   state.value.loading = false;
+  //   return true;
+  // };
 
   return {
     ...toRefs(state.value),
-    saveCategorySettings,
+   // saveCategorySettings,
     fetchCategorySettings,
     ready,
     hasChanges,

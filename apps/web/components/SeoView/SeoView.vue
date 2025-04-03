@@ -156,16 +156,16 @@ import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 const metaData = ref(false);
 
-const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
+// const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
 
-const { data, id, ready } = useCategorySettings();
-console.log('SeoView ID:', id);
-console.log('SeoView Data:', data);
-const categoryId = getCategoryId.value;
-const parentCategoryId = getParentCategoryId.value;
+const { data, ready } = useCategorySettings();
 
-console.log('categoryId', categoryId);
-console.log('parentCategoryId', parentCategoryId);
+// console.log('SeoView Data:', data);
+// const categoryId = getCategoryId.value;
+// const parentCategoryId = getParentCategoryId.value;
+
+// console.log('categoryId', categoryId);
+// console.log('parentCategoryId', parentCategoryId);
 
 const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
