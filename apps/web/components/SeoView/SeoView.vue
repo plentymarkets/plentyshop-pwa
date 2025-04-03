@@ -157,10 +157,14 @@
       </UiAccordionItem>
     </form>
   </div>
+
+  <div v-else class="flex justify-center items-center mt-5">
+    <SfLoaderCircular />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfTooltip, SfIconInfo, SfLoaderCircular } from '@storefront-ui/vue';
 
 import Multiselect from 'vue-multiselect';
 const metaData = ref(false);
