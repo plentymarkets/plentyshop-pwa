@@ -1,5 +1,5 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid" :class="{ 'drag-handle cursor-move': root }">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
@@ -17,13 +17,6 @@
         { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet && root },
       ]"
     >
-      <button
-        v-if="root"
-        class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
-        aria-label="Drag to reorder block"
-      >
-        drag button
-      </button>
       <button
         v-if="disableActions && isPreview && root"
         class="z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
