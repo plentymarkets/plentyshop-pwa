@@ -2,9 +2,6 @@ import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
 
 export class CheckoutPageObject extends PageObject {
-  shouldShowPreferredDeliverySurcharge() {
-    throw new Error('Method not implemented.');
-  }
   get goToCheckoutButton() {
     return cy.getByTestId('checkout-button');
   }
@@ -128,10 +125,6 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('address-select-2');
   }
 
-  get preferredDeliveryContainer() {
-    return cy.getByTestId('preferred-delivery');
-  }
-
   goToGuestCheckout() {
     this.goToGuestCheckoutButton.click();
     return this;
@@ -235,16 +228,6 @@ export class CheckoutPageObject extends PageObject {
 
   shouldNotShowShippingAddressSelection() {
     this.shippingAddressSelect.should('not.exist');
-    return this;
-  }
-
-  shouldShowPreferredDelivery(): this {
-    this.preferredDeliveryContainer.should('exist');
-    return this;
-  }
-
-  shouldNotShowPreferredDelivery(): this {
-    this.preferredDeliveryContainer.should('not.exist');
     return this;
   }
 
