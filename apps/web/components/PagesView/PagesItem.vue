@@ -12,21 +12,26 @@
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
+        {{ item.id }}
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
         {{ item.name }}
       </router-link>
 
+      <SfTooltip label="You have unsaved changes on this page" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+        <SfIconError :size="'sm'" />
+      </SfTooltip>
+
       <SfIconMoreHoriz @click.prevent="openMenu" />
 
       <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
-        <div class="p-2 rounded bg-white w-max">
+        <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
           <div
             class="p-1 flex"
             @click="
               openGeneralSettings(item.id);
-              setPageId(item.id, parentId);
+              setCategoryId(item.id, parentId);
             "
           >
             <NuxtImg width="24" height="24px" :src="gearBlack" />
@@ -36,7 +41,7 @@
             class="p-1 flex"
             @click="
               openSeoSettings(item.id);
-              setPageId(item.id, parentId);
+              setCategoryId(item.id, parentId);
             "
           >
             <SfIconSearch />
@@ -45,7 +50,7 @@
           <div
             class="p-1 flex"
             :class="{ 'opacity-50 cursor-not-allowed': item.name === 'Homepage' }"
-            @click="item.name !== 'Homepage' ? (deletePage(item.id), setPageId(item.id, parentId)) : null"
+            @click="item.name !== 'Homepage' ? (deletePage(item.id), setCategoryId(item.id, parentId)) : null"
           >
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
@@ -68,6 +73,8 @@ import {
   SfDropdown,
   SfIconDelete,
   SfIconSearch,
+  SfIconError,
+  SfTooltip,
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
@@ -84,7 +91,9 @@ const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
-const { setPageId } = useCategorySettings();
+const { setCategoryId } = useCategoryIdHelper();
+const { id: categoryId } = useCategorySettings();
+
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
 const route = useRoute();
@@ -94,11 +103,13 @@ const openGeneralSettings = (id: number) => {
   close();
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-settings');
+  categoryId.value = id;
 };
 const openSeoSettings = (id: number) => {
   close();
   currentSeoPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
+  categoryId.value = id;
 };
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;

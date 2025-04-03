@@ -1,5 +1,9 @@
 <template>
-  <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
+  <div
+    v-if="ready"
+    class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
+    data-testid="pages-general-settings-drawer"
+  >
     <form data-testid="basic-settings-form" class="w-full absolute bg-white">
       <UiAccordionItem
         v-model="basicSettingsOpen"
@@ -9,6 +13,7 @@
       >
         <template #summary>
           <h2>Text</h2>
+          {{ data.id }}
         </template>
         <div class="py-2">
           <div class="flex justify-between">
@@ -24,7 +29,7 @@
           </div>
           <label>
             <SfInput
-              v-model="id"
+              v-model="data.id"
               type="text"
               data-testid="page-id"
               wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1"
@@ -32,7 +37,7 @@
             >
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="id" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="data.id" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -52,9 +57,9 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="pageType"
+            v-model="selectedPageType"
             data-testid="new-page-type"
-            :options="pageTypes"
+            :options="pageTypeOptions"
             label="label"
             track-by="value"
             placeholder="Select a page type"
@@ -78,16 +83,16 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="name" type="text" data-testid="page-name">
+            <SfInput v-model="data.details[0].name" type="text" data-testid="page-name">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="name" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="data.details[0].name" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
           </label>
         </div>
-        <div class="py-2">
+        <!-- <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
             <SfTooltip
@@ -111,7 +116,7 @@
             track-by="id"
             deselect-label="Selected"
           />
-        </div>
+        </div> -->
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -126,10 +131,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="path" type="text" data-testid="page-url-slug">
+            <SfInput v-model="data.details[0].nameUrl" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="path" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="data.details[0].nameUrl" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -139,7 +144,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="linklist"
+              v-model="data.linklist"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -148,7 +153,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Login Necessary</UiFormLabel>
             <SfSwitch
-              v-model="right"
+              v-model="data.right"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -163,20 +168,40 @@ import { SfIconInfo, SfInput, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
 const basicSettingsOpen = ref(false);
-const { pages } = await usePages();
-const id = ref(1);
-const type = ref('');
-const name = ref('');
-const path = ref('');
-const linklist = ref(false);
-const right = ref(false);
-interface PageOption {
-  id: number | null;
-  name: string;
-}
-const selectedPage = ref<PageOption | null>(null);
-const { getPageId, getParentCategoryId } = useCategorySettings();
-const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
+
+const { getCategoryId } = useCategoryIdHelper();
+const { data, ready, fetchCategorySettings } = useCategorySettings();
+
+watch(
+  getCategoryId,
+  async (newId: number | undefined) => {
+    if (newId !== undefined) {
+      ready.value = false;
+      await fetchCategorySettings(newId);
+      ready.value = true;
+      console.log('Category data ready for ID:', newId);
+    }
+  },
+  { immediate: true },
+);
+
+const pageTypeOptions = [
+  { label: 'Item', value: 'item' },
+  { label: 'Content', value: 'content' },
+  { label: 'Container', value: 'container' },
+  { label: 'Blog', value: 'blog' },
+];
+
+const selectedPageType = computed({
+  get() {
+    return pageTypeOptions.find((option) => option.value === data.value.type) || null;
+  },
+  set(selectedOption) {
+    data.value.type = selectedOption ? selectedOption.value : null;
+  },
+});
+
+const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
       return page;
@@ -190,43 +215,4 @@ const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
   }
   return undefined;
 };
-watch(
-  () => getPageId.value,
-  (newId) => {
-    const foundPage = findPageById(newId, pages.value);
-    if (foundPage) {
-      id.value = foundPage.id;
-      type.value = foundPage.type || '';
-      name.value = foundPage.name || '';
-      path.value = foundPage.path || '';
-      linklist.value = foundPage.linklist === 'y';
-      right.value = foundPage.right === 'all';
-    }
-  },
-  { immediate: true },
-);
-
-const pageTypes = ref([
-  { label: 'Content', value: 'content' },
-  { label: 'Item category', value: 'item' },
-]);
-const pageType = ref(type.value === 'content' ? pageTypes.value[0] : pageTypes.value[1]);
-const pageOptions = computed(() => {
-  const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
-  options.unshift({ id: null, name: 'None' });
-  return options;
-});
-
-watch(
-  getParentCategoryId,
-  (newId) => {
-    if (newId) {
-      const matchedPage = pageOptions.value.find((page) => page.id === newId);
-      selectedPage.value = matchedPage || null;
-    } else {
-      selectedPage.value = { id: null, name: 'None' };
-    }
-  },
-  { immediate: true },
-);
 </script>
