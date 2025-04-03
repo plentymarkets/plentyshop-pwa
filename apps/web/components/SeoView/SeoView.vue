@@ -126,7 +126,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.sitemap" type="text" data-testid="seo-canonical" placeholder="Enter URL">
+            <SfInput v-model="data.details[0].canonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
                   <input id="page-id" v-model="data.sitemap" type="text" class="invisible w-8" />
@@ -160,7 +160,7 @@ const metaData = ref(false);
 
 const { data, ready } = useCategorySettings();
 
-// console.log('SeoView Data:', data);
+console.log('SeoView Data:', data);
 // const categoryId = getCategoryId.value;
 // const parentCategoryId = getParentCategoryId.value;
 
@@ -181,6 +181,7 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   }
   return undefined;
 };
+
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);

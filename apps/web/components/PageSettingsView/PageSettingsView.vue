@@ -52,9 +52,9 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="data.type"
+            v-model="selectedPageType"
             data-testid="new-page-type"
-            :options="data.type"
+            :options="pageTypeOptions"
             label="label"
             track-by="value"
             placeholder="Select a page type"
@@ -148,7 +148,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Login Necessary</UiFormLabel>
             <SfSwitch
-              v-model="data.linklist"
+              v-model="data.right"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -167,6 +167,23 @@ const basicSettingsOpen = ref(false);
 const { data, ready } = useCategorySettings();
 
 console.log(data);
+
+const pageTypeOptions = [
+  { label: 'Item', value: 'item' },
+  { label: 'Content', value: 'content' },
+  { label: 'Container', value: 'container' },
+  { label: 'Blog', value: 'blog' },
+];
+
+
+const selectedPageType = computed({
+  get() {
+    return pageTypeOptions.find(option => option.value === data.value.type) || null;
+  },
+  set(selectedOption) {
+    data.value.type = selectedOption ? selectedOption.value : null;
+  },
+});
 
 const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {

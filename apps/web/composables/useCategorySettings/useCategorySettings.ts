@@ -69,7 +69,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         console.log('Category data ready for ID:', newId);
       }
     },
-    { immediate: true },
+    { immediate: true, once: true },
   );
 
   // const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
