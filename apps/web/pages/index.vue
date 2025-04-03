@@ -6,7 +6,7 @@
       v-model="data"
       item-key="meta.uuid"
       handle=".drag-handle"
-      @on-drag-start="handleDragUpdate"
+      @update="handleDragUpdate"
       class="content"
     >
       <template #item="{ element: block, index }">
