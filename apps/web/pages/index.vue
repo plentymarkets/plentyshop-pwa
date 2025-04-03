@@ -1,14 +1,7 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <draggable
-      v-if="data.length"
-      v-model="data"
-      item-key="meta.uuid"
-      handle=".drag-handle"
-      @update="handleDragUpdate"
-      class="content"
-    >
+    <draggable v-if="data.length" v-model="data" item-key="meta.uuid" handle=".drag-handle" class="content">
       <template #item="{ element: block, index }">
         <PageBlock
           :index="index"
@@ -43,10 +36,6 @@ const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, change
 
 const { t } = useI18n();
 const { settingsIsDirty } = useSiteConfiguration();
-
-const handleDragUpdate = (evt: { newIndex: number; oldIndex: number }) => {
-  console.log('New order:', data.value);
-};
 
 const { data, getBlocks } = useCategoryTemplate();
 

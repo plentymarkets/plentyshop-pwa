@@ -33,48 +33,36 @@
               </div>
               <hr />
               <div class="p-2">
-                <div
-                  v-for="(slide, index) in slides"
-                  :key="index"
-                  class="flex items-center justify-between p-2 rounded"
+                <draggable
+                  v-if="slides.length"
+                  v-model="slides"
+                  item-key="meta.uuid"
+                  handle=".drag-slides-handle"
+                  class="p-2 rounded"
                 >
-                  <div class="flex items-center">
-                    <SfIconArrowUpward
-                      v-if="index !== 0"
-                      :data-testid="`actions-move-slide-up-${index}`"
-                      class="cursor-pointer text-neutral-500 mr-2"
-                      size="sm"
-                      @click.stop="moveSlideUp(index)"
-                    />
-                    <SfIconArrowUpward
-                      v-else
-                      class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
-                      size="sm"
-                    />
+                  <template #item="{ element: slide, index }">
+                    <div class="flex items-center justify-between drag-slides-handle cursor-move">
+                      <div class="flex items-center">
+                        <button
+                          class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                          aria-label="Drag to reorder block"
+                        >
+                          <SfIconUnfoldMore />
+                        </button>
+                        <span>Slide {{ index + 1 }}</span>
+                      </div>
 
-                    <SfIconArrowDownward
-                      v-if="index + 1 !== slides.length"
-                      :data-testid="`actions-move-slide-down-${index}`"
-                      class="cursor-pointer text-neutral-500 mr-2"
-                      size="sm"
-                      @click.stop="moveSlideDown(index)"
-                    />
-                    <SfIconArrowDownward
-                      v-else
-                      class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
-                      size="sm"
-                    />
-                    <span>Slide {{ index + 1 }}</span>
-                  </div>
-                  <button
-                    :data-testid="`actions-delete-slide-${index}`"
-                    class="text-red-500 hover:text-red-700"
-                    :disabled="slides.length === 1"
-                    @click="deleteSlide(index)"
-                  >
-                    <SfIconDelete class="text-neutral-500" />
-                  </button>
-                </div>
+                      <button
+                        :data-testid="`actions-delete-slide-${index}`"
+                        class="text-red-500 hover:text-red-700"
+                        :disabled="slides.length === 1"
+                        @click="deleteSlide(index)"
+                      >
+                        <SfIconDelete class="text-neutral-500" />
+                      </button>
+                    </div>
+                  </template>
+                </draggable>
                 <hr />
                 <div class="pl-2 pr-2 pt-2 flex justify-between items-center">
                   <p>Add Slide</p>
@@ -168,15 +156,15 @@ import {
   SfIconDelete,
   SfInput,
   SfIconMoreHoriz,
-  SfIconArrowUpward,
-  SfIconArrowDownward,
   SfIconAdd,
   useDisclosure,
   SfIconClose,
+  SfIconUnfoldMore,
 } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import draggable from 'vuedraggable';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
@@ -260,32 +248,6 @@ const deleteSlide = async (index: number) => {
   setIndex(blockUuid.value, 0);
   await nextTick();
   close();
-};
-
-const moveSlideUp = async (index: number) => {
-  if (index <= 0) return;
-
-  const newSlides = [...slides.value] as BannerProps[];
-
-  [newSlides[index - 1], newSlides[index]] = [newSlides[index], newSlides[index - 1]];
-  slides.value = newSlides;
-
-  await nextTick();
-
-  setIndex(blockUuid.value, index - 1);
-};
-
-const moveSlideDown = async (index: number) => {
-  if (index >= slides.value.length - 1) return;
-
-  const newSlides = [...slides.value] as BannerProps[];
-
-  [newSlides[index], newSlides[index + 1]] = [newSlides[index + 1], newSlides[index]];
-  slides.value = newSlides;
-
-  await nextTick();
-
-  setIndex(blockUuid.value, index + 1);
 };
 </script>
 
