@@ -11,7 +11,6 @@
         id="perPage"
         v-model="selected"
         :aria-label="$t('perPage')"
-        @change="updateItemsPerPage(Number(selected))"
       >
         <option v-for="{ value, label, disabled } in options" :key="value" :value="value" :disabled="disabled">
           {{ label }}
@@ -23,38 +22,44 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
+import type { CategoryItemsPerPageProps } from '~/components/CategoryItemsPerPage/types';
 import { defaults } from '~/composables';
 
 const props = defineProps<CategoryItemsPerPageProps>();
+const { itemsPerPage, updateItemsPerPage } = useProductFilters();
 
-const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
+const maxValidOption = computed(() => {
+  let firstHigherFound = false;
+  let max = defaults.DEFAULT_ITEMS_PER_PAGE;
 
-const options = ref(
-  defaults.PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })),
-);
-
-let firstHigherValueOptionFound = false;
-
-options.value = options.value.map((option) => {
-  if (Number(option.value) < props.totalProducts || !firstHigherValueOptionFound) {
-    if (Number(option.value) > props.totalProducts) {
-      firstHigherValueOptionFound = true;
+  for (const step of defaults.PER_PAGE_STEPS) {
+    if (step <= props.totalProducts) {
+      max = step;
+    } else if (!firstHigherFound) {
+      max = step;
+      firstHigherFound = true;
     }
-    return { ...option, disabled: false };
-  } else {
-    return { ...option, disabled: true };
   }
+  return max;
 });
 
-const lastDisabledValue =
-  options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
+const options = computed(() =>
+  defaults.PER_PAGE_STEPS.map((step: number) => ({
+    label: step.toString(),
+    value: step.toString(),
+    disabled: step > maxValidOption.value
+  }))
+);
 
-const facetsFromURL = getFacetsFromURL();
-const selectedValue =
-  facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
-    ? lastDisabledValue
-    : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
-
-const selected = ref(selectedValue);
+const selected = computed({
+  get: () => {
+    const current = itemsPerPage.value;
+    return (current <= maxValidOption.value ? current : maxValidOption.value).toString();
+  },
+  set: (value) => {
+    const numericValue = Number(value);
+    const validValue = numericValue <= maxValidOption.value ? numericValue : maxValidOption.value;
+    updateItemsPerPage(validValue);
+  }
+});
 </script>

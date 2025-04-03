@@ -6,7 +6,7 @@
       {{ $t('sortBy') }}
     </h6>
     <div class="px-4">
-      <SfSelect id="sortBy" v-model="selected" :aria-label="$t('sortBy')" @change="sortingChanged">
+      <SfSelect id="sortBy" v-model="selected" :aria-label="$t('sortBy')" @change="updateSort(selected)">
         <option v-for="{ value, label } in options" :key="value" :value="value">
           {{ $t(`sortType.${label}`) }}
         </option>
@@ -18,7 +18,8 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 
-const { getFacetsFromURL, updateSorting } = useCategoryFilter();
+const { sort, updateSort } = useProductFilters();
+
 const options = ref([
   {
     label: 'nameA-Z',
@@ -45,23 +46,5 @@ const options = ref([
     value: 'item.feedbackDecimal_desc',
   },
 ]);
-const selected = ref(options.value[0].value);
-
-function sortingChanged() {
-  updateSorting(selected.value);
-}
-
-function sortQueryChanged() {
-  const facets = getFacetsFromURL();
-  selected.value = facets.sort ?? options.value[0].value;
-}
-
-sortQueryChanged();
-
-watch(
-  () => useNuxtApp().$router.currentRoute.value.query.sort,
-  () => {
-    sortQueryChanged();
-  },
-);
+const selected = ref(sort.value || options.value[0].value);
 </script>

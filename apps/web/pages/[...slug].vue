@@ -37,8 +37,9 @@ const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
+const { activeFilters, priceRange, sort, itemsPerPage } = useProductFilters();
 const { data: categoryTree } = useCategoryTree();
-const { buildCategoryLanguagePath } = useLocalization();
+const { buildCategoryLanguagePath, getCategoryUrlFromRoute } = useLocalization();
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -52,6 +53,17 @@ const breadcrumbs = computed(() => {
   }
 
   return [];
+});
+
+watchEffect(async () => {
+  await fetchProducts({
+    categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
+    ...priceRange.value,
+    sort: sort.value,
+    itemsPerPage: itemsPerPage.value,
+    page: Number(route.query.page) || 1,
+    facets: activeFilters.value.join(','),
+  });
 });
 
 const handleQueryUpdate = async () => {
@@ -102,13 +114,6 @@ const keywordsContent = computed((): string =>
 
 const robotsContent = computed((): string =>
   productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
-);
-
-watch(
-  () => route.query,
-  async () => {
-    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
-  },
 );
 
 useHead({
