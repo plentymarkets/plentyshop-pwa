@@ -25,7 +25,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
   const fetchCategorySettings = async (categoryId: number) => {
     if (cache.value[categoryId]) {
       console.log('Loaded from cache:', categoryId);
-      state.value.data = cache.value[categoryId]; // reuses the reference so edits persist
+      state.value.data = cache.value[categoryId];
       return cache.value[categoryId];
     }
 
@@ -56,58 +56,16 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
   });
 
-  // const fetchCategorySettings = async (categoryId: number) => {
-  //   if (cache.value[categoryId]) {
-  //     console.log('Loaded from cache:', categoryId);
-  //     state.value.data = cache.value[categoryId];
-  //     return cache.value[categoryId];
-  //   }
-  // if (cache.value[categoryId]) {
-  //   console.log('Loaded from cache:', categoryId);
-  //   const cleanCopy = JSON.parse(JSON.stringify(cache.value[categoryId]));
-  //   state.value.data = cleanCopy;
-  //   state.value.initialData = JSON.parse(JSON.stringify(cleanCopy));
-  //   return cleanCopy;
-  // }
-
-  //   state.value.loading = true;
-  //   try {
-  //     const { fetchProducts } = useProducts(settingsId);
-  //     const result = await fetchProducts({ categoryId: categoryId.toString() });
-
-  //     const categoryData = result.category;
-  //     console.log('Fetched:', categoryData);
-
-  //     const cleanData = JSON.parse(JSON.stringify(categoryData));
-  //     cache.value[categoryId] = cleanData;
-  //     state.value.data = cleanData;
-  //     return cleanData;
-  //   } catch (error) {
-  //     throw new Error(error as string);
-  //   } finally {
-  //     state.value.loading = false;
-  //   }
-  // };
-
-  // const fetchCategorySettings = async (categoryId: number) => {
-  //   try {
-  //     const { fetchProducts } = useProducts(settingsId);
-  //     const data = await fetchProducts({ categoryId: categoryId.toString() });
-  //     console.log('Data:', data.category);
-  //     state.value.data = data.category;
-  //     return state.value.data;
-  //   } catch (error) {
-  //     throw new Error(error as string);
-  //   } finally {
-  //     state.value.loading = false;
-  //   }
-  // };
-
+  const ready = ref(false);
   watch(
     () => state.value.id,
     async (newId: number) => {
-      await fetchCategorySettings(newId);
-      console.log(newId);
+      if (newId) {
+        ready.value = false;
+        await fetchCategorySettings(newId);
+        ready.value = true;
+        console.log('Category data ready for ID:', newId);
+      }
     },
     { immediate: true },
   );
@@ -173,6 +131,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     ...toRefs(state.value),
     saveCategorySettings,
     fetchCategorySettings,
+    ready,
     hasChanges,
   };
 };

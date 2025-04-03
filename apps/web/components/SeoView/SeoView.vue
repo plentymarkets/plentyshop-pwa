@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
+  <div v-if="ready" class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
       <UiAccordionItem
         v-model="metaData"
@@ -158,12 +158,11 @@ const metaData = ref(false);
 
 const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
 
-const { data, id, fetchCategorySettings } = useCategorySettings();
-
+const { data, id, ready } = useCategorySettings();
+console.log('SeoView ID:', id);
+console.log('SeoView Data:', data);
 const categoryId = getCategoryId.value;
 const parentCategoryId = getParentCategoryId.value;
-
-fetchCategorySettings(id.value);
 
 console.log('categoryId', categoryId);
 console.log('parentCategoryId', parentCategoryId);
