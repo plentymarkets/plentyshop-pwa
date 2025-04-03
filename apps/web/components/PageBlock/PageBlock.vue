@@ -167,10 +167,9 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 </script>
 
-
 <style>
 .drag-handle:hover .sf-icon-drag {
-  color: #538AEA;
+  color: #538aea;
 }
 
 .sortable-chosen {

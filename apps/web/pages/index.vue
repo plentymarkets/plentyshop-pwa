@@ -34,21 +34,19 @@
           @click="tabletEdit(index)"
         />
       </template>
-
     </draggable>
   </div>
 </template>
 <script lang="ts" setup>
-import draggable from 'vuedraggable'
+import draggable from 'vuedraggable';
 const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
 const { t } = useI18n();
 const { settingsIsDirty } = useSiteConfiguration();
 
-
 const handleDragUpdate = (evt: { newIndex: number; oldIndex: number }) => {
-  console.log('New order:', data.value)
-}
+  console.log('New order:', data.value);
+};
 
 const { data, getBlocks } = useCategoryTemplate();
 
