@@ -71,7 +71,7 @@
             >
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="computedKeywords" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="data.details[0].metaKeywords" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -140,7 +140,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
             <SfSwitch
-              v-model="computedSitemap"
+              v-model="data.sitemap"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -158,35 +158,12 @@ const metaData = ref(false);
 
 const { getCategoryId, getParentCategoryId } = useCategoryIdHelper();
 
-const { fetchCategorySettings } = useCategorySettings();
+const { data, id, fetchCategorySettings } = useCategorySettings();
 
 const categoryId = getCategoryId.value;
 const parentCategoryId = getParentCategoryId.value;
 
-fetchCategorySettings(categoryId || 0);
-
-const { data } = useCategorySettings();
-console.log('data from seo', data);
-
-const computedDescription = computed(() => {
-  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.description || '' : '';
-});
-
-const computedKeywords = computed(() => {
-  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.keywords || '' : '';
-});
-
-const computedRobots = computed(() => {
-  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.robots || '' : '';
-});
-
-const computedCanonicalLink = computed(() => {
-  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.canonicalLink || '' : '';
-});
-
-const computedSitemap = computed(() => {
-  return getCategoryId.value !== undefined ? data.value[getCategoryId.value]?.sitemap || false : false;
-});
+fetchCategorySettings(id.value);
 
 console.log('categoryId', categoryId);
 console.log('parentCategoryId', parentCategoryId);
@@ -205,47 +182,6 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
   }
   return undefined;
 };
-
-// watch(
-//   [getCategoryId, getParentCategoryId],
-//   ([newCategoryId, newParentCategoryId]) => {
-//     if (newCategoryId) {
-//       const foundPage = findPageById(newCategoryId, pages.value);
-//       if (foundPage) {
-//         title.value = foundPage.name;
-//         description.value = foundPage.metaDescription || '';
-//         keywords.value = foundPage.metaKeywords || '';
-//         canonicalLink.value = foundPage.canonicalLink || '';
-//         robots.value = foundPage.metaRobots || 'all';
-//         sitemap.value = foundPage.sitemap === 'y';
-//       }
-//       useCategorySettings(newCategoryId || 0);
-
-//     }
-//     console.log('Updated categoryId:', newCategoryId);
-//     console.log('Updated parentCategoryId:', newParentCategoryId);
-//   },
-//   { immediate: true }
-// );
-
-// const pageOptions = computed(() => {
-//   const options: PageOption[] = pages.value.map((page) => ({ id: page.id, name: page.name }));
-//   options.unshift({ id: null, name: 'None' });
-//   return options;
-// });
-
-// watch(
-//   getParentCategoryId,
-//   (newId) => {
-//     if (newId) {
-//       const matchedPage = pageOptions.value.find((page) => page.id === newId);
-//       selectedPage.value = matchedPage || null;
-//     } else {
-//       selectedPage.value = { id: null, name: 'None' };
-//     }
-//   },
-//   { immediate: true },
-// );
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);

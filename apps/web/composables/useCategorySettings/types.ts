@@ -8,6 +8,7 @@ export interface useCategoryConfigurationState {
   drawerOpen: boolean;
   drawerExtraOpen: boolean;
   drawerView: DrawerView;
+  initialData: any;
 }
 
 export interface useCategorySettings {

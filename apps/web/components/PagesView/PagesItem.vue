@@ -91,9 +91,9 @@ const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
-const { setCategoryId, getCategoryId } = useCategoryIdHelper();
+const { setCategoryId } = useCategoryIdHelper();
 
-const { id: categoryId, fetchCategorySettings } = useCategorySettings();
+const { id: categoryId } = useCategorySettings();
 
 const open = ref(false);
 const toggle = () => (open.value = !open.value);

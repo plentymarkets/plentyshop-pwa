@@ -30,6 +30,8 @@
           variant="primary"
           data-testid="add-page-btn"
           class="border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          :class="{ 'opacity-40 cursor-not-allowed': !hasChanges  }"
+          :disabled="!hasChanges"
         >
           Save Settings
         </button>
@@ -82,6 +84,7 @@ const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+const { hasChanges } = useCategorySettings();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
