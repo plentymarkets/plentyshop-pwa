@@ -109,7 +109,7 @@ import { productImageGetters } from '@plentymarkets/shop-api';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { useTimeoutFn, useIntersectionObserver, unrefElement } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
-import defaultImage from 'assets/icons/paths/default-image.svg'
+import defaultImage from 'assets/icons/paths/default-image.svg';
 
 const props = defineProps<{ images: ImagesData[] }>();
 
