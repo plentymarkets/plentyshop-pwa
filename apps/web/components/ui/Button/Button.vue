@@ -10,7 +10,7 @@
     ]"
     data-testid="button"
     :aria-label="ariaLabel"
-    :aria-hidden="ariaLabelIsHidden"
+    :aria-hidden="ariaHidden"
   >
     <slot v-if="$slots.prefix" name="prefix" />
     <slot />
@@ -78,7 +78,6 @@ const type = computed(
       ? 'button'
       : undefined),
 );
-const ariaLabelIsHidden = computed(() => props.ariaHidden || props.ariaLabel === '');
 </script>
 <script lang="ts">
 export const variantClasses = {

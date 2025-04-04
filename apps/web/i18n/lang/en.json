@@ -879,11 +879,13 @@
   },
   "reviewsCount": "{count} reviews",
   "sale": "Sale",
+  "closeNeutralAlert": "Close neutral alert",
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
   "scrollTop": "Scroll to top",
   "search": "Search",
+  "resetSearch": "Reset Search",
   "shipping": {
     "addButton": "Add shipping address",
     "description": "Add a shipping address to view shipping details.",

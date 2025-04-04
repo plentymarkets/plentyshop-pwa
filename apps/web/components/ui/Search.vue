@@ -16,7 +16,7 @@
         <button
           v-if="inputModel"
           type="button"
-          aria-label="Reset search"
+          :aria-label="t('resetSearch')"
           class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
           @click="handleReset"
         >
