@@ -22,6 +22,7 @@ export interface useCategorySettings {
   // setPageId: (id: number) => void;
   ready: Ref<boolean>;
   hasChanges: ComputedRef<boolean>;
+  isDirty: (id: number) => ComputedRef<boolean>;
  // saveCategorySettings: () => Promise<boolean>;
   fetchCategorySettings: (categoryId: number) => Promise<Record<number, any>>;
 }

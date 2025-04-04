@@ -19,7 +19,13 @@
         {{ item.name }}
       </router-link>
 
-      <SfTooltip label="You have unsaved changes on this page" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <SfTooltip
+        v-if="isDirty(item.id).value"
+        label="You have unsaved changes on this page"
+        :placement="'top'"
+        :show-arrow="true"
+        class="ml-2 z-10"
+      >
         <SfIconError :size="'sm'" />
       </SfTooltip>
 
@@ -92,7 +98,7 @@ const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
-const { id: categoryId } = useCategorySettings();
+const { id: categoryId, isDirty } = useCategorySettings();
 
 const open = ref(false);
 const toggle = () => (open.value = !open.value);

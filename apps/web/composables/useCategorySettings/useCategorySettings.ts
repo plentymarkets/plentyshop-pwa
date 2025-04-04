@@ -56,6 +56,13 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     }
   };
 
+  const isDirty = (id: number) => {
+    return computed(() => 
+      id === state.value.data.id &&
+      JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData)
+    );
+  };
+
   const hasChanges = computed(() => {
     return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
   });
@@ -123,5 +130,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     fetchCategorySettings,
     ready,
     hasChanges,
+    isDirty,
   };
 };
