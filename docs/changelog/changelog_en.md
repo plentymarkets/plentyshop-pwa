@@ -37,6 +37,10 @@
 - Fix item page image gallery overlap.
 - Fix broken category filters and navigation.
 
+# v1.12.2 (2025-04-04)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+
+
 # v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 👷 Changed
