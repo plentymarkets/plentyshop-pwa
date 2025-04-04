@@ -1,5 +1,5 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid" :class="{ 'drag-handle cursor-move': root }">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
@@ -159,3 +159,15 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   openDrawerWithView('blocksList');
 };
 </script>
+
+<style>
+.drag-handle:hover .sf-icon-drag {
+  color: #538aea;
+}
+
+.sortable-ghost {
+  opacity: 0.4;
+  background: #f0f4ff;
+  border-radius: 0.5rem;
+}
+</style>

@@ -1,8 +1,17 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <div v-if="data.length" class="content">
-      <template v-for="(block, index) in data" :key="index">
+    <draggable
+      v-if="data.length"
+      v-model="data"
+      item-key="meta.uuid"
+      handle=".drag-handle"
+      class="content"
+      :filter="'.no-drag'"
+      :prevent-on-filter="false"
+      @change="scrollToBlock"
+    >
+      <template #item="{ element: block, index }">
         <PageBlock
           :index="index"
           :block="block"
@@ -27,11 +36,29 @@
           @click="tabletEdit(index)"
         />
       </template>
-    </div>
+    </draggable>
   </div>
 </template>
 <script lang="ts" setup>
+import draggable from 'vuedraggable';
+import type { Block } from '@plentymarkets/shop-api';
 const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
+
+interface DragEvent<T = Block> {
+  added?: {
+    element: T;
+    newIndex: number;
+  };
+  removed?: {
+    element: T;
+    oldIndex: number;
+  };
+  moved?: {
+    element: T;
+    oldIndex: number;
+    newIndex: number;
+  };
+}
 
 const { t } = useI18n();
 const { settingsIsDirty } = useSiteConfiguration();
@@ -66,6 +93,19 @@ const hasUnsavedChanges = () => {
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
   event.preventDefault();
+};
+
+const scrollToBlock = (evt: DragEvent) => {
+  if (evt.moved) {
+    const { newIndex } = evt.moved;
+
+    const block = document.getElementById(`block-${newIndex}`);
+    if (block) {
+      nextTick(() => {
+        block.scrollIntoView(true);
+      });
+    }
+  }
 };
 
 getRobots();
