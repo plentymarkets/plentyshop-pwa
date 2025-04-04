@@ -4,10 +4,10 @@
     data-testid="edit-block-actions"
   >
     <button
-      class="text-black hover:bg-gray-100 p-1 rounded"
+      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
       data-testid="open-editor-button"
       aria-label="editor button"
-      @click="triggerEdit"
+      @click.stop="triggerEdit"
     >
       <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@
     <div class="w-px h-4 bg-gray-300" />
 
     <button
-      class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+      class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
       aria-label="Drag to reorder block"
     >
       <SfIconUnfoldMore />
@@ -28,7 +28,7 @@
     <div class="w-px h-4 bg-gray-300" />
 
     <button
-      class="text-black hover:bg-gray-100 p-1 rounded"
+      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
       aria-label="delete block button"
       data-testid="delete-block-button"
       @click="triggerDelete"
@@ -57,23 +57,4 @@ const triggerEdit = () => {
 const triggerDelete = () => {
   deleteBlock(props.block.meta.uuid);
 };
-
-// const scrollToBlock = (newIndex: number) => {
-//   const block = document.getElementById(`block-${newIndex}`);
-//   if (block) {
-//     block.scrollIntoView(true);
-//     window.scrollBy(0, -200);
-//   }
-// };
-// let timeoutId: ReturnType<typeof setTimeout>;
-//
-// const changePosition = (position: number) => {
-//   emit('change-position', props.index, position);
-//   if (timeoutId) {
-//     clearTimeout(timeoutId);
-//   }
-//   timeoutId = setTimeout(() => {
-//     scrollToBlock(props.index + position);
-//   }, 100);
-// };
 </script>

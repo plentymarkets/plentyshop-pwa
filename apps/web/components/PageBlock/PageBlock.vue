@@ -165,12 +165,6 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   color: #538aea;
 }
 
-.sortable-chosen {
-  opacity: 0.8;
-  transform: scale(1.02);
-  transition: all 0.2s ease;
-}
-
 .sortable-ghost {
   opacity: 0.4;
   background: #f0f4ff;
