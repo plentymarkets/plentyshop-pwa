@@ -12,16 +12,28 @@
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
+        <span>
+          {{ item.id }}
+        </span>
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
         {{ item.name }}
       </router-link>
 
+      <SfTooltip
+        v-if="showFormWarning"
+        label="You have unsaved changes on this page"
+        :placement="'top'"
+        :show-arrow="true"
+        class="ml-2 z-10"
+      >
+        <SfIconError :size="'sm'" />
+      </SfTooltip>
       <SfIconMoreHoriz @click.prevent="openMenu" />
 
       <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
-        <div class="p-2 rounded bg-white w-max">
+        <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
           <div
             class="p-1 flex"
             @click="
@@ -68,6 +80,8 @@ import {
   SfDropdown,
   SfIconDelete,
   SfIconSearch,
+  SfIconError,
+  SfTooltip,
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
@@ -75,15 +89,19 @@ import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
+const currentSeoPageId = ref<number | null>(null);
+const currentGeneralPageId = ref<number | null>(null);
+
 const { item } = defineProps<{
   item: MenuItemType;
   parentId: number | undefined;
 }>();
 
+const { categorySettingsIsDirty } = useCategorySettings();
+
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
-const currentSeoPageId = ref<number | null>(null);
-const currentGeneralPageId = ref<number | null>(null);
+
 const { setPageId } = useCategorySettings();
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
@@ -105,4 +123,11 @@ const deletePage = (id: number) => {
   toggleDeleteModal(true);
   close();
 };
+
+const isTouched = computed(() => categorySettingsIsDirty.value);
+
+// Show form warning if the current page matches the active SEO or General settings page
+const showFormWarning = computed(() => {
+  return (currentSeoPageId.value === item.id || currentGeneralPageId.value === item.id) && isTouched.value;
+});
 </script>

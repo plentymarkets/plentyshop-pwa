@@ -42,12 +42,12 @@ export interface useCategorySettings {
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<useCategoryConfigurationState['drawerOpen']>>;
   drawerExtraOpen: Readonly<Ref<useCategoryConfigurationState['drawerExtraOpen']>>;
-  title: Readonly<Ref<useCategoryConfigurationState['title']>>;
-  description: Readonly<Ref<useCategoryConfigurationState['description']>>;
-  keywords: Readonly<Ref<useCategoryConfigurationState['keywords']>>;
-  robots: Readonly<Ref<useCategoryConfigurationState['robots']>>;
-  canonical: Readonly<Ref<useCategoryConfigurationState['canonical']>>;
-  includeSitemap: Readonly<Ref<useCategoryConfigurationState['includeSitemap']>>;
+  title: Ref<useCategoryConfigurationState['title']>;
+  description: Ref<useCategoryConfigurationState['description']>;
+  keywords: Ref<useCategoryConfigurationState['keywords']>;
+  robots: Ref<useCategoryConfigurationState['robots']>;
+  canonical: Ref<useCategoryConfigurationState['canonical']>;
+  includeSitemap: Ref<useCategoryConfigurationState['includeSitemap']>;
   drawerView: Readonly<Ref<useCategoryConfigurationState['drawerView']>>;
   categorySettingsIsDirty: ComputedRef<boolean>;
   id: Readonly<Ref<useCategoryConfigurationState['id']>>;
@@ -55,12 +55,13 @@ export interface useCategorySettings {
   sitemap: Readonly<Ref<useCategoryConfigurationState['sitemap']>>;
   linkList: Readonly<Ref<useCategoryConfigurationState['linkList']>>;
   name: Readonly<Ref<useCategoryConfigurationState['name']>>;
-  canonicalLink: Readonly<Ref<useCategoryConfigurationState['canonicalLink']>>;
+  canonicalLink: Ref<useCategoryConfigurationState['canonicalLink']>;
   position: Readonly<Ref<useCategoryConfigurationState['position']>>;
   setPageId: (id: number, parentId?: number) => void;
   getPageId: Readonly<ComputedRef<number>>;
   getParentCategoryId: Readonly<ComputedRef<number | null>>;
   saveCategorySettings: () => Promise<boolean>;
+  resetInitialData: () => void;
 }
 
 export type useCategorySettingsReturn = () => useCategorySettings;

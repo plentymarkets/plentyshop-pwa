@@ -9,6 +9,7 @@
       >
         <template #summary>
           <h2>Text</h2>
+          {{getPageId }}
         </template>
         <div class="py-2">
           <div class="flex justify-between">
