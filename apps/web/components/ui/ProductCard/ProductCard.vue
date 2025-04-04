@@ -128,9 +128,10 @@ const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
-const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
-const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
-const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
+const productPath = computed(() =>
+  localePath(`/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`),
+);
+
 const getWidth = () => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth;
