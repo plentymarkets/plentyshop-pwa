@@ -41,7 +41,10 @@
                   class="p-2 rounded"
                 >
                   <template #item="{ element: slide, index }">
-                    <div class="flex items-center justify-between drag-slides-handle cursor-move">
+                    <div
+                      :key="slide.meta.uuid"
+                      class="flex items-center justify-between drag-slides-handle cursor-move"
+                    >
                       <div class="flex items-center">
                         <button
                           class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
