@@ -154,6 +154,7 @@
           class="ml-2"
           :data-testid="`close-address-${AddressType.Billing}`"
           @click="edit"
+          :aria-label="$t('closeAddressForm')"
         >
           <SfIconClose />
         </UiButton>

@@ -207,6 +207,7 @@
   "addToWishlist": "Add to wishlist",
   "addedToCart": "Item added to Cart",
   "address": "Addresses",
+  "closeAddressForm": "Close address form",
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
   },
@@ -786,6 +787,7 @@
   "perPage": "Per page",
   "phone": "Phone",
   "pickSavedAddress": "Saved addresses",
+  "closePickSavedAddress": "Close addresses picker",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "placeOrder": "Place order and pay",
   "pleaseSelect": "Please Select",
