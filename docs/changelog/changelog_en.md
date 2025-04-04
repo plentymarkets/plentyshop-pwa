@@ -43,6 +43,7 @@
 ### 🩹 Fixed
 
 - Fix broken category filters and navigation.
+- Fix broken product link from category page.
 - Fix typescript build error during shop deployment.
 - Fix toolbar arrow.
 - Fix left side menu german navigation.
