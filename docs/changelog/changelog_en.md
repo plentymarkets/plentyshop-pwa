@@ -29,26 +29,26 @@
 ### New
 
 - Added the possibility to toggle the visibility of tags on the category page based on an environment variable (USE_TAGS_ON_CATEGORY_PAGE=1).
-- DHL Preferred Delivery.
-- A default image is displayed for items without an image.
+- DHL Preferred Delivery has been added as a shipping method.
+- A default image is now displayed for items without an item image.
 
 ### 👷 Changed
 
 - Item tags have been removed from the category page.
-- Image optimization disabled in the local development environment.
+- Image optimisation has been disabled in the local development environment.
 - Price calculation updated: If graduated prices are not available, the default price is used.
 - All Mollie Klarna payment methods are filtered out as they are not yet supported.
-- Demo cookie removed from the cookie bar.
-- Article preview texts now support HTML formatting.
+- Demo cookie has been removed from the cookie bar.
+- Item preview texts now support HTML formatting.
 
 ### 🩹 Fixed
 
-- Fix broken category filters and navigation.
-- Fix broken item link from category page.
-- Fix typescript build error during shop deployment.
-- Fix toolbar arrow.
-- Fix left side menu german navigation.
-- Fix item page image gallery overlap.
+- Fixed broken category filters and navigation.
+- Fixed a broken item link from category page.
+- Fixed a typescript build error during shop deployment.
+- Fixed a toolbar arrow.
+- Fixed the left side menu navigation in the German version.
+- Fixed an overlap in the item page image gallery.
 
 # v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
