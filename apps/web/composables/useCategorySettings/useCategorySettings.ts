@@ -30,6 +30,10 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       state.value.data = cache.value[categoryId];
       state.value.initialData = JSON.parse(JSON.stringify(cache.value[categoryId]));
 
+      // const { addCategorySettings } = useCategorySettingsCollection();
+      // await addCategorySettings(cache.value[categoryId]);
+      // await nextTick();
+
       return cache.value[categoryId];
     }
 
@@ -42,7 +46,13 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       const categoryData = result.category;
       console.log('Fetched from API:', categoryData);
 
+
       const cleanData = JSON.parse(JSON.stringify(categoryData));
+
+
+      const { addCategorySettings } = useCategorySettingsCollection();
+      await addCategorySettings(cleanData);
+      await nextTick();
 
       cache.value[categoryId] = cleanData;
       state.value.data = cache.value[categoryId];
