@@ -36,6 +36,7 @@
 - Fix left side menu german navigation.
 - Fix item page image gallery overlap.
 - Fix broken category filters and navigation.
+- Fix broken product link from category page.
 
 # v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
