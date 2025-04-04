@@ -4,27 +4,27 @@
 
 ### Neu
 
-- Möglichkeit hinzugefügt, die Sichtbarkeit von Tags auf der Kategorieseite basierend auf einer Umgebungsvariable (USE_TAGS_ON_CATEGORY_PAGE=1) umzuschalten.
-- DHL Preffered-Delivery.
-- Für Artikel ohne Bild wird ein Standardbild angezeigt.
+- Die Möglichkeit, die Sichtbarkeit von Tags auf der Kategorieseite basierend auf einer Umgebungsvariable (USE_TAGS_ON_CATEGORY_PAGE=1) umzuschalten, wurde hinzugefügt.
+- DHL Prefered-Delivery wurde als Lieferart hinzugefügt.
+- Für Artikel ohne Artikelbild wird nun ein Standardbild angezeigt.
 
 ### 👷 Geändert
 
 - Artikel-Tags wurden von der Kategorieseite entfernt.
-- Bildoptimierung in der lokalen Entwicklungsumgebung deaktiviert.
-- Preisberechnung aktualisiert: Wenn Staffelpreise nicht verfügbar sind, wird der Standardpreis verwendet.
-- Alle Mollie Klarna Zahlungsmethoden werden herausgefiltert, da sie noch nicht unterstützt werden.
-- Demo-Cookie aus der Cookiebar entfernt.
+- Die Bildoptimierung in der lokalen Entwicklungsumgebung wurde deaktiviert.
+- Die Preisberechnung wurde aktualisiert: Wenn Staffelpreise nicht verfügbar sind, wird der Standardpreis verwendet.
+- Alle Mollie Klarna-Zahlungsmethoden werden herausgefiltert, da diese noch nicht unterstützt werden.
+- Das Demo-Cookie wurde aus der Cookiebar entfernt.
 - Artikel-Vorschautexte unterstützen jetzt HTML-Formatierung.
 
 ### 🩹 Behoben
 
-- Fehlerhafte Kategorie-Filter und Navigation behoben.
-- Fehlerhaften Produktlink auf der Kategorieseite behoben.
-- TypeScript-Build-Fehler während der Shop-Bereitstellung behoben.
-- Toolbar-Pfeil korrigiert.
-- Deutsche Navigation im linken Seitenmenü korrigiert.
-- Überlappung der Bildergalerie auf der Artikelseite behoben.
+- Fehlerhafte Kategorie-Filter und -Navigation wurden behoben.
+- Fehlerhafte Produktlinks auf der Kategorieseite wurden behoben.
+- Ein TypeScript-Build-Fehler während der Shop-Bereitstellung wurde behoben.
+- Der Toolbar-Pfeil wurde korrigiert.
+- Die deutsche Navigation im linken Seitenmenü wurde korrigiert.
+- Eine Überlappung der Bildergalerie auf der Artikelseite wurde behoben.
 
 # v1.12.1 (2025-03-24) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
