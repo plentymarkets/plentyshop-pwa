@@ -1,25 +1,26 @@
 # Changelog PlentyONE Shop
 
-# v1.12.2 (2025-04-04) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+# v1.12.2 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu
 
 - Möglichkeit hinzugefügt, die Sichtbarkeit von Tags auf der Kategorieseite basierend auf einer Umgebungsvariable (USE_TAGS_ON_CATEGORY_PAGE=1) umzuschalten.
 - DHL Preffered-Delivery.
-- Standardbild für Produkte & alternativer Text für Standardbild hinzugefügt.
+- Für Artikel ohne Bild wird ein Standardbild angezeigt.
 
 ### 👷 Geändert
 
-- Lokale Bildoptimierung deaktiviert.
+- Artikel-Tags wurden von der Kategorieseite entfernt.
+- Bildoptimierung in der lokalen Entwicklungsumgebung deaktiviert.
 - Preisberechnung aktualisiert: Wenn Staffelpreise nicht verfügbar sind, wird der Standardpreis verwendet.
-- Alle Mollie Klarna Zahlungsmethoden wurden herausgefiltert, da sie noch nicht unterstützt werden.
+- Alle Mollie Klarna Zahlungsmethoden werden herausgefiltert, da sie noch nicht unterstützt werden.
 - Demo-Cookie aus der Cookiebar entfernt.
-- Kurze Artikelbeschreibungen unterstützen jetzt HTML-Formatierung.
+- Artikel-Vorschautexte unterstützen jetzt HTML-Formatierung.
 
 ### 🩹 Behoben
 
 - Fehlerhafte Kategorie-Filter und Navigation behoben.
-- Fehlerhaften Produktlink von der Kategorieseite behoben.
+- Fehlerhaften Produktlink auf der Kategorieseite behoben.
 - TypeScript-Build-Fehler während der Shop-Bereitstellung behoben.
 - Toolbar-Pfeil korrigiert.
 - Deutsche Navigation im linken Seitenmenü korrigiert.
@@ -397,8 +398,8 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 #### Konfiguration
 
-- Das Favicon kann jetzt vom plentysystems System abgerufen werden.
-- Das Logo kann jetzt vom plentysystems System abgerufen werden.
+- Das Favicon kann jetzt vom PlentyONE System abgerufen werden.
+- Das Logo kann jetzt vom PlentyONE System abgerufen werden.
 - Die Google Fonts-Schriftart kann jetzt über Umgebungsvariablen konfiguriert werden.
 - Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
 - Die in der App verfügbaren Sprachen und die Standardsprache können jetzt über Umgebungsvariablen konfiguriert werden.
@@ -446,7 +447,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Die Bearbeitung des Autorennamens in Rezensionen und Antworten wurde korrigiert.
 - Das Problem mit dem plentyID-Cookie in der PWA-Live-Vorschau wurde behoben.
 - Es wurde behoben, dass die PayPal Express-Schaltfläche auf der Produktseite nur angezeigt wird, wenn der Artikel zum Kauf verfügbar ist.
-- Beim Abrufen von Konfigurationen von plentysystems wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
+- Beim Abrufen von Konfigurationen von PlentyONE wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
 - Das verwaiste Formularlabel in den Attributen der Produktseite wurde behoben.
 - Der Datenschutzlink in der Cookieleiste funktionierte nicht richtig. Dies wurde behoben.
 - Kleinere Styling-Probleme im Kreditkartenformular im Checkout und im Bewertungsformular auf der Produktseite wurden behoben.
