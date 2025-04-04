@@ -200,6 +200,7 @@
   "addToWishlist": "Add to wishlist",
   "addedToCart": "Item added to Cart",
   "address": "Addresses",
+  "closeAddressForm": "Close address form",
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
   },
@@ -779,6 +780,7 @@
   "perPage": "Per page",
   "phone": "Phone",
   "pickSavedAddress": "Saved addresses",
+  "closePickSavedAddress": "Close addresses picker",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "placeOrder": "Place order and pay",
   "pleaseSelect": "Please Select",
@@ -872,11 +874,13 @@
   },
   "reviewsCount": "{count} reviews",
   "sale": "Sale",
+  "closeNeutralAlert": "Close neutral alert",
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
   "scrollTop": "Scroll to top",
   "search": "Search",
+  "resetSearch": "Reset Search",
   "shipping": {
     "addButton": "Add shipping address",
     "description": "Add a shipping address to view shipping details.",
