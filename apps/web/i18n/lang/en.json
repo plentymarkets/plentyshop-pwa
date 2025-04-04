@@ -27,17 +27,17 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores consent selection."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores information about the current session, for example if the user is logged in."
         },
         "vsfLocale": {
           "name": "vsf-locale",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores the display language."
         }
       },
