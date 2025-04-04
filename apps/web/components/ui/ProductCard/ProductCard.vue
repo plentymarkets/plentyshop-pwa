@@ -119,7 +119,6 @@ const {
   isFromSlider = false,
 } = defineProps<ProductCardProps>();
 
-const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product);
