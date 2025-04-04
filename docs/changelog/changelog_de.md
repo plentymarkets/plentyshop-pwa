@@ -1,5 +1,30 @@
 # Changelog PlentyONE Shop
 
+# v1.12.2 (2025-04-04) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Möglichkeit hinzugefügt, die Sichtbarkeit von Tags auf der Kategorieseite basierend auf einer Umgebungsvariable (USE_TAGS_ON_CATEGORY_PAGE=1) umzuschalten.
+- DHL Preffered-Delivery.
+- Standardbild für Produkte & alternativer Text für Standardbild hinzugefügt.
+
+### 👷 Geändert
+
+- Lokale Bildoptimierung deaktiviert.
+- Preisberechnung aktualisiert: Wenn Staffelpreise nicht verfügbar sind, wird der Standardpreis verwendet.
+- Alle Mollie Klarna Zahlungsmethoden wurden herausgefiltert, da sie noch nicht unterstützt werden.
+- Demo-Cookie aus der Cookiebar entfernt.
+- Kurze Artikelbeschreibungen unterstützen jetzt HTML-Formatierung.
+
+### 🩹 Behoben
+
+- Fehlerhafte Kategorie-Filter und Navigation behoben.
+- Fehlerhaften Produktlink von der Kategorieseite behoben.
+- TypeScript-Build-Fehler während der Shop-Bereitstellung behoben.
+- Toolbar-Pfeil korrigiert.
+- Deutsche Navigation im linken Seitenmenü korrigiert.
+- Überlappung der Bildergalerie auf der Artikelseite behoben.
+
 # v1.12.1 (2025-03-24) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert
