@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="absolute right-2 top-2 flex items-center">
-        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton :aria-label="t('account.ordersAndReturns.orderAgain.closeQuickCheckout')" data-testid="quick-checkout-close" square variant="tertiary" @click="close">
           <SfIconClose />
         </UiButton>
       </div>

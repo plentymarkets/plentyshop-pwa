@@ -120,6 +120,7 @@
     "ordersAndReturns": {
       "actions": "Actions",
       "amount": "Amount",
+      "more": "Show more",
       "continue": "Continue shopping",
       "details": "Details",
       "heading": "Orders & Returns",
@@ -132,6 +133,7 @@
         "addToCart": "Add to cart",
         "buyAgain": "Buy again",
         "cancel": "Cancel",
+        "closeQuickCheckout": "Close Quick Checkout",
         "heading": "Buy again",
         "headingChanges": "Change in products",
         "notAvailable": "Currently unavailable",
@@ -349,6 +351,7 @@
   "clear": "Clear",
   "clearFilters": "Clear all filters",
   "closeDialog": "Close Dialog",
+  "closeDrawer": "Close Drawer",
   "closeListSettings": "Close list settings",
   "closeMenu": "Close Menu",
   "coming-soon": "Coming Soon",
@@ -385,6 +388,7 @@
   "content": "Content",
   "continueAsGuest": "Continue as guest",
   "continueShopping": "Continue shopping",
+  "closeAuthentication": "Close authentication",
   "coupon": {
     "apply": "Apply",
     "couponApplied": "The coupon has been added successfully",
@@ -721,6 +725,7 @@
     "inputPlaceholder": "Please share your reason for declining...",
     "missingEmail": "No email address has been provided.",
     "offer": "Offer",
+    "closeAddressForm": "Close Address Form",
     "offerValidUntil": "Offer valid until: {date}"
   },
   "openConfigurationDrawer": "Open configuration drawer",

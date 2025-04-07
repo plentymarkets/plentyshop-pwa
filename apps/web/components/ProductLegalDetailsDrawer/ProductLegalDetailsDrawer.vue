@@ -22,6 +22,7 @@
           data-testid="product-legal-details-close"
           class="text-white"
           @click="open = false"
+          :aria-label="t('closeDrawer')"
         >
           <SfIconClose />
         </UiButton>
