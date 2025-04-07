@@ -1,5 +1,4 @@
 <template>
-  <div>TEST</div>
   <div>
     <EmptyBlock v-if="dataIsEmpty"/>
     <div v-if="data.length" class="content">
