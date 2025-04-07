@@ -2,6 +2,10 @@
 
 # v1.x.x (yyyy-mm-dd)
 
+### 🩹 Fixed
+
+- A bug which crashed the build process.
+
 ### New
 
 - (dev) Added pages entry on the left side menu, where users can manage their pages.

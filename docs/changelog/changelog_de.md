@@ -1,5 +1,11 @@
 # Changelog PlentyONE Shop
 
+# v1.x.x (yyyy-mm-dd)
+
+### 🩹 Behoben
+
+- Ein Fehler, der den Build-Prozess zum Absturz brachte.
+
 # v1.13.0 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu
