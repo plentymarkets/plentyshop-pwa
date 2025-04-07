@@ -27,17 +27,17 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores consent selection."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores information about the current session, for example if the user is logged in."
         },
         "vsfLocale": {
           "name": "vsf-locale",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores the display language."
         }
       },
@@ -49,13 +49,6 @@
       "label": "External media"
     },
     "functional": {
-      "cookies": {
-        "scriptDemo": {
-          "name": "Script demo",
-          "provider": "plentysystems AG",
-          "status": "Usage example for loading a script after consent."
-        }
-      },
       "description": "These cookies are used to store preferred settings and certain options selected by the user.",
       "label": "Functional"
     },
