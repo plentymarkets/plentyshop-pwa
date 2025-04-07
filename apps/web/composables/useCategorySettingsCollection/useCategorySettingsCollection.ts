@@ -23,9 +23,18 @@ export const useCategorySettingsCollection = () => {
     return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
   });
 
+  const isCategoryDirty = (id: number) => {
+    const current = state.value.data.find((item) => item.id === id);
+    const initial = state.value.initialData.find((item) => item.id === id);
+    if (!current || !initial) return false;
+  
+    return JSON.stringify(current) !== JSON.stringify(initial);
+  };
+
   return {
     ...toRefs(state.value),
     addCategorySettings,
+    isCategoryDirty,
     hasChanges,
   };
 };

@@ -20,7 +20,7 @@
       </router-link>
 
       <SfTooltip
-        v-if="isDirty(item.id).value"
+        v-if="isCategoryDirty(item.id)"
         label="You have unsaved changes on this page"
         :placement="'top'"
         :show-arrow="true"
@@ -84,6 +84,7 @@ import {
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+const { isCategoryDirty } = useCategorySettingsCollection();
 
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
@@ -98,7 +99,7 @@ const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
-const { id: categoryId, isDirty } = useCategorySettings();
+const { id: categoryId } = useCategorySettings();
 
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
