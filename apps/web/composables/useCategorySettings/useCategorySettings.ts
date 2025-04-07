@@ -29,11 +29,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       console.log('Loaded from cache:', categoryId);
       state.value.data = cache.value[categoryId];
       state.value.initialData = JSON.parse(JSON.stringify(cache.value[categoryId]));
-
-      // const { addCategorySettings } = useCategorySettingsCollection();
-      // await addCategorySettings(cache.value[categoryId]);
-      // await nextTick();
-
       return cache.value[categoryId];
     }
 

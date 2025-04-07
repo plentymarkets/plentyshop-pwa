@@ -144,7 +144,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="data.linklist"
+              v-model="linklistBoolean"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -153,7 +153,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Login Necessary</UiFormLabel>
             <SfSwitch
-              v-model="data.right"
+              v-model="loginBoolean"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -174,6 +174,24 @@ const basicSettingsOpen = ref(false);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, ready, fetchCategorySettings } = useCategorySettings();
+
+const loginBoolean = computed({
+  get() {
+    return data.value.right === 'all';
+  },
+  set(value: boolean) {
+    data.value.right = value ? 'all' : 'customer';
+  },
+});
+
+const linklistBoolean = computed({
+  get() {
+    return data.value.linklist === 'Y';
+  },
+  set(value: boolean) {
+    data.value.linklist = value ? 'Y' : 'N';
+  },
+});
 
 watch(
   getCategoryId,

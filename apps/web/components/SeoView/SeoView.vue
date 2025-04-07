@@ -149,7 +149,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
             <SfSwitch
-              v-model="data.sitemap"
+              v-model="sitemapBoolean"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -172,6 +172,14 @@ const metaData = ref(false);
 const { getCategoryId } = useCategoryIdHelper();
 
 const { data, ready, fetchCategorySettings } = useCategorySettings();
+const sitemapBoolean = computed({
+  get() {
+    return data.value.sitemap === 'Y';
+  },
+  set(value: boolean) {
+    data.value.sitemap = value ? 'Y' : 'N';
+  },
+});
 
 watch(
   getCategoryId,
@@ -203,7 +211,7 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
-const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];
+const robotNames = ['ALL', 'INDEX', 'NOFOLLOW', 'NOINDEX', 'NO INDEX, NOFOLLOW'];
 
 const titleTooltip = 'Title displayed in search results of search engines.';
 const robotsTooltip =
