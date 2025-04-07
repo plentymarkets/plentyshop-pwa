@@ -41,7 +41,7 @@
 
     <div class="flex justify-end gap-x-4 mt-6">
       <div>
-        <UiButton :aria-label="t('closeDialog')" type="button" variant="secondary" @click="confirmCancel">{{
+        <UiButton type="button" variant="secondary" @click="confirmCancel">{{
           t('paypal.unbrandedCancel')
         }}</UiButton>
       </div>
