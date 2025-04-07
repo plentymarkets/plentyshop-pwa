@@ -31,7 +31,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     state.value.loading = false;
 
     if (!data?.value?.data.length) {
-      console.log('data',data, 'identifier', identifier, 'type', type);
       state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     } else {
       state.value.data = data?.value?.data ?? state.value.data;
