@@ -1,6 +1,13 @@
 <template>
   <header>
-    <UiButton :aria-label="t('closeDialog')" type="button" square variant="tertiary" class="absolute right-2 top-2" @click="$emit('confirmCancel')">
+    <UiButton
+      :aria-label="t('closeDialog')"
+      type="button"
+      square
+      variant="tertiary"
+      class="absolute right-2 top-2"
+      @click="$emit('confirmCancel')"
+    >
       <SfIconClose />
     </UiButton>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
@@ -34,7 +41,9 @@
 
     <div class="flex justify-end gap-x-4 mt-6">
       <div>
-        <UiButton :aria-label="t('closeDialog')" type="button" variant="secondary" @click="confirmCancel">{{ t('paypal.unbrandedCancel') }}</UiButton>
+        <UiButton :aria-label="t('closeDialog')" type="button" variant="secondary" @click="confirmCancel">{{
+          t('paypal.unbrandedCancel')
+        }}</UiButton>
       </div>
       <div>
         <UiButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">

@@ -172,7 +172,13 @@
       aria-labelledby="search-modal-title"
     >
       <header class="mb-4">
-        <UiButton :aria-label="t('closeDialog')" square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
+        <UiButton
+          :aria-label="t('closeDialog')"
+          square
+          variant="tertiary"
+          class="absolute right-4 top-2"
+          @click="searchModalClose"
+        >
           <SfIconClose class="text-neutral-500" />
         </UiButton>
         <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
