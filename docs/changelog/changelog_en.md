@@ -4,35 +4,52 @@
 
 ### New
 
-- Added posibility to toggle visibility of tags on category page based on env variable (USE_TAGS_ON_CATEGORY_PAGE=1).
-- Added DHL preffered delivery
-- Added pages entry on the left side menu, where users can manage their pages.
-- Add design for adding a new page.
-- Added design for category settings.
-- Added form for general settings
-- Added form for SEO settings
-- Updated general settings and seo settings to get data dynamically
-- Added form for delete page
-- Fix correct children data for Seo settings
+- (dev) Added pages entry on the left side menu, where users can manage their pages.
+- (dev) Add design for adding a new page.
+- (dev) Added design for category settings.
+- (dev) Added form for general settings
+- (dev) Added form for SEO settings
+- (dev) Updated general settings and seo settings to get data dynamically
+- (dev) Added form for delete page
+- (dev) Fix correct children data for Seo settings
+- (dev) Added manange pages button in editor toolbar.
 
 ### 👷 Changed
 
 - Refactored code for banner settings.
-- Short item descriptions now support HTML formatting.
-- Added manange pages button in editor toolbar.
-- The editor now has a new component that allows page navigation.
-- Disabled local image optimization.
-- Updated price calculation: If graduated prices are unavailable, the default price is used .
+- (dev) The editor now has a new component that allows page navigation.
 
 ### 🩹 Fixed
 
-- Fix typescript build error during shop deployment.
-- Fix Page Selector state.
-- Fix Page Selector closes when clicking outside the box.
-- Fix toolbar arrow.
-- Fix Page Selector closes on second button click
-- Fix left side menu german navigation.
-- Fix item page image gallery overlap.
+- (dev) Fix Page Selector state.
+- (dev) Fix Page Selector closes when clicking outside the box.
+- (dev) Fix Page Selector closes on second button click.
+
+# v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Added the possibility to toggle the visibility of tags on the category page based on an environment variable (USE_TAGS_ON_CATEGORY_PAGE=1).
+- DHL Preferred Delivery has been added as a shipping method.
+- A default image is now displayed for items without an item image.
+
+### 👷 Changed
+
+- Item tags have been removed from the category page.
+- Image optimisation has been disabled in the local development environment.
+- Price calculation updated: If graduated prices are not available, the default price is used.
+- All Mollie Klarna payment methods are filtered out as they are not yet supported.
+- Demo cookie has been removed from the cookie bar.
+- Item preview texts now support HTML formatting.
+
+### 🩹 Fixed
+
+- Fixed broken category filters and navigation.
+- Fixed a broken item link from category page.
+- Fixed a typescript build error during shop deployment.
+- Fixed a toolbar arrow.
+- Fixed the left side menu navigation in the German version.
+- Fixed an overlap in the item page image gallery.
 
 # v1.12.1 (2025-03-24)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -92,10 +109,10 @@
 
 ### 🩹 Fixed
 
-- Fixed displayed the recommended products on product pages.
+- Fixed displayed the recommended items on item pages.
 - Fixed the save button not being re-enabled on subsequent edits.
 - Fixed an issue where an empty initial category template couldn't get edited.
-- Fixed an issue that recommended products blocks would fetch the wrong data in the editor when a new one got added.
+- Fixed an issue that recommended items blocks would fetch the wrong data in the editor when a new one got added.
 
 # v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -186,7 +203,7 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 ### 🩹 Fixed
 
-- Fixed a hydration error when fetching recommended products on the homepage.
+- Fixed a hydration error when fetching recommended items on the homepage.
 - Fixed an issue that disabled the save button even though the user has edited the homepage template.
 - Removed the `nuxt-security` module for now due to issues with PayPal.
 - Fixed an issue with PayPal Express Checkout where it would require you to reauthorize the payment.
@@ -201,8 +218,8 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 - The shop now has a dedicated legal information page for shipping information. You can link a category inside the Online Store Section of the Shops Configuration. The template configured on that category is used for the pages content. The URL for the page is /shipping.
 - In the checkout, shipping providers now include expected delivery dates.
 - The configured robots value on a category in the Terra back end, is now used for the robots meta tag of that category in the front end.
-- Product pages now contain canonical URLs.
-- The recommended products block now optionally includes a pretitle, title, subtitle, and description.
+- Item pages now contain canonical URLs.
+- The recommended items block now optionally includes a pretitle, title, subtitle, and description.
 
 ### 👷 Changed
 
@@ -216,14 +233,14 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 ### 🩹 Fixed
 
 - Prices now always displays an asterisk to refer to additional VAT and shipping information
-- Fixed the direction of accordion arrows on product pages.
+- Fixed the direction of accordion arrows on item pages.
 - Fixed an issue where the required attributes notification blocked the cart.
 - Fixed a visual inconsistency in the category filters sidebar.
 - Fixed an accesibility error caused by missing label on clear filters.
 - Fixed a warning about using the same text in alt and title on the category page.
 - Fixed the number of max visible pages on mobile pagination.
-- Fixed the product gallery thumbnail image alternate text.
-- The homepage now displays recommended products on initial load.
+- Fixed the item gallery thumbnail image alternate text.
+- The homepage now displays recommended items on initial load.
 - Fixed an issue where only the first template block selected in the editor is editable.
 - Fixed an issue where the editor's language selector displayed an inverted data template.
 - When the multilingualism configuration of the remote shop doesn't include English or German, the corresponding language file is now removed at build time. As a result, the language isn't displayed in the language selector.
@@ -233,10 +250,10 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 ### New
 
-- Users can now edit the homepage from within the shop. This includes adding, editing and deleting individual blocks. Supported block types include Hero Slider, Media Card, Recommended Product gallery, and Newsletter.
+- Users can now edit the homepage from within the shop. This includes adding, editing and deleting individual blocks. Supported block types include Hero Slider, Media Card, Recommended Item gallery, and Newsletter.
 - Categories with visibility "After login" now redirect to the login when accessed by a guest user.
-- Category pages now support filtering products by rating.
-- Users can now zoom in on product images by hovering over them. Double-tapping and pinch zooming are supported on mobile.
+- Category pages now support filtering items by rating.
+- Users can now zoom in on item images by hovering over them. Double-tapping and pinch zooming are supported on mobile.
 - The legal details drawer now includes more manufacturer information.
 - Additional settings from the SEO configuration are now supported in the app. This includes dynamic structured data and robots settings.
 - The offer page now displays the date until when the offer is valid if it has been set.
@@ -258,7 +275,7 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 - When subscribing to the newsletter, users now have to confirm the subscription via email.
 - The address preview details now include the country name.
 - The size of the quantity labels in the quick checkout has been adjusted on desktop to improve accessibility.
-- The order of attribute select and order properties on product pages have been switched to better reflect the user flow.
+- The order of attribute select and order properties on item pages have been switched to better reflect the user flow.
 - The values of attributes are now sorted in descending order by position, then by ID and then alphabetically.
 - The cookie bar has been adjusted to provide a better user experience.
 
@@ -306,7 +323,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Added a missing href attribute to the cookie bar anchor.
 - Fixed cookie bar usability in landscape mode.
 - Fixed the position of the order property tooltip.
-- Fixed the images sizes loaded on product page.
+- Fixed the images sizes loaded on item page.
 - Fixed an issue where the customer class didn't affect prices and categories after login by reloading the page.
 - Fixed when the empty cart notification gets displayed.
 - Fixed an issue where the Hero slider buttons didn't link to the provided target.
@@ -314,16 +331,16 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed GPSR drawer responsiveness.
 - Fixed accessibility issues by adding the store name to the alt text for the logo.
 - The hero image now uses the alt text specified in the homepage template.
-- The recommended products section on the homepage now uses the category ID from the homepage template.
-- The recommended products section on the homepage is now displayed multiple times if specified.
-- Category products can now be fetched multiple times on the same page.
+- The recommended items section on the homepage now uses the category ID from the homepage template.
+- The recommended items section on the homepage is now displayed multiple times if specified.
+- Category items can now be fetched multiple times on the same page.
 - Fixed an issue where review modal was unscrollable on smaller screens.
 - The error message provided has been improved when adding items to the cart that are not available or can't be added for other reasons.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
 - Fixed multiple issues in the PayPal readonly checkout process.
 - Fixed a issue where PayPal payments were stored as "Cash in Advance".
 - The language selector is no longer displayed if only one language is configured.
-- Fixed an issue with category product prices not being updated on page change.
+- Fixed an issue with category item prices not being updated on page change.
 - Fixed loading times on the homepage by adding SSR.
 - CSS for the Swiper library is now only loaded on pages that use the `HeroCarousel` component.
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
@@ -338,7 +355,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Google Pay and Apple Pay are now available as payment methods in the checkout.
 - Clicking the **Buy** button with an unsaved address now displays a notification.
 - To ensure compliance with geo-blocking regulations, selecting an EU country as the shipping country now makes all EU countries available as billing options.
-- The product title display now supports custom titles. You can set the custom title on the item. If no custom title is set, the default "Item name | Company name" is used.
+- The item title display now supports custom titles. You can set the custom title on the item. If no custom title is set, the default "Item name | Company name" is used.
 - Added tax and shipping note to the wishlist page.
 - Added a new request header for the `configId`.
 - Added the environment variable `NO_CACHE` for disabling caching.
@@ -354,7 +371,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed an issue where increasing the quantity beyond maximum stock would clear the cart.
 - Removed the "Add to Cart" notification from item and category pages when the quick checkout modal is not present.
 - Improved accessibility for the cart and wishlist pages by increasing the font size.
-- Fixed an issue where the product path was not reactive when the category was changed.
+- Fixed an issue where the item path was not reactive when the category was changed.
 - The build now automatically generates a language file for every active language, not just the default language.
 - Resolved an issue where the soft login was still shown after successful authentication on the order confirmation page.
 - Corrected manufacturer data to use `externalName` instead of `name` in structured data.
@@ -400,7 +417,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 #### Functionality
 
 - A new page was added to the webshop for presenting offers. Users can accept or reject offers directly on this page, and upon acceptance, an order is automatically created.
-- Product pages now display the EU responsible person of the manufacturer.
+- Item pages now display the EU responsible person of the manufacturer.
 - The app now takes into consideration the referrer ID to display the correct price.
 - Reorders now support order properties.
 - Reorders now check for available stock.
@@ -411,7 +428,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 #### Payment
 
-- PayPal's Pay Later banner is now displayed on product pages, the cart, checkout and quick checkout.
+- PayPal's Pay Later banner is now displayed on item pages, the cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
 - The quick checkout now displays variation properties.
 - The order confirmation page now displays bank details if the payment method is cash in advance.
@@ -430,11 +447,11 @@ NPM_AUTH_TOKEN="<TOKEN>"
 #### SEO
 
 - The app now reads the head title and title suffix from the environment.
-- The app now reads metadata for products and categories, from the environment.
-- The app now reads title and alternate for product images, from the environment.
+- The app now reads metadata for items and categories, from the environment.
+- The app now reads title and alternate for item images, from the environment.
 - The app now reads metadata, such as description and keywords, from the environment.
 - The app now reads the minimum required Open Graph data, that is the title, image, and endpoint, from the environment.
-- Added canonical meta tags to product items.
+- Added canonical meta tags to item items.
 
 #### Page speed
 
@@ -464,11 +481,11 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - The side navigation of the automatically generated composables documentation now contains the correct links.
 - Fixed editing author name on reviews and replies with added e2e.
 - Fixed the issue with the plentyID-cookie in the PWA live preview.
-- Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
+- Fixed that the PayPal Express button on the item page is only displayed if the item is available for purchase.
 - Fixed that when fetching configurations from PlentyONE, the build would only apply updates on the second run.
-- Fixed orphaned form label on product page attributes.
+- Fixed orphaned form label on item page attributes.
 - Fixed cookie bar privacy link not working properly.
-- Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
+- Fixed minor styling issues in the credit card form in the checkout and the rating form on the item page.
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Base price display on minimum order quantity.
@@ -523,18 +540,18 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 - Variation properties can be displayed in the store
 - Demo for changing app settings at runtime
-- Uploaded files as a product attribute can now be downloaded
+- Uploaded files as a item attribute can now be downloaded
 - Hook to load system configuration
 - Reorder previous purchases from 'My Account' and order confirmation pages using the 'Buy Again' feature.
 
 ### 🩹 Fixed
 
-- Recursive calls found under catch-all `category/product` routes
+- Recursive calls found under catch-all `category/item` routes
 - Multiple hydration errors
-- A problem with the image loading status for products on category pages
+- A problem with the image loading status for items on category pages
 - Webmanifest 404 error
 - Checkout console error
-- Product attributes empty list rendering
+- Item attributes empty list rendering
 - Canonical links are now correctly set
 - Missing translation in country select
 - Missing item short description
@@ -588,7 +605,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### Fixed
 
-- Fixed recommended product text overflow.
+- Fixed recommended item text overflow.
 - Fixed too many reviews error case.
 - Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
@@ -604,11 +621,11 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - A random login error has been fixed.
 - When adding an item to the shopping cart that is already in the shopping cart, the item's quantity is now increased.
 - Components of item bundles without an item URL no longer lead to a 404 page.
-- Components of item bundles without a name now display the placeholder "Product Information Missing" in place of the name
+- Components of item bundles without a name now display the placeholder "Item Information Missing" in place of the name
 - Filters on the category view could lead to a server-side rendering error. This has been fixed.
 - The login button is now acessible.
 - The middleware now supporty IPv6 addresses.
-- The PayPal express button on the product page now handles the click event correctly.
+- The PayPal express button on the item page now handles the click event correctly.
 - Fixed a lighthouse error regarding the wishlist button size.
 - The returns image has been removed.
 - The cookie bar mobile view has been improved.
@@ -689,7 +706,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed styling issues on radio buttons and adjusted spacing on checkboxes and coupons.
 - Fixed the styling and wording on the new return page.
 - Excluded certain pages from the sitemap.
-- Fixed the function of the 'Product' button in the navbar for mobile device.
+- Fixed the function of the 'Item' button in the navbar for mobile device.
 - Canonical URL includes currently selected language path.
 - Fixed the format of legal text on small display sizes.
 - Fixed the header color on mobile devices, to have a unified look and feel.
@@ -712,18 +729,18 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### New
 
-- Added order properties on product pages, in the cart, and on the order summary.
+- Added order properties on item pages, in the cart, and on the order summary.
 - Added coupons.
 - Added PayPal's **Pay Later** option for payments.
 - Added returns, including return reasons.
-- Added wishlist functionality, including the ability to add products to the cart directly from the wishlist.
-- Added product ratings to category pages.
+- Added wishlist functionality, including the ability to add items to the cart directly from the wishlist.
+- Added item ratings to category pages.
 - Added configuration (`cookie-scripts.config.ts`) to determine which scripts to load when a user accepts a consent cookie.
 - Added Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
 - Added form validation with vee-validate. The following forms have validation:
   - Registering a new account
   - Signing up for the newsletter
-  - Add a product with order properties to the cart
+  - Add a item with order properties to the cart
   - Parts of the checkout; full coverage of the checkout will be added in the future
 - Added a way to exit preview mode on live domains.
 
@@ -770,7 +787,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Notifications were causing a layout shift for the user, this has been fixed.
 - Categories loading in the wrong language when the site was rendered with SSR for the first time.
 - The variation select didn't remove the variation from the URL when the base variation was selected.
-- Products on the order confirmation didn't link to the correct product.
+- Items on the order confirmation didn't link to the correct item.
 
 ## v1.1.0 (2023-11-03) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -790,12 +807,12 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - The order confirmation now displays buttons to download order documents
 - The order confirmation can now be accessed via a link after authentication
 - The order confirmation is now also accessible via the order history
-- None saleable products are marked as such
-- Added display of bulk and graduated prices on product pages
+- None saleable items are marked as such
+- Added display of bulk and graduated prices on item pages
 - Display of net/gross prices depending on the configuration
 - Added menu to header to switch between different language versions of the PWA
 - Multilingual URLs are now used for different language versions of the PWA
-- Added structured data for breadcrumbs, categories, products and logo
+- Added structured data for breadcrumbs, categories, items and logo
 - Added composable that sets canonical url metadata for static pages.
 - Added more default notifications for a variaty of interactions in the PWA
 - Added loading animations where applicable
@@ -804,9 +821,9 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### Changed
 
-- Reworked logic of products with multiple attributes
-- Current bulk price is now marked on product pages
-- For products with different prices, the cheapest price is displayed as "from price" on the category page
+- Reworked logic of items with multiple attributes
+- Current bulk price is now marked on item pages
+- For items with different prices, the cheapest price is displayed as "from price" on the category page
 - Updated URL structure to be more similar to plentyShop LTS
 - Changed position of notifications
 - New checkout layout - same address checkbox functionality
