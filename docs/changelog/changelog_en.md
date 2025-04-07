@@ -14,7 +14,7 @@
 - Updated general settings and seo settings to get data dynamically
 - Added form for delete page
 - Fix correct children data for Seo settings
-
+- Added editable page for category
 ### 👷 Changed
 
 - Added manange pages button in editor toolbar.
