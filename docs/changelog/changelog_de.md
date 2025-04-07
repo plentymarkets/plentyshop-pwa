@@ -1,6 +1,6 @@
 # Changelog PlentyONE Shop
 
-# v1.x.x (yyyy-mm-dd)
+# v1.13.1 (2025-04-07)
 
 ### 🩹 Behoben
 
