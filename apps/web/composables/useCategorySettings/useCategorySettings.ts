@@ -26,7 +26,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
 
   const fetchCategorySettings = async (categoryId: number) => {
     if (cache.value[categoryId]) {
-      console.log('Loaded from cache:', categoryId);
       state.value.data = cache.value[categoryId];
       state.value.initialData = JSON.parse(JSON.stringify(cache.value[categoryId]));
       return cache.value[categoryId];
@@ -39,8 +38,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       const result = await fetchProducts({ categoryId: categoryId.toString() });
 
       const categoryData = result.category;
-      console.log('Fetched from API:', categoryData);
-
 
       const cleanData = JSON.parse(JSON.stringify(categoryData));
 

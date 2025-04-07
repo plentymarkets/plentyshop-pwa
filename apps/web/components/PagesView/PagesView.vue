@@ -32,6 +32,7 @@
           class="border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
           :class="{ 'opacity-40 cursor-not-allowed': !hasChanges  }"
           :disabled="!hasChanges"
+          @click="saveCategorySettings"
         >
           Save Settings
         </button>
@@ -85,7 +86,7 @@ const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 
-const { hasChanges } = useCategorySettingsCollection();
+const { hasChanges, saveCategorySettings } = useCategorySettingsCollection();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
