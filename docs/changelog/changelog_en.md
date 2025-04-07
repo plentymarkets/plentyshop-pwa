@@ -1,6 +1,6 @@
 # Changelog PlentyONE Shop
 
-# v1.13.1 (2025-04-07)
+# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🩹 Fixed
 
@@ -28,7 +28,7 @@
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
 
-# v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+# v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
