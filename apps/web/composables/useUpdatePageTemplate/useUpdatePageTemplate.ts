@@ -7,7 +7,7 @@ const updatePageTemplate = async (): Promise<boolean> => {
   const route = useRoute();
   try {
     const cleanedData = JSON.stringify(data.value);
-    if(route.path === '/'){
+    if (route.path === '/') {
       await saveBlocks('index', 'immutable', cleanedData);
     } else {
       await saveBlocks(dataProducts.value.category.id, 'category', cleanedData);

@@ -34,7 +34,7 @@
 const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
 const { t } = useI18n();
-const { settingsIsDirty } = useSiteConfiguration();
+const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 
 const { data, getBlocks } = useCategoryTemplate();
 
@@ -67,6 +67,19 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
   event.preventDefault();
 };
+onBeforeRouteLeave((to, from, next) => {
+  if (isEditingEnabled.value) {
+    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    if (confirmation) {
+      closeDrawer();
+      next();
+    } else {
+      next(false);
+    }
+  } else {
+    next();
+  }
+});
 
 getRobots();
 setRobotForStaticPage('Homepage');
