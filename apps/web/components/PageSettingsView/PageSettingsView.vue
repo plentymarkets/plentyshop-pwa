@@ -177,10 +177,10 @@ const { data, ready, fetchCategorySettings } = useCategorySettings();
 
 const loginBoolean = computed({
   get() {
-    return data.value.right === 'all';
+    return data.value.right === 'customer';
   },
   set(value: boolean) {
-    data.value.right = value ? 'all' : 'customer';
+    data.value.right = value ? 'customer' : 'all';
   },
 });
 

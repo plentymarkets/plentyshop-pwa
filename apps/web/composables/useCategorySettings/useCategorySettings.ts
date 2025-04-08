@@ -35,7 +35,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
 
     try {
       const { fetchProducts } = useProducts(settingsId);
-      const result = await fetchProducts({ categoryId: categoryId.toString() });
+      const result = await fetchProducts({ categoryId: categoryId.toString()});
 
       const categoryData = result.category;
 

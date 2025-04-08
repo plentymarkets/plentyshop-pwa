@@ -49,6 +49,7 @@ export const useCategorySettingsCollection = () => {
               categoryId: detail.categoryId,
               lang: detail.lang,
               name: detail.name,
+              nameUrl: detail.nameUrl,
               type: category.type,
               metaTitle: detail.metaTitle,
               metaDescription: detail.metaDescription,
