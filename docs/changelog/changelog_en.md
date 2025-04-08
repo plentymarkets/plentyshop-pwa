@@ -1,5 +1,11 @@
 # Changelog PlentyONE Shop
 
+# v1.xx.x (xxxx-xx-xx)
+
+### 🩹 Fixed
+
+- Updated the category menu markup by removing a button element nested within an anchor tag.
+
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🩹 Fixed
