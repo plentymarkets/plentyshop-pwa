@@ -78,7 +78,7 @@ watch(
 watch(
   locale,
   (newLocale) => {
-    language.value = newLocale === 'en' ? 'english' : 'german';
+    language.value = newLocale.toString() === 'en' ? 'english' : 'german';
   },
   { immediate: true },
 );

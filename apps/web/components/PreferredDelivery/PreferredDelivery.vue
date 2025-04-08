@@ -2,6 +2,7 @@
   <div
     v-if="preferredDeliveryAvailable"
     class="flex flex-col my-6 md:mx-4 p-4 rounded-md shadow-[inset_0_0_0_0.1rem_rgb(255,204,0)]"
+    data-testid="preferred-delivery"
   >
     <header class="w-full">
       <NuxtImg
@@ -21,7 +22,7 @@
 
     <form novalidate @submit.prevent="validateAndSubmitForm">
       <template v-if="data.day.enabled">
-        <div class="mt-3">
+        <div class="mt-3" data-testid="preferred-delivery-day">
           <div class="inline-flex items-center">
             <label
               for="wunschtag-title"
@@ -40,6 +41,7 @@
           {{
             $t('PreferredDelivery.general.wunschpaketAdditionalCharge', {
               additionalCharge: data.additionalCharge,
+              currency: currency,
             })
           }}
         </div>
@@ -163,6 +165,7 @@ const {
   validationSchema,
   shippingMethodHasPreferredDelivery,
   preferredDeliveryAvailable,
+  currency,
 } = usePreferredDelivery();
 const { defineField, errors, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
