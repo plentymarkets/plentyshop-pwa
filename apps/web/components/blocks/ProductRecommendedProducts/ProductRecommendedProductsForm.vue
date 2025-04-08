@@ -121,7 +121,7 @@
 <script setup lang="ts">
 import type { ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
-import { useDebounceFn } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
@@ -142,10 +142,9 @@ const recommendedBlock = computed(
     }) as ProductRecommendedProductsContent,
 );
 
-
 const debouncedFn = useDebounceFn((event: Event) => {
   const target = event.target as HTMLInputElement;
 
-  recommendedBlock.value.categoryId = target.value.toString()
-}, 1000)
+  recommendedBlock.value.categoryId = target.value.toString();
+}, 1000);
 </script>

@@ -22,7 +22,7 @@ watch(
   () => props.content.categoryId,
   () => {
     if (props.content.categoryId) {
-      fetchProductRecommended(props.content.categoryId)
+      fetchProductRecommended(props.content.categoryId);
     }
   },
 );
