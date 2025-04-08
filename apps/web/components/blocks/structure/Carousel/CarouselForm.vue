@@ -39,6 +39,7 @@
                   item-key="meta.uuid"
                   handle=".drag-slides-handle"
                   class="p-2 rounded"
+                  :filter="'.no-drag'"
                 >
                   <template #item="{ element: slide, index }">
                     <div
@@ -46,6 +47,33 @@
                       class="flex items-center justify-between drag-slides-handle cursor-move"
                     >
                       <div class="flex items-center">
+                        <div v-if="false" class="flex flex-col no-drag">
+                          <SfIconExpandLess
+                            v-if="index !== 0"
+                            :data-testid="`actions-move-slide-up-${index}`"
+                            class="cursor-pointer text-neutral-500 mr-2"
+                            size="sm"
+                            @click.stop="moveSlideUp(index)"
+                          />
+                          <SfIconExpandLess
+                            v-else
+                            class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
+                            size="sm"
+                          />
+
+                          <SfIconExpandMore
+                            v-if="index + 1 !== slides.length"
+                            :data-testid="`actions-move-slide-down-${slide.meta.uuid}`"
+                            class="cursor-pointer text-neutral-500 mr-2"
+                            size="sm"
+                            @click.stop="moveSlideDown(index)"
+                          />
+                          <SfIconExpandMore
+                            v-else
+                            class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
+                            size="sm"
+                          />
+                        </div>
                         <button
                           class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
                           aria-label="Drag to reorder block"
@@ -83,6 +111,7 @@
         </div>
       </div>
       <SfScrollable
+        :key="slides.length"
         class="items-center w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
         <template #previousButton="defaultProps">
@@ -105,8 +134,8 @@
 
         <div class="flex items-center gap-2 flex-nowrap">
           <button
-            v-for="(_, index) in slides"
-            :key="index"
+            v-for="(slide, index) in slides"
+            :key="slide.meta.uuid"
             :data-testid="`slide-settings-${index}`"
             class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
             :class="activeSlide === index ? 'bg-editor-button text-white' : ''"
@@ -162,6 +191,8 @@ import {
   SfIconAdd,
   useDisclosure,
   SfIconClose,
+  SfIconExpandMore,
+  SfIconExpandLess,
 } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
@@ -251,6 +282,31 @@ const deleteSlide = async (index: number) => {
   setIndex(blockUuid.value, 0);
   await nextTick();
   close();
+};
+
+const moveSlideUp = async (index: number) => {
+  if (index <= 0) return;
+
+  const newSlides = [...slides.value] as BannerProps[];
+
+  [newSlides[index - 1], newSlides[index]] = [newSlides[index], newSlides[index - 1]];
+  slides.value = newSlides;
+
+  setIndex(blockUuid.value, index - 1);
+  await nextTick();
+};
+
+const moveSlideDown = async (index: number) => {
+  if (index >= slides.value.length - 1) return;
+
+  const newSlides = [...slides.value] as BannerProps[];
+
+  [newSlides[index], newSlides[index + 1]] = [newSlides[index + 1], newSlides[index]];
+  slides.value = newSlides;
+
+  await nextTick();
+
+  setIndex(blockUuid.value, index + 1);
 };
 </script>
 

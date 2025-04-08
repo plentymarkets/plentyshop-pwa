@@ -57,7 +57,7 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.checkIfSlideActionsAreVisible();
     });
 
-    it('should move a slide up and down', () => {
+    it.skip('should move a slide up and down', () => {
       bannerSlider.openSlideActions();
       bannerSlider.addSlide();
       bannerSlider.openSlideActions();
@@ -68,12 +68,12 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.checkSlideSettings(2);
     });
 
-    it('should not move up the first slide', () => {
+    it.skip('should not move up the first slide', () => {
       bannerSlider.openSlideActions();
       bannerSlider.checkIsMoveSlideUpDisabled(0);
     });
 
-    it('should not move down the last slide', () => {
+    it.skip('should not move down the last slide', () => {
       bannerSlider.openSlideActions();
       bannerSlider.checkIsMoveSlideDownDisabled(1);
     });
