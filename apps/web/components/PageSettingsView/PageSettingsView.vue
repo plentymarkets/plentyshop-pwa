@@ -200,7 +200,6 @@ watch(
       ready.value = false;
       await fetchCategorySettings(newId);
       ready.value = true;
-      console.log('Category data ready for ID:', newId);
     }
   },
   { immediate: true },
@@ -221,19 +220,4 @@ const selectedPageType = computed({
     data.value.type = selectedOption ? selectedOption.value : null;
   },
 });
-
-const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
-  for (const page of pagesList) {
-    if (page.id === id) {
-      return page;
-    }
-    if (page.children) {
-      const foundPage = findPageById(id, page.children);
-      if (foundPage) {
-        return foundPage;
-      }
-    }
-  }
-  return undefined;
-};
 </script>
