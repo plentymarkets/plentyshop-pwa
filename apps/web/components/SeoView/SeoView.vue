@@ -211,7 +211,7 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
-const robotNames = ['ALL', 'INDEX', 'NOFOLLOW', 'NOINDEX', 'NO INDEX, NOFOLLOW'];
+const robotNames = ['ALL', 'INDEX', 'NOFOLLOW', 'NOINDEX', 'NOINDEX_NOFOLLOW'];
 
 const titleTooltip = 'Title displayed in search results of search engines.';
 const robotsTooltip =

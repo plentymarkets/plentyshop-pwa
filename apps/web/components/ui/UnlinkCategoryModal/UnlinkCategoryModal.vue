@@ -67,7 +67,7 @@ const findPageById = (id: number | null, pagesList: Page[]): Page | undefined =>
 watch(
   () => getCategoryId.value,
   (newId) => {
-    const foundPage = findPageById(newId, pages.value);
+    const foundPage = findPageById(newId ?? null, pages.value);
     if (foundPage) {
       pageName.value = foundPage.name;
       id.value = foundPage.id;
