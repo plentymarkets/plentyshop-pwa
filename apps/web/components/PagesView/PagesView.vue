@@ -37,12 +37,9 @@
           <template v-if="loading">
             <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px]" />
           </template>
-          <template v-else>
-            Save Settings
-          </template>
+          <template v-else> Save Settings </template>
         </button>
       </div>
-
 
       <UiAccordionItem
         v-model="contentPagesOpen"
@@ -92,7 +89,7 @@ const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 
-const {loading, hasChanges, save } = useCategorySettingsCollection();
+const { loading, hasChanges, save } = useCategorySettingsCollection();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {

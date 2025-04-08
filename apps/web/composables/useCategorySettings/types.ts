@@ -21,7 +21,7 @@ export interface useCategorySettings {
   ready: Ref<boolean>;
   hasChanges: ComputedRef<boolean>;
   isDirty: (id: number) => ComputedRef<boolean>;
-  fetchCategorySettings: (categoryId: number) => Promise<Category | null>; 
+  fetchCategorySettings: (categoryId: number) => Promise<Category | null>;
 }
 
 export type useCategorySettingsReturn = () => useCategorySettings;
