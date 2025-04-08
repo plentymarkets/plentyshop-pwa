@@ -36,7 +36,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -52,7 +52,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -94,15 +94,13 @@ const splitItemsByType = (items: MenuItemType[]) => {
 const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
-  const urls = {
-    en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
+  const urls: Record<string, string> = {
+    en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = locale.value in urls ? urls[locale.value] : null;
+  const targetUrl = urls[locale.value] ?? urls['en'] ?? null;
 
-  if (targetUrl) {
-    window.open(targetUrl, '_blank');
-  }
+  if (targetUrl) window.open(targetUrl, '_blank');
 };
 </script>
