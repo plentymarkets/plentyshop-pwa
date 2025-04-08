@@ -217,7 +217,7 @@ const selectedPageType = computed({
     return pageTypeOptions.find((option) => option.value === data.value.type) || null;
   },
   set(selectedOption) {
-    data.value.type = selectedOption ? selectedOption.value : null;
+    data.value.type = selectedOption ? selectedOption.value : '';
   },
 });
 </script>

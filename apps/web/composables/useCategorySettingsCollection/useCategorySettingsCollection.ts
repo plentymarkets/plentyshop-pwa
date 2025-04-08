@@ -1,12 +1,7 @@
+import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
 import type { Category } from '@plentymarkets/shop-api';
 
-interface useCategorySettingsCollectionState {
-  data: Category[];
-  initialData: Category[];
-  loading: boolean;
-}
-
-export const useCategorySettingsCollection = () => {
+export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
     data: [],
     initialData: [],

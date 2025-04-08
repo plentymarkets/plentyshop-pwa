@@ -1,14 +1,20 @@
+import type { Category } from '@plentymarkets/shop-api';
+
 export interface useCategorySettingsCollectionState {
-    data: any[];
-    initialData: any[];
-  }
-  
-  export interface useCategorySettingsCollection {
-    data: Ref<useCategorySettingsCollectionState['data']>;
-    initialData: Ref<useCategorySettingsCollectionState['initialData']>;
-    loading: Readonly<Ref<boolean>>;
-    hasChanges: ComputedRef<boolean>;
-    addCategorySettings: (categoryId: number) => Promise<void>;
-  }
-  
-  export type useCategorySettingsCollectionReturn = () => useCategorySettingsCollection;
+  data: Category[];
+  initialData: Category[];
+  loading: boolean;
+}
+
+export interface useCategorySettingsCollection {
+  data: Readonly<Ref<useCategorySettingsCollectionState['data']>>;
+  initialData: Readonly<Ref<useCategorySettingsCollectionState['initialData']>>;
+  loading: Readonly<Ref<boolean>>;
+  hasChanges: ComputedRef<boolean>;
+  isCategoryDirty: (id: number) => boolean;
+  addCategorySettings: (category: Category) => Promise<void>;
+  saveCategorySettings: () => Promise<boolean>;
+  save: () => Promise<void>;
+}
+
+export type useCategorySettingsCollectionReturn = () => useCategorySettingsCollection;
