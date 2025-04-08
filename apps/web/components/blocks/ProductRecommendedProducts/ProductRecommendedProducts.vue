@@ -18,13 +18,12 @@ if (props.content.categoryId) {
   fetchProductRecommended(props.content.categoryId);
 }
 
-watchDebounced(
+watch(
   () => props.content.categoryId,
   () => {
     if (props.content.categoryId) {
-      fetchProductRecommended(props.content.categoryId);
+      fetchProductRecommended(props.content.categoryId)
     }
   },
-  { immediate: true, debounce: 500 },
 );
 </script>
