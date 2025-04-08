@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import type { ProductRecommendedProductsProps } from './types';
-import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
