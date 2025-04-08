@@ -13,6 +13,9 @@ export const useCategorySettingsCollection = () => {
     loading: false,
   }));
 
+  const { send } = useNotification();
+  // const { $i18n } = useNuxtApp();
+
   const addCategorySettings = async (category: Category) => {
     const exists = state.value.data.some((item) => item.id === category.id);
     if (exists) return;
@@ -67,9 +70,6 @@ export const useCategorySettingsCollection = () => {
           }),
         ),
       );
-
-      console.log('Settings being sent:', settings);
-
       const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
 
       if (error.value) {
@@ -87,11 +87,31 @@ export const useCategorySettingsCollection = () => {
     }
   };
 
+  const save = async () => {
+    const successMessage = 'Categories saved successfully';
+    const errorMessage = 'Error saving categories';
+
+    const isSaved = await saveCategorySettings();
+
+    if (isSaved) {
+      send({
+        message: successMessage,
+        type: 'positive',
+      });
+    } else {
+      send({
+        message: errorMessage,
+        type: 'negative',
+      });
+    }
+  };
+
   return {
     ...toRefs(state.value),
     addCategorySettings,
     isCategoryDirty,
     saveCategorySettings,
+    save,
     hasChanges,
   };
 };
