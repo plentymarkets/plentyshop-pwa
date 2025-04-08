@@ -12,7 +12,6 @@
         :to="`${localePrefix}${item.path}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
-        {{ item.id }}
         <span v-if="item.name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>

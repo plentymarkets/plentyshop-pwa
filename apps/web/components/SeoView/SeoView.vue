@@ -13,8 +13,6 @@
       >
         <template #summary>
           <h2>Meta Data</h2>
-
-          {{ data.id }}
         </template>
 
         <div class="py-2">
@@ -39,7 +37,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Meta description</UiFormLabel>
-            <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="descTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -124,7 +122,7 @@
         </template>
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Title</UiFormLabel>
+            <UiFormLabel>Canonical URL</UiFormLabel>
             <SfTooltip :label="canicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -198,6 +196,8 @@ const furtherSettings = ref(false);
 const robotNames = ['ALL', 'INDEX', 'NOFOLLOW', 'NOINDEX', 'NOINDEX_NOFOLLOW'];
 
 const titleTooltip = 'Title displayed in search results of search engines.';
+const descTooltip =
+  'Short description of the page shown in search results of search engines. Should be engaging and informative.';
 const robotsTooltip =
   'This setting controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
 const keywordsTooltip =

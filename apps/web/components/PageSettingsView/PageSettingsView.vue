@@ -12,8 +12,7 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>Text</h2>
-          {{ data.id }}
+          <h2>Basics</h2>
         </template>
         <div class="py-2">
           <div class="flex justify-between">
@@ -170,7 +169,7 @@
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
-const basicSettingsOpen = ref(false);
+const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, ready, fetchCategorySettings } = useCategorySettings();
