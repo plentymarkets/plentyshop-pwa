@@ -10,6 +10,8 @@
       :filter="'.no-drag'"
       :prevent-on-filter="false"
       @change="scrollToBlock"
+      @start="handleDragStart"
+      @end="handleDragEnd"
     >
       <template #item="{ element: block, index }">
         <PageBlock
@@ -42,7 +44,16 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
-const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
+const {
+  isClicked,
+  clickedBlockIndex,
+  isTablet,
+  blockHasData,
+  tabletEdit,
+  changeBlockPosition,
+  handleDragStart,
+  handleDragEnd,
+} = useBlockManager();
 
 interface DragEvent<T = Block> {
   added?: {
@@ -102,7 +113,7 @@ const scrollToBlock = (evt: DragEvent) => {
     const block = document.getElementById(`block-${newIndex}`);
     if (block) {
       nextTick(() => {
-        block.scrollIntoView(true);
+        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
   }
@@ -111,3 +122,31 @@ const scrollToBlock = (evt: DragEvent) => {
 getRobots();
 setRobotForStaticPage('Homepage');
 </script>
+
+<style>
+.sortable-ghost {
+  opacity: 0.6;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+
+.sortable-drag {
+  opacity: 1 !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.sortable-chosen .block-wrapper {
+  outline: none !important;
+}
+.sortable-chosen .add-block-button,
+.sortable-chosen .block-actions {
+  display: none !important;
+}
+
+.sortable-chosen {
+  opacity: 0.6;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+</style>

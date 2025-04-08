@@ -50,7 +50,7 @@
                           class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
                           aria-label="Drag to reorder block"
                         >
-                          <SfIconUnfoldMore />
+                          <NuxtImg width="18" height="18" :src="dragIcon" />
                         </button>
                         <span>Slide {{ index + 1 }}</span>
                       </div>
@@ -162,12 +162,12 @@ import {
   SfIconAdd,
   useDisclosure,
   SfIconClose,
-  SfIconUnfoldMore,
 } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import draggable from 'vuedraggable';
+import dragIcon from 'assets/icons/paths/drag.svg';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
