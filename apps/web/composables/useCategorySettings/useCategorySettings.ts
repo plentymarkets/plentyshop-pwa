@@ -13,8 +13,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     initialData: {} as Category,
   }));
 
-  const ready = ref(false);
-
   const fetchCategorySettings = async (categoryId: number): Promise<Category | null> => {
     if (cache.value[categoryId]) {
       state.value.data = cache.value[categoryId];
@@ -48,21 +46,8 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     }
   };
 
-  const isDirty = (id: number) => {
-    return computed(
-      () => id === state.value.data?.id && JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData),
-    );
-  };
-
-  const hasChanges = computed(() => {
-    return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
-  });
-
   return {
     ...toRefs(state.value),
     fetchCategorySettings,
-    ready,
-    hasChanges,
-    isDirty,
   };
 };

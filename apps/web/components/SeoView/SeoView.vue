@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="ready"
+    v-if="!loading"
     class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
     data-testid="pages-general-settings-drawer"
   >
@@ -169,7 +169,7 @@ const metaData = ref(false);
 
 const { getCategoryId } = useCategoryIdHelper();
 
-const { data, ready, fetchCategorySettings } = useCategorySettings();
+const { data, loading, fetchCategorySettings } = useCategorySettings();
 const isInSitemap = computed({
   get() {
     return data.value.sitemap === 'Y';
@@ -183,9 +183,7 @@ watch(
   getCategoryId,
   async (newId: number | undefined) => {
     if (newId !== undefined) {
-      ready.value = false;
       await fetchCategorySettings(newId);
-      ready.value = true;
     }
   },
   { immediate: true },

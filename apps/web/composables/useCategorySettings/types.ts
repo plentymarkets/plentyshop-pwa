@@ -14,13 +14,10 @@ export interface useCategoryConfigurationState {
 export interface useCategorySettings {
   data: Ref<useCategoryConfigurationState['data']>;
   id: Ref<useCategoryConfigurationState['id']>;
-  loading: Readonly<Ref<boolean>>;
+  loading: Ref<boolean>;
   drawerOpen: Readonly<Ref<useCategoryConfigurationState['drawerOpen']>>;
   drawerExtraOpen: Readonly<Ref<useCategoryConfigurationState['drawerExtraOpen']>>;
   drawerView: Readonly<Ref<useCategoryConfigurationState['drawerView']>>;
-  ready: Ref<boolean>;
-  hasChanges: ComputedRef<boolean>;
-  isDirty: (id: number) => ComputedRef<boolean>;
   fetchCategorySettings: (categoryId: number) => Promise<Category | null>;
 }
 

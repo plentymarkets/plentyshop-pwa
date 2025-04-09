@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="ready"
+    v-if="!loading"
     class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
     data-testid="pages-general-settings-drawer"
   >
@@ -172,7 +172,7 @@ import Multiselect from 'vue-multiselect';
 const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
-const { data, ready, fetchCategorySettings } = useCategorySettings();
+const { data, loading, fetchCategorySettings } = useCategorySettings();
 
 const isInLinkedList = computed({
   get() {
@@ -196,9 +196,7 @@ watch(
   getCategoryId,
   async (newId: number | undefined) => {
     if (newId !== undefined) {
-      ready.value = false;
       await fetchCategorySettings(newId);
-      ready.value = true;
     }
   },
   { immediate: true },
@@ -206,7 +204,7 @@ watch(
 
 const pageTypeOptions = [
   { label: 'Item', value: 'item' },
-  { label: 'Content', value: 'content' }
+  { label: 'Content', value: 'content' },
 ];
 
 const selectedPageType = computed({
