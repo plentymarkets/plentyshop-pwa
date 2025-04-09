@@ -7,7 +7,7 @@
 - Updated the category menu markup by removing a button element nested within an anchor tag.
 - Fixed nuxt runtime error.
 
-### New
+### 👷 Changed
 
 - Consent prompt is now shown again if consent config changes (via hash check).
 
