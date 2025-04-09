@@ -5,6 +5,7 @@
 ### 🩹 Fixed
 
 - Updated the category menu markup by removing a button element nested within an anchor tag.
+- Fixed nuxt runtime error.
 
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -23,6 +24,7 @@
 - (dev) Added form for delete page
 - (dev) Fix correct children data for Seo settings
 - (dev) Added manange pages button in editor toolbar.
+- (dev) State management and save for edit categories toolbar
 
 ### 👷 Changed
 

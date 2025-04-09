@@ -24,6 +24,23 @@
         </button>
       </div>
 
+      <div class="mx-4 mb-4 mt-4">
+        <button
+          type="button"
+          variant="primary"
+          data-testid="add-page-btn"
+          class="border border-editor-button bg-editor-button text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          :class="{ 'opacity-40 cursor-not-allowed': !hasChanges || loading }"
+          :disabled="!hasChanges || loading"
+          @click="save"
+        >
+          <template v-if="loading">
+            <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px]" />
+          </template>
+          <template v-else> Save Settings </template>
+        </button>
+      </div>
+
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"
@@ -64,13 +81,15 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
+import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
 const { locale } = useI18n();
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+
+const { loading, hasChanges, save } = useCategorySettingsCollection();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
