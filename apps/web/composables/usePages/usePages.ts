@@ -36,24 +36,24 @@ export const usePages = async () => {
         })
         .filter(Boolean);
 
-      // if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
-      //   transformedData.unshift({
-      //     id: 1,
-      //     name: t('homepage.title'),
-      //     path: '/',
-      //     children: undefined,
-      //     type: 'content',
-      //     right: 'all',
-      //     parentCategoryId: '',
-      //     sitemap: '',
-      //     linklist: '',
-      //     canonicalLink: '',
-      //     position: '',
-      //     metaDescription: '',
-      //     metaKeywords: '',
-      //     metaRobots: '',
-      //   });
-      // }
+      if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
+        transformedData.unshift({
+          id: 1,
+          name: t('homepage.title'),
+          path: '/',
+          children: undefined,
+          type: 'content',
+          right: 'all',
+          parentCategoryId: '',
+          sitemap: '',
+          linklist: '',
+          canonicalLink: '',
+          position: '',
+          metaDescription: '',
+          metaKeywords: '',
+          metaRobots: '',
+        });
+      }
 
       return transformedData as {
         id: number;

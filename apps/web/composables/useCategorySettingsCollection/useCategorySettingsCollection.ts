@@ -9,7 +9,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   }));
 
   const { send } = useNotification();
-  // const { $i18n } = useNuxtApp();
+  const { $i18n } = useNuxtApp();
 
   const addCategorySettings = async (category: Category) => {
     const exists = state.value.data.some((item) => item.id === category.id);
@@ -83,8 +83,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   };
 
   const save = async () => {
-    const successMessage = 'Categories saved successfully';
-    const errorMessage = 'Error saving categories';
+    const successMessage = $i18n.t('errorMessages.editor.categories.success');
+    const errorMessage = $i18n.t('errorMessages.editor.categories.error');
 
     const isSaved = await saveCategorySettings();
 
