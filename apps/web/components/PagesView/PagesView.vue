@@ -29,7 +29,7 @@
           type="button"
           variant="primary"
           data-testid="add-page-btn"
-          class="border border-editor-button bg-[#062633] text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          class="border border-editor-button bg-editor-button text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
           :class="{ 'opacity-40 cursor-not-allowed': !hasChanges || loading }"
           :disabled="!hasChanges || loading"
           @click="save"
