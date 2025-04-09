@@ -51,6 +51,5 @@ export const useToolbar = () => {
     return route.path === '/' || dataProduct.value.category?.type === 'content';
   });
 
-
   return { save, isEditablePage };
 };
