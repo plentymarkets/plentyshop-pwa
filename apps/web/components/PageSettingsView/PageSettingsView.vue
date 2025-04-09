@@ -143,7 +143,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="linklistBoolean"
+              v-model="isInLinkedList"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -152,7 +152,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Login Necessary</UiFormLabel>
             <SfSwitch
-              v-model="loginBoolean"
+              v-model="isLoginRequired"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -174,7 +174,7 @@ const basicSettingsOpen = ref(true);
 const { getCategoryId } = useCategoryIdHelper();
 const { data, ready, fetchCategorySettings } = useCategorySettings();
 
-const loginBoolean = computed({
+const isInLinkedList = computed({
   get() {
     return data.value.right === 'customer';
   },
@@ -183,7 +183,7 @@ const loginBoolean = computed({
   },
 });
 
-const linklistBoolean = computed({
+const isLoginRequired = computed({
   get() {
     return data.value.linklist === 'Y';
   },
@@ -206,9 +206,7 @@ watch(
 
 const pageTypeOptions = [
   { label: 'Item', value: 'item' },
-  { label: 'Content', value: 'content' },
-  { label: 'Container', value: 'container' },
-  { label: 'Blog', value: 'blog' },
+  { label: 'Content', value: 'content' }
 ];
 
 const selectedPageType = computed({

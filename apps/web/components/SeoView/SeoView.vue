@@ -102,7 +102,7 @@
             v-model="data.details[0].metaRobots"
             data-testid="page-parent"
             :options="robotNames"
-            placeholder="Select a parent page"
+            placeholder="Select robots"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
@@ -147,7 +147,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
             <SfSwitch
-              v-model="sitemapBoolean"
+              v-model="isInSitemap"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -170,7 +170,7 @@ const metaData = ref(false);
 const { getCategoryId } = useCategoryIdHelper();
 
 const { data, ready, fetchCategorySettings } = useCategorySettings();
-const sitemapBoolean = computed({
+const isInSitemap = computed({
   get() {
     return data.value.sitemap === 'Y';
   },
