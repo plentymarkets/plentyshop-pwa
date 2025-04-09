@@ -9,6 +9,6 @@ const props = defineProps<RecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
 
 if (props.categoryId) {
-    fetchProductRecommended(props.categoryId);
+  fetchProductRecommended(props.categoryId);
 }
 </script>
