@@ -9,6 +9,7 @@
       >
         <template #summary>
           <h2>Meta Data</h2>
+         {{getPageId }}
         </template>
 
         <div class="py-2">
@@ -20,13 +21,7 @@
           </div>
 
           <label>
-            <SfInput v-model="title" type="text" data-testid="seo-title" placeholder="Enter title">
-              <template #suffix>
-                <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="title" type="text" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
+            <SfInput v-model="title" type="text" data-testid="seo-title" placeholder="Enter title" />
           </label>
         </div>
 
@@ -38,13 +33,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="description" type="text" data-testid="seo-description" placeholder="Enter description">
-              <template #suffix>
-                <label for="page-type" class="rounded-lg cursor-pointer">
-                  <input id="page-type" v-model="description" type="text" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
+            <SfInput v-model="description" type="text" data-testid="seo-description" placeholder="Enter description" />
           </label>
         </div>
 
@@ -56,13 +45,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="keywords" type="text" data-testid="page-name" placeholder="Enter keywords">
-              <template #suffix>
-                <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="keywords" type="text" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
+            <SfInput v-model="keywords" type="text" data-testid="page-name" placeholder="Enter keywords" />
           </label>
         </div>
       </UiAccordionItem>
@@ -108,29 +91,20 @@
         </template>
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Title</UiFormLabel>
+            <UiFormLabel>Canonical Link</UiFormLabel>
             <SfTooltip :label="canicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="canonical" type="text" data-testid="seo-canonical" placeholder="Enter URL">
-              <template #suffix>
-                <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="canonical" type="text" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
+            <SfInput v-model="canonical" type="text" data-testid="seo-canonical" placeholder="Enter URL" />
           </label>
         </div>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
-            <SfSwitch
-              v-model="includeSitemap"
-              class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-            />
+            <SfSwitch v-model="includeSitemap" />
           </div>
         </div>
       </UiAccordionItem>
@@ -171,6 +145,8 @@ const findPageById = (id: number, pagesList: Page[]): Page | undefined => {
   return undefined;
 };
 
+
+// Watch for changes in the page ID and update the form fields
 watch(
   () => getPageId.value,
   (newId) => {
