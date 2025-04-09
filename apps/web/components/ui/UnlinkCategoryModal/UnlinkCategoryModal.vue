@@ -17,7 +17,7 @@
     <p class="mb-6">{{ pageName }} page will be deleted</p>
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
-        <button type="button" data-testid="delete-btn" class="bg-editor-danger w-full py-2 rounded-md text-white">
+        <button type="button" data-testid="delete-btn" class="bg-editor-danger w-full py-2 rounded-md text-white" @click="deletePage(id)">
           Delete page
         </button>
         <button
@@ -86,4 +86,9 @@ watch(
 const closeModal = () => {
   toggleDeleteModal(false);
 };
+const deletePage = async (id: number) => {
+  await useSdk().plentysystems.deleteCategory({
+    categoryId: id,
+  });
+}
 </script>
