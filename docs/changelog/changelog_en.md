@@ -7,6 +7,10 @@
 - Updated the category menu markup by removing a button element nested within an anchor tag.
 - Fixed nuxt runtime error.
 
+### New
+
+- Consent prompt is now shown again if consent config changes (via hash check).
+
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🩹 Fixed
