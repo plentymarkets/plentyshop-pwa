@@ -282,7 +282,7 @@ export const useCart: UseCartReturn = () => {
       emit('frontend:removeFromCart', {
         deleteItemParams: { cartItemId: cartItem.id },
         cart: state.value.data,
-        cartItem: cartItem,
+        item: cartItem,
       });
       return state.value.data;
     } catch (error) {
