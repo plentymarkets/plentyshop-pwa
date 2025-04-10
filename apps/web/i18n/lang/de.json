@@ -27,17 +27,17 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Speichert die Einwilligungsauswahl."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
         },
         "vsfLocale": {
           "name": "vsf-locale",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Speichert die Anzeigesprache."
         }
       },
@@ -49,13 +49,6 @@
       "label": "Externe Medien"
     },
     "functional": {
-      "cookies": {
-        "scriptDemo": {
-          "name": "Script-Demo",
-          "provider": "plentysystems AG",
-          "status": "Anwendungsbeispiel zum Laden eines Skripts nach Einwilligung."
-        }
-      },
       "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können.",
       "label": "Funktional"
     },
@@ -528,6 +521,10 @@
         "success": "Die Änderungen wurden gespeichert.",
         "settings": "Um Änderungen an den Einstellungen anzuwenden, aktualisiere deinen Shop.",
         "error": "Die Änderungen konnten nicht gespeichert werden. Falls die aktuelle Sitzung abgelaufen ist, starte eine neue Sitzung. Öffne dazu den Editor erneut."
+      },
+      "categories": {
+        "success": "Kategorien erfolgreich gespeichert.",
+        "error": "Fehler beim Speichern der Kategorien."
       }
     },
     "paymentFailed": "Die Zahlung ist fehlgeschlagen. Versuche es bitte erneut.",
@@ -1031,7 +1028,7 @@
       "wunschortExample": "z.B. Garage, Terrasse",
       "wunschnachbarExampleName": "Nachname, Vorname",
       "wunschnachbarExampleAddress": "Straße, Hausnummer, PLZ und Ort",
-      "wunschpaketAdditionalCharge": "Für diesen Service fällt ein Aufpreis in Höhe von {additionalCharge} € an.*",
+      "wunschpaketAdditionalCharge": "Für diesen Service fällt ein Aufpreis in Höhe von {additionalCharge} {currency} an.*",
       "wunschtagNone": "Keiner",
       "preferredDayAlertMessage": "Liefertag wählen.",
       "preferredLocationAlertMessage": "Ablageort eingeben.",

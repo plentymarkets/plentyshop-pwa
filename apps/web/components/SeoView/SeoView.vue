@@ -1,5 +1,9 @@
 <template>
-  <div class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-general-settings-drawer">
+  <div
+    v-if="!loading"
+    class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
+    data-testid="pages-general-settings-drawer"
+  >
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
       <UiAccordionItem
         v-model="metaData"
@@ -20,10 +24,10 @@
           </div>
 
           <label>
-            <SfInput v-model="title" type="text" data-testid="seo-title" placeholder="Enter title">
+            <SfInput v-model="data.details[0].metaTitle" type="text" data-testid="seo-title" placeholder="Enter title">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="title" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="data.details[0].metaTitle" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -33,15 +37,20 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Meta description</UiFormLabel>
-            <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="descTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="description" type="text" data-testid="seo-description" placeholder="Enter description">
+            <SfInput
+              v-model="data.details[0].metaDescription"
+              type="text"
+              data-testid="seo-description"
+              placeholder="Enter description"
+            >
               <template #suffix>
                 <label for="page-type" class="rounded-lg cursor-pointer">
-                  <input id="page-type" v-model="description" type="text" class="invisible w-8" />
+                  <input id="page-type" v-model="data.details[0].metaDescription" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -56,10 +65,15 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="keywords" type="text" data-testid="page-name" placeholder="Enter keywords">
+            <SfInput
+              v-model="data.details[0].metaKeywords"
+              type="text"
+              data-testid="page-name"
+              placeholder="Enter keywords"
+            >
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="keywords" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="data.details[0].metaKeywords" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -85,10 +99,10 @@
           </div>
 
           <Multiselect
-            v-model="robots"
+            v-model="data.details[0].metaRobots"
             data-testid="page-parent"
             :options="robotNames"
-            placeholder="Select a parent page"
+            placeholder="Select robots"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
@@ -108,16 +122,21 @@
         </template>
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Title</UiFormLabel>
+            <UiFormLabel>Canonical URL</UiFormLabel>
             <SfTooltip :label="canicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="canonical" type="text" data-testid="seo-canonical" placeholder="Enter URL">
+            <SfInput
+              v-model="data.details[0].canonicalLink"
+              type="text"
+              data-testid="seo-canonical"
+              placeholder="Enter URL"
+            >
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="canonical" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="data.sitemap" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -128,7 +147,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Include page in Sitemap.xml</UiFormLabel>
             <SfSwitch
-              v-model="includeSitemap"
+              v-model="isInSitemap"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -136,35 +155,35 @@
       </UiAccordionItem>
     </form>
   </div>
+
+  <div v-else class="flex justify-center items-center mt-5">
+    <SfLoaderCircular />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfTooltip, SfIconInfo, SfLoaderCircular } from '@storefront-ui/vue';
+
 import Multiselect from 'vue-multiselect';
-const { pages } = await usePages();
 const metaData = ref(false);
-const title = ref('');
-const description = ref('');
-const keywords = ref('');
-const canonical = ref('');
-const robots = ref('all');
-const includeSitemap = ref(false);
-const { getPageId } = useCategorySettings();
-const findPageById = (id: number | string) => {
-  return pages.value.find((page) => page.id === id);
-};
+
+const { getCategoryId } = useCategoryIdHelper();
+
+const { data, loading, fetchCategorySettings } = useCategorySettings();
+const isInSitemap = computed({
+  get() {
+    return data.value.sitemap === 'Y';
+  },
+  set(value: boolean) {
+    data.value.sitemap = value ? 'Y' : 'N';
+  },
+});
 
 watch(
-  () => getPageId.value,
-  (newId) => {
-    const foundPage = findPageById(newId);
-    if (foundPage) {
-      title.value = foundPage.name;
-      description.value = foundPage.metaDescription || '';
-      keywords.value = foundPage.metaKeywords || '';
-      canonical.value = foundPage.canonicalLink || '';
-      robots.value = foundPage.metaRobots || 'all';
-      includeSitemap.value = foundPage.sitemap === 'y';
+  getCategoryId,
+  async (newId: number | undefined) => {
+    if (newId !== undefined) {
+      await fetchCategorySettings(newId);
     }
   },
   { immediate: true },
@@ -172,9 +191,11 @@ watch(
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
-const robotNames = ['all', 'index', 'nofollow', 'noindex', 'no index, nofollow'];
+const robotNames = ['ALL', 'INDEX', 'NOFOLLOW', 'NOINDEX', 'NOINDEX_NOFOLLOW'];
 
 const titleTooltip = 'Title displayed in search results of search engines.';
+const descTooltip =
+  'Short description of the page shown in search results of search engines. Should be engaging and informative.';
 const robotsTooltip =
   'This setting controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
 const keywordsTooltip =

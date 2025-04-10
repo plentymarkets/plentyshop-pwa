@@ -1,5 +1,6 @@
 import {
   AddressType,
+  cartGetters,
   shippingProviderGetters,
   type ApiError,
   type DoSavePreferredDeliveryServiceParams,
@@ -146,6 +147,7 @@ export const usePreferredDelivery = () => {
 
   const propagateEnabledOptions = (shippingProfileId: number, data: PreferredDeliveryServicesData) => {
     const preferredIdProfile = state.value.data.preferredProfiles[shippingProfileId];
+    if (!preferredIdProfile) return;
 
     state.value.data.day.enabled =
       preferredIdProfile?.includes('PreferredDay') && typeof data.preferredDay !== 'boolean';
@@ -183,6 +185,10 @@ export const usePreferredDelivery = () => {
 
   const usingPreferredNeighbour = computed(
     () => state.value.data.neighbour.enabled && state.value.data.neighbour.checked,
+  );
+
+  const currency = computed(
+    () => cartGetters.getCurrency(cartData.value) || (useAppConfig().fallbackCurrency as string),
   );
 
   const submitForm = async () => {
@@ -228,6 +234,7 @@ export const usePreferredDelivery = () => {
     disableAllOptions,
     handleDayChange,
     isDayChecked,
+    currency,
     submitForm,
     ...toRefs(state.value),
   };
