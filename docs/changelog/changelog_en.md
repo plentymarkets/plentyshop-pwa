@@ -8,6 +8,9 @@
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
 
+### Chore
+- Add validator package to optimizeDeps
+
 ### Developer notes
 
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
