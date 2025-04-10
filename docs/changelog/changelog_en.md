@@ -8,6 +8,11 @@
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
 
+### Developer notes
+
+- Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
+- Updated `frontend:removeFromCart` event to include deleted cartItem.
+
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🩹 Fixed
