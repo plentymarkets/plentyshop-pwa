@@ -73,9 +73,9 @@ const countsProductReviews = computed(() => reviewGetters.getReviewCounts(produc
 
 await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
-    product: product.value
-  })
-})
+    product: product.value,
+  });
+});
 
 if (Object.keys(product.value).length === 0) {
   throw new Response(null, {

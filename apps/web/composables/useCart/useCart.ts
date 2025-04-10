@@ -1,7 +1,6 @@
 import type {
   DoAddItemParams,
   SetCartItemQuantityParams,
-  DeleteCartItemParams,
   CartItem,
   CartItemError,
   ApiError,
@@ -283,7 +282,7 @@ export const useCart: UseCartReturn = () => {
       emit('frontend:removeFromCart', {
         deleteItemParams: { cartItemId: cartItem.id },
         cart: state.value.data,
-        cartItem: cartItem
+        cartItem: cartItem,
       });
       return state.value.data;
     } catch (error) {

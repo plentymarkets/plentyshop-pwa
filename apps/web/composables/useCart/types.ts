@@ -1,9 +1,4 @@
-import type {
-  Cart,
-  DoAddItemParams,
-  SetCartItemQuantityParams,
-  CartItem,
-} from '@plentymarkets/shop-api';
+import type { Cart, DoAddItemParams, SetCartItemQuantityParams, CartItem } from '@plentymarkets/shop-api';
 
 export interface UseCartState {
   data: Cart;
