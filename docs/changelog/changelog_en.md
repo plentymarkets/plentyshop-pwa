@@ -9,7 +9,8 @@
 - Turnstile validation error in the contact form if turnstile is not configured.
 
 ### Chore
-- Add validator package to optimizeDeps
+
+- Add validator package to nuxt optimizeDeps.
 
 ### Developer notes
 
