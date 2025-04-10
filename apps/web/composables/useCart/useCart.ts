@@ -268,12 +268,12 @@ export const useCart: UseCartReturn = () => {
    * });
    * ```
    */
-  const deleteCartItem: DeleteCartItem = async (params: DeleteCartItemParams) => {
+  const deleteCartItem: DeleteCartItem = async (cartItem: CartItem) => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() =>
         useSdk().plentysystems.deleteCartItem({
-          cartItemId: params.cartItemId,
+          cartItemId: cartItem.id,
         }),
       );
 
@@ -281,8 +281,9 @@ export const useCart: UseCartReturn = () => {
 
       state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
       emit('frontend:removeFromCart', {
-        deleteItemParams: params,
+        deleteItemParams: { cartItemId: cartItem.id },
         cart: state.value.data,
+        cartItem: cartItem
       });
       return state.value.data;
     } catch (error) {
