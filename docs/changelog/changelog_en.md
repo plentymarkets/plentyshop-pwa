@@ -6,6 +6,7 @@
 
 - Updated the category menu markup by removing a button element nested within an anchor tag.
 - Fixed nuxt runtime error.
+- Turnstile validation error in the contact form if turnstile is not configured.
 
 ### Developer notes
 
