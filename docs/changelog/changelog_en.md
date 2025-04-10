@@ -25,6 +25,8 @@
 - (dev) Added form for delete page
 - (dev) Fix correct children data for Seo settings
 - (dev) Added manange pages button in editor toolbar.
+- (dev) State management and save for edit categories toolbar
+- (dev) Added editable page for category
 
 ### 👷 Changed
 
