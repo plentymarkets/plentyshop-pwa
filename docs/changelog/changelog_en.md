@@ -8,6 +8,7 @@
 - Fixed nuxt runtime error.
 
 ### Developer notes
+
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
 - Updated `frontend:removeFromCart` event to include deleted cartItem.
 
