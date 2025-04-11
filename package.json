@@ -45,7 +45,8 @@
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
-    "vue-multiselect": "^3.2.0"
+    "vue-multiselect": "^3.2.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
