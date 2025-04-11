@@ -7,6 +7,8 @@ on:
 jobs:
   update-release-notes:
     runs-on: ubuntu-latest
+    outputs:
+      commit_sha: ${{ steps.commit_update.outputs.commit_sha }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -114,7 +116,9 @@ jobs:
             echo "commit_sha=${commit_sha}" >> $GITHUB_OUTPUT
           fi
           
-      - name: Run Integration Gates
-        uses: ./.github/workflows/integration.yml
-        with:
-          commit_sha: ${{ steps.commit_update.outputs.commit_sha }}
+  run-integration-gates:
+    if: ${{ github.repository.owner == 'plentymarkets' && github.repository.name == 'plentyshop-pwa' }}
+    needs: update-release-notes
+    uses: ./.github/workflows/integration.yml
+    with:
+      commit_sha: ${{ needs.update-release-notes.outputs.commit_sha }}
