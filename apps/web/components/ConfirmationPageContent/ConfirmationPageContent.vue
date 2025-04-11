@@ -75,7 +75,13 @@
     aria-labelledby="login-modal"
   >
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication()">
+      <UiButton
+        :aria-label="t('closeAuthentication')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="closeAuthentication()"
+      >
         <SfIconClose />
       </UiButton>
     </header>

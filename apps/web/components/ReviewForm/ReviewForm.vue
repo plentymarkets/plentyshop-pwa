@@ -9,7 +9,13 @@
           {{ t('review.editReplyFormTitle') }}
         </template>
       </h3>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReviewModal">
+      <UiButton
+        :aria-label="t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="closeReviewModal"
+      >
         <SfIconClose />
       </UiButton>
     </header>

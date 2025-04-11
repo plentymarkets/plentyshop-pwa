@@ -7,7 +7,13 @@
     aria-labelledby="return-modal-title"
   >
     <header class="mb-4">
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close()">
+      <UiButton
+        :aria-label="t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="close()"
+      >
         <SfIconClose />
       </UiButton>
     </header>
