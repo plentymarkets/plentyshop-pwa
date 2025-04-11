@@ -36,6 +36,7 @@
 - (dev) Added manange pages button in editor toolbar.
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
+- (dev) Added delete category logic
 
 ### 👷 Changed
 
