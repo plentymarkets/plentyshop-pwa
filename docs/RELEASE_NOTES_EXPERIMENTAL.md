@@ -8,9 +8,7 @@
 
 ### Other Changes
 <!-- pr-entry-start:1201 -->
-## ci: add workflow to automatically update changelog
-
-([#1201](https://github.com/plentymarkets/plentyshop-pwa/pull/1201))
+- ci: add workflow to automatically update the changelog ([#1201](https://github.com/plentymarkets/plentyshop-pwa/pull/1201))
 <!-- pr-entry-end:1201 -->
 
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
