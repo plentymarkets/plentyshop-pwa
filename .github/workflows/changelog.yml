@@ -96,6 +96,7 @@ jobs:
           fi
 
       - name: Commit and push changes
+        id: commit_update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -104,11 +105,16 @@ jobs:
           git add ${{ github.workspace }}/docs/RELEASE_NOTES_EXPERIMENTAL.md
           if git diff --cached --quiet; then
             echo "No changes to commit."
+            echo "commit_sha=${{ github.sha }}" >> $GITHUB_OUTPUT
           else
             git commit -m "Update release notes with PR #${PR_NUMBER}: ${PR_TITLE}"
             git pull --rebase origin ${{ github.head_ref }}
             git push origin HEAD:${{ github.head_ref }}
+            commit_sha=$(git rev-parse HEAD)
+            echo "commit_sha=${commit_sha}" >> $GITHUB_OUTPUT
           fi
-
+          
       - name: Run Integration Gates
         uses: ./.github/workflows/integration.yml
+        with:
+          commit_sha: ${{ steps.commit_update.outputs.commit_sha }}

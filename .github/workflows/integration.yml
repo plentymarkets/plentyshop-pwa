@@ -1,9 +1,12 @@
 name: Integration Gates
 on:
-  # pull_request:
-  #   branches:
-  #     - main
   workflow_call:
+    inputs:
+      commit_sha:
+        type: string
+        description: 'SHA of the commit to check out'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -14,6 +17,11 @@ jobs:
   meta:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha != '' && inputs.commit_sha || github.ref }}
+
       - name: Assign author to PR
         if: github.event.action == 'opened'
         uses: toshimaru/auto-author-assign@v2.1.1
