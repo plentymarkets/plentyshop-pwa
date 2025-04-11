@@ -200,9 +200,7 @@ const changeQuantity = async (quantity: string) => {
 
 const deleteItem = async () => {
   deleteLoading.value = true;
-  await deleteCartItem({
-    cartItemId: cartItem.id,
-  });
+  await deleteCartItem(cartItem);
   send({ message: t('deletedFromCart'), type: 'positive' });
   deleteLoading.value = false;
 };
