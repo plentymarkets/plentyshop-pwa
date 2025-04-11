@@ -106,5 +106,6 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Update release notes with PR #${PR_NUMBER}: ${PR_TITLE}"
+            git pull --rebase origin ${{ github.head_ref }}
             git push origin HEAD:${{ github.head_ref }}
           fi
