@@ -7,6 +7,11 @@
 - Turnstile validation error in the contact form if turnstile is not configured.
 
 ### Other Changes
+<!-- pr-entry-start:1201 -->
+## ci: add workflow to automatically update changelog
+
+([#1201](https://github.com/plentymarkets/plentyshop-pwa/pull/1201))
+<!-- pr-entry-end:1201 -->
 
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
 - Updated `frontend:removeFromCart` event to include deleted cartItem.
@@ -193,7 +198,6 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 - Fixed an index error on adding the first block.
 - The first block on the page is now always displayed as an `h1` and all other blocks are displayed as `h2`.
 
-## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 📙 Todo
 
