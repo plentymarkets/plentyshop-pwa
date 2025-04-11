@@ -521,6 +521,10 @@
         "success": "Die Änderungen wurden gespeichert.",
         "settings": "Um Änderungen an den Einstellungen anzuwenden, aktualisiere deinen Shop.",
         "error": "Die Änderungen konnten nicht gespeichert werden. Falls die aktuelle Sitzung abgelaufen ist, starte eine neue Sitzung. Öffne dazu den Editor erneut."
+      },
+      "categories": {
+        "success": "Kategorien erfolgreich gespeichert.",
+        "error": "Fehler beim Speichern der Kategorien."
       }
     },
     "paymentFailed": "Die Zahlung ist fehlgeschlagen. Versuche es bitte erneut.",

@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       },
     },
     optimizeDeps: {
-      include: ['dotenv'],
+      include: ['dotenv', 'validator'],
     },
   },
   css: ['~/assets/style.scss'],
