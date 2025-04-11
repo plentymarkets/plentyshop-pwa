@@ -116,8 +116,7 @@ jobs:
             echo "commit_sha=${commit_sha}" >> $GITHUB_OUTPUT
           fi
           
-  run-integration-gates:
-    if: ${{ github.repository.owner == 'plentymarkets' && github.repository.name == 'plentyshop-pwa' }}
+  integration-gates:
     needs: update-release-notes
     uses: ./.github/workflows/integration.yml
     with:
