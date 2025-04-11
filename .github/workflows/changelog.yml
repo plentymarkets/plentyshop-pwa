@@ -2,7 +2,7 @@ name: Update Release Notes
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    branches: [main]
 
 jobs:
   update-release-notes:
@@ -109,3 +109,6 @@ jobs:
             git pull --rebase origin ${{ github.head_ref }}
             git push origin HEAD:${{ github.head_ref }}
           fi
+
+      - name: Run Integration Gates
+        uses: ./.github/workflows/integration.yml
