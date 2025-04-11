@@ -13,42 +13,18 @@
           :block-has-data="blockHasData"
           :change-block-position="changeBlockPosition"
           :root="true"
-          class="group"
-          :class="[
-            {
-              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
-            },
-            {
-              'px-4 md:px-6':
-                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
-            },
-          ]"
-          data-testid="block-wrapper"
-          @click="tabletEdit(index)"
         />
       </template>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
-
-const { t } = useI18n();
+const { isClicked, clickedBlockIndex, isTablet, blockHasData, changeBlockPosition } = useBlockManager();
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
-
 const { data, getBlocks } = useCategoryTemplate();
-
 const dataIsEmpty = computed(() => data.value.length === 0);
-
+const { data: dataProducts } = useProducts();
 const { isEditingEnabled, disableActions } = useEditor();
-const { getRobots, setRobotForStaticPage } = useRobots();
-
-const { setPageMeta } = usePageMeta();
-
-const icon = 'home';
-setPageMeta(t('homepage.title'), icon);
-
-await getBlocks('index', 'immutable');
 
 onMounted(() => {
   isEditingEnabled.value = false;
@@ -56,13 +32,12 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
-
 const hasUnsavedChanges = () => {
   return !isEditingEnabled.value && !settingsIsDirty.value;
 };
-
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
   event.preventDefault();
@@ -81,6 +56,5 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
-getRobots();
-setRobotForStaticPage('Homepage');
+await getBlocks(dataProducts.value.category.id, 'category');
 </script>
