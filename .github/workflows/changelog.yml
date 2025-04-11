@@ -1,0 +1,110 @@
+name: Update Release Notes
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  update-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Update release notes with PR title
+        run: |
+          # Extract PR title and number
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          echo "New release note for PR #$PR_NUMBER: $PR_TITLE"
+          
+          # Check for "experimental" tag in PR labels
+          LABELS_JSON='${{ toJson(github.event.pull_request.labels) }}'
+          if echo "$LABELS_JSON" | grep -iq "experimental"; then
+            EXPERIMENTAL_FLAG=" [Experimental]"
+          else
+            EXPERIMENTAL_FLAG=""
+          fi
+          
+          # Define unique markers for this PR entry
+          BEGIN_MARKER="<!-- pr-entry-start:${PR_NUMBER} -->"
+          END_MARKER="<!-- pr-entry-end:${PR_NUMBER} -->"
+          
+          # Extract commit type prefix and determine section header
+          COMMIT_TYPE=$(echo "$PR_TITLE" | awk -F: '{print $1}' | tr '[:upper:]' '[:lower:]')
+          case "$COMMIT_TYPE" in
+            feat)
+              SECTION_HEADER="### Features"
+              ;;
+            fix)
+              SECTION_HEADER="### Bug Fixes"
+              ;;
+            docs)
+              SECTION_HEADER="### Documentation"
+              ;;
+            style)
+              SECTION_HEADER="### Styles"
+              ;;
+            refactor)
+              SECTION_HEADER="### Refactoring"
+              ;;
+            perf)
+              SECTION_HEADER="### Performance Improvements"
+              ;;
+            test)
+              SECTION_HEADER="### Tests"
+              ;;
+            chore)
+              SECTION_HEADER="### Chores"
+              ;;
+            *)
+              SECTION_HEADER="### Other Changes"
+              ;;
+          esac
+          
+          # Create a new release note entry with experimental flag
+          ENTRY="## ${PR_TITLE}${EXPERIMENTAL_FLAG}\n\n([#${PR_NUMBER}](${PR_URL}))"
+          NEW_ENTRY="${BEGIN_MARKER}\n${ENTRY}\n${END_MARKER}"
+          
+          # Update or insert the entry in RELEASE_NOTES.md only above the first version indicator
+          RELEASE_NOTES_FILE="${{ github.workspace }}/docs/RELEASE_NOTES_EXPERIMENTAL.md"
+          
+          if grep -q "${BEGIN_MARKER}" "${RELEASE_NOTES_FILE}"; then
+            echo "Updating existing entry..."
+            perl -0777 -pi -e "s|$BEGIN_MARKER.*?$END_MARKER|$NEW_ENTRY|s" "${RELEASE_NOTES_FILE}"
+          else
+            # Split the file: pre-version (before first version header) and post-version (from first version header onwards)
+            PRE_FILE="pre_version.tmp"
+            POST_FILE="post_version.tmp"
+            sed -n '/^## v[0-9]\+\.[0-9]\+\.[0-9]\+ (/q;p' "${RELEASE_NOTES_FILE}" > "${PRE_FILE}"
+            sed '1,/^## v[0-9]\+\.[0-9]\+\.[0-9]\+ (/d' "${RELEASE_NOTES_FILE}" > "${POST_FILE}"
+            
+            if grep -q "^${SECTION_HEADER}$" "${PRE_FILE}"; then
+              echo "Inserting new entry in existing section..."
+              awk -v sec="${SECTION_HEADER}" -v entry="${NEW_ENTRY}" '
+                { print }
+                $0 == sec { print entry }
+              ' "${PRE_FILE}" > "new_pre.tmp"
+              mv new_pre.tmp "${PRE_FILE}"
+            else
+              echo "Appending new section and entry..."
+              echo -e "\n${SECTION_HEADER}\n\n${NEW_ENTRY}\n" >> "${PRE_FILE}"
+            fi
+            # Reassemble the updated file
+            cat "${PRE_FILE}" "${POST_FILE}" > "${RELEASE_NOTES_FILE}"
+            rm "${PRE_FILE}" "${POST_FILE}"
+          fi
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add RELEASE_NOTES.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update release notes with PR #${PR_NUMBER}: ${PR_TITLE}"
+            git push
+          fi
