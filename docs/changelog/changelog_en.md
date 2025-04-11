@@ -36,6 +36,7 @@
 
 ### 👷 Changed
 
+- Refactored code for banner settings.
 - (dev) The editor now has a new component that allows page navigation.
 
 ### 🩹 Fixed
