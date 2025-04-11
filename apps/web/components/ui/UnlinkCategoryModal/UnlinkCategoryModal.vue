@@ -17,18 +17,16 @@
     <p class="mb-6">{{ pageName }} page will be deleted</p>
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
-        <button type="button" data-testid="delete-btn" class="bg-editor-danger w-full py-2 rounded-md text-white" @click="deletePage(id)">
+        <button
+          type="button"
+          data-testid="delete-btn"
+          class="bg-red-700 w-full py-2 rounded-md text-white"
+          @click="deletePage(id)"
+        >
           Delete page
         </button>
         <button
           type="button"
-          data-testid="another-action-btn"
-          class="border border-editor-button w-full py-2 rounded-md text-editor-button"
-        >
-          Delete only {{ language }} translations
-        </button>
-        <button
-          type="submit"
           data-testid="cancel-btn"
           class="border border-editor-button w-full py-2 rounded-md text-editor-button"
           @click="closeModal"
@@ -48,8 +46,6 @@ const { getCategoryId } = useCategoryIdHelper();
 const { pages } = await usePages();
 const pageName = ref('');
 const id = ref(1);
-const { locale } = useI18n();
-const language = ref('');
 const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
   for (const page of pagesList) {
     if (page.id === id) {
@@ -75,13 +71,6 @@ watch(
   },
   { immediate: true },
 );
-watch(
-  locale,
-  (newLocale) => {
-    language.value = newLocale.toString() === 'en' ? 'english' : 'german';
-  },
-  { immediate: true },
-);
 
 const closeModal = () => {
   toggleDeleteModal(false);
@@ -90,5 +79,5 @@ const deletePage = async (id: number) => {
   await useSdk().plentysystems.deleteCategory({
     categoryId: id,
   });
-}
+};
 </script>
