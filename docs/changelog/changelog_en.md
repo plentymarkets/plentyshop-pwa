@@ -2,6 +2,10 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
+### New
+
+- Appended variation to product urls in category page for LTS compatibility.
+
 ### 🩹 Fixed
 
 - Updated the category menu markup by removing a button element nested within an anchor tag.
