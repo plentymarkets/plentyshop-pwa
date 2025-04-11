@@ -63,7 +63,7 @@ jobs:
           esac
           
           # Create a new release note entry with experimental flag
-          ENTRY="## ${PR_TITLE}${EXPERIMENTAL_FLAG}\n\n([#${PR_NUMBER}](${PR_URL}))"
+          ENTRY="- ${PR_TITLE}${EXPERIMENTAL_FLAG} ([#${PR_NUMBER}](${PR_URL}))"
           NEW_ENTRY="${BEGIN_MARKER}\n${ENTRY}\n${END_MARKER}"
           
           # Update or insert the entry in RELEASE_NOTES.md only above the first version indicator
