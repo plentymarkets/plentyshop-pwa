@@ -19,6 +19,7 @@
       <div class="actions flex flex-col gap-4">
         <button
           type="button"
+          aria-label="deleteButton"
           data-testid="delete-btn"
           class="bg-red-700 w-full py-2 rounded-md text-white"
           @click="deletePage(id)"
@@ -27,6 +28,7 @@
         </button>
         <button
           type="button"
+          aria-label="cancelButton"
           data-testid="cancel-btn"
           class="border border-editor-button w-full py-2 rounded-md text-editor-button"
           @click="closeModal"
