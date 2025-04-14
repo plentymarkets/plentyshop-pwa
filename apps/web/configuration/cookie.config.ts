@@ -1,5 +1,11 @@
 import type { CookieGroupFromNuxtConfig } from '@plentymarkets/shop-core';
-import crypto from 'node:crypto';
+
+const getHash = async (input: string): Promise<string> => {
+  const buffer = new TextEncoder().encode(input);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+};
 
 const config = {
   barTitle: 'CookieBar.about.label',
@@ -79,7 +85,7 @@ const config = {
 };
 
 const cookieConfig = {
-  configHash: crypto.createHash('sha256').update(JSON.stringify(config)).digest('hex'),
+  configHash: await getHash(JSON.stringify(config)),
   ...config,
 };
 
