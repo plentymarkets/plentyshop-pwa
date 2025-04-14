@@ -122,7 +122,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         // TODO: handle error
       },
       async createOrder() {
-        const order = await createTransaction(fundingSource);
+        const order = await createTransaction(fundingSource, !isCommit);
         return order?.id ?? '';
       },
       async onApprove(data) {
