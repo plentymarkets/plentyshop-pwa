@@ -12,6 +12,10 @@
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
 
+### Chore
+
+- Add validator package to nuxt optimizeDeps.
+
 ### Developer notes
 
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
@@ -36,6 +40,7 @@
 - (dev) Added manange pages button in editor toolbar.
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
+- (dev) Added delete category logic
 
 ### 👷 Changed
 
