@@ -73,6 +73,7 @@ watch(
   },
   { immediate: true },
 );
+
 const closeModal = () => {
   toggleDeleteModal(false);
 };

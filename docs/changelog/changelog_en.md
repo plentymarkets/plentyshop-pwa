@@ -2,23 +2,6 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
-### 🩹 Fixed
-
-- Updated the category menu markup by removing a button element nested within an anchor tag.
-- Fixed nuxt runtime error.
-- Turnstile validation error in the contact form if turnstile is not configured.
-
-### Developer notes
-
-- Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
-- Updated `frontend:removeFromCart` event to include deleted cartItem.
-
-# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
-
-### 🩹 Fixed
-
-- A bug which crashed the build process.
-
 ### New
 
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
@@ -33,17 +16,36 @@
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
 - (dev) Added delete category logic
-
-### 👷 Changed
-
-- (dev) The editor now has a new component that allows page navigation.
+- Appended variation to product urls in category page for LTS compatibility.
+- (dev) Added delete category logic
 
 ### 🩹 Fixed
 
+- Fix an error while attempting to login from guest.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
+- (dev) Fix styling of editor actions on content pages.
 - (dev) Fix notification and modal closing of delete category
+- Updated the category menu markup by removing a button element nested within an anchor tag.
+- Fixed nuxt runtime error.
+- Turnstile validation error in the contact form if turnstile is not configured.
+- It's no longer possible to enter values outside the quantity limits in the quantity selector. The quantity will be set to 1 or the maximum value instead.
+
+### Chore
+
+- Add validator package to nuxt optimizeDeps.
+
+### Developer notes
+
+- Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
+- Updated `frontend:removeFromCart` event to include deleted cartItem.
+
+# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 🩹 Fixed
+
+- A bug which crashed the build process.
 
 # v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
