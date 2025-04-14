@@ -1,5 +1,25 @@
 # Changelog PlentyONE Shop
 
+# v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🩹 Behoben
+
+- Variation wurde zu Produkt-URLs auf Kategorieseiten hinzugefügt, um die Kompatibilität mit LTS sicherzustellen.
+- Ein Fehler wurde behoben, der beim Versuch, sich als Gast einzuloggen, auftrat.
+- Das Markup des Kategoriemenüs wurde aktualisiert, indem ein verschachteltes Button-Element innerhalb eines Anker-Tags entfernt wurde.
+- Nuxt-Laufzeitfehler behoben.
+- Turnstile-Validierungsfehler im Kontaktformular behoben, wenn Turnstile nicht konfiguriert ist.
+- Es ist nicht mehr möglich, Werte außerhalb der Mengengrenzen im Mengenauswahlfeld einzugeben. Die Menge wird stattdessen auf 1 oder den maximalen Wert gesetzt.
+
+### 👷 Chore
+
+- Validator-Paket zu nuxt optimizeDeps hinzugefügt.
+
+### Hinweise für Entwickler
+
+- Implementiert: 'frontend:productLoaded': { product: Product };-Event, das ausgelöst wird, wenn ein Produkt auf der Produktseite geladen wird.
+- Aktualisiert: frontend:removeFromCart-Event, um das gelöschte cartItem einzuschließen.
+
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 🩹 Behoben
