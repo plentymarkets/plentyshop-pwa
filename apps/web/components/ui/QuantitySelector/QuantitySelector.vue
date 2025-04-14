@@ -90,6 +90,12 @@ const inputClasses = computed(
 onMounted(() => (inputId.value = useId()));
 
 watch(count, (quantity) => {
+  if (quantity < minValue) {
+    set(minValue);
+  } else if (quantity > maxValue) {
+    set(maxValue);
+  }
+
   emit('changeQuantity', quantity);
 });
 
