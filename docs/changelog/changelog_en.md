@@ -2,7 +2,7 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
-### New
+### 🚀 New
 
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
@@ -26,20 +26,23 @@
 
 # v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### 🩹 Fixed
+### 👷 Changed
 
 - Appended variation ID to product urls in category page for LTS compatibility.
+
+### 🩹 Fixed
+
 - Fix an error while attempting to login from guest.
 - Changed the category menu markup by removing an invalid button element nested within an anchor tag.
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
 - It's no longer possible to enter values outside the quantity limits in the quantity selector. The quantity will be set to 1 or the maximum value instead.
 
-### Chore
+### 🏡 Chore
 
 - Add validator package to nuxt optimizeDeps.
 
-### Developer notes
+### 💻 Developer notes
 
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
 - Updated `frontend:removeFromCart` event to include deleted cartItem.
