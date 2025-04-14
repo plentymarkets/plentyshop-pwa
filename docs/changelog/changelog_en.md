@@ -2,8 +2,6 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
-
-
 ### New
 
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
