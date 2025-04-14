@@ -2,11 +2,19 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
+### New
+
+- Appended variation to product urls in category page for LTS compatibility.
+
 ### 🩹 Fixed
 
 - Updated the category menu markup by removing a button element nested within an anchor tag.
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
+
+### Chore
+
+- Add validator package to nuxt optimizeDeps.
 
 ### Developer notes
 
@@ -36,6 +44,7 @@
 - (dev) Added manange pages button in editor toolbar.
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
+- (dev) Added delete category logic
 
 ### 👷 Changed
 
