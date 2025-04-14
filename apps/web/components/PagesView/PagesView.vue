@@ -83,8 +83,10 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
+import { generateMockPages } from '~/mocks/pagesMock';
+
 const { locale } = useI18n();
-const { pages } = await usePages();
+const pages = ref(generateMockPages());
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
