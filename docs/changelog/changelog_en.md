@@ -20,6 +20,7 @@
 
 ### 🩹 Fixed
 
+- Fix an error while attempting to login from guest.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
