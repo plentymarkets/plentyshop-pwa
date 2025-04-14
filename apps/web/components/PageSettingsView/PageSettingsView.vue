@@ -141,6 +141,26 @@
         </div>
         <div class="py-2">
           <div class="flex justify-between mb-2">
+            <UiFormLabel class="mb-1"
+              >Client (store)
+              <SfTooltip
+                label="The page name is used to identify the page in the page list and can be visible in the navigation, depending on the settings. It can be changed at any time."
+                :placement="'top'"
+                :show-arrow="true"
+                class="ml-2 z-10"
+              >
+                <SfIconInfo :size="'sm'" />
+              </SfTooltip>
+            </UiFormLabel>
+
+            <SfSwitch
+              v-model="isLinkedToWebstore"
+              class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+            />
+          </div>
+        </div>
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
               v-model="isInLinkedList"
@@ -182,6 +202,15 @@ const isInLinkedList = computed({
     data.value.right = value ? 'customer' : 'all';
   },
 });
+
+// const isLinkedToWebstore = computed({
+//   get() {
+//     return data.value.isLinkedToWebstore === 'ALL';
+//   },
+//   set(value: boolean) {
+//     data.value.isLinkedToWebstore = value ? 'ALL' : 'Default';
+//   },
+// });
 
 const isLoginRequired = computed({
   get() {
