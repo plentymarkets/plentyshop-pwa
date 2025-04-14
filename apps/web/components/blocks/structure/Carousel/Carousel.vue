@@ -41,7 +41,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 
-const { activeSlideIndex, setIndex } = useCarousel();
+const { activeSlidesIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 
 const handleArrows = () => {
@@ -82,7 +82,7 @@ const onSwiperInit = (swiper: SwiperType) => {
 };
 
 const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeSlideIndex.value[meta.uuid]) {
+  if (swiper.realIndex !== activeSlidesIndex.value[meta.uuid]) {
     await nextTick();
     swiper.update();
 
@@ -91,7 +91,7 @@ const onSlideChange = async (swiper: SwiperType) => {
 };
 
 watch(
-  () => activeSlideIndex.value[meta.uuid],
+  () => activeSlidesIndex.value[meta.uuid],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
       slider.update();
