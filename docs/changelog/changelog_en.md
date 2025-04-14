@@ -28,7 +28,7 @@
 
 ### 🩹 Fixed
 
-- Appended variation to product urls in category page for LTS compatibility.
+- Appended variation ID to product urls in category page for LTS compatibility.
 - Fix an error while attempting to login from guest.
 - Changed the category menu markup by removing an invalid button element nested within an anchor tag.
 - Fixed nuxt runtime error.
