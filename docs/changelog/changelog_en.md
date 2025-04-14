@@ -43,6 +43,7 @@
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
+- (dev) Fix notification and modal closing of delete category
 
 # v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

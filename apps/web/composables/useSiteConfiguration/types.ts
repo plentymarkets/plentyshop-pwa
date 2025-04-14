@@ -80,6 +80,7 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
+  deletePage: (pageId: number, pageName: string) => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

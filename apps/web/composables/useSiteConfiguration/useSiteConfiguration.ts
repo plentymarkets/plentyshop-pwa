@@ -46,6 +46,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: useRuntimeConfig().public.secondaryColor,
     },
   }));
+  const { t } = useI18n();
 
   /**
    * @description Function for loading a google font.
@@ -189,6 +190,37 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.settingsCategory = category;
   };
 
+  const deletePage = async (id: number, pageName: string) => {
+    const { send } = useNotification();
+    try {
+      const { data } = await useSdk().plentysystems.deleteCategory({
+        categoryId: id,
+      });
+      if (data === 'Category deleted') {
+        toggleDeleteModal(false);
+        send({
+          message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
+          type: 'positive',
+        });
+      }
+    } catch (error) {
+      let errorMessage = '';
+      if (error && typeof error === 'object') {
+        if ('message' in error) {
+          errorMessage = (error as { message: string }).message;
+        }
+      }
+      send({
+        message: t('errorMessages.editor.categories.deleteError', {
+          pageName: pageName,
+          id: id,
+          errorMessage: errorMessage,
+        }),
+        type: 'negative',
+      });
+    }
+  };
+
   return {
     updatePrimaryColor,
     updateSecondaryColor,
@@ -203,5 +235,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     togglePageModal,
     setSettingsCategory,
     toggleDeleteModal,
+    deletePage,
   };
 };
