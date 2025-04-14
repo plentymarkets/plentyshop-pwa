@@ -28,6 +28,7 @@
 - Updated the category menu markup by removing a button element nested within an anchor tag.
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
+- It's no longer possible to enter values outside the quantity limits in the quantity selector. The quantity will be set to 1 or the maximum value instead.
 
 ### Chore
 
