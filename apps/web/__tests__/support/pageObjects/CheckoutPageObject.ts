@@ -266,6 +266,11 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  checkInvoice() {
+    cy.getByTestId('payment-method-6000').check({ force: true });
+    return this;
+  }
+
   checkPayPal() {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
     cy.getByTestId('payment-method-6001').check({ force: true });
