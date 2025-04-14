@@ -13,13 +13,25 @@
           :block-has-data="blockHasData"
           :change-block-position="changeBlockPosition"
           :root="true"
+          class="group"
+          :class="[
+            {
+              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+            },
+            {
+              'px-4 md:px-6':
+                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
+            },
+          ]"
+          data-testid="block-wrapper"
+          @click="tabletEdit(index)"
         />
       </template>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-const { isClicked, clickedBlockIndex, isTablet, blockHasData, changeBlockPosition } = useBlockManager();
+const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
