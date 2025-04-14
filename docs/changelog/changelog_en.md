@@ -4,10 +4,26 @@
 
 ### New
 
+- (dev) Added pages entry on the left side menu, where users can manage their pages.
+- (dev) Add design for adding a new page.
+- (dev) Added design for category settings.
+- (dev) Added form for general settings
+- (dev) Added form for SEO settings
+- (dev) Updated general settings and seo settings to get data dynamically
+- (dev) Added form for delete page
+- (dev) Fix correct children data for Seo settings
+- (dev) Added manange pages button in editor toolbar.
+- (dev) State management and save for edit categories toolbar
+- (dev) Added editable page for category
+- (dev) Added delete category logic
 - Appended variation to product urls in category page for LTS compatibility.
 
 ### 🩹 Fixed
 
+- (dev) Fix Page Selector state.
+- (dev) Fix Page Selector closes when clicking outside the box.
+- (dev) Fix Page Selector closes on second button click.
+- (dev) Fix styling of editor actions on content pages.
 - Updated the category menu markup by removing a button element nested within an anchor tag.
 - Fixed nuxt runtime error.
 - Turnstile validation error in the contact form if turnstile is not configured.
@@ -26,31 +42,6 @@
 ### 🩹 Fixed
 
 - A bug which crashed the build process.
-
-### New
-
-- (dev) Added pages entry on the left side menu, where users can manage their pages.
-- (dev) Add design for adding a new page.
-- (dev) Added design for category settings.
-- (dev) Added form for general settings
-- (dev) Added form for SEO settings
-- (dev) Updated general settings and seo settings to get data dynamically
-- (dev) Added form for delete page
-- (dev) Fix correct children data for Seo settings
-- (dev) Added manange pages button in editor toolbar.
-- (dev) State management and save for edit categories toolbar
-- (dev) Added editable page for category
-- (dev) Added delete category logic
-
-### 👷 Changed
-
-- (dev) The editor now has a new component that allows page navigation.
-
-### 🩹 Fixed
-
-- (dev) Fix Page Selector state.
-- (dev) Fix Page Selector closes when clicking outside the box.
-- (dev) Fix Page Selector closes on second button click.
 
 # v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
