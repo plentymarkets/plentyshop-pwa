@@ -127,9 +127,14 @@ const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
-const productPath = computed(() =>
-  localePath(`/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`),
-);
+const variationId = computed(() => productGetters.getVariationId(product));
+
+const productPath = computed(() => {
+  const basePath = `/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`;
+  const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product) === 1;
+
+  return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
+});
 
 const getWidth = () => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
