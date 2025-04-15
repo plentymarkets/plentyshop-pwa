@@ -41,7 +41,7 @@
 
 ### New
 
-- Added drag-and-drop functionality for the homepage blocks & slides in context menu.
+- Drag-and-drop functionality has been integrated for both blocks and banner context menu slides.
 
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
