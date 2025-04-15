@@ -1,13 +1,10 @@
 <template>
   <div data-testid="contact-information" class="md:px-4 py-6">
-    <h2 class="w-full text-neutral-900 text-lg font-bold" :class="{ 'mb-4': !enableGuestLogin }">
+    <h2 class="w-full text-neutral-900 text-lg font-bold">
       {{ t('contactInfo.heading') }}
     </h2>
 
-    <div
-      v-if="enableGuestLogin && !disabled && (isGuest || (!isAuthorized && !isGuest))"
-      class="w-full flex flex-col sm:flex-row mb-4"
-    >
+    <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mb-4">
       <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
         {{ t('auth.signup.logInLinkLabel') }}
@@ -81,10 +78,13 @@ const {
 } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
-const enableGuestLogin = useRuntimeConfig().public.enableGuestLogin;
 
 const { errors, defineField, validate } = useForm({ validationSchema: emailValidationSchema });
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
+
+watch(isAuthorized, (updatedStatus) => {
+  customerEmail.value = updatedStatus ? sessionData.value.user?.email ?? '' : sessionData.value.user?.guestMail ?? '';
+});
 
 const validateAndSubmitEmail = async () => {
   const formData = await validate();
