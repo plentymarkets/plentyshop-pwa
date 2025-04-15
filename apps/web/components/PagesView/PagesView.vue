@@ -53,7 +53,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in limitedContentItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -69,7 +69,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in limitedItemItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -86,6 +86,7 @@ import type { MenuItemType } from '~/components/PagesView/types';
 import { generateMockPages } from '~/mocks/pagesMock';
 
 const { locale } = useI18n();
+const INITIAL_LIMIT = 50;
 const pages = ref(generateMockPages());
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
@@ -93,26 +94,14 @@ const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration(
 
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const splitItemsByType = (items: MenuItemType[]) => {
-  const result = {
-    contentItems: [] as MenuItemType[],
-    itemItems: [] as MenuItemType[],
-  };
+const contentItems = ref(pages.value.filter((item) => item.type === 'content'));
+const itemItems = ref(pages.value.filter((item) => item.type === 'item'));
 
-  items.forEach((item) => {
-    switch (item.type) {
-      case 'content':
-        result.contentItems.push(item);
-        break;
-      case 'item':
-        result.itemItems.push(item);
-        break;
-    }
-  });
+const limitedContentItems = ref(contentItems.value.slice(0, INITIAL_LIMIT));
+const limitedItemItems = ref(itemItems.value.slice(0, INITIAL_LIMIT));
 
-  return result;
-};
-const { contentItems, itemItems } = splitItemsByType(pages.value);
+console.log('limitedContentItems', limitedContentItems.value);
+console.log('limitedItemItems', limitedItemItems.value);
 
 const openHelpPage = () => {
   const urls: Record<string, string> = {
