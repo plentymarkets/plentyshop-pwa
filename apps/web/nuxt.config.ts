@@ -8,26 +8,20 @@ import { paths } from './utils/paths';
 export default defineNuxtConfig({
   telemetry: false,
   devtools: { enabled: true },
-
   typescript: {
     typeCheck: true,
   },
-
   app: appConfiguration,
-
   experimental: {
     asyncContext: true,
   },
-
   appConfig: {
     titleSuffix: process.env.STORENAME || 'PlentyONE Shop',
     fallbackCurrency: 'GBP',
   },
-
   imports: {
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
-
   vite: {
     server: {
       fs: {
@@ -38,9 +32,7 @@ export default defineNuxtConfig({
       include: ['dotenv', 'validator'],
     },
   },
-
   css: ['~/assets/style.scss'],
-
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
@@ -48,24 +40,19 @@ export default defineNuxtConfig({
     },
     compressPublicAssets: true,
   },
-
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
-
   image: {
     provider: 'none',
   },
-
   site: {
     url: '',
   },
-
   pages: true,
-
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
@@ -93,7 +80,6 @@ export default defineNuxtConfig({
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
     },
   },
-
   modules: [
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
@@ -111,16 +97,13 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
   ],
-
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },
-
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
     confirmationUrl: paths.confirmation,
   },
-
   fonts: {
     defaults: {
       weights: [300, 400, 500, 700],
@@ -129,9 +112,7 @@ export default defineNuxtConfig({
       prefix: '/_nuxt-plenty/fonts/',
     },
   },
-
   i18n: nuxtI18nOptions,
-
   sitemap: {
     autoLastmod: true,
     xsl: '/sitemap_style.xsl',
@@ -162,16 +143,13 @@ export default defineNuxtConfig({
       },
     },
   },
-
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
     exposeConfig: true,
   },
-
   turnstile: {
     siteKey: process.env?.TURNSTILESITEKEY,
   },
-
   viewport: {
     breakpoints: {
       xs: 380,
@@ -195,7 +173,6 @@ export default defineNuxtConfig({
       secure: true,
     },
   },
-
   veeValidate: {
     autoImports: false,
     componentNames: {
@@ -205,7 +182,6 @@ export default defineNuxtConfig({
       ErrorMessage: 'VeeErrorMessage',
     },
   },
-
   pwa: {
     registerType: 'autoUpdate',
     workbox: {
@@ -255,9 +231,6 @@ export default defineNuxtConfig({
         },
       ],
     },
-
     registerWebManifestInRouteRules: true,
-  },
-
-  compatibilityDate: '2025-04-15',
+  }
 });
