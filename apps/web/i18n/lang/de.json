@@ -98,7 +98,7 @@
       "section": {
         "billingDetails": "Rechnungsadressen",
         "personalData": "Persönliche Daten",
-        "shippingDetails": "Versandadressen"
+        "shippingDetails": "Lieferadressen"
       },
       "shippingDetails": {
         "newAddress": "Neue Lieferadresse",
@@ -893,7 +893,7 @@
   "shippingAddress": "Lieferadresse",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "shippingMethod": {
-    "description": "Nicht verfügbar, solange keine Versandadresse angegeben wird.",
+    "description": "Nicht verfügbar, solange keine Lieferadresse angegeben wird.",
     "free": "Kostenlos",
     "heading": "Versandart",
     "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
