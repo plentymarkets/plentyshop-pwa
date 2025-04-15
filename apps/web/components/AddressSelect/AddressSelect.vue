@@ -19,7 +19,13 @@
     data-testid="checkout-pick-address-modal"
   >
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+      <UiButton
+        :aria-label="t('closePickSavedAddress')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="close"
+      >
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">

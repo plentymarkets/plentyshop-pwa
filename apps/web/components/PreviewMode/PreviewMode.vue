@@ -13,7 +13,7 @@
             :class="{ 'mt-2': useClassFor(index) }"
             :aria-disabled="false"
             type="button"
-            aria-label="button"
+            :aria-label="$t(`PreviewModeBar.${cookieName}`)"
             @click="removeLookupCookie(index)"
           >
             {{ $t(`PreviewModeBar.${cookieName}`) }}
