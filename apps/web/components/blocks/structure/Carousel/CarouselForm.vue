@@ -77,6 +77,7 @@
                         <button
                           class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
                           aria-label="Drag to reorder block"
+                          :data-testid="`actions-drag-slide-handle-${index}`"
                         >
                           <NuxtImg width="18" height="18" :src="dragIcon" />
                         </button>

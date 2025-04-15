@@ -57,7 +57,7 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.checkIfSlideActionsAreVisible();
     });
 
-    it.skip('should move a slide up and down', () => {
+    it('should move a slide up and down', () => {
       bannerSlider.openSlideActions();
       bannerSlider.addSlide();
       bannerSlider.openSlideActions();
