@@ -2,7 +2,7 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
-### 🚀 New
+### New
 
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
@@ -16,6 +16,8 @@
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
 - (dev) Added delete category logic
+- Appended variation to product urls in category page for LTS compatibility.
+- (dev) Added delete category logic
 
 ### 🩹 Fixed
 
@@ -23,6 +25,7 @@
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
 - (dev) Fix styling of editor actions on content pages.
+- (dev) Fix notification and modal closing of delete category
 
 # v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
