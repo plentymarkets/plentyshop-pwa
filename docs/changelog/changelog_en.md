@@ -3,6 +3,7 @@
 # v1.xx.x (xxxx-xx-xx)
 
 ### New
+
 - Drag-and-drop functionality has been integrated for both blocks and banner context menu slides.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
