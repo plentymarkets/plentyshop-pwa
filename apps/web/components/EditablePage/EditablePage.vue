@@ -41,14 +41,15 @@
     </draggable>
   </div>
 </template>
+
 <script lang="ts" setup>
 import draggable from 'vuedraggable';
-import type { Block } from '@plentymarkets/shop-api';
+import type { DragEvent, EditablePageProps } from './types';
 
-const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
+const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
-const { isEditingEnabled, disableActions } = useEditor();
+await getBlocks(props.identifier, props.type);
 
 const {
   isClicked,
@@ -61,35 +62,6 @@ const {
   handleDragEnd,
 } = useBlockManager();
 
-const props = defineProps({
-  identifier: {
-    type: [Number, String],
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-});
-
-await getBlocks(props.identifier, props.type);
-
-interface DragEvent<T = Block> {
-  added?: {
-    element: T;
-    newIndex: number;
-  };
-  removed?: {
-    element: T;
-    oldIndex: number;
-  };
-  moved?: {
-    element: T;
-    oldIndex: number;
-    newIndex: number;
-  };
-}
-
 const scrollToBlock = (evt: DragEvent) => {
   if (evt.moved) {
     const { newIndex } = evt.moved;
@@ -101,6 +73,9 @@ const scrollToBlock = (evt: DragEvent) => {
     }
   }
 };
+
+const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
+const { isEditingEnabled, disableActions } = useEditor();
 
 onMounted(() => {
   isEditingEnabled.value = false;
