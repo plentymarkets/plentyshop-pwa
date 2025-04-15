@@ -1,8 +1,19 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <div v-if="data.length" class="content">
-      <template v-for="(block, index) in data" :key="index">
+    <draggable
+      v-if="data.length"
+      v-model="data"
+      item-key="meta.uuid"
+      handle=".drag-handle"
+      class="content"
+      :filter="'.no-drag'"
+      :prevent-on-filter="false"
+      @change="scrollToBlock"
+      @start="handleDragStart"
+      @end="handleDragEnd"
+    >
+      <template #item="{ element: block, index }">
         <PageBlock
           :index="index"
           :block="block"
@@ -27,16 +38,57 @@
           @click="tabletEdit(index)"
         />
       </template>
-    </div>
+    </draggable>
   </div>
 </template>
 <script lang="ts" setup>
-const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
+import draggable from 'vuedraggable';
+import type { Block } from '@plentymarkets/shop-api';
+
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 const { data: dataProducts } = useProducts();
 const { isEditingEnabled, disableActions } = useEditor();
+
+const {
+  isClicked,
+  clickedBlockIndex,
+  isTablet,
+  blockHasData,
+  tabletEdit,
+  changeBlockPosition,
+  handleDragStart,
+  handleDragEnd,
+} = useBlockManager();
+
+interface DragEvent<T = Block> {
+  added?: {
+    element: T;
+    newIndex: number;
+  };
+  removed?: {
+    element: T;
+    oldIndex: number;
+  };
+  moved?: {
+    element: T;
+    oldIndex: number;
+    newIndex: number;
+  };
+}
+
+const scrollToBlock = (evt: DragEvent) => {
+  if (evt.moved) {
+    const { newIndex } = evt.moved;
+    const block = document.getElementById(`block-${newIndex}`);
+    if (block) {
+      nextTick(() => {
+        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+};
 
 onMounted(() => {
   isEditingEnabled.value = false;
@@ -70,3 +122,28 @@ onBeforeRouteLeave((to, from, next) => {
 
 await getBlocks(dataProducts.value.category.id, 'category');
 </script>
+
+<style>
+.sortable-ghost {
+  opacity: 0.6;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+.sortable-drag {
+  opacity: 1 !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+.sortable-chosen .block-wrapper {
+  outline: none !important;
+}
+.sortable-chosen .add-block-button,
+.sortable-chosen .block-actions {
+  display: none !important;
+}
+.sortable-chosen {
+  opacity: 0.6;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+</style>
