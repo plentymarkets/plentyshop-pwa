@@ -22,7 +22,7 @@
           aria-label="deleteButton"
           data-testid="delete-btn"
           class="bg-red-700 w-full py-2 rounded-md text-white"
-          @click="deletePage(id)"
+          @click="deletePage(id, pageName)"
         >
           Delete page
         </button>
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
 
-const { unlinkModalOpen, toggleDeleteModal } = useSiteConfiguration();
+const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
 const { getCategoryId } = useCategoryIdHelper();
 const { pages } = await usePages();
 const pageName = ref('');
@@ -76,10 +76,5 @@ watch(
 
 const closeModal = () => {
   toggleDeleteModal(false);
-};
-const deletePage = async (id: number) => {
-  await useSdk().plentysystems.deleteCategory({
-    categoryId: id,
-  });
 };
 </script>
