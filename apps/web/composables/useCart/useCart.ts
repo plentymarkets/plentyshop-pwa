@@ -121,7 +121,7 @@ export const useCart: UseCartReturn = () => {
     try {
       await useSdk().plentysystems.deleteCart();
     } catch {}
-    clearCartItems()
+    clearCartItems();
   };
 
   /**
