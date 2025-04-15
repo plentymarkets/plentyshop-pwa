@@ -2,26 +2,9 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
-### 🩹 Fixed
-
-- Updated the category menu markup by removing a button element nested within an anchor tag.
-- Fixed nuxt runtime error.
-- Turnstile validation error in the contact form if turnstile is not configured.
-
-### Developer notes
-
-- Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
-- Updated `frontend:removeFromCart` event to include deleted cartItem.
-
 ### 👷 Changed
 
 - Cookies consent prompt is now shown again if consent config changes (via hash check).
-
-# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
-
-### 🩹 Fixed
-
-- A bug which crashed the build process.
 
 ### New
 
