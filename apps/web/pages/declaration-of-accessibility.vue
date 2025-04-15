@@ -14,6 +14,7 @@ definePageMeta({
   pageType: 'static',
 });
 
+
 await getLegalTexts({
   type: 'DeclarationOfAccessibility',
 });
