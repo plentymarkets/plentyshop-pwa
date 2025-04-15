@@ -54,6 +54,7 @@
                 "
                 :price="orderGetters.getOrderAgainInformationPrice(item)"
                 :crossed-price="orderGetters.getItemPrice(item)"
+                :crossed-price-value="null"
               />
               <div
                 v-if="orderGetters.getItemShortDescription(order, item)"

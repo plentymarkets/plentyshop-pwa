@@ -1,12 +1,19 @@
 <template>
   <div class="text-sm py-1">
     <span class="mr-2 text-secondary-500 font-bold text-2xl" data-testid="price">
-      <span>{{ n(price, 'currency') }}</span>
+      <span v-if="price">{{ price }}</span>
+      <span v-else>{{ t('priceNotAvailable') }}</span>
       <span>{{ t('asterisk') }} </span>
     </span>
-    <span v-if="crossedPrice" class="text-base font-normal text-neutral-500 line-through">
-      {{ $n(crossedPrice, 'currency') }}
+    <span
+      v-if="crossedPrice && typeof crossedPriceValue === 'number' && crossedPriceValue > 0"
+      class="text-base font-normal text-neutral-500 line-through"
+    >
+      <span>{{ crossedPrice }}</span>
     </span>
+    <span v-else-if="typeof crossedPriceValue === 'number' && crossedPriceValue > 0">{{
+      n(crossedPriceValue, 'currency')
+    }}</span>
   </div>
 </template>
 

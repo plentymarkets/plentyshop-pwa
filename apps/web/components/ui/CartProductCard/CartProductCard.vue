@@ -25,7 +25,8 @@
       </SfLink>
 
       <div v-if="!cartItem.variation?.bundleComponents">
-        {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
+        {{ cartItem.variation?.prices?.default?.price.formatted }}
+        <span>{{ t('asterisk') }} </span>
       </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
@@ -92,7 +93,10 @@
           v-if="currentFullPrice"
           class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ n(currentFullPrice || 0, 'currency') }}
+          <span v-if="cartGetters.getCurrency(cartData) === 'GBP'">
+            {{ cartGetters.getCurrency(cartData) }} {{ currentFullPrice.toFixed(2) }}
+          </span>
+          <span v-else> {{ currentFullPrice.toFixed(2) }} {{ cartGetters.getCurrency(cartData) }} </span>
         </span>
         <UiQuantitySelector
           ref="quantitySelectorReference"
@@ -103,6 +107,22 @@
           class="mt-4 sm:mt-0"
           @change-quantity="debounceQuantity"
         />
+      </div>
+
+      <div class="mt-4 typography-text-xs flex gap-1">
+        <span>{{ t('asterisk') }}</span>
+        <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
+        <i18n-t keypath="excludedShipping" scope="global">
+          <template #shipping>
+            <SfLink
+              :href="localePath(paths.shipping)"
+              target="_blank"
+              class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            >
+              {{ $t('delivery') }}
+            </SfLink>
+          </template>
+        </i18n-t>
       </div>
     </div>
 
@@ -135,9 +155,11 @@ const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
+const { showNetPrices } = useCustomer();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
+const { basePriceSingleValue } = useProductPrice(cartItem.variation ?? ({} as Product));
 const { send } = useNotification();
-const { t, n } = useI18n();
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 const imageLoaded = ref(false);
@@ -219,12 +241,6 @@ const cartItemImage = computed(() => {
 const debounceQuantity = debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
-
-const basePriceSingleValue = computed(
-  () =>
-    productGetters.getGraduatedPriceByQuantity(cartItem.variation ?? ({} as Product), cartItem.quantity)?.basePrice ??
-    productGetters.getDefaultBasePrice(cartItem.variation ?? ({} as Product)),
-);
 
 const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem)));
 </script>
