@@ -313,7 +313,8 @@
         "cancellationRights": "Widerrufsbelehrung",
         "legalDisclosure": "Impressum",
         "privacyPolicy": "Datenschutzerklärung",
-        "termsAndConditions": "AGB"
+        "termsAndConditions": "AGB",
+        "declarationOfAccessibility": "Barrierefreiheitserklärung"
       }
     },
     "services": {
