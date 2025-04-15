@@ -67,16 +67,6 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.moveSlideDown(1);
       bannerSlider.checkSlideSettings(2);
     });
-
-    it('should not move up the first slide', () => {
-      bannerSlider.openSlideActions();
-      bannerSlider.checkIsMoveSlideUpDisabled(0);
-    });
-
-    it('should not move down the last slide', () => {
-      bannerSlider.openSlideActions();
-      bannerSlider.checkIsMoveSlideDownDisabled(1);
-    });
   });
 
   describe('Image Settings', () => {

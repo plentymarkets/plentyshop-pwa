@@ -4,7 +4,7 @@
     <div
       :id="`block-${index}`"
       :class="[
-        'relative',
+        'relative block-wrapper',
         {
           'mb-s': blockSize === 's' && root,
           'mb-m': blockSize === 'm' && root,
@@ -12,14 +12,17 @@
           'mb-xl': blockSize === 'xl' && root,
         },
         {
-          'outline outline-4 outline-[#538AEA]': showOutline,
+          'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
-        { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet && root },
+        {
+          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
+            isPreview && disableActions && !isTablet && root && !isDragging,
+        },
       ]"
     >
       <button
-        v-if="disableActions && isPreview && root"
-        class="z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+        v-if="disableActions && isPreview && root && !isDragging"
+        class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
         data-testid="top-add-block"
         aria-label="top add block"
@@ -28,9 +31,9 @@
         <SfIconAdd class="cursor-pointer" />
       </button>
       <UiBlockActions
-        v-if="disableActions && blockHasData && blockHasData(block) && isPreview && root"
+        v-if="disableActions && blockHasData && blockHasData(block) && isPreview && root && !isDragging"
         :class="[
-          'opacity-0',
+          'opacity-0 block-actions',
           {
             'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
             'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
@@ -63,8 +66,9 @@
       </component>
 
       <button
-        v-if="disableActions && isPreview && root"
-        class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+        v-if="disableActions && isPreview && root && !isDragging"
+        :key="isDragging ? 'dragging' : 'not-dragging'"
+        class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
         data-testid="bottom-add-block"
         aria-label="bottom add block"
@@ -96,7 +100,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
-const { visiblePlaceholder, togglePlaceholder, modules } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, modules, isDragging } = useBlockManager();
 const attrs = useAttrs();
 
 const getBlockComponent = computed(() => {
