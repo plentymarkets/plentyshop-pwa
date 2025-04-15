@@ -524,7 +524,9 @@
       },
       "categories": {
         "success": "Kategorien erfolgreich gespeichert.",
-        "error": "Fehler beim Speichern der Kategorien."
+        "error": "Fehler beim Speichern der Kategorien.",
+        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}" ,
+        "deleteSuccess": "Die Seite {pageName} (Kategorie-ID: {id}) wurde gelöscht."
       }
     },
     "paymentFailed": "Die Zahlung ist fehlgeschlagen. Versuche es bitte erneut.",

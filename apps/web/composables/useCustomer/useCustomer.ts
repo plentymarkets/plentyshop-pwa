@@ -1,4 +1,5 @@
 import {
+  AddressType,
   type ApiError,
   type RegisterParams,
   type SessionResult,
@@ -155,6 +156,8 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
 
     state.value.data.user = null;
+    useCheckoutAddress(AddressType.Shipping).clear();
+    useCheckoutAddress(AddressType.Billing).clear();
     checkUserState();
     useWishlist().setWishlistItemIds([]);
   };
