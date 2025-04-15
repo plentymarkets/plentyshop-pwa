@@ -23,6 +23,4 @@ const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
 
-await getRobots();
-setRobotForStaticPage('DeclarationOfAccessibility');
 </script>
