@@ -43,7 +43,7 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * ```
  */
 export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  const route = to ?? useNuxtApp().$router.currentRoute.value;
+  const route = to ? ref(to) : useNuxtApp().$router.currentRoute;
 
   /**
    * @description Function for getting facets from url.
@@ -101,9 +101,9 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
-    return Object.keys(route.query)
+    return Object.keys(route.value.query)
       .filter((f) => nonFilters.has(f))
-      .reduce(reduceFilters(route.query), {});
+      .reduce(reduceFilters(route.value.query), {});
   };
 
   /***
@@ -229,7 +229,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const updateSorting = (sort: string): void => {
-    navigateTo({ query: { ...route.query, sort } });
+    navigateTo({ query: { ...route.value.query, sort } });
   };
 
   /**
