@@ -21,7 +21,7 @@
 
 ### 👷 Changed
 
-- Unified some terms in German and English 
+- Unified some terms in German and English
 
 ### 🩹 Fixed
 
