@@ -1,8 +1,8 @@
 export default defineNuxtPlugin(async () => {
   const { on: onPlentyEvent } = usePlentyEvent();
 
-  onPlentyEvent('module:clearCart', () => {
-    const { clearCartItems } = useCart();
-    clearCartItems();
+  onPlentyEvent('module:clearCart', async () => {
+    const { deleteCart } = useCart();
+    await deleteCart();
   });
 });
