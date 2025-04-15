@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       },
     },
     optimizeDeps: {
-      include: ['dotenv'],
+      include: ['dotenv', 'validator'],
     },
   },
   css: ['~/assets/style.scss'],
@@ -70,7 +70,6 @@ export default defineNuxtConfig({
       headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
-      enableGuestLogin: process.env?.ENABLE_GUEST_LOGIN === 'true',
       storename: process.env.STORENAME || 'PlentyONE GmbH',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
