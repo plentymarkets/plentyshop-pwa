@@ -1,6 +1,7 @@
 import type { CookieGroupFromNuxtConfig } from '@plentymarkets/shop-core';
 
 export default {
+  configHash: '',
   barTitle: 'CookieBar.about.label',
   barDescription: 'CookieBar.about.description',
   groups: [
@@ -24,7 +25,6 @@ export default {
           Provider: 'CookieBar.essentials.cookies.plentyId.provider',
           Status: 'CookieBar.essentials.cookies.plentyId.status',
           PrivacyPolicy: '/PrivacyPolicy',
-          // Lifespan must respect this format, currently only accepts days.
           Lifespan: 'Session',
           accepted: true,
         },

@@ -199,7 +199,7 @@ const {
   changeVisibilityState,
 } = useCookieBar();
 
-initializeCookies();
+onNuxtReady(async () => await initializeCookies());
 
 const furtherSettingsOn = ref(false);
 

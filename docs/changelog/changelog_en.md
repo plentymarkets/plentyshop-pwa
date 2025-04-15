@@ -2,6 +2,10 @@
 
 # v1.xx.x (xxxx-xx-xx)
 
+### 👷 Changed
+
+- Cookies consent prompt is now shown again if consent config changes (via hash check).
+
 ### New
 
 - Drag-and-drop functionality has been integrated for both blocks and banner context menu slides.
