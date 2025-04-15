@@ -120,8 +120,9 @@ export const useCart: UseCartReturn = () => {
   const deleteCart: DeleteCart = async () => {
     try {
       await useSdk().plentysystems.deleteCart();
-    } catch {}
-    clearCartItems();
+    } finally {
+      clearCartItems();
+    }
   };
 
   /**
