@@ -1,13 +1,7 @@
 import type { CookieGroupFromNuxtConfig } from '@plentymarkets/shop-core';
 
-const getHash = async (input: string): Promise<string> => {
-  const buffer = new TextEncoder().encode(input);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-};
-
-const config = {
+export default {
+  configHash: '',
   barTitle: 'CookieBar.about.label',
   barDescription: 'CookieBar.about.description',
   groups: [
@@ -82,11 +76,4 @@ const config = {
       cookies: [],
     },
   ],
-};
-
-const cookieConfig = {
-  configHash: await getHash(JSON.stringify(config)),
-  ...config,
-};
-
-export default cookieConfig as CookieGroupFromNuxtConfig;
+} as CookieGroupFromNuxtConfig;
