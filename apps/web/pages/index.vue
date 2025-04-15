@@ -1,165 +1,19 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <draggable
-      v-if="data.length"
-      v-model="data"
-      item-key="meta.uuid"
-      handle=".drag-handle"
-      class="content"
-      :filter="'.no-drag'"
-      :prevent-on-filter="false"
-      @change="scrollToBlock"
-      @start="handleDragStart"
-      @end="handleDragEnd"
-    >
-      <template #item="{ element: block, index }">
-        <PageBlock
-          :index="index"
-          :block="block"
-          :disable-actions="disableActions"
-          :is-clicked="isClicked"
-          :clicked-block-index="clickedBlockIndex"
-          :is-tablet="isTablet"
-          :block-has-data="blockHasData"
-          :change-block-position="changeBlockPosition"
-          :root="true"
-          class="group"
-          :class="[
-            {
-              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
-            },
-            {
-              'px-4 md:px-6':
-                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
-            },
-          ]"
-          data-testid="block-wrapper"
-          @click="tabletEdit(index)"
-        />
-      </template>
-    </draggable>
+    <EditablePage :identifier="'index'" :type="'immutable'" />
   </div>
 </template>
 <script lang="ts" setup>
-import draggable from 'vuedraggable';
-import type { Block } from '@plentymarkets/shop-api';
-const {
-  isClicked,
-  clickedBlockIndex,
-  isTablet,
-  blockHasData,
-  tabletEdit,
-  changeBlockPosition,
-  handleDragStart,
-  handleDragEnd,
-} = useBlockManager();
-
-interface DragEvent<T = Block> {
-  added?: {
-    element: T;
-    newIndex: number;
-  };
-  removed?: {
-    element: T;
-    oldIndex: number;
-  };
-  moved?: {
-    element: T;
-    oldIndex: number;
-    newIndex: number;
-  };
-}
-
-const { t } = useI18n();
-const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
-
-const { data, getBlocks } = useCategoryTemplate();
-
+const { data } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 
-const { isEditingEnabled, disableActions } = useEditor();
-const { getRobots, setRobotForStaticPage } = useRobots();
-
+const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
-
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
 
-await getBlocks('index', 'immutable');
-
-onMounted(() => {
-  isEditingEnabled.value = false;
-  window.addEventListener('beforeunload', handleBeforeUnload);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('beforeunload', handleBeforeUnload);
-});
-
-const hasUnsavedChanges = () => {
-  return !isEditingEnabled.value && !settingsIsDirty.value;
-};
-
-const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  if (hasUnsavedChanges()) return;
-  event.preventDefault();
-};
-onBeforeRouteLeave((to, from, next) => {
-  if (isEditingEnabled.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
-    } else {
-      next(false);
-    }
-  } else {
-    next();
-  }
-});
-
-const scrollToBlock = (evt: DragEvent) => {
-  if (evt.moved) {
-    const { newIndex } = evt.moved;
-
-    const block = document.getElementById(`block-${newIndex}`);
-    if (block) {
-      nextTick(() => {
-        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
-  }
-};
-
+const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
 setRobotForStaticPage('Homepage');
 </script>
-
-<style>
-.sortable-ghost {
-  opacity: 0.6;
-  background: #f0f4ff;
-  border-radius: 8px;
-}
-
-.sortable-drag {
-  opacity: 1 !important;
-  transform: scale(1.02);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.sortable-chosen .block-wrapper {
-  outline: none !important;
-}
-.sortable-chosen .add-block-button,
-.sortable-chosen .block-actions {
-  display: none !important;
-}
-
-.sortable-chosen {
-  opacity: 0.6;
-  background: #f0f4ff;
-  border-radius: 8px;
-}
-</style>

@@ -48,7 +48,6 @@ import type { Block } from '@plentymarkets/shop-api';
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
-const { data: dataProducts } = useProducts();
 const { isEditingEnabled, disableActions } = useEditor();
 
 const {
@@ -61,6 +60,19 @@ const {
   handleDragStart,
   handleDragEnd,
 } = useBlockManager();
+
+const props = defineProps({
+  identifier: {
+    type: [Number, String],
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+});
+
+await getBlocks(props.identifier, props.type);
 
 interface DragEvent<T = Block> {
   added?: {
@@ -99,13 +111,16 @@ onBeforeUnmount(() => {
   closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
+
 const hasUnsavedChanges = () => {
   return !isEditingEnabled.value && !settingsIsDirty.value;
 };
+
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
   event.preventDefault();
 };
+
 onBeforeRouteLeave((to, from, next) => {
   if (isEditingEnabled.value) {
     const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
@@ -119,8 +134,6 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
-
-await getBlocks(dataProducts.value.category.id, 'category');
 </script>
 
 <style>
