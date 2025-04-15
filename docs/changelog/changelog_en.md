@@ -3,7 +3,7 @@
 # v1.xx.x (xxxx-xx-xx)
 
 ### New
-
+- Drag-and-drop functionality has been integrated for both blocks and banner context menu slides.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -16,7 +16,6 @@
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
 - (dev) Added delete category logic
-- Appended variation to product urls in category page for LTS compatibility.
 - (dev) Added delete category logic
 
 ### 🩹 Fixed
@@ -49,10 +48,6 @@
 
 - Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
 - Updated `frontend:removeFromCart` event to include deleted cartItem.
-
-### New
-
-- Drag-and-drop functionality has been integrated for both blocks and banner context menu slides.
 
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
