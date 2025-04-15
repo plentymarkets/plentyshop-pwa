@@ -4,6 +4,7 @@
 
 ### New
 
+- Drag-and-drop functionality has been integrated for both blocks and banner context menu slides.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -16,7 +17,6 @@
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
 - (dev) Added delete category logic
-- Appended variation to product urls in category page for LTS compatibility.
 - (dev) Added delete category logic
 
 ### 🩹 Fixed
