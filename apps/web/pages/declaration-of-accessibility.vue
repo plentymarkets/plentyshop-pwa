@@ -22,5 +22,4 @@ await getLegalTexts({
 const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
-
 </script>
