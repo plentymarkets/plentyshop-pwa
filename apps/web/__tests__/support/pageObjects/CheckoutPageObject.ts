@@ -1,5 +1,6 @@
 import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
+import { TIMEOUT } from 'dns';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -125,6 +126,10 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('address-select-2');
   }
 
+  get mollieCreditCardModal() {
+    return cy.getByTestId('modal');
+  }
+
   goToGuestCheckout() {
     this.goToGuestCheckoutButton.click();
     return this;
@@ -187,10 +192,12 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillContactInformationForm() {
+    cy.intercept('/plentysystems/doLoginAsGuest').as('loginAsGuest');
     cy.getFixture('addressForm').then(() => {
       const uniqueEmail = `test.order${new Date().getTime()}@plentymarkets.com`;
       this.contactInformationForm.type(uniqueEmail).blur();
     });
+    cy.wait('@loginAsGuest', { timeout: 10000 });
 
     return this;
   }
@@ -241,6 +248,16 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  fillMollieCreditCardForm() {
+    cy.iframe('[title=paypal_card_number_field]').find('.card-field-number').first().type('4868719460707704');
+
+    cy.iframe('[title=paypal_card_expiry_field]').find('.card-field-expiry').type('12/27');
+
+    cy.iframe('[title=paypal_card_cvv_field]').find('.card-field-cvv').type('123');
+
+    return this;
+  }
+
   payCreditCard() {
     cy.intercept('/plentysystems/doAdditionalInformation')
       .as('doAdditionalInformation')
@@ -268,6 +285,20 @@ export class CheckoutPageObject extends PageObject {
 
   checkInvoice() {
     cy.getByTestId('payment-method-6000').check({ force: true });
+    return this;
+  }
+
+  checkMollieEPS() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6048').check({ force: true }); //Mevo = 6048 //fabian = ?
+    cy.wait('@setPaymentProvider');
+    return this;
+  }
+
+  checkMollieCreditCard() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6046').check({ force: true }); //Mevo = 6046 //fabian = 6032
+    cy.wait('@setPaymentProvider');
     return this;
   }
 
@@ -340,6 +371,10 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
+  }
+
+  get mollieCreditCardButtun() {
     return cy.get('.paypal-buttons-context-iframe').first();
   }
 
