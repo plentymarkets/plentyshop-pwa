@@ -372,10 +372,6 @@ export class CheckoutPageObject extends PageObject {
     return cy.get('.paypal-buttons-context-iframe').first();
   }
 
-  get mollieCreditCardButtun() {
-    return cy.get('.paypal-buttons-context-iframe').first();
-  }
-
   shouldShowShippingMethods() {
     cy.getByTestId('shipping-method-list').should('be.visible');
     cy.getByTestId('no-payment-method-available').should('not.exist');
