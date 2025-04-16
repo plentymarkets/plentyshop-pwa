@@ -313,7 +313,8 @@
         "cancellationRights": "Cancellation rights",
         "legalDisclosure": "Legal disclosure",
         "privacyPolicy": "Privacy policy",
-        "termsAndConditions": "Terms and conditions"
+        "termsAndConditions": "Terms and conditions",
+        "declarationOfAccessibility": "Declaration of accessibility"
       }
     },
     "services": {
@@ -524,7 +525,9 @@
       },
       "categories": {
         "success": "Categories saved successfully.",
-        "error": "Error saving categories."
+        "error": "Error saving categories.",
+        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}" ,
+        "deleteSuccess": "The page {pageName} (category ID: {id}) has been deleted."
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",

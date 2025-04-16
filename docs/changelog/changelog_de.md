@@ -1,5 +1,15 @@
 # Changelog PlentyONE Shop
 
+# vx.x.x (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.xx.x" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🚀 Neu
+
+- Drag-and-Drop-Funktionalität wurde sowohl für Blöcke und Blockeinstellungen integriert.
+
+### 👷 Geändert
+
+- Vereinheitlichung einiger Begriffe auf Deutsch und Englisch
+
 # v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert

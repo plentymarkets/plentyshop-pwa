@@ -94,7 +94,8 @@ const { item } = defineProps<{
 }>();
 
 const { isOpen, open: openMenu, close } = useDisclosure();
-const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
+const { setSettingsCategory } = useSiteConfiguration();
+const { toggleDeleteModal } = useCategorySettings();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
