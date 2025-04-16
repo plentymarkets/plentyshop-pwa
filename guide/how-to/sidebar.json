@@ -28,10 +28,6 @@
                 "link": "/guide/how-to/cookie.md"
             },
             {
-                "text": "Homepage content",
-                "link": "/guide/how-to/homepage.md"
-            },
-            {
                 "text": "Bot protection",
                 "link": "/guide/how-to/bot-protection.md"
             }
@@ -52,6 +48,20 @@
             {
                 "text": "Custom Icon",
                 "link": "/guide/how-to/custom-icon.md"
+            }
+        ]
+    },
+    {
+        "text": "Editor",
+        "collapsed": true,
+        "items":[
+            {
+                "text": "Get started",
+                "link": "/guide/how-to/editor/index.md"
+            },
+            {
+                "text": "Site settings",
+                "link": "/guide/how-to/editor/site-settings.md"
             }
         ]
     },

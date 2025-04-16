@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 import sidebarProduct from '../guide/product/sidebar.json';
 import sidebarSetup from '../guide/setup/sidebar.json';
 import sidebarHowTo from '../guide/how-to/sidebar.json';
@@ -8,7 +8,7 @@ import typedocSidebarComposables from '../reference/composables/typedoc-sidebar.
 import typedocSidebarApi from '../reference/api/typedoc-sidebar.json';
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
   head: [['link', { rel: 'icon', href: '/favicon.png' }]],
   title: "PlentyONE Shop Docs",
   description: "Documentation for PlentyONE Shop, built with VueJS, Nuxt 3 and Alokai.",
@@ -20,6 +20,7 @@ export default defineConfig({
       dark: 'github-dark-high-contrast'
     }
   },
+  mermaid: {},
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
