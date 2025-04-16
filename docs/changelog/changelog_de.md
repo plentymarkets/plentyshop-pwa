@@ -11,6 +11,7 @@
 - Vereinheitlichung einiger Begriffe auf Deutsch und Englisch
 
 ### 🩹 Behoben
+
 - Ein Fehler wurde behoben, bei dem lediglich eine Sortierung bzw. ein Filter ausgewählt werden konnte
 
 # v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>

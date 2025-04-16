@@ -25,7 +25,7 @@
 
 ### 🩹 Fixed
 
-- Fixed broken selection when having filtering and sorting
+- Fix broken selection when having filtering and sorting
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
