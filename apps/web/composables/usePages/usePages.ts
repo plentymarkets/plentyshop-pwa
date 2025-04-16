@@ -4,18 +4,21 @@ export const usePages = async () => {
   const { locale } = useI18n();
   const { data } = useCategoryTree();
 
-  const pages = useState<Page[]>('pages', () => []); 
+  const pages = useState<Page[]>('pages', () => []);
   const contentPages = useState<Page[]>('contentPages', () => []);
   const itemPages = useState<Page[]>('itemPages', () => []);
+  const childrenMap = useState<Record<number, Page[]>>('childrenMap', () => ({}));
+  const childrenLimitMap = useState<Record<number, number>>('childrenLimitMap', () => ({})); 
   let contentLimit = 1;
-  let itemLimit = 1; 
+  let itemLimit = 1;
 
   const transformCategoryTreeToPages = () => {
     const allPages: Page[] = [];
     const contentData: Page[] = [];
     const itemData: Page[] = [];
+    const tempChildrenMap: Record<number, Page[]> = {};
 
-    const transformData = (data: CategoryTreeItem[], parentPath = '') => {
+    const transformData = (data: CategoryTreeItem[], parentPath = '', parentId: number | null = null) => {
       data.forEach((item: CategoryTreeItem) => {
         if (!item.details || item.details.length === 0) {
           return;
@@ -47,20 +50,41 @@ export const usePages = async () => {
           itemData.push(page);
         }
 
+        if (parentId !== null) {
+          if (!tempChildrenMap[parentId]) {
+            tempChildrenMap[parentId] = [];
+          }
+          tempChildrenMap[parentId].push(page);
+        }
+
         if (item.children) {
-          transformData(item.children, currentPath);
+          transformData(item.children, currentPath, item.id);
         }
       });
     };
 
     transformData(data.value);
 
-    pages.value = allPages; 
+    pages.value = allPages;
     contentPages.value = contentData;
     itemPages.value = itemData;
+    childrenMap.value = tempChildrenMap;
   };
 
-  if (contentPages.value.length === 0 && itemPages.value.length === 0) {
+  const getLimitedChildren = (parentId: number): Page[] => {
+    const children = childrenMap.value[parentId] || [];
+    const limit = childrenLimitMap.value[parentId] || 1; 
+    return children.slice(0, limit);
+  };
+
+  const loadMoreChildren = (parentId: number) => {
+    if (!childrenLimitMap.value[parentId]) {
+      childrenLimitMap.value[parentId] = 1; 
+    }
+    childrenLimitMap.value[parentId] += 1; 
+  };
+
+  if (pages.value.length === 0) {
     await transformCategoryTreeToPages();
   }
 
@@ -73,12 +97,12 @@ export const usePages = async () => {
   });
 
   const loadMoreContentPages = () => {
-    contentLimit += 1; 
+    contentLimit += 1;
     transformCategoryTreeToPages();
   };
 
   const loadMoreItemPages = () => {
-    itemLimit += 1; 
+    itemLimit += 1;
     transformCategoryTreeToPages();
   };
 
@@ -86,6 +110,10 @@ export const usePages = async () => {
     pages,
     contentPages,
     itemPages,
+    childrenMap,
+    childrenLimitMap,
+    getLimitedChildren,
+    loadMoreChildren,
     loadMoreContentPages,
     loadMoreItemPages,
   };

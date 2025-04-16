@@ -5,7 +5,7 @@
       :class="['px-4 py-2 flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
       @click="toggle"
     >
-      <span v-if="item.children && item.children.length > 0">
+      <span v-if="children && children.length > 0">
         <SfIconExpandMore />
       </span>
       <router-link
@@ -63,9 +63,20 @@
         </div>
       </SfDropdown>
     </div>
-    <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">
-      <PagesItem v-for="child in item.children" :key="child.path" :item="child" :parent-id="item.id" />
+    
+
+    <!-- Render children -->
+    <ul v-if="open && limitedChildren.length > 0" class="pl-4 border-l border-gray-200">
+      <PagesItem v-for="child in limitedChildren" :key="child.path" :item="child" :parent-id="item.id" />
     </ul>
+    <!-- Load More button for children -->
+    <button
+      v-if="children.length > limitedChildren.length"
+      @click="loadMoreChildren(item.id)"
+      class="text-blue-500 text-sm mt-2"
+    >
+      Load More
+    </button>
   </li>
 </template>
 <script setup lang="ts">
@@ -92,6 +103,9 @@ const { item } = defineProps<{
   item: MenuItemType;
   parentId: number | undefined;
 }>();
+const { childrenMap, getLimitedChildren, loadMoreChildren } = await usePages();
+const children = computed(() => childrenMap.value[item.id] || []);
+const limitedChildren = computed(() => getLimitedChildren(item.id));
 
 const { isOpen, open: openMenu, close } = useDisclosure();
 const { setSettingsCategory } = useSiteConfiguration();
