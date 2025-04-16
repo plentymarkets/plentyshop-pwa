@@ -26,6 +26,8 @@
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
+        <SfInput v-model="customerWish" type="text" :label="t('orderContactWish')" class="mb-4" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
       </div>
       <div class="col-span-6 xl:col-span-5">
@@ -97,7 +99,7 @@
 
 <script setup lang="ts">
 import { AddressType, cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import {
@@ -149,6 +151,8 @@ const {
 } = useCheckoutPagePaymentAndShipping();
 
 const { setPageMeta } = usePageMeta();
+
+const customerWish = ref('');
 
 const icon = 'page';
 setPageMeta(t('checkout'), icon);
@@ -247,7 +251,10 @@ const openPayPalCardDialog = async () => {
 const handleRegularOrder = async () => {
   const data = await createOrder({
     paymentId: paymentMethods.value.selected,
-    additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
+    additionalInformation: { 
+      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      orderContactWish: customerWish.value
+     },
   });
 
   if (data?.order?.id) {
