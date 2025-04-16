@@ -313,7 +313,8 @@
         "cancellationRights": "Widerrufsbelehrung",
         "legalDisclosure": "Impressum",
         "privacyPolicy": "Datenschutzerklärung",
-        "termsAndConditions": "AGB"
+        "termsAndConditions": "AGB",
+        "declarationOfAccessibility": "Barrierefreiheitserklärung"
       }
     },
     "services": {
@@ -729,7 +730,7 @@
     "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
     "sameAsShippingAddress": "Entspricht der Lieferadresse",
     "saveOrderToAccount": "Speichern Sie diese Bestellung in Ihrem Konto",
-    "shipping": "Lieferkosten",
+    "shipping": "Versandkosten",
     "signUp": "Registrieren",
     "subTotal": "Zwischensumme",
     "total": "Summe",

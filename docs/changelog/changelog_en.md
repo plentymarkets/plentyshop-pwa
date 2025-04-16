@@ -5,6 +5,7 @@
 ### 🚀 New
 
 - Added Mollie payment methods in the checkout.
+- Added page for accessibility information.
 - Drag-and-drop functionality has been integrated for blocks and block settings.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
