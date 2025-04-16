@@ -26,6 +26,7 @@
 
 ### 🩹 Fixed
 
+- Fixed the PayPal Express flow, requires PayPal Plugin version >= 6.5.11
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
