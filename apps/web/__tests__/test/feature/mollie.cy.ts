@@ -38,7 +38,15 @@ describe('Mollie payment methods', () => {
     checkout.goToCheckout().acceptTerms().checkMollieCreditCard().placeOrderButtons.click();
 
     checkout.fillMollieCreditCardForm();
-    checkout.payCreditCard();
+    cy.getByTestId('pay-creditcard-button').click();
+    pymentStatus.selectPaid();
+    cy.window().then((win) => {
+      const currentUrl = win.location.href;
+      cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
+      win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
+      cy.wait('@getMolliePaymentStatus');
+      checkout.displayFullyPaid();
+    });
   });
 
   it('[feature] Check mollie PayPal and place a fully paid order', () => {
