@@ -37,52 +37,53 @@ describe('Mollie payment methods', () => {
 
     checkout.goToCheckout().acceptTerms().checkMollieCreditCard().placeOrderButtons.click();
 
-    checkout.mollieCreditCardModal.should('exist');
+    checkout.fillMollieCreditCardForm();
+    checkout.payCreditCard();
   });
 
-  // it('[feature] Check mollie PayPal and place a fully paid order', () => {
-  //   cy.visitAndHydrate(paths.authLogin);
+  it('[feature] Check mollie PayPal and place a fully paid order', () => {
+    cy.visitAndHydrate(paths.authLogin);
 
-  //   cy.intercept('/plentysystems/doLogin').as('doLogin');
-  //   myAccount.successLogin();
-  //   cy.wait('@doLogin');
+    cy.intercept('/plentysystems/doLogin').as('doLogin');
+    myAccount.successLogin();
+    cy.wait('@doLogin');
 
-  //   homePage.goToCategory();
-  //   productListPage.addToCart();
-  //   cart.openCart();
+    homePage.goToCategory();
+    productListPage.addToCart();
+    cart.openCart();
 
-  //   checkout.goToCheckout().acceptTerms().checkMolliePayPal().placeOrderButtons.click();
+    checkout.goToCheckout().acceptTerms().checkMolliePayPal().placeOrderButtons.click();
 
-  //   pymentStatus.selectPaid();
-  //   cy.window().then((win) => {
-  //     const currentUrl = win.location.href;
-  //     cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
-  //     win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
-  //     cy.wait('@getMolliePaymentStatus');
-  //     checkout.displayFullyPaid();
-  //   });
-  // });
+    pymentStatus.selectPaid();
+    cy.window().then((win) => {
+      const currentUrl = win.location.href;
+      cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
+      win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
+      cy.wait('@getMolliePaymentStatus');
+      checkout.displayFullyPaid();
+    });
+  });
 
-  // it('[feature] Check mollie PayPal and place a failed paid order', () => {
-  //   cy.visitAndHydrate(paths.authLogin);
+  it('[feature] Check mollie PayPal and place a failed paid order', () => {
+    cy.visitAndHydrate(paths.authLogin);
 
-  //   cy.intercept('/plentysystems/doLogin').as('doLogin');
-  //   myAccount.successLogin();
-  //   cy.wait('@doLogin');
+    cy.intercept('/plentysystems/doLogin').as('doLogin');
+    myAccount.successLogin();
+    cy.wait('@doLogin');
 
-  //   homePage.goToCategory();
-  //   productListPage.addToCart();
-  //   cart.openCart();
+    homePage.goToCategory();
+    productListPage.addToCart();
+    cart.openCart();
 
-  //   checkout.goToCheckout().acceptTerms().checkMolliePayPal().placeOrderButtons.click();
+    checkout.goToCheckout().acceptTerms().checkMolliePayPal().placeOrderButtons.click();
 
-  //   pymentStatus.selectFailed();
-  //   cy.window().then((win) => {
-  //     const currentUrl = win.location.href;
-  //     cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
-  //     win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
-  //     cy.wait('@getMolliePaymentStatus');
-  //   });
-  //   cy.url().should('include', '/checkout');
-  // });
+    pymentStatus.selectFailed();
+    cy.window().then((win) => {
+      const currentUrl = win.location.href;
+      cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
+      win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
+      cy.wait('@getMolliePaymentStatus');
+    });
+    cy.url().should('include', '/checkout');
+  });
 });

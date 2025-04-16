@@ -126,10 +126,6 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('address-select-2');
   }
 
-  get mollieCreditCardModal() {
-    return cy.getByTestId('modal');
-  }
-
   goToGuestCheckout() {
     this.goToGuestCheckoutButton.click();
     return this;
@@ -249,11 +245,13 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillMollieCreditCardForm() {
-    cy.iframe('[title=paypal_card_number_field]').find('.card-field-number').first().type('4868719460707704');
+    cy.iframe('[title="cardNumber input"]').find('#cardNumber').type('3782 822463 10005');
 
-    cy.iframe('[title=paypal_card_expiry_field]').find('.card-field-expiry').type('12/27');
+    cy.iframe('[title="cardHolder input"]').find('#cardHolder').first().type('Test Holder');
 
-    cy.iframe('[title=paypal_card_cvv_field]').find('.card-field-cvv').type('123');
+    cy.iframe('[title="expiryDate input"]').find('#expiryDate').first().type('12/29');
+
+    cy.iframe('[title="verificationCode input"]').find('#verificationCode').first().type('1234');
 
     return this;
   }
