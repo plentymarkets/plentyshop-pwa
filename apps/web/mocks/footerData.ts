@@ -22,6 +22,10 @@ export const categories = [
         key: 'cancellationForm',
         link: paths.cancellationForm,
       },
+      {
+        key: 'declarationOfAccessibility',
+        link: paths.declarationOfAccessibility,
+      },
     ],
   },
   {
