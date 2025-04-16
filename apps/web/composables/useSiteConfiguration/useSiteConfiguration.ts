@@ -27,7 +27,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     pageModalOpen: false,
     settingsCategory: null,
     settingsType: null,
-    unlinkModalOpen: false,
     loading: false,
     placement: 'left',
     newBlockPosition: 0,
@@ -181,9 +180,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.pageModalOpen = value;
   };
 
-  const toggleDeleteModal = (value: boolean) => {
-    state.value.unlinkModalOpen = value;
-  };
   const setSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => {
     state.value.settingsType = settingsType || null;
     state.value.settingsCategory = category;
@@ -202,6 +198,5 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
-    toggleDeleteModal,
   };
 };
