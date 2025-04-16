@@ -1,10 +1,11 @@
 # Changelog PlentyONE Shop
 
-# v1.xx.x (xxxx-xx-xx)
+# v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Added page for accessibility information.
+- Drag-and-drop functionality has been integrated for blocks and block settings.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -17,8 +18,11 @@
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
 - (dev) Added delete category logic
-- Appended variation to product urls in category page for LTS compatibility.
 - (dev) Added delete category logic
+
+### 👷 Changed
+
+- Unified some terms in German and English
 
 ### 🩹 Fixed
 

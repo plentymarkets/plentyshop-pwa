@@ -22,6 +22,10 @@ const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
   () => Promise<{ default: unknown }>
 >;
 
+const dragState = reactive({
+  isDragging: false,
+});
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
@@ -178,12 +182,24 @@ export const useBlockManager = () => {
       data.value[index] = updatedBlock;
     }
   };
+
+  const handleDragStart = () => {
+    dragState.isDragging = true;
+  };
+
+  const handleDragEnd = () => {
+    dragState.isDragging = false;
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
     isClicked,
     clickedBlockIndex,
     isTablet,
+    isDragging: computed(() => dragState.isDragging),
+    handleDragStart,
+    handleDragEnd,
     getBlocksLists,
     blockHasData,
     tabletEdit,
