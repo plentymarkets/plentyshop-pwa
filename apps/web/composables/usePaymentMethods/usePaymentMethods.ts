@@ -32,7 +32,8 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
     const originalList = data.value?.data?.list ?? [];
     const filteredPaymentList = originalList.filter((provider) => {
       const isKlarnaViaMollie = klarnaPaymentKeys.includes(provider.paymentKey) && provider.key === 'Mollie';
-      const isUnsupportedPlentyPayPal = provider.key === 'plentyPayPal' && !integratedPayPalKeys.includes(provider.paymentKey);
+      const isUnsupportedPlentyPayPal =
+        provider.key === 'plentyPayPal' && !integratedPayPalKeys.includes(provider.paymentKey);
 
       return !isKlarnaViaMollie && !isUnsupportedPlentyPayPal;
     });
