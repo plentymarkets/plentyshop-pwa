@@ -20,22 +20,21 @@ beforeEach(() => {
     'consent-cookie',
     '{"CookieBar.essentials.label":{"CookieBar.essentials.cookies.plentyId.name":true,"CookieBar.essentials.cookies.vsfLocale.name":true,"CookieBar.essentials.cookies.consentCookie.name":true,"CookieBar.essentials.cookies.cloudflareTurnstile.name":true},"CookieBar.externalMedia.label":{},"CookieBar.functional.label":{"CookieBar.functional.cookies.scriptDemo.name":true,"CookieBar.essentials.cookies.payPal.name":true},"CookieBar.marketing.label":{}}',
   );
-  cy.visitAndHydrate(paths.home);
+  cy.visitAndHydrate(paths.authLogin);
+
+  cy.intercept('/plentysystems/doLogin').as('doLogin');
+  myAccount.successLogin();
+  cy.wait('@doLogin');
+
+  homePage.goToCategory();
+  productListPage.addToCart();
+  cart.openCart();
+  checkout.goToCheckout().acceptTerms();
 });
 
 describe('Mollie payment methods', () => {
   it('[feature] Check mollie credit cardpayment and place a test order', () => {
-    cy.visitAndHydrate(paths.authLogin);
-
-    cy.intercept('/plentysystems/doLogin').as('doLogin');
-    myAccount.successLogin();
-    cy.wait('@doLogin');
-
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().acceptTerms().checkMollieCreditCard().placeOrderButtons.click();
+    checkout.checkMollieCreditCard().placeOrderButtons.click();
 
     checkout.fillMollieCreditCardForm();
     cy.getByTestId('pay-creditcard-button').click();
@@ -50,17 +49,7 @@ describe('Mollie payment methods', () => {
   });
 
   it('[feature] Check mollie PayPal and place a fully paid order', () => {
-    cy.visitAndHydrate(paths.authLogin);
-
-    cy.intercept('/plentysystems/doLogin').as('doLogin');
-    myAccount.successLogin();
-    cy.wait('@doLogin');
-
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().acceptTerms().checkMolliePayPal().placeOrderButtons.click();
+    checkout.checkMolliePayPal().placeOrderButtons.click();
 
     pymentStatus.selectPaid();
     cy.window().then((win) => {
@@ -73,17 +62,7 @@ describe('Mollie payment methods', () => {
   });
 
   it('[feature] Check mollie PayPal and place a failed paid order', () => {
-    cy.visitAndHydrate(paths.authLogin);
-
-    cy.intercept('/plentysystems/doLogin').as('doLogin');
-    myAccount.successLogin();
-    cy.wait('@doLogin');
-
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().acceptTerms().checkMolliePayPal().placeOrderButtons.click();
+    checkout.checkMolliePayPal().placeOrderButtons.click();
 
     pymentStatus.selectFailed();
     cy.window().then((win) => {
