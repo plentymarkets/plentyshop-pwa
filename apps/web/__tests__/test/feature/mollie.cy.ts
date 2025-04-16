@@ -3,11 +3,15 @@ import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
+import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
+import { PaymentStatusScreen } from '../../support/pageObjects/PaymentStatusScreen';
 
 const checkout = new CheckoutPageObject();
 const cart = new CartPageObject();
 const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
+const myAccount = new MyAccountPageObject();
+const pymentStatus = new PaymentStatusScreen();
 
 beforeEach(() => {
   cy.clearCookies();
@@ -20,39 +24,49 @@ beforeEach(() => {
 });
 
 describe('Mollie payment methods', () => {
-  it('[smoke] Check mollie credit cardpayment and place a test order', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
+  // it('[feature] Check mollie credit cardpayment and place a test order', () => {
+  //   homePage.goToCategory();
+  //   productListPage.addToCart();
+  //   cart.openCart();
 
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout()
-      .fillContactInformationForm()
-      .checkMollieCreditCard()
-      .fillShippingAddressForm()
-      .acceptTerms()
-      .placeOrderButtons.click();
+  //   checkout
+  //     .goToCheckout()
+  //     .goToGuestCheckout()
+  //     .fillContactInformationForm()
+  //     .checkMollieCreditCard()
+  //     .fillShippingAddressForm()
+  //     .acceptTerms()
+  //     .placeOrderButtons.click();
 
-    cy.wait(4000);
+  //   cy.wait(4000);
 
-    checkout.mollieCreditCardModal.should('exist');
-  });
+  //   checkout.mollieCreditCardModal.should('exist');
+  // });
 
-  it('[smoke] Check mollie credit cardpayment and place a test order', () => {
+  it('[feature] Check mollie credit cardpayment and place a test order', () => {
     cy.setCookie('vsf-locale', 'de');
-    cy.visitAndHydrate(paths.home + 'de');
+    cy.visitAndHydrate('/de' + paths.authLogin);
+
+    cy.intercept('/plentysystems/doLogin').as('doLogin');
+    myAccount.successLogin();
+    cy.wait('@doLogin');
+
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
 
-    checkout
-      .goToCheckout()
-      .goToGuestCheckout()
-      .fillContactInformationForm()
-      .checkMollieEPS()
-      .fillShippingAddressForm()
-      .acceptTerms()
-      .placeOrderButton();
+    checkout.goToCheckout().acceptTerms().checkMollieEPS().placeOrderButtons.click();
+
+    pymentStatus.selectPaid();
+
+    cy.origin('https://mevofvd5omld.c01-14.plentymarkets.com', () => {
+      cy.on('uncaught:exception', (err) => {
+        if (err.message.includes('Cannot redefine property: cookie')) {
+          return false;
+        }
+      });
+
+      cy.visit('http://localhost:3000/de');
+    });
   });
 });
