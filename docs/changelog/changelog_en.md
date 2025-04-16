@@ -23,6 +23,7 @@
 ### 👷 Changed
 
 - Unified some terms in German and English
+- Filtering not integrated PayPal payment methods out of the checkout process.
 
 ### 🩹 Fixed
 
