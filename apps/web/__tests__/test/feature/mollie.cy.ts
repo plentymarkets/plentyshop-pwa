@@ -45,7 +45,43 @@ describe('Mollie payment methods', () => {
 
   it('[feature] Check mollie credit cardpayment and place a test order', () => {
     cy.setCookie('vsf-locale', 'de');
-    cy.visitAndHydrate('/de' + paths.authLogin);
+    cy.visitAndHydrate('/de' + paths.authLogin, {
+      onBeforeLoad(win) {
+        const originalAssign = win.location.assign;
+        const originalReplace = win.location.replace;
+
+        // Hook into assign and replace
+        win.location.assign = function (url: string) {
+          if (url.startsWith('https://mevofvd5omld.c01-14.plentymarkets.com')) {
+            console.log('Redirect intercepted: assign -> redirecting to localhost');
+            originalAssign.call(win.location, 'http://localhost:3000');
+          } else {
+            originalAssign.call(win.location, url);
+          }
+        };
+
+        win.location.replace = function (url: string) {
+          if (url.startsWith('https://mevofvd5omld.c01-14.plentymarkets.com')) {
+            console.log('Redirect intercepted: replace -> redirecting to localhost');
+            originalReplace.call(win.location, 'http://localhost:3000');
+          } else {
+            originalReplace.call(win.location, url);
+          }
+        };
+
+        // Auch direktes Setzen von href abfangen
+        Object.defineProperty(win.location, 'href', {
+          set(url: string) {
+            if (url.startsWith('https://mevofvd5omld.c01-14.plentymarkets.com')) {
+              console.log('Redirect intercepted: href -> redirecting to localhost');
+              originalAssign.call(win.location, 'http://localhost:3000');
+            } else {
+              originalAssign.call(win.location, url);
+            }
+          },
+        });
+      },
+    });
 
     cy.intercept('/plentysystems/doLogin').as('doLogin');
     myAccount.successLogin();
@@ -59,14 +95,16 @@ describe('Mollie payment methods', () => {
 
     pymentStatus.selectPaid();
 
-    cy.origin('https://mevofvd5omld.c01-14.plentymarkets.com', () => {
-      cy.on('uncaught:exception', (err) => {
-        if (err.message.includes('Cannot redefine property: cookie')) {
-          return false;
-        }
-      });
+    cy.visit('http://localhost:3000', {});
 
-      cy.visit('http://localhost:3000/de');
-    });
+    // cy.origin('https://mevofvd5omld.c01-14.plentymarkets.com/de/mollie-payment', () => {
+    //   cy.log('test');
+    //   cy.on('uncaught:exception', (err) => {
+    //     if (err.message.includes('Cannot redefine property: cookie')) {
+    //       return false;
+    //     }
+    //   });
+    // });
+    // cy.visit('http://localhost:3000/de/mollie-payment');
   });
 });
