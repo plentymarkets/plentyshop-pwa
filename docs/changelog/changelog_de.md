@@ -1,5 +1,38 @@
 # Changelog PlentyONE Shop
 
+# vx.x.x (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.xx.x" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🚀 Neu
+
+- Drag-and-Drop-Funktionalität wurde sowohl für Blöcke und Blockeinstellungen integriert.
+
+### 👷 Geändert
+
+- Vereinheitlichung einiger Begriffe auf Deutsch und Englisch
+
+# v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 👷 Geändert
+
+- Variation ID wurde zu Produkt-URLs auf Kategorieseiten hinzugefügt, um die Kompatibilität mit LTS sicherzustellen.
+
+### 🩹 Behoben
+
+- Ein Fehler wurde behoben, der beim Versuch, sich als Gast einzuloggen, auftrat.
+- Das Markup des Kategoriemenüs wurde aktualisiert, indem ein invalides verschachteltes Button-Element innerhalb eines Anker-Tags entfernt wurde.
+- Nuxt-Laufzeitfehler behoben.
+- Turnstile-Validierungsfehler im Kontaktformular behoben, wenn Turnstile nicht konfiguriert ist.
+- Es ist nicht mehr möglich, Werte außerhalb der Mengengrenzen im Mengenauswahlfeld einzugeben. Die Menge wird stattdessen auf 1 oder den maximalen Wert gesetzt.
+
+### 🏡 Chore
+
+- Validator-Paket zu nuxt optimizeDeps hinzugefügt.
+
+### 💻 Hinweise für Entwickler
+
+- Implementiert: 'frontend:productLoaded': { product: Product };-Event, das ausgelöst wird, wenn ein Produkt auf der Produktseite geladen wird.
+- Aktualisiert: frontend:removeFromCart-Event, um das gelöschte cartItem einzuschließen.
+
 # v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 🩹 Behoben
@@ -8,7 +41,7 @@
 
 # v1.13.0 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Die Möglichkeit, die Sichtbarkeit von Tags auf der Kategorieseite basierend auf einer Umgebungsvariable (USE_TAGS_ON_CATEGORY_PAGE=1) umzuschalten, wurde hinzugefügt.
 - DHL Prefered-Delivery wurde als Lieferart hinzugefügt.
@@ -47,7 +80,7 @@
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Symbolleiste für Seiteneinstellungen hinzugefügt.
 - Rechtlicher Hinweis im Checkout zu "lokaler Mehrwertsteuer, Kosten der Zollabfertigung und Zollgebühren" bei Bedarf hinzugefügt.
@@ -83,7 +116,7 @@
 
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Benachrichtigungen beim erfolgreichen oder fehlgeschlagenen Speichern von Änderungen im Editor hinzugefügt.
 
@@ -100,7 +133,7 @@
 
 # v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 #### Editor
 
@@ -164,7 +197,7 @@ Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Haupt
   - Führe `yarn setup:unix` oder `yarn setup:windows` aus und drücke y, um die `.yarnrc.yml` zu entfernen.
   - Entferne den `NPM_AUTH_TOKEN` aus der `apps/web/.env` Datei.
 
-### Neu
+### 🚀 Neu
 
 - Möglichkeit hinzugefügt, primäre und sekundäre Farben über den Seiten-Konfigurationsbereich zu ändern.
 - Seiten-Konfigurationsbereich hinzugefügt.
@@ -188,7 +221,7 @@ Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Haupt
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Das [Nuxt-Security-Modul](https://nuxt-security.vercel.app/) wurde zur Web-App hinzugefügt.
 - Die Web-App ist jetzt in der Lage, [Komponenten aus einem Modul](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in vorgegebenen Bereichen des Shops zu rendern.
@@ -225,7 +258,7 @@ Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Haupt
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Benutzer können jetzt die Startseite direkt im Shop bearbeiten. Dies umfasst das Hinzufügen, Bearbeiten und Löschen einzelner Blöcke. Unterstützte Blocktypen sind Hero Slider, Media Card, Empfohlene Produkte und Newsletter.
 - Kategorien mit der Sichtbarkeit "Nach Login" leiten Gastbenutzer jetzt zum Login weiter.
