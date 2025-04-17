@@ -1,11 +1,9 @@
 # Changelog PlentyONE Shop
 
-# v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+# v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New
 
-- Added page for accessibility information.
-- Drag-and-drop functionality has been integrated for blocks and block settings.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -20,6 +18,22 @@
 - (dev) Added delete category logic
 - (dev) Added delete category logic
 
+### 🩹 Fixed
+
+- (dev) Fix Page Selector state.
+- (dev) Fix Page Selector closes when clicking outside the box.
+- (dev) Fix Page Selector closes on second button click.
+- (dev) Fix styling of editor actions on content pages.
+- (dev) Fix notification and modal closing of delete category
+
+# v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.14.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 🚀 New
+
+- Added Mollie payment methods in the checkout.
+- Added a new legal page for the declaration on accessibility.
+- Drag-and-drop functionality has been integrated for blocks and block settings.
+
 ### 👷 Changed
 
 - Unified some terms in German and English
@@ -28,11 +42,7 @@
 ### 🩹 Fixed
 
 - Fixed the PayPal Express flow, requires PayPal Plugin version >= 6.5.11
-- (dev) Fix Page Selector state.
-- (dev) Fix Page Selector closes when clicking outside the box.
-- (dev) Fix Page Selector closes on second button click.
-- (dev) Fix styling of editor actions on content pages.
-- (dev) Fix notification and modal closing of delete category
+- Fixed the redirect in the quick checkout to the guest login instead of the checkout page when you are not logged in.
 
 # v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

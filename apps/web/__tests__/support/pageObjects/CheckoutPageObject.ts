@@ -187,10 +187,12 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillContactInformationForm() {
+    cy.intercept('/plentysystems/doLoginAsGuest').as('loginAsGuest');
     cy.getFixture('addressForm').then(() => {
       const uniqueEmail = `test.order${new Date().getTime()}@plentymarkets.com`;
       this.contactInformationForm.type(uniqueEmail).blur();
     });
+    cy.wait('@loginAsGuest', { timeout: 10000 });
 
     return this;
   }
@@ -241,6 +243,18 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  fillMollieCreditCardForm() {
+    cy.iframe('[title="cardNumber input"]').find('#cardNumber').type('3782 822463 10005');
+
+    cy.iframe('[title="cardHolder input"]').find('#cardHolder').first().type('Test Holder');
+
+    cy.iframe('[title="expiryDate input"]').find('#expiryDate').first().type('12/29');
+
+    cy.iframe('[title="verificationCode input"]').find('#verificationCode').first().type('1234');
+
+    return this;
+  }
+
   payCreditCard() {
     cy.intercept('/plentysystems/doAdditionalInformation')
       .as('doAdditionalInformation')
@@ -268,6 +282,20 @@ export class CheckoutPageObject extends PageObject {
 
   checkInvoice() {
     cy.getByTestId('payment-method-6000').check({ force: true });
+    return this;
+  }
+
+  checkMolliePayPal() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6056').check({ force: true });
+    cy.wait('@setPaymentProvider');
+    return this;
+  }
+
+  checkMollieCreditCard() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6046').check({ force: true });
+    cy.wait('@setPaymentProvider');
     return this;
   }
 

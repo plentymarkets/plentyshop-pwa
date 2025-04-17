@@ -1,6 +1,6 @@
 {
   "name": "@plentymarkets/plentyshop-pwa",
-  "version": "1.13.2",
+  "version": "1.14.0",
   "private": true,
   "license": "BSD-3-Clause",
   "workspaces": [
@@ -33,7 +33,8 @@
   },
   "dependencies": {
     "@plentymarkets/shop-core": "^1.3.9",
-    "@plentymarkets/shop-api": "file:/Users/cristi/workspace/plentymarkets-sdk/packages/api-client",
+    "@plentymarkets/shop-module-mollie": "^1.0.5",
+    "@plentymarkets/shop-api": "^0.101.1",
     "@plentymarkets/shop-module-gtag": "^1.1.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
