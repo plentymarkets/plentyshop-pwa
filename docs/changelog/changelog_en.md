@@ -31,7 +31,7 @@
 ### 🚀 New
 
 - Added Mollie payment methods in the checkout.
-- Added page for accessibility information.
+- Added a new legal page for the declaration on accessibility.
 - Drag-and-drop functionality has been integrated for blocks and block settings.
 
 ### 👷 Changed

@@ -2,12 +2,13 @@
 
 # vx.x.x (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.xx.x" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-# v1.14.0 (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.40.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+# v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.40.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 🚀 Neu
 
-- Drag-and-Drop-Funktionalität wurde sowohl für Blöcke und Blockeinstellungen integriert.
 - Mollie Zahlungsmethoden wurden in den Checkout integriert.
+- Es wurde eine neue rechtliche Seite für die Erklärung zur Barrierefreiheit hinzugefügt.
+- Drag-and-Drop-Funktionalität wurde sowohl für Blöcke und Blockeinstellungen integriert.
 
 ### 👷 Geändert
 
