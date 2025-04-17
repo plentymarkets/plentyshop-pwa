@@ -65,8 +65,8 @@ jobs:
 
       - name: Scan for malicious code
         run: >
-          semgrep scan 
-          --error 
+          semgrep scan
+          --error
           --severity ERROR
           .
   fitness-code-quality:
@@ -91,7 +91,7 @@ jobs:
       - name: Unit tests
         run: npm run test:coverage
       - name: 'Report Coverage'
-        if: always() 
+        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: './apps/web/'
@@ -229,6 +229,8 @@ jobs:
         with:
           install: false
           command: npm run test:cypress-quarantine
+        env:
+          MOLLIE_TEST_MODE: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
