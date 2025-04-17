@@ -2,6 +2,10 @@
 
 # vx.x.x (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.xx.x" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
+### 👷 Geändert
+
+- Alte Markennamen und Produktbezeichnungen aktualisiert.
+
 # v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.40.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 🚀 Neu
