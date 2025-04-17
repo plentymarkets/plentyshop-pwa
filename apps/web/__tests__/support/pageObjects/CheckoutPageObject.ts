@@ -1,6 +1,5 @@
 import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
-import { TIMEOUT } from 'dns';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
