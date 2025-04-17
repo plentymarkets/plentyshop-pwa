@@ -1,4 +1,3 @@
-// // composables/usePages.ts
 // composables/usePages.ts
 import type { CategoryTreeItem } from '~/composables/usePages/types';
 import { generateMockPagesAndCategories } from '~/composables/usePages/mock';
@@ -29,7 +28,7 @@ export const usePages = async () => {
           const currentPath = `${parentPath}/${item.details[0].nameUrl}`;
 
           const rawChildren = item.children || [];
-          const childrenLimit = childrenLimitMap.value[item.id] || 1;
+          const childrenLimit = childrenLimitMap.value[item.id] || rawChildren.length; // Default to all children if no limit
           const slicedChildren = rawChildren.slice(0, childrenLimit);
           const children = slicedChildren.length > 0
             ? transformData(slicedChildren, currentPath, false, item.id)
@@ -101,7 +100,7 @@ export const usePages = async () => {
 
   const loadMoreChildren = (parentId: number) => {
     if (!childrenLimitMap.value[parentId]) {
-      childrenLimitMap.value[parentId] = 10;
+      childrenLimitMap.value[parentId] = 0; // Initialize with a default limit
     }
 
     const parentInTree = [...mockPages, ...mockCategories].find(
@@ -112,8 +111,8 @@ export const usePages = async () => {
     const currentLimit = childrenLimitMap.value[parentId];
 
     if (currentLimit < totalChildren) {
-      childrenLimitMap.value[parentId] += 10;
-      transformCategoryTreeToPages();
+      childrenLimitMap.value[parentId] += 10; // Increment the limit
+      transformCategoryTreeToPages(); // Re-transform the tree to apply the new limit
     }
   };
 
