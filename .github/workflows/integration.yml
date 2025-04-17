@@ -9,6 +9,9 @@ permissions:
   packages: read
   pull-requests: write
 
+env:
+  MOLLIE_TEST_MODE: true
+
 jobs:
   meta:
     runs-on: ubuntu-latest
@@ -65,8 +68,8 @@ jobs:
 
       - name: Scan for malicious code
         run: >
-          semgrep scan 
-          --error 
+          semgrep scan
+          --error
           --severity ERROR
           .
   fitness-code-quality:
@@ -91,7 +94,7 @@ jobs:
       - name: Unit tests
         run: npm run test:coverage
       - name: 'Report Coverage'
-        if: always() 
+        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: './apps/web/'
@@ -156,7 +159,6 @@ jobs:
         env:
           NUXT_PUBLIC_DEFAULT_ITEMS_PER_PAGE: 1
           CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
-          MOLLIE_TEST_MODE: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -223,6 +225,9 @@ jobs:
 
       - name: Extract build
         run: tar -xzf build.tar.gz
+
+      - name: Check MOLLIE_TEST_MODE
+        run: echo "MOLLIE_TEST_MODE=$MOLLIE_TEST_MODE"
 
       - name: E2E tests
         uses: cypress-io/github-action@v5

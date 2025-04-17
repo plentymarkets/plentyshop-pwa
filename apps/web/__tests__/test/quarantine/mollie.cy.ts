@@ -33,7 +33,7 @@ beforeEach(() => {
 });
 
 describe('Mollie payment methods', () => {
-  it('[feature] Check mollie credit cardpayment and place a test order', () => {
+  it('[feature] Check mollie credit card payment and place a test order', () => {
     checkout.checkMollieCreditCard().placeOrderButtons.click();
 
     checkout.fillMollieCreditCardForm();
