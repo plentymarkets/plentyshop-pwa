@@ -1,8 +1,8 @@
-import type { CategoryResponse } from '../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { CategoryData } from '../../../../../plentymarkets-sdk/packages/api-client/src';
 import type { CategorySearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseCategoriesSearchState {
-  data: CategoryResponse;
+  data: CategoryData;
   loading: boolean;
 }
 
