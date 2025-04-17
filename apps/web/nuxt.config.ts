@@ -102,7 +102,7 @@ export default defineNuxtConfig({
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
-    liveMode: false,
+    liveMode: !process.env.MOLLIE_TEST_MODE,
     confirmationUrl: paths.confirmation,
   },
   fonts: {
