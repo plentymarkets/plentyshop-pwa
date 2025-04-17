@@ -192,11 +192,11 @@ export const usePreferredDelivery = () => {
   );
 
   const submitForm = async () => {
-    const parameters = { surcharge: null } as DoSavePreferredDeliveryServiceParams;
+    const parameters = {} as DoSavePreferredDeliveryServiceParams;
 
     if (usingPreferredDay.value) {
       parameters.preferredDay = state.value.data.day.value;
-      parameters.surcharge = state.value.data.additionalCharge;
+      if (state.value.data.additionalCharge) parameters.surcharge = state.value.data.additionalCharge;
     }
 
     if (usingPreferredLocation.value) {
