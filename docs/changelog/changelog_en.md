@@ -18,6 +18,10 @@
 - (dev) Added delete category logic
 - (dev) Added delete category logic
 
+### 👷 Changed
+
+- Updated instances of old branding and product names
+
 ### 🩹 Fixed
 
 - (dev) Fix Page Selector state.
