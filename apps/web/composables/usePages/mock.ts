@@ -16,7 +16,7 @@ const generateCategory = (
     details: [
       {
         name,
-        nameUrl: path.slice(1), // remove leading slash
+        nameUrl: path.slice(1),
         canonicalLink: '',
         position: '',
         metaDescription: '',
@@ -39,23 +39,38 @@ const generateCategory = (
   };
 };
 
-const generateNested = (
-  count = 5,
-  childrenPerLevel = 3,
-  maxDepth = 2,
-  depth = 0,
-  forceType?: 'item' | 'content'
-): CategoryTreeItem[] => {
+const generateChildrenFor48 = (parentPath: string, forceType?: 'item' | 'content'): CategoryTreeItem[] => {
+  const children: CategoryTreeItem[] = [];
+  for (let i = 1; i <= 100; i++) {
+    const name = `${i} kid of 48`;
+    const child = generateCategory(name, parentPath, 1, forceType);
+
+    // 25th kid gets its own 20 children
+    if (i === 25) {
+      child.children = [];
+      for (let j = 1; j <= 20; j++) {
+        const subName = `${j} kid of ${i} kid of 48`;
+        const subChild = generateCategory(subName, `${parentPath}/${name}`, 2, forceType);
+        child.children.push(subChild);
+      }
+      child.childCount = child.children.length;
+    }
+
+    children.push(child);
+  }
+  return children;
+};
+
+const generateMockSet = (type: 'item' | 'content'): CategoryTreeItem[] => {
   const nodes: CategoryTreeItem[] = [];
 
-  for (let i = 1; i <= count; i++) {
-    const name = `${forceType === 'content' ? 'Page' : 'Category'} ${depth + 1}.${i}`;
-    const node = generateCategory(name, '', depth, forceType);
+  for (let i = 1; i <= 200; i++) {
+    const name = `${type === 'content' ? 'Page' : 'Category'} ${i}`;
+    const node = generateCategory(name, '', 0, type);
 
-    if (depth < maxDepth) {
-      const children = generateNested(childrenPerLevel, childrenPerLevel, maxDepth, depth + 1, forceType);
-      node.children = children;
-      node.childCount = children.length;
+    if (i === 48) {
+      node.children = generateChildrenFor48(node.details[0].nameUrl, type);
+      node.childCount = node.children.length;
     }
 
     nodes.push(node);
@@ -65,14 +80,8 @@ const generateNested = (
 };
 
 export const generateMockPagesAndCategories = () => {
-  const mockPages: CategoryTreeItem[] = [
-    generateCategory('Homepage', '', 0, 'content'),
-    generateCategory('About Us', '', 0, 'content'),
-    generateCategory('Contact', '', 0, 'content'),
-    ...generateNested(3, 2, 2, 0, 'content'), // generate more nested content pages
-  ];
-
-  const mockCategories: CategoryTreeItem[] = generateNested(5, 3, 2, 0, 'item');
+  const mockPages: CategoryTreeItem[] = generateMockSet('content');
+  const mockCategories: CategoryTreeItem[] = generateMockSet('item');
 
   return {
     mockPages,

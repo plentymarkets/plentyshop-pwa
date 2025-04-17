@@ -66,13 +66,15 @@
         :parent-id="item.id"
       />
     </ul>
+    <button
+      v-if="hasMoreChildren"
+      class="ml-4 mt-2 text-sm text-blue-600 hover:underline"
+      @click="loadMoreChildren(item.id)"
+    >
+      Load more children
+    </button>
   </li>
-  <!-- <button
-        class="ml-4 mt-2 text-sm text-blue-600 hover:underline"
-        @click="loadMoreChildren(item.id)"
-      >
-        Load more children
-      </button> -->
+
 </template>
 
 <script setup lang="ts">
@@ -93,8 +95,12 @@ import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { locale } = useI18n();
 const { isCategoryDirty } = useCategorySettingsCollection();
-const { loadMoreChildren } = await usePages();
-
+const { loadMoreChildren, childrenLimitMap } = await usePages();
+const hasMoreChildren = computed(() => {
+  const currentLimit = childrenLimitMap.value[item.id] || 0;
+  const totalChildren = item.children?.length || 0;
+  return currentLimit < totalChildren; // Show the button if there are more children to load
+});
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
 const { item } = defineProps<{

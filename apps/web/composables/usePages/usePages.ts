@@ -1,4 +1,5 @@
-// // // composables/usePages.ts
+// // composables/usePages.ts
+// composables/usePages.ts
 import type { CategoryTreeItem } from '~/composables/usePages/types';
 import { generateMockPagesAndCategories } from '~/composables/usePages/mock';
 
@@ -24,13 +25,16 @@ export const usePages = async () => {
       let items = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) return null;
-  
+
           const currentPath = `${parentPath}/${item.details[0].nameUrl}`;
-  
-          const children = item.children
-            ? transformData(item.children, currentPath, false, item.id)
+
+          const rawChildren = item.children || [];
+          const childrenLimit = childrenLimitMap.value[item.id] || 1;
+          const slicedChildren = rawChildren.slice(0, childrenLimit);
+          const children = slicedChildren.length > 0
+            ? transformData(slicedChildren, currentPath, false, item.id)
             : undefined;
-  
+
           return {
             id: item.id,
             name: item.details[0].name,
@@ -49,16 +53,12 @@ export const usePages = async () => {
           };
         })
         .filter(Boolean) as Page[];
-  
+
       if (isRoot) {
         const limit = parentId === undefined && data[0]?.type === 'content' ? contentLimit.value : categoryLimit.value;
-        console.log('Limit:', limit, 'Items:', items); // Debugging
-        items = items.slice(0, limit);
-      } else if (parentId !== undefined) {
-        const limit = childrenLimitMap.value[parentId] || 1;
         items = items.slice(0, limit);
       }
-  
+
       if (
         isRoot &&
         !items.some((page) => page && page.name.toLowerCase() === 'homepage')
@@ -80,30 +80,41 @@ export const usePages = async () => {
           metaRobots: '',
         });
       }
-  
+
       return items;
     };
-  
+
     contentPages.value = transformData(mockPages);
     productCategories.value = transformData(mockCategories);
     pages.value = [...contentPages.value, ...productCategories.value];
   };
+
   const loadMoreContent = () => {
-    contentLimit.value += 1;
+    contentLimit.value += 50;
     transformCategoryTreeToPages();
   };
 
   const loadMoreCategories = () => {
-    categoryLimit.value += 1;
+    categoryLimit.value += 50;
     transformCategoryTreeToPages();
   };
 
   const loadMoreChildren = (parentId: number) => {
     if (!childrenLimitMap.value[parentId]) {
-      childrenLimitMap.value[parentId] = 1;
+      childrenLimitMap.value[parentId] = 10;
     }
-    childrenLimitMap.value[parentId] += 1;
-    transformCategoryTreeToPages();
+
+    const parentInTree = [...mockPages, ...mockCategories].find(
+      (entry) => entry.id === parentId
+    );
+
+    const totalChildren = parentInTree?.children?.length || 0;
+    const currentLimit = childrenLimitMap.value[parentId];
+
+    if (currentLimit < totalChildren) {
+      childrenLimitMap.value[parentId] += 10;
+      transformCategoryTreeToPages();
+    }
   };
 
   if (pages.value.length === 0) {
