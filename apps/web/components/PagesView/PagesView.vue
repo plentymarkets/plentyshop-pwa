@@ -5,8 +5,8 @@
         <div class="flex items-center text-xl font-bold">
           Pages
           <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
-            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
-          /></SfTooltip>
+            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
+          </SfTooltip>
         </div>
         <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
           <SfIconClose />
@@ -53,10 +53,22 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem
+              v-for="item in contentItems"
+              :key="item.path"
+              :item="item"
+              :parent-id="item.id"
+            />
           </ul>
+          <button
+            class="mt-2 text-sm text-blue-600 hover:underline"
+            @click="loadMoreContent"
+          >
+            Load more pages
+          </button>
         </div>
       </UiAccordionItem>
+
       <UiAccordionItem
         v-model="productPagesOpen"
         data-testid="product-pages-section"
@@ -69,8 +81,19 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem
+              v-for="item in itemItems"
+              :key="item.path"
+              :item="item"
+              :parent-id="item.id"
+            />
           </ul>
+          <button
+            class="mt-2 text-sm text-blue-600 hover:underline"
+            @click="loadMoreCategories"
+          >
+            Load more categories
+          </button>
         </div>
       </UiAccordionItem>
     </div>
@@ -83,12 +106,17 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
+
 const { locale } = useI18n();
-const { pages } = await usePages();
+const {
+  pages,
+  loadMoreContent,
+  loadMoreCategories,
+} = await usePages();
+
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
-
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
 const splitItemsByType = (items: MenuItemType[]) => {
@@ -110,6 +138,7 @@ const splitItemsByType = (items: MenuItemType[]) => {
 
   return result;
 };
+
 const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {

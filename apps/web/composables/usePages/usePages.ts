@@ -1,21 +1,36 @@
+// composables/usePages.ts
 import type { CategoryTreeItem } from '~/composables/usePages/types';
+import { generateMockPagesAndCategories } from '~/composables/usePages/mock';
 
 export const usePages = async () => {
   const { t, locale } = useI18n();
-  const { data } = useCategoryTree();
+
+  const { mockPages, mockCategories } = generateMockPagesAndCategories();
 
   const pages = useState<Page[]>('pages', () => []);
+  const contentPages = useState<Page[]>('contentPages', () => []);
+  const productCategories = useState<Page[]>('productCategories', () => []);
+
+  const contentLimit = useState<number>('contentLimit', () => 1);
+  const categoryLimit = useState<number>('categoryLimit', () => 1);
+  const childrenLimitMap = useState<Record<number, number>>('childrenLimitMap', () => ({}));
+
   const transformCategoryTreeToPages = () => {
-    const transformData = (data: CategoryTreeItem[], parentPath = '', isRoot = true): Page[] => {
-      const transformedData = data
+    const transformData = (
+      data: CategoryTreeItem[],
+      parentPath = '',
+      isRoot = true,
+      parentId?: number
+    ): Page[] => {
+      let items = data
         .map((item: CategoryTreeItem) => {
-          if (!item.details || item.details.length === 0) {
-            return null;
-          }
+          if (!item.details || item.details.length === 0) return null;
 
           const currentPath = `${parentPath}/${item.details[0].nameUrl}`;
 
-          const children = item.children ? transformData(item.children, currentPath, false) : undefined;
+          const children = item.children
+            ? transformData(item.children, currentPath, false, item.id)
+            : undefined;
 
           return {
             id: item.id,
@@ -27,17 +42,28 @@ export const usePages = async () => {
             parentCategoryId: item.parentCategoryId,
             sitemap: item.sitemap,
             linklist: item.linklist,
-            canonicalLink: item.details[0].canonicalLink ? item.details[0].canonicalLink : '',
-            position: item.details[0].position ? item.details[0].position : '',
-            metaDescription: item.details[0].metaDescription ? item.details[0].metaDescription : '',
-            metaKeywords: item.details[0].metaKeywords ? item.details[0].metaKeywords : '',
-            metaRobots: item.details[0].metaRobots ? item.details[0].metaRobots : '',
+            canonicalLink: item.details[0].canonicalLink ?? '',
+            position: item.details[0].position ?? '',
+            metaDescription: item.details[0].metaDescription ?? '',
+            metaKeywords: item.details[0].metaKeywords ?? '',
+            metaRobots: item.details[0].metaRobots ?? '',
           };
         })
-        .filter(Boolean);
+        .filter(Boolean) as Page[];
 
-      if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
-        transformedData.unshift({
+      if (isRoot) {
+        const limit = parentId === undefined && data[0]?.type === 'content' ? contentLimit.value : categoryLimit.value;
+        items = items.slice(0, limit);
+      } else if (parentId !== undefined) {
+        const limit = childrenLimitMap.value[parentId] || 1;
+        items = items.slice(0, limit);
+      }
+
+      if (
+        isRoot &&
+        !items.some((page) => page && page.name.toLowerCase() === 'homepage')
+      ) {
+        items.unshift({
           id: 1,
           name: t('homepage.title'),
           path: '/',
@@ -55,40 +81,47 @@ export const usePages = async () => {
         });
       }
 
-      return transformedData as {
-        id: number;
-        name: string;
-        path: string;
-        children?: Page[];
-        type: string;
-        right: string;
-        parentCategoryId: string;
-        sitemap: string;
-        linklist: string;
-        canonicalLink?: string;
-        position?: string;
-        metaDescription?: string;
-        metaKeywords?: string;
-        metaRobots?: string;
-      }[];
+      return items;
     };
 
-    pages.value = transformData(data.value);
+    contentPages.value = transformData(mockPages);
+    productCategories.value = transformData(mockCategories);
+    pages.value = [...contentPages.value, ...productCategories.value];
+  };
+
+  const loadMoreContent = () => {
+    contentLimit.value += 1;
+    transformCategoryTreeToPages();
+  };
+
+  const loadMoreCategories = () => {
+    categoryLimit.value += 1;
+    transformCategoryTreeToPages();
+  };
+
+  const loadMoreChildren = (parentId: number) => {
+    if (!childrenLimitMap.value[parentId]) {
+      childrenLimitMap.value[parentId] = 1;
+    }
+    childrenLimitMap.value[parentId] += 1;
+    transformCategoryTreeToPages();
   };
 
   if (pages.value.length === 0) {
-    await transformCategoryTreeToPages();
+    transformCategoryTreeToPages();
   }
 
-  watch(locale, async () => {
-    await transformCategoryTreeToPages();
-  });
-
-  watch(data, async () => {
-    await transformCategoryTreeToPages();
+  watch(locale, () => {
+    transformCategoryTreeToPages();
   });
 
   return {
     pages,
+    contentPages,
+    productCategories,
+    loadMoreContent,
+    loadMoreCategories,
+    loadMoreChildren,
+    childrenLimitMap,
   };
 };

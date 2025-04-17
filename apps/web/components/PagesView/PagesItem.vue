@@ -34,20 +34,14 @@
         <div class="p-2 rounded bg-white w-max shadow-[0px_2px_4px_-1px_#0000000F]">
           <div
             class="p-1 flex"
-            @click="
-              openGeneralSettings(item.id);
-              setCategoryId(item.id, parentId);
-            "
+            @click="openGeneralSettings(item.id); setCategoryId(item.id, parentId)"
           >
             <NuxtImg width="24" height="24px" :src="gearBlack" />
             <span class="ml-2">General Settings</span>
           </div>
           <div
             class="p-1 flex"
-            @click="
-              openSeoSettings(item.id);
-              setCategoryId(item.id, parentId);
-            "
+            @click="openSeoSettings(item.id); setCategoryId(item.id, parentId)"
           >
             <SfIconSearch />
             <span class="ml-2">SEO Settings</span>
@@ -63,11 +57,24 @@
         </div>
       </SfDropdown>
     </div>
+
     <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">
-      <PagesItem v-for="child in item.children" :key="child.path" :item="child" :parent-id="item.id" />
+      <PagesItem
+        v-for="child in item.children"
+        :key="child.path"
+        :item="child"
+        :parent-id="item.id"
+      />
+      <button
+        class="ml-4 mt-2 text-sm text-blue-600 hover:underline"
+        @click="loadMoreChildren(item.id)"
+      >
+        Load more children
+      </button>
     </ul>
   </li>
 </template>
+
 <script setup lang="ts">
 import type { MenuItemType } from '~/components/PagesView/types';
 import {
@@ -83,9 +90,11 @@ import {
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-const { isCategoryDirty } = useCategorySettingsCollection();
 
 const { locale } = useI18n();
+const { isCategoryDirty } = useCategorySettingsCollection();
+const { loadMoreChildren } = await usePages();
+
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
 const { item } = defineProps<{
