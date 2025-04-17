@@ -46,6 +46,8 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     } finally {
       state.value.loading = false;
     }
+
+    console.log('Category settings:', state.value.data);
   };
   const toggleDeleteModal = (value: boolean) => {
     state.value.unlinkModalOpen = value;

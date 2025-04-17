@@ -24,23 +24,6 @@
         </button>
       </div>
 
-      <div class="mx-4 mb-4 mt-4">
-        <button
-          type="button"
-          variant="primary"
-          data-testid="add-page-btn"
-          class="border border-editor-button bg-editor-button text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
-          :class="{ 'opacity-40 cursor-not-allowed': !hasChanges || loading }"
-          :disabled="!hasChanges || loading"
-          @click="save"
-        >
-          <template v-if="loading">
-            <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px]" />
-          </template>
-          <template v-else> Save Settings </template>
-        </button>
-      </div>
-
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"
@@ -53,10 +36,18 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in contentPages" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
+          <button
+            type="button"
+            class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+            @click="loadMoreContentPages"
+          >
+            Load More Content Pages
+          </button>
         </div>
       </UiAccordionItem>
+
       <UiAccordionItem
         v-model="productPagesOpen"
         data-testid="product-pages-section"
@@ -69,8 +60,15 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in itemPages" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
+          <button
+            type="button"
+            class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+            @click="loadMoreItemPages"
+          >
+            Load More Product Pages
+          </button>
         </div>
       </UiAccordionItem>
     </div>
@@ -81,36 +79,12 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import type { MenuItemType } from '~/components/PagesView/types';
+import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
 const { locale } = useI18n();
-const { pages } = await usePages();
+const { contentPages, itemPages, loadMoreContentPages, loadMoreItemPages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
-
-const { loading, hasChanges, save } = useCategorySettingsCollection();
-
-const splitItemsByType = (items: MenuItemType[]) => {
-  const result = {
-    contentItems: [] as MenuItemType[],
-    itemItems: [] as MenuItemType[],
-  };
-
-  items.forEach((item) => {
-    switch (item.type) {
-      case 'content':
-        result.contentItems.push(item);
-        break;
-      case 'item':
-        result.itemItems.push(item);
-        break;
-    }
-  });
-
-  return result;
-};
-const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
   const urls: Record<string, string> = {
