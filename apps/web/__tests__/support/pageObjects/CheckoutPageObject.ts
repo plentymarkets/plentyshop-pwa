@@ -287,14 +287,14 @@ export class CheckoutPageObject extends PageObject {
 
   checkMolliePayPal() {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
-    cy.getByTestId('payment-method-6056').check({ force: true }); //Mevo = 6048 //fabian = ?
+    cy.getByTestId('payment-method-6056').check({ force: true });
     cy.wait('@setPaymentProvider');
     return this;
   }
 
   checkMollieCreditCard() {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
-    cy.getByTestId('payment-method-6046').check({ force: true }); //Mevo = 6046 //fabian = 6032
+    cy.getByTestId('payment-method-6046').check({ force: true });
     cy.wait('@setPaymentProvider');
     return this;
   }
