@@ -166,8 +166,6 @@ jobs:
   test-e2e-editor:
     runs-on: ubuntu-latest
     needs: build
-    env:
-      MOLLIE_TEST_MODE: true
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -205,6 +203,8 @@ jobs:
   test-e2e-flakey:
     runs-on: ubuntu-latest
     needs: build
+    env:
+      MOLLIE_TEST_MODE: true
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
