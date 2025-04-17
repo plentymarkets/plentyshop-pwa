@@ -4,6 +4,7 @@
 
 ### 🚀 New
 
+- Added page for accessibility information.
 - Drag-and-drop functionality has been integrated for blocks and block settings.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
@@ -22,9 +23,11 @@
 ### 👷 Changed
 
 - Unified some terms in German and English
+- Filtering not integrated PayPal payment methods out of the checkout process.
 
 ### 🩹 Fixed
 
+- Fixed the PayPal Express flow, requires PayPal Plugin version >= 6.5.11
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
