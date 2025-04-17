@@ -6,15 +6,15 @@ export const usePages = async () => {
   const { data } = useCategoryTree();
 
   // Data for stress test 
-  // const data = ref<CategoryTreeItem[]>(generateMockPages());
+//  const data = ref<CategoryTreeItem[]>(generateMockPages());
 
   const pages = useState<Page[]>('pages', () => []);
   const contentPages = useState<Page[]>('contentPages', () => []);
   const itemPages = useState<Page[]>('itemPages', () => []);
   const childrenMap = useState<Record<number, Page[]>>('childrenMap', () => ({}));
   const childrenLimitMap = useState<Record<number, number>>('childrenLimitMap', () => ({})); 
-  let contentLimit = 50;
-  let itemLimit = 50;
+  let contentLimit = 1;
+  let itemLimit = 1;
 
   const transformCategoryTreeToPages = () => {
     const allPages: Page[] = [];
@@ -22,7 +22,9 @@ export const usePages = async () => {
     const itemData: Page[] = [];
     const tempChildrenMap: Record<number, Page[]> = {};
 
-    const transformData = (data: CategoryTreeItem[], parentPath = '', parentId: number | null = null) => {
+    const transformData = (data: CategoryTreeItem[], parentPath = '', parentId: number | null = null): Page[] => {
+      const children: Page[] = [];
+
       data.forEach((item: CategoryTreeItem) => {
         if (!item.details || item.details.length === 0) {
           return;
@@ -46,6 +48,11 @@ export const usePages = async () => {
           metaRobots: item.details[0].metaRobots || '',
         };
 
+        if (item.children) {
+          page.children = transformData(item.children, currentPath, item.id);
+        }
+
+        children.push(page);
         allPages.push(page);
 
         if (item.type === 'content' && contentData.length < contentLimit) {
@@ -60,11 +67,9 @@ export const usePages = async () => {
           }
           tempChildrenMap[parentId].push(page);
         }
-
-        if (item.children) {
-          transformData(item.children, currentPath, item.id);
-        }
       });
+
+      return children;
     };
 
     transformData(data.value);
@@ -101,12 +106,12 @@ export const usePages = async () => {
   });
 
   const loadMoreContentPages = () => {
-    contentLimit += 50;
+    contentLimit += 1;
     transformCategoryTreeToPages();
   };
 
   const loadMoreItemPages = () => {
-    itemLimit += 50;
+    itemLimit += 1;
     transformCategoryTreeToPages();
   };
 
@@ -122,3 +127,4 @@ export const usePages = async () => {
     loadMoreItemPages,
   };
 };
+

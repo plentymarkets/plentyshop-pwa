@@ -63,17 +63,15 @@
         </div>
       </SfDropdown>
     </div>
-    
 
-    <!-- Render children -->
     <ul v-if="open && limitedChildren.length > 0" class="pl-4 border-l border-gray-200">
       <PagesItem v-for="child in limitedChildren" :key="child.path" :item="child" :parent-id="item.id" />
     </ul>
-    <!-- Load More button for children -->
+
     <button
       v-if="children.length > limitedChildren.length"
-      @click="loadMoreChildren(item.id)"
       class="text-blue-500 text-sm mt-2"
+      @click="loadMoreChildren(item.id)"
     >
       Load More
     </button>
