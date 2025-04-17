@@ -66,7 +66,7 @@
   },
   "PreviewModeBar": {
     "label": "Steuerung des Vorschaumodus",
-    "pwa": "plentyShop PWA Vorschau beenden"
+    "pwa": "Shop Vorschau beenden"
   },
   "account": {
     "accountSettings": {
@@ -1044,7 +1044,7 @@
       "invalidPostalCodeMessage": "Bitte prüfen Sie die Eingabe der Postleitzahl. Es wird ein 5-stelliger numerischer Wert erwartet - z.B. '34117'.",
       "noServicesMessage1": "Bitte prüfen Sie die Eingabe der Postleitzahl. Es wird ein 5-stelliger numerischer Wert erwartet - z.B. '34117'.",
       "noServicesMessage2": "Es konnten keine gültigen Services für DHL Wunschzustellung ermittelt werden.",
-      "assistantDescription": "Verwende diesen Assistenten, um mit dem DHL Wunschzustellung-Plugin die DHL Wunschzustellung-Services in deinem plentyShop zu integrieren.",
+      "assistantDescription": "Verwende diesen Assistenten, um mit dem DHL Wunschzustellung-Plugin die DHL Wunschzustellung-Services in deinem Shop zu integrieren.",
       "warning": "Warnhinweis",
       "wunschpaketRequirementWarning": "Speichere einen Aufpreis für den Service {preferredDayMsg}. Die Wunschzustellung-Services selbst aktivierst du dann im Assistenten {shippingSettingsMsg}. Bestimme hier außerdem die Cut-off-Zeit und lege fest, an welchen Tagen keine Paketübergabe an DHL erfolgt.",
       "additionalCharge": "Aufpreis",

@@ -210,8 +210,8 @@ export default defineNuxtConfig({
       cleanupOutdatedCaches: true,
     },
     manifest: {
-      name: 'plentyshop PWA',
-      short_name: 'plentyshopPWA',
+      name: 'PlentyONE Shop',
+      short_name: 'PlentyONEShop',
       theme_color: '#0C7992',
       icons: [
         {
