@@ -230,7 +230,7 @@ jobs:
           install: false
           command: npm run test:cypress-quarantine
         env:
-          MOLLIE_TEST_MODE: true
+          MOLLIE_TEST_MODE: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
