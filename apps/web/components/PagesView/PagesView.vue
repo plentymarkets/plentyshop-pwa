@@ -41,6 +41,7 @@
         </button>
       </div>
 
+      <!-- Content Pages Section -->
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"
@@ -54,7 +55,7 @@
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
             <PagesItem
-              v-for="item in contentItems"
+              v-for="item in contentPages"
               :key="item.path"
               :item="item"
               :parent-id="item.id"
@@ -62,13 +63,14 @@
           </ul>
           <button
             class="mt-2 text-sm text-blue-600 hover:underline"
-            @click="loadMoreContent"
+            @click="loadMoreContentPages"
           >
             Load more pages
           </button>
         </div>
       </UiAccordionItem>
 
+      <!-- Product Categories Section -->
       <UiAccordionItem
         v-model="productPagesOpen"
         data-testid="product-pages-section"
@@ -82,7 +84,7 @@
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
             <PagesItem
-              v-for="item in itemItems"
+              v-for="item in itemPages"
               :key="item.path"
               :item="item"
               :parent-id="item.id"
@@ -90,7 +92,7 @@
           </ul>
           <button
             class="mt-2 text-sm text-blue-600 hover:underline"
-            @click="loadMoreCategories"
+            @click="loadMoreItemPages"
           >
             Load more categories
           </button>
@@ -105,41 +107,19 @@
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import type { MenuItemType } from '~/components/PagesView/types';
 
 const { locale } = useI18n();
 const {
-  pages,
-  loadMoreContent,
-  loadMoreCategories,
+  contentPages,
+  productCategories: itemPages,
+  loadMoreContent: loadMoreContentPages,
+  loadMoreCategories: loadMoreItemPages,
 } = await usePages();
 
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
-
-const splitItemsByType = (items: MenuItemType[]) => {
-  const result = {
-    contentItems: [] as MenuItemType[],
-    itemItems: [] as MenuItemType[],
-  };
-
-  items.forEach((item) => {
-    switch (item.type) {
-      case 'content':
-        result.contentItems.push(item);
-        break;
-      case 'item':
-        result.itemItems.push(item);
-        break;
-    }
-  });
-
-  return result;
-};
-
-const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
   const urls: Record<string, string> = {

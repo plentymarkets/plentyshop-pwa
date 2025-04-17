@@ -65,14 +65,14 @@
         :item="child"
         :parent-id="item.id"
       />
-      <button
+    </ul>
+  </li>
+  <!-- <button
         class="ml-4 mt-2 text-sm text-blue-600 hover:underline"
         @click="loadMoreChildren(item.id)"
       >
         Load more children
-      </button>
-    </ul>
-  </li>
+      </button> -->
 </template>
 
 <script setup lang="ts">
