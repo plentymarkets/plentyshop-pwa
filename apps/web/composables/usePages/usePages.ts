@@ -1,16 +1,20 @@
 import type { CategoryTreeItem } from '~/composables/usePages/types';
+// import { generateMockPages } from '~/mocks/pagesMock';
 
 export const usePages = async () => {
   const { locale } = useI18n();
   const { data } = useCategoryTree();
+
+  // Data for stress test 
+  // const data = ref<CategoryTreeItem[]>(generateMockPages());
 
   const pages = useState<Page[]>('pages', () => []);
   const contentPages = useState<Page[]>('contentPages', () => []);
   const itemPages = useState<Page[]>('itemPages', () => []);
   const childrenMap = useState<Record<number, Page[]>>('childrenMap', () => ({}));
   const childrenLimitMap = useState<Record<number, number>>('childrenLimitMap', () => ({})); 
-  let contentLimit = 1;
-  let itemLimit = 1;
+  let contentLimit = 50;
+  let itemLimit = 50;
 
   const transformCategoryTreeToPages = () => {
     const allPages: Page[] = [];
@@ -97,12 +101,12 @@ export const usePages = async () => {
   });
 
   const loadMoreContentPages = () => {
-    contentLimit += 1;
+    contentLimit += 50;
     transformCategoryTreeToPages();
   };
 
   const loadMoreItemPages = () => {
-    itemLimit += 1;
+    itemLimit += 50;
     transformCategoryTreeToPages();
   };
 
