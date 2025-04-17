@@ -5,8 +5,8 @@
         <div class="flex items-center text-xl font-bold">
           Pages
           <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
-            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
-          /></SfTooltip>
+            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
+          </SfTooltip>
         </div>
         <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
           <SfIconClose />
@@ -41,6 +41,7 @@
         </button>
       </div>
 
+      <!-- Content Pages Section -->
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"
@@ -53,10 +54,23 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem
+              v-for="item in contentPages"
+              :key="item.path"
+              :item="item"
+              :parent-id="item.id"
+            />
           </ul>
+          <button
+            class="mt-2 text-sm text-blue-600 hover:underline"
+            @click="loadMoreContentPages"
+          >
+            Load more pages
+          </button>
         </div>
       </UiAccordionItem>
+
+      <!-- Product Categories Section -->
       <UiAccordionItem
         v-model="productPagesOpen"
         data-testid="product-pages-section"
@@ -69,8 +83,19 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem
+              v-for="item in itemPages"
+              :key="item.path"
+              :item="item"
+              :parent-id="item.id"
+            />
           </ul>
+          <button
+            class="mt-2 text-sm text-blue-600 hover:underline"
+            @click="loadMoreItemPages"
+          >
+            Load more categories
+          </button>
         </div>
       </UiAccordionItem>
     </div>
@@ -82,35 +107,19 @@
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import type { MenuItemType } from '~/components/PagesView/types';
+
 const { locale } = useI18n();
-const { pages } = await usePages();
+const {
+  contentPages,
+  productCategories: itemPages,
+  loadMoreContent: loadMoreContentPages,
+  loadMoreCategories: loadMoreItemPages,
+} = await usePages();
+
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
-
 const { loading, hasChanges, save } = useCategorySettingsCollection();
-
-const splitItemsByType = (items: MenuItemType[]) => {
-  const result = {
-    contentItems: [] as MenuItemType[],
-    itemItems: [] as MenuItemType[],
-  };
-
-  items.forEach((item) => {
-    switch (item.type) {
-      case 'content':
-        result.contentItems.push(item);
-        break;
-      case 'item':
-        result.itemItems.push(item);
-        break;
-    }
-  });
-
-  return result;
-};
-const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
   const urls: Record<string, string> = {
