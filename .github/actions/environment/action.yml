@@ -10,9 +10,6 @@ inputs:
   configuration:
     description: 'Configuration'
     required: true
-  mollie-test-mode:
-    description: 'Mollie test mode'
-    required: false
 runs:
   using: 'composite'
   steps:
@@ -29,4 +26,4 @@ runs:
         API_SECURITY_TOKEN: ${{ inputs.api-security-token }}
         API_ENDPOINT: ${{ inputs.api-endpoint }}
         CONFIGURATION: ${{ inputs.configuration }}
-        MOLLIE_TEST_MODE: ${{ inputs.mollie-test-mode }}
+        MOLLIE_TEST_MODE: true
