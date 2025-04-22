@@ -1,22 +1,28 @@
 <template>
-  <TextContent data-testid="recommended-block" class="pb-4" :text="props.text" :index="props.index" />
-  <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+  <div v-bind="$attrs">
+    <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
+    <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { ProductRecommendedProductsProps } from './types';
-import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<ProductRecommendedProductsProps>();
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
+const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
+  props.content.categoryId + props.content.cacheKey,
+);
 
-watchDebounced(
-  () => props.categoryId,
+if (props.content.categoryId) {
+  fetchProductRecommended(props.content.categoryId);
+}
+
+watch(
+  () => props.content.categoryId,
   () => {
-    if (props.categoryId) {
-      fetchProductRecommended(props.categoryId);
+    if (props.content.categoryId) {
+      fetchProductRecommended(props.content.categoryId);
     }
   },
-  { debounce: 500, immediate: true },
 );
 </script>

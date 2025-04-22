@@ -31,7 +31,7 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <BlocksProductRecommendedProducts :text="{}" :category-id="productGetters.getCategoryIds(product)[0]" />
+          <RecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -71,7 +71,11 @@ setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-await fetchProduct(productParams);
+await fetchProduct(productParams).then(() => {
+  usePlentyEvent().emit('frontend:productLoaded', {
+    product: product.value,
+  });
+});
 
 if (Object.keys(product.value).length === 0) {
   throw new Response(null, {

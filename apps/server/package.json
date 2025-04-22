@@ -1,8 +1,8 @@
 {
   "name": "server",
-  "version": "1.12.0",
+  "version": "1.14.0",
   "main": "./src/index.ts",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "scripts": {
     "dev": "nodemon",
     "start": "echo \"Starting server...\" && nodemon --spawn",

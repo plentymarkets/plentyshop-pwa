@@ -4,7 +4,7 @@
       <header class="flex items-center justify-between px-4 py-5 border-b">
         <div class="flex items-center text-xl font-bold">
           Pages
-          <SfTooltip label="Open manual" placement="left" :show-arrow="true" class="flex">
+          <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
             <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
           /></SfTooltip>
         </div>
@@ -24,6 +24,23 @@
         </button>
       </div>
 
+      <div class="mx-4 mb-4 mt-4">
+        <button
+          type="button"
+          variant="primary"
+          data-testid="add-page-btn"
+          class="border border-editor-button bg-editor-button text-white w-full py-1 rounded-md flex align-center justify-center text-editor-button"
+          :class="{ 'opacity-40 cursor-not-allowed': !hasChanges || loading }"
+          :disabled="!hasChanges || loading"
+          @click="save"
+        >
+          <template v-if="loading">
+            <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px]" />
+          </template>
+          <template v-else> Save Settings </template>
+        </button>
+      </div>
+
       <UiAccordionItem
         v-model="contentPagesOpen"
         data-testid="content-pages-section"
@@ -36,7 +53,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -52,7 +69,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" />
+            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -64,15 +81,15 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd } from '@storefront-ui/vue';
+import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
 import type { MenuItemType } from '~/components/PagesView/types';
-const { $i18n } = useNuxtApp();
-const currentLocale = ref($i18n.locale.value);
-
+const { locale } = useI18n();
 const { pages } = await usePages();
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+
+const { loading, hasChanges, save } = useCategorySettingsCollection();
 
 const splitItemsByType = (items: MenuItemType[]) => {
   const result = {
@@ -96,12 +113,13 @@ const splitItemsByType = (items: MenuItemType[]) => {
 const { contentItems, itemItems } = splitItemsByType(pages.value);
 
 const openHelpPage = () => {
-  const urls = {
-    en: ' https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
+  const urls: Record<string, string> = {
+    en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
     de: 'https://knowledge.plentymarkets.com/de-de/manual/main/webshop/shop-editor.html',
   };
 
-  const targetUrl = currentLocale.value === 'de' ? urls.de : urls.en;
-  window.open(targetUrl, '_blank');
+  const targetUrl = urls[locale.value] ?? urls['en'] ?? null;
+
+  if (targetUrl) window.open(targetUrl, '_blank');
 };
 </script>

@@ -9,7 +9,7 @@
         {{ t(cookieGroups?.barTitle) }}
       </div>
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
-        <i18n-t v-if="cookieGroups.barDescription" :keypath="cookieGroups.barDescription">
+        <i18n-t v-if="cookieGroups.barDescription" :keypath="cookieGroups.barDescription" scope="global">
           <template #legal
             ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{
               t('categories.legal.subcategories.legalDisclosure')

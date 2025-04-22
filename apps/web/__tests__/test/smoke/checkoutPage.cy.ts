@@ -30,6 +30,7 @@ describe('Smoke: Checkout Page', () => {
       .goToGuestCheckout()
       .fillContactInformationForm()
       .fillShippingAddressForm()
+      .checkInvoice()
       .acceptTerms()
       .placeOrderButton()
       .displaySuccessPage();

@@ -1,8 +1,8 @@
 /**
- * Composables for plentyShop PWA.
+ * Composables for PlentyONE Shop.
  *
  * @remarks
- * This section provides a reference of composables available in plentyShop PWA.
+ * This section provides a reference of composables available in PlentyONE Shop.
  * It includes the available functions and interfaces.
  *
  * @packageDocumentation
@@ -25,7 +25,6 @@ export * from './useCustomerContact';
 export * from './useCustomerOrder';
 export * from './useCustomerOrders';
 export * from './useCustomerReturns';
-export * from './useHandleError';
 export * from './useInitialSetup';
 export * from './useLegalInformation';
 export * from './useLocalization';
@@ -33,7 +32,6 @@ export * from './useMakeOrder';
 export * from './useMegaMenu';
 export * from './useModernImage';
 export * from './useNewsletter';
-export * from './useNotification';
 export * from './useOffer';
 export * from './useOrderDocument';
 export * from './usePaymentMethods';

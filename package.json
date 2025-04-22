@@ -1,8 +1,8 @@
 {
   "name": "@plentymarkets/plentyshop-pwa",
-  "version": "1.12.0",
+  "version": "1.14.0",
   "private": true,
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "workspaces": [
     "apps/*"
   ],
@@ -32,8 +32,9 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.95.1",
-    "@plentymarkets/shop-core": "^1.2.2",
+    "@plentymarkets/shop-core": "^1.3.9",
+    "@plentymarkets/shop-module-mollie": "^1.0.5",
+    "@plentymarkets/shop-api": "^0.101.1",
     "@plentymarkets/shop-module-gtag": "^1.1.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
@@ -45,7 +46,8 @@
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
-    "vue-multiselect": "^3.2.0"
+    "vue-multiselect": "^3.2.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",

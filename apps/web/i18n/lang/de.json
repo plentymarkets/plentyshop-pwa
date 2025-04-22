@@ -27,17 +27,17 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Speichert die Einwilligungsauswahl."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
         },
         "vsfLocale": {
           "name": "vsf-locale",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Speichert die Anzeigesprache."
         }
       },
@@ -49,13 +49,6 @@
       "label": "Externe Medien"
     },
     "functional": {
-      "cookies": {
-        "scriptDemo": {
-          "name": "Script-Demo",
-          "provider": "plentysystems AG",
-          "status": "Anwendungsbeispiel zum Laden eines Skripts nach Einwilligung."
-        }
-      },
       "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können.",
       "label": "Funktional"
     },
@@ -109,7 +102,7 @@
       "section": {
         "billingDetails": "Rechnungsadressen",
         "personalData": "Persönliche Daten",
-        "shippingDetails": "Versandadressen"
+        "shippingDetails": "Lieferadressen"
       },
       "shippingDetails": {
         "newAddress": "Neue Lieferadresse",
@@ -137,13 +130,13 @@
         "buyAgain": "Erneut kaufen",
         "cancel": "Abbrechen",
         "heading": "Erneut kaufen",
-        "headingChanges": "Änderungen der Produkte",
+        "headingChanges": "Änderungen der Artikel",
         "notAvailable": "Nicht verfügbar",
         "orderPropertyNotAvailableOrChanged": "Artikeleigenschaften geändert oder nicht mehr verfügbar",
         "priceDown": "Preis gesenkt",
         "priceUp": "Preis erhöht",
         "stockLimitation": "nur noch {stock} Artikel verfügbar",
-        "subtext": "Sie können die Produkte aus dieser Bestellung erneut kaufen.",
+        "subtext": "Sie können die Artikel aus dieser Bestellung erneut kaufen.",
         "subtextChanges": "Seit Ihrer letzten Bestellung sind Änderungen aufgetreten"
       },
       "orderDate": "Auftragsdatum",
@@ -159,17 +152,17 @@
         "delivery": "Versand",
         "estimatedTax": "MwSt.",
         "heading": "Bestellübersicht",
-        "itemsSubtotal": "Produkte Zwischensumme",
+        "itemsSubtotal": "Artikel Zwischensumme",
         "orderDate": "Auftragsdatum",
         "orderId": "Auftrags-ID",
         "paymentAmount": "Gesamtsumme",
         "paymentMethod": "Zahlungsart",
         "price": "Preis",
         "priceFrom": "ab",
-        "product": "Produkt",
+        "product": "Artikel",
         "quantity": "Anzahl",
         "shippingAddress": "Lieferadresse",
-        "showDetails": "Produktdetails anzeigen",
+        "showDetails": "Artikeldetails anzeigen",
         "status": "Status",
         "subtotal": "Zwischensumme",
         "tableCaption": "Bestellübersicht",
@@ -184,7 +177,7 @@
       "returnDate": "Retourendatum",
       "returnId": "Retouren-ID",
       "returnsAltText": "Keine Retouren",
-      "returnsDescription": "Sie haben noch keine Produkte zurückgeschickt",
+      "returnsDescription": "Sie haben noch keine Artikel zurückgeschickt",
       "returnsHeading": "Retouren",
       "section": {
         "myOrders": "Meine Bestellungen",
@@ -215,8 +208,8 @@
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
   "allFromCategory": "Alle {name}",
-  "allProducts": "Alle Produkte",
-  "allProductsLinkText": "Produkte durchsuchen",
+  "allProducts": "Alle Artikel",
+  "allProductsLinkText": "Artikel durchsuchen",
   "apply": "Anwenden",
   "asterisk": "*",
   "auth": {
@@ -324,7 +317,8 @@
         "cancellationRights": "Widerrufsbelehrung",
         "legalDisclosure": "Impressum",
         "privacyPolicy": "Datenschutzerklärung",
-        "termsAndConditions": "AGB"
+        "termsAndConditions": "AGB",
+        "declarationOfAccessibility": "Barrierefreiheitserklärung"
       }
     },
     "services": {
@@ -402,7 +396,7 @@
   "createCustomerReview": "Bewertung abgeben",
   "currentPage": "Die aktuelle Seite ist {page}",
   "customerReviews": "Kundenrezensionen",
-  "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
+  "customerReviewsNone": "Es hat noch niemand eine Bewertung für diesen Artikel abgegeben",
   "deletedFromCart": "Artikel aus dem Warenkorb entfernt",
   "delivery": "Versandkosten",
   "documents": {
@@ -440,8 +434,8 @@
   "emptyCart": "Ihr Warenkorb ist leer",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "emptyCartNotification": "Sie haben keine Artikel in Ihrem Warenkorb",
-  "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
-  "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
+  "emptyStateAltText": "Bild, das beschreibt, dass keine Artikel gefunden wurden",
+  "emptyStateText": "Wir haben keine Artikel mehr in dieser Kategorie.",
   "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
   "emptyWishlist": "Ihre Wunschliste ist leer",
   "error": {
@@ -530,9 +524,14 @@
     "editor": {
       "save": {
         "success": "Die Änderungen wurden gespeichert.",
-        "editor": "Änderungen am Seiteninhalt werden sofort veröffentlicht, wenn die Homepage-Kategorie mit dem Live-Shop verknüpft ist.",
-        "settings": "Um Einstellungen zu veröffentlichen, baue den Shop und schalte die Instanz live.",
+        "settings": "Um Änderungen an den Einstellungen anzuwenden, aktualisiere deinen Shop.",
         "error": "Die Änderungen konnten nicht gespeichert werden. Falls die aktuelle Sitzung abgelaufen ist, starte eine neue Sitzung. Öffne dazu den Editor erneut."
+      },
+      "categories": {
+        "success": "Kategorien erfolgreich gespeichert.",
+        "error": "Fehler beim Speichern der Kategorien.",
+        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}" ,
+        "deleteSuccess": "Die Seite {pageName} (Kategorie-ID: {id}) wurde gelöscht."
       }
     },
     "paymentFailed": "Die Zahlung ist fehlgeschlagen. Versuche es bitte erneut.",
@@ -688,8 +687,8 @@
     "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
     "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
     "responsibleHeader": "Verantwortliche Stelle in der EU",
-    "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass das Produkt allen notwendigen Vorschriften entspricht.",
-    "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Produkts.",
+    "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass der Artikel allen notwendigen Vorschriften entspricht.",
+    "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Artikels.",
     "contactUrl": "Kontaktformular",
     "responsibleContactUrl": "EU-Verantwortlicher Kontaktformular"
   },
@@ -714,9 +713,9 @@
   "nextAriaLabel": "Zur nächsten Seite navigieren",
   "noReviews": "Keine Bewertungen",
   "noneExisting": "Keine vorhanden",
-  "numberInCart": "{count} Produkte im Warenkorb",
-  "numberInWishlist": "{count} Produkte in der Wunschliste",
-  "numberOfProducts": "{count} Produkte von {total} Produkten",
+  "numberInCart": "{count} Artikel im Warenkorb",
+  "numberInWishlist": "{count} Artikel in der Wunschliste",
+  "numberOfProducts": "{count} Artikel von {total} Artikeln",
   "offerForm": {
     "acceptOffer": "Angebot annehmen",
     "cancel": "Abbrechen",
@@ -735,7 +734,7 @@
     "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
     "sameAsShippingAddress": "Entspricht der Lieferadresse",
     "saveOrderToAccount": "Speichern Sie diese Bestellung in Ihrem Konto",
-    "shipping": "Lieferkosten",
+    "shipping": "Versandkosten",
     "signUp": "Registrieren",
     "subTotal": "Zwischensumme",
     "total": "Summe",
@@ -801,12 +800,12 @@
   "procentageSavings": "Du sparst {percent} % auf dieses Bundle",
   "productAttributes": {
     "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
-    "productNameMissing": "Produktname fehlt",
+    "productNameMissing": "Artikelname fehlt",
     "seeAvailableOptions": "Verfügbare Optionen anzeigen"
   },
-  "productDetails": "Produktdetails",
+  "productDetails": "Artikeldetails",
   "productLegalDetailsHeader": "Rechtliche Informationen",
-  "products": "Produkte",
+  "products": "Artikel",
   "quantitySelector": "Mengeneingabe",
   "quantitySelectorDecrease": "Menge reduzieren",
   "quantitySelectorIncrease": "Menge erhöhen",
@@ -865,7 +864,7 @@
       "success": "Ihre Bewertung wurde übermittelt."
     },
     "reviewAuthor": "Dein Name (optional)",
-    "reviewText": "Produktbewertung (optional)",
+    "reviewText": "Artikelbewertung (optional)",
     "saveAnswer": "Antwort abgeben",
     "showAnswers": "Antworten anzeigen",
     "submitReview": "Bewertung absenden",
@@ -899,7 +898,7 @@
   "shippingAddress": "Lieferadresse",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "shippingMethod": {
-    "description": "Nicht verfügbar, solange keine Versandadresse angegeben wird.",
+    "description": "Nicht verfügbar, solange keine Lieferadresse angegeben wird.",
     "free": "Kostenlos",
     "heading": "Versandart",
     "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
@@ -910,7 +909,7 @@
   "showLess": "Weniger anzeigen",
   "showMore": "Mehr anzeigen",
   "showOptions": "Optionen anzeigen",
-  "showProducts": "Produkte anzeigen",
+  "showProducts": "Artikel anzeigen",
   "socialLabel": "Gehe zu {label}",
   "softLogin": {
     "check": "Prüfen",
@@ -981,7 +980,8 @@
       "loadOrdersFailed": "Die Bestellungen konnten nicht geladen werden.",
       "migrateUnauthorized": "Die Bestellung konnte nicht zu deinem Account hinzugefügt werden.",
       "notFound": "Die Bestellung existiert nicht.",
-      "softLoginFailed": "Die angegebenen Daten sind ungültig."
+      "softLoginFailed": "Die angegebenen Daten sind ungültig.",
+      "assignPaymentFailed": "Die Zahlung konnte nicht zugewiesen werden."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
@@ -1010,5 +1010,86 @@
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "double-tap-zoom": "Zum Zoomen doppeltippen"
+  "double-tap-zoom": "Zum Zoomen doppeltippen",
+  "PreferredDelivery": {
+    "general": {
+      "basicSettingsStartSave": "Speichere Grundeinstellung ...",
+      "basicSettingsSaveSuccess": "Grundeinstellung gespeichert.",
+      "basicSettingsDataToStore": "Strukturierung der Grundeinstellungen fürs Speichern.",
+      "userSettingsResetCache": "Zurücksetzen des Caches: user settings",
+      "shipmentControllerDetectEnv": "Produktiv oder Testmodus",
+      "requestAndResponse": "Request und response",
+      "soapFault": "Soap fault",
+      "assistantName": "DHL Wunschzustellung",
+      "wunschpaketIntroduction": "Mit den Services von DHL Wunschzustellung entscheiden Sie, wann und wo Sie Ihre Pakete empfangen.",
+      "wunschpaketOptions": "Wählen Sie Ihre bevorzugte Lieferoption aus:",
+      "wunschpaketTitle": "DHL Wunschzustellung",
+      "preferredDayMsg": "Liefertag",
+      "shippingSettingsMsg": "DHL Versenden: Einstellungsverknüpfung",
+      "wunschtagTitle": "Liefertag: Lieferung zum gewünschten Tag",
+      "wunschortTitle": "Ablageort: Lieferung an den gewünschten Ablageort",
+      "wunschnachbarTitle": "Nachbar: Lieferung an den Nachbarn Ihrer Wahl",
+      "wunschtagTooltip": "Sie haben die Möglichkeit einen der angezeigten Tage als Liefertag für die Lieferung Ihrer Waren auszuwählen. Andere Tage sind aufgrund der Lieferprozesse aktuell nicht möglich.",
+      "wunschortTooltip": "Bestimmen Sie einen wettergeschützten und nicht einsehbaren Platz auf Ihrem Grundstück, an dem wir das Paket während Ihrer Abwesenheit hinterlegen dürfen.",
+      "wunschnachbarTooltip": "Bestimmen Sie eine Person in Ihrer unmittelbaren Nachbarschaft, bei der wir Ihr Paket abgeben dürfen. Diese sollte im gleichen Haus, direkt gegenüber oder nebenan wohnen.",
+      "wunschortExample": "z.B. Garage, Terrasse",
+      "wunschnachbarExampleName": "Nachname, Vorname",
+      "wunschnachbarExampleAddress": "Straße, Hausnummer, PLZ und Ort",
+      "wunschpaketAdditionalCharge": "Für diesen Service fällt ein Aufpreis in Höhe von {additionalCharge} {currency} an.*",
+      "wunschtagNone": "Keiner",
+      "preferredDayAlertMessage": "Liefertag wählen.",
+      "preferredLocationAlertMessage": "Ablageort eingeben.",
+      "preferredNeighbourNameAlertMessage": "Nachbar: Nachname, Vorname eingeben.",
+      "preferredNeighbourAddressMessage": "Nachbar: Straße, Hausnummer, PLZ und Ort eingeben.",
+      "preferredNeigbourMaxCharViolation": "Maximale Zeichenanzahl (100) überschritten.",
+      "submitWunschpaketServices": "Einstellungen für Wunschzustellung-Services übernommen.",
+      "apply": "Übernehmen",
+      "parcelApiCallLog": "Parcel API call log",
+      "invalidPostalCodeMessage": "Bitte prüfen Sie die Eingabe der Postleitzahl. Es wird ein 5-stelliger numerischer Wert erwartet - z.B. '34117'.",
+      "noServicesMessage1": "Bitte prüfen Sie die Eingabe der Postleitzahl. Es wird ein 5-stelliger numerischer Wert erwartet - z.B. '34117'.",
+      "noServicesMessage2": "Es konnten keine gültigen Services für DHL Wunschzustellung ermittelt werden.",
+      "assistantDescription": "Verwende diesen Assistenten, um mit dem DHL Wunschzustellung-Plugin die DHL Wunschzustellung-Services in deinem Shop zu integrieren.",
+      "warning": "Warnhinweis",
+      "wunschpaketRequirementWarning": "Speichere einen Aufpreis für den Service {preferredDayMsg}. Die Wunschzustellung-Services selbst aktivierst du dann im Assistenten {shippingSettingsMsg}. Bestimme hier außerdem die Cut-off-Zeit und lege fest, an welchen Tagen keine Paketübergabe an DHL erfolgt.",
+      "additionalCharge": "Aufpreis",
+      "preferredDay": "Aufpreis Liefertag",
+      "cutofftime": "Cut-off-Zeit",
+      "cutofftimeDescription": "Die Cut-off-Zeit ist die spätestmögliche Bestellzeit, bis zu dem der Mindestwunschtag (Bestelltag + 2 Werktage) garantiert werden kann. Wenn der Zeitpunkt überschritten wird, wird der frühestmögliche Liefertag, der im Frontend angezeigt wird, einen Tag nach hinten verschoben (Bestelltag + 3 Werktage).",
+      "hour": "Stunde",
+      "minute": "Minute",
+      "exclusionTransfer": "Ausschluss von Übergabetagen",
+      "exclusionTransferDescription": "An den Werktagen, die du aktivierst, findet keine Übergabe von Paketen an DHL statt (zusätzlich zu Sonntagen und Feiertagen). Diese Angabe ermittelt den ersten Liefertag, der im Webshop angezeigt wird.",
+      "step1Title": "Service-Einstellungen",
+      "gmapsApiKey": "API-Schlüssel",
+      "additionalChargeDescription": "Gib den Bruttopreis für den Service {preferredDayMsg} ein. Der Preis wird deinen Kund:innen in Rechnung gestellt, wenn sie den Service in deinem Webshop wählen. Gib 0 ein, um diesen Service kostenfrei anzubieten.",
+      "postnumberRequired": "Möchtest du, dass die DHL Postnummer ein Pflichtfeld für deine Kunden ist, wenn sie eine Postfiliale im Finder wählen?",
+      "finderSettingsTitle": "Einstellungen für den DHL Packstation/Postfiliale-Finder",
+      "finderSettingsDescription": "Gib deinen Google Maps API-Schlüssel ein, um den Finder korrekt verwenden zu können. Im Assistenten {shippingSettingsMsg} kannst du den Finder aktivieren. Entscheide außerdem, ob die DHL Postnummer ein Pflichtfeld sein soll, wenn ein Kunde im Finder eine Postfiliale wählt."
+    },
+    "packstation": {
+      "title": "DHL Packstation / Postfiliale",
+      "zipcodePlaceholder": "PLZ",
+      "cityPlaceholder": "Ort",
+      "streetPlaceholder": "Straße",
+      "dropDownValues": {
+        "both": "Packstation/Postfiliale",
+        "postfilial": "Postfiliale",
+        "packstation": "Packstation"
+      },
+      "nameInfo": "Der Name wird aus der Rechnungsadresse übernommen. Die Postnummer und die Adresse der Packstation/Postfiliale werden als Lieferadresse übernommen.",
+      "search": "Suchen",
+      "backToList": "Zurück zur Liste",
+      "loading": "Laden",
+      "noResult1": "Es konnten keine Ergebnisse gefunden werden.",
+      "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
+      "setPackstation": "Übernehmen",
+      "moreDetails": "Details",
+      "postNumberPlaceholder": "Postnumber",
+      "packstationAddedSuccessMessage": "Die Packstation/Postfiliale wurde als Lieferadresse übernommen.",
+      "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",
+      "postnumberRequired": "Die Postnummer ist eine Pflichtangabe. Bitte geben Sie Ihre DHL Postnummer ein.",
+      "locationSearchUnifiedCall": "Location Search Unified API Call",
+      "locationSearchUnifiedCallError": "Location Search Unified API error"
+    }
+  }
 }

@@ -3,6 +3,7 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
+import { paths } from './utils/paths';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -27,6 +28,9 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
+    optimizeDeps: {
+      include: ['dotenv', 'validator'],
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -41,6 +45,9 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
+  },
+  image: {
+    provider: 'none',
   },
   site: {
     url: '',
@@ -57,13 +64,13 @@ export default defineNuxtConfig({
       useWebp: process.env?.IMAGEWEBP === 'true',
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
+      useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
-      enableGuestLogin: process.env?.ENABLE_GUEST_LOGIN === 'true',
-      storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
+      storename: process.env.STORENAME || 'PlentyONE GmbH',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
       isHero: true,
@@ -74,8 +81,9 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@plentymarkets/shop-module-gtag',
     '@plentymarkets/shop-core',
+    '@plentymarkets/shop-module-mollie',
+    '@plentymarkets/shop-module-gtag',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
@@ -88,14 +96,14 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '@vue-storefront/nuxt',
   ],
-  alokai: {
-    middleware: {
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      cdnCacheBustingId: 'no-cache-busting-id-set',
-      ssrApiUrl: '',
-    },
+  shopCore: {
+    apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+  },
+  shopModuleMollie: {
+    checkoutUrl: paths.checkout,
+    liveMode: !process.env.MOLLIE_TEST_MODE,
+    confirmationUrl: paths.confirmation,
   },
   fonts: {
     defaults: {
@@ -103,19 +111,6 @@ export default defineNuxtConfig({
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
-    },
-  },
-  image: {
-    screens: {
-      '4xl': 1920,
-      '3xl': 1536,
-      '2xl': 1366,
-      xl: 1280,
-      lg: 1024,
-      md: 768,
-      sm: 640,
-      xs: 376,
-      '2xs': 360,
     },
   },
   i18n: nuxtI18nOptions,
@@ -215,8 +210,8 @@ export default defineNuxtConfig({
       cleanupOutdatedCaches: true,
     },
     manifest: {
-      name: 'plentyshop PWA',
-      short_name: 'plentyshopPWA',
+      name: 'PlentyONE Shop',
+      short_name: 'PlentyONEShop',
       theme_color: '#0C7992',
       icons: [
         {
@@ -237,7 +232,6 @@ export default defineNuxtConfig({
         },
       ],
     },
-
     registerWebManifestInRouteRules: true,
   },
 });

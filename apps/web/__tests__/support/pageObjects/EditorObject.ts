@@ -1,20 +1,22 @@
 import { PageObject } from './PageObject';
 
+export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
+
 export class EditorObject extends PageObject {
   get pretitle() {
-    return cy.getByTestId('banner-pretitle-0');
+    return cy.getByTestId(`banner-pretitle-${firstBannerBlockUuid}`);
   }
 
   get title() {
-    return cy.getByTestId('banner-title-0');
+    return cy.getByTestId(`banner-title-${firstBannerBlockUuid}`);
   }
 
   get subtitle() {
-    return cy.getByTestId('banner-subtitle-0');
+    return cy.getByTestId(`banner-subtitle-${firstBannerBlockUuid}`);
   }
 
   get description() {
-    return cy.getByTestId('banner-description-0');
+    return cy.getByTestId(`banner-description-${firstBannerBlockUuid}`);
   }
 
   get editorToolbar() {

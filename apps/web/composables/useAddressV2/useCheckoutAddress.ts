@@ -50,10 +50,15 @@ export const useCheckoutAddress = (type: AddressType) => {
     return Number(state.value.checkoutAddress?.id) > 0;
   });
 
+  const countryHasDelivery = computed(() => {
+    return hasCheckoutAddress.value && Number(state.value.checkoutAddress.country) === 1;
+  });
+
   return {
     set,
     clear,
     hasCheckoutAddress,
+    countryHasDelivery,
     ...toRefs(state.value),
   };
 };

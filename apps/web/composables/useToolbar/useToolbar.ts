@@ -3,34 +3,37 @@ export const useToolbar = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const homepageCategoryId = useRuntimeConfig().public.homepageCategoryId;
-  const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
   const { updatePageTemplate } = useUpdatePageTemplate();
-
+  const { data: dataProduct } = useProducts();
+  const route = useRoute();
   const save = async () => {
     const messageList: string[] = [];
     let hasError = false;
+    let saved = null;
     const errorMessage = $i18n.t('errorMessages.editor.save.error');
 
-    const handleSave = async (saveFunction: () => Promise<boolean>, successMessage: string) => {
-      const saved = await saveFunction();
+    const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
+      saved = await saveFunction();
+
       if (saved) {
-        messageList.push(successMessage);
+        if (successMessage) {
+          messageList.push(successMessage);
+        }
       } else {
         hasError = true;
       }
     };
 
-    if (!isLocalTemplate.value && isEditingEnabled.value) {
-      await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
+    if (isEditingEnabled.value) {
+      await handleSave(updatePageTemplate);
     }
 
     if (settingsIsDirty.value) {
       await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
     }
 
-    if (messageList.length > 0) {
+    if (saved && !hasError) {
       send({
         message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',
@@ -44,6 +47,9 @@ export const useToolbar = () => {
       });
     }
   };
+  const isEditablePage = computed(() => {
+    return route.path === '/' || dataProduct.value.category?.type === 'content';
+  });
 
-  return { save };
+  return { save, isEditablePage };
 };

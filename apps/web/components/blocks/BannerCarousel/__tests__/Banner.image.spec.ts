@@ -2,11 +2,15 @@ import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { BlocksBannerCarouselBanner } from '#components';
 
+const bannerBlockUuid = '11111111-1111-4111-8111-111111111111';
+
 describe('Banner image', () => {
   it('should not render an image if no image is provided', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-        bannerProps: {
+        name: 'Banner',
+        type: 'content',
+        content: {
           text: {
             pretitle: 'Test pretitle',
             title: 'Test title',
@@ -16,24 +20,28 @@ describe('Banner image', () => {
           image: {},
           button: {},
         },
-
         index: 0,
+        lazyLoading: 'eager',
+        meta: {
+          uuid: bannerBlockUuid,
+        },
       },
     });
 
-    const image = wrapper.find('[data-testid="banner-image-0"]');
+    const image = wrapper.find(`[data-testid="banner-image-${bannerBlockUuid}"]`);
 
     expect(image.attributes('src')).toBe('');
     expect(image.attributes('alt')).toBe('');
     expect(image.attributes('style')).toContain('height: 576px');
-
-    expect(wrapper.find('[data-testid="banner-overlay-0"]').exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="banner-overlay-${bannerBlockUuid}"]`).exists()).toBe(true);
   });
 
   it('should set the given brightness', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
-        bannerProps: {
+        name: 'Banner',
+        type: 'content',
+        content: {
           image: {
             wideScreen: '/test-desktop.jpg',
             desktop: '/test-desktop.jpg',
@@ -45,13 +53,15 @@ describe('Banner image', () => {
           text: {},
           button: {},
         },
-
         index: 0,
+        lazyLoading: 'eager',
+        meta: {
+          uuid: bannerBlockUuid,
+        },
       },
     });
 
-    const image = wrapper.find('[data-testid="banner-image-0"]');
-
+    const image = wrapper.find(`[data-testid="banner-image-${bannerBlockUuid}"]`);
     expect(image.attributes('style')).toContain('filter: brightness(0.5)');
   });
 });

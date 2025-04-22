@@ -48,9 +48,11 @@
 
         <ProductPrice :product="product" />
 
-        <div class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-          {{ productGetters.getShortDescription(product) }}
-        </div>
+        <div
+          class="mb-4 font-normal typography-text-sm"
+          data-testid="product-description"
+          v-html="productGetters.getShortDescription(product)"
+        />
 
         <div class="mt-4 typography-text-xs flex gap-1">
           <span>{{ t('asterisk') }}</span>
@@ -94,7 +96,7 @@
           data-testid="quick-checkout-checkout-button"
           size="lg"
           class="w-full mb-4 md:mb-0"
-          @click="goToPage(paths.checkout)"
+          @click="goToCheckout()"
         >
           {{ t('goToCheckout') }}
         </UiButton>
@@ -126,6 +128,7 @@ const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
+const { isAuthorized } = useCustomer();
 
 onMounted(() => {
   startTimer();
@@ -143,6 +146,8 @@ const totals = computed(() => {
     vats: totalsData.totalVats,
   };
 });
+
+const goToCheckout = () => (isAuthorized.value ? goToPage(paths.checkout) : goToPage(paths.guestLogin));
 
 const goToPage = (path: string) => {
   closeQuickCheckout();

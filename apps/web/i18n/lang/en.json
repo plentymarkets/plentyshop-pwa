@@ -27,17 +27,17 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores consent selection."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores information about the current session, for example if the user is logged in."
         },
         "vsfLocale": {
           "name": "vsf-locale",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores the display language."
         }
       },
@@ -49,13 +49,6 @@
       "label": "External media"
     },
     "functional": {
-      "cookies": {
-        "scriptDemo": {
-          "name": "Script demo",
-          "provider": "plentysystems AG",
-          "status": "Usage example for loading a script after consent."
-        }
-      },
       "description": "These cookies are used to store preferred settings and certain options selected by the user.",
       "label": "Functional"
     },
@@ -324,7 +317,8 @@
         "cancellationRights": "Cancellation rights",
         "legalDisclosure": "Legal disclosure",
         "privacyPolicy": "Privacy policy",
-        "termsAndConditions": "Terms and conditions"
+        "termsAndConditions": "Terms and conditions",
+        "declarationOfAccessibility": "Declaration of accessibility"
       }
     },
     "services": {
@@ -530,9 +524,14 @@
     "editor": {
       "save": {
         "success": "Your changes have been saved.",
-        "editor": "Changes to page content are published immediately if the homepage category is linked to the live shop.",
-        "settings": "To publish settings, build the shop and set the instance to live mode.",
+        "settings": "For settings changes to take effect, update your shop.",
         "error": "The changes couldn't be saved. Your session may have expired. Re-enter the editor to start a new session."
+      },
+      "categories": {
+        "success": "Categories saved successfully.",
+        "error": "Error saving categories.",
+        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}" ,
+        "deleteSuccess": "The page {pageName} (category ID: {id}) has been deleted."
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",
@@ -981,7 +980,8 @@
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
-      "softLoginFailed": "The provided data is invalid."
+      "softLoginFailed": "The provided data is invalid.",
+      "assignPaymentFailed": "The payment could not be assigned to the order."
     },
     "unknownError": "An unknown error has occurred."
   },
@@ -1010,5 +1010,86 @@
     "delete": "The item was removed from your wish list."
   },
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
-  "double-tap-zoom": "Double-tap to zoom"
+  "double-tap-zoom": "Double-tap to zoom",
+  "PreferredDelivery": {
+    "general": {
+      "basicSettingsStartSave": "Save basic settings ...",
+      "basicSettingsSaveSuccess": "Basic settings saved.",
+      "basicSettingsDataToStore": "Structuring the basic settings for saving.",
+      "userSettingsResetCache": "Reset cache: user settings",
+      "shipmentControllerDetectEnv": "Productive or test mode",
+      "requestAndResponse": "Request and response",
+      "soapFault": "Soap fault",
+      "assistantName": "DHL Preferred Delivery",
+      "wunschpaketIntroduction": "Use the DHL preferred services and decide when and where you would like to receive your parcels.",
+      "wunschpaketOptions": "Select your favourite delivery option:",
+      "wunschpaketTitle": "DHL preferred services",
+      "preferredDayMsg": "Preferred day",
+      "shippingSettingsMsg": "DHL Shipping: Settings combination",
+      "wunschtagTitle": "Preferred day: Delivery on the required day",
+      "wunschortTitle": "Preferred location: Delivery to the required location",
+      "wunschnachbarTitle": "Preferred neighbour: Delivery to the required neighbour",
+      "wunschtagTooltip": "You can select one of the displayed days as preferred day for the delivery of your parcels. Due to the delivery processes, it is not possible to select other days at the moment.",
+      "wunschortTooltip": "Determine a weatherproof location on your premises that is not obviously visible to third parties. We will deposit your parcel while you are absent.",
+      "wunschnachbarTooltip": "Determine a person in the immediate vicinity to whom we will deliver your parcel. This person should live in the same house, directly on the opposite side or next door.",
+      "wunschortExample": "e.g. garage, terrace",
+      "wunschnachbarExampleName": "Last name, first name",
+      "wunschnachbarExampleAddress": "Street, house number, postcode, town",
+      "wunschpaketAdditionalCharge": "When using this service, a surcharge of {additionalCharge} {currency} applies.*",
+      "wunschtagNone": "None",
+      "preferredDayAlertMessage": "Select the preferred day.",
+      "preferredLocationAlertMessage": "Enter the preferred location.",
+      "preferredNeighbourNameAlertMessage": "Preferred neighbour: Enter last name and first name.",
+      "preferredNeighbourAddressMessage": "Preferred neighbour: Enter street, house number, postcode and town.",
+      "preferredNeigbourMaxCharViolation": "Maximum number of characters (100) exceeded.",
+      "submitWunschpaketServices": "Settings for preferred services submitted.",
+      "apply": "Apply",
+      "parcelApiCallLog": "Parcel API call log",
+      "invalidPostalCodeMessage": "Please check the postcode. The postcode is not valid. A 5-digit value is expected.",
+      "noServicesMessage1": "Please check the postcode you entered. A 5-digit value is expected.",
+      "noServicesMessage2": "No valid services for DHL Preferred Delivery could be found.",
+      "assistantDescription": "Use this assistant to integrate the DHL Preferred Delivery services in your Shop via the DHL Preferred Delivery plugin.",
+      "warning": "Warning",
+      "wunschpaketRequirementWarning": "Save an additional charge for the service {preferredDayMsg}. You have to select the Preferred Delivery services in the {shippingSettingsMsg} assistant. Determine also the cut-off time and the days when there is no transfer of parcels to DHL.",
+      "additionalCharge": "Additional charge",
+      "preferredDay": "Additional charge preferred day",
+      "cutofftime": "Cut-off-time",
+      "cutofftimeDescription": "Cut-off time is the latest possible order time up to which the minimum preferred day (day of order + 2 working days) can be guaranteed. As soon as the time is exceeded, the earliest preferred day displayed in the frontend will be shifted to one day later (day of order + 3 working days).",
+      "hour": "Hour",
+      "minute": "Minute",
+      "exclusionTransfer": "Exclusion of transfer days",
+      "exclusionTransferDescription": "There is no transfer of parcels to DHL (in addition to Sundays and public holidays) on the working days that you activate. This information calculates the first displayed preferred day in the online store.",
+      "step1Title": "Service settings",
+      "gmapsApiKey": "API key",
+      "additionalChargeDescription": "Enter the gross prices for the service {preferredDayMsg}. This price is charged to the customer's account if they select the service in your online store. Insert 0 to offer the service free of charge.",
+      "postnumberRequired": "Decide whether your customers are required to enter their DHL post number when they select a post office in the finder.",
+      "finderSettingsTitle": "Settings for the DHL Packstation/Postfiliale finder",
+      "finderSettingsDescription": "Enter your Google Maps API key to use the finder correctly. In the {shippingSettingsMsg} assistant, you can activate the finder. You can also decide whether the DHL post number should be a mandatory field when a customer selects a post office in the finder."
+    },
+    "packstation": {
+      "title": "DHL Packstation / Postfiliale",
+      "zipcodePlaceholder": "PLZ",
+      "cityPlaceholder": "Ort",
+      "streetPlaceholder": "Street",
+      "dropDownValues": {
+        "both": "Packstation/Postfiliale",
+        "postfilial": "Postfiliale",
+        "packstation": "Packstation"
+      },
+      "nameInfo": "Der Name wird aus der Rechnungsadresse übernommen. Die Postnummer und die Adresse der Packstation/Postfiliale werden als Lieferadresse übernommen.",
+      "search": "Search",
+      "backToList": "Back to list",
+      "loading": "Loading",
+      "noResult1": "There is no result for your search.",
+      "noResult2": "Please enter at least the postcode or the town.",
+      "setPackstation": "Apply",
+      "moreDetails": "More Details",
+      "postNumberPlaceholder": "Postnumber",
+      "packstationAddedSuccessMessage": "The Packstation/post office was taken as delivery address.",
+      "containerTextInfo": "Enter an address and select a filter for the pick-up location. Afterwards, click on one of the search results to select this pick-up location.",
+      "postnumberRequired": "The post number is mandatory. Please enter your DHL post number.",
+      "locationSearchUnifiedCall": "Location Search Unified API Call",
+      "locationSearchUnifiedCallError": "Location Search Unified API error"
+    }
+  }
 }

@@ -8,7 +8,7 @@
       'bg-neutral-50',
       'border-0',
       'border-gray-300',
-      'z-[150]',
+      'z-[15]',
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
@@ -27,6 +27,5 @@ const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
-  if (view === 'PagesView') return resolveComponent('PagesView');
 };
 </script>
