@@ -39,6 +39,7 @@ For example, the app can reflect changes to the colour palette right away.
 ## How to add a setting
 
 1. In `nuxt.config.ts`, add a new property to `runtimeConfig.public`. This initialises the runtime configuration.
+1. In `useSiteConfiguration/types.ts`, extend the type definition with new properties.
 1. In `useSiteConfiguration.ts`, add a new data property, create an update function, and map the property when saving settings. This ensures the runtime configuration is maintained and can be persisted into the Plenty system.
 1. In the settings view component, add an input that binds to the state property. This allows users to update the setting.
 
@@ -62,6 +63,26 @@ export default defineNuxtConfig({
     },
   },
 });
+```
+
+### Update the type definition
+
+In this step, you update the type definitions to include your new setting. Extend the existing types by adding the new property to both the configuration and state interfaces, aligning them with your updated runtime configuration.
+
+```ts
+// apps/web/composables/useSiteConfiguration/types.ts
+
+export type ConfigurationSettings = {
+  primaryColor: string;
+};
+
+export interface UseSiteConfigurationState {
+  primaryColor: string;
+}
+
+export interface UseSiteConfiguration {
+  primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
+}
 ```
 
 ### Update the site configuration composable
@@ -137,6 +158,18 @@ export const useSiteConfiguration = () => {
 };
 ```
 
+As with the properties, you have to add your function in `types`.
+
+```ts
+// apps/web/composables/useSiteConfiguration/types.ts
+
+export type SetColorPalette = (hexColor: string) => void;
+
+export interface UseSiteConfiguration {
+  updatePrimaryColor: SetColorPalette;
+}
+```
+
 ### Update the settings drawer
 
 To enable the user to update a setting, you have to make it accessible in the editor.
@@ -200,7 +233,7 @@ const colorsOpen = ref(false);
 ```
 
 For your setting, you can either extend an existing view or create your own.
-If you create your own `MyNewView.vue` component, you have to register it in `SiteConfigurationDrawer.vue`.
+If you create your own `MyNewView.vue` component, you have to register it in `SiteConfigurationDrawer.vue` and `SettingsToolbar.vue`.
 
 ```vue
 <!-- apps/web/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue -->
@@ -211,4 +244,42 @@ const getDrawerView = (view: string) => {
   if (view === 'MyNewView') return resolveComponent('MyNewView');
 };
 </script>
+```
+
+```vue
+<!-- apps/web/components/SettingsToolbar/SettingsToolbar.vue -->
+
+<button
+  type="button"
+  class="editor-button relative py-2 flex justify-center"
+  :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MyNewView' }"
+  aria-label="Open my drawer"
+  data-testid="open-my-drawer"
+  @click="openDrawerWithView('MyNewView')"
+>
+  <NuxtImg v-if="drawerView === 'MyNewView'" width="24" height="24px" :src="paintBrushWhite" />
+  <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
+</button>
+```
+
+:::tip
+`paintBrushWhite` and `paintBrushBlack` are custom icons.
+For further information on adding custom icons, refer to the [Custom Icon](/guide/how-to/custom-icon.md) guide.
+Alternatively, you can integrate other icon components like [Nuxt Icon](https://nuxt.com/modules/icon).
+:::
+
+Finally, extend the `DrawerView` in `types.ts`.
+
+```ts
+// apps/web/composables/useSiteConfiguration/types.ts
+
+export type DrawerView =
+  | 'MyNewView'
+  | 'SettingsView'
+  | 'blocksList'
+  | 'DesignView'
+  | 'SeoView'
+  | 'PagesView'
+  | 'blocksSettings'
+  | null;
 ```
