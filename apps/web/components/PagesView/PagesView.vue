@@ -89,7 +89,7 @@ const { data, getCategories } = useCategoriesSearch();
 await getCategories({
   'level': 1,
   'type': 'in:item,content',
-  'sortBy':'position_asc,name_asc',
+  'sortBy':'position_asc',
   'page': 1,
   'itemsPerPage': 50,
   'with': 'details,clients'

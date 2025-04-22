@@ -24,10 +24,10 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
 
     state.value.loading = true;
     try {
-      const { fetchProducts } = useProducts(settingsId);
-      const result = await fetchProducts({ categoryId: categoryId.toString() });
+      const { getCategory } = useCategoryDetails();
+      const result = await getCategory({ categoryId: categoryId });
 
-      const categoryData = result.category as Category;
+      const categoryData = result;
 
       const cleanData = JSON.parse(JSON.stringify(categoryData));
 
@@ -87,3 +87,4 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     deletePage,
   };
 };
+
