@@ -885,6 +885,7 @@
   },
   "reviewsCount": "{Anzahl} Bewertungen",
   "sale": "Verkauf",
+  "closeNeutralAlert": "TBD",
   "saveAddress": "Adresse speichern",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
