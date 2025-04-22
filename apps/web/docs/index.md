@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: 'plentyShop PWA'
+  name: 'PlentyONE Shop'
   tagline: Composables documentation
   actions:
     - theme: brand

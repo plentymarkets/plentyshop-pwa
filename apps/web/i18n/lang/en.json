@@ -66,7 +66,7 @@
   },
   "PreviewModeBar": {
     "label": "Preview mode control",
-    "pwa": "Deactivate plentyShop PWA preview"
+    "pwa": "Deactivate Shop preview"
   },
   "account": {
     "accountSettings": {
@@ -1044,7 +1044,7 @@
       "invalidPostalCodeMessage": "Please check the postcode. The postcode is not valid. A 5-digit value is expected.",
       "noServicesMessage1": "Please check the postcode you entered. A 5-digit value is expected.",
       "noServicesMessage2": "No valid services for DHL Preferred Delivery could be found.",
-      "assistantDescription": "Use this assistant to integrate the DHL Preferred Delivery services in your plentyShop via the DHL Preferred Delivery plugin.",
+      "assistantDescription": "Use this assistant to integrate the DHL Preferred Delivery services in your Shop via the DHL Preferred Delivery plugin.",
       "warning": "Warning",
       "wunschpaketRequirementWarning": "Save an additional charge for the service {preferredDayMsg}. You have to select the Preferred Delivery services in the {shippingSettingsMsg} assistant. Determine also the cut-off time and the days when there is no transfer of parcels to DHL.",
       "additionalCharge": "Additional charge",
