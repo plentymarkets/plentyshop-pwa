@@ -60,7 +60,8 @@ import type { RemoveLookupCookie } from './types';
 
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteConfiguration();
-const { save } = useToolbar();
+const { save: saveBlocksAndSiteSettings } = useToolbar();
+const { save: saveCategorySettings, hasChanges } = useCategorySettingsCollection();
 
 const bannerIsHidden = ref(true);
 const isPreview = ref(false);
@@ -73,7 +74,7 @@ onMounted(() => {
 });
 
 const hasUnsavedChanges = () => {
-  return isEditingEnabled.value || settingsIsDirty.value;
+  return isEditingEnabled.value || settingsIsDirty.value || hasChanges.value;
 };
 
 const removeLookupCookie: RemoveLookupCookie = (): void => {
@@ -84,7 +85,8 @@ const removeLookupCookie: RemoveLookupCookie = (): void => {
 };
 
 const saveAndExit = async (): Promise<void> => {
-  await save();
+  await saveBlocksAndSiteSettings();
+  await saveCategorySettings();
   removeLookupCookie();
 };
 </script>
