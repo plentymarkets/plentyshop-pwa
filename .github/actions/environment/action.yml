@@ -26,4 +26,3 @@ runs:
         API_SECURITY_TOKEN: ${{ inputs.api-security-token }}
         API_ENDPOINT: ${{ inputs.api-endpoint }}
         CONFIGURATION: ${{ inputs.configuration }}
-        MOLLIE_TEST_MODE: true
