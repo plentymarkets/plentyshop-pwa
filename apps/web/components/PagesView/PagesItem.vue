@@ -55,7 +55,11 @@
           <div
             class="p-1 flex"
             :class="{ 'opacity-50 cursor-not-allowed': item.details[0].name === 'Homepage' }"
-            @click="item.details[0].name !== 'Homepage' ? (deletePage(item.id), setCategoryId(item.id, parentId)) : null"
+            @click="
+              item.details[0].name !== 'Homepage'
+                ? (deletePage(item.id), setCategoryId(item.id, parentId, item.details[0].name))
+                : null
+            "
           >
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
@@ -64,9 +68,9 @@
       </SfDropdown>
     </div>
     <!--    Children is disabled for the moment-->
-<!--    <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">-->
-<!--      <PagesItem v-for="child in item.children" :key="child.details[0].nameUrl" :item="item.child" :parent-id="item.id" />-->
-<!--    </ul>-->
+    <!--    <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">-->
+    <!--      <PagesItem v-for="child in item.children" :key="child.details[0].nameUrl" :item="item.child" :parent-id="item.id" />-->
+    <!--    </ul>-->
   </li>
 </template>
 <script setup lang="ts">
@@ -120,6 +124,7 @@ const openSeoSettings = (id: number) => {
 };
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;
+  categoryId.value = id;
   toggleDeleteModal(true);
   close();
 };
