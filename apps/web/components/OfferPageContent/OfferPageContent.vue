@@ -140,7 +140,7 @@
             aria-labelledby="address-modal-title"
           >
             <UiButton
-              :aria-label="t('offerForm.closeAddressForm')"
+              :aria-label="t('closeAddressForm')"
               square
               variant="tertiary"
               class="absolute right-2 top-2"

@@ -113,6 +113,7 @@
     "ordersAndReturns": {
       "actions": "Aktionen",
       "amount": "Anzahl",
+      "more": "TBD",
       "continue": "Einkauf fortsetzen",
       "details": "Details",
       "heading": "Bestellungen & Retouren",
@@ -125,6 +126,7 @@
         "addToCart": "In den Warenkorb",
         "buyAgain": "Erneut kaufen",
         "cancel": "Abbrechen",
+        "closeQuickCheckout": "TBD",
         "heading": "Erneut kaufen",
         "headingChanges": "Änderungen der Artikel",
         "notAvailable": "Nicht verfügbar",
@@ -200,6 +202,7 @@
   "addToWishlist": "Zur Wunschliste hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
   "address": "Adressen",
+  "closeAddressForm": "TBD",
   "addressContainer": {
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
@@ -342,6 +345,7 @@
   "clear": "Zurücksetzen",
   "clearFilters": "Alle Filter löschen",
   "closeDialog": "Dialogfenster schließen",
+  "closeDrawer": "TBD",
   "closeListSettings": "Listeneinstellungen schließen",
   "closeMenu": "Menü schließen",
   "coming-soon": "Demnächst",
@@ -378,6 +382,7 @@
   "content": "Inhalt",
   "continueAsGuest": "Weiter als Gast",
   "continueShopping": "Einkauf fortsetzen",
+  "closeAuthentication": "TBD",
   "coupon": {
     "apply": "Einlösen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
@@ -786,6 +791,7 @@
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
   "pickSavedAddress": "Gespeicherte Adressen",
+  "closePickSavedAddress": "TBD",
   "pickSavedAddressSubtitle": "Wählen Sie eine Ihrer gespeicherten Adressen oder erstellen Sie eine Neue",
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "pleaseSelect": "Bitte wählen",
@@ -884,6 +890,7 @@
   "savedShippingAddress": "Gespeicherte Lieferadressen",
   "scrollTop": "Nach oben scrollen",
   "search": "Suche",
+  "resetSearch": "TBD",
   "shipping": {
     "addButton": "Lieferadresse hinzufügen",
     "description": "Fügen Sie eine Lieferadresse hinzu, um Versanddetails anzuzeigen.",
