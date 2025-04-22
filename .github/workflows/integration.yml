@@ -223,9 +223,6 @@ jobs:
       - name: Extract build
         run: tar -xzf build.tar.gz
 
-      - name: Check MOLLIE_TEST_MODE
-        run: echo "MOLLIE_TEST_MODE=$MOLLIE_TEST_MODE"
-
       - name: E2E tests
         uses: cypress-io/github-action@v5
         with:
