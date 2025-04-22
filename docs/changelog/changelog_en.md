@@ -20,6 +20,7 @@
 
 ### 👷 Changed
 
+- Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
 
 ### 🩹 Fixed
