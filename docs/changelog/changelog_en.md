@@ -22,6 +22,7 @@
 ### 👷 Changed
 
 - Updated instances of old branding and product names
+- Enable caching for turbo builds
 
 ### 🩹 Fixed
 
