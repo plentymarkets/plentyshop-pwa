@@ -9,9 +9,6 @@ permissions:
   packages: read
   pull-requests: write
 
-env:
-  MOLLIE_TEST_MODE: true
-
 jobs:
   meta:
     runs-on: ubuntu-latest
@@ -217,6 +214,7 @@ jobs:
           api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
           api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
           configuration: ${{ vars.CONFIG }}
+          mollie-test-mode: true
 
       - name: Download build
         uses: actions/download-artifact@v4
