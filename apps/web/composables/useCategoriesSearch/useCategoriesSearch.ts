@@ -11,7 +11,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     state.value.loading = true;
     try {
       const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoriesSearch(params));
-      state.value.data = data?.value?.data.data ?? state.value.data;
+      state.value.data = data?.value?.data ?? state.value.data;
     } catch (error) {
       throw new Error(error as string);
     } finally {
