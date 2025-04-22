@@ -119,7 +119,6 @@ const {
   isFromSlider = false,
 } = defineProps<ProductCardProps>();
 
-const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product);
@@ -128,9 +127,15 @@ const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
-const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
-const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
-const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
+const variationId = computed(() => productGetters.getVariationId(product));
+
+const productPath = computed(() => {
+  const basePath = `/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`;
+  const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product) === 1;
+
+  return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
+});
+
 const getWidth = () => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth;

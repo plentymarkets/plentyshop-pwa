@@ -5,7 +5,8 @@ export const useToolbar = () => {
 
   const { saveSettings, settingsIsDirty } = useSiteConfiguration();
   const { updatePageTemplate } = useUpdatePageTemplate();
-
+  const { data: dataProduct } = useProducts();
+  const route = useRoute();
   const save = async () => {
     const messageList: string[] = [];
     let hasError = false;
@@ -46,6 +47,9 @@ export const useToolbar = () => {
       });
     }
   };
+  const isEditablePage = computed(() => {
+    return route.path === '/' || dataProduct.value.category?.type === 'content';
+  });
 
-  return { save };
+  return { save, isEditablePage };
 };

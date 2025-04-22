@@ -1,8 +1,8 @@
 /**
- * Composables for plentyShop PWA.
+ * Composables for PlentyONE Shop.
  *
  * @remarks
- * This section provides a reference of composables available in plentyShop PWA.
+ * This section provides a reference of composables available in PlentyONE Shop.
  * It includes the available functions and interfaces.
  *
  * @packageDocumentation

@@ -24,7 +24,6 @@ export interface UseSiteConfigurationState {
   settingsType: SettingsType;
   drawerOpen: boolean;
   pageModalOpen: boolean;
-  unlinkModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
   primaryColor: string;
@@ -46,7 +45,6 @@ export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
-export type ToggleDeleteModal = (value: boolean) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
 
 export interface UseSiteConfiguration {
@@ -56,7 +54,6 @@ export interface UseSiteConfiguration {
   settingsCategory: Readonly<Ref<UseSiteConfigurationState['settingsCategory']>>;
   settingsType: Readonly<Ref<UseSiteConfigurationState['settingsType']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
-  unlinkModalOpen: Readonly<Ref<UseSiteConfigurationState['unlinkModalOpen']>>;
   blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
   blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
@@ -76,7 +73,6 @@ export interface UseSiteConfiguration {
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
   togglePageModal: TogglePageModal;
-  toggleDeleteModal: ToggleDeleteModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;

@@ -3,9 +3,15 @@ const updatePageTemplate = async (): Promise<boolean> => {
   const { send } = useNotification();
   const { saveBlocks, data } = useCategoryTemplate();
 
+  const { data: dataProducts } = useProducts();
+  const route = useRoute();
   try {
     const cleanedData = JSON.stringify(data.value);
-    await saveBlocks('index', 'immutable', cleanedData);
+    if (route.path === '/') {
+      await saveBlocks('index', 'immutable', cleanedData);
+    } else {
+      await saveBlocks(dataProducts.value.category.id, 'category', cleanedData);
+    }
 
     return true;
   } catch (error) {

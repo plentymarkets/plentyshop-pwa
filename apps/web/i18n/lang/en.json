@@ -27,17 +27,17 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores consent selection."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores information about the current session, for example if the user is logged in."
         },
         "vsfLocale": {
           "name": "vsf-locale",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores the display language."
         }
       },
@@ -66,7 +66,7 @@
   },
   "PreviewModeBar": {
     "label": "Preview mode control",
-    "pwa": "Deactivate plentyShop PWA preview"
+    "pwa": "Deactivate Shop preview"
   },
   "account": {
     "accountSettings": {
@@ -313,7 +313,8 @@
         "cancellationRights": "Cancellation rights",
         "legalDisclosure": "Legal disclosure",
         "privacyPolicy": "Privacy policy",
-        "termsAndConditions": "Terms and conditions"
+        "termsAndConditions": "Terms and conditions",
+        "declarationOfAccessibility": "Declaration of accessibility"
       }
     },
     "services": {
@@ -521,6 +522,12 @@
         "success": "Your changes have been saved.",
         "settings": "For settings changes to take effect, update your shop.",
         "error": "The changes couldn't be saved. Your session may have expired. Re-enter the editor to start a new session."
+      },
+      "categories": {
+        "success": "Categories saved successfully.",
+        "error": "Error saving categories.",
+        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}" ,
+        "deleteSuccess": "The page {pageName} (category ID: {id}) has been deleted."
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",
@@ -969,7 +976,8 @@
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
-      "softLoginFailed": "The provided data is invalid."
+      "softLoginFailed": "The provided data is invalid.",
+      "assignPaymentFailed": "The payment could not be assigned to the order."
     },
     "unknownError": "An unknown error has occurred."
   },
@@ -1036,7 +1044,7 @@
       "invalidPostalCodeMessage": "Please check the postcode. The postcode is not valid. A 5-digit value is expected.",
       "noServicesMessage1": "Please check the postcode you entered. A 5-digit value is expected.",
       "noServicesMessage2": "No valid services for DHL Preferred Delivery could be found.",
-      "assistantDescription": "Use this assistant to integrate the DHL Preferred Delivery services in your plentyShop via the DHL Preferred Delivery plugin.",
+      "assistantDescription": "Use this assistant to integrate the DHL Preferred Delivery services in your Shop via the DHL Preferred Delivery plugin.",
       "warning": "Warning",
       "wunschpaketRequirementWarning": "Save an additional charge for the service {preferredDayMsg}. You have to select the Preferred Delivery services in the {shippingSettingsMsg} assistant. Determine also the cut-off time and the days when there is no transfer of parcels to DHL.",
       "additionalCharge": "Additional charge",

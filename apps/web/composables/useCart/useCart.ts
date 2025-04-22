@@ -1,7 +1,6 @@
 import type {
   DoAddItemParams,
   SetCartItemQuantityParams,
-  DeleteCartItemParams,
   CartItem,
   CartItemError,
   ApiError,
@@ -16,6 +15,7 @@ import type {
   AddItemsToCart,
   DeleteCartItem,
   SetCartItemQuantity,
+  DeleteCart,
 } from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
@@ -108,6 +108,21 @@ export const useCart: UseCartReturn = () => {
    */
   const clearCartItems = () => {
     state.value.data.items = [];
+  };
+
+  /**
+   * @description Function for deleting the cart.
+   * @example
+   * ``` ts
+   * await deleteCart()
+   * ```
+   */
+  const deleteCart: DeleteCart = async () => {
+    try {
+      await useSdk().plentysystems.deleteCart();
+    } finally {
+      clearCartItems();
+    }
   };
 
   /**
@@ -268,12 +283,12 @@ export const useCart: UseCartReturn = () => {
    * });
    * ```
    */
-  const deleteCartItem: DeleteCartItem = async (params: DeleteCartItemParams) => {
+  const deleteCartItem: DeleteCartItem = async (cartItem: CartItem) => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() =>
         useSdk().plentysystems.deleteCartItem({
-          cartItemId: params.cartItemId,
+          cartItemId: cartItem.id,
         }),
       );
 
@@ -281,8 +296,9 @@ export const useCart: UseCartReturn = () => {
 
       state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
       emit('frontend:removeFromCart', {
-        deleteItemParams: params,
+        deleteItemParams: { cartItemId: cartItem.id },
         cart: state.value.data,
+        item: cartItem,
       });
       return state.value.data;
     } catch (error) {
@@ -302,6 +318,7 @@ export const useCart: UseCartReturn = () => {
     addItemsToCart,
     deleteCartItem,
     getCart,
+    deleteCart,
     cartIsEmpty,
     ...toRefs(state.value),
   };
