@@ -96,7 +96,7 @@
           data-testid="quick-checkout-checkout-button"
           size="lg"
           class="w-full mb-4 md:mb-0"
-          @click="goToPage(paths.checkout)"
+          @click="goToCheckout()"
         >
           {{ t('goToCheckout') }}
         </UiButton>
@@ -128,6 +128,7 @@ const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
+const { isAuthorized } = useCustomer();
 
 onMounted(() => {
   startTimer();
@@ -145,6 +146,8 @@ const totals = computed(() => {
     vats: totalsData.totalVats,
   };
 });
+
+const goToCheckout = () => (isAuthorized.value ? goToPage(paths.checkout) : goToPage(paths.guestLogin));
 
 const goToPage = (path: string) => {
   closeQuickCheckout();
