@@ -2,7 +2,6 @@ import { getPaletteFromColor } from '../utils/tailwindHelper';
 import type { Shade } from '../utils/tailwindHelper';
 
 export default defineNuxtPlugin(async () => {
-  if (!import.meta.server) return;
   const buildPalette = (colorType: string, baseColor?: string): Array<Shade & { type: string }> => {
     if (!baseColor) return [];
 

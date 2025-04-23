@@ -190,16 +190,7 @@ const runtimeConfig = useRuntimeConfig();
 const cookieGroups = ref(runtimeConfig.public.cookieGroups);
 const { t } = useI18n();
 
-const {
-  initializeCookies,
-  data: cookieJson,
-  visible,
-  setConsent,
-  setAllCookiesState,
-  changeVisibilityState,
-} = useCookieBar();
-
-onNuxtReady(async () => await initializeCookies());
+const { data: cookieJson, visible, setConsent, setAllCookiesState, changeVisibilityState } = useCookieBar();
 
 const furtherSettingsOn = ref(false);
 
