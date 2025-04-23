@@ -18,7 +18,9 @@
     </h2>
 
     <ul class="space-y-1">
-      <li v-for="(service, value) in preferredDeliveryServices" :key="value">{{ `${value}: ${service}` }}</li>
+      <li v-for="(serviceValue, serviceName, index) in preferredDeliveryServices" :key="index">
+        {{ `${serviceName}: ${serviceValue}` }}
+      </li>
     </ul>
   </template>
 </template>
