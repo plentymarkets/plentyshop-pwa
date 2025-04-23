@@ -20,6 +20,7 @@
 
 ### 👷 Changed
 
+- Use preview text for bundle items on item page
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
 
