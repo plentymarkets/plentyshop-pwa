@@ -93,7 +93,7 @@ onMounted(async () => {
   if (isPreview.value) {
     await import('./draggable.css');
   }
-})
+});
 
 onBeforeUnmount(() => {
   closeDrawer();
