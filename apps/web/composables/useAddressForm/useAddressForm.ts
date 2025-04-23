@@ -92,11 +92,9 @@ export const useAddressForm = (type: AddressType) => {
   };
 
   const refreshAddressDependencies = async () => {
-    if (type === AddressType.Shipping) {
-      await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
-      notifyIfShippingChanged();
-      notifyIfBillingChanged();
-    }
+    await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
+    notifyIfShippingChanged();
+    notifyIfBillingChanged();
   };
 
   return {

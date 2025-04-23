@@ -71,6 +71,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
     await savePaymentMethod(paymentMethodId);
     await getShippingMethods();
+    await getCart();
   };
 
   const validateShippingTerms = () => {
