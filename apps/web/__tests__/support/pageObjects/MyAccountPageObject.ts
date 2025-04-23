@@ -66,7 +66,7 @@ export class MyAccountPageObject extends PageObject {
     this.accountLayout.getByTestId('account-layout-heading').should('be.visible');
     this.accountLayout.getByTestId('account-page-sidebar').should('be.visible');
     this.accountLayout.contains('Account Settings').should('exist');
-    this.accountLayout.contains('Personal Data').should('exist');
+    this.accountLayout.contains('Personal data').should('exist');
     this.accountLayout.contains('Billing addresses').should('exist');
     this.accountLayout.contains('Shipping addresses').should('exist');
     this.accountLayout.contains('Orders & Returns').should('exist');
