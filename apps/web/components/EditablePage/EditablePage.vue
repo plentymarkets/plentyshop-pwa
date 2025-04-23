@@ -82,6 +82,19 @@ onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
+const config = useRuntimeConfig();
+const showConfigurationDrawer = config.public.showConfigurationDrawer;
+const isPreview = ref(false);
+
+onMounted(async () => {
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+
+  if (isPreview.value) {
+    await import('./draggable.css');
+  }
+})
+
 onBeforeUnmount(() => {
   closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -110,28 +123,3 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 </script>
-
-<style>
-.sortable-ghost {
-  opacity: 0.6;
-  background: #f0f4ff;
-  border-radius: 8px;
-}
-.sortable-drag {
-  opacity: 1 !important;
-  transform: scale(1.02);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-.sortable-chosen .block-wrapper {
-  outline: none !important;
-}
-.sortable-chosen .add-block-button,
-.sortable-chosen .block-actions {
-  display: none !important;
-}
-.sortable-chosen {
-  opacity: 0.6;
-  background: #f0f4ff;
-  border-radius: 8px;
-}
-</style>
