@@ -80,7 +80,7 @@ export class MyAccountPageObject extends PageObject {
   }
 
   checkPersonalDataSection() {
-    cy.get('a').contains('Personal Data').click();
+    cy.get('a').contains('Personal data').click();
     cy.visitAndHydrate(paths.accountPersonalData);
     cy.url().should('contain', paths.accountPersonalData);
     this.accountLayout.getByTestId('account-name').should('be.visible');
