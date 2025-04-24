@@ -103,8 +103,7 @@ await getCategories({
   'itemsPerPage': 150,
   'with': 'details,clients'
 })
-const contentPagesOpen = ref(false);
-const productPagesOpen = ref(false);
+
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
