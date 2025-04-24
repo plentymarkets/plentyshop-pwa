@@ -25,6 +25,7 @@
 - Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
+- Order confirmation soft login shows a warning instead of an error message.
 
 ### 🩹 Fixed
 
