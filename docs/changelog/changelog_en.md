@@ -4,6 +4,7 @@
 
 ### 🚀 New
 
+- Added aria label property on custom button component.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -20,6 +21,8 @@
 
 ### 👷 Changed
 
+- Use preview text for bundle items on item page
+- Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
 
