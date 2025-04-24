@@ -126,7 +126,7 @@
         "addToCart": "Add to cart",
         "buyAgain": "Buy again",
         "cancel": "Cancel",
-        "closeQuickCheckout": "Close Quick Checkout",
+        "closeQuickCheckout": "Close add to cart confirmation",
         "heading": "Buy again",
         "headingChanges": "Change in products",
         "notAvailable": "Currently unavailable",
@@ -202,7 +202,7 @@
   "addToWishlist": "Add to wishlist",
   "addedToCart": "Item added to Cart",
   "address": "Addresses",
-  "closeAddressForm": "Close address form",
+  "closeAddressForm": "End address editing",
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
   },
