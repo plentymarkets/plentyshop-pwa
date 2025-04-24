@@ -14,7 +14,7 @@
       </button>
     </header>
 
-    <p class="mb-6">{{ pageName }} page will be deleted</p>
+    <p class="mb-6">{{ getCategoryName }} page will be deleted</p>
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
         <button
@@ -22,7 +22,7 @@
           aria-label="deleteButton"
           data-testid="delete-btn"
           class="bg-red-700 w-full py-2 rounded-md text-white"
-          @click="deletePage(id, pageName)"
+          @click="deletePage(currentCategoryId!, getCategoryName!)"
         >
           Delete page
         </button>
@@ -44,35 +44,9 @@
 import { SfIconClose } from '@storefront-ui/vue';
 
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
-const { getCategoryId } = useCategoryIdHelper();
-const { pages } = await usePages();
-const pageName = ref('');
-const id = ref(1);
-const findPageById = (id: number | null, pagesList: Page[]): Page | undefined => {
-  for (const page of pagesList) {
-    if (page.id === id) {
-      return page;
-    }
-    if (page.children) {
-      const foundPage = findPageById(id, page.children);
-      if (foundPage) {
-        return foundPage;
-      }
-    }
-  }
-  return undefined;
-};
-watch(
-  () => getCategoryId.value,
-  (newId) => {
-    const foundPage = findPageById(newId ?? null, pages.value);
-    if (foundPage) {
-      pageName.value = foundPage.name;
-      id.value = foundPage.id;
-    }
-  },
-  { immediate: true },
-);
+const { getCategoryId, getCategoryName } = useCategoryIdHelper();
+
+const currentCategoryId = computed(() => getCategoryId.value);
 
 const closeModal = () => {
   toggleDeleteModal(false);

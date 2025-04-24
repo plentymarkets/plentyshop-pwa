@@ -18,6 +18,7 @@
 - (dev) Added editable page for category
 - (dev) Added delete category logic
 - (dev) Added delete category logic
+- (dev) Replace data structures for left navigation and individual categories
 
 ### 👷 Changed
 
