@@ -1,5 +1,5 @@
 import type { CategoryData } from '@plentymarkets/shop-api';
-
+import type { UseCategoryDetailState, UseCategoryDetailsReturn } from './types';
 export const useCategoryDetails: UseCategoryDetailsReturn = () => {
   const state = useState<UseCategoryDetailState>('useCategoriesSearch', () => ({
     data: {} as CategoryData,

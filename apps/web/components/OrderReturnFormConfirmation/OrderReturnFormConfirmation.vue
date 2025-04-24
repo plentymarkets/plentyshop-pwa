@@ -1,7 +1,13 @@
 <template>
   <div>
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="$emit('closed')">
+      <UiButton
+        :aria-label="t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="$emit('closed')"
+      >
         <SfIconClose />
       </UiButton>
     </header>
