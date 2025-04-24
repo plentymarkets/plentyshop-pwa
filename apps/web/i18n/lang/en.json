@@ -113,6 +113,7 @@
     "ordersAndReturns": {
       "actions": "Actions",
       "amount": "Amount",
+      "more": "Show more",
       "continue": "Continue shopping",
       "details": "Details",
       "heading": "Orders & Returns",
@@ -200,6 +201,7 @@
   "addToWishlist": "Add to wishlist",
   "addedToCart": "Item added to Cart",
   "address": "Addresses",
+  "closeAddressForm": "End address editing",
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
   },
@@ -342,6 +344,7 @@
   "clear": "Clear",
   "clearFilters": "Clear all filters",
   "closeDialog": "Close Dialog",
+  "closeDrawer": "Close Drawer",
   "closeListSettings": "Close list settings",
   "closeMenu": "Close Menu",
   "coming-soon": "Coming Soon",
@@ -378,6 +381,7 @@
   "content": "Content",
   "continueAsGuest": "Continue as guest",
   "continueShopping": "Continue shopping",
+  "closeAuthentication": "Close authentication",
   "coupon": {
     "apply": "Apply",
     "couponApplied": "The coupon has been added successfully",
@@ -786,6 +790,7 @@
   "perPage": "Per page",
   "phone": "Phone",
   "pickSavedAddress": "Saved addresses",
+  "closePickSavedAddress": "Close addresses picker",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "placeOrder": "Place order and pay",
   "pleaseSelect": "Please Select",
@@ -810,7 +815,8 @@
     "checkYourCart": "Check your cart",
     "heading": "Added to shopping cart",
     "subTotal": "Items subtotal",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "close": "Close quick checkout"
   },
   "readLess": "Read less",
   "readMore": "Read more",
@@ -879,11 +885,13 @@
   },
   "reviewsCount": "{count} reviews",
   "sale": "Sale",
+  "closeNeutralAlert": "Close neutral alert",
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
   "scrollTop": "Scroll to top",
   "search": "Search",
+  "resetSearch": "Reset Search",
   "shipping": {
     "addButton": "Add shipping address",
     "description": "Add a shipping address to view shipping details.",
