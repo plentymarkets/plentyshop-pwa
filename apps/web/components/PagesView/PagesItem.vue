@@ -72,9 +72,9 @@
       class="pl-4 border-l border-gray-200 max-h-[300px] overflow-auto"
       @scroll="handleChildrenScroll"
     >
-      <li v-if="loadingChildren" class="px-4 py-2 text-sm text-gray-500">Loading...</li>
-      <PagesItem v-for="child in children" :key="child.details[0].nameUrl" :item="child" :parent-id="item.id" />
-      <li v-if="loadingChildren && children.length > 0" class="px-4 py-2 text-sm text-gray-500">Loading more...</li>
+      <li v-if="childrenPagination.loading.value && childrenPagination.items.value.length" class="px-4 py-2 text-sm text-gray-500">Loading...</li>
+      <PagesItem v-for="child in childrenPagination.items.value" :key="child.details[0].nameUrl" :item="child" :parent-id="item.id" />
+      <li v-if="childrenPagination.loading.value && childrenPagination.items.value.length > 0" class="px-4 py-2 text-sm text-gray-500">Loading more...</li>
     </ul>
   </li>
 </template>
@@ -93,7 +93,7 @@ import {
 import gearBlack from 'assets/icons/paths/gear-black.svg';
 import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
 const { isCategoryDirty } = useCategorySettingsCollection();
-const { data, getCategories } = useCategoriesSearch();
+const { usePaginatedChildren } = useCategoriesSearch();
 
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
@@ -110,53 +110,24 @@ const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
 const { id: categoryId } = useCategorySettings();
-const children = ref<CategoryEntry[]>([]);
-const loadingChildren = ref(false);
-const hasMoreChildren = ref(true);
-const childrenPage = ref(1);
 const open = ref(false);
-
-const fetchChildren = async () => {
-  if (loadingChildren.value || !hasMoreChildren.value) return;
-
-  loadingChildren.value = true;
-  try {
-    await getCategories({
-      parentCategoryId: item.id,
-      itemsPerPage: 30,
-      page: childrenPage.value,
-      with: 'details,clients',
-    });
-
-    const entries = data.value.entries ?? [];
-    children.value.push(...entries);
-    hasMoreChildren.value = !data.value.isLastPage;
-    childrenPage.value++;
-  } catch (err) {
-    console.error('Error fetching child categories', err);
-  } finally {
-    loadingChildren.value = false;
-  }
-};
+const childrenPagination = usePaginatedChildren(item.id);
 
 const toggle = async () => {
   open.value = !open.value;
-
-  if (open.value && item.hasChildren && children.value.length === 0) {
-    await fetchChildren();
+  if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
+    await childrenPagination.fetchMore();
   }
 };
 
 const handleChildrenScroll = async (e: Event) => {
-  if (loadingChildren.value || !hasMoreChildren.value) return;
-
   const el = e.target as HTMLElement;
   const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
-
-  if (nearBottom) {
-    await fetchChildren();
+  if (nearBottom && childrenPagination.hasMore.value && !childrenPagination.loading.value) {
+    await childrenPagination.fetchMore();
   }
 };
+
 const route = useRoute();
 const isActive = computed(() => route.path === item?.details[0].nameUrl);
 

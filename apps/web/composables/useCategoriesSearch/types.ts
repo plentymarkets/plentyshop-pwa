@@ -12,7 +12,12 @@ export interface UseCategoriesSearchState {
   hasMoreContent: boolean;
   hasMoreItem: boolean;
 }
-
+export interface PaginatedChildren {
+  items: Ref<CategoryEntry[]>;
+  loading: Ref<boolean>;
+  hasMore: Ref<boolean>;
+  fetchMore: () => Promise<void>;
+}
 export interface UseCategoriesSearchMethods {
   contentItems: Readonly<Ref<CategoryEntry[]>>;
   itemItems: Readonly<Ref<CategoryEntry[]>>;
@@ -23,6 +28,7 @@ export interface UseCategoriesSearchMethods {
   fetchContentCategories: () => Promise<void>;
   fetchItemCategories: () => Promise<void>;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
+  usePaginatedChildren: (parentCategoryId: number) => PaginatedChildren;
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;

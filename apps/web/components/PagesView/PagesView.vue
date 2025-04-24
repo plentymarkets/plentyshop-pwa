@@ -94,16 +94,6 @@ import {
 import { useSiteConfiguration } from '~/composables/useSiteConfiguration';
 const { locale } = useI18n();
 
-const { data, getCategories } = useCategoriesSearch();
-await getCategories({
-  'level': 1,
-  'type': 'in:item,content',
-  'sortBy':'position_asc',
-  'page': 1,
-  'itemsPerPage': 150,
-  'with': 'details,clients'
-})
-
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 

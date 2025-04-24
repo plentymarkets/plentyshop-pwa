@@ -1,4 +1,4 @@
-import type { CategoryData, CategorySearchCriteria } from '@plentymarkets/shop-api';
+import type { CategoryData, CategorySearchCriteria, CategoryEntry } from '@plentymarkets/shop-api';
 import type { UseCategoriesSearchMethodsReturn, UseCategoriesSearchState } from './types';
 
 export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
@@ -94,6 +94,45 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       state.value.loadingContent = false;
     }
   }
+  const usePaginatedChildren = (parentCategoryId: number) => {
+    const items = ref<CategoryEntry[]>([]);
+    const loading = ref(false);
+    const hasMore = ref(true);
+    const page = ref(1);
+
+    const fetchMore = async () => {
+      if (loading.value || !hasMore.value) return;
+
+      loading.value = true;
+      try {
+        const { data } = await useAsyncData<{ data: CategoryData }>(() =>
+          useSdk().plentysystems.getCategoriesSearch({
+            parentCategoryId,
+            itemsPerPage: 30,
+            page: page.value,
+            with: 'details,clients',
+          })
+        );
+
+        const result: CategoryData = data?.value?.data ?? createEmptyCategoryData();
+        items.value.push(...result.entries);
+        hasMore.value = !result.isLastPage;
+        page.value++;
+      } catch (error) {
+        console.error(`Error fetching children for category ${parentCategoryId}:`, error);
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    return {
+      items,
+      loading,
+      hasMore,
+      fetchMore,
+    };
+  };
+
 
 
   return {
@@ -101,6 +140,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     fetchContentCategories,
     fetchItemCategories,
     getCategories,
+    usePaginatedChildren,
   };
 };
 
