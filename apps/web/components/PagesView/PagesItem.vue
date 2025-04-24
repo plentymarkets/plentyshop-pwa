@@ -9,7 +9,7 @@
         <SfIconExpandMore />
       </span>
       <router-link
-        :to="`${localePrefix}${item.details[0].nameUrl}`"
+        :to="`${localePrefix}/${item.details[0].nameUrl}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
         <span v-if="item.details[0].name === 'Homepage'">
