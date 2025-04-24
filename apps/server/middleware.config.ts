@@ -6,8 +6,8 @@ dotenv.config({
 
 const config = {
   logger: {
-    verbosity: process.env.LOG_LEVEL ?? 'info',
-  },
+    verbosity: 'silent',
+  } as any,
   integrations: {
     plentysystems: {
       location: '@plentymarkets/shop-api/server',

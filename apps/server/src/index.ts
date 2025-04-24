@@ -19,7 +19,7 @@ const checkEnvironments = (integrations: any) => {
 
 (async () => {
   const app = await createServer(
-    { integrations: config.integrations },
+    config,
     {
       cors: {
         origin: 'http://localhost:3000',
@@ -27,11 +27,6 @@ const checkEnvironments = (integrations: any) => {
       },
       bodyParser: {
         limit: '50mb',
-      },
-      fileUpload: {
-        enabled: true,
-        maxFileSize: 14_155_776, // 13,3mb for 10mb upload file
-        maxFiles: 5,
       },
     },
   );
