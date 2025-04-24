@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable'
 import type { DragEvent, EditablePageProps } from './types';
-
+console.log('here')
 const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
