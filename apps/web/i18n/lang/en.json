@@ -97,11 +97,11 @@
       },
       "section": {
         "billingDetails": "Billing addresses",
-        "personalData": "Personal Data",
+        "personalData": "Personal data",
         "shippingDetails": "Shipping addresses"
       },
       "shippingDetails": {
-        "newAddress": "New Shipping Address",
+        "newAddress": "New shipping address",
         "shippingAddress": "Shipping address"
       }
     },
@@ -126,13 +126,13 @@
         "buyAgain": "Buy again",
         "cancel": "Cancel",
         "heading": "Buy again",
-        "headingChanges": "Change in products",
+        "headingChanges": "Change in items",
         "notAvailable": "Currently unavailable",
         "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
         "priceDown": "Price decreased",
         "priceUp": "Price increased",
         "stockLimitation": "only {stock} item(s) available",
-        "subtext": "You can purchase the products from this order again.",
+        "subtext": "You can purchase the items from this order again.",
         "subtextChanges": "Changes occured since you last ordered"
       },
       "orderDate": "Order Date",
@@ -155,10 +155,10 @@
         "paymentMethod": "Payment method",
         "price": "Price",
         "priceFrom": "from",
-        "product": "Product",
+        "product": "Item",
         "quantity": "Quantity",
         "shippingAddress": "Shipping address",
-        "showDetails": "Show product details",
+        "showDetails": "Show item details",
         "status": "Status",
         "subtotal": "Subtotal",
         "tableCaption": "Order details",
@@ -173,7 +173,7 @@
       "returnDate": "Return Date",
       "returnId": "Return-ID",
       "returnsAltText": "No returns",
-      "returnsDescription": "You haven't returned products yet",
+      "returnsDescription": "You haven't returned items yet",
       "returnsHeading": "Returns",
       "section": {
         "myOrders": "My Orders",
@@ -181,7 +181,7 @@
       },
       "shippingDate": "Shipping date",
       "shippingSummary": {
-        "heading": "Shipping Summary",
+        "heading": "Shipping summary",
         "shipTo": "Ship to",
         "shippingMethod": "Shipping method"
       },
@@ -204,8 +204,8 @@
     "sameAsShippingAddress": "Same as shipping address"
   },
   "allFromCategory": "All {name}",
-  "allProducts": "All products",
-  "allProductsLinkText": "Browse products",
+  "allProducts": "All items",
+  "allProductsLinkText": "Browse items",
   "apply": "Apply",
   "asterisk": "*",
   "auth": {
@@ -392,7 +392,7 @@
   "createCustomerReview": "Create review",
   "currentPage": "Current Page is {page}",
   "customerReviews": "Customer reviews",
-  "customerReviewsNone": "Nobody has submitted a review for this product yet",
+  "customerReviewsNone": "Nobody has submitted a review for this item yet",
   "deletedFromCart": "Item removed from shopping cart",
   "delivery": "Shipping",
   "documents": {
@@ -430,8 +430,8 @@
   "emptyCart": "Your cart is empty",
   "emptyCartImgAlt": "Image of an empty cart",
   "emptyCartNotification": "You don't have any items in your cart",
-  "emptyStateAltText": "Image that describes that no products were found",
-  "emptyStateText": "We no longer have products in this category.",
+  "emptyStateAltText": "Image that describes that no items were found",
+  "emptyStateText": "We no longer have items in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
   "emptyWishlist": "Your wishlist is empty",
   "error": {
@@ -683,8 +683,8 @@
     "noInformation": "No information available for manufacturer",
     "noResponsibleInformation": "No information available for Responsible Person",
     "responsibleHeader": "Responsible Person in the EU",
-    "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations.",
-    "subtitle": "Manufacturer information includes the address and additional details about the producer of the product.",
+    "responsibleSubtitle": "An economic operator based within the EU who ensures that the item complies with all necessary regulations.",
+    "subtitle": "Manufacturer information includes the address and additional details about the producer of the item.",
     "contactUrl": "Contact form",
     "responsibleContactUrl": "EU-Responsible contact form"
   },
@@ -709,9 +709,9 @@
   "nextAriaLabel": "Navigate to next page",
   "noReviews": "No reviews",
   "noneExisting": "None",
-  "numberInCart": "{count} product in cart",
-  "numberInWishlist": "{count} products in wishlist",
-  "numberOfProducts": "{count} Products out of {total} Products",
+  "numberInCart": "{count} item in cart",
+  "numberInWishlist": "{count} items in wishlist",
+  "numberOfProducts": "{count} items out of {total} items",
   "offerForm": {
     "acceptOffer": "Accept offer",
     "cancel": "Cancel",
@@ -796,13 +796,13 @@
   "procentageSavings": "You save {percent} % on this bundle",
   "productAttributes": {
     "notValidVariation": "Please select a valid variation.",
-    "productNameMissing": "Product name missing",
+    "productNameMissing": "Item name missing",
     "seeAvailableOptions": "See available options"
   },
-  "productDetails": "Product details",
-  "productLegalDetailsHeader": "Product Legal Details",
-  "products": "Products",
-  "quantitySelector": "Quantity Selector",
+  "productDetails": "Item details",
+  "productLegalDetailsHeader": "Item legal details",
+  "products": "Items",
+  "quantitySelector": "Quantity selector",
   "quantitySelectorDecrease": "Decrease value",
   "quantitySelectorIncrease": "Increase value",
   "quickCheckout": {
@@ -860,7 +860,7 @@
       "success": "Your review has been submitted."
     },
     "reviewAuthor": "Your name (optional)",
-    "reviewText": "Product review (optional)",
+    "reviewText": "Item review (optional)",
     "saveAnswer": "Submit answer",
     "showAnswers": "Show answers",
     "submitReview": "Send review",
@@ -887,9 +887,9 @@
   "shipping": {
     "addButton": "Add shipping address",
     "description": "Add a shipping address to view shipping details.",
-    "heading": "Shipping Address",
+    "heading": "Shipping address",
     "methodChanged": "The selected shipping method is not available anymore.",
-    "noShippingMessage": "No Shipping Information available"
+    "noShippingMessage": "No shipping information available"
   },
   "shippingAddress": "Shipping address",
   "shippingAddressRequired": "Please select a shipping address.",
@@ -905,7 +905,7 @@
   "showLess": "Show less",
   "showMore": "Show more",
   "showOptions": "Show options",
-  "showProducts": "Show products",
+  "showProducts": "Show items",
   "socialLabel": "Go to {label} page",
   "softLogin": {
     "check": "Check",
@@ -950,7 +950,7 @@
       "reachedMaximumQuantity": "Your order exceeds the maximum order quantity of this item."
     },
     "contact": {
-      "emailAlreadyExists": "The e-mail address already exists.",
+      "emailAlreadyExists": "The email address already exists.",
       "missingContactOrUnexpectedFormat": "Missing contact data or unexpected format.",
       "unexpectedAddressFormat": "Unexpected address format"
     },
@@ -1050,7 +1050,7 @@
       "additionalCharge": "Additional charge",
       "preferredDay": "Additional charge preferred day",
       "cutofftime": "Cut-off-time",
-      "cutofftimeDescription": "Cut-off time is the latest possible order time up to which the minimum preferred day (day of order + 2 working days) can be guaranteed. As soon as the time is exceeded, the earliest preferred day displayed in the frontend will be shifted to one day later (day of order + 3 working days).",
+      "cutofftimeDescription": "Cut-off-time is the latest possible order time up to which the minimum preferred day (day of order + 2 working days) can be guaranteed. As soon as the time is exceeded, the earliest preferred day displayed in the frontend will be shifted to one day later (day of order + 3 working days).",
       "hour": "Hour",
       "minute": "Minute",
       "exclusionTransfer": "Exclusion of transfer days",
@@ -1059,20 +1059,20 @@
       "gmapsApiKey": "API key",
       "additionalChargeDescription": "Enter the gross prices for the service {preferredDayMsg}. This price is charged to the customer's account if they select the service in your online store. Insert 0 to offer the service free of charge.",
       "postnumberRequired": "Decide whether your customers are required to enter their DHL post number when they select a post office in the finder.",
-      "finderSettingsTitle": "Settings for the DHL Packstation/Postfiliale finder",
+      "finderSettingsTitle": "Settings for the DHL Packstation/Postal outlet finder",
       "finderSettingsDescription": "Enter your Google Maps API key to use the finder correctly. In the {shippingSettingsMsg} assistant, you can activate the finder. You can also decide whether the DHL post number should be a mandatory field when a customer selects a post office in the finder."
     },
     "packstation": {
-      "title": "DHL Packstation / Postfiliale",
-      "zipcodePlaceholder": "PLZ",
-      "cityPlaceholder": "Ort",
+      "title": "DHL Packstation / Postal outlet",
+      "zipcodePlaceholder": "Postcode",
+      "cityPlaceholder": "City",
       "streetPlaceholder": "Street",
       "dropDownValues": {
-        "both": "Packstation/Postfiliale",
-        "postfilial": "Postfiliale",
+        "both": "Packstation/Postal outlet",
+        "postfilial": "Postal outlet",
         "packstation": "Packstation"
       },
-      "nameInfo": "Der Name wird aus der Rechnungsadresse übernommen. Die Postnummer und die Adresse der Packstation/Postfiliale werden als Lieferadresse übernommen.",
+      "nameInfo": "The name is taken from the billing address. The post number and the address of the packing station/post office will be used as the shipping address.",
       "search": "Search",
       "backToList": "Back to list",
       "loading": "Loading",
@@ -1080,8 +1080,8 @@
       "noResult2": "Please enter at least the postcode or the town.",
       "setPackstation": "Apply",
       "moreDetails": "More Details",
-      "postNumberPlaceholder": "Postnumber",
-      "packstationAddedSuccessMessage": "The Packstation/post office was taken as delivery address.",
+      "postNumberPlaceholder": "Post number",
+      "packstationAddedSuccessMessage": "The Packstation/post office was taken as shipping address.",
       "containerTextInfo": "Enter an address and select a filter for the pick-up location. Afterwards, click on one of the search results to select this pick-up location.",
       "postnumberRequired": "The post number is mandatory. Please enter your DHL post number.",
       "locationSearchUnifiedCall": "Location Search Unified API Call",

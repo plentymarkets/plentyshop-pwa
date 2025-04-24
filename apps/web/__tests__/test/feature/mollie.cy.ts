@@ -33,7 +33,8 @@ beforeEach(() => {
 });
 
 describe('Mollie payment methods', () => {
-  it('[feature] Check mollie credit cardpayment and place a test order', () => {
+  // The credit card test fails if "MOLLIE_TEST_MODE=true" is missing in the .env. Make sure it's set locally and in the GitHub Action runtime.
+  it('[feature] Check mollie credit card payment and place a test order', () => {
     checkout.checkMollieCreditCard().placeOrderButtons.click();
 
     checkout.fillMollieCreditCardForm();

@@ -21,7 +21,10 @@
 
 ### 👷 Changed
 
+- Use preview text for bundle items on item page
+- Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
+- Enable caching for turbo builds
 
 ### 🩹 Fixed
 
@@ -30,6 +33,7 @@
 - (dev) Fix Page Selector closes on second button click.
 - (dev) Fix styling of editor actions on content pages.
 - (dev) Fix notification and modal closing of delete category
+- The CSS for drag-&-drop is now only loaded in the editor, not the live shop.
 
 # v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.14.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
