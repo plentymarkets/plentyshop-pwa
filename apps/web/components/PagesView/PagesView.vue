@@ -5,8 +5,8 @@
         <div class="flex items-center text-xl font-bold">
           Pages
           <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
-            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage"
-          /></SfTooltip>
+            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
+          </SfTooltip>
         </div>
         <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
           <SfIconClose />
@@ -52,11 +52,13 @@
         </template>
 
         <div class="mb-6 mt-4">
-          <ul class="bg-white shadow-md rounded-lg">
+          <ul class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto" @scroll="(e) => handleScroll(e, 'content')">
             <PagesItem v-for="item in contentItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
+            <li v-if="loadingContent" class="px-4 py-2 text-sm text-gray-500">Loading...</li>
           </ul>
         </div>
       </UiAccordionItem>
+
       <UiAccordionItem
         v-model="productPagesOpen"
         data-testid="product-pages-section"
@@ -68,8 +70,9 @@
         </template>
 
         <div class="mb-6 mt-4">
-          <ul class="bg-white shadow-md rounded-lg">
+          <ul class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto" @scroll="(e) => handleScroll(e, 'item')">
             <PagesItem v-for="item in itemItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
+            <li v-if="loadingItem" class="px-4 py-2 text-sm text-gray-500">Loading...</li>
           </ul>
         </div>
       </UiAccordionItem>
@@ -81,9 +84,16 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import type { CategoryEntry } from '@plentymarkets/shop-api';
+import {
+  SfIconClose,
+  SfIconHelp,
+  SfTooltip,
+  SfIconAdd,
+  SfLoaderCircular
+} from '@storefront-ui/vue';
+import { useSiteConfiguration } from '~/composables/useSiteConfiguration';
 const { locale } = useI18n();
+
 const { data, getCategories } = useCategoriesSearch();
 await getCategories({
   'level': 1,
@@ -96,29 +106,46 @@ await getCategories({
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
-
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const splitItemsByType = (items: CategoryEntry[]) => {
-  const result = {
-    contentItems: [] as CategoryEntry[],
-    itemItems: [] as CategoryEntry[],
-  };
+const {
+  contentItems,
+  itemItems,
+  loadingContent,
+  loadingItem,
+  hasMoreContent,
+  hasMoreItem,
+  fetchContentCategories,
+  fetchItemCategories
+} = useCategoriesSearch();
 
-  items.forEach((item) => {
-    switch (item.type) {
-      case 'content':
-        result.contentItems.push(item);
-        break;
-      case 'item':
-        result.itemItems.push(item);
-        break;
+const contentPagesOpen = ref(false);
+const productPagesOpen = ref(false);
+
+const handleScroll = async (e: Event, type: 'content' | 'item') => {
+  const el = e.target as HTMLElement;
+  const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
+
+  if (nearBottom) {
+    if (type === 'content' && hasMoreContent.value) {
+      await fetchContentCategories();
+    } else if (type === 'item' && hasMoreItem.value) {
+      await fetchItemCategories();
     }
-  });
-
-  return result;
+  }
 };
-const { contentItems, itemItems } = splitItemsByType(data.value.entries);
+
+watch(contentPagesOpen, (opened) => {
+  if (opened && contentItems.value.length === 0) {
+    fetchContentCategories();
+  }
+});
+
+watch(productPagesOpen, (opened) => {
+  if (opened && itemItems.value.length === 0) {
+    fetchItemCategories();
+  }
+});
 
 const openHelpPage = () => {
   const urls: Record<string, string> = {
@@ -127,7 +154,6 @@ const openHelpPage = () => {
   };
 
   const targetUrl = urls[locale.value] ?? urls['en'] ?? null;
-
   if (targetUrl) window.open(targetUrl, '_blank');
 };
 </script>
