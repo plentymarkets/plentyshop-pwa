@@ -126,7 +126,6 @@
         "addToCart": "Add to cart",
         "buyAgain": "Buy again",
         "cancel": "Cancel",
-        "closeQuickCheckout": "Close add to cart confirmation",
         "heading": "Buy again",
         "headingChanges": "Change in products",
         "notAvailable": "Currently unavailable",
@@ -816,7 +815,8 @@
     "checkYourCart": "Check your cart",
     "heading": "Added to shopping cart",
     "subTotal": "Items subtotal",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "close": "Close quick checkout"
   },
   "readLess": "Read less",
   "readMore": "Read more",

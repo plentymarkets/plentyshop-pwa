@@ -126,7 +126,6 @@
         "addToCart": "In den Warenkorb",
         "buyAgain": "Erneut kaufen",
         "cancel": "Abbrechen",
-        "closeQuickCheckout": "Warenkorb-Bestätigung schließen",
         "heading": "Erneut kaufen",
         "headingChanges": "Änderungen der Artikel",
         "notAvailable": "Nicht verfügbar",
@@ -816,7 +815,8 @@
     "checkYourCart": "Warenkorb prüfen",
     "heading": "Zum Warenkorb hinzugefügt",
     "subTotal": "Zwischensumme",
-    "quantity": "Anzahl"
+    "quantity": "Anzahl",
+    "close": "Warenkorb-Bestätigung schließen"
   },
   "readLess": "Weniger lesen",
   "readMore": "Mehr lesen",

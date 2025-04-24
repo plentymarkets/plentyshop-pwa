@@ -14,7 +14,7 @@
       </div>
       <div class="absolute right-2 top-2 flex items-center">
         <UiButton
-          :aria-label="t('account.ordersAndReturns.orderAgain.closeQuickCheckout')"
+          :aria-label="t('quickCheckout.close')"
           data-testid="quick-checkout-close"
           square
           variant="tertiary"
