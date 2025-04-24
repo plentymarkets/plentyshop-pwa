@@ -82,16 +82,15 @@
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import type { CategoryEntry } from '../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale } = useI18n();
-// const { pages } = await usePages();
 const { data, getCategories } = useCategoriesSearch();
 await getCategories({
   'level': 1,
   'type': 'in:item,content',
   'sortBy':'position_asc',
   'page': 1,
-  'itemsPerPage': 50,
+  'itemsPerPage': 150,
   'with': 'details,clients'
 })
 const contentPagesOpen = ref(false);

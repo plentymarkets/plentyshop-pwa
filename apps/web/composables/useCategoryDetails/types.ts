@@ -1,4 +1,4 @@
-import type { CategoryData, CategorySearchById } from '../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { CategoryData } from '@plentymarkets/shop-api';
 
 export interface UseCategoryDetailState {
   data: CategoryData;
@@ -8,7 +8,7 @@ export interface UseCategoryDetailState {
 export interface UseCategoryDetailsMethods {
   data: Readonly<Ref<UseCategoryDetailState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  getCategory: (id: CategorySearchById) => Promise<void>;
+  getCategory: (id: number) => Promise<CategoryData>;
 }
 
 export type UseCategoryDetailsReturn = () => UseCategoryDetailsMethods;

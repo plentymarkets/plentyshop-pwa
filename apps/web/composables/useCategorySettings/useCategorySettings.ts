@@ -25,20 +25,17 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     state.value.loading = true;
     try {
       const { getCategory } = useCategoryDetails();
-      const result = await getCategory({ categoryId: categoryId });
+      const result = await getCategory(categoryId);
 
-      const categoryData = result;
-
-      const cleanData = JSON.parse(JSON.stringify(categoryData));
+      const cleanData = JSON.parse(JSON.stringify(result));
 
       const { addCategorySettings } = useCategorySettingsCollection();
       await addCategorySettings(cleanData);
       await nextTick();
 
       cache.value[categoryId] = cleanData;
-      state.value.data = cache.value[categoryId];
+      state.value.data = cleanData;
       state.value.initialData = JSON.parse(JSON.stringify(cleanData));
-
       return cache.value[categoryId];
     } catch (error) {
       console.error('Error fetching category settings:', error);
@@ -87,4 +84,3 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     deletePage,
   };
 };
-

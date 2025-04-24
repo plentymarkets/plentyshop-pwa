@@ -1,6 +1,4 @@
 import type { CategoryData } from '@plentymarkets/shop-api';
-import type { UseCategoryDetailsReturn, UseCategoryDetailState } from './types';
-import type { CategorySearchById } from '../../../../../plentymarkets-sdk/packages/api-client/src';
 
 export const useCategoryDetails: UseCategoryDetailsReturn = () => {
   const state = useState<UseCategoryDetailState>('useCategoriesSearch', () => ({
@@ -8,13 +6,17 @@ export const useCategoryDetails: UseCategoryDetailsReturn = () => {
     loading: false,
   }));
 
-  const getCategory = async (categoryId: CategorySearchById) => {
+  const getCategory = async (categoryId: number): Promise<CategoryData> => {
     state.value.loading = true;
     try {
-      const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryById(categoryId));
-      state.value.data = data?.value?.data ?? state.value.data;
-      console.log('Single category data', state.value.data);
+      const { data } = await useAsyncData<{ data: CategoryData }>(() =>
+        useSdk().plentysystems.getCategoryById({ categoryId, with: 'details,clients' }),
+      );
+      const result = data?.value?.data;
+      state.value.data = result ?? state.value.data;
+      return result!;
     } catch (error) {
+      console.error('getCategory error:', error);
       throw new Error(error as string);
     } finally {
       state.value.loading = false;
@@ -26,4 +28,3 @@ export const useCategoryDetails: UseCategoryDetailsReturn = () => {
     ...toRefs(state.value),
   };
 };
-
