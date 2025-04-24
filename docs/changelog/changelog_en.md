@@ -29,6 +29,7 @@
 
 ### 🩹 Fixed
 
+- Checkout improvements related to payment methods surcharge and required amounts for availability.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
