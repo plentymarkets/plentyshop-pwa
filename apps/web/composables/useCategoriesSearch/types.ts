@@ -1,15 +1,29 @@
-import type { CategoryData } from '../../../../../plentymarkets-sdk/packages/api-client/src';
-import type { CategorySearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { CategoryEntry } from '../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { CategoryData, CategorySearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseCategoriesSearchState {
   data: CategoryData;
-  loading: boolean;
+  contentItems: CategoryEntry[];
+  itemItems: CategoryEntry[];
+  loadingContent: boolean;
+  loadingItem: boolean;
+  contentPage: number;
+  itemPage: number;
+  hasMoreContent: boolean;
+  hasMoreItem: boolean;
 }
 
 export interface UseCategoriesSearchMethods {
-  data: Readonly<Ref<UseCategoriesSearchState['data']>>;
-  loading: Readonly<Ref<boolean>>;
+  contentItems: Readonly<Ref<CategoryEntry[]>>;
+  itemItems: Readonly<Ref<CategoryEntry[]>>;
+  loadingContent: Readonly<Ref<boolean>>;
+  loadingItem: Readonly<Ref<boolean>>;
+  hasMoreContent: Readonly<Ref<boolean>>;
+  hasMoreItem: Readonly<Ref<boolean>>;
+  fetchContentCategories: () => Promise<void>;
+  fetchItemCategories: () => Promise<void>;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;
+
