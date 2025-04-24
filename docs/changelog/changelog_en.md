@@ -4,6 +4,7 @@
 
 ### 🚀 New
 
+- Added aria label property on custom button component.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
