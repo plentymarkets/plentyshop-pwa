@@ -198,7 +198,7 @@ import {
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
-import draggable from 'vuedraggable';
+import draggable from 'vuedraggable/src/vuedraggable'
 import dragIcon from 'assets/icons/paths/drag.svg';
 
 const { isOpen, open, close } = useDisclosure();

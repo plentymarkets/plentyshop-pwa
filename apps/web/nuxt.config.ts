@@ -11,10 +11,6 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  alias: {
-    //pointing at the component instead of ES5
-    'vuedraggable$': 'vuedraggable/src/vuedraggable'
-  },
   app: appConfiguration,
   experimental: {
     asyncContext: true,
