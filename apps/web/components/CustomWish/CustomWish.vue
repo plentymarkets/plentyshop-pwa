@@ -4,7 +4,12 @@
       {{ t('orderContactWish') }}
     </h2>
 
-    <SfTextarea v-model="customerWish" class="resize-none md:!h-32 sm:!h-20 w-full" :placeholder="t('checkoutContactWishMessage')" @blur="setCustomerWish(customerWish)"/>
+    <SfTextarea
+      v-model="customerWish"
+      class="resize-none md:!h-32 sm:!h-20 w-full"
+      :placeholder="t('checkoutContactWishMessage')"
+      @blur="setCustomerWish(customerWish)"
+    />
   </div>
 </template>
 
