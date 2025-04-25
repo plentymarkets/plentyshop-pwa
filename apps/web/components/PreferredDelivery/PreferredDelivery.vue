@@ -4,20 +4,20 @@
     class="flex flex-col my-6 md:mx-4 p-4 rounded-md shadow-[inset_0_0_0_0.1rem_rgb(255,204,0)]"
     data-testid="preferred-delivery"
   >
-    <header class="w-full">
+    <header class="w-full flex items-center justify-between gap-4">
+      <h3 class="font-bold">{{ $t('PreferredDelivery.general.wunschpaketTitle') }}</h3>
       <NuxtImg
         ref="img"
         src="/_nuxt-plenty/images/preferredDelivery/plugin-icon.svg"
-        alt="dhl logo"
-        width="256"
+        alt="DHL logo"
+        width="130"
         height="auto"
         loading="lazy"
         class="block rounded-lg bg-[rgb(255,204,0)] p-3"
       />
-      <h3 class="font-bold mt-4">{{ $t('PreferredDelivery.general.wunschpaketTitle') }}</h3>
     </header>
 
-    <div class="mt-2">{{ $t('PreferredDelivery.general.wunschpaketIntroduction') }}</div>
+    <div class="mt-3">{{ $t('PreferredDelivery.general.wunschpaketIntroduction') }}</div>
     <div>{{ $t('PreferredDelivery.general.wunschpaketOptions') }}</div>
 
     <form novalidate @submit.prevent="validateAndSubmitForm">

@@ -5,11 +5,10 @@
   >
     <header class="w-full flex items-center justify-between gap-4">
       <h3 class="font-bold">{{ $t('PreferredDelivery.packstation.title') }}</h3>
-
       <NuxtImg
         ref="img"
         src="/_nuxt-plenty/images/preferredDelivery/plugin-icon.svg"
-        alt="dhl logo"
+        alt="DHL logo"
         width="130"
         height="auto"
         loading="lazy"
@@ -19,7 +18,7 @@
 
     <div class="mt-3">{{ $t('PreferredDelivery.packstation.containerTextInfo') }}</div>
 
-    <form novalidate @submit.prevent="" class="">
+    <form novalidate @submit.prevent="">
       <div class="py-4 sm:flex sm:gap-4">
         <SfInput
           type="text"
@@ -48,7 +47,7 @@
           for="DHL-type-packstation"
           class="order-1 sm:order-2 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit"
         >
-          <SfCheckbox id="DHL-type-packstation" @change="" />
+          <SfCheckbox id="DHL-type-packstation" />
           {{ $t('PreferredDelivery.packstation.dropDownValues.packstation') }}
         </label>
 
@@ -56,7 +55,7 @@
           for="DHL-type-postal-outlet"
           class="order-2 sm:order-3 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit mt-2 sm:mt-0"
         >
-          <SfCheckbox id="DHL-type-postal-outlet" @change="" />
+          <SfCheckbox id="DHL-type-postal-outlet" />
           {{ $t('PreferredDelivery.packstation.dropDownValues.postfilial') }}
         </label>
 
