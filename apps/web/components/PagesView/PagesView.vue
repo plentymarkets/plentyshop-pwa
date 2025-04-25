@@ -53,7 +53,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in contentItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in contentItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -69,7 +69,7 @@
 
         <div class="mb-6 mt-4">
           <ul class="bg-white shadow-md rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.path" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in itemItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
           </ul>
         </div>
       </UiAccordionItem>
@@ -82,19 +82,28 @@
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import type { MenuItemType } from '~/components/PagesView/types';
+import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale } = useI18n();
-const { pages } = await usePages();
+const { data, getCategories } = useCategoriesSearch();
+await getCategories({
+  level: 1,
+  type: 'in:item,content',
+  sortBy: 'position_asc',
+  page: 1,
+  itemsPerPage: 50,
+  with: 'details,clients',
+});
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
+
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const splitItemsByType = (items: MenuItemType[]) => {
+const splitItemsByType = (items: CategoryEntry[]) => {
   const result = {
-    contentItems: [] as MenuItemType[],
-    itemItems: [] as MenuItemType[],
+    contentItems: [] as CategoryEntry[],
+    itemItems: [] as CategoryEntry[],
   };
 
   items.forEach((item) => {
@@ -110,7 +119,7 @@ const splitItemsByType = (items: MenuItemType[]) => {
 
   return result;
 };
-const { contentItems, itemItems } = splitItemsByType(pages.value);
+const { contentItems, itemItems } = splitItemsByType(data.value.entries);
 
 const openHelpPage = () => {
   const urls: Record<string, string> = {

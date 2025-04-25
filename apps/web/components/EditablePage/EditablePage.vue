@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import draggable from 'vuedraggable';
+import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 
 const props = defineProps<EditablePageProps>();
