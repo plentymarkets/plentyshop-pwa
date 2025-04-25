@@ -144,8 +144,6 @@
       </UiButton>
     </form>
   </div>
-
-  <UiDivider v-if="preferredDeliveryAvailable" class="w-screen md:w-auto -mx-4 md:mx-0" />
 </template>
 
 <script setup lang="ts">
