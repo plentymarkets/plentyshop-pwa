@@ -19,6 +19,7 @@
 - (dev) Added delete category logic
 - (dev) Added delete category logic
 - (dev) Replace data structures for left navigation and individual categories
+- (dev) Added a customer wish input field on the checkout
 
 ### 👷 Changed
 
