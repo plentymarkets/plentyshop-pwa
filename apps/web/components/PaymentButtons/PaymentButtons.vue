@@ -81,7 +81,7 @@ const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
+const { shippingPrivacyAgreement, customerWish } = useAdditionalInformation();
 const paypalCardDialog = ref(false);
 
 const {
@@ -167,7 +167,7 @@ const openPayPalCardDialog = async () => {
 const handleRegularOrder = async () => {
   const data = await createOrder({
     paymentId: paymentMethods.value.selected,
-    additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
+    additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value, orderContactWish: customerWish.value },
   });
 
   if (data?.order?.id) {
