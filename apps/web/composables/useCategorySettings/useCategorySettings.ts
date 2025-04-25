@@ -11,7 +11,9 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     drawerExtraOpen: false,
     drawerView: null,
     initialData: {} as Category,
+    unlinkModalOpen: false,
   }));
+  const { t } = useI18n();
 
   const fetchCategorySettings = async (categoryId: number): Promise<Category | null> => {
     if (cache.value[categoryId]) {
@@ -22,21 +24,18 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
 
     state.value.loading = true;
     try {
-      const { fetchProducts } = useProducts(settingsId);
-      const result = await fetchProducts({ categoryId: categoryId.toString() });
+      const { getCategory } = useCategoryDetails();
+      const result = await getCategory(categoryId);
 
-      const categoryData = result.category as Category;
-
-      const cleanData = JSON.parse(JSON.stringify(categoryData));
+      const cleanData = JSON.parse(JSON.stringify(result));
 
       const { addCategorySettings } = useCategorySettingsCollection();
       await addCategorySettings(cleanData);
       await nextTick();
 
       cache.value[categoryId] = cleanData;
-      state.value.data = cache.value[categoryId];
+      state.value.data = cleanData;
       state.value.initialData = JSON.parse(JSON.stringify(cleanData));
-
       return cache.value[categoryId];
     } catch (error) {
       console.error('Error fetching category settings:', error);
@@ -45,9 +44,43 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       state.value.loading = false;
     }
   };
-
+  const toggleDeleteModal = (value: boolean) => {
+    state.value.unlinkModalOpen = value;
+  };
+  const deletePage = async (id: number, pageName: string) => {
+    const { send } = useNotification();
+    try {
+      const { data } = await useSdk().plentysystems.deleteCategory({
+        categoryId: id,
+      });
+      if (data === 'Category deleted') {
+        toggleDeleteModal(false);
+        send({
+          message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
+          type: 'positive',
+        });
+      }
+    } catch (error) {
+      let errorMessage = '';
+      if (error && typeof error === 'object') {
+        if ('message' in error) {
+          errorMessage = (error as { message: string }).message;
+        }
+      }
+      send({
+        message: t('errorMessages.editor.categories.deleteError', {
+          pageName: pageName,
+          id: id,
+          errorMessage: errorMessage,
+        }),
+        type: 'negative',
+      });
+    }
+  };
   return {
     ...toRefs(state.value),
     fetchCategorySettings,
+    toggleDeleteModal,
+    deletePage,
   };
 };

@@ -11,6 +11,18 @@
     </h2>
     <p>{{ shippingMethod }}</p>
   </template>
+
+  <template v-if="preferredDeliveryServices">
+    <h2 class="font-medium text-base mt-4">
+      {{ $t('PreferredDelivery.general.assistantName') }}
+    </h2>
+
+    <ul class="space-y-1">
+      <li v-for="(serviceValue, serviceName, index) in preferredDeliveryServices" :key="index">
+        {{ `${serviceName}: ${serviceValue}` }}
+      </li>
+    </ul>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -21,4 +33,5 @@ const props = defineProps<OrderShippingSummaryPropsType>();
 
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const shippingMethod = orderGetters.getShippingProvider(props.order);
+const preferredDeliveryServices = orderGetters.getPreferredDeliveryServices(props.order);
 </script>

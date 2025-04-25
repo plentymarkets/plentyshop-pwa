@@ -1,20 +1,10 @@
 # Changelog PlentyONE Shop
 
-# v1.xx.x (xxxx-xx-xx)
+# v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### 🩹 Fixed
+### 🚀 New
 
-- Updated the category menu markup by removing a button element nested within an anchor tag.
-- Fixed nuxt runtime error.
-
-# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
-
-### 🩹 Fixed
-
-- A bug which crashed the build process.
-
-### New
-
+- Added aria label property on custom button component.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -26,20 +16,79 @@
 - (dev) Added manange pages button in editor toolbar.
 - (dev) State management and save for edit categories toolbar
 - (dev) Added editable page for category
+- (dev) Added delete category logic
+- (dev) Added delete category logic
+- (dev) Replace data structures for left navigation and individual categories
 
 ### 👷 Changed
 
-- (dev) The editor now has a new component that allows page navigation.
+- Use preview text for bundle items on item page
+- Added DHL Preferred Delivery Services to order details.
+- Updated instances of old branding and product names
+- Enable caching for turbo builds
+- Order confirmation soft login shows a warning instead of an error message now.
 
 ### 🩹 Fixed
 
+- Checkout improvements related to payment methods surcharge and required amounts for availability.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
+- (dev) Fix styling of editor actions on content pages.
+- (dev) Fix notification and modal closing of delete category
+- The CSS for drag-&-drop is now only loaded in the editor, not the live shop.
+- Fixed drag&drop legacy JS PSI error.
+
+# v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.14.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 🚀 New
+
+- Added Mollie payment methods in the checkout.
+- Added a new legal page for the declaration on accessibility.
+- Drag-and-drop functionality has been integrated for blocks and block settings.
+
+### 👷 Changed
+
+- Unified some terms in German and English
+- Filtering not integrated PayPal payment methods out of the checkout process.
+
+### 🩹 Fixed
+
+- Fixed the PayPal Express flow, requires PayPal Plugin version >= 6.5.11
+- Fixed the redirect in the quick checkout to the guest login instead of the checkout page when you are not logged in.
+
+# v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 👷 Changed
+
+- Appended variation ID to product urls in category page for LTS compatibility.
+
+### 🩹 Fixed
+
+- Fix an error while attempting to login from guest.
+- Changed the category menu markup by removing an invalid button element nested within an anchor tag.
+- Fixed nuxt runtime error.
+- Turnstile validation error in the contact form if turnstile is not configured.
+- It's no longer possible to enter values outside the quantity limits in the quantity selector. The quantity will be set to 1 or the maximum value instead.
+
+### 🏡 Chore
+
+- Add validator package to nuxt optimizeDeps.
+
+### 💻 Developer notes
+
+- Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
+- Updated `frontend:removeFromCart` event to include deleted cartItem.
+
+# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 🩹 Fixed
+
+- A bug which crashed the build process.
 
 # v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Added the possibility to toggle the visibility of tags on the category page based on an environment variable (USE_TAGS_ON_CATEGORY_PAGE=1).
 - DHL Preferred Delivery has been added as a shipping method.
@@ -78,7 +127,7 @@
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Added site settings toolbar.
 - Added a legal hint in the checkout for "local VAT, costs of customs clearance and customs duties" if necessary.
@@ -114,7 +163,7 @@
 
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Added success and error notifications when saving changes in the editor.
 - Added block structures and refactored the editor to support them, including adding api endpoint communication.
@@ -134,7 +183,7 @@
 
 # v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 #### Editor
 
@@ -198,7 +247,7 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
   - Run `yarn setup:unix` or `yarn setup:windows` and press y to remove the `.yarnrc.yml`.
   - Remove `NPM_AUTH_TOKEN` from your `apps/web/.env` file.
 
-### New
+### 🚀 New
 
 - Added ability to change primary and secondary colors from Site Configuration Drawer.
 - Added site configuration drawer.
@@ -223,7 +272,7 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - The [Nuxt security module](https://nuxt-security.vercel.app/) has been added to the web app.
 - The web app is now equipped to [render components from a module](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in designated areas of the shop.
@@ -260,7 +309,7 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Users can now edit the homepage from within the shop. This includes adding, editing and deleting individual blocks. Supported block types include Hero Slider, Media Card, Recommended Item gallery, and Newsletter.
 - Categories with visibility "After login" now redirect to the login when accessed by a guest user.
@@ -361,7 +410,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - User can now modify shipping address during the read-only checkout process.
 - Google Pay and Apple Pay are now available as payment methods in the checkout.
@@ -604,7 +653,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Pagination for review items has been added.
 - Custom SVG icons are now supported.
@@ -670,7 +719,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Category routing has been updated, and the /c prefix has been removed. Please verify that no static URLs in your application still include /c.
   - To accommodate the /c routing change, the [category page](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) was moved from apps/web/pages/category/[slug].vue to apps/web/pages/[...slug].vue.
 
-### New
+### 🚀 New
 
 - Added scroll to top for review pagination.
 - a ‘Previous’ button to the return form for easier navigation.
@@ -739,7 +788,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
 
-### New
+### 🚀 New
 
 - Added order properties on item pages, in the cart, and on the order summary.
 - Added coupons.
@@ -777,7 +826,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ## v1.2.0 (2023-11-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.1.0...v1.2.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### 🚀 New
 
 - Added getters to show variation properties.
 - Added a frontend toggle to disable the pwa preview mode.
@@ -807,7 +856,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 - [Middleware](./docs/config/middleware.md) `API_ENDPOINT` now has to be maintained via an `.env` file under `apps/server`.
 
-### New
+### 🚀 New
 
 - Added PayPal Express Checkout
 - Added PayPal payment option for credit cards

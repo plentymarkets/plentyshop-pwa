@@ -169,7 +169,10 @@ const validationSchema = toTypedSchema(
         return true;
       }),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
-    turnstile: string().required(t('errorMessages.contact.turnstileRequired')).default(''),
+    turnstile:
+      turnstileSiteKey.length > 0
+        ? string().required(t('errorMessages.contact.turnstileRequired')).default('')
+        : string().optional().default(''),
   }),
 );
 

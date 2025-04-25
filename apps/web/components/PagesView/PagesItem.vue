@@ -9,13 +9,13 @@
         <SfIconExpandMore />
       </span>
       <router-link
-        :to="`${localePrefix}${item.path}`"
+        :to="`${localePrefix}/${item.details[0].nameUrl}`"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
-        <span v-if="item.name === 'Homepage'">
+        <span v-if="item.details[0].name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
-        {{ item.name }}
+        {{ item.details[0].name }}
       </router-link>
 
       <SfTooltip
@@ -54,8 +54,12 @@
           </div>
           <div
             class="p-1 flex"
-            :class="{ 'opacity-50 cursor-not-allowed': item.name === 'Homepage' }"
-            @click="item.name !== 'Homepage' ? (deletePage(item.id), setCategoryId(item.id, parentId)) : null"
+            :class="{ 'opacity-50 cursor-not-allowed': item.details[0].name === 'Homepage' }"
+            @click="
+              item.details[0].name !== 'Homepage'
+                ? (deletePage(item.id), setCategoryId(item.id, parentId, item.details[0].name))
+                : null
+            "
           >
             <SfIconDelete />
             <span class="ml-2">Delete Page</span>
@@ -63,13 +67,13 @@
         </div>
       </SfDropdown>
     </div>
-    <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">
-      <PagesItem v-for="child in item.children" :key="child.path" :item="child" :parent-id="item.id" />
-    </ul>
+    <!--    Children is disabled for the moment-->
+    <!--    <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">-->
+    <!--      <PagesItem v-for="child in item.children" :key="child.details[0].nameUrl" :item="item.child" :parent-id="item.id" />-->
+    <!--    </ul>-->
   </li>
 </template>
 <script setup lang="ts">
-import type { MenuItemType } from '~/components/PagesView/types';
 import {
   SfIconHome,
   SfIconExpandMore,
@@ -82,19 +86,20 @@ import {
   SfTooltip,
 } from '@storefront-ui/vue';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
 const { isCategoryDirty } = useCategorySettingsCollection();
 
 const { locale } = useI18n();
 const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
 
 const { item } = defineProps<{
-  item: MenuItemType;
+  item: CategoryEntry;
   parentId: number | undefined;
 }>();
 
 const { isOpen, open: openMenu, close } = useDisclosure();
-const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
+const { setSettingsCategory } = useSiteConfiguration();
+const { toggleDeleteModal } = useCategorySettings();
 const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
@@ -103,7 +108,7 @@ const { id: categoryId } = useCategorySettings();
 const open = ref(false);
 const toggle = () => (open.value = !open.value);
 const route = useRoute();
-const isActive = computed(() => route.path === item.path);
+const isActive = computed(() => route.path === item?.details[0].nameUrl);
 
 const openGeneralSettings = (id: number) => {
   close();
@@ -119,6 +124,7 @@ const openSeoSettings = (id: number) => {
 };
 const deletePage = (id: number) => {
   currentGeneralPageId.value = id;
+  categoryId.value = id;
   toggleDeleteModal(true);
   close();
 };

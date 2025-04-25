@@ -133,16 +133,18 @@ export const usePayPal = () => {
   /**
    * @description Function for creating a PayPal transaction.
    * @param fundingSource
+   * @param isExpress
    * @return CreateTransaction
    * @example
    * ``` ts
-   * createTransaction(fundingSource: string);
+   * createTransaction('paypal', true);
    * ```
    */
-  const createTransaction = async (fundingSource: string) => {
+  const createTransaction = async (fundingSource: string, isExpress = false) => {
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doCreatePayPalTransaction({
         fundingSource: fundingSource,
+        is_express: isExpress,
       }),
     );
     state.value.order = data.value?.data ?? null;

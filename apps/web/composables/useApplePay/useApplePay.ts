@@ -57,7 +57,7 @@ export const useApplePay = () => {
       requiredBillingContactFields: ['postalAddress'],
       total: {
         type: 'final',
-        label: useRuntimeConfig().public.storename ?? 'plentyshop PWA',
+        label: useRuntimeConfig().public.storename ?? 'PlentyONE Shop',
         amount: cartGetters.getTotals(cart.value).total.toString(),
       },
     } as ApplePayJS.ApplePayPaymentRequest;

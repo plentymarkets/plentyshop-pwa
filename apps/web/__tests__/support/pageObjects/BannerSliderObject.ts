@@ -57,19 +57,25 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkIsMoveSlideUpDisabled(index: number) {
-    cy.get(`[data-testid="actions-move-slide-up-${index}"]`).should('not.exist');
+    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`).should('not.exist');
   }
 
   checkIsMoveSlideDownDisabled(index: number) {
-    cy.get(`[data-testid="actions-move-slide-down-${index}"]`).should('not.exist');
+    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`).should('not.exist');
   }
 
   moveSlideUp(index: number) {
-    cy.get(`[data-testid="actions-move-slide-up-${index}"]`).click();
+    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`)
+      .trigger('mousedown', { which: 1 })
+      .trigger('mousemove', { clientX: 0, clientY: -100 })
+      .trigger('mouseup', { force: true });
   }
 
   moveSlideDown(index: number) {
-    cy.get(`[data-testid="actions-move-slide-down-${index}"]`).click();
+    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`)
+      .trigger('mousedown', { which: 1 })
+      .trigger('mousemove', { clientX: 0, clientY: 100 })
+      .trigger('mouseup', { force: true });
   }
 
   openImageGroup() {

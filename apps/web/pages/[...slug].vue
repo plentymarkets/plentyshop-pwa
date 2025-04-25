@@ -7,7 +7,7 @@
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
     <template v-if="isEditablePage && runtimeConfig.public.isDev">
-      <EditablePage />
+      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
     </template>
     <template v-else>
       <CategoryPageContent
