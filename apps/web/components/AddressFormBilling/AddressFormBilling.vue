@@ -153,6 +153,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Billing}`"
+          :aria-label="$t('closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
@@ -181,6 +182,7 @@ const {
   add: showNewForm,
   save: saveAddress,
   validationSchema: billingSchema,
+  refreshAddressDependencies,
 } = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
@@ -247,6 +249,7 @@ const submitForm = handleSubmit((billingAddressForm) => {
 
   saveAddress()
     .then(() => syncCheckoutAddress())
+    .then(() => refreshAddressDependencies())
     .catch((error) => useHandleError(error));
 });
 

@@ -27,7 +27,7 @@
             class="w-full"
             :aria-disabled="false"
             type="button"
-            aria-label="button"
+            :aria-label="{{ $t(`previewModeBar.exitWithoutSaving`) }}"
             @click="removeLookupCookie()"
           >
             {{ $t(`previewModeBar.exitWithoutSaving`) }}
