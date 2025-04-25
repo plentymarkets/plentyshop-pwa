@@ -25,15 +25,9 @@
           <PreferredDelivery v-if="countryHasDelivery" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <div class="md:px-4 py-6">
-          <h2 class="w-full text-neutral-900 text-lg font-bold mb-4">
-            {{ t('orderContactWish') }}
-          </h2>
-
-          <SfTextarea v-model="customerWish" class="resize-none md:!h-32 sm:!h-20 w-full" :placeholder="t('checkoutContactWishMessage')"/>
-        </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-4" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
+        <SfInput v-model="customerWish" type="text" :label="t('orderContactWish')" class="mb-4" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
       </div>
       <div class="col-span-6 xl:col-span-5">
@@ -105,7 +99,7 @@
 
 <script setup lang="ts">
 import { AddressType, cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import {
@@ -257,7 +251,7 @@ const openPayPalCardDialog = async () => {
 const handleRegularOrder = async () => {
   const data = await createOrder({
     paymentId: paymentMethods.value.selected,
-    additionalInformation: {
+    additionalInformation: { 
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
       orderContactWish: customerWish.value
      },
