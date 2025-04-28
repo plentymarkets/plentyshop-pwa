@@ -19,6 +19,7 @@
 - (dev) Added delete category logic
 - (dev) Added delete category logic
 - (dev) Replace data structures for left navigation and individual categories
+- (dev) Add isLinkedToWebstore property for categories
 
 ### 👷 Changed
 
