@@ -1,14 +1,14 @@
 import type { DrawerView } from '~/composables/useSiteConfiguration/types';
-import type { Category } from '@plentymarkets/shop-api';
+import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export interface useCategoryConfigurationState {
-  data: Category;
+  data: CategoryEntry;
   id: number;
   loading: boolean;
   drawerOpen: boolean;
   drawerExtraOpen: boolean;
   drawerView: DrawerView | null;
-  initialData: Category;
+  initialData: CategoryEntry;
   unlinkModalOpen: boolean;
 }
 export type ToggleDeleteModal = (value: boolean) => void;

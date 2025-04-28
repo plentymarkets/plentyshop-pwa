@@ -1,8 +1,8 @@
-import type { Category } from '@plentymarkets/shop-api';
+import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export interface useCategorySettingsCollectionState {
-  data: Category[];
-  initialData: Category[];
+  data: CategoryEntry[];
+  initialData: CategoryEntry[];
   loading: boolean;
 }
 
@@ -12,7 +12,7 @@ export interface useCategorySettingsCollection {
   loading: Readonly<Ref<boolean>>;
   hasChanges: ComputedRef<boolean>;
   isCategoryDirty: (id: number) => boolean;
-  addCategorySettings: (category: Category) => Promise<void>;
+  addCategorySettings: (category: CategoryEntry) => Promise<void>;
   saveCategorySettings: () => Promise<boolean>;
   save: () => Promise<void>;
 }

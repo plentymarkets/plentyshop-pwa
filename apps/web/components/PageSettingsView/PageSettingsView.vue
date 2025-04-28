@@ -154,7 +154,7 @@
             </UiFormLabel>
 
             <SfSwitch
-              v-model="isLinkedToWebstore"
+              v-model="data.isLinkedToWebstore"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -203,15 +203,6 @@ const isInLinkedList = computed({
   },
 });
 
-// const isLinkedToWebstore = computed({
-//   get() {
-//     return data.value.isLinkedToWebstore === 'ALL';
-//   },
-//   set(value: boolean) {
-//     data.value.isLinkedToWebstore = value ? 'ALL' : 'Default';
-//   },
-// });
-
 const isLoginRequired = computed({
   get() {
     return data.value.linklist === 'Y';
@@ -230,6 +221,14 @@ watch(
   },
   { immediate: true },
 );
+
+// watch(isLinkedToWebstore, (newValue, oldValue) => {
+//   console.log('isLinkedToWebstore changed:', { oldValue, newValue });
+// });
+
+// watch(isLoginRequired, (newValue, oldValue) => {
+//   console.log('isLoginRequired changed:', { oldValue, newValue });
+// });
 
 const pageTypeOptions = [
   { label: 'Item', value: 'item' },
