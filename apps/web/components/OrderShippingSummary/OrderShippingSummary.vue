@@ -14,7 +14,7 @@
 
   <template v-if="preferredDeliveryServices">
     <h2 class="font-medium text-base mt-4">
-      {{ $t('PreferredDelivery.general.wunschpaketTitle') }}
+      {{ $t('PreferredDelivery.general.assistantName') }}
     </h2>
 
     <ul class="space-y-1">
