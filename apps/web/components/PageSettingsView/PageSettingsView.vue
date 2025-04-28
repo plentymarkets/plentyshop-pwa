@@ -141,10 +141,10 @@
         </div>
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel class="mb-1"
-              >Client (store)
+            <UiFormLabel class="mb-1">
+              Activate page for store
               <SfTooltip
-                label="The page name is used to identify the page in the page list and can be visible in the navigation, depending on the settings. It can be changed at any time."
+                label="If you deactivate this page, customers and search engines won't be able to access it via the navigation or direct links. You can reactivate the page at any time."
                 :placement="'top'"
                 :show-arrow="true"
                 class="ml-2 z-10"
