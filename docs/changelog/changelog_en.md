@@ -27,6 +27,7 @@
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
 - Order confirmation soft login shows a warning instead of an error message now.
+- Changed the button icon and label for exiting the editor.
 
 ### 🩹 Fixed
 
