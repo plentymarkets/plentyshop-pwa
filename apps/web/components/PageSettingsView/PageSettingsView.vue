@@ -222,14 +222,6 @@ watch(
   { immediate: true },
 );
 
-// watch(isLinkedToWebstore, (newValue, oldValue) => {
-//   console.log('isLinkedToWebstore changed:', { oldValue, newValue });
-// });
-
-// watch(isLoginRequired, (newValue, oldValue) => {
-//   console.log('isLoginRequired changed:', { oldValue, newValue });
-// });
-
 const pageTypeOptions = [
   { label: 'Item', value: 'item' },
   { label: 'Content', value: 'content' },
