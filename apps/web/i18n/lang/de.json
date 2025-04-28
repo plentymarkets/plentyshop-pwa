@@ -64,9 +64,13 @@
       "label": "Marketing"
     }
   },
-  "PreviewModeBar": {
-    "label": "Steuerung des Vorschaumodus",
-    "pwa": "Shop Vorschau beenden"
+  "previewModeBar": {
+    "label": "Steuerelemente für Editor",
+    "title": "Editor verlassen und zum Liveshop wechseln?",
+    "exitEditor": "Editor verlassen und zum Liveshop wechseln",
+    "unsavedChangesWarning": "Es gibt ungespeicherte Änderungen.",
+    "saveAndExit": "Speichern und verlassen",
+    "exitWithoutSaving": "Ohne Speichern verlassen"
   },
   "account": {
     "accountSettings": {
@@ -113,6 +117,7 @@
     "ordersAndReturns": {
       "actions": "Aktionen",
       "amount": "Anzahl",
+      "more": "Mehr anzeigen",
       "continue": "Einkauf fortsetzen",
       "details": "Details",
       "heading": "Bestellungen & Retouren",
@@ -200,6 +205,7 @@
   "addToWishlist": "Zur Wunschliste hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
   "address": "Adressen",
+  "closeAddressForm": "Adressbearbeitung beenden",
   "addressContainer": {
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
@@ -342,6 +348,7 @@
   "clear": "Zurücksetzen",
   "clearFilters": "Alle Filter löschen",
   "closeDialog": "Dialogfenster schließen",
+  "closeDrawer": "Drawer schließen",
   "closeListSettings": "Listeneinstellungen schließen",
   "closeMenu": "Menü schließen",
   "coming-soon": "Demnächst",
@@ -378,6 +385,7 @@
   "content": "Inhalt",
   "continueAsGuest": "Weiter als Gast",
   "continueShopping": "Einkauf fortsetzen",
+  "closeAuthentication": "Authentifizierungsmodal schließen",
   "coupon": {
     "apply": "Einlösen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
@@ -786,6 +794,7 @@
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
   "pickSavedAddress": "Gespeicherte Adressen",
+  "closePickSavedAddress": "Adressauswahl schließen",
   "pickSavedAddressSubtitle": "Wählen Sie eine Ihrer gespeicherten Adressen oder erstellen Sie eine Neue",
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "pleaseSelect": "Bitte wählen",
@@ -810,7 +819,8 @@
     "checkYourCart": "Warenkorb prüfen",
     "heading": "Zum Warenkorb hinzugefügt",
     "subTotal": "Zwischensumme",
-    "quantity": "Anzahl"
+    "quantity": "Anzahl",
+    "close": "Warenkorb-Bestätigung schließen"
   },
   "readLess": "Weniger lesen",
   "readMore": "Mehr lesen",
@@ -879,14 +889,16 @@
   },
   "reviewsCount": "{Anzahl} Bewertungen",
   "sale": "Verkauf",
+  "closeNeutralAlert": "Benachrichtigung schließen",
   "saveAddress": "Adresse speichern",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
   "scrollTop": "Nach oben scrollen",
   "search": "Suche",
+  "resetSearch": "Suche zurücksetzen",
   "shipping": {
     "addButton": "Lieferadresse hinzufügen",
-    "description": "Fügen Sie eine Lieferadresse hinzu, um Versanddetails anzuzeigen.",
+    "description": "Fügen Sie eine Lieferadresse hinzu, um Versandinformationen anzuzeigen.",
     "heading": "Lieferadresse",
     "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar.",
     "noShippingMessage": "Keine Versandinformationen verfügbar"
@@ -1080,7 +1092,7 @@
       "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
       "setPackstation": "Übernehmen",
       "moreDetails": "Details",
-      "postNumberPlaceholder": "Postnumber",
+      "postNumberPlaceholder": "Postnummer",
       "packstationAddedSuccessMessage": "Die Packstation/Postfiliale wurde als Lieferadresse übernommen.",
       "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",
       "postnumberRequired": "Die Postnummer ist eine Pflichtangabe. Bitte geben Sie Ihre DHL Postnummer ein.",

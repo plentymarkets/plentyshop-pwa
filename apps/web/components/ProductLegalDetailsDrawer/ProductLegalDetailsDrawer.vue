@@ -21,6 +21,7 @@
           variant="tertiary"
           data-testid="product-legal-details-close"
           class="text-white"
+          :aria-label="t('closeDrawer')"
           @click="open = false"
         >
           <SfIconClose />

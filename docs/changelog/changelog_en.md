@@ -4,6 +4,7 @@
 
 ### 🚀 New
 
+- Added aria label property on custom button component.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -17,18 +18,27 @@
 - (dev) Added editable page for category
 - (dev) Added delete category logic
 - (dev) Added delete category logic
+- (dev) Replace data structures for left navigation and individual categories
 
 ### 👷 Changed
 
+- Use preview text for bundle items on item page
+- Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
+- Enable caching for turbo builds
+- Order confirmation soft login shows a warning instead of an error message now.
+- Changed the button icon and label for exiting the editor.
 
 ### 🩹 Fixed
 
+- Checkout improvements related to payment methods surcharge and required amounts for availability.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
 - (dev) Fix styling of editor actions on content pages.
 - (dev) Fix notification and modal closing of delete category
+- The CSS for drag-&-drop is now only loaded in the editor, not the live shop.
+- Fixed drag&drop legacy JS PSI error.
 
 # v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.14.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

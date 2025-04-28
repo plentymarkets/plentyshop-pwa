@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { AddressType } from '@plentymarkets/shop-api';
+import { AddressType, cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -62,7 +62,7 @@ const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
 const { cart, cartIsEmpty, cartLoading, persistShippingAddress, persistBillingAddress } = useCheckout();
-
+const { fetchPaymentMethods } = usePaymentMethods();
 const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
@@ -100,6 +100,7 @@ onNuxtReady(async () => {
 });
 
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
 const { processingOrder } = useProcessingOrder();
 
 watch(cartIsEmpty, async () => {
@@ -107,5 +108,9 @@ watch(cartIsEmpty, async () => {
     send({ type: 'neutral', message: t('emptyCartNotification') });
     await navigateTo(localePath(paths.cart));
   }
+});
+
+watch(itemSumNet, async () => {
+  await fetchPaymentMethods();
 });
 </script>

@@ -54,7 +54,7 @@
               </UiButton>
               <UiDropdown class="relative">
                 <template #trigger>
-                  <UiButton variant="tertiary">
+                  <UiButton :aria-label="t('account.ordersAndReturns.more')" variant="tertiary">
                     <SfIconMoreHoriz size="sm" />
                   </UiButton>
                 </template>
