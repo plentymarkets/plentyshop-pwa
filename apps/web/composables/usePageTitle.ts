@@ -5,9 +5,9 @@
 export const usePageTitle = () => {
   const { titleSuffix } = useAppConfig();
 
-  useHead({
+  /* useHead({
     titleTemplate: (titleChunk) => {
       return titleChunk ? `${titleChunk} | ${titleSuffix}` : titleSuffix;
     },
-  });
+  }); */
 };

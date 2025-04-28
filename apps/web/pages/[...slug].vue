@@ -34,12 +34,30 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'] });
 
+const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
+const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
+const { setCategoriesPageMeta } = useCanonical();
+
+const handleQueryUpdate = async () => {
+  const facet = getFacetsFromURL();
+  await fetchProducts(facet).then(() => checkFiltersInURL());
+
+  if (!productsCatalog.value.category) {
+    
+    console.log(facet.categoryUrlPath);
+    useState('useProducts').value = null;
+
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Not found',
+    });
+  }
+};
+await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { setCategoriesPageMeta } = useCanonical();
-const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
@@ -58,19 +76,6 @@ const breadcrumbs = computed(() => {
 
   return [];
 });
-
-const handleQueryUpdate = async () => {
-  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
-
-  if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
-    });
-  }
-};
-
-await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
 
 const { setPageMeta } = usePageMeta();
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
@@ -116,12 +121,12 @@ watch(
   },
 );
 
-useHead({
+/* useHead({
   title: headTitle,
   meta: [
     { name: 'description', content: descriptionContent },
     { name: 'keywords', content: keywordsContent },
     { name: 'robots', content: robotsContent },
   ],
-});
+}); */
 </script>

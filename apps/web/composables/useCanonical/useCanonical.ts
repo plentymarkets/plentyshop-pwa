@@ -107,17 +107,17 @@ export const useCanonical: UseCanonicalReturn = () => {
     const runtimeConfig = useRuntimeConfig();
 
     const canonicalLink = `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
-    useHead({
+    /* useHead({
       link: [
         {
           rel: 'canonical',
           href: canonicalLink,
         },
       ],
-    });
+    }); */
     if (productsCatalog.languageUrls) {
       Object.keys(productsCatalog.languageUrls).forEach((key) => {
-        useHead({
+        /* useHead({
           link: [
             {
               rel: 'alternate',
@@ -128,10 +128,10 @@ export const useCanonical: UseCanonicalReturn = () => {
                   : `${runtimeConfig.public.domain}${localePath(route.fullPath, key as Locale)}`,
             },
           ],
-        });
+        }); */
       });
     }
-    setPreviousAndNextLink(productsCatalog, facetsFromUrl, canonicalLink);
+    //(productsCatalog, facetsFromUrl, canonicalLink);
     state.value.loading = false;
   };
 

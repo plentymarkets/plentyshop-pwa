@@ -42,14 +42,14 @@ export const useStructuredData: useStructuredDataReturn = () => {
       url: runtimeConfig.public.domain,
       logo: runtimeConfig.public.domain + '/_nuxt-plenty/images/logo.png',
     };
-    useHead({
+    /* useHead({
       script: [
         {
           type: 'application/ld+json',
           innerHTML: JSON.stringify(structuredData),
         },
       ],
-    });
+    }); */
 
     state.value.loading = false;
   };
@@ -181,14 +181,14 @@ export const useStructuredData: useStructuredDataReturn = () => {
         },
       });
     }
-    useHead({
+    /* useHead({
       script: [
         {
           type: 'application/ld+json',
           innerHTML: JSON.stringify(metaObject, null, 4),
         },
       ],
-    });
+    }); */
     state.value.loading = false;
   };
 
@@ -205,9 +205,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
       robotsContent = 'noindex';
     }
 
-    useHead({
+   /*  useHead({
       meta: [{ name: 'robots', content: robotsContent }],
-    });
+    }); */
 
     state.value.loading = false;
   };
@@ -218,9 +218,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const canonical = productSeoSettingsGetters.getCanonical(product);
 
     if (canonical) {
-      useHead({
+      /* useHead({
         link: [{ rel: 'canonical', href: productSeoSettingsGetters.getCanonicalHref(canonical) }],
-      });
+      }); */
 
       const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
       const alternateLocales = canonicalAlternates.map((item: CanonicalAlternate) => {
@@ -231,9 +231,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
         };
       });
 
-      useHead({
+      /* useHead({
         link: alternateLocales,
-      });
+      }); */
     }
     state.value.loading = false;
   };

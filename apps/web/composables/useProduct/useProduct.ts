@@ -64,7 +64,7 @@ export const useProduct: UseProductReturn = (slug) => {
     const title =
       productGetters.getTitle(state.value.data) || `${productGetters.getName(state.value.data)} | ${titleSuffix}`;
 
-    useHead({
+    /* useHead({
       title,
       titleTemplate: '',
       meta: [
@@ -77,7 +77,7 @@ export const useProduct: UseProductReturn = (slug) => {
           content: productGetters.getMetaKeywords(state.value.data) || process.env.METAKEYWORDS,
         },
       ],
-    });
+    }); */
   };
 
   return {

@@ -51,14 +51,28 @@ definePageMeta({
   path: '/:slug*_:itemId',
 });
 
-const { t } = useI18n();
 const route = useRoute();
+const { productParams, productId } = createProductParams(route.params);
+const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
+await fetchProduct(productParams);
+
+if (Object.keys(product.value).length === 0) {
+
+  useState(`useProduct-${productId}`).value = null;
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'product not found',
+  });
+}
+usePlentyEvent().emit('frontend:productLoaded', {
+  product: product.value,
+});
+
+const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
-const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
@@ -71,18 +85,6 @@ setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-await fetchProduct(productParams).then(() => {
-  usePlentyEvent().emit('frontend:productLoaded', {
-    product: product.value,
-  });
-});
-
-if (Object.keys(product.value).length === 0) {
-  throw new Response(null, {
-    status: 404,
-    statusText: 'Not found',
-  });
-}
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
 
