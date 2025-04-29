@@ -212,7 +212,7 @@ const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
   } else {
     await handleRegularOrder();
   }
-}
+};
 
 const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
   if (callback) callback(await readyToOrder());

@@ -1,4 +1,4 @@
-import { additionalInformationGetters, ApiError } from '@plentymarkets/shop-api';
+import { ApiError } from '@plentymarkets/shop-api';
 import type {
   UseMakeOrderState,
   UseMakeOrderReturn,
