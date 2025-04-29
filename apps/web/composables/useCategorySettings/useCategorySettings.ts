@@ -1,21 +1,21 @@
 import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~/composables/useCategorySettings/types';
-import type { Category } from '@plentymarkets/shop-api';
+import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') => {
-  const cache = useState<Record<number, Category>>(`categoryCache-${settingsId}`, () => ({}));
+  const cache = useState<Record<number, CategoryEntry>>(`categoryCache-${settingsId}`, () => ({}));
   const state = useState<useCategoryConfigurationState>(`categoryConfiguration-${settingsId}`, () => ({
-    data: {} as Category,
+    data: {} as CategoryEntry,
     id: 0,
     loading: false,
     drawerOpen: false,
     drawerExtraOpen: false,
     drawerView: null,
-    initialData: {} as Category,
+    initialData: {} as CategoryEntry,
     unlinkModalOpen: false,
   }));
   const { t } = useI18n();
 
-  const fetchCategorySettings = async (categoryId: number): Promise<Category | null> => {
+  const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
     if (cache.value[categoryId]) {
       state.value.data = cache.value[categoryId];
       state.value.initialData = JSON.parse(JSON.stringify(cache.value[categoryId]));
