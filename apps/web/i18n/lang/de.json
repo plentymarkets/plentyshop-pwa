@@ -530,7 +530,7 @@
       "categories": {
         "success": "Kategorien erfolgreich gespeichert.",
         "error": "Fehler beim Speichern der Kategorien.",
-        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}" ,
+        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}",
         "deleteSuccess": "Die Seite {pageName} (Kategorie-ID: {id}) wurde gelöscht."
       }
     },
@@ -1072,8 +1072,11 @@
     },
     "packstation": {
       "title": "DHL Packstation / Postfiliale",
+      "zipcodeLabel": "Geben Sie Ihre Postleitzahl ein",
       "zipcodePlaceholder": "PLZ",
+      "cityLabel": "Geben Sie Ihre Stadt ein",
       "cityPlaceholder": "Ort",
+      "streetLabel": "Geben Sie Ihre Straße ein ",
       "streetPlaceholder": "Straße",
       "dropDownValues": {
         "both": "Packstation/Postfiliale",

@@ -530,7 +530,7 @@
       "categories": {
         "success": "Categories saved successfully.",
         "error": "Error saving categories.",
-        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}" ,
+        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}",
         "deleteSuccess": "The page {pageName} (category ID: {id}) has been deleted."
       }
     },
@@ -1072,8 +1072,11 @@
     },
     "packstation": {
       "title": "DHL Packstation / Postal outlet",
+      "zipcodeLabel": "Enter your zip code",
       "zipcodePlaceholder": "Postcode",
+      "cityLabel": "Enter your city",
       "cityPlaceholder": "City",
+      "streetLabel": "Enter your street",
       "streetPlaceholder": "Street",
       "dropDownValues": {
         "both": "Packstation/Postal outlet",
