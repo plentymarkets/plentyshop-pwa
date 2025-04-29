@@ -20,6 +20,8 @@
           <UiDivider :class="dividerClass" />
           <CheckoutPayment disabled />
         </div>
+        <UiDivider :class="dividerClass" />
+        <CustomWish />
         <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
           <CheckoutGeneralTerms />
