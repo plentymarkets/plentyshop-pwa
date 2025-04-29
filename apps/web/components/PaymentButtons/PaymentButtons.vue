@@ -81,7 +81,7 @@ const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();
-const { shippingPrivacyAgreement, customerWish } = useAdditionalInformation();
+const { shippingPrivacyAgreement, customerWish, doAdditionalInformation } = useAdditionalInformation();
 const paypalCardDialog = ref(false);
 
 const {
@@ -126,7 +126,11 @@ const paypalApplePayPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
 });
 
-const handleReadyToBuy = (callback?: PayPalAddToCartCallback) => {
+const handleReadyToBuy = async (callback?: PayPalAddToCartCallback) => {
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  });
   if (callback) {
     callback(readyToBuy());
   }
@@ -134,6 +138,11 @@ const handleReadyToBuy = (callback?: PayPalAddToCartCallback) => {
 
 const order = async () => {
   if (!readyToBuy()) return;
+
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  });
 
   processingOrder.value = true;
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
@@ -167,10 +176,6 @@ const openPayPalCardDialog = async () => {
 const handleRegularOrder = async () => {
   const data = await createOrder({
     paymentId: paymentMethods.value.selected,
-    additionalInformation: {
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-      orderContactWish: customerWish.value,
-    },
   });
 
   if (data?.order?.id) {

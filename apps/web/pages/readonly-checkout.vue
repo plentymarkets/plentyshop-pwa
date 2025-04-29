@@ -75,13 +75,13 @@ const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCar
 const { getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { shippingPrivacyAgreement, customerWish, doAdditionalInformation } = useAdditionalInformation();
 const {
   data: shippingAddresses,
   getAddresses: getShippingAddresses,
@@ -201,16 +201,24 @@ const readyToOrder = async () => {
 };
 
 const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  });
   if (callback) callback(await readyToOrder());
 };
 
 const handleRegularOrder = async () => {
   if (!(await readyToOrder())) return;
 
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  })
+
   try {
     const data = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
     if (data) {

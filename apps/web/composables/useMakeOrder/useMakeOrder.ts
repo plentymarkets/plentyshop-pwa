@@ -44,18 +44,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     state.value.loading = true;
     state.value.data = null;
 
-    try {
-      const additionalParams = additionalInformationGetters.getAdditionalInformation(params.additionalInformation);
-
-      if (params.shippingPrivacyHintAccepted) {
-        additionalParams.shippingPrivacyHintAccepted = params.shippingPrivacyHintAccepted;
-      }
-
-      await useSdk().plentysystems.doAdditionalInformation(additionalParams);
-    } catch (error) {
-      return handleMakeOrderError(error);
-    }
-
     const paymentType = ref('errorCode');
     const paymentValue = ref('');
 
