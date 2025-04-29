@@ -20,6 +20,7 @@
 - (dev) Added delete category logic
 - (dev) Replace data structures for left navigation and individual categories
 - (dev) Add isLinkedToWebstore property for categories
+- (dev) Close drawer on second click
 
 ### 👷 Changed
 
