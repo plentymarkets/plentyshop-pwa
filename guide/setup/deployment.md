@@ -68,7 +68,6 @@ For additional details, refer to the following guide:
 
 * [Middleware](/guide/how-to/middleware.md)
 
-
 ### Config
 
 When running the shop locally, the app utilises values from `apps/web/.env` to enable features and settings, which are then read by the Nuxt configuration.
@@ -85,9 +84,12 @@ Since we're ignoring .env files on deployment, the values from apps/web/.env nee
 
 | Name      | Value |
 | ----------- | ----------- |
-| `Config`  | TURNSTILESITEKEY="0x4AAAAAAANx3aXDh7UR35x0" <br> NEWSLETTERFORMNAMES=true <br> USE_WEBP=0 <br> VALIDATE_RETURN_REASONS=1 |
+| `Config`  | CONFIG_ID=1 <br> TURNSTILESITEKEY="0x4AAAAAAANx3aXDh7UR35x0" <br> NEWSLETTERFORMNAMES=true <br> USE_WEBP=0 <br> VALIDATE_RETURN_REASONS=1 |
 
-
+::: warning
+Providing a `CONFIG_ID` is mandatory to access all functionality of the app.
+You can find the **Configuration ID** in your Plenty system, in the **Shop » Management** menu.
+:::
 
 ### Upload
 
