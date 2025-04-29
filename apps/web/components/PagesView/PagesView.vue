@@ -52,9 +52,14 @@
         </template>
 
         <div class="mb-6 mt-4">
-          <ul class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto" @scroll="(e) => handleScroll(e, 'content')">
+          <ul
+            class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto"
+            @scroll="(e) => handleScroll(e, 'content')"
+          >
             <PagesItem v-for="item in contentItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
-            <li v-if="loadingContent" class="px-4 py-2 text-sm text-gray-500">Loading...</li>
+            <li v-if="loadingContent" class="flex justify-center items-center py-4">
+              <SfLoaderCircular size="sm" />
+            </li>
           </ul>
         </div>
       </UiAccordionItem>
@@ -70,9 +75,14 @@
         </template>
 
         <div class="mb-6 mt-4">
-          <ul class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto" @scroll="(e) => handleScroll(e, 'item')">
+          <ul
+            class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto"
+            @scroll="(e) => handleScroll(e, 'item')"
+          >
             <PagesItem v-for="item in itemItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
-            <li v-if="loadingItem" class="px-4 py-2 text-sm text-gray-500">Loading...</li>
+            <li v-if="loadingItem" class="flex justify-center items-center py-4">
+              <SfLoaderCircular size="sm" />
+            </li>
           </ul>
         </div>
       </UiAccordionItem>
@@ -84,13 +94,7 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import {
-  SfIconClose,
-  SfIconHelp,
-  SfTooltip,
-  SfIconAdd,
-  SfLoaderCircular
-} from '@storefront-ui/vue';
+import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
 import { useSiteConfiguration } from '~/composables/useSiteConfiguration';
 const { locale } = useI18n();
 
@@ -105,7 +109,7 @@ const {
   hasMoreContent,
   hasMoreItem,
   fetchContentCategories,
-  fetchItemCategories
+  fetchItemCategories,
 } = useCategoriesSearch();
 
 const contentPagesOpen = ref(false);
