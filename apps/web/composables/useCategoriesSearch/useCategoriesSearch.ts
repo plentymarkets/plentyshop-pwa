@@ -38,7 +38,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
           itemsPerPage: 30,
           sortBy: 'position_asc',
           with: 'details,clients',
-        })
+        }),
       );
 
       const result: CategoryData = data.value?.data ?? createEmptyCategoryData();
@@ -66,7 +66,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
           itemsPerPage: 30,
           sortBy: 'position_asc',
           with: 'details,clients',
-        })
+        }),
       );
 
       const result: CategoryData = data.value?.data ?? createEmptyCategoryData();
@@ -84,7 +84,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     state.value.loadingContent = true;
     try {
       const { data } = await useAsyncData<{ data: CategoryData }>(() =>
-        useSdk().plentysystems.getCategoriesSearch(params)
+        useSdk().plentysystems.getCategoriesSearch(params),
       );
 
       state.value.data = data?.value?.data ?? state.value.data;
@@ -93,7 +93,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     } finally {
       state.value.loadingContent = false;
     }
-  }
+  };
   const usePaginatedChildren = (parentCategoryId: number) => {
     const items = ref<CategoryEntry[]>([]);
     const loading = ref(false);
@@ -111,7 +111,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
             itemsPerPage: 30,
             page: page.value,
             with: 'details,clients',
-          })
+          }),
         );
 
         const result: CategoryData = data?.value?.data ?? createEmptyCategoryData();
@@ -133,8 +133,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     };
   };
 
-
-
   return {
     ...toRefs(state.value),
     fetchContentCategories,
@@ -143,4 +141,3 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     usePaginatedChildren,
   };
 };
-

@@ -12,4 +12,3 @@ export interface UseCategoryDetailsMethods {
 }
 
 export type UseCategoryDetailsReturn = () => UseCategoryDetailsMethods;
-
