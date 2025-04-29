@@ -64,9 +64,13 @@
       "label": "Marketing"
     }
   },
-  "PreviewModeBar": {
-    "label": "Preview mode control",
-    "pwa": "Deactivate Shop preview"
+  "previewModeBar": {
+    "label": "Editor controls",
+    "title": "Exit editor and visit live shop?",
+    "exitEditor": "Exit editor and visit live shop",
+    "unsavedChangesWarning": "You have unsaved changes.",
+    "saveAndExit": "Save changes and exit",
+    "exitWithoutSaving": "Exit without saving"
   },
   "account": {
     "accountSettings": {
