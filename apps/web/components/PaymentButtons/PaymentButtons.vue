@@ -203,8 +203,12 @@ const renderPaymentComponent = (component: PaymentButtonComponent) => {
   return !(component.excludePaymentKeys && component.excludePaymentKeys.includes(selectedPayment?.paymentKey));
 };
 const filteredComponents = computed(() => components.value.filter((component) => renderPaymentComponent(component)));
-const validateOnClickComponents = (event: MouseEvent) => {
+const validateOnClickComponents = async (event: MouseEvent) => {
   if (readyToBuy() && event.target) {
+    await doAdditionalInformation({
+      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      orderContactWish: customerWish.value,
+    });
     event.target.dispatchEvent(new CustomEvent('validated-click'));
   }
 };
