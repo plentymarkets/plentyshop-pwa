@@ -5,7 +5,7 @@
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <Cookiebar />
+      <ClientOnly><Cookiebar /></ClientOnly>
       <PreviewMode />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
