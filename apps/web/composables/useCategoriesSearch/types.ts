@@ -1,5 +1,4 @@
-import type { CategoryEntry } from '../../../../../plentymarkets-sdk/packages/api-client/src';
-import type { CategoryData, CategorySearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { CategoryData, CategorySearchCriteria, CategoryEntry } from '@plentymarkets/shop-api';
 
 export interface UseCategoriesSearchState {
   data: CategoryData;
