@@ -19,6 +19,8 @@
 - (dev) Added delete category logic
 - (dev) Added delete category logic
 - (dev) Replace data structures for left navigation and individual categories
+- (dev) Add isLinkedToWebstore property for categories
+- (dev) Close drawer on second click
 - (dev) Added a customer wish input field on the checkout
 
 ### 👷 Changed
@@ -28,6 +30,7 @@
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
 - Order confirmation soft login shows a warning instead of an error message now.
+- Changed the button icon and label for exiting the editor.
 
 ### 🩹 Fixed
 
