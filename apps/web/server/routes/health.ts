@@ -1,3 +1,3 @@
 import { eventHandler } from 'h3';
 
-export default eventHandler(() => true);
+export default eventHandler(() => "OK");
