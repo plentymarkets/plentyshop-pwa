@@ -38,7 +38,7 @@
               v-if="changedTotal"
               :disabled="!termsAccepted || interactionDisabled"
               type="Checkout"
-              @validation-callback="handleUpdatedOrder"
+              @validation-callback="handlePreparePayment"
             />
 
             <UiButton
@@ -47,7 +47,7 @@
               :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
-              @click="handleRegularOrder"
+              @click="handlePreparePayment"
             >
               <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ t('buy') }}</template>
@@ -202,21 +202,24 @@ const readyToOrder = async () => {
   return true;
 };
 
-const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
+const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
   });
+  if (typeof callback === 'function') {
+    await handleUpdatedOrder(callback);
+  } else {
+    await handleRegularOrder();
+  }
+}
+
+const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
   if (callback) callback(await readyToOrder());
 };
 
 const handleRegularOrder = async () => {
   if (!(await readyToOrder())) return;
-
-  await doAdditionalInformation({
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-    orderContactWish: customerWish.value,
-  })
 
   try {
     const data = await createOrder({
