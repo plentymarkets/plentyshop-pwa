@@ -4,10 +4,69 @@ This section describes how to run the project locally.
 
 ## Prerequisites
 
-- `Node.js` 20+
-- [Personal Access Token](https://github.com/settings/tokens/new) with the scope **read:packages**
+The project uses Node.js. We recommend using a Node version manager to install Node.
 
-Download Node.js from the [official website](https://nodejs.org/) and use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version.
+- [fnm](https://github.com/Schniz/fnm)
+- [nvm](https://github.com/nvm-sh/nvm)
+
+The installation instructions below don't specify a version to install.
+This is because version management is handled via the `.nvmrc` file in the project root.
+The default setup uses the latest Node LTS version available.
+However, you can pin a version in your project by modifying `.nvmrc`.
+
+::: tabs
+== fnm
+```bash
+# Download and install fnm:
+curl -o- https://fnm.vercel.app/install | bash
+
+# Download and install Node.js:
+fnm install
+
+# Verify the Node.js version:
+node -v
+
+# Verify npm version:
+npm -v
+```
+
+== nvm
+```bash
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+
+# Download and install Node.js:
+nvm install
+
+# Verify the Node.js version:
+node -v
+nvm current # Should print "v22.15.0".
+
+# Verify npm version:
+npm -v
+```
+:::
+
+::: details Windows
+Only fnm is supported on Windows.
+
+```PowerShell
+# Download and install fnm:
+winget install Schniz.fnm
+
+# Download and install Node.js:
+fnm install
+
+# Verify the Node.js version:
+node -v
+
+# Verify npm version:
+npm -v
+```
+:::
 
 ## Repository fork
 

@@ -1,4 +1,5 @@
 import { withMermaid } from "vitepress-plugin-mermaid";
+import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
 import sidebarProduct from '../guide/product/sidebar.json';
 import sidebarSetup from '../guide/setup/sidebar.json';
 import sidebarHowTo from '../guide/how-to/sidebar.json';
@@ -18,6 +19,9 @@ export default withMermaid({
     theme: {
       light: 'github-light-high-contrast',
       dark: 'github-dark-high-contrast'
+    },
+    config(md) {
+      md.use(tabsMarkdownPlugin)
     }
   },
   mermaid: {},

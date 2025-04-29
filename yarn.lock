@@ -3164,6 +3164,7 @@ __metadata:
     mermaid: ^11.6.0
     vitepress: ^1.3.4
     vitepress-plugin-mermaid: ^2.0.17
+    vitepress-plugin-tabs: ^0.7.0
   languageName: unknown
   linkType: soft
 
@@ -3576,6 +3577,16 @@ __metadata:
     "@mermaid-js/mermaid-mindmap":
       optional: true
   checksum: ce9affaf32319be05a30e6885dfa71df0483a612462e2a751e0f685167b8b59d77ca39beff402e7d421e6b007919425c0e53d16199f4baba5fab87381885300c
+  languageName: node
+  linkType: hard
+
+"vitepress-plugin-tabs@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "vitepress-plugin-tabs@npm:0.7.0"
+  peerDependencies:
+    vitepress: ^1.0.0
+    vue: ^3.5.0
+  checksum: 120c7d893dd0b6f11174ea929bb70e7b69f4f9861dfdcaecc4fe81b7430750fd71751dfd9223c826e1e5b1e25102bee67ca36f3703105f1ee63d97d6a8a8ddd1
   languageName: node
   linkType: hard
 
