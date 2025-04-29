@@ -90,7 +90,8 @@ import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
 const { data: categoryTree } = useCategoryTree();
-const { addCategory } = useCategory();
+const { data: newCategory, addCategory } = useCategory();
+const { addNewPageToTree } = useCategoriesSearch();
 
 const validationSchema = toTypedSchema(
   object({
@@ -107,10 +108,20 @@ const createNewPage = async () => {
     return;
   }
 
-  addCategory({
+  await addCategory({
     name: pageName?.value || '',
     type: pageType.value.value,
     parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
+  });
+
+  /* TODO: Find a solution for interfaces
+  * Category is used for when adding a new category
+  * CategoryEntry is used when fetching the category
+  */
+  addNewPageToTree({
+    ...newCategory.value,
+    isLinkedToWebstore: false,
+    hasChildren: false,
   });
 };
 

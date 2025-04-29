@@ -28,6 +28,7 @@ export interface UseCategoriesSearchMethods {
   fetchItemCategories: () => Promise<void>;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
   usePaginatedChildren: (parentCategoryId: number) => PaginatedChildren;
+  addNewPageToTree: (newPage: CategoryEntry) => void;
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;

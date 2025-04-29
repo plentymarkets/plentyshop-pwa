@@ -14,6 +14,19 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     hasMoreItem: true,
   }));
 
+  const addNewPageToTree = (newPage: CategoryEntry) => {
+    switch (newPage.type) {
+      case 'content':
+        state.value.contentItems.unshift(newPage);
+        break;
+      case 'item':
+        state.value.itemItems.unshift(newPage);
+        break;
+      default:
+        console.warn(`Unknown category type: ${newPage.type}`);
+    }
+  };
+
   const createEmptyCategoryData = (): CategoryData => ({
     entries: [],
     isLastPage: true,
@@ -139,5 +152,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     fetchItemCategories,
     getCategories,
     usePaginatedChildren,
+    addNewPageToTree
   };
 };

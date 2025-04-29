@@ -22,7 +22,7 @@ export const useCategory: UseCategoryMethodsReturn = () => {
    * addCategory();
    * ```
    */
-  const addCategory = async (params: CategoryParams) => {
+  const addCategory = async (params: CategoryParams): Promise<void> => {
     const { togglePageModal } = useSiteConfiguration();
     const { send } = useNotification();
 
