@@ -44,10 +44,6 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
       useHandleError(error.value);
       state.value.data = null;
 
-      if (params.orderContactWish) {
-        setCustomerWish('');
-      }
-
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
