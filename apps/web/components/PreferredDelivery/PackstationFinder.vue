@@ -19,7 +19,7 @@
     <div class="mt-3">{{ $t('PreferredDelivery.packstation.containerTextInfo') }}</div>
 
     <form novalidate @submit.prevent="validateAndSubmitForm">
-      <div class="py-4 sm:flex sm:gap-4">
+      <div class="mt-4 sm:flex sm:gap-4">
         <label class="sm:basis-[50%]">
           <UiFormLabel>{{ $t('PreferredDelivery.packstation.streetLabel') }}</UiFormLabel>
           <SfInput
@@ -32,8 +32,8 @@
           />
         </label>
 
-        <label class="mt-4 sm:mt-0 sm:basis-[25%]">
-          <UiFormLabel>{{ $t('PreferredDelivery.packstation.zipcodeLabel') }}</UiFormLabel>
+        <label class="sm:basis-[25%]">
+          <UiFormLabel class="mt-4 sm:mt-0">{{ $t('PreferredDelivery.packstation.zipcodeLabel') }}</UiFormLabel>
           <SfInput
             v-model="zipcode"
             v-bind="zipcodeAttributes"
@@ -44,8 +44,8 @@
           />
         </label>
 
-        <label class="mt-4 sm:mt-0 sm:basis-[25%]">
-          <UiFormLabel>{{ $t('PreferredDelivery.packstation.cityLabel') }}</UiFormLabel>
+        <label class="sm:basis-[25%]">
+          <UiFormLabel class="mt-4 sm:mt-0">{{ $t('PreferredDelivery.packstation.cityLabel') }}</UiFormLabel>
           <SfInput
             v-model="city"
             v-bind="cityAttributes"
@@ -57,7 +57,14 @@
         </label>
       </div>
 
-      <div class="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+      <ErrorMessage
+        v-if="!street && !zipcode && !city"
+        as="div"
+        class="flex text-negative-700 text-sm mt-2"
+        name="searchParams.street"
+      />
+
+      <div class="flex flex-col sm:flex-row sm:items-center sm:gap-3 mt-4">
         <label
           for="DHL-type-packstation"
           class="order-1 sm:order-2 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit"
@@ -74,25 +81,60 @@
           {{ $t('PreferredDelivery.packstation.dropDownValues.postfilial') }}
         </label>
 
-        <ErrorMessage
-          v-if="!street && !zipcode && !city"
-          as="span"
-          class="flex text-negative-700 text-sm mt-2"
-          name="searchParams.street"
-        />
-
         <UiButton type="submit" :disabled="loading" variant="secondary" class="order-3 sm:order-1 w-fit mt-3 sm:mt-0">
-          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-          <template v-else>{{ $t('PreferredDelivery.packstation.search') }}</template>
+          {{ $t('PreferredDelivery.packstation.search') }}
         </UiButton>
       </div>
     </form>
+
+    <div v-if="data.packstations.length" class="mt-4 flex flex-col sm:flex-row gap-1">
+      <div class="bg-gray-200 rounded-md h-96 sm:h-auto w-full sm:flex-1 order-1 sm:order-2 mb-3 sm:mb-0">
+        gonna have the map displayed here
+      </div>
+
+      <ul class="space-y-4 max-h-96 sm:max-h-[500px] overflow-y-auto w-full sm:w-[40%] order-2 sm:order-1">
+        <li v-for="(station, index) in data.packstations" :key="index" class="mr-0 sm:mr-1">
+          <button
+            type="button"
+            class="w-full text-left p-3 rounded-md border border-gray-300 hover:border-[rgb(255,204,0)] hover:bg-[rgb(255,204,0)] active:bg-[rgb(255,204,0)] transition-colors duration-150 focus:outline-none"
+            @click="handleStationSelection(station)"
+          >
+            <div class="flex flex-col gap-1">
+              <div class="flex justify-between items-center">
+                <p
+                  :class="[
+                    'inline-block px-3 py-1 rounded-full text-white text-xs',
+                    station.location.keyword === 'Packstation' ? 'bg-red-500' : 'bg-blue-500',
+                  ]"
+                >
+                  {{ station.location.keyword }}
+                </p>
+
+                <span class="text-sm text-gray-500 font-semibold flex justify-between items-center">
+                  <SfIconLocationOn size="xs" />
+                  {{ (station.distance / 1000).toFixed(2) }} km
+                </span>
+              </div>
+
+              <p class="font-semibold">{{ station.name }}</p>
+
+              <p class="text-sm">
+                {{ station.place.address.streetAddress }}
+                <br />
+                {{ station.place.address.postalCode }} {{ station.place.address.addressLocality }}
+              </p>
+            </div>
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ErrorMessage, useForm } from 'vee-validate';
-import { SfCheckbox, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfIconLocationOn, SfInput } from '@storefront-ui/vue';
+import type { Packstation } from '@plentymarkets/shop-api';
 
 const { loading, data, validationSchema, submitForm } = usePackstationFinder();
 const { handleSubmit, errors, validate, defineField } = useForm({ validationSchema: validationSchema });
@@ -111,4 +153,34 @@ const validateAndSubmitForm = async () => {
   const formData = await validate();
   if (formData.valid) handleSubmit(() => submitForm())();
 };
+
+const handleStationSelection = (station: Packstation) => {
+  console.log('Selected station:', station);
+};
 </script>
+
+<style scoped>
+/* Firefox */
+ul {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Chrome, Edge, Safari, ...  */
+ul::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+ul::-webkit-scrollbar-track {
+  background: transparent;
+  box-shadow: none;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+</style>

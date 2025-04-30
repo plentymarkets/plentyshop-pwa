@@ -1,14 +1,15 @@
-import type { PackstationsSearchParams } from '@plentymarkets/shop-api';
+import type { PackstationList, PackstationsSearchParams } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 export const usePackstationFinder = () => {
   const { $i18n } = useNuxtApp();
+  const genericMessage = $i18n.t('PreferredDelivery.packstation.noResult2');
+
   const state = useState('usePackstationFinder', () => ({
     loading: false,
-    formTouched: false,
     data: {
-      packstations: {},
+      packstations: [] as PackstationList,
       searchParams: {
         street: '',
         zipcode: '',
@@ -19,24 +20,23 @@ export const usePackstationFinder = () => {
     },
   }));
 
+  const conditionalField = (otherField1: string, otherField2: string) =>
+    string().when([], {
+      is: () =>
+        !(
+          state.value.data.searchParams[otherField1 as keyof typeof state.value.data.searchParams] ||
+          state.value.data.searchParams[otherField2 as keyof typeof state.value.data.searchParams]
+        ),
+      then: () => string().required(genericMessage).min(3, genericMessage).default(''),
+      otherwise: () => string().optional().default(''),
+    });
+
   const validationSchema = toTypedSchema(
     object({
       searchParams: object({
-        street: string().when([], {
-          is: () => !(state.value.data.searchParams.zipcode || state.value.data.searchParams.city),
-          then: () => string().required($i18n.t('PreferredDelivery.general.preferredLocationAlertMessage')).default(''),
-          otherwise: () => string().optional().default(''),
-        }),
-        zipcode: string().when([], {
-          is: () => !(state.value.data.searchParams.street || state.value.data.searchParams.city),
-          then: () => string().required($i18n.t('PreferredDelivery.general.preferredLocationAlertMessage')).default(''),
-          otherwise: () => string().optional().default(''),
-        }),
-        city: string().when([], {
-          is: () => !(state.value.data.searchParams.street || state.value.data.searchParams.zipcode),
-          then: () => string().required($i18n.t('PreferredDelivery.general.preferredLocationAlertMessage')).default(''),
-          otherwise: () => string().optional().default(''),
-        }),
+        street: conditionalField('zipcode', 'city'),
+        zipcode: conditionalField('street', 'city'),
+        city: conditionalField('street', 'zipcode'),
       }),
     }),
   );
