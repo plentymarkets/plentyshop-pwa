@@ -106,10 +106,7 @@ const {
   itemItems,
   loadingContent,
   loadingItem,
-  hasMoreContent,
-  hasMoreItem,
-  fetchContentCategories,
-  fetchItemCategories,
+  fetchCategories,
 } = useCategoriesSearch();
 
 const contentPagesOpen = ref(false);
@@ -120,23 +117,19 @@ const handleScroll = async (e: Event, type: 'content' | 'item') => {
   const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
 
   if (nearBottom) {
-    if (type === 'content' && hasMoreContent.value) {
-      await fetchContentCategories();
-    } else if (type === 'item' && hasMoreItem.value) {
-      await fetchItemCategories();
-    }
+    await fetchCategories(type);
   }
 };
 
 watch(contentPagesOpen, (opened) => {
   if (opened && contentItems.value.length === 0) {
-    fetchContentCategories();
+    fetchCategories('content');
   }
 });
 
 watch(productPagesOpen, (opened) => {
   if (opened && itemItems.value.length === 0) {
-    fetchItemCategories();
+    fetchCategories('item');
   }
 });
 
