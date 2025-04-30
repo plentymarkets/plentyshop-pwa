@@ -33,6 +33,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
+    headerLogo: useRuntimeConfig().public.headerLogo,
+    favicon: useRuntimeConfig().public.favicon,
+    ogTitle: useRuntimeConfig().public.ogTitle,
+    ogImg: useRuntimeConfig().public.ogImg,
+    useAvif: useRuntimeConfig().public.useAvif,
+    useWebp: useRuntimeConfig().public.useWebp,
+    manufactured: useRuntimeConfig().public.manufactured,
     drawerView: null,
     blockType: '',
     blockUuid: '',
@@ -43,6 +50,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      headerLogo: useRuntimeConfig().public.headerLogo,
+      favicon: useRuntimeConfig().public.favicon,
+      ogTitle: useRuntimeConfig().public.ogTitle,
+      ogImg: useRuntimeConfig().public.ogImg,
+      useAvif: useRuntimeConfig().public.useAvif,
+      useWebp: useRuntimeConfig().public.useWebp,
+      manufactured: useRuntimeConfig().public.manufactured,
     },
   }));
 
@@ -133,6 +147,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
+      state.value.headerLogo !== state.value.initialData.headerLogo ||
+      state.value.favicon !== state.value.initialData.favicon ||
+      state.value.ogTitle !== state.value.initialData.ogTitle ||
+      state.value.ogImg !== state.value.initialData.ogImg ||
+      state.value.useAvif !== state.value.initialData.useAvif ||
+      state.value.useWebp !== state.value.initialData.useWebp ||
+      state.value.manufactured !== state.value.initialData.manufactured ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
     );
   });
@@ -142,20 +163,48 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     const settings = [
       {
-        key: 'blockSize',
-        value: state.value.blockSize,
+      key: 'blockSize',
+      value: state.value.blockSize,
       },
       {
-        key: 'font',
-        value: state.value.selectedFont.value,
+      key: 'font',
+      value: state.value.selectedFont.value,
       },
       {
-        key: 'primaryColor',
-        value: state.value.primaryColor,
+      key: 'primaryColor',
+      value: state.value.primaryColor,
       },
       {
-        key: 'secondaryColor',
-        value: state.value.secondaryColor,
+      key: 'secondaryColor',
+      value: state.value.secondaryColor,
+      },
+      {
+      key: 'headerLogo',
+      value: state.value.headerLogo,
+      },
+      {
+      key: 'favicon',
+      value: state.value.favicon,
+      },
+      {
+      key: 'ogTitle',
+      value: state.value.ogTitle,
+      },
+      {
+      key: 'ogImg',
+      value: state.value.ogImg,
+      },
+      {
+      key: 'useAvif',
+      value: state.value.useAvif ? 'true' : 'false',
+      },
+      {
+      key: 'useWebp',
+      value: state.value.useWebp ? 'true' : 'false',
+      },
+      {
+      key: 'manufactured',
+      value: state.value.manufactured,
       },
     ];
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -170,6 +219,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      headerLogo: state.value.headerLogo,
+      favicon: state.value.favicon,
+      ogTitle: state.value.ogTitle,
+      ogImg: state.value.ogImg,
+      useAvif: state.value.useAvif,
+      useWebp: state.value.useWebp,
+      manufactured: state.value.manufactured,
     };
 
     state.value.loading = false;

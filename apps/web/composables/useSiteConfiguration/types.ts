@@ -15,6 +15,13 @@ export type ConfigurationSettings = {
   selectedFont: SelectedFont;
   primaryColor: string;
   secondaryColor: string;
+  headerLogo: string;
+  favicon: string;
+  ogTitle: string;
+  ogImg: string;
+  useAvif: boolean;
+  useWebp: boolean;
+  manufactured: string;
 };
 
 export interface UseSiteConfigurationState {
@@ -28,6 +35,13 @@ export interface UseSiteConfigurationState {
   currentFont: string;
   primaryColor: string;
   secondaryColor: string;
+  headerLogo: string;
+  favicon: string;
+  ogTitle: string;
+  ogImg: string;
+  useAvif: boolean;
+  useWebp: boolean;
+  manufactured: string;
   selectedFont: SelectedFont;
   blockSize: string;
   placement: string;
@@ -60,6 +74,13 @@ export interface UseSiteConfiguration {
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
   secondaryColor: Readonly<Ref<UseSiteConfigurationState['secondaryColor']>>;
+  headerLogo: Readonly<Ref<UseSiteConfigurationState['headerLogo']>>;
+  favicon: Readonly<Ref<UseSiteConfigurationState['favicon']>>;
+  ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;
+  ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
+  useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
+  useWebp: Readonly<Ref<UseSiteConfigurationState['useWebp']>>;
+  manufactured: Readonly<Ref<UseSiteConfigurationState['manufactured']>>;
   blockSize: Readonly<Ref<UseSiteConfigurationState['blockSize']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;

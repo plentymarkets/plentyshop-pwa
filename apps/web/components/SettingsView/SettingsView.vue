@@ -29,7 +29,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="headerLogo" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Ideal dimensions: 150 × 40 px, or a maximum width of 180 px and a maximum height of 80 px.</span
@@ -50,7 +50,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="favicon" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Recommended dimensions: A square of 32 × 32 px or 48 × 48 px (180 × 180 px for iPhones/iPads)
@@ -81,7 +81,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="ogTitle" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews.
@@ -102,7 +102,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="ogImg" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Optimal image dimensions: 1200 × 630 px (min. 600 × 315 px) for best display on social media.
@@ -133,6 +133,7 @@
               <SfIconInfo :size="'sm'" /> </SfTooltip
           ></UiFormLabel>
           <SfSwitch
+            v-model="useAvif"
             class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
           />
         </div>
@@ -155,6 +156,7 @@
               <SfIconInfo :size="'sm'" /> </SfTooltip
           ></UiFormLabel>
           <SfSwitch
+            v-model="useWebp"
             class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
           />
         </div>
@@ -166,7 +168,7 @@
     </UiAccordionItem>
 
     <UiAccordionItem
-      v-model="manufactured"
+      v-model="manufacturedTab"
       data-testid="color-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -175,7 +177,17 @@
         <h2 class="">Manufactured (GPSR)</h2>
       </template>
       <div class="py-2">
-        <UiFormLabel>Settings for the item view</UiFormLabel>
+        <UiFormLabel class="mb-1"
+          >Settings for the item view
+          <SfTooltip
+            label="Depending on your business, GPSR may require certain manufacturer details to be displayed. Select which ones should appear on your product detail pages."
+            :placement="'top'"
+            :show-arrow="true"
+            class="ml-2 z-10"
+          >
+            <SfIconInfo :size="'sm'" />
+          </SfTooltip>
+        </UiFormLabel>
         <Multiselect
           v-model="selectedFields"
           :options="fields"
@@ -192,6 +204,7 @@
           </template>
         </Multiselect>
       </div>
+      <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span>
     </UiAccordionItem>
   </div>
 </template>
@@ -200,7 +213,7 @@
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip, SfSwitch } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
-const { closeDrawer } = useSiteConfiguration();
+const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, manufactured, closeDrawer } = useSiteConfiguration();
 
 const selectedFieldsRaw = ref<{ label: string; value: string }[]>([]);
 
@@ -243,5 +256,5 @@ const fields = [
 const branding = ref(false);
 const socialMedia = ref(false);
 const optimisation = ref(false);
-const manufactured = ref(false);
+const manufacturedTab = ref(false);
 </script>
