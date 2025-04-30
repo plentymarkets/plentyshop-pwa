@@ -4,14 +4,14 @@
     v-for="(component, index) in filteredComponents"
     :key="index"
     :disabled="disableBuyButton"
-    @click="validateOnClickComponents($event)"
+    @click="handlePreparePayment($event)"
   />
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
       <PayPalExpressButton
         :disabled="!termsAccepted || disableBuyButton"
         type="Checkout"
-        @validation-callback="handleReadyToBuy"
+        @validation-callback="handlePreparePayment"
       />
       <PayPalPayLaterBanner
         placement="payment"
@@ -27,12 +27,12 @@
     <PayPalApplePayButton
       v-else-if="selectedPaymentId === paypalApplePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
-      @button-clicked="handleReadyToBuy"
+      @button-clicked="handlePreparePayment"
     />
     <PayPalGooglePayButton
       v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
-      @button-clicked="handleReadyToBuy"
+      @button-clicked="handlePreparePayment"
     />
     <UiButton
       v-else
@@ -41,7 +41,7 @@
       size="lg"
       data-testid="place-order-button"
       class="w-full mb-4 md:mb-0 cursor-pointer"
-      @click="order"
+      @click="handlePreparePayment"
     >
       <template v-if="createOrderLoading">
         <SfLoaderCircular class="flex justify-center items-center" size="sm" />
@@ -126,11 +126,24 @@ const paypalApplePayPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
 });
 
-const handleReadyToBuy = async (callback?: PayPalAddToCartCallback) => {
+const handlePreparePayment = async (callback?: PayPalAddToCartCallback, event?: MouseEvent) => {
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
   });
+
+  if (typeof callback === 'function') {
+    await handleReadyToBuy(callback);
+  }
+  else if (event){
+    await validateOnClickComponents(event);
+  }
+  else{
+    await order();
+  }
+}
+
+const handleReadyToBuy = async (callback?: PayPalAddToCartCallback) => {
   if (callback) {
     callback(readyToBuy());
   }
@@ -138,11 +151,6 @@ const handleReadyToBuy = async (callback?: PayPalAddToCartCallback) => {
 
 const order = async () => {
   if (!readyToBuy()) return;
-
-  await doAdditionalInformation({
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-    orderContactWish: customerWish.value,
-  });
 
   processingOrder.value = true;
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
@@ -169,6 +177,10 @@ const readyToBuy = () => {
 
 const openPayPalCardDialog = async () => {
   if (!readyToBuy()) return;
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  });
 
   paypalCardDialog.value = true;
 };
@@ -205,10 +217,6 @@ const renderPaymentComponent = (component: PaymentButtonComponent) => {
 const filteredComponents = computed(() => components.value.filter((component) => renderPaymentComponent(component)));
 const validateOnClickComponents = async (event: MouseEvent) => {
   if (readyToBuy() && event.target) {
-    await doAdditionalInformation({
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-      orderContactWish: customerWish.value,
-    });
     event.target.dispatchEvent(new CustomEvent('validated-click'));
   }
 };
