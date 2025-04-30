@@ -60,6 +60,70 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   }));
 
+  // To move to component if this does not work -- FROM HERE
+  const selectedFieldsRaw = ref<{ label: string; value: string }[]>([]);
+
+  const selectedFields = computed({
+    get() {
+      return selectedFieldsRaw.value;
+    },
+    set(newValue) {
+      const isAllClicked = newValue.some((v) => v.value === 'all');
+
+      if (isAllClicked) {
+        const realFields = fields.filter((f) => f.value !== 'all');
+
+        // If all fields are already selected, deselect all; otherwise, select all
+        selectedFieldsRaw.value = selectedFieldsRaw.value.length === realFields.length ? [] : [...realFields];
+      } else {
+        // Update selected fields excluding the 'all' option
+        selectedFieldsRaw.value = newValue.filter((v) => v.value !== 'all');
+      }
+
+      console.log('Updated Selected Fields:', selectedFieldsRaw.value);
+    },
+  });
+
+  const fields = [
+    { label: 'All', value: 'all' },
+    { label: 'External Name', value: 'external_name' },
+    { label: 'Name', value: 'name' },
+    { label: 'Logo Url', value: 'logo_url' },
+    { label: 'Homepage', value: 'homepage' },
+    { label: 'Street', value: 'street' },
+    { label: 'House No.', value: 'house_no' },
+    { label: 'Postcode', value: 'postcode' },
+    { label: 'Town', value: 'town' },
+    { label: 'Country', value: 'country' },
+    { label: 'Telephone number', value: 'telephone_number' },
+    { label: 'Fax Number', value: 'fax_number' },
+    { label: 'Email', value: 'email' },
+    { label: 'Legal Name', value: 'legal_name' },
+    { label: 'Contact Form', value: 'contact_form' },
+  ];
+
+  const generatePayload = computed(() => {
+
+    return fields
+      .filter((field) => field.value !== "all") 
+      .map((field) => {
+        const isSelected = selectedFieldsRaw.value.some((selected) => selected.value === field.value);
+        return {
+          key: `manufacturer.${field.value}`,
+          value: isSelected ? "1" : "0",
+        };
+      });
+  });
+
+  // TO here
+  
+  watch(selectedFieldsRaw, (newValue) => {
+    console.log("Updated Selected Fields:", newValue);
+    console.log("Generated Payload:", generatePayload.value);
+  });
+
+
+
   /**
    * @description Function for loading a google font.
    * @return LoadGoogleFont
@@ -158,55 +222,79 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     );
   });
 
+  // const manufacturedTest = [
+  //   {
+  //     key: 'manufacturer.external_name',
+  //     value: '0',
+  //   },
+  //   { key: 'manufacturer.name', value: isSelected },
+  //   { key: 'manufacturer.logo_url', value: '0' },
+  //   { key: 'manufacturer.homepage', value: '0' },
+  //   { key: 'manufacturer.street', value: '0' },
+  //   { key: 'manufacturer.house_no', value: '0' },
+  //   { key: 'manufacturer.postcode', value: '0' },
+  //   { key: 'manufacturer.town', value: '0' },
+  //   { key: 'manufacturer.country', value: '0' },
+  //   { key: 'manufacturer.telephone_number', value: '0' },
+  //   { key: 'manufacturer.fax_number', value: '0' },
+  //   { key: 'manufacturer.email', value: '0' },
+  //   { key: 'manufacturer.legal_name', value: '0' },
+  //   { key: 'manufacturer.contact_form', value: '0' },
+  // ];
+
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
 
     const settings = [
       {
-      key: 'blockSize',
-      value: state.value.blockSize,
+        key: 'blockSize',
+        value: state.value.blockSize,
       },
       {
-      key: 'font',
-      value: state.value.selectedFont.value,
+        key: 'font',
+        value: state.value.selectedFont.value,
       },
       {
-      key: 'primaryColor',
-      value: state.value.primaryColor,
+        key: 'primaryColor',
+        value: state.value.primaryColor,
       },
       {
-      key: 'secondaryColor',
-      value: state.value.secondaryColor,
+        key: 'secondaryColor',
+        value: state.value.secondaryColor,
       },
       {
-      key: 'headerLogo',
-      value: state.value.headerLogo,
+        key: 'headerLogo',
+        value: state.value.headerLogo,
       },
       {
-      key: 'favicon',
-      value: state.value.favicon,
+        key: 'favicon',
+        value: state.value.favicon,
       },
       {
-      key: 'ogTitle',
-      value: state.value.ogTitle,
+        key: 'ogTitle',
+        value: state.value.ogTitle,
       },
       {
-      key: 'ogImg',
-      value: state.value.ogImg,
+        key: 'ogImg',
+        value: state.value.ogImg,
       },
       {
-      key: 'useAvif',
-      value: state.value.useAvif ? 'true' : 'false',
+        key: 'useAvif',
+        value: state.value.useAvif ? 'true' : 'false',
       },
       {
-      key: 'useWebp',
-      value: state.value.useWebp ? 'true' : 'false',
+        key: 'useWebp',
+        value: state.value.useWebp ? 'true' : 'false',
       },
-      {
-      key: 'manufactured',
-      value: state.value.manufactured,
-      },
+      // {
+      //   key: 'manufactured',
+      //   value: generatePayload,
+      // },
+      ...generatePayload.value,
     ];
+
+    console.log('Payload being sent:', settings);
+
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
     if (error.value) {
@@ -254,5 +342,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
+    fields,
+    selectedFields,
   };
 };

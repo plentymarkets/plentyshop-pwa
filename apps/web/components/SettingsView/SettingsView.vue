@@ -213,48 +213,14 @@
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip, SfSwitch } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
-const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, manufactured, closeDrawer } = useSiteConfiguration();
+const { fields, selectedFields, headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer } = useSiteConfiguration();
 
-const selectedFieldsRaw = ref<{ label: string; value: string }[]>([]);
-
-const selectedFields = computed({
-  get() {
-    return selectedFieldsRaw.value;
-  },
-  set(newValue) {
-    const isAllClicked = newValue.some((v) => v.value === 'all');
-
-    if (isAllClicked) {
-      const realFields = fields.filter((f) => f.value !== 'all');
-
-      const allSelected = selectedFieldsRaw.value.length === realFields.length;
-      selectedFieldsRaw.value = allSelected ? [] : [...realFields];
-    } else {
-      selectedFieldsRaw.value = newValue.filter((v) => v.value !== 'all');
-    }
-  },
-});
-
-const fields = [
-  { label: 'All', value: 'all' },
-  { label: 'External Name', value: 'external_name' },
-  { label: 'Name', value: 'name' },
-  { label: 'Logo Url', value: 'logo_url' },
-  { label: 'Homepage', value: 'homepage' },
-  { label: 'Street', value: 'street' },
-  { label: 'House No.', value: 'house_no' },
-  { label: 'Postcode', value: 'postcode' },
-  { label: 'Town', value: 'town' },
-  { label: 'Country', value: 'country' },
-  { label: 'Telephone number', value: 'telephone_number' },
-  { label: 'Fax Number', value: 'fax_number' },
-  { label: 'Email', value: 'email' },
-  { label: 'Legal Name', value: 'legal_name' },
-  { label: 'Contact Form', value: 'contact_form' },
-];
 
 const branding = ref(false);
 const socialMedia = ref(false);
 const optimisation = ref(false);
 const manufacturedTab = ref(false);
+
+
+
 </script>

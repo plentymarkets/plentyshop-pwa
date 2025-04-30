@@ -97,6 +97,9 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
+  fields: { label: string; value: string }[];
+  selectedFields: ComputedRef<{ label: string; value: string }[]>;
+
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
