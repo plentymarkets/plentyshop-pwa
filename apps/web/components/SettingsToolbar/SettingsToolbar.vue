@@ -11,7 +11,7 @@
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
         aria-label="Open pages drawer"
         data-testid="open-pages-drawer"
-        @click="openDrawerWithView('PagesView')"
+        @click="toggleDrawerView('PagesView')"
       >
         <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
         <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
@@ -22,7 +22,7 @@
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'DesignView' }"
         aria-label="Open design drawer"
         data-testid="open-design-drawer"
-        @click="openDrawerWithView('DesignView')"
+        @click="toggleDrawerView('DesignView')"
       >
         <NuxtImg v-if="drawerView === 'DesignView'" width="24" height="24px" :src="paintBrushWhite" />
         <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
@@ -60,6 +60,14 @@ import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
-const { drawerView, openDrawerWithView } = useSiteConfiguration();
+const { drawerView, openDrawerWithView, closeDrawer } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
+
+function toggleDrawerView(view: DrawerView) {
+  if (drawerView.value === view) {
+    closeDrawer();
+  } else {
+    openDrawerWithView(view);
+  }
+}
 </script>
