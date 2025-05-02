@@ -1,5 +1,7 @@
 # Changelog PlentyONE Shop
 
+For changelogs of newer versions, refer to the [Releases](https://github.com/plentymarkets/plentyshop-pwa/releases) page.
+
 # v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New

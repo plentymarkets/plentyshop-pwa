@@ -51,15 +51,6 @@ jobs:
           vulnerability-check: false
           comment-summary-in-pr: on-failure
 
-      - name: Changelog review
-        if: contains(github.event.pull_request.labels.*.name, 'feature') || contains(github.event.pull_request.labels.*.name, 'fix')
-        run: |
-          gh pr diff "$BRANCH" --name-only >> diff.txt
-          grep -Fxq "docs/changelog/changelog_en.md" diff.txt
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: ${{ github.head_ref }}
-
       - name: Install Semgrep
         run: pip install semgrep
 
