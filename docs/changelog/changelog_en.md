@@ -32,6 +32,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
 - Order confirmation soft login shows a warning instead of an error message now.
+- Moved the "Login instead" button below the email input field in the contact information section during checkout.
 - Changed the button icon and label for exiting the editor.
 
 ### 🩹 Fixed
