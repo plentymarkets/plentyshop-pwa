@@ -19,23 +19,21 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       return;
     }
 
-    state.value.newPages.push(newPage.id);
-    switch (newPage.type) {
-      case 'content':
-        state.value.contentItems.unshift(newPage);
-        break;
-      case 'item':
-        state.value.itemItems.unshift(newPage);
-        break;
-      default:
-        console.warn(`Unknown category type: ${newPage.type}`);
+    if (!state.value.newPages.includes(newPage.id)) {
+      state.value.newPages.push(newPage.id);
     }
+
+    const targetArray = {
+      content: state.value.contentItems,
+      item: state.value.itemItems,
+    }[newPage.type];
+
+    targetArray?.unshift(newPage);
   };
 
   const deletePageFromTree = (id: number) => {
     state.value.contentItems = state.value.contentItems.filter((item) => item.id !== id);
     state.value.itemItems = state.value.itemItems.filter((item) => item.id !== id);
-    state.value.newPages = state.value.newPages.filter((newPageId) => newPageId !== id);
   }
 
   const createEmptyCategoryData = (): CategoryData => ({
