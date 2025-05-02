@@ -134,14 +134,12 @@ const handlePreparePayment = async (callback?: PayPalAddToCartCallback, event?: 
 
   if (typeof callback === 'function') {
     await handleReadyToBuy(callback);
-  }
-  else if (event){
+  } else if (event) {
     await validateOnClickComponents(event);
-  }
-  else{
+  } else {
     await order();
   }
-}
+};
 
 const handleReadyToBuy = async (callback?: PayPalAddToCartCallback) => {
   if (callback) {
