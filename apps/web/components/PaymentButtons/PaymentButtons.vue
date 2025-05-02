@@ -4,7 +4,7 @@
     v-for="(component, index) in filteredComponents"
     :key="index"
     :disabled="disableBuyButton"
-    @click="handlePreparePayment($event)"
+    @click="validateOnClickComponents($event)"
   />
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
@@ -126,7 +126,7 @@ const paypalApplePayPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
 });
 
-const handlePreparePayment = async (callback?: PayPalAddToCartCallback, event?: MouseEvent) => {
+const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
@@ -134,8 +134,6 @@ const handlePreparePayment = async (callback?: PayPalAddToCartCallback, event?: 
 
   if (typeof callback === 'function') {
     await handleReadyToBuy(callback);
-  } else if (event) {
-    await validateOnClickComponents(event);
   } else {
     await order();
   }
@@ -214,6 +212,10 @@ const renderPaymentComponent = (component: PaymentButtonComponent) => {
 };
 const filteredComponents = computed(() => components.value.filter((component) => renderPaymentComponent(component)));
 const validateOnClickComponents = async (event: MouseEvent) => {
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  });
   if (readyToBuy() && event.target) {
     event.target.dispatchEvent(new CustomEvent('validated-click'));
   }
