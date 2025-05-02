@@ -34,7 +34,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   const deletePageFromTree = (id: number) => {
     state.value.contentItems = state.value.contentItems.filter((item) => item.id !== id);
     state.value.itemItems = state.value.itemItems.filter((item) => item.id !== id);
-  }
+  };
 
   const createEmptyCategoryData = (): CategoryData => ({
     entries: [],
@@ -82,7 +82,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));
-  }
+  };
 
   const usePaginatedChildren = (parentCategoryId: number) => {
     const items = ref<CategoryEntry[]>([]);
@@ -128,6 +128,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     fetchCategories,
     usePaginatedChildren,
     addNewPageToTree,
-    deletePageFromTree
+    deletePageFromTree,
   };
 };

@@ -115,9 +115,9 @@ const createNewPage = async () => {
   });
 
   /* TODO: Find a solution for interfaces
-  * Category is used for when adding a new category
-  * CategoryEntry is used when fetching the category
-  */
+   * Category is used for when adding a new category
+   * CategoryEntry is used when fetching the category
+   */
   addNewPageToTree({
     ...newCategory.value,
     isLinkedToWebstore: false,
