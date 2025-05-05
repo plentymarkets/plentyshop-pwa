@@ -35,6 +35,9 @@
     "test:watch": {
       "cache": false
     },
+    "test:cypress-checkout": {
+      "cache": false
+    },
     "test:cypress-editor": {
       "cache": false
     },
