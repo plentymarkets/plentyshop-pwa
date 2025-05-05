@@ -13,7 +13,7 @@
     </main>
     <NuxtLazyHydrate when-idle>
       <UiNavbarBottom v-if="viewport.isLessThan('md')" />
-      <ClientOnly><Cookiebar /></ClientOnly>
+      <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
