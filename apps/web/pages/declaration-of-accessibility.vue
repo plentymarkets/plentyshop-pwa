@@ -24,5 +24,5 @@ const getHTMLTexts = () => {
 };
 
 await getRobots();
-setRobotForStaticPage('DeclarationOfAccessibility')
+setRobotForStaticPage('DeclarationOfAccessibility');
 </script>
