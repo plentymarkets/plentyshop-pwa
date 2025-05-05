@@ -127,7 +127,3 @@ const keywordsTooltip =
 const robotsTooltip =
   'Controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
 </script>
-
-<style>
-@import 'vue-multiselect/dist/vue-multiselect.css';
-</style>
