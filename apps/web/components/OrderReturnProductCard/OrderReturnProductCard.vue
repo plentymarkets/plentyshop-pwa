@@ -48,7 +48,7 @@
             <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
               <li>
                 <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
-                <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
+                <span>{{ format(orderGetters.getItemPrice(orderItem)) }}</span>
               </li>
               <li>
                 <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
@@ -57,7 +57,7 @@
               <li>
                 <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
                 <span>
-                  {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+                  {{ format(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
                 </span>
               </li>
             </ul>
@@ -125,6 +125,7 @@ import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular 
 import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from '../../utils/debounce';
 
+const { format } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();

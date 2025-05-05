@@ -77,7 +77,10 @@ export const useCart: UseCartReturn = () => {
     try {
       const { data, error } = await useAsyncData(() => useSdk().plentysystems.getCart());
       useHandleError(error.value);
-      state.value.data = data?.value?.data ?? state.value.data;
+
+      if (data.value?.data) {
+        setCart(data?.value?.data);
+      }
 
       return state.value.data;
     } catch (error) {
@@ -96,7 +99,10 @@ export const useCart: UseCartReturn = () => {
    * ```
    */
   const setCart = (data: Cart) => {
+    const { setPattern } = usePriceFormatter();
     state.value.data = data;
+    // @ts-ignore
+    setPattern(data.currencyPattern);
   };
 
   /**
