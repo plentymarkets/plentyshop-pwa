@@ -6,6 +6,7 @@
 const { data, getLegalTexts } = useLegalInformation();
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 const icon = 'page';
 setPageMeta(t('categories.legal.subcategories.declarationOfAccessibility'), icon);
@@ -21,4 +22,7 @@ await getLegalTexts({
 const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
+
+await getRobots();
+setRobotForStaticPage('DeclarationOfAccessibility')
 </script>
