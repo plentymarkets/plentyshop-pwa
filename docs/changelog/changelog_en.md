@@ -14,6 +14,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Added design for category settings.
 - (dev) Added form for general settings
 - (dev) Added form for SEO settings
+- (dev) Added view for global SEO settings
 - (dev) Updated general settings and seo settings to get data dynamically
 - (dev) Added form for delete page
 - (dev) Fix correct children data for Seo settings

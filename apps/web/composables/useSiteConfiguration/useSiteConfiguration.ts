@@ -10,6 +10,7 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import { metaDefaults } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
@@ -33,6 +34,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
+    seoSettings: metaDefaults,
     drawerView: null,
     blockType: '',
     blockUuid: '',
@@ -43,6 +45,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      seoSettings: structuredClone(metaDefaults),
     },
   }));
 
@@ -133,7 +136,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
-      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
     );
   });
 
@@ -157,6 +161,22 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'secondaryColor',
         value: state.value.secondaryColor,
       },
+      {
+        key: 'metaTitle',
+        value: state.value.seoSettings.title,
+      },
+      {
+        key: 'metaDescription',
+        value: state.value.seoSettings.description,
+      },
+      {
+        key: 'metaKeywords',
+        value: state.value.seoSettings.keywords,
+      },
+      {
+        key: 'robots',
+        value: state.value.seoSettings.robots,
+      },
     ];
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
@@ -170,6 +190,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      seoSettings: state.value.seoSettings,
     };
 
     state.value.loading = false;
