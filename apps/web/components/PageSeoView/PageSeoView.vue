@@ -2,7 +2,7 @@
   <div
     v-if="!loading"
     class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
-    data-testid="pages-general-settings-drawer"
+    data-testid="pages-seo-settings-drawer"
   >
     <form data-testid="basic-settings-form" class="w-full abssolute bg-white">
       <UiAccordionItem
