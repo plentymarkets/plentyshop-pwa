@@ -48,6 +48,7 @@
           <SfTextarea
             v-model="seoSettings.description"
             data-testid="seo-description"
+            class="w-full"
             placeholder="Enter description"
             rows="3"
           />
