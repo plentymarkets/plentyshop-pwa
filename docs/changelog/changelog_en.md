@@ -40,6 +40,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 ### 🩹 Fixed
 
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
+- Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
