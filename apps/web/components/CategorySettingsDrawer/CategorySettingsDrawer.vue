@@ -14,7 +14,7 @@
     </div>
     <PageSettingsView v-if="settingsType === 'general-settings'" class="mt-2" />
 
-    <SeoView v-if="settingsType === 'seo-settings'" />
+    <PageSeoView v-if="settingsType === 'seo-settings'" />
   </SfDrawer>
 </template>
 
