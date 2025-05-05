@@ -21,6 +21,7 @@
 - (dev) Replace data structures for left navigation and individual categories
 - (dev) Add isLinkedToWebstore property for categories
 - (dev) Close drawer on second click
+- (dev) Changed design for settings drawer
 
 ### 👷 Changed
 

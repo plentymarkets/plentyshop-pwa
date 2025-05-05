@@ -140,6 +140,28 @@
           </label>
         </div>
         <div class="py-2">
+          <div class="flex justify-between">
+            <UiFormLabel class="mb-1">Position </UiFormLabel>
+            <SfTooltip
+              label="The position determines the page order. Lower positions come first."
+              :placement="'top'"
+              :show-arrow="true"
+              class="ml-2 z-10"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </div>
+          <label>
+            <SfInput v-model="data.details[0].position" type="text" data-testid="page-position">
+              <template #suffix>
+                <label for="page-position" class="rounded-lg cursor-pointer">
+                  <input id="page-position" v-model="data.details[0].position" type="text" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">
               Activate page for store
@@ -193,7 +215,6 @@ const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
-
 const isInLinkedList = computed({
   get() {
     return data.value.right === 'customer';
