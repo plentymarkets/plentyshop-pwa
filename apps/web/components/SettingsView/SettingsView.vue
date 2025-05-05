@@ -188,7 +188,7 @@
             <SfIconInfo :size="'sm'" />
           </SfTooltip>
         </UiFormLabel> -->
-        <!-- <Multiselect
+    <!-- <Multiselect
           v-model="selectedFields"
           :options="fields"
           :multiple="true"
@@ -203,10 +203,10 @@
             <span class="text-neutral-900">{{ values.map((v: any) => v.label).join(', ') }}</span>
           </template>
         </Multiselect> -->
-      <!-- </div>
+    <!-- </div>
       <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span> -->
     <!-- </UiAccordionItem> -->
-  </div> 
+  </div>
 </template>
 
 <script setup lang="ts">

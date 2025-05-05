@@ -28,6 +28,7 @@
         <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
       </button>
       <button
+        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"
