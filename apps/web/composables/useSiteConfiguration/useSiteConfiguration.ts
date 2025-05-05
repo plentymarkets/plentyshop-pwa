@@ -137,7 +137,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
-      state.value.seoSettings !== state.value.initialData.seoSettings
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
     );
   });
 
