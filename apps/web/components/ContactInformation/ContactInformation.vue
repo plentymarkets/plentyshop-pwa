@@ -1,15 +1,8 @@
 <template>
   <div data-testid="contact-information" class="md:px-4 py-6">
-    <h2 class="w-full text-neutral-900 text-lg font-bold">
+    <h2 class="w-full text-neutral-900 text-lg font-bold mb-4">
       {{ t('contactInfo.heading') }}
     </h2>
-
-    <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mb-4">
-      <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
-      <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
-        {{ t('auth.signup.logInLinkLabel') }}
-      </SfLink>
-    </div>
 
     <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contactInfo.email') }}: {{ customerEmail }}</div>
 
@@ -35,6 +28,13 @@
         />
       </label>
     </form>
+
+    <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mt-4">
+      <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
+      <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
+        {{ t('auth.signup.logInLinkLabel') }}
+      </SfLink>
+    </div>
 
     <UiModal
       v-if="isAuthenticationOpen"
