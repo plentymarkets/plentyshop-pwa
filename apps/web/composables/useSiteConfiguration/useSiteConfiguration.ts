@@ -39,7 +39,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     ogImg: useRuntimeConfig().public.ogImg,
     useAvif: useRuntimeConfig().public.useAvif,
     useWebp: useRuntimeConfig().public.useWebp,
-    manufactured: useRuntimeConfig().public.manufactured,
     drawerView: null,
     blockType: '',
     blockUuid: '',
@@ -56,71 +55,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: useRuntimeConfig().public.ogImg,
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
-      manufactured: useRuntimeConfig().public.manufactured,
     },
   }));
 
-  // To move to component if this does not work -- FROM HERE
-  const selectedFieldsRaw = ref<{ label: string; value: string }[]>([]);
-
-  const selectedFields = computed({
-    get() {
-      return selectedFieldsRaw.value;
-    },
-    set(newValue) {
-      const isAllClicked = newValue.some((v) => v.value === 'all');
-
-      if (isAllClicked) {
-        const realFields = fields.filter((f) => f.value !== 'all');
-
-        // If all fields are already selected, deselect all; otherwise, select all
-        selectedFieldsRaw.value = selectedFieldsRaw.value.length === realFields.length ? [] : [...realFields];
-      } else {
-        // Update selected fields excluding the 'all' option
-        selectedFieldsRaw.value = newValue.filter((v) => v.value !== 'all');
-      }
-
-      console.log('Updated Selected Fields:', selectedFieldsRaw.value);
-    },
-  });
-
-  const fields = [
-    { label: 'All', value: 'all' },
-    { label: 'External Name', value: 'external_name' },
-    { label: 'Name', value: 'name' },
-    { label: 'Logo Url', value: 'logo_url' },
-    { label: 'Homepage', value: 'homepage' },
-    { label: 'Street', value: 'street' },
-    { label: 'House No.', value: 'house_no' },
-    { label: 'Postcode', value: 'postcode' },
-    { label: 'Town', value: 'town' },
-    { label: 'Country', value: 'country' },
-    { label: 'Telephone number', value: 'telephone_number' },
-    { label: 'Fax Number', value: 'fax_number' },
-    { label: 'Email', value: 'email' },
-    { label: 'Legal Name', value: 'legal_name' },
-    { label: 'Contact Form', value: 'contact_form' },
-  ];
-
-  const generatePayload = computed(() => {
-
-    return fields
-      .filter((field) => field.value !== "all") 
-      .map((field) => {
-        const isSelected = selectedFieldsRaw.value.some((selected) => selected.value === field.value);
-        return {
-          key: `manufacturer.${field.value}`,
-          value: isSelected ? "1" : "0",
-        };
-      });
-  });
-
-  // TO here
-  
-  watch(selectedFieldsRaw, (newValue) => {
-    console.log("Updated Selected Fields:", newValue);
-    console.log("Generated Payload:", generatePayload.value);
-  });
 
 
 
@@ -217,30 +154,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.ogImg !== state.value.initialData.ogImg ||
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
-      state.value.manufactured !== state.value.initialData.manufactured ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
     );
   });
 
-  // const manufacturedTest = [
-  //   {
-  //     key: 'manufacturer.external_name',
-  //     value: '0',
-  //   },
-  //   { key: 'manufacturer.name', value: isSelected },
-  //   { key: 'manufacturer.logo_url', value: '0' },
-  //   { key: 'manufacturer.homepage', value: '0' },
-  //   { key: 'manufacturer.street', value: '0' },
-  //   { key: 'manufacturer.house_no', value: '0' },
-  //   { key: 'manufacturer.postcode', value: '0' },
-  //   { key: 'manufacturer.town', value: '0' },
-  //   { key: 'manufacturer.country', value: '0' },
-  //   { key: 'manufacturer.telephone_number', value: '0' },
-  //   { key: 'manufacturer.fax_number', value: '0' },
-  //   { key: 'manufacturer.email', value: '0' },
-  //   { key: 'manufacturer.legal_name', value: '0' },
-  //   { key: 'manufacturer.contact_form', value: '0' },
-  // ];
 
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
@@ -286,14 +203,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'useWebp',
         value: state.value.useWebp ? 'true' : 'false',
       },
-      // {
-      //   key: 'manufactured',
-      //   value: generatePayload,
-      // },
-      ...generatePayload.value,
+
     ];
 
-    console.log('Payload being sent:', settings);
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
@@ -313,7 +225,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: state.value.ogImg,
       useAvif: state.value.useAvif,
       useWebp: state.value.useWebp,
-      manufactured: state.value.manufactured,
     };
 
     state.value.loading = false;
@@ -342,7 +253,5 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
-    fields,
-    selectedFields,
   };
 };

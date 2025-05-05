@@ -167,7 +167,7 @@
       </div>
     </UiAccordionItem>
 
-    <UiAccordionItem
+    <!-- <UiAccordionItem
       v-model="manufacturedTab"
       data-testid="color-section"
       summary-active-class="bg-neutral-100"
@@ -187,8 +187,8 @@
           >
             <SfIconInfo :size="'sm'" />
           </SfTooltip>
-        </UiFormLabel>
-        <Multiselect
+        </UiFormLabel> -->
+        <!-- <Multiselect
           v-model="selectedFields"
           :options="fields"
           :multiple="true"
@@ -202,25 +202,21 @@
           <template #selection="{ values }">
             <span class="text-neutral-900">{{ values.map((v: any) => v.label).join(', ') }}</span>
           </template>
-        </Multiselect>
-      </div>
-      <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span>
-    </UiAccordionItem>
-  </div>
+        </Multiselect> -->
+      <!-- </div>
+      <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span> -->
+    <!-- </UiAccordionItem> -->
+  </div> 
 </template>
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip, SfSwitch } from '@storefront-ui/vue';
-import Multiselect from 'vue-multiselect';
+// import Multiselect from 'vue-multiselect';
 
-const { fields, selectedFields, headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer } = useSiteConfiguration();
-
+// const { fields, selectedFields} = useSiteConfiguration();
+const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer } = useSiteConfiguration();
 
 const branding = ref(false);
 const socialMedia = ref(false);
 const optimisation = ref(false);
-const manufacturedTab = ref(false);
-
-
-
 </script>

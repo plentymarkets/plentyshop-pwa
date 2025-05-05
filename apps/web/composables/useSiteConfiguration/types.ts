@@ -21,7 +21,6 @@ export type ConfigurationSettings = {
   ogImg: string;
   useAvif: boolean;
   useWebp: boolean;
-  manufactured: string;
 };
 
 export interface UseSiteConfigurationState {
@@ -41,7 +40,6 @@ export interface UseSiteConfigurationState {
   ogImg: string;
   useAvif: boolean;
   useWebp: boolean;
-  manufactured: string;
   selectedFont: SelectedFont;
   blockSize: string;
   placement: string;
@@ -80,7 +78,6 @@ export interface UseSiteConfiguration {
   ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
   useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
   useWebp: Readonly<Ref<UseSiteConfigurationState['useWebp']>>;
-  manufactured: Readonly<Ref<UseSiteConfigurationState['manufactured']>>;
   blockSize: Readonly<Ref<UseSiteConfigurationState['blockSize']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
@@ -97,8 +94,6 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
-  fields: { label: string; value: string }[];
-  selectedFields: ComputedRef<{ label: string; value: string }[]>;
 
 }
 
