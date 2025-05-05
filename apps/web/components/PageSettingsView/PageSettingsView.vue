@@ -143,7 +143,7 @@
           <div class="flex justify-between">
             <UiFormLabel class="mb-1">Position </UiFormLabel>
             <SfTooltip
-              label="The position determines the page order. Lower positions come first."
+              label="The position determines the page order in the navigation and the editor. Lower positions come first."
               :placement="'top'"
               :show-arrow="true"
               class="ml-2 z-10"
