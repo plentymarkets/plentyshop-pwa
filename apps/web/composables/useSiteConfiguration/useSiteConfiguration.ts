@@ -39,14 +39,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    seoSettings: metaDefaults,
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
-      seoSettings: metaDefaults,
+      seoSettings: structuredClone(metaDefaults),
     },
-    seoSettings: metaDefaults,
   }));
 
   /**
@@ -137,7 +137,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
-      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
+      state.value.seoSettings !== state.value.initialData.seoSettings
     );
   });
 
