@@ -1,14 +1,24 @@
-import type { PackstationList, PackstationsSearchParams } from '@plentymarkets/shop-api';
+import {
+  AddressType,
+  shippingProviderGetters,
+  type PreferredDeliveryLocationShippingProfilesData,
+  type ApiError,
+  type PackstationList,
+  type PackstationsSearchParams,
+} from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 export const usePackstationFinder = () => {
   const { $i18n } = useNuxtApp();
+  const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
+  const { data: cartData } = useCart();
   const genericMessage = $i18n.t('PreferredDelivery.packstation.noResult2');
 
   const state = useState('usePackstationFinder', () => ({
     loading: false,
     data: {
+      preferredProfilesData: {} as PreferredDeliveryLocationShippingProfilesData,
       packstations: [] as PackstationList,
       searchParams: {
         street: '',
@@ -19,6 +29,22 @@ export const usePackstationFinder = () => {
       } as PackstationsSearchParams,
     },
   }));
+
+  const getShippingProfilesData = async () => {
+    try {
+      const { data } = await useSdk().plentysystems.getPreferredDeliveryLocationShippingProfiles();
+      state.value.data.preferredProfilesData = data;
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
+    }
+  };
+
+  const hasPreferredDeliveryLocation = computed(() => {
+    const shippingProfileId = Number(shippingProviderGetters.getShippingProfileId(cartData.value));
+    return state.value.data.preferredProfilesData.shippingProfiles?.includes(shippingProfileId) ?? false;
+  });
+
+  const deliveryLocationAvailable = computed(() => countryHasDelivery.value && hasPreferredDeliveryLocation.value);
 
   const conditionalField = (otherField1: string, otherField2: string) =>
     string().when([], {
@@ -55,6 +81,9 @@ export const usePackstationFinder = () => {
   };
 
   return {
+    getShippingProfilesData,
+    hasPreferredDeliveryLocation,
+    deliveryLocationAvailable,
     validationSchema,
     submitForm,
     ...toRefs(state.value),

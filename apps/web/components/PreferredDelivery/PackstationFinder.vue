@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="deliveryLocationAvailable"
     class="flex flex-col my-6 md:mx-4 p-4 rounded-md shadow-[inset_0_0_0_0.1rem_rgb(255,204,0)]"
     data-testid="preferred-delivery-location-finder"
   >
@@ -136,8 +137,11 @@ import { ErrorMessage, useForm } from 'vee-validate';
 import { SfCheckbox, SfIconLocationOn, SfInput } from '@storefront-ui/vue';
 import type { Packstation } from '@plentymarkets/shop-api';
 
-const { loading, data, validationSchema, submitForm } = usePackstationFinder();
+const { loading, data, getShippingProfilesData, deliveryLocationAvailable, validationSchema, submitForm } =
+  usePackstationFinder();
 const { handleSubmit, errors, validate, defineField } = useForm({ validationSchema: validationSchema });
+
+onNuxtReady(() => getShippingProfilesData());
 
 const [street, streetAttributes] = defineField('searchParams.street');
 const [zipcode, zipcodeAttributes] = defineField('searchParams.zipcode');
