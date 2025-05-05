@@ -114,7 +114,7 @@ const seoSettings = computed({
   },
 });
 
-const robotOptions = ['all', 'noindex', 'nofollow', 'none'];
+const robotOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 
 const globalDefaults = 'The settings below apply to any page without its own, page-specific settings.';
 const titleTooltip =

@@ -191,7 +191,7 @@ watch(
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
-const robotNames = ['all', 'noindex', 'nofollow', 'none'];
+const robotNames = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 
 const titleTooltip = 'Title displayed in search results of search engines.';
 const descTooltip =
