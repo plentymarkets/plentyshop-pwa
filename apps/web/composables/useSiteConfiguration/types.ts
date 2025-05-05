@@ -94,7 +94,6 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
-
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

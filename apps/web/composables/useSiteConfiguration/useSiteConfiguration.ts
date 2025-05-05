@@ -58,9 +58,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   }));
 
-
-
-
   /**
    * @description Function for loading a google font.
    * @return LoadGoogleFont
@@ -158,7 +155,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     );
   });
 
-
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
 
@@ -203,9 +199,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'useWebp',
         value: state.value.useWebp ? 'true' : 'false',
       },
-
     ];
-
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
