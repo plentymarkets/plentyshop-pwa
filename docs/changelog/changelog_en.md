@@ -6,6 +6,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
+- Added robots for declaration of accessibility page
 - Added aria label property on custom button component.
 - Added application health check endpoint `/healthz`.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
