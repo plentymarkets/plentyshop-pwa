@@ -63,9 +63,9 @@ const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
 
   if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Page not found',
     });
   }
 };
