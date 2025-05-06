@@ -1,19 +1,8 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" />
-    <draggable
-      v-if="data.length"
-      v-model="data"
-      item-key="meta.uuid"
-      handle=".drag-handle"
-      class="content"
-      :filter="'.no-drag'"
-      :prevent-on-filter="false"
-      @change="scrollToBlock"
-      @start="handleDragStart"
-      @end="handleDragEnd"
-    >
-      <template #item="{ element: block, index }">
+    <div v-if="data.length" class="content">
+      <template v-for="(block, index) in data" :key="index">
         <PageBlock
           :index="index"
           :block="block"
@@ -38,13 +27,12 @@
           @click="tabletEdit(index)"
         />
       </template>
-    </draggable>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import draggable from 'vuedraggable/src/vuedraggable';
-import type { DragEvent, EditablePageProps } from './types';
+import type { EditablePageProps } from './types';
 
 const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
@@ -58,21 +46,7 @@ const {
   blockHasData,
   tabletEdit,
   changeBlockPosition,
-  handleDragStart,
-  handleDragEnd,
 } = useBlockManager();
-
-const scrollToBlock = (evt: DragEvent) => {
-  if (evt.moved) {
-    const { newIndex } = evt.moved;
-    const block = document.getElementById(`block-${newIndex}`);
-    if (block) {
-      nextTick(() => {
-        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
-  }
-};
 
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { isEditingEnabled, disableActions } = useEditor();
@@ -82,32 +56,17 @@ onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
-const config = useRuntimeConfig();
-const showConfigurationDrawer = config.public.showConfigurationDrawer;
-const isPreview = ref(false);
-
-onMounted(async () => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-
-  if (isPreview.value) {
-    await import('./draggable.css');
-  }
-});
 
 onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
-
 const hasUnsavedChanges = () => {
   return !isEditingEnabled.value && !settingsIsDirty.value;
 };
-
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
   event.preventDefault();
 };
-
 onBeforeRouteLeave((to, from, next) => {
   if (isEditingEnabled.value) {
     const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');

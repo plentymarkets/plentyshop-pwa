@@ -33,22 +33,19 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.4.0",
-    "@plentymarkets/shop-module-mollie": "^1.0.5",
     "@plentymarkets/shop-api": "^0.104.0",
+    "@plentymarkets/shop-core": "^1.4.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
+    "@plentymarkets/shop-module-mollie": "^1.0.5",
     "@types/applepayjs": "^14.0.8",
-    "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",
     "@vee-validate/nuxt": "^4.13.2",
     "@vee-validate/yup": "^4.13.2",
     "blaze-slider": "^1.9.3",
     "country-flag-icons": "^1.5.12",
     "dotenv": "^16.4.5",
-    "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
-    "vue-multiselect": "^3.2.0",
-    "vuedraggable": "^4.1.0"
+    "vue-multiselect": "^3.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
