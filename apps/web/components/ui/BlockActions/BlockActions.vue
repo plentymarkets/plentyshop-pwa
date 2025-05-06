@@ -44,13 +44,11 @@
 
     <div class="w-px h-4 bg-gray-300" />
 
-    <button
-      class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
-      aria-label="Drag to reorder block"
-    >
-      <NuxtImg width="18" height="18" :src="dragIcon" />
-    </button>
-
+    <DragHandle class="drag-handle cursor-move no-drag">
+      <div class="drag-handle cursor-grab p-1 hover:bg-gray-100 rounded-full">
+        <SfIconMoreVert /><SfIconMoreVert style="margin-left: -1rem" />
+      </div>
+    </DragHandle>
     <div class="w-px h-4 bg-gray-300" />
 
     <button
@@ -65,10 +63,10 @@
 </template>
 
 <script lang="ts" setup>
-import dragIcon from 'assets/icons/paths/drag.svg';
-import { SfIconDelete, SfIconExpandLess, SfIconExpandMore, SfIconBase } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconExpandLess, SfIconExpandMore, SfIconBase, SfIconMoreVert } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import type { Block } from '@plentymarkets/shop-api';
+import { DragHandle } from 'vue-slicksort'
 
 const props = defineProps<{ index: number; block: Block }>();
 
