@@ -64,9 +64,13 @@
       "label": "Marketing"
     }
   },
-  "PreviewModeBar": {
-    "label": "Steuerung des Vorschaumodus",
-    "pwa": "Shop Vorschau beenden"
+  "previewModeBar": {
+    "label": "Steuerelemente für Editor",
+    "title": "Editor verlassen und zum Liveshop wechseln?",
+    "exitEditor": "Editor verlassen und zum Liveshop wechseln",
+    "unsavedChangesWarning": "Es gibt ungespeicherte Änderungen.",
+    "saveAndExit": "Speichern und verlassen",
+    "exitWithoutSaving": "Ohne Speichern verlassen"
   },
   "account": {
     "accountSettings": {

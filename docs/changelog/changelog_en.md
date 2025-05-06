@@ -1,15 +1,19 @@
 # Changelog PlentyONE Shop
 
+For changelogs of newer versions, refer to the [Releases](https://github.com/plentymarkets/plentyshop-pwa/releases) page.
+
 # v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New
 
 - Added aria label property on custom button component.
+- Added application health check endpoint `/healthz`.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
 - (dev) Added form for general settings
 - (dev) Added form for SEO settings
+- (dev) Added view for global SEO settings
 - (dev) Updated general settings and seo settings to get data dynamically
 - (dev) Added form for delete page
 - (dev) Fix correct children data for Seo settings
@@ -19,18 +23,25 @@
 - (dev) Added delete category logic
 - (dev) Added delete category logic
 - (dev) Replace data structures for left navigation and individual categories
+- (dev) Add isLinkedToWebstore property for categories
+- (dev) Close drawer on second click
+- (dev) Add Settings View
 
 ### 👷 Changed
 
+- Cookies consent prompt is now shown again if consent config changes (via hash check).
 - Use preview text for bundle items on item page
 - Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
 - Enable caching for turbo builds
 - Order confirmation soft login shows a warning instead of an error message now.
+- Moved the "Login instead" button below the email input field in the contact information section during checkout.
+- Changed the button icon and label for exiting the editor.
 
 ### 🩹 Fixed
 
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
+- Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
