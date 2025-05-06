@@ -1,23 +1,12 @@
-import { createSharedComposable } from '@vueuse/core';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
-import { useDisclosure } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
 
-const setVsfLocale = (locale: Locale) => {
-  const { $i18n } = useNuxtApp();
-  const { setLocaleCookie } = $i18n;
-  const DAYS = 100;
-  const localeExpireDate = new Date();
-  localeExpireDate.setDate(new Date().getDate() + DAYS);
-  const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
-
-  setLocaleCookie(locale);
-  vsfLocale.value = locale;
-};
-
-export const useLocalization = createSharedComposable(() => {
-  const { isOpen: isOpen, toggle } = useDisclosure();
+export const useLocalization = () => {
+  const isOpen = useState('localization-disclosure', () => false);
+  const toggle = () => {
+    isOpen.value = !isOpen.value;
+  };
   /**
    * @description Function for wrapping the category language path.
    *
@@ -94,6 +83,18 @@ export const useLocalization = createSharedComposable(() => {
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
+  const setVsfLocale = (locale: Locale) => {
+    const { $i18n } = useNuxtApp();
+    const { setLocaleCookie } = $i18n;
+    const DAYS = 100;
+    const localeExpireDate = new Date();
+    localeExpireDate.setDate(new Date().getDate() + DAYS);
+    const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
+
+    setLocaleCookie(locale);
+    vsfLocale.value = locale;
+  };
+
   /**
    * @description Function for switching app locale.
    * @param language
@@ -129,4 +130,4 @@ export const useLocalization = createSharedComposable(() => {
     switchLocale,
     setVsfLocale,
   };
-});
+};

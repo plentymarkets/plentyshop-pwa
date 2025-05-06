@@ -32,6 +32,13 @@ export const useWishlist: UseWishlistReturn = () => {
     wishlistItemIds: [] as number[],
   }));
 
+  const { t } = useNuxtApp().$i18n;
+
+  const messages = {
+    delete: t('wishlistInteraction.delete'),
+    add: t('wishlistInteraction.add')
+  };
+
   /**
    * @description Function for fetching products.
    * @return FetchWishlist
@@ -149,15 +156,14 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const interactWithWishlist: InteractWithWishlist = async (variationId: number, quantity = 1) => {
-    const { $i18n } = useNuxtApp();
     const { send } = useNotification();
 
     await (isWishlistItem(variationId)
       ? deleteWishlistItem({ variationId }).then(() =>
-          send({ type: 'positive', message: $i18n.t('wishlistInteraction.delete') }),
+          send({ type: 'positive', message: messages.delete }),
         )
       : addWishlistItem({ variationId, quantity }).then(() =>
-          send({ type: 'positive', message: $i18n.t('wishlistInteraction.add') }),
+          send({ type: 'positive', message: messages.add }),
         ));
   };
 
