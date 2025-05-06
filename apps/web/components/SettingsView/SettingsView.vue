@@ -9,7 +9,7 @@
 
     <UiAccordionItem
       v-model="branding"
-      data-testid="color-section"
+      data-testid="settings-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -41,7 +41,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>Favicon</UiFormLabel>
           <SfTooltip
-            label="A favicon helps customers recognize your site in browser tabs and bookmarks. It must be an ICO file, as other image formats are not supported."
+            label="A favicon helps customers recognize your site in browser tabs and bookmarks. Required file format: .ico"
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -50,7 +50,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="favicon" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="favicon" type="text" placeholder="Enter URL of the image" data-testid="favicon-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Recommended dimensions: A square of 32 × 32 px or 48 × 48 px (180 × 180 px for iPhones/iPads)
@@ -61,7 +61,7 @@
 
     <UiAccordionItem
       v-model="socialMedia"
-      data-testid="color-section"
+      data-testid="social-media-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -81,7 +81,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="ogTitle" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="ogTitle" type="text" placeholder="Enter URL of the image" data-testid="og-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews.
@@ -102,7 +102,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="ogImg" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+          <SfInput v-model="ogImg" type="text" placeholder="Enter URL of the image" data-testid="og-image-field" />
 
           <span class="typography-text-xs text-neutral-700"
             >Optimal image dimensions: 1200 × 630 px (min. 600 × 315 px) for best display on social media.
@@ -113,7 +113,7 @@
 
     <UiAccordionItem
       v-model="optimisation"
-      data-testid="color-section"
+      data-testid="optimisation-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >

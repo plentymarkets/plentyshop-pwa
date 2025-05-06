@@ -71,7 +71,6 @@ export default defineNuxtConfig({
       favicon: process.env.FAVICON || '/_nuxt-plenty/favicon.ico',
       ogTitle: process.env.OG_TITLE || 'PlentyONE Shop',
       ogImg: process.env.OG_IMG || '/_nuxt-plenty/images/logo.svg',
-      manufactured: process.env.MANUFACTURED || '',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PlentyONE GmbH',
