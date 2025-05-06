@@ -67,7 +67,8 @@ export default defineNuxtConfig({
       useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
-      headerLogo: process.env.NUXT_PUBLIC_HEADER_LOGO || '/_nuxt-plenty/images/logo.svg',
+      headerLogo:
+        process.env.NUXT_PUBLIC_HEADER_LOGO || 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PlentyONE GmbH',
