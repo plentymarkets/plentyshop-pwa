@@ -80,7 +80,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { SfDrawer, SfIconBase, SfIconChevronLeft, SfIconChevronRight, SfIconDelete } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 const { toggleDeleteModal } = useCategorySettings();
