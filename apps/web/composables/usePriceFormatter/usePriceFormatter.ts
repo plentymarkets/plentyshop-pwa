@@ -26,8 +26,8 @@ export const usePriceFormatter = () => {
 
   const format = (value: number) => {
     if (state.value.pattern === '') {
-      const { n } = useI18n();
-      return n(value, 'currency');
+      const { $i18n } = useNuxtApp();
+      return $i18n.n(value, 'currency');
     }
 
     const numberParts = value.toFixed(state.value.decimalPlaces).split('.');
