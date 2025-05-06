@@ -33,29 +33,29 @@
         {{ item.details[0].name }}
       </span>
       <div class="flex items-center gap-x-2 ml-2">
-      <SfTooltip
-        v-if="isCategoryDirty(item.id)"
-        label="You have unsaved changes on this page"
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
-        <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
-      </SfTooltip>
-      <SfIconBase
-        size="base"
-        viewBox="0 0 24 24"
-        class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-        @click="
-          openSettingsMenu(item.id);
-          setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
-        "
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-          <path :d="gearPath" fill="#062633" />
-        </svg>
-      </SfIconBase>
-    </div>
+        <SfTooltip
+          v-if="isCategoryDirty(item.id)"
+          label="You have unsaved changes on this page"
+          :placement="'top'"
+          :show-arrow="true"
+          class="ml-2 z-10"
+        >
+          <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
+        </SfTooltip>
+        <SfIconBase
+          size="base"
+          viewBox="0 0 24 24"
+          class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+          @click="
+            openSettingsMenu(item.id);
+            setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
+          "
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+            <path :d="gearPath" fill="#062633" />
+          </svg>
+        </SfIconBase>
+      </div>
     </div>
     <ul
       v-if="item.hasChildren && open"
