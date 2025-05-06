@@ -1,11 +1,11 @@
-import {
-  AddressType,
-  shippingProviderGetters,
-  type PreferredDeliveryLocationShippingProfilesData,
-  type ApiError,
-  type PackstationList,
-  type PackstationsSearchParams,
+import type {
+  Packstation,
+  PreferredDeliveryLocationShippingProfilesData,
+  ApiError,
+  PackstationList,
+  PackstationsSearchParams,
 } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
@@ -80,11 +80,25 @@ export const usePackstationFinder = () => {
     }
   };
 
+  const mapMarkers = computed(() => {
+    if (!state.value.data.packstations.length) {
+      return [];
+    }
+
+    return state.value.data.packstations.map((packstation: Packstation) => ({
+      position: {
+        lat: Number(packstation.place.geo.latitude),
+        lng: Number(packstation.place.geo.longitude),
+      },
+    }));
+  });
+
   return {
     getShippingProfilesData,
     hasPreferredDeliveryLocation,
     deliveryLocationAvailable,
     validationSchema,
+    mapMarkers,
     submitForm,
     ...toRefs(state.value),
   };

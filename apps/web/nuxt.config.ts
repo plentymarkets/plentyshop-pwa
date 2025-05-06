@@ -81,6 +81,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxt/scripts',
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',

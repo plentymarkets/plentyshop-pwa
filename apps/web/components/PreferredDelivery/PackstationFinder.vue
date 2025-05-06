@@ -89,12 +89,18 @@
     </form>
 
     <div v-if="data.packstations.length" class="mt-4 flex flex-col sm:flex-row gap-1">
-      <div class="bg-gray-200 rounded-md h-96 sm:h-auto w-full sm:flex-1 order-1 sm:order-2 mb-3 sm:mb-0">
-        gonna have the map displayed here
-      </div>
+      <ScriptGoogleMaps
+        ref="googleMapsRef"
+        :center="query"
+        :markers="mapMarkers"
+        :api-key="gmapsApiKey?.toString()"
+        class="rounded-md h-96 sm:h-auto min-h-80 flex-1 sm:basis-[70%] min-w-0 order-1 sm:order-2"
+        above-the-fold
+        @ready="handleReady"
+      />
 
-      <ul class="space-y-4 max-h-96 sm:max-h-[500px] overflow-y-auto w-full sm:w-[40%] order-2 sm:order-1">
-        <li v-for="(station, index) in data.packstations" :key="index" class="mr-0 sm:mr-1">
+      <ul class="space-y-4 h-96 max-h-96 overflow-y-auto flex-1 sm:basis-[30%] w-full order-2 sm:order-1 mt-3 sm:mt-0">
+        <li v-for="(station, index) in data.packstations" :key="index" class="mr-0 sm:mr-3">
           <button
             type="button"
             class="w-full text-left p-3 rounded-md border border-gray-300 hover:border-[rgb(255,204,0)] hover:bg-[rgb(255,204,0)] active:bg-[rgb(255,204,0)] transition-colors duration-150 focus:outline-none"
@@ -137,11 +143,9 @@ import { ErrorMessage, useForm } from 'vee-validate';
 import { SfCheckbox, SfIconLocationOn, SfInput } from '@storefront-ui/vue';
 import type { Packstation } from '@plentymarkets/shop-api';
 
-const { loading, data, getShippingProfilesData, deliveryLocationAvailable, validationSchema, submitForm } =
+const { loading, data, getShippingProfilesData, deliveryLocationAvailable, mapMarkers, validationSchema, submitForm } =
   usePackstationFinder();
 const { handleSubmit, errors, validate, defineField } = useForm({ validationSchema: validationSchema });
-
-onNuxtReady(() => getShippingProfilesData());
 
 const [street, streetAttributes] = defineField('searchParams.street');
 const [zipcode, zipcodeAttributes] = defineField('searchParams.zipcode');
@@ -159,8 +163,36 @@ const validateAndSubmitForm = async () => {
 };
 
 const handleStationSelection = (station: Packstation) => {
-  console.log('Selected station:', station);
+  // console.log('Selected station:', station);
 };
+
+console.log('mapMarkers', mapMarkers.value);
+
+const gmapsApiKey = computed(() => data.value.preferredProfilesData.gmapsApiKey);
+
+const isLoaded = ref(false);
+const center = ref();
+const googleMapsRef = ref();
+
+const query = ref({
+  lat: -37.7995487,
+  lng: 144.9867841,
+});
+
+function handleReady(e: { readonly map: Ref<google.maps.Map | undefined> }) {
+  const map = e.map.value;
+  if (map) {
+    center.value = map.getCenter();
+    map.addListener('center_changed', () => {
+      center.value = map.getCenter();
+    });
+    isLoaded.value = true;
+  }
+}
+
+onNuxtReady(async () => {
+  await getShippingProfilesData();
+});
 </script>
 
 <style scoped>
