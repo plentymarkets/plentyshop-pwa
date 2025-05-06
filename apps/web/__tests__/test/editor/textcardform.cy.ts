@@ -1,3 +1,4 @@
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 
 describe('Text Card Block Form', () => {
@@ -87,14 +88,13 @@ describe('Text Card Block Form', () => {
     cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
   };
 
+  const cookieBar = new CookieBarObject();
+
   beforeEach(() => {
     cy.clearCookies();
     cy.setCookie('vsf-locale', 'en');
-    cy.setCookie(
-      'consent-cookie',
-      '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
-    );
     cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
     openSettingsForTextCardBlock();
   });
 

@@ -7,11 +7,13 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 ### 🚀 New
 
 - Added aria label property on custom button component.
+- Added application health check endpoint `/healthz`.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
 - (dev) Added form for general settings
 - (dev) Added form for SEO settings
+- (dev) Added view for global SEO settings
 - (dev) Updated general settings and seo settings to get data dynamically
 - (dev) Added form for delete page
 - (dev) Fix correct children data for Seo settings
@@ -26,6 +28,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+- Cookies consent prompt is now shown again if consent config changes (via hash check).
 - Use preview text for bundle items on item page
 - Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
@@ -37,6 +40,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 ### 🩹 Fixed
 
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
+- Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
