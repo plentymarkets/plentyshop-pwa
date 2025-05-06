@@ -59,7 +59,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
 - Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
 - The CSS for drag-and-drop is now only loaded in the editor, not the live shop.
-- Fixed drag-and-drop legacy JS PSI error.
+- Removed lagacy JavaScript for drag-and-drop.
 
 ### 💻 Developer notes
 
