@@ -10,7 +10,7 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
-import { metaDefaults } from '~/configuration/app.config';
+import { metaDefaults, openGraph, favicon } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
@@ -35,9 +35,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     headerLogo: useRuntimeConfig().public.headerLogo,
-    favicon: String(useRuntimeConfig().public.favicon),
-    ogTitle: String(useRuntimeConfig().public.ogTitle),
-    ogImg: String(useRuntimeConfig().public.ogImg),
+    favicon: structuredClone(favicon).icon,
+    ogTitle: structuredClone(openGraph).title,
+    ogImg: structuredClone(openGraph).image,
     useAvif: useRuntimeConfig().public.useAvif,
     useWebp: useRuntimeConfig().public.useWebp,
     seoSettings: metaDefaults,
@@ -53,9 +53,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: useRuntimeConfig().public.secondaryColor,
       seoSettings: structuredClone(metaDefaults),
       headerLogo: useRuntimeConfig().public.headerLogo,
-      favicon: String(useRuntimeConfig().public.favicon),
-      ogTitle: String(useRuntimeConfig().public.ogTitle),
-      ogImg: String(useRuntimeConfig().public.ogImg),
+      favicon: structuredClone(favicon).icon,
+      ogTitle: structuredClone(openGraph).title,
+      ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
     },
