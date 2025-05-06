@@ -2,7 +2,7 @@
 
 For changelogs of newer versions, refer to the [Releases](https://github.com/plentymarkets/plentyshop-pwa/releases) page.
 
-# v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+# v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.15.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New
 
@@ -29,7 +29,6 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
-
 ### 🩹 Fixed
 
 - (dev) Fix Page Selector state.
@@ -42,16 +41,15 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
-- Added aria label property on custom button component.
-- Added application health check endpoint `/healthz`.
+- Added aria label to custom button component.
+- Added information about selected "DHL Preferred Delivery Services" to order confirmation.
+- Enabled caching for turbo builds.
 
 ### 👷 Changed
 
-- Cookies consent prompt is now shown again if consent config changes (via hash check).
-- Use preview text for bundle items on item page
-- Added DHL Preferred Delivery Services to order details.
-- Updated instances of old branding and product names
-- Enable caching for turbo builds
+- Cookies consent prompt is shown again if consent config changes (via hash check).
+- Use preview text for bundle items on item page instead of item description.
+- Updated instances of old branding and product names.
 - Order confirmation soft login shows a warning instead of an error message now.
 - Moved the "Login instead" button below the email input field in the contact information section during checkout.
 - Changed the button icon and label for exiting the editor.
@@ -60,8 +58,12 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
 - Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
-- The CSS for drag-&-drop is now only loaded in the editor, not the live shop.
-- Fixed drag&drop legacy JS PSI error.
+- The CSS for drag-and-drop is now only loaded in the editor, not the live shop.
+- Fixed drag-and-drop legacy JS PSI error.
+
+### 💻 Developer notes
+
+- Added application health check endpoint `/healthz`.
 
 # v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.14.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
