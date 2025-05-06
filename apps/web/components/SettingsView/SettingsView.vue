@@ -20,7 +20,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>Logo</UiFormLabel>
           <SfTooltip
-            label="The logo is displayed in the header of the onlineshop. For the best performance, you should choose an image file in one of the following formats: SVG, AVIF or WebP. If you choose SVG, the size must be 150 x 40 px. For other formats, the maximum size is 180 px (width) by 80 px (height)."
+            label="The logo is displayed in the header of the onlineshop. For the best performance, you should choose an image file in one of the following formats: SVG, AVIF or WebP."
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -32,7 +32,8 @@
           <SfInput v-model="headerLogo" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
 
           <span class="typography-text-xs text-neutral-700"
-            >Ideal dimensions: 150 × 40 px, or a maximum width of 180 px and a maximum height of 80 px.</span
+            >If you choose SVG, the size must be 150 x 40 px. For other formats, the maximum size is 180 px (width) by
+            80 px (height).</span
           >
         </label>
       </div>
@@ -53,7 +54,7 @@
           <SfInput v-model="favicon" type="text" placeholder="Enter URL of the image" data-testid="favicon-field" />
 
           <span class="typography-text-xs text-neutral-700"
-            >Recommended dimensions: A square of 32 × 32 px or 48 × 48 px (180 × 180 px for iPhones/iPads)
+            >Recommended dimensions: A square of 32 × 32 px or 48 × 48 px
           </span>
         </label>
       </div>
