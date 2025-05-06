@@ -32,7 +32,7 @@
         </span>
         {{ item.details[0].name }}
       </span>
-
+      <div class="flex items-center gap-x-2 ml-2">
       <SfTooltip
         v-if="isCategoryDirty(item.id)"
         label="You have unsaved changes on this page"
@@ -40,7 +40,7 @@
         :show-arrow="true"
         class="ml-2 z-10"
       >
-        <SfIconError :size="'sm'" />
+        <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
       </SfTooltip>
       <SfIconBase
         size="base"
@@ -55,6 +55,7 @@
           <path :d="gearPath" fill="#062633" />
         </svg>
       </SfIconBase>
+    </div>
     </div>
     <ul
       v-if="item.hasChildren && open"

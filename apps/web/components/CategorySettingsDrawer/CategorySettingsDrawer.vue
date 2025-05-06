@@ -13,7 +13,7 @@
       <SfIconChevronLeft class="cursor-pointer" @click="handleBack" />
     </div>
 
-    <div v-if="activeView" class="flex px-4 pt-2 gap-4 border-b">
+    <div v-if="activeView" class="flex px-4 pt-2 gap-4 pb-2">
       <button
         :class="[
           'py-1 px-3 rounded-md font-medium',
@@ -96,12 +96,12 @@ const activeView = ref<null | 'general' | 'seo'>(null);
 const redirectToPage = () => {
   const targetUrl = `${localePrefix.value}/${getCategoryPath.value}`;
   navigateTo(targetUrl);
+  setSettingsCategory(null);
 };
 const handleBack = () => {
   if (activeView.value !== null) {
     activeView.value = null;
   } else {
-    open.value = false;
     setSettingsCategory(null);
   }
 };
