@@ -26,6 +26,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Add isLinkedToWebstore property for categories
 - (dev) Close drawer on second click
 - (dev) Add Settings View
+- (dev) Logo preview
 
 ### 👷 Changed
 
