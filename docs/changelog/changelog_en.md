@@ -6,8 +6,6 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
-- Added aria label property on custom button component.
-- Added application health check endpoint `/healthz`.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -31,6 +29,24 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+
+### 🩹 Fixed
+
+- (dev) Fix Page Selector state.
+- (dev) Fix Page Selector closes when clicking outside the box.
+- (dev) Fix Page Selector closes on second button click.
+- (dev) Fix styling of editor actions on content pages.
+- (dev) Fix notification and modal closing of delete category
+
+# v1.15.0 (2025-05-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.15.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 🚀 New
+
+- Added aria label property on custom button component.
+- Added application health check endpoint `/healthz`.
+
+### 👷 Changed
+
 - Cookies consent prompt is now shown again if consent config changes (via hash check).
 - Use preview text for bundle items on item page
 - Added DHL Preferred Delivery Services to order details.
@@ -44,11 +60,6 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
 - Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
-- (dev) Fix Page Selector state.
-- (dev) Fix Page Selector closes when clicking outside the box.
-- (dev) Fix Page Selector closes on second button click.
-- (dev) Fix styling of editor actions on content pages.
-- (dev) Fix notification and modal closing of delete category
 - The CSS for drag-&-drop is now only loaded in the editor, not the live shop.
 - Fixed drag&drop legacy JS PSI error.
 
