@@ -1,3 +1,5 @@
+import type { CurrencyPattern } from '@plentymarkets/shop-api'
+
 export const usePriceFormatter = () => {
   const state = useState('usePriceFormatter', () => ({
     pattern: '',
@@ -9,16 +11,16 @@ export const usePriceFormatter = () => {
     currency: '',
   }));
 
-  const setPattern = (currencyPattern: any|undefined) => {
-    if (currencyPattern) {
+  const setPattern = (currencyPattern: CurrencyPattern | undefined) => {
+    if (currencyPattern?.pattern) {
       state.value.thousandSeparator = currencyPattern?.thousandsSeparator ?? '';
       state.value.decimalSeparator = currencyPattern?.decimalSeparator ?? '';
       state.value.decimalPlaces = currencyPattern?.decimalPlaces ?? 2;
       state.value.spaceBeforeSymbol = /\s¤/.test(currencyPattern.pattern) || /¤\s/.test(currencyPattern.pattern) || currencyPattern.symbol.length > 1;
       state.value.symbolBeforeValue = currencyPattern.pattern.indexOf('¤') < currencyPattern.pattern.indexOf('#');
       state.value.currency = currencyPattern?.symbol ?? '';
+      state.value.pattern = currencyPattern?.pattern ?? '';
     }
-    state.value.pattern = currencyPattern?.pattern ?? '';
   };
 
   const format = (value: number) => {

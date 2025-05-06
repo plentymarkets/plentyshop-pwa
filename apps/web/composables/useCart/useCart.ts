@@ -101,7 +101,6 @@ export const useCart: UseCartReturn = () => {
   const setCart = (data: Cart) => {
     const { setPattern } = usePriceFormatter();
     state.value.data = data;
-    // @ts-ignore
     setPattern(data.currencyPattern);
   };
 
