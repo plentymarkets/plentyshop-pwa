@@ -50,6 +50,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
               name: detail.name,
               nameUrl: detail.nameUrl,
               type: category.type,
+              position: detail.position,
               metaTitle: detail.metaTitle,
               metaDescription: detail.metaDescription,
               metaKeywords: detail.metaKeywords,

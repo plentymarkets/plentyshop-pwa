@@ -25,9 +25,13 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Replace data structures for left navigation and individual categories
 - (dev) Add isLinkedToWebstore property for categories
 - (dev) Close drawer on second click
+- (dev) Add Settings View
+- (dev) Changed design for settings drawer
+- (dev) Logo preview
 
 ### 👷 Changed
 
+- Cookies consent prompt is now shown again if consent config changes (via hash check).
 - Use preview text for bundle items on item page
 - Added DHL Preferred Delivery Services to order details.
 - Updated instances of old branding and product names
@@ -40,6 +44,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 ### 🩹 Fixed
 
 - Checkout improvements related to payment methods surcharge and required amounts for availability.
+- Fixed cookie bar hydration error in `@plentymarkets/shop-module-gtag@1.1.2`.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
