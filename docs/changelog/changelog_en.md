@@ -27,6 +27,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Close drawer on second click
 - (dev) Add Settings View
 - (dev) Changed design for settings drawer
+- (dev) Logo preview
 
 ### 👷 Changed
 
