@@ -48,7 +48,6 @@ definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t } = useI18n();
-const { format } = usePriceFormatter();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { isAuthorized } = useCustomer();

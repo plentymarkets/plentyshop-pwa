@@ -30,7 +30,9 @@ export const usePriceFormatter = () => {
       return n(value, 'currency');
     }
 
-    let [integerPart, decimalPart] = value.toFixed(state.value.decimalPlaces).split('.');
+    const numberParts = value.toFixed(state.value.decimalPlaces).split('.');
+    let integerPart = numberParts[0];
+    const decimalPart = numberParts[1];
 
     if (state.value.thousandSeparator) {
       integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, state.value.thousandSeparator);
