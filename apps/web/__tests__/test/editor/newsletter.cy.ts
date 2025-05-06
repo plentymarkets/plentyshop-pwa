@@ -1,3 +1,4 @@
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 
 describe('Newsletter Block Form', () => {
@@ -44,6 +45,8 @@ describe('Newsletter Block Form', () => {
     cy.getByTestId('newsletter-block').should('have.css', 'background-color', 'rgb(0, 255, 0)');
   };
 
+  const cookieBar = new CookieBarObject();
+
   beforeEach(() => {
     cy.clearCookies();
     cy.setCookie('vsf-locale', 'en');
@@ -51,6 +54,8 @@ describe('Newsletter Block Form', () => {
       'consent-cookie',
       '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
     );
+    cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
     cy.visitAndHydrate(paths.home);
     clickOnNewsletterBlockEditButton();
   });

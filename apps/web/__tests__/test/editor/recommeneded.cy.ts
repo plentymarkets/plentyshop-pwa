@@ -1,4 +1,5 @@
 import { paths } from '../../../utils/paths';
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Recommended Block Form', () => {
   const checkIsRecommendedBlockIsVisible = () => {
@@ -40,6 +41,8 @@ describe('Recommended Block Form', () => {
       .should('have.css', 'color', 'rgb(0, 255, 0)');
   };
 
+  const cookieBar = new CookieBarObject();
+
   beforeEach(() => {
     cy.clearCookies();
     cy.setCookie('vsf-locale', 'en');
@@ -47,6 +50,8 @@ describe('Recommended Block Form', () => {
       'consent-cookie',
       '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
     );
+    cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
     cy.visitAndHydrate(paths.home);
     clickOnRecommendedBlockEditButton();
   });

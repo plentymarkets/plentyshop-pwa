@@ -4,9 +4,11 @@ import {
   secondBannerBlockUuid,
 } from '../../support/pageObjects/BannerSliderObject';
 import { paths } from '../../../utils/paths';
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Banner Slider Block Form', () => {
   const bannerSlider = new BannerSliderObject();
+  const cookieBar = new CookieBarObject();
 
   const openSettingsForBannerSliderBlock = () => {
     cy.get('[data-testid="open-editor-button"]').eq(0).should('exist').click();
@@ -21,6 +23,8 @@ describe('Banner Slider Block Form', () => {
       'consent-cookie',
       '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
     );
+    cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
     cy.visitAndHydrate(paths.home);
     openSettingsForBannerSliderBlock();
   });

@@ -1,8 +1,10 @@
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
 
 describe('Blocks', () => {
   const editor = new EditorObject();
+  const cookieBar = new CookieBarObject();
 
   beforeEach(() => {
     cy.clearCookies();
@@ -11,6 +13,8 @@ describe('Blocks', () => {
       'consent-cookie',
       '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
     );
+    cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
     cy.visitAndHydrate(paths.home);
   });
 
