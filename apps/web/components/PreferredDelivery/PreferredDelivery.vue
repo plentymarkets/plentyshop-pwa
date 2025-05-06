@@ -106,11 +106,7 @@
               />
               {{ $t('PreferredDelivery.general.wunschnachbarTitle') }}
             </label>
-            <SfTooltip
-              :label="$t('PreferredDelivery.general.wunschnachbarTooltip')"
-              :show-arrow="true"
-              class="ml-1"
-            >
+            <SfTooltip :label="$t('PreferredDelivery.general.wunschnachbarTooltip')" :show-arrow="true" class="ml-1">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
