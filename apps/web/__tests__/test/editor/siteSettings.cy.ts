@@ -1,3 +1,4 @@
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../support/pageObjects/SiteSettingsObject';
@@ -5,6 +6,7 @@ import { SiteSettingsObject } from '../../support/pageObjects/SiteSettingsObject
 describe('SiteSettings', () => {
   const editor = new EditorObject();
   const siteSettings = new SiteSettingsObject();
+  const cookieBar = new CookieBarObject();
 
   const font = 'Almarai';
   const primaryColor = '#11ff00';
@@ -15,11 +17,8 @@ describe('SiteSettings', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.setCookie('vsf-locale', 'en');
-    cy.setCookie(
-      'consent-cookie',
-      '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
-    );
     cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
   });
 
   it('should change the font', () => {
