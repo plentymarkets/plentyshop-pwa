@@ -51,7 +51,7 @@
     </ul>
 
     <PageSettingsView v-if="activeView === 'general'" class="mt-2" />
-    <SeoView v-if="activeView === 'seo'" class="mt-2" />
+    <PageSeoView v-if="activeView === 'seo'" class="mt-2" />
 
     <div v-if="!activeView" class="py-4">
       <h3 class="font-bold text-center mb-3">Actions</h3>

@@ -38,16 +38,18 @@
       <!--        <NuxtImg v-if="drawerView === 'SettingsView'" width="24" height="24px" src="/assets/icons/paths/gear-white.svg" />-->
       <!--        <NuxtImg v-else width="24" height="24px" src="/assets/icons/paths/gear-black.svg" />-->
       <!--      </button>-->
-      <!--      <button-->
-      <!--        type="button"-->
-      <!--        class="editor-button relative py-2"-->
-      <!--        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SeoView' }"-->
-      <!--        aria-label="Open seo drawer"-->
-      <!--        data-testid="open-seo-drawer"-->
-      <!--        @click="openDrawerWithView('SeoView')"-->
-      <!--      >-->
-      <!--        <SfIconSearch />-->
-      <!--      </button>-->
+      <button
+        v-if="runtimeConfig.public.isDev"
+        type="button"
+        class="editor-button relative py-2 flex justify-center"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SeoView' }"
+        aria-label="Open SEO settings drawer"
+        data-testid="open-seo-drawer"
+        @click="toggleDrawerView('SeoView')"
+      >
+        <SfIconSearch v-if="drawerView === 'SeoView'" class="text-white" />
+        <SfIconSearch v-else />
+      </button>
     </div>
   </aside>
 </template>
@@ -56,10 +58,12 @@
 // import gearBlack from 'assets/icons/paths/gear-black.svg';
 // import gearWhite from 'assets/icons/paths/gear-white.svg';
 
+import { SfIconSearch } from '@storefront-ui/vue';
 import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
+
 const { drawerView, openDrawerWithView, closeDrawer } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 
