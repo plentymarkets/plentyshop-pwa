@@ -79,8 +79,8 @@ await fetchProduct(productParams).then(() => {
 
 if (Object.keys(product.value).length === 0) {
   throw createError({
-      statusCode: 404,
-      statusMessage: 'Product not found',
+    statusCode: 404,
+    statusMessage: 'Product not found',
   });
 }
 setCurrentProduct(product.value || ({} as Product));
