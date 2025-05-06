@@ -45,5 +45,4 @@ describe('AssetDownloader', () => {
       expect(writerMock.write).toHaveBeenCalledWith(url, expectedPath);
     });
   });
-
 });
