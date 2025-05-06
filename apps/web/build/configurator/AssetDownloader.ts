@@ -25,15 +25,4 @@ export class AssetDownloader {
     const iconPath = path.resolve(__dirname, `../../public/_nuxt-plenty/favicon.ico`);
     this.writer.write(url, iconPath);
   }
-
-  downloadLogo(url: string) {
-    if (!FileTypeValidator.isImage(url)) {
-      this.logger.warn('The URL does not point to an image file. Aborting the download.');
-      return;
-    }
-    this.logger.info('Downloading logo...');
-    const fileType = url.split('.').pop();
-    const logoPath = path.resolve(__dirname, `../../public/_nuxt-plenty/images/logo.${fileType}`);
-    this.writer.write(url, logoPath);
-  }
 }
