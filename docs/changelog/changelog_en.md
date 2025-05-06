@@ -31,6 +31,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🩹 Fixed
 
+- Fixed an issue where the currency was not displayed correctly.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
