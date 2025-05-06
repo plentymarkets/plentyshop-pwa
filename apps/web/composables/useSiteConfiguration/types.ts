@@ -1,10 +1,10 @@
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView =
+  | 'SeoView'
   | 'SettingsView'
   | 'blocksList'
   | 'DesignView'
-  | 'SeoView'
   | 'PagesView'
   | 'blocksSettings'
   | null;
@@ -21,6 +21,12 @@ export type ConfigurationSettings = {
   ogImg: string;
   useAvif: boolean;
   useWebp: boolean;
+  seoSettings: {
+    title: string;
+    description: string;
+    keywords: string;
+    robots: string;
+  };
 };
 
 export interface UseSiteConfigurationState {
@@ -47,6 +53,12 @@ export interface UseSiteConfigurationState {
   blockType: string;
   blockUuid: string;
   initialData: ConfigurationSettings;
+  seoSettings: {
+    title: string;
+    description: string;
+    keywords: string;
+    robots: string;
+  };
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -79,6 +91,7 @@ export interface UseSiteConfiguration {
   useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
   useWebp: Readonly<Ref<UseSiteConfigurationState['useWebp']>>;
   blockSize: Readonly<Ref<UseSiteConfigurationState['blockSize']>>;
+  seoSettings: Readonly<Ref<UseSiteConfigurationState['seoSettings']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;

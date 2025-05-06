@@ -10,6 +10,7 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import { metaDefaults } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
@@ -39,6 +40,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     ogImg: useRuntimeConfig().public.ogImg,
     useAvif: useRuntimeConfig().public.useAvif,
     useWebp: useRuntimeConfig().public.useWebp,
+    seoSettings: metaDefaults,
     drawerView: null,
     blockType: '',
     blockUuid: '',
@@ -49,6 +51,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      seoSettings: structuredClone(metaDefaults),
       headerLogo: useRuntimeConfig().public.headerLogo,
       favicon: useRuntimeConfig().public.favicon,
       ogTitle: useRuntimeConfig().public.ogTitle,
@@ -152,6 +155,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
     );
   });
 
@@ -199,6 +204,22 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'useWebp',
         value: state.value.useWebp ? 'true' : 'false',
       },
+      {
+        key: 'metaTitle',
+        value: state.value.seoSettings.title,
+      },
+      {
+        key: 'metaDescription',
+        value: state.value.seoSettings.description,
+      },
+      {
+        key: 'metaKeywords',
+        value: state.value.seoSettings.keywords,
+      },
+      {
+        key: 'robots',
+        value: state.value.seoSettings.robots,
+      },
     ];
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -219,6 +240,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: state.value.ogImg,
       useAvif: state.value.useAvif,
       useWebp: state.value.useWebp,
+      seoSettings: state.value.seoSettings,
     };
 
     state.value.loading = false;
