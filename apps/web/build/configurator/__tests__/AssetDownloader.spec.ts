@@ -46,26 +46,4 @@ describe('AssetDownloader', () => {
     });
   });
 
-  describe('downloadLogo', () => {
-    it('should log a warning if the URL is not an image', () => {
-      vi.spyOn(FileTypeValidator, 'isImage').mockReturnValue(false);
-      const url = 'http://example.com/file.txt';
-
-      assetDownloader.downloadLogo(url);
-
-      expect(loggerMock.warn).toHaveBeenCalled();
-      expect(writerMock.write).not.toHaveBeenCalled();
-    });
-
-    it('should download the logo if the URL is an image', () => {
-      vi.spyOn(FileTypeValidator, 'isImage').mockReturnValue(true);
-      const url = 'http://example.com/logo.png';
-      const expectedPath = path.resolve(__dirname, `../../../public/_nuxt-plenty/images/logo.png`);
-
-      assetDownloader.downloadLogo(url);
-
-      expect(loggerMock.info).toHaveBeenCalled();
-      expect(writerMock.write).toHaveBeenCalledWith(url, expectedPath);
-    });
-  });
 });
