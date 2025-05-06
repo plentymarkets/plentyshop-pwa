@@ -367,7 +367,8 @@
       "subjectLabel": "Subject"
     },
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}.",
-    "success": "Message sent successfully"
+    "success": "Message sent successfully",
+    "misConfigured": "Our contact form is temporarily disabled due to a missing security configuration. Please check back later or reach out to us via alternative contact methods."
   },
   "contactInfo": {
     "add": "Add contact information",
@@ -990,6 +991,10 @@
       "notFound": "The order does not exist.",
       "softLoginFailed": "The provided data is invalid.",
       "assignPaymentFailed": "The payment could not be assigned to the order."
+    },
+    "turnstile": {
+      "invalid": "Verification failed. Please try again in a few moments.",
+      "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "unknownError": "An unknown error has occurred."
   },
