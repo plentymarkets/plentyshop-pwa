@@ -27,17 +27,18 @@
         <NuxtImg v-if="drawerView === 'DesignView'" width="24" height="24px" :src="paintBrushWhite" />
         <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
       </button>
-      <!--      <button-->
-      <!--        type="button"-->
-      <!--        class="editor-button relative py-2 flex justify-center"-->
-      <!--        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"-->
-      <!--        aria-label="Open settings drawer"-->
-      <!--        data-testid="open-settings-drawer"-->
-      <!--        @click="openDrawerWithView('SettingsView')"-->
-      <!--      >-->
-      <!--        <NuxtImg v-if="drawerView === 'SettingsView'" width="24" height="24px" src="/assets/icons/paths/gear-white.svg" />-->
-      <!--        <NuxtImg v-else width="24" height="24px" src="/assets/icons/paths/gear-black.svg" />-->
-      <!--      </button>-->
+      <button
+        v-if="runtimeConfig.public.isDev"
+        type="button"
+        class="editor-button relative py-2 flex justify-center"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"
+        aria-label="Open settings drawer"
+        data-testid="open-settings-drawer"
+        @click="toggleDrawerView('SettingsView')"
+      >
+        <NuxtImg v-if="drawerView === 'SettingsView'" width="24" height="24px" :src="gearWhite" />
+        <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
+      </button>
       <button
         v-if="runtimeConfig.public.isDev"
         type="button"
@@ -55,8 +56,8 @@
 </template>
 
 <script setup lang="ts">
-// import gearBlack from 'assets/icons/paths/gear-black.svg';
-// import gearWhite from 'assets/icons/paths/gear-white.svg';
+import gearBlack from 'assets/icons/paths/gear-black.svg';
+import gearWhite from 'assets/icons/paths/gear-white.svg';
 
 import { SfIconSearch } from '@storefront-ui/vue';
 import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
