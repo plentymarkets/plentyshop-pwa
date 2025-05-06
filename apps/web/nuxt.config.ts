@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       },
     },
     optimizeDeps: {
-      include: ['dotenv', 'validator'],
+      include: ['dotenv', 'validator', 'js-sha256'],
     },
   },
   css: ['~/assets/style.scss'],
