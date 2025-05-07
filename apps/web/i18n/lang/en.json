@@ -1100,7 +1100,16 @@
       "containerTextInfo": "Enter an address and select a filter for the pick-up location. Afterwards, click on one of the search results to select this pick-up location.",
       "postnumberRequired": "The post number is mandatory. Please enter your DHL post number.",
       "locationSearchUnifiedCall": "Location Search Unified API Call",
-      "locationSearchUnifiedCallError": "Location Search Unified API error"
+      "locationSearchUnifiedCallError": "Location Search Unified API error",
+      "days": {
+        "Monday": "Monday",
+        "Tuesday": "Tuesday",
+        "Wednesday": "Wednesday",
+        "Thursday": "Thursday",
+        "Friday": "Friday",
+        "Saturday": "Saturday",
+        "Sunday": "Sunday"
+      }
     }
   }
 }

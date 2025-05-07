@@ -1100,7 +1100,16 @@
       "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",
       "postnumberRequired": "Die Postnummer ist eine Pflichtangabe. Bitte geben Sie Ihre DHL Postnummer ein.",
       "locationSearchUnifiedCall": "Location Search Unified API Call",
-      "locationSearchUnifiedCallError": "Location Search Unified API error"
+      "locationSearchUnifiedCallError": "Location Search Unified API error",
+      "days": {
+        "Monday": "Montag",
+        "Tuesday": "Dienstag",
+        "Wednesday": "Mittwoch",
+        "Thursday": "Donnerstag",
+        "Friday": "Freitag",
+        "Saturday": "Samstag",
+        "Sunday": "Sonntag"
+      }
     }
   }
 }
