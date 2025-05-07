@@ -30,6 +30,8 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+- `vsf-locale` cookie got removed, we now send a header `locale` with every sdk request.
+
 ### 🩹 Fixed
 
 - Fixed an issue where the currency was not displayed correctly.
