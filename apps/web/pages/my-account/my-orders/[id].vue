@@ -34,7 +34,7 @@
           </li>
           <li>
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.paymentAmount') }}</p>
-            <span>{{ $n(orderGetters.getTotal(data.totals), 'currency') }}</span>
+            <span>{{ format(orderGetters.getTotal(data.totals)) }}</span>
           </li>
           <li class="mt-4">
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.status') }}</p>
@@ -160,6 +160,7 @@ import { paths } from '~/utils/paths';
 const route = useRoute();
 const localePath = useLocalePath();
 const { locale } = useI18n();
+const { format } = usePriceFormatter();
 const { isOpen } = useDisclosure({ initialValue: true });
 const { fetchOrder, data } = useCustomerOrder(route.params.id as string);
 
