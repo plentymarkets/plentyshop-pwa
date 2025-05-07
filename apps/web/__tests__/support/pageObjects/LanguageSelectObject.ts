@@ -21,7 +21,7 @@ export class LanguageSelectObject extends PageObject {
   }
 
   changeLanguage(option: string) {
-    this.checkOptions().selectOption(option)
+    this.checkOptions().selectOption(option);
 
     return this;
   }
