@@ -4,18 +4,6 @@ import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import { useDisclosure } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
 
-const setVsfLocale = (locale: Locale) => {
-  const { $i18n } = useNuxtApp();
-  const { setLocaleCookie } = $i18n;
-  const DAYS = 100;
-  const localeExpireDate = new Date();
-  localeExpireDate.setDate(new Date().getDate() + DAYS);
-  const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
-
-  setLocaleCookie(locale);
-  vsfLocale.value = locale;
-};
-
 export const useLocalization = createSharedComposable(() => {
   const { isOpen: isOpen, toggle } = useDisclosure();
   /**
