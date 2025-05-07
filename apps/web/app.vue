@@ -52,7 +52,6 @@ const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
-
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { disableActions } = useEditor();
 
@@ -63,17 +62,15 @@ const showConfigurationDrawer = config.showConfigurationDrawer;
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
-
-await setInitialDataSSR();
+await callOnce(async () => {
+  await setInitialDataSSR();
+})
 setVsfLocale(locale.value);
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
-
-onNuxtReady(async () => {
-  bodyClass.value = 'hydrated'; // Need this class for cypress testing
-});
 
 watch(
   () => locale.value,
