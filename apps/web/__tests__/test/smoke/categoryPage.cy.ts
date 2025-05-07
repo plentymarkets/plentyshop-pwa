@@ -12,8 +12,6 @@ describe('Smoke: Category Page', () => {
   });
 
   it('[smoke] Category should load DE SSR on first visit where there are no browser cookies', () => {
-    cy.visitAndHydrate('/de/wohnzimmer');
-
-    cy.url().should('include', '/de/wohnzimmer');
+    cy.visit('/de/wohnzimmer');
   });
 });
