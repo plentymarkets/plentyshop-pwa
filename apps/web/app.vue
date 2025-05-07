@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-
 const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
 const { getCategoryTree } = useCategoryTree();
@@ -65,7 +64,7 @@ onMounted(() => {
 });
 await callOnce(async () => {
   await setInitialDataSSR();
-})
+});
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
