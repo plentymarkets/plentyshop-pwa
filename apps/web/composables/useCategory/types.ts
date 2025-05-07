@@ -1,7 +1,7 @@
-import type { Category, CategoryParams } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryParams } from '@plentymarkets/shop-api';
 
 export interface UseCategoryState {
-  data: Category;
+  data: CategoryEntry;
   loading: boolean;
 }
 

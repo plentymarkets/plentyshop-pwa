@@ -14,6 +14,20 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     hasMoreItem: true,
   }));
 
+  const insertIntoParent = (newPage: CategoryEntry, nodes: CategoryEntry[]): boolean => {
+    for (const node of nodes) {
+      if (node.id === newPage.parentCategoryId) {
+        if (!node.children) node.children = [];
+        node.children.unshift(newPage);
+        return true;
+      }
+      if (node.children && insertIntoParent(newPage, node.children)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const addNewPageToTree = (newPage: CategoryEntry) => {
     if (state.value.contentItems.length === 0 && state.value.itemItems.length === 0) {
       return;
@@ -28,12 +42,35 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       item: state.value.itemItems,
     }[newPage.type];
 
-    targetArray?.unshift(newPage);
+    // If it has no parent, insert at root level
+    if (!newPage.parentCategoryId) {
+      targetArray?.unshift(newPage);
+      return;
+    }
+
+    insertIntoParent(newPage,targetArray ?? []);
+  };
+
+  const deleteFromTree = (id: number, nodes: CategoryEntry[]): CategoryEntry[] => {
+    return nodes
+      .map((node) => {
+        if (node.id === id) return null;
+
+        const newNode: CategoryEntry = { ...node };
+
+        if (node.children) {
+          const updatedChildren = deleteFromTree(id, node.children);
+          newNode.children = updatedChildren.length > 0 ? updatedChildren : undefined;
+        }
+
+        return newNode;
+      })
+      .filter(Boolean) as CategoryEntry[]; // Remove null entries
   };
 
   const deletePageFromTree = (id: number) => {
-    state.value.contentItems = state.value.contentItems.filter((item) => item.id !== id);
-    state.value.itemItems = state.value.itemItems.filter((item) => item.id !== id);
+    state.value.contentItems = deleteFromTree(id, state.value.contentItems);
+    state.value.itemItems = deleteFromTree(id, state.value.itemItems);
   };
 
   const createEmptyCategoryData = (): CategoryData => ({
@@ -84,11 +121,36 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));
   };
 
-  const usePaginatedChildren = (parentCategoryId: number) => {
+  const usePaginatedChildren = (category: CategoryEntry) => {
     const items = ref<CategoryEntry[]>([]);
     const loading = ref(false);
     const hasMore = ref(true);
     const page = ref(1);
+
+    const findCategoryById = (nodes: CategoryEntry[], id: number): CategoryEntry | undefined => {
+      for (const node of nodes) {
+        if (node.id === id) return node;
+        if (node.children) {
+          const found = findCategoryById(node.children, id);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
+
+    const addChildrenToParent = (parentId: number, children: CategoryEntry[]) => {
+      const parent = findCategoryById(state.value.contentItems, parentId);
+      if (!parent) {
+        console.error(`Parent category with ID ${parentId} not found.`);
+        return;
+      }
+
+      if (!parent.children) {
+        parent.children = [];
+      }
+
+      parent.children.push(...children);
+    };
 
     const fetchMore = async () => {
       if (loading.value || !hasMore.value) return;
@@ -97,7 +159,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       try {
         const { data } = await useAsyncData<{ data: CategoryData }>(() =>
           useSdk().plentysystems.getCategoriesSearch({
-            parentCategoryId,
+            parentCategoryId: category.id,
             itemsPerPage: 30,
             page: page.value,
             with: 'details,clients',
@@ -105,11 +167,14 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
         );
 
         const result: CategoryData = data?.value?.data ?? createEmptyCategoryData();
+
+        addChildrenToParent(category.id, result.entries);
+
         items.value.push(...result.entries);
         hasMore.value = !result.isLastPage;
         page.value++;
       } catch (error) {
-        console.error(`Error fetching children for category ${parentCategoryId}:`, error);
+        console.error(`Error fetching children for category ${category.id}:`, error);
       } finally {
         loading.value = false;
       }

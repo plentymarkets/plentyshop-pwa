@@ -56,7 +56,7 @@
             class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto"
             @scroll="(e) => handleScroll(e, 'content')"
           >
-            <PagesItem v-for="item in contentItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in contentItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -79,7 +79,7 @@
             class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto"
             @scroll="(e) => handleScroll(e, 'item')"
           >
-            <PagesItem v-for="item in itemItems" :key="item.details[0].nameUrl" :item="item" :parent-id="item.id" />
+            <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingItem" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>

@@ -1,4 +1,4 @@
-import type { Category, CategoryParams } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryParams } from '@plentymarkets/shop-api';
 import type { UseCategoryState, UseCategoryMethodsReturn } from './types';
 
 /**
@@ -11,7 +11,7 @@ import type { UseCategoryState, UseCategoryMethodsReturn } from './types';
  */
 export const useCategory: UseCategoryMethodsReturn = () => {
   const state = useState<UseCategoryState>('useCategory', () => ({
-    data: {} as Category,
+    data: {} as CategoryEntry,
     loading: false,
   }));
 

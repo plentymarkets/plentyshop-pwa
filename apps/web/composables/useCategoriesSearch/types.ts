@@ -25,7 +25,7 @@ export interface UseCategoriesSearchMethods {
   hasMoreContent: Readonly<Ref<boolean>>;
   hasMoreItem: Readonly<Ref<boolean>>;
   fetchCategories: (categoryType: 'item' | 'content') => Promise<void>;
-  usePaginatedChildren: (parentCategoryId: number) => PaginatedChildren;
+  usePaginatedChildren: (category: CategoryEntry) => PaginatedChildren;
   addNewPageToTree: (newPage: CategoryEntry) => void;
   deletePageFromTree: (id: number) => void;
 }

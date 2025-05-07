@@ -114,15 +114,7 @@ const createNewPage = async () => {
     parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
   });
 
-  /* TODO: Find a solution for interfaces
-   * Category is used for when adding a new category
-   * CategoryEntry is used when fetching the category
-   */
-  addNewPageToTree({
-    ...newCategory.value,
-    isLinkedToWebstore: false,
-    hasChildren: false,
-  });
+  addNewPageToTree(newCategory.value);
 };
 
 const closeModal = () => {
