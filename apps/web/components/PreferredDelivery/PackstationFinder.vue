@@ -92,11 +92,11 @@
       <div
         id="map"
         ref="mapElement"
-        class="border border-gray-300 bg-gray-300 rounded-md h-96 sm:h-auto min-h-80 flex-1 sm:basis-[70%] min-w-0 order-1 sm:order-2"
+        class="border border-gray-300 bg-gray-300 rounded-md h-96 sm:h-auto min-h-80 flex-1 sm:basis-[65%] min-w-0 order-1 sm:order-2"
       />
 
       <ul
-        class="space-y-4 h-[500px] max-h-[500px] overflow-y-auto flex-1 sm:basis-[30%] w-full order-2 sm:order-1 mt-3 sm:mt-0"
+        class="space-y-4 h-[500px] max-h-[500px] overflow-y-auto flex-1 sm:basis-[35%] w-full order-2 sm:order-1 mt-3 sm:mt-0"
       >
         <li
           v-for="(station, index) in data.packstations"
@@ -228,7 +228,6 @@ onNuxtReady(async () => await getShippingProfilesData());
 const postnumber = ref('');
 
 const selectPackstation = (station: Packstation) => {
-  // Handle logic here
   console.log('Selected station:', station.openingHours, 'Postnumber:', postnumber.value);
 };
 
