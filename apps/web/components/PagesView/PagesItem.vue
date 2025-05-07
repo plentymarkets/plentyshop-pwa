@@ -133,6 +133,6 @@ watch(
   (newChildren) => {
     childrenPagination.items.value = (newChildren ?? []).filter(Boolean);
   },
-  { immediate: true, deep: true }
+  { immediate: true, deep: true },
 );
 </script>

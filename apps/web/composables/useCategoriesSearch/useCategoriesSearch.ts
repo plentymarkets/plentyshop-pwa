@@ -48,7 +48,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       return;
     }
 
-    insertIntoParent(newPage,targetArray ?? []);
+    insertIntoParent(newPage, targetArray ?? []);
   };
 
   const deleteFromTree = (id: number, nodes: CategoryEntry[]): CategoryEntry[] => {
