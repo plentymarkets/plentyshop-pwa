@@ -59,5 +59,4 @@ await callOnce(async () => {
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
-
 </script>
