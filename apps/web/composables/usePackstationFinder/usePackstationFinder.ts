@@ -1,5 +1,4 @@
 import type {
-  Packstation,
   PreferredDeliveryLocationShippingProfilesData,
   ApiError,
   PackstationList,
@@ -74,31 +73,16 @@ export const usePackstationFinder = () => {
       state.value.data.packstations = data;
       state.value.loading = false;
     } catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error?.toString());
+      useHandleError(error as ApiError);
       state.value.loading = false;
     }
   };
-
-  const mapMarkers = computed(() => {
-    if (!state.value.data.packstations.length) {
-      return [];
-    }
-
-    return state.value.data.packstations.map((packstation: Packstation) => ({
-      position: {
-        lat: Number(packstation.place.geo.latitude),
-        lng: Number(packstation.place.geo.longitude),
-      },
-    }));
-  });
 
   return {
     getShippingProfilesData,
     hasPreferredDeliveryLocation,
     deliveryLocationAvailable,
     validationSchema,
-    mapMarkers,
     submitForm,
     ...toRefs(state.value),
   };

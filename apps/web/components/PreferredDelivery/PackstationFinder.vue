@@ -89,15 +89,28 @@
     </form>
 
     <div v-if="data.packstations.length" class="mt-4 flex flex-col sm:flex-row gap-1">
-      <div class="rounded-md h-96 sm:h-auto min-h-80 flex-1 sm:basis-[70%] min-w-0 order-1 sm:order-2">cristi</div>
-      >
+      <div
+        id="map"
+        ref="mapElement"
+        class="border border-gray-300 bg-gray-300 rounded-md h-96 sm:h-auto min-h-80 flex-1 sm:basis-[70%] min-w-0 order-1 sm:order-2"
+      />
 
       <ul class="space-y-4 h-96 max-h-96 overflow-y-auto flex-1 sm:basis-[30%] w-full order-2 sm:order-1 mt-3 sm:mt-0">
-        <li v-for="(station, index) in data.packstations" :key="index" class="mr-0 sm:mr-3">
+        <li
+          v-for="(station, index) in data.packstations"
+          :key="index"
+          :ref="(el) => (packstationRefs[index] = el as HTMLElement | null)"
+          class="mr-0 sm:mr-3"
+        >
           <button
             type="button"
-            class="w-full text-left p-3 rounded-md border border-gray-300 hover:border-[rgb(255,204,0)] hover:bg-[rgb(255,204,0)] active:bg-[rgb(255,204,0)] transition-colors duration-150 focus:outline-none"
-            @click="handleStationSelection(station)"
+            :class="[
+              'w-full text-left p-3 rounded-md border transition-colors duration-150 focus:outline-none',
+              index === currentPackstationIndex
+                ? 'border-[rgb(255,204,0)] bg-[rgb(255,204,0)]'
+                : 'border-gray-300 hover:border-[rgb(255,204,0)] hover:bg-[rgb(255,204,0)] active:bg-[rgb(255,204,0)]',
+            ]"
+            @click="showPackstationDetails(index, realMarkers[index])"
           >
             <div class="flex flex-col gap-1">
               <div class="flex justify-between items-center">
@@ -134,36 +147,29 @@
 <script setup lang="ts">
 import { ErrorMessage, useForm } from 'vee-validate';
 import { SfCheckbox, SfIconLocationOn, SfInput } from '@storefront-ui/vue';
-import type { Packstation } from '@plentymarkets/shop-api';
 
 const { loading, data, getShippingProfilesData, deliveryLocationAvailable, validationSchema, submitForm } =
   usePackstationFinder();
+
+const { mapElement, packstationRefs, currentPackstationIndex, showPackstationDetails, realMarkers } =
+  usePackstationMap();
+
 const { handleSubmit, errors, validate, defineField } = useForm({ validationSchema: validationSchema });
 
 const [street, streetAttributes] = defineField('searchParams.street');
 const [zipcode, zipcodeAttributes] = defineField('searchParams.zipcode');
 const [city, cityAttributes] = defineField('searchParams.city');
 
-watch([street, zipcode, city], () => {
-  data.value.searchParams.street = street.value as string;
-  data.value.searchParams.zipcode = zipcode.value as string;
-  data.value.searchParams.city = city.value as string;
-});
+watch(street, (updatedStreet) => (data.value.searchParams.street = updatedStreet || ''));
+watch(zipcode, (updatedZipcode) => (data.value.searchParams.zipcode = updatedZipcode || ''));
+watch(city, (updatedCity) => (data.value.searchParams.city = updatedCity || ''));
 
 const validateAndSubmitForm = async () => {
   const formData = await validate();
   if (formData.valid) handleSubmit(() => submitForm())();
 };
 
-const handleStationSelection = (station: Packstation) => {
-  // console.log('Selected station:', station);
-};
-
-const gmapsApiKey = computed(() => data.value.preferredProfilesData.gmapsApiKey);
-
-onNuxtReady(async () => {
-  await getShippingProfilesData();
-});
+onNuxtReady(async () => await getShippingProfilesData());
 </script>
 
 <style scoped>
