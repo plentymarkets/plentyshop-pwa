@@ -104,11 +104,10 @@
                           )
                         }}
                         {{
-                          n(
+                          format(
                             productPropertyGetters.getOrderPropertySurcharge(
                               orderGetters.getOrderAgainOrderProperty(item, property),
                             ),
-                            'currency',
                           )
                         }})</span
                       >
@@ -250,7 +249,8 @@ const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const { showNetPrices } = useCustomer();
 
 const localePath = useLocalePath();

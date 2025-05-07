@@ -44,7 +44,6 @@ const main = async () => {
     const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
     const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);
     assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
-    assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
   } else {
     BuildLoggerInstance.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
   }
