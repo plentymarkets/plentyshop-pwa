@@ -2,7 +2,7 @@
   <li class="border-b">
     <div
       class="relative"
-      :class="['px-4 py-2  group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
+      :class="['px-4 py-2 group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
       @click="toggle"
     >
       <span v-if="item.hasChildren">
@@ -104,7 +104,7 @@ const { setSettingsCategory } = useSiteConfiguration();
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
 const open = ref(false);
-const childrenPagination = usePaginatedChildren(item.id);
+const childrenPagination = usePaginatedChildren(item);
 
 const toggle = async () => {
   open.value = !open.value;
@@ -127,4 +127,12 @@ const openSettingsMenu = (id: number) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-menu');
 };
+
+watch(
+  () => item.children,
+  (newChildren) => {
+    childrenPagination.items.value = (newChildren ?? []).filter(Boolean);
+  },
+  { immediate: true, deep: true }
+);
 </script>
