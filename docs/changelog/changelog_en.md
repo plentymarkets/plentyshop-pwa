@@ -31,6 +31,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 ### 👷 Changed
 
 - Reduced JavaScript chunk size for better performance. This includes extracting chunks for various libraries, as well as lazy-loading translations and editor components.
+- `vsf-locale` cookie got removed, we now send a header `locale` with every sdk request.
 
 ### 🩹 Fixed
 
