@@ -38,8 +38,8 @@ export default defineNuxtConfig({
             vue: ['vee-validate', 'vue-i18n', 'vue-router'],
           },
         },
-      }
-    }
+      },
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
