@@ -11,10 +11,6 @@ const productListPage = new ProductListPageObject();
 
 describe('Smoke: PayPal credit card order', () => {
   beforeEach(() => {
-    cy.setCookie(
-      'consent-cookie',
-      '{"CookieBar.essentials.label":{"CookieBar.essentials.cookies.plentyId.name":true,"CookieBar.essentials.cookies.vsfLocale.name":true,"CookieBar.essentials.cookies.consentCookie.name":true,"CookieBar.essentials.cookies.cloudflareTurnstile.name":true},"CookieBar.externalMedia.label":{},"CookieBar.functional.label":{"CookieBar.essentials.cookies.payPal.name":true},"CookieBar.marketing.label":{}}',
-    );
   });
 
   it('[smoke] Check if status on order gets updated when paying with paypal credit card', () => {
