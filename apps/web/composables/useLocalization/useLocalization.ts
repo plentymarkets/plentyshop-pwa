@@ -83,18 +83,6 @@ export const useLocalization = () => {
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
-  const setVsfLocale = (locale: Locale) => {
-    const { $i18n } = useNuxtApp();
-    const { setLocaleCookie } = $i18n;
-    const DAYS = 100;
-    const localeExpireDate = new Date();
-    localeExpireDate.setDate(new Date().getDate() + DAYS);
-    const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
-
-    setLocaleCookie(locale);
-    vsfLocale.value = locale;
-  };
-
   /**
    * @description Function for switching app locale.
    * @param language
@@ -107,7 +95,6 @@ export const useLocalization = () => {
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 
-    setVsfLocale(language);
     if (hideMenu) {
       toggle();
     }
@@ -127,6 +114,5 @@ export const useLocalization = () => {
     isOpen,
     toggle,
     switchLocale,
-    setVsfLocale,
   };
 };

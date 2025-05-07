@@ -42,13 +42,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '#i18n';
-
 const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
 const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR } = useInitialSetup();
-const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
@@ -66,16 +63,14 @@ onMounted(() => {
 });
 await callOnce(async () => {
   await setInitialDataSSR();
-})
-setVsfLocale(locale.value);
+});
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
 watch(
   () => locale.value,
-  async (locale: Locale) => {
-    setVsfLocale(locale);
+  async () => {
     await getCategoryTree();
   },
 );

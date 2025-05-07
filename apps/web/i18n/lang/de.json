@@ -34,11 +34,6 @@
           "name": "plentyID",
           "provider": "PlentyONE GmbH",
           "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
-        },
-        "vsfLocale": {
-          "name": "vsf-locale",
-          "provider": "PlentyONE GmbH",
-          "status": "Speichert die Anzeigesprache."
         }
       },
       "description": "Essenzielle Cookies ermöglichen grundlegende Funktionen und sind für die einwandfreie Funktion der Website erforderlich.",

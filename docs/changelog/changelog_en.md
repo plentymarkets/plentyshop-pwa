@@ -30,14 +30,18 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+- `vsf-locale` cookie got removed, we now send a header `locale` with every sdk request.
+
 ### 🩹 Fixed
 
 - Fixed an issue where the currency was not displayed correctly.
+- Fixed a z-index issue in the checkout.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
 - (dev) Fix styling of editor actions on content pages.
 - (dev) Fix notification and modal closing of delete category
+- (dev) Fix Page Seo title tooltip
 
 # v1.15.0 (2025-05-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.15.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

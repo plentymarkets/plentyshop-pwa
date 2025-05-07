@@ -29,14 +29,6 @@ export default {
           accepted: true,
         },
         {
-          name: 'CookieBar.essentials.cookies.vsfLocale.name',
-          Provider: 'CookieBar.essentials.cookies.vsfLocale.provider',
-          Status: 'CookieBar.essentials.cookies.vsfLocale.status',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: 'Session',
-          accepted: true,
-        },
-        {
           name: 'CookieBar.essentials.cookies.consentCookie.name',
           Provider: 'CookieBar.essentials.cookies.consentCookie.provider',
           Status: 'CookieBar.essentials.cookies.consentCookie.status',

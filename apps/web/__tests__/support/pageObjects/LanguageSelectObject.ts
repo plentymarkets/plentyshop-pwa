@@ -14,12 +14,6 @@ export class LanguageSelectObject extends PageObject {
     return this;
   }
 
-  checkLanguageSelected(locale: string) {
-    cy.getCookie('vsf-locale').should('have.property', 'value', locale);
-
-    return this;
-  }
-
   selectOption(option: string) {
     cy.intercept('/plentysystems/getCart').as('getCart');
     cy.getByTestId(`languageOption-${option}`).first().click().wait('@getCart');
@@ -27,7 +21,7 @@ export class LanguageSelectObject extends PageObject {
   }
 
   changeLanguage(option: string) {
-    this.checkOptions().selectOption(option).checkLanguageSelected(option);
+    this.checkOptions().selectOption(option);
 
     return this;
   }

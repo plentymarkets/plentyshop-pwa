@@ -193,7 +193,8 @@ const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
 const robotNames = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 
-const titleTooltip = 'Title displayed in search results of search engines.';
+const titleTooltip =
+  'Title displayed in search results of search engines. Enter text here to add a prefix before the shop name in the page title (shown as “your text / shop name”).';
 const descTooltip =
   'Short description of the page shown in search results of search engines. Should be engaging and informative.';
 const robotsTooltip =
