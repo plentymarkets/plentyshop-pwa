@@ -59,4 +59,10 @@ await callOnce(async () => {
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
+
+onMounted(() => {
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
+});
 </script>
