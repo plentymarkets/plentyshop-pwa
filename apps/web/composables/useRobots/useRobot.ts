@@ -65,6 +65,10 @@ export const useRobots: UseRobotReturn = () => {
       case 'SearchResult':
         content = robotGetters.getRobotsSearchResult(state.value.data);
         break;
+
+      case 'DeclarationOfAccessibility':
+        content = robotGetters.getRobotsAccessibilityDeclarationResult(state.value.data);
+        break;
     }
 
     useHead({

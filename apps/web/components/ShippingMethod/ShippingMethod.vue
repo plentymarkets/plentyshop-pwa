@@ -71,7 +71,8 @@ const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const emit = defineEmits<CheckoutShippingEmits>();
 
 const { data: cart } = useCart();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const { selectedMethod } = useCartShippingMethods();
 const { shippingMethods } = useCheckoutPagePaymentAndShipping();
 const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
@@ -94,6 +95,6 @@ const updateShippingMethod = (shippingId: string) => {
 };
 
 const getShippingAmount = (amount: string) => {
-  return amount === '0' ? t('shippingMethod.free') : n(Number(amount), 'currency');
+  return amount === '0' ? t('shippingMethod.free') : format(Number(amount));
 };
 </script>

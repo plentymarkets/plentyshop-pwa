@@ -78,7 +78,7 @@
           <p class="font-medium text-base">{{ t('quickCheckout.cartContains', cartItemsCount) }}</p>
           <div class="grid grid-cols-2">
             <p class="text-base">{{ t('quickCheckout.subTotal') }}:</p>
-            <p data-testid="subtotal" class="font-medium text-right">{{ n(totals.subTotal, 'currency') }}</p>
+            <p data-testid="subtotal" class="font-medium text-right">{{ format(totals.subTotal) }}</p>
           </div>
         </div>
 
@@ -118,7 +118,8 @@ import { paths } from '~/utils/paths';
 
 defineProps<QuickCheckoutProps>();
 
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 
 const { showNetPrices } = useCustomer();
 

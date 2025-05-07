@@ -16,7 +16,7 @@
         >
           <p class="flex flex-col gap-2 grow pr-2">{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           <p class="flex flex-col gap-2 text-right">
-            {{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}
+            {{ format(cartGetters.getBasketItemOrderParamPrice(property)) }}
           </p>
         </div>
 
@@ -33,15 +33,15 @@
           </p>
         </div>
         <div class="flex flex-col gap-2 text-right">
-          <p data-testid="subtotal" class="font-medium">{{ n(totals.subTotal, 'currency') }}</p>
+          <p data-testid="subtotal" class="font-medium">{{ format(totals.subTotal) }}</p>
           <p data-testid="shipping" class="font-medium">
             {{ getShippingAmount(cartGetters.getShippingPrice(props.cart)) }}
           </p>
           <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium" data-testid="coupon-value">
-            {{ n(cartGetters.getCouponDiscount(props.cart), 'currency') }}
+            {{ format(cartGetters.getCouponDiscount(props.cart)) }}
           </p>
           <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat">
-            {{ n(cartGetters.getTotalVatAmount(vat), 'currency') }}
+            {{ format(cartGetters.getTotalVatAmount(vat)) }}
           </p>
         </div>
       </div>
@@ -55,7 +55,7 @@
         >
           <p class="flex flex-col gap-2 grow pr-2">{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           <p class="flex flex-col gap-2 text-right">
-            {{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}
+            {{ format(cartGetters.getBasketItemOrderParamPrice(property)) }}
           </p>
         </div>
         <UiDivider class="mt-4 w-auto" />
@@ -63,7 +63,7 @@
 
       <div class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4">
         <h2 data-testid="total-label">{{ t('total') }}</h2>
-        <h2 data-testid="total">{{ n(totals.total, 'currency') }}</h2>
+        <h2 data-testid="total">{{ format(totals.total) }}</h2>
       </div>
       <UiDivider class="w-auto mb-4" />
       <slot />
@@ -76,7 +76,8 @@ import { cartGetters } from '@plentymarkets/shop-api';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(props.cart);
@@ -88,7 +89,7 @@ const totals = computed(() => {
 });
 
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shippingMethod.free') : n(Number(amount), 'currency');
+  return amount === 0 ? t('shippingMethod.free') : format(Number(amount));
 };
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);

@@ -111,13 +111,12 @@ export const useLocalization = () => {
     if (hideMenu) {
       toggle();
     }
-    await getCart().then(
-      async () =>
-        await navigateTo({
-          path: switchLocalePath(language),
-          query: route.query,
-        }),
-    );
+
+    await navigateTo({
+      path: switchLocalePath(language),
+      query: route.query,
+    });
+    await getCart();
   };
 
   return {
