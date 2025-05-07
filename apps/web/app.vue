@@ -42,13 +42,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '#i18n';
 
 const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
 const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR } = useInitialSetup();
-const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
@@ -63,22 +61,18 @@ const showConfigurationDrawer = config.showConfigurationDrawer;
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
-
-await setInitialDataSSR();
-setVsfLocale(locale.value);
+await callOnce(async () => {
+  await setInitialDataSSR();
+})
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
-onNuxtReady(async () => {
-  bodyClass.value = 'hydrated'; // Need this class for cypress testing
-});
-
 watch(
   () => locale.value,
-  async (locale: Locale) => {
-    setVsfLocale(locale);
+  async () => {
     await getCategoryTree();
   },
 );

@@ -106,7 +106,6 @@ export const useLocalization = createSharedComposable(() => {
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 
-    setVsfLocale(language);
     if (hideMenu) {
       toggle();
     }
@@ -126,6 +125,5 @@ export const useLocalization = createSharedComposable(() => {
     isOpen,
     toggle,
     switchLocale,
-    setVsfLocale,
   };
 });
