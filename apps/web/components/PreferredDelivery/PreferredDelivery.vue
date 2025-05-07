@@ -14,11 +14,11 @@
         loading="lazy"
         class="block rounded-lg bg-[rgb(255,204,0)] p-3"
       />
-      <h3 class="font-bold mt-4">{{ $t('PreferredDelivery.general.wunschpaketTitle') }}</h3>
+      <h3 class="font-bold mt-4">{{ t('PreferredDelivery.general.wunschpaketTitle') }}</h3>
     </header>
 
-    <div class="mt-2">{{ $t('PreferredDelivery.general.wunschpaketIntroduction') }}</div>
-    <div>{{ $t('PreferredDelivery.general.wunschpaketOptions') }}</div>
+    <div class="mt-2">{{ t('PreferredDelivery.general.wunschpaketIntroduction') }}</div>
+    <div>{{ t('PreferredDelivery.general.wunschpaketOptions') }}</div>
 
     <form novalidate @submit.prevent="validateAndSubmitForm">
       <template v-if="data.day.enabled">
@@ -29,9 +29,9 @@
               class="inline-flex items-center flex-row gap-2 select-none font-semibold cursor-pointer"
             >
               <SfCheckbox id="wunschtag-title" v-model="data.day.checked" @change="dayCheckboxChange" />
-              {{ $t('PreferredDelivery.general.wunschtagTitle') }}
+              {{ t('PreferredDelivery.general.wunschtagTitle') }}
             </label>
-            <SfTooltip :label="$t('PreferredDelivery.general.wunschtagTooltip')" :show-arrow="true" class="ml-1 z-10">
+            <SfTooltip :label="t('PreferredDelivery.general.wunschtagTooltip')" :show-arrow="true" class="ml-1 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -39,7 +39,7 @@
 
         <div class="my-2">
           {{
-            $t('PreferredDelivery.general.wunschpaketAdditionalCharge', {
+            t('PreferredDelivery.general.wunschpaketAdditionalCharge', {
               additionalCharge: data.additionalCharge,
               currency: currency,
             })
@@ -72,22 +72,25 @@
               class="inline-flex items-center flex-row gap-2 select-none font-semibold cursor-pointer"
             >
               <SfCheckbox id="wunschort-title" v-model="data.location.checked" @change="toggleOption('location')" />
-              {{ $t('PreferredDelivery.general.wunschortTitle') }}
+              {{ t('PreferredDelivery.general.wunschortTitle') }}
             </label>
-            <SfTooltip :label="$t('PreferredDelivery.general.wunschortTooltip')" :show-arrow="true" class="ml-1 z-10">
+            <SfTooltip :label="t('PreferredDelivery.general.wunschortTooltip')" :show-arrow="true" class="ml-1 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
         </div>
 
+        <label for="dhl-drop-off-location" class="mt-4 block text-sm font-medium pb-0.5">{{
+          t('PreferredDelivery.general.preferredDropOffLocation')
+        }}</label>
         <SfInput
+          id="dhl-drop-off-location"
           v-model="locationValue"
           type="text"
           name="location"
           v-bind="locationValueAttributes"
           :invalid="Boolean(errors['location.value'])"
-          :placeholder="$t('PreferredDelivery.general.wunschortExample')"
-          wrapper-class="mt-4"
+          :placeholder="t('PreferredDelivery.general.wunschortExample')"
         />
         <ErrorMessage as="span" name="location.value" class="flex text-negative-700 text-sm mt-2" />
       </template>
@@ -104,10 +107,10 @@
                 v-model="data.neighbour.checked"
                 @change="toggleOption('neighbour')"
               />
-              {{ $t('PreferredDelivery.general.wunschnachbarTitle') }}
+              {{ t('PreferredDelivery.general.wunschnachbarTitle') }}
             </label>
             <SfTooltip
-              :label="$t('PreferredDelivery.general.wunschnachbarTooltip')"
+              :label="t('PreferredDelivery.general.wunschnachbarTooltip')"
               :show-arrow="true"
               class="ml-1 z-10"
             >
@@ -116,31 +119,37 @@
           </div>
         </div>
 
+        <label for="dhl-neighbour-name" class="mt-4 block text-sm font-medium pb-0.5">{{
+          t('PreferredDelivery.general.preferredNeighbourFullName')
+        }}</label>
         <SfInput
+          id="dhl-neighbour-name"
           v-model="neighbourName"
           type="text"
           name="neighbourName"
           v-bind="neighbourNameAttributes"
           :invalid="Boolean(errors['neighbour.name'])"
-          :placeholder="$t('PreferredDelivery.general.wunschnachbarExampleName')"
-          wrapper-class="mt-4"
+          :placeholder="t('PreferredDelivery.general.wunschnachbarExampleName')"
         />
         <ErrorMessage as="span" name="neighbour.name" class="flex text-negative-700 text-sm mt-2" />
 
+        <label for="dhl-neighbour-address" class="mt-4 block text-sm font-medium pb-0.5">{{
+          t('PreferredDelivery.general.preferredNeighbourAddress')
+        }}</label>
         <SfInput
+          id="dhl-neighbour-address"
           v-model="neighbourAddress"
           type="text"
           name="neighbourAddress"
           v-bind="neighbourAddressAttributes"
           :invalid="Boolean(errors['neighbour.address'])"
-          :placeholder="$t('PreferredDelivery.general.wunschnachbarExampleAddress')"
-          wrapper-class="mt-4"
+          :placeholder="t('PreferredDelivery.general.wunschnachbarExampleAddress')"
         />
         <ErrorMessage as="span" name="neighbour.address" class="flex text-negative-700 text-sm mt-2" />
       </template>
 
       <UiButton type="submit" variant="secondary" class="mt-4 w-fit">
-        {{ $t('PreferredDelivery.general.apply') }}
+        {{ t('PreferredDelivery.general.apply') }}
       </UiButton>
     </form>
   </div>
@@ -169,6 +178,7 @@ const {
 } = usePreferredDelivery();
 const { defineField, errors, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
+const { t } = useI18n();
 
 onNuxtReady(() => getPreferredProfiles());
 
