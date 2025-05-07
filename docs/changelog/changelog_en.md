@@ -29,6 +29,8 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+- The contact form requires a turnstile validation otherwise the form will not show up.
+
 ### 🩹 Fixed
 
 - Fixed an issue where the currency was not displayed correctly.
@@ -54,7 +56,6 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - Order confirmation soft login shows a warning instead of an error message now.
 - Moved the "Login instead" button below the email input field in the contact information section during checkout.
 - Changed the button icon and label for exiting the editor.
-- The contact form requires a turnstile validation otherwise the form will not show up.
 
 ### 🩹 Fixed
 
