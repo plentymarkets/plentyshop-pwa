@@ -96,7 +96,6 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
-  closeDrawer();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
 

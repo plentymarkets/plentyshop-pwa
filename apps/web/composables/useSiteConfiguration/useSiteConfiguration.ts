@@ -10,6 +10,7 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import { metaDefaults, openGraph, favicon } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
@@ -33,6 +34,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
+    headerLogo: useRuntimeConfig().public.headerLogo,
+    favicon: structuredClone(favicon).icon,
+    ogTitle: structuredClone(openGraph).title,
+    ogImg: structuredClone(openGraph).image,
+    useAvif: useRuntimeConfig().public.useAvif,
+    useWebp: useRuntimeConfig().public.useWebp,
+    seoSettings: metaDefaults,
     drawerView: null,
     blockType: '',
     blockUuid: '',
@@ -43,6 +51,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      seoSettings: structuredClone(metaDefaults),
+      headerLogo: useRuntimeConfig().public.headerLogo,
+      favicon: structuredClone(favicon).icon,
+      ogTitle: structuredClone(openGraph).title,
+      ogImg: structuredClone(openGraph).image,
+      useAvif: useRuntimeConfig().public.useAvif,
+      useWebp: useRuntimeConfig().public.useWebp,
     },
   }));
 
@@ -133,7 +148,15 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
-      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
+      state.value.headerLogo !== state.value.initialData.headerLogo ||
+      state.value.favicon !== state.value.initialData.favicon ||
+      state.value.ogTitle !== state.value.initialData.ogTitle ||
+      state.value.ogImg !== state.value.initialData.ogImg ||
+      state.value.useAvif !== state.value.initialData.useAvif ||
+      state.value.useWebp !== state.value.initialData.useWebp ||
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
     );
   });
 
@@ -157,7 +180,48 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'secondaryColor',
         value: state.value.secondaryColor,
       },
+      {
+        key: 'headerLogo',
+        value: state.value.headerLogo,
+      },
+      {
+        key: 'favicon',
+        value: state.value.favicon,
+      },
+      {
+        key: 'ogTitle',
+        value: state.value.ogTitle,
+      },
+      {
+        key: 'ogImg',
+        value: state.value.ogImg,
+      },
+      {
+        key: 'useAvif',
+        value: state.value.useAvif ? 'true' : 'false',
+      },
+      {
+        key: 'useWebp',
+        value: state.value.useWebp ? 'true' : 'false',
+      },
+      {
+        key: 'metaTitle',
+        value: state.value.seoSettings.title,
+      },
+      {
+        key: 'metaDescription',
+        value: state.value.seoSettings.description,
+      },
+      {
+        key: 'metaKeywords',
+        value: state.value.seoSettings.keywords,
+      },
+      {
+        key: 'robots',
+        value: state.value.seoSettings.robots,
+      },
     ];
+
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
     if (error.value) {
@@ -170,6 +234,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      headerLogo: state.value.headerLogo,
+      favicon: state.value.favicon,
+      ogTitle: state.value.ogTitle,
+      ogImg: state.value.ogImg,
+      useAvif: state.value.useAvif,
+      useWebp: state.value.useWebp,
+      seoSettings: state.value.seoSettings,
     };
 
     state.value.loading = false;
