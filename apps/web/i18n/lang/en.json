@@ -34,11 +34,6 @@
           "name": "plentyID",
           "provider": "PlentyONE GmbH",
           "status": "Stores information about the current session, for example if the user is logged in."
-        },
-        "vsfLocale": {
-          "name": "vsf-locale",
-          "provider": "PlentyONE GmbH",
-          "status": "Stores the display language."
         }
       },
       "description": "Essential cookies enable basic functions and are necessary for the proper functioning of the website.",
