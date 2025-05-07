@@ -6,6 +6,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
+- Added robots for declaration of accessibility page
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -33,6 +34,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 - Fixed an issue where the currency was not displayed correctly.
 - Fixed missing form labels for DHL preferred delivery services.
+- Fixed a z-index issue in the checkout.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.

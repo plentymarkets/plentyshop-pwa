@@ -31,7 +31,7 @@
               <SfCheckbox id="wunschtag-title" v-model="data.day.checked" @change="dayCheckboxChange" />
               {{ t('PreferredDelivery.general.wunschtagTitle') }}
             </label>
-            <SfTooltip :label="t('PreferredDelivery.general.wunschtagTooltip')" :show-arrow="true" class="ml-1 z-10">
+            <SfTooltip :label="$t('PreferredDelivery.general.wunschtagTooltip')" :show-arrow="true" class="ml-1">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="grid gap-1 grid-cols-3 md:grid-cols-6 mt-1">
-          <label v-for="(day, index) in data.preferredDays" :key="`preferred-day-${index}`" class="relative">
+          <label v-for="(day, index) in data.preferredDays" :key="`preferred-day-${index}`">
             <input
               type="radio"
               class="peer sr-only"
@@ -74,7 +74,7 @@
               <SfCheckbox id="wunschort-title" v-model="data.location.checked" @change="toggleOption('location')" />
               {{ t('PreferredDelivery.general.wunschortTitle') }}
             </label>
-            <SfTooltip :label="t('PreferredDelivery.general.wunschortTooltip')" :show-arrow="true" class="ml-1 z-10">
+            <SfTooltip :label="$t('PreferredDelivery.general.wunschortTooltip')" :show-arrow="true" class="ml-1">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -109,11 +109,7 @@
               />
               {{ t('PreferredDelivery.general.wunschnachbarTitle') }}
             </label>
-            <SfTooltip
-              :label="t('PreferredDelivery.general.wunschnachbarTooltip')"
-              :show-arrow="true"
-              class="ml-1 z-10"
-            >
+            <SfTooltip :label="$t('PreferredDelivery.general.wunschnachbarTooltip')" :show-arrow="true" class="ml-1">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
