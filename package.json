@@ -1,6 +1,6 @@
 {
   "name": "@plentymarkets/plentyshop-pwa",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "private": true,
   "license": "BSD-3-Clause",
   "workspaces": [
@@ -33,10 +33,10 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.4.0",
+    "@plentymarkets/shop-core": "^1.4.1",
     "@plentymarkets/shop-module-mollie": "^1.0.5",
-    "@plentymarkets/shop-api": "^0.105.0",
-    "@plentymarkets/shop-module-gtag": "^1.1.1",
+    "@plentymarkets/shop-api": "^0.105.1",
+    "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",

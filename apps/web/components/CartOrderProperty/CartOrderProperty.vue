@@ -4,7 +4,7 @@
       {{ basketItemOrderParam.name }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(property).surchargeType">
         ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(property).surchargeType) }}
-        {{ $n(productPropertyGetters.getOrderPropertySurcharge(property), 'currency') }})</span
+        {{ format(productPropertyGetters.getOrderPropertySurcharge(property)) }})</span
       >
     </span>
     <span
@@ -24,6 +24,7 @@ import type { CartOrderPropertyProps } from '~/components/CartOrderProperty/type
 import { cartGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
+const { format } = usePriceFormatter();
 const { downloadFile } = useProductOrderProperties();
 const loading = ref(false);
 const props = defineProps<CartOrderPropertyProps>();
