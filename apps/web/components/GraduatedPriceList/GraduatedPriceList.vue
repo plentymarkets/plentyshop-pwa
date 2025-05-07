@@ -17,7 +17,7 @@
         class="border-b border-neutral-200"
         :class="{ 'bg-gray-200': list.price === selectedList?.price.value }"
       >
-        <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap h-[38px]">{{ $n(list.price, 'currency') }}</td>
+        <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap h-[38px]">{{ format(list.price) }}</td>
         <td class="lg:p-4 p-2 lg:whitespace-nowrap h-[38px]">{{ list.quantity }}</td>
         <td class="lg:p-4 p-2 flex h-[38px]">
           <div>{{ list.discount }} %</div>
@@ -37,6 +37,7 @@ import type { GraduatedPriceListProps } from '~/components/GraduatedPriceList/ty
 import { SfIconCheck } from '@storefront-ui/vue';
 
 const { product, count = 0 } = defineProps<GraduatedPriceListProps>();
+const { format } = usePriceFormatter();
 const graduatedList = computed(() => productGetters.getGraduatedList(product));
 const selectedList = computed(() => productGetters.getGraduatedPriceByQuantity(product, count));
 </script>
