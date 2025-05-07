@@ -30,6 +30,7 @@ export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: getLocales(),
   defaultLocale: getDefaultLocale(),
   langDir: 'lang',
+  lazy: true,
   strategy: 'prefix_and_default',
   vueI18n: '~/configuration/vueI18n.config.ts',
   detectBrowserLanguage: false,
