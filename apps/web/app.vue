@@ -59,7 +59,7 @@ const showConfigurationDrawer = config.showConfigurationDrawer;
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+  // isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 await callOnce(async () => {
