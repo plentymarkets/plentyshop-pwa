@@ -42,9 +42,17 @@ import { flagImports } from './flags';
 const { isOpen } = useLocalization();
 const viewport = useViewport();
 const { localeCodes, locale: currentLocale } = useI18n();
+const { getCategoryTree } = useCategoryTree();
 const flagList: { [key: string]: string } = {};
 
 localeCodes.value.forEach((localeCode) => {
   if (flagImports[localeCode]) flagList[localeCode] = flagImports[localeCode];
 });
+
+watch(
+  () => currentLocale.value,
+  async () => {
+    await getCategoryTree();
+  },
+);
 </script>

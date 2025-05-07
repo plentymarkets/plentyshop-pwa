@@ -44,24 +44,15 @@
 <script setup lang="ts">
 const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
-const { getCategoryTree } = useCategoryTree();
-const { setInitialDataSSR } = useInitialSetup();
 const route = useRoute();
-const { locale } = useI18n();
-const { setStaticPageMeta } = useCanonical();
-
-const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { disableActions } = useEditor();
-
+const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
+const { setStaticPageMeta } = useCanonical();
+const { setInitialDataSSR } = useInitialSetup();
 
-onMounted(() => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-  bodyClass.value = 'hydrated'; // Need this class for cypress testing
-});
 await callOnce(async () => {
   await setInitialDataSSR();
 });
@@ -69,10 +60,10 @@ await callOnce(async () => {
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
-watch(
-  () => locale.value,
-  async () => {
-    await getCategoryTree();
-  },
-);
+onMounted(() => {
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
+});
+
 </script>
