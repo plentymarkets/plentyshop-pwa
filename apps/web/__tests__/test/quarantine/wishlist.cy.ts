@@ -19,7 +19,6 @@ beforeEach(() => {
   cy.intercept('/plentysystems/deleteWishlistItem').as('deleteWishlistItem');
 
   cy.clearCookies();
-  cy.setCookie('vsf-locale', 'en');
   cy.setCookie(
     'consent-cookie',
     '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
