@@ -30,6 +30,8 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+- Reduced JavaScript chunk size for better performance. This includes extracting chunks for various libraries, as well as lazy-loading translations and editor components.
+
 ### 🩹 Fixed
 
 - Fixed an issue where the currency was not displayed correctly.
