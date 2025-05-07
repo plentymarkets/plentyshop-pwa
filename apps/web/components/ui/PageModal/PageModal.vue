@@ -48,14 +48,18 @@
         <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
         <Multiselect
           v-model="parentPage"
-          data-testid="new-parent-page"
-          :options="categories"
+          :options="allCategories"
           :custom-label="getLabel"
-          placeholder="Select a parent page"
-          :allow-empty="false"
+          :loading="loadingContent || loadingItem"
+          :searchable="true"
+          :internal-search="false"
           class="cursor-pointer"
           select-label=""
           deselect-label="Selected"
+          label="details[0].name"
+          placeholder="Select a parent page"
+          track-by="id"
+          @search-change="handleSearch"
         />
       </div>
 
@@ -86,11 +90,8 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
-
-const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { data: categoryTree } = useCategoryTree();
-const { addCategory } = useCategory();
+import { useCategory } from '@/composables/useCategory';
+import { useSiteConfiguration } from '@/composables/useSiteConfiguration';
 
 const validationSchema = toTypedSchema(
   object({
@@ -99,18 +100,53 @@ const validationSchema = toTypedSchema(
 );
 
 const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
-  validationSchema: validationSchema,
+  validationSchema,
 });
 
-const createNewPage = async () => {
-  if (!meta.value.valid) {
-    return;
-  }
+const [pageName, pageNameAttributes] = defineField('pageName');
+const pageTypes = ref([
+  { label: 'Content', value: 'content' },
+  { label: 'Item category', value: 'item' },
+]);
+const pageType = ref(pageTypes.value[0]);
+const parentPage = ref();
+const lastQuery = ref('');
 
-  addCategory({
-    name: pageName?.value || '',
-    type: pageType.value.value,
-    parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
+const { pageModalOpen, togglePageModal } = useSiteConfiguration();
+const { addCategory } = useCategory();
+const {
+  getCategories,
+  contentItems,
+  itemItems,
+  fetchContentCategories,
+  fetchItemCategories,
+  loadingContent,
+  loadingItem,
+  data,
+} = useCategoriesSearch();
+
+onMounted(() => {
+  console.log('test munted')
+  fetchContentCategories();
+  fetchItemCategories();
+});
+console.log('contentItems', contentItems.value, itemItems.value);
+// const allCategories = computed(() => [...contentItems.value, ...itemItems.value]);
+const allCategories = computed(() =>
+  lastQuery.value && data.value?.entries?.length ? data.value.entries : [...contentItems.value, ...itemItems.value]
+);
+
+const getLabel = (option: CategoryTreeItem) => option?.details?.[0]?.name || '';
+
+const handleSearch = async (query: string) => {
+  if (!query) return;
+  await getCategories({
+    type: 'in:item,content',
+    with: 'details,clients',
+    sortBy: 'position_asc,name_asc',
+    columns: '*',
+    page: 1,
+    itemsPerPage: 100,
   });
 };
 
@@ -119,41 +155,17 @@ const closeModal = () => {
   togglePageModal(false);
 };
 
-const flattenCategories = (items: CategoryTreeItem[]) => {
-  let flat: CategoryTreeItem[] = [];
-  items.forEach((item: CategoryTreeItem) => {
-    if (item.type === 'item' || item.type === 'content') {
-      flat.push(item);
-    }
-    if (item.children && item.children.length) {
-      flat = flat.concat(flattenCategories(item.children));
-    }
+const createNewPage = async () => {
+  if (!meta.value.valid) return;
+
+  addCategory({
+    name: pageName?.value || '',
+    type: pageType.value.value,
+    parentCategoryId: parentPage.value?.id || null,
   });
-  return flat;
+
+  closeModal();
 };
 
-const getLabel = (option: CategoryTreeItem) => {
-  return option.details && option.details.length ? option.details[0].name : '';
-};
-
-const emptyCategoryItem: CategoryTreeItem = {
-  id: 0,
-  type: 'none',
-  itemCount: [],
-  childCount: 0,
-  right: 'all',
-  details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
-};
-
-const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
-
-const [pageName, pageNameAttributes] = defineField('pageName');
-const pageTypes = ref([
-  { label: 'Content', value: 'content' },
-  { label: 'Item category', value: 'item' },
-]);
-const pageType = ref(pageTypes.value[0]);
-const parentPage = ref(emptyCategoryItem);
-
-const onSubmit = handleSubmit(() => createNewPage());
+const onSubmit = handleSubmit(createNewPage);
 </script>
