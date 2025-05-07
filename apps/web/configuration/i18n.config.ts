@@ -33,4 +33,5 @@ export const nuxtI18nOptions: NuxtI18nOptions = {
   strategy: 'prefix_and_default',
   vueI18n: '~/configuration/vueI18n.config.ts',
   detectBrowserLanguage: false,
+  lazy: true
 };
