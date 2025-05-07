@@ -1,5 +1,5 @@
 <template>
-  <LazyUiToolbar hydrate-on-idle v-if="isPreview" :style="`font-family: ${config.font}`" />
+  <LazyUiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
   <div
     class="w-100 relative md:flex"
     :class="{
@@ -8,7 +8,7 @@
       'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen,
     }"
   >
-    <LazySettingsToolbar hydrate-on-idle
+    <LazySettingsToolbar
       v-if="isPreview && disableActions"
       :class="{
         'order-first': placement === 'left',
@@ -17,8 +17,8 @@
       }"
     />
 
-    <LazySiteConfigurationDrawer hydrate-on-idle 
-      v-if="drawerOpen"
+    <LazySiteConfigurationDrawer 
+      v-if="isPreview && drawerOpen"
       class="absolute lg:relative bg-white"
       :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
       :style="`font-family: ${config.font}`"
@@ -29,7 +29,7 @@
       :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
-      <LazyUiNotifications hydrate-on-idle />
+      <LazyUiNotifications hydrate-on-idle/>
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <NuxtLayout>
@@ -37,8 +37,8 @@
       </NuxtLayout>
     </div>
   </div>
-  <LazyUiPageModal hydrate-on-idle />
-  <LazyUiUnlinkCategoryModal hydrate-on-idle />
+  <LazyUiPageModal v-if="isPreview" />
+  <LazyUiUnlinkCategoryModal v-if="isPreview" />
 </template>
 
 <script setup lang="ts">
