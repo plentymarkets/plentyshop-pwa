@@ -4,13 +4,9 @@
     <main>
       <slot />
     </main>
-    <NuxtLazyHydrate when-idle>
-      <Cookiebar />
-      <PreviewMode />
-    </NuxtLazyHydrate>
-    <NuxtLazyHydrate when-visible>
-      <UiFooter :simplified-footer="true" />
-    </NuxtLazyHydrate>
+    <LazyCookiebar hydrate-on-visible />
+    <LazyPreviewMode hydrate-on-visible />
+    <LazyUiFooter hydrate-on-visible :simplified-footer="true" />
   </div>
 </template>
 
