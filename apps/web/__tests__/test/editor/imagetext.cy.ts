@@ -123,7 +123,6 @@ describe('Image Text Block Form', () => {
 
   beforeEach(() => {
     cy.clearCookies();
-    cy.setCookie('vsf-locale', 'en');
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     openSettingsForImageTextBlock();
