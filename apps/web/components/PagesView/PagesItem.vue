@@ -81,7 +81,15 @@
   </li>
 </template>
 <script setup lang="ts">
-import { SfIconHome, SfIconExpandMore, SfIconExpandLess, SfIconError, SfTooltip, SfLoaderCircular, SfIconBase } from '@storefront-ui/vue';
+import {
+  SfIconHome,
+  SfIconExpandMore,
+  SfIconExpandLess,
+  SfIconError,
+  SfTooltip,
+  SfLoaderCircular,
+  SfIconBase,
+} from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
