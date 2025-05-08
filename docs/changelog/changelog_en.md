@@ -43,6 +43,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Fix styling of editor actions on content pages.
 - (dev) Fix notification and modal closing of delete category
 - (dev) Fix Page Seo title tooltip
+- (dev) Fix editor page navigation
 
 ### Performance
 

@@ -95,7 +95,6 @@
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
-import { useSiteConfiguration } from '~/composables/useSiteConfiguration';
 const { locale } = useI18n();
 
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
