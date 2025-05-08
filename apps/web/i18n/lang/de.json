@@ -1054,7 +1054,6 @@
       "streetLabel": "Geben Sie Ihre Straße ein ",
       "streetPlaceholder": "Straße",
       "dropDownValues": {
-        "both": "Packstation/Postfiliale",
         "postfilial": "Postfiliale",
         "packstation": "Packstation"
       },
