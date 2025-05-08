@@ -1,8 +1,9 @@
-import type { CategoryData, CategoryEntry } from '@plentymarkets/shop-api';
+import type { CategoryData, CategoryEntry, CategorySearchCriteria } from '@plentymarkets/shop-api';
 import type { UseCategoriesSearchMethodsReturn, UseCategoriesSearchState } from './types';
 
 export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   const state = useState<UseCategoriesSearchState>('useCategoriesSearch', () => ({
+    data: {} as CategoryData,
     contentItems: [],
     itemItems: [],
     newPages: [],
@@ -117,6 +118,21 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     }
   };
 
+  const getCategories = async (params: CategorySearchCriteria) => {
+    state.value.loadingContent = true;
+    try {
+      const { data } = await useAsyncData<{ data: CategoryData }>(() =>
+        useSdk().plentysystems.getCategoriesSearch(params),
+      );
+
+      state.value.data = data?.value?.data ?? state.value.data;
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loadingContent = false;
+    }
+  };
+
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));
   };
@@ -194,5 +210,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     usePaginatedChildren,
     addNewPageToTree,
     deletePageFromTree,
+    getCategories,
   };
 };
