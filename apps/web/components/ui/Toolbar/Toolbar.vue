@@ -66,7 +66,6 @@ const { data, loading, cleanData } = useCategoryTemplate();
 const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
 
 const { save } = useToolbar();
-const { getBlocksLists } = useBlockManager();
 
 const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
 
@@ -77,10 +76,6 @@ const toggleEdit = () => {
     isEditing.value = false;
   }
 };
-
-onMounted(() => {
-  getBlocksLists();
-});
 
 const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'lg:z-20 md:z-10' : 'md:z-20'));
 
