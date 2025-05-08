@@ -128,14 +128,14 @@
               </p>
 
               <SfInput
-                v-model="postnumber"
+                v-model="postNumber"
                 type="text"
                 name="postnumber"
                 :placeholder="$t('PreferredDelivery.packstation.postNumberPlaceholder')"
                 wrapper-class="w-full"
               />
 
-              <UiButton type="button" variant="primary" class="mt-4 w-full" @click="selectPackstation(station)">
+              <UiButton type="button" variant="primary" class="mt-4 w-full" @click="savePackstationAddress(station)">
                 {{ t('PreferredDelivery.packstation.setPackstation') }}
               </UiButton>
 
@@ -207,8 +207,8 @@
 <script setup lang="ts">
 import { ErrorMessage, useForm } from 'vee-validate';
 import { SfCheckbox, SfIconLocationOn, SfInput } from '@storefront-ui/vue';
-import type { Packstation } from '@plentymarkets/shop-api';
 
+const { postNumber, savePackstationAddress } = usePackstationAddress();
 const { loading, data, getShippingProfilesData, deliveryLocationAvailable, validationSchema, submitForm } =
   usePackstationFinder();
 
@@ -228,12 +228,6 @@ const validateAndSubmitForm = async () => {
 };
 
 onNuxtReady(async () => await getShippingProfilesData());
-
-const postnumber = ref('');
-
-const selectPackstation = (station: Packstation) => {
-  console.log('Selected station:', station.openingHours, 'Postnumber:', postnumber.value);
-};
 
 watch(street, (updatedStreet) => (data.value.searchParams.street = updatedStreet || ''));
 watch(zipcode, (updatedZipcode) => (data.value.searchParams.zipcode = updatedZipcode || ''));
