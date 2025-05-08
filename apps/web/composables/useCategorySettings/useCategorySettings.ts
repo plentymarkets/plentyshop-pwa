@@ -50,12 +50,14 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
   const deletePage = async (id: number, pageName: string) => {
     const { send } = useNotification();
     const { deletePageFromTree } = useCategoriesSearch();
+    const { setSettingsCategory } = useSiteConfiguration();
     try {
       const { data } = await useSdk().plentysystems.deleteCategory({
         categoryId: id,
       });
       if (data === 'Category deleted') {
         toggleDeleteModal(false);
+        setSettingsCategory(null);
         deletePageFromTree(id);
         send({
           message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),

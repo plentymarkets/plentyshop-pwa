@@ -24,7 +24,6 @@
           class="bg-red-700 w-full py-2 rounded-md text-white"
           @click="
             deletePage(currentCategoryId!, getCategoryName!);
-            setSettingsCategory(null);
           "
         >
           Delete page
@@ -45,7 +44,6 @@
 
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-const { setSettingsCategory } = useSiteConfiguration();
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
 const { getCategoryId, getCategoryName } = useCategoryIdHelper();
 
