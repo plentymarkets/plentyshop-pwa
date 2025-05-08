@@ -8,7 +8,6 @@ describe('Blocks', () => {
 
   beforeEach(() => {
     cy.clearCookies();
-    cy.setCookie('vsf-locale', 'en');
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
   });
