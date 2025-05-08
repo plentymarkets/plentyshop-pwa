@@ -9,7 +9,7 @@
         <SfIconExpandMore />
       </span>
       <router-link v-if="!isTablet" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
-        <span v-if="item.details[0].name === 'Hsomepage'">
+        <span v-if="item.details[0].name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
         {{ item.details[0].name }}
