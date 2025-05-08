@@ -96,7 +96,7 @@
       />
 
       <ul
-        class="space-y-4 h-[500px] max-h-[500px] overflow-y-auto flex-1 sm:basis-[35%] w-full order-2 sm:order-1 mt-3 sm:mt-0"
+        class="space-y-4 h-[520px] max-h-[520px] overflow-y-auto flex-1 sm:basis-[35%] w-full order-2 sm:order-1 mt-3 sm:mt-0"
       >
         <li
           v-for="(station, index) in data.packstations"
@@ -153,7 +153,11 @@
                     <span>
                       {{ t(`PreferredDelivery.packstation.days.${openingHour.dayOfWeek.split('/').pop() ?? ''}`) }}
                     </span>
-                    <span>{{ `${openingHour.opens.slice(0, -3)} - ${openingHour.closes.slice(0, -3)}` }}</span>
+                    <span>
+                      {{ openingHour.opens.slice(0, -3) }}
+                      <span class="inline-block text-lg text-gray-500 leading-none align-text-bottom">•</span>
+                      {{ openingHour.closes.slice(0, -3) }}
+                    </span>
                   </li>
                 </ul>
               </div>

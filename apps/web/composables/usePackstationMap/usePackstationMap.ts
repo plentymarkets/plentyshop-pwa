@@ -1,15 +1,14 @@
 import type { Packstation } from '@plentymarkets/shop-api';
 
 export const usePackstationMap = () => {
-  const mapElement = ref<HTMLElement | null>(null);
-  const packstationRefs = ref<(HTMLElement | null)[]>([]);
-  const map = ref<google.maps.Map | null>(null);
-  const realMarkers = ref<google.maps.Marker[]>([]);
-  const previousMarker = ref<google.maps.Marker | null>(null);
-  const currentPackstationIndex = ref<number | null>(null);
-
   const state = useState('usePackstationMap', () => ({
+    mapElement: null as HTMLElement | null,
+    packstationRefs: [] as (HTMLElement | null)[],
+    map: null as google.maps.Map | null,
     mapsLoaded: false,
+    realMarkers: [] as google.maps.Marker[],
+    previousMarker: null as google.maps.Marker | null,
+    currentPackstationIndex: null as number | null,
   }));
 
   const { data } = usePackstationFinder();
@@ -39,28 +38,26 @@ export const usePackstationMap = () => {
     strokeColor: '#ffffff',
     strokeWeight: 1,
     rotation: 0,
-    scale: 0.06,
+    scale: 0.052,
     anchor: new google.maps.Point(0, 20),
   });
 
   const showPackstationDetails = (index: number, marker: unknown) => {
-    if (previousMarker.value) {
-      previousMarker.value.setAnimation(null);
-    }
+    if (state.value.previousMarker) state.value.previousMarker.setAnimation(null);
 
-    currentPackstationIndex.value = index;
+    state.value.currentPackstationIndex = index;
 
     if (marker instanceof google.maps.Marker) {
       marker.setAnimation(google.maps.Animation.BOUNCE);
       const markerPosition = marker.getPosition();
       if (markerPosition) {
-        map.value?.setCenter(markerPosition);
-        map.value?.setZoom(16);
+        state.value.map?.setCenter(markerPosition);
+        state.value.map?.setZoom(16);
       }
-      previousMarker.value = marker;
+      state.value.previousMarker = marker;
     }
 
-    const targetRef = packstationRefs.value[index];
+    const targetRef = state.value.packstationRefs[index];
     if (targetRef) targetRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
@@ -77,19 +74,19 @@ export const usePackstationMap = () => {
   });
 
   const initMap = async () => {
-    if (!mapElement.value) return;
+    if (!state.value.mapElement) return;
 
     const [{ Map }, { Marker }] = await Promise.all([
       google.maps.importLibrary('maps') as Promise<{ Map: typeof google.maps.Map }>,
       google.maps.importLibrary('marker') as Promise<{ Marker: typeof google.maps.Marker }>,
     ]);
 
-    realMarkers.value.forEach((m) => m.setMap(null));
-    realMarkers.value = [];
+    state.value.realMarkers.forEach((m) => m.setMap(null));
+    state.value.realMarkers = [];
 
     const bounds = new google.maps.LatLngBounds();
 
-    map.value = new Map(mapElement.value, {
+    state.value.map = new Map(state.value.mapElement, {
       center: mapMarkers.value[0]?.position,
       zoom: 12,
       disableDefaultUI: true,
@@ -102,32 +99,32 @@ export const usePackstationMap = () => {
     mapMarkers.value.forEach((markerData) => {
       const marker = new Marker({
         position: markerData.position,
-        map: map.value!,
+        map: state.value.map!,
         icon: markerData.icon,
       });
 
-      realMarkers.value.push(marker);
+      state.value.realMarkers.push(marker);
 
       marker.addListener('click', () => showPackstationDetails(markerData.index, marker));
       marker.addListener('mouseover', () => {
-        if (currentPackstationIndex.value === null) marker.setAnimation(google.maps.Animation.BOUNCE);
+        if (state.value.currentPackstationIndex === null) marker.setAnimation(google.maps.Animation.BOUNCE);
       });
       marker.addListener('mouseout', () => {
-        if (currentPackstationIndex.value === null) marker.setAnimation(null);
+        if (state.value.currentPackstationIndex === null) marker.setAnimation(null);
       });
 
       const pos = marker.getPosition();
       if (pos) bounds.extend(pos);
     });
 
-    map.value.fitBounds(bounds);
+    state.value.map.fitBounds(bounds);
   };
 
   watch(
     () => data.value.packstations,
     async (list) => {
       if (list.length) {
-        currentPackstationIndex.value = null;
+        state.value.currentPackstationIndex = null;
         await loadGoogleMaps();
         await nextTick();
         await initMap();
@@ -137,11 +134,7 @@ export const usePackstationMap = () => {
   );
 
   return {
-    mapElement,
-    packstationRefs,
-    realMarkers,
-    mapMarkers,
-    currentPackstationIndex,
     showPackstationDetails,
+    ...toRefs(state.value),
   };
 };
