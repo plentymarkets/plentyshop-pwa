@@ -13,7 +13,6 @@ const cookieBar = new CookieBarObject();
 
 beforeEach(() => {
   cy.clearCookies();
-  cy.setCookie('vsf-locale', 'en');
   cy.intercept('/plentysystems/deleteReview').as('deleteReview');
   cy.intercept('/plentysystems/doReview').as('postReview');
   cy.intercept('/plentysystems/setReview').as('setReview');
