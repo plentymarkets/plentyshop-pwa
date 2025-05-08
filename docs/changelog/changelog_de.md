@@ -48,6 +48,10 @@ Changelog-Einträge für neuere Versionen findest du auf der Seite [Releases](ht
 - Ein Fehler in dem PayPal-Express-Prozess wurde behoben, PayPal Plugin Version >= 6.5.11 erforderlich.
 - Im Quick-Checkout leitet der Button "Zur Kasse" jetzt zum Gast-Login, wenn man nicht eingeloggt ist.
 
+### 🩹 Behoben
+
+- Ein Fehler wurde behoben, bei dem lediglich eine Sortierung bzw. ein Filter ausgewählt werden konnte
+
 # v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert

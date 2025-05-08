@@ -86,6 +86,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🩹 Fixed
 
+- Fixed broken selection when having filtering and sorting
 - Fixed the PayPal Express flow, requires PayPal Plugin version >= 6.5.11
 - Fixed the redirect in the quick checkout to the guest login instead of the checkout page when you are not logged in.
 
