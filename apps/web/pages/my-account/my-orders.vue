@@ -38,7 +38,8 @@
             </li>
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.amount') }}</p>
-              <span class="block typography-text-sm mb-2">{{ format(orderGetters.getPrice(order)) }}</span>
+              <span class="block typography-text-sm mb-2" v-if="showNetPrices">{{ format(order.totals.totalNet) }}</span>
+              <span class="block typography-text-sm mb-2" v-else>{{ format(orderGetters.getPrice(order)) }}</span>
             </li>
             <li v-if="orderGetters.getShippingDate(order, locale)">
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</p>
@@ -101,7 +102,8 @@
             <tr v-for="(order, index) in data.data.entries" :key="index" class="border-b border-neutral-200">
               <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
-              <td class="lg:p-4 p-2">{{ format(orderGetters.getPrice(order)) }}</td>
+              <td class="lg:p-4 p-2" v-if="showNetPrices">{{ format(order.totals.totalNet) }}</td>
+              <td class="lg:p-4 p-2" v-else>{{ format(orderGetters.getPrice(order)) }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
@@ -164,6 +166,7 @@ const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
 const { format } = usePriceFormatter();
+const { showNetPrices } = useCustomer();
 const { t, locale } = useI18n();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);

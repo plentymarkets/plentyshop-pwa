@@ -773,6 +773,7 @@
     },
     "vat": {
       "incl": "inkl.",
+      "excl": "exkl.",
       "plus": "zzgl."
     }
   },

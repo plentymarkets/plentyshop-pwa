@@ -32,7 +32,19 @@
             {{ t('estimatedTax') }} {{ cartGetters.getTotalVatValue(vat) }}%
           </p>
         </div>
-        <div class="flex flex-col gap-2 text-right">
+        <div v-if="showNetPrices" class="flex flex-col gap-2 text-right">
+          <p data-testid="subtotal" class="font-medium">{{ format(cartGetters.getItemSumNet(props.cart)) }}</p>
+          <p data-testid="shipping" class="font-medium">
+            {{ getShippingAmount(cartGetters.getShippingAmountNet(props.cart)) }}
+          </p>
+          <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium" data-testid="coupon-value">
+            {{ format(cartGetters.getCouponDiscount(props.cart)) }}
+          </p>
+          <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat">
+            {{ t('orderProperties.vat.excl') }} {{ format(cartGetters.getTotalVatAmount(vat)) }}
+          </p>
+        </div>
+        <div v-else class="flex flex-col gap-2 text-right">
           <p data-testid="subtotal" class="font-medium">{{ format(totals.subTotal) }}</p>
           <p data-testid="shipping" class="font-medium">
             {{ getShippingAmount(cartGetters.getShippingPrice(props.cart)) }}
@@ -41,7 +53,7 @@
             {{ format(cartGetters.getCouponDiscount(props.cart)) }}
           </p>
           <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat">
-            {{ format(cartGetters.getTotalVatAmount(vat)) }}
+            {{ t('orderProperties.vat.incl') }} {{ format(cartGetters.getTotalVatAmount(vat)) }}
           </p>
         </div>
       </div>
@@ -63,7 +75,8 @@
 
       <div class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4">
         <h2 data-testid="total-label">{{ t('total') }}</h2>
-        <h2 data-testid="total">{{ format(totals.total) }}</h2>
+        <h2 data-testid="total" v-if="showNetPrices">{{ format(cart.basketAmountNet) }}</h2>
+        <h2 data-testid="total" v-else>{{ format(totals.total) }}</h2>
       </div>
       <UiDivider class="w-auto mb-4" />
       <slot />
@@ -77,6 +90,7 @@ import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
 const { t } = useI18n();
+const { showNetPrices } = useCustomer();
 const { format } = usePriceFormatter();
 
 const totals = computed(() => {

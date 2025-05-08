@@ -58,8 +58,8 @@
                 v-if="
                   orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesAvailable(item)
                 "
-                :price="orderGetters.getOrderAgainInformationPrice(item)"
-                :crossed-price="orderGetters.getItemPrice(item)"
+                :price="newItemPrice(item)"
+                :crossed-price="itemPrice(item)"
               />
               <div
                 v-if="orderGetters.getItemShortDescription(order, item)"
@@ -169,7 +169,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.orderPropertyNotAvailableOrChanged') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="orderGetters.getOrderAgainInformationPrice(item) > orderGetters.getItemPrice(item)"
+                  v-else-if="newItemPrice(item) > itemPrice(item)"
                   variant="secondary"
                   size="sm"
                   class="!font-medium"
@@ -178,7 +178,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.priceUp') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="orderGetters.getOrderAgainInformationPrice(item) < orderGetters.getItemPrice(item)"
+                  v-else-if="newItemPrice(item) < itemPrice(item)"
                   variant="positive"
                   size="sm"
                   class="!font-medium"
@@ -242,7 +242,7 @@ import {
   SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
-import { orderGetters, productPropertyGetters } from '@plentymarkets/shop-api';
+import {orderGetters, OrderItem, productPropertyGetters} from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
 
 const props = defineProps<OrderAgainProps>();
@@ -282,4 +282,21 @@ const addToCart = async () => {
   }
   loadingAddToCart.value = false;
 };
+
+const itemPrice = (item: OrderItem): number => {
+  let value: number;
+  if (showNetPrices) {
+    value = orderGetters.getItemNetPrice(item);
+  } else {
+    value = orderGetters.getItemPrice(item);
+  }
+  value = Math.floor(Math.round(value * 100)) / 100;
+  return value;
+};
+
+const newItemPrice = (item: OrderItem) => {
+  let value = orderGetters.getOrderAgainInformationPrice(item);
+  value = Math.floor(Math.round(value * 100)) / 100;
+  return value;
+}
 </script>
