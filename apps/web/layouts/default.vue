@@ -7,11 +7,14 @@
     <main>
       <slot />
     </main>
+    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
-    <LazyUiNavbarBottom v-if="viewport.isLessThan('lg')" />
-    <LazyPreviewMode hydrate-on-visible />
-    <LazyUiFooter hydrate-on-visible />
-    <LazyQuickCheckout v-if="isOpen" :product="product" />
+    <PreviewMode />
+    <NuxtLazyHydrate when-visible>
+      <UiFooter />
+    </NuxtLazyHydrate>
+
+    <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
