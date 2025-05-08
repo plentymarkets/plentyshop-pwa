@@ -17,7 +17,7 @@
       }"
     />
 
-    <SiteConfigurationDrawer 
+    <SiteConfigurationDrawer
       v-if="isPreview && drawerOpen"
       class="absolute lg:relative bg-white"
       :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
