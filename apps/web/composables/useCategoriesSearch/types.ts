@@ -24,6 +24,7 @@ export interface UseCategoriesSearchMethods {
   loadingItem: Readonly<Ref<boolean>>;
   hasMoreContent: Readonly<Ref<boolean>>;
   hasMoreItem: Readonly<Ref<boolean>>;
+  data: Ref<CategoryData>;
   fetchContentCategories: () => Promise<void>;
   fetchItemCategories: () => Promise<void>;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
