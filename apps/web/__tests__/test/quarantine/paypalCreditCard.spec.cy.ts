@@ -10,8 +10,7 @@ const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
 describe('Smoke: PayPal credit card order', () => {
-  beforeEach(() => {
-  });
+  beforeEach(() => {});
 
   it('[smoke] Check if status on order gets updated when paying with paypal credit card', () => {
     cy.visitAndHydrate(paths.home);
