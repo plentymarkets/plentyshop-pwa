@@ -1,4 +1,4 @@
-import { Address, AddressType, Packstation } from '@plentymarkets/shop-api';
+import { type Address, type Packstation, AddressType } from '@plentymarkets/shop-api';
 
 export const usePackstationAddress = () => {
   const { send } = useNotification();
