@@ -4,8 +4,6 @@
     class="w-100 relative md:flex"
     :class="{
       'lg:flex-row-reverse': placement !== 'left',
-      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen,
-      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen,
     }"
   >
     <SettingsToolbar
