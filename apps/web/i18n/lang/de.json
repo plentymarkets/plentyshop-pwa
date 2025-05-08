@@ -34,11 +34,6 @@
           "name": "plentyID",
           "provider": "PlentyONE GmbH",
           "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
-        },
-        "vsfLocale": {
-          "name": "vsf-locale",
-          "provider": "PlentyONE GmbH",
-          "status": "Speichert die Anzeigesprache."
         }
       },
       "description": "Essenzielle Cookies ermöglichen grundlegende Funktionen und sind für die einwandfreie Funktion der Website erforderlich.",
@@ -367,7 +362,8 @@
       "subjectLabel": "Betreff"
     },
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
-    "success": "Nachricht erfolgreich gesendet"
+    "success": "Nachricht erfolgreich gesendet",
+    "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Sicherheitskonfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten."
   },
   "contactInfo": {
     "add": "Kontaktinformationen hinzufügen",
@@ -991,6 +987,10 @@
       "notFound": "Die Bestellung existiert nicht.",
       "softLoginFailed": "Die angegebenen Daten sind ungültig.",
       "assignPaymentFailed": "Die Zahlung konnte nicht zugewiesen werden."
+    },
+    "turnstile": {
+      "invalid": "Verifizierung fehlgeschlagen. Bitte versuchen Sie es in ein paar Minuten erneut.",
+      "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
