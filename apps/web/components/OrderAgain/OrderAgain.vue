@@ -58,7 +58,7 @@
                 v-if="
                   orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesAvailable(item)
                 "
-                :price="newItemPrice(item)"
+                :price="roundAmount(orderGetters.getOrderAgainInformationPrice(item))"
                 :crossed-price="itemPrice(item)"
               />
               <div
@@ -169,7 +169,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.orderPropertyNotAvailableOrChanged') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="newItemPrice(item) > itemPrice(item)"
+                  v-else-if="roundAmount(orderGetters.getOrderAgainInformationPrice(item)) > itemPrice(item)"
                   variant="secondary"
                   size="sm"
                   class="!font-medium"
@@ -178,7 +178,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.priceUp') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="newItemPrice(item) < itemPrice(item)"
+                  v-else-if="roundAmount(orderGetters.getOrderAgainInformationPrice(item)) < itemPrice(item)"
                   variant="positive"
                   size="sm"
                   class="!font-medium"
@@ -242,7 +242,7 @@ import {
   SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
-import {orderGetters, OrderItem, productPropertyGetters} from '@plentymarkets/shop-api';
+import { orderGetters, OrderItem, productPropertyGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
 
 const props = defineProps<OrderAgainProps>();
@@ -283,20 +283,14 @@ const addToCart = async () => {
   loadingAddToCart.value = false;
 };
 
-const itemPrice = (item: OrderItem): number => {
-  let value: number;
-  if (showNetPrices) {
-    value = orderGetters.getItemNetPrice(item);
-  } else {
-    value = orderGetters.getItemPrice(item);
-  }
-  value = Math.floor(Math.round(value * 100)) / 100;
-  return value;
+const roundAmount = (value: number) => {
+  return Math.floor(Math.round(value * 100)) / 100;
 };
-
-const newItemPrice = (item: OrderItem) => {
-  let value = orderGetters.getOrderAgainInformationPrice(item);
-  value = Math.floor(Math.round(value * 100)) / 100;
-  return value;
-}
+const itemPrice = (item: OrderItem): number => {
+  if (showNetPrices) {
+    return roundAmount(orderGetters.getItemNetPrice(item));
+  } else {
+    return roundAmount(orderGetters.getItemPrice(item));
+  }
+};
 </script>

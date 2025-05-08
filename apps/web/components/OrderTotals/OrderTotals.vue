@@ -20,7 +20,10 @@
   </div>
   <div v-for="(vat, index) in orderGetters.getOrderVats(order)" :key="index" class="grid grid-cols-2 mt-2">
     <p class="font-medium text-base">{{ t('orderConfirmation.vat') }} ({{ orderGetters.getOrderVatRate(vat) }}%):</p>
-    <p class="text-right">{{ showNetPrices ? t('orderProperties.vat.excl') : t('orderProperties.vat.incl') }} {{ format(orderGetters.getOrderVatValue(vat)) }}</p>
+    <p class="text-right">
+      {{ showNetPrices ? t('orderProperties.vat.excl') : t('orderProperties.vat.incl') }}
+      {{ format(orderGetters.getOrderVatValue(vat)) }}
+    </p>
   </div>
   <UiDivider v-if="additionalCostsWithTax.length > 0" class="mt-2 mb-2" />
   <div v-for="(additionalCost, index) in additionalCostsWithTax" :key="index" class="grid grid-cols-2">
@@ -33,7 +36,7 @@
       {{ t('orderConfirmation.total') }}:
     </p>
     <p class="text-right" :class="{ 'font-bold text-xl': isOrderTypeOffer }">
-      {{ showNetPrices ? format(order.totals.totalNet) : format(orderGetters.getTotal(order.totals)) }}
+      {{ showNetPrices ? format(orderGetters.getTotalNet(order.totals)) : format(orderGetters.getTotal(order.totals)) }}
     </p>
   </div>
 </template>

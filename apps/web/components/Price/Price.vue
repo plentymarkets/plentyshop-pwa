@@ -19,8 +19,8 @@ const { format } = usePriceFormatter();
 const { t } = useI18n();
 
 const differentPrices = computed(() => {
-  return props.crossedPrice ?
-      Math.floor(Math.round(props.price * 100)) / 100 !== Math.floor(Math.round(props.crossedPrice * 100)) / 100 :
-      false;
+  return props.crossedPrice
+    ? Math.floor(Math.round(props.price * 100)) / 100 !== Math.floor(Math.round(props.crossedPrice * 100)) / 100
+    : false;
 });
 </script>
