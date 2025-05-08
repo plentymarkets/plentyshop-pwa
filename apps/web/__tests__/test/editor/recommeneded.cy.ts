@@ -45,7 +45,6 @@ describe('Recommended Block Form', () => {
 
   beforeEach(() => {
     cy.clearCookies();
-    cy.setCookie('vsf-locale', 'en');
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     clickOnRecommendedBlockEditButton();
