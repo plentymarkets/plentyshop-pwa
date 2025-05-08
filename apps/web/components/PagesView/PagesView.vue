@@ -93,6 +93,7 @@
 </template>
 
 <script setup lang="ts">
+import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfLoaderCircular } from '@storefront-ui/vue';
 const { locale } = useI18n();
 
