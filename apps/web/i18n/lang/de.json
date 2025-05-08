@@ -1059,8 +1059,6 @@
       },
       "nameInfo": "Der Name wird aus der Rechnungsadresse übernommen. Die Postnummer und die Adresse der Packstation/Postfiliale werden als Lieferadresse übernommen.",
       "search": "Suchen",
-      "backToList": "Zurück zur Liste",
-      "loading": "Laden",
       "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
       "setPackstation": "Übernehmen",
       "postNumberPlaceholder": "Postnummer",
