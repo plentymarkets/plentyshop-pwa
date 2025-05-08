@@ -22,9 +22,7 @@
           aria-label="deleteButton"
           data-testid="delete-btn"
           class="bg-red-700 w-full py-2 rounded-md text-white"
-          @click="
-            deletePage(currentCategoryId!, getCategoryName!);
-          "
+          @click="deletePage(currentCategoryId!, getCategoryName!)"
         >
           Delete page
         </button>
