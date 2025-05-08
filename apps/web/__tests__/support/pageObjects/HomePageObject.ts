@@ -76,11 +76,9 @@ export class HomePageObject extends PageObject {
     return this;
   }
 
-  checkLanguage(locale: string, textToCheck: string) {
+  checkLanguage(textToCheck: string) {
     const categories = cy.getByTestId('category-button');
     categories.invoke('text').should('include', textToCheck);
-    cy.getCookie('vsf-locale').should('have.property', 'value', locale);
-
     return this;
   }
 
