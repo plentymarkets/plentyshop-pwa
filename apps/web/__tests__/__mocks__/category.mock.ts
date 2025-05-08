@@ -21,7 +21,6 @@ export const CategoryMock: Category = {
       nameUrl: 'sessel-hocker',
       metaTitle: '',
       position: '5',
-      previewUrl: '',
       itemListView: 'ItemViewCategoriesList',
       singleItemView: 'ItemViewSingleItem',
       pageView: 'PageDesignContent',
