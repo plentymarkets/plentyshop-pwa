@@ -78,10 +78,10 @@
           <p class="font-medium text-base">{{ t('quickCheckout.cartContains', cartItemsCount) }}</p>
           <div class="grid grid-cols-2">
             <p class="text-base">{{ t('quickCheckout.subTotal') }}:</p>
-            <p data-testid="subtotal" class="font-medium text-right" v-if="showNetPrices">
+            <p v-if="showNetPrices" data-testid="subtotal" class="font-medium text-right">
               {{ format(cartGetters.getItemSumNet(cart)) }}
             </p>
-            <p data-testid="subtotal" class="font-medium text-right" v-else>{{ format(totals.subTotal) }}</p>
+            <p v-else data-testid="subtotal" class="font-medium text-right">{{ format(totals.subTotal) }}</p>
           </div>
         </div>
 

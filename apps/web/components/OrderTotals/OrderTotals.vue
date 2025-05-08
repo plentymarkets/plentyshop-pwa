@@ -6,13 +6,13 @@
   <UiDivider v-if="additionalCostsWithoutTax.length > 0" class="mt-2 mb-2" />
   <div class="grid grid-cols-2">
     <p class="font-medium text-base">{{ t('orderConfirmation.subTotal') }}:</p>
-    <p class="text-right" v-if="showNetPrices">{{ format(order.totals.itemSumNet) }}</p>
-    <p class="text-right" v-else>{{ format(orderGetters.getSubTotal(order.totals)) }}</p>
+    <p v-if="showNetPrices" class="text-right">{{ format(order.totals.itemSumNet) }}</p>
+    <p v-else class="text-right">{{ format(orderGetters.getSubTotal(order.totals)) }}</p>
   </div>
   <div class="grid grid-cols-2 mt-2">
     <p class="font-medium text-base">{{ t('orderConfirmation.shipping') }}:</p>
-    <p class="text-right" v-if="showNetPrices">{{ getShippingAmount(order.totals.shippingNet ?? 0) }}</p>
-    <p class="text-right" v-else>{{ getShippingAmount(orderGetters.getShippingCost(order) ?? 0) }}</p>
+    <p v-if="showNetPrices" class="text-right">{{ getShippingAmount(order.totals.shippingNet ?? 0) }}</p>
+    <p v-else class="text-right">{{ getShippingAmount(orderGetters.getShippingCost(order) ?? 0) }}</p>
   </div>
   <div class="grid grid-cols-2 mt-2">
     <p class="font-medium text-base">{{ t('coupon.name') }}:</p>

@@ -242,7 +242,8 @@ import {
   SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
-import { orderGetters, OrderItem, productPropertyGetters } from '@plentymarkets/shop-api';
+import type { OrderItem } from '@plentymarkets/shop-api';
+import { orderGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
 
 const props = defineProps<OrderAgainProps>();

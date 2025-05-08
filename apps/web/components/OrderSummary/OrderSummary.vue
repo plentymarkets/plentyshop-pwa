@@ -75,8 +75,8 @@
 
       <div class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4">
         <h2 data-testid="total-label">{{ t('total') }}</h2>
-        <h2 data-testid="total" v-if="showNetPrices">{{ format(cartGetters.getBasketAmountNet(props.cart)) }}</h2>
-        <h2 data-testid="total" v-else>{{ format(totals.total) }}</h2>
+        <h2 v-if="showNetPrices" data-testid="total">{{ format(cartGetters.getBasketAmountNet(props.cart)) }}</h2>
+        <h2 v-else data-testid="total">{{ format(totals.total) }}</h2>
       </div>
       <UiDivider class="w-auto mb-4" />
       <slot />

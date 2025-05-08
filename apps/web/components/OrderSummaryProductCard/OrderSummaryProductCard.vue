@@ -91,8 +91,8 @@
       <div class="items-start sm:items-center sm:mt-auto text-sm">
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.price') }}:</p>
-          <p class="text-right" v-if="showNetPrices">{{ format(orderGetters.getItemNetPrice(orderItem)) }}</p>
-          <p class="text-right" v-else>{{ format(orderGetters.getItemPrice(orderItem)) }}</p>
+          <p v-if="showNetPrices" class="text-right">{{ format(orderGetters.getItemNetPrice(orderItem)) }}</p>
+          <p v-else class="text-right">{{ format(orderGetters.getItemPrice(orderItem)) }}</p>
         </div>
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.quantity') }}:</p>
@@ -100,10 +100,10 @@
         </div>
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('orderConfirmation.total') }}:</p>
-          <p class="text-right" v-if="showNetPrices">
+          <p v-if="showNetPrices" class="text-right">
             {{ format(orderGetters.getItemNetPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
           </p>
-          <p class="text-right" v-else>
+          <p v-else class="text-right">
             {{ format(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
           </p>
         </div>
