@@ -8,7 +8,7 @@
       <UiBrandLogo />
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">
         <UiLanguageEditor />
-        <UiPageSelector v-if="runtimeConfig.public.isDev" />
+        <UiPageSelector />
       </div>
       <div class="ml-auto flex space-x-2">
         <button
@@ -58,7 +58,6 @@ import { SfLoaderCircular, SfIconBase, SfIconVisibility } from '@storefront-ui/v
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 import { deepEqual } from '~/utils/jsonHelper';
-const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
