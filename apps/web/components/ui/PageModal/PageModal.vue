@@ -99,10 +99,7 @@ const fetchCategoriesByName = async (name: string = '') => {
     type: 'in:item,content',
     sortBy: 'position_asc,name_asc',
     with: 'details,clients',
-    columns: '*',
     name: name ? `like:${name}` : '',
-    page: 1,
-    itemsPerPage: 100,
   });
 };
 const loadInitialCategories = async () => {
