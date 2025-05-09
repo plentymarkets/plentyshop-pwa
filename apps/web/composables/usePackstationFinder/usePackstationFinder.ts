@@ -78,12 +78,23 @@ export const usePackstationFinder = () => {
     }
   };
 
+  const resetComponent = () => {
+    state.value.data.searchParams = {
+      street: '',
+      zipcode: '',
+      city: '',
+      searchPackstation: true,
+      searchPostfilial: true,
+    } as PackstationsSearchParams;
+  };
+
   return {
     getShippingProfilesData,
     hasPreferredDeliveryLocation,
     deliveryLocationAvailable,
     validationSchema,
     submitForm,
+    resetComponent,
     ...toRefs(state.value),
   };
 };

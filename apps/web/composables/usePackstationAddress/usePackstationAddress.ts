@@ -3,7 +3,7 @@ import { type Address, type Packstation, AddressType } from '@plentymarkets/shop
 export const usePackstationAddress = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
-  const { data } = usePackstationFinder();
+  const { data, resetComponent } = usePackstationFinder();
 
   const state = useState('usePackstationAddress', () => ({
     postNumber: '',
@@ -46,6 +46,7 @@ export const usePackstationAddress = () => {
       .then(() => handleShippingPrimaryAddress())
       .then(() => refreshAddressDependencies())
       .then(() => handleCartTotalChanges())
+      .then(() => resetComponent())
       .catch((error) => useHandleError(error));
   };
 
