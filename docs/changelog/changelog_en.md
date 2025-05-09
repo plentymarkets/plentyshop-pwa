@@ -6,6 +6,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
+- Added DHL delivery location finder functionality.
 - Added robots for declaration of accessibility page
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
