@@ -88,12 +88,9 @@ const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 const { getCategoryName, getCategoryPath } = useCategoryIdHelper();
 
-const { locale } = useI18n();
-const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
-
 const activeView = ref<null | 'general' | 'seo'>(null);
 const redirectToPage = () => {
-  const targetUrl = `${localePrefix.value}/${getCategoryPath.value}`;
+  const targetUrl = getCategoryPath.value;
   navigateTo(targetUrl);
   setSettingsCategory(null);
 };
