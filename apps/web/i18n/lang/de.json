@@ -1047,9 +1047,9 @@
     },
     "packstation": {
       "title": "DHL Packstation / Postfiliale",
-      "zipcodeLabel": "Geben Sie Ihre Postleitzahl ein",
+      "zipcodeLabel": "Postleitzahl",
       "zipcodePlaceholder": "PLZ",
-      "cityLabel": "Geben Sie Ihre Stadt ein",
+      "cityLabel": "Stadt/Ort",
       "cityPlaceholder": "Ort",
       "streetLabel": "Geben Sie Ihre Straße ein ",
       "streetPlaceholder": "Straße",
