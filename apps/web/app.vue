@@ -18,7 +18,7 @@
     />
 
     <SiteConfigurationDrawer
-      v-if="drawerOpen"
+      v-if="isPreview && drawerOpen"
       class="absolute lg:relative bg-white"
       :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
       :style="`font-family: ${config.font}`"
@@ -29,7 +29,7 @@
       :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
-      <UiNotifications />
+      <LazyUiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <NuxtLayout>
@@ -37,8 +37,8 @@
       </NuxtLayout>
     </div>
   </div>
-  <UiPageModal />
-  <UiUnlinkCategoryModal />
+  <UiPageModal v-if="isPreview" />
+  <UiUnlinkCategoryModal v-if="isPreview" />
 </template>
 
 <script setup lang="ts">
