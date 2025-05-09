@@ -22,10 +22,7 @@
           aria-label="deleteButton"
           data-testid="delete-btn"
           class="bg-red-700 w-full py-2 rounded-md text-white"
-          @click="
-            deletePage(currentCategoryId!, getCategoryName!);
-            setSettingsCategory(null);
-          "
+          @click="deletePage(currentCategoryId!, getCategoryName!)"
         >
           Delete page
         </button>
@@ -45,7 +42,6 @@
 
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-const { setSettingsCategory } = useSiteConfiguration();
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
 const { getCategoryId, getCategoryName } = useCategoryIdHelper();
 
