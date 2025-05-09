@@ -54,7 +54,7 @@
     <PageSeoView v-if="activeView === 'seo'" class="mt-2" />
 
     <div v-if="!activeView" class="py-4">
-      <h3 class="font-bold text-center mb-3">Actions</h3>
+      <h3 class="font-bold text-center flex flex-col gap-4 items-start ml-4 mb-3">Actions</h3>
       <div class="flex flex-col gap-4 justify-center items-center">
         <button
           class="border border-editor-button py-2 rounded-md flex items-center justify-center w-[90%] text-editor-button hover:bg-gray-50"
