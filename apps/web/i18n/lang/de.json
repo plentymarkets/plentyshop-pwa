@@ -530,7 +530,7 @@
       "categories": {
         "success": "Kategorien erfolgreich gespeichert.",
         "error": "Fehler beim Speichern der Kategorien.",
-        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}" ,
+        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}",
         "deleteSuccess": "Die Seite {pageName} (Kategorie-ID: {id}) wurde gelöscht."
       }
     },
@@ -1022,19 +1022,10 @@
   "double-tap-zoom": "Zum Zoomen doppeltippen",
   "PreferredDelivery": {
     "general": {
-      "basicSettingsStartSave": "Speichere Grundeinstellung ...",
-      "basicSettingsSaveSuccess": "Grundeinstellung gespeichert.",
-      "basicSettingsDataToStore": "Strukturierung der Grundeinstellungen fürs Speichern.",
-      "userSettingsResetCache": "Zurücksetzen des Caches: user settings",
-      "shipmentControllerDetectEnv": "Produktiv oder Testmodus",
-      "requestAndResponse": "Request und response",
-      "soapFault": "Soap fault",
       "assistantName": "DHL Wunschzustellung",
       "wunschpaketIntroduction": "Mit den Services von DHL Wunschzustellung entscheiden Sie, wann und wo Sie Ihre Pakete empfangen.",
       "wunschpaketOptions": "Wählen Sie Ihre bevorzugte Lieferoption aus:",
       "wunschpaketTitle": "DHL Wunschzustellung",
-      "preferredDayMsg": "Liefertag",
-      "shippingSettingsMsg": "DHL Versenden: Einstellungsverknüpfung",
       "wunschtagTitle": "Liefertag: Lieferung zum gewünschten Tag",
       "wunschortTitle": "Ablageort: Lieferung an den gewünschten Ablageort",
       "wunschnachbarTitle": "Nachbar: Lieferung an den Nachbarn Ihrer Wahl",
@@ -1046,59 +1037,44 @@
       "wunschnachbarExampleAddress": "Straße, Hausnummer, PLZ und Ort",
       "wunschpaketAdditionalCharge": "Für diesen Service fällt ein Aufpreis in Höhe von {additionalCharge} {currency} an.*",
       "wunschtagNone": "Keiner",
-      "preferredDayAlertMessage": "Liefertag wählen.",
       "preferredLocationAlertMessage": "Ablageort eingeben.",
       "preferredNeighbourNameAlertMessage": "Nachbar: Nachname, Vorname eingeben.",
       "preferredNeighbourAddressMessage": "Nachbar: Straße, Hausnummer, PLZ und Ort eingeben.",
       "preferredNeigbourMaxCharViolation": "Maximale Zeichenanzahl (100) überschritten.",
       "submitWunschpaketServices": "Einstellungen für Wunschzustellung-Services übernommen.",
       "apply": "Übernehmen",
-      "parcelApiCallLog": "Parcel API call log",
       "invalidPostalCodeMessage": "Bitte prüfen Sie die Eingabe der Postleitzahl. Es wird ein 5-stelliger numerischer Wert erwartet - z.B. '34117'.",
-      "noServicesMessage1": "Bitte prüfen Sie die Eingabe der Postleitzahl. Es wird ein 5-stelliger numerischer Wert erwartet - z.B. '34117'.",
-      "noServicesMessage2": "Es konnten keine gültigen Services für DHL Wunschzustellung ermittelt werden.",
-      "assistantDescription": "Verwende diesen Assistenten, um mit dem DHL Wunschzustellung-Plugin die DHL Wunschzustellung-Services in deinem Shop zu integrieren.",
-      "warning": "Warnhinweis",
-      "wunschpaketRequirementWarning": "Speichere einen Aufpreis für den Service {preferredDayMsg}. Die Wunschzustellung-Services selbst aktivierst du dann im Assistenten {shippingSettingsMsg}. Bestimme hier außerdem die Cut-off-Zeit und lege fest, an welchen Tagen keine Paketübergabe an DHL erfolgt.",
-      "additionalCharge": "Aufpreis",
-      "preferredDay": "Aufpreis Liefertag",
-      "cutofftime": "Cut-off-Zeit",
-      "cutofftimeDescription": "Die Cut-off-Zeit ist die spätestmögliche Bestellzeit, bis zu dem der Mindestwunschtag (Bestelltag + 2 Werktage) garantiert werden kann. Wenn der Zeitpunkt überschritten wird, wird der frühestmögliche Liefertag, der im Frontend angezeigt wird, einen Tag nach hinten verschoben (Bestelltag + 3 Werktage).",
-      "hour": "Stunde",
-      "minute": "Minute",
-      "exclusionTransfer": "Ausschluss von Übergabetagen",
-      "exclusionTransferDescription": "An den Werktagen, die du aktivierst, findet keine Übergabe von Paketen an DHL statt (zusätzlich zu Sonntagen und Feiertagen). Diese Angabe ermittelt den ersten Liefertag, der im Webshop angezeigt wird.",
-      "step1Title": "Service-Einstellungen",
-      "gmapsApiKey": "API-Schlüssel",
-      "additionalChargeDescription": "Gib den Bruttopreis für den Service {preferredDayMsg} ein. Der Preis wird deinen Kund:innen in Rechnung gestellt, wenn sie den Service in deinem Webshop wählen. Gib 0 ein, um diesen Service kostenfrei anzubieten.",
-      "postnumberRequired": "Möchtest du, dass die DHL Postnummer ein Pflichtfeld für deine Kunden ist, wenn sie eine Postfiliale im Finder wählen?",
-      "finderSettingsTitle": "Einstellungen für den DHL Packstation/Postfiliale-Finder",
-      "finderSettingsDescription": "Gib deinen Google Maps API-Schlüssel ein, um den Finder korrekt verwenden zu können. Im Assistenten {shippingSettingsMsg} kannst du den Finder aktivieren. Entscheide außerdem, ob die DHL Postnummer ein Pflichtfeld sein soll, wenn ein Kunde im Finder eine Postfiliale wählt."
+      "additionalCharge": "Aufpreis"
     },
     "packstation": {
       "title": "DHL Packstation / Postfiliale",
+      "zipcodeLabel": "Postleitzahl",
       "zipcodePlaceholder": "PLZ",
+      "cityLabel": "Stadt/Ort",
       "cityPlaceholder": "Ort",
+      "streetLabel": "Geben Sie Ihre Straße ein ",
       "streetPlaceholder": "Straße",
       "dropDownValues": {
-        "both": "Packstation/Postfiliale",
         "postfilial": "Postfiliale",
         "packstation": "Packstation"
       },
       "nameInfo": "Der Name wird aus der Rechnungsadresse übernommen. Die Postnummer und die Adresse der Packstation/Postfiliale werden als Lieferadresse übernommen.",
       "search": "Suchen",
-      "backToList": "Zurück zur Liste",
-      "loading": "Laden",
-      "noResult1": "Es konnten keine Ergebnisse gefunden werden.",
       "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
       "setPackstation": "Übernehmen",
-      "moreDetails": "Details",
       "postNumberPlaceholder": "Postnummer",
       "packstationAddedSuccessMessage": "Die Packstation/Postfiliale wurde als Lieferadresse übernommen.",
       "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",
       "postnumberRequired": "Die Postnummer ist eine Pflichtangabe. Bitte geben Sie Ihre DHL Postnummer ein.",
-      "locationSearchUnifiedCall": "Location Search Unified API Call",
-      "locationSearchUnifiedCallError": "Location Search Unified API error"
+      "days": {
+        "Monday": "Montag",
+        "Tuesday": "Dienstag",
+        "Wednesday": "Mittwoch",
+        "Thursday": "Donnerstag",
+        "Friday": "Freitag",
+        "Saturday": "Samstag",
+        "Sunday": "Sonntag"
+      }
     }
   }
 }
