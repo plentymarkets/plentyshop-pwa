@@ -285,7 +285,7 @@ const addToCart = async () => {
 };
 
 const roundAmount = (value: number) => {
-  return Math.floor(Math.round(value * 100)) / 100;
+  return Math.round(value * 100) / 100;
 };
 const itemPrice = (item: OrderItem): number => {
   if (showNetPrices) {
