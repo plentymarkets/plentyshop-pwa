@@ -92,7 +92,7 @@ import { object, string } from 'yup';
 import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { data: newCategory, addCategory } = useCategory();
+const { data: newCategory, addCategory } = useCategoryManagement();
 const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
 
 const fetchCategoriesByName = async (name: string = '') => {

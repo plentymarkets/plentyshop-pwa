@@ -6,11 +6,11 @@ import type { UseCategoryState, UseCategoryMethodsReturn } from './types';
  * @returns UseCategoryMethodsReturn
  * @example
  * ``` ts
- * const { data, loading, addCategory } = useCategory();
+ * const { data, loading, addCategory } = useCategoryManagement();
  * ```
  */
-export const useCategory: UseCategoryMethodsReturn = () => {
-  const state = useState<UseCategoryState>('useCategory', () => ({
+export const useCategoryManagement: UseCategoryMethodsReturn = () => {
+  const state = useState<UseCategoryState>('useCategoryManagement', () => ({
     data: {} as CategoryEntry,
     loading: false,
   }));
