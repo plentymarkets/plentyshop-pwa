@@ -20,5 +20,5 @@ const { setCustomerWish } = useAdditionalInformation();
 const customerWish = ref('');
 const config = useRuntimeConfig().public;
 const showCustomerWishComponent = config.showCustomerWishComponent;
-setCustomerWish('');
+setCustomerWish(null);
 </script>

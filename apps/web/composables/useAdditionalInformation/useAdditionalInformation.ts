@@ -21,7 +21,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     data: null,
     loading: false,
     shippingPrivacyAgreement: false,
-    customerWish: '',
+    customerWish: null,
     showErrors: false,
   }));
 
@@ -81,7 +81,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
    * });
    * ```
    */
-  const setCustomerWish = (customerWish: string) => {
+  const setCustomerWish = (customerWish: string | null) => {
     state.value.loading = true;
     state.value.customerWish = customerWish;
     state.value.loading = false;
