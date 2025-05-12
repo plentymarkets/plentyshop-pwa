@@ -1,3 +1,3 @@
-export * from './useCategory';
+export * from './useCategoryManagement';
 
 export * from './types';
