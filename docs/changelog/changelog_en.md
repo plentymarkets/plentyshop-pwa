@@ -6,6 +6,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
+- Added DHL delivery location finder functionality.
 - Added robots for declaration of accessibility page
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
@@ -44,6 +45,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Fix styling of editor actions on content pages.
 - (dev) Fix notification and modal closing of delete category
 - (dev) Fix Page Seo title tooltip
+- (dev) Fix editor page navigation
 
 # v1.15.0 (2025-05-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.15.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

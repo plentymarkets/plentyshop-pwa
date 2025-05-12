@@ -8,11 +8,7 @@
       <span v-if="item.hasChildren">
         <SfIconExpandMore />
       </span>
-      <router-link
-        v-if="!isTablet"
-        :to="`${localePrefix}/${item.details[0].nameUrl}`"
-        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
-      >
+      <router-link v-if="!isTablet" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
         <span v-if="item.details[0].name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
         </span>
@@ -48,7 +44,7 @@
           class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
           @click="
             openSettingsMenu(item.id);
-            setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
+            setCategoryId(item.id, parentId, item.details[0].name, pagePath);
           "
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
@@ -92,14 +88,15 @@ const { usePaginatedChildren } = useCategoriesSearch();
 const viewport = useViewport();
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-const { locale } = useI18n();
-const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
-
 const { item } = defineProps<{
   item: CategoryEntry;
   parentId: number | undefined;
 }>();
 
+const pagePath = computed(() => {
+  const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
+  return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
+});
 const { setSettingsCategory } = useSiteConfiguration();
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();

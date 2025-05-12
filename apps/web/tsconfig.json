@@ -2,9 +2,9 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "types": ["vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs", "@types/googlepay"],
+    "types": ["vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs", "@types/googlepay", "@types/google.maps"],
     "verbatimModuleSyntax": false,
-    "noImplicitAny": true,
+    "noImplicitAny": true
   },
   "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
   "typedocOptions": {

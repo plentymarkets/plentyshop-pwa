@@ -36,7 +36,7 @@ describe('Feature: Language Selector', () => {
     languageSelect
       .openModal()
       .changeLanguage('de')
-      .waitFor(['@getProduct', '@getCategoryTree'])
+      .waitFor(['@getProduct', '@getCategoryTree', '@getFacet'])
       .checkUrl('/de/wohnzimmer/sessel-hocker/sessel-afterwork_122');
   });
 
