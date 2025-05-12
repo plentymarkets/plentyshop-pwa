@@ -37,6 +37,8 @@
       </NuxtLayout>
     </div>
   </div>
+  <UiPageModal />
+  <UiUnlinkCategoryModal />
 </template>
 
 <script setup lang="ts">
