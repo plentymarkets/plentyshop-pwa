@@ -36,6 +36,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🩹 Fixed
 
+- Fixed an issue in the guest checkout flow that allowed address saving without providing an email.
 - Fixed an issue where the currency was not displayed correctly.
 - Fixed a z-index issue in the checkout.
 - (dev) Fix Page Selector state.
