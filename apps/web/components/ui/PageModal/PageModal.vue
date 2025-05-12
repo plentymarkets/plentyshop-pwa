@@ -49,13 +49,16 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="categories"
+          :options="data.entries || []"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
           class="cursor-pointer"
           select-label=""
           deselect-label="Selected"
+          :searchable="true"
+          :internal-search="false"
+          @search-change="handleSearch"
         />
       </div>
 
@@ -89,9 +92,30 @@ import { object, string } from 'yup';
 import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { data: categoryTree } = useCategoryTree();
 const { addCategory } = useCategory();
-
+const { data, getCategories } = useCategoriesSearch();
+const fetchCategoriesByName = async (name: string = '') => {
+  await getCategories({
+    type: 'in:item,content',
+    sortBy: 'position_asc,name_asc',
+    with: 'details,clients',
+    name: name ? `like:${name}` : '',
+  });
+};
+const loadInitialCategories = async () => {
+  await fetchCategoriesByName();
+};
+watch(
+  () => pageModalOpen.value,
+  async (isOpen) => {
+    if (isOpen) {
+      resetForm();
+      parentPage.value = emptyCategoryItem;
+      pageType.value = pageTypes.value[0];
+      await loadInitialCategories();
+    }
+  },
+);
 const validationSchema = toTypedSchema(
   object({
     pageName: string().required('Enter a page name').default(''),
@@ -118,20 +142,6 @@ const closeModal = () => {
   resetForm();
   togglePageModal(false);
 };
-
-const flattenCategories = (items: CategoryTreeItem[]) => {
-  let flat: CategoryTreeItem[] = [];
-  items.forEach((item: CategoryTreeItem) => {
-    if (item.type === 'item' || item.type === 'content') {
-      flat.push(item);
-    }
-    if (item.children && item.children.length) {
-      flat = flat.concat(flattenCategories(item.children));
-    }
-  });
-  return flat;
-};
-
 const getLabel = (option: CategoryTreeItem) => {
   return option.details && option.details.length ? option.details[0].name : '';
 };
@@ -145,8 +155,6 @@ const emptyCategoryItem: CategoryTreeItem = {
   details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
 };
 
-const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
-
 const [pageName, pageNameAttributes] = defineField('pageName');
 const pageTypes = ref([
   { label: 'Content', value: 'content' },
@@ -154,6 +162,13 @@ const pageTypes = ref([
 ]);
 const pageType = ref(pageTypes.value[0]);
 const parentPage = ref(emptyCategoryItem);
-
 const onSubmit = handleSubmit(() => createNewPage());
+const debouncedSearch = debounce(async (query: string) => {
+  if (!query || query.length < 2) return;
+  await fetchCategoriesByName(query);
+}, 500);
+
+const handleSearch = (query: string) => {
+  debouncedSearch(query);
+};
 </script>
