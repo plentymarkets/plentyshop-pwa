@@ -16,12 +16,9 @@
     </header>
 
     <p class="mb-6">
-      Page '{{ getCategoryName }}' will be deleted. Please note that all it's subpages will be deleted as well.
+      {{ deleteMessage }}
     </p>
 
-    <p>
-      {{ getPageHasChildren }}
-    </p>
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
         <button
@@ -55,6 +52,23 @@ import { SfIconClose } from '@storefront-ui/vue';
 const { setSettingsCategory } = useSiteConfiguration();
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
 const { getCategoryId, getCategoryName, getPageType, getPageHasChildren } = useCategoryIdHelper();
+
+const deleteMessage = computed(() => {
+  const pageName = getCategoryName.value;
+  const pageType = getPageType.value;
+  const hasChildren = getPageHasChildren.value;
+
+  if (pageType === 'content') {
+    return hasChildren
+      ? `Page "${pageName}" will be deleted. Please note that all its subpages will be deleted as well.`
+      : `Page "${pageName}" will be deleted.`;
+  } else if (pageType === 'item') {
+    return hasChildren
+      ? `"${pageName}" will be deleted and all assigned products will lose their association. Please note that all its subcategories will be deleted as well.`
+      : `Product Category "${pageName}" will be deleted and all assigned products will lose their association.`;
+  }
+  return '';
+});
 
 const currentCategoryId = computed(() => getCategoryId.value);
 

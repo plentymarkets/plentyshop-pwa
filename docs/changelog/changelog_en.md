@@ -28,6 +28,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Add Settings View
 - (dev) Changed design for settings drawer
 - (dev) Logo preview
+- (dev) Extended hint text for subpages on deletion
 
 ### 👷 Changed
 
