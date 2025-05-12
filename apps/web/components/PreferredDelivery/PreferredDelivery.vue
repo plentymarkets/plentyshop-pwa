@@ -91,7 +91,6 @@
           v-bind="locationValueAttributes"
           :invalid="Boolean(errors['location.value'])"
           :placeholder="t('PreferredDelivery.general.wunschortExample')"
-          wrapper-class="mt-4"
         />
         <ErrorMessage as="span" name="location.value" class="flex text-negative-700 text-sm mt-2" />
       </template>
@@ -127,7 +126,6 @@
           v-bind="neighbourNameAttributes"
           :invalid="Boolean(errors['neighbour.name'])"
           :placeholder="t('PreferredDelivery.general.wunschnachbarExampleName')"
-          wrapper-class="mt-4"
         />
         <ErrorMessage as="span" name="neighbour.name" class="flex text-negative-700 text-sm mt-2" />
 
@@ -142,7 +140,6 @@
           v-bind="neighbourAddressAttributes"
           :invalid="Boolean(errors['neighbour.address'])"
           :placeholder="t('PreferredDelivery.general.wunschnachbarExampleAddress')"
-          wrapper-class="mt-4"
         />
         <ErrorMessage as="span" name="neighbour.address" class="flex text-negative-700 text-sm mt-2" />
       </template>
