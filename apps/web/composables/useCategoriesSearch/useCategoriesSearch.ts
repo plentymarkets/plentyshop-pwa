@@ -16,17 +16,14 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   }));
 
   const insertIntoParent = (newPage: CategoryEntry, nodes: CategoryEntry[]): boolean => {
-    for (const node of nodes) {
+    return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
-        if (!node.children) node.children = [];
+        node.children = node.children || [];
         node.children.unshift(newPage);
         return true;
       }
-      if (node.children && insertIntoParent(newPage, node.children)) {
-        return true;
-      }
-    }
-    return false;
+      return node.children ? insertIntoParent(newPage, node.children) : false;
+    });
   };
 
   const addNewPageToTree = (newPage: CategoryEntry) => {
@@ -43,7 +40,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       item: state.value.itemItems,
     }[newPage.type];
 
-    // If it has no parent, insert at root level
     if (!newPage.parentCategoryId) {
       targetArray?.unshift(newPage);
       return;
@@ -53,20 +49,23 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   };
 
   const deleteFromTree = (id: number, nodes: CategoryEntry[]): CategoryEntry[] => {
-    return nodes
-      .map((node) => {
-        if (node.id === id) return null;
+    return nodes.reduce<CategoryEntry[]>((acc, node) => {
+      if (node.id === id) return acc;
 
-        const newNode: CategoryEntry = { ...node };
+      const updatedNode: CategoryEntry = { ...node };
 
-        if (node.children) {
-          const updatedChildren = deleteFromTree(id, node.children);
-          newNode.children = updatedChildren.length > 0 ? updatedChildren : undefined;
+      if (node.children) {
+        const prunedChildren = deleteFromTree(id, node.children);
+        if (prunedChildren.length) {
+          updatedNode.children = prunedChildren;
+        } else {
+          delete updatedNode.children;
         }
+      }
 
-        return newNode;
-      })
-      .filter(Boolean) as CategoryEntry[]; // Remove null entries
+      acc.push(updatedNode);
+      return acc;
+    }, []);
   };
 
   const deletePageFromTree = (id: number) => {
@@ -155,9 +154,10 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     };
 
     const addChildrenToParent = (parentId: number, children: CategoryEntry[]) => {
+      const { send } = useNotification();
       const parent = findCategoryById(state.value.contentItems, parentId);
       if (!parent) {
-        console.error(`Parent category with ID ${parentId} not found.`);
+        send({ message: `Parent category with ID ${parentId} not found.`, type: 'negative' });
         return;
       }
 
@@ -169,6 +169,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     };
 
     const fetchMore = async () => {
+      const { send } = useNotification();
       if (loading.value || !hasMore.value) return;
 
       loading.value = true;
@@ -190,7 +191,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
         hasMore.value = !result.isLastPage;
         page.value++;
       } catch (error) {
-        console.error(`Error fetching children for category ${category.id}:`, error);
+        send({ message: `Error fetching children for category ${category.id}: ${error}`, type: 'negative' });
       } finally {
         loading.value = false;
       }
