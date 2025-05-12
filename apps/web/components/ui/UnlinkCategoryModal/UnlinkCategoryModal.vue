@@ -8,13 +8,17 @@
     overlay-classes="z-[1000]"
   >
     <header class="flex items-center justify-between mb-2">
-      <div class="flex items-center text-xl font-bold">Delete page?</div>
+      <div v-if="getPageType === 'item'" class="flex items-center text-xl font-bold">Delete Product Category?</div>
+      <div v-else class="flex items-center text-xl font-bold">Delete page?</div>
       <button class="absolute right-2 top-2 px-4 py-4" @click="closeModal">
         <SfIconClose />
       </button>
     </header>
 
-    <p class="mb-6">{{ getCategoryName }} page will be deleted</p>
+    <p class="mb-6">
+      Page '{{ getCategoryName }}' will be deleted. Please note that all it's subpages will be deleted as well.
+    </p>
+
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
         <button
@@ -47,7 +51,7 @@
 import { SfIconClose } from '@storefront-ui/vue';
 const { setSettingsCategory } = useSiteConfiguration();
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
-const { getCategoryId, getCategoryName } = useCategoryIdHelper();
+const { getCategoryId, getCategoryName, getPageType } = useCategoryIdHelper();
 
 const currentCategoryId = computed(() => getCategoryId.value);
 

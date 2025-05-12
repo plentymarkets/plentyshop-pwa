@@ -19,7 +19,7 @@
         v-else
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
         @click="
-          openSettingsMenu(item.id);
+          openSettingsMenu(item.id, item.type);
           setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
         "
       >
@@ -43,7 +43,7 @@
           viewBox="0 0 24 24"
           class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
           @click="
-            openSettingsMenu(item.id);
+            openSettingsMenu(item.id, item.type);
             setCategoryId(item.id, parentId, item.details[0].name, pagePath);
           "
         >
@@ -99,7 +99,7 @@ const pagePath = computed(() => {
 });
 const { setSettingsCategory } = useSiteConfiguration();
 const currentGeneralPageId = ref<number | null>(null);
-const { setCategoryId } = useCategoryIdHelper();
+const { setCategoryId, setPageType } = useCategoryIdHelper();
 const open = ref(false);
 const childrenPagination = usePaginatedChildren(item.id);
 
@@ -120,8 +120,9 @@ const handleChildrenScroll = async (e: Event) => {
 
 const route = useRoute();
 const isActive = computed(() => route.path === item?.details[0].nameUrl);
-const openSettingsMenu = (id: number) => {
+const openSettingsMenu = (id: number, pageType?: string) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-menu');
+  setPageType(pageType);
 };
 </script>
