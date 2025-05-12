@@ -49,7 +49,7 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="data.entries"
+          :options="data.entries || []"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
@@ -106,7 +106,6 @@ const fetchCategoriesByName = async (name: string = '') => {
 const loadInitialCategories = async () => {
   await fetchCategoriesByName();
 };
-await loadInitialCategories();
 watch(
   () => pageModalOpen.value,
   async (isOpen) => {
