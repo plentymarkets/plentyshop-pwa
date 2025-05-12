@@ -21,6 +21,7 @@
         @click="
           openSettingsMenu(item.id, item.type);
           setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
+          checkIfItemHasChildren();
         "
       >
         <span v-if="item.details[0].name === 'Homepage'">
@@ -45,6 +46,7 @@
           @click="
             openSettingsMenu(item.id, item.type);
             setCategoryId(item.id, parentId, item.details[0].name, pagePath);
+            checkIfItemHasChildren();
           "
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
@@ -99,7 +101,7 @@ const pagePath = computed(() => {
 });
 const { setSettingsCategory } = useSiteConfiguration();
 const currentGeneralPageId = ref<number | null>(null);
-const { setCategoryId, setPageType } = useCategoryIdHelper();
+const { setCategoryId, setPageType, setPageHasChildren } = useCategoryIdHelper();
 const open = ref(false);
 const childrenPagination = usePaginatedChildren(item.id);
 
@@ -124,5 +126,13 @@ const openSettingsMenu = (id: number, pageType?: string) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-menu');
   setPageType(pageType);
+};
+
+const checkIfItemHasChildren = () => {
+  if (item.hasChildren) {
+    setPageHasChildren(true);
+  } else {
+    setPageHasChildren(false);
+  }
 };
 </script>

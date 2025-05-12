@@ -19,6 +19,9 @@
       Page '{{ getCategoryName }}' will be deleted. Please note that all it's subpages will be deleted as well.
     </p>
 
+    <p>
+      {{ getPageHasChildren }}
+    </p>
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
         <button
@@ -51,7 +54,7 @@
 import { SfIconClose } from '@storefront-ui/vue';
 const { setSettingsCategory } = useSiteConfiguration();
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
-const { getCategoryId, getCategoryName, getPageType } = useCategoryIdHelper();
+const { getCategoryId, getCategoryName, getPageType, getPageHasChildren } = useCategoryIdHelper();
 
 const currentCategoryId = computed(() => getCategoryId.value);
 
