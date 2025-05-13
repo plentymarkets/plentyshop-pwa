@@ -4,7 +4,7 @@
       <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
       <CategoryPageContent
         v-if="productsCatalog"
-        :title="$t('resultsFor', { phrase: tagName })"
+        :title="t('resultsFor', { phrase: tagName })"
         :total-products="searchPaginationTotals"
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
@@ -29,6 +29,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 definePageMeta({ layout: false });
 
 const route = useRoute();
+const { t } = useI18n();
 const { data: productsCatalog, productsPerPage, loading, searchByTag } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
 const [tagName, tagId] = route.params.slug.toString().split('_');

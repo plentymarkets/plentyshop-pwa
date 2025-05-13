@@ -7,8 +7,8 @@ import type {
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-import homepageTemplateDataDe from '~/composables/useHomepage/homepageTemplateDataDe.json';
-import homepageTemplateDataEn from '~/composables/useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from './homepageTemplateDataDe.json';
+import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);

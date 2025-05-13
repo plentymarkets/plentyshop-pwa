@@ -17,8 +17,8 @@
     >
       <div class="grid grid-rows-category-sidebar h-full md:block">
         <div class="p-4 flex justify-between items-center md:hidden">
-          <span class="font-bold text-lg">{{ $t('listSettings') }}</span>
-          <UiButton variant="tertiary" :aria-label="$t('closeListSettings')" @click="$emit('close')">
+          <span class="font-bold text-lg">{{ t('listSettings') }}</span>
+          <UiButton variant="tertiary" :aria-label="t('closeListSettings')" @click="$emit('close')">
             <template #prefix>
               <SfIconClose class="text-neutral-500" />
             </template>
@@ -27,7 +27,7 @@
         <slot class="overflow-y-auto md:overflow-y-visible py-4 md:p-0" />
         <div class="p-4 md:mt-2 flex flex-wrap justify-between border-t border-t-neutral-200 md:border-0 gap-3">
           <UiButton class="md:hidden whitespace-nowrap flex flex-1" variant="primary" @click="$emit('close')">
-            {{ $t('showProducts') }}
+            {{ t('showProducts') }}
           </UiButton>
         </div>
       </div>
@@ -38,6 +38,8 @@
 <script setup lang="ts">
 import { SfDrawer, SfIconClose } from '@storefront-ui/vue';
 import type { CategorySidebarEmits, CategorySidebarProps } from '~/components/CategorySidebar/types';
+
+const { t } = useI18n();
 
 defineProps<CategorySidebarProps>();
 defineEmits<CategorySidebarEmits>();

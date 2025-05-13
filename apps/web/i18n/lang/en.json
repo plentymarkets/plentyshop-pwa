@@ -346,6 +346,7 @@
   "closeDrawer": "Close Drawer",
   "closeListSettings": "Close list settings",
   "closeMenu": "Close Menu",
+  "browseProducts": "Browse Products",
   "coming-soon": "Coming Soon",
   "contact": {
     "clearAll": "Clear all",
@@ -1041,6 +1042,9 @@
       "preferredNeighbourNameAlertMessage": "Preferred neighbour: Enter last name and first name.",
       "preferredNeighbourAddressMessage": "Preferred neighbour: Enter street, house number, postcode and town.",
       "preferredNeigbourMaxCharViolation": "Maximum number of characters (100) exceeded.",
+      "preferredNeighbourFullName": "Enter your preferred neighbor's full name",
+      "preferredNeighbourAddress": "Enter your preferred neighbor's full address",
+      "preferredDropOffLocation": "Enter your preferred dropoff location",
       "submitWunschpaketServices": "Settings for preferred services submitted.",
       "apply": "Apply",
       "invalidPostalCodeMessage": "Please check the postcode. The postcode is not valid. A 5-digit value is expected.",

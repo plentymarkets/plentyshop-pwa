@@ -83,7 +83,8 @@
         </label>
 
         <UiButton type="submit" :disabled="loading" variant="secondary" class="order-3 sm:order-1 w-fit mt-3 sm:mt-0">
-          {{ t('PreferredDelivery.packstation.search') }}
+          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+          <span v-else>{{ t('PreferredDelivery.packstation.search') }}</span>
         </UiButton>
       </div>
     </form>
@@ -131,7 +132,7 @@
                 v-model="postNumber"
                 type="text"
                 name="postnumber"
-                :placeholder="$t('PreferredDelivery.packstation.postNumberPlaceholder')"
+                :placeholder="t('PreferredDelivery.packstation.postNumberPlaceholder')"
                 wrapper-class="w-full"
               />
 
@@ -206,7 +207,7 @@
 
 <script setup lang="ts">
 import { ErrorMessage, useForm } from 'vee-validate';
-import { SfCheckbox, SfIconLocationOn, SfInput } from '@storefront-ui/vue';
+import { SfCheckbox, SfIconLocationOn, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const { postNumber, savePackstationAddress } = usePackstationAddress();
 const { loading, data, getShippingProfilesData, deliveryLocationAvailable, validationSchema, submitForm } =

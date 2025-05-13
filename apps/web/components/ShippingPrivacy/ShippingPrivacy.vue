@@ -10,10 +10,10 @@
       @update:model-value="(event) => setShippingPrivacyAgreement(Boolean(event))"
     />
     <label for="shipping-agreement-checkbox" class="cursor-pointer select-none">
-      {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+      {{ t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
     </label>
   </div>
-  <div v-if="showErrors" class="text-negative-700 text-sm mb-4">{{ $t('privacyPolicyRequired') }}</div>
+  <div v-if="showErrors" class="text-negative-700 text-sm mb-4">{{ t('privacyPolicyRequired') }}</div>
 </template>
 
 <script lang="ts" setup>
@@ -22,6 +22,7 @@ import { SfCheckbox } from '@storefront-ui/vue';
 
 const { shippingPrivacyAgreement, showErrors, setShippingPrivacyAgreement } = useAdditionalInformation();
 const { selectedMethod } = useCartShippingMethods();
+const { t } = useI18n();
 
 const parcelServiceInformation = computed(() =>
   selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '',

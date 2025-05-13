@@ -3,14 +3,14 @@
     <h6
       class="bg-neutral-100 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
-      {{ $t('perPage') }}
+      {{ t('perPage') }}
     </h6>
 
     <div class="px-4">
       <SfSelect
         id="perPage"
         v-model="selected"
-        :aria-label="$t('perPage')"
+        :aria-label="t('perPage')"
         @change="updateItemsPerPage(Number(selected))"
       >
         <option v-for="{ value, label, disabled } in options" :key="value" :value="value" :disabled="disabled">
@@ -29,6 +29,7 @@ import { defaults } from '~/composables';
 const props = defineProps<CategoryItemsPerPageProps>();
 
 const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
+const { t } = useI18n();
 
 const options = ref(
   defaults.PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })),
