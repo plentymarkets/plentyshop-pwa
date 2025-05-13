@@ -3,7 +3,7 @@
     <span class="font-bold">
       {{ basketItemOrderParam.name }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(property).surchargeType">
-        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(property).surchargeType) }}
+        ({{ t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(property).surchargeType) }}
         {{ format(productPropertyGetters.getOrderPropertySurcharge(property)) }})</span
       >
     </span>
@@ -24,6 +24,7 @@ import type { CartOrderPropertyProps } from '~/components/CartOrderProperty/type
 import { cartGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
+const { t } = useI18n();
 const { format } = usePriceFormatter();
 const { downloadFile } = useProductOrderProperties();
 const loading = ref(false);

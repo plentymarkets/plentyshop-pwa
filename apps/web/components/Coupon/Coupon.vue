@@ -3,7 +3,7 @@
     <SfAccordionItem v-if="!cartGetters.getCouponDiscount(cart)" v-model="openedCoupon" data-testid="couponZone">
       <template #summary>
         <div :class="['flex justify-between font-medium p-3', { 'my-4 bg-gray-100 rounded-md': openedCoupon }]">
-          <p class="pl-3">{{ $t('coupon.title') }}</p>
+          <p class="pl-3">{{ t('coupon.title') }}</p>
           <SfIconChevronLeft
             :class="['text-neutral-500', { 'rotate-90': openedCoupon, '-rotate-90': !openedCoupon }]"
           />
@@ -13,8 +13,8 @@
         <div class="flex-grow mr-2" data-testid="couponCode">
           <SfInput
             v-model="couponCode"
-            :placeholder="$t('coupon.enterCode')"
-            :aria-label="$t('coupon.name')"
+            :placeholder="t('coupon.enterCode')"
+            :aria-label="t('coupon.name')"
             type="text"
             name="couponCode"
             required
@@ -30,7 +30,7 @@
         >
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else>
-            {{ $t('coupon.apply') }}
+            {{ t('coupon.apply') }}
           </span>
         </UiButton>
       </div>
@@ -47,7 +47,7 @@
         >
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else class="underline">
-            {{ $t('coupon.remove') }}
+            {{ t('coupon.remove') }}
             <SfIconClose />
           </span>
         </UiButton>
@@ -62,6 +62,7 @@ import { SfAccordionItem, SfIconChevronLeft, SfIconClose, SfInput, SfLoaderCircu
 const openedCoupon = ref(false);
 const couponCode = ref('');
 const { addCoupon, deleteCoupon, loading } = useCoupon();
+const { t } = useI18n();
 const { data: cart } = useCart();
 
 const handleDeleteCoupon = async () => {

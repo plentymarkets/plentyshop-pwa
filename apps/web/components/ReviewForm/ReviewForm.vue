@@ -64,7 +64,7 @@
         <UiFormLabel for="review-message" class="mt-4">
           <template v-if="isReplyUpdateModal">
             {{ t('review.yourAnswer') }}
-            {{ $t('asterisk') }}
+            {{ t('asterisk') }}
           </template>
           <template v-else-if="isCreateReviewModal || isUpdateReviewModal">
             {{ t('review.reviewText') }}

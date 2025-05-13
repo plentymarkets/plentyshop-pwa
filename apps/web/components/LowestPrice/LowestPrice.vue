@@ -1,6 +1,6 @@
 <template>
   <div v-if="showLowestPrice" class="text-sm mb-2">
-    {{ $t('lowestPrice', { price: format(lowestPrice) }) }}
+    {{ t('lowestPrice', { price: format(lowestPrice) }) }}
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import { useProductPrice } from '~/composables/useProductPrice';
 
 const props = defineProps<LowestPriceProps>();
 const { format } = usePriceFormatter();
+const { t } = useI18n();
 const { price } = useProductPrice(props.product);
 
 const lowestPrice = computed(() => Number(productGetters.getLowestPrice(props.product)));
