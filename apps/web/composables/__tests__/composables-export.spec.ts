@@ -24,10 +24,6 @@ describe('composables index exports', () => {
 
     fileModules.push('defaults');
 
-    console.log(exportedModules.sort());
-    console.log(fileModules.sort());
-
-
     it('should export every use* composable file', () => {
         expect(exportedModules.sort()).toEqual(fileModules.sort())
     })
