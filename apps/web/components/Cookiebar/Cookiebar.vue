@@ -78,7 +78,7 @@
                   v-if="propKey !== 'name' && propKey !== 'accepted' && propKey !== 'cookieNames'"
                   class="flex p-2 mb-1 bg-white"
                 >
-                  <div class="w-1/4">
+                  <div class="w-1/4 break-words mr-2">
                     {{ t(`CookieBar.keys.${propKey}`) }}
                   </div>
                   <div class="w-3/4 break-words">

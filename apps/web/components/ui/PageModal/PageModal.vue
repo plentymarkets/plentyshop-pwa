@@ -93,8 +93,10 @@ import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-
 
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
 const { addCategory } = useCategory();
-const { data, getCategories } = useCategoriesSearch();
+const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
 const { getCategoryName, getCategoryId } = useCategoryIdHelper();
+
+const { data: newCategory, addCategory } = useCategoryManagement();
 
 const fetchCategoriesByName = async (name: string = '') => {
   await getCategories({
@@ -107,7 +109,6 @@ const fetchCategoriesByName = async (name: string = '') => {
 const loadInitialCategories = async () => {
   await fetchCategoriesByName();
 };
-await loadInitialCategories();
 watch(
   () => pageModalOpen.value,
   async (isOpen) => {
@@ -119,6 +120,7 @@ watch(
     }
   },
 );
+
 const validationSchema = toTypedSchema(
   object({
     pageName: string().required('Enter a page name').default(''),
@@ -134,11 +136,13 @@ const createNewPage = async () => {
     return;
   }
 
-  addCategory({
+  await addCategory({
     name: pageName?.value || '',
     type: pageType.value.value,
     parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
   });
+
+  addNewPageToTree(newCategory.value);
 };
 
 const closeModal = () => {
