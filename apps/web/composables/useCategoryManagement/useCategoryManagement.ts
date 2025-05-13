@@ -1,4 +1,4 @@
-import type { Category, CategoryParams } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryParams } from '@plentymarkets/shop-api';
 import type { UseCategoryState, UseCategoryMethodsReturn } from './types';
 
 /**
@@ -6,12 +6,12 @@ import type { UseCategoryState, UseCategoryMethodsReturn } from './types';
  * @returns UseCategoryMethodsReturn
  * @example
  * ``` ts
- * const { data, loading, addCategory } = useCategory();
+ * const { data, loading, addCategory } = useCategoryManagement();
  * ```
  */
-export const useCategory: UseCategoryMethodsReturn = () => {
-  const state = useState<UseCategoryState>('useCategory', () => ({
-    data: {} as Category,
+export const useCategoryManagement: UseCategoryMethodsReturn = () => {
+  const state = useState<UseCategoryState>('useCategoryManagement', () => ({
+    data: {} as CategoryEntry,
     loading: false,
   }));
 
@@ -22,7 +22,7 @@ export const useCategory: UseCategoryMethodsReturn = () => {
    * addCategory();
    * ```
    */
-  const addCategory = async (params: CategoryParams) => {
+  const addCategory = async (params: CategoryParams): Promise<void> => {
     const { togglePageModal } = useSiteConfiguration();
     const { send } = useNotification();
 
