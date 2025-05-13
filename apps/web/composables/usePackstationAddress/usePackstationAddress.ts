@@ -28,6 +28,7 @@ export const usePackstationAddress = () => {
     addressToSave.value.country = '1';
     addressToSave.value.city = packstation.place.address.addressLocality;
     addressToSave.value.zipCode = packstation.place.address.postalCode;
+    addressToSave.value.postNumber = state.value.postNumber;
     addressToSave.value.streetName = packstation.location.keyword;
     addressToSave.value.apartment = packstation.location.keywordId;
 
