@@ -5,7 +5,6 @@ const currentCategoryPath = ref<string | null>(null);
 const currentPageType = ref<string | null>(null);
 const currentPageHasChildren = ref<boolean | null>(null);
 
-
 export const useCategoryIdHelper = () => {
   const setCategoryId = (id: number, parentId?: number, name?: string, path?: string) => {
     currentCategoryId.value = id;
