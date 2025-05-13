@@ -7,7 +7,7 @@
   >
     <label>
       <UiFormLabel>
-        {{ hasCompany ? $t('form.firstNameLabel') : `${$t('form.firstNameLabel')} ${$t('form.required')}` }}
+        {{ hasCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -21,7 +21,7 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasCompany ? $t('form.lastNameLabel') : `${$t('form.lastNameLabel')} ${$t('form.required')}` }}
+        {{ hasCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         v-model="lastName"
@@ -35,12 +35,12 @@
 
     <div class="md:col-span-3">
       <SfLink class="select-none hover:cursor-pointer" @click="hasCompany = !hasCompany">
-        {{ !hasCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
+        {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
       </SfLink>
     </div>
 
     <label v-if="hasCompany">
-      <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="companyName"
         name="companyName"
@@ -52,7 +52,7 @@
     </label>
 
     <label v-if="hasCompany" class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="vatNumber"
         autocomplete="vatNumber"
@@ -63,7 +63,7 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="streetName"
         name="streetName"
@@ -75,7 +75,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="apartment"
         name="streetNumber"
@@ -87,7 +87,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="zipCode"
         name="zipCode"
@@ -99,7 +99,7 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="city"
         name="city"
@@ -111,12 +111,12 @@
     </label>
 
     <label class="md:col-span-3">
-      <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
         v-model="country"
         name="country"
         v-bind="countryAttributes"
-        :placeholder="$t('form.selectPlaceholder')"
+        :placeholder="t('form.selectPlaceholder')"
         :invalid="Boolean(errors['country'])"
         wrapper-class-name="bg-white"
         class="!ring-1 !ring-neutral-200"
@@ -144,7 +144,7 @@
           variant="secondary"
           type="submit"
         >
-          {{ $t('saveAddress') }}
+          {{ t('saveAddress') }}
         </UiButton>
 
         <UiButton
@@ -153,7 +153,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Billing}`"
-          :aria-label="$t('closeAddressForm')"
+          :aria-label="t('closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
@@ -184,6 +184,7 @@ const {
   validationSchema: billingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Billing);
+const { t } = useI18n();
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: billingSchema });
