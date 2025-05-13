@@ -35,7 +35,10 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            vue: ['vee-validate', 'vue-i18n', 'vue-router'],
+            'vue-core': ['vue', 'vue-router', '@vue/shared'],
+            'i18n': ['vue-i18n'],
+            'form': ['vee-validate', 'validator'],
+            'utils': ['js-sha256', 'dotenv'],
           },
         },
       },
