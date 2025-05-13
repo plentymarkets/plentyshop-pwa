@@ -68,7 +68,7 @@
           Edit page
         </button>
         <button
-          class="border border-editor-button py-2 rounded-md flex items-center justify-center w-[90%] text-editor-button hover:bg-gray-50"
+          class="border border-red-700 py-2 rounded-md flex items-center justify-center w-[90%] text-red-700 hover:bg-gray-50"
           @click="toggleDeleteModal(true)"
         >
           <SfIconDelete class="mr-2" />
