@@ -49,7 +49,7 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="data.entries"
+          :options="data.entries || []"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
@@ -89,11 +89,15 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
-const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { addCategory } = useCategory();
-const { data, getCategories } = useCategoriesSearch();
+const router = useRouter();
+const { setCategoryId } = useCategoryIdHelper();
+const { pageModalOpen, togglePageModal, setSettingsCategory } = useSiteConfiguration();
+const { data: newCategory, addCategory } = useCategoryManagement();
+const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
+
 const fetchCategoriesByName = async (name: string = '') => {
   await getCategories({
     type: 'in:item,content',
@@ -105,7 +109,6 @@ const fetchCategoriesByName = async (name: string = '') => {
 const loadInitialCategories = async () => {
   await fetchCategoriesByName();
 };
-await loadInitialCategories();
 watch(
   () => pageModalOpen.value,
   async (isOpen) => {
@@ -117,6 +120,7 @@ watch(
     }
   },
 );
+
 const validationSchema = toTypedSchema(
   object({
     pageName: string().required('Enter a page name').default(''),
@@ -132,11 +136,27 @@ const createNewPage = async () => {
     return;
   }
 
-  addCategory({
+  await addCategory({
     name: pageName?.value || '',
     type: pageType.value.value,
     parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
   });
+
+  addNewPageToTree(newCategory.value);
+  await redirectToNewPage(newCategory.value);
+};
+
+const redirectToNewPage = async (newCategory: CategoryEntry) => {
+  await router.push({
+    path: newCategory.details[0].nameUrl,
+  });
+  setCategoryId(
+    newCategory.id,
+    newCategory.parentCategoryId,
+    newCategory.details[0].name,
+    newCategory.details[0].nameUrl,
+  );
+  setSettingsCategory({} as CategoryTreeItem, 'general-menu');
 };
 
 const closeModal = () => {

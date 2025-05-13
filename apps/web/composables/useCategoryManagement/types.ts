@@ -1,11 +1,11 @@
-import type { Category, CategoryParams } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryParams } from '@plentymarkets/shop-api';
 
 export interface UseCategoryState {
-  data: Category;
+  data: CategoryEntry;
   loading: boolean;
 }
 
-export type AddCategory = (params: CategoryParams) => void;
+export type AddCategory = (params: CategoryParams) => Promise<void>;
 
 export interface UseCategoryMethods {
   data: Readonly<Ref<UseCategoryState['data']>>;
