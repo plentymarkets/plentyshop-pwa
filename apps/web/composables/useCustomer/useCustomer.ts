@@ -222,6 +222,10 @@ export const useCustomer: UseCustomerReturn = () => {
     }),
   );
 
+  const missingGuestCheckoutEmail = computed(
+    () => (state.value.isGuest || (!state.value.isGuest && !state.value.isAuthorized)) && !state.value.validGuestEmail,
+  );
+
   const backToContactInformation = (): boolean => {
     const classList = ['bg-primary-50', 'rounded-md'];
     const opacityClass = 'opacity-0';
@@ -253,6 +257,7 @@ export const useCustomer: UseCustomerReturn = () => {
     loginAsGuest,
     changePassword,
     emailValidationSchema,
+    missingGuestCheckoutEmail,
     backToContactInformation,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),

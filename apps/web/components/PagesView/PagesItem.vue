@@ -2,11 +2,12 @@
   <li class="border-b">
     <div
       class="relative"
-      :class="['px-4 py-2  group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
+      :class="['px-4 py-2 group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
       @click="toggle"
     >
       <span v-if="item.hasChildren">
-        <SfIconExpandMore />
+        <SfIconExpandMore v-if="!open" />
+        <SfIconExpandLess v-else />
       </span>
       <router-link v-if="!isTablet" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
         <span v-if="item.details[0].name === 'Homepage'">
@@ -80,7 +81,15 @@
   </li>
 </template>
 <script setup lang="ts">
-import { SfIconHome, SfIconExpandMore, SfIconError, SfTooltip, SfLoaderCircular, SfIconBase } from '@storefront-ui/vue';
+import {
+  SfIconHome,
+  SfIconExpandMore,
+  SfIconExpandLess,
+  SfIconError,
+  SfTooltip,
+  SfLoaderCircular,
+  SfIconBase,
+} from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
@@ -101,7 +110,7 @@ const { setSettingsCategory } = useSiteConfiguration();
 const currentGeneralPageId = ref<number | null>(null);
 const { setCategoryId } = useCategoryIdHelper();
 const open = ref(false);
-const childrenPagination = usePaginatedChildren(item.id);
+const childrenPagination = usePaginatedChildren(item);
 
 const toggle = async () => {
   open.value = !open.value;
@@ -124,4 +133,12 @@ const openSettingsMenu = (id: number) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-menu');
 };
+
+watch(
+  () => item.children,
+  (newChildren) => {
+    childrenPagination.items.value = (newChildren ?? []).filter(Boolean);
+  },
+  { immediate: true, deep: true },
+);
 </script>
