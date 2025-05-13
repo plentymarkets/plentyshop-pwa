@@ -30,6 +30,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Logo preview
 - (dev) Change Category Settings Drawer delete button color
 - (dev) Change MegaMenu hover background classes to secondary 100
+- (dev) Extended hint text for subpages on deletion
 - (dev) Add parent suggestion for add page
 
 ### 👷 Changed
