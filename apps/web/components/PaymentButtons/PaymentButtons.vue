@@ -127,27 +127,20 @@ const paypalApplePayPaymentId = computed(() => {
 });
 
 const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
+  if (!readyToBuy()) return;
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
   });
 
-  if (typeof callback === 'function') {
-    await handleReadyToBuy(callback);
+  if (typeof callback === 'function' && callback) {
+    await callback(true);
   } else {
     await order();
   }
 };
 
-const handleReadyToBuy = async (callback?: PayPalAddToCartCallback) => {
-  if (callback) {
-    callback(readyToBuy());
-  }
-};
-
 const order = async () => {
-  if (!readyToBuy()) return;
-
   processingOrder.value = true;
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
