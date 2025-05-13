@@ -9,8 +9,8 @@
   <AddressesList
     class="col-span-3"
     :type="AddressType.Billing"
-    :add-address-text="$t('account.accountSettings.billingDetails.newAddress')"
-    :edit-address-text="$t('account.accountSettings.billingDetails.billingAddress')"
+    :add-address-text="t('account.accountSettings.billingDetails.newAddress')"
+    :edit-address-text="t('account.accountSettings.billingDetails.billingAddress')"
   />
 </template>
 

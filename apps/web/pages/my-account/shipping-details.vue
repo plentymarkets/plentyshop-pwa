@@ -9,8 +9,8 @@
   <AddressesList
     class="col-span-3"
     :type="AddressType.Shipping"
-    :add-address-text="$t('account.accountSettings.shippingDetails.newAddress')"
-    :edit-address-text="$t('account.accountSettings.shippingDetails.shippingAddress')"
+    :add-address-text="t('account.accountSettings.shippingDetails.newAddress')"
+    :edit-address-text="t('account.accountSettings.shippingDetails.shippingAddress')"
   />
 </template>
 

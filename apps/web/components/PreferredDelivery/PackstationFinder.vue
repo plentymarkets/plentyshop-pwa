@@ -131,7 +131,7 @@
                 v-model="postNumber"
                 type="text"
                 name="postnumber"
-                :placeholder="$t('PreferredDelivery.packstation.postNumberPlaceholder')"
+                :placeholder="t('PreferredDelivery.packstation.postNumberPlaceholder')"
                 wrapper-class="w-full"
               />
 

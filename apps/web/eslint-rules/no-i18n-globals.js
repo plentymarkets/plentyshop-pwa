@@ -30,7 +30,7 @@ export const noI18nGlobals = {
                     if (node.type === 'VExpressionContainer' || node.type === 'VDirectiveKey') {
                         const text = sourceCode.getText(node);
 
-                        if (text.startsWith('{{ $t(')) {
+                        if (text.includes('$t(')) {
                             context.report({
                                 node,
                                 messageId: "noGlobalT"
@@ -38,7 +38,7 @@ export const noI18nGlobals = {
                         }
 
 
-                        if (text.startsWith('{{ $n(')) {
+                        if (text.includes('$n(')) {
                             context.report({
                                 node,
                                 messageId: "noGlobalN"
