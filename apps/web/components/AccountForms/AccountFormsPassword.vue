@@ -2,7 +2,7 @@
   <form data-testid="account-forms-password" @submit.prevent="submitChangePassword">
     <label class="block">
       <UiFormLabel
-        >{{ t('account.accountSettings.personalData.currentPassword') }} {{ $t('form.required') }}</UiFormLabel
+        >{{ t('account.accountSettings.personalData.currentPassword') }} {{ t('form.required') }}</UiFormLabel
       >
       <UiFormPasswordInput
         v-model="userPasswords.oldPassword"
@@ -12,7 +12,7 @@
       />
     </label>
     <label class="block my-4">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }} {{ t('form.required') }}</UiFormLabel>
       <UiFormPasswordInput
         v-model="userPasswords.firstNewPassword"
         name="password"
@@ -25,7 +25,7 @@
     </label>
     <label class="block">
       <UiFormLabel
-        >{{ t('account.accountSettings.personalData.newPasswordAgain') }} {{ $t('form.required') }}</UiFormLabel
+        >{{ t('account.accountSettings.personalData.newPasswordAgain') }} {{ t('form.required') }}</UiFormLabel
       >
       <UiFormPasswordInput
         v-model="userPasswords.secondNewPassword"

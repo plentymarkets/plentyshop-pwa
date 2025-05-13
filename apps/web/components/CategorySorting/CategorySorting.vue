@@ -3,12 +3,12 @@
     <h6
       class="bg-neutral-100 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
-      {{ $t('sortBy') }}
+      {{ t('sortBy') }}
     </h6>
     <div class="px-4">
-      <SfSelect id="sortBy" v-model="selected" :aria-label="$t('sortBy')" @change="sortingChanged">
+      <SfSelect id="sortBy" v-model="selected" :aria-label="t('sortBy')" @change="sortingChanged">
         <option v-for="{ value, label } in options" :key="value" :value="value">
-          {{ $t(`sortType.${label}`) }}
+          {{ t(`sortType.${label}`) }}
         </option>
       </SfSelect>
     </div>
@@ -19,6 +19,7 @@
 import { SfSelect } from '@storefront-ui/vue';
 
 const { getFacetsFromURL, updateSorting } = useCategoryFilter();
+const { t } = useI18n();
 const options = ref([
   {
     label: 'nameA-Z',
