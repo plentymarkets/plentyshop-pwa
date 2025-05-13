@@ -128,7 +128,7 @@
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-            <p class="typography-text-base font-medium">Browse products</p>
+            <p class="typography-text-base font-medium">{{ t('browseProducts') }}</p>
             <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="ml-2" @click="close()">
               <SfIconClose class="text-neutral-500" />
             </UiButton>
