@@ -55,6 +55,10 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Fix Page Seo title tooltip
 - (dev) Fix editor page navigation
 
+### Performance
+
+- Removed i18n from `app.vue`
+
 # v1.15.0 (2025-05-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.15.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New
