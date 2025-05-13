@@ -30,6 +30,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Logo preview
 - (dev) Change Category Settings Drawer delete button color
 - (dev) Change MegaMenu hover background classes to secondary 100
+- (dev) Extended hint text for subpages on deletion
 
 ### 👷 Changed
 
@@ -40,6 +41,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 ### 🩹 Fixed
 
 - Fixed an issue in the guest checkout flow where available address was incorrectly shown as unavailable.
+- Fixed cookierbar text overlap and browse products translation.
 - Fixed an issue in the guest checkout flow that allowed address saving without providing an email.
 - Fixed an issue where the currency was not displayed correctly.
 - Fixed missing form labels for DHL preferred delivery services.
