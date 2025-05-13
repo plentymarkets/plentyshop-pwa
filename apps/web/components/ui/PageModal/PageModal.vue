@@ -89,9 +89,12 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
-const { pageModalOpen, togglePageModal } = useSiteConfiguration();
+const router = useRouter();
+const { setCategoryId } = useCategoryIdHelper();
+const { pageModalOpen, togglePageModal, setSettingsCategory } = useSiteConfiguration();
 const { data: newCategory, addCategory } = useCategoryManagement();
 const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
 
@@ -140,6 +143,20 @@ const createNewPage = async () => {
   });
 
   addNewPageToTree(newCategory.value);
+  await redirectToNewPage(newCategory.value);
+};
+
+const redirectToNewPage = async (newCategory: CategoryEntry) => {
+  await router.push({
+    path: newCategory.details[0].nameUrl,
+  });
+  setCategoryId(
+    newCategory.id,
+    newCategory.parentCategoryId,
+    newCategory.details[0].name,
+    newCategory.details[0].nameUrl,
+  );
+  setSettingsCategory({} as CategoryTreeItem, 'general-menu');
 };
 
 const closeModal = () => {
