@@ -202,6 +202,7 @@ const [companyName, companyNameAttributes] = defineField('companyName');
 const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 
 const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
+const guestHasShippingAsBilling = computed(() => isGuest.value && shippingAsBilling.value);
 
 if (!addAddress && address) {
   hasCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
@@ -213,17 +214,15 @@ if (!addAddress && address) {
   }
 }
 
-const guestHasShippingAsBilling = isGuest.value && shippingAsBilling.value;
-
 const syncCheckoutAddress = async () => {
   await setCheckoutAddress(
-    addAddress || guestHasShippingAsBilling
+    addAddress || isGuest.value
       ? (billingAddresses.value[0] as Address)
       : (userAddressGetters.getDefault(billingAddresses.value) as Address),
     !addAddress,
   );
 
-  if (guestHasShippingAsBilling) shippingAsBilling.value = false;
+  if (guestHasShippingAsBilling.value) shippingAsBilling.value = false;
 };
 
 const validateAndSubmitForm = async () => {
@@ -241,7 +240,7 @@ const validateAndSubmitForm = async () => {
 const submitForm = handleSubmit((billingAddressForm) => {
   addressToSave.value = billingAddressForm as Address;
 
-  if (guestHasShippingAsBilling && !addAddress) delete addressToSave.value?.id;
+  if (guestHasShippingAsBilling.value && !addAddress) delete addressToSave.value?.id;
   if (addAddress) addressToSave.value.primary = true;
   if (!hasCompany.value) {
     addressToSave.value.companyName = '';
