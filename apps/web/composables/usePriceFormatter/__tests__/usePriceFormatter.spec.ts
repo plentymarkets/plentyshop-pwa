@@ -9,6 +9,7 @@ describe('usePriceFormatter', () => {
       const value = 1234.56;
       const result = format(value);
 
+      // eslint-disable-next-line custom-rules/no-i18n-globals
       expect(result).toBe($i18n.n(value, 'currency'));
     });
 
