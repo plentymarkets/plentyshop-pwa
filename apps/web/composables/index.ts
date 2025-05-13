@@ -18,7 +18,7 @@ export * from './useCart';
 export * from './useCartShippingMethods';
 export * from './useCategoryFilter';
 export * from './useCategoryTree';
-export * from './useCategoryManagement'
+export * from './useCategoryManagement';
 export * from './useCoupon';
 export * from './useCsrfToken';
 export * from './useCustomer';
