@@ -43,6 +43,7 @@ export const useGooglePay = () => {
       state.value.scriptLoaded = true;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state.value.script = (script as any).Googlepay() as GooglePayPayPal;
     state.value.googleConfig = await state.value.script.config();
     state.value.paymentsClient = getPaymentsClient();
@@ -88,6 +89,7 @@ export const useGooglePay = () => {
     const { createOrder } = useMakeOrder();
     const { $i18n } = useNuxtApp();
     const { processingOrder } = useProcessingOrder();
+    const { emit } = usePlentyEvent();
 
     state.value.paymentLoading = true;
 
@@ -134,6 +136,7 @@ export const useGooglePay = () => {
       });
 
       processingOrder.value = true;
+      emit('frontend:orderCreated', order);
       clearCartItems();
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
       state.value.paymentLoading = false;

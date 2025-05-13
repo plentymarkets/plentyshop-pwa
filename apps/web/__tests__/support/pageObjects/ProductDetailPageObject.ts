@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class ProductDetailPageObject extends PageObject {
   get addToCartButton() {

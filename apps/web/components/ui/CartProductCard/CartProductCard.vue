@@ -4,7 +4,7 @@
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
           ref="img"
-          :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
+          :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
           :alt="cartGetters.getItemName(cartItem)"
           width="300"
           height="300"
@@ -25,7 +25,7 @@
       </SfLink>
 
       <div v-if="!cartItem.variation?.bundleComponents">
-        {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
+        {{ format(cartGetters.getCartItemPrice(cartItem)) }}
       </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
@@ -92,7 +92,7 @@
           v-if="currentFullPrice"
           class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ n(currentFullPrice || 0, 'currency') }}
+          {{ format(currentFullPrice || 0) }}
         </span>
         <UiQuantitySelector
           ref="quantitySelectorReference"
@@ -129,7 +129,7 @@ import { productGetters, productBundleGetters, cartGetters } from '@plentymarket
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
-import _ from 'lodash';
+import { debounce } from '../../../utils/debounce';
 
 const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
@@ -137,12 +137,14 @@ const emit = defineEmits(['load']);
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const localePath = useLocalePath();
 
 const imageLoaded = ref(false);
 const img = ref();
 const deleteLoading = ref(false);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
@@ -199,9 +201,7 @@ const changeQuantity = async (quantity: string) => {
 
 const deleteItem = async () => {
   deleteLoading.value = true;
-  await deleteCartItem({
-    cartItemId: cartItem.id,
-  });
+  await deleteCartItem(cartItem);
   send({ message: t('deletedFromCart'), type: 'positive' });
   deleteLoading.value = false;
 };
@@ -217,7 +217,7 @@ const cartItemImage = computed(() => {
   return '';
 });
 
-const debounceQuantity = _.debounce(changeQuantity, 500);
+const debounceQuantity = debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
 

@@ -3,9 +3,9 @@
     <template v-if="imageExtension === 'svg'">
       <NuxtImg
         ref="logo"
-        :src="imagePath"
+        :src="headerLogo"
         :alt="`${{ storeName }} logo`"
-        class="w-100 h-10 py-2"
+        class="w-100 py-2"
         width="150"
         height="40"
         preload
@@ -15,7 +15,7 @@
       <img
         id="logo"
         ref="logo"
-        :src="imagePath"
+        :src="headerLogo"
         :alt="`${{ storeName }} logo`"
         :width="imgWidth"
         :height="imgHeight"
@@ -28,9 +28,11 @@
 
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig();
+const { headerLogo } = useSiteConfiguration();
+
 const storeName = runtimeConfig.public.storeName;
+
 const imageExtension = runtimeConfig.public.headerLogo.split('.').pop();
-const imagePath = '/images/logo.' + imageExtension;
 const logo = ref<HTMLImageElement | null>(null);
 const imgWidth = ref<string>('');
 const imgHeight = ref<string>('');

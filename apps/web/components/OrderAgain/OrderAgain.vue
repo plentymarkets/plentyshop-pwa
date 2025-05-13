@@ -1,7 +1,7 @@
 <template>
   <UiModal v-model="isOpen" tag="section" class="w-full h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto">
     <header>
-      <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+      <h2 class="font-bold text-lg leading-6 md:text-2xl">
         <span>{{ t('account.ordersAndReturns.orderAgain.heading') }}</span>
       </h2>
       <div v-if="!loading">
@@ -13,7 +13,13 @@
         </div>
       </div>
       <div class="absolute right-2 top-2 flex items-center">
-        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton
+          :aria-label="t('quickCheckout.close')"
+          data-testid="quick-checkout-close"
+          square
+          variant="tertiary"
+          @click="close"
+        >
           <SfIconClose />
         </UiButton>
       </div>
@@ -33,7 +39,8 @@
               <NuxtImg
                 ref="img"
                 :src="
-                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) || '/images/placeholder.png'
+                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) ||
+                  '/_nuxt-plenty/images/placeholder.png'
                 "
                 :alt="orderGetters.getItemName(item)"
                 width="300"
@@ -97,11 +104,10 @@
                           )
                         }}
                         {{
-                          n(
+                          format(
                             productPropertyGetters.getOrderPropertySurcharge(
                               orderGetters.getOrderAgainOrderProperty(item, property),
                             ),
-                            'currency',
                           )
                         }})</span
                       >
@@ -243,7 +249,8 @@ const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const { showNetPrices } = useCustomer();
 
 const localePath = useLocalePath();

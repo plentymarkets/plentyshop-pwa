@@ -31,7 +31,7 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <ProductRecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
+          <RecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -63,14 +63,24 @@ const { data: productReviews, fetchProductReviews } = useProductReviews(Number(p
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 
+const { setPageMeta } = usePageMeta();
+
+const productName = computed(() => productGetters.getName(product.value));
+const icon = 'sell';
+setPageMeta(productName.value, icon);
+
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-await fetchProduct(productParams);
+await fetchProduct(productParams).then(() => {
+  usePlentyEvent().emit('frontend:productLoaded', {
+    product: product.value,
+  });
+});
 
 if (Object.keys(product.value).length === 0) {
-  throw new Response(null, {
-    status: 404,
-    statusText: 'Not found',
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Product not found',
   });
 }
 setCurrentProduct(product.value || ({} as Product));
@@ -116,6 +126,16 @@ watch(
       }
       setProductCanonicalMetaData(product.value);
     }
+  },
+  { immediate: true },
+);
+
+watch(
+  () => route.params,
+  () => {
+    const productName = computed(() => productGetters.getName(product.value));
+    const icon = 'sell';
+    setPageMeta(productName.value, icon);
   },
   { immediate: true },
 );

@@ -40,7 +40,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       url: runtimeConfig.public.domain,
-      logo: runtimeConfig.public.domain + '/images/logo.png',
+      logo: runtimeConfig.public.domain + '/_nuxt-plenty/images/logo.png',
     };
     useHead({
       script: [
@@ -140,6 +140,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);

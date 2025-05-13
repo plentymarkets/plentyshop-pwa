@@ -1,5 +1,6 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
 import { architecture, ecma } from "@vue-storefront/eslint-config";
+import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
 
 export default withNuxt(
   {
@@ -18,6 +19,7 @@ export default withNuxt(
   ecma({
     withImport: false,
   }),
+  ...pluginVueA11y.configs["flat/recommended"],
   {
     /**
      * Rules from other plugins
@@ -34,13 +36,21 @@ export default withNuxt(
      * unicorn/prefer-add-event-listener
      */
     rules: {
-      'arrow-parens': 'off',
+      'arrow-parens': ['error', 'always'],
+      'no-console': ['error'],
       'no-constant-binary-expression': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
+      'vue/no-console': ['error'],
       'vue/no-multiple-template-root': ['off'],
       'vue/no-v-html': ['off'],
-      'vue/html-self-closing': 'off',
+      'vue/html-self-closing': ['error', { html: { void: 'always' } }],
+      'vuejs-accessibility/click-events-have-key-events': 'off',
+      'vuejs-accessibility/form-control-has-label': 'off',
+      'vuejs-accessibility/label-has-for': 'off',
+      'vuejs-accessibility/mouse-events-have-key-events': 'off',
+      'vuejs-accessibility/no-autofocus': 'off',
+      'vuejs-accessibility/no-redundant-roles': 'off',
+      'vuejs-accessibility/no-static-element-interactions': 'off',
     }
   },
 );

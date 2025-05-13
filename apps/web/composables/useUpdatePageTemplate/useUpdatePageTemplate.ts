@@ -1,26 +1,30 @@
-const stripArrayBrackets = (jsonString: string): string => {
-  jsonString = jsonString.trim();
-  if (jsonString.startsWith('[') && jsonString.endsWith(']')) {
-    jsonString = jsonString.slice(1, -1);
-  }
-  return jsonString;
-};
-
-const updatePageTemplate = async (): Promise<void> => {
-  const { setCategoryTemplate } = useCategoryTemplate();
+const updatePageTemplate = async (): Promise<boolean> => {
   const { isEditingEnabled } = useEditor();
-  const { initialBlocks } = useHomepage();
-  const runtimeConfig = useRuntimeConfig();
-  const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-  const { data, loading } = useHomepage();
-  loading.value = true;
+  const { send } = useNotification();
+  const { saveBlocks, data } = useCategoryTemplate();
+
+  const { data: dataProducts } = useProducts();
+  const route = useRoute();
   try {
-    const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
-    await setCategoryTemplate(homepageCategoryId, cleanedData);
+    const cleanedData = JSON.stringify(data.value);
+    if (route.path === '/') {
+      await saveBlocks('index', 'immutable', cleanedData);
+    } else {
+      await saveBlocks(dataProducts.value.category.id, 'category', cleanedData);
+    }
+
+    return true;
+  } catch (error) {
+    if (error) {
+      send({
+        message: error.toString(),
+        type: 'negative',
+      });
+      console.error(error);
+    }
+    return false;
   } finally {
-    loading.value = false;
     isEditingEnabled.value = false;
-    initialBlocks.value = data.value.blocks.map((block) => toRaw(block));
   }
 };
 

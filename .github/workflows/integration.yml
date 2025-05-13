@@ -51,47 +51,47 @@ jobs:
           vulnerability-check: false
           comment-summary-in-pr: on-failure
 
-      - name: Changelog review
-        if: contains(github.event.pull_request.labels.*.name, 'feature') || contains(github.event.pull_request.labels.*.name, 'fix')
-        run: |
-          gh pr diff "$BRANCH" --name-only >> diff.txt
-          grep -Fxq "docs/changelog/changelog_en.md" diff.txt
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: ${{ github.head_ref }}
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Scan for malicious code
+        run: >
+          semgrep scan 
+          --error 
+          --severity ERROR
+          .
   fitness-code-quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run prettier
-        run: yarn format
+        run: npm run format
 
       - name: Run linter
-        run: yarn lint
+        run: npm run lint
   test-unit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Unit tests
-        run: yarn test:coverage
+        run: npm run test:coverage
+      - name: 'Report Coverage'
+        if: always() 
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: './apps/web/'
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         uses: ./.github/actions/environment
@@ -101,10 +101,12 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Build application
-        run: yarn build
+        run: npm run build
 
       - name: Install productive dependencies for server
-        run: yarn workspaces focus --production
+        run: |
+          npm install --omit=dev --workspace=apps/web
+          npm install --omit=dev --workspace=apps/server
 
       - name: Tar build output
         run: tar -czf build.tar.gz -C ${{ github.workspace }} apps/server/dist apps/web/.output apps/web/.nuxt
@@ -119,10 +121,8 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         uses: ./.github/actions/environment
@@ -143,10 +143,46 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           install: false
-          command: yarn test:cypress
+          command: npm run test:cypress
         env:
           NUXT_PUBLIC_DEFAULT_ITEMS_PER_PAGE: 1
           CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
+          MOLLIE_TEST_MODE: true
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/web/__tests__/report/screenshots
+          if-no-files-found: ignore
+  test-e2e-checkout:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          command: npm run test:cypress-checkout
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -159,10 +195,8 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         uses: ./.github/actions/environment
@@ -183,10 +217,9 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           install: false
-          command: yarn test:cypress-editor
+          command: npm run test:cypress-editor
         env:
           NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
-          NUXT_PUBLIC_EXPERIMENTAL_ADD_BLOCK: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -199,10 +232,8 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         uses: ./.github/actions/environment
@@ -223,7 +254,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           install: false
-          command: yarn test:cypress-quarantine
+          command: npm run test:cypress-quarantine
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -236,10 +267,8 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         uses: ./.github/actions/environment
@@ -257,16 +286,14 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: lighthouse mobile audit
-        run: yarn lhci:mobile
+        run: npm run lhci:mobile
   fitness-web-vitals-desktop:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
-        with:
-          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         uses: ./.github/actions/environment
@@ -284,43 +311,4 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: lighthouse desktop audit
-        run: yarn lhci:desktop
-  ready-to-review:
-    runs-on: ubuntu-latest
-    needs: [fitness-compliance, fitness-code-quality, test-unit, build, test-e2e-stable, fitness-web-vitals-mobile, fitness-web-vitals-desktop]
-    steps:
-      - name: Ready to review (push notification)
-        if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-        run: |
-          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
-            "cardsV2": [
-                {
-                    "cardId": "${{ github.event.pull_request.id }}",
-                    "card": {
-                        "header": {
-                            "title": "Boilerplate Review Required",
-                            "subtitle": "${{ github.event.pull_request.title }}"
-                        },
-                        "sections": [
-                            {
-                                "widgets": [
-                                    {
-                                        "buttonList": {
-                                            "buttons": {
-                                                "text": "Open PR",
-                                                "onClick": {
-                                                    "openLink": {
-                                                        "url": "https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]}'
+        run: npm run lhci:desktop

@@ -7,7 +7,7 @@ interface RGB {
   b: number;
 }
 
-interface Shade {
+export interface Shade {
   weight: string;
   rgb: string;
 }
@@ -25,6 +25,11 @@ const hex2rgb = (hex: string): RGB => {
 export const getPaletteFromColor = (type: string, hexColor: string, config: PaletteConfig = {}): TailwindPalette => {
   const paletteOutput = createPaletteFromColor(type, hexColor, config);
   const rgbPalette: TailwindPalette = [];
+
+  if (!paletteOutput || !paletteOutput[type]) {
+    return rgbPalette;
+  }
+
   Object.entries(paletteOutput[type]).forEach((entry) => {
     const rgb = hex2rgb(entry[1]) || '';
     rgbPalette.push({ weight: entry[0], rgb: `${rgb.r} ${rgb.g} ${rgb.b}` });

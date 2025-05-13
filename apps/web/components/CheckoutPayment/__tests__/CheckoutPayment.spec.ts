@@ -7,8 +7,8 @@ describe('<CheckoutPayment />', () => {
       props: {
         paymentMethods: {
           list: [],
-          selected: 0
-        }
+          selected: 0,
+        },
       },
     });
 

@@ -1,7 +1,7 @@
 <template>
   <section data-testid="category-empty-state" class="flex flex-col items-center md:mt-16">
     <NuxtImg
-      src="/images/something-went-wrong.svg"
+      src="/_nuxt-plenty/images/something-went-wrong.svg"
       :alt="$t('emptyStateAltText')"
       width="192"
       height="192"

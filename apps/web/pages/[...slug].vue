@@ -5,11 +5,10 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
-    <SfLoaderCircular
-      v-if="loading || checkingPermission"
-      class="fixed top-[50%] right-0 left-0 m-auto z-[99999]"
-      size="2xl"
-    />
+    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <template v-if="isEditablePage && runtimeConfig.public.isDev">
+      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
+    </template>
     <template v-else>
       <CategoryPageContent
         v-if="productsCatalog?.products"
@@ -38,9 +37,13 @@ definePageMeta({ layout: false, middleware: ['category-guard'] });
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { data: productsCatalog, productsPerPage, loading, checkingPermission } = useProducts();
+const { setCategoriesPageMeta } = useCanonical();
+const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
+const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
+const { isEditablePage } = useToolbar();
+const runtimeConfig = useRuntimeConfig();
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -56,9 +59,27 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
+const handleQueryUpdate = async () => {
+  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+
+  if (!productsCatalog.value.category) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Page not found',
+    });
+  }
+};
+
+await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+
+const { setPageMeta } = usePageMeta();
+const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
+const icon = 'sell';
+setPageMeta(categoryName.value, icon);
+
 watch(
   () => locale.value,
-  (changedLocale: any) => {
+  (changedLocale: string) => {
     router.push({
       path: buildCategoryLanguagePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
@@ -86,6 +107,13 @@ const keywordsContent = computed((): string =>
 
 const robotsContent = computed((): string =>
   productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
+);
+
+watch(
+  () => route.query,
+  async () => {
+    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+  },
 );
 
 useHead({

@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class HomePageObject extends PageObject {
   get header() {
@@ -27,6 +27,18 @@ export class HomePageObject extends PageObject {
 
   get headerButton() {
     return cy.getByTestId('button').contains('Browse products');
+  }
+
+  get topToolbar() {
+    return cy.getByTestId('edit-mode-toolbar');
+  }
+
+  get sideToolbar() {
+    return cy.getByTestId('edit-mode-side-toolbar');
+  }
+
+  get blockActions() {
+    return cy.getByTestId('edit-block-actions');
   }
 
   get baseUrl() {
@@ -64,11 +76,9 @@ export class HomePageObject extends PageObject {
     return this;
   }
 
-  checkLanguage(locale: string, textToCheck: string) {
+  checkLanguage(textToCheck: string) {
     const categories = cy.getByTestId('category-button');
     categories.invoke('text').should('include', textToCheck);
-    cy.getCookie('vsf-locale').should('have.property', 'value', locale);
-
     return this;
   }
 
@@ -81,6 +91,21 @@ export class HomePageObject extends PageObject {
     cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.getByTestId('category-button').first().click();
     cy.wait('@getFacet');
+    return this;
+  }
+
+  topToolbarShouldNotExist() {
+    this.topToolbar.should('not.exist');
+    return this;
+  }
+
+  sideToolbarShouldNotExist() {
+    this.sideToolbar.should('not.exist');
+    return this;
+  }
+
+  blockActionsShouldNotExist() {
+    this.blockActions.should('not.exist');
     return this;
   }
 }

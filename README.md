@@ -2,9 +2,9 @@
 
   <a href="https://plentyone.com" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
-      <img alt="PlentyONE logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
+      <source media="(prefers-color-scheme: dark)" srcset="./docs/images/PlentyONE_Logo_White_RGB.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./docs/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+      <img alt="PlentyONE logo" src="./docs/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
     </picture> 
   </a>
 
@@ -12,9 +12,9 @@
 
   <a href="https://alokai.com" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
-      <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="40px">
+      <source media="(prefers-color-scheme: dark)" srcset="./docs/images/alokai-logo-light.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./docs/images/alokai-logo-dark.svg">
+      <img alt="alokai logo" src="./docs/images/alokai-logo-dark.svg" height="40px">
     </picture> 
   </a>
 
@@ -39,12 +39,6 @@ We recommend working with a fork of this repository. A fork allows you to easily
 1. [Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
 
-### Create authentication token
-
-This project queries data from PlentyONE by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate.
-
-To enable authentication, create a [Personal Access Token](https://github.com/settings/tokens/new) (PAT) with the scope **read:packages**.
-
 ### Set up environment
 
 Create an environment file under `apps/web/.env`. The minimum required configuration includes your PAT, the [API endpoint](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-endpoint) of your PlentyONE system and the corresponding [API security token](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token):
@@ -52,12 +46,11 @@ Create an environment file under `apps/web/.env`. The minimum required configura
 ```properties
 # apps/web/.env
 
-NPM_AUTH_TOKEN=
 API_ENDPOINT=
 API_SECURITY_TOKEN=
 ```
 
-Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using Yarn.
+Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using NPM.
 
 ```bash
 # installs nvm (Node Version Manager)
@@ -66,13 +59,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 # downloads and installs Node.js according to the project version in .nvmrc
 nvm install
 
-# downloads and installs Yarn according to the project version, and downloads, installs, and builds all dependencies
-npm run setup:unix
+# downloads and installs NPM according to the project version, and downloads, installs, and builds all dependencies
+npm install
 ```
 
 ### Start the app
 
-Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+Run `npm run dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ## Resources
 

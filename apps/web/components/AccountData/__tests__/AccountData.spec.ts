@@ -6,8 +6,8 @@ describe('<AccountData />', () => {
     const { getByTestId } = mount(AccountData, {
       props: {
         header: 'Header',
-        buttonText: 'Button Text'
-      }
+        buttonText: 'Button Text',
+      },
     });
 
     expect(getByTestId('account-data'));

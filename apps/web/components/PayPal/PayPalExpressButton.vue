@@ -16,6 +16,7 @@ const { getScript, createTransaction, approveOrder, executeOrder } = usePayPal()
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
+const { emit } = usePlentyEvent();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
@@ -91,8 +92,10 @@ const onApprove = async (data: OnApproveData) => {
 
     clearCartItems();
 
-    if (order?.order?.id)
+    if (order?.order?.id) {
+      emit('frontend:orderCreated', order);
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+    }
   }
 };
 
@@ -119,7 +122,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         // TODO: handle error
       },
       async createOrder() {
-        const order = await createTransaction(fundingSource);
+        const order = await createTransaction(fundingSource, !isCommit);
         return order?.id ?? '';
       },
       async onApprove(data) {

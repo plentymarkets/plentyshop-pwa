@@ -5,6 +5,6 @@ describe('<FormLabel />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(UiFormLabel);
 
-    expect(getByTestId('form-label')); 
+    expect(getByTestId('form-label'));
   });
 });

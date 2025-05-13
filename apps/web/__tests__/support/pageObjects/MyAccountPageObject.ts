@@ -1,5 +1,5 @@
 import { paths } from '../../../utils/paths';
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class MyAccountPageObject extends PageObject {
   get accountLayout() {
@@ -66,7 +66,7 @@ export class MyAccountPageObject extends PageObject {
     this.accountLayout.getByTestId('account-layout-heading').should('be.visible');
     this.accountLayout.getByTestId('account-page-sidebar').should('be.visible');
     this.accountLayout.contains('Account Settings').should('exist');
-    this.accountLayout.contains('Personal Data').should('exist');
+    this.accountLayout.contains('Personal data').should('exist');
     this.accountLayout.contains('Billing addresses').should('exist');
     this.accountLayout.contains('Shipping addresses').should('exist');
     this.accountLayout.contains('Orders & Returns').should('exist');
@@ -80,7 +80,7 @@ export class MyAccountPageObject extends PageObject {
   }
 
   checkPersonalDataSection() {
-    cy.get('a').contains('Personal Data').click();
+    cy.get('a').contains('Personal data').click();
     cy.visitAndHydrate(paths.accountPersonalData);
     cy.url().should('contain', paths.accountPersonalData);
     this.accountLayout.getByTestId('account-name').should('be.visible');
@@ -94,7 +94,7 @@ export class MyAccountPageObject extends PageObject {
     cy.intercept('/plentysystems/getAddresses').as('getAddresses');
     cy.get('a').contains('Billing addresses').click();
     cy.url().should('contain', paths.accountBillingDetails);
-    cy.wait("@getAddresses");
+    cy.wait('@getAddresses');
     this.accountLayout.getByTestId('account-billing-addresses-1').should('be.visible');
 
     return this;
@@ -104,7 +104,7 @@ export class MyAccountPageObject extends PageObject {
     cy.intercept('/plentysystems/getAddresses').as('getAddresses');
     cy.get('a').contains('Shipping addresses').click();
     cy.url().should('contain', paths.accountShippingDetails);
-    cy.wait("@getAddresses");
+    cy.wait('@getAddresses');
     this.accountLayout.getByTestId('account-billing-addresses-2').should('be.visible');
 
     return this;

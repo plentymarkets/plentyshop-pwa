@@ -1,4 +1,4 @@
-import { type Address, AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { type Address, type AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 
@@ -53,7 +53,7 @@ export const useAddressForm = (type: AddressType) => {
       }),
       country: string()
         .required($i18n.t('errorMessages.requiredField'))
-        .default(cartGetters.getShippingCountryId(customerData.value?.basket)),
+        .default(cartGetters.getShippingCountryId(customerData.value?.basket).toString()),
       streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
@@ -92,11 +92,9 @@ export const useAddressForm = (type: AddressType) => {
   };
 
   const refreshAddressDependencies = async () => {
-    if (type === AddressType.Shipping) {
-      await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
-      notifyIfShippingChanged();
-      notifyIfBillingChanged();
-    }
+    await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
+    notifyIfShippingChanged();
+    notifyIfBillingChanged();
   };
 
   return {

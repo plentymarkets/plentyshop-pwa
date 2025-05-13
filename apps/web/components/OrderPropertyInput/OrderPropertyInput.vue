@@ -4,7 +4,7 @@
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <template v-if="orderPropertyLabel.surchargeType">
         ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
-        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+        {{ format(productPropertyGetters.getOrderPropertySurcharge(productProperty)) }})
       </template>
       {{ orderPropertyLabel.surchargeIndicator }}
       <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
@@ -47,7 +47,8 @@ import { object, string } from 'yup';
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-const { t, n } = useI18n();
+const { format } = usePriceFormatter();
+const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();

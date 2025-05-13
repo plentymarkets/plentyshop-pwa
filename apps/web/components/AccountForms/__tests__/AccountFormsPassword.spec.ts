@@ -5,6 +5,6 @@ describe('<AccountFormsPassword />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(AccountFormsPassword);
 
-    expect(getByTestId('account-forms-password'));    
+    expect(getByTestId('account-forms-password'));
   });
 });

@@ -48,15 +48,18 @@ export const usePayPal = () => {
    */
   const loadConfig = async () => {
     if (state.value.loadedConfig) return false;
-    const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
-
-    if (data) {
-      state.value.config = data ?? null;
-      state.value.isAvailable = !!state.value.config;
-      state.value.loadedConfig = true;
-      return true;
+    try {
+      const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
+      if (data) {
+        state.value.config = data ?? null;
+        state.value.isAvailable = !!state.value.config;
+        state.value.loadedConfig = true;
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
     }
-    return false;
   };
 
   /**
@@ -111,6 +114,7 @@ export const usePayPal = () => {
       return state.value.paypalScript.script;
     }
 
+    state.value.loadingScripts = {};
     state.value.isReady = false;
     state.value.paypalScript = null;
     state.value.loadingScripts[scriptKey] = loadScript(currency, localePayPal, commit)
@@ -129,16 +133,18 @@ export const usePayPal = () => {
   /**
    * @description Function for creating a PayPal transaction.
    * @param fundingSource
+   * @param isExpress
    * @return CreateTransaction
    * @example
    * ``` ts
-   * createTransaction(fundingSource: string);
+   * createTransaction('paypal', true);
    * ```
    */
-  const createTransaction = async (fundingSource: string) => {
+  const createTransaction = async (fundingSource: string, isExpress = false) => {
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doCreatePayPalTransaction({
         fundingSource: fundingSource,
+        is_express: isExpress,
       }),
     );
     state.value.order = data.value?.data ?? null;

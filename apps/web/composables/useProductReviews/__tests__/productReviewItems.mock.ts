@@ -16,8 +16,8 @@ export const mockProductReviewItems: ReviewItem[] = [
         message: 'test',
         isVisible: 'test',
         createdAt: 'test',
-        updatedAt: 'test'
-      }
+        updatedAt: 'test',
+      },
     },
     feedbackRating: {
       ratingId: 'test',
@@ -28,8 +28,8 @@ export const mockProductReviewItems: ReviewItem[] = [
         ratingValue: '4',
         isVisible: 'test',
         createdAt: 'test',
-        updatedAt: 'test'
-      }
+        updatedAt: 'test',
+      },
     },
     targetRelation: {
       feedbackId: 'test',
@@ -38,24 +38,25 @@ export const mockProductReviewItems: ReviewItem[] = [
       variationAttributes: [],
       targetRelationLabel: 'test',
       targetRelationName: [],
-      feedbackRelationParentTargetId: 1
+      feedbackRelationParentTargetId: 1,
     },
-    sourceRelation: [{
-      feedbackId: 'test',
-      feedbackRelationType: 'test',
-      feedbackRelationSourceId: 'test',
-      sourceRelationLabel: 'test',
-      sourceRelationTypeLabel: 'test',
-      feedback: {
-        id: 1,
-        title: 'test',
-        isVisible: true,
-        createdAt: 'test',
-        updatedAt: 'test',
-        authorName: 'test'
-      }
-    }],
-    replies: []
-  }
-]
-
+    sourceRelation: [
+      {
+        feedbackId: 'test',
+        feedbackRelationType: 'test',
+        feedbackRelationSourceId: 'test',
+        sourceRelationLabel: 'test',
+        sourceRelationTypeLabel: 'test',
+        feedback: {
+          id: 1,
+          title: 'test',
+          isVisible: true,
+          createdAt: 'test',
+          updatedAt: 'test',
+          authorName: 'test',
+        },
+      },
+    ],
+    replies: [],
+  },
+];

@@ -1,6 +1,13 @@
 <template>
   <header>
-    <UiButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="$emit('confirmCancel')">
+    <UiButton
+      :aria-label="t('closeDialog')"
+      type="button"
+      square
+      variant="tertiary"
+      class="absolute right-2 top-2"
+      @click="$emit('confirmCancel')"
+    >
       <SfIconClose />
     </UiButton>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
@@ -64,6 +71,7 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
+const { emit: emitPlentyEvent } = usePlentyEvent();
 
 const confirmCancel = () => {
   emit('confirmCancel');
@@ -112,6 +120,7 @@ onMounted(() => {
           useProcessingOrder().processingOrder.value = true;
           clearCartItems();
 
+          emitPlentyEvent('frontend:orderCreated', order);
           navigateTo(
             localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
           );

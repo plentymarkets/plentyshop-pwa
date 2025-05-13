@@ -90,6 +90,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const addWishlistItem: AddWishlistItem = async (params: AddWishlistItemParams) => {
+    const { emit } = usePlentyEvent();
     state.value.loading = true;
 
     try {

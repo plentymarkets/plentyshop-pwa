@@ -2,14 +2,46 @@ import type {
   FetchCategoryTemplate,
   UseCategoryTemplateReturn,
   UseCategoryTemplateState,
-  SetCategoryTemplate,
+  GetBlocks,
+  SaveBlocks,
 } from '~/composables/useCategoryTemplate/types';
+import type { Block } from '@plentymarkets/shop-api';
+
+import homepageTemplateDataDe from '~/composables/useHomepage/homepageTemplateDataDe.json';
+import homepageTemplateDataEn from '~/composables/useHomepage/homepageTemplateDataEn.json';
+
+const useLocaleSpecificHomepageTemplate = (locale: string) =>
+  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
-    data: null,
+    data: [],
+    cleanData: [],
+    categoryTemplateData: null,
     loading: false,
   }));
+
+  const { $i18n } = useNuxtApp();
+
+  const getBlocks: GetBlocks = async (identifier, type) => {
+    state.value.loading = true;
+
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
+
+    state.value.loading = false;
+
+    if (!data?.value?.data.length && type === 'immutable') {
+      state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+    } else {
+      state.value.data = data?.value?.data ?? state.value.data;
+    }
+
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+  };
+
+  const updateBlocks: UpdateBlocks = (blocks) => {
+    state.value.data = blocks;
+  };
 
   /**
    * @description Function for fetching the category template from a category id
@@ -27,29 +59,33 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
 
     state.value.loading = false;
-    state.value.data = data?.value?.data ?? state.value.data;
+    state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
-  const setCategoryTemplate: SetCategoryTemplate = async (categoryId: number, content: string) => {
+  const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     state.value.loading = true;
-    try {
-      const { data } = await useAsyncData(() =>
-        useSdk().plentysystems.setCategoryTemplate({
-          id: categoryId,
-          content: content,
-        }),
-      );
-      state.value.data = data?.value?.data ?? state.value.data;
-    } catch (error) {
-      throw new Error(error as string);
-    } finally {
-      state.value.loading = false;
+
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.doSaveBlocks({
+        identifier: identifier,
+        entityType: type,
+        blocks: content,
+      }),
+    );
+    if (error.value) {
+      throw new Error(error.value.message);
     }
+    state.value.data = data?.value?.data ?? state.value.data;
+
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+    state.value.loading = false;
   };
 
   return {
     fetchCategoryTemplate,
-    setCategoryTemplate,
+    saveBlocks,
+    getBlocks,
+    updateBlocks,
     ...toRefs(state.value),
   };
 };

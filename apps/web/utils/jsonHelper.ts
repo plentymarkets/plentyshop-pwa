@@ -1,4 +1,4 @@
-export const deepEqual = (object1: any, object2: any): boolean => {
+export const deepEqual = (object1: unknown, object2: unknown): boolean => {
   if (object1 === object2) return true;
 
   if (typeof object1 !== typeof object2 || object1 === null || object2 === null) {

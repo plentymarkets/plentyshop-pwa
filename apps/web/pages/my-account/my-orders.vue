@@ -38,11 +38,11 @@
             </li>
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.amount') }}</p>
-              <span class="block typography-text-sm mb-2">{{ n(orderGetters.getPrice(order), 'currency') }}</span>
+              <span class="block typography-text-sm mb-2">{{ format(orderGetters.getPrice(order)) }}</span>
             </li>
-            <li v-if="orderGetters.getShippingDate(order)">
+            <li v-if="orderGetters.getShippingDate(order, locale)">
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</p>
-              <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order) }}</span>
+              <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order, locale) }}</span>
             </li>
             <li class="flex flex-wrap items-center mb-2">
               <p class="block typography-text-sm -mb-1.5 font-medium flex-[100%]">
@@ -54,7 +54,7 @@
               </UiButton>
               <UiDropdown class="relative">
                 <template #trigger>
-                  <UiButton variant="tertiary">
+                  <UiButton :aria-label="t('account.ordersAndReturns.more')" variant="tertiary">
                     <SfIconMoreHoriz size="sm" />
                   </UiButton>
                 </template>
@@ -101,8 +101,8 @@
             <tr v-for="(order, index) in data.data.entries" :key="index" class="border-b border-neutral-200">
               <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
-              <td class="lg:p-4 p-2">{{ n(orderGetters.getPrice(order), 'currency') }}</td>
-              <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
+              <td class="lg:p-4 p-2">{{ format(orderGetters.getPrice(order)) }}</td>
+              <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
                 <UiButton
@@ -163,7 +163,8 @@ const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
-const { t, n, locale } = useI18n();
+const { format } = usePriceFormatter();
+const { t, locale } = useI18n();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);

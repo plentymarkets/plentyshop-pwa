@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ locale: string }>();
+import type { Locale } from '#i18n';
+
+defineProps<{ locale: Locale }>();
 const { switchLocale } = useLocalization();
 </script>

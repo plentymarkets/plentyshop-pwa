@@ -1,20 +1,27 @@
-import type {
-  RegisterParams,
-  SessionResult,
-  UserChangePasswordParams,
-  WishlistVariation,
-  ApiError
+import {
+  AddressType,
+  type ApiError,
+  type RegisterParams,
+  type SessionResult,
+  type UserChangePasswordParams,
+  userGetters,
+  type WishlistVariation
 } from '@plentymarkets/shop-api';
+import { toTypedSchema } from '@vee-validate/yup';
+import { object, string } from 'yup';
 import type {
+  ChangePassword,
+  GetSession,
+  Login,
+  LoginAsGuest,
+  Logout,
+  Register,
   UseCustomerReturn,
   UseCustomerState,
-  GetSession,
-  LoginAsGuest,
-  Login,
-  Register,
-  Logout,
-  ChangePassword,
 } from '~/composables/useCustomer/types';
+import { scrollToHTMLObject } from '~/utils/scollHelper';
+
+const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
@@ -27,11 +34,14 @@ import type {
  * ```
  */
 export const useCustomer: UseCustomerReturn = () => {
+  const { emit } = usePlentyEvent();
+  const { $i18n } = useNuxtApp();
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
     data: {} as SessionResult,
     loading: false,
     isAuthorized: false,
     isGuest: false,
+    validGuestEmail: false,
   }));
 
   /** Function for checking if user is guest or authorized
@@ -43,18 +53,14 @@ export const useCustomer: UseCustomerReturn = () => {
   const checkUserState = () => {
     if (state.value.data?.user?.guestMail) {
       state.value.isGuest = true;
+      state.value.validGuestEmail = true;
       state.value.isAuthorized = false;
       return;
     }
 
-    if (state.value.data?.user?.email) {
-      state.value.isGuest = false;
-      state.value.isAuthorized = true;
-      return;
-    }
-
     state.value.isGuest = false;
-    state.value.isAuthorized = false;
+    state.value.validGuestEmail = false;
+    state.value.isAuthorized = state.value.data?.user?.email ? true : false;
   };
 
   /** Function for getting current user/cart data from session
@@ -69,7 +75,7 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
-    useWishlist().setWishlistItemIds(Object.keys(state.value.data?.basket?.itemWishListIds || ({} as WishlistVariation)));
+    useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || ({} as WishlistVariation)));
 
     state.value.loading = false;
     return state.value.data;
@@ -120,7 +126,13 @@ export const useCustomer: UseCustomerReturn = () => {
     try {
       await useSdk()
         .plentysystems.doLogin({ email: email, password: password })
-        .then(async () => await getSession());
+        .then(async () => {
+          await getSession();
+
+          if (state.value.data?.user) {
+            emit('frontend:login', { user: state.value.data.user });
+          }
+        });
 
       return state.value.isAuthorized;
     } catch (error) {
@@ -145,6 +157,8 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
 
     state.value.data.user = null;
+    useCheckoutAddress(AddressType.Shipping).clear();
+    useCheckoutAddress(AddressType.Billing).clear();
     checkUserState();
     useWishlist().setWishlistItemIds({} as WishlistVariation);
   };
@@ -167,6 +181,10 @@ export const useCustomer: UseCustomerReturn = () => {
 
     if (data.value) {
       await getSession();
+
+      if (state.value.data?.user) {
+        emit('frontend:signUp', { user: state.value.data.user });
+      }
     }
 
     return data.value?.data ?? null;
@@ -194,6 +212,43 @@ export const useCustomer: UseCustomerReturn = () => {
     return !error.value;
   };
 
+  const emailValidationSchema = toTypedSchema(
+    object({
+      customerEmail: string()
+        .required($i18n.t('errorMessages.email.required'))
+        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) =>
+          userGetters.isValidEmailAddress(email),
+        )
+        .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
+    }),
+  );
+
+  const missingGuestCheckoutEmail = computed(
+    () => (state.value.isGuest || (!state.value.isGuest && !state.value.isAuthorized)) && !state.value.validGuestEmail,
+  );
+
+  const backToContactInformation = (): boolean => {
+    const classList = ['bg-primary-50', 'rounded-md'];
+    const opacityClass = 'opacity-0';
+    const targetId = CONTACT_INFORMATION;
+
+    const targetElement = document.querySelector(targetId);
+    const firstDivider = document.querySelector('#top-contact-information-divider');
+    const secondDivider = document.querySelector('#top-shipping-divider');
+
+    scrollToHTMLObject(targetId);
+
+    targetElement?.classList.add(...classList);
+    [firstDivider, secondDivider].forEach((divider) => divider?.classList.add(opacityClass));
+
+    setTimeout(() => {
+      targetElement?.classList.remove(...classList);
+      [firstDivider, secondDivider].forEach((divider) => divider?.classList.remove(opacityClass));
+    }, 1000);
+
+    return false;
+  };
+
   return {
     setUser,
     getSession,
@@ -202,6 +257,9 @@ export const useCustomer: UseCustomerReturn = () => {
     register,
     loginAsGuest,
     changePassword,
+    emailValidationSchema,
+    missingGuestCheckoutEmail,
+    backToContactInformation,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };

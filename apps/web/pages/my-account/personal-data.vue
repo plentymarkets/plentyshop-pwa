@@ -47,7 +47,14 @@
     aria-labelledby="address-modal-title"
   >
     <header>
-      <UiButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="closeModal">
+      <UiButton
+        :aria-label="$t('closeDialog')"
+        type="button"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="closeModal"
+      >
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
@@ -55,11 +62,6 @@
       </h3>
     </header>
     <AccountFormsName v-if="openedForm === 'yourName'" @on-save="closeModal" @on-cancel="closeModal" />
-    <ContactInformationForm
-      v-else-if="openedForm === 'contactInformation'"
-      @on-save="closeModal"
-      @on-cancel="closeModal"
-    />
     <AccountFormsPassword v-else-if="openedForm === 'passwordChange'" @on-save="closeModal" @on-cancel="closeModal" />
   </UiModal>
 </template>

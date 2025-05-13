@@ -1,5 +1,5 @@
-import { PageObject } from './PageObject';
 import type { AddressFixtureOverride } from '~/__tests__/types';
+import { PageObject } from './PageObject';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -22,8 +22,18 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('button').contains('Add shipping address');
   }
 
+  get shippingAddressForm() {
+    return cy.getByTestId('shipping-address-form');
+  }
+
+  get billingAddressForm() {
+    return cy.getByTestId('billing-address-form');
+  }
+
   get contactInformationForm() {
-    return cy.getByTestId('contact-information-form').find('input');
+    const input = cy.getByTestId('contact-information-form').find('input');
+    input.clear();
+    return input;
   }
 
   get saveShipping() {
@@ -54,7 +64,7 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('checkout-edit-address-modal');
   }
 
-   editBillingAddress() {
+  editBillingAddress() {
     cy.getByTestId('edit-address-1').click();
     return this;
   }
@@ -105,6 +115,14 @@ export class CheckoutPageObject extends PageObject {
 
   get shippingAsBillingText() {
     return cy.getByTestId('address-info-text-1');
+  }
+
+  get billingAddressSelect() {
+    return cy.getByTestId('address-select-1');
+  }
+
+  get shippingAddressSelect() {
+    return cy.getByTestId('address-select-2');
   }
 
   goToGuestCheckout() {
@@ -169,11 +187,13 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillContactInformationForm() {
+    cy.intercept('/plentysystems/doLoginAsGuest').as('loginAsGuest');
     cy.getFixture('addressForm').then(() => {
-      const uniqueEmail = `test-order-${new Date().getTime()}@plentymarkets.com`;
-      this.contactInformationForm.type(uniqueEmail);
-      this.contactInformationFormSaveButton.click().should('not.exist');
+      const uniqueEmail = `test.order${new Date().getTime()}@plentymarkets.com`;
+      this.contactInformationForm.type(uniqueEmail).blur();
     });
+    cy.wait('@loginAsGuest', { timeout: 10000 });
+
     return this;
   }
 
@@ -191,7 +211,7 @@ export class CheckoutPageObject extends PageObject {
       .intercept('/plentysystems/getPaymentProviders')
       .as('getPaymentProviders');
 
-    this.fillAddressForm(fixtureOverride);
+    this.fillAddressForm('shipping', fixtureOverride);
 
     cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
 
@@ -200,6 +220,16 @@ export class CheckoutPageObject extends PageObject {
 
   shouldShowShippingAsBillingText() {
     this.shippingAsBillingText.contains('Same as shipping address');
+    return this;
+  }
+
+  shouldNotShowBillingAddressSelection() {
+    this.billingAddressSelect.should('not.exist');
+    return this;
+  }
+
+  shouldNotShowShippingAddressSelection() {
+    this.shippingAddressSelect.should('not.exist');
     return this;
   }
 
@@ -213,14 +243,58 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  fillMollieCreditCardForm() {
+    cy.iframe('[title="cardNumber input"]').find('#cardNumber').type('3782 822463 10005');
+
+    cy.iframe('[title="cardHolder input"]').find('#cardHolder').first().type('Test Holder');
+
+    cy.iframe('[title="expiryDate input"]').find('#expiryDate').first().type('12/29');
+
+    cy.iframe('[title="verificationCode input"]').find('#verificationCode').first().type('1234');
+
+    return this;
+  }
+
   payCreditCard() {
+    cy.intercept('/plentysystems/doAdditionalInformation')
+      .as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment')
+      .intercept('/plentysystems/doCapturePayPalOrder')
+      .as('doCapturePayPalOrder')
+      .intercept('/plentysystems/getExecutePayPalOrder')
+      .as('getExecutePayPalOrder');
+
     cy.getByTestId('pay-creditcard-button').click();
+    cy.wait('@doAdditionalInformation')
+      .wait('@doPreparePayment')
+      .wait('@doCapturePayPalOrder')
+      .wait('@getExecutePayPalOrder');
     return this;
   }
 
   checkCreditCard() {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
     cy.getByTestId('payment-method-6008').check({ force: true });
+    cy.wait('@setPaymentProvider');
+    return this;
+  }
+
+  checkInvoice() {
+    cy.getByTestId('payment-method-6000').check({ force: true });
+    return this;
+  }
+
+  checkMolliePayPal() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6056').check({ force: true });
+    cy.wait('@setPaymentProvider');
+    return this;
+  }
+
+  checkMollieCreditCard() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6046').check({ force: true });
     cy.wait('@setPaymentProvider');
     return this;
   }
@@ -232,28 +306,64 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillAddressForm(fixtureOverride?: AddressFixtureOverride) {
+  fillAddressForm(addressType: string, fixtureOverride?: AddressFixtureOverride) {
     cy.getFixture('addressForm').then((fixture) => {
-
       if (fixtureOverride) {
         fixture = { ...fixture, ...fixtureOverride };
       }
 
-      this.fillForm(fixture);
+      addressType === 'shipping' ? this.fillShippingForm(fixture) : this.fillBillingForm(fixture);
     });
+
     return this;
   }
 
-  fillForm(fixture: any) {
-    this.firstNameInput.type(fixture.firstName);
-    this.lastNameInput.type(fixture.lastName);
-    this.countrySelect.select(fixture.country);
-    this.streetNameInput.type(fixture.streetName);
-    this.streetNumberInput.type(fixture.apartment);
-    this.cityInput.type(fixture.city);
-    // this.stateSelect.select(fixture.state);
-    this.postalCodeInput.type(fixture.zipCode);
-    this.saveShipping.click({ force: true });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fillShippingForm(fixture: any) {
+    this.shippingAddressForm.within(() => {
+      this.firstNameInput.type(fixture.firstName);
+      this.lastNameInput.type(fixture.lastName);
+      this.countrySelect.select(fixture.country);
+      this.streetNameInput.type(fixture.streetName);
+      this.streetNumberInput.type(fixture.apartment);
+      this.cityInput.type(fixture.city);
+      // this.stateSelect.select(fixture.state);
+      this.postalCodeInput.type(fixture.zipCode);
+      this.useShippingAsBilling.check();
+      this.saveShipping.click({ force: true });
+    });
+
+    return this;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fillBillingForm(fixture: any) {
+    this.shippingAddressForm
+      .within(() => {
+        this.firstNameInput.type(fixture.firstName);
+        this.lastNameInput.type(fixture.lastName);
+        this.countrySelect.select(fixture.country);
+        this.streetNameInput.type(fixture.streetName);
+        this.streetNumberInput.type(fixture.apartment);
+        this.cityInput.type(fixture.city);
+        // this.stateSelect.select(fixture.state);
+        this.postalCodeInput.type(fixture.zipCode);
+        this.useShippingAsBilling.uncheck();
+      })
+      .then(() => {
+        this.billingAddressForm.within(() => {
+          this.firstNameInput.type(fixture.firstName);
+          this.lastNameInput.type(fixture.lastName);
+          this.countrySelect.select(fixture.country);
+          this.streetNameInput.type(fixture.streetName);
+          this.streetNumberInput.type(fixture.apartment);
+          this.cityInput.type(fixture.city);
+          // this.stateSelect.select(fixture.state);
+          this.postalCodeInput.type(fixture.zipCode);
+          this.saveBilling.click({ force: true });
+        });
+      });
+
     return this;
   }
 

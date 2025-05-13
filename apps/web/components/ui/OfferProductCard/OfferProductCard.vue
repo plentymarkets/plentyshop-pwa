@@ -27,11 +27,11 @@
         >
           {{ offerGetters.getOfferItemVariationName(variation) }}
         </SfLink>
-        <p>{{ formatPrice(offerGetters.getOfferItemOriginalPrice(filteredOffer.order.orderItems[key])) }}</p>
+        <p>{{ format(offerGetters.getOfferItemOriginalPrice(filteredOffer.order.orderItems[key])) }}</p>
         <UiBadges v-if="variation" :product="variation" :use-availability="true" :use-tags="false" />
 
         <p class="flex justify-end self-end text-yellow-600 font-bold text-lg pt-6">
-          {{ formatPrice(offerGetters.getOfferItemOriginalPriceWithQuantity(filteredOffer.order.orderItems[key])) }}
+          {{ format(offerGetters.getOfferItemOriginalPriceWithQuantity(filteredOffer.order.orderItems[key])) }}
         </p>
       </div>
     </div>
@@ -45,7 +45,7 @@ import { offerGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<OfferProductCardProps>();
 const NuxtLink = resolveComponent('NuxtLink');
-const { n } = useI18n();
+const { format } = usePriceFormatter();
 
 const filteredOffer = computed(() => {
   const {
@@ -61,10 +61,6 @@ const filteredOffer = computed(() => {
 });
 
 const getImageSource = (variationId: string) => {
-  return props.offer.itemImages[variationId] || '/images/placeholder.png';
-};
-
-const formatPrice = (price: number) => {
-  return n(price, 'currency');
+  return props.offer.itemImages[variationId] || '/_nuxt-plenty/images/placeholder.png';
 };
 </script>

@@ -1,8 +1,8 @@
 /**
- * Composables for plentyShop PWA.
+ * Composables for PlentyONE Shop.
  *
  * @remarks
- * This section provides a reference of composables available in plentyShop PWA.
+ * This section provides a reference of composables available in PlentyONE Shop.
  * It includes the available functions and interfaces.
  *
  * @packageDocumentation
@@ -18,8 +18,6 @@ export * from './useCart';
 export * from './useCartShippingMethods';
 export * from './useCategoryFilter';
 export * from './useCategoryTree';
-export * from './useCookieBar';
-export * from './useCookieConsent';
 export * from './useCoupon';
 export * from './useCsrfToken';
 export * from './useCustomer';
@@ -27,7 +25,6 @@ export * from './useCustomerContact';
 export * from './useCustomerOrder';
 export * from './useCustomerOrders';
 export * from './useCustomerReturns';
-export * from './useHandleError';
 export * from './useInitialSetup';
 export * from './useLegalInformation';
 export * from './useLocalization';
@@ -35,7 +32,6 @@ export * from './useMakeOrder';
 export * from './useMegaMenu';
 export * from './useModernImage';
 export * from './useNewsletter';
-export * from './useNotification';
 export * from './useOffer';
 export * from './useOrderDocument';
 export * from './usePaymentMethods';
@@ -48,7 +44,6 @@ export * from './useProductReviewAverage';
 export * from './useProductReviews';
 export * from './useProducts';
 export * from './useQuickCheckout';
-export * from './useReadCookieBar';
 export * from './useReturnOrder';
 export * from './useSearch';
 export * from './useStructuredData';
@@ -60,3 +55,4 @@ export * from './useCheckout';
 export * from './useAddressForm';
 export * from './useProcessingOrder';
 export * from './useModuleRendering';
+export * from './useRobots';

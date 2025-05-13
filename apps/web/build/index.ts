@@ -16,21 +16,34 @@ dotenv.config({
 });
 
 const main = async () => {
+  const configKeys = [
+    'NUXT_PUBLIC_PRIMARY_COLOR',
+    'NUXT_PUBLIC_SECONDARY_COLOR',
+    'DEFAULTLANGUAGE',
+    'LANGUAGELIST',
+    'LOGO',
+    'FAVICON',
+  ];
+
+  const config = configKeys.reduce(
+    (configAccumulator, key) => {
+      configAccumulator[key] = process.env[key];
+      return configAccumulator;
+    },
+    {} as Record<string, string | undefined>,
+  );
+
   if (process.env.FETCH_REMOTE_CONFIG === '1') {
-    BuildLoggerInstance.info('Fetching remote configuration...');
-    const systemConfiguration = new SystemConfiguration();
-    await systemConfiguration.fetch();
+    BuildLoggerInstance.info('Configuring application...');
+    const systemConfiguration = new SystemConfiguration(config);
 
     const dataWriter = new DataToFileWriter(BuildLoggerInstance);
     const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
-    appConfigurator.generateEnvironment(systemConfiguration.getResponse());
-    appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
-    appConfigurator.generateLanguageFiles(systemConfiguration.getLanugages());
+    appConfigurator.generateLanguageFiles(systemConfiguration.getLanguages());
 
     const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
     const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);
     assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
-    assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
   } else {
     BuildLoggerInstance.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
   }

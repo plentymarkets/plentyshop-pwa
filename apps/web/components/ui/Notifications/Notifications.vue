@@ -36,7 +36,7 @@
           type="button"
           class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
           :class="[{ 'ml-auto': !notification?.action?.text }, getButtonClasses(notification)]"
-          aria-label="Close neutral alert"
+          :aria-label="$t('closeNeutralAlert')"
           @click="notification.dismiss"
         >
           <SfIconClose class="hidden md:block" />
@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconCheckCircle, SfIconInfo, SfIconWarning, SfIconError } from '@storefront-ui/vue';
-import type { Notification } from '../../../composables/useNotification/types';
+import type { Notification } from '@plentymarkets/shop-core';
 const { data: notifications } = useNotification();
 
 const classMapper = {

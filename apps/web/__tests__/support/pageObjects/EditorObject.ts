@@ -1,20 +1,22 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
+
+export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
 
 export class EditorObject extends PageObject {
   get pretitle() {
-    return cy.getByTestId('banner-pretitle-0');
+    return cy.getByTestId(`banner-pretitle-${firstBannerBlockUuid}`);
   }
 
   get title() {
-    return cy.getByTestId('banner-title-0');
+    return cy.getByTestId(`banner-title-${firstBannerBlockUuid}`);
   }
 
   get subtitle() {
-    return cy.getByTestId('banner-subtitle-0');
+    return cy.getByTestId(`banner-subtitle-${firstBannerBlockUuid}`);
   }
 
   get description() {
-    return cy.getByTestId('banner-description-0');
+    return cy.getByTestId(`banner-description-${firstBannerBlockUuid}`);
   }
 
   get editorToolbar() {
@@ -38,23 +40,31 @@ export class EditorObject extends PageObject {
   }
 
   get exitEditorButton() {
-    return cy.get('#close')
+    return cy.get('#close');
   }
 
-  get blockWrapper() {
-    return cy.getByTestId('block-wrapper')
+  get blockWrappers() {
+    return cy.get('[data-testid*="block-wrapper"]');
   }
 
-  get topBlockButton(){
-    return cy.getByTestId('top-add-block')
+  get topBlockButton() {
+    return cy.getByTestId('top-add-block');
   }
 
-  get bottomBlockButton(){
-    return cy.getByTestId('bottom-add-block')
+  get bottomBlockButton() {
+    return cy.getByTestId('bottom-add-block');
   }
 
-  get deleteBlockButton(){
-    return cy.getByTestId('delete-block-button')
+  get deleteBlockButton() {
+    return cy.getByTestId('delete-block-button');
+  }
+
+  get topMoveBlockButton() {
+    return cy.getByTestId('move-up-button');
+  }
+
+  get bottomMoveBlockButton() {
+    return cy.getByTestId('move-down-button');
   }
 
   get recommendedProducts() {
@@ -65,6 +75,22 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('editor-language-select');
   }
 
+  get addBlockButton() {
+    return cy.getByTestId('block-add-image-with-text-0');
+  }
+
+  get designSettingsButton() {
+    return cy.getByTestId('open-design-drawer');
+  }
+
+  blockIsBanner(el: JQuery<HTMLElement>) {
+    return el[0].innerHTML.includes('banner-image');
+  }
+
+  blockIsNewsletter(el: JQuery<HTMLElement>) {
+    return el[0].innerHTML.includes('newsletter-block');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -73,6 +99,11 @@ export class EditorObject extends PageObject {
   toggleEditMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Edit');
+    return this;
+  }
+
+  toggleDesignSettings() {
+    this.designSettingsButton.should('be.visible').click();
     return this;
   }
 
@@ -108,7 +139,7 @@ export class EditorObject extends PageObject {
       .should('exist')
       .and('be.visible')
       .invoke('attr', 'placeholder')
-      .should('not.be.empty')
+      .should('not.be.empty');
   }
 
   replaceEditorContent(content: string) {
@@ -121,7 +152,7 @@ export class EditorObject extends PageObject {
           cy.wrap($el).clear();
         }
       })
-      .type(content, {delay: 0})
+      .type(content, { delay: 0 })
       .should('have.value', content);
   }
 
@@ -134,11 +165,8 @@ export class EditorObject extends PageObject {
   }
 
   buttonsExistWithGroupClasses() {
-    this.blockWrapper.first()
-      .should('exist')
-      .and('have.class', 'group')
-      .and('not.have.css', 'outline-style', 'solid');
-    this.blockWrapper.first().within(() => {
+    this.blockWrappers.first().should('exist').and('have.class', 'group').and('not.have.css', 'outline-style', 'solid');
+    this.blockWrappers.first().within(() => {
       this.topBlockButton
         .should('exist')
         .and('have.class', 'group-hover:opacity-100')
@@ -152,24 +180,23 @@ export class EditorObject extends PageObject {
         .and('have.class', 'group-hover:opacity-100')
         .and('have.class', 'group-focus:opacity-100');
     });
-
   }
 
   deleteBlock() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
-      this.blockWrapper.first().should('exist');
+      this.blockWrappers.first().should('exist');
       this.deleteBlockButton.eq(1).click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength - 1);
+      this.blockWrappers.should('have.length', initialLength - 1);
     });
-   }
+  }
 
-   recommendedProductsExist() {
-      this.recommendedProducts.should('exist');
-   }
+  recommendedProductsExist() {
+    this.recommendedProducts.should('exist');
+  }
 
-   switchLanguage() {
+  switchLanguage() {
     cy.intercept('/plentysystems/getCart').as('getCart');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
     cy.intercept('/plentysystems/getFacet').as('getFacet');
@@ -178,27 +205,67 @@ export class EditorObject extends PageObject {
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
     cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
-    this.title.first().should('have.text', 'Dein Sound');
+    this.title.first().should('have.text', 'Ihr Sound');
   }
 
   addBlockTop() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
+      this.addBlockButton.should('exist').click();
+      cy.wait(1000);
+      this.blockWrappers.should('have.length', initialLength + 1);
     });
   }
 
   addBlockBottom() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
+      this.addBlockButton.click();
+      cy.wait(1000);
+      this.blockWrappers.should('have.length', initialLength + 1);
+    });
+  }
+
+  checkFirstBlock() {
+    this.blockWrappers.first().within(() => {
+      this.topMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+    });
+  }
+
+  checkLastBlock() {
+    this.blockWrappers.last().within(() => {
+      this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+    });
+  }
+
+  assertDefaultBlockOrder() {
+    this.blockWrappers.first().should('contain.text', 'Feel the music').next().should('contain.text', 'Discover Tech');
+  }
+
+  moveBlock() {
+    this.blockWrappers.first().within(() => {
+      this.bottomMoveBlockButton.first().should('exist').click();
+    });
+  }
+
+  assertChangedBlockOrder() {
+    this.blockWrappers.first().should('contain.text', 'Discover Tech').next().should('contain.text', 'Feel the music');
+  }
+
+  checkWrapperSpacings() {
+    this.blockWrappers.each((el) => {
+      if (this.blockIsBanner(el) || this.blockIsNewsletter(el)) {
+        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+      } else {
+        cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-6');
+      }
     });
   }
 }
-

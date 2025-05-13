@@ -39,6 +39,7 @@ export const useApplePay = () => {
       state.value.scriptLoaded = true;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state.value.script = (script as any).Applepay() as ApplepayType;
     state.value.config = await state.value.script.config();
 
@@ -56,7 +57,7 @@ export const useApplePay = () => {
       requiredBillingContactFields: ['postalAddress'],
       total: {
         type: 'final',
-        label: useRuntimeConfig().public.storename ?? 'plentyshop PWA',
+        label: useRuntimeConfig().public.storename ?? 'PlentyONE Shop',
         amount: cartGetters.getTotals(cart.value).total.toString(),
       },
     } as ApplePayJS.ApplePayPaymentRequest;
@@ -70,6 +71,7 @@ export const useApplePay = () => {
     const localePath = useLocalePath();
     const { shippingPrivacyAgreement } = useAdditionalInformation();
     const { $i18n } = useNuxtApp();
+    const { emit } = usePlentyEvent();
 
     try {
       const paymentRequest = createPaymentRequest();
@@ -129,6 +131,7 @@ export const useApplePay = () => {
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
           clearCartItems();
 
+          emit('frontend:orderCreated', order);
           navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
           showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));

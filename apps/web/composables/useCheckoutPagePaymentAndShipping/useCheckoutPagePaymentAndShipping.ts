@@ -37,7 +37,14 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const selectedPaymentId = computed(() => cart?.value?.methodOfPaymentId || 0);
 
   const handleShippingMethodUpdate = async (shippingMethodId: string) => {
+    const existingShippingMethod = selectedShippingMethod.value
+      ? shippingProviderGetters.getParcelServicePresetId(selectedShippingMethod.value)
+      : null;
+
+    if (existingShippingMethod === shippingMethodId) return;
+
     await saveShippingMethod(Number(shippingMethodId));
+    usePreferredDelivery().disableAllOptions();
     await fetchPaymentMethods();
     await getCart();
 
@@ -45,6 +52,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
       selectedShippingMethod.value,
       selectedPaymentId.value,
     );
+
     const isPaymentMethodUnavailable = paymentProviderGetters.isPaymentMethodUnavailable(
       paymentMethods.value.list,
       selectedPaymentId.value,
@@ -63,6 +71,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
     await savePaymentMethod(paymentMethodId);
     await getShippingMethods();
+    await getCart();
   };
 
   const validateShippingTerms = () => {

@@ -5,4 +5,5 @@ export interface ModalProps {
   tag?: string | ConcreteComponent;
   disableClickAway?: boolean;
   disableEsc?: boolean;
+  overlayClasses?: string;
 }

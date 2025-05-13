@@ -9,10 +9,12 @@ describe('<Filter />', () => {
           id: '1',
           count: 3,
           name: 'test facet',
-          names:[ {
+          names: [
+            {
               lang: 'en',
-              name: 'test facet translation name'
-          }],
+              name: 'test facet translation name',
+            },
+          ],
           type: 'color',
           values: [
             {
@@ -22,18 +24,17 @@ describe('<Filter />', () => {
                 {
                   lang: 'en',
                   name: 'red',
-                }
+                },
               ],
               cssClass: 'string',
               position: 0,
-              count: 3
-            }
+              count: 3,
+            },
           ],
-        }
+        },
       },
     });
 
     expect(getByTestId('accordion-item'));
   });
 });
-
