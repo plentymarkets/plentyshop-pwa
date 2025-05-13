@@ -1,6 +1,6 @@
 <template>
   <UiButton class="mt-4 w-full cursor-pointer" variant="secondary" @click="openReturn()">
-    {{ $t('returns.returnItems') }}
+    {{ t('returns.returnItems') }}
   </UiButton>
 
   <OrderReturnForm :is-open="isReturnOpen" @close="closeReturn" />
@@ -13,7 +13,7 @@ import type { OrderReturnItemsProps } from './types';
 const props = defineProps<OrderReturnItemsProps>();
 
 const { isOpen: isReturnOpen, open: openReturnForm, close: closeReturn } = useDisclosure();
-
+const { t } = useI18n();
 const { setCurrentReturnOrder } = useReturnOrder();
 
 const openReturn = () => {

@@ -7,7 +7,7 @@
       >
         <div v-if="hasUnsavedChanges()" class="w-full flex flex-col">
           <div class="mb-4 text-center typography-text-lg font-bold">
-            <h2>{{ $t('previewModeBar.title') }}</h2>
+            <h2>{{ t('previewModeBar.title') }}</h2>
           </div>
           <div
             class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
@@ -15,28 +15,28 @@
             <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
             <span class="py-2 mr-2">
               <p>
-                {{ $t(`previewModeBar.unsavedChangesWarning`) }}
+                {{ t(`previewModeBar.unsavedChangesWarning`) }}
               </p>
             </span>
           </div>
           <UiButton class="w-full my-2" @click="saveAndExit()">
-            {{ $t(`previewModeBar.saveAndExit`) }}
+            {{ t(`previewModeBar.saveAndExit`) }}
           </UiButton>
           <UiButton
             variant="secondary"
             class="w-full"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t(`previewModeBar.exitWithoutSaving`)"
+            :aria-label="t(`previewModeBar.exitWithoutSaving`)"
             @click="removeLookupCookie()"
           >
-            {{ $t(`previewModeBar.exitWithoutSaving`) }}
+            {{ t(`previewModeBar.exitWithoutSaving`) }}
           </UiButton>
         </div>
 
         <div v-else class="w-full flex flex-col">
           <UiButton class="w-full my-2" @click="removeLookupCookie()">
-            {{ $t(`previewModeBar.exitEditor`) }}
+            {{ t(`previewModeBar.exitEditor`) }}
           </UiButton>
         </div>
       </div>
@@ -44,7 +44,7 @@
       <UiButton
         variant="secondary"
         class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-16 right-auto xl:right-16 xl:left-auto bg-white !py-1"
-        :aria-label="$t('previewModeBar.label')"
+        :aria-label="t('previewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
         <NuxtImg width="32px" height="32px" :src="storeBlack" />
@@ -58,6 +58,7 @@ import storeBlack from '/assets/icons/paths/store-black.svg';
 import { SfIconWarning } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
+const { t } = useI18n();
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteConfiguration();
 const { save: saveBlocksAndSiteSettings } = useToolbar();

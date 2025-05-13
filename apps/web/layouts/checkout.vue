@@ -7,7 +7,7 @@
           <UiButton
             :class="[viewport.isLessThan('lg') ? 'flex lg:hidden whitespace-nowrap' : 'hidden lg:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
-            :aria-label="$t('prevAriaLabel')"
+            :aria-label="t('prevAriaLabel')"
             variant="tertiary"
             @click="goToPreviousRoute"
           >
@@ -31,6 +31,7 @@ import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
 const localePath = useLocalePath();
+const { t } = useI18n();
 const router = useRouter();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
