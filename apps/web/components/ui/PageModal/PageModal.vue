@@ -119,7 +119,6 @@ watch(
     }
   },
 );
-
 const validationSchema = toTypedSchema(
   object({
     pageName: string().required('Enter a page name').default(''),

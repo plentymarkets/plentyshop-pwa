@@ -3,7 +3,7 @@ const currentParentCategoryId = ref<number | null>(null);
 const currentCategoryName = ref<string | null>(null);
 const currentCategoryPath = ref<string | null>(null);
 export const useCategoryIdHelper = () => {
-  const setCategoryId = (id: number, parentId?: number, name?: string, path?: string) => {
+  const setCategoryId = (id?: number, parentId?: number, name?: string, path?: string) => {
     currentCategoryId.value = id;
     if (parentId !== undefined) {
       currentParentCategoryId.value = parentId;
