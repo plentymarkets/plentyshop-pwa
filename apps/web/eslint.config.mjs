@@ -1,6 +1,7 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
 import { architecture, ecma } from "@vue-storefront/eslint-config";
 import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
+import noDollarT from './eslintrules/no-dollar-t.mjs';
 
 export default withNuxt(
   {
@@ -35,13 +36,20 @@ export default withNuxt(
      * unicorn/no-thenable
      * unicorn/prefer-add-event-listener
      */
+    plugins: {
+      plentyshop: {
+        rules: {
+          'no-dollar-t': noDollarT,
+        }
+      }
+    },
     rules: {
       'arrow-parens': ['error', 'always'],
       'no-console': ['error'],
       'no-constant-binary-expression': 'off',
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       'vue/no-console': ['error'],
-      'vue/no-multiple-template-root': ['off'],
+      'vue/no-multiple-template-root': ['error'],
       'vue/no-v-html': ['off'],
       'vue/html-self-closing': ['error', { html: { void: 'always' } }],
       'vuejs-accessibility/click-events-have-key-events': 'off',
@@ -51,6 +59,7 @@ export default withNuxt(
       'vuejs-accessibility/no-autofocus': 'off',
       'vuejs-accessibility/no-redundant-roles': 'off',
       'vuejs-accessibility/no-static-element-interactions': 'off',
-    }
+      'plentyshop/no-dollar-t': ['error'],
+    },
   },
 );
