@@ -49,7 +49,7 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="data.entries"
+          :options="categoriesWithFallback"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
@@ -94,6 +94,8 @@ import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-
 const { pageModalOpen, togglePageModal } = useSiteConfiguration();
 const { addCategory } = useCategory();
 const { data, getCategories } = useCategoriesSearch();
+const { getCategoryName, getCategoryId } = useCategoryIdHelper();
+
 const fetchCategoriesByName = async (name: string = '') => {
   await getCategories({
     type: 'in:item,content',
@@ -111,7 +113,7 @@ watch(
   async (isOpen) => {
     if (isOpen) {
       resetForm();
-      parentPage.value = emptyCategoryItem;
+      parentPage.value = buildFallbackCategory();
       pageType.value = pageTypes.value[0];
       await loadInitialCategories();
     }
@@ -146,29 +148,45 @@ const closeModal = () => {
 const getLabel = (option: CategoryTreeItem) => {
   return option.details && option.details.length ? option.details[0].name : '';
 };
-
-const emptyCategoryItem: CategoryTreeItem = {
-  id: 0,
-  type: 'none',
-  itemCount: [],
-  childCount: 0,
-  right: 'all',
-  details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
-};
-
 const [pageName, pageNameAttributes] = defineField('pageName');
 const pageTypes = ref([
   { label: 'Content', value: 'content' },
   { label: 'Item category', value: 'item' },
 ]);
 const pageType = ref(pageTypes.value[0]);
-const parentPage = ref(emptyCategoryItem);
+const buildFallbackCategory = (): CategoryTreeItem => {
+  return {
+    id: getCategoryId.value ?? 0,
+    type: 'none',
+    itemCount: [],
+    childCount: 0,
+    right: 'all',
+    details: [
+      {
+        name: getCategoryName.value ?? 'None',
+        lang: '',
+        nameUrl: '',
+        metaTitle: '',
+        imagePath: '',
+        image2Path: '',
+      },
+    ],
+  };
+};
+const parentPage = ref<CategoryTreeItem>(buildFallbackCategory());
+
+const categoriesWithFallback = computed(() => {
+  const selected = parentPage.value;
+  const entries = data.value.entries || [];
+
+  const exists = entries.some((entry) => entry.id === selected?.id);
+  return exists ? entries : [selected, ...entries];
+});
 const onSubmit = handleSubmit(() => createNewPage());
 const debouncedSearch = debounce(async (query: string) => {
   if (!query || query.length < 2) return;
   await fetchCategoriesByName(query);
 }, 500);
-
 const handleSearch = (query: string) => {
   debouncedSearch(query);
 };
