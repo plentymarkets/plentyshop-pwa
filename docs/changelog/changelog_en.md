@@ -28,15 +28,20 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Add Settings View
 - (dev) Changed design for settings drawer
 - (dev) Logo preview
+- (dev) Change Category Settings Drawer delete button color
+- (dev) Change MegaMenu hover background classes to secondary 100
 
 ### 👷 Changed
 
 - The contact form requires a turnstile validation otherwise the form will not show up.
 - `vsf-locale` cookie got removed, we now send a header `locale` with every sdk request.
+- Translations are now lazy loaded. This decreases JavaScript chunk size, which in turn improves page load performance.
 
 ### 🩹 Fixed
 
+- Fixed an issue in the guest checkout flow that allowed address saving without providing an email.
 - Fixed an issue where the currency was not displayed correctly.
+- Fixed missing form labels for DHL preferred delivery services.
 - Fixed a z-index issue in the checkout.
 - (dev) Fix Page Selector state.
 - (dev) Fix Page Selector closes when clicking outside the box.
