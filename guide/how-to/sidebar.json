@@ -48,6 +48,10 @@
             {
                 "text": "Custom Icon",
                 "link": "/guide/how-to/custom-icon.md"
+            },
+            {
+                "text": "Currency Formatter",
+                "link": "/guide/how-to/currency-formatter.md"
             }
         ]
     },
