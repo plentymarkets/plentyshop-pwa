@@ -51,11 +51,8 @@
           <h2>Content Pages</h2>
         </template>
 
-        <div class="mb-6 mt-4">
-          <ul
-            class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto"
-            @scroll="(e) => handleScroll(e, 'content')"
-          >
+        <div class="mb-6 mt-4 overflow-auto max-h-[500px]">
+          <ul class="shadow-md rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
             <PagesItem v-for="item in contentItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
@@ -74,11 +71,8 @@
           <h2>Product Categories</h2>
         </template>
 
-        <div class="mb-6 mt-4">
-          <ul
-            class="bg-white shadow-md rounded-lg max-h-[500px] overflow-auto"
-            @scroll="(e) => handleScroll(e, 'item')"
-          >
+        <div class="mb-6 mt-4 overflow-auto max-h-[500px]">
+          <ul class="shadow-md rounded-lg" @scroll="(e) => handleScroll(e, 'item')">
             <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingItem" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />

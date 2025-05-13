@@ -1,5 +1,5 @@
 <template>
-  <li class="border-b">
+  <li class="border border-[#D9E2DC] rounded-[5px] mb-3">
     <div
       class="relative"
       :class="['px-4 py-2 group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
@@ -54,7 +54,8 @@
         </SfIconBase>
       </div>
     </div>
-    <ul
+  </li>
+  <ul
       v-if="item.hasChildren && open"
       class="pl-4 border-l border-gray-200 max-h-[300px] overflow-auto"
       @scroll="handleChildrenScroll"
@@ -78,7 +79,6 @@
         <SfLoaderCircular size="sm" />
       </li>
     </ul>
-  </li>
 </template>
 <script setup lang="ts">
 import {
