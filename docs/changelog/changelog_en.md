@@ -40,6 +40,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🩹 Fixed
 
+- Fixed cookierbar text overlap and browse products translation.
 - Fixed an issue in the guest checkout flow that allowed address saving without providing an email.
 - Fixed an issue where the currency was not displayed correctly.
 - Fixed missing form labels for DHL preferred delivery services.
