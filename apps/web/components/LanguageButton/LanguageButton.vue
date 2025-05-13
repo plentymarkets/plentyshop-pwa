@@ -2,7 +2,7 @@
   <UiButton
     square
     class="ml-3 mb-2"
-    :aria-label="$t(`lang.${locale}`)"
+    :aria-label="t(`lang.${locale}`)"
     :data-testid="`languageOption-${locale}`"
     @click="async () => await switchLocale(locale)"
   >
@@ -15,4 +15,5 @@ import type { Locale } from '#i18n';
 
 defineProps<{ locale: Locale }>();
 const { switchLocale } = useLocalization();
+const { t } = useI18n();
 </script>

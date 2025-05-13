@@ -49,13 +49,16 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="categories"
+          :options="data.entries || []"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
           class="cursor-pointer"
           select-label=""
           deselect-label="Selected"
+          :searchable="true"
+          :internal-search="false"
+          @search-change="handleSearch"
         />
       </div>
 
@@ -86,11 +89,37 @@ import Multiselect from 'vue-multiselect';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
-const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { data: categoryTree } = useCategoryTree();
-const { addCategory } = useCategory();
+const router = useRouter();
+const { setCategoryId } = useCategoryIdHelper();
+const { pageModalOpen, togglePageModal, setSettingsCategory } = useSiteConfiguration();
+const { data: newCategory, addCategory } = useCategoryManagement();
+const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
+
+const fetchCategoriesByName = async (name: string = '') => {
+  await getCategories({
+    type: 'in:item,content',
+    sortBy: 'position_asc,name_asc',
+    with: 'details,clients',
+    name: name ? `like:${name}` : '',
+  });
+};
+const loadInitialCategories = async () => {
+  await fetchCategoriesByName();
+};
+watch(
+  () => pageModalOpen.value,
+  async (isOpen) => {
+    if (isOpen) {
+      resetForm();
+      parentPage.value = emptyCategoryItem;
+      pageType.value = pageTypes.value[0];
+      await loadInitialCategories();
+    }
+  },
+);
 
 const validationSchema = toTypedSchema(
   object({
@@ -107,31 +136,33 @@ const createNewPage = async () => {
     return;
   }
 
-  addCategory({
+  await addCategory({
     name: pageName?.value || '',
     type: pageType.value.value,
     parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
   });
+
+  addNewPageToTree(newCategory.value);
+  await redirectToNewPage(newCategory.value);
+};
+
+const redirectToNewPage = async (newCategory: CategoryEntry) => {
+  await router.push({
+    path: newCategory.details[0].nameUrl,
+  });
+  setCategoryId(
+    newCategory.id,
+    newCategory.parentCategoryId,
+    newCategory.details[0].name,
+    newCategory.details[0].nameUrl,
+  );
+  setSettingsCategory({} as CategoryTreeItem, 'general-menu');
 };
 
 const closeModal = () => {
   resetForm();
   togglePageModal(false);
 };
-
-const flattenCategories = (items: CategoryTreeItem[]) => {
-  let flat: CategoryTreeItem[] = [];
-  items.forEach((item: CategoryTreeItem) => {
-    if (item.type === 'item' || item.type === 'content') {
-      flat.push(item);
-    }
-    if (item.children && item.children.length) {
-      flat = flat.concat(flattenCategories(item.children));
-    }
-  });
-  return flat;
-};
-
 const getLabel = (option: CategoryTreeItem) => {
   return option.details && option.details.length ? option.details[0].name : '';
 };
@@ -145,8 +176,6 @@ const emptyCategoryItem: CategoryTreeItem = {
   details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
 };
 
-const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
-
 const [pageName, pageNameAttributes] = defineField('pageName');
 const pageTypes = ref([
   { label: 'Content', value: 'content' },
@@ -154,6 +183,13 @@ const pageTypes = ref([
 ]);
 const pageType = ref(pageTypes.value[0]);
 const parentPage = ref(emptyCategoryItem);
-
 const onSubmit = handleSubmit(() => createNewPage());
+const debouncedSearch = debounce(async (query: string) => {
+  if (!query || query.length < 2) return;
+  await fetchCategoriesByName(query);
+}, 500);
+
+const handleSearch = (query: string) => {
+  debouncedSearch(query);
+};
 </script>

@@ -38,6 +38,7 @@ export interface UseCustomer {
   loginAsGuest: LoginAsGuest;
   changePassword: ChangePassword;
   emailValidationSchema: ReturnType<typeof toTypedSchema>;
+  missingGuestCheckoutEmail: Ref<boolean>;
   backToContactInformation: () => boolean;
   showNetPrices?: boolean;
 }

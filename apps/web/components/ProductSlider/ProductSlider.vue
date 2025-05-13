@@ -31,9 +31,9 @@
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
-    <span>{{ $t('asterisk') }}</span>
-    <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-    <span v-else>{{ $t('itemInclVAT') }}</span>
+    <span>{{ t('asterisk') }}</span>
+    <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+    <span v-else>{{ t('itemInclVAT') }}</span>
     <i18n-t keypath="excludedShipping" scope="global">
       <template #shipping>
         <SfLink
@@ -41,7 +41,7 @@
           target="_blank"
           class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
         >
-          {{ $t('delivery') }}
+          {{ t('delivery') }}
         </SfLink>
       </template>
     </i18n-t>
@@ -57,6 +57,7 @@ import { paths } from '~/utils/paths';
 const { addModernImageExtension } = useModernImage();
 const { showNetPrices } = useCustomer();
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 defineProps<ProductSliderProps>();
 </script>

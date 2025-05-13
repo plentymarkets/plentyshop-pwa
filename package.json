@@ -1,6 +1,6 @@
 {
   "name": "@plentymarkets/plentyshop-pwa",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "private": true,
   "license": "BSD-3-Clause",
   "workspaces": [
@@ -33,10 +33,10 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.3.11",
+    "@plentymarkets/shop-core": "^1.5.1",
     "@plentymarkets/shop-module-mollie": "^1.0.5",
-    "@plentymarkets/shop-api": "^0.104.0",
-    "@plentymarkets/shop-module-gtag": "^1.1.1",
+    "@plentymarkets/shop-api": "0.107.0",
+    "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",
@@ -58,6 +58,7 @@
     "@nuxtjs/i18n": "9.1.5",
     "@nuxtjs/turnstile": "^0.8.0",
     "@paypal/paypal-js": "8.1.0",
+    "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^0.10.6",
     "@vue-storefront/eslint-config": "~2.0.0",

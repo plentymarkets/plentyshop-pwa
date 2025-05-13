@@ -14,7 +14,7 @@
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
         <UiButton
-          :aria-label="$t('closeDialog')"
+          :aria-label="t('closeDialog')"
           data-testid="quick-checkout-close"
           square
           variant="tertiary"
@@ -65,7 +65,7 @@
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ $t('delivery') }}
+                {{ t('delivery') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -78,7 +78,7 @@
           <p class="font-medium text-base">{{ t('quickCheckout.cartContains', cartItemsCount) }}</p>
           <div class="grid grid-cols-2">
             <p class="text-base">{{ t('quickCheckout.subTotal') }}:</p>
-            <p data-testid="subtotal" class="font-medium text-right">{{ n(totals.subTotal, 'currency') }}</p>
+            <p data-testid="subtotal" class="font-medium text-right">{{ format(totals.subTotal) }}</p>
           </div>
         </div>
 
@@ -118,7 +118,8 @@ import { paths } from '~/utils/paths';
 
 defineProps<QuickCheckoutProps>();
 
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 
 const { showNetPrices } = useCustomer();
 
