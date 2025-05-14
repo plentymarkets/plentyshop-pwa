@@ -210,14 +210,6 @@ export const usePayPal = () => {
    */
   const createCreditCardTransaction = async () => {
     state.value.loading = true;
-    await useAsyncData(() =>
-      useSdk().plentysystems.doAdditionalInformation({
-        orderContactWish: null,
-        orderCustomerSign: null,
-        shippingPrivacyHintAccepted: true,
-        templateType: 'checkout',
-      }),
-    );
 
     const { error: preparePaymentError } = await useAsyncData(() => useSdk().plentysystems.doPreparePayment());
     useHandleError(preparePaymentError.value);
