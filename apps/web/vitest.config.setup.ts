@@ -40,7 +40,6 @@ const i18n = createI18n({
 });
 config.global.plugins = [i18n];
 config.global.mocks = {
-  $t: (key: string) => key,
   $d: (date: Date) => date.toLocaleDateString(),
 };
 config.global.stubs = {

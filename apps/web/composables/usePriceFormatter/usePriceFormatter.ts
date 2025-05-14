@@ -27,6 +27,7 @@ export const usePriceFormatter = () => {
   const format = (value: number) => {
     if (state.value.pattern === '') {
       const { $i18n } = useNuxtApp();
+      // eslint-disable-next-line custom-rules/no-i18n-globals
       return $i18n.n(value, 'currency');
     }
 
