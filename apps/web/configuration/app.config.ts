@@ -36,6 +36,8 @@ export const appConfiguration = {
     link: [
       { rel: 'icon', href: favicon.icon },
       { rel: 'apple-touch-icon', href: favicon.appleTouchIcon },
+      { rel: 'preconnect', href: process.env.CDN_URL || '' },
+      { rel: 'preconnect', href: process.env.API_ENDPOINT || '' },
     ],
     title: metaDefaults.title,
   },
