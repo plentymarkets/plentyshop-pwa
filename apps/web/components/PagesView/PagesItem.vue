@@ -3,9 +3,9 @@
     <div
       class="relative"
       :class="['px-4 py-2 group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
-      @click="toggle"
+      @click="toggleOnTablet"
     >
-      <span v-if="item.hasChildren">
+      <span v-if="item.hasChildren" @click="toggleOnDesktop">
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
@@ -117,12 +117,16 @@ const currentGeneralPageId = ref<number | null>(null);
 const open = ref(false);
 const childrenPagination = usePaginatedChildren(item);
 
-const toggle = async () => {
+const toggleOpen = async (isTabletCheck = false) => {
+  if (isTabletCheck && !isTablet.value) return;
+
   open.value = !open.value;
   if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
     await childrenPagination.fetchMore();
   }
 };
+const toggleOnDesktop = () => toggleOpen();
+const toggleOnTablet = () => toggleOpen(true);
 
 const handleChildrenScroll = async (e: Event) => {
   const el = e.target as HTMLElement;
