@@ -1,9 +1,6 @@
 <template>
   <div class="relative">
-    <div
-      v-if="formIsLoading"
-      class="absolute inset-0 z-50 flex items-center justify-center bg-white/80"
-    >
+    <div v-if="formIsLoading" class="absolute inset-0 z-50 flex items-center justify-center bg-white/80">
       <SfLoaderCircular size="2xl" />
     </div>
     <form

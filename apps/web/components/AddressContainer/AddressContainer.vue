@@ -50,10 +50,7 @@
     </div>
   </div>
   <div v-else class="flex items-center justify-center relative h-fit min-h-[6rem]">
-    <SfLoaderCircular
-      class="z-[999]"
-      size="2xl"
-    />
+    <SfLoaderCircular class="z-[999]" size="2xl" />
   </div>
 </template>
 
@@ -67,7 +64,7 @@ const { disabled = false, type } = defineProps<AddressContainerProps>();
 const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
-const { loading: AddressLoading ,checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
+const { loading: AddressLoading, checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized } = useCustomer();
