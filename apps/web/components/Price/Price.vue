@@ -4,7 +4,7 @@
       <span>{{ format(price) }}</span>
       <span>{{ t('asterisk') }} </span>
     </span>
-    <span v-if="crossedPrice" class="text-base font-normal text-neutral-500 line-through">
+    <span v-if="crossedPrice && crossedPrice !== price" class="text-base font-normal text-neutral-500 line-through">
       {{ format(crossedPrice) }}
     </span>
   </div>
