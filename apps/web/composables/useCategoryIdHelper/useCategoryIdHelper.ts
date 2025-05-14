@@ -4,9 +4,23 @@ const currentCategoryName = ref<string | null>(null);
 const currentCategoryPath = ref<string | null>(null);
 const currentPageType = ref<string | null>(null);
 const currentPageHasChildren = ref<boolean | null>(null);
+const currentCategoryLevel = ref<number | null>(null);
+const currentParentName = ref<string | null>(null);
 
 export const useCategoryIdHelper = () => {
-  const setCategoryId = (id?: number, parentId?: number, name?: string, path?: string) => {
+  const setCategoryId = ({
+    id,
+    parentId,
+    name,
+    path,
+    level,
+  }: {
+    id?: number;
+    parentId?: number;
+    name?: string;
+    path?: string;
+    level?: number;
+  }) => {
     currentCategoryId.value = id;
     if (parentId !== undefined) {
       currentParentCategoryId.value = parentId;
@@ -17,14 +31,19 @@ export const useCategoryIdHelper = () => {
     if (path !== undefined) {
       currentCategoryPath.value = path;
     }
+    if (level !== undefined) {
+      currentCategoryLevel.value = level;
+    }
   };
-
   const setPageType = (pageType?: string) => {
     if (pageType !== undefined) {
       currentPageType.value = pageType;
     }
   };
 
+  const setParentName = (name: string) => {
+    currentParentName.value = name;
+  };
   const setPageHasChildren = (hasChildren: boolean) => {
     currentPageHasChildren.value = hasChildren;
   };
@@ -35,6 +54,9 @@ export const useCategoryIdHelper = () => {
   const getCategoryPath = computed(() => currentCategoryPath.value);
   const getPageType = computed(() => currentPageType.value);
   const getPageHasChildren = computed(() => currentPageHasChildren.value);
+  const getCurrentCategoryLevel = computed(() => currentCategoryLevel.value);
+  const getParentName = computed(() => currentParentName.value);
+
 
   return {
     setCategoryId,
@@ -46,5 +68,8 @@ export const useCategoryIdHelper = () => {
     getCategoryPath,
     getPageType,
     getPageHasChildren,
+    getCurrentCategoryLevel,
+    setParentName,
+    getParentName,
   };
 };
