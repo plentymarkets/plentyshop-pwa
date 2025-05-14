@@ -2,10 +2,11 @@ import { ref, computed, watch } from 'vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
 export const useAddPageModal = () => {
-  const { pageModalOpen, togglePageModal } = useSiteConfiguration();
+  const { pageModalOpen, togglePageModal, setSettingsCategory } = useSiteConfiguration();
   const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
   const {
     getCategoryName,
@@ -14,7 +15,9 @@ export const useAddPageModal = () => {
     getCurrentCategoryLevel,
     getParentCategoryId,
     getPageType,
+    setCategoryId,
   } = useCategoryIdHelper();
+  const router = useRouter();
   const { data: newCategory, addCategory } = useCategoryManagement();
 
   const _isReady = ref(false);
@@ -129,8 +132,21 @@ export const useAddPageModal = () => {
     });
 
     addNewPageToTree(newCategory.value);
+    await redirectToNewPage(newCategory.value);
   };
-
+  const redirectToNewPage = async (newCategory: CategoryEntry) => {
+    await router.push({
+      path: newCategory.details[0].nameUrl,
+    });
+    setCategoryId({
+        id: newCategory.id,
+        parentId: newCategory.parentCategoryId,
+        name: newCategory.details[0].name,
+        path: newCategory.details[0].nameUrl,
+    }
+    );
+    setSettingsCategory({} as CategoryTreeItem, 'general-menu');
+  };
   const closeModal = () => {
     resetForm();
     togglePageModal(false);
