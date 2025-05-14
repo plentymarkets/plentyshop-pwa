@@ -77,10 +77,4 @@ const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/P
 const UnlinkCategoryModal = defineAsyncComponent(
   () => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'),
 );
-
-const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
-const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
-const SiteConfigurationDrawer = defineAsyncComponent(() => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue'));
-const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
-const UnlinkCategoryModal = defineAsyncComponent(() => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'));
 </script>
