@@ -59,7 +59,7 @@
   </li>
   <ul
     v-if="item.hasChildren && open"
-    class="pl-4 relative border-[#D9E2DC]-200 max-h-[500px] overflow-auto"
+    class="pl-3 relative border-[#D9E2DC]-200 max-h-[500px] overflow-auto"
     @scroll="handleChildrenScroll"
   >
     <hr class="absolute top-0 left-0 w-[1px] h-[calc(100%-0.75rem)] bg-gray-200" />
