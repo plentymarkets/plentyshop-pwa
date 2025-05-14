@@ -20,6 +20,8 @@
           <UiDivider :class="dividerClass" />
           <CheckoutPayment disabled />
         </div>
+        <UiDivider :class="dividerClass" />
+        <CustomerWish />
         <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
           <CheckoutGeneralTerms />
@@ -36,7 +38,7 @@
               v-if="changedTotal"
               :disabled="!termsAccepted || interactionDisabled"
               type="Checkout"
-              @validation-callback="handleUpdatedOrder"
+              @validation-callback="handlePreparePayment"
             />
 
             <UiButton
@@ -45,7 +47,7 @@
               :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
-              @click="handleRegularOrder"
+              @click="handlePreparePayment"
             >
               <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ t('buy') }}</template>
@@ -75,13 +77,13 @@ const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCar
 const { getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { shippingPrivacyAgreement, customerWish, doAdditionalInformation } = useAdditionalInformation();
 const {
   data: shippingAddresses,
   getAddresses: getShippingAddresses,
@@ -200,6 +202,18 @@ const readyToOrder = async () => {
   return true;
 };
 
+const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
+  await doAdditionalInformation({
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    orderContactWish: customerWish.value,
+  });
+  if (typeof callback === 'function') {
+    await handleUpdatedOrder(callback);
+  } else {
+    await handleRegularOrder();
+  }
+};
+
 const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
   if (callback) callback(await readyToOrder());
 };
@@ -210,7 +224,6 @@ const handleRegularOrder = async () => {
   try {
     const data = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
     if (data) {
