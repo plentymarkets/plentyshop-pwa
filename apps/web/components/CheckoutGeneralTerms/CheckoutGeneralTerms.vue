@@ -17,7 +17,7 @@
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
-              {{ $t('termsAndConditions') }}
+              {{ t('termsAndConditions') }}
             </SfLink>
           </template>
 
@@ -27,7 +27,7 @@
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
-              {{ $t('cancellationRights') }}
+              {{ t('cancellationRights') }}
             </SfLink>
           </template>
 
@@ -37,14 +37,14 @@
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
-              {{ $t('privacyPolicy') }}
+              {{ t('privacyPolicy') }}
             </SfLink>
           </template>
         </i18n-t>
       </label>
     </div>
-    <div class="text-sm text-neutral-500 mt-1 ml-7">* {{ $t('contact.form.asterixHint') }}</div>
-    <div v-if="showErrors" class="text-negative-700 text-sm">{{ $t('termsRequired') }}</div>
+    <div class="text-sm text-neutral-500 mt-1 ml-7">* {{ t('contact.form.asterixHint') }}</div>
+    <div v-if="showErrors" class="text-negative-700 text-sm">{{ t('termsRequired') }}</div>
   </div>
 </template>
 
@@ -53,6 +53,7 @@ import { SfCheckbox, SfLink } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 const { checkboxValue, setCheckboxValue, showErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 </script>

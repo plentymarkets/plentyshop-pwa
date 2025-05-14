@@ -12,7 +12,7 @@
         </h1>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="px-4 py-6">
-          <h1 class="font-bold text-lg mb-2">{{ $t('contactInfo.heading') }}</h1>
+          <h1 class="font-bold text-lg mb-2">{{ t('contactInfo.heading') }}</h1>
           <div>
             {{
               offerGetters.getOfferEmail(offer).length > 0

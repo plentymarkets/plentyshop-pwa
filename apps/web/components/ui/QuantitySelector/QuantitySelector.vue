@@ -3,7 +3,7 @@
     <div class="flex border border-neutral-300 rounded-md h-full w-full">
       <SfTooltip
         v-if="count <= minValue"
-        :label="$t('minimumOrderQuantity', minValue)"
+        :label="t('minimumOrderQuantity', minValue)"
         placement="left"
         :show-arrow="true"
         class="flex"
@@ -14,7 +14,7 @@
           square
           class="rounded-r-none"
           :aria-controls="inputId"
-          :aria-label="$t('quantitySelectorDecrease')"
+          :aria-label="t('quantitySelectorDecrease')"
           data-testid="quantity-selector-decrease-button"
           @click="dec()"
         >
@@ -28,7 +28,7 @@
         square
         class="rounded-r-none"
         :aria-controls="inputId"
-        :aria-label="$t('quantitySelectorDecrease')"
+        :aria-label="t('quantitySelectorDecrease')"
         data-testid="quantity-selector-decrease-button"
         @click="dec()"
       >
@@ -44,7 +44,7 @@
         :max="maxValue"
         data-testid="quantity-selector-input"
         class="h-12"
-        :aria-label="$t('quantitySelector')"
+        :aria-label="t('quantitySelector')"
         :disabled="disabled"
         @input="handleOnChange"
       />
@@ -54,7 +54,7 @@
         square
         class="rounded-l-none"
         :aria-controls="inputId"
-        :aria-label="$t('quantitySelectorIncrease')"
+        :aria-label="t('quantitySelectorIncrease')"
         data-testid="quantity-selector-increase-button"
         @click="inc()"
       >
@@ -71,6 +71,7 @@ import { useCounter } from '@vueuse/core';
 import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
 
 const emit = defineEmits(['changeQuantity']);
+const { t } = useI18n();
 
 const {
   value = 1,

@@ -38,14 +38,14 @@
     <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
       <div class="mb-3">
         <label for="min">
-          <UiFormLabel class="text-start">{{ $t('min') }}</UiFormLabel>
-          <SfInput id="min" v-model="minPrice" :placeholder="$t('min')" />
+          <UiFormLabel class="text-start">{{ t('min') }}</UiFormLabel>
+          <SfInput id="min" v-model="minPrice" :placeholder="t('min')" />
         </label>
       </div>
       <div class="mb-3">
         <label for="max">
-          <UiFormLabel class="text-start">{{ $t('max') }}</UiFormLabel>
-          <SfInput id="max" v-model="maxPrice" :placeholder="$t('max')" />
+          <UiFormLabel class="text-start">{{ t('max') }}</UiFormLabel>
+          <SfInput id="max" v-model="maxPrice" :placeholder="t('max')" />
         </label>
       </div>
       <div class="flex">
@@ -58,9 +58,9 @@
           <template #prefix>
             <SfIconCheck />
           </template>
-          {{ $t('apply') }}
+          {{ t('apply') }}
         </UiButton>
-        <UiButton type="reset" class="h-10" variant="secondary" :aria-label="$t('clear')" @click="resetPriceFilter">
+        <UiButton type="reset" class="h-10" variant="secondary" :aria-label="t('clear')" @click="resetPriceFilter">
           <SfIconClose />
         </UiButton>
       </div>
@@ -111,6 +111,8 @@ import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
+const { t } = useI18n();
+
 const open = ref(true);
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
