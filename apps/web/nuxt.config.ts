@@ -66,6 +66,7 @@ export default defineNuxtConfig({
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
+      renderCategoryDescription: process.env.RENDER_CATEGORY_DESCRIPTION === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||

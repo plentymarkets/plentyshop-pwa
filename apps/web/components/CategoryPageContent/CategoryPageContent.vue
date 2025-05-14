@@ -8,6 +8,8 @@
         </NuxtLazyHydrate>
       </CategorySidebar>
       <div class="flex-1">
+       <slot name="above-articles" />
+
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold md:text-lg">
             {{
@@ -86,6 +88,8 @@
           :page-size="itemsPerPage"
           :max-visible-pages="maxVisiblePages"
         />
+
+        <slot name="below-articles" />
       </div>
     </div>
   </NarrowContainer>
