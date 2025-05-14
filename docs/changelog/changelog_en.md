@@ -35,6 +35,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 👷 Changed
 
+- Checkout address listing details now includes "Post number", when available.
 - The contact form requires a turnstile validation otherwise the form will not show up.
 - `vsf-locale` cookie got removed, we now send a header `locale` with every sdk request.
 - Translations are now lazy loaded. This decreases JavaScript chunk size, which in turn improves page load performance.
