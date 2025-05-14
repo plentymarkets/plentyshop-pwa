@@ -139,12 +139,11 @@ export const useAddPageModal = () => {
       path: newCategory.details[0].nameUrl,
     });
     setCategoryId({
-        id: newCategory.id,
-        parentId: newCategory.parentCategoryId,
-        name: newCategory.details[0].name,
-        path: newCategory.details[0].nameUrl,
-    }
-    );
+      id: newCategory.id,
+      parentId: newCategory.parentCategoryId,
+      name: newCategory.details[0].name,
+      path: newCategory.details[0].nameUrl,
+    });
     setSettingsCategory({} as CategoryTreeItem, 'general-menu');
   };
   const closeModal = () => {

@@ -103,7 +103,6 @@ const handleBack = () => {
     setSettingsCategory(null);
     setCategoryId({});
     setParentName('');
-
   }
 };
 </script>

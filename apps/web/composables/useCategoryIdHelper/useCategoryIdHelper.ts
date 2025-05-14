@@ -57,7 +57,6 @@ export const useCategoryIdHelper = () => {
   const getCurrentCategoryLevel = computed(() => currentCategoryLevel.value);
   const getParentName = computed(() => currentParentName.value);
 
-
   return {
     setCategoryId,
     setPageType,

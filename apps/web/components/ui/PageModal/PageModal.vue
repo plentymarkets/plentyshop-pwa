@@ -1,4 +1,4 @@
-<template  v-if="_isReady">
+<template v-if="_isReady">
   <UiModal
     v-model="pageModalOpen"
     aria-labelledby="page-modal"

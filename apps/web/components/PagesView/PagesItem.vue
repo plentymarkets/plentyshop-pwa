@@ -40,7 +40,7 @@
           size="base"
           viewBox="0 0 24 24"
           class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-           @click="handleSettingsClick"
+          @click="handleSettingsClick"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
             <path :d="gearPath" fill="#062633" />
