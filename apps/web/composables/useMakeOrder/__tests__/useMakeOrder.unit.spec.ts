@@ -31,64 +31,6 @@ describe('useMakeOrder', () => {
       return useHandleError;
     });
 
-    it('should add shippingPrivacyHintAccepted to additionalInformation', async () => {
-      const { createOrder } = useMakeOrder();
-      const additionalInformationSpy = vi.fn();
-
-      useSdk.mockImplementation(() => {
-        return {
-          plentysystems: {
-            doAdditionalInformation: additionalInformationSpy,
-            doPreparePayment: vi.fn(),
-            doPlaceOrder: vi.fn(),
-            doExecutePayment: vi.fn(),
-          },
-        };
-      });
-
-      await createOrder({
-        paymentId: 1,
-        shippingPrivacyHintAccepted: true,
-      });
-
-      expect(additionalInformationSpy).toHaveBeenCalledWith({
-        orderContactWish: null,
-        orderCustomerSign: null,
-        shippingPrivacyHintAccepted: true,
-        templateType: 'checkout',
-      });
-    });
-
-    it('should call useHandleError if additionalInformation fails', async () => {
-      const additionalInformationSpy = vi.fn().mockImplementation(() => {
-        throw new ApiError({
-          key: 'error',
-          code: '500',
-          message: 'error',
-          cause: {},
-        });
-      });
-
-      useSdk.mockImplementation(() => {
-        return {
-          plentysystems: {
-            doAdditionalInformation: additionalInformationSpy,
-            doPreparePayment: vi.fn(),
-            doPlaceOrder: vi.fn(),
-            doExecutePayment: vi.fn(),
-          },
-        };
-      });
-
-      const { createOrder } = useMakeOrder();
-
-      await createOrder({
-        paymentId: 1,
-        shippingPrivacyHintAccepted: true,
-      });
-      expect(useHandleError).toHaveBeenCalled();
-    });
-
     it('should call useHandleError if doPreparePayment fails', async () => {
       const preparePaymentSpy = vi.fn().mockImplementation(() => {
         throw new ApiError({
@@ -102,7 +44,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: preparePaymentSpy,
             doPlaceOrder: vi.fn(),
             doExecutePayment: vi.fn(),
@@ -132,7 +73,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: vi.fn(),
             doPlaceOrder: placeOrderSpy,
             doExecutePayment: vi.fn(),
@@ -162,7 +102,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: vi.fn(),
             doPlaceOrder: vi.fn(),
             doExecutePayment: executePaymentSpy,
@@ -180,19 +119,9 @@ describe('useMakeOrder', () => {
     });
 
     it('should set processingOrder to false if any call fails', async () => {
-      const additionalInformationSpy = vi.fn().mockImplementation(() => {
-        throw new ApiError({
-          key: 'error',
-          code: '500',
-          message: 'error',
-          cause: {},
-        });
-      });
-
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: additionalInformationSpy,
             doPreparePayment: vi.fn(),
             doPlaceOrder: vi.fn(),
             doExecutePayment: vi.fn(),
@@ -222,7 +151,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: vi.fn(),
             doPlaceOrder: orderFailSpy,
             doExecutePayment: vi.fn(),
@@ -237,38 +165,6 @@ describe('useMakeOrder', () => {
         shippingPrivacyHintAccepted: true,
       });
       expect(loading.value).toBe(false);
-    });
-
-    it('should not continue if doAdditionalInformation fails', async () => {
-      const additionalInformationSpy = vi.fn().mockImplementation(() => {
-        throw new ApiError({
-          key: 'error',
-          code: '500',
-          message: 'error',
-          cause: {},
-        });
-      });
-
-      const doPreparePaymentSpy = vi.fn();
-
-      useSdk.mockImplementation(() => {
-        return {
-          plentysystems: {
-            doAdditionalInformation: additionalInformationSpy,
-            doPreparePayment: doPreparePaymentSpy,
-            doPlaceOrder: vi.fn(),
-            doExecutePayment: vi.fn(),
-          },
-        };
-      });
-
-      const { createOrder } = useMakeOrder();
-
-      await createOrder({
-        paymentId: 1,
-        shippingPrivacyHintAccepted: true,
-      });
-      expect(doPreparePaymentSpy).not.toHaveBeenCalled();
     });
 
     it('should not continue if doPreparePayment fails', async () => {
@@ -286,7 +182,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: preparePaymentSpy,
             doPlaceOrder: doPlaceOrderSpy,
             doExecutePayment: vi.fn(),
@@ -318,7 +213,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: vi.fn(),
             doPlaceOrder: placeOrderSpy,
             doExecutePayment: doExecutePaymentSpy,
@@ -348,7 +242,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: doPreparePayment,
             doPlaceOrder: vi.fn(),
             doExecutePayment: vi.fn(),
@@ -392,7 +285,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: doPreparePaymentSuccess,
             doPlaceOrder: doPlaceOrder,
             doExecutePayment: vi.fn(),
@@ -421,7 +313,6 @@ describe('useMakeOrder', () => {
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: vi.fn(),
             doPreparePayment: doPreparePayment,
             doPlaceOrder: vi.fn(),
             doExecutePayment: vi.fn(),
@@ -437,19 +328,9 @@ describe('useMakeOrder', () => {
     });
 
     it('should return null if any call in createOrder fails', async () => {
-      const additionalInformationSpy = vi.fn().mockImplementation(() => {
-        throw new ApiError({
-          key: 'error',
-          code: '500',
-          message: 'error',
-          cause: {},
-        });
-      });
-
       useSdk.mockImplementation(() => {
         return {
           plentysystems: {
-            doAdditionalInformation: additionalInformationSpy,
             doPreparePayment: vi.fn(),
             doPlaceOrder: vi.fn(),
             doExecutePayment: vi.fn(),
