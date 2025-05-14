@@ -52,7 +52,7 @@
         </template>
 
         <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
-          <ul class="shadow-md rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
+          <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
             <PagesItem v-for="item in contentItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
@@ -72,7 +72,7 @@
         </template>
 
         <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
-          <ul class="shadow-md rounded-lg" @scroll="(e) => handleScroll(e, 'item')">
+          <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'item')">
             <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingItem" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
