@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="checkout-address" class="md:px-4 py-6">
+  <div v-if="!AddressLoading" data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold">
         {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
@@ -49,10 +49,16 @@
       </template>
     </div>
   </div>
+  <div v-else class="flex items-center justify-center relative h-fit min-h-[6rem]">
+    <SfLoaderCircular
+      class="z-[999]"
+      size="2xl"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { SfTooltip } from '@storefront-ui/vue';
+import { SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import type { AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 
@@ -61,7 +67,7 @@ const { disabled = false, type } = defineProps<AddressContainerProps>();
 const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
-const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
+const { loading: AddressLoading ,checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized } = useCustomer();
