@@ -4,7 +4,7 @@
     class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
     data-testid="account-orders-heading"
   >
-    {{ $t('wishlist') }}
+    {{ t('wishlist') }}
   </h2>
   <ClientOnly>
     <div class="relative col-span-4">
@@ -19,4 +19,5 @@ definePageMeta({
   pageType: 'static',
   middleware: ['auth-guard'],
 });
+const { t } = useI18n();
 </script>

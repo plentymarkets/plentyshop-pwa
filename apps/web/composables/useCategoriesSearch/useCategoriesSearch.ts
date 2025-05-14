@@ -155,7 +155,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
     const addChildrenToParent = (parentId: number, children: CategoryEntry[]) => {
       const { send } = useNotification();
-      const parent = findCategoryById(state.value.contentItems, parentId);
+      const parent = findCategoryById([...state.value.contentItems, ...state.value.itemItems], parentId);
       if (!parent) {
         send({ message: `Parent category with ID ${parentId} not found.`, type: 'negative' });
         return;

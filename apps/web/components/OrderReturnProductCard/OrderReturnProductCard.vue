@@ -47,15 +47,15 @@
           <div class="mt-2 md:mb-2">
             <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
               <li>
-                <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
+                <span class="font-bold mr-2">{{ t('account.ordersAndReturns.orderDetails.price') }}:</span>
                 <span>{{ format(orderGetters.getItemPrice(orderItem)) }}</span>
               </li>
               <li>
-                <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
+                <span class="font-bold mr-2">{{ t('returns.quantity') }}:</span>
                 <span>{{ orderGetters.getItemQty(orderItem) }}</span>
               </li>
               <li>
-                <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+                <span class="font-bold mr-2">{{ t('orderConfirmation.total') }}:</span>
                 <span>
                   {{ format(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
                 </span>
@@ -68,15 +68,15 @@
       <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-1/3">
         <div class="w-full md:self-end">
           <label>
-            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ t('returns.returnReason') }} </span>
             <SfSelect
               :model-value="String(returnReasonId)"
               size="sm"
               class="h-fit"
-              :placeholder="$t(`returns.selectReturnReason`)"
+              :placeholder="t(`returns.selectReturnReason`)"
               @update:model-value="(event) => changeReason(Number(event))"
             >
-              <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
+              <option :value="null">— {{ t('returns.selectReturnReason') }} —</option>
               <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
                 {{ name }}
               </option>
@@ -89,7 +89,7 @@
             <SfAccordionItem :model-value="opened" @update:model-value="toggleDropdown">
               <template #summary>
                 <div class="flex justify-between px-3.5 py-1.5 bg-neutral-100">
-                  {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
+                  {{ t('account.ordersAndReturns.orderDetails.showDetails') }}
                   <SfIconChevronLeft class="text-neutral-500" :class="{ 'rotate-90': opened, '-rotate-90': !opened }" />
                 </div>
               </template>
@@ -123,9 +123,10 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
-import { debounce } from '../../utils/debounce';
+import { debounce } from '~/utils/debounce';
 
 const { format } = usePriceFormatter();
+const { t } = useI18n();
 const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();
