@@ -121,10 +121,13 @@ const contentProps = computed(() => {
 });
 
 const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-const pwaCookie = useCookie('pwa');
-isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+
+onMounted(() => {
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
 
 const showOutline = computed(() => {
   return (
