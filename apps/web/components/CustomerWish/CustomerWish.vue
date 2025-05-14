@@ -1,13 +1,13 @@
 <template>
   <div v-if="showCustomerWishComponent" class="md:px-4 py-6">
     <h2 class="w-full text-neutral-900 text-lg font-bold mb-4">
-      {{ t('orderContactWish') }}
+      {{ t('customerWish') }}
     </h2>
 
     <SfTextarea
       v-model="customerWish"
       class="resize-none md:!h-32 sm:!h-20 w-full"
-      :placeholder="t('checkoutContactWishMessage')"
+      :placeholder="t('customerWishMessage')"
       @blur="setCustomerWish(customerWish)"
     />
   </div>

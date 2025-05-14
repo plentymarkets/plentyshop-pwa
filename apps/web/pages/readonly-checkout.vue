@@ -21,7 +21,7 @@
           <CheckoutPayment disabled />
         </div>
         <UiDivider :class="dividerClass" />
-        <CustomWish />
+        <CustomerWish />
         <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
           <CheckoutGeneralTerms />
