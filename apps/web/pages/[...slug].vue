@@ -17,23 +17,11 @@
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
       >
-        <template
-          v-if="
-            runtimeConfig.public.renderCategoryDescription &&
-            categoryGetters.getCategoryDescription1(productsCatalog.category)
-          "
-          #above-articles
-        >
+        <template v-if="categoryGetters.getCategoryDescription1(productsCatalog.category)" #above-articles>
           <div class="mb-4" v-html="categoryGetters.getCategoryDescription1(productsCatalog.category)" />
         </template>
 
-        <template
-          v-if="
-            runtimeConfig.public.renderCategoryDescription &&
-            categoryGetters.getCategoryDescription2(productsCatalog.category)
-          "
-          #below-articles
-        >
+        <template v-if="categoryGetters.getCategoryDescription2(productsCatalog.category)" #below-articles>
           <div class="mt-4" v-html="categoryGetters.getCategoryDescription2(productsCatalog.category)" />
         </template>
         <template #sidebar>
