@@ -112,7 +112,7 @@
 
     <UiAccordionItem
       v-model="headerOpen"
-      data-testid="color-section"
+      data-testid="header-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
