@@ -52,6 +52,7 @@ export const usePackstationAddress = () => {
   };
 
   return {
+    postNumberRequired,
     savePackstationAddress,
     ...toRefs(state.value),
   };
