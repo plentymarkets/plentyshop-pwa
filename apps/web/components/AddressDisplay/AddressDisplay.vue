@@ -14,6 +14,9 @@
     <p>
       {{ `${userAddressGetters.getPostCode(address)} ${userAddressGetters.getCity(address)}` }}
     </p>
+    <p v-if="userAddressGetters.getPostNumber(address)">
+      {{ t('PreferredDelivery.packstation.postNumberPlaceholder') }}: {{ userAddressGetters.getPostNumber(address) }}
+    </p>
     <p>{{ countryName }}</p>
   </div>
 </template>
@@ -24,6 +27,7 @@ import type { AddressProps } from './types';
 
 const { address } = defineProps<AddressProps>();
 
+const { t } = useI18n();
 const countryName = computed(() =>
   address?.country ? useAggregatedCountries().localeCountryName(address.country) : '',
 );
