@@ -1,11 +1,13 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div v-if="addressLoading || formIsLoading" class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
-      <div class="relative w-full" >
+      <div class="relative w-full">
         <h2 class="text-neutral-900 text-lg font-bold mb-4">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
-        <AddressDisplaySkeleton v-if="addressLoading || (formIsLoading && (type == AddressType.Billing && shippingAsBilling))"/>
+        <AddressDisplaySkeleton
+          v-if="addressLoading || (formIsLoading && type == AddressType.Billing && shippingAsBilling)"
+        />
         <AddressFormSkeleton
           v-if="formIsLoading && (type == AddressType.Shipping || (type == AddressType.Billing && !shippingAsBilling))"
         />
@@ -16,53 +18,53 @@
     </div>
     <div v-else>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
-      <h2 class="text-neutral-900 text-lg font-bold">
-        {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
-      </h2>
+        <h2 class="text-neutral-900 text-lg font-bold">
+          {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
+        </h2>
 
-      <div class="flex mt-4 sm:justify-center sm:mt-0">
-        <AddressSelect
-          v-if="showAdressSelection"
-          :type="type"
-          :disabled="disabled"
-          @new="showNewForm = true"
-          @edit="edit"
-        />
+        <div class="flex mt-4 sm:justify-center sm:mt-0">
+          <AddressSelect
+            v-if="showAdressSelection"
+            :type="type"
+            :disabled="disabled"
+            @new="showNewForm = true"
+            @edit="edit"
+          />
 
-        <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAdressSelection }" :label="t('editAddress')">
-          <UiButton
-            :disabled="!hasCheckoutAddress || formIsLoading || disabled"
-            variant="secondary"
-            :data-testid="'edit-address-' + type"
-            @click="edit(checkoutAddress)"
-          >
-            {{ t('contactInfo.edit') }}
-          </UiButton>
-        </SfTooltip>
-      </div>
-    </div>
-
-    <div class="mt-2">
-      <template v-if="isShipping">
-        <AddressFormShipping v-if="showNewForm" :disabled="disabled" add-address />
-        <template v-else-if="hasCheckoutAddress">
-          <AddressFormShipping v-if="editing" :disabled="disabled" :address="addressToEdit" />
-          <AddressDisplay v-else :address="checkoutAddress" />
-        </template>
-        <div v-else class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
-      </template>
-
-      <template v-if="isBilling">
-        <AddressFormBilling v-if="showNewForm" :disabled="disabled" add-address />
-        <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
-          <AddressFormBilling v-if="editing" :disabled="disabled" :address="addressToEdit" />
-          <AddressDisplay v-else :address="checkoutAddress" />
-        </template>
-        <div v-if="showDynamicAddressText" :data-testid="'address-info-text-' + type" class="mt-2">
-          {{ dynamicAddressText }}
+          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAdressSelection }" :label="t('editAddress')">
+            <UiButton
+              :disabled="!hasCheckoutAddress || formIsLoading || disabled"
+              variant="secondary"
+              :data-testid="'edit-address-' + type"
+              @click="edit(checkoutAddress)"
+            >
+              {{ t('contactInfo.edit') }}
+            </UiButton>
+          </SfTooltip>
         </div>
-      </template>
-    </div>
+      </div>
+
+      <div class="mt-2">
+        <template v-if="isShipping">
+          <AddressFormShipping v-if="showNewForm" :disabled="disabled" add-address />
+          <template v-else-if="hasCheckoutAddress">
+            <AddressFormShipping v-if="editing" :disabled="disabled" :address="addressToEdit" />
+            <AddressDisplay v-else :address="checkoutAddress" />
+          </template>
+          <div v-else class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
+        </template>
+
+        <template v-if="isBilling">
+          <AddressFormBilling v-if="showNewForm" :disabled="disabled" add-address />
+          <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
+            <AddressFormBilling v-if="editing" :disabled="disabled" :address="addressToEdit" />
+            <AddressDisplay v-else :address="checkoutAddress" />
+          </template>
+          <div v-if="showDynamicAddressText" :data-testid="'address-info-text-' + type" class="mt-2">
+            {{ dynamicAddressText }}
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
