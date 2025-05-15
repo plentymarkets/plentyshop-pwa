@@ -1,6 +1,18 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+    <div v-if="addressLoading" class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+      <div class="relative w-full" >
+        <h2 class="text-neutral-900 text-lg font-bold mb-4">
+          {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
+        </h2>
+        <AddressDisplaySkeleton />
+        <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
+          <SfLoaderCircular size="2xl" />
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold">
         {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
       </h2>
@@ -32,22 +44,8 @@
         <AddressFormShipping v-if="showNewForm" :disabled="disabled" add-address />
         <template v-else-if="hasCheckoutAddress">
           <AddressFormShipping v-if="editing" :disabled="disabled" :address="addressToEdit" />
-          <div v-else>
-            <div v-if="addressLoading" class="relative" >
-              <AddressDisplaySkeleton />
-              <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
-                <SfLoaderCircular size="2xl" />
-              </div>
-            </div>
-            <AddressDisplay v-else :address="checkoutAddress" />
-          </div>
+          <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <div v-else-if="addressLoading" class="relative" >
-          <AddressDisplaySkeleton />
-          <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
-            <SfLoaderCircular size="2xl" />
-          </div>
-        </div>
         <div v-else class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
       </template>
 
@@ -55,26 +53,13 @@
         <AddressFormBilling v-if="showNewForm" :disabled="disabled" add-address />
         <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
           <AddressFormBilling v-if="editing" :disabled="disabled" :address="addressToEdit" />
-          <div v-else>
-            <div v-if="addressLoading" class="relative" >
-              <AddressDisplaySkeleton />
-              <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
-                <SfLoaderCircular size="2xl" />
-              </div>
-            </div>
-            <AddressDisplay v-else :address="checkoutAddress" />
-          </div>
+          <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <div v-else-if="showDynamicAddressText && addressLoading" class="relative" >
-          <AddressDisplaySkeleton />
-          <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
-            <SfLoaderCircular size="2xl" />
-          </div>
-        </div>
-        <div v-else :data-testid="'address-info-text-' + type" class="mt-2">
+        <div v-if="showDynamicAddressText" :data-testid="'address-info-text-' + type" class="mt-2">
           {{ dynamicAddressText }}
         </div>
       </template>
+    </div>
     </div>
   </div>
 </template>
