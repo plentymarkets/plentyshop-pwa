@@ -86,19 +86,22 @@ const { toggleDeleteModal } = useCategorySettings();
 const { setSettingsCategory } = useSiteConfiguration();
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
-const { getCategoryName, getCategoryPath } = useCategoryIdHelper();
+const { getCategoryName, getCategoryPath, setParentName, setCategoryId } = useCategoryIdHelper();
 
 const activeView = ref<null | 'general' | 'seo'>(null);
 const redirectToPage = () => {
   const targetUrl = getCategoryPath.value;
   navigateTo(targetUrl);
   setSettingsCategory(null);
+  setCategoryId({});
 };
 const handleBack = () => {
   if (activeView.value !== null) {
     activeView.value = null;
   } else {
     setSettingsCategory(null);
+    setCategoryId({});
+    setParentName('');
   }
 };
 </script>

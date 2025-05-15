@@ -19,11 +19,7 @@
       <span
         v-else
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
-        @click="
-          openSettingsMenu(item.id, item.type);
-          setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
-          checkIfItemHasChildren();
-        "
+        @click="handleSettingsClick"
       >
         <span v-if="item.details[0].name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
@@ -44,11 +40,7 @@
           size="base"
           viewBox="0 0 24 24"
           class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-          @click="
-            openSettingsMenu(item.id, item.type);
-            setCategoryId(item.id, parentId, item.details[0].name, pagePath);
-            checkIfItemHasChildren();
-          "
+          @click="handleSettingsClick"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
             <path :d="gearPath" fill="#062633" />
@@ -98,16 +90,15 @@ import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
 const { setSettingsCategory } = useSiteConfiguration();
-const { setCategoryId, setPageType, setPageHasChildren } = useCategoryIdHelper();
+const { setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
 const route = useRoute();
 const viewport = useViewport();
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-const { item } = defineProps<{
+const { item, parentId } = defineProps<{
   item: CategoryEntry;
   parentId: number | undefined;
 }>();
-
 const pagePath = computed(() => {
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
   return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
@@ -118,12 +109,29 @@ const open = ref(false);
 const childrenPagination = usePaginatedChildren(item);
 
 const toggleOpen = async (isTabletCheck = false) => {
+  if (item.level === 5) {
+    setParentName(item.details[0].name);
+  }
   if (isTabletCheck && !isTablet.value) return;
 
   open.value = !open.value;
+  if (item.level === 5) {
+    setParentName(item.details[0].name);
+  }
   if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
     await childrenPagination.fetchMore();
   }
+};
+const handleSettingsClick = () => {
+  openSettingsMenu(item.id, item.type);
+  setCategoryId({
+    id: item.id,
+    parentId: parentId,
+    name: item.details[0].name,
+    path: item.details[0].nameUrl,
+    level: item.level,
+  });
+  checkIfItemHasChildren();
 };
 const toggleOnDesktop = () => toggleOpen();
 const toggleOnTablet = () => toggleOpen(true);

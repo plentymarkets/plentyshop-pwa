@@ -4,7 +4,7 @@
     class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
     data-testid="pages-general-settings-drawer"
   >
-    <form data-testid="basic-settings-form" class="w-full absolute bg-white">
+    <form data-testid="basic-settings-form" class="w-full shadow-[inset_0px_0px_20px_-20px_#111] absolute bg-white">
       <UiAccordionItem
         v-model="basicSettingsOpen"
         data-testid="open-basic-settings"

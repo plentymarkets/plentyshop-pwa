@@ -91,3 +91,4 @@ export * from './useValidatorAggregator';
 export * from './useWishlist';
 export * from './useModuleRendering';
 export * from './useRobots';
+export * from './useAddPage';
