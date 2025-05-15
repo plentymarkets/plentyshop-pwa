@@ -47,8 +47,8 @@
             <SfIconFavorite />
             <SfBadge
               :content="wishlistItemIds.length"
-              :style="{ backgroundColor: iconColor }"
-              class="outline outline-primary-500 !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor }"
+              class="outline !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="wishlist-badge"
               placement="top-right"
               :max="99"
@@ -68,8 +68,8 @@
             <SfIconShoppingCart />
             <SfBadge
               :content="cartItemsCount"
-              :style="{ backgroundColor: iconColor }"
-              class="outline outline-primary-500 !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor }"
+              class="outline !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="cart-badge"
               placement="top-right"
               :max="99"
@@ -219,7 +219,7 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
-const { iconColor } = useSiteConfiguration();
+const { iconColor, headerBackgroundColor } = useSiteConfiguration();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t, localeCodes } = useI18n();

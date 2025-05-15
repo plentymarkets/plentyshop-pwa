@@ -69,7 +69,11 @@
         <label>
           <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
             <template #suffix>
-              <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="border border-[#a0a0a0] rounded-lg cursor-pointer">
+              <label
+                for="primary-color"
+                :style="{ backgroundColor: primaryColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
                 <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
               </label>
             </template>
@@ -119,7 +123,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>Background color</UiFormLabel>
           <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            label="If set, this background color will take precedence over your defined primary color for the header."
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -139,14 +143,14 @@
               </label>
             </template>
           </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose primary color</span>
+          <span class="typography-text-xs text-neutral-700">Choose header background color</span>
         </label>
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>Icon color</UiFormLabel>
           <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            label="Use this to override the default white icon color in the header, ensuring sufficient contrast with your chosen background."
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -157,12 +161,16 @@
         <label>
           <SfInput v-model="iconColor" type="text" data-testid="icon-color">
             <template #suffix>
-              <label for="icon-color" :style="{ backgroundColor: iconColor }" class="border border-[#a0a0a0] rounded-lg cursor-pointer">
+              <label
+                for="icon-color"
+                :style="{ backgroundColor: iconColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
                 <input id="icon-color" v-model="iconColor" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose secondary color</span>
+          <span class="typography-text-xs text-neutral-700">Choose icon color</span>
         </label>
       </div>
     </UiAccordionItem>
