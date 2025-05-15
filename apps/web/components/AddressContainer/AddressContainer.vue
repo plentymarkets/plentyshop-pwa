@@ -1,11 +1,14 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div v-if="addressLoading" class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+    <div v-if="addressLoading || formIsLoading" class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
       <div class="relative w-full" >
         <h2 class="text-neutral-900 text-lg font-bold mb-4">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
-        <AddressDisplaySkeleton />
+        <AddressDisplaySkeleton v-if="addressLoading || (formIsLoading && (type == AddressType.Billing && shippingAsBilling))"/>
+        <AddressFormSkeleton
+          v-if="formIsLoading && (type == AddressType.Shipping || (type == AddressType.Billing && !shippingAsBilling))"
+        />
         <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
           <SfLoaderCircular size="2xl" />
         </div>

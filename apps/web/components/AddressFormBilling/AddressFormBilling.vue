@@ -1,12 +1,5 @@
 <template>
-  <div v-if="formIsLoading" class="relative" >
-    <AddressFormSkeleton/>
-    <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
-      <SfLoaderCircular size="2xl" />
-    </div>
-  </div>
   <form
-    v-else
     novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="billing-address-form"
@@ -172,7 +165,7 @@
 
 <script setup lang="ts">
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfIconClose, SfInput, SfLink, SfSelect, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { AddressFormBillingProps } from './types';
 
