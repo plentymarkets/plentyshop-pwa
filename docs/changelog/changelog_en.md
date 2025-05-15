@@ -8,6 +8,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 - Added DHL delivery location finder functionality.
 - Added robots for declaration of accessibility page
+- Displaying correct prices for B2B customers.
 - (dev) Added pages entry on the left side menu, where users can manage their pages.
 - (dev) Add design for adding a new page.
 - (dev) Added design for category settings.
@@ -33,6 +34,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Extended hint text for subpages on deletion
 - Added a customer wish input field on the checkout
 - (dev) New menu styling
+- (dev) Add parent suggestion for add page
 
 ### 👷 Changed
 
@@ -44,6 +46,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🩹 Fixed
 
+- Fixed remove unnecessary display of cross-price if prices are the same.
 - Fixed an issue in the guest checkout flow where available address was incorrectly shown as unavailable.
 - Fixed cookierbar text overlap and browse products translation.
 - Fixed an issue in the guest checkout flow that allowed address saving without providing an email.

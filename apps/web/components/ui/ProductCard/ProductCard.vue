@@ -64,7 +64,10 @@
           <span>{{ format(price) }}</span>
           <span>{{ t('asterisk') }} </span>
         </span>
-        <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
+        <span
+          v-if="crossedPrice && differentPrices(price, crossedPrice)"
+          class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
+        >
           {{ format(crossedPrice) }}
         </span>
       </div>
@@ -166,6 +169,9 @@ const addWithLoader = async (productId: number, quickCheckout = true) => {
   } finally {
     loading.value = false;
   }
+};
+const differentPrices = (price: number, crossedPrice: number) => {
+  return crossedPrice ? Math.round(price * 100) / 100 !== Math.round(crossedPrice * 100) / 100 : false;
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
