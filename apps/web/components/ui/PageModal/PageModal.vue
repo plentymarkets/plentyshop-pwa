@@ -1,4 +1,4 @@
-<template>
+<template v-if="_isReady">
   <UiModal
     v-model="pageModalOpen"
     aria-labelledby="page-modal"
@@ -49,7 +49,7 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="data.entries || []"
+          :options="categoriesWithFallback"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
@@ -86,110 +86,21 @@
 <script setup lang="ts">
 import { SfIconClose, SfInput } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { useForm, ErrorMessage } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
-import { object, string } from 'yup';
-import type { CategoryEntry, CategoryTreeItem } from '@plentymarkets/shop-api';
-import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { ErrorMessage } from 'vee-validate';
 
-const router = useRouter();
-const { setCategoryId } = useCategoryIdHelper();
-const { pageModalOpen, togglePageModal, setSettingsCategory } = useSiteConfiguration();
-const { data: newCategory, addCategory } = useCategoryManagement();
-const { data, getCategories, addNewPageToTree } = useCategoriesSearch();
-
-const fetchCategoriesByName = async (name: string = '') => {
-  await getCategories({
-    type: 'in:item,content',
-    sortBy: 'position_asc,name_asc',
-    with: 'details,clients',
-    name: name ? `like:${name}` : '',
-  });
-};
-const loadInitialCategories = async () => {
-  await fetchCategoriesByName();
-};
-watch(
-  () => pageModalOpen.value,
-  async (isOpen) => {
-    if (isOpen) {
-      resetForm();
-      parentPage.value = emptyCategoryItem;
-      pageType.value = pageTypes.value[0];
-      await loadInitialCategories();
-    }
-  },
-);
-
-const validationSchema = toTypedSchema(
-  object({
-    pageName: string().required('Enter a page name').default(''),
-  }),
-);
-
-const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
-  validationSchema: validationSchema,
-});
-
-const createNewPage = async () => {
-  if (!meta.value.valid) {
-    return;
-  }
-
-  await addCategory({
-    name: pageName?.value || '',
-    type: pageType.value.value,
-    parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
-  });
-
-  addNewPageToTree(newCategory.value);
-  await redirectToNewPage(newCategory.value);
-};
-
-const redirectToNewPage = async (newCategory: CategoryEntry) => {
-  await router.push({
-    path: newCategory.details[0].nameUrl,
-  });
-  setCategoryId(
-    newCategory.id,
-    newCategory.parentCategoryId,
-    newCategory.details[0].name,
-    newCategory.details[0].nameUrl,
-  );
-  setSettingsCategory({} as CategoryTreeItem, 'general-menu');
-};
-
-const closeModal = () => {
-  resetForm();
-  togglePageModal(false);
-};
-const getLabel = (option: CategoryTreeItem) => {
-  return option.details && option.details.length ? option.details[0].name : '';
-};
-
-const emptyCategoryItem: CategoryTreeItem = {
-  id: 0,
-  type: 'none',
-  itemCount: [],
-  childCount: 0,
-  right: 'all',
-  details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
-};
-
-const [pageName, pageNameAttributes] = defineField('pageName');
-const pageTypes = ref([
-  { label: 'Content', value: 'content' },
-  { label: 'Item category', value: 'item' },
-]);
-const pageType = ref(pageTypes.value[0]);
-const parentPage = ref(emptyCategoryItem);
-const onSubmit = handleSubmit(() => createNewPage());
-const debouncedSearch = debounce(async (query: string) => {
-  if (!query || query.length < 2) return;
-  await fetchCategoriesByName(query);
-}, 500);
-
-const handleSearch = (query: string) => {
-  debouncedSearch(query);
-};
+const {
+  _isReady,
+  pageModalOpen,
+  pageType,
+  pageTypes,
+  parentPage,
+  categoriesWithFallback,
+  pageName,
+  pageNameAttributes,
+  errors,
+  getLabel,
+  closeModal,
+  onSubmit,
+  handleSearch,
+} = useAddPageModal();
 </script>
