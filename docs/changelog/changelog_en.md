@@ -33,6 +33,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Extended hint text for subpages on deletion
 - Added a customer wish input field on the checkout
 - (dev) New menu styling
+- (dev) Add parent suggestion for add page
 
 ### 👷 Changed
 
