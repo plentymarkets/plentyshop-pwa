@@ -1068,7 +1068,7 @@
       "search": "Suchen",
       "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
       "setPackstation": "Übernehmen",
-      "postNumberLabel": "Geben Sie Ihre Beitragsnummer ein",
+      "postNumberLabel": "Geben Sie Ihre Postnummer ein",
       "postNumberPlaceholder": "Postnummer",
       "packstationAddedSuccessMessage": "Die Packstation/Postfiliale wurde als Lieferadresse übernommen.",
       "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",
