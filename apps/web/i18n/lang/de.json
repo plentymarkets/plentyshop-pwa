@@ -1,4 +1,6 @@
 {
+  "customerWish": "Hinweise und Wünsche",
+  "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein.",
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
@@ -770,6 +772,7 @@
     },
     "vat": {
       "incl": "inkl.",
+      "excl": "exkl.",
       "plus": "zzgl."
     }
   },

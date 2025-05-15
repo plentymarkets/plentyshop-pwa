@@ -1,4 +1,4 @@
-import { additionalInformationGetters, ApiError } from '@plentymarkets/shop-api';
+import { ApiError } from '@plentymarkets/shop-api';
 import type {
   UseMakeOrderState,
   UseMakeOrderReturn,
@@ -43,18 +43,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
     state.value.data = null;
-
-    try {
-      const additionalParams = additionalInformationGetters.getAdditionalInformation(params.additionalInformation);
-
-      if (params.shippingPrivacyHintAccepted) {
-        additionalParams.shippingPrivacyHintAccepted = params.shippingPrivacyHintAccepted;
-      }
-
-      await useSdk().plentysystems.doAdditionalInformation(additionalParams);
-    } catch (error) {
-      return handleMakeOrderError(error);
-    }
 
     const paymentType = ref('errorCode');
     const paymentValue = ref('');
