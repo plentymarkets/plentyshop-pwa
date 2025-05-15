@@ -3,14 +3,7 @@
     <template v-if="isActive">
       <div class="w-full text-left p-3 rounded-md border border-[rgb(255,204,0)] bg-[rgb(255,204,0)] space-y-3">
         <div class="flex justify-between items-center select-none">
-          <p
-            :class="[
-              'inline-block px-3 py-1 rounded-full text-white text-xs',
-              station.location.keyword === 'Packstation' ? 'bg-red-500' : 'bg-blue-500',
-            ]"
-          >
-            {{ station.location.keyword }}
-          </p>
+          <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
           <span class="text-sm text-gray-700 font-semibold flex items-center gap-1">
             <SfIconLocationOn size="xs" />
             {{ (station.distance / 1000).toFixed(2) }} km
@@ -19,7 +12,8 @@
 
         <p class="font-semibold text-base select-none">{{ station.name }}</p>
         <p class="text-sm leading-tight select-none">
-          {{ station.place.address.streetAddress }}<br />
+          {{ station.place.address.streetAddress }}
+          <br />
           {{ station.place.address.postalCode }} {{ station.place.address.addressLocality }}
         </p>
 
@@ -71,14 +65,7 @@
       >
         <div class="flex flex-col gap-1">
           <div class="flex justify-between items-center">
-            <p
-              :class="[
-                'inline-block px-3 py-1 rounded-full text-white text-xs',
-                station.location.keyword === 'Packstation' ? 'bg-red-500' : 'bg-blue-500',
-              ]"
-            >
-              {{ station.location.keyword }}
-            </p>
+            <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
             <span class="text-sm text-gray-500 font-semibold flex items-center gap-1">
               <SfIconLocationOn size="xs" />
               {{ (station.distance / 1000).toFixed(2) }} km
@@ -86,8 +73,9 @@
           </div>
           <p class="font-semibold">{{ station.name }}</p>
           <p class="text-sm">
-            {{ station.place.address.streetAddress }}<br />
-            {{ station.place.address.postalCode }} {{ station.place.address.addressLocality }}
+            {{ station.place.address.streetAddress }}
+            <br />
+            {{ `${station.place.address.postalCode} ${station.place.address.addressLocality}` }}
           </p>
         </div>
       </button>
@@ -105,4 +93,11 @@ defineEmits(['on-station-select']);
 
 const { t } = useI18n();
 const { postNumber, savePackstationAddress } = usePackstationAddress();
+
+const stationBadgeClass = computed(() =>
+  [
+    'inline-block px-3 py-1 rounded-full text-white text-xs',
+    station.location.keyword === 'Packstation' ? 'bg-red-500' : 'bg-blue-500',
+  ].join(' '),
+);
 </script>
