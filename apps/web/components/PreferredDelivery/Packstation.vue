@@ -2,27 +2,34 @@
   <li :ref="setRef" class="mr-0 sm:mr-3">
     <template v-if="isActive">
       <div class="w-full text-left p-3 rounded-md border border-[rgb(255,204,0)] bg-[rgb(255,204,0)] space-y-3">
-        <div class="flex justify-between items-center select-none">
-          <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
-          <span class="text-sm text-gray-700 font-semibold flex items-center gap-1">
-            <SfIconLocationOn size="xs" />
-            {{ (station.distance / 1000).toFixed(2) }} km
-          </span>
+        <div class="p-3 rounded bg-yellow-300 select-none">
+          <div class="flex justify-between items-center select-none">
+            <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
+            <span class="text-sm text-gray-700 font-semibold flex items-center gap-1">
+              <SfIconLocationOn size="xs" />
+              {{ (station.distance / 1000).toFixed(2) }} km
+            </span>
+          </div>
+
+          <p class="font-semibold text-base select-none">{{ station.name }}</p>
+          <p class="text-sm leading-tight select-none">
+            {{ station.place.address.streetAddress }}
+            <br />
+            {{ station.place.address.postalCode }} {{ station.place.address.addressLocality }}
+          </p>
         </div>
 
-        <p class="font-semibold text-base select-none">{{ station.name }}</p>
-        <p class="text-sm leading-tight select-none">
-          {{ station.place.address.streetAddress }}
-          <br />
-          {{ station.place.address.postalCode }} {{ station.place.address.addressLocality }}
-        </p>
+        <label for="dhl-post-number" class="mt-4 block text-sm font-medium pb-0.5">
+          {{ t('PreferredDelivery.packstation.postNumberLabel') }}
+        </label>
 
         <SfInput
+          id="dhl-post-number"
           v-model="postNumber"
           type="text"
           name="postnumber"
           :placeholder="t('PreferredDelivery.packstation.postNumberPlaceholder')"
-          wrapper-class="w-full"
+          wrapper-class="w-full !mt-0"
         />
 
         <UiButton type="button" variant="primary" class="mt-4 w-full" @click="savePackstationAddress(station)">
