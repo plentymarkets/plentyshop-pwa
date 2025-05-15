@@ -81,6 +81,8 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
+      headerBackgroundColor: process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
+      iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
     },
   },

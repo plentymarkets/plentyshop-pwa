@@ -69,7 +69,7 @@
         <label>
           <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
             <template #suffix>
-              <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
+              <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="border border-[#a0a0a0] rounded-lg cursor-pointer">
                 <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
               </label>
             </template>
@@ -95,9 +95,70 @@
               <label
                 for="secondary-color"
                 :style="{ backgroundColor: secondaryColor }"
-                class="rounded-lg cursor-pointer"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
                 <input id="secondary-color" v-model="secondaryColor" type="color" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Choose secondary color</span>
+        </label>
+      </div>
+    </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="headerOpen"
+      data-testid="color-section"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2 class="">Header</h2>
+      </template>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Background color</UiFormLabel>
+          <SfTooltip
+            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            :placement="'top'"
+            :show-arrow="true"
+            class="ml-2 z-10"
+          >
+            <SfIconInfo :size="'sm'" />
+          </SfTooltip>
+        </div>
+        <label>
+          <SfInput v-model="headerBackgroundColor" type="text" data-testid="background-icon-color">
+            <template #suffix>
+              <label
+                for="icon-background-color"
+                :style="{ backgroundColor: headerBackgroundColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input id="icon-background-color" v-model="headerBackgroundColor" type="color" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Choose primary color</span>
+        </label>
+      </div>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Icon color</UiFormLabel>
+          <SfTooltip
+            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            :placement="'top'"
+            :show-arrow="true"
+            class="ml-2 z-10"
+          >
+            <SfIconInfo :size="'sm'" />
+          </SfTooltip>
+        </div>
+        <label>
+          <SfInput v-model="iconColor" type="text" data-testid="icon-color">
+            <template #suffix>
+              <label for="icon-color" :style="{ backgroundColor: iconColor }" class="border border-[#a0a0a0] rounded-lg cursor-pointer">
+                <input id="icon-color" v-model="iconColor" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -140,11 +201,21 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
-const { closeDrawer, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =
-  useSiteConfiguration();
+const {
+  closeDrawer,
+  loadGoogleFont,
+  primaryColor,
+  secondaryColor,
+  iconColor,
+  headerBackgroundColor,
+  updateBlockSize,
+  blockSize,
+  selectedFont,
+} = useSiteConfiguration();
 
 const fontsOpen = ref(false);
 const colorsOpen = ref(false);
+const headerOpen = ref(false);
 const blocksSpacingOpen = ref(false);
 
 const fonts = ref([]);
