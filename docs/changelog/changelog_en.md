@@ -32,6 +32,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 - (dev) Change MegaMenu hover background classes to secondary 100
 - (dev) Extended hint text for subpages on deletion
 - Added a customer wish input field on the checkout
+- (dev) New menu styling
 
 ### 👷 Changed
 
