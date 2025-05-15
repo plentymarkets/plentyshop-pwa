@@ -3,7 +3,7 @@
     <template v-if="isActive">
       <div class="w-full text-left p-3 rounded-md border border-[rgb(255,204,0)] bg-[rgb(255,204,0)] space-y-3">
         <div class="p-3 rounded bg-yellow-300 select-none space-y-3">
-          <div class="flex justify-between items-center select-none">
+          <div class="flex justify-between items-center">
             <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
             <span class="text-sm text-gray-700 font-semibold flex items-center gap-1">
               <SfIconLocationOn size="xs" />
@@ -11,8 +11,8 @@
             </span>
           </div>
 
-          <p class="font-semibold text-base select-none">{{ station.name }}</p>
-          <p class="text-sm leading-tight select-none">
+          <p class="font-semibold text-base">{{ station.name }}</p>
+          <p class="text-sm leading-tight">
             {{ station.place.address.streetAddress }}
             <br />
             {{ station.place.address.postalCode }} {{ station.place.address.addressLocality }}
