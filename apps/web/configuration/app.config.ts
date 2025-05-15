@@ -1,5 +1,5 @@
 export const metaDefaults = {
-  title: process.env.NUXT_PUBLIC_META_TITLE || 'PlentyONE Shop',
+  title: process.env.NUXT_PUBLIC_META_TITLE || process.env.METATITLE || 'PlentyONE Shop',
   description: process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
   keywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
   robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
