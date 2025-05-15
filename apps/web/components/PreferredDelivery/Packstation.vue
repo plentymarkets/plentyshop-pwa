@@ -2,7 +2,7 @@
   <li :ref="setRef" class="mr-0 sm:mr-3">
     <template v-if="isActive">
       <div class="w-full text-left p-3 rounded-md border border-[rgb(255,204,0)] bg-[rgb(255,204,0)] space-y-3">
-        <div class="p-3 rounded bg-yellow-300 select-none">
+        <div class="p-3 rounded bg-yellow-300 select-none space-y-3">
           <div class="flex justify-between items-center select-none">
             <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
             <span class="text-sm text-gray-700 font-semibold flex items-center gap-1">
@@ -70,7 +70,7 @@
         ]"
         @click="$emit('on-station-select', index)"
       >
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center">
             <p :class="stationBadgeClass">{{ station.location.keyword }}</p>
             <span class="text-sm text-gray-500 font-semibold flex items-center gap-1">
@@ -103,7 +103,7 @@ const { postNumber, savePackstationAddress } = usePackstationAddress();
 
 const stationBadgeClass = computed(() =>
   [
-    'inline-block px-3 py-1 rounded-full text-white text-xs',
+    'inline-block px-3 py-1 rounded-full text-xs font-semibold',
     station.location.keyword === 'Packstation' ? 'bg-red-500' : 'bg-blue-500',
   ].join(' '),
 );
