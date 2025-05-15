@@ -86,8 +86,7 @@ const { toggleDeleteModal } = useCategorySettings();
 const { setSettingsCategory } = useSiteConfiguration();
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
-const { getCategoryName, getCategoryPath, setParentName } = useCategoryIdHelper();
-const { setCategoryId } = useCategoryIdHelper();
+const { getCategoryName, getCategoryPath, setParentName, setCategoryId } = useCategoryIdHelper();
 
 const activeView = ref<null | 'general' | 'seo'>(null);
 const redirectToPage = () => {
