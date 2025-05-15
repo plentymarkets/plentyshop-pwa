@@ -1,12 +1,12 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div v-if="addressLoading || formIsLoading" class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+    <div v-if="addressLoading || formIsLoading || initialFetchingAddress" class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
       <div class="relative w-full">
         <h2 class="text-neutral-900 text-lg font-bold mb-4">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
         <AddressDisplaySkeleton
-          v-if="addressLoading || (formIsLoading && type == AddressType.Billing && shippingAsBilling)"
+          v-if="addressLoading || (formIsLoading && type == AddressType.Billing && shippingAsBilling) || initialFetchingAddress"
         />
         <AddressFormSkeleton
           v-if="formIsLoading && (type == AddressType.Shipping || (type == AddressType.Billing && !shippingAsBilling))"
@@ -83,6 +83,17 @@ const { loading: addressLoading, checkoutAddress, hasCheckoutAddress } = useChec
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized } = useCustomer();
+const { loading: fetchingAddress } = useFetchAddress(type);
+const initialFetchingAddress = ref(true)
+
+onMounted(() => {
+  const stop = watch(fetchingAddress, (val) => {
+    if (val === false) {
+      initialFetchingAddress.value = false
+      stop()
+    }
+  })
+})
 
 const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
 
