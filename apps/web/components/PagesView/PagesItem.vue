@@ -89,7 +89,6 @@ import type { CategoryEntry } from '@plentymarkets/shop-api';
 import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
-const { setParentName } = useCategoryIdHelper();
 const { setSettingsCategory } = useSiteConfiguration();
 const { setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
 const route = useRoute();
