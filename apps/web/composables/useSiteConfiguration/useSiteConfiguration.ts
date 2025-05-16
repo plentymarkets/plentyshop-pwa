@@ -34,6 +34,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
+    iconColor: useRuntimeConfig().public.iconColor,
+    headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
     headerLogo: useRuntimeConfig().public.headerLogo,
     favicon: structuredClone(favicon).icon,
     ogTitle: structuredClone(openGraph).title,
@@ -51,6 +53,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      iconColor: useRuntimeConfig().public.iconColor,
+      headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
       seoSettings: structuredClone(metaDefaults),
       headerLogo: useRuntimeConfig().public.headerLogo,
       favicon: structuredClone(favicon).icon,
@@ -148,6 +152,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
+      state.value.iconColor !== state.value.initialData.iconColor ||
+      state.value.headerBackgroundColor !== state.value.initialData.headerBackgroundColor ||
       state.value.headerLogo !== state.value.initialData.headerLogo ||
       state.value.favicon !== state.value.initialData.favicon ||
       state.value.ogTitle !== state.value.initialData.ogTitle ||
@@ -220,6 +226,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'robots',
         value: state.value.seoSettings.robots,
       },
+      {
+        key: 'iconColor',
+        value: state.value.iconColor,
+      },
+      {
+        key: 'iconBackgroundColor',
+        value: state.value.headerBackgroundColor,
+      },
     ];
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -234,6 +248,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      iconColor: state.value.iconColor,
+      headerBackgroundColor: state.value.headerBackgroundColor,
       headerLogo: state.value.headerLogo,
       favicon: state.value.favicon,
       ogTitle: state.value.ogTitle,
