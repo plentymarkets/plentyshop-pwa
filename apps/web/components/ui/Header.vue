@@ -149,27 +149,29 @@
       </UiButton>
     </div>
   </MegaMenu>
-  <LanguageSelector />
-  <UiModal
-    v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
-    v-model="isAuthenticationOpen"
-    tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
-  >
-    <header>
-      <UiButton
-        :aria-label="t('closeDialog')"
-        square
-        variant="tertiary"
-        class="absolute right-2 top-2"
-        @click="closeAuthentication"
-      >
-        <SfIconClose />
-      </UiButton>
-    </header>
-    <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-    <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
-  </UiModal>
+  <LazyLanguageSelector hydrate-on-idle />
+  <NuxtLazyHydrate when-idle>
+    <UiModal
+      v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
+      v-model="isAuthenticationOpen"
+      tag="section"
+      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+    >
+      <header>
+        <UiButton
+          :aria-label="t('closeDialog')"
+          square
+          variant="tertiary"
+          class="absolute right-2 top-2"
+          @click="closeAuthentication"
+        >
+          <SfIconClose />
+        </UiButton>
+      </header>
+      <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" />
+      <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
+    </UiModal>
+  </NuxtLazyHydrate>
 
   <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
     <SfModal
