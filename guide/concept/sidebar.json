@@ -2,5 +2,9 @@
   {
     "text": "Data flow",
     "link": "https://docs.vuestorefront.io/general/basics/data-flow"
+  },
+  {
+    "text": "Composable‑Centric Data Fetching",
+    "link": "/guide/concept/composable-centric-data-fetching"
   }
 ]
