@@ -228,8 +228,13 @@ const blocksSpacingOpen = ref(false);
 
 const fonts = ref([]);
 
-const response = await fetch('/fonts/meta.json');
-fonts.value = await response.json();
+onMounted(async () => {
+  const response = await fetch('/_nuxt-plenty/editor/fonts.json');
+
+  if (response.ok) {
+    fonts.value = await response.json();
+  }
+});
 
 const btnClasses = ref(
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 uppercase inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed',
