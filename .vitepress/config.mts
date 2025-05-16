@@ -32,7 +32,7 @@ export default withMermaid({
         text: 'Product',
         items: [
           { text: 'Introduction', link: '/guide/product/' },
-          { text: 'Changelog', link: 'https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/changelog/changelog_en.md'}
+          { text: 'Changelog', link: 'https://github.com/plentymarkets/plentyshop-pwa/releases'}
         ]
       },
       {
