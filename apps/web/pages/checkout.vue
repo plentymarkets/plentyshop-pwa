@@ -7,6 +7,7 @@
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
+        Shipping ID Text {{ shippingProfileText }}
         <UiDivider id="top-contact-information-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation id="contact-information" />
         <UiDivider id="top-shipping-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -72,6 +73,16 @@ const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMeth
   useCheckoutPagePaymentAndShipping();
 
 emit('frontend:beginCheckout', cart.value);
+
+
+const shippingProfileText = computed(() => {
+  if (cart.value.shippingProfileId === 7) {
+    return 'Mein Shipping Profil ist reactive' + cart.value.shippingProfileId
+  }
+  else {
+    return cart.value.shippingProfileId.toString();
+  }
+})
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
