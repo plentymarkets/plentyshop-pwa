@@ -58,8 +58,8 @@
                 v-if="
                   orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesAvailable(item)
                 "
-                :price="orderGetters.getOrderAgainInformationPrice(item)"
-                :crossed-price="orderGetters.getItemPrice(item)"
+                :price="roundAmount(orderGetters.getOrderAgainInformationPrice(item))"
+                :crossed-price="itemPrice(item)"
               />
               <div
                 v-if="orderGetters.getItemShortDescription(order, item)"
@@ -104,11 +104,10 @@
                           )
                         }}
                         {{
-                          n(
+                          format(
                             productPropertyGetters.getOrderPropertySurcharge(
                               orderGetters.getOrderAgainOrderProperty(item, property),
                             ),
-                            'currency',
                           )
                         }})</span
                       >
@@ -170,7 +169,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.orderPropertyNotAvailableOrChanged') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="orderGetters.getOrderAgainInformationPrice(item) > orderGetters.getItemPrice(item)"
+                  v-else-if="roundAmount(orderGetters.getOrderAgainInformationPrice(item)) > itemPrice(item)"
                   variant="secondary"
                   size="sm"
                   class="!font-medium"
@@ -179,7 +178,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.priceUp') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="orderGetters.getOrderAgainInformationPrice(item) < orderGetters.getItemPrice(item)"
+                  v-else-if="roundAmount(orderGetters.getOrderAgainInformationPrice(item)) < itemPrice(item)"
                   variant="positive"
                   size="sm"
                   class="!font-medium"
@@ -207,7 +206,7 @@
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ $t('delivery') }}
+                {{ t('delivery') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -243,6 +242,7 @@ import {
   SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
+import type { OrderItem } from '@plentymarkets/shop-api';
 import { orderGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
 
@@ -250,7 +250,8 @@ const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const { showNetPrices } = useCustomer();
 
 const localePath = useLocalePath();
@@ -281,5 +282,16 @@ const addToCart = async () => {
     goToPage(paths.cart);
   }
   loadingAddToCart.value = false;
+};
+
+const roundAmount = (value: number) => {
+  return Math.round(value * 100) / 100;
+};
+const itemPrice = (item: OrderItem): number => {
+  if (showNetPrices) {
+    return roundAmount(orderGetters.getItemNetPrice(item));
+  } else {
+    return roundAmount(orderGetters.getItemPrice(item));
+  }
 };
 </script>

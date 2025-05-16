@@ -8,13 +8,17 @@
     overlay-classes="z-[1000]"
   >
     <header class="flex items-center justify-between mb-2">
-      <div class="flex items-center text-xl font-bold">Delete page?</div>
+      <div v-if="getPageType === 'item'" class="flex items-center text-xl font-bold">Delete Product Category?</div>
+      <div v-else class="flex items-center text-xl font-bold">Delete page?</div>
       <button class="absolute right-2 top-2 px-4 py-4" @click="closeModal">
         <SfIconClose />
       </button>
     </header>
 
-    <p class="mb-6">{{ getCategoryName }} page will be deleted</p>
+    <p class="mb-6">
+      {{ deleteMessage }}
+    </p>
+
     <form data-testid="add-page-form" class="flex flex-col rounded-md gap-4" novalidate>
       <div class="actions flex flex-col gap-4">
         <button
@@ -42,9 +46,25 @@
 
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-
 const { unlinkModalOpen, toggleDeleteModal, deletePage } = useCategorySettings();
-const { getCategoryId, getCategoryName } = useCategoryIdHelper();
+const { getCategoryId, getCategoryName, getPageType, getPageHasChildren } = useCategoryIdHelper();
+
+const deleteMessage = computed(() => {
+  const pageName = getCategoryName.value;
+  const pageType = getPageType.value;
+  const hasChildren = getPageHasChildren.value;
+
+  if (pageType === 'content') {
+    return hasChildren
+      ? `Page "${pageName}" will be deleted. Please note that all its subpages will be deleted as well.`
+      : `Page "${pageName}" will be deleted.`;
+  } else if (pageType === 'item') {
+    return hasChildren
+      ? `"${pageName}" will be deleted and all assigned products will lose their association. Please note that all its subcategories will be deleted as well.`
+      : `Product Category "${pageName}" will be deleted and all assigned products will lose their association.`;
+  }
+  return '';
+});
 
 const currentCategoryId = computed(() => getCategoryId.value);
 

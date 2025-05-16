@@ -1,5 +1,5 @@
 import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
-import type { Category } from '@plentymarkets/shop-api';
+import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
@@ -11,7 +11,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const addCategorySettings = async (category: Category) => {
+  const addCategorySettings = async (category: CategoryEntry) => {
     const exists = state.value.data.some((item) => item.id === category.id);
     if (exists) return;
 
@@ -43,12 +43,14 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
               parentCategoryId: category.parentCategoryId,
               sitemap: category.sitemap,
               linklist: category.linklist,
+              linkCategoryToWebstore: category.isLinkedToWebstore,
               right: category.right,
               categoryId: detail.categoryId,
               lang: detail.lang,
               name: detail.name,
               nameUrl: detail.nameUrl,
               type: category.type,
+              position: detail.position,
               metaTitle: detail.metaTitle,
               metaDescription: detail.metaDescription,
               metaKeywords: detail.metaKeywords,

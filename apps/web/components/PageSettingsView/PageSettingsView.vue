@@ -4,7 +4,7 @@
     class="sticky top-[52px] h-[calc(100vh-50px)] overflow-y-auto"
     data-testid="pages-general-settings-drawer"
   >
-    <form data-testid="basic-settings-form" class="w-full absolute bg-white">
+    <form data-testid="basic-settings-form" class="w-full shadow-[inset_0px_0px_20px_-20px_#111] absolute bg-white">
       <UiAccordionItem
         v-model="basicSettingsOpen"
         data-testid="open-basic-settings"
@@ -140,6 +140,48 @@
           </label>
         </div>
         <div class="py-2">
+          <div class="flex justify-between">
+            <UiFormLabel class="mb-1">Position </UiFormLabel>
+            <SfTooltip
+              label="The position determines the page order in the navigation and the editor. Lower positions come first."
+              :placement="'top'"
+              :show-arrow="true"
+              class="ml-2 z-10"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </div>
+          <label>
+            <SfInput v-model="data.details[0].position" type="text" data-testid="page-position">
+              <template #suffix>
+                <label for="page-position" class="rounded-lg cursor-pointer">
+                  <input id="page-position" v-model="data.details[0].position" type="text" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel class="mb-1">
+              Activate page for store
+              <SfTooltip
+                label="If you deactivate this page, customers and search engines won't be able to access it via the navigation or direct links. You can reactivate the page at any time."
+                :placement="'top'"
+                :show-arrow="true"
+                class="ml-2 z-10"
+              >
+                <SfIconInfo :size="'sm'" />
+              </SfTooltip>
+            </UiFormLabel>
+
+            <SfSwitch
+              v-model="data.isLinkedToWebstore"
+              class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+            />
+          </div>
+        </div>
+        <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
@@ -173,7 +215,6 @@ const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
-
 const isInLinkedList = computed({
   get() {
     return data.value.right === 'customer';

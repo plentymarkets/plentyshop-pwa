@@ -4,13 +4,13 @@
     class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
     data-testid="account-orders-heading"
   >
-    {{ $t('account.accountSettings.section.personalData') }}
+    {{ t('account.accountSettings.section.personalData') }}
   </h2>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.yourName')"
-    :button-text="$t('account.accountSettings.personalData.edit')"
+    :header="t('account.accountSettings.personalData.yourName')"
+    :button-text="t('account.accountSettings.personalData.edit')"
     data-testid="account-name"
     @on-click="openModal('yourName')"
   >
@@ -19,8 +19,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.contactInformation')"
-    :button-text="$t('account.accountSettings.personalData.edit')"
+    :header="t('account.accountSettings.personalData.contactInformation')"
+    :button-text="t('account.accountSettings.personalData.edit')"
     data-testid="account-email"
     @on-click="openModal('contactInformation')"
   >
@@ -29,8 +29,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.yourPassword')"
-    :button-text="$t('account.accountSettings.personalData.change')"
+    :header="t('account.accountSettings.personalData.yourPassword')"
+    :button-text="t('account.accountSettings.personalData.change')"
     :show-edit-button="true"
     data-testid="account-password"
     @on-click="openModal('passwordChange')"
@@ -48,7 +48,7 @@
   >
     <header>
       <UiButton
-        :aria-label="$t('closeDialog')"
+        :aria-label="t('closeDialog')"
         type="button"
         square
         variant="tertiary"
@@ -58,7 +58,7 @@
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-        {{ $t(`account.accountSettings.personalData.${openedForm}`) }}
+        {{ t(`account.accountSettings.personalData.${openedForm}`) }}
       </h3>
     </header>
     <AccountFormsName v-if="openedForm === 'yourName'" @on-save="closeModal" @on-cancel="closeModal" />
@@ -76,6 +76,7 @@ definePageMeta({
   middleware: ['auth-guard'],
 });
 const { isOpen, open, close } = useDisclosure();
+const { t } = useI18n();
 const lastActiveElement = ref();
 const modalElement = ref();
 const openedForm = ref('');

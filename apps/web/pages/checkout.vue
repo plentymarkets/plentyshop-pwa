@@ -22,9 +22,13 @@
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <PreferredDeliveryPackstationFinder v-if="countryHasDelivery" />
           <PreferredDelivery v-if="countryHasDelivery" />
+          <UiDivider v-if="preferredDeliveryAvailable" class="w-screen md:w-auto -mx-4 md:mx-0" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <CustomerWish />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
       </div>
@@ -62,6 +66,7 @@ const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
 const { cart, cartIsEmpty, cartLoading, persistShippingAddress, persistBillingAddress } = useCheckout();
+const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
 const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
@@ -74,14 +79,14 @@ const checkPayPalPaymentsEligible = async () => {
     const applePayAvailable = await useApplePay().checkIsEligible();
 
     if (googlePayAvailable || applePayAvailable) {
-      await usePaymentMethods().fetchPaymentMethods();
+      await fetchPaymentMethods();
     }
   }
 };
 
 await Promise.all([
   useCartShippingMethods().getShippingMethods(),
-  usePaymentMethods().fetchPaymentMethods(),
+  fetchPaymentMethods(),
   useAggregatedCountries().fetchAggregatedCountries(),
 ]);
 

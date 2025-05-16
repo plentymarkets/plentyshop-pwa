@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       },
     },
     optimizeDeps: {
-      include: ['dotenv', 'validator'],
+      include: ['dotenv', 'validator', 'js-sha256'],
     },
   },
   css: ['~/assets/style.scss'],
@@ -60,14 +60,17 @@ export default defineNuxtConfig({
       isDev: process.env.NODE_ENV === 'development',
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
-      useAvif: process.env?.IMAGEAVIF === 'true',
-      useWebp: process.env?.IMAGEWEBP === 'true',
+      useAvif: process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
+      useWebp: process.env?.NUXT_PUBLIC_USE_WEBP === 'true',
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
-      headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
+      headerLogo:
+        process.env.NUXT_PUBLIC_HEADER_LOGO ||
+        process.env.LOGO ||
+        'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PlentyONE GmbH',
@@ -78,6 +81,7 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
+      showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
     },
   },
   modules: [
