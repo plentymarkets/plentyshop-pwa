@@ -13,8 +13,8 @@
     </main>
     <Cookiebar />
     <LazyUiNavbarBottom v-if="viewport.isLessThan('md')" />
-    <LazyPreviewMode  hydrate-on-idle />
-    <LazyUiFooter  hydrate-on-visible/>
+    <LazyPreviewMode hydrate-on-idle />
+    <LazyUiFooter hydrate-on-visible />
   </div>
 </template>
 
