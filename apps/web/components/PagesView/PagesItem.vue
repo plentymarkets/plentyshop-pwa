@@ -1,8 +1,8 @@
 <template>
   <li class="border border-[#D9E2DC] rounded-[5px] mb-3">
     <div
-      class="relative"
-      :class="['px-4 py-2 group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
+      class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
+      :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
       @click="toggleOnTablet"
     >
       <span v-if="item.hasChildren" @click="toggleOnDesktop">
@@ -39,7 +39,8 @@
         <SfIconBase
           size="base"
           viewBox="0 0 24 24"
-          class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+          class="text-primary-900 transition-opacity duration-200"
+          :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
           @click="handleSettingsClick"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
@@ -89,9 +90,8 @@ import type { CategoryEntry } from '@plentymarkets/shop-api';
 import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
-const { setSettingsCategory } = useSiteConfiguration();
-const { setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
-const route = useRoute();
+const { setSettingsCategory, settingsType } = useSiteConfiguration();
+const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
 const viewport = useViewport();
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
@@ -144,7 +144,7 @@ const handleChildrenScroll = async (e: Event) => {
   }
 };
 
-const isActive = computed(() => route.path === item?.details[0].nameUrl);
+const isActive = computed(() => item.id === getCategoryId.value && settingsType.value);
 const openSettingsMenu = (id: number, pageType?: string) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-menu');
