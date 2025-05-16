@@ -41,7 +41,7 @@ export const useBlockManager = () => {
 
   const getBlocksLists = async () => {
     try {
-      const response = await fetch('/blocks/blocksLists.json');
+      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -192,6 +192,7 @@ export const useBlockManager = () => {
   };
 
   return {
+    blocksLists,
     currentBlock,
     currentBlockUuid,
     isClicked,
