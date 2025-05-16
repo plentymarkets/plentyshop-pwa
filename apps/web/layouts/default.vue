@@ -7,9 +7,9 @@
     <main>
       <slot />
     </main>
-    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <LazyPreviewMode hydrate-on-idle />
+    <LazyUiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <LazyUiFooter hydrate-on-visible />
     <LazyQuickCheckout v-if="isOpen" :product="product" />
   </div>

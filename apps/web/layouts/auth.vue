@@ -11,14 +11,10 @@
       <h1 v-if="heading" class="font-bold mb-10 typography-headline-3 md:typography-headline-2">{{ heading }}</h1>
       <slot />
     </main>
-    <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="viewport.isLessThan('md')" />
-      <Cookiebar />
-      <PreviewMode />
-    </NuxtLazyHydrate>
-    <NuxtLazyHydrate when-visible>
-      <UiFooter />
-    </NuxtLazyHydrate>
+    <Cookiebar />
+    <LazyUiNavbarBottom v-if="viewport.isLessThan('md')" />
+    <LazyPreviewMode  hydrate-on-idle />
+    <LazyUiFooter  hydrate-on-visible/>
   </div>
 </template>
 
