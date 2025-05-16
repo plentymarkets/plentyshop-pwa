@@ -8,16 +8,7 @@
         <h2 class="text-neutral-900 text-lg font-bold mb-5 mt-2">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
-        <AddressDisplaySkeleton
-          v-if="
-            addressLoading ||
-            (formIsLoading && type == AddressType.Billing && shippingAsBilling) ||
-            initialFetchingAddress
-          "
-        />
-        <AddressFormSkeleton
-          v-if="formIsLoading && (type == AddressType.Shipping || (type == AddressType.Billing && !shippingAsBilling))"
-        />
+        <AddressDisplaySkeleton />
         <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
           <SfLoaderCircular size="2xl" />
         </div>
