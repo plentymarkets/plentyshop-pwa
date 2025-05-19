@@ -65,14 +65,8 @@ const { save: saveBlocksAndSiteSettings } = useToolbar();
 const { save: saveCategorySettings, hasChanges } = useCategorySettingsCollection();
 
 const bannerIsHidden = ref(true);
-const isPreview = ref(false);
+const isPreview = useState<boolean>('isPreview');
 const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-
-onMounted(() => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-});
 
 const hasUnsavedChanges = () => {
   return isEditingEnabled.value || settingsIsDirty.value || hasChanges.value;
