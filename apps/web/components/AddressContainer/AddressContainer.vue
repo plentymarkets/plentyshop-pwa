@@ -8,7 +8,8 @@
         <h2 class="text-neutral-900 text-lg font-bold mb-5 mt-2">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
-        <AddressDisplaySkeleton />
+        <AddressDisplaySkeleton v-if="isAuthorized || (!isAuthorized && (type !== AddressType.Shipping)) || isGuest"/>
+        <AddressFormSkeleton v-else/>
         <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
           <SfLoaderCircular size="2xl" />
         </div>
@@ -80,7 +81,7 @@ const isShipping = type === AddressType.Shipping;
 const { loading: addressLoading, checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
-const { isAuthorized } = useCustomer();
+const { isAuthorized, isGuest } = useCustomer();
 const { loading: fetchingAddress } = useFetchAddress(type);
 const initialFetchingAddress = ref(true);
 
