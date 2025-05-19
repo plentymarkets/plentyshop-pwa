@@ -1055,6 +1055,7 @@
     "packstation": {
       "title": "DHL Packstation / Postfiliale",
       "zipcodeLabel": "Postleitzahl",
+      "zipcodeInvalid": "Geben Sie eine gültige Postleitzahl ein.",
       "zipcodePlaceholder": "PLZ",
       "cityLabel": "Stadt/Ort",
       "cityPlaceholder": "Ort",

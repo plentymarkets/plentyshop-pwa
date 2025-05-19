@@ -1,4 +1,5 @@
-import type { AggregatedCountries } from '@plentymarkets/shop-api';
+import type { ActiveShippingCountry, AggregatedCountries, GeoRegulatedCountry } from '@plentymarkets/shop-api';
+import { AddressType } from '@plentymarkets/shop-api';
 import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
 
 /**
@@ -65,11 +66,28 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     return billingCountries.value.find((country) => country.id === id)?.currLangName ?? '';
   };
 
+  const getZipCodeRegex = (countryId: number, type: AddressType): RegExp | null => {
+    const countries = type === AddressType.Billing ? billingCountries.value : state.value.default;
+    const country = countries.find((country: ActiveShippingCountry | GeoRegulatedCountry) => country.id === countryId);
+
+    let pattern = country?.zipCodeRegex ?? null;
+    if (pattern && pattern.startsWith('/') && pattern.endsWith('/')) pattern = pattern.slice(1, -1);
+
+    try {
+      if (typeof pattern === 'string') return new RegExp(pattern);
+      return null;
+    } catch (e) {
+      console.error(`Invalid regex pattern: `, pattern, e);
+      return null;
+    }
+  };
+
   return {
     fetchAggregatedCountries,
     useGeoRegulatedCountries,
     billingCountries,
     localeCountryName,
+    getZipCodeRegex,
     ...toRefs(state.value),
   };
 };

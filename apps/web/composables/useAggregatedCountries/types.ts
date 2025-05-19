@@ -1,4 +1,9 @@
-import type { ActiveShippingCountry, GeoRegulatedCountry, AggregatedCountries } from '@plentymarkets/shop-api';
+import type {
+  ActiveShippingCountry,
+  GeoRegulatedCountry,
+  AggregatedCountries,
+  AddressType,
+} from '@plentymarkets/shop-api';
 
 export interface UseAggregatedCountriesState {
   default: AggregatedCountries['default'];
@@ -16,6 +21,7 @@ export interface UseAggregatedCountries {
   useGeoRegulatedCountries: boolean;
   billingCountries: ComputedRef<(ActiveShippingCountry | GeoRegulatedCountry)[]>;
   localeCountryName: (countryId: string) => string;
+  getZipCodeRegex: (countryId: number, type: AddressType) => RegExp | null;
 }
 
 export type UseAggregatedCountriesReturn = () => UseAggregatedCountries;
