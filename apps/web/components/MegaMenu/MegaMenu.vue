@@ -1,7 +1,8 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-10">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 bg-primary-500 border-neutral-200"
+      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
       <div class="flex items-center">
@@ -207,6 +208,8 @@ const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
+const { headerBackgroundColor } = useSiteConfiguration();
+
 const { setDrawerOpen } = useDrawerState();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
