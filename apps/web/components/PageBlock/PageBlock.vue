@@ -120,11 +120,7 @@ const contentProps = computed(() => {
   return props.root ? { ...props.block } : { ...props.block, ...attrs };
 });
 
-const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-const pwaCookie = useCookie('pwa');
-isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+const isPreview = useState<boolean>('isPreview');
 
 const showOutline = computed(() => {
   return (
