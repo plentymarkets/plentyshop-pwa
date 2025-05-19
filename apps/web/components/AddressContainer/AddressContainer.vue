@@ -8,8 +8,8 @@
         <h2 class="text-neutral-900 text-lg font-bold mb-5 mt-2">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
-        <AddressDisplaySkeleton v-if="isAuthorized || (!isAuthorized && (type !== AddressType.Shipping)) || isGuest"/>
-        <AddressFormSkeleton v-else/>
+        <AddressDisplaySkeleton v-if="isAuthorized || (!isAuthorized && type !== AddressType.Shipping) || isGuest" />
+        <AddressFormSkeleton v-else />
         <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
           <SfLoaderCircular size="2xl" />
         </div>
