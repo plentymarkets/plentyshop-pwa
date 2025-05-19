@@ -20,7 +20,7 @@
         </div>
 
         <label for="dhl-post-number" class="mt-4 block text-sm font-medium pb-0.5">
-          {{ t('PreferredDelivery.packstation.postNumberLabel') }}
+          {{ postNumberLabel }}
         </label>
 
         <SfInput
@@ -99,12 +99,18 @@ const { station, index, isActive, setRef } = defineProps<PackstationProps>();
 defineEmits(['on-station-select']);
 
 const { t } = useI18n();
-const { postNumber, savePackstationAddress } = usePackstationAddress();
+const { postNumber, postNumberRequired, savePackstationAddress } = usePackstationAddress();
 
 const stationBadgeClass = computed(() =>
   [
     'inline-block px-3 py-1 rounded-full text-xs font-semibold',
     station.location.keyword === 'Packstation' ? 'bg-red-500' : 'bg-blue-500',
   ].join(' '),
+);
+
+const postNumberLabel = computed(() =>
+  station.location.keyword === 'Packstation' || postNumberRequired.value
+    ? `${t('PreferredDelivery.packstation.postNumberLabel')} ${t('form.required')}`
+    : t('PreferredDelivery.packstation.postNumberLabel'),
 );
 </script>
