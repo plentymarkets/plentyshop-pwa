@@ -1,4 +1,9 @@
-import type { ActiveShippingCountry, AggregatedCountries, GeoRegulatedCountry } from '@plentymarkets/shop-api';
+import type {
+  ActiveShippingCountry,
+  AggregatedCountries,
+  ApiError,
+  GeoRegulatedCountry,
+} from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
 
@@ -76,8 +81,8 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     try {
       if (typeof pattern === 'string') return new RegExp(pattern);
       return null;
-    } catch (e) {
-      console.error(`Invalid regex pattern: `, pattern, e);
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
       return null;
     }
   };
