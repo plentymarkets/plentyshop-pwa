@@ -12,13 +12,13 @@ const productListPage = new ProductListPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.visitAndHydrate(paths.home);
-
-  homePage.goToCategory();
-  productListPage.addToCart();
 });
 
 describe('Checkout Addresses', () => {
   it('should display same as shipping text if a guest creates his shipping address with billing same as shipping checked', () => {
+    homePage.goToCategory();
+    productListPage.addToCart();
+
     cart.openCart();
     checkout
       .goToCheckout()
@@ -29,6 +29,8 @@ describe('Checkout Addresses', () => {
   });
 
   it('should not display shipping and billing address selection if a guest user creates his address', () => {
+    homePage.goToCategory();
+    productListPage.addToCart();
     cart.openCart();
 
     checkout
@@ -41,8 +43,10 @@ describe('Checkout Addresses', () => {
   });
 
   it('should be able to edit the billing address as a guest user if selected same as shipping', () => {
-    cart.openCart();
+    homePage.goToCategory();
+    productListPage.addToCart();
 
+    cart.openCart();
     checkout
       .goToCheckout()
       .goToGuestCheckout()
