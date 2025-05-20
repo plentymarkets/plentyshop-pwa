@@ -366,7 +366,7 @@
     },
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}.",
     "success": "Message sent successfully",
-    "misConfigured": "Our contact form is temporarily disabled due to a missing security configuration. Please check back later or reach out to us via alternative contact methods."
+    "misConfigured": "Our contact form is temporarily disabled due to a missing configuration. Please check back later or reach out to us via alternative contact methods."
   },
   "contactInfo": {
     "add": "Add contact information",
