@@ -366,7 +366,7 @@
     },
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
     "success": "Nachricht erfolgreich gesendet",
-    "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Sicherheitskonfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten."
+    "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten."
   },
   "contactInfo": {
     "add": "Kontaktinformationen hinzufügen",
