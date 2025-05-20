@@ -103,18 +103,6 @@ const validateAndSubmitEmail = async () => {
 const handleGuestEmailChange = async (updatedEmail: string) => {
   await saveContactInformation(updatedEmail);
 
-  useCheckoutAddress(AddressType.Shipping).clear();
-  useCheckoutAddress(AddressType.Billing).clear();
-
-  await useFetchAddress(AddressType.Shipping)
-    .fetchServer()
-    .then(() => persistShippingAddress());
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
-    .then(() => persistBillingAddress())
-    .catch((error) => useHandleError(error));
-
   await checkPayPalPaymentsEligible();
 };
 
