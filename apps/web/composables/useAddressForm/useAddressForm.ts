@@ -11,7 +11,7 @@ export const useAddressForm = (type: AddressType) => {
   const { data: cartData } = useCart();
   const { send } = useNotification();
   const { restrictedAddresses } = useRestrictedAddress();
-  const { getZipCodeRegex } = useAggregatedCountries();
+  const { getCountryZipCodeRegex } = useAggregatedCountries();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -62,7 +62,7 @@ export const useAddressForm = (type: AddressType) => {
       zipCode: string()
         .required($i18n.t('errorMessages.requiredField'))
         .when('country', ([countryId], schema) => {
-          const zipCodeRegex = getZipCodeRegex(Number(countryId), type);
+          const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), type);
           return zipCodeRegex
             ? schema.matches(zipCodeRegex, $i18n.t('PreferredDelivery.packstation.zipcodeInvalid'))
             : schema;

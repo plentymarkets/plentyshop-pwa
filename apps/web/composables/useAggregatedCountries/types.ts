@@ -21,7 +21,7 @@ export interface UseAggregatedCountries {
   useGeoRegulatedCountries: boolean;
   billingCountries: ComputedRef<(ActiveShippingCountry | GeoRegulatedCountry)[]>;
   localeCountryName: (countryId: string) => string;
-  getZipCodeRegex: (countryId: number, type: AddressType) => RegExp | null;
+  getCountryZipCodeRegex: (countryId: number, type: AddressType) => RegExp | null;
 }
 
 export type UseAggregatedCountriesReturn = () => UseAggregatedCountries;
