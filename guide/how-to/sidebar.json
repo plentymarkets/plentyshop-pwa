@@ -30,6 +30,10 @@
             {
                 "text": "Bot protection",
                 "link": "/guide/how-to/bot-protection.md"
+            },
+            {
+                "text": "Customer wish",
+                "link": "/guide/how-to/customer-wish.md"
             }
         ]
     },
