@@ -1055,7 +1055,7 @@
     "packstation": {
       "title": "DHL Packstation / Postal outlet",
       "zipcodeLabel": "Enter your zip code",
-      "zipcodeInvalid": "Enter a valid zip code.",
+      "zipcodeInvalid": "Enter a valid postcode.",
       "zipcodePlaceholder": "Postcode",
       "cityLabel": "Enter your city",
       "cityPlaceholder": "City",
