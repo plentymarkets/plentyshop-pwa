@@ -206,8 +206,8 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillShippingAddressForm(fixtureOverride?: AddressFixtureOverride) {
-    cy.intercept('/plentysystems/setCheckoutAddress')
-      .as('setCheckoutAddress')
+    cy.intercept('/plentysystems/doSaveAddress')
+      .as('doSaveAddress')
       .intercept('/plentysystems/getShippingProvider')
       .as('getShippingProvider')
       .intercept('/plentysystems/getPaymentProviders')
@@ -215,7 +215,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.fillAddressForm('shipping', fixtureOverride);
 
-    cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
+    cy.wait(['@doSaveAddress', '@getShippingProvider', '@getPaymentProviders']);
 
     return this;
   }
