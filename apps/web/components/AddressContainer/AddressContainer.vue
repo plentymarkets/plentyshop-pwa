@@ -10,9 +10,6 @@
         </h2>
         <AddressDisplaySkeleton v-if="isAuthorized || (!isAuthorized && type !== AddressType.Shipping) || isGuest" />
         <AddressFormSkeleton v-else />
-        <div class="absolute inset-0 z-[999] flex items-center justify-center bg-white/30">
-          <SfLoaderCircular size="2xl" />
-        </div>
       </div>
     </div>
     <div v-else>
@@ -69,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfTooltip } from '@storefront-ui/vue';
 import type { AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 
