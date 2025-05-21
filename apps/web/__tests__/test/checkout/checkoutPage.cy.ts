@@ -43,6 +43,7 @@ describe('Smoke: Checkout Page', () => {
       .shouldShowShippingMethods()
       .fillShippingAddressForm({
         country: '7',
+        zipCode: '1234',
       })
       .shouldNotShowShippingMethods();
   });
