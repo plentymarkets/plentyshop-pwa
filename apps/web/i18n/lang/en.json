@@ -934,7 +934,20 @@
     "priceDown": "Price ⬇",
     "priceUp": "Price ⬆",
     "reviewsDown": "Item reviews ⬇",
-    "reviewsUp": "Item reviews ⬆"
+    "reviewsUp": "Item reviews ⬆",
+    "recommended": "Recommended",
+    "newest": "Newest items",
+    "oldest": "Oldest items",
+    "availabilityUp": "Availability ⬆",
+    "availabilityDown": "Availability ⬇",
+    "variationNumberUp": "Variation number ⬆",
+    "variationNumberDown": "Variation number ⬇",
+    "lastUpdate": "Last update",
+    "firstUpdate": "First update",
+    "manufacturerAsc": "Manufacturer A-Z",
+    "manufacturerDesc": "Manufacturer Z-A",
+    "topSellerUp": "Top seller ⬆",
+    "topSellerDown": "Top seller ⬇"
   },
   "storefrontError": {
     "offer": {
