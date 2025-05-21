@@ -165,7 +165,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.placeOrderButtons.click();
 
-    cy.wait(['@doAdditionalInformation', '@doPreparePayment']);
+    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
 
     return this;
   }
@@ -215,7 +215,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.fillAddressForm('shipping', fixtureOverride);
 
-    cy.wait(['@doSaveAddress', '@getShippingProvider', '@getPaymentProviders']);
+    cy.wait(['@doSaveAddress', '@getShippingProvider', '@getPaymentProviders'], { timeout: 10000 });
 
     return this;
   }
@@ -266,7 +266,7 @@ export class CheckoutPageObject extends PageObject {
       .as('getExecutePayPalOrder');
 
     cy.getByTestId('pay-creditcard-button').click();
-    cy.wait(['@doPreparePayment', '@doCapturePayPalOrder', '@getExecutePayPalOrder']);
+    cy.wait('@doPreparePayment').wait('@doCapturePayPalOrder').wait('@getExecutePayPalOrder');
     return this;
   }
 
