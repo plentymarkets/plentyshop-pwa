@@ -7,6 +7,7 @@ export type DrawerView =
   | 'DesignView'
   | 'PagesView'
   | 'blocksSettings'
+  | 'FooterView'
   | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
@@ -16,6 +17,8 @@ export type ConfigurationSettings = {
   primaryColor: string;
   secondaryColor: string;
   headerBackgroundColor: string;
+  footerBackgroundColor: string;
+  footerTextColor: string;
   iconColor: string;
   headerLogo: string;
   favicon: string;
@@ -43,6 +46,8 @@ export interface UseSiteConfigurationState {
   primaryColor: string;
   secondaryColor: string;
   headerBackgroundColor: string;
+  footerBackgroundColor: string;
+  footerTextColor: string;
   iconColor: string;
   headerLogo: string;
   favicon: string;
@@ -71,6 +76,7 @@ export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
+export type OpenFooterDrawer = (view: DrawerView) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
@@ -92,6 +98,8 @@ export interface UseSiteConfiguration {
   iconColor: Readonly<Ref<UseSiteConfigurationState['iconColor']>>;
   headerLogo: Readonly<Ref<UseSiteConfigurationState['headerLogo']>>;
   favicon: Readonly<Ref<UseSiteConfigurationState['favicon']>>;
+  footerBackgroundColor: Readonly<Ref<UseSiteConfigurationState['footerBackgroundColor']>>;
+  footerTextColor: Readonly<Ref<UseSiteConfigurationState['footerTextColor']>>;
   ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;
   ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
   useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
@@ -109,6 +117,7 @@ export interface UseSiteConfiguration {
   updateBlockSize: UpdateBlockSize;
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
+  openFooterDrawer: OpenFooterDrawer;
   togglePageModal: TogglePageModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;

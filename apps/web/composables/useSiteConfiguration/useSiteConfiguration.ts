@@ -36,6 +36,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     iconColor: useRuntimeConfig().public.iconColor,
     headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
+    footerBackgroundColor: useRuntimeConfig().public.footerBackgroundColor,
+    footerTextColor: useRuntimeConfig().public.footerTextColor,
     headerLogo: useRuntimeConfig().public.headerLogo,
     favicon: structuredClone(favicon).icon,
     ogTitle: structuredClone(openGraph).title,
@@ -53,6 +55,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      footerBackgroundColor: useRuntimeConfig().public.footerBackgroundColor,
+      footerTextColor: useRuntimeConfig().public.footerTextColor,
       iconColor: useRuntimeConfig().public.iconColor,
       headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
       seoSettings: structuredClone(metaDefaults),
@@ -134,6 +138,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
 
+  const openFooterDrawer = (view: DrawerView) => {
+    state.value.drawerView = 'FooterView';
+    // state.value.drawerView = view;
+    state.value.drawerOpen = true;
+    state.value.placement = view === 'FooterView' ? 'right' : 'left';
+  };
+
   const closeDrawer = () => {
     state.value.drawerOpen = false;
     state.value.drawerView = null;
@@ -154,6 +165,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       state.value.iconColor !== state.value.initialData.iconColor ||
       state.value.headerBackgroundColor !== state.value.initialData.headerBackgroundColor ||
+      state.value.footerBackgroundColor !== state.value.initialData.footerBackgroundColor ||
+      state.value.footerTextColor !== state.value.initialData.footerTextColor ||
       state.value.headerLogo !== state.value.initialData.headerLogo ||
       state.value.favicon !== state.value.initialData.favicon ||
       state.value.ogTitle !== state.value.initialData.ogTitle ||
@@ -234,6 +247,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'iconBackgroundColor',
         value: state.value.headerBackgroundColor,
       },
+      {
+        key: 'footerBackgroundColor',
+        value: state.value.footerBackgroundColor,
+      },
+      {
+        key: 'footerTextColor',
+        value: state.value.footerTextColor,
+      },
     ];
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -250,6 +271,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: state.value.secondaryColor,
       iconColor: state.value.iconColor,
       headerBackgroundColor: state.value.headerBackgroundColor,
+      footerBackgroundColor: state.value.footerBackgroundColor,
+      footerTextColor: state.value.footerTextColor,
       headerLogo: state.value.headerLogo,
       favicon: state.value.favicon,
       ogTitle: state.value.ogTitle,
@@ -282,6 +305,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     openDrawerWithView,
     closeDrawer,
     settingsIsDirty,
+    openFooterDrawer,
     saveSettings,
     togglePageModal,
     setSettingsCategory,
