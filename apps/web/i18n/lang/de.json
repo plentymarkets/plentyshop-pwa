@@ -934,7 +934,20 @@
     "priceDown": "Preis ⬇",
     "priceUp": "Preis ⬆",
     "reviewsDown": "Kundenbewertung ⬇",
-    "reviewsUp": "Kundenbewertung ⬆"
+    "reviewsUp": "Kundenbewertung ⬆",
+    "recommended": "Empfohlen",
+    "newest": "Neueste Artikel",
+    "oldest": "Älteste Artikel",
+    "availabilityUp": "Verfügbarkeit ⬆",
+    "availabilityDown": "Verfügbarkeit ⬇",
+    "variationNumberUp": "Variantennummer ⬆",
+    "variationNumberDown": "Variantennummer ⬇",
+    "lastUpdate": "Letzte Aktualisierung",
+    "firstUpdate": "Erste Aktualisierung",
+    "manufacturerAsc": "Hersteller A-Z",
+    "manufacturerDesc": "Hersteller Z-A",
+    "topSellerUp": "Meistverkaufte Artikel ⬆",
+    "topSellerDown": "Meistverkaufte Artikel ⬇"
   },
   "storefrontError": {
     "offer": {
