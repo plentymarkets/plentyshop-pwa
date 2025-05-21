@@ -165,7 +165,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.placeOrderButtons.click();
 
-    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
+    cy.wait(['@doAdditionalInformation', '@doPreparePayment']);
 
     return this;
   }
@@ -266,7 +266,7 @@ export class CheckoutPageObject extends PageObject {
       .as('getExecutePayPalOrder');
 
     cy.getByTestId('pay-creditcard-button').click();
-    cy.wait('@doPreparePayment').wait('@doCapturePayPalOrder').wait('@getExecutePayPalOrder');
+    cy.wait(['@doPreparePayment', '@doCapturePayPalOrder', '@getExecutePayPalOrder']);
     return this;
   }
 
