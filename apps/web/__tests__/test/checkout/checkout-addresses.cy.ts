@@ -26,7 +26,7 @@ describe('Checkout Addresses', () => {
       .fillContactInformationForm()
       .fillShippingAddressForm({
         country: '1',
-        zipCode: '12345'
+        zipCode: '12345',
       })
       .shouldShowShippingAsBillingText();
   });
@@ -42,7 +42,7 @@ describe('Checkout Addresses', () => {
       .fillContactInformationForm()
       .fillShippingAddressForm({
         country: '1',
-        zipCode: '12345'
+        zipCode: '12345',
       })
       .shouldNotShowShippingAddressSelection()
       .shouldNotShowBillingAddressSelection();
