@@ -38,6 +38,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
     footerBackgroundColor: useRuntimeConfig().public.footerBackgroundColor,
     footerTextColor: useRuntimeConfig().public.footerTextColor,
+    footerNoteBackgroundColor: useRuntimeConfig().public.footerNoteBackgroundColor,
+    footerNoteTextColor: useRuntimeConfig().public.footerNoteTextColor,
     headerLogo: useRuntimeConfig().public.headerLogo,
     favicon: structuredClone(favicon).icon,
     ogTitle: structuredClone(openGraph).title,
@@ -57,6 +59,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: useRuntimeConfig().public.secondaryColor,
       footerBackgroundColor: useRuntimeConfig().public.footerBackgroundColor,
       footerTextColor: useRuntimeConfig().public.footerTextColor,
+      footerNoteBackgroundColor: useRuntimeConfig().public.footerNoteBackgroundColor,
+      footerNoteTextColor: useRuntimeConfig().public.footerNoteTextColor,
       iconColor: useRuntimeConfig().public.iconColor,
       headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
       seoSettings: structuredClone(metaDefaults),
@@ -166,6 +170,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.iconColor !== state.value.initialData.iconColor ||
       state.value.headerBackgroundColor !== state.value.initialData.headerBackgroundColor ||
       state.value.footerBackgroundColor !== state.value.initialData.footerBackgroundColor ||
+      state.value.footerNoteBackgroundColor !== state.value.initialData.footerNoteBackgroundColor ||
+      state.value.footerNoteTextColor !== state.value.initialData.footerNoteTextColor ||
       state.value.footerTextColor !== state.value.initialData.footerTextColor ||
       state.value.headerLogo !== state.value.initialData.headerLogo ||
       state.value.favicon !== state.value.initialData.favicon ||
@@ -255,6 +261,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'footerTextColor',
         value: state.value.footerTextColor,
       },
+      {
+        key: 'footerNoteBackgroundColor',
+        value: state.value.footerNoteBackgroundColor,
+      },
+      {
+        key: 'footerNoteTextColor',
+        value: state.value.footerNoteTextColor,
+      },
     ];
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -272,6 +286,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       iconColor: state.value.iconColor,
       headerBackgroundColor: state.value.headerBackgroundColor,
       footerBackgroundColor: state.value.footerBackgroundColor,
+      footerNoteBackgroundColor: state.value.footerNoteBackgroundColor,
+      footerNoteTextColor: state.value.footerNoteTextColor,
       footerTextColor: state.value.footerTextColor,
       headerLogo: state.value.headerLogo,
       favicon: state.value.favicon,

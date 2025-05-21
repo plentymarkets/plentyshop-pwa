@@ -1,13 +1,13 @@
 <template>
   <footer
-    class="pt-10 bg-secondary-100 md:mb-0 relative block-wrapper"
+    class="pt-10 md:mb-0 relative block-wrapper"
     data-testid="footer"
     :class="[
       simplifiedFooter ? 'mb-0' : 'mb-[58px]',
       { 'outline outline-4 outline-[#538AEA]': showOutline },
       { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': showFooterHoverOutline },
     ]"
-    :style="{ cursor: isPreview && disableActions ? 'pointer' : '' }"
+    :style="{ cursor: isPreview && disableActions ? 'pointer' : '', backgroundColor: footerBackgroundColor }"
     :tabindex="isPreview && disableActions ? 0 : undefined"
     @click="handleFooterClick"
   >
@@ -28,7 +28,7 @@
       data-testid="section-top"
     >
       <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
-        <div class="ml-4 text-lg font-medium leading-7 text-neutral-900">
+        <div :style="{ color: footerTextColor }" class="ml-4 text-lg font-medium leading-7">
           {{ t(`categories.${key}.label`) }}
         </div>
         <ul>
@@ -39,7 +39,8 @@
           >
             <SfLink
               :tag="NuxtLink"
-              class="router-link-active router-link-exact-active no-underline text-neutral-600 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
+              :style="{ color: footerTextColor }"
+              class="router-link-active router-link-exact-active no-underline hover:underline active:underline"
               variant="secondary"
               :to="localePath(link)"
             >
@@ -62,11 +63,12 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfListItem } from '@storefront-ui/vue';
+import { SfLink, SfListItem, SfIconBase } from '@storefront-ui/vue';
 import { categories } from '~/mocks';
 import type { FooterProps } from './types';
 import { editPath } from 'assets/icons/paths/edit';
 const { openFooterDrawer } = useSiteConfiguration();
+const { footerBackgroundColor, footerTextColor } = useSiteConfiguration();
 
 const triggerEdit = () => {
   openFooterDrawer('FooterView');
