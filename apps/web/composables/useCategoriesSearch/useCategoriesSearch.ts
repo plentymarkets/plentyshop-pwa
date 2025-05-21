@@ -19,6 +19,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
         node.children = node.children || [];
+        node.hasChildren = true;
         node.children.unshift(newPage);
         return true;
       }
