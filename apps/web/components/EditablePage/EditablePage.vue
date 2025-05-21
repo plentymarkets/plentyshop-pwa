@@ -82,14 +82,9 @@ onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
-const config = useRuntimeConfig();
-const showConfigurationDrawer = config.public.showConfigurationDrawer;
-const isPreview = ref(false);
+const isPreview = useState<boolean>('isPreview');
 
 onMounted(async () => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-
   if (isPreview.value) {
     await import('./draggable.css');
   }
