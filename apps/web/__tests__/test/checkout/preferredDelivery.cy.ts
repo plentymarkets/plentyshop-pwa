@@ -18,8 +18,8 @@ beforeEach(() => {
 
 describe('Preferred Delivery', () => {
   it('should not render when shipping country is not Germany', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
+
     cart.openCart();
     checkout
       .goToCheckout()
@@ -30,8 +30,8 @@ describe('Preferred Delivery', () => {
   });
 
   it('should render when shipping country is Germany', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
+
     cart.openCart();
     checkout
       .goToCheckout()

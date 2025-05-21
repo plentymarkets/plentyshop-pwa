@@ -32,8 +32,7 @@ describe('Smoke: Checkout Page', () => {
   });
 
   it('[smoke] Display "no shipping methods available" when shipping country is Denmark', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
 
     cart.openCart();
     checkout

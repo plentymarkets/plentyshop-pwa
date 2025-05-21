@@ -16,8 +16,7 @@ beforeEach(() => {
 
 describe('Checkout Addresses', () => {
   it('should display same as shipping text if a guest creates his shipping address with billing same as shipping checked', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
 
     cart.openCart();
     checkout
@@ -32,8 +31,8 @@ describe('Checkout Addresses', () => {
   });
 
   it('should not display shipping and billing address selection if a guest user creates his address', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
+
     cart.openCart();
 
     checkout
@@ -49,8 +48,7 @@ describe('Checkout Addresses', () => {
   });
 
   it('should be able to edit the billing address as a guest user if selected same as shipping', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
 
     cart.openCart();
     checkout

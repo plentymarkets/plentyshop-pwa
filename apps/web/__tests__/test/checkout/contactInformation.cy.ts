@@ -16,8 +16,7 @@ beforeEach(() => {
 
 describe('Contact Information', () => {
   it('should scroll to contact information if email is invalid and buy button is clicked', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
     cart.openCart();
 
     checkout.goToCheckout().goToGuestCheckout();
@@ -30,8 +29,8 @@ describe('Contact Information', () => {
   });
 
   it('should scroll to contact information if email is invalid and shipping address save is clicked', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
+
     cart.openCart();
 
     checkout.goToCheckout().goToGuestCheckout();
