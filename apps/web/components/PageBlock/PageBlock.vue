@@ -120,11 +120,12 @@ const contentProps = computed(() => {
   return props.root ? { ...props.block } : { ...props.block, ...attrs };
 });
 
-const isPreview = useState<boolean>('isPreview');
+const config = useRuntimeConfig().public;
+const isPreview = config.isPreview;
 
 const showOutline = computed(() => {
   return (
-    isPreview.value &&
+    isPreview &&
     props.disableActions &&
     props.isClicked &&
     props.isTablet &&

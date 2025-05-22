@@ -49,8 +49,8 @@ const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
-const isPreview = useState<boolean>('isPreview');
 const config = useRuntimeConfig().public;
+const isPreview = config.isPreview;
 const { setStaticPageMeta } = useCanonical();
 const { setInitialDataSSR } = useInitialSetup();
 

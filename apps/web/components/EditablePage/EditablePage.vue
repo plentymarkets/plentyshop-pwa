@@ -82,10 +82,11 @@ onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
-const isPreview = useState<boolean>('isPreview');
+const config = useRuntimeConfig().public;
+const isPreview = config.isPreview;
 
 onMounted(async () => {
-  if (isPreview.value) {
+  if (isPreview) {
     await import('./draggable.css');
   }
 });

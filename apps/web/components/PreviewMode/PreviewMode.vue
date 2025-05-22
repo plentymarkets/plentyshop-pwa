@@ -65,8 +65,8 @@ const { save: saveBlocksAndSiteSettings } = useToolbar();
 const { save: saveCategorySettings, hasChanges } = useCategorySettingsCollection();
 
 const bannerIsHidden = ref(true);
-const isPreview = useState<boolean>('isPreview');
 const config = useRuntimeConfig().public;
+const isPreview = config.isPreview;
 
 const hasUnsavedChanges = () => {
   return isEditingEnabled.value || settingsIsDirty.value || hasChanges.value;
