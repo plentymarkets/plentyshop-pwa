@@ -31,7 +31,6 @@
         <SfIconAdd class="cursor-pointer" />
       </button>
       <UiBlockActions
-        v-if="disableActions && blockHasData && blockHasData(block) && isPreview && root && !isDragging"
         :class="[
           'opacity-0 block-actions',
           {
