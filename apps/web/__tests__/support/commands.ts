@@ -65,8 +65,8 @@ Cypress.Commands.add('addToCart', (id = 1072, quantity: number = 1) => {
 });
 
 Cypress.Commands.add('visitSmoke', () => {
-  cy.visitAndHydrate('/smoke-e2e')
-})
+  cy.visitAndHydrate('/smoke-e2e');
+});
 
 Cypress.Commands.add('visitAndHydrate', (url, options) => {
   cy.clearServiceWorkers();
