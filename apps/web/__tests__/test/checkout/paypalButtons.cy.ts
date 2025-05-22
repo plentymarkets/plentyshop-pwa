@@ -1,19 +1,12 @@
-import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { paths } from '../../../utils/paths';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 
 const checkout = new CheckoutPageObject();
-const cart = new CartPageObject();
-const homePage = new HomePageObject();
-const productListPage = new ProductListPageObject();
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
 
 beforeEach(() => {
-  cy.clearCookies();
-  cy.visitAndHydrate(paths.home);
+  cy.clearCookies().visitSmoke();
 });
 
 describe('Feature: PayPal button rendering', () => {
@@ -26,10 +19,8 @@ describe('Feature: PayPal button rendering', () => {
 
     cy.wait('@doLogin').visitAndHydrate(paths.home);
 
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-    checkout.goToCheckout().checkPayPal();
+    cy.addToCart();
+    checkout.goToCheckoutPath().checkPayPal();
 
     cy.reload();
     cy.wait('@getPaymentProviders');
