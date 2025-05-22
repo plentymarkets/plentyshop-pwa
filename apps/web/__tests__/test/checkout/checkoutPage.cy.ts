@@ -2,6 +2,7 @@ import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
+import { paths } from '../../../utils/paths';
 
 const checkout = new CheckoutPageObject();
 const cart = new CartPageObject();
@@ -15,6 +16,7 @@ beforeEach(() => {
 describe('Smoke: Checkout Page', () => {
   it('[smoke] full checkout flow and place order', () => {
     // dont replace with cy.addToCart(); this should check the complete checkout flow
+    cy.visitAndHydrate(paths.home);
     homePage.goToCategory();
     productListPage.addToCart();
 
