@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
+      watch: {
+        usePolling: process.env.NODE_ENV === 'development',
+      }
     },
     optimizeDeps: {
       include: ['dotenv', 'validator', 'js-sha256'],

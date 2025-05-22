@@ -1,16 +1,16 @@
 <template>
-  <component :is="Toolbar" v-if="isPreview" :style="`font-family: ${config.font}`" />
+  <component :is="Toolbar" v-if="$isPreview" :style="`font-family: ${config.font}`" />
   <div
     class="w-100 relative md:flex"
     :class="{
       'lg:flex-row-reverse': placement !== 'left',
-      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen && isPreview,
-      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen && isPreview,
+      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen && $isPreview,
+      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen && $isPreview,
     }"
   >
     <component
       :is="SettingsToolbar"
-      v-if="isPreview && disableActions"
+      v-if="$isPreview && disableActions"
       :class="{
         'order-first': placement === 'left',
         'order-last': placement === 'right',
@@ -28,7 +28,7 @@
 
     <div
       class="bg-white w-full relative"
-      :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': isPreview && !drawerOpen && disableActions }"
+      :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': $isPreview && !drawerOpen && disableActions }"
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
@@ -39,18 +39,17 @@
       </NuxtLayout>
     </div>
   </div>
-  <component :is="PageModal" v-if="isPreview" />
-  <component :is="UnlinkCategoryModal" v-if="isPreview" />
+  <component :is="PageModal" v-if="$isPreview" />
+  <component :is="UnlinkCategoryModal" v-if="$isPreview" />
 </template>
 
 <script setup lang="ts">
-const { $pwa } = useNuxtApp();
+const { $pwa, $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const config = useRuntimeConfig().public;
-const isPreview = config.isPreview;
 const { setStaticPageMeta } = useCanonical();
 const { setInitialDataSSR } = useInitialSetup();
 
