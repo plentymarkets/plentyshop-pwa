@@ -246,8 +246,8 @@ export default defineNuxtConfig({
       if (process.env.E2E_TEST) {
         pages.push({
           name: 'e2e',
-          path: '/e2e',
-          file: '~/e2e/e2e.vue'
+          path: '/smoke-e2e',
+          file: '~/smoke-e2e/smoke-e2e.vue'
         })
       }
     }

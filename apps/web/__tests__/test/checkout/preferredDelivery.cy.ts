@@ -6,7 +6,7 @@ const preferredDeliveryObject = new PreferredDeliveryObject();
 
 beforeEach(() => {
   cy.clearCookies();
-  cy.visitAndHydrate('/e2e');
+  cy.visitAndHydrate('/smoke-e2e');
 });
 
 describe('Preferred Delivery', () => {
