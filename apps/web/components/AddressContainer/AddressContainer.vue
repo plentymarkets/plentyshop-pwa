@@ -83,10 +83,9 @@ const { loading: fetchingAddress } = useFetchAddress(type);
 const initialFetchingAddress = ref(true);
 
 onMounted(() => {
-  const stop = watch(fetchingAddress, (val) => {
-    if (val === false) {
+  watchEffect(() => {
+    if (fetchingAddress.value === false) {
       initialFetchingAddress.value = false;
-      stop();
     }
   });
 });
