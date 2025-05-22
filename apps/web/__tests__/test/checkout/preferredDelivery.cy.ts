@@ -12,10 +12,7 @@ beforeEach(() => {
 describe('Preferred Delivery', () => {
   it('should not render when shipping country is not Germany', () => {
     cy.addToCart();
-    checkout
-      .goToCheckoutPath()
-      .fillContactInformationForm()
-      .fillShippingAddressForm({ country: '7', zipCode: '1234' });
+    checkout.goToCheckoutPath().fillContactInformationForm().fillShippingAddressForm({ country: '7', zipCode: '1234' });
     preferredDeliveryObject.shouldNotShowPreferredDelivery();
   });
 

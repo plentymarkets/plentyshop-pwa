@@ -16,7 +16,7 @@ beforeEach(() => {
 describe('Contact Information', () => {
   it('should scroll to contact information if email is invalid and buy button is clicked', () => {
     cy.addToCart();
-    checkout.goToCheckoutPath()
+    checkout.goToCheckoutPath();
 
     checkout.contactInformationForm.type('invalid-email');
 
@@ -27,7 +27,7 @@ describe('Contact Information', () => {
 
   it('should scroll to contact information if email is invalid and shipping address save is clicked', () => {
     cy.addToCart();
-    checkout.goToCheckoutPath()
+    checkout.goToCheckoutPath();
 
     checkout.contactInformationForm.type('invalid-email');
     checkout.fillAddressForm('shipping');
@@ -36,7 +36,7 @@ describe('Contact Information', () => {
 
   it('should scroll to contact information if email is invalid and billing address save is clicked', () => {
     cy.addToCart();
-    checkout.goToCheckoutPath()
+    checkout.goToCheckoutPath();
 
     checkout.contactInformationForm.type('invalid-email');
     checkout.fillAddressForm('billing');
@@ -45,14 +45,14 @@ describe('Contact Information', () => {
 
   it('should validate email input', () => {
     cy.addToCart();
-    checkout.goToCheckoutPath()
+    checkout.goToCheckoutPath();
     checkout.contactInformationForm.type('invalid-email').blur();
     cy.get('#customerEmailError').should('exist');
   });
 
   it('should validate email input with minus "-"', () => {
     cy.addToCart();
-    checkout.goToCheckoutPath()
+    checkout.goToCheckoutPath();
 
     checkout.contactInformationForm.type('valid-email@plentyone.com').blur();
     cy.get('#customerEmailError').should('not.exist');
@@ -60,7 +60,7 @@ describe('Contact Information', () => {
 
   it('should validate email input with dot "."', () => {
     cy.addToCart();
-    checkout.goToCheckoutPath()
+    checkout.goToCheckoutPath();
 
     checkout.contactInformationForm.type('valid.email@plentyone.com').blur();
     cy.get('#customerEmailError').should('not.exist');
