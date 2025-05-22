@@ -1,3 +1,3 @@
 <template>
-    <div>e2e testing</div>
+  <div>e2e testing</div>
 </template>

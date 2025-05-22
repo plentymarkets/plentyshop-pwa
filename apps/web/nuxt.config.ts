@@ -242,14 +242,14 @@ export default defineNuxtConfig({
     registerWebManifestInRouteRules: true,
   },
   hooks: {
-    'pages:extend' (pages) {
+    'pages:extend'(pages) {
       if (process.env.E2E_TEST) {
         pages.push({
           name: 'e2e',
           path: '/smoke-e2e',
-          file: '~/e2e/smoke-e2e.vue'
-        })
+          file: '~/e2e/smoke-e2e.vue',
+        });
       }
-    }
-  }
+    },
+  },
 });
