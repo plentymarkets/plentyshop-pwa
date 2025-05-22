@@ -16,10 +16,8 @@ beforeEach(() => {
 
 describe('Contact Information', () => {
   it('should scroll to contact information if email is invalid and buy button is clicked', () => {
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
-    cart.openCart();
-
-    checkout.goToCheckout().goToGuestCheckout();
+    cy.addToCart();
+    checkout.goToCheckoutPath()
 
     checkout.contactInformationForm.type('invalid-email');
 
@@ -29,11 +27,8 @@ describe('Contact Information', () => {
   });
 
   it('should scroll to contact information if email is invalid and shipping address save is clicked', () => {
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
-
-    cart.openCart();
-
-    checkout.goToCheckout().goToGuestCheckout();
+    cy.addToCart();
+    checkout.goToCheckoutPath()
 
     checkout.contactInformationForm.type('invalid-email');
     checkout.fillAddressForm('shipping');
@@ -41,11 +36,8 @@ describe('Contact Information', () => {
   });
 
   it('should scroll to contact information if email is invalid and billing address save is clicked', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().goToGuestCheckout();
+    cy.addToCart();
+    checkout.goToCheckoutPath()
 
     checkout.contactInformationForm.type('invalid-email');
     checkout.fillAddressForm('billing');
@@ -53,33 +45,23 @@ describe('Contact Information', () => {
   });
 
   it('should validate email input', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().goToGuestCheckout();
-
+    cy.addToCart();
+    checkout.goToCheckoutPath()
     checkout.contactInformationForm.type('invalid-email').blur();
     cy.get('#customerEmailError').should('exist');
   });
 
   it('should validate email input with minus "-"', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().goToGuestCheckout();
+    cy.addToCart();
+    checkout.goToCheckoutPath()
 
     checkout.contactInformationForm.type('valid-email@plentyone.com').blur();
     cy.get('#customerEmailError').should('not.exist');
   });
 
   it('should validate email input with dot "."', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-    cart.openCart();
-
-    checkout.goToCheckout().goToGuestCheckout();
+    cy.addToCart();
+    checkout.goToCheckoutPath()
 
     checkout.contactInformationForm.type('valid.email@plentyone.com').blur();
     cy.get('#customerEmailError').should('not.exist');

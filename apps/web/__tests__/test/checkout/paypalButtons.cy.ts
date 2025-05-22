@@ -26,9 +26,8 @@ describe('Feature: PayPal button rendering', () => {
 
     cy.wait('@doLogin').visitAndHydrate(paths.home);
 
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
-    cart.openCart();
-    checkout.goToCheckout().checkPayPal();
+    cy.addToCart();
+    checkout.goToCheckoutPath().checkPayPal();
 
     cy.reload();
     cy.wait('@getPaymentProviders');

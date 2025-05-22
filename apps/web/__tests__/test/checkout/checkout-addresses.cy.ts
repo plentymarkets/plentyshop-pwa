@@ -1,13 +1,7 @@
-import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { paths } from '../../../utils/paths';
 
 const checkout = new CheckoutPageObject();
-const cart = new CartPageObject();
-const homePage = new HomePageObject();
-const productListPage = new ProductListPageObject();
 
 beforeEach(() => {
   cy.clearCookies();
@@ -16,12 +10,10 @@ beforeEach(() => {
 
 describe('Checkout Addresses', () => {
   it('should display same as shipping text if a guest creates his shipping address with billing same as shipping checked', () => {
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
+    cy.addToCart();
 
-    cart.openCart();
     checkout
-      .goToCheckout()
-      .goToGuestCheckout()
+      .goToCheckoutPath()
       .fillContactInformationForm()
       .fillShippingAddressForm({
         country: '1',
@@ -31,13 +23,10 @@ describe('Checkout Addresses', () => {
   });
 
   it('should not display shipping and billing address selection if a guest user creates his address', () => {
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
-
-    cart.openCart();
+    cy.addToCart();
 
     checkout
-      .goToCheckout()
-      .goToGuestCheckout()
+      .goToCheckoutPath()
       .fillContactInformationForm()
       .fillShippingAddressForm({
         country: '1',
@@ -48,12 +37,9 @@ describe('Checkout Addresses', () => {
   });
 
   it('should be able to edit the billing address as a guest user if selected same as shipping', () => {
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
-
-    cart.openCart();
+    cy.addToCart();
     checkout
-      .goToCheckout()
-      .goToGuestCheckout()
+      .goToCheckoutPath()
       .fillContactInformationForm()
       .fillShippingAddressForm()
       .shouldShowShippingAsBillingText()

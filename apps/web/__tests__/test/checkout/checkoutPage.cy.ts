@@ -15,7 +15,8 @@ beforeEach(() => {
 });
 
 describe('Smoke: Checkout Page', () => {
-  it('[smoke] Display checkout and place order', () => {
+  it('[smoke] full checkout flow and place order', () => {
+    // dont replace with cy.addToCart(); this should check the complete checkout flow
     homePage.goToCategory();
     productListPage.addToCart();
 
@@ -32,12 +33,9 @@ describe('Smoke: Checkout Page', () => {
   });
 
   it('[smoke] Display "no shipping methods available" when shipping country is Denmark', () => {
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId":1072,"quantity":1});
-
-    cart.openCart();
+    cy.addToCart();
     checkout
-      .goToCheckout()
-      .goToGuestCheckout()
+      .goToCheckoutPath()
       .fillContactInformationForm()
       .shouldShowShippingMethods()
       .fillShippingAddressForm({

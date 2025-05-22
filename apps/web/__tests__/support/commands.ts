@@ -14,6 +14,7 @@ declare global {
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
       isScrolledTo(): Cypress.Chainable;
+      addToCart(id?: number, quantity?: number): Cypress.Chainable
     }
   }
 }
@@ -56,6 +57,10 @@ Cypress.Commands.add('clearServiceWorkers', () => {
     );
     return cy.wrap(registrationPromise);
   }
+});
+
+Cypress.Commands.add('addToCart', (id = 1072, quantity: number = 1) => {
+  cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', {"productId": id,"quantity": quantity});
 });
 
 Cypress.Commands.add('visitAndHydrate', (url, options) => {
