@@ -1,7 +1,7 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div
-      v-if="addressLoading || formIsLoading || initialFetchingAddress"
+      v-if="billingSkeleton || shippingSkeleton || formIsLoading || fetchingAddress"
       class="flex flex-col sm:flex-row sm:items-center justify-between"
     >
       <div class="relative w-full">
@@ -47,7 +47,7 @@
             <AddressFormShipping v-if="editing" :disabled="disabled" :address="addressToEdit" />
             <AddressDisplay v-else :address="checkoutAddress" />
           </template>
-          <div v-else class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
+          <div v-else-if="!hasCheckoutAddress && !shippingSkeleton" class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
         </template>
 
         <template v-if="isBilling">
@@ -56,7 +56,7 @@
             <AddressFormBilling v-if="editing" :disabled="disabled" :address="addressToEdit" />
             <AddressDisplay v-else :address="checkoutAddress" />
           </template>
-          <div v-if="showDynamicAddressText" :data-testid="'address-info-text-' + type" class="mt-2">
+          <div v-if="showDynamicAddressText && !billingSkeleton" :data-testid="'address-info-text-' + type" class="mt-2">
             {{ dynamicAddressText }}
           </div>
         </template>
@@ -75,20 +75,12 @@ const { disabled = false, type } = defineProps<AddressContainerProps>();
 const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
-const { loading: addressLoading, checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
+const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized, isGuest } = useCustomer();
 const { loading: fetchingAddress } = useFetchAddress(type);
-const initialFetchingAddress = ref(true);
-
-onMounted(() => {
-  watchEffect(() => {
-    if (fetchingAddress.value === false) {
-      initialFetchingAddress.value = false;
-    }
-  });
-});
+const { billingSkeleton, shippingSkeleton } = useCheckout();
 
 const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
 
