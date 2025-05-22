@@ -1,19 +1,12 @@
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { paths } from '../../../utils/paths';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { CartPageObject } from '../../support/pageObjects/CartPageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { PreferredDeliveryObject } from '../../support/pageObjects/PreferredDeliveryObject';
 
 const checkout = new CheckoutPageObject();
-const cart = new CartPageObject();
-const homePage = new HomePageObject();
-const productListPage = new ProductListPageObject();
 const preferredDeliveryObject = new PreferredDeliveryObject();
 
 beforeEach(() => {
   cy.clearCookies();
-  cy.visitAndHydrate(paths.home);
+  cy.visitAndHydrate('/e2e');
 });
 
 describe('Preferred Delivery', () => {

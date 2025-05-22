@@ -1,11 +1,10 @@
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { paths } from '../../../utils/paths';
 
 const checkout = new CheckoutPageObject();
 
 beforeEach(() => {
   cy.clearCookies();
-  cy.visitAndHydrate(paths.home);
+  cy.visitAndHydrate('/e2e');
 });
 
 describe('Checkout Addresses', () => {
