@@ -10,7 +10,7 @@ const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
 beforeEach(() => {
-  cy.clearCookies().visitSmoke();
+  cy.clearCookies();
 });
 
 describe('Smoke: Checkout Page', () => {
@@ -19,7 +19,6 @@ describe('Smoke: Checkout Page', () => {
     cy.visitAndHydrate(paths.home);
     homePage.goToCategory();
     productListPage.addToCart();
-
     cart.openCart();
     checkout
       .goToCheckout()
@@ -33,7 +32,7 @@ describe('Smoke: Checkout Page', () => {
   });
 
   it('[smoke] Display "no shipping methods available" when shipping country is Denmark', () => {
-    cy.addToCart();
+    cy.visitSmoke().addToCart();
     checkout
       .goToCheckoutPath()
       .fillContactInformationForm()
