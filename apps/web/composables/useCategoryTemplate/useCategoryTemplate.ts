@@ -13,6 +13,8 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
+const { send } = useNotification();
+
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
     data: [],
@@ -26,7 +28,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
 
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
+
+    if (error.value) {
+      send({ type: 'negative', message: error?.value?.message });
+    }
 
     state.value.loading = false;
 
