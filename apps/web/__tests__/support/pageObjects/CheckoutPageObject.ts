@@ -317,6 +317,7 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillShippingForm(fixture: any) {
+    cy.wait(1000);
     this.shippingAddressForm.within(() => {
       this.firstNameInput.type(fixture.firstName);
       this.lastNameInput.type(fixture.lastName);
@@ -335,6 +336,7 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillBillingForm(fixture: any) {
+    cy.wait(1000);
     this.shippingAddressForm
       .within(() => {
         this.firstNameInput.type(fixture.firstName);

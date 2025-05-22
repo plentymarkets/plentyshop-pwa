@@ -57,7 +57,10 @@ describe('Checkout Addresses', () => {
       .goToCheckout()
       .goToGuestCheckout()
       .fillContactInformationForm()
-      .fillShippingAddressForm()
+      .fillShippingAddressForm({
+          country: '1',
+          zipCode: '12345',
+      })
       .shouldShowShippingAsBillingText()
       .editBillingAddress();
     checkout.firstNameInput.clear();
