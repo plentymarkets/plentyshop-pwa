@@ -6,8 +6,7 @@ const checkout = new CheckoutPageObject();
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
 
 beforeEach(() => {
-  cy.clearCookies();
-  cy.visitAndHydrate('/smoke-e2e');
+  cy.clearCookies().visitSmoke();
 });
 
 describe('Feature: PayPal button rendering', () => {

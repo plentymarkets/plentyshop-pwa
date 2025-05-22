@@ -3,8 +3,7 @@ import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject
 const checkout = new CheckoutPageObject();
 
 beforeEach(() => {
-  cy.clearCookies();
-  cy.visitAndHydrate('/smoke-e2e');
+  cy.clearCookies().visitSmoke();
 });
 
 describe('Checkout Addresses', () => {

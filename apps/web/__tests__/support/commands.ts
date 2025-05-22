@@ -11,6 +11,7 @@ declare global {
       waitUntilElementInDOM(id: () => Cypress.Chainable): Chainable;
       visit(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       visitAndHydrate(options: Partial<Cypress.VisitOptions> & { url: string }): Cypress.Chainable | null;
+      visitSmoke(): Chainable;
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
       isScrolledTo(): Cypress.Chainable;
@@ -62,6 +63,10 @@ Cypress.Commands.add('clearServiceWorkers', () => {
 Cypress.Commands.add('addToCart', (id = 1072, quantity: number = 1) => {
   cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', { productId: id, quantity: quantity });
 });
+
+Cypress.Commands.add('visitSmoke', () => {
+  cy.visitAndHydrate('/smoke-e2e')
+})
 
 Cypress.Commands.add('visitAndHydrate', (url, options) => {
   cy.clearServiceWorkers();
