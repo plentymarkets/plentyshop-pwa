@@ -65,7 +65,15 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
-const { cart, cartIsEmpty, cartLoading, persistShippingAddress, persistBillingAddress, setBillingSkeleton, setShippingSkeleton } = useCheckout();
+const {
+  cart,
+  cartIsEmpty,
+  cartLoading,
+  persistShippingAddress,
+  persistBillingAddress,
+  setBillingSkeleton,
+  setShippingSkeleton,
+} = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
 const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =

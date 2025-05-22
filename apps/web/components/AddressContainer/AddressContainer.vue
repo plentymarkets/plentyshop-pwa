@@ -47,7 +47,9 @@
             <AddressFormShipping v-if="editing" :disabled="disabled" :address="addressToEdit" />
             <AddressDisplay v-else :address="checkoutAddress" />
           </template>
-          <div v-else-if="!hasCheckoutAddress && !shippingSkeleton" class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
+          <div v-else-if="!hasCheckoutAddress && !shippingSkeleton" class="mt-2">
+            {{ t('account.accountSettings.noAddresses') }}
+          </div>
         </template>
 
         <template v-if="isBilling">
@@ -56,7 +58,11 @@
             <AddressFormBilling v-if="editing" :disabled="disabled" :address="addressToEdit" />
             <AddressDisplay v-else :address="checkoutAddress" />
           </template>
-          <div v-if="showDynamicAddressText && !billingSkeleton" :data-testid="'address-info-text-' + type" class="mt-2">
+          <div
+            v-if="showDynamicAddressText && !billingSkeleton"
+            :data-testid="'address-info-text-' + type"
+            class="mt-2"
+          >
             {{ dynamicAddressText }}
           </div>
         </template>

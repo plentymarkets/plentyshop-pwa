@@ -14,7 +14,7 @@ export const useCheckout = (cacheKey = '') => {
     combineShippingAndBilling: true,
     init: false,
     shippingSkeleton: true,
-    billingSkeleton: true
+    billingSkeleton: true,
   }));
 
   const { data: cart, cartIsEmpty, getCart, clearCartItems, loading: cartLoading } = useCart();
@@ -79,11 +79,11 @@ export const useCheckout = (cacheKey = '') => {
 
   const setShippingSkeleton = (loading: boolean) => {
     state.value.shippingSkeleton = loading;
-  }
+  };
 
   const setBillingSkeleton = (loading: boolean) => {
     state.value.billingSkeleton = loading;
-  }
+  };
 
   const persistShippingAddress = async () => {
     setShippingInitialState();
@@ -132,6 +132,6 @@ export const useCheckout = (cacheKey = '') => {
     validateTerms,
     scrollToShippingAddress,
     setShippingSkeleton,
-    setBillingSkeleton
+    setBillingSkeleton,
   };
 };
