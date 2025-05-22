@@ -78,17 +78,17 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     let pattern = country?.zipCodeRegex ?? null;
 
     try {
-      if (!pattern || typeof pattern !== 'string') return null;
+      if (typeof pattern !== 'string') return null;
+      let flags = '';
 
-      if (country?.isoCode2 === 'GB') {
-        if (pattern.startsWith('/')) pattern = pattern.slice(1);
-        if (pattern.endsWith('/i')) pattern = pattern.slice(0, -2);
-        else if (pattern.endsWith('/')) pattern = pattern.slice(0, -1);
-        return new RegExp(pattern, 'i');
+      if (pattern.startsWith('/') && pattern.endsWith('/i')) {
+        pattern = pattern.slice(1, -2);
+        flags = 'i';
+      } else if (pattern.startsWith('/') && pattern.endsWith('/')) {
+        pattern = pattern.slice(1, -1);
       }
 
-      if (pattern.startsWith('/') && pattern.endsWith('/')) pattern = pattern.slice(1, -1);
-      return new RegExp(pattern);
+      return new RegExp(pattern, flags);
     } catch (error: unknown) {
       useHandleError(error as ApiError);
       return null;
