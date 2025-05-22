@@ -56,8 +56,8 @@ jobs:
 
       - name: Scan for malicious code
         run: >
-          semgrep scan 
-          --error 
+          semgrep scan
+          --error
           --severity ERROR
           .
   fitness-code-quality:
@@ -82,7 +82,7 @@ jobs:
       - name: Unit tests
         run: npm run test:coverage
       - name: 'Report Coverage'
-        if: always() 
+        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: './apps/web/'
@@ -241,6 +241,7 @@ jobs:
           api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
           api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
           configuration: ${{ vars.CONFIG }}
+          LANGUAGELIST: 'en,de'
 
       - name: Download build
         uses: actions/download-artifact@v4
