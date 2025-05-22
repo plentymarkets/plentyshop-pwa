@@ -14,6 +14,12 @@ describe('Smoke: PayPal credit card order', () => {
     myAccount.successLogin();
     cy.wait('@doLogin');
     cy.addToCart();
-    checkout.goToCheckoutPath().acceptTerms().checkCreditCard().placeCreditCartOrder().fillCreditCardForm().payCreditCard();
+    checkout
+      .goToCheckoutPath()
+      .acceptTerms()
+      .checkCreditCard()
+      .placeCreditCartOrder()
+      .fillCreditCardForm()
+      .payCreditCard();
   });
 });
