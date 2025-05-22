@@ -21,7 +21,11 @@ describe('Preferred Delivery', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
-    checkout.goToCheckout().goToGuestCheckout().fillContactInformationForm().fillShippingAddressForm({ country: '7' });
+    checkout
+      .goToCheckout()
+      .goToGuestCheckout()
+      .fillContactInformationForm()
+      .fillShippingAddressForm({ country: '7', zipCode: '1234' });
     preferredDeliveryObject.shouldNotShowPreferredDelivery();
   });
 
@@ -29,7 +33,11 @@ describe('Preferred Delivery', () => {
     homePage.goToCategory();
     productListPage.addToCart();
     cart.openCart();
-    checkout.goToCheckout().goToGuestCheckout().fillContactInformationForm().fillShippingAddressForm({ country: '1' });
+    checkout
+      .goToCheckout()
+      .goToGuestCheckout()
+      .fillContactInformationForm()
+      .fillShippingAddressForm({ country: '1', zipCode: '12345' });
     preferredDeliveryObject.shouldShowPreferredDelivery();
   });
 });
