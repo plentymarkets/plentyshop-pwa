@@ -106,6 +106,7 @@ export interface UseSiteConfiguration {
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;
   updateSecondaryColor: SetColorPalette;
+  updateHeaderBackgroundColor: SetColorPalette;
   updateBlockSize: UpdateBlockSize;
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
