@@ -27,11 +27,11 @@
           class="group"
           :class="[
             {
-              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
             },
             {
               'px-4 md:px-6':
-                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
+                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe'  && block.name !== 'Footer',
             },
           ]"
           data-testid="block-wrapper"
