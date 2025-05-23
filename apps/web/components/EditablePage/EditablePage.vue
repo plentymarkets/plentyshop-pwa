@@ -46,6 +46,8 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 
+const { $isPreview } = useNuxtApp();
+
 const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
@@ -82,10 +84,8 @@ onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
-const isPreview = useState<boolean>('isPreview');
-
 onMounted(async () => {
-  if (isPreview.value) {
+  if ($isPreview) {
     await import('./draggable.css');
   }
 });

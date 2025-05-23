@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div v-if="isPreview">
+    <div v-if="$isPreview">
       <div
         v-if="!bannerIsHidden"
         class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
@@ -58,6 +58,8 @@ import storeBlack from '/assets/icons/paths/store-black.svg';
 import { SfIconWarning } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
+const { $isPreview } = useNuxtApp();
+
 const { t } = useI18n();
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteConfiguration();
@@ -65,7 +67,6 @@ const { save: saveBlocksAndSiteSettings } = useToolbar();
 const { save: saveCategorySettings, hasChanges } = useCategorySettingsCollection();
 
 const bannerIsHidden = ref(true);
-const isPreview = useState<boolean>('isPreview');
 const config = useRuntimeConfig().public;
 
 const hasUnsavedChanges = () => {
