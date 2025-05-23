@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       },
       watch: {
         usePolling: process.env.NODE_ENV === 'development',
-      }
+      },
     },
     optimizeDeps: {
       include: ['dotenv', 'validator', 'js-sha256'],

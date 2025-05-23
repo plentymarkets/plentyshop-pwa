@@ -16,7 +16,7 @@
         },
         {
           'hover:outline hover:outline-4 hover:outline-[#538AEA]':
-          $isPreview && disableActions && !isTablet && root && !isDragging,
+            $isPreview && disableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
@@ -124,11 +124,7 @@ const contentProps = computed(() => {
 
 const showOutline = computed(() => {
   return (
-    $isPreview &&
-    props.disableActions &&
-    props.isClicked &&
-    props.isTablet &&
-    props.clickedBlockIndex === props.index
+    $isPreview && props.disableActions && props.isClicked && props.isTablet && props.clickedBlockIndex === props.index
   );
 });
 
