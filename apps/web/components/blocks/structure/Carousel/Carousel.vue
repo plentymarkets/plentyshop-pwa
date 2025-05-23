@@ -12,7 +12,12 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
-        <slot name="content" :content-block="banner" :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'" />
+        <slot
+          name="content"
+          :content-block="banner"
+          :index="getSlideAdjustedIndex(slideIndex)"
+          :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
+        />
       </SwiperSlide>
       <div
         v-if="enableModules"
@@ -88,6 +93,10 @@ const onSlideChange = async (swiper: SwiperType) => {
 
     setIndex(meta.uuid, swiper.realIndex);
   }
+};
+
+const getSlideAdjustedIndex = (slideIndex: number) => {
+  return activeSlideIndex.value[meta.uuid] === slideIndex ? index : index + slideIndex;
 };
 
 watch(
