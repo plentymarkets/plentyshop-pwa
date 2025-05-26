@@ -20,7 +20,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "test:cypress-checkout": "cypress run --browser electron --headless --spec '__tests__/test/checkout/*.cy.{js,jsx,ts,tsx}'",
+    "test:cypress-checkout": "cypress run --browser chrome --headless --spec '__tests__/test/checkout/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-editor": "cypress run --browser chrome --headless --spec '__tests__/test/editor/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/quarantine/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress": "cypress run --browser chrome --headless --spec '__tests__/test/feature/*.cy.{js,jsx,ts,tsx},__tests__/test/smoke/*.cy.{js,jsx,ts,tsx}'",
