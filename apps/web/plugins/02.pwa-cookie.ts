@@ -27,7 +27,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      isPreview: !!pwaCookie.value,
+      isPreview: !!pwaCookie.value || useRuntimeConfig().public.isPreview,
     },
   };
 });
