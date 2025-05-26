@@ -49,9 +49,8 @@ const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
-const isPreview = ref(false);
+const isPreview = useState<boolean>('isPreview');
 const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
 const { setStaticPageMeta } = useCanonical();
 const { setInitialDataSSR } = useInitialSetup();
 
@@ -63,8 +62,6 @@ if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
 onMounted(() => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 

@@ -6,7 +6,7 @@
         <template v-if="localeCodes.length > 1">
           <UiButton
             v-if="!isLanguageSelectOpen"
-            class="group relative hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
             variant="tertiary"
             :style="{ color: iconColor }"
@@ -21,7 +21,7 @@
           </UiButton>
           <UiButton
             v-else
-            class="group relative hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
             :style="{ color: isActive ? iconColor : '' }"
             variant="tertiary"
@@ -34,7 +34,7 @@
           </UiButton>
         </template>
         <UiButton
-          class="group relative hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
+          class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
           :style="{ color: iconColor }"
@@ -47,8 +47,8 @@
             <SfIconFavorite />
             <SfBadge
               :content="wishlistItemIds.length"
-              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor }"
-              class="outline !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="wishlist-badge"
               placement="top-right"
               :max="99"
@@ -56,7 +56,7 @@
           </template>
         </UiButton>
         <UiButton
-          class="group relative hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :style="{ color: iconColor }"
           :to="localePath(paths.cart)"
@@ -68,8 +68,8 @@
             <SfIconShoppingCart />
             <SfBadge
               :content="cartItemsCount"
-              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor }"
-              class="outline !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="cart-badge"
               placement="top-right"
               :max="99"
@@ -80,7 +80,7 @@
           <template #trigger>
             <UiButton
               variant="tertiary"
-              class="relative hover:bg-primary-800 active:bg-primary-700 rounded-md"
+              class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
               :style="{ color: iconColor }"
               :class="{ 'bg-primary-700': isAccountDropdownOpen }"
               data-testid="account-dropdown-button"
@@ -115,7 +115,7 @@
         <UiButton
           v-else
           :style="{ color: iconColor }"
-          class="group relative hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           :aria-label="t('auth.login.openLoginForm')"
           square
@@ -129,7 +129,7 @@
     <div v-if="viewport.isLessThan('lg')">
       <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
@@ -140,7 +140,7 @@
       </UiButton>
       <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
         :aria-label="t('openSearchModalButtonLabel')"
         @click="searchModalOpen"
