@@ -61,7 +61,7 @@
 
 <script lang="ts" setup>
 import type { ApiError } from '@plentymarkets/shop-api';
-import { AddressType, orderGetters } from '@plentymarkets/shop-api';
+import { AddressType } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
@@ -76,8 +76,7 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
 const { getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
-const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { loading: executeOrderLoading, executeOrder } = usePayPal();
+const { loading: executeOrderLoading, createPlentyOrder, captureOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
@@ -102,7 +101,6 @@ const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const interactionDisabled = computed(
   () =>
-    createOrderLoading.value ||
     disableShippingPayment.value ||
     cartLoading.value ||
     navigationInProgress.value ||
@@ -222,20 +220,17 @@ const handleRegularOrder = async () => {
   if (!(await readyToOrder())) return;
 
   try {
-    const data = await createOrder({
-      paymentId: cart.value.methodOfPaymentId,
-    });
+    const data = await createPlentyOrder();
+    const paypalOrderId = route?.query?.orderId?.toString() || '';
 
     if (data) {
-      await executeOrder({
-        mode: 'PAYPAL',
-        plentyOrderId: Number.parseInt(orderGetters.getId(data)),
-        paypalTransactionId: route?.query?.orderId?.toString() ?? '',
-      });
-    }
+      await captureOrder(paypalOrderId);
+      await createPlentyPaymentFromPayPalOrder(paypalOrderId, data.order.id);
 
-    clearCartItems();
-    if (data?.order?.id) await navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+      usePlentyEvent().emit('module:clearCart', null);
+      clearCartItems();
+      if (data?.order?.id) await navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+    }
   } catch (error) {
     useHandleError(error as ApiError);
   }

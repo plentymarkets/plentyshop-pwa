@@ -63,7 +63,7 @@ import type { CardFieldsOnApproveData } from '@paypal/paypal-js';
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
 const { send } = useNotification();
-const { getScript, createCreditCardTransaction, captureOrder, executeOrder } = usePayPal();
+const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
@@ -78,51 +78,28 @@ const confirmCancel = () => {
 };
 
 onMounted(() => {
-  let paypalOrderId: string = '';
-  let paypalPayerId: string = '';
-
   if (paypal && paypal.CardFields) {
     const cardFields = paypal.CardFields({
       async createOrder() {
         loading.value = true;
-        const data = await createCreditCardTransaction();
-        paypalOrderId = data?.id ?? '';
-        paypalPayerId = data?.payPalPayerId ?? '';
-        return paypalOrderId ?? '';
+        const data = await createTransaction({
+          type: 'basket',
+        });
+        return data?.id ?? '';
       },
       async onApprove(data: CardFieldsOnApproveData) {
-        const capture = await captureOrder({
-          paypalOrderId: data.orderID,
-          paypalPayerId: paypalPayerId,
-        });
-        if (capture?.error) {
-          send({
-            type: 'negative',
-            message: capture.error,
-          });
-          loading.value = false;
-          return;
-        }
-        const order = await createOrder({
-          paymentId: cart.value.methodOfPaymentId,
-          additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
-        });
-
-        if (order) {
-          await executeOrder({
-            mode: 'PAYPAL_UNBRANDED_CARD',
-            plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-            paypalTransactionId: data.orderID,
-          });
-        }
-
+        const order = await createPlentyOrder();
         if (order?.order?.id) {
+          await captureOrder(data.orderID);
+          await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
+
+          emitPlentyEvent('module:clearCart', null);
           useProcessingOrder().processingOrder.value = true;
           clearCartItems();
 
           emitPlentyEvent('frontend:orderCreated', order);
           navigateTo(
-            localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+              localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
           );
         }
         loading.value = false;

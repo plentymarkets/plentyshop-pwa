@@ -1,22 +1,13 @@
-import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
+import {FUNDING_SOURCE, loadScript as loadPayPalScript, PayPalNamespace} from '@paypal/paypal-js';
 import type {
-  PayPalCaptureOrderParams,
   PayPalConfigResponse,
   PayPalCreateOrder,
-  PayPalExecuteParams,
-  PayPalGetOrderDetailsParams,
+  PayPalCreateOrderRequest,
 } from '@plentymarkets/shop-api';
-import { paypalGetters } from '@plentymarkets/shop-api';
+import {ApiError, paypalGetters} from '@plentymarkets/shop-api';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
-
-const getOrder = async (params: PayPalGetOrderDetailsParams) => {
-  const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalOrderDetails(params));
-  useHandleError(error.value);
-
-  return data.value?.data ?? null;
-};
 
 /**
  * @description Composable for managing PayPal interaction.
@@ -37,6 +28,8 @@ export const usePayPal = () => {
     loadedConfig: false,
     isAvailable: false,
     isReady: false,
+    activatedAPMs: false,
+    fraudId: null as string | null,
   }));
 
   /**
@@ -62,6 +55,23 @@ export const usePayPal = () => {
     }
   };
 
+  const updateAvailableAPMs = async (script: PayPalNamespace) => {
+    if (script.getFundingSources && !state.value.activatedAPMs) {
+      state.value.activatedAPMs = true;
+      const availableFoundingSources = new Map();
+      const fundingSources = script.getFundingSources();
+      fundingSources.forEach((fundingSource: string) => {
+        if (script.isFundingEligible) {
+          availableFoundingSources.set(fundingSource, script.isFundingEligible(fundingSource as FUNDING_SOURCE));
+        }
+      });
+      await useSdk().plentysystems.doHandlePayPalPaymentFundingSources({
+        availableFoundingSources: Object.fromEntries(availableFoundingSources),
+      });
+      await usePaymentMethods().fetchPaymentMethods();
+    }
+  };
+
   /**
    * @description Function for get the PayPal sdk script.
    * @param currency string
@@ -77,7 +87,7 @@ export const usePayPal = () => {
     await loadConfig();
     if (state.value.config && paypalGetters.getClientId(state.value.config)) {
       try {
-        return await loadPayPalScript({
+        const script = await loadPayPalScript({
           clientId: paypalGetters.getClientId(state.value.config),
           merchantId: paypalGetters.getMerchantId(state.value.config),
           currency: currency,
@@ -87,6 +97,12 @@ export const usePayPal = () => {
           locale: locale,
           commit: commit,
         });
+
+        if (script) {
+          updateAvailableAPMs(script).then();
+        }
+
+        return script;
       } catch {
         // TODO: Handle error (not loading sdk)
       }
@@ -95,6 +111,11 @@ export const usePayPal = () => {
     return null;
   };
 
+  /**
+   * @description Function to get the PayPal SDK script.
+   * @param currency
+   * @param commit
+   */
   const getScript = async (currency: string, commit = false) => {
     const { $i18n } = useNuxtApp();
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
@@ -131,90 +152,79 @@ export const usePayPal = () => {
   };
 
   /**
+   * @description Function to get order details from PayPal.
+   * @example
+   * ``` ts
+   * getOrder('paypal_transaction_id');
+   * ```
+   */
+  const getOrder = async (paypalOrderId: string) => {
+    state.value.loading = true;
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalOrder({
+      paypalOrderId,
+    }));
+    useHandleError(error.value);
+
+    state.value.loading = false;
+
+    return data.value?.data ?? null;
+  };
+
+  /**
+   * @description Function to get the fraud id.
+   * @example
+   * ``` ts
+   * getFraudId();
+   * ```
+   */
+  const getFraudId = async () => {
+    state.value.loading = true;
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalFraudId());
+    useHandleError(error.value);
+
+    state.value.loading = false;
+    state.value.fraudId = data.value?.data.fraudId ?? null;
+
+    return data.value?.data.fraudId ?? null;
+  };
+
+  /**
    * @description Function for creating a PayPal transaction.
-   * @param fundingSource
-   * @param isExpress
    * @return CreateTransaction
    * @example
    * ``` ts
    * createTransaction('paypal', true);
    * ```
+   * @param params
    */
-  const createTransaction = async (fundingSource: string, isExpress = false) => {
+  const createTransaction = async (params: PayPalCreateOrderRequest) => {
+    state.value.loading = true;
     const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doCreatePayPalTransaction({
-        fundingSource: fundingSource,
-        is_express: isExpress,
-      }),
-    );
+      useSdk().plentysystems.doCreatePayPalOrder(params));
     state.value.order = data.value?.data ?? null;
     useHandleError(error.value);
+
+    state.value.loading = false;
 
     return state.value.order;
   };
 
   /**
-   * @description Function for approving a PayPal transaction.
-   * @param orderID
-   * @param payerID
-   * @return ApproveOrder
+   * @description Function for (re-)capturing a PayPal order.
+   * @param PayPalOrderId string
+   * @return CaptureOrder
    * @example
    * ``` ts
-   * approveOrder('1', '1');
-   * ```
-   */
-  const approveOrder = async (orderID: string, payerID: string) => {
-    state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doApprovePayPalTransaction({
-        transactionId: orderID,
-        payerId: payerID,
-      }),
-    );
-    useHandleError(error.value);
-
-    state.value.loading = false;
-    return data.value?.data ?? null;
-  };
-
-  /**
-   * @description Function for executing a PayPal transaction.
-   * @param params { PayPalExecuteParams }
-   * @return ExecuteOrder
-   * @example
-   * ``` ts
-   * executeOrder({
-   *   mode: 'PAYPAL',
-   *   plentyOrderId: 1234,
-   *   paypalTransactionId: 'UHIhhur3h2rh2',
+   * captureOrder({
+   *    paypalOrderId: '1'
    * });
    * ```
    */
-  const executeOrder = async (params: PayPalExecuteParams) => {
+  const captureOrder = async (PayPalOrderId: string) => {
     state.value.loading = true;
-
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getExecutePayPalOrder(params));
-    useHandleError(error.value);
-
-    state.value.loading = false;
-    return data.value?.data ?? null;
-  };
-
-  /**
-   * @description Function for creating a PayPal credit card transaction.
-   * @return CreateCreditCardTransaction
-   * @example
-   * ``` ts
-   * createCreditCardTransaction();
-   * ```
-   */
-  const createCreditCardTransaction = async () => {
-    state.value.loading = true;
-
-    const { error: preparePaymentError } = await useAsyncData(() => useSdk().plentysystems.doPreparePayment());
-    useHandleError(preparePaymentError.value);
-
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePayPalCreditCardTransaction());
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCapturePayPalOrderV2({
+      paypalOrderId: PayPalOrderId,
+    }));
     useHandleError(error.value);
 
     state.value.loading = false;
@@ -223,36 +233,61 @@ export const usePayPal = () => {
 
   /**
    * @description Function for (re-)capturing a PayPal order.
-   * @param params { PayPalCaptureOrderParams }
+   * @param PayPalOrderId string
+   * @param plentyOrderId number
    * @return CaptureOrder
    * @example
    * ``` ts
    * captureOrder({
-   *    paypalOrderId: '1';
-   *    paypalPayerId: '1';
-   *    plentyOrderId: 1; // optional: the order will be recaptured
+   *    paypalOrderId: '1'
    * });
    * ```
    */
-  const captureOrder = async (params: PayPalCaptureOrderParams) => {
+  const createPlentyPaymentFromPayPalOrder = async (PayPalOrderId: string, plentyOrderId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCapturePayPalOrder(params));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePlentyPaymentFromPayPalOrder({
+      payPalOrderId: PayPalOrderId,
+      plentyOrderId,
+    }));
     useHandleError(error.value);
 
     state.value.loading = false;
     return data.value?.data ?? null;
   };
 
+  /**
+   * @description Function for create a Plenty order.
+   * @return Order | null
+   * @example
+   * ``` ts
+   * createPlentyOrder();
+   * ```
+   */
+  const createPlentyOrder = async () => {
+    state.value.loading = true;
+    try {
+      const { data } = await useSdk().plentysystems.doPlaceOrder()
+      return data
+    }
+    catch (error) {
+      useHandleError(error as ApiError)
+      return null
+    }
+    finally {
+      state.value.loading = false;
+    }
+  };
+
   return {
     state,
-    approveOrder,
+    createPlentyOrder,
     createTransaction,
-    executeOrder,
     loadConfig,
-    createCreditCardTransaction,
     captureOrder,
     getScript,
     getOrder,
+    getFraudId,
+    createPlentyPaymentFromPayPalOrder,
     ...toRefs(state.value),
   };
 };

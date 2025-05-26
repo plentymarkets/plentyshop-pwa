@@ -65,11 +65,9 @@ export const useApplePay = () => {
 
   const processPayment = () => {
     const { processingOrder } = useProcessingOrder();
-    const { createOrder } = useMakeOrder();
-    const { createCreditCardTransaction, captureOrder, executeOrder } = usePayPal();
-    const { data: cart, clearCartItems } = useCart();
+    const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
+    const { clearCartItems } = useCart();
     const localePath = useLocalePath();
-    const { shippingPrivacyAgreement } = useAdditionalInformation();
     const { $i18n } = useNuxtApp();
     const { emit } = usePlentyEvent();
 
@@ -90,16 +88,15 @@ export const useApplePay = () => {
 
       paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
         try {
-          const transaction = await createCreditCardTransaction();
+          const transaction = await createTransaction({
+            type: 'basket',
+          });
           if (!transaction || !transaction.id) {
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));
             return;
           }
 
-          const order = await createOrder({
-            paymentId: cart.value.methodOfPaymentId,
-            additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
-          });
+          const order = await createPlentyOrder();
           if (!order || !order.order || !order.order.id) {
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));
             return;
@@ -116,19 +113,12 @@ export const useApplePay = () => {
             return;
           }
 
-          await captureOrder({
-            paypalOrderId: transaction.id,
-            paypalPayerId: transaction.payPalPayerId,
-          });
-
-          await executeOrder({
-            mode: 'PAYPAL_APPLE_PAY',
-            plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-            paypalTransactionId: transaction.id,
-          });
+          await captureOrder(transaction.id);
+          await createPlentyPaymentFromPayPalOrder(transaction.id, order.order.id);
 
           processingOrder.value = true;
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+          emit('module:clearCart', null);
           clearCartItems();
 
           emit('frontend:orderCreated', order);
