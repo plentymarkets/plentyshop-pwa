@@ -28,7 +28,7 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
       watch: {
-        usePolling: process.env.NODE_ENV === 'development',
+        usePolling: process.env.NODE_ENV === 'development', // see apps/web/plugins/02.pwa-cookie.ts
       },
     },
     optimizeDeps: {
