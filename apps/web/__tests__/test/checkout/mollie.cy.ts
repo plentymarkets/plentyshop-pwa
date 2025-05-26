@@ -1,15 +1,9 @@
 import { paths } from '../../../utils/paths';
-import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 import { PaymentStatusScreen } from '../../support/pageObjects/PaymentStatusScreen';
 
 const checkout = new CheckoutPageObject();
-const cart = new CartPageObject();
-const homePage = new HomePageObject();
-const productListPage = new ProductListPageObject();
 const myAccount = new MyAccountPageObject();
 const pymentStatus = new PaymentStatusScreen();
 
@@ -21,10 +15,8 @@ beforeEach(() => {
   myAccount.successLogin();
   cy.wait('@doLogin');
 
-  homePage.goToCategory();
-  productListPage.addToCart();
-  cart.openCart();
-  checkout.goToCheckout().acceptTerms();
+  cy.addToCart();
+  checkout.goToCheckoutPath().acceptTerms();
 });
 
 describe('Mollie payment methods', () => {

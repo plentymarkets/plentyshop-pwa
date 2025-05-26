@@ -1,5 +1,6 @@
 import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
+import { paths } from '../../../utils/paths';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -132,6 +133,11 @@ export class CheckoutPageObject extends PageObject {
 
   goToCheckout() {
     this.goToCheckoutButton.click();
+    return this;
+  }
+
+  goToCheckoutPath() {
+    cy.visitAndHydrate(paths.checkout);
     return this;
   }
 
