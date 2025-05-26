@@ -10,6 +10,14 @@ const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
 
+const clickApplePay = async () => {
+  await emits('button-clicked', async (successfully) => {
+    if (successfully) {
+      processPayment();
+    }
+  });
+}
+
 const renderButton = async () => {
   if ((await initialize()) && config.value.isEligible) {
     const applePayButtonContainer = document.querySelector('#apple-pay-button');
@@ -19,12 +27,8 @@ const renderButton = async () => {
 
       const applePayButton = document.querySelector('#btn-appl');
       if (applePayButton) {
-        applePayButton.addEventListener('click', async () => {
-          await emits('button-clicked', async (successfully) => {
-            if (successfully) {
-              processPayment();
-            }
-          });
+        applePayButton.addEventListener('click', () => {
+          clickApplePay();
         });
       }
     }
