@@ -24,7 +24,10 @@ describe('Checkout Addresses', () => {
       .goToCheckout()
       .goToGuestCheckout()
       .fillContactInformationForm()
-      .fillShippingAddressForm()
+      .fillShippingAddressForm({
+        country: '1',
+        zipCode: '12345',
+      })
       .shouldShowShippingAsBillingText();
   });
 
@@ -37,7 +40,10 @@ describe('Checkout Addresses', () => {
       .goToCheckout()
       .goToGuestCheckout()
       .fillContactInformationForm()
-      .fillShippingAddressForm()
+      .fillShippingAddressForm({
+        country: '1',
+        zipCode: '12345',
+      })
       .shouldNotShowShippingAddressSelection()
       .shouldNotShowBillingAddressSelection();
   });
@@ -51,7 +57,10 @@ describe('Checkout Addresses', () => {
       .goToCheckout()
       .goToGuestCheckout()
       .fillContactInformationForm()
-      .fillShippingAddressForm()
+      .fillShippingAddressForm({
+        country: '1',
+        zipCode: '12345',
+      })
       .shouldShowShippingAsBillingText()
       .editBillingAddress();
     checkout.firstNameInput.clear();

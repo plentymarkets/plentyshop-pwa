@@ -206,8 +206,8 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillShippingAddressForm(fixtureOverride?: AddressFixtureOverride) {
-    cy.intercept('/plentysystems/setCheckoutAddress')
-      .as('setCheckoutAddress')
+    cy.intercept('/plentysystems/doSaveAddress')
+      .as('doSaveAddress')
       .intercept('/plentysystems/getShippingProvider')
       .as('getShippingProvider')
       .intercept('/plentysystems/getPaymentProviders')
@@ -215,7 +215,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.fillAddressForm('shipping', fixtureOverride);
 
-    cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
+    cy.wait(['@doSaveAddress', '@getShippingProvider', '@getPaymentProviders'], { timeout: 10000 });
 
     return this;
   }
@@ -317,6 +317,7 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillShippingForm(fixture: any) {
+    cy.wait(1000);
     this.shippingAddressForm.within(() => {
       this.firstNameInput.type(fixture.firstName);
       this.lastNameInput.type(fixture.lastName);
@@ -335,6 +336,7 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillBillingForm(fixture: any) {
+    cy.wait(1000);
     this.shippingAddressForm
       .within(() => {
         this.firstNameInput.type(fixture.firstName);
