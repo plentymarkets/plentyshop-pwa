@@ -81,7 +81,8 @@ export const useApplePay = () => {
             validationUrl: event.validationURL,
           });
           paymentSession.completeMerchantValidation(validationData.merchantSession);
-        } catch {
+        } catch(e) {
+          console.log(e);
           paymentSession.abort();
         }
       };
@@ -134,8 +135,8 @@ export const useApplePay = () => {
       });
 
       paymentSession.begin();
-    } catch {
-      /* error */
+    } catch(e) {
+      console.log(e);
     }
   };
 
