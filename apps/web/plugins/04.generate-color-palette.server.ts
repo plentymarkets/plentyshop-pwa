@@ -15,10 +15,12 @@ export default defineNuxtPlugin(async () => {
     const publicRuntimeConfig = useRuntimeConfig().public;
     const primaryColor = publicRuntimeConfig.primaryColor || '#062633';
     const secondaryColor = publicRuntimeConfig.secondaryColor || '#31687d';
+    const headerColor = publicRuntimeConfig.headerBackgroundColor || primaryColor || '#062633';
     const primaryPalette = buildPalette('primary', primaryColor);
     const secondaryPalette = buildPalette('secondary', secondaryColor);
+    const headerPalette = buildPalette('header', headerColor);
 
-    const colors = [...primaryPalette, ...secondaryPalette];
+    const colors = [...primaryPalette, ...secondaryPalette, ...headerPalette];
 
     const styleString = colors.reduce((acc, { type, weight, rgb }) => {
       return acc + `--colors-2-${type}-${weight}: ${rgb};`;
