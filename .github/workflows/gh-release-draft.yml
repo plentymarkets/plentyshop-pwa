@@ -87,18 +87,22 @@ jobs:
             # Extract commit hash and message
             commit_hash=${commit_line%% *}
             commit_msg=${commit_line#* }
+
+            # Get the commit hash
+            LINK_REF=" (${commit_hash:0:7})"
             
             # Get PR number if available
-            PR_NUM=""
-            if ! PR_NUM=$(gh pr list --search "$commit_hash" --json number --jq '.[0].number' 2>/dev/null); then
-              PR_NUM=$(gh pr view $commit_hash --json number --jq '.number' 2>/dev/null || echo "")
-            fi
-            
-            # Set reference link - prefer PR number if available
+            PR_NUM=$(gh pr list --search "$commit_hash" --state merged --json number --jq '.[0].number' 2>/dev/null)
+
+            # Get PR labels if available
             if [ ! -z "$PR_NUM" ]; then
-              LINK_REF=" (#$PR_NUM)"
-            else
-              LINK_REF=" (${commit_hash:0:7})"
+              PR_LABELS=$(gh pr list --search "$commit_hash" --state merged --json labels --jq '.[0].labels[].name' 2>/dev/null || echo "")
+            fi
+
+            # Skip if PR has the "ignore-for-release" label
+            if [[ "$PR_LABELS" =~ "ignore-for-release" ]]; then
+              echo "Skipping commit $commit_hash due to 'ignore-for-release' label"
+              continue
             fi
             
             # Get GitHub username from commit
@@ -107,7 +111,7 @@ jobs:
               GITHUB_USER=$(echo "$AUTHOR_EMAIL" | sed -E 's/^[0-9]+\+//' | sed 's/@users\.noreply\.github\.com//')
             else
               if [ ! -z "$PR_NUM" ]; then
-                GITHUB_USER=$(gh pr view "$PR_NUM" --json author --jq '.author.login' 2>/dev/null || git log -1 --format="%aN" $commit_hash)
+                GITHUB_USER=$(gh pr list --search "$commit_hash" --state merged --json author --jq '.[0].author.login' 2>/dev/null || git log -1 --format="%aN" $commit_hash)
               else
                 GITHUB_USER=$(git log -1 --format="%aN" $commit_hash)
               fi

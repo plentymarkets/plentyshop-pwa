@@ -54,7 +54,7 @@
     <PageSeoView v-if="activeView === 'seo'" class="mt-2" />
 
     <div v-if="!activeView" class="py-4">
-      <h3 class="font-bold text-center mb-3">Actions</h3>
+      <h3 class="font-bold text-center flex flex-col gap-4 items-start ml-4 mb-3">Actions</h3>
       <div class="flex flex-col gap-4 justify-center items-center">
         <button
           class="border border-editor-button py-2 rounded-md flex items-center justify-center w-[90%] text-editor-button hover:bg-gray-50"
@@ -68,7 +68,7 @@
           Edit page
         </button>
         <button
-          class="border border-editor-button py-2 rounded-md flex items-center justify-center w-[90%] text-editor-button hover:bg-gray-50"
+          class="border border-red-700 py-2 rounded-md flex items-center justify-center w-[90%] text-red-700 hover:bg-gray-50"
           @click="toggleDeleteModal(true)"
         >
           <SfIconDelete class="mr-2" />
@@ -86,22 +86,22 @@ const { toggleDeleteModal } = useCategorySettings();
 const { setSettingsCategory } = useSiteConfiguration();
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
-const { getCategoryName, getCategoryPath } = useCategoryIdHelper();
-
-const { locale } = useI18n();
-const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
+const { getCategoryName, getCategoryPath, setParentName, setCategoryId } = useCategoryIdHelper();
 
 const activeView = ref<null | 'general' | 'seo'>(null);
 const redirectToPage = () => {
-  const targetUrl = `${localePrefix.value}/${getCategoryPath.value}`;
+  const targetUrl = getCategoryPath.value;
   navigateTo(targetUrl);
   setSettingsCategory(null);
+  setCategoryId({});
 };
 const handleBack = () => {
   if (activeView.value !== null) {
     activeView.value = null;
   } else {
     setSettingsCategory(null);
+    setCategoryId({});
+    setParentName('');
   }
 };
 </script>

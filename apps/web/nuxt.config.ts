@@ -68,7 +68,9 @@ export default defineNuxtConfig({
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo:
-        process.env.NUXT_PUBLIC_HEADER_LOGO || 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
+        process.env.LOGO ||
+        process.env.NUXT_PUBLIC_HEADER_LOGO ||
+        'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PlentyONE GmbH',
@@ -79,6 +81,10 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
+      headerBackgroundColor:
+        process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
+      iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
+      showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
     },
   },
   modules: [
@@ -234,5 +240,16 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
+  },
+  hooks: {
+    'pages:extend'(pages) {
+      if (process.env.E2E_TEST) {
+        pages.push({
+          name: 'e2e',
+          path: '/smoke-e2e',
+          file: '~/e2e/smoke-e2e.vue',
+        });
+      }
+    },
   },
 });

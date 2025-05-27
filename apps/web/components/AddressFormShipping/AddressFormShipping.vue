@@ -7,7 +7,7 @@
   >
     <label>
       <UiFormLabel>
-        {{ hasShippingCompany ? $t('form.firstNameLabel') : `${$t('form.firstNameLabel')} ${$t('form.required')}` }}
+        {{ hasShippingCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -21,7 +21,7 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasShippingCompany ? $t('form.lastNameLabel') : `${$t('form.lastNameLabel')} ${$t('form.required')}` }}
+        {{ hasShippingCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         v-model="lastName"
@@ -35,12 +35,12 @@
 
     <div class="md:col-span-3">
       <SfLink class="select-none hover:cursor-pointer" @click="hasShippingCompany = !hasShippingCompany">
-        {{ !hasShippingCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
+        {{ !hasShippingCompany ? t('form.addCompany') : t('form.removeCompany') }}
       </SfLink>
     </div>
 
     <label v-if="hasShippingCompany">
-      <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="companyName"
         name="companyName"
@@ -52,7 +52,7 @@
     </label>
 
     <label v-if="hasShippingCompany" class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="vatNumber"
         autocomplete="vatNumber"
@@ -63,7 +63,7 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="streetName"
         name="streetName"
@@ -75,7 +75,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="apartment"
         name="streetNumber"
@@ -87,7 +87,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="zipCode"
         name="zipCode"
@@ -99,7 +99,7 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         v-model="city"
         name="city"
@@ -111,12 +111,12 @@
     </label>
 
     <label class="md:col-span-3">
-      <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
         v-model="country"
         name="country"
         v-bind="countryAttributes"
-        :placeholder="$t('form.selectPlaceholder')"
+        :placeholder="t('form.selectPlaceholder')"
         :invalid="Boolean(errors['country'])"
         wrapper-class-name="bg-white"
         class="!ring-1 !ring-neutral-200"
@@ -139,7 +139,7 @@
     >
       <label v-if="!restrictedAddresses" class="flex items-center gap-2">
         <SfCheckbox v-model="shippingAsBilling" data-testid="use-shipping-as-billing" />
-        <span class="cursor-pointer select-none">{{ $t('form.useAsBillingLabel') }}</span>
+        <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
       </label>
 
       <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
@@ -149,7 +149,7 @@
           variant="secondary"
           type="submit"
         >
-          {{ $t('saveAddress') }}
+          {{ t('saveAddress') }}
         </UiButton>
 
         <UiButton
@@ -158,7 +158,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Shipping}`"
-          :aria-label="$t('closeAddressForm')"
+          :aria-label="t('closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
@@ -176,7 +176,8 @@ import type { AddressFormShippingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormShippingProps>();
 
-const { isGuest, validGuestEmail, backToContactInformation } = useCustomer();
+const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
+const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { handleCartTotalChanges } = useCartTotalChange();
@@ -269,7 +270,7 @@ const validateAndSubmitForm = async () => {
   const formData = await validate();
 
   if (formIsLoading.value) return;
-  if (isGuest.value && !validGuestEmail.value) return backToContactInformation();
+  if (missingGuestCheckoutEmail.value) return backToContactInformation();
 
   if (formData.valid) {
     await submitForm();

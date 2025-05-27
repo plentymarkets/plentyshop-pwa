@@ -21,6 +21,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     data: null,
     loading: false,
     shippingPrivacyAgreement: false,
+    customerWish: null,
     showErrors: false,
   }));
 
@@ -71,9 +72,25 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     state.value.loading = false;
   };
 
+  /**
+   * @description Function for setting the customer wish value.
+   * @example
+   * ``` ts
+   * setCustomerWish({
+   *   customerWish: 'example custom wish'
+   * });
+   * ```
+   */
+  const setCustomerWish = (customerWish: string | null) => {
+    state.value.loading = true;
+    state.value.customerWish = customerWish;
+    state.value.loading = false;
+  };
+
   return {
     setShippingPrivacyAgreementErrors,
     setShippingPrivacyAgreement,
+    setCustomerWish,
     doAdditionalInformation,
     ...toRefs(state.value),
   };

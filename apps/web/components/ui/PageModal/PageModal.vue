@@ -1,4 +1,4 @@
-<template>
+<template v-if="_isReady">
   <UiModal
     v-model="pageModalOpen"
     aria-labelledby="page-modal"
@@ -49,13 +49,16 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="categories"
+          :options="categoriesWithFallback"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
           class="cursor-pointer"
           select-label=""
           deselect-label="Selected"
+          :searchable="true"
+          :internal-search="false"
+          @search-change="handleSearch"
         />
       </div>
 
@@ -83,77 +86,21 @@
 <script setup lang="ts">
 import { SfIconClose, SfInput } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { useForm, ErrorMessage } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
-import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import { ErrorMessage } from 'vee-validate';
 
-const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { data: categoryTree } = useCategoryTree();
-const { addCategory } = useCategory();
-
-const validationSchema = toTypedSchema(
-  object({
-    pageName: string().required('Enter a page name').default(''),
-  }),
-);
-
-const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
-  validationSchema: validationSchema,
-});
-
-const createNewPage = async () => {
-  if (!meta.value.valid) {
-    return;
-  }
-
-  addCategory({
-    name: pageName?.value || '',
-    type: pageType.value.value,
-    parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
-  });
-};
-
-const closeModal = () => {
-  resetForm();
-  togglePageModal(false);
-};
-
-const flattenCategories = (items: CategoryTreeItem[]) => {
-  let flat: CategoryTreeItem[] = [];
-  items.forEach((item: CategoryTreeItem) => {
-    if (item.type === 'item' || item.type === 'content') {
-      flat.push(item);
-    }
-    if (item.children && item.children.length) {
-      flat = flat.concat(flattenCategories(item.children));
-    }
-  });
-  return flat;
-};
-
-const getLabel = (option: CategoryTreeItem) => {
-  return option.details && option.details.length ? option.details[0].name : '';
-};
-
-const emptyCategoryItem: CategoryTreeItem = {
-  id: 0,
-  type: 'none',
-  itemCount: [],
-  childCount: 0,
-  right: 'all',
-  details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
-};
-
-const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
-
-const [pageName, pageNameAttributes] = defineField('pageName');
-const pageTypes = ref([
-  { label: 'Content', value: 'content' },
-  { label: 'Item category', value: 'item' },
-]);
-const pageType = ref(pageTypes.value[0]);
-const parentPage = ref(emptyCategoryItem);
-
-const onSubmit = handleSubmit(() => createNewPage());
+const {
+  _isReady,
+  pageModalOpen,
+  pageType,
+  pageTypes,
+  parentPage,
+  categoriesWithFallback,
+  pageName,
+  pageNameAttributes,
+  errors,
+  getLabel,
+  closeModal,
+  onSubmit,
+  handleSearch,
+} = useAddPageModal();
 </script>
