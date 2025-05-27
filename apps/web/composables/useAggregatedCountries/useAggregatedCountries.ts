@@ -90,7 +90,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
       useHandleError(error as ApiError);
       return null;
     }
-  }
+  };
 
   const getCountryZipCodeRegex = (countryId: number, type: AddressType): RegExp | null => {
     const countries = type === AddressType.Billing ? billingCountries.value : state.value.default;

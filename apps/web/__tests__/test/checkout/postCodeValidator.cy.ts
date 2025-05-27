@@ -18,11 +18,11 @@ describe('Post Code validator GB', () => {
     const gb = countryList.find((country) => country.countryId === '12');
     checkout.fillPostCodeBillingForm({ country: gb?.countryId, zipCode: gb?.valid[0] });
     cy.get('#billingZipCodeError').should('not.exist');
-  })
+  });
 
   it('should fail on invalid GB post code', () => {
     const gb = countryList.find((country) => country.countryId === '12');
     checkout.fillPostCodeBillingForm({ country: gb?.countryId, zipCode: gb?.invalid[0] });
     cy.get('#billingZipCodeError').should('exist');
-  })
-})
+  });
+});
