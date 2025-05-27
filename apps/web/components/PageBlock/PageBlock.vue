@@ -1,5 +1,5 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid">
+  <div v-if="block.meta && (block.type !== 'footer' || runtimeConfig.public.isDev)" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
@@ -66,7 +66,7 @@
       </component>
 
       <button
-        v-if="disableActions && $isPreview && root && !isDragging"
+        v-if="disableActions && $isPreview && root && !isDragging && props.block.type !== 'footer'"
         :key="isDragging ? 'dragging' : 'not-dragging'"
         class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
@@ -84,6 +84,7 @@
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd } from '@storefront-ui/vue';
+const runtimeConfig = useRuntimeConfig();
 
 const { $isPreview } = useNuxtApp();
 
@@ -124,11 +125,7 @@ const contentProps = computed(() => {
 
 const showOutline = computed(() => {
   return (
-    $isPreview &&
-    props.disableActions &&
-    props.isClicked &&
-    props.isTablet &&
-    props.clickedBlockIndex === props.index
+    $isPreview && props.disableActions && props.isClicked && props.isTablet && props.clickedBlockIndex === props.index
   );
 });
 

@@ -11,18 +11,6 @@
     :tabindex="isPreview && disableActions ? 0 : undefined"
     @click="handleFooterClick"
   >
-    <button
-      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
-      data-testid="open-editor-button"
-      aria-label="editor button"
-      @click="triggerEdit"
-    >
-      <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path :d="editPath" fill="black" />
-        </svg>
-      </SfIconBase>
-    </button>
     <div
       class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
       data-testid="section-top"
@@ -63,16 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfListItem, SfIconBase } from '@storefront-ui/vue';
+import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories } from '~/mocks';
 import type { FooterProps } from './types';
-import { editPath } from 'assets/icons/paths/edit';
-const { openFooterDrawer } = useSiteConfiguration();
-const { footerBackgroundColor, footerTextColor } = useSiteConfiguration();
 
-const triggerEdit = () => {
-  openFooterDrawer('FooterView');
-};
+const { footerBackgroundColor, footerTextColor } = useSiteConfiguration();
 
 const storename: string = useRuntimeConfig().public.storename;
 
