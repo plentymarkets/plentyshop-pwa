@@ -82,7 +82,7 @@ jobs:
       - name: Unit tests
         run: npm run test:coverage
       - name: 'Report Coverage'
-        if: always() 
+        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: './apps/web/'
@@ -219,7 +219,7 @@ jobs:
           install: false
           command: npm run test:cypress-editor
         env:
-          NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
+          NUXT_PUBLIC_IS_PREVIEW: true
 
       - uses: actions/upload-artifact@v4
         if: failure()

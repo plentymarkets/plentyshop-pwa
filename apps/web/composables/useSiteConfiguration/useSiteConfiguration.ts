@@ -71,6 +71,19 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
     },
+    footerSettings: {
+      column1: { title: 'Column 1' },
+      column2: { title: 'Column 2', description: '', showContactLink: true },
+      column3: { title: 'Column 3', description: '' },
+      column4: { title: 'Column 4', description: '' },
+      footnote: 'Footnotes are here now',
+      colors: {
+        background: useRuntimeConfig().public.footerBackgroundColor,
+        text: useRuntimeConfig().public.footerTextColor,
+        noteBackground: useRuntimeConfig().public.footerNoteBackgroundColor,
+        noteText: useRuntimeConfig().public.footerNoteTextColor,
+      },
+    },
   }));
 
   /**
@@ -91,7 +104,19 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.currentFont = `font-family: '${fontName}'`;
   };
+  const setFooterColumn = (column: keyof FooterSettings, value: Partial<FooterColumn>) => {
+    if (typeof state.value.footerSettings[column] === 'object') {
+      Object.assign(state.value.footerSettings[column], value);
+    }
+  };
 
+  const setFootnote = (text: string) => {
+    state.value.footerSettings.footnote = text;
+  };
+
+  const setFooterColors = (colors: Partial<FooterSettings['colors']>) => {
+    Object.assign(state.value.footerSettings.colors, colors);
+  };
   const setColorProperties: SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
     tailwindPalette.forEach((shade) => {
       if (shade.rgb) {
@@ -325,5 +350,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
+    footerSettings: toRef(state.value, 'footerSettings'),
+    setFooterColumn,
+    setFootnote,
+    setFooterColors,
   };
 };

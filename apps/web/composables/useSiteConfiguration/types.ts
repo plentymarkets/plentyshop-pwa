@@ -72,6 +72,29 @@ export interface UseSiteConfigurationState {
     keywords: string;
     robots: string;
   };
+  footerSettings: FooterSettings;
+
+}
+export interface FooterColumn {
+  title: string;
+  description?: string;
+  showContactLink?: boolean;
+}
+
+export interface FooterSettings {
+  column1: {
+    title: string;
+  };
+  column2: FooterColumn;
+  column3: FooterColumn;
+  column4: FooterColumn;
+  footnote: string;
+  colors: {
+    background: string;
+    text: string;
+    noteBackground: string;
+    noteText: string;
+  };
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -128,6 +151,10 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
+  footerSettings: Readonly<Ref<UseSiteConfigurationState['footerSettings']>>;
+  setFooterColumn: (column: keyof FooterSettings, value: Partial<FooterColumn>) => void;
+  setFootnote: (text: string) => void;
+  setFooterColors: (colors: Partial<FooterSettings['colors']>) => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

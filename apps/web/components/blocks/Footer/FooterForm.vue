@@ -1,11 +1,5 @@
 <template>
   <div class="footer-settings-view sticky top-[52px]" data-testid="footer-settings-drawer">
-    <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">Footer</div>
-      <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
-        <SfIconClose />
-      </button>
-    </header>
     <UiAccordionItem
       v-model="firstColumnOpen"
       data-testid="first-column-section"
@@ -20,10 +14,15 @@
           <UiFormLabel>Title</UiFormLabel>
         </div>
         <label>
-          <SfInput type="text" data-testid="input-title-column-1">
+          <SfInput v-model="footerSettings.column1.title" type="text" data-testid="input-title-column-1">
             <template #suffix>
               <label for="text-title-column-1" class="rounded-lg cursor-pointer">
-                <input id="text-title-column-1" type="text" class="invisible w-8" />
+                <input
+                  id="text-title-column-1"
+                  v-model="footerSettings.column1.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -45,10 +44,15 @@
           <UiFormLabel>Title</UiFormLabel>
         </div>
         <label>
-          <SfInput type="text" data-testid="input-title-column-2">
+          <SfInput v-model="footerSettings.column2.title" type="text" data-testid="input-title-column-2">
             <template #suffix>
               <label for="input-title-column-2" class="rounded-lg cursor-pointer">
-                <input id="input-title-column-2" type="text" class="invisible w-8" />
+                <input
+                  id="input-title-column-2"
+                  v-model="footerSettings.column2.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -59,6 +63,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel class="mb-1">Show the link to contact form</UiFormLabel>
           <SfSwitch
+            v-model="footerSettings.column2.showContactLink"
             class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
           />
         </div>
@@ -67,6 +72,7 @@
       <div class="py-2">
         <UiFormLabel>Description</UiFormLabel>
         <SfTextarea
+          v-model="footerSettings.column2.description"
           name="description"
           type="text"
           class="w-full min-h-[232px]"
@@ -90,10 +96,10 @@
           <UiFormLabel>Title</UiFormLabel>
         </div>
         <label>
-          <SfInput type="text" data-testid="input-title-column-3">
+          <SfInput v-model="footerSettings.column3.title" type="text" data-testid="input-title-column-3">
             <template #suffix>
               <label for="input-title-column-3" class="rounded-lg cursor-pointer">
-                <input id="input-title-column-3" type="text" class="invisible w-8" />
+                <input id="input-title-column-3" v-model="footerSettings.column3.title" type="text" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -103,6 +109,7 @@
       <div class="py-2">
         <UiFormLabel>Description</UiFormLabel>
         <SfTextarea
+          v-model="footerSettings.column3.description"
           name="description"
           type="text"
           class="w-full min-h-[232px]"
@@ -126,7 +133,7 @@
           <UiFormLabel>Title</UiFormLabel>
         </div>
         <label>
-          <SfInput type="text" data-testid="input-title-column-4">
+          <SfInput v-model="footerSettings.column4.title" type="text" data-testid="input-title-column-4">
             <template #suffix>
               <label for="input-title-column-4" class="rounded-lg cursor-pointer">
                 <input id="input-title-column-4" type="text" class="invisible w-8" />
@@ -139,6 +146,7 @@
       <div class="py-2">
         <UiFormLabel>Description</UiFormLabel>
         <SfTextarea
+          v-model="footerSettings.column4.description"
           name="description"
           type="text"
           class="w-full min-h-[232px]"
@@ -162,14 +170,14 @@
           <UiFormLabel>Text color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerTextColor" type="text" data-testid="text-color-select">
+          <SfInput v-model="footerSettings.colors.text" type="text" data-testid="text-color-select">
             <template #suffix>
               <label
                 for="footer-text-color"
-                :style="{ backgroundColor: footerTextColor }"
+                :style="{ backgroundColor: footerSettings.colors.text }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="footer-text-color" v-model="footerTextColor" type="color" class="invisible w-8" />
+                <input id="footer-text-color" v-model="footerSettings.colors.text" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -181,14 +189,14 @@
           <UiFormLabel>Background color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerBackgroundColor" type="text" data-testid="bg-footer-color-select">
+          <SfInput v-model="footerSettings.colors.background" type="text" data-testid="bg-footer-color-select">
             <template #suffix>
               <label
                 for="bg-footer-color"
-                :style="{ backgroundColor: footerBackgroundColor }"
+                :style="{ backgroundColor: footerSettings.colors.background }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="bg-footer-color" v-model="footerBackgroundColor" type="color" class="invisible w-8" />
+                <input id="bg-footer-color" v-model="footerSettings.colors.background" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -210,10 +218,10 @@
           <UiFormLabel>Footnotes text</UiFormLabel>
         </div>
         <label>
-          <SfInput type="text" data-testid="input-footnote">
+          <SfInput v-model="footerSettings.footnote"  type="text" data-testid="input-footnote">
             <template #suffix>
               <label for="input-footnote" class="rounded-lg cursor-pointer">
-                <input id="input-footnote" type="text" class="invisible w-8" />
+                <input id="input-footnote"  v-model="footerSettings.footnote" type="text" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -225,14 +233,14 @@
           <UiFormLabel>Footnote Text color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerNoteTextColor" type="text" data-testid="text-color-select">
+          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="text-color-select">
             <template #suffix>
               <label
                 for="footer-text-color"
-                :style="{ backgroundColor: footerNoteTextColor }"
+                :style="{ backgroundColor: footerSettings.colors.noteBackground }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="footer-text-color" v-model="footerNoteTextColor" type="color" class="invisible w-8" />
+                <input id="footer-text-color" v-model="footerSettings.colors.noteBackground" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -264,8 +272,14 @@
 <script setup lang="ts">
 import { SfIconClose, SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
 
-const { footerBackgroundColor, footerTextColor, footerNoteTextColor, footerNoteBackgroundColor, closeDrawer } =
-  useSiteConfiguration();
+const {
+  footerBackgroundColor,
+  footerTextColor,
+  footerNoteTextColor,
+  footerNoteBackgroundColor,
+  closeDrawer,
+  footerSettings,
+} = useSiteConfiguration();
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
 const thirdColumnOpen = ref(false);

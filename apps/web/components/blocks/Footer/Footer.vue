@@ -1,107 +1,79 @@
 <template>
   <footer
-    class="pt-10 md:mb-0 relative block-wrapper"
+    class="pt-10"
+    :style="{
+      backgroundColor: footerSettings.colors.background,
+      color: footerSettings.colors.text,
+    }"
     data-testid="footer"
-    :class="[
-      simplifiedFooter ? 'mb-0' : 'mb-[58px]',
-      { 'outline outline-4 outline-[#538AEA]': showOutline },
-      { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': showFooterHoverOutline },
-    ]"
-    :style="{ cursor: isPreview && disableActions ? 'pointer' : '', backgroundColor: footerBackgroundColor }"
-    :tabindex="isPreview && disableActions ? 0 : undefined"
-    @click="handleFooterClick"
   >
-    <button
-      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
-      data-testid="open-editor-button"
-      aria-label="editor button"
-      @click="triggerEdit"
-    >
-      <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path :d="editPath" fill="black" />
-        </svg>
-      </SfIconBase>
-    </button>
-    <div
-      class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
-      data-testid="section-top"
-    >
-      <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
-        <div :style="{ color: footerTextColor }" class="ml-4 text-lg font-medium leading-7">
-          {{ t(`categories.${key}.label`) }}
+    <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div class="max-w-[280px] break-words">
+          <div class="ml-4 text-lg font-medium leading-7">
+            {{ footerSettings.column1.title }}
+          </div>
+          <ul class="space-y-2">
+            <SfListItem
+              v-for="{ key: subcategoryKey, link } in categories[0].subcategories"
+              :key="subcategoryKey"
+              class="py-2 !bg-transparent typography-text-sm"
+            >
+              <SfLink
+                :tag="NuxtLink"
+                :style="{ color: footerSettings.colors.text }"
+                class="no-underline text-neutral-600 hover:!text-neutral-900"
+                variant="secondary"
+                :to="localePath(link)"
+              >
+                {{ t(`categories.${categories[0].key}.subcategories.${subcategoryKey}`) }}
+              </SfLink>
+            </SfListItem>
+          </ul>
         </div>
-        <ul>
-          <SfListItem
-            v-for="{ key: subcategoryKey, link } in subcategories"
-            :key="subcategoryKey"
-            class="py-2 !bg-transparent typography-text-sm"
-          >
+
+        <div
+          v-for="(column, i) in [footerSettings.column2, footerSettings.column3, footerSettings.column4]"
+          :key="i"
+          class="max-w-[280px] break-words"
+        >
+          <div class="ml-4 text-lg font-medium leading-7">
+            {{ column.title }}
+          </div>
+          <div v-if="column.description" class="mt-2 text-sm" v-html="column.description" />
+          <div v-if="column.showContactLink" class="mt-2 text-sm">
             <SfLink
               :tag="NuxtLink"
-              :style="{ color: footerTextColor }"
-              class="router-link-active router-link-exact-active no-underline hover:underline active:underline"
+              class="no-underline text-neutral-600 hover:!text-neutral-900"
               variant="secondary"
-              :to="localePath(link)"
+              :to="localePath('/contact')"
             >
-              {{ t(`categories.${key}.subcategories.${subcategoryKey}`) }}
+              Contact
             </SfLink>
-          </SfListItem>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
-    <hr />
 
-    <div class="bg-neutral-900" data-testid="section-bottom">
-      <div class="justify-end px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">
-        <p class="flex items-center justify-center leading-5 text-center typography-text-sm text-white/50 md:ml-6">
-          {{ companyName }}
-        </p>
-      </div>
+    <div
+      class="text-sm text-center pt-4"
+      :style="{
+        color: footerSettings.colors.noteText,
+        backgroundColor: footerSettings.colors.noteBackground,
+      }"
+    >
+      {{ footerSettings.footnote }}
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfListItem, SfIconBase } from '@storefront-ui/vue';
+import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories } from '~/mocks';
-import type { FooterProps } from './types';
-import { editPath } from 'assets/icons/paths/edit';
-const { openFooterDrawer } = useSiteConfiguration();
-const { footerBackgroundColor, footerTextColor } = useSiteConfiguration();
-
-const triggerEdit = () => {
-  openFooterDrawer('FooterView');
-};
-
-const storename: string = useRuntimeConfig().public.storename;
-
-const companyName: string = `© ${storename} ${new Date().getFullYear()}`;
-
-const { simplifiedFooter = false } = defineProps<FooterProps>();
 
 const { t } = useI18n();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 
-const { isClicked, clickedBlockIndex, isTablet } = useBlockManager();
-const isPreview = useState('isPreview');
-const { disableActions } = useEditor();
-const root = true;
-const isDragging = ref(false);
-
-const showOutline = computed(
-  () => isPreview.value && disableActions.value && isClicked.value && isTablet.value && clickedBlockIndex.value === 0,
-);
-
-const showFooterHoverOutline = computed(
-  () => isPreview.value && disableActions.value && !isTablet.value && root && !isDragging.value,
-);
-
-function handleFooterClick() {
-  if (isTablet.value) {
-    isClicked.value = !isClicked.value;
-    clickedBlockIndex.value = isClicked.value ? 0 : null;
-  }
-}
+const { footerSettings } = useSiteConfiguration();
 </script>
