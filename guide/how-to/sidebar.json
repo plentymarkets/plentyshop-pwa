@@ -1,5 +1,9 @@
 [
     {
+        "text": "Project update strategies",
+        "link": "/guide/how-to/project-update-strategies.md"
+    },
+    {
         "text": "App configuration",
         "collapsed": true,
         "items": [
