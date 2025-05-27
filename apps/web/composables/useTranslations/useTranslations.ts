@@ -29,9 +29,10 @@ export const useTranslations: UseTranslationsReturn = () => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() => useSdk().plentysystems.getTranslations({ locale }));
+
       useHandleError(error.value);
 
-     state.value.data = data.data as string
+     state.value.data = data.value.data as string
     } catch (error) {
       throw new Error(error as string);
     } finally {
