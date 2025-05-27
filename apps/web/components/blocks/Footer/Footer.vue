@@ -43,6 +43,7 @@
           <div v-if="column.description" class="mt-2 text-sm" v-html="column.description" />
           <div v-if="column.showContactLink" class="mt-2 text-sm">
             <SfLink
+              :style="{ color: footerSettings.colors.text }"
               :tag="NuxtLink"
               class="no-underline text-neutral-600 hover:!text-neutral-900"
               variant="secondary"

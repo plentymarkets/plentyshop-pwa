@@ -36,10 +36,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     iconColor: useRuntimeConfig().public.iconColor,
     headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
-    footerBackgroundColor: useRuntimeConfig().public.footerBackgroundColor,
-    footerTextColor: useRuntimeConfig().public.footerTextColor,
-    footerNoteBackgroundColor: useRuntimeConfig().public.footerNoteBackgroundColor,
-    footerNoteTextColor: useRuntimeConfig().public.footerNoteTextColor,
     headerLogo: useRuntimeConfig().public.headerLogo,
     favicon: structuredClone(favicon).icon,
     ogTitle: structuredClone(openGraph).title,
@@ -52,25 +48,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
-    initialData: {
-      blockSize: useRuntimeConfig().public.blockSize,
-      selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
-      primaryColor: useRuntimeConfig().public.primaryColor,
-      secondaryColor: useRuntimeConfig().public.secondaryColor,
-      footerBackgroundColor: useRuntimeConfig().public.footerBackgroundColor,
-      footerTextColor: useRuntimeConfig().public.footerTextColor,
-      footerNoteBackgroundColor: useRuntimeConfig().public.footerNoteBackgroundColor,
-      footerNoteTextColor: useRuntimeConfig().public.footerNoteTextColor,
-      iconColor: useRuntimeConfig().public.iconColor,
-      headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
-      seoSettings: structuredClone(metaDefaults),
-      headerLogo: useRuntimeConfig().public.headerLogo,
-      favicon: structuredClone(favicon).icon,
-      ogTitle: structuredClone(openGraph).title,
-      ogImg: structuredClone(openGraph).image,
-      useAvif: useRuntimeConfig().public.useAvif,
-      useWebp: useRuntimeConfig().public.useWebp,
-    },
     footerSettings: {
       column1: { title: 'Column 1' },
       column2: { title: 'Column 2', description: '', showContactLink: true },
@@ -84,6 +61,35 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         noteText: useRuntimeConfig().public.footerNoteTextColor,
       },
     },
+    initialData: {
+      blockSize: useRuntimeConfig().public.blockSize,
+      selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+      primaryColor: useRuntimeConfig().public.primaryColor,
+      secondaryColor: useRuntimeConfig().public.secondaryColor,
+      iconColor: useRuntimeConfig().public.iconColor,
+      headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
+      seoSettings: structuredClone(metaDefaults),
+      headerLogo: useRuntimeConfig().public.headerLogo,
+      favicon: structuredClone(favicon).icon,
+      ogTitle: structuredClone(openGraph).title,
+      ogImg: structuredClone(openGraph).image,
+      useAvif: useRuntimeConfig().public.useAvif,
+      useWebp: useRuntimeConfig().public.useWebp,
+      initialFooterSettings: structuredClone({
+        column1: { title: 'Column 1' },
+        column2: { title: 'Column 2', description: '', showContactLink: true },
+        column3: { title: 'Column 3', description: '' },
+        column4: { title: 'Column 4', description: '' },
+        footnote: 'Footnotes are here now',
+        colors: {
+          background: useRuntimeConfig().public.footerBackgroundColor,
+          text: useRuntimeConfig().public.footerTextColor,
+          noteBackground: useRuntimeConfig().public.footerNoteBackgroundColor,
+          noteText: useRuntimeConfig().public.footerNoteTextColor,
+        },
+      }),
+    },
+
   }));
 
   /**
@@ -203,16 +209,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const settingsIsDirty = computed(() => {
+    const footerChanged = JSON.stringify(state.value.footerSettings) !== JSON.stringify(state.value.initialData.initialFooterSettings);
     return (
+      footerChanged ||
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       state.value.iconColor !== state.value.initialData.iconColor ||
       state.value.headerBackgroundColor !== state.value.initialData.headerBackgroundColor ||
-      state.value.footerBackgroundColor !== state.value.initialData.footerBackgroundColor ||
-      state.value.footerNoteBackgroundColor !== state.value.initialData.footerNoteBackgroundColor ||
-      state.value.footerNoteTextColor !== state.value.initialData.footerNoteTextColor ||
-      state.value.footerTextColor !== state.value.initialData.footerTextColor ||
       state.value.headerLogo !== state.value.initialData.headerLogo ||
       state.value.favicon !== state.value.initialData.favicon ||
       state.value.ogTitle !== state.value.initialData.ogTitle ||
@@ -220,11 +224,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
-      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
       JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
     );
   });
-
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
 
@@ -293,22 +295,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'iconBackgroundColor',
         value: state.value.headerBackgroundColor,
       },
-      {
-        key: 'footerBackgroundColor',
-        value: state.value.footerBackgroundColor,
-      },
-      {
-        key: 'footerTextColor',
-        value: state.value.footerTextColor,
-      },
-      {
-        key: 'footerNoteBackgroundColor',
-        value: state.value.footerNoteBackgroundColor,
-      },
-      {
-        key: 'footerNoteTextColor',
-        value: state.value.footerNoteTextColor,
-      },
     ];
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -325,10 +311,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: state.value.secondaryColor,
       iconColor: state.value.iconColor,
       headerBackgroundColor: state.value.headerBackgroundColor,
-      footerBackgroundColor: state.value.footerBackgroundColor,
-      footerNoteBackgroundColor: state.value.footerNoteBackgroundColor,
-      footerNoteTextColor: state.value.footerNoteTextColor,
-      footerTextColor: state.value.footerTextColor,
       headerLogo: state.value.headerLogo,
       favicon: state.value.favicon,
       ogTitle: state.value.ogTitle,
@@ -336,6 +318,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useAvif: state.value.useAvif,
       useWebp: state.value.useWebp,
       seoSettings: state.value.seoSettings,
+      initialFooterSettings: structuredClone(state.value.footerSettings),
+
     };
 
     state.value.loading = false;

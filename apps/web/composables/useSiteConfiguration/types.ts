@@ -17,10 +17,6 @@ export type ConfigurationSettings = {
   primaryColor: string;
   secondaryColor: string;
   headerBackgroundColor: string;
-  footerBackgroundColor: string;
-  footerTextColor: string;
-  footerNoteBackgroundColor: string;
-  footerNoteTextColor: string;
   iconColor: string;
   headerLogo: string;
   favicon: string;
@@ -34,6 +30,7 @@ export type ConfigurationSettings = {
     keywords: string;
     robots: string;
   };
+  initialFooterSettings: FooterSettings;
 };
 
 export interface UseSiteConfigurationState {
@@ -48,10 +45,6 @@ export interface UseSiteConfigurationState {
   primaryColor: string;
   secondaryColor: string;
   headerBackgroundColor: string;
-  footerBackgroundColor: string;
-  footerTextColor: string;
-  footerNoteBackgroundColor: string;
-  footerNoteTextColor: string;
   iconColor: string;
   headerLogo: string;
   favicon: string;
@@ -125,10 +118,6 @@ export interface UseSiteConfiguration {
   iconColor: Readonly<Ref<UseSiteConfigurationState['iconColor']>>;
   headerLogo: Readonly<Ref<UseSiteConfigurationState['headerLogo']>>;
   favicon: Readonly<Ref<UseSiteConfigurationState['favicon']>>;
-  footerBackgroundColor: Readonly<Ref<UseSiteConfigurationState['footerBackgroundColor']>>;
-  footerTextColor: Readonly<Ref<UseSiteConfigurationState['footerTextColor']>>;
-  footerNoteBackgroundColor: Readonly<Ref<UseSiteConfigurationState['footerNoteBackgroundColor']>>;
-  footerNoteTextColor: Readonly<Ref<UseSiteConfigurationState['footerNoteTextColor']>>;
   ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;
   ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
   useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;

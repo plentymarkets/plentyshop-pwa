@@ -233,14 +233,14 @@
           <UiFormLabel>Footnote Text color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="text-color-select">
+          <SfInput v-model="footerSettings.colors.noteText" type="text" data-testid="text-color-select">
             <template #suffix>
               <label
                 for="footer-text-color"
-                :style="{ backgroundColor: footerSettings.colors.noteBackground }"
+                :style="{ backgroundColor: footerSettings.colors.noteText }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="footer-text-color" v-model="footerSettings.colors.noteBackground" type="color" class="invisible w-8" />
+                <input id="footer-text-color" v-model="footerSettings.colors.noteText" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -252,14 +252,14 @@
           <UiFormLabel>Footnote Background color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerNoteBackgroundColor" type="text" data-testid="bg-footer-color-select">
+          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="bg-footer-color-select">
             <template #suffix>
               <label
                 for="bg-footer-color"
-                :style="{ backgroundColor: footerNoteBackgroundColor }"
+                :style="{ backgroundColor: footerSettings.colors.noteBackground }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="bg-footer-color" v-model="footerNoteBackgroundColor" type="color" class="invisible w-8" />
+                <input id="bg-footer-color" v-model="footerSettings.colors.noteBackground" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -270,14 +270,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import {SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
 
 const {
-  footerBackgroundColor,
-  footerTextColor,
-  footerNoteTextColor,
-  footerNoteBackgroundColor,
-  closeDrawer,
   footerSettings,
 } = useSiteConfiguration();
 const firstColumnOpen = ref(false);
