@@ -1,5 +1,5 @@
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import type { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
+import type {ApplepayType, ConfigResponse, PayPalAddToCartCallback} from '~/components/PayPal/types';
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ export const useApplePay = () => {
     } as ApplePayJS.ApplePayPaymentRequest;
   };
 
-  const processPayment = () => {
+  const processPayment = (emits: { (event: "button-clicked", callback: PayPalAddToCartCallback): Promise<void> }) => {
     const { processingOrder } = useProcessingOrder();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
@@ -77,6 +77,15 @@ export const useApplePay = () => {
 
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
         try {
+          console.log('onvalidatemerchant', event);
+          await emits('button-clicked', async (successfully: boolean) => {
+            console.log('button-clicked', successfully);
+            if (!successfully) {
+              paymentSession.abort();
+              return;
+            }
+          });
+
           const validationData = await state.value.script.validateMerchant({
             validationUrl: event.validationURL,
           });
