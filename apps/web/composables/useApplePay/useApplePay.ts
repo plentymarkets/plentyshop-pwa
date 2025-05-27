@@ -77,9 +77,7 @@ export const useApplePay = () => {
 
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
         try {
-          console.log('onvalidatemerchant123', event);
           await emits('button-clicked', async (successfully) => {
-            console.log('button-clicked', successfully);
             if (!successfully) {
               paymentSession.abort();
               return;
@@ -88,7 +86,6 @@ export const useApplePay = () => {
             const validationData = await state.value.script.validateMerchant({
               validationUrl: event.validationURL,
             });
-            console.log('validationData', validationData);
             paymentSession.completeMerchantValidation(validationData.merchantSession);
           });
         } catch(e) {
@@ -103,12 +100,14 @@ export const useApplePay = () => {
             type: 'basket',
           });
           if (!transaction || !transaction.id) {
+            paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));
             return;
           }
 
           const order = await createPlentyOrder();
           if (!order || !order.order || !order.order.id) {
+            paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));
             return;
           }
@@ -120,6 +119,7 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
+            paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
             return;
           }
