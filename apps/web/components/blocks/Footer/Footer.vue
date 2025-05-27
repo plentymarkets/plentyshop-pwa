@@ -22,7 +22,7 @@
               <SfLink
                 :tag="NuxtLink"
                 :style="{ color: footerSettings.colors.text }"
-                class="no-underline text-neutral-600 hover:!text-neutral-900"
+                class="no-underline text-neutral-600 hover:!text-neutral-900 hover:underline active:underline"
                 variant="secondary"
                 :to="localePath(link)"
               >
@@ -40,23 +40,28 @@
           <div class="ml-4 text-lg font-medium leading-7">
             {{ column.title }}
           </div>
-          <div v-if="column.description" class="mt-2 text-sm" v-html="column.description" />
-          <div v-if="column.showContactLink" class="mt-2 text-sm">
+                 <div v-if="column.showContactLink" class="mt-2 ml-4 text-sm hover:underline active:underline">
             <SfLink
               :tag="NuxtLink"
-              class="no-underline text-neutral-600 hover:!text-neutral-900"
+              class="no-underline text-neutral-900 hover:cursor-pointer hover:!text-neutral-900 hover:underline active:underline"
               variant="secondary"
               :to="localePath('/contact')"
             >
               Contact
             </SfLink>
           </div>
+          <div
+            v-if="column.description"
+            class="mt-2 ml-4 text-sm hover:underline active:underline hover:cursor-pointer"
+            v-html="column.description"
+          />
+
         </div>
       </div>
     </div>
 
     <div
-      class="text-sm text-center pt-4"
+      class="text-sm text-center py-4"
       :style="{
         color: footerSettings.colors.noteText,
         backgroundColor: footerSettings.colors.noteBackground,

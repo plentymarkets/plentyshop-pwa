@@ -76,7 +76,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       column2: { title: 'Column 2', description: '', showContactLink: true },
       column3: { title: 'Column 3', description: '' },
       column4: { title: 'Column 4', description: '' },
-      footnote: 'Footnotes are here now',
+      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
       colors: {
         background: useRuntimeConfig().public.footerBackgroundColor,
         text: useRuntimeConfig().public.footerTextColor,
