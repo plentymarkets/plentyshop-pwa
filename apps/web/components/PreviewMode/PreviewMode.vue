@@ -65,7 +65,6 @@ const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteConfiguration();
 const { save: saveBlocksAndSiteSettings } = useToolbar();
 const { save: saveCategorySettings, hasChanges } = useCategorySettingsCollection();
-const { $isPreview } = useNuxtApp();
 
 const bannerIsHidden = ref(true);
 const config = useRuntimeConfig().public;
