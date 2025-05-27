@@ -99,7 +99,12 @@
           <SfInput v-model="footerSettings.column3.title" type="text" data-testid="input-title-column-3">
             <template #suffix>
               <label for="input-title-column-3" class="rounded-lg cursor-pointer">
-                <input id="input-title-column-3" v-model="footerSettings.column3.title" type="text" class="invisible w-8" />
+                <input
+                  id="input-title-column-3"
+                  v-model="footerSettings.column3.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -196,7 +201,12 @@
                 :style="{ backgroundColor: footerSettings.colors.background }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="bg-footer-color" v-model="footerSettings.colors.background" type="color" class="invisible w-8" />
+                <input
+                  id="bg-footer-color"
+                  v-model="footerSettings.colors.background"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -218,10 +228,10 @@
           <UiFormLabel>Footnotes text</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerSettings.footnote"  type="text" data-testid="input-footnote">
+          <SfInput v-model="footerSettings.footnote" type="text" data-testid="input-footnote">
             <template #suffix>
               <label for="input-footnote" class="rounded-lg cursor-pointer">
-                <input id="input-footnote"  v-model="footerSettings.footnote" type="text" class="invisible w-8" />
+                <input id="input-footnote" v-model="footerSettings.footnote" type="text" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -233,14 +243,19 @@
           <UiFormLabel>Footnote Text color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerSettings.colors.noteText" type="text" data-testid="text-color-select">
+          <SfInput v-model="footerSettings.colors.noteText" type="text" data-testid="footnote-text-color-select">
             <template #suffix>
               <label
-                for="footer-text-color"
+                for="footnote-text-color"
                 :style="{ backgroundColor: footerSettings.colors.noteText }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="footer-text-color" v-model="footerSettings.colors.noteText" type="color" class="invisible w-8" />
+                <input
+                  id="footnote-text-color"
+                  v-model="footerSettings.colors.noteText"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -252,14 +267,19 @@
           <UiFormLabel>Footnote Background color</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="bg-footer-color-select">
+          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="footnote-bg-color-select">
             <template #suffix>
               <label
-                for="bg-footer-color"
+                for="footnote-bg-color"
                 :style="{ backgroundColor: footerSettings.colors.noteBackground }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="bg-footer-color" v-model="footerSettings.colors.noteBackground" type="color" class="invisible w-8" />
+                <input
+                  id="footnote-bg-color"
+                  v-model="footerSettings.colors.noteBackground"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -270,11 +290,9 @@
 </template>
 
 <script setup lang="ts">
-import {SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
 
-const {
-  footerSettings,
-} = useSiteConfiguration();
+const { footerSettings } = useSiteConfiguration();
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
 const thirdColumnOpen = ref(false);
