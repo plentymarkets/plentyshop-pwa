@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
+      watch: {
+        usePolling: process.env.NODE_ENV === 'development', // see apps/web/plugins/02.pwa-cookie.ts
+      },
     },
     optimizeDeps: {
       include: ['dotenv', 'validator', 'js-sha256'],
@@ -65,6 +68,7 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
+      isPreview: false,
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo:
