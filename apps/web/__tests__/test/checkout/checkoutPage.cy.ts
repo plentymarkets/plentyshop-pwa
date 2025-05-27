@@ -11,14 +11,14 @@ const productListPage = new ProductListPageObject();
 
 beforeEach(() => {
   cy.clearCookies();
-  cy.visitAndHydrate(paths.home);
 });
 
 describe('Smoke: Checkout Page', () => {
-  it('[smoke] Display checkout and place order', () => {
+  it('[smoke] full checkout flow and place order', () => {
+    // dont replace with cy.addToCart(); this should check the complete checkout flow
+    cy.visitAndHydrate(paths.home);
     homePage.goToCategory();
     productListPage.addToCart();
-
     cart.openCart();
     checkout
       .goToCheckout()
@@ -32,13 +32,9 @@ describe('Smoke: Checkout Page', () => {
   });
 
   it('[smoke] Display "no shipping methods available" when shipping country is Denmark', () => {
-    homePage.goToCategory();
-    productListPage.addToCart();
-
-    cart.openCart();
+    cy.visitSmoke().addToCart();
     checkout
-      .goToCheckout()
-      .goToGuestCheckout()
+      .goToCheckoutPath()
       .fillContactInformationForm()
       .shouldShowShippingMethods()
       .fillShippingAddressForm({
