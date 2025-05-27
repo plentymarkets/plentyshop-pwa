@@ -77,7 +77,7 @@ export const useApplePay = () => {
 
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
         try {
-          console.log('onvalidatemerchant', event);
+          console.log('onvalidatemerchant123', event);
           await emits('button-clicked', async (successfully) => {
             console.log('button-clicked', successfully);
             if (!successfully) {
