@@ -58,6 +58,8 @@ import storeBlack from '/assets/icons/paths/store-black.svg';
 import { SfIconWarning } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
+const { $isPreview } = useNuxtApp();
+
 const { t } = useI18n();
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteConfiguration();

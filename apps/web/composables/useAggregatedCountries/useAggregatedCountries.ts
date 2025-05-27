@@ -76,11 +76,19 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     const country = countries.find((country: ActiveShippingCountry | GeoRegulatedCountry) => country.id === countryId);
 
     let pattern = country?.zipCodeRegex ?? null;
-    if (pattern && pattern.startsWith('/') && pattern.endsWith('/')) pattern = pattern.slice(1, -1);
 
     try {
-      if (typeof pattern === 'string') return new RegExp(pattern);
-      return null;
+      if (typeof pattern !== 'string') return null;
+      let flags = '';
+
+      if (pattern.startsWith('/') && pattern.endsWith('/i')) {
+        pattern = pattern.slice(1, -2);
+        flags = 'i';
+      } else if (pattern.startsWith('/') && pattern.endsWith('/')) {
+        pattern = pattern.slice(1, -1);
+      }
+
+      return new RegExp(pattern, flags);
     } catch (error: unknown) {
       useHandleError(error as ApiError);
       return null;

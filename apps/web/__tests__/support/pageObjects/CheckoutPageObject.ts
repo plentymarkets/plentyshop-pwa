@@ -1,5 +1,6 @@
 import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
+import { paths } from '../../../utils/paths';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -132,6 +133,11 @@ export class CheckoutPageObject extends PageObject {
 
   goToCheckout() {
     this.goToCheckoutButton.click();
+    return this;
+  }
+
+  goToCheckoutPath() {
+    cy.visitAndHydrate(paths.checkout);
     return this;
   }
 
@@ -317,6 +323,7 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillShippingForm(fixture: any) {
+    cy.wait(1000);
     this.shippingAddressForm.within(() => {
       this.firstNameInput.type(fixture.firstName);
       this.lastNameInput.type(fixture.lastName);
@@ -335,6 +342,7 @@ export class CheckoutPageObject extends PageObject {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillBillingForm(fixture: any) {
+    cy.wait(1000);
     this.shippingAddressForm
       .within(() => {
         this.firstNameInput.type(fixture.firstName);

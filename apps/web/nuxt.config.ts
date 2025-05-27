@@ -28,7 +28,7 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
       watch: {
-        usePolling: process.env.NODE_ENV === 'development',
+        usePolling: process.env.NODE_ENV === 'development', // see apps/web/plugins/02.pwa-cookie.ts
       },
     },
     optimizeDeps: {
@@ -68,8 +68,8 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
-      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       isPreview: false,
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo:
         process.env.LOGO ||
@@ -248,5 +248,16 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
+  },
+  hooks: {
+    'pages:extend'(pages) {
+      if (process.env.E2E_TEST) {
+        pages.push({
+          name: 'e2e',
+          path: '/smoke-e2e',
+          file: '~/e2e/smoke-e2e.vue',
+        });
+      }
+    },
   },
 });

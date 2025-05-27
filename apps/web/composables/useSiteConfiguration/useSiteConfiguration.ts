@@ -141,6 +141,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     setColorProperties('secondary', tailwindColors);
   };
 
+  const updateHeaderBackgroundColor: SetColorPalette = (hexColor: string) => {
+    const tailwindColors: TailwindPalette = getPaletteFromColor('header', hexColor).map((color) => ({
+      ...color,
+    }));
+
+    setColorProperties('header', tailwindColors);
+  };
+
   watch(
     () => state.value.primaryColor,
     (newValue) => {
@@ -152,6 +160,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     () => state.value.secondaryColor,
     (newValue) => {
       updateSecondaryColor(newValue);
+    },
+  );
+
+  watch(
+    () => state.value.headerBackgroundColor,
+    (newValue) => {
+      updateHeaderBackgroundColor(newValue);
     },
   );
 
@@ -339,6 +354,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   return {
     updatePrimaryColor,
     updateSecondaryColor,
+    updateHeaderBackgroundColor,
     ...toRefs(state.value),
     updateNewBlockPosition,
     loadGoogleFont,
