@@ -32,6 +32,7 @@
       </button>
       <UiBlockActions
         v-if="disableActions && blockHasData && blockHasData(block) && $isPreview && root && !isDragging"
+        :key="`${block.meta.uuid}`"
         :class="[
           'opacity-0 block-actions',
           {
