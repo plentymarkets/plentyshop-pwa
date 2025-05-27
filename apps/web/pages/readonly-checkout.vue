@@ -76,7 +76,12 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
 const { getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
-const { loading: executeOrderLoading, createPlentyOrder, captureOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
+const {
+  loading: executeOrderLoading,
+  createPlentyOrder,
+  captureOrder,
+  createPlentyPaymentFromPayPalOrder,
+} = usePayPal();
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');

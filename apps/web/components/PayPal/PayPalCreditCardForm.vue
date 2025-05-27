@@ -60,11 +60,10 @@ import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CardFieldsOnApproveData } from '@paypal/paypal-js';
 
-const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
 const { send } = useNotification();
-const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } = usePayPal();
-const { createOrder } = useMakeOrder();
+const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
+  usePayPal();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const localePath = useLocalePath();
@@ -99,7 +98,7 @@ onMounted(() => {
 
           emitPlentyEvent('frontend:orderCreated', order);
           navigateTo(
-              localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+            localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
           );
         }
         loading.value = false;

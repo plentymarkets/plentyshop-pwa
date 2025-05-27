@@ -1,10 +1,6 @@
-import {FUNDING_SOURCE, loadScript as loadPayPalScript, PayPalNamespace} from '@paypal/paypal-js';
-import type {
-  PayPalConfigResponse,
-  PayPalCreateOrder,
-  PayPalCreateOrderRequest,
-} from '@plentymarkets/shop-api';
-import {ApiError, paypalGetters} from '@plentymarkets/shop-api';
+import { type FUNDING_SOURCE, loadScript as loadPayPalScript, type PayPalNamespace } from '@paypal/paypal-js';
+import type { PayPalConfigResponse, PayPalCreateOrder, PayPalCreateOrderRequest, ApiError } from '@plentymarkets/shop-api';
+import { paypalGetters } from '@plentymarkets/shop-api';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
@@ -160,9 +156,11 @@ export const usePayPal = () => {
    */
   const getOrder = async (paypalOrderId: string) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalOrder({
-      paypalOrderId,
-    }));
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.getPayPalOrder({
+        paypalOrderId,
+      }),
+    );
     useHandleError(error.value);
 
     state.value.loading = false;
@@ -199,8 +197,7 @@ export const usePayPal = () => {
    */
   const createTransaction = async (params: PayPalCreateOrderRequest) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doCreatePayPalOrder(params));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePayPalOrder(params));
     state.value.order = data.value?.data ?? null;
     useHandleError(error.value);
 
@@ -222,9 +219,11 @@ export const usePayPal = () => {
    */
   const captureOrder = async (PayPalOrderId: string) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCapturePayPalOrderV2({
-      paypalOrderId: PayPalOrderId,
-    }));
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.doCapturePayPalOrderV2({
+        paypalOrderId: PayPalOrderId,
+      }),
+    );
     useHandleError(error.value);
 
     state.value.loading = false;
@@ -245,10 +244,12 @@ export const usePayPal = () => {
    */
   const createPlentyPaymentFromPayPalOrder = async (PayPalOrderId: string, plentyOrderId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePlentyPaymentFromPayPalOrder({
-      payPalOrderId: PayPalOrderId,
-      plentyOrderId,
-    }));
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.doCreatePlentyPaymentFromPayPalOrder({
+        payPalOrderId: PayPalOrderId,
+        plentyOrderId,
+      }),
+    );
     useHandleError(error.value);
 
     state.value.loading = false;
@@ -266,14 +267,12 @@ export const usePayPal = () => {
   const createPlentyOrder = async () => {
     state.value.loading = true;
     try {
-      const { data } = await useSdk().plentysystems.doPlaceOrder()
-      return data
-    }
-    catch (error) {
-      useHandleError(error as ApiError)
-      return null
-    }
-    finally {
+      const { data } = await useSdk().plentysystems.doPlaceOrder();
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+      return null;
+    } finally {
       state.value.loading = false;
     }
   };

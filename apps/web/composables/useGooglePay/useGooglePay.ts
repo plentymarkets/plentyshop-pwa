@@ -83,7 +83,8 @@ export const useGooglePay = () => {
   const processPayment = async (paymentData: google.payments.api.PaymentData) => {
     if (!state.value.script) return;
     const localePath = useLocalePath();
-    const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } = usePayPal();
+    const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
+      usePayPal();
     const { clearCartItems } = useCart();
     const { $i18n } = useNuxtApp();
     const { processingOrder } = useProcessingOrder();

@@ -1,5 +1,9 @@
-import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import type {ApplepayType, ConfigResponse, PayPalAddToCartCallback} from '~/components/PayPal/types';
+import { cartGetters } from '@plentymarkets/shop-api';
+import type { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '~/components/PayPal/types';
+
+type ButtonClickedEmits = {
+  (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
+};
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
@@ -63,7 +67,7 @@ export const useApplePay = () => {
     } as ApplePayJS.ApplePayPaymentRequest;
   };
 
-  const processPayment = (emits: { (event: "button-clicked", callback: PayPalAddToCartCallback): Promise<void> }) => {
+  const processPayment = (emits: ButtonClickedEmits) => {
     const { processingOrder } = useProcessingOrder();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
@@ -88,8 +92,7 @@ export const useApplePay = () => {
             });
             paymentSession.completeMerchantValidation(validationData.merchantSession);
           });
-        } catch(e) {
-          console.log(e);
+        } catch {
           paymentSession.abort();
         }
       };
@@ -145,8 +148,8 @@ export const useApplePay = () => {
       });
 
       paymentSession.begin();
-    } catch(e) {
-      console.log(e);
+    } catch {
+      showErrorNotification($i18n.t('storefrontError.unknownError'));
     }
   };
 

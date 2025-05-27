@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
+import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
@@ -12,7 +12,14 @@ const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(uuid());
 const paypalScript = ref<PayPalNamespace | null>(null);
 
-const { order: paypalOrder, getScript, createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
+const {
+  order: paypalOrder,
+  getScript,
+  createTransaction,
+  captureOrder,
+  createPlentyOrder,
+  createPlentyPaymentFromPayPalOrder,
+} = usePayPal();
 const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
 
@@ -68,7 +75,7 @@ const onValidationCallback = async () => {
 const onApprove = async (data: OnApproveData) => {
   emits('on-approved');
 
-  if ((props.type === TypeCartPreview || props.type === TypeSingleItem))
+  if (props.type === TypeCartPreview || props.type === TypeSingleItem)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (props.type === TypeCheckout) {
