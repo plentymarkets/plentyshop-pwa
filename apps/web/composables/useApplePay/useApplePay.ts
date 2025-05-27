@@ -78,18 +78,19 @@ export const useApplePay = () => {
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
         try {
           console.log('onvalidatemerchant', event);
-          await emits('button-clicked', async (successfully: boolean) => {
+          await emits('button-clicked', async (successfully) => {
             console.log('button-clicked', successfully);
             if (!successfully) {
               paymentSession.abort();
               return;
             }
-          });
 
-          const validationData = await state.value.script.validateMerchant({
-            validationUrl: event.validationURL,
+            const validationData = await state.value.script.validateMerchant({
+              validationUrl: event.validationURL,
+            });
+            console.log('validationData', validationData);
+            paymentSession.completeMerchantValidation(validationData.merchantSession);
           });
-          paymentSession.completeMerchantValidation(validationData.merchantSession);
         } catch(e) {
           console.log(e);
           paymentSession.abort();

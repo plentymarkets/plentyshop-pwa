@@ -20,9 +20,7 @@ const renderButton = async () => {
       const applePayButton = document.querySelector('#btn-appl');
       if (applePayButton) {
         applePayButton.addEventListener('click', () => {
-          console.log('Apple Pay button clicked');
           processPayment(emits);
-          console.log('Apple Pay button event listener added');
         });
       }
     }
