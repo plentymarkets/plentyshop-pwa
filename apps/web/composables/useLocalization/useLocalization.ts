@@ -1,11 +1,11 @@
-import { createSharedComposable } from '@vueuse/core';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
-import { useDisclosure } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
 
-export const useLocalization = createSharedComposable(() => {
-  const { isOpen: isOpen, toggle } = useDisclosure();
+export const useLocalization = () => {
+    const isOpen = useState('localization-open', () => false);
+    const toggle = () => isOpen.value = !isOpen.value;
+
   /**
    * @description Function for wrapping the category language path.
    *
@@ -82,6 +82,25 @@ export const useLocalization = createSharedComposable(() => {
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
+  const shouldAddLocalePrefix = (strategy: string, lang: string, defaultLocale: string, locales: string[]) => {
+
+      if (!locales.includes(lang)) return false;
+
+      if (strategy === 'prefix') {
+        return true;
+      }
+
+      if (strategy === 'prefix_except_default') {
+        return lang !== defaultLocale;
+      }
+
+      if (strategy === 'prefix_and_default') {
+        return lang !== defaultLocale;
+      }
+
+      return false;
+  }
+
   /**
    * @description Function for switching app locale.
    * @param language
@@ -113,5 +132,6 @@ export const useLocalization = createSharedComposable(() => {
     isOpen,
     toggle,
     switchLocale,
+    shouldAddLocalePrefix,
   };
-});
+};
