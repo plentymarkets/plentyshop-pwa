@@ -108,22 +108,23 @@ export const useLocalization = () => {
   };
 
   /**
-   * @description navigateTo wrapper that accepts a path and a locale string. If the lang is supported it will switch to the language otherwise it will use localePath as fallback
-   * @param path to navigate to, needs to start with a slash
-   * @param locale locale to switch to
-   * @example await navigateToWithLocale('/login', 'de');
+   * @description Function for creating a localized path. It will add the locale prefix if necessary respecting the i18n strategy settings.
+   * @param path  e.g. '/login'
+   * @param locale to be added to the path
+   * @returns localized path with the locale prefix if necessary
+   * @example createLocalePath('/login', 'de');
    */
-  const navigateToWithLocale = (path: string, locale: string) => {
+  const createLocalePath = (path: string, locale: string) => {
     const { defaultLocale, locales, strategy } = useNuxtApp().$i18n;
-    const { shouldAddLocalePrefix } = useLocalization();
     const localeCodes = locales.value.map((locale) => locale.code.toString());
 
     const shouldAddLocale = shouldAddLocalePrefix({ strategy, lang: locale, defaultLocale, locales: localeCodes });
     if (shouldAddLocale) {
-      return navigateTo(`/${locale}${path}`);
+      const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+      return `/${locale}${normalizedPath}`;
     }
     const localePath = useLocalePath();
-    return navigateTo(localePath(path));
+    return localePath(path);
   };
 
   /**
@@ -158,6 +159,6 @@ export const useLocalization = () => {
     toggle,
     switchLocale,
     shouldAddLocalePrefix,
-    navigateToWithLocale,
+    createLocalePath,
   };
 };
