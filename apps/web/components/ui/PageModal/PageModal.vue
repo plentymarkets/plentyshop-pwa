@@ -62,6 +62,18 @@
         />
       </div>
 
+      <div
+        v-if="!isValidParentPage()"
+        class="bg-red-700 w-full rounded-md text-white text-sm px-4 py-2 grid grid-cols-[auto,1fr] gap-2"
+      >
+        <span class="flex items-center">
+          <SfIconWarning />
+        </span>
+        <span>
+          {{ invalidParentMessage }}
+        </span>
+      </div>
+
       <div class="actions grid gap-4 grid-cols-2">
         <button
           type="button"
@@ -75,6 +87,8 @@
           type="submit"
           data-testid="block-spacing-btn"
           class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
+          :class="{ 'opacity-50 cursor-not-allowed': !isValidParentPage() }"
+          :disabled="!isValidParentPage()"
         >
           Add page
         </button>
@@ -84,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput } from '@storefront-ui/vue';
+import { SfIconClose, SfIconWarning, SfInput } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import { ErrorMessage } from 'vee-validate';
 
@@ -99,8 +113,12 @@ const {
   pageNameAttributes,
   errors,
   getLabel,
+  isValidParentPage,
   closeModal,
   onSubmit,
   handleSearch,
 } = useAddPageModal();
+
+const invalidParentMessage =
+  "You've selected a level 6 category as parent page. Select a category of level 5 or lower.";
 </script>
