@@ -92,11 +92,11 @@ export const useLocalization = () => {
   const createLocalePath = (path: string, locale: string) => {
     const { locales } = useNuxtApp().$i18n;
     const localeCodes = locales.value.map((_locale) => _locale.code.toString());
-    const langSupported = localeCodes.includes(locale);
+    const localeSupported = localeCodes.includes(locale);
     const localeRoute = useLocaleRoute();
     const localePath = useLocalePath();
 
-    if (langSupported) {
+    if (localeSupported) {
       return localeRoute(path, locale as Locale);
     }
     return localePath(path);
