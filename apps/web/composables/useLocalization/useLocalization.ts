@@ -82,48 +82,23 @@ export const useLocalization = () => {
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
-  const shouldAddLocalePrefix = (config: {
-    strategy: string;
-    lang: string;
-    defaultLocale: string;
-    locales: string[];
-  }) => {
-    const { locales, lang, defaultLocale, strategy } = config;
-
-    if (!locales.includes(lang)) return false;
-
-    if (strategy === 'prefix') {
-      return true;
-    }
-
-    if (strategy === 'prefix_except_default') {
-      return lang !== defaultLocale;
-    }
-
-    if (strategy === 'prefix_and_default') {
-      return lang !== defaultLocale;
-    }
-
-    return false;
-  };
-
   /**
-   * @description Function for creating a localized path. It will add the locale prefix if necessary respecting the i18n strategy settings.
+   * @description Function for creating a path with a specific locale. (useLocaleRoute or useLocalePath)
    * @param path  e.g. '/login'
    * @param locale to be added to the path
    * @returns localized path with the locale prefix if necessary
    * @example createLocalePath('/login', 'de');
    */
   const createLocalePath = (path: string, locale: string) => {
-    const { defaultLocale, locales, strategy } = useNuxtApp().$i18n;
-    const localeCodes = locales.value.map((locale) => locale.code.toString());
-
-    const shouldAddLocale = shouldAddLocalePrefix({ strategy, lang: locale, defaultLocale, locales: localeCodes });
-    if (shouldAddLocale) {
-      const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-      return `/${locale}${normalizedPath}`;
-    }
+    const { locales } = useNuxtApp().$i18n;
+    const localeCodes = locales.value.map((_locale) => _locale.code.toString());
+    const langSupported = localeCodes.includes(locale);
+    const localeRoute = useLocaleRoute();
     const localePath = useLocalePath();
+
+    if (langSupported) {
+      return localeRoute(path, locale as Locale);
+    }
     return localePath(path);
   };
 
@@ -158,7 +133,6 @@ export const useLocalization = () => {
     isOpen,
     toggle,
     switchLocale,
-    shouldAddLocalePrefix,
     createLocalePath,
   };
 };
