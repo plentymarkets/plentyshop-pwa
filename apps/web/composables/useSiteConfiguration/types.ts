@@ -82,6 +82,7 @@ export interface FooterSettings {
   column3: FooterColumn;
   column4: FooterColumn;
   footnote: string;
+  footnoteAlign: 'left' | 'center' | 'right';
   colors: {
     background: string;
     text: string;

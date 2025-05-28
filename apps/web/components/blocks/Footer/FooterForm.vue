@@ -237,6 +237,52 @@
           </SfInput>
         </label>
       </div>
+      <div class="py-2">
+        <UiFormLabel>Footnote Alignment</UiFormLabel>
+
+        <div
+          class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+        >
+          <div
+            for="footnoteAlign-align-left"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': footerSettings.footnoteAlign === 'left',
+                }"
+            data-testid="footnoteAlign-textbox-y-align-left"
+            @click="footerSettings.footnoteAlign = 'left'"
+          >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerSettings.footnoteAlign !== 'left' }" />
+            Left
+          </div>
+
+          <div
+            for="footnoteAlign-align-center"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': footerSettings.footnoteAlign === 'center',
+                }"
+            data-testid="footnoteAlign-textbox-y-align-center"
+            @click="footerSettings.footnoteAlign = 'center'"
+          >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerSettings.footnoteAlign !== 'center' }" />
+            Center
+          </div>
+
+          <div
+            for="footnoteAlign-align-right"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': footerSettings.footnoteAlign === 'right',
+                }"
+            data-testid="footnoteAlign-textbox-y-align-right"
+            @click="footerSettings.footnoteAlign = 'right'"
+          >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerSettings.footnoteAlign !== 'right' }" />
+            Right
+          </div>
+        </div>
+      </div>
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -290,7 +336,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 
 const { footerSettings } = useSiteConfiguration();
 const firstColumnOpen = ref(false);

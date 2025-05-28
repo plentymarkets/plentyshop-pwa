@@ -62,7 +62,12 @@
     </div>
 
     <div
-      class="text-sm text-center py-4"
+      class="text-sm  py-4"
+      :class="{
+    'text-left': footerSettings.footnoteAlign === 'left',
+    'text-center': footerSettings.footnoteAlign === 'center',
+    'text-right': footerSettings.footnoteAlign === 'right'
+  }"
       :style="{
         color: footerSettings.colors.noteText,
         backgroundColor: footerSettings.colors.noteBackground,
