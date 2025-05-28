@@ -156,7 +156,7 @@ export const useAddPageModal = () => {
   };
 
   const isValidParentPage = (): boolean => {
-    return getLevel(parentPage.value) !== 1;
+    return getLevel(parentPage.value) !== 6;
   };
 
   const createNewPage = async () => {
