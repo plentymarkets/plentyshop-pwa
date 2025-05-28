@@ -82,7 +82,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         column3: { title: 'Column 3', description: '' },
         column4: { title: 'Column 4', description: '' },
         footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-        footnoteAlign: 'center',
         colors: {
           background: useRuntimeConfig().public.footerBackgroundColor,
           text: useRuntimeConfig().public.footerTextColor,
@@ -91,7 +90,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         },
       }),
     },
-
   }));
 
   /**
@@ -211,7 +209,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const settingsIsDirty = computed(() => {
-    const footerChanged = JSON.stringify(state.value.footerSettings) !== JSON.stringify(state.value.initialData.initialFooterSettings);
+    const footerChanged =
+      JSON.stringify(state.value.footerSettings) !== JSON.stringify(state.value.initialData.initialFooterSettings);
     return (
       footerChanged ||
       state.value.blockSize !== state.value.initialData.blockSize ||
@@ -321,7 +320,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useWebp: state.value.useWebp,
       seoSettings: state.value.seoSettings,
       initialFooterSettings: structuredClone(state.value.footerSettings),
-
     };
 
     state.value.loading = false;

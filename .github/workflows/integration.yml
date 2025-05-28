@@ -147,6 +147,7 @@ jobs:
         env:
           NUXT_PUBLIC_DEFAULT_ITEMS_PER_PAGE: 1
           CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
+          CONFIG_ID: 1
           MOLLIE_TEST_MODE: true
 
       - uses: actions/upload-artifact@v4
