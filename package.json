@@ -37,7 +37,6 @@
     "@plentymarkets/shop-module-mollie": "^1.0.5",
     "@plentymarkets/shop-api": "^0.111.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
-    "@plentymarkets/shop-module-mollie": "^1.0.5",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",
