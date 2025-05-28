@@ -108,6 +108,25 @@ export const useLocalization = () => {
   };
 
   /**
+   * @description navigateTo wrapper that accepts a path and a locale string. If the lang is supported it will switch to the language otherwise it will use localePath as fallback
+   * @param path to navigate to, needs to start with a slash
+   * @param locale locale to switch to
+   * @example await navigateToWithLocale('/login', 'de');
+   */
+  const navigateToWithLocale = (path: string, locale: string) => {
+    const { defaultLocale, locales, strategy } = useNuxtApp().$i18n;
+    const { shouldAddLocalePrefix } = useLocalization();
+    const localeCodes = locales.value.map((locale) => locale.code.toString());
+
+    const shouldAddLocale = shouldAddLocalePrefix({ strategy, lang: locale, defaultLocale, locales: localeCodes });
+    if (shouldAddLocale) {
+      return navigateTo(`/${locale}${path}`);
+    }
+    const localePath = useLocalePath();
+    return navigateTo(localePath(path));
+  };
+
+  /**
    * @description Function for switching app locale.
    * @param language
    *
@@ -139,5 +158,6 @@ export const useLocalization = () => {
     toggle,
     switchLocale,
     shouldAddLocalePrefix,
+    navigateToWithLocale,
   };
 };
