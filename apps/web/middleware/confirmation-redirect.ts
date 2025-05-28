@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       const { defaultLocale, locales, strategy } = useNuxtApp().$i18n;
       const { shouldAddLocalePrefix } = useLocalization();
       const localeCodes = locales.value.map((locale) => locale.code.toString());
-      const shouldAddLocale = shouldAddLocalePrefix(strategy, lang, defaultLocale, localeCodes);
+      const shouldAddLocale = shouldAddLocalePrefix({ strategy, lang, defaultLocale, locales: localeCodes });
 
       if (shouldAddLocale) {
         return navigateTo(`/${lang}${paths.confirmation}/${to.query.id}/${to.query.ak}`);

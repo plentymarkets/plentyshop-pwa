@@ -82,7 +82,14 @@ export const useLocalization = () => {
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
-  const shouldAddLocalePrefix = (strategy: string, lang: string, defaultLocale: string, locales: string[]) => {
+  const shouldAddLocalePrefix = (config: {
+    strategy: string;
+    lang: string;
+    defaultLocale: string;
+    locales: string[];
+  }) => {
+    const { locales, lang, defaultLocale, strategy } = config;
+
     if (!locales.includes(lang)) return false;
 
     if (strategy === 'prefix') {
