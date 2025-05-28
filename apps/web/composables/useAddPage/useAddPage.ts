@@ -86,6 +86,7 @@ export const useAddPageModal = () => {
       return {
         ...noneCategoryItem,
         id: getParentCategoryId.value,
+        level: getCurrentCategoryLevel.value ?? 0,
         details: [{ ...noneCategoryItem.details[0], name: getParentName.value }],
       };
     }
@@ -94,6 +95,7 @@ export const useAddPageModal = () => {
       return {
         ...noneCategoryItem,
         id: getCategoryId.value,
+        level: getCurrentCategoryLevel.value ?? 0,
         details: [{ ...noneCategoryItem.details[0], name: getCategoryName.value }],
       };
     }
@@ -154,7 +156,7 @@ export const useAddPageModal = () => {
   };
 
   const isValidParentPage = (): boolean => {
-    return getLevel(parentPage.value) !== 6;
+    return getLevel(parentPage.value) !== 1;
   };
 
   const createNewPage = async () => {
