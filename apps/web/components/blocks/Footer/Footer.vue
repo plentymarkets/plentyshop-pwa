@@ -62,6 +62,7 @@
     </div>
 
     <div
+      v-if="footerSettings.footnote && footerSettings.footnote.trim() !== ''"
       class="text-sm text-center py-4"
       :style="{
         color: footerSettings.colors.noteText,

@@ -6,17 +6,17 @@
       :class="[
         'relative block-wrapper',
         {
-          'mb-s': blockSize === 's' && root,
-          'mb-m': blockSize === 'm' && root,
-          'mb-l': blockSize === 'l' && root,
-          'mb-xl': blockSize === 'xl' && root,
+          'mb-s': blockSize === 's' && root && block.type !== 'footer',
+          'mb-m': blockSize === 'm' && root && block.type !== 'footer',
+          'mb-l': blockSize === 'l' && root && block.type !== 'footer',
+          'mb-xl': blockSize === 'xl' && root && block.type !== 'footer',
         },
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
         {
           'hover:outline hover:outline-4 hover:outline-[#538AEA]':
-            $isPreview && disableActions && !isTablet && root && !isDragging,
+            disableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
