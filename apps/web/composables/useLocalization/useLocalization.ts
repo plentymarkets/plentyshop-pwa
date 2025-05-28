@@ -3,8 +3,8 @@ import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 export const useLocalization = () => {
-    const isOpen = useState('localization-open', () => false);
-    const toggle = () => isOpen.value = !isOpen.value;
+  const isOpen = useState('localization-open', () => false);
+  const toggle = () => (isOpen.value = !isOpen.value);
 
   /**
    * @description Function for wrapping the category language path.
@@ -83,23 +83,22 @@ export const useLocalization = () => {
   };
 
   const shouldAddLocalePrefix = (strategy: string, lang: string, defaultLocale: string, locales: string[]) => {
+    if (!locales.includes(lang)) return false;
 
-      if (!locales.includes(lang)) return false;
+    if (strategy === 'prefix') {
+      return true;
+    }
 
-      if (strategy === 'prefix') {
-        return true;
-      }
+    if (strategy === 'prefix_except_default') {
+      return lang !== defaultLocale;
+    }
 
-      if (strategy === 'prefix_except_default') {
-        return lang !== defaultLocale;
-      }
+    if (strategy === 'prefix_and_default') {
+      return lang !== defaultLocale;
+    }
 
-      if (strategy === 'prefix_and_default') {
-        return lang !== defaultLocale;
-      }
-
-      return false;
-  }
+    return false;
+  };
 
   /**
    * @description Function for switching app locale.
