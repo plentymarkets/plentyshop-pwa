@@ -12,17 +12,22 @@ beforeEach(() => {
   checkout.goToCheckoutPath().fillContactInformationForm().useShippingAsBilling.uncheck();
 });
 
-// only test one case to safe test execution time other zipcodes are tested in a unit test
-describe('Post Code validator GB', () => {
-  it('should acccept valid GB post code', () => {
-    const gb = countryList.find((country) => country.countryId === '12');
-    checkout.fillPostCodeBillingForm({ country: gb?.countryId, zipCode: gb?.valid[0] });
-    cy.get('#billingZipCodeError').should('not.exist');
-  });
+// only test one case (UK, set in env) to safe test execution time
+// other zipcodes are tested in a unit test
+countryList.forEach(({ countryId, name, valid, invalid }) => {
+  describe(`${name} Post Code Validator`, () => {
+    valid.forEach((zipCode) => {
+      it(`accepts valid postcode: ${zipCode}`, () => {
+        checkout.fillPostCodeBillingForm({ country: countryId, zipCode });
+        cy.get('#billingZipCodeError').should('not.exist');
+      });
+    });
 
-  it('should fail on invalid GB post code', () => {
-    const gb = countryList.find((country) => country.countryId === '12');
-    checkout.fillPostCodeBillingForm({ country: gb?.countryId, zipCode: gb?.invalid[0] });
-    cy.get('#billingZipCodeError').should('exist');
+    invalid.forEach((zipCode) => {
+      it(`rejects invalid postcode: ${zipCode}`, () => {
+        checkout.fillPostCodeBillingForm({ country: countryId, zipCode });
+        cy.get('#billingZipCodeError').should('exist');
+      });
+    });
   });
 });

@@ -3,7 +3,7 @@ import { ActiveShippingCountryList } from './mocks/ActiveShippingCountriesMock';
 import countryList from '../../../__tests__/fixtures/postCodeMapper.json';
 
 describe('useAggregatedCountries', () => {
-  describe('paresZipCodeRegex', () => {
+  describe('parseZipCodeRegex', () => {
     countryList.forEach(({ countryId, name, valid, invalid }) => {
       describe(`${name} Post Code Validator`, () => {
         valid.forEach((zipCode) => {
@@ -11,7 +11,7 @@ describe('useAggregatedCountries', () => {
             const country = ActiveShippingCountryList.find((country) => Number(country.id === Number(countryId)));
             if (!country) return null;
             const regex = useAggregatedCountries().parseZipCodeRegex(country);
-            expect(regex?.test(zipCode)).not.toBe(null);
+            expect(regex?.test(zipCode)).toBe(true);
           });
         });
 
