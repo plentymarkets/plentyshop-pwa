@@ -49,10 +49,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     footerSettings: {
-      column1: { title: 'Column 1' },
-      column2: { title: 'Column 2', description: '', showContactLink: true },
-      column3: { title: 'Column 3', description: '' },
-      column4: { title: 'Column 4', description: '' },
+      column1: { title: 'Legal' },
+      column2: { title: 'Contact', description: '', showContactLink: true },
+      column3: { title: '', description: '' },
+      column4: { title: '', description: '' },
       footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
       footnoteAlign: 'center',
       colors: {
@@ -77,10 +77,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
       initialFooterSettings: structuredClone({
-        column1: { title: 'Column 1' },
-        column2: { title: 'Column 2', description: '', showContactLink: true },
-        column3: { title: 'Column 3', description: '' },
-        column4: { title: 'Column 4', description: '' },
+        column1: { title: 'Legal' },
+        column2: { title: 'Contact', description: '', showContactLink: true },
+        column3: { title: '', description: '' },
+        column4: { title: '', description: '' },
         footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
         footnoteAlign: 'center',
         colors: {

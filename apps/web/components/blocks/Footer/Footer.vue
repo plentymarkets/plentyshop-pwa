@@ -13,7 +13,7 @@
           <div class="ml-4 text-lg font-medium leading-7">
             {{ footerSettings.column1.title }}
           </div>
-          <ul class="space-y-2">
+          <ul>
             <SfListItem
               v-for="{ key: subcategoryKey, link } in categories[0].subcategories"
               :key="subcategoryKey"
@@ -40,30 +40,32 @@
           <div class="ml-4 text-lg font-medium leading-7">
             {{ column.title }}
           </div>
-                 <div v-if="column.showContactLink" class="mt-2 ml-4 text-sm hover:underline active:underline">
-            <SfLink
-              :style="{ color: footerSettings.colors.text }"
-              :tag="NuxtLink"
-              class="no-underline text-neutral-900 hover:cursor-pointer hover:!text-neutral-900 hover:underline active:underline"
-              variant="secondary"
-              :to="localePath('/contact')"
+          <div v-if="column.showContactLink" class="text-sm">
+            <li
+              class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
             >
-              Contact
-            </SfLink>
+              <SfLink
+                :style="{ color: footerSettings.colors.text }"
+                :tag="NuxtLink"
+                class="no-underline text-neutral-900 hover:cursor-pointer hover:!text-neutral-900 hover:underline active:underline"
+                variant="secondary"
+                :to="localePath('/contact')"
+              >
+                Contact
+              </SfLink>
+            </li>
           </div>
           <div
             v-if="column.description"
-            class="mt-2 ml-4 text-sm hover:underline active:underline hover:cursor-pointer"
+            class="custom-html ml-4 text-sm hover:cursor-pointer"
             v-html="column.description"
           />
-
         </div>
       </div>
     </div>
-
     <div
       v-if="footerSettings.footnote && footerSettings.footnote.trim() !== ''"
-      class="text-sm py-4"
+      class="text-sm text-center py-10 md:py-6 "
       :class="{
     'text-left': footerSettings.footnoteAlign === 'left',
     'text-center': footerSettings.footnoteAlign === 'center',
@@ -89,3 +91,10 @@ const NuxtLink = resolveComponent('NuxtLink');
 
 const { footerSettings } = useSiteConfiguration();
 </script>
+
+<style scoped>
+::v-deep(.custom-html li) {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+</style>

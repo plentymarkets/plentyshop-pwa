@@ -212,6 +212,53 @@
           </SfInput>
         </label>
       </div>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Footnote Text color</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="footerSettings.colors.noteText" type="text" data-testid="footnote-text-color-select">
+            <template #suffix>
+              <label
+                for="footnote-text-color"
+                :style="{ backgroundColor: footerSettings.colors.noteText }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="footnote-text-color"
+                  v-model="footerSettings.colors.noteText"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
+
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Footnote Background color</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="footnote-bg-color-select">
+            <template #suffix>
+              <label
+                for="footnote-bg-color"
+                :style="{ backgroundColor: footerSettings.colors.noteBackground }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="footnote-bg-color"
+                  v-model="footerSettings.colors.noteBackground"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -284,53 +331,6 @@
         </div>
       </div>
 
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Footnote Text color</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="footerSettings.colors.noteText" type="text" data-testid="footnote-text-color-select">
-            <template #suffix>
-              <label
-                for="footnote-text-color"
-                :style="{ backgroundColor: footerSettings.colors.noteText }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="footnote-text-color"
-                  v-model="footerSettings.colors.noteText"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Footnote Background color</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="footerSettings.colors.noteBackground" type="text" data-testid="footnote-bg-color-select">
-            <template #suffix>
-              <label
-                for="footnote-bg-color"
-                :style="{ backgroundColor: footerSettings.colors.noteBackground }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="footnote-bg-color"
-                  v-model="footerSettings.colors.noteBackground"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
     </UiAccordionItem>
   </div>
 </template>
