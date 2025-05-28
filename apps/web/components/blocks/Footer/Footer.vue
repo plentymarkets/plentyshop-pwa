@@ -65,12 +65,12 @@
     </div>
     <div
       v-if="footerSettings.footnote && footerSettings.footnote.trim() !== ''"
-      class="text-sm text-center py-10 md:py-6 "
+      class="text-sm py-10 md:py-6 px-4"
       :class="{
-    'text-left': footerSettings.footnoteAlign === 'left',
-    'text-center': footerSettings.footnoteAlign === 'center',
-    'text-right': footerSettings.footnoteAlign === 'right'
-  }"
+        'text-left': footerSettings.footnoteAlign === 'left',
+        'text-center': footerSettings.footnoteAlign === 'center',
+        'text-right': footerSettings.footnoteAlign === 'right',
+      }"
       :style="{
         color: footerSettings.colors.noteText,
         backgroundColor: footerSettings.colors.noteBackground,
