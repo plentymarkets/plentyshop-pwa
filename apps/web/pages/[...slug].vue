@@ -39,10 +39,11 @@ const route = useRoute();
 const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
+const { fetchProducts, fetchProductsServer, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
+const { setPageMeta } = usePageMeta();
 const runtimeConfig = useRuntimeConfig();
 
 const breadcrumbs = computed(() => {
@@ -59,20 +60,10 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
-const handleQueryUpdate = async () => {
-  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+await fetchProductsServer(getFacetsFromURL())
+      .then(() => checkFiltersInURL())
+      .then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
 
-  if (!productsCatalog.value.category) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Page not found',
-    });
-  }
-};
-
-await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
-
-const { setPageMeta } = usePageMeta();
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
 const icon = 'sell';
 setPageMeta(categoryName.value, icon);
@@ -112,7 +103,9 @@ const robotsContent = computed((): string =>
 watch(
   () => route.query,
   async () => {
-    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+    await fetchProducts(getFacetsFromURL())
+          .then(() => checkFiltersInURL())
+          .then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
   },
 );
 

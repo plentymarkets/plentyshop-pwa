@@ -33,7 +33,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
    * fetchProducts3({ categoryId: '19', page: 1 });
    * ```
    */
-  const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
+  const fetchProductsServer: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
@@ -41,11 +41,45 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     const { data } = await useAsyncData(`useProducts-${identifier}`, () => useSdk().plentysystems.getFacet(params));
 
+    if (!data.value?.data.category) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Page not found',
+      });
+    }
+
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
+    }
+
+    state.value.loading = false;
+    return state.value.data;
+  };
+
+
+  const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
+    console.log('fetchProducts');
+    state.value.loading = true;
+
+    if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
+
+    const { data } = await useSdk().plentysystems.getFacet(params);
+
+    if (!data.category) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Page not found',
+      });
+    }
+
+    state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
+
+    if (data) {
+      data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
+      state.value.data = data;
     }
 
     state.value.loading = false;
@@ -70,6 +104,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   };
 
   return {
+    fetchProductsServer,
     fetchProducts,
     setCurrentProduct,
     ...toRefs(state.value),

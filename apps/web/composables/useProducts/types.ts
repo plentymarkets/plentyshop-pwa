@@ -16,6 +16,7 @@ export interface UseProducts {
   productsPerPage: Readonly<Ref<number>>;
   currentProduct: Readonly<Ref<UseProductsState['currentProduct']>>;
   fetchProducts: FetchProducts;
+  fetchProductsServer: FetchProducts;
   setCurrentProduct: SetCurrentProduct;
 }
 
