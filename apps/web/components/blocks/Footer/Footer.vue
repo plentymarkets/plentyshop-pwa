@@ -57,7 +57,7 @@
           </div>
           <div
             v-if="column.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
+            class="custom-html ml-4 py-2 text-sm hover:cursor-pointer"
             v-html="column.description"
           />
         </div>

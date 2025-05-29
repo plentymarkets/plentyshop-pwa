@@ -7,7 +7,7 @@
       { 'outline outline-4 outline-[#538AEA]': showOutline },
       { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': showFooterHoverOutline },
     ]"
-    :style="{ cursor: isPreview && disableActions ? 'pointer' : '', backgroundColor: footerSettings.colors.background, }"
+    :style="{ cursor: isPreview && disableActions ? 'pointer' : '', backgroundColor: footerSettings.colors.background }"
     :tabindex="isPreview && disableActions ? 0 : undefined"
     @click="handleFooterClick"
   >
@@ -16,7 +16,7 @@
       data-testid="section-top"
     >
       <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
-        <div   :style="{ color: footerSettings.colors.text }" class="ml-4 text-lg font-medium leading-7">
+        <div :style="{ color: footerSettings.colors.text }" class="ml-4 text-lg font-medium leading-7">
           {{ t(`categories.${key}.label`) }}
         </div>
         <ul>
@@ -27,7 +27,7 @@
           >
             <SfLink
               :tag="NuxtLink"
-               :style="{ color: footerSettings.colors.text }"
+              :style="{ color: footerSettings.colors.text }"
               class="router-link-active router-link-exact-active no-underline hover:underline active:underline"
               variant="secondary"
               :to="localePath(link)"
@@ -81,10 +81,10 @@ const showFooterHoverOutline = computed(
   () => isPreview.value && disableActions.value && !isTablet.value && root && !isDragging.value,
 );
 
-function handleFooterClick() {
+const handleFooterClick = () => {
   if (isTablet.value) {
     isClicked.value = !isClicked.value;
     clickedBlockIndex.value = isClicked.value ? 0 : null;
   }
-}
+};
 </script>

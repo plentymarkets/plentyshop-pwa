@@ -54,7 +54,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       column3: { title: '', description: '' },
       column4: { title: '', description: '' },
       footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-      footnoteAlign: 'center',
+      footnoteAlign: 'right',
       colors: {
         background: useRuntimeConfig().public.footerBackgroundColor,
         text: useRuntimeConfig().public.footerTextColor,
@@ -82,7 +82,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         column3: { title: '', description: '' },
         column4: { title: '', description: '' },
         footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-        footnoteAlign: 'center',
+        footnoteAlign: 'right',
         colors: {
           background: useRuntimeConfig().public.footerBackgroundColor,
           text: useRuntimeConfig().public.footerTextColor,
