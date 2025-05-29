@@ -71,10 +71,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     return billingCountries.value.find((country) => country.id === id)?.currLangName ?? '';
   };
 
-  const getCountryZipCodeRegex = (countryId: number, type: AddressType): RegExp | null => {
-    const countries = type === AddressType.Billing ? billingCountries.value : state.value.default;
-    const country = countries.find((country: ActiveShippingCountry | GeoRegulatedCountry) => country.id === countryId);
-
+  const parseZipCodeRegex = (country: ActiveShippingCountry | GeoRegulatedCountry) => {
     let pattern = country?.zipCodeRegex ?? null;
 
     try {
@@ -95,7 +92,15 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     }
   };
 
+  const getCountryZipCodeRegex = (countryId: number, type: AddressType): RegExp | null => {
+    const countries = type === AddressType.Billing ? billingCountries.value : state.value.default;
+    const country = countries.find((country: ActiveShippingCountry | GeoRegulatedCountry) => country.id === countryId);
+    if (!country) return null;
+    return parseZipCodeRegex(country);
+  };
+
   return {
+    parseZipCodeRegex,
     fetchAggregatedCountries,
     useGeoRegulatedCountries,
     billingCountries,
