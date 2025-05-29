@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+
 describe('useLocalization', () => {
   const { useNuxtApp } = vi.hoisted(() => {
     return {

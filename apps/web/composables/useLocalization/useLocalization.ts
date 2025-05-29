@@ -1,9 +1,10 @@
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
+import { createSharedComposable } from '@vueuse/core';
 
-export const useLocalization = () => {
-  const isOpen = useState('localization-open', () => false);
+export const useLocalization = createSharedComposable(() => {
+  const isOpen = ref(false);
   const toggle = () => (isOpen.value = !isOpen.value);
 
   /**
@@ -135,4 +136,4 @@ export const useLocalization = () => {
     switchLocale,
     createLocalePath,
   };
-};
+});
