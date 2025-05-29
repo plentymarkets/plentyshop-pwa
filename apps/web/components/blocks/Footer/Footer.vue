@@ -22,7 +22,7 @@
               <SfLink
                 :tag="NuxtLink"
                 :style="{ color: footerSettings.colors.text }"
-                class="no-underline text-neutral-600 hover:!text-neutral-900 hover:underline active:underline"
+                class="no-underline text-neutral-600 hover:underline active:underline"
                 variant="secondary"
                 :to="localePath(link)"
               >
@@ -47,7 +47,7 @@
               <SfLink
                 :style="{ color: footerSettings.colors.text }"
                 :tag="NuxtLink"
-                class="no-underline text-neutral-900 hover:cursor-pointer hover:!text-neutral-900 hover:underline active:underline"
+                class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
                 variant="secondary"
                 :to="localePath('/contact')"
               >
@@ -96,5 +96,8 @@ const { footerSettings } = useSiteConfiguration();
 ::v-deep(.custom-html li) {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+::v-deep(.custom-html li:hover){
+  text-decoration: underline;
 }
 </style>
