@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" />
+    <EmptyBlock v-if="dataIsEmpty || (data.length === 1 && data[0].name === 'Footer')"/>
     <draggable
       v-if="data.length"
       v-model="data"
@@ -45,11 +45,25 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
+import { v4 as uuid } from 'uuid';
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
+const footerExists = data.value.some((block) => block.name === 'Footer');
+
+if (!footerExists) {
+  data.value.push({
+    name: 'Footer',
+    type: 'footer',
+    meta: {
+      uuid: uuid(),
+    },
+    content: {
+    },
+  });
+}
 
 const {
   isClicked,
@@ -61,7 +75,6 @@ const {
   handleDragStart,
   handleDragEnd,
 } = useBlockManager();
-
 const scrollToBlock = (evt: DragEvent) => {
   if (evt.moved) {
     const { newIndex } = evt.moved;
@@ -76,7 +89,7 @@ const scrollToBlock = (evt: DragEvent) => {
 
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { isEditingEnabled, disableActions } = useEditor();
-
+console.log('data', data.value);
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);

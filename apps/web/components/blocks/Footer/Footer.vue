@@ -65,7 +65,7 @@
     </div>
     <div
       v-if="footerSettings.footnote && footerSettings.footnote.trim() !== ''"
-      class="text-sm text-center py-10 md:py-6 "
+      class="text-sm py-10 md:py-6 "
       :class="{
     'text-left': footerSettings.footnoteAlign === 'left',
     'text-center': footerSettings.footnoteAlign === 'center',
