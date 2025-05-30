@@ -264,15 +264,15 @@ export class CheckoutPageObject extends PageObject {
   }
 
   payCreditCard() {
-    cy.intercept('/plentysystems/doPreparePayment')
-      .as('doPreparePayment')
-      .intercept('/plentysystems/doCapturePayPalOrder')
-      .as('doCapturePayPalOrder')
-      .intercept('/plentysystems/getExecutePayPalOrder')
-      .as('getExecutePayPalOrder');
+    cy.intercept('/plentysystems/doPlaceOrder')
+      .as('doPlaceOrder')
+      .intercept('/plentysystems/doCapturePayPalOrderV2')
+      .as('doCapturePayPalOrderV2')
+      .intercept('/plentysystems/doCreatePlentyPaymentFromPayPalOrder')
+      .as('doCreatePlentyPaymentFromPayPalOrder');
 
     cy.getByTestId('pay-creditcard-button').click();
-    cy.wait('@doPreparePayment').wait('@doCapturePayPalOrder').wait('@getExecutePayPalOrder');
+    cy.wait('@doPlaceOrder').wait('@doCapturePayPalOrderV2').wait('@doCreatePlentyPaymentFromPayPalOrder');
     return this;
   }
 
