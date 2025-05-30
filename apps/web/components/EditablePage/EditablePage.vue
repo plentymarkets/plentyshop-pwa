@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty || (data.length === 1 && data[0].name === 'Footer')"/>
+    <EmptyBlock v-if="dataIsEmpty || (data.length === 1 && data[0].name === 'Footer')" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -27,11 +27,15 @@
           class="group"
           :class="[
             {
-              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
+              'max-w-screen-3xl mx-auto lg:px-10 mt-3':
+                block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
             },
             {
               'px-4 md:px-6':
-                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe'  && block.name !== 'Footer',
+                block.name !== 'Carousel' &&
+                block.name !== 'Banner' &&
+                block.name !== 'NewsletterSubscribe' &&
+                block.name !== 'Footer',
             },
           ]"
           data-testid="block-wrapper"
@@ -61,6 +65,18 @@ if (!footerExists) {
       uuid: uuid(),
     },
     content: {
+      column1: { title: 'Column 1' },
+      column2: { title: 'Column 2', description: '', showContactLink: true },
+      column3: { title: 'Column 3', description: '' },
+      column4: { title: 'Column 4', description: '' },
+      footnote: 'Footnotes are here now',
+      footnoteAlign: 'center',
+      colors: {
+        background: '#f5f5f5',
+        text: '#1c1c1c',
+        noteBackground: '#e5e5e5',
+        noteText: '#000000',
+      },
     },
   });
 }
