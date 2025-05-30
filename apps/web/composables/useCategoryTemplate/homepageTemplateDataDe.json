@@ -123,10 +123,7 @@
       "uuid": "9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a"
     },
     "configuration": {
-      "columnWidths": [
-        4,
-        4
-      ]
+      "columnWidths": [4, 4]
     },
     "content": [
       {
@@ -185,25 +182,68 @@
     }
   },
   {
-      "name": "NewsletterSubscribe",
-      "type": "content",
-      "meta": {
-        "uuid": "0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f"
+    "name": "NewsletterSubscribe",
+    "type": "content",
+    "meta": {
+      "uuid": "0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f"
+    },
+    "content": {
+      "text": {
+        "bgColor": "#f5f5f5",
+        "title": "Abonnieren Sie unseren Newsletter",
+        "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
       },
-      "content": {
+      "input": {
+        "displayNameInput": true,
+        "nameIsRequired": false
+      },
+      "button": {
+        "label": "Newsletter abonnieren"
+      }
+    }
+  },
+  {
+    "name": "Footer",
+    "type": "footer",
+    "meta": {
+      "uuid": "4f7e2b1a-9c8d-4e6f-b3a2-1d0c5b4a3e2f"
+    },
+    "content": {
+      "firstColumn": {
         "text": {
-          "bgColor": "#f5f5f5",
-          "title": "Abonnieren Sie unseren Newsletter",
-          "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
-        },
-        "input": {
-          "displayNameInput": true,
-          "nameIsRequired": false
-        },
-        "button": {
-          "label": "Newsletter abonnieren"
+          "title": "Legal"
+        }
+      },
+      "secondColumn": {
+        "text": {
+          "title": "Contact",
+          "showLinkToContact": false,
+          "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
+        }
+      },
+      "thirdColumn": {
+        "text": {
+          "title": "Social Media",
+          "htmlDescription": "<ul><li><a href='https://www.instagram.com/plentymarkets/'>Instagram</a></li><li><a href='https://www.facebook.com/plentymarkets/'>Facebook</a></li></ul>"
+        }
+      },
+      "fourthColumn": {
+        "text": {
+          "title": "Newsletter",
+          "htmlDescription": "<p>Subscribe to our newsletter and stay updated on the latest news and offers.</p>"
+        }
+      },
+      "color": {
+        "text": "#000",
+        "background": "#f5f5f5"
+      },
+      "footnotes": {
+        "text": "New Footnote text",
+        "color": {
+          "text": "#000",
+          "background": "#f5f5f5"
         }
       }
     }
+  }
 ]
-

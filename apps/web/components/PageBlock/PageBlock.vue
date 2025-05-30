@@ -1,22 +1,22 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid">
+  <div v-if="block.meta && (block.type !== 'footer' || runtimeConfig.public.isDev)" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
       :class="[
         'relative block-wrapper',
         {
-          'mb-s': blockSize === 's' && root,
-          'mb-m': blockSize === 'm' && root,
-          'mb-l': blockSize === 'l' && root,
-          'mb-xl': blockSize === 'xl' && root,
+          'mb-s': blockSize === 's' && root && block.type !== 'footer',
+          'mb-m': blockSize === 'm' && root && block.type !== 'footer',
+          'mb-l': blockSize === 'l' && root && block.type !== 'footer',
+          'mb-xl': blockSize === 'xl' && root && block.type !== 'footer',
         },
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
         {
           'hover:outline hover:outline-4 hover:outline-[#538AEA]':
-            $isPreview && disableActions && !isTablet && root && !isDragging,
+            disableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
@@ -32,6 +32,7 @@
       </button>
       <UiBlockActions
         v-if="disableActions && blockHasData && blockHasData(block) && $isPreview && root && !isDragging"
+        :key="`${block.meta.uuid}`"
         :class="[
           'opacity-0 block-actions',
           {
@@ -66,7 +67,7 @@
       </component>
 
       <button
-        v-if="disableActions && $isPreview && root && !isDragging"
+        v-if="disableActions && $isPreview && root && !isDragging && props.block.type !== 'footer'"
         :key="isDragging ? 'dragging' : 'not-dragging'"
         class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
@@ -84,6 +85,7 @@
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd } from '@storefront-ui/vue';
+const runtimeConfig = useRuntimeConfig();
 
 const { $isPreview } = useNuxtApp();
 
