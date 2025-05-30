@@ -1,11 +1,12 @@
-import { createSharedComposable } from '@vueuse/core';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
-import { useDisclosure } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
+import { createSharedComposable } from '@vueuse/core';
 
 export const useLocalization = createSharedComposable(() => {
-  const { isOpen: isOpen, toggle } = useDisclosure();
+  const isOpen = ref(false);
+  const toggle = () => (isOpen.value = !isOpen.value);
+
   /**
    * @description Function for wrapping the category language path.
    *
@@ -83,6 +84,26 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
+   * @description Function for creating a path with a specific locale. (useLocaleRoute or useLocalePath)
+   * @param path  e.g. '/login'
+   * @param locale to be added to the path
+   * @returns localized path with the locale prefix if necessary
+   * @example createLocalePath('/login', 'de');
+   */
+  const createLocalePath = (path: string, locale: string) => {
+    const { locales } = useNuxtApp().$i18n;
+    const localeCodes = locales.value.map((_locale) => _locale.code.toString());
+    const localeSupported = localeCodes.includes(locale);
+    const localeRoute = useLocaleRoute();
+    const localePath = useLocalePath();
+
+    if (localeSupported) {
+      return localeRoute(path, locale as Locale);
+    }
+    return localePath(path);
+  };
+
+  /**
    * @description Function for switching app locale.
    * @param language
    *
@@ -113,5 +134,6 @@ export const useLocalization = createSharedComposable(() => {
     isOpen,
     toggle,
     switchLocale,
+    createLocalePath,
   };
 });
