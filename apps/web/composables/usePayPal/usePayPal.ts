@@ -1,5 +1,10 @@
 import { type FUNDING_SOURCE, loadScript as loadPayPalScript, type PayPalNamespace } from '@paypal/paypal-js';
-import type { PayPalConfigResponse, PayPalCreateOrder, PayPalCreateOrderRequest, ApiError } from '@plentymarkets/shop-api';
+import type {
+  PayPalConfigResponse,
+  PayPalCreateOrder,
+  PayPalCreateOrderRequest,
+  ApiError,
+} from '@plentymarkets/shop-api';
 import { paypalGetters } from '@plentymarkets/shop-api';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
