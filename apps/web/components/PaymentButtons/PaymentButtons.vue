@@ -127,14 +127,19 @@ const paypalApplePayPaymentId = computed(() => {
 });
 
 const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
-  if (!readyToBuy()) return;
+  if (!readyToBuy()) {
+    if (typeof callback === 'function' && callback) {
+      callback(false);
+    }
+    return;
+  }
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
   });
 
   if (typeof callback === 'function' && callback) {
-    await callback(true);
+    callback(true);
   } else {
     await order();
   }
