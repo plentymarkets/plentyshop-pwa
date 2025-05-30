@@ -57,7 +57,7 @@
           </div>
           <div
             v-if="column.description"
-            class="custom-html ml-4 py-2 text-sm hover:cursor-pointer"
+            class="custom-html ml-4 text-sm hover:cursor-pointer"
             v-html="column.description"
           />
         </div>
@@ -97,7 +97,7 @@ const { footerSettings } = useSiteConfiguration();
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-::v-deep(.custom-html li:hover){
+::v-deep(.custom-html li:hover) {
   text-decoration: underline;
 }
 </style>
