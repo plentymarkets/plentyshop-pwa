@@ -22,7 +22,7 @@
               <SfLink
                 :tag="NuxtLink"
                 :style="{ color: footerSettings.colors.text }"
-                class="no-underline text-neutral-600 hover:!text-neutral-900 hover:underline active:underline"
+                class="no-underline text-neutral-600 hover:underline active:underline"
                 variant="secondary"
                 :to="localePath(link)"
               >
@@ -47,7 +47,7 @@
               <SfLink
                 :style="{ color: footerSettings.colors.text }"
                 :tag="NuxtLink"
-                class="no-underline text-neutral-900 hover:cursor-pointer hover:!text-neutral-900 hover:underline active:underline"
+                class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
                 variant="secondary"
                 :to="localePath('/contact')"
               >
@@ -57,7 +57,7 @@
           </div>
           <div
             v-if="column.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
+            class="custom-html ml-4 py-2 text-sm hover:cursor-pointer"
             v-html="column.description"
           />
         </div>
@@ -65,12 +65,12 @@
     </div>
     <div
       v-if="footerSettings.footnote && footerSettings.footnote.trim() !== ''"
-      class="text-sm py-10 md:py-6 "
+      class="text-sm py-10 md:py-6 px-4"
       :class="{
-    'text-left': footerSettings.footnoteAlign === 'left',
-    'text-center': footerSettings.footnoteAlign === 'center',
-    'text-right': footerSettings.footnoteAlign === 'right'
-  }"
+        'text-left': footerSettings.footnoteAlign === 'left',
+        'text-center': footerSettings.footnoteAlign === 'center',
+        'text-right': footerSettings.footnoteAlign === 'right',
+      }"
       :style="{
         color: footerSettings.colors.noteText,
         backgroundColor: footerSettings.colors.noteBackground,
@@ -96,5 +96,8 @@ const { footerSettings } = useSiteConfiguration();
 ::v-deep(.custom-html li) {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+::v-deep(.custom-html li:hover){
+  text-decoration: underline;
 }
 </style>
