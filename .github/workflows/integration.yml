@@ -293,6 +293,8 @@ jobs:
 
       - name: lighthouse mobile audit
         run: npm run lhci:mobile
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
   fitness-web-vitals-desktop:
     runs-on: ubuntu-latest
     needs: build
@@ -318,3 +320,5 @@ jobs:
 
       - name: lighthouse desktop audit
         run: npm run lhci:desktop
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
