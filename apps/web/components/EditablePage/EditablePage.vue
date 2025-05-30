@@ -89,7 +89,6 @@ const scrollToBlock = (evt: DragEvent) => {
 
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { isEditingEnabled, disableActions } = useEditor();
-console.log('data', data.value);
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
