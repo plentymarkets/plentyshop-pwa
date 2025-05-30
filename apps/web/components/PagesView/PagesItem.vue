@@ -10,8 +10,8 @@
         <SfIconExpandLess v-else />
       </span>
       <router-link v-if="!isTablet" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
-        <span v-if="item.details[0].name === 'Homepage'">
-          <SfIconHome class="w-4 h-4 mr-2" />
+        <span v-if="props.icon">
+          <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
         {{ item.details[0].name }}
       </router-link>
@@ -21,8 +21,8 @@
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
         @click="handleSettingsClick"
       >
-        <span v-if="item.details[0].name === 'Homepage'">
-          <SfIconHome class="w-4 h-4 mr-2" />
+        <span v-if="props.icon">
+          <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
         {{ item.details[0].name }}
       </span>
@@ -37,6 +37,7 @@
           <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
         </SfTooltip>
         <SfIconBase
+          v-if="!props.hideSettings"
           size="base"
           viewBox="0 0 24 24"
           class="text-primary-900 transition-opacity duration-200"
@@ -78,7 +79,6 @@
 </template>
 <script setup lang="ts">
 import {
-  SfIconHome,
   SfIconExpandMore,
   SfIconExpandLess,
   SfIconError,
@@ -86,7 +86,7 @@ import {
   SfLoaderCircular,
   SfIconBase,
 } from '@storefront-ui/vue';
-import type { CategoryEntry } from '@plentymarkets/shop-api';
+import type { PagesItemProps } from './types';
 import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
@@ -95,10 +95,9 @@ const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChil
 const viewport = useViewport();
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-const { item, parentId } = defineProps<{
-  item: CategoryEntry;
-  parentId: number | undefined;
-}>();
+const props = defineProps<PagesItemProps>();
+const item = props.item;
+
 const pagePath = computed(() => {
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
   return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
@@ -126,7 +125,7 @@ const handleSettingsClick = () => {
   openSettingsMenu(item.id, item.type);
   setCategoryId({
     id: item.id,
-    parentId: parentId,
+    parentId: props.parentId,
     name: item.details[0].name,
     path: item.details[0].nameUrl,
     level: item.level,
