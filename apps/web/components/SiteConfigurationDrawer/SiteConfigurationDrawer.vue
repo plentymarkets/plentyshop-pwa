@@ -29,6 +29,5 @@ const getDrawerView = (view: string) => {
   if (view === 'SeoView') return resolveComponent('SeoView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
-  if (view === 'FooterView') return resolveComponent('FooterView');
 };
 </script>
