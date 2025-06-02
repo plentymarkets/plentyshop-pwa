@@ -1,4 +1,4 @@
-import type {ShippingProvider, ShippingMethod, ApiError} from '@plentymarkets/shop-api';
+import type { ShippingProvider, ShippingMethod, ApiError } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import type {
   UseCartShippingMethodsState,
@@ -63,8 +63,8 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
     try {
       state.value.loading = true;
       await useSdk().plentysystems.setShippingProvider({
-          shippingId: shippingMethodId,
-        });
+        shippingId: shippingMethodId,
+      });
 
       setSelectedMethod(shippingMethodId);
     } catch (error) {
