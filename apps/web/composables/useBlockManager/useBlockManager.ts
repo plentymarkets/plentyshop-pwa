@@ -64,9 +64,9 @@ export const useBlockManager = () => {
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    if (data.value.length === 0) {
-      updateBlocks([newBlock]);
-
+    const nonFooterBlocks = data.value.filter((block: Block) => block.type !== 'footer');
+    if (nonFooterBlocks.length === 0) {
+      updateBlocks([newBlock, ...data.value.filter((block: Block) => block.type === 'footer')]);
       return;
     }
 
