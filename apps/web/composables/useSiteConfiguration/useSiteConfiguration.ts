@@ -189,13 +189,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
 
-  // const openFooterDrawer = (view: DrawerView) => {
-  //   state.value.drawerView = 'FooterView';
-  //   // state.value.drawerView = view;
-  //   state.value.drawerOpen = true;
-  //   state.value.placement = view === 'FooterView' ? 'right' : 'left';
-  // };
-
   const closeDrawer = () => {
     state.value.drawerOpen = false;
     state.value.drawerView = null;
@@ -347,7 +340,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     openDrawerWithView,
     closeDrawer,
     settingsIsDirty,
-    // openFooterDrawer,
     saveSettings,
     togglePageModal,
     setSettingsCategory,

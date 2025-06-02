@@ -97,7 +97,6 @@ export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
-// export type OpenFooterDrawer = (view: DrawerView) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
@@ -137,7 +136,6 @@ export interface UseSiteConfiguration {
   updateBlockSize: UpdateBlockSize;
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
-  // openFooterDrawer: OpenFooterDrawer;
   togglePageModal: TogglePageModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
