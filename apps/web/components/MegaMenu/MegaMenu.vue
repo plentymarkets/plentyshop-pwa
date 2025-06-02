@@ -91,7 +91,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="typography-text-sm mb-2 hover:bg-secondary-100"
+                      class="typography-text-sm mb-2 hover:bg-secondary-100 rounded"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -102,7 +102,7 @@
                     :tag="NuxtLink"
                     size="sm"
                     :href="localePath(generateCategoryLink(node))"
-                    class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
+                    class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded"
                   >
                     {{ categoryTreeGetters.getName(node) }}
                   </SfListItem>
@@ -113,7 +113,7 @@
                         :tag="NuxtLink"
                         size="sm"
                         :href="localePath(generateCategoryLink(child))"
-                        class="typography-text-sm py-1.5 hoverbg-secondary-100"
+                        class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
                       >
                         {{ categoryTreeGetters.getName(child) }}
                       </SfListItem>
@@ -223,7 +223,6 @@ const { headerBackgroundColor } = useSiteConfiguration();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const { setDrawerOpen } = useDrawerState();
-
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
   onClose: close,
@@ -246,10 +245,7 @@ const trapFocusOptions = {
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
-
-const headerClass = computed(() => ({
-  'z-[10]': isOpen.value,
-}));
+const headerClass = computed(() => ({ 'z-[10]': isOpen.value }));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -288,21 +284,28 @@ const onMouseLeave = () => {
 };
 
 const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
-  if (menuNode.childCount > 0 && viewport.isGreaterOrEquals('lg')) {
+  if (!viewport.isGreaterOrEquals('lg')) return;
+
+  if (menuNode.childCount > 0) {
     activeNode.value = [menuNode.id];
     open();
     setCategory([menuNode]);
+    return;
   }
+
+  if (category.value !== null) category.value = null;
+};
+
+const handleFirstTouch = (menuNode: CategoryTreeItem) => {
+  tappedCategories.value.set(menuNode.id, true);
+  onCategoryMouseEnter(menuNode);
 };
 
 const onCategoryTap = (menuNode: CategoryTreeItem) => {
-  if (menuNode.childCount > 0 && isTouchDevice.value) {
-    if (!tappedCategories.value.get(menuNode.id)) {
-      tappedCategories.value.set(menuNode.id, true);
-      onCategoryMouseEnter(menuNode);
-      return;
-    }
+  if (menuNode.childCount > 0 && isTouchDevice.value && !tappedCategories.value.get(menuNode.id)) {
+    return handleFirstTouch(menuNode);
   }
+
   router.push(localePath(generateCategoryLink(menuNode)));
 };
 
@@ -311,22 +314,22 @@ onMounted(() => {
   removeHook = router.afterEach(() => close());
 });
 
-onBeforeUnmount(() => {
-  if (removeHook) removeHook();
-});
+onBeforeUnmount(() => removeHook?.());
 
 watch(
   () => props.categories,
-  async (categories: CategoryTreeItem[]) => {
+  (categories: CategoryTreeItem[]) => {
     categoryTree.value = categoryTreeGetters.getTree(categories);
     setCategory(categoryTree.value);
   },
 );
 
 setCategory(categoryTree.value);
+
 useTrapFocus(
   computed(() => megaMenuReference.value?.[0]),
   trapFocusOptions,
 );
+
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
