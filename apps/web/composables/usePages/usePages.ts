@@ -1,12 +1,12 @@
 import type { CategoryTreeItem } from '~/composables/usePages/types';
 
 export const usePages = async () => {
-  const { t, locale } = useI18n();
+  const { locale } = useI18n();
   const { data } = useCategoryTree();
 
   const pages = useState<Page[]>('pages', () => []);
   const transformCategoryTreeToPages = () => {
-    const transformData = (data: CategoryTreeItem[], parentPath = '', isRoot = true): Page[] => {
+    const transformData = (data: CategoryTreeItem[], parentPath = ''): Page[] => {
       const transformedData = data
         .map((item: CategoryTreeItem) => {
           if (!item.details || item.details.length === 0) {
@@ -15,7 +15,7 @@ export const usePages = async () => {
 
           const currentPath = `${parentPath}/${item.details[0].nameUrl}`;
 
-          const children = item.children ? transformData(item.children, currentPath, false) : undefined;
+          const children = item.children ? transformData(item.children, currentPath) : undefined;
 
           return {
             id: item.id,
@@ -35,25 +35,6 @@ export const usePages = async () => {
           };
         })
         .filter(Boolean);
-
-      if (isRoot && !transformedData.some((page) => page && page.name === 'Homepage')) {
-        transformedData.unshift({
-          id: 1,
-          name: t('homepage.title'),
-          path: '/',
-          children: undefined,
-          type: 'content',
-          right: 'all',
-          parentCategoryId: '',
-          sitemap: '',
-          linklist: '',
-          canonicalLink: '',
-          position: '',
-          metaDescription: '',
-          metaKeywords: '',
-          metaRobots: '',
-        });
-      }
 
       return transformedData as {
         id: number;

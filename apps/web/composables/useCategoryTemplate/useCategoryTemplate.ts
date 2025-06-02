@@ -26,14 +26,15 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
 
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getBlocks({ identifier, type }));
+    const response = await useSdk().plentysystems.getBlocks({ identifier, type });
+    const data = response?.data;
 
     state.value.loading = false;
 
-    if (!data?.value?.data.length && type === 'immutable') {
+    if (!data?.length && type === 'immutable') {
       state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     } else {
-      state.value.data = data?.value?.data ?? state.value.data;
+      state.value.data = data ?? state.value.data;
     }
 
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
