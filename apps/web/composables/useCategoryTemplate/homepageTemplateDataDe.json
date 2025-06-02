@@ -16,7 +16,8 @@
         "name": "Banner",
         "type": "content",
         "meta": {
-          "uuid": "a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d"
+          "uuid": "a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+          "isGlobalTemplate": false
         },
         "content": {
           "image": {
@@ -51,7 +52,8 @@
         "name": "Banner",
         "type": "content",
         "meta": {
-          "uuid": "d4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a"
+          "uuid": "d4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a",
+          "isGlobalTemplate": false
         },
         "content": {
           "image": {
@@ -87,7 +89,8 @@
     "name": "TextCard",
     "type": "content",
     "meta": {
-      "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d"
+      "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "isGlobalTemplate": false
     },
     "content": {
       "text": {
@@ -109,7 +112,8 @@
     "name": "ProductRecommendedProducts",
     "type": "content",
     "meta": {
-      "uuid": "f7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
+      "uuid": "f7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c",
+      "isGlobalTemplate": false
     },
     "content": {
       "categoryId": "73",
@@ -120,7 +124,8 @@
     "name": "MultiGrid",
     "type": "structure",
     "meta": {
-      "uuid": "9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a"
+      "uuid": "9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a",
+      "isGlobalTemplate": false
     },
     "configuration": {
       "columnWidths": [4, 4]
@@ -169,7 +174,8 @@
     "name": "ProductRecommendedProducts",
     "type": "content",
     "meta": {
-      "uuid": "g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c"
+      "uuid": "g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c",
+      "isGlobalTemplate": false
     },
     "content": {
       "categoryId": "49",
@@ -185,7 +191,8 @@
     "name": "NewsletterSubscribe",
     "type": "content",
     "meta": {
-      "uuid": "0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f"
+      "uuid": "0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f",
+      "isGlobalTemplate": false
     },
     "content": {
       "text": {
@@ -206,7 +213,8 @@
     "name": "Footer",
     "type": "content",
     "meta": {
-      "uuid": "4f7e2b1a-9c8d-4e6f-b3a2-1d0c5b4a3e2f"
+      "uuid": "4f7e2b1a-9c8d-4e6f-b3a2-1d0c5b4a3e2f",
+      "isGlobalTemplate": true
     },
     "content": {
       "firstColumn": {
