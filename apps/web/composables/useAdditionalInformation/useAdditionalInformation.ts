@@ -1,4 +1,4 @@
-import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
+import type { AdditionalInformationParams, ApiError } from '@plentymarkets/shop-api';
 import type {
   UseAdditionalInformationState,
   DoAdditionalInformation,
@@ -40,13 +40,13 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const doAdditionalInformation: DoAdditionalInformation = async (params: AdditionalInformationParams) => {
     state.value.loading = true;
     try {
-      const { error } = await useAsyncData(() => useSdk().plentysystems.doAdditionalInformation(params));
-      useHandleError(error.value);
+      await useSdk().plentysystems.doAdditionalInformation(params);
       state.value.data = null;
 
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      useHandleError(error as ApiError);
+      return state.value.data;
     } finally {
       state.value.loading = false;
     }
