@@ -81,27 +81,4 @@ loadExampleScript: () => {
 
 ## Read and react to a registered cookie
 
-To read and react to the state of the a specific cookie you can use the [useCookieConsent](/reference/composables/functions/useCookieConsent) composable.
-
-This composable uses the cookie name that you defined in the `cookie.config.ts` to get the reactive state of cookie.
-
-``` vue
-// MyComponent.vue
-<template>
-  <ScriptDemoButton v-if="ScriptDemoCookie"></ScriptDemoButton>
-  <div v-else>
-    <div>Script demo cookies not accepted</div>
-  </div>
-</template>
-
-<script setup lang="ts">
-const { consent: ScriptDemoCookie } = useCookieConsent('CookieBar.functional.cookies.scriptDemo.name');
-
-watch(ScriptDemoCookie, () => {
-  reloadScript();
-  console.log('ScriptDemo value', ScriptDemoCookie.value)
-  // do something when the cookie changes.
-});
-
-</script>
-```
+Refer to the [Cookie Consent System](/guide/modules/shop-core/cookie-consent) for a more detailed overview of its features and example implementation.

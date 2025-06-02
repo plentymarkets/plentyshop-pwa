@@ -5,7 +5,7 @@ next: false
 # Google Analytics
 This module allows you to integrate Google Analytics into your shop. Starting from version **v1.10.0**, it comes pre-installed. Be sure that the `@plentymarkets/shop-gtag-module` package exists in your `apps/web/package.json`. If you're using an earlier version or the package isn't part of your `apps/web/package.json`, you can install it manually with:
 ```bash
-yarn add @plentymarkets/shop-gtag-module
+npm install @plentymarkets/shop-gtag-module
 ```
 Make sure to add this module at the top of the `modules` section in your `nuxt.config.ts` file. Once installed, you only need to configure the settings in the backend.
 
