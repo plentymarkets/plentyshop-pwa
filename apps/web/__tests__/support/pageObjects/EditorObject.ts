@@ -83,6 +83,18 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('open-design-drawer');
   }
 
+  get pagesSettingsButton() {
+    return cy.getByTestId('open-pages-drawer');
+  }
+
+  get contentPagesSection() {
+    return cy.getByTestId('content-pages-section');
+  }
+
+  get productPagesSection() {
+    return cy.getByTestId('product-pages-section');
+  }
+
   blockIsBanner(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('banner-image');
   }
