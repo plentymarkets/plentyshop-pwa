@@ -12,6 +12,7 @@ export default defineConfig({
   chromeWebSecurity: false,
   env: {
     DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 10,
+    POST_CODE_VALIDATION_COUNTRY: 'United Kingdom',
   },
   e2e: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

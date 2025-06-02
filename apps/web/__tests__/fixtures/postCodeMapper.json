@@ -1,0 +1,176 @@
+[
+  {
+    "countryId": "2",
+    "name": "Austria",
+    "valid": ["1010", "4020"],
+    "invalid": ["ABCDE", "99999"]
+  },
+  {
+    "countryId": "3",
+    "name": "Belgium",
+    "valid": ["1000", "4000"],
+    "invalid": ["BE123", "abcd"]
+  },
+  {
+    "countryId": "44",
+    "name": "Bulgaria",
+    "valid": ["1000", "9000"],
+    "invalid": ["000", "ABCDE"]
+  },
+  {
+    "countryId": "54",
+    "name": "Croatia",
+    "valid": ["10000", "21000"],
+    "invalid": ["HR999", "XYZ"]
+  },
+  {
+    "countryId": "5",
+    "name": "Cyprus",
+    "valid": ["1000", "9999"],
+    "invalid": ["CY12345", "ABCDE"]
+  },
+  {
+    "countryId": "6",
+    "name": "Czech Republic",
+    "valid": ["11000", "37001"],
+    "invalid": ["123", "CZABC"]
+  },
+  {
+    "countryId": "7",
+    "name": "Denmark",
+    "valid": ["1000", "9990"],
+    "invalid": ["D123", "abcd"]
+  },
+  {
+    "countryId": "9",
+    "name": "Estonia",
+    "valid": ["10115", "90025"],
+    "invalid": ["EE123", "ABCDE"]
+  },
+  {
+    "countryId": "11",
+    "name": "Finland",
+    "valid": ["00100", "99999"],
+    "invalid": ["FI9999", "aaaaa"]
+  },
+  {
+    "countryId": "10",
+    "name": "France",
+    "valid": ["75001", "13001"],
+    "invalid": ["FR99999", "ABCDE"]
+  },
+  {
+    "countryId": "1",
+    "name": "Germany",
+    "valid": ["10115", "80331", "20095"],
+    "invalid": ["ABCDE", "1234", "999999"]
+  },
+  {
+    "countryId": "13",
+    "name": "Greece",
+    "valid": ["10558", "85100"],
+    "invalid": ["GR123456", "zzzzz"]
+  },
+  {
+    "countryId": "14",
+    "name": "Hungary",
+    "valid": ["1011", "9027"],
+    "invalid": ["HU1234A", "123"]
+  },
+  {
+    "countryId": "16",
+    "name": "Ireland",
+    "valid": ["D02 AF30", "T12 C8RK"],
+    "invalid": ["IR12345", "zzzz"]
+  },
+  {
+    "countryId": "15",
+    "name": "Italy",
+    "valid": ["00100", "10100"],
+    "invalid": ["123", "ITABCDE"]
+  },
+  {
+    "countryId": "18",
+    "name": "Latvia",
+    "valid": ["LV-1001", "LV-1050"],
+    "invalid": ["LV123456", "abcd"]
+  },
+  {
+    "countryId": "33",
+    "name": "Lithuania",
+    "valid": ["LT-01100", "LT-99999"],
+    "invalid": ["LT123", "abc"]
+  },
+  {
+    "countryId": "17",
+    "name": "Luxembourg",
+    "valid": ["L-1009", "L-9999"],
+    "invalid": ["LU12345", "abcd"]
+  },
+  {
+    "countryId": "19",
+    "name": "Malta",
+    "valid": ["BKR 1234", "VLT 1111"],
+    "invalid": ["MT0000", "xyz"]
+  },
+  {
+    "countryId": "21",
+    "name": "Netherlands",
+    "valid": ["1011 AB", "5611BZ"],
+    "invalid": ["NL-12345", "abcd"]
+  },
+  {
+    "countryId": "20",
+    "name": "Norway",
+    "valid": ["0001", "9991"],
+    "invalid": ["NO1234A", "abcd"]
+  },
+  {
+    "countryId": "23",
+    "name": "Poland",
+    "valid": ["00-001", "99-999"],
+    "invalid": ["PL9999", "zzzzz"]
+  },
+  {
+    "countryId": "22",
+    "name": "Portugal",
+    "valid": ["1000-001", "9999-999"],
+    "invalid": ["PT9999", "abcd"]
+  },
+  {
+    "countryId": "41",
+    "name": "Romania",
+    "valid": ["010011", "999999"],
+    "invalid": ["RO123", "abcd"]
+  },
+  {
+    "countryId": "26",
+    "name": "Slovakia",
+    "valid": ["01001", "99999"],
+    "invalid": ["SK123456", "abcd"]
+  },
+  {
+    "countryId": "27",
+    "name": "Slovenia",
+    "valid": ["1000", "9000"],
+    "invalid": ["SI99999", "abcd"]
+  },
+  {
+    "countryId": "8",
+    "name": "Spain",
+    "valid": ["28001", "08001"],
+    "invalid": ["ES123", "abc"]
+  },
+  {
+    "countryId": "24",
+    "name": "Sweden",
+    "valid": ["100 05", "903 47"],
+    "invalid": ["SE1234", "zzzz"]
+  },
+  {
+    "countryId": "12",
+    "name": "United Kingdom",
+    "valid": ["A9 9AA", "A99 9AA", "A9A 9AA", "AA9 9AA", "AA99 9AA", "AA9A 9AA"],
+    "invalid": ["12345", "ABCDE", "W1 0AXX"]
+  }
+]

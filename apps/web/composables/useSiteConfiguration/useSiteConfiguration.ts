@@ -246,7 +246,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         value: state.value.iconColor,
       },
       {
-        key: 'iconBackgroundColor',
+        key: 'headerBackgroundColor',
         value: state.value.headerBackgroundColor,
       },
     ];

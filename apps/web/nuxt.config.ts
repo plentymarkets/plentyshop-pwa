@@ -4,6 +4,7 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { paths } from './utils/paths';
+import { resolve } from 'pathe';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -251,7 +252,7 @@ export default defineNuxtConfig({
         pages.push({
           name: 'e2e',
           path: '/smoke-e2e',
-          file: '~/e2e/smoke-e2e.vue',
+          file: resolve(__dirname, 'e2e/smoke-e2e.vue'),
         });
       }
     },

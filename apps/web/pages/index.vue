@@ -5,6 +5,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  middleware: ['confirmation-redirect'],
+});
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 const icon = 'home';

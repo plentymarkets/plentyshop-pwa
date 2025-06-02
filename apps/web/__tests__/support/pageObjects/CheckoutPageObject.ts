@@ -321,6 +321,15 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  fillPostCodeBillingForm(fixture: AddressFixtureOverride) {
+    this.billingAddressForm.within(() => {
+      this.countrySelect.select(fixture.country ?? '');
+      this.postalCodeInput.type(fixture.zipCode ?? '');
+    });
+
+    return this;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillShippingForm(fixture: any) {
     cy.wait(1000);

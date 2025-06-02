@@ -12,6 +12,7 @@ permissions:
 jobs:
   meta:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Assign author to PR
         if: github.event.action == 'opened'
@@ -40,6 +41,7 @@ jobs:
           apply-changes: true
   fitness-compliance:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: meta
     steps:
       - uses: actions/checkout@v4
@@ -62,6 +64,7 @@ jobs:
           .
   fitness-code-quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -74,6 +77,7 @@ jobs:
         run: npm run lint
   test-unit:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -88,6 +92,7 @@ jobs:
           working-directory: './apps/web/'
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -118,6 +123,7 @@ jobs:
           path: build.tar.gz
   test-e2e-stable:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -147,7 +153,7 @@ jobs:
         env:
           NUXT_PUBLIC_DEFAULT_ITEMS_PER_PAGE: 1
           CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
-          CONFIG_ID: 1
+          NUXT_PUBLIC_CONFIG_ID: 1
           MOLLIE_TEST_MODE: true
 
       - uses: actions/upload-artifact@v4
@@ -158,6 +164,7 @@ jobs:
           if-no-files-found: ignore
   test-e2e-checkout:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -184,6 +191,8 @@ jobs:
         with:
           install: false
           command: npm run test:cypress-checkout
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -193,6 +202,7 @@ jobs:
           if-no-files-found: ignore
   test-e2e-editor:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -221,6 +231,7 @@ jobs:
           command: npm run test:cypress-editor
         env:
           NUXT_PUBLIC_IS_PREVIEW: true
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -230,6 +241,7 @@ jobs:
           if-no-files-found: ignore
   test-e2e-flakey:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -256,6 +268,8 @@ jobs:
         with:
           install: false
           command: npm run test:cypress-quarantine
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -265,6 +279,7 @@ jobs:
           if-no-files-found: ignore
   fitness-web-vitals-mobile:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -288,8 +303,11 @@ jobs:
 
       - name: lighthouse mobile audit
         run: npm run lhci:mobile
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
   fitness-web-vitals-desktop:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -313,3 +331,5 @@ jobs:
 
       - name: lighthouse desktop audit
         run: npm run lhci:desktop
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
