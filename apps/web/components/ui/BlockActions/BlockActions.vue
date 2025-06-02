@@ -16,11 +16,11 @@
       </SfIconBase>
     </button>
 
-    <div v-if="props.block.type !== 'footer'" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
 
     <div class="flex flex-col">
       <button
-        v-if="props.block.type !== 'footer'"
+        v-if="props.block.name !== 'Footer'"
         class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
         data-testid="move-up-button"
         aria-label="move up button"
@@ -32,7 +32,7 @@
       </button>
 
       <button
-        v-if="props.block.type !== 'footer'"
+        v-if="props.block.name !== 'Footer'"
         class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
         data-testid="move-down-button"
         aria-label="move down button"
@@ -44,20 +44,20 @@
       </button>
     </div>
 
-    <div v-if="props.block.type !== 'footer'" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
 
     <button
-      v-if="props.block.type !== 'footer'"
+      v-if="props.block.name !== 'Footer'"
       class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
       aria-label="Drag to reorder block"
     >
       <NuxtImg width="18" height="18" :src="dragIcon" />
     </button>
 
-    <div v-if="props.block.type !== 'footer'" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
 
     <button
-      v-if="props.block.type !== 'footer'"
+      v-if="props.block.name !== 'Footer'"
       class="text-black hover:bg-gray-100 p-1 rounded no-drag"
       aria-label="delete block button"
       data-testid="delete-block-button"
