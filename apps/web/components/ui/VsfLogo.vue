@@ -4,7 +4,7 @@
       <NuxtImg
         ref="logo"
         :src="headerLogo"
-        :alt="`${{ storeName }} logo`"
+        :alt="`${storeName} logo`"
         class="w-100 py-2"
         width="150"
         height="40"
@@ -16,7 +16,7 @@
         id="logo"
         ref="logo"
         :src="headerLogo"
-        :alt="`${{ storeName }} logo`"
+        :alt="`${storeName} logo`"
         :width="imgWidth"
         :height="imgHeight"
         class="max-h-[100px] max-w-[200px]"
@@ -30,7 +30,7 @@
 const runtimeConfig = useRuntimeConfig();
 const { headerLogo } = useSiteConfiguration();
 
-const storeName = runtimeConfig.public.storeName;
+const storeName = runtimeConfig.public.storename;
 
 const imageExtension = runtimeConfig.public.headerLogo.split('.').pop();
 const logo = ref<HTMLImageElement | null>(null);
