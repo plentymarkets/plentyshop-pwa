@@ -285,10 +285,9 @@ export const useCart: UseCartReturn = () => {
   const deleteCartItem: DeleteCartItem = async (cartItem: CartItem) => {
     state.value.loading = true;
     try {
-      const { data } = await
-        useSdk().plentysystems.deleteCartItem({
-          cartItemId: cartItem.id,
-        });
+      const { data } = await useSdk().plentysystems.deleteCartItem({
+        cartItemId: cartItem.id,
+      });
 
       state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
       emit('frontend:removeFromCart', {
