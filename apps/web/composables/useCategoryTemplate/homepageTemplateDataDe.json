@@ -204,7 +204,7 @@
   },
   {
     "name": "Footer",
-    "type": "footer",
+    "type": "content",
     "meta": {
       "uuid": "4f7e2b1a-9c8d-4e6f-b3a2-1d0c5b4a3e2f"
     },

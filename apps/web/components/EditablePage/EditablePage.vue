@@ -60,17 +60,17 @@ const footerExists = data.value.some((block) => block.name === 'Footer');
 if (!footerExists) {
   data.value.push({
     name: 'Footer',
-    type: 'footer',
+    type: 'content',
     meta: {
       uuid: uuid(),
     },
     content: {
-      column1: { title: 'Column 1' },
-      column2: { title: 'Column 2', description: '', showContactLink: true },
-      column3: { title: 'Column 3', description: '' },
-      column4: { title: 'Column 4', description: '' },
-      footnote: 'Footnotes are here now',
-      footnoteAlign: 'center',
+      column1: { title: 'Legal' },
+      column2: { title: 'Contact', description: '', showContactLink: true },
+      column3: { title: '', description: '' },
+      column4: { title: '', description: '' },
+      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
+      footnoteAlign: 'right',
       colors: {
         background: '#f5f5f5',
         text: '#1c1c1c',
