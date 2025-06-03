@@ -217,41 +217,37 @@
       "isGlobalTemplate": true
     },
     "content": {
-      "firstColumn": {
+      "column1": {
         "text": {
           "title": "Legal"
         }
       },
-      "secondColumn": {
+      "column2": {
         "text": {
           "title": "Contact",
           "showLinkToContact": false,
           "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
         }
       },
-      "thirdColumn": {
+      "column3": {
         "text": {
           "title": "Social Media",
           "htmlDescription": "<ul><li><a href='https://www.instagram.com/plentymarkets/'>Instagram</a></li><li><a href='https://www.facebook.com/plentymarkets/'>Facebook</a></li></ul>"
         }
       },
-      "fourthColumn": {
+      "column4": {
         "text": {
           "title": "Newsletter",
           "htmlDescription": "<p>Subscribe to our newsletter and stay updated on the latest news and offers.</p>"
         }
       },
-      "color": {
-        "text": "#000",
-        "background": "#f5f5f5"
-      },
-      "footnotes": {
-        "text": "New Footnote text",
-        "align": "center",
-        "color": {
-          "text": "#000",
-          "background": "#f5f5f5"
-        }
+      "footnote": "© PlentyONE GmbH 2025",
+      "footnoteAlign": "right",
+      "colors": {
+        "background": "#cfe4ec",
+        "text": "#151a16",
+        "noteBackground": "#151a16",
+        "noteText": "#8b8d8b"
       }
     }
   }
