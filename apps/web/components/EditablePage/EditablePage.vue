@@ -45,7 +45,6 @@
     </draggable>
   </div>
 </template>
-
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
@@ -58,31 +57,31 @@ await getBlocks(props.identifier, props.type);
 const route = useRoute();
 if (route.meta.pageType !== 'block') {
   const footerExists = data.value.some((block) => block.name === 'Footer');
-
-if (!footerExists) {
-  data.value.push({
-    name: 'Footer',
-    type: 'content',
-    meta: {
-      uuid: uuid(),
-    },
-    content: {
-      column1: { title: 'Legal' },
-      column2: { title: 'Contact', description: '', showContactLink: true },
-      column3: { title: '', description: '' },
-      column4: { title: '', description: '' },
-      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-      footnoteAlign: 'right',
-      colors: {
-        background: '#cfe4ec',
-        text: '#1c1c1c',
-        noteBackground: '#e5e5e5',
-        noteText: '#000000',
+  if (!footerExists) {
+    data.value.push({
+      name: 'Footer',
+      type: 'content',
+      meta: {
+        uuid: uuid(),
       },
-    },
-  });
-}
+      content: {
+        column1: { title: 'Legal' },
+        column2: { title: 'Contact', description: '', showContactLink: true },
+        column3: { title: '', description: '' },
+        column4: { title: '', description: '' },
+        footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
+        footnoteAlign: 'right',
 
+        colors: {
+          background: '#cfe4ec',
+          text: '#1c1c1c',
+          noteBackground: '#e5e5e5',
+          noteText: '#000000',
+        },
+      },
+    });
+  }
+}
 const {
   isClicked,
   clickedBlockIndex,
@@ -104,33 +103,27 @@ const scrollToBlock = (evt: DragEvent) => {
     }
   }
 };
-
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { isEditingEnabled, disableActions } = useEditor();
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
-
 onMounted(async () => {
   if ($isPreview) {
     await import('./draggable.css');
   }
 });
-
 onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
-
 const hasUnsavedChanges = () => {
   return !isEditingEnabled.value && !settingsIsDirty.value;
 };
-
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
   event.preventDefault();
 };
-
 onBeforeRouteLeave((to, from, next) => {
   if (isEditingEnabled.value) {
     const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
