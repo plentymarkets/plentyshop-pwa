@@ -7,7 +7,6 @@ export type DrawerView =
   | 'DesignView'
   | 'PagesView'
   | 'blocksSettings'
-  | 'FooterView'
   | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
