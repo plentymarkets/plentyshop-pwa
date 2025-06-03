@@ -181,99 +181,98 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     );
   });
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
-    state.value.loading = true;
+    try {
+      state.value.loading = true;
 
-    const settings = [
-      {
-        key: 'blockSize',
-        value: state.value.blockSize,
-      },
-      {
-        key: 'font',
-        value: state.value.selectedFont.value,
-      },
-      {
-        key: 'primaryColor',
-        value: state.value.primaryColor,
-      },
-      {
-        key: 'secondaryColor',
-        value: state.value.secondaryColor,
-      },
-      {
-        key: 'headerLogo',
-        value: state.value.headerLogo,
-      },
-      {
-        key: 'favicon',
-        value: state.value.favicon,
-      },
-      {
-        key: 'ogTitle',
-        value: state.value.ogTitle,
-      },
-      {
-        key: 'ogImg',
-        value: state.value.ogImg,
-      },
-      {
-        key: 'useAvif',
-        value: state.value.useAvif ? 'true' : 'false',
-      },
-      {
-        key: 'useWebp',
-        value: state.value.useWebp ? 'true' : 'false',
-      },
-      {
-        key: 'metaTitle',
-        value: state.value.seoSettings.title,
-      },
-      {
-        key: 'metaDescription',
-        value: state.value.seoSettings.description,
-      },
-      {
-        key: 'metaKeywords',
-        value: state.value.seoSettings.keywords,
-      },
-      {
-        key: 'robots',
-        value: state.value.seoSettings.robots,
-      },
-      {
-        key: 'iconColor',
-        value: state.value.iconColor,
-      },
-      {
-        key: 'headerBackgroundColor',
-        value: state.value.headerBackgroundColor,
-      },
-    ];
+      const settings = [
+        {
+          key: 'blockSize',
+          value: state.value.blockSize,
+        },
+        {
+          key: 'font',
+          value: state.value.selectedFont.value,
+        },
+        {
+          key: 'primaryColor',
+          value: state.value.primaryColor,
+        },
+        {
+          key: 'secondaryColor',
+          value: state.value.secondaryColor,
+        },
+        {
+          key: 'headerLogo',
+          value: state.value.headerLogo,
+        },
+        {
+          key: 'favicon',
+          value: state.value.favicon,
+        },
+        {
+          key: 'ogTitle',
+          value: state.value.ogTitle,
+        },
+        {
+          key: 'ogImg',
+          value: state.value.ogImg,
+        },
+        {
+          key: 'useAvif',
+          value: state.value.useAvif ? 'true' : 'false',
+        },
+        {
+          key: 'useWebp',
+          value: state.value.useWebp ? 'true' : 'false',
+        },
+        {
+          key: 'metaTitle',
+          value: state.value.seoSettings.title,
+        },
+        {
+          key: 'metaDescription',
+          value: state.value.seoSettings.description,
+        },
+        {
+          key: 'metaKeywords',
+          value: state.value.seoSettings.keywords,
+        },
+        {
+          key: 'robots',
+          value: state.value.seoSettings.robots,
+        },
+        {
+          key: 'iconColor',
+          value: state.value.iconColor,
+        },
+        {
+          key: 'headerBackgroundColor',
+          value: state.value.headerBackgroundColor,
+        },
+      ];
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+      await useSdk().plentysystems.setConfiguration({ settings });
 
-    if (error.value) {
+      state.value.initialData = {
+        blockSize: state.value.blockSize,
+        selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
+        primaryColor: state.value.primaryColor,
+        secondaryColor: state.value.secondaryColor,
+        iconColor: state.value.iconColor,
+        headerBackgroundColor: state.value.headerBackgroundColor,
+        headerLogo: state.value.headerLogo,
+        favicon: state.value.favicon,
+        ogTitle: state.value.ogTitle,
+        ogImg: state.value.ogImg,
+        useAvif: state.value.useAvif,
+        useWebp: state.value.useWebp,
+        seoSettings: state.value.seoSettings,
+      };
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    } finally {
       state.value.loading = false;
-      return false;
     }
-
-    state.value.initialData = {
-      blockSize: state.value.blockSize,
-      selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
-      primaryColor: state.value.primaryColor,
-      secondaryColor: state.value.secondaryColor,
-      iconColor: state.value.iconColor,
-      headerBackgroundColor: state.value.headerBackgroundColor,
-      headerLogo: state.value.headerLogo,
-      favicon: state.value.favicon,
-      ogTitle: state.value.ogTitle,
-      ogImg: state.value.ogImg,
-      useAvif: state.value.useAvif,
-      useWebp: state.value.useWebp,
-      seoSettings: state.value.seoSettings,
-    };
-
-    state.value.loading = false;
     return true;
   };
 
