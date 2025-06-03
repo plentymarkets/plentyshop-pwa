@@ -251,9 +251,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       },
     ];
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
-
-    if (error.value) {
+    try {
+      useSdk().plentysystems.setConfiguration({ settings });
+    } catch (error) {
       state.value.loading = false;
       return false;
     }
