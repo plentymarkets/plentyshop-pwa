@@ -70,14 +70,17 @@ export const useCustomer: UseCustomerReturn = () => {
    */
   const getSession: GetSession = async () => {
     state.value.loading = true;
-    // @@@ FGE @@@
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
-    useHandleError(error.value);
-    state.value.data = data?.value?.data ?? state.value.data;
-    checkUserState();
-    useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || []));
+    try {
+      const { data } = await useSdk().plentysystems.getSession();
+      state.value.data = data ?? null;
+      checkUserState();
+      useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || []));
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
-    state.value.loading = false;
     return state.value.data;
   };
 
