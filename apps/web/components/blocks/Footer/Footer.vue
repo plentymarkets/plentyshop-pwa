@@ -64,21 +64,21 @@
       </div>
     </div>
     <div>
-    <div
-      v-if="props.content?.footnote && props.content.footnote.trim() !== ''"
-      class="text-sm py-10 md:py-6 px-10"
-      :class="{
-        'text-left': props.content?.footnoteAlign === 'left',
-        'text-center': props.content?.footnoteAlign === 'center',
-        'text-right': props.content?.footnoteAlign === 'right',
-      }"
-      :style="{
-        color: props.content?.colors?.noteText || undefined,
-        backgroundColor: props.content?.colors?.noteBackground || undefined,
-      }"
-    >
-      {{ props.content.footnote }}
-    </div>
+      <div
+        v-if="props.content?.footnote && props.content.footnote.trim() !== ''"
+        class="text-sm py-10 md:py-6 px-10"
+        :class="{
+          'text-left': props.content?.footnoteAlign === 'left',
+          'text-center': props.content?.footnoteAlign === 'center',
+          'text-right': props.content?.footnoteAlign === 'right',
+        }"
+        :style="{
+          color: props.content?.colors?.noteText || undefined,
+          backgroundColor: props.content?.colors?.noteBackground || undefined,
+        }"
+      >
+        {{ props.content.footnote }}
+      </div>
     </div>
   </footer>
 </template>

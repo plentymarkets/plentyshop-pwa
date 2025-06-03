@@ -42,7 +42,7 @@ import { categories } from '~/mocks';
 import type { FooterProps } from './types';
 const storename: string = useRuntimeConfig().public.storename;
 const companyName: string = `© ${storename} ${new Date().getFullYear()}`;
- const { simplifiedFooter = false } = defineProps<FooterProps>();
+const { simplifiedFooter = false } = defineProps<FooterProps>();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
