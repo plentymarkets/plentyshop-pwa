@@ -59,29 +59,28 @@ const route = useRoute();
 if (route.meta.pageType !== 'block') {
   const footerExists = data.value.some((block) => block.name === 'Footer');
 
-  if (!footerExists) {
-    data.value.push({
-      name: 'Footer',
-      type: 'content',
-      meta: {
-        uuid: uuid(),
+if (!footerExists) {
+  data.value.push({
+    name: 'Footer',
+    type: 'content',
+    meta: {
+      uuid: uuid(),
+    },
+    content: {
+      column1: { title: 'Legal' },
+      column2: { title: 'Contact', description: '', showContactLink: true },
+      column3: { title: '', description: '' },
+      column4: { title: '', description: '' },
+      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
+      footnoteAlign: 'right',
+      colors: {
+        background: '#cfe4ec',
+        text: '#1c1c1c',
+        noteBackground: '#e5e5e5',
+        noteText: '#000000',
       },
-      content: {
-        column1: { title: 'Legal' },
-        column2: { title: 'Contact', description: '', showContactLink: true },
-        column3: { title: '', description: '' },
-        column4: { title: '', description: '' },
-        footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-        footnoteAlign: 'right',
-        colors: {
-          background: '#f5f5f5',
-          text: '#1c1c1c',
-          noteBackground: '#e5e5e5',
-          noteText: '#000000',
-        },
-      },
-    });
-  }
+    },
+  });
 }
 
 const {

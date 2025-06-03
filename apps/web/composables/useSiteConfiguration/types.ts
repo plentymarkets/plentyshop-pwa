@@ -7,7 +7,6 @@ export type DrawerView =
   | 'DesignView'
   | 'PagesView'
   | 'blocksSettings'
-  | 'FooterView'
   | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
@@ -30,7 +29,6 @@ export type ConfigurationSettings = {
     keywords: string;
     robots: string;
   };
-  initialFooterSettings: FooterSettings;
 };
 
 export interface UseSiteConfigurationState {
@@ -64,30 +62,6 @@ export interface UseSiteConfigurationState {
     description: string;
     keywords: string;
     robots: string;
-  };
-  footerSettings: FooterSettings;
-
-}
-export interface FooterColumn {
-  title: string;
-  description?: string;
-  showContactLink?: boolean;
-}
-
-export interface FooterSettings {
-  column1: {
-    title: string;
-  };
-  column2: FooterColumn;
-  column3: FooterColumn;
-  column4: FooterColumn;
-  footnote: string;
-  footnoteAlign: 'left' | 'center' | 'right';
-  colors: {
-    background: string;
-    text: string;
-    noteBackground: string;
-    noteText: string;
   };
 }
 
@@ -140,10 +114,6 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
-  footerSettings: Readonly<Ref<UseSiteConfigurationState['footerSettings']>>;
-  setFooterColumn: (column: keyof FooterSettings, value: Partial<FooterColumn>) => void;
-  setFootnote: (text: string) => void;
-  setFooterColors: (colors: Partial<FooterSettings['colors']>) => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

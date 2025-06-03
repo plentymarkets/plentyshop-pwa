@@ -67,21 +67,17 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
           }),
         ),
       );
-      const { error } = await useAsyncData(() => useSdk().plentysystems.setCategorySettings(settings));
+      await useSdk().plentysystems.setCategorySettings(settings);
 
-      if (error.value) {
-        console.error('Error saving category settings:', error.value);
-        state.value.loading = false;
-        return false;
-      }
       state.value.initialData = JSON.parse(JSON.stringify(state.value.data));
       state.value.loading = false;
-      return true;
     } catch (e) {
-      state.value.loading = false;
       console.error('Error saving category settings:', e);
-      return false;
+    } finally {
+      state.value.loading = false;
     }
+
+    return true;
   };
 
   const save = async () => {

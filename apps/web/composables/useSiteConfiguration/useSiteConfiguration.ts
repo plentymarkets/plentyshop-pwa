@@ -48,20 +48,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
-    footerSettings: {
-      column1: { title: 'Legal' },
-      column2: { title: 'Contact', description: '', showContactLink: true },
-      column3: { title: '', description: '' },
-      column4: { title: '', description: '' },
-      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-      footnoteAlign: 'right',
-      colors: {
-        background: useRuntimeConfig().public.footerBackgroundColor,
-        text: useRuntimeConfig().public.footerTextColor,
-        noteBackground: useRuntimeConfig().public.footerNoteBackgroundColor,
-        noteText: useRuntimeConfig().public.footerNoteTextColor,
-      },
-    },
+
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -76,20 +63,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
-      initialFooterSettings: structuredClone({
-        column1: { title: 'Legal' },
-        column2: { title: 'Contact', description: '', showContactLink: true },
-        column3: { title: '', description: '' },
-        column4: { title: '', description: '' },
-        footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-        footnoteAlign: 'right',
-        colors: {
-          background: useRuntimeConfig().public.footerBackgroundColor,
-          text: useRuntimeConfig().public.footerTextColor,
-          noteBackground: useRuntimeConfig().public.footerNoteBackgroundColor,
-          noteText: useRuntimeConfig().public.footerNoteTextColor,
-        },
-      }),
     },
   }));
 
@@ -111,19 +84,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.currentFont = `font-family: '${fontName}'`;
   };
-  const setFooterColumn = (column: keyof FooterSettings, value: Partial<FooterColumn>) => {
-    if (typeof state.value.footerSettings[column] === 'object') {
-      Object.assign(state.value.footerSettings[column], value);
-    }
-  };
 
-  const setFootnote = (text: string) => {
-    state.value.footerSettings.footnote = text;
-  };
-
-  const setFooterColors = (colors: Partial<FooterSettings['colors']>) => {
-    Object.assign(state.value.footerSettings.colors, colors);
-  };
   const setColorProperties: SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
     tailwindPalette.forEach((shade) => {
       if (shade.rgb) {
@@ -203,10 +164,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const settingsIsDirty = computed(() => {
-    const footerChanged =
-      JSON.stringify(state.value.footerSettings) !== JSON.stringify(state.value.initialData.initialFooterSettings);
     return (
-      footerChanged ||
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
@@ -223,100 +181,98 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     );
   });
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
-    state.value.loading = true;
+    try {
+      state.value.loading = true;
 
-    const settings = [
-      {
-        key: 'blockSize',
-        value: state.value.blockSize,
-      },
-      {
-        key: 'font',
-        value: state.value.selectedFont.value,
-      },
-      {
-        key: 'primaryColor',
-        value: state.value.primaryColor,
-      },
-      {
-        key: 'secondaryColor',
-        value: state.value.secondaryColor,
-      },
-      {
-        key: 'headerLogo',
-        value: state.value.headerLogo,
-      },
-      {
-        key: 'favicon',
-        value: state.value.favicon,
-      },
-      {
-        key: 'ogTitle',
-        value: state.value.ogTitle,
-      },
-      {
-        key: 'ogImg',
-        value: state.value.ogImg,
-      },
-      {
-        key: 'useAvif',
-        value: state.value.useAvif ? 'true' : 'false',
-      },
-      {
-        key: 'useWebp',
-        value: state.value.useWebp ? 'true' : 'false',
-      },
-      {
-        key: 'metaTitle',
-        value: state.value.seoSettings.title,
-      },
-      {
-        key: 'metaDescription',
-        value: state.value.seoSettings.description,
-      },
-      {
-        key: 'metaKeywords',
-        value: state.value.seoSettings.keywords,
-      },
-      {
-        key: 'robots',
-        value: state.value.seoSettings.robots,
-      },
-      {
-        key: 'iconColor',
-        value: state.value.iconColor,
-      },
-      {
-        key: 'headerBackgroundColor',
-        value: state.value.headerBackgroundColor,
-      },
-    ];
+      const settings = [
+        {
+          key: 'blockSize',
+          value: state.value.blockSize,
+        },
+        {
+          key: 'font',
+          value: state.value.selectedFont.value,
+        },
+        {
+          key: 'primaryColor',
+          value: state.value.primaryColor,
+        },
+        {
+          key: 'secondaryColor',
+          value: state.value.secondaryColor,
+        },
+        {
+          key: 'headerLogo',
+          value: state.value.headerLogo,
+        },
+        {
+          key: 'favicon',
+          value: state.value.favicon,
+        },
+        {
+          key: 'ogTitle',
+          value: state.value.ogTitle,
+        },
+        {
+          key: 'ogImg',
+          value: state.value.ogImg,
+        },
+        {
+          key: 'useAvif',
+          value: state.value.useAvif ? 'true' : 'false',
+        },
+        {
+          key: 'useWebp',
+          value: state.value.useWebp ? 'true' : 'false',
+        },
+        {
+          key: 'metaTitle',
+          value: state.value.seoSettings.title,
+        },
+        {
+          key: 'metaDescription',
+          value: state.value.seoSettings.description,
+        },
+        {
+          key: 'metaKeywords',
+          value: state.value.seoSettings.keywords,
+        },
+        {
+          key: 'robots',
+          value: state.value.seoSettings.robots,
+        },
+        {
+          key: 'iconColor',
+          value: state.value.iconColor,
+        },
+        {
+          key: 'headerBackgroundColor',
+          value: state.value.headerBackgroundColor,
+        },
+      ];
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+      await useSdk().plentysystems.setConfiguration({ settings });
 
-    if (error.value) {
+      state.value.initialData = {
+        blockSize: state.value.blockSize,
+        selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
+        primaryColor: state.value.primaryColor,
+        secondaryColor: state.value.secondaryColor,
+        iconColor: state.value.iconColor,
+        headerBackgroundColor: state.value.headerBackgroundColor,
+        headerLogo: state.value.headerLogo,
+        favicon: state.value.favicon,
+        ogTitle: state.value.ogTitle,
+        ogImg: state.value.ogImg,
+        useAvif: state.value.useAvif,
+        useWebp: state.value.useWebp,
+        seoSettings: state.value.seoSettings,
+      };
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    } finally {
       state.value.loading = false;
-      return false;
     }
-
-    state.value.initialData = {
-      blockSize: state.value.blockSize,
-      selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
-      primaryColor: state.value.primaryColor,
-      secondaryColor: state.value.secondaryColor,
-      iconColor: state.value.iconColor,
-      headerBackgroundColor: state.value.headerBackgroundColor,
-      headerLogo: state.value.headerLogo,
-      favicon: state.value.favicon,
-      ogTitle: state.value.ogTitle,
-      ogImg: state.value.ogImg,
-      useAvif: state.value.useAvif,
-      useWebp: state.value.useWebp,
-      seoSettings: state.value.seoSettings,
-      initialFooterSettings: structuredClone(state.value.footerSettings),
-    };
-
-    state.value.loading = false;
     return true;
   };
 
@@ -343,9 +299,5 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
-    footerSettings: toRef(state.value, 'footerSettings'),
-    setFooterColumn,
-    setFootnote,
-    setFooterColors,
   };
 };

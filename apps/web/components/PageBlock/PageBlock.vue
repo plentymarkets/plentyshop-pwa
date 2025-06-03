@@ -1,22 +1,21 @@
 <template>
-  <div v-if="block.meta && (block.type !== 'footer' || runtimeConfig.public.isDev)" :key="block.meta.uuid">
+  <div v-if="block.meta && (block.name !== 'Footer' || runtimeConfig.public.isDev)" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
       :class="[
         'relative block-wrapper',
         {
-          'mb-s': blockSize === 's' && root && block.type !== 'footer',
-          'mb-m': blockSize === 'm' && root && block.type !== 'footer',
-          'mb-l': blockSize === 'l' && root && block.type !== 'footer',
-          'mb-xl': blockSize === 'xl' && root && block.type !== 'footer',
+          'mb-s': blockSize === 's' && root && block.name !== 'Footer',
+          'mb-m': blockSize === 'm' && root && block.name !== 'Footer',
+          'mb-l': blockSize === 'l' && root && block.name !== 'Footer',
+          'mb-xl': blockSize === 'xl' && root && block.name !== 'Footer',
         },
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
         {
-          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
-            disableActions && !isTablet && root && !isDragging,
+          'hover:outline hover:outline-4 hover:outline-[#538AEA]': disableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
@@ -67,7 +66,7 @@
       </component>
 
       <button
-        v-if="disableActions && $isPreview && root && !isDragging && props.block.type !== 'footer'"
+        v-if="disableActions && $isPreview && root && !isDragging && props.block.name !== 'Footer'"
         :key="isDragging ? 'dragging' : 'not-dragging'"
         class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"

@@ -43,7 +43,6 @@
   <component :is="UnlinkCategoryModal" v-if="$isPreview" />
 </template>
 
-
 <script setup lang="ts">
 const { $pwa, $isPreview } = useNuxtApp();
 const bodyClass = ref('');

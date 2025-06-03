@@ -64,9 +64,9 @@ export const useBlockManager = () => {
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    const nonFooterBlocks = data.value.filter((block: Block) => block.type !== 'footer');
+    const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
     if (nonFooterBlocks.length === 0) {
-      updateBlocks([newBlock, ...data.value.filter((block: Block) => block.type === 'footer')]);
+      updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       return;
     }
 
@@ -108,7 +108,13 @@ export const useBlockManager = () => {
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
-  const isLastBlock = (index: number) => index === data.value.length - 1;
+  const isLastBlock = (index: number) => {
+    if (!data.value || data.value.length === 0) return false;
+    const lastNonFooterIndex = [...data.value].reverse().findIndex((block) => block.name !== 'Footer');
+    if (lastNonFooterIndex === -1) return false;
+    const actualLastNonFooterIndex = data.value.length - 1 - lastNonFooterIndex;
+    return index === actualLastNonFooterIndex;
+  };
 
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
     for (const [index, block] of blocks.entries()) {
