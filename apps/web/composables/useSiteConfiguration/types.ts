@@ -115,10 +115,6 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
-  // footerSettings: Readonly<Ref<UseSiteConfigurationState['footerSettings']>>;
-  // setFooterColumn: (column: keyof FooterSettings, value: Partial<FooterColumn>) => void;
-  // setFootnote: (text: string) => void;
-  // setFooterColors: (colors: Partial<FooterSettings['colors']>) => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
