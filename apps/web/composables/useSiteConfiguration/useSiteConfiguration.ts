@@ -253,7 +253,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     try {
       useSdk().plentysystems.setConfiguration({ settings });
-    } catch (error) {
+    } catch {
       state.value.loading = false;
       return false;
     }
