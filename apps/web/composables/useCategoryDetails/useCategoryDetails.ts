@@ -9,18 +9,17 @@ export const useCategoryDetails: UseCategoryDetailsReturn = () => {
   const getCategory = async (categoryId: number): Promise<CategoryData> => {
     state.value.loading = true;
     try {
-      const { data } = await useAsyncData<{ data: CategoryData }>(() =>
-        useSdk().plentysystems.getCategoryById({ categoryId, with: 'details,clients' }),
-      );
-      const result = data?.value?.data;
+      const data = await useSdk().plentysystems.getCategoryById({ categoryId, with: 'details,clients' });
+      const result = data.data;
       state.value.data = result ?? state.value.data;
-      return result!;
+      return result;
     } catch (error) {
       console.error('getCategory error:', error);
-      throw new Error(error as string);
     } finally {
       state.value.loading = false;
     }
+    
+    return state.value.data;
   };
 
   return {
