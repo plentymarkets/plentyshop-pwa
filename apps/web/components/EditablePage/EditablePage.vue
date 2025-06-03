@@ -72,7 +72,7 @@ if (!footerExists) {
       footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
       footnoteAlign: 'right',
       colors: {
-        background: '#f5f5f5',
+        background: '#cfe4ec',
         text: '#1c1c1c',
         noteBackground: '#e5e5e5',
         noteText: '#000000',

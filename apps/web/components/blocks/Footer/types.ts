@@ -1,5 +1,5 @@
 export type FooterProps = {
-  simplifiedFooter?: boolean;
+  content?: FooterSettings;
 };
 
 export interface FooterColumnText {
@@ -40,4 +40,31 @@ export interface FooterBlock {
   type: string;
   meta: FooterMeta;
   content: FooterContent;
+}
+
+export interface FooterSettingsColumn {
+  title: string;
+  description?: string;
+  showContactLink?: boolean;
+}
+
+export interface FooterSettingsColors {
+  background: string;
+  text: string;
+  noteBackground: string;
+  noteText: string;
+}
+
+export interface FooterSettings {
+
+  meta: {
+    uuid: string;
+  };
+  column1: FooterSettingsColumn;
+  column2: FooterSettingsColumn;
+  column3: FooterSettingsColumn;
+  column4: FooterSettingsColumn;
+  footnote: string;
+  footnoteAlign: 'left' | 'center' | 'right';
+  colors: FooterSettingsColors;
 }
