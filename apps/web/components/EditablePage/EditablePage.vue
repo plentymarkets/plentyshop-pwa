@@ -55,7 +55,7 @@ const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
 const route = useRoute();
-if (route.meta.pageType !== 'block') {
+if (route.meta.pageType === 'block') {
   const footerExists = data.value.some((block) => block.name === 'Footer');
   if (!footerExists) {
     data.value.push({
