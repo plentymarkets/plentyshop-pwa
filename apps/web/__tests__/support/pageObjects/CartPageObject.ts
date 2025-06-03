@@ -100,7 +100,7 @@ export class CartPageObject extends PageObject {
     return this;
   }
 
-  summaryItems(expectedItems = ('Items: 2')) {
+  summaryItems(expectedItems = 'Items: 2') {
     cy.getByTestId('total-in-cart').invoke('text').should('include', expectedItems);
     return this;
   }

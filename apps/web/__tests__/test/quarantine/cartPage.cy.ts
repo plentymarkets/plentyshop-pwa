@@ -3,11 +3,10 @@ import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 const cart = new CartPageObject();
 
 describe('Smoke: Cart Page', () => {
-
   beforeEach(() => {
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
     cy.clearCookies();
-  
+
     cy.visitSmoke();
   });
 
@@ -35,32 +34,20 @@ describe('Smoke: Cart Page', () => {
 
   it('should add a product to the cart and then increase the quantity', () => {
     cy.addToCart();
-    cart
-      .openCart()
-      .increaseCartItemQuantity()
-      .summaryItems()
+    cart.openCart().increaseCartItemQuantity().summaryItems();
   });
 
   it('should add a product to the cart and then decrease the quantity', () => {
     cy.addToCart();
-    cart
-      .openCart()
-      .increaseCartItemQuantity()
-      .decreaseCartItemQuantity()
-      .summaryItems('Items: 1');
+    cart.openCart().increaseCartItemQuantity().decreaseCartItemQuantity().summaryItems('Items: 1');
   });
 
   it('should add a product to the cart and increase the quantity 3 times', () => {
     cy.addToCart();
-    cart
-      .openCart()
-      .increaseCartItemQuantity()
+    cart.openCart().increaseCartItemQuantity();
 
-    cy.wait(1000)
+    cy.wait(1000);
 
-    cart
-      .increaseCartItemQuantity()
-      .increaseCartItemQuantity()
-      .summaryItems('Items: 4');
+    cart.increaseCartItemQuantity().increaseCartItemQuantity().summaryItems('Items: 4');
   });
 });
