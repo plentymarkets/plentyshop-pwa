@@ -91,12 +91,13 @@ const checkPayPalPaymentsEligible = async () => {
     }
   }
 };
-
-await Promise.all([
-  useCartShippingMethods().getShippingMethods(),
-  fetchPaymentMethods(),
-  useAggregatedCountries().fetchAggregatedCountries(),
-]);
+await callOnce(async () => {
+  await Promise.all([
+    useCartShippingMethods().getShippingMethods(),
+    fetchPaymentMethods(),
+    useAggregatedCountries().fetchAggregatedCountries(),
+  ]);
+});
 
 onNuxtReady(async () => {
   await useFetchAddress(AddressType.Shipping)
