@@ -98,7 +98,9 @@ import {
 } from '@storefront-ui/vue';
 import type { MyAccountSubsection } from '~/layouts/types';
 import { paths } from '~/utils/paths';
-
+definePageMeta({
+  pageType: 'static',
+});
 const localePath = useLocalePath();
 const viewport = useViewport();
 const { t } = useI18n();

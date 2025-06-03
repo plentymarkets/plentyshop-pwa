@@ -29,7 +29,9 @@
 <script setup lang="ts">
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
-
+definePageMeta({
+  pageType: 'static',
+});
 const localePath = useLocalePath();
 const { t } = useI18n();
 const router = useRouter();
@@ -41,6 +43,5 @@ const historyState = router.options.history.state;
 const backUrl = localePath(historyState?.back?.toString() ?? paths.home);
 const backHref = backUrl === localePath(router.currentRoute.value.path) ? localePath(paths.home) : backUrl;
 const goToPreviousRoute = () => (backToCart ? navigateTo(localePath(paths.cart)) : navigateTo(localePath(backHref)));
-
 onNuxtReady(async () => await setInitialData());
 </script>

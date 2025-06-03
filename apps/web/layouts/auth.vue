@@ -25,7 +25,8 @@
 <script setup lang="ts">
 defineProps<{
   heading: string;
-}>();
+  pageType: 'static',
 
+}>();
 const viewport = useViewport();
 </script>
