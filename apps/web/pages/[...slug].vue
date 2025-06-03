@@ -32,7 +32,7 @@
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-definePageMeta({ layout: false, middleware: ['category-guard'] });
+definePageMeta({ layout: false, middleware: ['category-guard'], pageType: 'block' });
 
 const { t, locale } = useI18n();
 const route = useRoute();

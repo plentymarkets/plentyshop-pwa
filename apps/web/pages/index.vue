@@ -7,12 +7,12 @@
 <script lang="ts" setup>
 definePageMeta({
   middleware: ['confirmation-redirect'],
+  pageType: 'block',
 });
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
-
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
 setRobotForStaticPage('Homepage');
