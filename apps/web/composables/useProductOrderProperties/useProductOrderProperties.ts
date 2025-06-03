@@ -4,7 +4,7 @@ import type {
   UseProductOrderPropertiesReturn,
   UseProductOrderPropertiesState,
 } from '~/composables/useProductOrderProperties/types';
-import { productPropertyGetters } from '@plentymarkets/shop-api';
+import { ApiError, productPropertyGetters } from '@plentymarkets/shop-api';
 import type { ProductProperty, BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
 
 const fileToBase64 = async (file: File): Promise<string | null> => {
@@ -154,35 +154,39 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
       return null;
     }
 
-    const { data } = await useAsyncData(() =>
-      useSdk().plentysystems.doUploadOrderPropertyFile({
+    try {
+      const { data } = await useSdk().plentysystems.doUploadOrderPropertyFile({
         base64: base64String,
         filename: file.name,
         type: file.type,
-      }),
-    );
-
-    state.value.loading = false;
-
-    return data.value?.data.data ?? null;
+      });
+      return data.data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return null;
   };
 
   const downloadFile = async (file: string) => {
-    const split = file.split('/');
-    const { data } = await useAsyncData(() =>
-      useSdk().plentysystems.getOrderPropertyFile({
+    try {
+      state.value.loading = true;
+      const split = file.split('/');
+      const { data } = await useSdk().plentysystems.getOrderPropertyFile({
         hash: split[0] ?? '',
         fileName: split[1] ?? '',
-      }),
-    );
-
-    if (data.value?.data) {
-      const blob = base64ToBlob(data.value.data.data.body, data.value.data.data['content-type']);
-      const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
+      });
+      if (data.data) {
+        const blob = base64ToBlob(data.data.body, data.data['content-type']);
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      }
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
-
-    state.value.loading = false;
     return null;
   };
 
