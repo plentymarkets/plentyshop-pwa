@@ -50,7 +50,6 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
       state.value.loading = false;
     }
 
-
     return state.value.data;
   };
 
