@@ -6,10 +6,10 @@
       :class="[
         'relative block-wrapper',
         {
-          'mb-s': blockSize === 's' && root && block.type !== 'footer',
-          'mb-m': blockSize === 'm' && root && block.type !== 'footer',
-          'mb-l': blockSize === 'l' && root && block.type !== 'footer',
-          'mb-xl': blockSize === 'xl' && root && block.type !== 'footer',
+          'mb-s': blockSize === 's' && root && block.name !== 'Footer',
+          'mb-m': blockSize === 'm' && root && block.name !== 'Footer',
+          'mb-l': blockSize === 'l' && root && block.name !== 'Footer',
+          'mb-xl': blockSize === 'xl' && root && block.name !== 'Footer',
         },
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,

@@ -90,10 +90,6 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
-      footerBackgroundColor: process.env.NUXT_PUBLIC_FOOTER_BACKGROUND_COLOR || '#cfe4ec',
-      footerTextColor: process.env.NUXT_PUBLIC_FOOTER_TEXT_COLOR || '#151a16',
-      footerNoteBackgroundColor: process.env.NUXT_PUBLIC_FOOTER_NOTE_BACKGROUND_COLOR || '#151a16',
-      footerNoteTextColor: process.env.NUXT_PUBLIC_FOOTER_NOTE_TEXT_COLOR || '#8b8c8a',
     },
   },
   modules: [

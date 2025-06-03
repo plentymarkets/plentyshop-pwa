@@ -48,20 +48,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
-    footerSettings: {
-      column1: { title: 'Legal' },
-      column2: { title: 'Contact', description: '', showContactLink: true },
-      column3: { title: '', description: '' },
-      column4: { title: '', description: '' },
-      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-      footnoteAlign: 'right',
-      colors: {
-        background: useRuntimeConfig().public.footerBackgroundColor,
-        text: useRuntimeConfig().public.footerTextColor,
-        noteBackground: useRuntimeConfig().public.footerNoteBackgroundColor,
-        noteText: useRuntimeConfig().public.footerNoteTextColor,
-      },
-    },
+
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -76,20 +63,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
-      initialFooterSettings: structuredClone({
-        column1: { title: 'Legal' },
-        column2: { title: 'Contact', description: '', showContactLink: true },
-        column3: { title: '', description: '' },
-        column4: { title: '', description: '' },
-        footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-        footnoteAlign: 'right',
-        colors: {
-          background: useRuntimeConfig().public.footerBackgroundColor,
-          text: useRuntimeConfig().public.footerTextColor,
-          noteBackground: useRuntimeConfig().public.footerNoteBackgroundColor,
-          noteText: useRuntimeConfig().public.footerNoteTextColor,
-        },
-      }),
     },
   }));
 
@@ -111,19 +84,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.currentFont = `font-family: '${fontName}'`;
   };
-  const setFooterColumn = (column: keyof FooterSettings, value: Partial<FooterColumn>) => {
-    if (typeof state.value.footerSettings[column] === 'object') {
-      Object.assign(state.value.footerSettings[column], value);
-    }
-  };
 
-  const setFootnote = (text: string) => {
-    state.value.footerSettings.footnote = text;
-  };
-
-  const setFooterColors = (colors: Partial<FooterSettings['colors']>) => {
-    Object.assign(state.value.footerSettings.colors, colors);
-  };
   const setColorProperties: SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
     tailwindPalette.forEach((shade) => {
       if (shade.rgb) {
@@ -203,10 +164,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const settingsIsDirty = computed(() => {
-    const footerChanged =
-      JSON.stringify(state.value.footerSettings) !== JSON.stringify(state.value.initialData.initialFooterSettings);
     return (
-      footerChanged ||
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
@@ -313,7 +271,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useAvif: state.value.useAvif,
       useWebp: state.value.useWebp,
       seoSettings: state.value.seoSettings,
-      initialFooterSettings: structuredClone(state.value.footerSettings),
     };
 
     state.value.loading = false;
@@ -343,9 +300,5 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
-    footerSettings: toRef(state.value, 'footerSettings'),
-    setFooterColumn,
-    setFootnote,
-    setFooterColors,
   };
 };

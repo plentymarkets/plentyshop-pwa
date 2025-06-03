@@ -56,7 +56,6 @@ export interface FooterSettingsColors {
 }
 
 export interface FooterSettings {
-
   meta: {
     uuid: string;
   };

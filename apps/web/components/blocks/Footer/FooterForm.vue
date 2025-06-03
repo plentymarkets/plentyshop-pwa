@@ -42,7 +42,12 @@
           <SfInput v-model="footerBlock.column2.title" type="text" data-testid="input-title-column-2">
             <template #suffix>
               <label for="input-title-column-2" class="rounded-lg cursor-pointer">
-                <input id="input-title-column-2" v-model="footerBlock.column2.title" type="text" class="invisible w-8" />
+                <input
+                  id="input-title-column-2"
+                  v-model="footerBlock.column2.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -89,7 +94,12 @@
           <SfInput v-model="footerBlock.column3.title" type="text" data-testid="input-title-column-3">
             <template #suffix>
               <label for="input-title-column-3" class="rounded-lg cursor-pointer">
-                <input id="input-title-column-3" v-model="footerBlock.column3.title" type="text" class="invisible w-8" />
+                <input
+                  id="input-title-column-3"
+                  v-model="footerBlock.column3.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -126,7 +136,12 @@
           <SfInput v-model="footerBlock.column4.title" type="text" data-testid="input-title-column-4">
             <template #suffix>
               <label for="input-title-column-4" class="rounded-lg cursor-pointer">
-                <input id="input-title-column-4" v-model="footerBlock.column4.title" type="text" class="invisible w-8" />
+                <input
+                  id="input-title-column-4"
+                  v-model="footerBlock.column4.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -185,7 +200,12 @@
                 :style="{ backgroundColor: footerBlock.colors.background }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="bg-footer-color" v-model="footerBlock.colors.background" type="color" class="invisible w-8" />
+                <input
+                  id="bg-footer-color"
+                  v-model="footerBlock.colors.background"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -203,7 +223,12 @@
                 :style="{ backgroundColor: footerBlock.colors.noteText }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="footnote-text-color" v-model="footerBlock.colors.noteText" type="color" class="invisible w-8" />
+                <input
+                  id="footnote-text-color"
+                  v-model="footerBlock.colors.noteText"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -221,7 +246,12 @@
                 :style="{ backgroundColor: footerBlock.colors.noteBackground }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="footnote-bg-color" v-model="footerBlock.colors.noteBackground" type="color" class="invisible w-8" />
+                <input
+                  id="footnote-bg-color"
+                  v-model="footerBlock.colors.noteBackground"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -262,6 +292,7 @@
             data-testid="footnoteAlign-textbox-y-align-left"
             @click="footerBlock.footnoteAlign = 'left'"
           >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerBlock.footnoteAlign !== 'left' }" />
             Left
           </div>
 
@@ -271,6 +302,7 @@
             data-testid="footnoteAlign-textbox-y-align-center"
             @click="footerBlock.footnoteAlign = 'center'"
           >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerBlock.footnoteAlign !== 'center' }" />
             Center
           </div>
 
@@ -280,6 +312,7 @@
             data-testid="footnoteAlign-textbox-y-align-right"
             @click="footerBlock.footnoteAlign = 'right'"
           >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerBlock.footnoteAlign !== 'right' }" />
             Right
           </div>
         </div>
@@ -289,7 +322,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterSettings } from './types';
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
