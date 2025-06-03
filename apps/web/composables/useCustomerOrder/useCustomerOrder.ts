@@ -37,7 +37,9 @@ export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
    */
   const fetchOrder: FetchOrder = async (params: OrderSearchParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getOrder(params));
+    const { data, error } = await useAsyncData(
+      'useCustomerOrder.fetchOrder' + params.orderId, () => useSdk().plentysystems.getOrder(params),
+    );
     useHandleError(error.value);
 
     const orderData = data.value?.data as Order;

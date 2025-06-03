@@ -133,7 +133,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
 
   const getAddresses: GetAddresses = async () => {
     state.value.loading = true;
-    // @@@ FGE @@@
+
     const { data, error } = await useAsyncData(type.toString(), () =>
       useSdk().plentysystems.getAddresses({
         typeId: type,
