@@ -1,10 +1,6 @@
 <template>
-  <NuxtLayout
-    name="checkout"
-    :back-label-desktop="t('backToCart')"
-    :back-label-mobile="t('back')"
-    :heading="t('checkout')"
-  >
+  <NuxtLayout name="checkout" :back-label-desktop="t('backToCart')" :back-label-mobile="t('back')"
+    :heading="t('checkout')">
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider id="top-contact-information-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -16,11 +12,8 @@
         <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod :disabled="disableShippingPayment" @update:shipping-method="handleShippingMethodUpdate" />
-          <SfLoaderCircular
-            v-if="disableShippingPayment"
-            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
-            size="2xl"
-          />
+          <SfLoaderCircular v-if="disableShippingPayment" class="absolute mt-5 right-0 left-0 m-auto z-[999]"
+            size="2xl" />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
           <PreferredDeliveryPackstationFinder v-if="countryHasDelivery" />
           <PreferredDelivery v-if="countryHasDelivery" />
@@ -91,12 +84,13 @@ const checkPayPalPaymentsEligible = async () => {
     }
   }
 };
-
-await Promise.all([
-  useCartShippingMethods().getShippingMethods(),
-  fetchPaymentMethods(),
-  useAggregatedCountries().fetchAggregatedCountries(),
-]);
+await callOnce(async () => {
+  await Promise.all([
+    useCartShippingMethods().getShippingMethods(),
+    fetchPaymentMethods(),
+    useAggregatedCountries().fetchAggregatedCountries(),
+  ]);
+})
 
 onNuxtReady(async () => {
   await useFetchAddress(AddressType.Shipping)

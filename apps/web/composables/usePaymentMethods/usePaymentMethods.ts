@@ -25,24 +25,27 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
    */
   const fetchPaymentMethods: FetchPaymentMethods = async () => {
     state.value.loading = true;
-    // @@@ FGE @@@
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPaymentProviders());
 
-    const klarnaPaymentKeys = ['klarna', 'klarnasliceit', 'klarnapaylater', 'klarnapaynow'];
-    const integratedPayPalKeys = ['PAYPAL', 'PAYPAL_UNBRANDED_CARD', 'PAYPAL_GOOGLE_PAY', 'PAYPAL_APPLE_PAY'];
-    const originalList = data.value?.data?.list ?? [];
-    const filteredPaymentList = originalList.filter((provider) => {
-      const isKlarnaViaMollie = klarnaPaymentKeys.includes(provider.paymentKey) && provider.key === 'Mollie';
-      const isUnsupportedPlentyPayPal =
-        provider.key === 'plentyPayPal' && !integratedPayPalKeys.includes(provider.paymentKey);
+    try {
+      const { data } = await useSdk().plentysystems.getPaymentProviders();
+      const klarnaPaymentKeys = ['klarna', 'klarnasliceit', 'klarnapaylater', 'klarnapaynow'];
+      const integratedPayPalKeys = ['PAYPAL', 'PAYPAL_UNBRANDED_CARD', 'PAYPAL_GOOGLE_PAY', 'PAYPAL_APPLE_PAY'];
+      const originalList = data?.list ?? [];
+      const filteredPaymentList = originalList.filter((provider) => {
+        const isKlarnaViaMollie = klarnaPaymentKeys.includes(provider.paymentKey) && provider.key === 'Mollie';
+        const isUnsupportedPlentyPayPal =
+          provider.key === 'plentyPayPal' && !integratedPayPalKeys.includes(provider.paymentKey);
 
-      return !isKlarnaViaMollie && !isUnsupportedPlentyPayPal;
-    });
+        return !isKlarnaViaMollie && !isUnsupportedPlentyPayPal;
+      });
 
-    useHandleError(error.value);
-    state.value.data = data.value?.data ?? state.value.data;
-    state.value.data.list = filteredPaymentList ?? state.value.data.list;
-    state.value.loading = false;
+      state.value.data = data ?? state.value.data;
+      state.value.data.list = filteredPaymentList ?? state.value.data.list;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
     return state.value.data;
   };
