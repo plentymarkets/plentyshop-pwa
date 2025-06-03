@@ -38,7 +38,6 @@ export const useProduct: UseProductReturn = (slug) => {
     const { data, error } = await useAsyncData(
       'useProduct.fetchProduct' + params.id + '_' + (params.variationId ?? -1),
       () => useSdk().plentysystems.getProduct(params),
-    );
     useHandleError(error.value);
 
     properties.setProperties(data.value?.data.properties ?? []);
