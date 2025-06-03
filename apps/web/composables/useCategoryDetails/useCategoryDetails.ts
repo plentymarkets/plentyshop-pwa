@@ -18,7 +18,7 @@ export const useCategoryDetails: UseCategoryDetailsReturn = () => {
     } finally {
       state.value.loading = false;
     }
-    
+
     return state.value.data;
   };
 

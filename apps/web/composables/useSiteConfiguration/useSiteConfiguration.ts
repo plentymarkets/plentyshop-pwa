@@ -184,7 +184,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
     try {
       state.value.loading = true;
-  
+
       const settings = [
         {
           key: 'blockSize',
@@ -252,8 +252,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         },
       ];
 
-      await useSdk().plentysystems.setConfiguration({ settings })
-      
+      await useSdk().plentysystems.setConfiguration({ settings });
+
       state.value.initialData = {
         blockSize: state.value.blockSize,
         selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },

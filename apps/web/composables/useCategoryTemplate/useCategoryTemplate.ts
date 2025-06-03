@@ -60,11 +60,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
       state.value.loading = true;
 
       const data = await useSdk().plentysystems.getCategoryTemplate({ id: categoryId });
-      
+
       state.value.categoryTemplateData = data.data ?? state.value.categoryTemplateData;
     } catch (error) {
       console.error('Error fetching category template:', error);
-    } finally{
+    } finally {
       state.value.loading = false;
     }
   };
@@ -72,7 +72,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
       state.value.loading = true;
-  
+
       const data = await useSdk().plentysystems.doSaveBlocks({
         identifier: identifier,
         entityType: type,
