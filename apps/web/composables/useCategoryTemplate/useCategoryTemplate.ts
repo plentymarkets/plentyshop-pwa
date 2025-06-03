@@ -27,7 +27,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(`${type}-${identifier}`, () => useSdk().plentysystems.getBlocks({ identifier, type }));
+    const { data, error } = await useAsyncData(`${type}-${identifier}`, () =>
+      useSdk().plentysystems.getBlocks({ identifier, type }),
+    );
 
     if (error.value) {
       send({ type: 'negative', message: error?.value?.message });
