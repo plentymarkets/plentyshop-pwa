@@ -1,4 +1,4 @@
-import type { PaymentProviders } from '@plentymarkets/shop-api';
+import type { ApiError, PaymentProviders } from '@plentymarkets/shop-api';
 import type { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, SavePaymentMethod } from './types';
 
 /**
@@ -25,11 +25,27 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
    */
   const fetchPaymentMethods: FetchPaymentMethods = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPaymentProviders());
 
-    useHandleError(error.value);
-    state.value.data = data.value?.data ?? state.value.data;
-    state.value.loading = false;
+    try {
+      const { data } = await useSdk().plentysystems.getPaymentProviders();
+      const klarnaPaymentKeys = ['klarna', 'klarnasliceit', 'klarnapaylater', 'klarnapaynow'];
+      const integratedPayPalKeys = ['PAYPAL', 'PAYPAL_UNBRANDED_CARD', 'PAYPAL_GOOGLE_PAY', 'PAYPAL_APPLE_PAY'];
+      const originalList = data?.list ?? [];
+      const filteredPaymentList = originalList.filter((provider) => {
+        const isKlarnaViaMollie = klarnaPaymentKeys.includes(provider.paymentKey) && provider.key === 'Mollie';
+        const isUnsupportedPlentyPayPal =
+          provider.key === 'plentyPayPal' && !integratedPayPalKeys.includes(provider.paymentKey);
+
+        return !isKlarnaViaMollie && !isUnsupportedPlentyPayPal;
+      });
+
+      state.value.data = data ?? state.value.data;
+      state.value.data.list = filteredPaymentList ?? state.value.data.list;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
     return state.value.data;
   };
@@ -44,21 +60,20 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
    * ```
    */
   const savePaymentMethod: SavePaymentMethod = async (paymentMethodId: number) => {
-    state.value.loading = true;
-    const { error } = await useAsyncData(() =>
-      useSdk().plentysystems.setPaymentProvider({
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.setPaymentProvider({
         paymentId: paymentMethodId,
-      }),
-    );
-
-    const { data: cart } = useCart();
-    useHandleError(error.value);
-
-    if (cart.value) {
-      cart.value.methodOfPaymentId = paymentMethodId;
+      });
+      const { data: cart } = useCart();
+      if (cart.value) {
+        cart.value.methodOfPaymentId = paymentMethodId;
+      }
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
-
-    state.value.loading = false;
   };
 
   return {
