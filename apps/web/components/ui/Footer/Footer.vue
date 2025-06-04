@@ -28,8 +28,8 @@
     </div>
     <hr />
     <div class="bg-neutral-900" data-testid="section-bottom">
-      <div class="justify-end px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">
-        <p class="flex items-center justify-center leading-5 text-center typography-text-sm text-white/50 md:ml-6">
+      <div class="text-sm py-10 md:py-6 px-10 text-right">
+        <p class="text-white/50">
           {{ companyName }}
         </p>
       </div>
