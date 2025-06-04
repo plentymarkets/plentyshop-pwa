@@ -134,17 +134,18 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   const getAddresses: GetAddresses = async () => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(type.toString(), () =>
-      useSdk().plentysystems.getAddresses({
+    try {
+      const { data } = await useSdk().plentysystems.getAddresses({
         typeId: type,
-      }),
-    );
-    useHandleError(error.value);
-    state.value.data = data.value?.data ?? state.value.data;
+      });
+      state.value.data = data ?? state.value.data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
     setInitialDisplayAddress();
-
-    state.value.loading = false;
     return state.value.data;
   };
 
