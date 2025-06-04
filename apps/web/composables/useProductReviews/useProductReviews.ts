@@ -44,13 +44,14 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     state.value.loading = true;
     const route = useRoute();
     const config = useRuntimeConfig().public;
+    const feedbackPerPage = Number(route.query.feedbackPage) || 1;
 
     try {
-      const { data, error } = await useAsyncData(() =>
+      const { data, error } = await useAsyncData(`${itemId}-${feedbackPerPage}`, () =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
           feedbacksPerPage: config.defaultItemsPerPage,
-          page: Number(route.query.feedbackPage) || 1,
+          page: feedbackPerPage,
         }),
       );
       useHandleError(error.value);
@@ -75,7 +76,9 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doReview(params));
+    const { data, error } = await useAsyncData(`${JSON.stringify(params)}`, () =>
+      useSdk().plentysystems.doReview(params),
+    );
     useHandleError(error.value);
     if (data.value?.data && typeof data.value.data === 'string') {
       send({ type: 'negative', message: data.value.data });
@@ -94,7 +97,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
     const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.deleteReview({ feedbackId }));
+    const { error } = await useAsyncData(`${feedbackId}`, () => useSdk().plentysystems.deleteReview({ feedbackId }));
     useHandleError(error.value);
 
     await fetchReviews();
@@ -109,7 +112,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setReview(params));
+    const { error } = await useAsyncData(`${JSON.stringify(params)}`, () => useSdk().plentysystems.setReview(params));
     useHandleError(error.value);
 
     if (!error.value) {
