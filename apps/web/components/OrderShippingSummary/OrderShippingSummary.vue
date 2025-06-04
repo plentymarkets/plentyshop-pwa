@@ -23,6 +23,11 @@
       </li>
     </ul>
   </template>
+
+  <template v-if="orderContactWish">
+    <h2 class="font-medium text-base mt-4">{{ t('customerWish') }}</h2>
+    <p>{{ orderContactWish }}</p>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -35,4 +40,5 @@ const { t } = useI18n();
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const shippingMethod = orderGetters.getShippingProvider(props.order);
 const preferredDeliveryServices = orderGetters.getPreferredDeliveryServices(props.order);
+const orderContactWish = orderGetters.getOrderContactWish(props.order);
 </script>
