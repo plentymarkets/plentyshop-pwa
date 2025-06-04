@@ -82,7 +82,6 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       send({ type: 'positive', message: $i18n.t('review.notification.success') });
     } catch (error) {
       useHandleError(error as ApiError);
-      send({ type: 'negative', message: (error as ApiError).message });
       return state.value.data;
     }
 
