@@ -161,16 +161,17 @@ export const usePayPal = () => {
    */
   const getOrder = async (paypalOrderId: string) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.getPayPalOrder({
+    try {
+      const { data } = await useSdk().plentysystems.getPayPalOrder({
         paypalOrderId,
-      }),
-    );
-    useHandleError(error.value);
-
-    state.value.loading = false;
-
-    return data.value?.data ?? null;
+      });
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return null;
   };
 
   /**
@@ -182,13 +183,17 @@ export const usePayPal = () => {
    */
   const getFraudId = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalFraudId());
-    useHandleError(error.value);
+    try {
+      const { data } = await useSdk().plentysystems.getPayPalFraudId();
+      state.value.fraudId = data.fraudId ?? null;
+    } catch (error) {
+      useHandleError(error as ApiError);
+      state.value.fraudId = null;
+    } finally {
+      state.value.loading = false;
+    }
 
-    state.value.loading = false;
-    state.value.fraudId = data.value?.data.fraudId ?? null;
-
-    return data.value?.data.fraudId ?? null;
+    return state.value.fraudId;
   };
 
   /**
@@ -202,11 +207,15 @@ export const usePayPal = () => {
    */
   const createTransaction = async (params: PayPalCreateOrderRequest) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePayPalOrder(params));
-    state.value.order = data.value?.data ?? null;
-    useHandleError(error.value);
-
-    state.value.loading = false;
+    try {
+      const { data } = await useSdk().plentysystems.doCreatePayPalOrder(params);
+      state.value.order = data ?? null;
+    } catch (error) {
+      useHandleError(error as ApiError);
+      state.value.order = null;
+    } finally {
+      state.value.loading = false;
+    }
 
     return state.value.order;
   };
@@ -224,15 +233,17 @@ export const usePayPal = () => {
    */
   const captureOrder = async (PayPalOrderId: string) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doCapturePayPalOrderV2({
+    try {
+      const { data } = await useSdk().plentysystems.doCapturePayPalOrderV2({
         paypalOrderId: PayPalOrderId,
-      }),
-    );
-    useHandleError(error.value);
-
-    state.value.loading = false;
-    return data.value?.data ?? null;
+      });
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return null;
   };
 
   /**
@@ -249,16 +260,18 @@ export const usePayPal = () => {
    */
   const createPlentyPaymentFromPayPalOrder = async (PayPalOrderId: string, plentyOrderId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doCreatePlentyPaymentFromPayPalOrder({
+    try {
+      const { data } = await useSdk().plentysystems.doCreatePlentyPaymentFromPayPalOrder({
         payPalOrderId: PayPalOrderId,
         plentyOrderId,
-      }),
-    );
-    useHandleError(error.value);
-
-    state.value.loading = false;
-    return data.value?.data ?? null;
+      });
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return null;
   };
 
   /**
