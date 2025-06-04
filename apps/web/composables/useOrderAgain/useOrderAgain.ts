@@ -1,4 +1,4 @@
-import type { DoAddItemParams, Order, BasketItemOrderParamsProperty } from '@plentymarkets/shop-api';
+import type { DoAddItemParams, Order, BasketItemOrderParamsProperty, ApiError } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-api';
 import type {
   UseOrderAgainState,
@@ -35,27 +35,30 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
    * ```
    */
   const loadOrderInformation: LoadOrderInformation = async (orderId, accessKey) => {
-    state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doOrderAgainInformation({
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.doOrderAgainInformation({
         orderId,
         accessKey,
-      }),
-    );
-    useHandleError(error.value);
+      });
 
-    if (data.value?.data?.data) {
-      state.value.order = data.value.data.data;
-      state.value.order.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.value.data.data);
-      state.value.hasItemsChanged = state.value.order
-        ? orderGetters.hasOrderAgainChangedItems(state.value.order)
-        : false;
-    } else {
+      if (data?.data) {
+        state.value.order = data.data;
+        state.value.order.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.data);
+        state.value.hasItemsChanged = state.value.order
+          ? orderGetters.hasOrderAgainChangedItems(state.value.order)
+          : false;
+      } else {
+        state.value.isOpen = false;
+        state.value.hasItemsChanged = false;
+      }
+    } catch (error) {
+      useHandleError(error as ApiError);
       state.value.isOpen = false;
       state.value.hasItemsChanged = false;
+    } finally {
+      state.value.loading = false;
     }
-
-    state.value.loading = false;
   };
 
   /** Function for open the order again modal

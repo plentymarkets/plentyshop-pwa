@@ -1,5 +1,5 @@
 import type { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
-import type { Cart, DoAddCouponParams } from '@plentymarkets/shop-api';
+import type { ApiError, Cart, DoAddCouponParams } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing coupons.
@@ -35,33 +35,38 @@ export const useCoupon: UseCouponReturn = () => {
       state.value.loading = false;
       return {} as Cart;
     }
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
-    state.value.loading = false;
 
-    useHandleError(error.value);
-
-    if (data.value) {
+    try {
+      await useSdk().plentysystems.doAddCoupon(params);
       await getCart();
       send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
     return {} as Cart;
   };
 
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
-    state.value.loading = true;
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const { getCart } = useCart();
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
-    state.value.loading = false;
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.deleteCoupon(params);
 
-    useHandleError(error.value);
-
-    if (data.value) {
-      await getCart();
-      send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
+      if (data) {
+        await getCart();
+        send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
+      }
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
+
     return {} as Cart;
   };
 

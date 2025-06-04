@@ -1,4 +1,4 @@
-import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, type ApiError, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import type {
   DeleteAddress,
   SetDefault,
@@ -133,6 +133,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
 
   const getAddresses: GetAddresses = async () => {
     state.value.loading = true;
+
     const { data, error } = await useAsyncData(type.toString(), () =>
       useSdk().plentysystems.getAddresses({
         typeId: type,
@@ -148,28 +149,27 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   };
 
   const saveAddress: SaveAddress = async (address: Address, combineShippingBilling = false) => {
-    state.value.loading = true;
-
-    const { data, error } = await useAsyncData(type.toString(), () =>
-      useSdk().plentysystems.doSaveAddress({
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.doSaveAddress({
         typeId: type,
         addressData: address,
-      }),
-    );
+      });
 
-    useHandleError(error.value);
-    state.value.loading = false;
-
-    const createdAddress = data.value?.data[0];
-
-    if (createdAddress) {
-      setDisplayAddress(createdAddress);
-      if (combineShippingBilling) {
-        await setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(createdAddress)));
+      if (data.length > 0) {
+        const createdAddress = data[0];
+        setDisplayAddress(createdAddress);
+        if (combineShippingBilling) {
+          await setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(createdAddress)));
+        }
       }
-    }
 
-    state.value.data = data.value?.data ?? state.value.data;
+      state.value.data = data ?? state.value.data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
     return state.value.data ?? [];
   };
