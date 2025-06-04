@@ -76,14 +76,14 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
-    const { data, error } = await useAsyncData(`${JSON.stringify(params)}`, () =>
-      useSdk().plentysystems.doReview(params),
-    );
-    useHandleError(error.value);
-    if (data.value?.data && typeof data.value.data === 'string') {
-      send({ type: 'negative', message: data.value.data });
-    } else {
+
+    try {
+      await useSdk().plentysystems.doReview(params);
       send({ type: 'positive', message: $i18n.t('review.notification.success') });
+    } catch (error) {
+      useHandleError(error as ApiError);
+      send({ type: 'negative', message: (error as ApiError).message });
+      return state.value.data;
     }
 
     await fetchReviews();
@@ -95,10 +95,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     state.value.loading = true;
     closeReviewModal();
 
-    const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
+    try {
+      const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
 
-    const { error } = await useAsyncData(`${feedbackId}`, () => useSdk().plentysystems.deleteReview({ feedbackId }));
-    useHandleError(error.value);
+      await useSdk().plentysystems.deleteReview({ feedbackId });
+    } catch (error) {
+      useHandleError(error as ApiError);
+    }
 
     await fetchReviews();
 
@@ -112,11 +115,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
 
-    const { error } = await useAsyncData(`${JSON.stringify(params)}`, () => useSdk().plentysystems.setReview(params));
-    useHandleError(error.value);
+    try {
+      await useSdk().plentysystems.setReview(params);
 
-    if (!error.value) {
       send({ type: 'positive', message: $i18n.t('review.notification.success') });
+    } catch (error) {
+      useHandleError(error as ApiError);
+      return state.value.data;
     }
 
     await fetchReviews();
