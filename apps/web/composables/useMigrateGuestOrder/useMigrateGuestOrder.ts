@@ -1,4 +1,4 @@
-import type { MigrateGuestOrderToCustomerParams } from '@plentymarkets/shop-api';
+import type { ApiError, MigrateGuestOrderToCustomerParams } from '@plentymarkets/shop-api';
 
 export const useMigrateGuestOrder = () => {
   const state = useState('useMigrateGuestOrder', () => ({
@@ -6,13 +6,16 @@ export const useMigrateGuestOrder = () => {
   }));
 
   const migrateGuestOrder = async (params: MigrateGuestOrderToCustomerParams) => {
-    state.value.loading = true;
-
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doMigrateGuestOrderToCustomer(params));
-    useHandleError(error.value);
-
-    state.value.loading = false;
-    return !!data;
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.doMigrateGuestOrderToCustomer(params);
+      return !!data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return false;
   };
 
   return {
