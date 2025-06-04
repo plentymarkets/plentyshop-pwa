@@ -25,8 +25,9 @@
 <script setup lang="ts">
 defineProps<{
   heading: string;
-  pageType: 'static',
-
 }>();
+definePageMeta({
+  isBlockified: false,
+});
 const viewport = useViewport();
 </script>

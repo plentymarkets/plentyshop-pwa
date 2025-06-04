@@ -5,12 +5,11 @@
       <slot />
     </NarrowContainer>
   </main>
-  <UiFooter v-if="isStaticPage" />
+  <UiFooter v-if="route.meta.isBlockified" />
 </template>
 <script setup lang="ts">
 definePageMeta({
-  pageType: 'static',
+  isBlockified: false,
 });
 const route = useRoute();
-const isStaticPage = computed(() => route.meta.pageType === 'static');
 </script>

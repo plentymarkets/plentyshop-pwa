@@ -9,17 +9,16 @@
       <PreviewMode />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
-      <UiFooter v-if="isStaticPage" :simplified-footer="true" />
+      <UiFooter v-if="route.meta.isBlockified" :simplified-footer="true" />
     </NuxtLazyHydrate>
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  pageType: 'static',
+  isBlockified: false,
 });
 const route = useRoute();
-const isStaticPage = computed(() => route.meta.pageType === 'static');
 usePageTitle();
 useStructuredData().setLogoMeta();
 </script>

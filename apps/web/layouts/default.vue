@@ -11,7 +11,7 @@
     <Cookiebar />
     <PreviewMode />
     <NuxtLazyHydrate when-visible>
-      <UiFooter v-if="isStaticPage"  />
+      <UiFooter v-if="!route.meta.isBlockified"  />
     </NuxtLazyHydrate>
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
@@ -21,13 +21,12 @@
 
 import type { DefaultLayoutProps } from '~/layouts/types';
 definePageMeta({
-  pageType: 'static',
+  isBlockified: false,
 });
 defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 const route = useRoute();
-const isStaticPage = computed(() => route.meta.pageType === 'static');
 setLogoMeta();
 </script>

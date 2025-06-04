@@ -99,7 +99,7 @@ import {
 import type { MyAccountSubsection } from '~/layouts/types';
 import { paths } from '~/utils/paths';
 definePageMeta({
-  pageType: 'static',
+  isBlockified: false,
 });
 const localePath = useLocalePath();
 const viewport = useViewport();

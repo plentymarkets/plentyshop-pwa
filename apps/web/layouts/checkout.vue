@@ -30,7 +30,7 @@
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 definePageMeta({
-  pageType: 'static',
+  isBlockified: false,
 });
 const localePath = useLocalePath();
 const { t } = useI18n();
