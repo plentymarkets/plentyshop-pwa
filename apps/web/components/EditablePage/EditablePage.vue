@@ -74,8 +74,8 @@ if (!footerExists) {
       colors: {
         background: '#cfe4ec',
         text: '#1c1c1c',
-        noteBackground: '#e5e5e5',
-        noteText: '#000000',
+        noteBackground: '#161a16',
+        noteText: '#959795',
       },
     },
   });
