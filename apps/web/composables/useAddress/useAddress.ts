@@ -135,9 +135,9 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     state.value.loading = true;
 
     try {
-      const {data} = await useSdk().plentysystems.getAddresses({
-          typeId: type,
-        });
+      const { data } = await useSdk().plentysystems.getAddresses({
+        typeId: type,
+      });
       state.value.data = data ?? state.value.data;
     } catch (error) {
       useHandleError(error as ApiError);
