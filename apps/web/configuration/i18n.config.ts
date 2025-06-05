@@ -1,7 +1,7 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
 
 export const getLocales = (): LocaleObject[] => {
-  const LANGUAGE_CODES = ['en'];
+  const LANGUAGE_CODES = ['en', 'de'];
   // const languages = (readdirSync(path.resolve(__dirname, '../i18n/lang')) || []).map((file: string) =>
   //   file.replace('.json', ''),
   // );

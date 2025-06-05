@@ -1,5 +1,5 @@
 import { defineI18nLocale } from '#i18n';
-import enLocale from './en.json';
+import deLocale from './de.json';
 
 export default defineI18nLocale(async (locale) => {
   const config = useRuntimeConfig().public;
@@ -7,14 +7,13 @@ export default defineI18nLocale(async (locale) => {
 
   if (config.fetchDynamicTranslations) {
     const { data, fetchTranslations } = useTranslations();
-
     await fetchTranslations(locale);
 
     remoteTranslations = data?.value || {};
   }
 
   return {
-    ...enLocale,
-    ...remoteTranslations,
+    ...deLocale,
+    ...remoteTranslations
   };
 });
