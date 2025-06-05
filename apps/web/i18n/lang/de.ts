@@ -9,7 +9,7 @@ export default defineI18nLocale(async (locale) => {
     const { data, fetchTranslations } = useTranslations();
     await fetchTranslations(locale);
 
-    remoteTranslations = data?.value || {};
+    remoteTranslations = JSON.parse(data?.value) || {};
   }
 
   return {
