@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" />
+    <EmptyBlock v-if="dataIsEmpty || (data.length === 1 && data[0].name === 'Footer')" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -27,11 +27,15 @@
           class="group"
           :class="[
             {
-              'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'Carousel',
+              'max-w-screen-3xl mx-auto lg:px-10 mt-3':
+                block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
             },
             {
               'px-4 md:px-6':
-                block.name !== 'Carousel' && block.name !== 'Banner' && block.name !== 'NewsletterSubscribe',
+                block.name !== 'Carousel' &&
+                block.name !== 'Banner' &&
+                block.name !== 'NewsletterSubscribe' &&
+                block.name !== 'Footer',
             },
           ]"
           data-testid="block-wrapper"
@@ -45,13 +49,37 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
-
+import { v4 as uuid } from 'uuid';
 const { $isPreview } = useNuxtApp();
-
 const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
+const footerExists = data.value.some((block) => block.name === 'Footer');
+
+if (!footerExists) {
+  data.value.push({
+    name: 'Footer',
+    type: 'content',
+    meta: {
+      uuid: uuid(),
+    },
+    content: {
+      column1: { title: 'Legal' },
+      column2: { title: 'Contact', description: '', showContactLink: true },
+      column3: { title: '', description: '' },
+      column4: { title: '', description: '' },
+      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
+      footnoteAlign: 'right',
+      colors: {
+        background: '#cfe4ec',
+        text: '#1c1c1c',
+        noteBackground: '#161a16',
+        noteText: '#959795',
+      },
+    },
+  });
+}
 
 const {
   isClicked,
@@ -63,7 +91,6 @@ const {
   handleDragStart,
   handleDragEnd,
 } = useBlockManager();
-
 const scrollToBlock = (evt: DragEvent) => {
   if (evt.moved) {
     const { newIndex } = evt.moved;
@@ -78,7 +105,6 @@ const scrollToBlock = (evt: DragEvent) => {
 
 const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
 const { isEditingEnabled, disableActions } = useEditor();
-
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
