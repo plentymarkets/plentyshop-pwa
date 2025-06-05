@@ -43,7 +43,7 @@ export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
   const getLegalTexts: GetLegalInformation = async (params: LegalTextsParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getLegalTexts(params));
+      const { data, error } = await useAsyncData(`${params.type}`, () => useSdk().plentysystems.getLegalTexts(params));
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
       return state.value.data;
