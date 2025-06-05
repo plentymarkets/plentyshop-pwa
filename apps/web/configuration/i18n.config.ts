@@ -1,7 +1,7 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
 
 export const getLocales = (): LocaleObject[] => {
-  const LANGUAGE_CODES = ['en', 'de'];
+  const LANGUAGE_CODES = ['en', 'de', 'fr'];
   const locales: LocaleObject[] = [];
 
   LANGUAGE_CODES.forEach((language) => {
