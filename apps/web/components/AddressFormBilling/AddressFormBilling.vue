@@ -95,7 +95,7 @@
         v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['zipCode'])"
       />
-      <ErrorMessage as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage id="billingZipCodeError" as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">

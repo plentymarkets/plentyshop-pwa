@@ -90,6 +90,21 @@ export class CartPageObject extends PageObject {
     return this;
   }
 
+  increaseCartItemQuantity() {
+    cy.getByTestId('quantity-selector-increase-button').click();
+    return this;
+  }
+
+  decreaseCartItemQuantity() {
+    cy.getByTestId('quantity-selector-decrease-button').click();
+    return this;
+  }
+
+  summaryItems(expectedItems = 'Items: 2') {
+    cy.getByTestId('total-in-cart').invoke('text').should('include', expectedItems);
+    return this;
+  }
+
   orderSummaryAfterCouponApplied() {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('be.visible');
