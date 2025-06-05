@@ -1,6 +1,5 @@
 import type { UseTranslationsReturn, FetchTranslations } from './types';
 
-
 /**
  * @description Composable for managing translations.
  * @returns UseTranslationsReturn
@@ -32,7 +31,7 @@ export const useTranslations: UseTranslationsReturn = () => {
 
       useHandleError(error.value);
 
-     state.value.data = data?.value?.data as string
+      state.value.data = data?.value?.data as string;
     } catch (error) {
       throw new Error(error as string);
     } finally {

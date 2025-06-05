@@ -16,7 +16,7 @@ export const getLocales = (): LocaleObject[] => {
   });
 
   return locales;
-}
+};
 
 const getDefaultLocale = () => {
   const locales = getLocales();
