@@ -14,6 +14,6 @@ export default defineI18nLocale(async (locale) => {
 
   return {
     ...deLocale,
-    ...remoteTranslations
+    ...remoteTranslations,
   };
 });
