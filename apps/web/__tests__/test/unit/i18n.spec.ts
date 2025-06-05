@@ -34,10 +34,10 @@ describe('locale configuration', () => {
   vi.mock('node:fs');
 
   it('should create a locale configuration for each language', () => {
-    const languages = ['en.json', 'de.json'];
+    const languages = ['en.ts', 'de.ts'];
     const EXPECTED = [
-      { code: 'en', file: 'en.json' },
-      { code: 'de', file: 'de.json' },
+      { code: 'en', file: 'en.ts' },
+      { code: 'de', file: 'de.ts' },
     ];
 
     (readdirSync as Mock).mockReturnValue(languages);
