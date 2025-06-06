@@ -33,22 +33,7 @@ describe('i18n', () => {
 describe('locale configuration', () => {
   vi.mock('node:fs');
 
-  it('should create a locale JSON configuration for each language', () => {
-    const languages = ['en.json', 'de.json', 'fr.json'];
-    const EXPECTED = [
-      { code: 'en', file: 'en.json' },
-      { code: 'de', file: 'de.json' },
-      { code: 'fr', file: 'fr.json' },
-    ];
-
-    (readdirSync as Mock).mockReturnValue(languages);
-
-    const localeObject = getLocales();
-
-    expect(localeObject).toEqual(EXPECTED);
-  });
-
-  it('should create a locale TS configuration for each language', () => {
+  it('should create a locale configuration for each language', () => {
     const languages = ['en.ts', 'de.ts', 'fr.ts'];
     const EXPECTED = [
       { code: 'en', file: 'en.ts' },

@@ -31,7 +31,7 @@ describe('AppConfigurator', () => {
 
       configurator.generateLanguageFiles(languages);
       expect(loggerSpy).toHaveBeenCalledOnce();
-      expect(writerSpy).toHaveBeenCalledTimes(3);
+      expect(writerSpy).toHaveBeenCalledTimes(5);
     });
   });
 });
