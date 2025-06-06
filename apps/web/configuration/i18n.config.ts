@@ -1,7 +1,14 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
+import { readdirSync } from 'node:fs';
+import path from 'node:path';
 
 export const getLocales = (): LocaleObject[] => {
-  const LANGUAGE_CODES = ['en', 'de', 'fr'];
+  const languages = (readdirSync(path.resolve(__dirname, '../i18n/lang')) || []).map((file: string) =>
+    file.replace(/\.[^.]+$/, ''),
+  );
+
+  const LANGUAGE_CODES = languages.filter((item, pos) => languages.indexOf(item) == pos);
+
   const locales: LocaleObject[] = [];
 
   LANGUAGE_CODES.forEach((language) => {

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { rmSync } from 'node:fs';
+import { rmSync, readFileSync } from 'node:fs';
 import type { Languages } from './types';
 import type { Writer } from '../writers/types';
 import type { Logger } from '../logs/types';
@@ -28,9 +28,18 @@ export class AppConfigurator {
 
     languages.activated.split(',').forEach((language) => {
       const languageFile = path.resolve(languageFilesPath, `${language}.json`);
-
       this.writer.writeMissing(fileData, languageFile);
+
+      const tsFilePath = path.resolve(languageFilesPath, `${language}.ts`);
+      const tsFileContent = this.getTsFileContent(languages.default);
+
+      this.writer.writeMissing(tsFileContent, tsFilePath);
     });
+  }
+
+  private getTsFileContent(language: string): string {
+    const filePath = path.resolve(__dirname, `../../i18n/lang/${language}.ts`);
+    return readFileSync(filePath, 'utf-8');
   }
 
   private cleanUpInactiveLanguages(languages: Languages, languageFilesPath: string) {
