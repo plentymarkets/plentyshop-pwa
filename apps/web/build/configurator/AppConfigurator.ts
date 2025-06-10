@@ -45,12 +45,16 @@ export class AppConfigurator {
   private cleanUpInactiveLanguages(languages: Languages, languageFilesPath: string) {
     if (!languages.activated.includes('en') && languages.default !== 'en') {
       const enFile = path.resolve(languageFilesPath, 'en.json');
+      const enTsFile = path.resolve(languageFilesPath, 'en.ts');
       rmSync(enFile);
+      rmSync(enTsFile);
     }
 
     if (!languages.activated.includes('de') && languages.default !== 'de') {
       const deFile = path.resolve(languageFilesPath, 'de.json');
+      const deTsFile = path.resolve(languageFilesPath, 'de.ts');
       rmSync(deFile);
+      rmSync(deTsFile);
     }
   }
 
