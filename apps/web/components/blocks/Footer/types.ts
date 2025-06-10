@@ -51,13 +51,14 @@ export interface FooterSettingsColumn {
 export interface FooterSettingsColors {
   background: string;
   text: string;
-  noteBackground: string;
-  noteText: string;
+  footnoteBackground: string;
+  footnoteText: string;
 }
 
 export interface FooterSettings {
   meta: {
     uuid: string;
+    isGlobalTemplate?: boolean;
   };
   column1: FooterSettingsColumn;
   column2: FooterSettingsColumn;

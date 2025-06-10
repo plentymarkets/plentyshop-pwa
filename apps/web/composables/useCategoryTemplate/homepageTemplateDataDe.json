@@ -219,26 +219,26 @@
     "content": {
       "column1": {
         "text": {
-          "title": "Legal"
+          "title": "Rechtliches"
         }
       },
       "column2": {
         "text": {
-          "title": "Contact",
+          "title": "Kontakt",
           "showLinkToContact": false,
           "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
         }
       },
       "column3": {
         "text": {
-          "title": "Social Media",
-          "htmlDescription": "<ul><li><a href='https://www.instagram.com/plentymarkets/'>Instagram</a></li><li><a href='https://www.facebook.com/plentymarkets/'>Facebook</a></li></ul>"
+          "title": "",
+          "htmlDescription": ""
         }
       },
       "column4": {
         "text": {
-          "title": "Newsletter",
-          "htmlDescription": "<p>Subscribe to our newsletter and stay updated on the latest news and offers.</p>"
+          "title": "",
+          "htmlDescription": ""
         }
       },
       "footnote": "© PlentyONE GmbH 2025",

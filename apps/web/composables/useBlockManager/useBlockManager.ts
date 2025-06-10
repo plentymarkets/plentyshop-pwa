@@ -110,10 +110,9 @@ export const useBlockManager = () => {
 
   const isLastBlock = (index: number) => {
     if (!data.value || data.value.length === 0) return false;
-    const lastNonFooterIndex = [...data.value].reverse().findIndex((block) => block.name !== 'Footer');
-    if (lastNonFooterIndex === -1) return false;
-    const actualLastNonFooterIndex = data.value.length - 1 - lastNonFooterIndex;
-    return index === actualLastNonFooterIndex;
+    const hasFooter = data.value.length > 0 && data.value[data.value.length - 1].name === 'Footer';
+    const lastNonFooterIndex = hasFooter ? data.value.length - 2 : data.value.length - 1;
+    return index === lastNonFooterIndex;
   };
 
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {

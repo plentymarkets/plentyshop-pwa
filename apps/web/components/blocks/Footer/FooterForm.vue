@@ -126,7 +126,7 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
       <template #summary>
-        <h2>Forth column</h2>
+        <h2>Fourth column</h2>
       </template>
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -158,104 +158,6 @@
           placeholder="Description text for the forth column"
           data-testid="input-text-column-4"
         />
-      </div>
-    </UiAccordionItem>
-
-    <UiAccordionItem
-      v-model="footerColors"
-      data-testid="color-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>Color</h2>
-      </template>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Text color</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="footerBlock.colors.text" type="text" data-testid="text-color-select">
-            <template #suffix>
-              <label
-                for="footer-text-color"
-                :style="{ backgroundColor: footerBlock.colors.text }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input id="footer-text-color" v-model="footerBlock.colors.text" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Background color</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
-            <template #suffix>
-              <label
-                for="bg-footer-color"
-                :style="{ backgroundColor: footerBlock.colors.background }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="bg-footer-color"
-                  v-model="footerBlock.colors.background"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Footnote Text color</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="footerBlock.colors.noteText" type="text" data-testid="footnote-text-color-select">
-            <template #suffix>
-              <label
-                for="footnote-text-color"
-                :style="{ backgroundColor: footerBlock.colors.noteText }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="footnote-text-color"
-                  v-model="footerBlock.colors.noteText"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Footnote Background color</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="footerBlock.colors.noteBackground" type="text" data-testid="footnote-bg-color-select">
-            <template #suffix>
-              <label
-                for="footnote-bg-color"
-                :style="{ backgroundColor: footerBlock.colors.noteBackground }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="footnote-bg-color"
-                  v-model="footerBlock.colors.noteBackground"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
       </div>
     </UiAccordionItem>
 
@@ -316,6 +218,104 @@
             Right
           </div>
         </div>
+      </div>
+    </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="footerColors"
+      data-testid="color-column-section"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>Color</h2>
+      </template>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Text color</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="footerBlock.colors.text" type="text" data-testid="text-color-select">
+            <template #suffix>
+              <label
+                for="footer-text-color"
+                :style="{ backgroundColor: footerBlock.colors.text }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input id="footer-text-color" v-model="footerBlock.colors.text" type="color" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Background color</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
+            <template #suffix>
+              <label
+                for="bg-footer-color"
+                :style="{ backgroundColor: footerBlock.colors.background }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="bg-footer-color"
+                  v-model="footerBlock.colors.background"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Footnote Text color</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="footerBlock.colors.footnoteText" type="text" data-testid="footnote-text-color-select">
+            <template #suffix>
+              <label
+                for="footnote-text-color"
+                :style="{ backgroundColor: footerBlock.colors.footnoteText }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="footnote-text-color"
+                  v-model="footerBlock.colors.footnoteText"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Footnote Background color</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="footerBlock.colors.footnoteBackground" type="text" data-testid="footnote-bg-color-select">
+            <template #suffix>
+              <label
+                for="footnote-bg-color"
+                :style="{ backgroundColor: footerBlock.colors.footnoteBackground }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="footnote-bg-color"
+                  v-model="footerBlock.colors.footnoteBackground"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
       </div>
     </UiAccordionItem>
   </div>

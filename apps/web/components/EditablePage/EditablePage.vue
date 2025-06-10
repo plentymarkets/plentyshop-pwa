@@ -55,6 +55,9 @@ const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
+
+const { t } = useI18n();
+
 const footerExists = data.value.some((block) => block.name === 'Footer');
 
 if (!footerExists) {
@@ -63,10 +66,11 @@ if (!footerExists) {
     type: 'content',
     meta: {
       uuid: uuid(),
+      isGlobalTemplate: true,
     },
     content: {
-      column1: { title: 'Legal' },
-      column2: { title: 'Contact', description: '', showContactLink: true },
+      column1: { title: t('categories.legal.label') },
+      column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
       column3: { title: '', description: '' },
       column4: { title: '', description: '' },
       footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
