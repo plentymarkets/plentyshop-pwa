@@ -4,11 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-ENV API_SECURITY_TOKEN=""
-ENV API_ENDPOINT=
-
 RUN npm install
-
 
 RUN npm run build
 
