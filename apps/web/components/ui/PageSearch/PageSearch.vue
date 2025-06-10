@@ -1,6 +1,7 @@
 <template>
   <div
     class="page-search z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
+    data-testid="page-search"
   >
     <div>
       <Multiselect
@@ -16,7 +17,7 @@
         select-label=""
         deselect-label="Selected"
         :open="isOpen"
-        class="h-[450px]"
+        :style="multiselectStyle"
         @select="selectValue"
       >
         <template #option="{ option }">
@@ -43,7 +44,10 @@
 
 <script lang="ts" setup>
 import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
+
 import { SfIconHome, SfIconMenu, SfButton } from '@storefront-ui/vue';
+
 const { openDrawerWithView } = useSiteConfiguration();
 const emit = defineEmits(['pageSelected', 'close']);
 const inputModel = ref('');
@@ -65,6 +69,7 @@ const flattenPages = (
     return acc;
   }, []);
 };
+
 const options = ref(flattenPages(pages.value));
 
 const trimPath = (path: string): string => {
@@ -95,6 +100,18 @@ const openPages = () => {
   openDrawerWithView('PagesView');
   emit('close');
 };
+
+const maxHeight = 450;
+const rowHeight = 40;
+const baseHeight = 56;
+const multiselectStyle = computed(() => {
+  const dynamicHeight = Math.min(baseHeight + options.value.length * rowHeight, maxHeight);
+  return {
+    height: dynamicHeight + 'px',
+    maxHeight: maxHeight + 'px',
+    minHeight: baseHeight + 'px',
+  };
+});
 </script>
 
 <style scoped>

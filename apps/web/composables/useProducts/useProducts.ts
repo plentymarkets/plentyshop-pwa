@@ -39,7 +39,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
     const identifier = category || params.categoryUrlPath || params.categoryId;
 
-    const { data } = await useAsyncData(`useProducts-${identifier}`, () => useSdk().plentysystems.getFacet(params));
+    const { data } = await useAsyncData(`useProducts-${identifier}-${JSON.stringify(params)}`, () =>
+      useSdk().plentysystems.getFacet(params),
+    );
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
