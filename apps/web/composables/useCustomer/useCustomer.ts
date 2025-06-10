@@ -214,11 +214,15 @@ export const useCustomer: UseCustomerReturn = () => {
   const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
     state.value.loading = true;
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doChangeUserPassword(params));
-    state.value.loading = false;
-    useHandleError(error.value);
-
-    return !error.value;
+    try {
+      await useSdk().plentysystems.doChangeUserPassword(params);
+      return true;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return false;
   };
 
   const emailValidationSchema = toTypedSchema(
