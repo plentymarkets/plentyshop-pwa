@@ -65,7 +65,15 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
-const { cart, cartIsEmpty, cartLoading, persistShippingAddress, persistBillingAddress } = useCheckout();
+const {
+  cart,
+  cartIsEmpty,
+  cartLoading,
+  persistShippingAddress,
+  persistBillingAddress,
+  setBillingSkeleton,
+  setShippingSkeleton,
+} = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
 const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
@@ -83,22 +91,25 @@ const checkPayPalPaymentsEligible = async () => {
     }
   }
 };
-
-await Promise.all([
-  useCartShippingMethods().getShippingMethods(),
-  fetchPaymentMethods(),
-  useAggregatedCountries().fetchAggregatedCountries(),
-]);
+await callOnce(async () => {
+  await Promise.all([
+    useCartShippingMethods().getShippingMethods(),
+    fetchPaymentMethods(),
+    useAggregatedCountries().fetchAggregatedCountries(),
+  ]);
+});
 
 onNuxtReady(async () => {
   await useFetchAddress(AddressType.Shipping)
     .fetchServer()
     .then(() => persistShippingAddress())
+    .then(() => setShippingSkeleton(false))
     .catch((error) => useHandleError(error));
 
   await useFetchAddress(AddressType.Billing)
     .fetchServer()
     .then(() => persistBillingAddress())
+    .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
   await checkPayPalPaymentsEligible();
