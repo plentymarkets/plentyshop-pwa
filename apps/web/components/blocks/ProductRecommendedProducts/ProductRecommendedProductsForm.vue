@@ -71,46 +71,32 @@
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
         <div
           for="text-align-left"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'left',
-          }"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': (recommendedBlock.text.textAlignment || 'left') === 'left' }"
           data-testid="recommended-form-text-align-left"
           @click="recommendedBlock.text.textAlignment = 'left'"
         >
-          <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: recommendedBlock.text.textAlignment !== 'left' }" />
+          <SfIconCheck :class="{ 'invisible': (recommendedBlock.text.textAlignment || 'left') !== 'left' }" class="mr-1 w-[1.1rem]" />
           Left
         </div>
-
         <div
           for="text-align-center"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'center',
-          }"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'center' }"
           data-testid="recommended-form-text-align-center"
           @click="recommendedBlock.text.textAlignment = 'center'"
         >
-          <SfIconCheck
-            class="mr-1 w-[1.1rem]"
-            :class="{ invisible: recommendedBlock.text.textAlignment !== 'center' }"
-          />
+          <SfIconCheck :class="{ 'invisible': recommendedBlock.text.textAlignment !== 'center' }" class="mr-1 w-[1.1rem]" />
           Center
         </div>
-
         <div
           for="text-align-right"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'right',
-          }"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'right' }"
           data-testid="recommended-form-text-align-right"
           @click="recommendedBlock.text.textAlignment = 'right'"
         >
-          <SfIconCheck
-            class="mr-1 w-[1.1rem]"
-            :class="{ invisible: recommendedBlock.text.textAlignment !== 'right' }"
-          />
+          <SfIconCheck :class="{ 'invisible': recommendedBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
           Right
         </div>
       </div>
