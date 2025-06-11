@@ -34,6 +34,7 @@
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
+
     <UiButton
       v-else
       type="submit"
@@ -49,7 +50,19 @@
       <template v-else>{{ t('buy') }}</template>
     </UiButton>
   </div>
+
   <UiModal
+    v-if="payPalPayUponInvoice"
+    v-model="payPalPayUponInvoice"
+    class="h-full w-full md:w-[600px] md:h-fit"
+    tag="section"
+    disable-click-away
+  >
+    <PayPalPayUponInvoiceForm @confirm-cancel="handlePayUponInvoiceModalClosing" />
+  </UiModal>
+
+  <UiModal
+    v-if="paypalCardDialog"
     v-model="paypalCardDialog"
     class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
     tag="section"
@@ -83,6 +96,7 @@ const { emit } = usePlentyEvent();
 const { send } = useNotification();
 const { shippingPrivacyAgreement, customerWish, doAdditionalInformation } = useAdditionalInformation();
 const paypalCardDialog = ref(false);
+const payPalPayUponInvoice = ref(false);
 
 const {
   cart,
@@ -121,37 +135,49 @@ const paypalGooglePayPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
 });
+
 const paypalApplePayPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
 });
 
+const PayPalPayUponInvoiceId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPayUponInvoiceKey);
+});
+
+const handlePayUponInvoiceModalClosing = () => {
+  payPalPayUponInvoice.value = false;
+  processingOrder.value = false;
+};
+
 const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
   if (!readyToBuy()) {
-    if (typeof callback === 'function' && callback) {
-      callback(false);
-    }
+    if (typeof callback === 'function' && callback) callback(false);
     return;
   }
+
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
   });
 
-  if (typeof callback === 'function' && callback) {
-    callback(true);
-  } else {
-    await order();
-  }
+  typeof callback === 'function' && callback ? callback(true) : await order();
 };
 
 const order = async () => {
   processingOrder.value = true;
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
-  paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
-    ? (paypalCardDialog.value = true)
-    : await handleRegularOrder();
+  if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
+    selectedPaymentId.value === PayPalPayUponInvoiceId.value
+      ? (payPalPayUponInvoice.value = true)
+      : (paypalCardDialog.value = true);
+
+    return;
+  }
+
+  await handleRegularOrder();
 };
 
 const readyToBuy = () => {

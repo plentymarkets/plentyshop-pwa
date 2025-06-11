@@ -338,6 +338,10 @@
   "checkoutPayment": {
     "comingSoon": "Bald verfügbar",
     "creditCard": "Kreditkarte",
+    "payUponInvoice": "Bezahlen Sie per Rechnung",
+    "birthdateLabel": "Geburtsdatum",
+    "countrySearch": "Suche nach einem Land",
+    "phoneLabel": "Telefonnummer",
     "heading": "Zahlungsart",
     "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },

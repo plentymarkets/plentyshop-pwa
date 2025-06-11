@@ -338,6 +338,10 @@
   "checkoutPayment": {
     "comingSoon": "Coming soon",
     "creditCard": "Credit Card",
+    "payUponInvoice": "Pay upon invoice",
+    "birthdateLabel": "Date of Birth",
+    "countrySearch": "Search for a country",
+    "phoneLabel": "Phone number",
     "heading": "Payment method",
     "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },

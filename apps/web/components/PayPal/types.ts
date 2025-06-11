@@ -144,3 +144,14 @@ export type GooglepayType = {
   validateMerchant(argument0: ValidateMerchantParams): Promise<ValidateMerchantResponse>;
   confirmOrder(argument0: ConfirmOrderParams): Promise<void>;
 };
+
+export type PhoneValidationResult = {
+  country: string;
+  countryCode: string;
+  formatted: string;
+  valid: boolean;
+  possible: boolean;
+  nationalNumber: string;
+  countryCallingCode: string;
+  number: string;
+};
