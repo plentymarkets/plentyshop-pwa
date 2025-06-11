@@ -13,7 +13,7 @@ export const getLocales = (): LocaleObject[] => {
 
   LANGUAGE_CODES.forEach((language) => {
     locales.push({
-      code: language as LocaleObject['*'],
+      code: language as LocaleObject['code'],
       file: `${language}.ts`,
     });
   });
@@ -24,7 +24,7 @@ export const getLocales = (): LocaleObject[] => {
 const getDefaultLocale = () => {
   const locales = getLocales();
   const localeKeys = locales.map((locale) => locale.code);
-  const defaultLocale = process.env.DEFAULTLANGUAGE as LocaleObject['*'];
+  const defaultLocale = process.env.DEFAULTLANGUAGE as LocaleObject['code'];
 
   return localeKeys.includes(defaultLocale) ? defaultLocale : 'en';
 };
