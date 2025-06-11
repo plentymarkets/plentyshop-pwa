@@ -27,6 +27,7 @@ export const appConfiguration = {
       { name: 'keywords', content: metaDefaults.keywords },
       { name: 'robots', content: metaDefaults.robots },
       { name: 'theme-color', content: '#0C7992' },
+      { name: 'generator', content: 'plentymarkets' },
       { property: 'og:title', content: openGraph.title },
       { property: 'og:type', content: openGraph.type },
       { property: 'og:image', content: openGraph.image },

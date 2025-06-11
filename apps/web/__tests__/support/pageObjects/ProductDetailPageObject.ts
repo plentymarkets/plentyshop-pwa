@@ -25,6 +25,10 @@ export class ProductDetailPageObject extends PageObject {
     return cy.getByTestId('price');
   }
 
+  get productImage() {
+    return cy.getByTestId('product-image-0');
+  }
+
   displayCheck() {
     this.assertProductDetailPageElements();
     return this;
@@ -36,6 +40,11 @@ export class ProductDetailPageObject extends PageObject {
     this.productPriceValue.should('be.visible');
     this.quantitySelector.should('be.visible');
     this.addToCartButton.should('be.visible');
+    return this;
+  }
+
+  assertModernImageFormat() {
+    this.productImage.should('have.attr', 'srcset').and('include', '.avif');
     return this;
   }
 }
