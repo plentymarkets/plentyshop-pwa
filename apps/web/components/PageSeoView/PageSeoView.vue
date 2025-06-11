@@ -99,7 +99,7 @@
           </div>
 
           <Multiselect
-            v-model="selectedRobot"
+            v-model="pageRobots"
             data-testid="page-parent"
             :options="robotNames"
             label="label"
@@ -200,7 +200,7 @@ const robotNames = [
   { label: 'No Index, No Follow', value: 'NOINDEX_NOFOLLOW' },
 ];
 
-const selectedRobot = computed({
+const pageRobots = computed({
   get() {
     return robotNames.find((option) => option.value === data.value.details[0].metaRobots) || null;
   },
