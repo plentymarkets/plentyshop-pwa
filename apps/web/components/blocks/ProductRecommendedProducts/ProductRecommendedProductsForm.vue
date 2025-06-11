@@ -72,31 +72,31 @@
         <div
           for="text-align-left"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': (recommendedBlock.text.textAlignment || 'left') === 'left' }"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('left') }"
           data-testid="recommended-form-text-align-left"
           @click="recommendedBlock.text.textAlignment = 'left'"
         >
-          <SfIconCheck :class="{ 'invisible': (recommendedBlock.text.textAlignment || 'left') !== 'left' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck :class="{ invisible: !isTextAlignSelected('left') }" class="mr-1 w-[1.1rem]" />
           Left
         </div>
         <div
           for="text-align-center"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'center' }"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('center') }"
           data-testid="recommended-form-text-align-center"
           @click="recommendedBlock.text.textAlignment = 'center'"
         >
-          <SfIconCheck :class="{ 'invisible': recommendedBlock.text.textAlignment !== 'center' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck :class="{ invisible: !isTextAlignSelected('center') }" class="mr-1 w-[1.1rem]" />
           Center
         </div>
         <div
           for="text-align-right"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'right' }"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('right') }"
           data-testid="recommended-form-text-align-right"
           @click="recommendedBlock.text.textAlignment = 'right'"
         >
-          <SfIconCheck :class="{ 'invisible': recommendedBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck :class="{ invisible: !isTextAlignSelected('right') }" class="mr-1 w-[1.1rem]" />
           Right
         </div>
       </div>
@@ -133,4 +133,8 @@ const debouncedFn = useDebounceFn((event: Event) => {
 
   recommendedBlock.value.categoryId = target.value.toString();
 }, 1000);
+
+const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
+  return (recommendedBlock.value.text.textAlignment || 'left') === align;
+};
 </script>
