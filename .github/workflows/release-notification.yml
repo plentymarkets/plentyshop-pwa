@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Push release notification
         run: |
-          curl --location --request POST '${{ secrets.CHAT_WEBHOOK_SBS_AREA }}' \
+          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
           --header 'Content-Type: application/json' \
           --data-raw '{
             "cardsV2": [
