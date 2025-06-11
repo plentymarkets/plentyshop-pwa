@@ -1,4 +1,4 @@
-import type { NewsletterParams } from '@plentymarkets/shop-api';
+import type { ApiError, NewsletterParams } from '@plentymarkets/shop-api';
 import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
 
 /**
@@ -27,12 +27,16 @@ export const useNewsletter: UseNewsletterReturn = () => {
    * ```
    */
   const subscribe: Subscribe = async (params: NewsletterParams) => {
-    state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doSubscribeNewsletter(params));
-    useHandleError(error.value);
-
-    state.value.loading = false;
-    return !!data.value?.data;
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.doSubscribeNewsletter(params);
+      return !!data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return false;
   };
 
   return {

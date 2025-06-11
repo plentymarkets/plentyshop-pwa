@@ -1,5 +1,5 @@
 import type { CategoryEntry, CategoryParams } from '@plentymarkets/shop-api';
-import type { UseCategoryState, UseCategoryMethodsReturn } from './types';
+import type { UseCategoryMethodsReturn, UseCategoryState } from './types';
 
 /**
  * @description Composable for managing the category .
@@ -28,9 +28,8 @@ export const useCategoryManagement: UseCategoryMethodsReturn = () => {
 
     state.value.loading = true;
     try {
-      const { data } = await useAsyncData(() => useSdk().plentysystems.doAddCategory(params));
-
-      const category = data?.value?.data;
+      const response = await useSdk().plentysystems.doAddCategory(params);
+      const category = response?.data;
 
       if (category) {
         togglePageModal(false);
