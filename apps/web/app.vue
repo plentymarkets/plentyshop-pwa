@@ -1,5 +1,5 @@
 <template>
-  <component :is="Toolbar" v-if="$isPreview" :style="`font-family: ${config.font}`" />
+  <component :is="Toolbar" v-if="$isPreview" />
   <div
     class="w-100 relative md:flex"
     :class="{
@@ -21,9 +21,8 @@
     <component
       :is="SiteConfigurationDrawer"
       v-if="drawerOpen"
-      class="absolute lg:relative bg-white"
+      class="absolute lg:relative bg-white font-editor"
       :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
-      :style="`font-family: ${config.font}`"
     />
 
     <div
@@ -49,7 +48,6 @@ const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
-const config = useRuntimeConfig().public;
 const { setStaticPageMeta } = useCanonical();
 const { setInitialDataSSR } = useInitialSetup();
 

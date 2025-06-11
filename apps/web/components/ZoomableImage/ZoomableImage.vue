@@ -13,6 +13,7 @@
     <Drift v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]" :key="route.fullPath" :index="index">
       <NuxtImg
         v-bind="nuxtImgProps"
+        :data-testid="`product-image-${index}`"
         @touchstart="onTouchStart"
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
@@ -23,6 +24,7 @@
     <NuxtImg
       v-else
       v-bind="nuxtImgProps"
+      :data-testid="`product-image-${index}`"
       @touchstart="onTouchStart"
       @touchmove="onTouchMove"
       @touchend="onTouchEnd"

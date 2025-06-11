@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-start min-h-screen p-10">
+  <div class="flex flex-col items-center justify-start min-h-screen p-10 font-editor">
     <UiButton class="mb-4 mt-20" @click.stop="addNewBlock('bottom')">
       <SfIconAdd class="cursor-pointer text-xl" />
     </UiButton>
