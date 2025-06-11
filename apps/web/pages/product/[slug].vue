@@ -71,12 +71,16 @@ setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-await fetchProduct(productParams);
+await fetchProduct(productParams).then(() => {
+  usePlentyEvent().emit('frontend:productLoaded', {
+    product: product.value,
+  });
+});
 
 if (Object.keys(product.value).length === 0) {
-  throw new Response(null, {
-    status: 404,
-    statusText: 'Not found',
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Product not found',
   });
 }
 setCurrentProduct(product.value || ({} as Product));

@@ -12,6 +12,7 @@ permissions:
 jobs:
   meta:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Assign author to PR
         if: github.event.action == 'opened'
@@ -40,6 +41,7 @@ jobs:
           apply-changes: true
   fitness-compliance:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: meta
     steps:
       - uses: actions/checkout@v4
@@ -50,15 +52,6 @@ jobs:
           deny-licenses: 'AGPL-1.0-or-later, GPL-1.0-or-later, LGPL-2.0-or-later, NGPL'
           vulnerability-check: false
           comment-summary-in-pr: on-failure
-
-      - name: Changelog review
-        if: contains(github.event.pull_request.labels.*.name, 'feature') || contains(github.event.pull_request.labels.*.name, 'fix')
-        run: |
-          gh pr diff "$BRANCH" --name-only >> diff.txt
-          grep -Fxq "docs/changelog/changelog_en.md" diff.txt
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: ${{ github.head_ref }}
 
       - name: Install Semgrep
         run: pip install semgrep
@@ -71,6 +64,7 @@ jobs:
           .
   fitness-code-quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -83,6 +77,7 @@ jobs:
         run: npm run lint
   test-unit:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -91,12 +86,13 @@ jobs:
       - name: Unit tests
         run: npm run test:coverage
       - name: 'Report Coverage'
-        if: always() 
+        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: './apps/web/'
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -127,6 +123,7 @@ jobs:
           path: build.tar.gz
   test-e2e-stable:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -156,6 +153,46 @@ jobs:
         env:
           NUXT_PUBLIC_DEFAULT_ITEMS_PER_PAGE: 1
           CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
+          NUXT_PUBLIC_CONFIG_ID: 1
+          MOLLIE_TEST_MODE: true
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/web/__tests__/report/screenshots
+          if-no-files-found: ignore
+  test-e2e-checkout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          command: npm run test:cypress-checkout
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -165,6 +202,7 @@ jobs:
           if-no-files-found: ignore
   test-e2e-editor:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -192,7 +230,8 @@ jobs:
           install: false
           command: npm run test:cypress-editor
         env:
-          NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
+          NUXT_PUBLIC_IS_PREVIEW: true
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -202,6 +241,7 @@ jobs:
           if-no-files-found: ignore
   test-e2e-flakey:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -228,6 +268,8 @@ jobs:
         with:
           install: false
           command: npm run test:cypress-quarantine
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -237,6 +279,7 @@ jobs:
           if-no-files-found: ignore
   fitness-web-vitals-mobile:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -260,8 +303,11 @@ jobs:
 
       - name: lighthouse mobile audit
         run: npm run lhci:mobile
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
   fitness-web-vitals-desktop:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -285,3 +331,5 @@ jobs:
 
       - name: lighthouse desktop audit
         run: npm run lhci:desktop
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1

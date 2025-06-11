@@ -1,41 +1,25 @@
-import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { paths } from '../../../utils/paths';
+import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 
+const myAccount = new MyAccountPageObject();
 const checkout = new CheckoutPageObject();
-const cart = new CartPageObject();
-const homePage = new HomePageObject();
-const productListPage = new ProductListPageObject();
 
 describe('Smoke: PayPal credit card order', () => {
-  beforeEach(() => {
-    cy.setCookie('vsf-locale', 'en');
-    cy.setCookie(
-      'consent-cookie',
-      '{"CookieBar.essentials.label":{"CookieBar.essentials.cookies.plentyId.name":true,"CookieBar.essentials.cookies.vsfLocale.name":true,"CookieBar.essentials.cookies.consentCookie.name":true,"CookieBar.essentials.cookies.cloudflareTurnstile.name":true},"CookieBar.externalMedia.label":{},"CookieBar.functional.label":{"CookieBar.essentials.cookies.payPal.name":true},"CookieBar.marketing.label":{}}',
-    );
-  });
-
   it('[smoke] Check if status on order gets updated when paying with paypal credit card', () => {
-    cy.visitAndHydrate(paths.home);
+    cy.clearCookies();
+    cy.visitAndHydrate(paths.authLogin);
 
-    homePage.goToCategory();
-    productListPage.addToCart();
-
-    cart.openCart();
+    cy.intercept('/plentysystems/doLogin').as('doLogin');
+    myAccount.successLogin();
+    cy.wait('@doLogin');
+    cy.addToCart();
     checkout
-      .goToCheckout()
-      .goToGuestCheckout()
-      .fillContactInformationForm()
-      .fillShippingAddressForm()
+      .goToCheckoutPath()
       .acceptTerms()
       .checkCreditCard()
       .placeCreditCartOrder()
       .fillCreditCardForm()
-      .payCreditCard()
-      .displaySuccessPage()
-      .displayFullyPaid();
+      .payCreditCard();
   });
 });

@@ -1,5 +1,108 @@
 # Changelog PlentyONE Shop
 
+Changelog-Einträge für neuere Versionen findest du auf der Seite [Releases](https://github.com/plentymarkets/plentyshop-pwa/releases).
+
+# v1.15.0 (2025-05-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.14.0...v1.15.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🚀 Neu
+
+- Aria-Label zu benutzerdefinierten Button-Komponenten hinzugefügt.
+- Informationen zu den ausgewählten "DHL Wunschpaket" Services in der Bestellbestätigung hinzugefügt.
+- Caching für Turbo-Builds aktiviert.
+
+### 👷 Geändert
+
+- Die Cookie-Einwilligungsabfrage wird erneut angezeigt, wenn sich die Konfiguration ändert (über Hash-Prüfung).
+- Vorschautext für Artikelpakete auf der Artikelseite verwendet anstelle der Artikelbeschreibung.
+- Veraltete Marken- und Produktnamen aktualisiert.
+- Beim Soft-Login auf der Bestellbestätigungsseite wird nun eine Warnung statt einer Fehlermeldung angezeigt.
+- Den Button "Stattdessen einloggen" im Checkout unter das Eingabefeld für die E-Mail-Adresse verschoben.
+- Icon und Beschriftung des Buttons zum Verlassen des Editors geändert.
+
+### 🩹 Behoben
+
+- Verbesserungen im Checkout im Zusammenhang mit Aufpreisen bei Zahlungsarten und erforderlichen Beträgen für die Verfügbarkeit.
+- Fehler bei der Cookie-Bar-Hydration in `@plentymarkets/shop-module-gtag@1.1.2` behoben.
+- Das CSS für Drag-and-Drop wird jetzt nur noch im Editor geladen, nicht mehr im Live-Shop.
+- Drag-and-Drop Legacy-JavaScript entfernt.
+
+### 💻 Hinweise für Entwickler
+
+- Endpunkt für den Applikations-Health-Check `/healthz`.
+
+# v1.14.0 (2025-04-17) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.2...v1.40.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🚀 Neu
+
+- Mollie Zahlungsmethoden wurden in den Checkout integriert.
+- Es wurde eine neue rechtliche Seite für die Erklärung zur Barrierefreiheit hinzugefügt.
+- Drag-and-Drop-Funktionalität wurde sowohl für Blöcke und Blockeinstellungen integriert.
+
+### 👷 Geändert
+
+- Vereinheitlichung einiger Begriffe auf Deutsch und Englisch
+- Nicht implementierte PayPal-Zahlungsmethoden werden aus dem Checkout-Prozess herausgefiltert.
+
+### 🩹 Behoben
+
+- Ein Fehler in dem PayPal-Express-Prozess wurde behoben, PayPal Plugin Version >= 6.5.11 erforderlich.
+- Im Quick-Checkout leitet der Button "Zur Kasse" jetzt zum Gast-Login, wenn man nicht eingeloggt ist.
+
+# v1.13.2 (2025-04-14) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.1...v1.13.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 👷 Geändert
+
+- Variation ID wurde zu Produkt-URLs auf Kategorieseiten hinzugefügt, um die Kompatibilität mit LTS sicherzustellen.
+
+### 🩹 Behoben
+
+- Ein Fehler wurde behoben, der beim Versuch, sich als Gast einzuloggen, auftrat.
+- Das Markup des Kategoriemenüs wurde aktualisiert, indem ein invalides verschachteltes Button-Element innerhalb eines Anker-Tags entfernt wurde.
+- Nuxt-Laufzeitfehler behoben.
+- Turnstile-Validierungsfehler im Kontaktformular behoben, wenn Turnstile nicht konfiguriert ist.
+- Es ist nicht mehr möglich, Werte außerhalb der Mengengrenzen im Mengenauswahlfeld einzugeben. Die Menge wird stattdessen auf 1 oder den maximalen Wert gesetzt.
+
+### 🏡 Chore
+
+- Validator-Paket zu nuxt optimizeDeps hinzugefügt.
+
+### 💻 Hinweise für Entwickler
+
+- Implementiert: 'frontend:productLoaded': { product: Product };-Event, das ausgelöst wird, wenn ein Produkt auf der Produktseite geladen wird.
+- Aktualisiert: frontend:removeFromCart-Event, um das gelöschte cartItem einzuschließen.
+
+# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🩹 Behoben
+
+- Ein Fehler, der den Build-Prozess zum Absturz brachte.
+
+# v1.13.0 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🚀 Neu
+
+- Die Möglichkeit, die Sichtbarkeit von Tags auf der Kategorieseite basierend auf einer Umgebungsvariable (USE_TAGS_ON_CATEGORY_PAGE=1) umzuschalten, wurde hinzugefügt.
+- DHL Prefered-Delivery wurde als Lieferart hinzugefügt.
+- Für Artikel ohne Artikelbild wird nun ein Standardbild angezeigt.
+
+### 👷 Geändert
+
+- Artikel-Tags wurden von der Kategorieseite entfernt.
+- Die Bildoptimierung in der lokalen Entwicklungsumgebung wurde deaktiviert.
+- Die Preisberechnung wurde aktualisiert: Wenn Staffelpreise nicht verfügbar sind, wird der Standardpreis verwendet.
+- Alle Mollie Klarna-Zahlungsmethoden werden herausgefiltert, da diese noch nicht unterstützt werden.
+- Das Demo-Cookie wurde aus der Cookiebar entfernt.
+- Artikel-Vorschautexte unterstützen jetzt HTML-Formatierung.
+
+### 🩹 Behoben
+
+- Fehlerhafte Kategorie-Filter und -Navigation wurden behoben.
+- Fehlerhafte Produktlinks auf der Kategorieseite wurden behoben.
+- Ein TypeScript-Build-Fehler während der Shop-Bereitstellung wurde behoben.
+- Der Toolbar-Pfeil wurde korrigiert.
+- Die deutsche Navigation im linken Seitenmenü wurde korrigiert.
+- Eine Überlappung der Bildergalerie auf der Artikelseite wurde behoben.
+
 # v1.12.1 (2025-03-24) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.0...v1.12.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 👷 Geändert
@@ -15,7 +118,7 @@
 
 # v1.12.0 (2025-03-19)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.11.1...v1.12.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Symbolleiste für Seiteneinstellungen hinzugefügt.
 - Rechtlicher Hinweis im Checkout zu "lokaler Mehrwertsteuer, Kosten der Zollabfertigung und Zollgebühren" bei Bedarf hinzugefügt.
@@ -51,7 +154,7 @@
 
 # v1.11.0 (2025-02-25) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.1...v1.11.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Benachrichtigungen beim erfolgreichen oder fehlgeschlagenen Speichern von Änderungen im Editor hinzugefügt.
 
@@ -68,7 +171,7 @@
 
 # v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 #### Editor
 
@@ -132,7 +235,7 @@ Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Haupt
   - Führe `yarn setup:unix` oder `yarn setup:windows` aus und drücke y, um die `.yarnrc.yml` zu entfernen.
   - Entferne den `NPM_AUTH_TOKEN` aus der `apps/web/.env` Datei.
 
-### Neu
+### 🚀 Neu
 
 - Möglichkeit hinzugefügt, primäre und sekundäre Farben über den Seiten-Konfigurationsbereich zu ändern.
 - Seiten-Konfigurationsbereich hinzugefügt.
@@ -156,7 +259,7 @@ Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Haupt
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Das [Nuxt-Security-Modul](https://nuxt-security.vercel.app/) wurde zur Web-App hinzugefügt.
 - Die Web-App ist jetzt in der Lage, [Komponenten aus einem Modul](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in vorgegebenen Bereichen des Shops zu rendern.
@@ -193,7 +296,7 @@ Wir haben unseren Package Manager von Yarn zu NPM gewechselt. Es gibt zwei Haupt
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Neu
+### 🚀 Neu
 
 - Benutzer können jetzt die Startseite direkt im Shop bearbeiten. Dies umfasst das Hinzufügen, Bearbeiten und Löschen einzelner Blöcke. Unterstützte Blocktypen sind Hero Slider, Media Card, Empfohlene Produkte und Newsletter.
 - Kategorien mit der Sichtbarkeit "Nach Login" leiten Gastbenutzer jetzt zum Login weiter.
@@ -372,8 +475,8 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 #### Konfiguration
 
-- Das Favicon kann jetzt vom plentysystems System abgerufen werden.
-- Das Logo kann jetzt vom plentysystems System abgerufen werden.
+- Das Favicon kann jetzt vom PlentyONE System abgerufen werden.
+- Das Logo kann jetzt vom PlentyONE System abgerufen werden.
 - Die Google Fonts-Schriftart kann jetzt über Umgebungsvariablen konfiguriert werden.
 - Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
 - Die in der App verfügbaren Sprachen und die Standardsprache können jetzt über Umgebungsvariablen konfiguriert werden.
@@ -421,7 +524,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Die Bearbeitung des Autorennamens in Rezensionen und Antworten wurde korrigiert.
 - Das Problem mit dem plentyID-Cookie in der PWA-Live-Vorschau wurde behoben.
 - Es wurde behoben, dass die PayPal Express-Schaltfläche auf der Produktseite nur angezeigt wird, wenn der Artikel zum Kauf verfügbar ist.
-- Beim Abrufen von Konfigurationen von plentysystems wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
+- Beim Abrufen von Konfigurationen von PlentyONE wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
 - Das verwaiste Formularlabel in den Attributen der Produktseite wurde behoben.
 - Der Datenschutzlink in der Cookieleiste funktionierte nicht richtig. Dies wurde behoben.
 - Kleinere Styling-Probleme im Kreditkartenformular im Checkout und im Bewertungsformular auf der Produktseite wurden behoben.

@@ -1,4 +1,4 @@
-import { type Address, AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { type Address, type AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 
@@ -11,6 +11,7 @@ export const useAddressForm = (type: AddressType) => {
   const { data: cartData } = useCart();
   const { send } = useNotification();
   const { restrictedAddresses } = useRestrictedAddress();
+  const { getCountryZipCodeRegex } = useAggregatedCountries();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -58,7 +59,14 @@ export const useAddressForm = (type: AddressType) => {
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
       state: string().default('').optional(),
-      zipCode: string().required($i18n.t('errorMessages.requiredField')).min(5),
+      zipCode: string()
+        .required($i18n.t('errorMessages.requiredField'))
+        .when('country', ([countryId], schema) => {
+          const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), type);
+          return zipCodeRegex
+            ? schema.matches(zipCodeRegex, $i18n.t('PreferredDelivery.packstation.zipcodeInvalid'))
+            : schema;
+        }),
       primary: boolean().default(false),
       companyName: string().when([], {
         is: () => state.value.hasCompany,
@@ -92,11 +100,9 @@ export const useAddressForm = (type: AddressType) => {
   };
 
   const refreshAddressDependencies = async () => {
-    if (type === AddressType.Shipping) {
-      await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
-      notifyIfShippingChanged();
-      notifyIfBillingChanged();
-    }
+    await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
+    notifyIfShippingChanged();
+    notifyIfBillingChanged();
   };
 
   return {

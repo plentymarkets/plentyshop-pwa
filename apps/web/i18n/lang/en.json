@@ -1,4 +1,6 @@
 {
+  "customerWish": "Notes and requests",
+  "customerWishMessage": "Enter your message to us here.",
   "CookieBar": {
     "Accept All": "Accept All",
     "Accept Selection": "Accept Selection",
@@ -27,18 +29,13 @@
         },
         "consentCookie": {
           "name": "consent-cookie",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores consent selection."
         },
         "plentyId": {
           "name": "plentyID",
-          "provider": "plentysystems AG",
+          "provider": "PlentyONE GmbH",
           "status": "Stores information about the current session, for example if the user is logged in."
-        },
-        "vsfLocale": {
-          "name": "vsf-locale",
-          "provider": "plentysystems AG",
-          "status": "Stores the display language."
         }
       },
       "description": "Essential cookies enable basic functions and are necessary for the proper functioning of the website.",
@@ -64,9 +61,13 @@
       "label": "Marketing"
     }
   },
-  "PreviewModeBar": {
-    "label": "Preview mode control",
-    "pwa": "Deactivate plentyShop PWA preview"
+  "previewModeBar": {
+    "label": "Editor controls",
+    "title": "Exit editor and visit live shop?",
+    "exitEditor": "Exit editor and visit live shop",
+    "unsavedChangesWarning": "You have unsaved changes.",
+    "saveAndExit": "Save changes and exit",
+    "exitWithoutSaving": "Exit without saving"
   },
   "account": {
     "accountSettings": {
@@ -97,11 +98,11 @@
       },
       "section": {
         "billingDetails": "Billing addresses",
-        "personalData": "Personal Data",
+        "personalData": "Personal data",
         "shippingDetails": "Shipping addresses"
       },
       "shippingDetails": {
-        "newAddress": "New Shipping Address",
+        "newAddress": "New shipping address",
         "shippingAddress": "Shipping address"
       }
     },
@@ -113,6 +114,7 @@
     "ordersAndReturns": {
       "actions": "Actions",
       "amount": "Amount",
+      "more": "Show more",
       "continue": "Continue shopping",
       "details": "Details",
       "heading": "Orders & Returns",
@@ -126,13 +128,13 @@
         "buyAgain": "Buy again",
         "cancel": "Cancel",
         "heading": "Buy again",
-        "headingChanges": "Change in products",
+        "headingChanges": "Change in items",
         "notAvailable": "Currently unavailable",
         "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
         "priceDown": "Price decreased",
         "priceUp": "Price increased",
         "stockLimitation": "only {stock} item(s) available",
-        "subtext": "You can purchase the products from this order again.",
+        "subtext": "You can purchase the items from this order again.",
         "subtextChanges": "Changes occured since you last ordered"
       },
       "orderDate": "Order Date",
@@ -155,10 +157,10 @@
         "paymentMethod": "Payment method",
         "price": "Price",
         "priceFrom": "from",
-        "product": "Product",
+        "product": "Item",
         "quantity": "Quantity",
         "shippingAddress": "Shipping address",
-        "showDetails": "Show product details",
+        "showDetails": "Show item details",
         "status": "Status",
         "subtotal": "Subtotal",
         "tableCaption": "Order details",
@@ -173,7 +175,7 @@
       "returnDate": "Return Date",
       "returnId": "Return-ID",
       "returnsAltText": "No returns",
-      "returnsDescription": "You haven't returned products yet",
+      "returnsDescription": "You haven't returned items yet",
       "returnsHeading": "Returns",
       "section": {
         "myOrders": "My Orders",
@@ -181,7 +183,7 @@
       },
       "shippingDate": "Shipping date",
       "shippingSummary": {
-        "heading": "Shipping Summary",
+        "heading": "Shipping summary",
         "shipTo": "Ship to",
         "shippingMethod": "Shipping method"
       },
@@ -200,12 +202,13 @@
   "addToWishlist": "Add to wishlist",
   "addedToCart": "Item added to Cart",
   "address": "Addresses",
+  "closeAddressForm": "End address editing",
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
   },
   "allFromCategory": "All {name}",
-  "allProducts": "All products",
-  "allProductsLinkText": "Browse products",
+  "allProducts": "All items",
+  "allProductsLinkText": "Browse items",
   "apply": "Apply",
   "asterisk": "*",
   "auth": {
@@ -313,7 +316,8 @@
         "cancellationRights": "Cancellation rights",
         "legalDisclosure": "Legal disclosure",
         "privacyPolicy": "Privacy policy",
-        "termsAndConditions": "Terms and conditions"
+        "termsAndConditions": "Terms and conditions",
+        "declarationOfAccessibility": "Declaration of accessibility"
       }
     },
     "services": {
@@ -341,8 +345,10 @@
   "clear": "Clear",
   "clearFilters": "Clear all filters",
   "closeDialog": "Close Dialog",
+  "closeDrawer": "Close Drawer",
   "closeListSettings": "Close list settings",
   "closeMenu": "Close Menu",
+  "browseProducts": "Browse Products",
   "coming-soon": "Coming Soon",
   "contact": {
     "clearAll": "Clear all",
@@ -359,7 +365,8 @@
       "subjectLabel": "Subject"
     },
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}.",
-    "success": "Message sent successfully"
+    "success": "Message sent successfully",
+    "misConfigured": "Our contact form is temporarily disabled due to a missing configuration. Please check back later or reach out to us via alternative contact methods."
   },
   "contactInfo": {
     "add": "Add contact information",
@@ -377,6 +384,7 @@
   "content": "Content",
   "continueAsGuest": "Continue as guest",
   "continueShopping": "Continue shopping",
+  "closeAuthentication": "Close authentication",
   "coupon": {
     "apply": "Apply",
     "couponApplied": "The coupon has been added successfully",
@@ -391,7 +399,7 @@
   "createCustomerReview": "Create review",
   "currentPage": "Current Page is {page}",
   "customerReviews": "Customer reviews",
-  "customerReviewsNone": "Nobody has submitted a review for this product yet",
+  "customerReviewsNone": "Nobody has submitted a review for this item yet",
   "deletedFromCart": "Item removed from shopping cart",
   "delivery": "Shipping",
   "documents": {
@@ -429,8 +437,8 @@
   "emptyCart": "Your cart is empty",
   "emptyCartImgAlt": "Image of an empty cart",
   "emptyCartNotification": "You don't have any items in your cart",
-  "emptyStateAltText": "Image that describes that no products were found",
-  "emptyStateText": "We no longer have products in this category.",
+  "emptyStateAltText": "Image that describes that no items were found",
+  "emptyStateText": "We no longer have items in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
   "emptyWishlist": "Your wishlist is empty",
   "error": {
@@ -521,6 +529,12 @@
         "success": "Your changes have been saved.",
         "settings": "For settings changes to take effect, update your shop.",
         "error": "The changes couldn't be saved. Your session may have expired. Re-enter the editor to start a new session."
+      },
+      "categories": {
+        "success": "Categories saved successfully.",
+        "error": "Error saving categories.",
+        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}",
+        "deleteSuccess": "The page {pageName} (category ID: {id}) has been deleted."
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",
@@ -676,8 +690,8 @@
     "noInformation": "No information available for manufacturer",
     "noResponsibleInformation": "No information available for Responsible Person",
     "responsibleHeader": "Responsible Person in the EU",
-    "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations.",
-    "subtitle": "Manufacturer information includes the address and additional details about the producer of the product.",
+    "responsibleSubtitle": "An economic operator based within the EU who ensures that the item complies with all necessary regulations.",
+    "subtitle": "Manufacturer information includes the address and additional details about the producer of the item.",
     "contactUrl": "Contact form",
     "responsibleContactUrl": "EU-Responsible contact form"
   },
@@ -702,9 +716,9 @@
   "nextAriaLabel": "Navigate to next page",
   "noReviews": "No reviews",
   "noneExisting": "None",
-  "numberInCart": "{count} product in cart",
-  "numberInWishlist": "{count} products in wishlist",
-  "numberOfProducts": "{count} Products out of {total} Products",
+  "numberInCart": "{count} item in cart",
+  "numberInWishlist": "{count} items in wishlist",
+  "numberOfProducts": "{count} items out of {total} items",
   "offerForm": {
     "acceptOffer": "Accept offer",
     "cancel": "Cancel",
@@ -758,6 +772,7 @@
     },
     "vat": {
       "incl": "incl.",
+      "excl": "excl.",
       "plus": "plus"
     }
   },
@@ -779,6 +794,7 @@
   "perPage": "Per page",
   "phone": "Phone",
   "pickSavedAddress": "Saved addresses",
+  "closePickSavedAddress": "Close addresses picker",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "placeOrder": "Place order and pay",
   "pleaseSelect": "Please Select",
@@ -789,13 +805,13 @@
   "procentageSavings": "You save {percent} % on this bundle",
   "productAttributes": {
     "notValidVariation": "Please select a valid variation.",
-    "productNameMissing": "Product name missing",
+    "productNameMissing": "Item name missing",
     "seeAvailableOptions": "See available options"
   },
-  "productDetails": "Product details",
-  "productLegalDetailsHeader": "Product Legal Details",
-  "products": "Products",
-  "quantitySelector": "Quantity Selector",
+  "productDetails": "Item details",
+  "productLegalDetailsHeader": "Item legal details",
+  "products": "Items",
+  "quantitySelector": "Quantity selector",
   "quantitySelectorDecrease": "Decrease value",
   "quantitySelectorIncrease": "Increase value",
   "quickCheckout": {
@@ -803,7 +819,8 @@
     "checkYourCart": "Check your cart",
     "heading": "Added to shopping cart",
     "subTotal": "Items subtotal",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "close": "Close quick checkout"
   },
   "readLess": "Read less",
   "readMore": "Read more",
@@ -853,7 +870,7 @@
       "success": "Your review has been submitted."
     },
     "reviewAuthor": "Your name (optional)",
-    "reviewText": "Product review (optional)",
+    "reviewText": "Item review (optional)",
     "saveAnswer": "Submit answer",
     "showAnswers": "Show answers",
     "submitReview": "Send review",
@@ -872,17 +889,19 @@
   },
   "reviewsCount": "{count} reviews",
   "sale": "Sale",
+  "closeNeutralAlert": "Close neutral alert",
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
   "scrollTop": "Scroll to top",
   "search": "Search",
+  "resetSearch": "Reset Search",
   "shipping": {
     "addButton": "Add shipping address",
     "description": "Add a shipping address to view shipping details.",
-    "heading": "Shipping Address",
+    "heading": "Shipping address",
     "methodChanged": "The selected shipping method is not available anymore.",
-    "noShippingMessage": "No Shipping Information available"
+    "noShippingMessage": "No shipping information available"
   },
   "shippingAddress": "Shipping address",
   "shippingAddressRequired": "Please select a shipping address.",
@@ -898,7 +917,7 @@
   "showLess": "Show less",
   "showMore": "Show more",
   "showOptions": "Show options",
-  "showProducts": "Show products",
+  "showProducts": "Show items",
   "socialLabel": "Go to {label} page",
   "softLogin": {
     "check": "Check",
@@ -915,7 +934,20 @@
     "priceDown": "Price ⬇",
     "priceUp": "Price ⬆",
     "reviewsDown": "Item reviews ⬇",
-    "reviewsUp": "Item reviews ⬆"
+    "reviewsUp": "Item reviews ⬆",
+    "recommended": "Recommended",
+    "newest": "Newest items",
+    "oldest": "Oldest items",
+    "availabilityUp": "Availability ⬆",
+    "availabilityDown": "Availability ⬇",
+    "variationNumberUp": "Variation number ⬆",
+    "variationNumberDown": "Variation number ⬇",
+    "lastUpdate": "Last update",
+    "firstUpdate": "First update",
+    "manufacturerAsc": "Manufacturer A-Z",
+    "manufacturerDesc": "Manufacturer Z-A",
+    "topSellerUp": "Top seller ⬆",
+    "topSellerDown": "Top seller ⬇"
   },
   "storefrontError": {
     "offer": {
@@ -943,7 +975,7 @@
       "reachedMaximumQuantity": "Your order exceeds the maximum order quantity of this item."
     },
     "contact": {
-      "emailAlreadyExists": "The e-mail address already exists.",
+      "emailAlreadyExists": "The email address already exists.",
       "missingContactOrUnexpectedFormat": "Missing contact data or unexpected format.",
       "unexpectedAddressFormat": "Unexpected address format"
     },
@@ -969,7 +1001,12 @@
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
-      "softLoginFailed": "The provided data is invalid."
+      "softLoginFailed": "The provided data is invalid.",
+      "assignPaymentFailed": "The payment could not be assigned to the order."
+    },
+    "turnstile": {
+      "invalid": "Verification failed. Please try again in a few moments.",
+      "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "unknownError": "An unknown error has occurred."
   },
@@ -1001,19 +1038,10 @@
   "double-tap-zoom": "Double-tap to zoom",
   "PreferredDelivery": {
     "general": {
-      "basicSettingsStartSave": "Save basic settings ...",
-      "basicSettingsSaveSuccess": "Basic settings saved.",
-      "basicSettingsDataToStore": "Structuring the basic settings for saving.",
-      "userSettingsResetCache": "Reset cache: user settings",
-      "shipmentControllerDetectEnv": "Productive or test mode",
-      "requestAndResponse": "Request and response",
-      "soapFault": "Soap fault",
       "assistantName": "DHL Preferred Delivery",
       "wunschpaketIntroduction": "Use the DHL preferred services and decide when and where you would like to receive your parcels.",
       "wunschpaketOptions": "Select your favourite delivery option:",
       "wunschpaketTitle": "DHL preferred services",
-      "preferredDayMsg": "Preferred day",
-      "shippingSettingsMsg": "DHL Shipping: Settings combination",
       "wunschtagTitle": "Preferred day: Delivery on the required day",
       "wunschortTitle": "Preferred location: Delivery to the required location",
       "wunschnachbarTitle": "Preferred neighbour: Delivery to the required neighbour",
@@ -1025,59 +1053,49 @@
       "wunschnachbarExampleAddress": "Street, house number, postcode, town",
       "wunschpaketAdditionalCharge": "When using this service, a surcharge of {additionalCharge} {currency} applies.*",
       "wunschtagNone": "None",
-      "preferredDayAlertMessage": "Select the preferred day.",
       "preferredLocationAlertMessage": "Enter the preferred location.",
       "preferredNeighbourNameAlertMessage": "Preferred neighbour: Enter last name and first name.",
       "preferredNeighbourAddressMessage": "Preferred neighbour: Enter street, house number, postcode and town.",
       "preferredNeigbourMaxCharViolation": "Maximum number of characters (100) exceeded.",
+      "preferredNeighbourFullName": "Enter your preferred neighbor's full name",
+      "preferredNeighbourAddress": "Enter your preferred neighbor's full address",
+      "preferredDropOffLocation": "Enter your preferred dropoff location",
       "submitWunschpaketServices": "Settings for preferred services submitted.",
       "apply": "Apply",
-      "parcelApiCallLog": "Parcel API call log",
       "invalidPostalCodeMessage": "Please check the postcode. The postcode is not valid. A 5-digit value is expected.",
-      "noServicesMessage1": "Please check the postcode you entered. A 5-digit value is expected.",
-      "noServicesMessage2": "No valid services for DHL Preferred Delivery could be found.",
-      "assistantDescription": "Use this assistant to integrate the DHL Preferred Delivery services in your plentyShop via the DHL Preferred Delivery plugin.",
-      "warning": "Warning",
-      "wunschpaketRequirementWarning": "Save an additional charge for the service {preferredDayMsg}. You have to select the Preferred Delivery services in the {shippingSettingsMsg} assistant. Determine also the cut-off time and the days when there is no transfer of parcels to DHL.",
-      "additionalCharge": "Additional charge",
-      "preferredDay": "Additional charge preferred day",
-      "cutofftime": "Cut-off-time",
-      "cutofftimeDescription": "Cut-off time is the latest possible order time up to which the minimum preferred day (day of order + 2 working days) can be guaranteed. As soon as the time is exceeded, the earliest preferred day displayed in the frontend will be shifted to one day later (day of order + 3 working days).",
-      "hour": "Hour",
-      "minute": "Minute",
-      "exclusionTransfer": "Exclusion of transfer days",
-      "exclusionTransferDescription": "There is no transfer of parcels to DHL (in addition to Sundays and public holidays) on the working days that you activate. This information calculates the first displayed preferred day in the online store.",
-      "step1Title": "Service settings",
-      "gmapsApiKey": "API key",
-      "additionalChargeDescription": "Enter the gross prices for the service {preferredDayMsg}. This price is charged to the customer's account if they select the service in your online store. Insert 0 to offer the service free of charge.",
-      "postnumberRequired": "Decide whether your customers are required to enter their DHL post number when they select a post office in the finder.",
-      "finderSettingsTitle": "Settings for the DHL Packstation/Postfiliale finder",
-      "finderSettingsDescription": "Enter your Google Maps API key to use the finder correctly. In the {shippingSettingsMsg} assistant, you can activate the finder. You can also decide whether the DHL post number should be a mandatory field when a customer selects a post office in the finder."
+      "additionalCharge": "Additional charge"
     },
     "packstation": {
-      "title": "DHL Packstation / Postfiliale",
-      "zipcodePlaceholder": "PLZ",
-      "cityPlaceholder": "Ort",
+      "title": "DHL Packstation / Postal outlet",
+      "zipcodeLabel": "Enter your zip code",
+      "zipcodeInvalid": "Enter a valid postcode.",
+      "zipcodePlaceholder": "Postcode",
+      "cityLabel": "Enter your city",
+      "cityPlaceholder": "City",
+      "streetLabel": "Enter your street",
       "streetPlaceholder": "Street",
       "dropDownValues": {
-        "both": "Packstation/Postfiliale",
-        "postfilial": "Postfiliale",
+        "postfilial": "Postal outlet",
         "packstation": "Packstation"
       },
-      "nameInfo": "Der Name wird aus der Rechnungsadresse übernommen. Die Postnummer und die Adresse der Packstation/Postfiliale werden als Lieferadresse übernommen.",
+      "nameInfo": "The name is taken from the billing address. The post number and the address of the packing station/post office will be used as the shipping address.",
       "search": "Search",
-      "backToList": "Back to list",
-      "loading": "Loading",
-      "noResult1": "There is no result for your search.",
       "noResult2": "Please enter at least the postcode or the town.",
       "setPackstation": "Apply",
-      "moreDetails": "More Details",
-      "postNumberPlaceholder": "Postnumber",
-      "packstationAddedSuccessMessage": "The Packstation/post office was taken as delivery address.",
+      "postNumberLabel": "Enter your post number",
+      "postNumberPlaceholder": "Post number",
+      "packstationAddedSuccessMessage": "The Packstation/post office was taken as shipping address.",
       "containerTextInfo": "Enter an address and select a filter for the pick-up location. Afterwards, click on one of the search results to select this pick-up location.",
       "postnumberRequired": "The post number is mandatory. Please enter your DHL post number.",
-      "locationSearchUnifiedCall": "Location Search Unified API Call",
-      "locationSearchUnifiedCallError": "Location Search Unified API error"
+      "days": {
+        "Monday": "Monday",
+        "Tuesday": "Tuesday",
+        "Wednesday": "Wednesday",
+        "Thursday": "Thursday",
+        "Friday": "Friday",
+        "Saturday": "Saturday",
+        "Sunday": "Sunday"
+      }
     }
   }
 }

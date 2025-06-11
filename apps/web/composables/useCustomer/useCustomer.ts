@@ -1,4 +1,5 @@
 import {
+  AddressType,
   type ApiError,
   type RegisterParams,
   type SessionResult,
@@ -58,7 +59,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
     state.value.isGuest = false;
     state.value.validGuestEmail = false;
-    state.value.isAuthorized = state.value.data?.user?.email ? true : false;
+    state.value.isAuthorized = !!state.value.data?.user?.email;
   };
 
   /** Function for getting current user/cart data from session
@@ -69,13 +70,17 @@ export const useCustomer: UseCustomerReturn = () => {
    */
   const getSession: GetSession = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
-    useHandleError(error.value);
-    state.value.data = data?.value?.data ?? state.value.data;
-    checkUserState();
-    useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || []));
+    try {
+      const { data } = await useSdk().plentysystems.getSession();
+      state.value.data = data ?? null;
+      checkUserState();
+      useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || []));
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
-    state.value.loading = false;
     return state.value.data;
   };
 
@@ -100,13 +105,15 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const loginAsGuest: LoginAsGuest = async (email: string) => {
-    state.value.loading = true;
-
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doLoginAsGuest({ email: email }));
-    useHandleError(error.value);
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.doLoginAsGuest({ email: email });
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
     checkUserState();
-
-    state.value.loading = false;
   };
 
   /** Function for user login.
@@ -148,13 +155,18 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const logout: Logout = async () => {
-    state.value.loading = true;
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.doLogoutUser();
+      state.value.data.user = null;
+      useCheckoutAddress(AddressType.Shipping).clear();
+      useCheckoutAddress(AddressType.Billing).clear();
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doLogoutUser());
-    state.value.loading = false;
-    useHandleError(error.value);
-
-    state.value.data.user = null;
     checkUserState();
     useWishlist().setWishlistItemIds([]);
   };
@@ -168,22 +180,23 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const register: Register = async (params: RegisterParams) => {
-    state.value.loading = true;
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.doRegisterUser(params);
+      if (data) {
+        await getSession();
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doRegisterUser(params));
-
-    useHandleError(error.value);
-    state.value.loading = false;
-
-    if (data.value) {
-      await getSession();
-
-      if (state.value.data?.user) {
-        emit('frontend:signUp', { user: state.value.data.user });
+        if (state.value.data?.user) {
+          emit('frontend:signUp', { user: state.value.data.user });
+        }
       }
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
-
-    return data.value?.data ?? null;
+    return null;
   };
 
   /** Function for changing the user password
@@ -201,11 +214,15 @@ export const useCustomer: UseCustomerReturn = () => {
   const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
     state.value.loading = true;
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doChangeUserPassword(params));
-    state.value.loading = false;
-    useHandleError(error.value);
-
-    return !error.value;
+    try {
+      await useSdk().plentysystems.doChangeUserPassword(params);
+      return true;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return false;
   };
 
   const emailValidationSchema = toTypedSchema(
@@ -217,6 +234,10 @@ export const useCustomer: UseCustomerReturn = () => {
         )
         .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
     }),
+  );
+
+  const missingGuestCheckoutEmail = computed(
+    () => (state.value.isGuest || (!state.value.isGuest && !state.value.isAuthorized)) && !state.value.validGuestEmail,
   );
 
   const backToContactInformation = (): boolean => {
@@ -250,6 +271,7 @@ export const useCustomer: UseCustomerReturn = () => {
     loginAsGuest,
     changePassword,
     emailValidationSchema,
+    missingGuestCheckoutEmail,
     backToContactInformation,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),

@@ -1,108 +1,168 @@
 <template>
-  <li class="border-b">
+  <li class="border border-[#D9E2DC] rounded-[5px] mb-3">
     <div
-      class="relative"
-      :class="['px-4 py-2 flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
-      @click="toggle"
+      class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
+      :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
+      @click="toggleOnTablet"
     >
-      <span v-if="item.children && item.children.length > 0">
-        <SfIconExpandMore />
+      <span v-if="item.hasChildren" @click="toggleOnDesktop">
+        <SfIconExpandMore v-if="!open" />
+        <SfIconExpandLess v-else />
       </span>
-      <router-link
-        :to="`${localePrefix}${item.path}`"
-        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
-      >
-        <span v-if="item.name === 'Homepage'">
-          <SfIconHome class="w-4 h-4 mr-2" />
+      <router-link v-if="!isTablet" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+        <span v-if="props.icon">
+          <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
-        {{ item.name }}
+        {{ item.details[0].name }}
       </router-link>
 
-      <SfIconMoreHoriz @click.prevent="openMenu" />
-
-      <SfDropdown v-model="isOpen" placement="right" class="absolute top-0 right-0 bottom-0">
-        <div class="p-2 rounded bg-white w-max">
-          <div
-            class="p-1 flex"
-            @click="
-              openGeneralSettings(item.id);
-              setPageId(item.id, parentId);
-            "
-          >
-            <NuxtImg width="24" height="24px" :src="gearBlack" />
-            <span class="ml-2">General Settings</span>
-          </div>
-          <div
-            class="p-1 flex"
-            @click="
-              openSeoSettings(item.id);
-              setPageId(item.id, parentId);
-            "
-          >
-            <SfIconSearch />
-            <span class="ml-2">SEO Settings</span>
-          </div>
-          <div
-            class="p-1 flex"
-            :class="{ 'opacity-50 cursor-not-allowed': item.name === 'Homepage' }"
-            @click="item.name !== 'Homepage' ? (deletePage(item.id), setPageId(item.id, parentId)) : null"
-          >
-            <SfIconDelete />
-            <span class="ml-2">Delete Page</span>
-          </div>
-        </div>
-      </SfDropdown>
+      <span
+        v-else
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
+        @click="handleSettingsClick"
+      >
+        <span v-if="props.icon">
+          <component :is="icon" class="w-4 h-4 mr-2" />
+        </span>
+        {{ item.details[0].name }}
+      </span>
+      <div class="flex items-center gap-x-2 ml-2">
+        <SfTooltip
+          v-if="isCategoryDirty(item.id)"
+          label="You have unsaved changes on this page"
+          :placement="'top'"
+          :show-arrow="true"
+          class="ml-2 z-10"
+        >
+          <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
+        </SfTooltip>
+        <SfIconBase
+          v-if="!props.hideSettings"
+          size="base"
+          viewBox="0 0 24 24"
+          class="text-primary-900 transition-opacity duration-200"
+          :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
+          @click="handleSettingsClick"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+            <path :d="gearPath" fill="#062633" />
+          </svg>
+        </SfIconBase>
+      </div>
     </div>
-    <ul v-if="item.children && open" class="pl-4 border-l border-gray-200">
-      <PagesItem v-for="child in item.children" :key="child.path" :item="child" :parent-id="item.id" />
-    </ul>
   </li>
+  <ul
+    v-if="item.hasChildren && open"
+    class="pl-3 relative border-[#D9E2DC]-200 max-h-[500px] overflow-auto"
+    @scroll="handleChildrenScroll"
+  >
+    <hr class="absolute top-0 left-0 w-[1px] h-[calc(100%-0.75rem)] bg-gray-200" />
+    <li
+      v-if="childrenPagination.loading.value && childrenPagination.items.value.length"
+      class="flex justify-center items-center py-4"
+    >
+      <SfLoaderCircular size="sm" />
+    </li>
+    <PagesItem
+      v-for="child in childrenPagination.items.value"
+      :key="child.details[0].nameUrl"
+      :item="child"
+      :parent-id="item.id"
+    />
+    <li
+      v-if="childrenPagination.loading.value && childrenPagination.items.value.length > 0"
+      class="flex justify-center items-center py-4"
+    >
+      <SfLoaderCircular size="sm" />
+    </li>
+  </ul>
 </template>
 <script setup lang="ts">
-import type { MenuItemType } from '~/components/PagesView/types';
 import {
-  SfIconHome,
   SfIconExpandMore,
-  SfIconMoreHoriz,
-  useDisclosure,
-  SfDropdown,
-  SfIconDelete,
-  SfIconSearch,
+  SfIconExpandLess,
+  SfIconError,
+  SfTooltip,
+  SfLoaderCircular,
+  SfIconBase,
 } from '@storefront-ui/vue';
-import gearBlack from 'assets/icons/paths/gear-black.svg';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import type { PagesItemProps } from './types';
+import { gearPath } from 'assets/icons/paths/gear';
+const { isCategoryDirty } = useCategorySettingsCollection();
+const { usePaginatedChildren } = useCategoriesSearch();
+const { setSettingsCategory, settingsType } = useSiteConfiguration();
+const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
+const viewport = useViewport();
+const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-const { locale } = useI18n();
-const localePrefix = computed(() => (locale.value.startsWith('/') ? locale.value : `/${locale.value}`));
+const props = defineProps<PagesItemProps>();
+const item = props.item;
 
-const { item } = defineProps<{
-  item: MenuItemType;
-  parentId: number | undefined;
-}>();
+const pagePath = computed(() => {
+  const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
+  return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
+});
 
-const { isOpen, open: openMenu, close } = useDisclosure();
-const { setSettingsCategory, toggleDeleteModal } = useSiteConfiguration();
-const currentSeoPageId = ref<number | null>(null);
 const currentGeneralPageId = ref<number | null>(null);
-const { setPageId } = useCategorySettings();
 const open = ref(false);
-const toggle = () => (open.value = !open.value);
-const route = useRoute();
-const isActive = computed(() => route.path === item.path);
+const childrenPagination = usePaginatedChildren(item);
 
-const openGeneralSettings = (id: number) => {
-  close();
+const toggleOpen = async (isTabletCheck = false) => {
+  if (item.level === 5) {
+    setParentName(item.details[0].name);
+  }
+  if (isTabletCheck && !isTablet.value) return;
+
+  open.value = !open.value;
+  if (item.level === 5) {
+    setParentName(item.details[0].name);
+  }
+  if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
+    await childrenPagination.fetchMore();
+  }
+};
+const handleSettingsClick = () => {
+  openSettingsMenu(item.id, item.type);
+  setCategoryId({
+    id: item.id,
+    parentId: props.parentId,
+    name: item.details[0].name,
+    path: item.details[0].nameUrl,
+    level: item.level,
+  });
+  checkIfItemHasChildren();
+};
+const toggleOnDesktop = () => toggleOpen();
+const toggleOnTablet = () => toggleOpen(true);
+
+const handleChildrenScroll = async (e: Event) => {
+  const el = e.target as HTMLElement;
+  const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
+  if (nearBottom && childrenPagination.hasMore.value && !childrenPagination.loading.value) {
+    await childrenPagination.fetchMore();
+  }
+};
+
+const isActive = computed(() => item.id === getCategoryId.value && settingsType.value);
+const openSettingsMenu = (id: number, pageType?: string) => {
   currentGeneralPageId.value = id;
-  setSettingsCategory({} as CategoryTreeItem, 'general-settings');
+  setSettingsCategory({} as CategoryTreeItem, 'general-menu');
+  setPageType(pageType);
 };
-const openSeoSettings = (id: number) => {
-  close();
-  currentSeoPageId.value = id;
-  setSettingsCategory({} as CategoryTreeItem, 'seo-settings');
+
+const checkIfItemHasChildren = () => {
+  if (item.hasChildren) {
+    setPageHasChildren(true);
+  } else {
+    setPageHasChildren(false);
+  }
 };
-const deletePage = (id: number) => {
-  currentGeneralPageId.value = id;
-  toggleDeleteModal(true);
-  close();
-};
+
+watch(
+  () => item.children,
+  (newChildren) => {
+    childrenPagination.items.value = (newChildren ?? []).filter(Boolean);
+  },
+  { immediate: true, deep: true },
+);
 </script>

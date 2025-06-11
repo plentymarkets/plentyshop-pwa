@@ -133,16 +133,18 @@ export const usePayPal = () => {
   /**
    * @description Function for creating a PayPal transaction.
    * @param fundingSource
+   * @param isExpress
    * @return CreateTransaction
    * @example
    * ``` ts
-   * createTransaction(fundingSource: string);
+   * createTransaction('paypal', true);
    * ```
    */
-  const createTransaction = async (fundingSource: string) => {
+  const createTransaction = async (fundingSource: string, isExpress = false) => {
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doCreatePayPalTransaction({
         fundingSource: fundingSource,
+        is_express: isExpress,
       }),
     );
     state.value.order = data.value?.data ?? null;
@@ -208,14 +210,6 @@ export const usePayPal = () => {
    */
   const createCreditCardTransaction = async () => {
     state.value.loading = true;
-    await useAsyncData(() =>
-      useSdk().plentysystems.doAdditionalInformation({
-        orderContactWish: null,
-        orderCustomerSign: null,
-        shippingPrivacyHintAccepted: true,
-        templateType: 'checkout',
-      }),
-    );
 
     const { error: preparePaymentError } = await useAsyncData(() => useSdk().plentysystems.doPreparePayment());
     useHandleError(preparePaymentError.value);

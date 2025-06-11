@@ -1,4 +1,4 @@
-<template>
+<template v-if="_isReady">
   <UiModal
     v-model="pageModalOpen"
     aria-labelledby="page-modal"
@@ -49,14 +49,29 @@
         <Multiselect
           v-model="parentPage"
           data-testid="new-parent-page"
-          :options="categories"
+          :options="categoriesWithFallback"
           :custom-label="getLabel"
           placeholder="Select a parent page"
           :allow-empty="false"
           class="cursor-pointer"
           select-label=""
           deselect-label="Selected"
+          :searchable="true"
+          :internal-search="false"
+          @search-change="handleSearch"
         />
+      </div>
+
+      <div
+        v-if="!isValidParentPage()"
+        class="bg-red-700 w-full rounded-md text-white text-sm px-4 py-2 grid grid-cols-[auto,1fr] gap-2"
+      >
+        <span class="flex items-center">
+          <SfIconWarning />
+        </span>
+        <span>
+          {{ invalidParentMessage }}
+        </span>
       </div>
 
       <div class="actions grid gap-4 grid-cols-2">
@@ -72,6 +87,8 @@
           type="submit"
           data-testid="block-spacing-btn"
           class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
+          :class="{ 'opacity-50 cursor-not-allowed': !isValidParentPage() }"
+          :disabled="!isValidParentPage()"
         >
           Add page
         </button>
@@ -81,79 +98,27 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput } from '@storefront-ui/vue';
+import { SfIconClose, SfIconWarning, SfInput } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { useForm, ErrorMessage } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
-import { object, string } from 'yup';
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import { ErrorMessage } from 'vee-validate';
 
-const { pageModalOpen, togglePageModal } = useSiteConfiguration();
-const { data: categoryTree } = useCategoryTree();
-const { addCategory } = useCategory();
+const {
+  _isReady,
+  pageModalOpen,
+  pageType,
+  pageTypes,
+  parentPage,
+  categoriesWithFallback,
+  pageName,
+  pageNameAttributes,
+  errors,
+  getLabel,
+  isValidParentPage,
+  closeModal,
+  onSubmit,
+  handleSearch,
+} = useAddPageModal();
 
-const validationSchema = toTypedSchema(
-  object({
-    pageName: string().required('Enter a page name').default(''),
-  }),
-);
-
-const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
-  validationSchema: validationSchema,
-});
-
-const createNewPage = async () => {
-  if (!meta.value.valid) {
-    return;
-  }
-
-  addCategory({
-    name: pageName?.value || '',
-    type: pageType.value.value,
-    parentCategoryId: categoryTreeGetters.getId(parentPage.value) || null,
-  });
-};
-
-const closeModal = () => {
-  resetForm();
-  togglePageModal(false);
-};
-
-const flattenCategories = (items: CategoryTreeItem[]) => {
-  let flat: CategoryTreeItem[] = [];
-  items.forEach((item: CategoryTreeItem) => {
-    if (item.type === 'item' || item.type === 'content') {
-      flat.push(item);
-    }
-    if (item.children && item.children.length) {
-      flat = flat.concat(flattenCategories(item.children));
-    }
-  });
-  return flat;
-};
-
-const getLabel = (option: CategoryTreeItem) => {
-  return option.details && option.details.length ? option.details[0].name : '';
-};
-
-const emptyCategoryItem: CategoryTreeItem = {
-  id: 0,
-  type: 'none',
-  itemCount: [],
-  childCount: 0,
-  right: 'all',
-  details: [{ name: 'None', lang: '', nameUrl: '', metaTitle: '', imagePath: '', image2Path: '' }],
-};
-
-const categories = computed(() => [emptyCategoryItem, ...flattenCategories(categoryTree.value)]);
-
-const [pageName, pageNameAttributes] = defineField('pageName');
-const pageTypes = ref([
-  { label: 'Content', value: 'content' },
-  { label: 'Item category', value: 'item' },
-]);
-const pageType = ref(pageTypes.value[0]);
-const parentPage = ref(emptyCategoryItem);
-
-const onSubmit = handleSubmit(() => createNewPage());
+const invalidParentMessage =
+  "You've selected a level 6 category as parent page. Select a category of level 5 or lower.";
 </script>

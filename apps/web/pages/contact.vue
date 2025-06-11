@@ -6,7 +6,21 @@
       </h1>
       <p class="mb-10">{{ t('contact.contactShopMessage') }}</p>
 
-      <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" novalidate @submit.prevent="onSubmit">
+      <div
+        v-if="turnstileSiteKey.length === 0"
+        class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+      >
+        <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
+        <div class="py-2">{{ t('contact.misConfigured') }}</div>
+      </div>
+
+      <form
+        v-else
+        data-testid="contact-form"
+        class="flex flex-col rounded-md gap-4"
+        novalidate
+        @submit.prevent="onSubmit"
+      >
         <div class="">
           <label>
             <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
@@ -129,7 +143,15 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconEmail } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfCheckbox,
+  SfLink,
+  SfTextarea,
+  SfLoaderCircular,
+  SfIconEmail,
+  SfIconWarning,
+} from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
@@ -169,7 +191,10 @@ const validationSchema = toTypedSchema(
         return true;
       }),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
-    turnstile: string().required(t('errorMessages.contact.turnstileRequired')).default(''),
+    turnstile:
+      turnstileSiteKey.length > 0
+        ? string().required(t('errorMessages.contact.turnstileRequired')).default('')
+        : string().optional().default(''),
   }),
 );
 

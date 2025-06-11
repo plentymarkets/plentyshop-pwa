@@ -12,7 +12,7 @@
         </h1>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="px-4 py-6">
-          <h1 class="font-bold text-lg mb-2">{{ $t('contactInfo.heading') }}</h1>
+          <h1 class="font-bold text-lg mb-2">{{ t('contactInfo.heading') }}</h1>
           <div>
             {{
               offerGetters.getOfferEmail(offer).length > 0
@@ -139,7 +139,13 @@
             class="h-full w-full overflow-auto md:w-[700px] md:h-fit"
             aria-labelledby="address-modal-title"
           >
-            <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="toggleModal">
+            <UiButton
+              :aria-label="t('closeAddressForm')"
+              square
+              variant="tertiary"
+              class="absolute right-2 top-2"
+              @click="toggleModal"
+            >
               <SfIconClose />
             </UiButton>
             <h1 class="font-bold text-xl mb-2">{{ t('offerForm.declineOffer') }}</h1>

@@ -22,6 +22,10 @@ const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
   () => Promise<{ default: unknown }>
 >;
 
+const dragState = reactive({
+  isDragging: false,
+});
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
@@ -37,7 +41,7 @@ export const useBlockManager = () => {
 
   const getBlocksLists = async () => {
     try {
-      const response = await fetch('/blocks/blocksLists.json');
+      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -178,12 +182,25 @@ export const useBlockManager = () => {
       data.value[index] = updatedBlock;
     }
   };
+
+  const handleDragStart = () => {
+    dragState.isDragging = true;
+  };
+
+  const handleDragEnd = () => {
+    dragState.isDragging = false;
+  };
+
   return {
+    blocksLists,
     currentBlock,
     currentBlockUuid,
     isClicked,
     clickedBlockIndex,
     isTablet,
+    isDragging: computed(() => dragState.isDragging),
+    handleDragStart,
+    handleDragEnd,
     getBlocksLists,
     blockHasData,
     tabletEdit,

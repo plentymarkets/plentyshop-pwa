@@ -1,0 +1,204 @@
+name: Generate Release Draft
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Fetch Git history
+        run: |
+          git fetch --tags --force
+          echo "Current tags:"
+          git tag --sort=-v:refname
+        
+      - name: Calculate version bump
+        id: version
+        run: |
+          # Get the latest tag and strip the 'v' prefix
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          echo "Found latest tag: $LATEST_TAG"
+          LATEST_VERSION=${LATEST_TAG#v}
+          echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          
+          # Parse the version components
+          IFS='.' read -r major minor patch <<< "$LATEST_VERSION"
+          
+          # Initialize version bump type (patch by default)
+          BUMP_TYPE="patch"
+          
+          # Check for breaking changes and features
+          while IFS= read -r commit; do
+            if [[ "$commit" == *"!"* ]] || [[ "$commit" == *"BREAKING CHANGE"* ]]; then
+              BUMP_TYPE="major"
+              break
+            elif [[ "$commit" =~ ^feat ]]; then
+              BUMP_TYPE="minor"
+              break
+            fi
+          done < <(git log "${LATEST_TAG}..HEAD" --pretty=format:"%s")
+          
+          # Calculate new version
+          if [ "$BUMP_TYPE" == "major" ]; then
+            NEW_VERSION="$((major + 1)).0.0"
+          elif [ "$BUMP_TYPE" == "minor" ]; then
+            NEW_VERSION="$major.$((minor + 1)).0"
+          else
+            NEW_VERSION="$major.$minor.$((patch + 1))"
+          fi
+          
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes
+        id: notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LATEST_TAG: v${{ steps.version.outputs.latest }}
+        run: |
+          echo "Generating release notes since ${LATEST_TAG}..."
+          
+          # Initialize sections with empty arrays
+          declare -a features=()
+          declare -a fixes=()
+          declare -a developers=()
+          declare -a others=()
+          declare -A contributors
+          
+          # Store commits in an array first
+          if ! mapfile -t commits < <(git log "${LATEST_TAG}..HEAD" --pretty=format:"%H %s"); then
+            echo "Error: Failed to retrieve commit history"
+            exit 1
+          fi
+          
+          # Process each commit
+          for commit_line in "${commits[@]}"; do
+            echo "Processing commit: $commit_line"
+            
+            # Extract commit hash and message
+            commit_hash=${commit_line%% *}
+            commit_msg=${commit_line#* }
+
+            # Get the commit hash
+            LINK_REF=" (${commit_hash:0:7})"
+            
+            # Get PR number if available
+            PR_NUM=$(gh pr list --search "$commit_hash" --state merged --json number --jq '.[0].number' 2>/dev/null)
+
+            # Get PR labels if available
+            if [ ! -z "$PR_NUM" ]; then
+              PR_LABELS=$(gh pr list --search "$commit_hash" --state merged --json labels --jq '.[0].labels[].name' 2>/dev/null || echo "")
+            fi
+
+            # Skip if PR has the "ignore-for-release" label
+            if [[ "$PR_LABELS" =~ "ignore-for-release" ]]; then
+              echo "Skipping commit $commit_hash due to 'ignore-for-release' label"
+              continue
+            fi
+            
+            # Get GitHub username from commit
+            AUTHOR_EMAIL=$(git log -1 --format="%aE" $commit_hash)
+            if [[ "$AUTHOR_EMAIL" =~ ^.*@users\.noreply\.github\.com$ ]]; then
+              GITHUB_USER=$(echo "$AUTHOR_EMAIL" | sed -E 's/^[0-9]+\+//' | sed 's/@users\.noreply\.github\.com//')
+            else
+              if [ ! -z "$PR_NUM" ]; then
+                GITHUB_USER=$(gh pr list --search "$commit_hash" --state merged --json author --jq '.[0].author.login' 2>/dev/null || git log -1 --format="%aN" $commit_hash)
+              else
+                GITHUB_USER=$(git log -1 --format="%aN" $commit_hash)
+              fi
+            fi
+            contributors["$GITHUB_USER"]="$GITHUB_USER"
+            
+            # Clean and store messages in arrays
+            if [[ "$commit_msg" =~ ^feat ]]; then
+              cleaned_msg=$(echo "$commit_msg" | sed -E 's/^feat(\([^)]*\))?: *//')
+              features+=("- $cleaned_msg$LINK_REF")
+            elif [[ "$commit_msg" =~ ^fix ]]; then
+              cleaned_msg=$(echo "$commit_msg" | sed -E 's/^fix(\([^)]*\))?: *//')
+              fixes+=("- $cleaned_msg$LINK_REF")
+            elif [[ "$commit_msg" =~ ^(style|refactor|test|build|ci|docs) ]]; then
+              prefix=$(echo "$commit_msg" | sed -E 's/^([^(:]+)(\([^)]*\))?: .*/\1/')
+              cleaned_msg=$(echo "$commit_msg" | sed -E 's/^[^(:]+(\([^)]*\))?: *//')
+              developers+=("- [$prefix] $cleaned_msg$LINK_REF")
+            else
+              others+=("- $commit_msg$LINK_REF")
+            fi
+          done
+          
+          # Check if we have any changes to document
+          if [ ${#features[@]} -eq 0 ] && [ ${#fixes[@]} -eq 0 ] && [ ${#developers[@]} -eq 0 ] && [ ${#others[@]} -eq 0 ]; then
+            echo "No changes found to document"
+            exit 0
+          fi
+          
+          # Generate release notes
+          {
+            echo "## What's Changed"
+            
+            if [ ${#features[@]} -gt 0 ]; then
+              echo -e "\n### Features"
+              printf '%s\n' "${features[@]}"
+            fi
+            
+            if [ ${#fixes[@]} -gt 0 ]; then
+              echo -e "\n### Bug Fixes"
+              printf '%s\n' "${fixes[@]}"
+            fi
+            
+            if [ ${#developers[@]} -gt 0 ]; then
+              echo -e "\n### For Developers"
+              printf '%s\n' "${developers[@]}"
+            fi
+            
+            if [ ${#others[@]} -gt 0 ]; then
+              echo -e "\n### Other Changes"
+              printf '%s\n' "${others[@]}"
+            fi
+            
+            if [ ${#contributors[@]} -gt 0 ]; then
+              echo -e "\n### Contributors"
+              for user in "${!contributors[@]}"; do
+                echo "- @$user"
+              done
+            fi
+          } > release_notes.md
+          
+          echo "Final release notes:"
+          cat release_notes.md
+
+      - name: Create draft release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          NEW_VERSION: v${{ steps.version.outputs.new }}
+        run: |
+          # Create and push the tag
+          if ! git tag "$NEW_VERSION"; then
+            echo "Error: Failed to create tag"
+            exit 1
+          fi
+          
+          if ! git push origin "$NEW_VERSION"; then
+            echo "Error: Failed to push tag"
+            git tag -d "$NEW_VERSION"
+            exit 1
+          fi
+          
+          # Create the release with the generated notes
+          if ! gh release create "$NEW_VERSION" \
+            --title "Release $NEW_VERSION" \
+            --notes-file release_notes.md \
+            --draft; then
+            echo "Error: Failed to create release"
+            git push --delete origin "$NEW_VERSION"
+            git tag -d "$NEW_VERSION"
+            exit 1
+          fi

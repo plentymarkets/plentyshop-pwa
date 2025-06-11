@@ -44,11 +44,12 @@
     <div class="p-2">
       <UiFormLabel>Category ID</UiFormLabel>
       <SfInput
-        v-model="recommendedBlock.categoryId"
+        :model-value="recommendedBlock.categoryId"
         data-testid="recommended-form-categoryid"
         name="category Id"
         type="text"
         placeholder="Enter Category Id"
+        @input="debouncedFn($event)"
       />
     </div>
     <div v-if="recommendedBlock.text" class="p-2">
@@ -120,6 +121,7 @@
 <script setup lang="ts">
 import type { ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import { useDebounceFn } from '@vueuse/core';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
@@ -139,4 +141,10 @@ const recommendedBlock = computed(
       categoryId: '',
     }) as ProductRecommendedProductsContent,
 );
+
+const debouncedFn = useDebounceFn((event: Event) => {
+  const target = event.target as HTMLInputElement;
+
+  recommendedBlock.value.categoryId = target.value.toString();
+}, 1000);
 </script>

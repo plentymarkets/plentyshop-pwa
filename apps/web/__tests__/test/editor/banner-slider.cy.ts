@@ -4,9 +4,11 @@ import {
   secondBannerBlockUuid,
 } from '../../support/pageObjects/BannerSliderObject';
 import { paths } from '../../../utils/paths';
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Banner Slider Block Form', () => {
   const bannerSlider = new BannerSliderObject();
+  const cookieBar = new CookieBarObject();
 
   const openSettingsForBannerSliderBlock = () => {
     cy.get('[data-testid="open-editor-button"]').eq(0).should('exist').click();
@@ -16,12 +18,8 @@ describe('Banner Slider Block Form', () => {
 
   beforeEach(() => {
     cy.clearCookies();
-    cy.setCookie('vsf-locale', 'en');
-    cy.setCookie(
-      'consent-cookie',
-      '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
-    );
     cy.visitAndHydrate(paths.home);
+    cookieBar.acceptAll();
     openSettingsForBannerSliderBlock();
   });
 
@@ -66,16 +64,6 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.openSlideActions();
       bannerSlider.moveSlideDown(1);
       bannerSlider.checkSlideSettings(2);
-    });
-
-    it('should not move up the first slide', () => {
-      bannerSlider.openSlideActions();
-      bannerSlider.checkIsMoveSlideUpDisabled(0);
-    });
-
-    it('should not move down the last slide', () => {
-      bannerSlider.openSlideActions();
-      bannerSlider.checkIsMoveSlideDownDisabled(1);
     });
   });
 

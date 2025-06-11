@@ -6,6 +6,9 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <template v-if="isEditablePage && runtimeConfig.public.isDev">
+      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
+    </template>
     <template v-else>
       <CategoryPageContent
         v-if="productsCatalog?.products"
@@ -39,6 +42,8 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
+const { isEditablePage } = useToolbar();
+const runtimeConfig = useRuntimeConfig();
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -58,9 +63,9 @@ const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
 
   if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Page not found',
     });
   }
 };

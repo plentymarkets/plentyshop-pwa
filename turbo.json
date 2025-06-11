@@ -3,13 +3,15 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "cache": false
+      "outputs": ["dist/**", ".output/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
+      "cache": true
     },
     "build:analyze": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "cache": false
+      "outputs": ["dist/**", ".output/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
+      "cache": true
     },
     "start": {
       "outputs": []
@@ -31,6 +33,9 @@
       "outputs": []
     },
     "test:watch": {
+      "cache": false
+    },
+    "test:cypress-checkout": {
       "cache": false
     },
     "test:cypress-editor": {

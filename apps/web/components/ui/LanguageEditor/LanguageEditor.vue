@@ -14,7 +14,7 @@
         @input="(ev: any) => switchLanguage(ev.target.value)"
       >
         <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
-          {{ $t(`lang.${locale}`) }}
+          {{ t(`lang.${locale}`) }}
         </option>
       </select>
       <div class="flex items-center">
@@ -29,7 +29,7 @@ import { SfIconLanguage, SfIconExpandMore } from '@storefront-ui/vue';
 import type { Locale } from 'vue-i18n';
 import { useI18n } from 'vue-i18n';
 
-const { localeCodes, locale: currentLocale } = useI18n();
+const { localeCodes, locale: currentLocale, t } = useI18n();
 const { switchLocale } = useLocalization();
 const { isEditing, disableActions } = useEditor();
 
