@@ -82,7 +82,7 @@ const localValue = ref(props.modelValue);
 
 const dropdownOptions = {
   showDialCodeInList: false,
-  showDialCodeInSelection: true,
+  showDialCodeInSelection: false,
   showFlags: true,
   showSearchBox: true,
   searchBoxPlaceholder: t('checkoutPayment.countrySearch'),
@@ -115,7 +115,8 @@ const styleClasses =
 }
 
 .vti__dropdown-list {
-  @apply absolute z-50 mt-1 w-max max-h-60 overflow-auto rounded border border-gray-200;
+  @apply absolute z-50 mt-1 max-h-60 overflow-auto rounded border border-gray-200;
+  width: calc(max-content, 100%);
 }
 
 .vti__dropdown-item {
