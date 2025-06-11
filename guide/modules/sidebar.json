@@ -24,5 +24,9 @@
   {
     "text": "Google Analytics",
     "link": "/guide/modules/google-analytics"
+  },
+  {
+    "text": "Mollie",
+    "link": "/guide/modules/mollie"
   }
 ]
