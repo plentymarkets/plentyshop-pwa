@@ -18,6 +18,7 @@ describe('Smoke: Product Detail Page', () => {
     productListPage.goToProduct();
 
     productDetailPage.displayCheck();
+    productDetailPage.assertModernImageFormat();
   });
 
   describe('should validate product url params', () => {
