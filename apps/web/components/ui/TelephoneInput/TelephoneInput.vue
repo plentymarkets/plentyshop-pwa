@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { VueTelInput } from 'vue-tel-input';
 import 'vue-tel-input/vue-tel-input.css';
-import type { PhoneValidationResult } from '~/components/PayPal/types';
+import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 import type { TelephoneInputProps } from './types';
 
 const props = withDefaults(defineProps<TelephoneInputProps>(), {
@@ -45,7 +45,43 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const { config, loadConfig, getFraudId } = usePayPal();
 const localValue = ref(props.modelValue);
+const fraudNet = {
+  merchantId: null as string | null,
+  fraudId: null as string | null,
+  pageId: 'checkout-page',
+};
+
+onNuxtReady(async () => {
+  await fetchDependencies();
+  if (fraudNet.merchantId && fraudNet.fraudId) insertFraudNetScript();
+});
+
+const fetchDependencies = async () => {
+  await loadConfig().then(() => (fraudNet.merchantId = config.value?.merchantId || null));
+  fraudNet.fraudId = await getFraudId();
+};
+
+const insertFraudNetScript = () => {
+  console.log('Inserting FraudNet script using:', fraudNet);
+
+  const scriptTag = document.createElement('script');
+  scriptTag.type = 'application/json';
+  scriptTag.setAttribute('fncls', 'fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99');
+  scriptTag.textContent = JSON.stringify({
+    f: fraudNet.fraudId,
+    s: `${fraudNet.merchantId}_${fraudNet.pageId}`,
+    sandbox: true,
+  });
+
+  document.body.appendChild(scriptTag);
+
+  const loader = document.createElement('script');
+  loader.src = 'https://c.paypal.com/da/r/fb.js';
+  loader.async = true;
+  document.body.appendChild(loader);
+};
 
 const dropdownOptions = {
   showDialCodeInList: false,

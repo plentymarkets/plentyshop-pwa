@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import type { PhoneValidationResult } from '~/components/PayPal/types';
+import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 
 defineEmits(['confirmPayment', 'confirmCancel']);
 

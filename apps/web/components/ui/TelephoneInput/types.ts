@@ -9,3 +9,14 @@ export type TelephoneInputProps = {
   mode?: 'auto' | 'international' | 'national';
   error?: string;
 };
+
+export type PhoneValidationResult = {
+  country: string;
+  countryCode: string;
+  formatted: string;
+  valid: boolean;
+  possible: boolean;
+  nationalNumber: string;
+  countryCallingCode: string;
+  number: string;
+};
