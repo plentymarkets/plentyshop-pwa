@@ -35,7 +35,7 @@
   "dependencies": {
     "@plentymarkets/shop-core": "^1.6.4",
     "@plentymarkets/shop-module-mollie": "^1.0.6",
-    "@plentymarkets/shop-api": "^0.116.0",
+    "@plentymarkets/shop-api": "^0.117.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
@@ -65,6 +65,7 @@
     "commitizen": "^4.3.0",
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
+    "eslint-module-utils": "^2.12.0",
     "happy-dom": "^15.11.7",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
