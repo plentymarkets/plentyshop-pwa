@@ -56,6 +56,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       if (node.children) {
         node.children = deleteFromTree(id, node.children);
         if (node.children.length === 0) {
+          node.hasChildren = false;
           delete node.children;
         }
       }
