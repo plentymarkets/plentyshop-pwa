@@ -25,9 +25,8 @@
     <UiTelephoneInput
       v-model="phone"
       :label="`${t('checkoutPayment.phoneLabel')} *`"
-      mode="international"
-      :enable-search="true"
       :only-countries="onlyCountries"
+      :default-country="defaultCountry"
       @valid-phone-number="handlePhoneNumberValidation"
     />
 
@@ -48,18 +47,21 @@
 </template>
 
 <script lang="ts" setup>
+import { AddressType } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PhoneValidationResult } from '~/components/PayPal/types';
 
 defineEmits(['confirmPayment', 'confirmCancel']);
 
 const { t } = useI18n();
-const { billingCountries } = useAggregatedCountries();
+const { billingCountries, getCountryIsoCode } = useAggregatedCountries();
+const { checkoutAddress: billingAddress } = useCheckoutAddress(AddressType.Billing);
 
 const loading = ref(false);
 const phone = ref('');
 
 const onlyCountries = billingCountries.value.map((country) => country.isoCode2.toLowerCase());
+const defaultCountry = billingAddress.value?.country ? getCountryIsoCode(billingAddress.value.country) : '';
 
 const handlePhoneNumberValidation = (validation: PhoneValidationResult) => {
   console.log('Phone number object:', validation);

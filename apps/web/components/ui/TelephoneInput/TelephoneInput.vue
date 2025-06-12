@@ -5,17 +5,14 @@
     </label>
 
     <vue-tel-input
-      :id="id"
       v-model="localValue"
-      :auto-default-country="true"
-      :valid-characters-only="true"
-      :placeholder="placeholder"
-      :input-options="inputOptions"
-      :style-classes="styleClasses"
-      :preferred-countries="preferredCountries"
       :only-countries="onlyCountries"
       :default-country="defaultCountry"
-      :enable-search="enableSearch"
+      :auto-default-country="false"
+      :input-options="inputOptions"
+      :valid-characters-only="true"
+      :style-classes="styleClasses"
+      :preferred-countries="preferredCountries"
       :dropdown-options="dropdownOptions"
       :mode="mode"
       @validate="(validation: PhoneValidationResult) => emit('validPhoneNumber', validation)"
@@ -27,17 +24,17 @@
 
 <script setup lang="ts">
 import { VueTelInput } from 'vue-tel-input';
+import 'vue-tel-input/vue-tel-input.css';
 import type { PhoneValidationResult } from '~/components/PayPal/types';
 import type { TelephoneInputProps } from './types';
 
 const props = withDefaults(defineProps<TelephoneInputProps>(), {
-  label: '',
   id: () => `tel-input-${Math.random().toString(36).substring(2, 7)}`,
+  label: '',
   placeholder: 'Enter phone number',
   preferredCountries: () => [],
   onlyCountries: () => [],
   defaultCountry: '',
-  enableSearch: true,
   mode: 'international',
   error: '',
 });
@@ -68,7 +65,13 @@ watch(localValue, (val) => {
 });
 
 const inputOptions = {
-  class: 'w-full px-3 py-2 text-sm placeholder-gray-400 rounded focus:outline-none focus:ring-0',
+  id: props.id,
+  autocomplete: 'on',
+  maxlength: 25,
+  showDialCode: true,
+  type: 'tel',
+  placeholder: props.placeholder,
+  styleClasses: 'w-full px-3 py-2 text-sm placeholder-gray-400 rounded focus:outline-none focus:ring-0',
 };
 
 const styleClasses =
@@ -85,15 +88,15 @@ const styleClasses =
 }
 
 .vti__dropdown {
-  @apply rounded ml-1;
+  @apply rounded ml-1 select-none;
 }
 
 .vti__dropdown-list {
-  @apply absolute z-50 mt-[8px] min-w-full max-h-60 left-[-5px] overflow-auto rounded border border-gray-200;
+  @apply absolute z-50 mt-[8px] min-w-full max-h-60 left-[-5px] overflow-y-auto overflow-x-hidden rounded border border-gray-200;
 }
 
 .vti__dropdown-item {
-  @apply flex items-center justify-between px-3 py-2 text-sm text-gray-800 cursor-pointer transition-colors hover:bg-gray-100;
+  @apply flex items-center justify-between px-3 py-2 text-sm text-gray-800 cursor-pointer transition-colors hover:bg-gray-100 select-none;
 }
 
 .vti__dropdown-item.highlighted {
