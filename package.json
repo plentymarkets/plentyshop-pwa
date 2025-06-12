@@ -69,7 +69,6 @@
     "happy-dom": "^15.11.7",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
-    "lint-staged": "^14.0.1",
     "nuxt": "^3.17.4",
     "nuxt-security": "2.1.5",
     "nuxt-viewport": "^2.1.5",
