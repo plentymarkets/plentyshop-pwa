@@ -4,12 +4,12 @@
 The cross-selling feature is available with `@plentymarkets/shop-api` version 0.95.0
 :::
 
-With `useSdk().plentysystems.getFacet` we are able to load cross-selling items.
-We can make use of the `useProducts` composable where we wrap the sdk call to be used in nuxt.
+You can use `useSdk().plentysystems.getFacet` to load cross-selling items.
+You can make use of the `useProducts` composable, in which you wrap the SDK call to be used in Nuxt.
 
-Required `getFacet` params for a cross-selling are the `itemId`, `type: cross_selling` and optional `crossSellingRelation`.
+The required `getFacet` parameters for a cross-selling item are `itemId`, `type: cross_selling`; the `crossSellingRelation` is optional.
 
-You can get the itemId by using `useProduct()`, if you are on the product page `product.value` is already available.
+You can get the `itemId` by using `useProduct()`; if you are on the product page `product.value` is already available.
 
 Example
 ```ts
@@ -22,7 +22,7 @@ const itemId = productGetters.getItemId(product.value)
 ``` ts
 const itemId = productGetters.getItemId(product.value)
 
-// the param for useProducts is your state key, if you want to have multiple item lists, this identifier must be unique
+// the param for useProducts is your state key; if you want to have multiple item lists, this identifier must be unique
 const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + itemId + 'Similar');
 
 fetchCrossSelling({
@@ -35,11 +35,13 @@ fetchCrossSelling({
 
 ### Fetch multiple cross-selling lists by relation type
 
-Available `crossSellingRelation` types: `Accessory`, `ReplacementPart`, `Similar`, `Bundle`
+The svailable `crossSellingRelation` types are:
+`Accessory`, `ReplacementPart`, `Similar`, `Bundle`
 
 ``` ts
 
-// the param for useProducts is your state key, if you want to have multiple item lists, this identifier must be unique
+// the param for useProducts is your state key; if you want to have multiple item lists, this identifier must be unique
+// type Similar
 const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts(productId + 'Similar');
 
 fetchCrossSelling({
