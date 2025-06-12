@@ -171,28 +171,11 @@ export const useAddPageModal = () => {
     addNewPageToTree(newCategory.value);
     await redirectToNewPage(newCategory.value);
   };
-  const buildFullPath = (category: CategoryEntry): string => {
-    const segments: string[] = [];
-    let current: CategoryEntry | undefined = category;
 
-    while (current && current.parentCategoryId && current.parentCategoryId !== 0) {
-      segments.unshift(current.details[0].nameUrl);
-      let parent: CategoryEntry | undefined = undefined;
-      if (current) {
-        parent = (data.value.entries || []).find((entry) => entry.id === current!.parentCategoryId);
-      }
-      if (!parent) break;
-      current = parent;
-    }
-
-    if (current && current.details[0].nameUrl) {
-      segments.unshift(current.details[0].nameUrl);
-    }
-
-    return '/' + segments.filter(Boolean).join('/');
-  };
   const redirectToNewPage = async (newCategory: CategoryEntry) => {
-    const path = buildFullPath(newCategory);
+    const previewUrl = newCategory.details[0]?.previewUrl;
+    const firstSlashIndex = previewUrl?.indexOf('/', 8) ?? -1;
+    const path = firstSlashIndex !== -1 ? previewUrl?.slice(firstSlashIndex) : '/';
     await router.push({ path });
     setCategoryId({
       id: newCategory.id,
