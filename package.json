@@ -54,7 +54,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",
-    "@lhci/cli": "^0.14.0",
+    "@lhci/cli": "^0.15.0",
     "@nuxt/test-utils": "^3.19.0",
     "@nuxtjs/turnstile": "^0.8.0",
     "@paypal/paypal-js": "8.1.0",
