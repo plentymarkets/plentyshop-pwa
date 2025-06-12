@@ -53,8 +53,14 @@
 
         <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
           <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
-            <PagesItem :item="homepageItem" :parent-id="undefined" :icon="SfIconHome" :hide-settings="true" />
-            <PagesItem v-for="item in contentItems" :key="item.id" :item="item" :parent-id="item.id" />
+            <PagesItem
+              v-for="item in [homepageItem, ...contentItems]"
+              :key="`${item.id}-${locale}`"
+              :item="item"
+              :parent-id="item.id"
+              :icon="item.id === 0 ? SfIconHome : undefined"
+              :hide-settings="item.id === 0"
+            />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -124,6 +130,11 @@ watch(productPagesOpen, (opened) => {
   }
 });
 
+watch(locale, () => {
+  fetchCategories('content');
+  fetchCategories('item');
+});
+
 const openHelpPage = () => {
   const urls: Record<string, string> = {
     en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
@@ -134,7 +145,7 @@ const openHelpPage = () => {
   if (targetUrl) window.open(targetUrl, '_blank');
 };
 
-const homepageItem: CategoryEntry = {
+const homepageItem = computed<CategoryEntry>(() => ({
   clients: [],
   details: [
     {
@@ -153,8 +164,8 @@ const homepageItem: CategoryEntry = {
       metaKeywords: '',
       metaRobots: 'index, follow',
       metaTitle: 'Homepage',
-      name: 'Homepage',
-      nameUrl: '/',
+      name: locale.value === 'en' ? 'Homepage' : 'Startseite',
+      nameUrl: locale.value === 'en' ? '/' : '/de',
       pageView: 'homepage',
       plenty_category_details_image_path: '',
       plenty_category_details_image2_path: '',
@@ -175,5 +186,5 @@ const homepageItem: CategoryEntry = {
   sitemap: 'Y',
   type: 'immutable',
   isLinkedToWebstore: true,
-};
+}));
 </script>

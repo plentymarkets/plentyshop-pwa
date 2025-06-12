@@ -82,10 +82,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].name" type="text" data-testid="page-name">
+            <SfInput v-model="pageName" type="text" data-testid="page-name">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="data.details[0].name" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="pageName" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -130,10 +130,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].nameUrl" type="text" data-testid="page-url-slug">
+            <SfInput v-model="pageNameUrl" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="data.details[0].nameUrl" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="pageNameUrl" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -152,10 +152,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].position" type="text" data-testid="page-position">
+            <SfInput v-model="pagePosition" type="text" data-testid="page-position">
               <template #suffix>
                 <label for="page-position" class="rounded-lg cursor-pointer">
-                  <input id="page-position" v-model="data.details[0].position" type="text" class="invisible w-8" />
+                  <input id="page-position" v-model="pagePosition" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -210,6 +210,7 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
+import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
 
 const basicSettingsOpen = ref(true);
 
@@ -256,4 +257,20 @@ const selectedPageType = computed({
     data.value.type = selectedOption ? selectedOption.value : '';
   },
 });
+
+const detailField = <K extends keyof CategoryDetails>(field: K) =>
+  computed({
+    get() {
+      return data.value.details[0]?.[field] ?? '';
+    },
+    set(val: CategoryDetails[K]) {
+      if (data.value.details.length) {
+        data.value.details[0][field] = val;
+      }
+    },
+  });
+
+const pageName = detailField('name');
+const pageNameUrl = detailField('nameUrl');
+const pagePosition = detailField('position');
 </script>
