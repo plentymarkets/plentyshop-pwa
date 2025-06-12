@@ -1,5 +1,9 @@
 <template>
   <header>
+    <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
+      {{ t('checkoutPayment.payUponInvoice') }}
+    </h3>
+
     <UiButton
       :aria-label="t('closeDialog')"
       type="button"
@@ -10,40 +14,48 @@
     >
       <SfIconClose />
     </UiButton>
-
-    <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-      {{ t('checkoutPayment.payUponInvoice') }}
-    </h3>
   </header>
 
-  <div class="grid grid-cols-1 gap-4">
+  <form class="grid grid-cols-1" novalidate @submit.prevent="validateAndSubmitForm">
     <label>
       <UiFormLabel class="flex">{{ t('checkoutPayment.birthdateLabel') }} *</UiFormLabel>
-      <SfInput name="birthdate" label="Phone Number" type="date" autocomplete="bday" />
+      <SfInput
+        v-model="birthDate"
+        label="Phone Number"
+        type="date"
+        autocomplete="bday"
+        :wrapper-class="{ 'ring-2 !ring-negative-700': !validBirthDate }"
+      />
     </label>
 
+    <div class="h-[2rem] mt-1">
+      <div v-if="!validBirthDate" class="text-sm text-negative-700">
+        {{ t('checkoutPayment.birthdateError') }}
+      </div>
+    </div>
+
     <UiTelephoneInput
-      v-model="phone"
+      v-model="phoneWithPrefix"
       :label="`${t('checkoutPayment.phoneLabel')} *`"
       :only-countries="onlyCountries"
       :default-country="defaultCountry"
+      :error="phoneError"
       @valid-phone-number="handlePhoneNumberValidation"
     />
 
-    <div class="text-sm text-neutral-500 mt-2">* {{ t('contact.form.asterixHint') }}</div>
+    <div class="text-sm text-neutral-500">* {{ t('contact.form.asterixHint') }}</div>
 
     <div class="flex justify-end gap-x-4">
-      <UiButton type="button" variant="secondary" @click="$emit('confirmCancel')">{{
-        t('paypal.unbrandedCancel')
-      }}</UiButton>
-      <UiButton type="submit" :disabled="loading">
+      <UiButton type="button" variant="secondary" @click="$emit('confirmCancel')">
+        {{ t('paypal.unbrandedCancel') }}
+      </UiButton>
+
+      <UiButton type="submit" :disabled="loading" class="min-w-[120px] w-fit">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-        <span v-else>
-          {{ t('paypal.unbrandedPay') }}
-        </span>
+        <template v-else>{{ t('paypal.unbrandedPay') }}</template>
       </UiButton>
     </div>
-  </div>
+  </form>
 </template>
 
 <script lang="ts" setup>
@@ -51,19 +63,113 @@ import { AddressType } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 
-defineEmits(['confirmPayment', 'confirmCancel']);
+defineEmits(['confirmCancel']);
 
 const { t } = useI18n();
+const { config, loadConfig, getFraudId } = usePayPal();
 const { billingCountries, getCountryIsoCode } = useAggregatedCountries();
 const { checkoutAddress: billingAddress } = useCheckoutAddress(AddressType.Billing);
 
 const loading = ref(false);
-const phone = ref('');
+const submitFirstTime = ref(true);
+const birthDate = ref('');
+const validBirthDate = ref(true);
+const phoneWithPrefix = ref('');
+const validPhone = ref(true);
+const phoneError = ref('');
+const phoneNumber = ref('');
+const phoneCountryCode = ref('');
 
 const onlyCountries = billingCountries.value.map((country) => country.isoCode2.toLowerCase());
 const defaultCountry = billingAddress.value?.country ? getCountryIsoCode(billingAddress.value.country) : '';
+const fraudNet = {
+  merchantId: null as string | null,
+  fraudId: null as string | null,
+  pageId: 'checkout-page',
+};
+
+onNuxtReady(async () => {
+  await fetchDependencies();
+  if (fraudNet.merchantId && fraudNet.fraudId) insertFraudNetScript();
+});
+
+watch(validPhone, (updatedStatus) => {
+  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkoutPayment.phoneError') : '';
+});
+
+watch(birthDate, () => {
+  if (!submitFirstTime.value) validBirthDate.value = isDateValid();
+});
+
+const fetchDependencies = async () => {
+  await loadConfig().then(() => (fraudNet.merchantId = config.value?.merchantId || null));
+  fraudNet.fraudId = await getFraudId();
+};
+
+const insertFraudNetScript = () => {
+  const scriptTag = document.createElement('script');
+  scriptTag.type = 'application/json';
+  scriptTag.setAttribute('fncls', 'fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99');
+  scriptTag.textContent = JSON.stringify({
+    f: fraudNet.fraudId,
+    s: `${fraudNet.merchantId}_${fraudNet.pageId}`,
+    sandbox: true,
+  });
+
+  document.body.appendChild(scriptTag);
+
+  const loader = document.createElement('script');
+  loader.src = 'https://c.paypal.com/da/r/fb.js';
+  loader.async = true;
+  document.body.appendChild(loader);
+};
 
 const handlePhoneNumberValidation = (validation: PhoneValidationResult) => {
-  console.log('Phone number object:', validation);
+  validPhone.value = validation.valid;
+  phoneNumber.value = validation.nationalNumber;
+  phoneCountryCode.value = validation.countryCallingCode;
+};
+
+const isDateValid = (): boolean => {
+  const date = new Date(birthDate.value);
+  return birthDate.value !== '' && !Number.isNaN(date.getTime()) && date < new Date();
+};
+
+const validateAndSubmitForm = async () => {
+  if (submitFirstTime.value) {
+    validBirthDate.value = isDateValid();
+    if (!validPhone.value) phoneError.value = t('checkoutPayment.phoneError');
+    submitFirstTime.value = false;
+  }
+
+  if (!validBirthDate.value || !validPhone.value) return;
+
+  await createPayPalPayUponInvoiceOrder();
+};
+
+const createPayPalPayUponInvoiceOrder = async () => {
+  loading.value = true;
+  const { createTransaction, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
+
+  try {
+    const orderData = {
+      type: 'order' as const,
+      additionalInformation: {
+        birthDate: birthDate.value,
+        phoneNumber: phoneNumber.value,
+        phoneCountryCode: phoneCountryCode.value,
+      },
+    };
+
+    const transactionOrder = await createTransaction(orderData);
+    const plentyOrder = await createPlentyOrder();
+    if (typeof transactionOrder?.id === 'string' && typeof plentyOrder?.order.id === 'string')
+      await createPlentyPaymentFromPayPalOrder(transactionOrder?.id, plentyOrder?.order.id);
+
+    loading.value = false;
+  } catch (error) {
+    loading.value = false;
+    console.error('Error: ', error);
+  }
 };
 </script>

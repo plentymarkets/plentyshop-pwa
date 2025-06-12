@@ -18,7 +18,9 @@
       @validate="(validation: PhoneValidationResult) => emit('validPhoneNumber', validation)"
     />
 
-    <p v-if="error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+    <div class="h-[2rem] mt-1">
+      <div v-if="error" class="text-sm text-negative-700">{{ error }}</div>
+    </div>
   </div>
 </template>
 
@@ -45,51 +47,7 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-const { config, loadConfig, getFraudId } = usePayPal();
 const localValue = ref(props.modelValue);
-const fraudNet = {
-  merchantId: null as string | null,
-  fraudId: null as string | null,
-  pageId: 'checkout-page',
-};
-
-onNuxtReady(async () => {
-  await fetchDependencies();
-  if (fraudNet.merchantId && fraudNet.fraudId) insertFraudNetScript();
-});
-
-const fetchDependencies = async () => {
-  await loadConfig().then(() => (fraudNet.merchantId = config.value?.merchantId || null));
-  fraudNet.fraudId = await getFraudId();
-};
-
-const insertFraudNetScript = () => {
-  console.log('Inserting FraudNet script using:', fraudNet);
-
-  const scriptTag = document.createElement('script');
-  scriptTag.type = 'application/json';
-  scriptTag.setAttribute('fncls', 'fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99');
-  scriptTag.textContent = JSON.stringify({
-    f: fraudNet.fraudId,
-    s: `${fraudNet.merchantId}_${fraudNet.pageId}`,
-    sandbox: true,
-  });
-
-  document.body.appendChild(scriptTag);
-
-  const loader = document.createElement('script');
-  loader.src = 'https://c.paypal.com/da/r/fb.js';
-  loader.async = true;
-  document.body.appendChild(loader);
-};
-
-const dropdownOptions = {
-  showDialCodeInList: false,
-  showDialCodeInSelection: false,
-  showFlags: true,
-  showSearchBox: true,
-  searchBoxPlaceholder: t('checkoutPayment.countrySearch'),
-};
 
 watch(
   () => props.modelValue,
@@ -99,6 +57,14 @@ watch(
 watch(localValue, (val) => {
   emit('update:modelValue', val);
 });
+
+const dropdownOptions = {
+  showDialCodeInList: false,
+  showDialCodeInSelection: false,
+  showFlags: true,
+  showSearchBox: true,
+  searchBoxPlaceholder: t('checkoutPayment.countrySearch'),
+};
 
 const inputOptions = {
   id: props.id,
@@ -110,13 +76,17 @@ const inputOptions = {
   styleClasses: 'w-full px-3 py-2 text-sm placeholder-gray-400 rounded focus:outline-none focus:ring-0',
 };
 
-const styleClasses =
-  'flex items-center gap-2 px-4 bg-white rounded h-[40px] hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-300';
+const styleClasses = computed(() =>
+  [
+    'flex items-center gap-2 px-4 bg-white rounded h-[40px] hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2',
+    props.error ? 'ring-2 ring-negative-700' : 'ring-1 ring-neutral-300',
+  ].join(' '),
+);
 </script>
 
 <style>
 .vue-tel-input {
-  @apply w-full relative p-0 border-none bg-transparent shadow-none;
+  @apply w-full relative p-0 border-none bg-transparent shadow-none focus-within:shadow-none;
 }
 
 .vue-tel-input input {

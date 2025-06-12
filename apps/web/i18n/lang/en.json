@@ -340,8 +340,10 @@
     "creditCard": "Credit Card",
     "payUponInvoice": "Pay upon invoice",
     "birthdateLabel": "Date of Birth",
+    "birthdateError": "Enter a valid date of birth.",
     "countrySearch": "Search for a country",
     "phoneLabel": "Phone number",
+    "phoneError": "Enter a valid phone number.",
     "heading": "Payment method",
     "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },

@@ -340,8 +340,10 @@
     "creditCard": "Kreditkarte",
     "payUponInvoice": "Bezahlen Sie per Rechnung",
     "birthdateLabel": "Geburtsdatum",
+    "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
     "countrySearch": "Suche nach einem Land",
     "phoneLabel": "Telefonnummer",
+    "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
     "heading": "Zahlungsart",
     "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },
