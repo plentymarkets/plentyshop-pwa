@@ -46,13 +46,17 @@ import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
+const route = useRoute();
+
 definePageMeta({
   layout: false,
   path: '/:slug*_:itemId',
+  validate: async (route) => {
+    return validateProductParams(route.params);
+  },
 });
 
 const { t } = useI18n();
-const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();

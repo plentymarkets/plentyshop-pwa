@@ -23,7 +23,6 @@ export const appConfiguration = {
       lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
-      { name: 'shop-name', content: process.env.STORENAME || 'PlentyONE GmbH' },
       { name: 'description', content: metaDefaults.description },
       { name: 'keywords', content: metaDefaults.keywords },
       { name: 'robots', content: metaDefaults.robots },
