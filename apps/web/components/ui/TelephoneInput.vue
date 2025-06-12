@@ -107,16 +107,21 @@ const styleClasses =
 
 <style>
 .vue-tel-input {
-  @apply w-full p-0 border-none bg-transparent shadow-none;
+  @apply w-full relative p-0 border-none bg-transparent shadow-none;
 }
 
 .vue-tel-input input {
   @apply bg-transparent focus:outline-none text-sm;
 }
 
+.vti__dropdown {
+  @apply rounded ml-1;
+}
+
 .vti__dropdown-list {
-  @apply absolute z-50 mt-1 max-h-60 overflow-auto rounded border border-gray-200;
-  width: calc(max-content, 100%);
+  @apply absolute z-50 mt-[8px] max-h-60 overflow-auto rounded border border-gray-200;
+  min-width: 100%;
+  left: -5px;
 }
 
 .vti__dropdown-item {
