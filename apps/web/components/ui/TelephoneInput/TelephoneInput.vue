@@ -28,54 +28,24 @@
 <script setup lang="ts">
 import { VueTelInput } from 'vue-tel-input';
 import type { PhoneValidationResult } from '~/components/PayPal/types';
+import type { TelephoneInputProps } from './types';
+
+const props = withDefaults(defineProps<TelephoneInputProps>(), {
+  label: '',
+  id: () => `tel-input-${Math.random().toString(36).substring(2, 7)}`,
+  placeholder: 'Enter phone number',
+  preferredCountries: () => [],
+  onlyCountries: () => [],
+  defaultCountry: '',
+  enableSearch: true,
+  mode: 'international',
+  error: '',
+});
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
   (e: 'validPhoneNumber', validation: PhoneValidationResult): void;
 }>();
-
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  id: {
-    type: String,
-    default: () => `tel-input-${Math.random().toString(36).substring(2, 7)}`,
-  },
-  placeholder: {
-    type: String,
-    default: 'Enter phone number',
-  },
-  preferredCountries: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-  onlyCountries: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-  defaultCountry: {
-    type: String,
-    default: '',
-  },
-  enableSearch: {
-    type: Boolean,
-    default: true,
-  },
-  mode: {
-    type: String as PropType<'auto' | 'international' | 'national'>,
-    default: 'international',
-  },
-  error: {
-    type: String,
-    default: '',
-  },
-});
 
 const { t } = useI18n();
 const localValue = ref(props.modelValue);
@@ -119,9 +89,7 @@ const styleClasses =
 }
 
 .vti__dropdown-list {
-  @apply absolute z-50 mt-[8px] max-h-60 overflow-auto rounded border border-gray-200;
-  min-width: 100%;
-  left: -5px;
+  @apply absolute z-50 mt-[8px] min-w-full max-h-60 left-[-5px] overflow-auto rounded border border-gray-200;
 }
 
 .vti__dropdown-item {
@@ -141,7 +109,6 @@ const styleClasses =
 }
 
 .vti__search_box {
-  width: 98%;
-  @apply rounded;
+  @apply rounded w-[99%];
 }
 </style>
