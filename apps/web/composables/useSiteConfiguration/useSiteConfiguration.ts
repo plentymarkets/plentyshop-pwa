@@ -48,6 +48,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -176,11 +177,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
-      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
       JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
     );
   });
-
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
     try {
       state.value.loading = true;

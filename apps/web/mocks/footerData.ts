@@ -11,6 +11,10 @@ export const categories = [
         link: paths.cancellationRights,
       },
       {
+        key: 'cancellationForm',
+        link: paths.cancellationForm,
+      },
+      {
         key: 'legalDisclosure',
         link: paths.legalDisclosure,
       },
@@ -18,10 +22,7 @@ export const categories = [
         key: 'privacyPolicy',
         link: paths.privacyPolicy,
       },
-      {
-        key: 'cancellationForm',
-        link: paths.cancellationForm,
-      },
+
       {
         key: 'declarationOfAccessibility',
         link: paths.declarationOfAccessibility,
