@@ -48,6 +48,7 @@
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.2.0",
+    "vue-tel-input": "^9.3.0",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
@@ -59,6 +60,7 @@
     "@paypal/paypal-js": "8.1.0",
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
+    "@types/vue-tel-input": "^2.1.7",
     "@vite-pwa/nuxt": "^1.0.1",
     "@vue-storefront/eslint-config": "~2.0.0",
     "@vue/test-utils": "^2.4.6",

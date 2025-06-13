@@ -23,6 +23,7 @@ export interface UseAggregatedCountries {
   localeCountryName: (countryId: string) => string;
   getCountryZipCodeRegex: (countryId: number, type: AddressType) => RegExp | null;
   parseZipCodeRegex(country: ActiveShippingCountry | GeoRegulatedCountry): RegExp | null;
+  getCountryIsoCode: (countryId: string) => string;
 }
 
 export type UseAggregatedCountriesReturn = () => UseAggregatedCountries;
