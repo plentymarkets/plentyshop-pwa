@@ -66,7 +66,7 @@ export const useBlockManager = () => {
 
     if (data.value.length === 0) {
       updateBlocks([newBlock]);
-
+      openDrawerWithView('blocksSettings', newBlock);
       return;
     }
 

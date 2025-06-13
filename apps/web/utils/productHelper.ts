@@ -2,6 +2,18 @@ import type { RouteParams } from 'vue-router';
 import type { Breadcrumb, CategoryTreeItem, Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
+export const validateProductParams = (params: RouteParams): boolean => {
+  const itemId = params.itemId as string;
+  if (!itemId) return false;
+
+  const pieces = itemId.split('_');
+  if (pieces.length === 0 || pieces.length > 2) return false;
+  if (!pieces[0] || isNaN(Number(pieces[0]))) return false;
+  if (pieces.length === 2 && (!pieces[1] || isNaN(Number(pieces[1])))) return false;
+
+  return true;
+};
+
 export const createProductParams = (params: RouteParams) => {
   const productPieces = (params.itemId as string).split('_');
 

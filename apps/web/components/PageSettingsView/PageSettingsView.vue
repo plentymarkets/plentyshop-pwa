@@ -185,7 +185,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="isInLinkedList"
+              v-model="isLinkedList"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -215,7 +215,7 @@ const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
-const isInLinkedList = computed({
+const isLoginRequired = computed({
   get() {
     return data.value.right === 'customer';
   },
@@ -224,7 +224,7 @@ const isInLinkedList = computed({
   },
 });
 
-const isLoginRequired = computed({
+const isLinkedList = computed({
   get() {
     return data.value.linklist === 'Y';
   },
