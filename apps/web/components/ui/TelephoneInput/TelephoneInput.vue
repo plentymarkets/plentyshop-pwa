@@ -118,6 +118,6 @@ const styleClasses = computed(() =>
 }
 
 .vti__search_box {
-  @apply rounded w-[99%];
+  @apply rounded w-[98.3%];
 }
 </style>
