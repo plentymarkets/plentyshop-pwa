@@ -162,9 +162,12 @@ const createPayPalPayUponInvoiceOrder = async () => {
     };
 
     const transactionOrder = await createTransaction(orderData);
-    const plentyOrder = await createPlentyOrder();
-    if (typeof transactionOrder?.id === 'string' && typeof plentyOrder?.order.id === 'string')
-      await createPlentyPaymentFromPayPalOrder(transactionOrder?.id, plentyOrder?.order.id);
+
+    if (typeof transactionOrder?.id === 'string') {
+      const plentyOrder = await createPlentyOrder();
+      if (typeof plentyOrder?.order.id === 'number')
+        await createPlentyPaymentFromPayPalOrder(transactionOrder?.id, plentyOrder?.order.id);
+    }
 
     loading.value = false;
     emit('confirmCancel');
