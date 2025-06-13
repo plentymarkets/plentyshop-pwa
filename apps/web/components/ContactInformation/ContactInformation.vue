@@ -92,12 +92,13 @@ const validateAndSubmitEmail = async () => {
   validGuestEmail.value = formData.valid;
   if (!validGuestEmail.value) return;
 
-  const updatedEmail = customerEmail.value as string;
-  const shouldUpdateEmail =
-    !sessionData.value.user?.guestMail ||
-    updatedEmail.trim().toLowerCase() !== sessionData.value.user.guestMail.trim().toLowerCase();
+  const guestEmail = customerEmail.value as string;
 
-  if (shouldUpdateEmail) await handleGuestEmailChange(updatedEmail);
+  const shouldUpdateEmail =
+    sessionData.value.user?.guestMail &&
+    sessionData.value.user.guestMail.trim().toLowerCase() !== guestEmail.trim().toLowerCase();
+
+  shouldUpdateEmail ? await handleGuestEmailChange(guestEmail) : await saveContactInformation(guestEmail);
 };
 
 const handleGuestEmailChange = async (updatedEmail: string) => {
