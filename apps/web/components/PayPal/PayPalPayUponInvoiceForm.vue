@@ -18,7 +18,7 @@
 
   <form class="grid grid-cols-1" novalidate @submit.prevent="validateAndSubmitForm">
     <label>
-      <UiFormLabel class="flex">{{ t('checkoutPayment.birthdateLabel') }} *</UiFormLabel>
+      <UiFormLabel class="flex">{{ t('checkoutPayment.birthdateLabel') }} &#8727;</UiFormLabel>
       <SfInput
         v-model="birthDate"
         label="Phone Number"
@@ -36,14 +36,14 @@
 
     <UiTelephoneInput
       v-model="phoneWithPrefix"
-      :label="`${t('checkoutPayment.phoneLabel')} *`"
+      :label="`${t('checkoutPayment.phoneLabel')} &#8727;`"
       :only-countries="onlyCountries"
       :default-country="defaultCountry"
       :error="phoneError"
       @valid-phone-number="handlePhoneNumberValidation"
     />
 
-    <div class="text-sm text-neutral-500">* {{ t('contact.form.asterixHint') }}</div>
+    <div class="text-sm text-neutral-500">&#8727; {{ t('contact.form.asterixHint') }}</div>
 
     <div class="flex justify-end gap-x-4">
       <UiButton type="button" variant="secondary" @click="emit('confirmCancel')">
