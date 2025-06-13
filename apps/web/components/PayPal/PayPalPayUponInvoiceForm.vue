@@ -153,9 +153,9 @@ const createPayPalPayUponInvoiceOrder = async () => {
 
   try {
     const orderData = {
-      type: 'order' as const,
+      type: 'basket' as const,
       additionalInformation: {
-        birthDate: birthDate.value,
+        birthdate: birthDate.value,
         phoneNumber: phoneNumber.value,
         phoneCountryCode: phoneCountryCode.value,
       },
