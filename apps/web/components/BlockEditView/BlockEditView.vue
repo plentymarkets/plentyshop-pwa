@@ -8,8 +8,9 @@
         <SfIconClose />
       </button>
     </header>
-
-    <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
+    <div class="h-[calc(100vh-150px)] overflow-y-auto">
+      <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
+    </div>
   </div>
 </template>
 
