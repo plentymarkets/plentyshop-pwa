@@ -91,8 +91,8 @@
       <div class="items-start sm:items-center sm:mt-auto text-sm">
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.price') }}:</p>
-          <p v-if="showNetPrices" class="text-right">{{ format(orderGetters.getItemNetPrice(orderItem)) }}</p>
-          <p v-else class="text-right">{{ format(orderGetters.getItemPrice(orderItem)) }}</p>
+          <p v-if="showNetPrices" class="text-right">{{ format(orderGetters.getOriginalItemNetPrice(orderItem)) }}</p>
+          <p v-else class="text-right">{{ format(orderGetters.getOriginalItemPrice(orderItem)) }}</p>
         </div>
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.quantity') }}:</p>
@@ -101,10 +101,10 @@
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('orderConfirmation.total') }}:</p>
           <p v-if="showNetPrices" class="text-right">
-            {{ format(orderGetters.getItemNetPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
+            {{ format(orderGetters.getOriginalItemNetPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
           </p>
           <p v-else class="text-right">
-            {{ format(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
+            {{ format(orderGetters.getOriginalItemPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
           </p>
         </div>
       </div>
@@ -117,17 +117,22 @@ import { orderGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
-const { format } = usePriceFormatter();
-const { showNetPrices } = useCustomer();
+const { formatWithSymbol } = usePriceFormatter();
 const { t } = useI18n();
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const img = ref();
 const imageLoaded = ref(false);
-
 const emit = defineEmits(['load']);
-defineProps<OrderSummaryProductCardProps>();
+const props = defineProps<OrderSummaryProductCardProps>();
+const totals = orderGetters.getTotals(props.order);
+const currency = orderGetters.getCurrency(props.order);
+const showNetPrices = totals.isNet;
+
+const format = (value: number) => {
+  return formatWithSymbol(value, currency);
+};
 
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;
