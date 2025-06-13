@@ -94,27 +94,27 @@ const styleClasses = computed(() =>
 }
 
 .vti__dropdown {
-  @apply rounded ml-1 select-none;
+  @apply rounded ml-1 hover:bg-primary-100 select-none;
 }
 
 .vti__dropdown-list {
-  @apply absolute z-50 mt-[8px] min-w-full max-h-60 left-[-5px] overflow-y-auto overflow-x-hidden rounded border border-gray-200;
+  @apply absolute z-50 mt-[8px] max-h-60 w-max left-[-5px] overflow-y-auto overflow-x-hidden rounded border border-gray-200;
 }
 
 .vti__dropdown-item {
-  @apply flex items-center justify-between px-3 py-2 text-sm text-gray-800 cursor-pointer transition-colors hover:bg-gray-100 select-none;
+  @apply flex items-center gap-1 px-3 py-2 text-sm transition-colors hover:bg-gray-100 whitespace-nowrap select-none;
 }
 
 .vti__dropdown-item.highlighted {
-  @apply bg-blue-50 text-blue-700;
-}
-
-.vti__dropdown-item.preferred {
-  @apply font-semibold;
+  @apply bg-primary-100;
 }
 
 .vti__flag {
-  @apply inline-block w-5 h-4 rounded-sm overflow-hidden mr-2;
+  @apply inline-block w-5 h-4 rounded-sm overflow-hidden mr-2 shrink-0;
+}
+
+.vti__dropdown-item strong {
+  @apply font-medium truncate;
 }
 
 .vti__search_box {

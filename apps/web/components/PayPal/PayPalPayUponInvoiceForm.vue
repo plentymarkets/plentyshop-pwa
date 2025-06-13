@@ -10,7 +10,7 @@
       square
       variant="tertiary"
       class="absolute right-2 top-2"
-      @click="$emit('confirmCancel')"
+      @click="emit('confirmCancel')"
     >
       <SfIconClose />
     </UiButton>
@@ -46,7 +46,7 @@
     <div class="text-sm text-neutral-500">* {{ t('contact.form.asterixHint') }}</div>
 
     <div class="flex justify-end gap-x-4">
-      <UiButton type="button" variant="secondary" @click="$emit('confirmCancel')">
+      <UiButton type="button" variant="secondary" @click="emit('confirmCancel')">
         {{ t('paypal.unbrandedCancel') }}
       </UiButton>
 
@@ -59,11 +59,11 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/shop-api';
+import { AddressType, type ApiError } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 
-defineEmits(['confirmCancel']);
+const emit = defineEmits(['confirmCancel']);
 
 const { t } = useI18n();
 const { config, loadConfig, getFraudId } = usePayPal();
@@ -167,9 +167,10 @@ const createPayPalPayUponInvoiceOrder = async () => {
       await createPlentyPaymentFromPayPalOrder(transactionOrder?.id, plentyOrder?.order.id);
 
     loading.value = false;
+    emit('confirmCancel');
   } catch (error) {
     loading.value = false;
-    console.error('Error: ', error);
+    useHandleError(error as ApiError);
   }
 };
 </script>
