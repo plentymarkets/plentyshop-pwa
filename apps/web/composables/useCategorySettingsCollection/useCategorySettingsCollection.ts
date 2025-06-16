@@ -36,7 +36,9 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     try {
       const settings = JSON.parse(
         JSON.stringify(
-          state.value.data.map((category) => {
+          state.value.data
+            .filter((category) => category.details && category.details.length > 0)
+            .map((category) => {
             const detail = category.details[0];
             return {
               id: category.id,

@@ -264,9 +264,10 @@ const detailField = <K extends keyof CategoryDetails>(field: K) =>
       return data.value.details[0]?.[field] ?? '';
     },
     set(val: CategoryDetails[K]) {
-      if (data.value.details.length) {
-        data.value.details[0][field] = val;
+      if (!data.value.details.length) {
+        data.value.details.push({} as CategoryDetails);
       }
+      data.value.details[0][field] = val;
     },
   });
 
