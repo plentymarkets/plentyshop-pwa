@@ -84,40 +84,40 @@ const styleClasses = computed(() =>
 );
 </script>
 
-<style>
-.vue-tel-input {
+<style scoped>
+:deep(.vue-tel-input) {
   @apply w-full relative p-0 border-none bg-transparent shadow-none focus-within:shadow-none;
 }
 
-.vue-tel-input input {
+:deep(.vue-tel-input input) {
   @apply bg-transparent focus:outline-none text-sm;
 }
 
-.vti__dropdown {
+:deep(.vti__dropdown) {
   @apply rounded ml-1 hover:bg-primary-100 select-none;
 }
 
-.vti__dropdown-list {
+:deep(.vti__dropdown-list) {
   @apply absolute z-50 mt-[8px] max-h-60 w-max left-[-5px] overflow-y-auto overflow-x-hidden rounded border border-gray-200;
 }
 
-.vti__dropdown-item {
+:deep(.vti__dropdown-item) {
   @apply flex items-center gap-1 px-3 py-2 text-sm transition-colors hover:bg-gray-100 whitespace-nowrap select-none;
 }
 
-.vti__dropdown-item.highlighted {
+:deep(.vti__dropdown-item.highlighted) {
   @apply bg-primary-100;
 }
 
-.vti__flag {
-  @apply inline-block w-5 h-4 rounded-sm overflow-hidden mr-2 shrink-0;
+:deep(.vti__flag) {
+  @apply rounded-sm;
 }
 
-.vti__dropdown-item strong {
+:deep(.vti__dropdown-item strong) {
   @apply font-medium truncate;
 }
 
-.vti__search_box {
+:deep(.vti__search_box) {
   @apply rounded w-[98.3%];
 }
 </style>
