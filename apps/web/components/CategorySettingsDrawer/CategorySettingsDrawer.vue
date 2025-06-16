@@ -129,4 +129,8 @@ const handleBack = () => {
 const isCategoryDetailsEmpty = computed(() => {
   return getCategoryDetails.value.length === 0;
 });
+
+watch(locale, () => {
+  handleBack();
+});
 </script>
