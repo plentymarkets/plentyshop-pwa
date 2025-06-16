@@ -28,7 +28,6 @@
     <div
       class="bg-white w-full relative"
       :class="{ 'lg:w-3/4': drawerOpen, 'lg:w-[calc(100%-66px)]': $isPreview && !drawerOpen && disableActions }"
-
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
