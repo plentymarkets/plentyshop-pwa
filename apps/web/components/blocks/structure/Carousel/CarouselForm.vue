@@ -206,11 +206,11 @@ const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
+const carouselRef = ref();
 setIndex(blockUuid.value, 0);
 
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
-
+console.log('activeSlide in carouselform', activeSlide);
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
@@ -226,8 +226,10 @@ const slides = computed({
 const controlsOpen = ref(true);
 
 const slideClick = async (index: number) => {
-  setIndex(blockUuid.value, index);
-  await nextTick();
+  const swiper = carouselRef.value?.swiperInstance?.value;
+  if (swiper) {
+    swiper.slideToLoop?.(index);
+  }
 };
 
 const addSlide = async () => {

@@ -83,15 +83,17 @@ const navigationConfig = computed(() => {
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
 
-  setIndex(meta.uuid, swiper.realIndex);
+  const actualIndex = swiper.activeIndex % content.length;
+  setIndex(meta.uuid, actualIndex);
 };
 
 const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeSlideIndex.value[meta.uuid]) {
-    await nextTick();
-    swiper.update();
+  const realLength = content.length;
+  const actualIndex = swiper.activeIndex % realLength;
+  const currentIndex = activeSlideIndex.value[meta.uuid];
 
-    setIndex(meta.uuid, swiper.realIndex);
+  if (actualIndex !== currentIndex) {
+    setIndex(meta.uuid, actualIndex);
   }
 };
 
@@ -109,6 +111,16 @@ watch(
   },
   { flush: 'post' },
 );
+watch(
+  () => activeSlideIndex.value[meta.uuid],
+  (newIndex) => {
+    if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
+      slider.update();
+      slider.slideToLoop?.(newIndex);
+    }
+  },
+  { flush: 'post' },
+);
 
 watch(
   () => configuration.controls.color,
@@ -119,6 +131,9 @@ watch(
     }
   },
 );
+defineExpose({
+  swiperInstance: slider,
+});
 </script>
 
 <style src="./styles/navigation.min.css"></style>
