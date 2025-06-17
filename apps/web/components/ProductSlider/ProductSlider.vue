@@ -19,7 +19,6 @@
       "
       :image-title="
         productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
-        productGetters.getName(product) ||
         ''
       "
       :image-height="productGetters.getImageHeight(product) || 600"

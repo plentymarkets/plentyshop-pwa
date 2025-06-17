@@ -30,6 +30,9 @@
         <NuxtImg
           :src="addModernImageExtension(productGetters.getMiddleImage(product))"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
+          :title="productImageGetters.getImageName(productImageGetters.getFirstImage(product))
+          ? productImageGetters.getImageName(productImageGetters.getFirstImage(product))
+          : null"
           width="240"
           height="240"
           loading="lazy"
@@ -115,7 +118,7 @@
 import { SfIconClose, SfLink } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
 import type { Product } from '@plentymarkets/shop-api';
-import { cartGetters, productGetters } from '@plentymarkets/shop-api';
+import { cartGetters, productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 import { paths } from '~/utils/paths';
 
