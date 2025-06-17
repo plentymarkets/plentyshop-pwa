@@ -10,11 +10,11 @@
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
-      <router-link v-if="!isTablet && item.details.length > 0" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+      <router-link v-if="!isTablet && !hasEmptyDetails" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
-        {{ item.details[0]?.name ?? `ID: ${item.id}` }}
+        {{ itemDisplayName }}
       </router-link>
 
       <span
@@ -25,7 +25,7 @@
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
-        {{ item.details[0]?.name ?? `ID: ${item.id}` }}
+        {{ itemDisplayName }}
       </span>
       <div class="flex items-center gap-x-2 ml-2">
         <SfTooltip
@@ -99,9 +99,10 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const props = defineProps<PagesItemProps>();
 const item = props.item;
 
+const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
 const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
 const pagePath = computed(() => {
-  if (item.id === 0) {
+  if (item.details[0]?.pageView === 'Homepage') {
     return item.details[0]?.nameUrl || '/';
   }
 
@@ -115,13 +116,13 @@ const childrenPagination = usePaginatedChildren(item);
 
 const toggleOpen = async (isTabletCheck = false) => {
   if (item.level === 5) {
-    setParentName(item.details[0].name);
+    setParentName(itemDisplayName.value);
   }
   if (isTabletCheck && !isTablet.value) return;
 
   open.value = !open.value;
   if (item.level === 5) {
-    setParentName(item.details[0].name);
+    setParentName(itemDisplayName.value);
   }
   if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
     await childrenPagination.fetchMore();
@@ -132,7 +133,7 @@ const handleSettingsClick = () => {
   setCategoryId({
     id: item.id,
     parentId: props.parentId,
-    name: item.details[0]?.name ?? `ID: ${item.id}`,
+    name: itemDisplayName.value,
     path: item.details[0]?.nameUrl || pagePath.value,
     level: item.level,
     details: item.details,
