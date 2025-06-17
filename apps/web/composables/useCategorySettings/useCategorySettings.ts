@@ -52,7 +52,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     const { deletePageFromTree } = useCategoriesSearch();
     const { setSettingsCategory } = useSiteConfiguration();
     const router = useRouter();
-    const { locale } = useI18n();
+    const { locale, defaultLocale } = useI18n();
     try {
       const { data } = await useSdk().plentysystems.deleteCategory({
         categoryId: id,
@@ -66,7 +66,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
           type: 'positive',
         });
         const lang = locale.value;
-        router.push(lang && lang !== 'en' ? `/${lang}` : '/');
+        router.push(lang && lang !== defaultLocale ? `/${lang}` : '/');
       }
     } catch (error) {
       let errorMessage = '';
