@@ -13,7 +13,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     initialData: {} as CategoryEntry,
     unlinkModalOpen: false,
   }));
-  const { t } = useI18n();
+  const { t, locale, defaultLocale } = useI18n();
 
   const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
     if (cache.value[categoryId]) {
@@ -52,7 +52,6 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     const { deletePageFromTree } = useCategoriesSearch();
     const { setSettingsCategory } = useSiteConfiguration();
     const router = useRouter();
-    const { locale, defaultLocale } = useI18n();
     try {
       const { data } = await useSdk().plentysystems.deleteCategory({
         categoryId: id,
