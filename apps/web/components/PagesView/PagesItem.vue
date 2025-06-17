@@ -129,6 +129,7 @@ const handleSettingsClick = () => {
     name: item.details[0].name,
     path: item.details[0].nameUrl,
     level: item.level,
+    previewUrl: item.details[0].previewUrl,
   });
   checkIfItemHasChildren();
 };
