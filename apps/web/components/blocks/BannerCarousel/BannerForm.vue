@@ -462,10 +462,8 @@ const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<BannerFormProps>();
-console.log('activeSlideIndex din carousel', activeSlideIndex.value);
 
 const activeSlide = computed(() => activeSlideIndex.value[props.uuid || blockUuid.value]);
-console.log('activeSlide dupa ce s a setat in computed cu activeslideIndex', activeSlide);
 const banner = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as BannerProps,
 );

@@ -9,7 +9,6 @@
       :navigation="navigationConfig"
       class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
-      @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
         <slot
@@ -87,30 +86,10 @@ const onSwiperInit = (swiper: SwiperType) => {
   setIndex(meta.uuid, actualIndex);
 };
 
-const onSlideChange = async (swiper: SwiperType) => {
-  const realLength = content.length;
-  const actualIndex = swiper.activeIndex % realLength;
-  const currentIndex = activeSlideIndex.value[meta.uuid];
-
-  if (actualIndex !== currentIndex) {
-    setIndex(meta.uuid, actualIndex);
-  }
-};
-
 const getSlideAdjustedIndex = (slideIndex: number) => {
   return activeSlideIndex.value[meta.uuid] === slideIndex ? index : index + slideIndex;
 };
 
-watch(
-  () => activeSlideIndex.value[meta.uuid],
-  (newIndex) => {
-    if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
-      slider.update();
-      slider.slideTo(newIndex);
-    }
-  },
-  { flush: 'post' },
-);
 watch(
   () => activeSlideIndex.value[meta.uuid],
   (newIndex) => {
