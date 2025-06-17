@@ -99,9 +99,11 @@
           </div>
 
           <Multiselect
-            v-model="metaRobots"
+            v-model="pageRobots"
             data-testid="page-parent"
             :options="robotNames"
+            label="label"
+            track-by="value"
             placeholder="Select robots"
             :allow-empty="false"
             class="cursor-pointer"
@@ -206,12 +208,25 @@ const detailField = <K extends keyof CategoryDetails>(field: K) =>
 const metaTitle = detailField('metaTitle');
 const metaDescription = detailField('metaDescription');
 const metaKeywords = detailField('metaKeywords');
-const metaRobots = detailField('metaRobots');
 const canonicalLink = detailField('canonicalLink');
 
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
-const robotNames = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
+const robotNames = [
+  { label: 'All', value: 'ALL' },
+  { label: 'No Index', value: 'NOINDEX' },
+  { label: 'No Follow', value: 'NOFOLLOW' },
+  { label: 'No Index, No Follow', value: 'NOINDEX_NOFOLLOW' },
+];
+
+const pageRobots = computed({
+  get() {
+    return robotNames.find((option) => option.value === data.value.details[0].metaRobots) || null;
+  },
+  set(selectedOption) {
+    data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';
+  },
+});
 
 const titleTooltip =
   'Title displayed in search results of search engines. Enter text here to add a prefix before the shop name in the page title (shown as “your text / shop name”).';
