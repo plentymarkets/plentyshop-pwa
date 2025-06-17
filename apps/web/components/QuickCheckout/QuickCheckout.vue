@@ -30,9 +30,11 @@
         <NuxtImg
           :src="addModernImageExtension(productGetters.getMiddleImage(product))"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
-          :title="productImageGetters.getImageName(productImageGetters.getFirstImage(product))
-          ? productImageGetters.getImageName(productImageGetters.getFirstImage(product))
-          : null"
+          :title="
+            productImageGetters.getImageName(productImageGetters.getFirstImage(product))
+              ? productImageGetters.getImageName(productImageGetters.getFirstImage(product))
+              : null
+          "
           width="240"
           height="240"
           loading="lazy"

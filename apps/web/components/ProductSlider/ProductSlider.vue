@@ -17,10 +17,7 @@
         productGetters.getName(product) ||
         ''
       "
-      :image-title="
-        productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
-        ''
-      "
+      :image-title="productImageGetters.getImageName(productImageGetters.getFirstImage(product)) || ''"
       :image-height="productGetters.getImageHeight(product) || 600"
       :image-width="productGetters.getImageWidth(product) || 600"
       :rating-count="productGetters.getTotalReviews(product)"
