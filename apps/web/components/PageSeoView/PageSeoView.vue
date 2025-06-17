@@ -221,7 +221,7 @@ const robotNames = [
 
 const pageRobots = computed({
   get() {
-    return robotNames.find((option) => option.value === data.value.details[0].metaRobots) || null;
+    return robotNames.find((option) => option.value === data.value.details[0]?.metaRobots) || null;
   },
   set(selectedOption) {
     data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';

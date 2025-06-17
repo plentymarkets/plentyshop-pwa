@@ -12,7 +12,11 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   const { $i18n } = useNuxtApp();
 
   const addCategorySettings = async (category: CategoryEntry) => {
-    const exists = state.value.data.some((item) => item.id === category.id);
+    const exists = state.value.data.some(
+      (item) =>
+        item.id === category.id &&
+        item.details[0].lang === category.details[0].lang
+    );
     if (exists) return;
 
     state.value.data.push(category);
