@@ -51,6 +51,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     const { send } = useNotification();
     const { deletePageFromTree } = useCategoriesSearch();
     const { setSettingsCategory } = useSiteConfiguration();
+    const router = useRouter();
     try {
       const { data } = await useSdk().plentysystems.deleteCategory({
         categoryId: id,
@@ -63,6 +64,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
           message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
           type: 'positive',
         });
+        router.push('/');
       }
     } catch (error) {
       let errorMessage = '';
