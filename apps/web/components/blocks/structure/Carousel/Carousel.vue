@@ -116,7 +116,7 @@ watch(
       }
     }
   },
-  { flush: 'post' }
+  { flush: 'post' },
 );
 
 watch(
@@ -128,9 +128,6 @@ watch(
     }
   },
 );
-defineExpose({
-  swiperInstance: slider,
-});
 </script>
 
 <style src="./styles/navigation.min.css"></style>
