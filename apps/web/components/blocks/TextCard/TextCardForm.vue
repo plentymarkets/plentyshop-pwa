@@ -1,15 +1,15 @@
 <template>
-  <form data-testid="text-card-form" class="w-full absolute bg-white">
-    <UiAccordionItem
-      v-model="textSettings"
-      data-testid="open-text-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>Text</h2>
-      </template>
+  <UiAccordionItem
+    v-model="textSettings"
+    data-testid="open-text-settings"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2>Text</h2>
+    </template>
 
+    <div data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>Pre-title</UiFormLabel>
@@ -132,76 +132,76 @@
           </div>
         </div>
       </fieldset>
-    </UiAccordionItem>
+    </div>
+  </UiAccordionItem>
 
-    <UiAccordionItem
-      v-model="buttonSettings"
-      data-testid="button-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>Button</h2>
-      </template>
+  <UiAccordionItem
+    v-model="buttonSettings"
+    data-testid="button-settings"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2>Button</h2>
+    </template>
 
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Label</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
-            <template #suffix>
-              <label for="text-button-label" class="rounded-lg cursor-pointer">
-                <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>Label</UiFormLabel>
       </div>
+      <label>
+        <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
+          <template #suffix>
+            <label for="text-button-label" class="rounded-lg cursor-pointer">
+              <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
 
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Link target</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
-            <template #suffix>
-              <label for="text-button-link" class="rounded-lg cursor-pointer">
-                <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>Link target</UiFormLabel>
       </div>
+      <label>
+        <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
+          <template #suffix>
+            <label for="text-button-link" class="rounded-lg cursor-pointer">
+              <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
 
-      <fieldset class="py-2">
-        <UiFormLabel>Outline</UiFormLabel>
+    <fieldset class="py-2">
+      <UiFormLabel>Outline</UiFormLabel>
 
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            data-testid="button-outline-primary"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'primary' }"
-            @click="textCardBlock.button.variant = 'primary'"
-          >
-            <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'primary' }" class="mr-1 w-[1.1rem]" />
+      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+        <div
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+          data-testid="button-outline-primary"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'primary' }"
+          @click="textCardBlock.button.variant = 'primary'"
+        >
+          <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'primary' }" class="mr-1 w-[1.1rem]" />
 
-            Primary
-          </div>
-
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            data-testid="button-outline-secondary"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'secondary' }"
-            @click="textCardBlock.button.variant = 'secondary'"
-          >
-            <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'secondary' }" class="mr-1 w-[1.1rem]" />
-            Secondary
-          </div>
+          Primary
         </div>
-      </fieldset>
-    </UiAccordionItem>
-  </form>
+
+        <div
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+          data-testid="button-outline-secondary"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'secondary' }"
+          @click="textCardBlock.button.variant = 'secondary'"
+        >
+          <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'secondary' }" class="mr-1 w-[1.1rem]" />
+          Secondary
+        </div>
+      </div>
+    </fieldset>
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
