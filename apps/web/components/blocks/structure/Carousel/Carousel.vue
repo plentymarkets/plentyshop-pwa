@@ -9,6 +9,7 @@
       :navigation="navigationConfig"
       class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
+      @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
         <slot
@@ -47,6 +48,7 @@ import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
+const isInternalChange = ref(false);
 
 const handleArrows = () => {
   const viewport = useViewport();
@@ -81,11 +83,23 @@ const navigationConfig = computed(() => {
 
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
-
-  const actualIndex = swiper.activeIndex % content.length;
-  setIndex(meta.uuid, actualIndex);
+  if (activeSlideIndex.value[meta.uuid] == null) {
+    const actualIndex = swiper.realIndex;
+    setIndex(meta.uuid, actualIndex);
+  }
 };
+const onSlideChange = (swiper: SwiperType) => {
+  const realIndex = swiper.realIndex;
 
+  if (isInternalChange.value) {
+    isInternalChange.value = false;
+    return;
+  }
+
+  if (realIndex !== activeSlideIndex.value[meta.uuid]) {
+    setIndex(meta.uuid, realIndex);
+  }
+};
 const getSlideAdjustedIndex = (slideIndex: number) => {
   return activeSlideIndex.value[meta.uuid] === slideIndex ? index : index + slideIndex;
 };
@@ -94,11 +108,15 @@ watch(
   () => activeSlideIndex.value[meta.uuid],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
-      slider.update();
-      slider.slideToLoop?.(newIndex);
+      isInternalChange.value = true;
+      if (slider.params.loop) {
+        slider.slideToLoop(newIndex);
+      } else {
+        slider.slideTo(newIndex);
+      }
     }
   },
-  { flush: 'post' },
+  { flush: 'post' }
 );
 
 watch(
