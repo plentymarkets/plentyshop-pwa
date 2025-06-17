@@ -7,58 +7,21 @@
       </button>
     </header>
 
-    <UiAccordionItem
-      v-model="fontsOpen"
-      data-testid="font-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>Fonts</h2>
-      </template>
+    <div class="h-[calc(100vh-150px)] overflow-y-auto">
+      <UiAccordionItem
+        v-model="fontsOpen"
+        data-testid="font-section"
+        summary-active-class="bg-neutral-100 border-t-0"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2>Fonts</h2>
+        </template>
 
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>Global fonts</UiFormLabel>
-        <SfTooltip
-          label="The shop supports Google Fonts. Fonts are downloaded during the build process. This means the shop does not connect to Google while the shop is running."
-          :placement="'top'"
-          :show-arrow="true"
-          class="ml-2 z-10"
-        >
-          <SfIconInfo :size="'sm'" />
-        </SfTooltip>
-      </div>
-
-      <Multiselect
-        v-model="selectedFont"
-        data-testid="font-select"
-        :options="fonts"
-        placeholder="Select a font"
-        label="value"
-        track-by="caption"
-        :allow-empty="false"
-        class="cursor-pointer"
-        select-label=""
-        deselect-label="Selected"
-        @select="loadGoogleFont(selectedFont.value)"
-      />
-      <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
-    </UiAccordionItem>
-
-    <UiAccordionItem
-      v-model="colorsOpen"
-      data-testid="color-section"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2 class="">Colors</h2>
-      </template>
-      <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Primary color</UiFormLabel>
+          <UiFormLabel>Global fonts</UiFormLabel>
           <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            label="The shop supports Google Fonts. Fonts are downloaded during the build process. This means the shop does not connect to Google while the shop is running."
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -66,140 +29,184 @@
             <SfIconInfo :size="'sm'" />
           </SfTooltip>
         </div>
-        <label>
-          <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
-            <template #suffix>
-              <label
-                for="primary-color"
-                :style="{ backgroundColor: primaryColor }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose primary color</span>
-        </label>
-      </div>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Secondary color</UiFormLabel>
-          <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
-            :placement="'top'"
-            :show-arrow="true"
-            class="ml-2 z-10"
-          >
-            <SfIconInfo :size="'sm'" />
-          </SfTooltip>
-        </div>
-        <label>
-          <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
-            <template #suffix>
-              <label
-                for="secondary-color"
-                :style="{ backgroundColor: secondaryColor }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input id="secondary-color" v-model="secondaryColor" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose secondary color</span>
-        </label>
-      </div>
-    </UiAccordionItem>
 
-    <UiAccordionItem
-      v-model="headerOpen"
-      data-testid="header-section"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2 class="">Header</h2>
-      </template>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Background color</UiFormLabel>
-          <SfTooltip
-            label="If set, this background color will take precedence over your defined primary color for the header."
-            :placement="'top'"
-            :show-arrow="true"
-            class="ml-2 z-10"
-          >
-            <SfIconInfo :size="'sm'" />
-          </SfTooltip>
-        </div>
-        <label>
-          <SfInput v-model="headerBackgroundColor" type="text" data-testid="background-icon-color">
-            <template #suffix>
-              <label
-                for="icon-background-color"
-                :style="{ backgroundColor: headerBackgroundColor }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input id="icon-background-color" v-model="headerBackgroundColor" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose header background color</span>
-        </label>
-      </div>
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>Icon color</UiFormLabel>
-          <SfTooltip
-            label="Use this to override the default white icon color in the header, ensuring sufficient contrast with your chosen background."
-            :placement="'top'"
-            :show-arrow="true"
-            class="ml-2 z-10"
-          >
-            <SfIconInfo :size="'sm'" />
-          </SfTooltip>
-        </div>
-        <label>
-          <SfInput v-model="iconColor" type="text" data-testid="icon-color">
-            <template #suffix>
-              <label
-                for="icon-color"
-                :style="{ backgroundColor: iconColor }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input id="icon-color" v-model="iconColor" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose icon color</span>
-        </label>
-      </div>
-    </UiAccordionItem>
+        <Multiselect
+          v-model="selectedFont"
+          data-testid="font-select"
+          :options="fonts"
+          placeholder="Select a font"
+          label="value"
+          track-by="caption"
+          :allow-empty="false"
+          class="cursor-pointer"
+          select-label=""
+          deselect-label="Selected"
+          @select="loadGoogleFont(selectedFont.value)"
+        />
+        <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
+      </UiAccordionItem>
 
-    <UiAccordionItem
-      v-model="blocksSpacingOpen"
-      data-testid="block-spacing-section"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2 class="">Blocks spacing</h2>
-      </template>
-      <div class="border-b py-1">
-        <button
-          v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
-          :key="key"
-          type="button"
-          data-testid="block-spacing-btn"
-          :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
-          @click="updateBlockSize(blocksSpacingSize)"
-        >
-          {{ blocksSpacingSize }}
-        </button>
-      </div>
-      <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">Spacing between blocks: {{ spacingInPx }}px</span>
-      </div>
-    </UiAccordionItem>
+      <UiAccordionItem
+        v-model="colorsOpen"
+        data-testid="color-section"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2 class="">Colors</h2>
+        </template>
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel>Primary color</UiFormLabel>
+            <SfTooltip
+              label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+              :placement="'top'"
+              :show-arrow="true"
+              class="ml-2 z-10"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </div>
+          <label>
+            <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
+              <template #suffix>
+                <label
+                  for="primary-color"
+                  :style="{ backgroundColor: primaryColor }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+            <span class="typography-text-xs text-neutral-700">Choose primary color</span>
+          </label>
+        </div>
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel>Secondary color</UiFormLabel>
+            <SfTooltip
+              label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+              :placement="'top'"
+              :show-arrow="true"
+              class="ml-2 z-10"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </div>
+          <label>
+            <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
+              <template #suffix>
+                <label
+                  for="secondary-color"
+                  :style="{ backgroundColor: secondaryColor }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input id="secondary-color" v-model="secondaryColor" type="color" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+            <span class="typography-text-xs text-neutral-700">Choose secondary color</span>
+          </label>
+        </div>
+      </UiAccordionItem>
+
+      <UiAccordionItem
+        v-model="headerOpen"
+        data-testid="header-section"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2 class="">Header</h2>
+        </template>
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel>Background color</UiFormLabel>
+            <SfTooltip
+              label="If set, this background color will take precedence over your defined primary color for the header."
+              :placement="'top'"
+              :show-arrow="true"
+              class="ml-2 z-10"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </div>
+          <label>
+            <SfInput v-model="headerBackgroundColor" type="text" data-testid="background-icon-color">
+              <template #suffix>
+                <label
+                  for="icon-background-color"
+                  :style="{ backgroundColor: headerBackgroundColor }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="icon-background-color"
+                    v-model="headerBackgroundColor"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+            <span class="typography-text-xs text-neutral-700">Choose header background color</span>
+          </label>
+        </div>
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel>Icon color</UiFormLabel>
+            <SfTooltip
+              label="Use this to override the default white icon color in the header, ensuring sufficient contrast with your chosen background."
+              :placement="'top'"
+              :show-arrow="true"
+              class="ml-2 z-10"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </div>
+          <label>
+            <SfInput v-model="iconColor" type="text" data-testid="icon-color">
+              <template #suffix>
+                <label
+                  for="icon-color"
+                  :style="{ backgroundColor: iconColor }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input id="icon-color" v-model="iconColor" type="color" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+            <span class="typography-text-xs text-neutral-700">Choose icon color</span>
+          </label>
+        </div>
+      </UiAccordionItem>
+
+      <UiAccordionItem
+        v-model="blocksSpacingOpen"
+        data-testid="block-spacing-section"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2 class="">Blocks spacing</h2>
+        </template>
+        <div class="border-b py-1">
+          <button
+            v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
+            :key="key"
+            type="button"
+            data-testid="block-spacing-btn"
+            :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
+            @click="updateBlockSize(blocksSpacingSize)"
+          >
+            {{ blocksSpacingSize }}
+          </button>
+        </div>
+        <div class="px-4 py-3">
+          <span class="typography-text-xs text-neutral-700">Spacing between blocks: {{ spacingInPx }}px</span>
+        </div>
+      </UiAccordionItem>
+    </div>
   </div>
 </template>
 
