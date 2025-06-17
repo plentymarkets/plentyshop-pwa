@@ -131,6 +131,8 @@ const isCategoryDetailsEmpty = computed(() => {
 });
 
 watch(locale, () => {
-  handleBack();
+  setSettingsCategory(null);
+  setCategoryId({});
+  setParentName('');
 });
 </script>
