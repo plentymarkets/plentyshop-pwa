@@ -53,7 +53,13 @@
 
         <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
           <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
-            <PagesItem :key="locale" :item="homepageItem" :parent-id="undefined" :icon="SfIconHome" :hide-settings="true" />
+            <PagesItem
+              :key="locale"
+              :item="homepageItem"
+              :parent-id="undefined"
+              :icon="SfIconHome"
+              :hide-settings="true"
+            />
             <PagesItem v-for="item in contentItems" :key="`${item.id}-${locale}`" :item="item" :parent-id="item.id" />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
@@ -91,8 +97,7 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfIconHome, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
-const { locale } = useI18n();
-const { $i18n } = useNuxtApp();
+const { locale, defaultLocale } = useI18n();
 
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
@@ -160,7 +165,7 @@ const homepageItem = computed<CategoryEntry>(() => ({
       metaRobots: 'index, follow',
       metaTitle: 'Homepage',
       name: 'Homepage',
-      nameUrl: locale.value === $i18n.defaultLocale ? '/' : `/${locale.value}`,
+      nameUrl: locale.value === defaultLocale ? '/' : `/${locale.value}`,
       pageView: 'Homepage',
       plenty_category_details_image_path: '',
       plenty_category_details_image2_path: '',

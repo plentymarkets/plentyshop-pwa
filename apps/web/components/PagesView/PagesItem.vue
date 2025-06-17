@@ -1,6 +1,5 @@
 <template>
-  <li class="border border-[#D9E2DC] rounded-[5px] mb-3"
-    :class="[hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']">
+  <li class="border border-[#D9E2DC] rounded-[5px] mb-3" :class="[hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']">
     <div
       class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
       :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
@@ -10,7 +9,11 @@
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
-      <router-link v-if="!isTablet && !hasEmptyDetails" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+      <router-link
+        v-if="!isTablet && !hasEmptyDetails"
+        :to="pagePath"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+      >
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
@@ -64,12 +67,7 @@
     >
       <SfLoaderCircular size="sm" />
     </li>
-    <PagesItem
-      v-for="child in childrenPagination.items.value"
-      :key="child.id"
-      :item="child"
-      :parent-id="item.id"
-    />
+    <PagesItem v-for="child in childrenPagination.items.value" :key="child.id" :item="child" :parent-id="item.id" />
     <li
       v-if="childrenPagination.loading.value && childrenPagination.items.value.length > 0"
       class="flex justify-center items-center py-4"

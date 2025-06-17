@@ -65,12 +65,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput
-              v-model="metaKeywords"
-              type="text"
-              data-testid="page-name"
-              placeholder="Enter keywords"
-            >
+            <SfInput v-model="metaKeywords" type="text" data-testid="page-name" placeholder="Enter keywords">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
                   <input id="page-name" v-model="metaKeywords" type="text" class="invisible w-8" />
@@ -130,12 +125,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput
-              v-model="canonicalLink"
-              type="text"
-              data-testid="seo-canonical"
-              placeholder="Enter URL"
-            >
+            <SfInput v-model="canonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
                   <input id="page-id" v-model="data.sitemap" type="text" class="invisible w-8" />

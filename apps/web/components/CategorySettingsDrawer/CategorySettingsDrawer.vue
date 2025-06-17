@@ -63,7 +63,8 @@
           <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
           <span class="py-2 mr-2">
             <p>
-              This page isn't set up for '{{ locale.toUpperCase() }}' yet. To start editing page contents, go to General settings, enter a name and a URL, and save the changes.
+              This page isn't set up for '{{ locale.toUpperCase() }}' yet. To start editing page contents, go to General
+              settings, enter a name and a URL, and save the changes.
             </p>
           </span>
         </div>
