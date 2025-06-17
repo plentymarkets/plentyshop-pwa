@@ -13,7 +13,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     initialData: {} as CategoryEntry,
     unlinkModalOpen: false,
   }));
-  const { t, locale } = useI18n();
+  const { t, locale, defaultLocale } = useI18n();
 
   const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
     const cacheKey = `${categoryId}-${locale.value}`;
@@ -52,6 +52,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     const { send } = useNotification();
     const { deletePageFromTree } = useCategoriesSearch();
     const { setSettingsCategory } = useSiteConfiguration();
+    const router = useRouter();
     try {
       const { data } = await useSdk().plentysystems.deleteCategory({
         categoryId: id,
@@ -64,6 +65,8 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
           message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
           type: 'positive',
         });
+        const lang = locale.value;
+        router.push(lang && lang !== defaultLocale ? `/${lang}` : '/');
       }
     } catch (error) {
       let errorMessage = '';
