@@ -1,3 +1,5 @@
+import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
+
 const currentCategoryId = ref<number>();
 const currentParentCategoryId = ref<number | null>(null);
 const currentCategoryName = ref<string | null>(null);
@@ -6,6 +8,7 @@ const currentPageType = ref<string | null>(null);
 const currentPageHasChildren = ref<boolean | null>(null);
 const currentCategoryLevel = ref<number | null>(null);
 const currentParentName = ref<string | null>(null);
+const currentCategoryDetails = ref<CategoryDetails[]>([]);
 
 export const useCategoryIdHelper = () => {
   const setCategoryId = ({
@@ -14,12 +17,14 @@ export const useCategoryIdHelper = () => {
     name,
     path,
     level,
+    details,
   }: {
     id?: number;
     parentId?: number;
     name?: string;
     path?: string;
     level?: number;
+    details?: CategoryDetails[];
   }) => {
     currentCategoryId.value = id;
     if (parentId !== undefined) {
@@ -33,6 +38,9 @@ export const useCategoryIdHelper = () => {
     }
     if (level !== undefined) {
       currentCategoryLevel.value = level;
+    }
+    if (details !== undefined) {
+      currentCategoryDetails.value = details;
     }
   };
   const setPageType = (pageType?: string) => {
@@ -56,6 +64,7 @@ export const useCategoryIdHelper = () => {
   const getPageHasChildren = computed(() => currentPageHasChildren.value);
   const getCurrentCategoryLevel = computed(() => currentCategoryLevel.value);
   const getParentName = computed(() => currentParentName.value);
+  const getCategoryDetails = computed(() => currentCategoryDetails.value);
 
   return {
     setCategoryId,
@@ -70,5 +79,6 @@ export const useCategoryIdHelper = () => {
     getCurrentCategoryLevel,
     setParentName,
     getParentName,
+    getCategoryDetails,
   };
 };
