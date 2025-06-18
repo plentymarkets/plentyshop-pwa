@@ -148,6 +148,11 @@ export const useAddPageModal = () => {
   const [pageName, pageNameAttributes] = defineField('pageName');
 
   const getLabel = (option: CategoryEntry) => {
+    if (!categoryEntryGetters.getDetails(option)[0]) {
+      const categoryId = categoryEntryGetters.getId(option);
+      return `ID: ${categoryId}`;
+    }
+
     return categoryEntryGetters.getDetails(option)[0].name;
   };
 
