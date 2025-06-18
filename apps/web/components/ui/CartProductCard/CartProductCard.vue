@@ -5,7 +5,7 @@
         <NuxtImg
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
-          :alt="cartGetters.getItemName(cartItem)"
+          :alt="imageAlt"
           width="300"
           height="300"
           loading="lazy"
@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
+import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
@@ -228,4 +228,9 @@ const basePriceSingleValue = computed(
 );
 
 const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem)));
+
+const imageAlt = computed(() => {
+  const image = cartItem?.variation?.images?.all[0];
+  return image ? productImageGetters.getImageAlternate(image) : '';
+});
 </script>
