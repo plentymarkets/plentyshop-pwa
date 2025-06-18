@@ -57,8 +57,8 @@
       <h3 class="font-bold text-center flex flex-col gap-4 items-start ml-4 mb-3">Actions</h3>
       <div class="flex flex-col gap-4 justify-center items-center">
         <div
-          class="w-[90%] flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
           v-if="isCategoryDetailsEmpty"
+          class="w-[90%] flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
         >
           <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
           <span class="py-2 mr-2">
