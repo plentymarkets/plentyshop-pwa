@@ -34,6 +34,8 @@
         {{ itemDisplayName }}
       </span>
       <div class="flex items-center gap-x-2 ml-2">
+        <NuxtImg v-if="isDisabled" width="24" height="24px" :src="disabled" @click="handleSettingsClick" />
+
         <SfTooltip
           v-if="isCategoryDirty(item.id)"
           label="You have unsaved changes on this page"
@@ -91,6 +93,7 @@ import {
 import type { PagesItemProps } from './types';
 
 import { gearPath } from 'assets/icons/paths/gear';
+import disabled from 'assets/icons/paths/disabled.svg';
 
 const { isCategoryDirty, data: collectionData } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
@@ -106,8 +109,13 @@ const isDisabled = computed(() => {
   let category = null;
   if (Array.isArray(collectionData.value)) {
     category = collectionData.value.find((cat) => cat.id === item.id);
-  } else if (collectionData.value && collectionData.value.id === item.id) {
-    category = collectionData.value;
+  } else if (
+    collectionData.value &&
+    typeof collectionData.value === 'object' &&
+    'id' in collectionData.value &&
+    (collectionData.value as { id: number }).id === item.id
+  ) {
+    category = collectionData.value as { id: number; isLinkedToWebstore?: boolean };
   }
   if (!category) {
     return item.isLinkedToWebstore === false;
