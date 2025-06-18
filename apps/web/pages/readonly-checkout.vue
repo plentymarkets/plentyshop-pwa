@@ -13,7 +13,7 @@
         <UiDivider :class="dividerClass" />
         <AddressContainer id="shipping-address" :key="0" :disabled="false" :type="AddressType.Shipping" />
         <UiDivider :class="dividerClass" />
-        <AddressContainer id="billing-address" :key="1" :disabled="false" :type="AddressType.Billing" />
+        <AddressContainer id="billing-address" :key="1" :disabled="true" :type="AddressType.Billing" />
         <UiDivider :class="dividerClass" />
         <div class="relative">
           <ShippingMethod disabled />
@@ -76,7 +76,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 const { isAuthorized, loginAsGuest, data: customer, getSession } = useCustomer();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
+const { data: cart, cartIsEmpty, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { emit } = usePlentyEvent();
@@ -148,10 +148,10 @@ const setClientCheckoutAddress = async () => {
 };
 
 const handle = async () => {
-  if (!paypalOrderId) {
-    return navigateTo(localePath(paths.cart));
-  }
+  if (!paypalOrderId) return navigateTo(localePath(paths.cart));
+
   await setAddressesFromPayPal(paypalOrderId);
+  await getCart();
 
   await useFetchAddress(AddressType.Shipping)
     .fetch()
