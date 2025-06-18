@@ -13,7 +13,7 @@
         </button>
       </header>
 
-      <div class="mx-4 mb-4 mt-4">
+      <div v-if="isDefaultLocale" class="mx-4 mb-4 mt-4">
         <button
           type="button"
           data-testid="add-page-btn"
@@ -22,6 +22,25 @@
         >
           <SfIconAdd /> Add Page
         </button>
+      </div>
+
+      <div v-else class="mx-4 mb-4 mt-4">
+        <SfTooltip
+          label="You can only add pages in the default language of your shop."
+          placement="right"
+          :show-arrow="true"
+          class="flex"
+        >
+          <button
+            type="button"
+            data-testid="add-page-btn"
+            class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button opacity-40 cursor-not-allowed"
+            disabled="true"
+            @click="null"
+          >
+            <SfIconAdd /> Add Page
+          </button>
+        </SfTooltip>
       </div>
 
       <div class="mx-4 mb-4 mt-4">
@@ -106,6 +125,8 @@ const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories } 
 
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
+
+const isDefaultLocale = computed(() => locale.value === defaultLocale);
 
 const limitAccordionHeight = computed(() => contentPagesOpen.value && productPagesOpen.value);
 
