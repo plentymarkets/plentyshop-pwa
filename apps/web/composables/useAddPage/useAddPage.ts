@@ -182,6 +182,7 @@ export const useAddPageModal = () => {
       parentId: newCategory.parentCategoryId,
       name: newCategory.details[0].name,
       path: newCategory.details[0].nameUrl,
+      details: newCategory.details,
     });
     setSettingsCategory({} as CategoryTreeItem, 'general-menu');
   };
