@@ -10,7 +10,7 @@ export type GetShippingMethods = () => Promise<ShippingProvider>;
 
 export type SaveShippingMethod = (shippingMethodId: number) => Promise<ShippingProvider>;
 
-export type SetSelectedMethod = (shippingMethodId: number) => void;
+export type SetSelectedMethod = (shippingMethodId: number) => Promise<void>;
 
 export interface UseCartShippingMethods {
   data: Readonly<Ref<UseCartShippingMethodsState['data']>>;
