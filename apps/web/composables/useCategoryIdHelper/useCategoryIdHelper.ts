@@ -8,6 +8,7 @@ const currentPageType = ref<string | null>(null);
 const currentPageHasChildren = ref<boolean | null>(null);
 const currentCategoryLevel = ref<number | null>(null);
 const currentParentName = ref<string | null>(null);
+const currentCategoryPreviewUrl = ref<string | null>(null);
 const currentCategoryDetails = ref<CategoryDetails[]>([]);
 
 export const useCategoryIdHelper = () => {
@@ -17,6 +18,7 @@ export const useCategoryIdHelper = () => {
     name,
     path,
     level,
+    previewUrl,
     details,
   }: {
     id?: number;
@@ -24,6 +26,7 @@ export const useCategoryIdHelper = () => {
     name?: string;
     path?: string;
     level?: number;
+    previewUrl?: string;
     details?: CategoryDetails[];
   }) => {
     currentCategoryId.value = id;
@@ -38,6 +41,9 @@ export const useCategoryIdHelper = () => {
     }
     if (level !== undefined) {
       currentCategoryLevel.value = level;
+    }
+    if (previewUrl !== undefined) {
+      currentCategoryPreviewUrl.value = previewUrl;
     }
     if (details !== undefined) {
       currentCategoryDetails.value = details;
@@ -64,6 +70,12 @@ export const useCategoryIdHelper = () => {
   const getPageHasChildren = computed(() => currentPageHasChildren.value);
   const getCurrentCategoryLevel = computed(() => currentCategoryLevel.value);
   const getParentName = computed(() => currentParentName.value);
+  const getCategoryPreviewPath = computed(() => {
+    const previewUrl = currentCategoryPreviewUrl.value;
+    if (!previewUrl) return '/';
+    const firstSlashIndex = previewUrl.indexOf('/', 8);
+    return firstSlashIndex !== -1 ? previewUrl.slice(firstSlashIndex) : '/';
+  });
   const getCategoryDetails = computed(() => currentCategoryDetails.value);
 
   return {
@@ -79,6 +91,7 @@ export const useCategoryIdHelper = () => {
     getCurrentCategoryLevel,
     setParentName,
     getParentName,
+    getCategoryPreviewPath,
     getCategoryDetails,
   };
 };
