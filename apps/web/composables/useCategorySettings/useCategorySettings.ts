@@ -2,7 +2,7 @@ import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') => {
-  const cache = useState<Record<number, CategoryEntry>>(`categoryCache-${settingsId}`, () => ({}));
+  const cache = useState<Record<string, CategoryEntry>>(`categoryCache-${settingsId}`, () => ({}));
   const state = useState<useCategoryConfigurationState>(`categoryConfiguration-${settingsId}`, () => ({
     data: {} as CategoryEntry,
     id: 0,
@@ -13,13 +13,14 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     initialData: {} as CategoryEntry,
     unlinkModalOpen: false,
   }));
-  const { t } = useI18n();
+  const { t, locale, defaultLocale } = useI18n();
 
   const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
-    if (cache.value[categoryId]) {
-      state.value.data = cache.value[categoryId];
-      state.value.initialData = JSON.parse(JSON.stringify(cache.value[categoryId]));
-      return cache.value[categoryId];
+    const cacheKey = `${categoryId}-${locale.value}`;
+    if (cache.value[cacheKey]) {
+      state.value.data = cache.value[cacheKey];
+      state.value.initialData = JSON.parse(JSON.stringify(cache.value[cacheKey]));
+      return cache.value[cacheKey];
     }
 
     state.value.loading = true;
@@ -33,10 +34,10 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       await addCategorySettings(cleanData);
       await nextTick();
 
-      cache.value[categoryId] = cleanData;
+      cache.value[cacheKey] = cleanData;
       state.value.data = cleanData;
       state.value.initialData = JSON.parse(JSON.stringify(cleanData));
-      return cache.value[categoryId];
+      return cache.value[cacheKey];
     } catch (error) {
       console.error('Error fetching category settings:', error);
       return null;
@@ -51,6 +52,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     const { send } = useNotification();
     const { deletePageFromTree } = useCategoriesSearch();
     const { setSettingsCategory } = useSiteConfiguration();
+    const router = useRouter();
     try {
       const { data } = await useSdk().plentysystems.deleteCategory({
         categoryId: id,
@@ -63,6 +65,8 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
           message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
           type: 'positive',
         });
+        const lang = locale.value;
+        router.push(lang && lang !== defaultLocale ? `/${lang}` : '/');
       }
     } catch (error) {
       let errorMessage = '';
