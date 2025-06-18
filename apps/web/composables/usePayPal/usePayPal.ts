@@ -175,6 +175,28 @@ export const usePayPal = () => {
   };
 
   /**
+   * @description Function to get order details from PayPal.
+   * @example
+   * ``` ts
+   * getOrder('paypal_transaction_id');
+   * ```
+   */
+  const setAddressesFromPayPal = async (paypalOrderId: string) => {
+    state.value.loading = true;
+    try {
+      const { data } = await useSdk().plentysystems.doHandlePayPalAddress({
+        paypalOrderId,
+      });
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return null;
+  };
+
+  /**
    * @description Function to get the fraud id.
    * @example
    * ``` ts
@@ -305,6 +327,7 @@ export const usePayPal = () => {
     getOrder,
     getFraudId,
     createPlentyPaymentFromPayPalOrder,
+    setAddressesFromPayPal,
     ...toRefs(state.value),
   };
 };
