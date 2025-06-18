@@ -14,9 +14,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     unlinkModalOpen: false,
   }));
   const { t, locale, defaultLocale } = useI18n();
-  const {
-    setCategoryId,
-  } = useCategoryIdHelper();
+  const { setCategoryId } = useCategoryIdHelper();
   const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
     const cacheKey = `${categoryId}-${locale.value}`;
     if (cache.value[cacheKey]) {
