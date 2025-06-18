@@ -44,6 +44,7 @@ export const useCategoryIdHelper = () => {
     }
     if (previewUrl !== undefined) {
       currentCategoryPreviewUrl.value = previewUrl;
+    }
     if (details !== undefined) {
       currentCategoryDetails.value = details;
     }

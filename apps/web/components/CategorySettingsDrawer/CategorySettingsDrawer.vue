@@ -107,7 +107,8 @@ const { toggleDeleteModal } = useCategorySettings();
 const { setSettingsCategory } = useSiteConfiguration();
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
-const { getCategoryName, getCategoryPreviewPath, getCategoryDetails, setParentName, setCategoryId } = useCategoryIdHelper();
+const { getCategoryName, getCategoryPreviewPath, getCategoryDetails, setParentName, setCategoryId } =
+  useCategoryIdHelper();
 const { locale } = useI18n();
 
 const activeView = ref<null | 'general' | 'seo'>(null);
