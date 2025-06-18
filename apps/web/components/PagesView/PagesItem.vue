@@ -1,11 +1,14 @@
 <template>
   <li
     class="border border-[#D9E2DC] rounded-[5px] mb-3"
-    :class="[{ disabled: isDisabled }, hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']"
+    :class="[isDisabled ? 'text-gray-400 bg-gray-100' : '', hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']"
   >
     <div
-      class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
-      :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
+      class="relative px-4 py-2 group flex items-center justify-between"
+      :class="[
+        isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent',
+        isDisabled ? 'text-gray-400' : 'cursor-pointer',
+      ]"
       @click="toggleOnTablet"
     >
       <span v-if="item.hasChildren" @click="toggleOnDesktop">
@@ -34,7 +37,13 @@
         {{ itemDisplayName }}
       </span>
       <div class="flex items-center gap-x-2 ml-2">
-        <NuxtImg v-if="isDisabled" width="24" height="24px" :src="disabled" @click="handleSettingsClick" />
+        <NuxtImg
+          v-if="isDisabled"
+          width="24"
+          height="24px"
+          :src="disabled"
+          @click="handleSettingsClick"
+        />
 
         <SfTooltip
           v-if="isCategoryDirty(item.id)"
