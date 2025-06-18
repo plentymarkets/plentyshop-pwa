@@ -37,14 +37,6 @@
         {{ itemDisplayName }}
       </span>
       <div class="flex items-center gap-x-2 ml-2">
-        <NuxtImg
-          v-if="isDisabled"
-          width="24"
-          height="24px"
-          :src="disabled"
-          @click="handleSettingsClick"
-        />
-
         <SfTooltip
           v-if="isCategoryDirty(item.id)"
           label="You have unsaved changes on this page"
@@ -54,8 +46,18 @@
         >
           <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
         </SfTooltip>
+        <template v-if="isDisabled">
+          <NuxtImg
+            width="24"
+            height="24px"
+            :src="disabled"
+            class="text-primary-900 transition-opacity duration-200 cursor-pointer"
+            :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
+            @click="handleSettingsClick"
+          />
+        </template>
         <SfIconBase
-          v-if="!props.hideSettings"
+          v-else-if="!props.hideSettings"
           size="base"
           viewBox="0 0 24 24"
           class="text-primary-900 transition-opacity duration-200"
