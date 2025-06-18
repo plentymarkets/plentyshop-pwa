@@ -24,10 +24,10 @@
           </div>
 
           <label>
-            <SfInput v-model="data.details[0].metaTitle" type="text" data-testid="seo-title" placeholder="Enter title">
+            <SfInput v-model="metaTitle" type="text" data-testid="seo-title" placeholder="Enter title">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
-                  <input id="page-id" v-model="data.details[0].metaTitle" type="text" class="invisible w-8" />
+                  <input id="page-id" v-model="metaTitle" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -43,14 +43,14 @@
           </div>
           <label>
             <SfInput
-              v-model="data.details[0].metaDescription"
+              v-model="metaDescription"
               type="text"
               data-testid="seo-description"
               placeholder="Enter description"
             >
               <template #suffix>
                 <label for="page-type" class="rounded-lg cursor-pointer">
-                  <input id="page-type" v-model="data.details[0].metaDescription" type="text" class="invisible w-8" />
+                  <input id="page-type" v-model="metaDescription" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -65,15 +65,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput
-              v-model="data.details[0].metaKeywords"
-              type="text"
-              data-testid="page-name"
-              placeholder="Enter keywords"
-            >
+            <SfInput v-model="metaKeywords" type="text" data-testid="page-name" placeholder="Enter keywords">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="data.details[0].metaKeywords" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="metaKeywords" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -130,12 +125,7 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput
-              v-model="data.details[0].canonicalLink"
-              type="text"
-              data-testid="seo-canonical"
-              placeholder="Enter URL"
-            >
+            <SfInput v-model="canonicalLink" type="text" data-testid="seo-canonical" placeholder="Enter URL">
               <template #suffix>
                 <label for="page-id" class="rounded-lg cursor-pointer">
                   <input id="page-id" v-model="data.sitemap" type="text" class="invisible w-8" />
@@ -167,6 +157,7 @@
 import { SfInput, SfSwitch, SfTooltip, SfIconInfo, SfLoaderCircular } from '@storefront-ui/vue';
 
 import Multiselect from 'vue-multiselect';
+import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
 const metaData = ref(false);
 
 const { getCategoryId } = useCategoryIdHelper();
@@ -191,6 +182,24 @@ watch(
   { immediate: true },
 );
 
+const detailField = <K extends keyof CategoryDetails>(field: K) =>
+  computed({
+    get() {
+      return data.value.details[0]?.[field] ?? '';
+    },
+    set(val: CategoryDetails[K]) {
+      if (!data.value.details.length) {
+        data.value.details.push({} as CategoryDetails);
+      }
+      data.value.details[0][field] = val;
+    },
+  });
+
+const metaTitle = detailField('metaTitle');
+const metaDescription = detailField('metaDescription');
+const metaKeywords = detailField('metaKeywords');
+const canonicalLink = detailField('canonicalLink');
+
 const robotsDropdown = ref(false);
 const furtherSettings = ref(false);
 const robotNames = [
@@ -202,7 +211,7 @@ const robotNames = [
 
 const pageRobots = computed({
   get() {
-    return robotNames.find((option) => option.value === data.value.details[0].metaRobots) || null;
+    return robotNames.find((option) => option.value === data.value.details[0]?.metaRobots) || null;
   },
   set(selectedOption) {
     data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';
