@@ -1,3 +1,5 @@
+import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
+
 const currentCategoryId = ref<number>();
 const currentParentCategoryId = ref<number | null>(null);
 const currentCategoryName = ref<string | null>(null);
@@ -7,6 +9,7 @@ const currentPageHasChildren = ref<boolean | null>(null);
 const currentCategoryLevel = ref<number | null>(null);
 const currentParentName = ref<string | null>(null);
 const currentCategoryPreviewUrl = ref<string | null>(null);
+const currentCategoryDetails = ref<CategoryDetails[]>([]);
 
 export const useCategoryIdHelper = () => {
   const setCategoryId = ({
@@ -16,6 +19,7 @@ export const useCategoryIdHelper = () => {
     path,
     level,
     previewUrl,
+    details,
   }: {
     id?: number;
     parentId?: number;
@@ -23,6 +27,7 @@ export const useCategoryIdHelper = () => {
     path?: string;
     level?: number;
     previewUrl?: string;
+    details?: CategoryDetails[];
   }) => {
     currentCategoryId.value = id;
     if (parentId !== undefined) {
@@ -39,6 +44,8 @@ export const useCategoryIdHelper = () => {
     }
     if (previewUrl !== undefined) {
       currentCategoryPreviewUrl.value = previewUrl;
+    if (details !== undefined) {
+      currentCategoryDetails.value = details;
     }
   };
   const setPageType = (pageType?: string) => {
@@ -68,6 +75,7 @@ export const useCategoryIdHelper = () => {
     const firstSlashIndex = previewUrl.indexOf('/', 8);
     return firstSlashIndex !== -1 ? previewUrl.slice(firstSlashIndex) : '/';
   });
+  const getCategoryDetails = computed(() => currentCategoryDetails.value);
 
   return {
     setCategoryId,
@@ -83,5 +91,6 @@ export const useCategoryIdHelper = () => {
     setParentName,
     getParentName,
     getCategoryPreviewPath,
+    getCategoryDetails,
   };
 };
