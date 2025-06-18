@@ -131,6 +131,7 @@ const handleSettingsClick = () => {
     level: item.level,
   });
   checkIfItemHasChildren();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 const toggleOnDesktop = () => toggleOpen();
 const toggleOnTablet = () => toggleOpen(true);
