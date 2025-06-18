@@ -44,7 +44,7 @@
       class="w-full mb-4 md:mb-0 cursor-pointer"
       @click="handlePreparePayment"
     >
-      <template v-if="createOrderLoading">
+      <template v-if="createOrderLoading || additionalInformationLoading">
         <SfLoaderCircular class="flex justify-center items-center" size="sm" />
       </template>
       <template v-else>{{ t('buy') }}</template>
@@ -94,7 +94,12 @@ const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();
-const { shippingPrivacyAgreement, customerWish, doAdditionalInformation } = useAdditionalInformation();
+const {
+  shippingPrivacyAgreement,
+  customerWish,
+  doAdditionalInformation,
+  loading: additionalInformationLoading,
+} = useAdditionalInformation();
 const paypalCardDialog = ref(false);
 const payPalPayUponInvoice = ref(false);
 
@@ -117,6 +122,7 @@ const disableBuyButton = computed(
     createOrderLoading.value ||
     disableShippingPayment.value ||
     cartLoading.value ||
+    additionalInformationLoading.value ||
     navigationInProgress.value ||
     processingOrder.value,
 );
