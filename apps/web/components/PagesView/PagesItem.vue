@@ -1,5 +1,8 @@
 <template>
-  <li class="border border-[#D9E2DC] rounded-[5px] mb-3" :class="[hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']">
+  <li
+    class="border border-[#D9E2DC] rounded-[5px] mb-3"
+    :class="[{ disabled: isDisabled }, hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']"
+  >
     <div
       class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
       :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
@@ -86,8 +89,10 @@ import {
   SfIconBase,
 } from '@storefront-ui/vue';
 import type { PagesItemProps } from './types';
+
 import { gearPath } from 'assets/icons/paths/gear';
-const { isCategoryDirty } = useCategorySettingsCollection();
+
+const { isCategoryDirty, data: collectionData } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
 const { setSettingsCategory, settingsType } = useSiteConfiguration();
 const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
@@ -96,6 +101,19 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 
 const props = defineProps<PagesItemProps>();
 const item = props.item;
+
+const isDisabled = computed(() => {
+  let category = null;
+  if (Array.isArray(collectionData.value)) {
+    category = collectionData.value.find((cat) => cat.id === item.id);
+  } else if (collectionData.value && collectionData.value.id === item.id) {
+    category = collectionData.value;
+  }
+  if (!category) {
+    return item.isLinkedToWebstore === false;
+  }
+  return category.isLinkedToWebstore === false;
+});
 
 const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
 const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
