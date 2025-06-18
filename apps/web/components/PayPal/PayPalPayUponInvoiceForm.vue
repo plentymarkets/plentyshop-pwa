@@ -69,6 +69,8 @@ const { t } = useI18n();
 const { config, loadConfig, getFraudId } = usePayPal();
 const { billingCountries, getCountryIsoCode } = useAggregatedCountries();
 const { checkoutAddress: billingAddress } = useCheckoutAddress(AddressType.Billing);
+const { emit: plentyEmit } = usePlentyEvent();
+const localePath = useLocalePath();
 
 const loading = ref(false);
 const submitFirstTime = ref(true);
@@ -165,11 +167,17 @@ const createPayPalPayUponInvoiceOrder = async () => {
 
     if (transactionOrder) {
       const plentyOrder = await createPlentyOrder();
-      if (plentyOrder) await createPlentyPaymentFromPayPalOrder(transactionOrder.id, plentyOrder.order.id);
+      if (plentyOrder) {
+        await createPlentyPaymentFromPayPalOrder(transactionOrder.id, plentyOrder.order.id);
+        emit('confirmCancel');
+        plentyEmit('frontend:orderCreated', plentyOrder);
+        plentyEmit('module:clearCart', null);
+        useProcessingOrder().processingOrder.value = true;
+        navigateTo(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey));
+      }
     }
 
     loading.value = false;
-    emit('confirmCancel');
   } catch (error) {
     loading.value = false;
     useHandleError(error as ApiError);
