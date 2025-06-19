@@ -7,7 +7,7 @@
       class="relative px-4 py-2 group flex items-center justify-between"
       :class="[
         isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent',
-        isDisabled ? 'text-gray-400' : 'cursor-pointer',
+        isDisabled ? 'text-gray-400 bg-gray-100' : 'cursor-pointer',
       ]"
       @click="toggleOnTablet"
     >
@@ -16,11 +16,11 @@
           width="24"
           height="24px"
           :src="disabled"
-          class="text-primary-900 transition-opacity duration-200 mr-1"
+          class="text-primary-900 transition-opacity duration-200 mr-1 cursor-pointer"
           @click="handleSettingsClick"
         />
       </template>
-      <span v-if="item.hasChildren" @click="toggleOnDesktop">
+      <span v-if="item.hasChildren" :class="isDisabled ? 'cursor-default' : ''" @click="toggleOnDesktop">
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
@@ -28,16 +28,17 @@
         v-if="!isTablet && !hasEmptyDetails"
         :to="pagePath"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        :class="isDisabled ? 'cursor-default' : ''"
       >
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
         {{ itemDisplayName }}
       </router-link>
-
       <span
         v-else
-        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        :class="isDisabled ? 'cursor-default' : 'cursor-pointer'"
         @click="handleSettingsClick"
       >
         <span v-if="props.icon">
