@@ -14,7 +14,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     unlinkModalOpen: false,
   }));
   const { t, locale, defaultLocale } = useI18n();
-
+  const { setCategoryId } = useCategoryIdHelper();
   const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
     const cacheKey = `${categoryId}-${locale.value}`;
     if (cache.value[cacheKey]) {
@@ -60,6 +60,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       if (data === 'Category deleted') {
         toggleDeleteModal(false);
         setSettingsCategory(null);
+        setCategoryId({});
         deletePageFromTree(id);
         send({
           message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
