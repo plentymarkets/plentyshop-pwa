@@ -1,7 +1,7 @@
 <template>
   <NuxtErrorBoundary>
     <Swiper
-      :key="`${index}`"
+      :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -56,7 +56,6 @@ const handleArrows = () => {
 };
 
 const enableModules = computed(() => content.length > 1);
-
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
@@ -81,16 +80,34 @@ const navigationConfig = computed(() => {
     : false;
 });
 
-const onSwiperInit = (swiper: SwiperType) => {
+const onSwiperInit = async (swiper: SwiperType) => {
   slider = swiper;
+
   if (activeSlideIndex.value[meta.uuid] == null) {
-    const actualIndex = swiper.realIndex;
-    setIndex(meta.uuid, actualIndex);
+    setIndex(meta.uuid, swiper.realIndex);
   }
 };
-const onSlideChange = (swiper: SwiperType) => {
-  const realIndex = swiper.realIndex;
+const reinitializeSwiper = async () => {
+  if (!slider || slider.destroyed) return;
 
+  await nextTick();
+
+  slider.update();
+
+  if (slider.params.navigation && slider.navigation) {
+    slider.navigation.destroy();
+    slider.navigation.init();
+    slider.navigation.update();
+  }
+
+  if (slider.params.pagination && slider.pagination) {
+    slider.pagination.destroy();
+    slider.pagination.init();
+    slider.pagination.update();
+  }
+};
+const onSlideChange = async (swiper: SwiperType) => {
+  const realIndex = swiper.realIndex;
   if (isInternalChange.value) {
     isInternalChange.value = false;
     return;
@@ -100,6 +117,7 @@ const onSlideChange = (swiper: SwiperType) => {
     setIndex(meta.uuid, realIndex);
   }
 };
+
 const getSlideAdjustedIndex = (slideIndex: number) => {
   return activeSlideIndex.value[meta.uuid] === slideIndex ? index : index + slideIndex;
 };
@@ -118,7 +136,14 @@ watch(
   },
   { flush: 'post' },
 );
-
+watch(
+  () => content.length,
+  async (newLength, oldLength) => {
+    if (oldLength <= 1 && newLength > 1) {
+      await reinitializeSwiper();
+    }
+  }
+);
 watch(
   () => configuration.controls.color,
   (newColor, oldColor) => {
