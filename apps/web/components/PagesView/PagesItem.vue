@@ -16,7 +16,7 @@
           width="24"
           height="24px"
           :src="disabled"
-          class="text-primary-900 transition-opacity duration-200 cursor-pointer"
+          class="text-primary-900 transition-opacity duration-200 cursor-pointer mr-1"
           @click="handleSettingsClick"
         />
       </template>
@@ -117,23 +117,14 @@ const props = defineProps<PagesItemProps>();
 const item = props.item;
 
 const isDisabled = computed(() => {
-  let category = null;
-  if (Array.isArray(collectionData.value)) {
-    category = collectionData.value.find((cat) => cat.id === item.id);
-  } else if (
-    collectionData.value &&
-    typeof collectionData.value === 'object' &&
-    'id' in collectionData.value &&
-    (collectionData.value as { id: number }).id === item.id
-  ) {
-    category = collectionData.value as { id: number; isLinkedToWebstore?: boolean };
-  }
-  if (!category) {
-    return item.isLinkedToWebstore === false;
-  }
-  return category.isLinkedToWebstore === false;
+  const collection = Array.isArray(collectionData.value)
+    ? collectionData.value
+    : collectionData.value
+      ? [collectionData.value]
+      : [];
+  const category = collection.find((cat) => cat.id === item.id);
+  return (category?.isLinkedToWebstore ?? item.isLinkedToWebstore) === false;
 });
-
 const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
 const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
 const pagePath = computed(() => {
