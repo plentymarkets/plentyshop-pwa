@@ -11,6 +11,15 @@
       ]"
       @click="toggleOnTablet"
     >
+      <template v-if="isDisabled">
+        <NuxtImg
+          width="24"
+          height="24px"
+          :src="disabled"
+          class="text-primary-900 transition-opacity duration-200 cursor-pointer"
+          @click="handleSettingsClick"
+        />
+      </template>
       <span v-if="item.hasChildren" @click="toggleOnDesktop">
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
@@ -46,16 +55,7 @@
         >
           <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
         </SfTooltip>
-        <template v-if="isDisabled">
-          <NuxtImg
-            width="24"
-            height="24px"
-            :src="disabled"
-            class="text-primary-900 transition-opacity duration-200 cursor-pointer"
-            :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
-            @click="handleSettingsClick"
-          />
-        </template>
+
         <SfIconBase
           v-else-if="!props.hideSettings"
           size="base"
