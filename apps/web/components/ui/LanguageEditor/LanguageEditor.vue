@@ -1,5 +1,6 @@
 <template>
   <div
+    :key="forceUpdate"
     class="flex items-center space-x-1 md:space-x-2"
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
@@ -30,10 +31,16 @@ import type { Locale } from 'vue-i18n';
 import { useI18n } from 'vue-i18n';
 
 const { localeCodes, locale: currentLocale, t } = useI18n();
+const forceUpdate = ref(0);
+
 const { switchLocale } = useLocalization();
 const { isEditing, disableActions } = useEditor();
-
 const switchLanguage = async (locale: Locale) => {
   await switchLocale(locale, false);
 };
+
+onMounted(async () => {
+  await nextTick();
+  forceUpdate.value++;
+});
 </script>
