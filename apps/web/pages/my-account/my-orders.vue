@@ -38,10 +38,12 @@
             </li>
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.amount') }}</p>
-              <span v-if="showNetPrices" class="block typography-text-sm mb-2">{{
-                format(orderGetters.getTotalNet(orderGetters.getTotals(order)))
+              <span v-if="order.totals.isNet" class="block typography-text-sm mb-2">{{
+                formatWithSymbol(orderGetters.getTotalNet(orderGetters.getTotals(order)), order.totals.currency)
               }}</span>
-              <span v-else class="block typography-text-sm mb-2">{{ format(orderGetters.getPrice(order)) }}</span>
+              <span v-else class="block typography-text-sm mb-2">{{
+                formatWithSymbol(orderGetters.getPrice(order), order.totals.currency)
+              }}</span>
             </li>
             <li v-if="orderGetters.getShippingDate(order, locale)">
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</p>
@@ -104,10 +106,22 @@
             <tr v-for="(order, index) in data.data.entries" :key="index" class="border-b border-neutral-200">
               <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
-              <td v-if="showNetPrices" class="lg:p-4 p-2">
-                {{ format(orderGetters.getTotalNet(orderGetters.getTotals(order))) }}
+              <td v-if="orderGetters.getTotals(order).isNet" class="lg:p-4 p-2">
+                {{
+                  formatWithSymbol(
+                    orderGetters.getTotalNet(orderGetters.getTotals(order)),
+                    orderGetters.getCurrency(order),
+                  )
+                }}
               </td>
-              <td v-else class="lg:p-4 p-2">{{ format(orderGetters.getPrice(order)) }}</td>
+              <td v-else class="lg:p-4 p-2">
+                {{
+                  formatWithSymbol(
+                    orderGetters.getTotal(orderGetters.getTotals(order)),
+                    orderGetters.getCurrency(order),
+                  )
+                }}
+              </td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
@@ -169,8 +183,7 @@ const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
-const { format } = usePriceFormatter();
-const { showNetPrices } = useCustomer();
+const { formatWithSymbol } = usePriceFormatter();
 const { t, locale } = useI18n();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
