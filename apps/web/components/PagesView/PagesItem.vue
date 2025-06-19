@@ -16,7 +16,7 @@
           width="24"
           height="24px"
           :src="disabled"
-          class="text-primary-900 transition-opacity duration-200 cursor-pointer mr-1"
+          class="text-primary-900 transition-opacity duration-200 mr-1"
           @click="handleSettingsClick"
         />
       </template>
@@ -60,7 +60,7 @@
           v-else-if="!props.hideSettings"
           size="base"
           viewBox="0 0 24 24"
-          class="text-primary-900 transition-opacity duration-200"
+          class="text-primary-900 transition-opacity duration-200 cursor-pointer"
           :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
           @click="handleSettingsClick"
         >
