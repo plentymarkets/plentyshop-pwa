@@ -14,6 +14,7 @@ export interface useCategorySettingsCollection {
   isCategoryDirty: (id: number) => boolean;
   addCategorySettings: (category: CategoryEntry) => Promise<void>;
   saveCategorySettings: () => Promise<boolean>;
+  isDisabledCategory: (id: number, fallbackIsLinkedToWebstore?: boolean) => boolean;
   save: () => Promise<void>;
 }
 

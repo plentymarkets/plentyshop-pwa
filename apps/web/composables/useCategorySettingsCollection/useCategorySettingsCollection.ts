@@ -117,6 +117,12 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     }
   };
 
+  const isDisabledCategory = (id: number, fallbackIsLinkedToWebstore?: boolean) => {
+    const collection = Array.isArray(state.value.data) ? state.value.data : state.value.data ? [state.value.data] : [];
+    const category = collection.find((cat) => cat.id === id);
+    return (category?.isLinkedToWebstore ?? fallbackIsLinkedToWebstore) === false;
+  };
+
   return {
     ...toRefs(state.value),
     addCategorySettings,
@@ -124,5 +130,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     saveCategorySettings,
     save,
     hasChanges,
+    isDisabledCategory,
   };
 };

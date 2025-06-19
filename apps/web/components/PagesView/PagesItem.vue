@@ -16,8 +16,7 @@
           width="24"
           height="24px"
           :src="disabled"
-          class="text-primary-900 transition-opacity duration-200 mr-1 cursor-pointer"
-          @click="handleSettingsClick"
+          class="text-primary-900 transition-opacity duration-200 mr-1"
         />
       </template>
       <span v-if="item.hasChildren" :class="isDisabled ? 'cursor-default' : ''" @click="toggleOnDesktop">
@@ -115,7 +114,7 @@ import type { PagesItemProps } from './types';
 import { gearPath } from 'assets/icons/paths/gear';
 import disabled from 'assets/icons/paths/disabled.svg';
 
-const { isCategoryDirty, data: collectionData } = useCategorySettingsCollection();
+const { isCategoryDirty, isDisabledCategory } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
 const { setSettingsCategory, settingsType } = useSiteConfiguration();
 const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
@@ -125,15 +124,7 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const props = defineProps<PagesItemProps>();
 const item = props.item;
 
-const isDisabled = computed(() => {
-  const collection = Array.isArray(collectionData.value)
-    ? collectionData.value
-    : collectionData.value
-      ? [collectionData.value]
-      : [];
-  const category = collection.find((cat) => cat.id === item.id);
-  return (category?.isLinkedToWebstore ?? item.isLinkedToWebstore) === false;
-});
+const isDisabled = computed(() => isDisabledCategory(item.id, item.isLinkedToWebstore));
 const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
 const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
 const pagePath = computed(() => {
