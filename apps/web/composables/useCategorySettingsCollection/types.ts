@@ -18,4 +18,5 @@ export interface useCategorySettingsCollection {
   save: () => Promise<void>;
 }
 
+
 export type useCategorySettingsCollectionReturn = () => useCategorySettingsCollection;
