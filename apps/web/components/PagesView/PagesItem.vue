@@ -24,11 +24,19 @@
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
+      <span
+        v-if="!isTablet && !hasEmptyDetails && isDisabled"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-default select-text"
+      >
+        <span v-if="props.icon">
+          <component :is="icon" class="w-4 h-4 mr-2" />
+        </span>
+        {{ itemDisplayName }}
+      </span>
       <router-link
-        v-if="!isTablet && !hasEmptyDetails"
+        v-else-if="!isTablet && !hasEmptyDetails"
         :to="pagePath"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
-        :class="isDisabled ? 'cursor-default' : ''"
       >
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
