@@ -17,6 +17,11 @@
             '/_nuxt-plenty/images/placeholder.png'
           "
           :alt="orderGetters.getItemName(orderItem)"
+          :title="
+            productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(order, orderItem))
+              ? productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(order, orderItem))
+              : null
+          "
           class="h-auto border rounded-md border-neutral-200"
           width="300"
           height="300"
@@ -113,7 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters, productBundleGetters } from '@plentymarkets/shop-api';
+import { orderGetters, productBundleGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
