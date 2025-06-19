@@ -10,7 +10,6 @@
       :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
     >
       <div class="flex items-center justify-center">
-        {{}}
         <NuxtImg
           ref="img"
           :src="
