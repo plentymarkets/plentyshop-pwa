@@ -162,7 +162,7 @@ const handleSettingsClick = () => {
     name: itemDisplayName.value,
     path: item.details[0]?.nameUrl || pagePath.value,
     level: item.level,
-    previewUrl: item.details[0].previewUrl,
+    previewUrl: item.details[0]?.previewUrl,
     details: item.details,
   });
   checkIfItemHasChildren();
