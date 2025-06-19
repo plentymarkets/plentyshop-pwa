@@ -6,6 +6,11 @@
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
           :alt="cartGetters.getItemName(cartItem)"
+          :title="
+            productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              ? productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              : null
+          "
           width="300"
           height="300"
           loading="lazy"
@@ -125,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
+import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
