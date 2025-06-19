@@ -7,6 +7,8 @@ export const PayPalGooglePayKey = 'PAYPAL_GOOGLE_PAY';
 
 export const PayPalApplePayKey = 'PAYPAL_APPLE_PAY';
 
+export const PayPalPayUponInvoiceKey = 'PAYPAL_PAY_UPON_INVOICE';
+
 export type PayPalScript = {
   script: PayPalNamespace | null;
   locale: string;

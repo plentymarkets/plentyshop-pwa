@@ -1,0 +1,186 @@
+<template>
+  <header>
+    <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
+      {{ t('checkoutPayment.payUponInvoice') }}
+    </h3>
+
+    <UiButton
+      :aria-label="t('closeDialog')"
+      type="button"
+      square
+      variant="tertiary"
+      class="absolute right-2 top-2"
+      @click="emit('confirmCancel')"
+    >
+      <SfIconClose />
+    </UiButton>
+  </header>
+
+  <form class="grid grid-cols-1" novalidate @submit.prevent="validateAndSubmitForm">
+    <label>
+      <UiFormLabel class="flex">{{ t('checkoutPayment.birthdateLabel') }} &#8727;</UiFormLabel>
+      <SfInput
+        v-model="birthDate"
+        label="Phone Number"
+        type="date"
+        autocomplete="bday"
+        :wrapper-class="{ 'ring-2 !ring-negative-700': !validBirthDate }"
+      />
+    </label>
+
+    <div class="h-[2rem] mt-1">
+      <div v-if="!validBirthDate" class="text-sm text-negative-700">
+        {{ t('checkoutPayment.birthdateError') }}
+      </div>
+    </div>
+
+    <UiTelephoneInput
+      v-model="phoneWithPrefix"
+      :label="`${t('checkoutPayment.phoneLabel')} &#8727;`"
+      :only-countries="onlyCountries"
+      :default-country="defaultCountry"
+      :error="phoneError"
+      @valid-phone-number="handlePhoneNumberValidation"
+    />
+
+    <div class="text-sm text-neutral-500">&#8727; {{ t('contact.form.asterixHint') }}</div>
+
+    <div class="flex justify-end gap-x-4">
+      <UiButton type="button" variant="secondary" @click="emit('confirmCancel')">
+        {{ t('paypal.unbrandedCancel') }}
+      </UiButton>
+
+      <UiButton type="submit" :disabled="loading" class="min-w-[120px] w-fit">
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+        <template v-else>{{ t('paypal.unbrandedPay') }}</template>
+      </UiButton>
+    </div>
+  </form>
+</template>
+
+<script lang="ts" setup>
+import { AddressType, type ApiError } from '@plentymarkets/shop-api';
+import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
+
+const emit = defineEmits(['confirmCancel']);
+
+const { t } = useI18n();
+const { config, loadConfig, getFraudId } = usePayPal();
+const { billingCountries, getCountryIsoCode } = useAggregatedCountries();
+const { checkoutAddress: billingAddress } = useCheckoutAddress(AddressType.Billing);
+const { emit: plentyEmit } = usePlentyEvent();
+const localePath = useLocalePath();
+
+const loading = ref(false);
+const submitFirstTime = ref(true);
+const birthDate = ref('');
+const validBirthDate = ref(true);
+const phoneWithPrefix = ref('');
+const validPhone = ref(true);
+const phoneError = ref('');
+const phoneNumber = ref('');
+const phoneCountryCode = ref('');
+
+const onlyCountries = billingCountries.value.map((country) => country.isoCode2.toLowerCase());
+const defaultCountry = billingAddress.value?.country ? getCountryIsoCode(billingAddress.value.country) : '';
+const fraudNet = {
+  merchantId: null as string | null,
+  fraudId: null as string | null,
+  pageId: 'checkout-page',
+};
+
+onNuxtReady(async () => {
+  await fetchDependencies();
+  if (fraudNet.merchantId && fraudNet.fraudId) insertFraudNetScript();
+});
+
+watch(validPhone, (updatedStatus) => {
+  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkoutPayment.phoneError') : '';
+});
+
+watch(birthDate, () => {
+  if (!submitFirstTime.value) validBirthDate.value = isDateValid();
+});
+
+const fetchDependencies = async () => {
+  await loadConfig().then(() => (fraudNet.merchantId = config.value?.merchantId || null));
+  fraudNet.fraudId = await getFraudId();
+};
+
+const insertFraudNetScript = () => {
+  const scriptTag = document.createElement('script');
+  scriptTag.type = 'application/json';
+  scriptTag.setAttribute('fncls', 'fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99');
+  scriptTag.textContent = JSON.stringify({
+    f: fraudNet.fraudId,
+    s: `${fraudNet.merchantId}_${fraudNet.pageId}`,
+    sandbox: true,
+  });
+
+  document.body.appendChild(scriptTag);
+
+  const loader = document.createElement('script');
+  loader.src = 'https://c.paypal.com/da/r/fb.js';
+  loader.async = true;
+  document.body.appendChild(loader);
+};
+
+const handlePhoneNumberValidation = (validation: PhoneValidationResult) => {
+  validPhone.value = validation.valid;
+  phoneNumber.value = validation.nationalNumber;
+  phoneCountryCode.value = validation.countryCallingCode;
+};
+
+const isDateValid = (): boolean => {
+  const date = new Date(birthDate.value);
+  return birthDate.value !== '' && !Number.isNaN(date.getTime()) && date < new Date();
+};
+
+const validateAndSubmitForm = async () => {
+  if (submitFirstTime.value) {
+    validBirthDate.value = isDateValid();
+    if (!validPhone.value) phoneError.value = t('checkoutPayment.phoneError');
+    submitFirstTime.value = false;
+  }
+
+  if (!validBirthDate.value || !validPhone.value) return;
+
+  await createPayPalPayUponInvoiceOrder();
+};
+
+const createPayPalPayUponInvoiceOrder = async () => {
+  loading.value = true;
+  const { createTransaction, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
+
+  try {
+    const orderData = {
+      type: 'basket' as const,
+      additionalInformation: {
+        birthdate: birthDate.value,
+        phoneNumber: phoneNumber.value,
+        phoneCountryCode: phoneCountryCode.value,
+      },
+    };
+
+    const transactionOrder = await createTransaction(orderData);
+
+    if (transactionOrder) {
+      const plentyOrder = await createPlentyOrder();
+      if (plentyOrder) {
+        await createPlentyPaymentFromPayPalOrder(transactionOrder.id, plentyOrder.order.id);
+        emit('confirmCancel');
+        plentyEmit('frontend:orderCreated', plentyOrder);
+        plentyEmit('module:clearCart', null);
+        useProcessingOrder().processingOrder.value = true;
+        navigateTo(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey));
+      }
+    }
+
+    loading.value = false;
+  } catch (error) {
+    loading.value = false;
+    useHandleError(error as ApiError);
+  }
+};
+</script>
