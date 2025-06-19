@@ -7,7 +7,7 @@
       class="relative px-4 py-2 group flex items-center justify-between"
       :class="[
         isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent',
-        isDisabled ? 'text-gray-400' : 'cursor-pointer',
+        isDisabled ? 'text-gray-400 bg-gray-100' : 'cursor-pointer',
       ]"
       @click="toggleOnTablet"
     >
@@ -17,15 +17,23 @@
           height="24px"
           :src="disabled"
           class="text-primary-900 transition-opacity duration-200 mr-1"
-          @click="handleSettingsClick"
         />
       </template>
-      <span v-if="item.hasChildren" @click="toggleOnDesktop">
+      <span v-if="item.hasChildren" :class="isDisabled ? 'cursor-default' : ''" @click="toggleOnDesktop">
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
+      <span
+        v-if="!isTablet && !hasEmptyDetails && isDisabled"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-default select-text"
+      >
+        <span v-if="props.icon">
+          <component :is="icon" class="w-4 h-4 mr-2" />
+        </span>
+        {{ itemDisplayName }}
+      </span>
       <router-link
-        v-if="!isTablet && !hasEmptyDetails"
+        v-else-if="!isTablet && !hasEmptyDetails"
         :to="pagePath"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
@@ -34,10 +42,10 @@
         </span>
         {{ itemDisplayName }}
       </router-link>
-
       <span
         v-else
-        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+        :class="isDisabled ? 'cursor-default' : 'cursor-pointer'"
         @click="handleSettingsClick"
       >
         <span v-if="props.icon">
@@ -106,7 +114,7 @@ import type { PagesItemProps } from './types';
 import { gearPath } from 'assets/icons/paths/gear';
 import disabled from 'assets/icons/paths/disabled.svg';
 
-const { isCategoryDirty, data: collectionData } = useCategorySettingsCollection();
+const { isCategoryDirty, isDisabledCategory } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
 const { setSettingsCategory, settingsType } = useSiteConfiguration();
 const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
@@ -116,15 +124,7 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const props = defineProps<PagesItemProps>();
 const item = props.item;
 
-const isDisabled = computed(() => {
-  const collection = Array.isArray(collectionData.value)
-    ? collectionData.value
-    : collectionData.value
-      ? [collectionData.value]
-      : [];
-  const category = collection.find((cat) => cat.id === item.id);
-  return (category?.isLinkedToWebstore ?? item.isLinkedToWebstore) === false;
-});
+const isDisabled = computed(() => isDisabledCategory(item.id, item.isLinkedToWebstore));
 const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
 const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
 const pagePath = computed(() => {
