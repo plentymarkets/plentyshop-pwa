@@ -57,7 +57,7 @@
         </SfTooltip>
 
         <SfIconBase
-          v-else-if="!props.hideSettings"
+          v-if="!props.hideSettings"
           size="base"
           viewBox="0 0 24 24"
           class="text-primary-900 transition-opacity duration-200 cursor-pointer"
