@@ -14,7 +14,6 @@
 <script lang="ts" setup>
 definePageMeta({
   layout: 'simplified-header-and-footer',
-  pageType: 'static',
 });
 
 const { data, error, relatedOrder, hasError, fetchOffer, declineOffer, acceptOffer } = useOffer();
