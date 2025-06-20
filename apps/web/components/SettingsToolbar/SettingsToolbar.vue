@@ -16,17 +16,7 @@
         <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
         <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
       </button>
-      <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'DesignView' }"
-        aria-label="Open design drawer"
-        data-testid="open-design-drawer"
-        @click="toggleDrawerView('DesignView')"
-      >
-        <NuxtImg v-if="drawerView === 'DesignView'" width="24" height="24px" :src="paintBrushWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
-      </button>
+      <SettingsDesignToolbarTrigger :active="drawerView === 'DesignView'" @click="toggleDrawerView('DesignView')" />
       <button
         v-if="runtimeConfig.public.isDev"
         type="button"

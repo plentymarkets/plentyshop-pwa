@@ -12,7 +12,8 @@
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
-    <component :is="getDrawerView(drawerView)" v-if="drawerView" />
+    <!--    <component :is="getDrawerView(drawerView)" v-if="drawerView" />-->
+    <SiteConfigurationView />
   </SfDrawer>
 </template>
 
