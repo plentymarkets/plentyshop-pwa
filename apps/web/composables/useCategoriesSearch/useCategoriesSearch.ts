@@ -133,7 +133,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   const resetCategories = () => {
     state.value.contentItems = [];
     state.value.itemItems = [];
-  }
+  };
 
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));

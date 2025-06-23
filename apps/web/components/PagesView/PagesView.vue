@@ -121,7 +121,8 @@ const { locale, defaultLocale } = useI18n();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } = useCategoriesSearch();
+const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
+  useCategoriesSearch();
 
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
@@ -140,7 +141,7 @@ const handleScroll = async (e: Event, type: 'content' | 'item') => {
 };
 onBeforeUnmount(() => {
   resetCategories();
-})
+});
 
 watch(contentPagesOpen, (opened) => {
   if (opened && contentItems.value.length === 0) {
