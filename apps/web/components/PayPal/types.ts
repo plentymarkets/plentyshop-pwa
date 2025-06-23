@@ -3,6 +3,10 @@ export type PaypalButtonPropsType = {
   disabled?: boolean;
 };
 
+export type PaypalAPMPropsType = {
+  disabled?: boolean;
+};
+
 export type PayPalAddToCartCallback = (successfully: boolean) => void;
 
 export type PayPalPayLaterBannerType = {

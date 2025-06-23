@@ -34,6 +34,7 @@
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
+    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="!termsAccepted || disableBuyButton" />
 
     <UiButton
       v-else
@@ -150,6 +151,15 @@ const paypalApplePayPaymentId = computed(() => {
 const PayPalPayUponInvoiceId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPayUponInvoiceKey);
+});
+
+const PayPalIsAPM = computed(() => {
+  if (!paymentMethods.value.list) return false;
+  const selectedPayment = paymentProviderGetters.getPaymentMethodById(
+    paymentMethods.value.list,
+    selectedPaymentId.value,
+  );
+  return selectedPayment && Object.keys(PayPalAlternativeFundingSourceMapper).includes(paymentProviderGetters.getPaymentKey(selectedPayment));
 });
 
 const handlePayUponInvoiceModalClosing = () => {
