@@ -34,6 +34,7 @@
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
+            <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
             <div v-if="payPalAvailable">
               <PayPalExpressButton
                 v-if="changedTotal"
@@ -54,7 +55,12 @@
                 <template v-else>{{ t('buy') }}</template>
               </UiButton>
             </div>
-            <div v-else>PayPal nicht verfügbar.</div>
+            <div v-else class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4">
+              <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
+              <div class="py-2 mr-2">
+                PayPal is not available for this order. Please change your address or payment method to continue.
+              </div>
+            </div>
           </OrderSummary>
         </div>
       </div>
@@ -63,9 +69,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
@@ -92,21 +97,19 @@ const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTot
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
 const {
-  data: billingAddresses,
-  getAddresses: getBillingAddresses,
-  saveAddress: saveBillingAddress,
-} = useAddress(AddressType.Billing);
+  checkoutAddress: billingAddress,
+    set: setBillingAddress,
+} = useCheckoutAddress(AddressType.Billing);
+const {
+  checkoutAddress: shippingAddress,
+    set: setShippingAddress,
+} = useCheckoutAddress(AddressType.Shipping);
 const {
   shippingPrivacyAgreement,
   customerWish,
   doAdditionalInformation,
   loading: additionalInformationLoading,
 } = useAdditionalInformation();
-const {
-  data: shippingAddresses,
-  getAddresses: getShippingAddresses,
-  saveAddress: saveShippingAddress,
-} = useAddress(AddressType.Shipping);
 const {
   anyAddressFormIsOpen,
   hasShippingAddress,
@@ -135,18 +138,6 @@ const payPalAvailable = computed(() =>
   paymentMethodData?.value?.list?.find((method) => method.paymentKey === 'PAYPAL' && method.key === 'plentyPayPal'),
 );
 
-const setClientCheckoutAddress = async () => {
-  try {
-    await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
-    await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
-    setShippingSkeleton(false);
-    setBillingSkeleton(false);
-    await handleCartTotalChanges();
-  } catch (error) {
-    useHandleError(error as ApiError);
-  }
-};
-
 const handle = async () => {
   if (!paypalOrderId) return navigateTo(localePath(paths.cart));
 
@@ -165,9 +156,19 @@ const handle = async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  if (customer.value.user === null && (billingAddresses.value[0]?.email || shippingAddresses.value[0]?.email)) {
-    await loginAsGuest(billingAddresses.value[0]?.email || shippingAddresses.value[0]?.email || '');
+  if (customer.value.user === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
+    await loginAsGuest(billingAddress.value?.email || shippingAddress.value?.email || '');
     await getSession();
+
+    if (!billingAddress.value) {
+      await setBillingAddress(shippingAddress.value);
+    } else if (!shippingAddress.value) {
+      await setShippingAddress(billingAddress.value);
+    }
+  }
+
+  if (customer.value.user === null) {
+    return navigateTo(localePath('/checkout'));
   }
 
   await Promise.all([
