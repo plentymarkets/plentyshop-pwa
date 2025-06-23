@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import { SfIconLanguage, SfIconExpandMore } from '@storefront-ui/vue';
 import type { Locale } from 'vue-i18n';
-import { useI18n } from 'vue-i18n';
 
 const { localeCodes, locale: currentLocale, t } = useI18n();
 const forceUpdate = ref(0);
