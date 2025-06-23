@@ -219,7 +219,11 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
-const { iconColor, headerBackgroundColor } = useSiteConfiguration();
+const { getSetting: getIconColor } = useSiteSettings('iconColor');
+const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+
+const iconColor = computed(() => getIconColor())
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor())
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t, localeCodes } = useI18n();

@@ -101,9 +101,12 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { blockSize, drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const { visiblePlaceholder, togglePlaceholder, modules, isDragging } = useBlockManager();
 const attrs = useAttrs();
+
+const blockSize = computed(() => getBlockSize())
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;

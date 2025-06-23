@@ -13,25 +13,41 @@ import {
  * const { data, loading, updateSetting, getSetting } = useSiteSettings();
  * ```
  */
-export const useSiteSettings: UseSiteSettingsReturn = (setting: string) => {
+export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   const state = useState<UseSiteSettingsState>('siteSettings', () => ({
     data: {},
     loading: false,
+    initialData: useRuntimeConfig().public || {},
   }));
 
   const updateSetting: UpdateSetting = async (value) => {
-    state.value.data = { ...state.value.data, [setting]: value };
+    state.value.data = { ...state.value.data, [setting as string]: value };
   };
 
   const getSetting: GetSetting = (): string => {
     return (
-      (state.value.data?.[setting] as string) || (useRuntimeConfig().public?.[setting] as string)
+      (state.value.data?.[setting as string] as string) || (useRuntimeConfig().public?.[setting as string] as string)
     );
   };
+
+  const isDirty = computed(() => {
+    const config = state.value.initialData;
+    const currentData = state.value.data;
+
+    return Object.keys(currentData).some(key =>
+      key in config && currentData[key] !== config[key]
+    );
+  });
+
+  const saveSettings: SaveSettings = () => {
+    state.value.initialData = { ...state.value.initialData, ...state.value.data };
+  }
 
   return {
     ...toRefs(state.value),
     updateSetting,
     getSetting,
+    isDirty,
+    saveSettings,
   };
 };
