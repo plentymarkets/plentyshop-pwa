@@ -82,10 +82,9 @@ const localePath = useLocalePath();
 const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
-const { isAuthorized, loginAsGuest, data: customer, getSession } = useCustomer();
+const { loginAsGuest, data: customer, getSession } = useCustomer();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { data: cart, cartIsEmpty, getCart, clearCartItems, loading: cartLoading } = useCart();
-const { getShippingMethods } = useCartShippingMethods();
+const { data: cart, cartIsEmpty, getCart, loading: cartLoading } = useCart();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { emit } = usePlentyEvent();
 const {
@@ -96,7 +95,7 @@ const {
   setAddressesFromPayPal,
 } = usePayPal();
 const { processingOrder } = useProcessingOrder();
-const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
+const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);

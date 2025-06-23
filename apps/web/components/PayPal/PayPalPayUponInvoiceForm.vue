@@ -43,7 +43,7 @@
       @valid-phone-number="handlePhoneNumberValidation"
     />
 
-    <div id="paypal-legal-container" class="text-sm text-neutral-800 mb-4"/>
+    <div id="paypal-legal-container" class="text-sm text-neutral-800 mb-4" />
 
     <div class="text-sm text-neutral-500">&#8727; {{ t('contact.form.asterixHint') }}</div>
 
@@ -115,12 +115,12 @@ const fetchDependencies = async () => {
 
 const insertLegalText = async () => {
   const payPalScript = await getScript(currency.value, true);
-  // @ts-ignore
+  // @ts-expect-error Legal method exists but not typed in PayPal SDK
   if (payPalScript && payPalScript.Legal) {
     payPalScript
-      // @ts-ignore
+      // @ts-expect-error Legal method exists but not typed in PayPal SDK
       .Legal({
-        // @ts-ignore
+        // @ts-expect-error Legal method exists but not typed in PayPal SDK
         fundingSource: payPalScript.Legal.FUNDING.PAY_UPON_INVOICE,
       })
       .render('#paypal-legal-container');
