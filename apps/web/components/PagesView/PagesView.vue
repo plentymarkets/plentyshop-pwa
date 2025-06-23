@@ -13,7 +13,7 @@
         </button>
       </header>
 
-      <div class="mx-4 mb-4 mt-4">
+      <div v-if="isDefaultLocale" class="mx-4 mb-4 mt-4">
         <button
           type="button"
           data-testid="add-page-btn"
@@ -22,6 +22,25 @@
         >
           <SfIconAdd /> Add Page
         </button>
+      </div>
+
+      <div v-else class="mx-4 mb-4 mt-4">
+        <SfTooltip
+          label="You can only add pages in the default language of your shop."
+          placement="right"
+          :show-arrow="true"
+          class="flex"
+        >
+          <button
+            type="button"
+            data-testid="add-page-btn"
+            class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button opacity-40 cursor-not-allowed"
+            disabled="true"
+            @click="null"
+          >
+            <SfIconAdd /> Add Page
+          </button>
+        </SfTooltip>
       </div>
 
       <div class="mx-4 mb-4 mt-4">
@@ -53,8 +72,14 @@
 
         <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
           <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
-            <PagesItem :item="homepageItem" :parent-id="undefined" :icon="SfIconHome" :hide-settings="true" />
-            <PagesItem v-for="item in contentItems" :key="item.id" :item="item" :parent-id="item.id" />
+            <PagesItem
+              :key="locale"
+              :item="homepageItem"
+              :parent-id="undefined"
+              :icon="SfIconHome"
+              :hide-settings="true"
+            />
+            <PagesItem v-for="item in contentItems" :key="`${item.id}-${locale}`" :item="item" :parent-id="item.id" />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -91,15 +116,18 @@
 import PagesItem from '~/components/PagesView/PagesItem.vue';
 import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfIconHome, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
-const { locale } = useI18n();
+const { locale, defaultLocale } = useI18n();
 
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories } = useCategoriesSearch();
+const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
+  useCategoriesSearch();
 
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
+
+const isDefaultLocale = computed(() => locale.value === defaultLocale);
 
 const limitAccordionHeight = computed(() => contentPagesOpen.value && productPagesOpen.value);
 
@@ -111,6 +139,9 @@ const handleScroll = async (e: Event, type: 'content' | 'item') => {
     await fetchCategories(type);
   }
 };
+onBeforeUnmount(() => {
+  resetCategories();
+});
 
 watch(contentPagesOpen, (opened) => {
   if (opened && contentItems.value.length === 0) {
@@ -124,6 +155,11 @@ watch(productPagesOpen, (opened) => {
   }
 });
 
+watch(locale, () => {
+  fetchCategories('content');
+  fetchCategories('item');
+});
+
 const openHelpPage = () => {
   const urls: Record<string, string> = {
     en: 'https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop-editor.html',
@@ -134,7 +170,7 @@ const openHelpPage = () => {
   if (targetUrl) window.open(targetUrl, '_blank');
 };
 
-const homepageItem: CategoryEntry = {
+const homepageItem = computed<CategoryEntry>(() => ({
   clients: [],
   details: [
     {
@@ -154,8 +190,8 @@ const homepageItem: CategoryEntry = {
       metaRobots: 'index, follow',
       metaTitle: 'Homepage',
       name: 'Homepage',
-      nameUrl: '/',
-      pageView: 'homepage',
+      nameUrl: locale.value === defaultLocale ? '/' : `/${locale.value}`,
+      pageView: 'Homepage',
       plenty_category_details_image_path: '',
       plenty_category_details_image2_path: '',
       plentyId: 0,
@@ -175,5 +211,5 @@ const homepageItem: CategoryEntry = {
   sitemap: 'Y',
   type: 'immutable',
   isLinkedToWebstore: true,
-};
+}));
 </script>
