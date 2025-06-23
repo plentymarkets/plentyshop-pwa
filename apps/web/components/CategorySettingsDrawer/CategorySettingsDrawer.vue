@@ -7,10 +7,13 @@
     :class="[{ 'max-w-[370px]': placement === 'left' || placement === 'right' }]"
   >
     <div class="px-4 py-5 border-b flex justify-between items-center">
-      <h3 class="font-bold typography-headline-3">
-        {{ getCategoryName }}
+      <h3 class="font-bold typography-headline-3 truncate overflow-hidden whitespace-nowrap max-w-[75%]">
+        <SfTooltip v-if="getCategoryName && getCategoryName.length > 27" :label="getCategoryName" placement="bottom">
+          <span>{{ getCategoryName }}</span>
+        </SfTooltip>
+        <span v-else>{{ getCategoryName }}</span>
       </h3>
-      <SfIconChevronLeft class="cursor-pointer" @click="handleBack" />
+      <SfIconChevronLeft class="cursor-pointer flex-shrink-0 ml-2" @click="handleBack" />
     </div>
 
     <div v-if="activeView" class="flex px-4 pt-2 gap-4 pb-2">
@@ -101,6 +104,7 @@ import {
   SfIconChevronRight,
   SfIconDelete,
   SfIconWarning,
+  SfTooltip,
 } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 const { toggleDeleteModal } = useCategorySettings();
