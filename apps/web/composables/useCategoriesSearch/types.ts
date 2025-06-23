@@ -31,6 +31,7 @@ export interface UseCategoriesSearchMethods {
   addNewPageToTree: (newPage: CategoryEntry) => void;
   deletePageFromTree: (id: number) => void;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
+  resetCategories: () => void;
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;

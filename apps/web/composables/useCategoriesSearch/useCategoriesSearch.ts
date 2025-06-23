@@ -130,6 +130,10 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       state.value.loadingContent = false;
     }
   };
+  const resetCategories = () => {
+    state.value.contentItems = [];
+    state.value.itemItems = [];
+  };
 
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));
@@ -209,5 +213,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     addNewPageToTree,
     deletePageFromTree,
     getCategories,
+    resetCategories,
   };
 };
