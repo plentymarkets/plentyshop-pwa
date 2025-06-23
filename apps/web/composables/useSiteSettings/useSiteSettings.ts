@@ -35,14 +35,12 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     const config = state.value.initialData;
     const currentData = state.value.data;
 
-    return Object.keys(currentData).some(key =>
-      key in config && currentData[key] !== config[key]
-    );
+    return Object.keys(currentData).some((key) => key in config && currentData[key] !== config[key]);
   });
 
   const saveSiteSettings: SaveSiteSettings = () => {
     state.value.initialData = { ...state.value.initialData, ...state.value.data };
-  }
+  };
 
   return {
     ...toRefs(state.value),

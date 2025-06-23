@@ -7,9 +7,7 @@
       </button>
     </header>
 
-    <div class="h-[calc(100vh-150px)] overflow-y-auto">
-
-    </div>
+    <div class="h-[calc(100vh-150px)] overflow-y-auto"></div>
   </div>
 </template>
 

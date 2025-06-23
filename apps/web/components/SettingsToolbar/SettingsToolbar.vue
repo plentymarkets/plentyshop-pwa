@@ -55,7 +55,14 @@ import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 
-const { drawerView, openDrawerWithView, closeDrawer, updatePrimaryColor, updateSecondaryColor, updateHeaderBackgroundColor } = useSiteConfiguration();
+const {
+  drawerView,
+  openDrawerWithView,
+  closeDrawer,
+  updatePrimaryColor,
+  updateSecondaryColor,
+  updateHeaderBackgroundColor,
+} = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');
 const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor');

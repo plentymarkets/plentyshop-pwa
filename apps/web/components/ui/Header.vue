@@ -222,8 +222,8 @@ const cartItemsCount = ref(0);
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 
-const iconColor = computed(() => getIconColor())
-const headerBackgroundColor = computed(() => getHeaderBackgroundColor())
+const iconColor = computed(() => getIconColor());
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t, localeCodes } = useI18n();

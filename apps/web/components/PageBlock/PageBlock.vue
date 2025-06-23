@@ -106,7 +106,7 @@ const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const { visiblePlaceholder, togglePlaceholder, modules, isDragging } = useBlockManager();
 const attrs = useAttrs();
 
-const blockSize = computed(() => getBlockSize())
+const blockSize = computed(() => getBlockSize());
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;

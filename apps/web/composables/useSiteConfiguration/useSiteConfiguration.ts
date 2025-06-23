@@ -135,8 +135,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.ogImg !== state.value.initialData.ogImg ||
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
-      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
-      || isDirty.value
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings) ||
+      isDirty.value
     );
   });
 
@@ -189,8 +189,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         },
         ...Object.entries(data.value || {}).map(([key, val]) => ({
           key,
-          value: String(val || '')
-        }))
+          value: String(val || ''),
+        })),
       ];
 
       await useSdk().plentysystems.setConfiguration({ settings });
@@ -206,7 +206,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       };
 
       saveSiteSettings();
-
     } catch (error) {
       console.error('Error saving settings:', error);
     } finally {

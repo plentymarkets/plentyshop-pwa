@@ -230,7 +230,7 @@ const { referenceRef, floatingRef, style } = useDropdown({
   middleware: [],
 });
 
-const headerBackgroundColor = computed(() => getHeaderBackgroundColor())
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const isTouchDevice = ref(false);
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
