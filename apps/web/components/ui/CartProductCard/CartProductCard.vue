@@ -6,6 +6,11 @@
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
           :alt="imageAlt"
+          :title="
+            productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              ? productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              : null
+          "
           width="300"
           height="300"
           loading="lazy"

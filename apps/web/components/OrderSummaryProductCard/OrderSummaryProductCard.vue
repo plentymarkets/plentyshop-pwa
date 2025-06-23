@@ -17,6 +17,11 @@
             '/_nuxt-plenty/images/placeholder.png'
           "
           :alt="imageAlt"
+          :title="
+            productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(order, orderItem))
+              ? productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(order, orderItem))
+              : null
+          "
           class="h-auto border rounded-md border-neutral-200"
           width="300"
           height="300"
