@@ -1,10 +1,25 @@
 <template>
-  <li class="border border-[#D9E2DC] rounded-[5px] mb-3" :class="[hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']">
+  <li
+    class="border border-[#D9E2DC] rounded-[5px] mb-3"
+    :class="[isDisabled ? 'text-gray-400 bg-gray-100' : '', hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']"
+  >
     <div
-      class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
-      :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
+      class="relative px-4 py-2 group flex items-center justify-between"
+      :class="[
+        isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent',
+        isDisabled ? 'text-gray-400' : 'cursor-pointer',
+      ]"
       @click="toggleOnTablet"
     >
+      <template v-if="isDisabled">
+        <NuxtImg
+          width="24"
+          height="24px"
+          :src="disabled"
+          class="text-primary-900 transition-opacity duration-200 mr-1"
+          @click="handleSettingsClick"
+        />
+      </template>
       <span v-if="item.hasChildren" @click="toggleOnDesktop">
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
@@ -40,11 +55,12 @@
         >
           <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
         </SfTooltip>
+
         <SfIconBase
           v-if="!props.hideSettings"
           size="base"
           viewBox="0 0 24 24"
-          class="text-primary-900 transition-opacity duration-200"
+          class="text-primary-900 transition-opacity duration-200 cursor-pointer"
           :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
           @click="handleSettingsClick"
         >
@@ -86,8 +102,11 @@ import {
   SfIconBase,
 } from '@storefront-ui/vue';
 import type { PagesItemProps } from './types';
+
 import { gearPath } from 'assets/icons/paths/gear';
-const { isCategoryDirty } = useCategorySettingsCollection();
+import disabled from 'assets/icons/paths/disabled.svg';
+
+const { isCategoryDirty, data: collectionData } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
 const { setSettingsCategory, settingsType } = useSiteConfiguration();
 const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
@@ -97,6 +116,15 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const props = defineProps<PagesItemProps>();
 const item = props.item;
 
+const isDisabled = computed(() => {
+  const collection = Array.isArray(collectionData.value)
+    ? collectionData.value
+    : collectionData.value
+      ? [collectionData.value]
+      : [];
+  const category = collection.find((cat) => cat.id === item.id);
+  return (category?.isLinkedToWebstore ?? item.isLinkedToWebstore) === false;
+});
 const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
 const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
 const pagePath = computed(() => {
