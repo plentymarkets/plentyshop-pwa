@@ -6,8 +6,7 @@
 import { cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
-import { PaypalAPMPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalAPMPropsType  } from '~/components/PayPal/types';
 import { PayPalAlternativeFundingSourceMapper } from '~/composables';
 
 const paypalButton = ref<HTMLElement | null>(null);
