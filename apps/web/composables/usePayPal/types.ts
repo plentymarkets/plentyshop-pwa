@@ -13,10 +13,12 @@ export const PayPalAlternativeFundingSourceMapper = {
   PAYPAL_GIROPAY: 'giropay',
   PAYPAL_SEPA: 'sepa',
   PAYPAL_SOFORT: 'sofort',
-  PAYPAL_IDEAL: 'ideal',
-  PAYPAL_EPS: 'eps',
   PAYPAL_BANCONTACT: 'bancontact',
-  PAYPAL_P24: 'p24',
+  PAYPAL_BLIK: 'blik',
+  PAYPAL_EPS: 'eps',
+  PAYPAL_IDEAL: 'ideal',
+  PAYPAL_MYBANK: 'mybank',
+  PAYPAL_PRZELEWY24: 'p24',
   PAYPAL_TRUSTLY: 'trustly',
 };
 

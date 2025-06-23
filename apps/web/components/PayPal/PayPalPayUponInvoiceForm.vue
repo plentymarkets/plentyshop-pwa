@@ -43,6 +43,8 @@
       @valid-phone-number="handlePhoneNumberValidation"
     />
 
+    <div id="paypal-legal-container" class="text-sm text-neutral-800 mb-4"/>
+
     <div class="text-sm text-neutral-500">&#8727; {{ t('contact.form.asterixHint') }}</div>
 
     <div class="flex justify-end gap-x-4">
@@ -59,19 +61,21 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, type ApiError } from '@plentymarkets/shop-api';
+import { AddressType, type ApiError, cartGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 
 const emit = defineEmits(['confirmCancel']);
 
 const { t } = useI18n();
-const { config, loadConfig, getFraudId } = usePayPal();
+const { config, loadConfig, getFraudId, getScript } = usePayPal();
 const { billingCountries, getCountryIsoCode } = useAggregatedCountries();
 const { checkoutAddress: billingAddress } = useCheckoutAddress(AddressType.Billing);
 const { emit: plentyEmit } = usePlentyEvent();
+const { data: cart } = useCart();
 const localePath = useLocalePath();
 
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const loading = ref(false);
 const submitFirstTime = ref(true);
 const birthDate = ref('');
@@ -106,6 +110,21 @@ watch(birthDate, () => {
 const fetchDependencies = async () => {
   await loadConfig().then(() => (fraudNet.merchantId = config.value?.merchantId || null));
   fraudNet.fraudId = await getFraudId();
+  await insertLegalText();
+};
+
+const insertLegalText = async () => {
+  const payPalScript = await getScript(currency.value, true);
+  // @ts-ignore
+  if (payPalScript && payPalScript.Legal) {
+    payPalScript
+      // @ts-ignore
+      .Legal({
+        // @ts-ignore
+        fundingSource: payPalScript.Legal.FUNDING.PAY_UPON_INVOICE,
+      })
+      .render('#paypal-legal-container');
+  }
 };
 
 const insertFraudNetScript = () => {

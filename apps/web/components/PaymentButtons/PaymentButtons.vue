@@ -159,7 +159,10 @@ const PayPalIsAPM = computed(() => {
     paymentMethods.value.list,
     selectedPaymentId.value,
   );
-  return selectedPayment && Object.keys(PayPalAlternativeFundingSourceMapper).includes(paymentProviderGetters.getPaymentKey(selectedPayment));
+  return (
+    selectedPayment &&
+    Object.keys(PayPalAlternativeFundingSourceMapper).includes(paymentProviderGetters.getPaymentKey(selectedPayment))
+  );
 });
 
 const handlePayUponInvoiceModalClosing = () => {
