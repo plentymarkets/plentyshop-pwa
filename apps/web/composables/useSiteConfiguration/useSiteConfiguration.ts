@@ -144,7 +144,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     try {
       state.value.loading = true;
 
-      const { data, saveSettings: saveSiteSettings } = useSiteSettings();
+      const { data, saveSiteSettings } = useSiteSettings();
 
       const settings = [
         {

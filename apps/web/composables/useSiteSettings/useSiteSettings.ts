@@ -3,6 +3,7 @@ import {
   UseSiteSettingsReturn,
   UseSiteSettingsState,
   GetSetting,
+  SaveSiteSettings,
 } from '~/composables/useSiteSettings/types';
 
 /**
@@ -39,7 +40,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     );
   });
 
-  const saveSettings: SaveSettings = () => {
+  const saveSiteSettings: SaveSiteSettings = () => {
     state.value.initialData = { ...state.value.initialData, ...state.value.data };
   }
 
@@ -48,6 +49,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     updateSetting,
     getSetting,
     isDirty,
-    saveSettings,
+    saveSiteSettings,
   };
 };

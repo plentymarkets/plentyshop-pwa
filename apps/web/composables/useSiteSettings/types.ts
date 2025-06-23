@@ -11,7 +11,7 @@ export interface UseSiteSettingsState {
 export type UpdateSetting = (value: string) => void;
 export type GetSetting = () => string;
 export type IsDirty = ComputedRef<boolean>;
-export type SaveSettings = () => void;
+export type SaveSiteSettings = () => void;
 
 export interface UseSiteSettings {
   data: Readonly<Ref<UseSiteSettingsState['data']>>;
@@ -20,7 +20,7 @@ export interface UseSiteSettings {
   updateSetting: UpdateSetting;
   getSetting: GetSetting;
   isDirty: IsDirty;
-  saveSettings: SaveSettings;
+  saveSiteSettings: SaveSiteSettings;
 }
 
 export type UseSiteSettingsReturn = (setting?: string) => UseSiteSettings;
