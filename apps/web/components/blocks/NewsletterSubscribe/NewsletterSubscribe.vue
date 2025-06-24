@@ -159,22 +159,20 @@ const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
-const showTurnstile = ref(false)
-const LazyTurnstile = defineAsyncComponent(() =>
-  import('../../TestVue/TestVue.vue')
-)
+const showTurnstile = ref(false);
+const LazyTurnstile = defineAsyncComponent(() => import('../../TestVue/TestVue.vue'));
 
 const toggleTurnstile = () => {
   showTurnstile.value = true;
-}
+};
 
 const onTurnstileVerify = (token: any) => {
-  turnstile.value = token  // Das hier hat gefehlt!
-}
+  turnstile.value = token; // Das hier hat gefehlt!
+};
 
 const onTurnstileError = (error: any) => {
-  turnstile.value = ''  // Reset bei Fehler
-}
+  turnstile.value = ''; // Reset bei Fehler
+};
 
 const validationSchema = toTypedSchema(
   object({
