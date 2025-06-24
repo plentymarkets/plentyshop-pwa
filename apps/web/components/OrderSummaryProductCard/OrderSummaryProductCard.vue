@@ -18,8 +18,8 @@
           "
           :alt="imageAlt"
           :title="
-            productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(order, orderItem))
-              ? productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(order, orderItem))
+            productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(props.order, props.orderItem))
+              ? productImageGetters.getImageName(orderGetters.getOrderVariationFirstImage(props.order, props.orderItem))
               : null
           "
           class="h-auto border rounded-md border-neutral-200"
