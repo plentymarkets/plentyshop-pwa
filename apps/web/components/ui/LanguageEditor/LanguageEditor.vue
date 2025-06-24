@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!loading"
     class="flex items-center space-x-1 md:space-x-2"
     :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
   >
@@ -27,13 +28,18 @@
 <script setup lang="ts">
 import { SfIconLanguage, SfIconExpandMore } from '@storefront-ui/vue';
 import type { Locale } from 'vue-i18n';
-import { useI18n } from 'vue-i18n';
 
 const { localeCodes, locale: currentLocale, t } = useI18n();
 const { switchLocale } = useLocalization();
 const { isEditing, disableActions } = useEditor();
-
 const switchLanguage = async (locale: Locale) => {
   await switchLocale(locale, false);
 };
+
+const loading = ref(true);
+
+onMounted(async () => {
+  await nextTick();
+  loading.value = false;
+});
 </script>
