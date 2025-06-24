@@ -115,9 +115,9 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
       ? state.value.data.find((category) => category.id === categoryFromRoute.id)
       : undefined;
 
-    const previewUrl = categoryAfterEdit?.details[0]?.previewUrl;
-    const nameUrl = categoryAfterEdit?.details[0]?.nameUrl;
-    const newSlug = buildNewSlug(previewUrl, nameUrl);
+    const editedPreviewUrl = categoryAfterEdit?.details[0]?.previewUrl;
+    const editedNameUrl = categoryAfterEdit?.details[0]?.nameUrl;
+    const newSlug = buildNewSlug(editedPreviewUrl, editedNameUrl);
     const ensureTrailingSlash = (path: string) => (path.endsWith('/') ? path : path + '/');
 
     const isSaved = await saveCategorySettings();
