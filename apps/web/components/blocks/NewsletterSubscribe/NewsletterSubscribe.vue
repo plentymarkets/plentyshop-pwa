@@ -80,6 +80,7 @@
             type="email"
             name="email"
             autocomplete="email"
+            @update:model-value="toggleTurnstile()"
           />
         </label>
         <div class="h-[2rem]">
@@ -123,13 +124,12 @@
           <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
         </UiButton>
 
-        <NuxtTurnstile
-          v-if="turnstileSiteKey"
+        <LazyTurnstile
+          v-if="showTurnstile"
           v-bind="turnstileAttributes"
-          ref="turnstileElement"
-          v-model="turnstile"
-          :options="{ theme: 'light' }"
           class="mt-4"
+          @verify="onTurnstileVerify"
+          @error="onTurnstileError"
         />
 
         <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -158,6 +158,23 @@ const props = defineProps<NewsletterSubscribeProps>();
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
+
+const showTurnstile = ref(false)
+const LazyTurnstile = defineAsyncComponent(() =>
+  import('../../TestVue/TestVue.vue')
+)
+
+const toggleTurnstile = () => {
+  showTurnstile.value = true;
+}
+
+const onTurnstileVerify = (token: any) => {
+  turnstile.value = token  // Das hier hat gefehlt!
+}
+
+const onTurnstileError = (error: any) => {
+  turnstile.value = ''  // Reset bei Fehler
+}
 
 const validationSchema = toTypedSchema(
   object({
