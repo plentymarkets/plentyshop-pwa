@@ -104,7 +104,7 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="data.parentCategoryId"
+            v-model="parentPageValue"
             data-testid="new-parent-page"
             :options="categoriesWithFallback"
             :custom-label="getLabel"
@@ -213,13 +213,30 @@
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
-import { onMounted, watch } from 'vue';
+import { onMounted, watch, computed } from 'vue';
 
 const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
 const { categoriesWithFallback, handleSearch, getLabel, initializeModalState } = useAddPageModal();
+
+const parentPageValue = computed({
+  get() {
+    if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
+      return categoriesWithFallback.value.find((cat) => cat.id === 0) || categoriesWithFallback.value[0];
+    }
+
+    return (
+      categoriesWithFallback.value.find((cat) => cat.id === data.value.parentCategoryId) ||
+      categoriesWithFallback.value[0]
+    );
+  },
+  set(val) {
+    data.value.parentCategoryId = val?.id || 0;
+  },
+});
+
 const isLoginRequired = computed({
   get() {
     return data.value.right === 'customer';
