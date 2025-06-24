@@ -127,7 +127,7 @@ const { locale, defaultLocale } = useI18n();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories, resetPagination } =
+const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
   useCategoriesSearch();
 
 const contentPagesOpen = ref(false);
@@ -162,10 +162,14 @@ watch(productPagesOpen, (opened) => {
 });
 
 watch(locale, () => {
-  resetPagination('item');
-  resetPagination('content');
-  fetchCategories('content');
-  fetchCategories('item');
+  if (contentPagesOpen.value) {
+    resetCategories();
+    fetchCategories('content');
+  }
+  if (productPagesOpen.value) {
+    resetCategories();
+    fetchCategories('item');
+  }
 });
 
 const openHelpPage = () => {

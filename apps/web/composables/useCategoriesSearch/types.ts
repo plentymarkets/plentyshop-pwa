@@ -32,7 +32,6 @@ export interface UseCategoriesSearchMethods {
   deletePageFromTree: (id: number) => void;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
   resetCategories: () => void;
-  resetPagination: (type: 'item' | 'content') => void;
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;

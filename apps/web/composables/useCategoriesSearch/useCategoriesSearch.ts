@@ -126,19 +126,16 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       state.value.loadingContent = false;
     }
   };
+
   const resetCategories = () => {
     state.value.contentItems = [];
+    state.value.contentPage = 1;
+    state.value.hasMoreContent = true;
     state.value.itemItems = [];
+    state.value.itemPage = 1;
+    state.value.hasMoreItem = true;
   };
-  const resetPagination = (type: 'item' | 'content') => {
-    const pageKey = type === 'item' ? 'itemPage' : 'contentPage';
-    const itemsKey = type === 'item' ? 'itemItems' : 'contentItems';
-    const hasMoreKey = type === 'item' ? 'hasMoreItem' : 'hasMoreContent';
 
-    state.value[itemsKey] = [];
-    state.value[pageKey] = 1;
-    state.value[hasMoreKey] = true;
-  };
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));
   };
@@ -218,6 +215,5 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     deletePageFromTree,
     getCategories,
     resetCategories,
-    resetPagination,
   };
 };
