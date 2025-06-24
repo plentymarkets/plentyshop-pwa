@@ -31,6 +31,7 @@ export const useBlockManager = () => {
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
   const { openDrawerWithView } = useSiteConfiguration();
+  const { setIndex } = useCarousel();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -104,7 +105,10 @@ export const useBlockManager = () => {
     updatedBlocks.splice(newIndex, 0, blockToChange);
 
     updateBlocks(updatedBlocks);
-
+    const movedBlock = updatedBlocks[newIndex];
+    if (movedBlock?.name === 'Carousel') {
+      setIndex(movedBlock.meta.uuid, 0);
+    }
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
