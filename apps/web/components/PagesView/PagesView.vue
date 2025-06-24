@@ -70,8 +70,8 @@
           <h2>Content Pages</h2>
         </template>
 
-        <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
-          <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'content')">
+        <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']" @scroll="(e) => handleScroll(e, 'content')">
+          <ul class="rounded-lg">
             <PagesItem
               :key="locale"
               :item="homepageItem"
@@ -97,8 +97,8 @@
           <h2>Product Categories</h2>
         </template>
 
-        <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']">
-          <ul class="rounded-lg" @scroll="(e) => handleScroll(e, 'item')">
+        <div :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']" @scroll="(e) => handleScroll(e, 'item')">
+          <ul class="rounded-lg">
             <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingItem" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
@@ -121,7 +121,7 @@ const { locale, defaultLocale } = useI18n();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
+const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories, resetPagination } =
   useCategoriesSearch();
 
 const contentPagesOpen = ref(false);
@@ -156,6 +156,8 @@ watch(productPagesOpen, (opened) => {
 });
 
 watch(locale, () => {
+  resetPagination('item');
+  resetPagination('content');
   fetchCategories('content');
   fetchCategories('item');
 });
