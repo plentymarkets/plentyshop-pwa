@@ -101,6 +101,24 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   const save = async () => {
     const successMessage = $i18n.t('errorMessages.editor.categories.success');
     const errorMessage = $i18n.t('errorMessages.editor.categories.error');
+    const route = useRoute();
+    const router = useRouter();
+
+    const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
+    const currentCategorySlug = extractCategorySlug(route.path);
+
+    const categoryFromRoute = initialCategories.find(
+      (category: CategoryEntry) => currentCategorySlug === category.details[0]?.nameUrl,
+    );
+
+    const categoryAfterEdit = categoryFromRoute
+      ? state.value.data.find((category) => category.id === categoryFromRoute.id)
+      : undefined;
+
+    const previewUrl = categoryAfterEdit?.details[0]?.previewUrl;
+    const nameUrl = categoryAfterEdit?.details[0]?.nameUrl;
+    const newSlug = buildNewSlug(previewUrl, nameUrl);
+    const ensureTrailingSlash = (path: string) => (path.endsWith('/') ? path : path + '/');
 
     const isSaved = await saveCategorySettings();
 
@@ -109,11 +127,33 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         message: successMessage,
         type: 'positive',
       });
+
+      if (categoryFromRoute && newSlug && ensureTrailingSlash(route.path) !== newSlug) {
+        await router.push(newSlug);
+      }
     } else {
       send({
         message: errorMessage,
         type: 'negative',
       });
+    }
+  };
+
+  const extractCategorySlug = (path: string): string | undefined => {
+    const segments = path.split('/').filter(Boolean);
+    return segments.length ? segments[segments.length - 1] : undefined;
+  };
+
+  const buildNewSlug = (previewUrl: string | undefined, nameUrl: string | undefined): string => {
+    if (!previewUrl || !nameUrl) return '/';
+    try {
+      const url = new URL(previewUrl);
+      const segments = url.pathname.split('/').filter(Boolean);
+      if (segments.length === 0) return `/${nameUrl}/`;
+      segments[segments.length - 1] = nameUrl;
+      return '/' + segments.join('/') + '/';
+    } catch {
+      return `/${nameUrl}/`;
     }
   };
 
