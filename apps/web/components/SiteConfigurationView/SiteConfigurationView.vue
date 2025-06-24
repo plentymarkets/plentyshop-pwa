@@ -2,7 +2,6 @@
   <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
-        test
         <slot name="setting-group-title" />
       </div>
       <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">

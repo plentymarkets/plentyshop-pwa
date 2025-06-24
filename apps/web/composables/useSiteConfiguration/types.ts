@@ -41,6 +41,7 @@ export interface UseSiteConfigurationState {
   useWebp: boolean;
   placement: string;
   drawerView: DrawerView;
+  activeSetting: string;
   blockType: string;
   blockUuid: string;
   initialData: ConfigurationSettings;
@@ -59,6 +60,7 @@ export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
+export type SetActiveSetting = (setting: string) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
 
 export interface UseSiteConfiguration {
@@ -81,7 +83,9 @@ export interface UseSiteConfiguration {
   seoSettings: Readonly<Ref<UseSiteConfigurationState['seoSettings']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
+  activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
+  setActiveSetting: SetActiveSetting;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;

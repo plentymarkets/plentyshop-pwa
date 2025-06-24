@@ -16,7 +16,7 @@
         <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
         <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
       </button>
-      <SettingsDesignToolbarTrigger :active="drawerView === 'DesignView'" @click="toggleDrawerView('DesignView')" />
+      <SettingsDesignToolbarTrigger :active="activeSetting === 'design'" @click="setActiveSetting('design')" />
       <button
         v-if="runtimeConfig.public.isDev"
         type="button"
@@ -57,12 +57,14 @@ import pagesBlack from 'assets/icons/paths/pages-black.svg';
 
 const {
   drawerView,
+  activeSetting,
   openDrawerWithView,
   closeDrawer,
   updatePrimaryColor,
   updateSecondaryColor,
   updateHeaderBackgroundColor,
-  loadGoogleFont
+  loadGoogleFont,
+  setActiveSetting
 } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');

@@ -7,6 +7,7 @@ import type {
   DrawerView,
   SaveSettings,
   SettingsType,
+  SetActiveSetting,
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
@@ -40,6 +41,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     useWebp: useRuntimeConfig().public.useWebp,
     seoSettings: metaDefaults,
     drawerView: null,
+    activeSetting: '',
     blockType: '',
     blockUuid: '',
     initialData: {
@@ -112,6 +114,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.drawerView = view;
     state.value.drawerOpen = true;
+    state.value.activeSetting = ''; // TODO: remove once all settings are moved to new structure
 
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
@@ -119,6 +122,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const closeDrawer = () => {
     state.value.drawerOpen = false;
     state.value.drawerView = null;
+    state.value.activeSetting = '';
   };
 
   const updateNewBlockPosition = (position: number) => {
@@ -223,6 +227,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.settingsCategory = category;
   };
 
+  const setActiveSetting: SetActiveSetting = (setting: string) => {
+    state.value.activeSetting = setting;
+    state.value.drawerOpen = true;
+    state.value.placement = 'left';
+    state.value.drawerView = null; // TODO: remove once all settings are moved to new structure
+  };
+
   return {
     updatePrimaryColor,
     updateSecondaryColor,
@@ -236,5 +247,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     saveSettings,
     togglePageModal,
     setSettingsCategory,
+    setActiveSetting,
   };
 };
