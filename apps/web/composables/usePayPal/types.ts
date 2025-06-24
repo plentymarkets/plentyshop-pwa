@@ -11,6 +11,7 @@ export const PayPalPayUponInvoiceKey = 'PAYPAL_PAY_UPON_INVOICE';
 
 export const PayPalAlternativeFundingSourceMapper = {
   PAYPAL_GIROPAY: 'giropay',
+  PAYPAL_CARD: 'card',
   PAYPAL_SEPA: 'sepa',
   PAYPAL_SOFORT: 'sofort',
   PAYPAL_BANCONTACT: 'bancontact',
