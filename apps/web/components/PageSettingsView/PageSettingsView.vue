@@ -213,7 +213,6 @@
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
-import { onMounted, watch, computed } from 'vue';
 
 const basicSettingsOpen = ref(true);
 
