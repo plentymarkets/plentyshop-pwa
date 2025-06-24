@@ -80,14 +80,29 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
             }),
         ),
       );
-      await useSdk().plentysystems.setCategorySettings(settings);
+      const response = await useSdk().plentysystems.setCategorySettings(settings);
+      console.log('Response from setCategorySettings:', response);
 
-      dirtyCategories.forEach((category) => {
-        const idx = state.value.initialData.findIndex((item) => item.id === category.id);
-        if (idx !== -1) {
-          state.value.initialData[idx] = JSON.parse(JSON.stringify(category));
+      // Flatten the response data
+      const updatedCategories = Array.isArray(response?.data)
+        ? response.data.flat()
+        : [];
+      console.log('Updated categories:', updatedCategories);
+
+      // Update state.value.data and state.value.initialData
+      updatedCategories.forEach((updatedCategory: CategoryEntry) => {
+        const dataIdx = state.value.data.findIndex((item) => item.id === updatedCategory.id);
+        if (dataIdx !== -1) {
+          console.log('Updating data for category:', updatedCategory.id);
+          state.value.data[dataIdx] = JSON.parse(JSON.stringify(updatedCategory));
+        }
+        const initialIdx = state.value.initialData.findIndex((item) => item.id === updatedCategory.id);
+        if (initialIdx !== -1) {
+          console.log('Updating initial data for category:', updatedCategory.id);
+          state.value.initialData[initialIdx] = JSON.parse(JSON.stringify(updatedCategory));
         }
       });
+
       state.value.loading = false;
     } catch (e) {
       console.error('Error saving category settings:', e);
@@ -105,10 +120,10 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const router = useRouter();
 
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
-    const currentCategorySlug = extractCategorySlug(route.path);
 
     const categoryFromRoute = initialCategories.find(
-      (category: CategoryEntry) => currentCategorySlug === category.details[0]?.nameUrl,
+      (category: CategoryEntry) =>
+        extractPathFromPreviewUrl(category.details[0]?.previewUrl) === route.path
     );
 
     const categoryAfterEdit = categoryFromRoute
@@ -118,7 +133,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const editedPreviewUrl = categoryAfterEdit?.details[0]?.previewUrl;
     const editedNameUrl = categoryAfterEdit?.details[0]?.nameUrl;
     const newSlug = buildNewSlug(editedPreviewUrl, editedNameUrl);
-    const ensureTrailingSlash = (path: string) => (path.endsWith('/') ? path : path + '/');
+
+    console.log(initialCategories, categoryFromRoute, categoryAfterEdit, newSlug);
 
     const isSaved = await saveCategorySettings();
 
@@ -128,7 +144,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         type: 'positive',
       });
 
-      if (categoryFromRoute && newSlug && ensureTrailingSlash(route.path) !== newSlug) {
+      if (categoryFromRoute && newSlug && route.path !== newSlug) {
         await router.push(newSlug);
       }
     } else {
@@ -137,6 +153,12 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         type: 'negative',
       });
     }
+  };
+
+  const extractPathFromPreviewUrl = (previewUrl?: string): string => {
+    if (!previewUrl) return '/';
+    const firstSlashIndex = previewUrl.indexOf('/', 8);
+    return firstSlashIndex !== -1 ? previewUrl.slice(firstSlashIndex) || '/' : '/';
   };
 
   const extractCategorySlug = (path: string): string | undefined => {
