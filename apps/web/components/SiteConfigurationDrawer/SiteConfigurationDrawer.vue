@@ -12,9 +12,9 @@
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
-      <component v-if="getViewComponent" :is="getViewComponent" />
-<!--      TODO: remove once all settings are moved to new structure-->
-      <component :is="getDrawerView(drawerView)" v-else-if="drawerView" />
+    <component v-if="getViewComponent" :is="getViewComponent" />
+    <!--      TODO: remove once all settings are moved to new structure-->
+    <component :is="getDrawerView(drawerView)" v-else-if="drawerView" />
   </SfDrawer>
 </template>
 
@@ -38,9 +38,9 @@ const modules = import.meta.glob(`@/components/**/settings/**/*.vue`) as Record<
 >;
 
 const getViewComponent = computed(() => {
-  const key = Object.keys(modules).find(p =>
-    p.includes(`/settings/${activeSetting.value}/`) && p.endsWith('View.vue')
-  )
-  return key ? defineAsyncComponent(modules[key]) : null
+  const key = Object.keys(modules).find(
+    (p) => p.includes(`/settings/${activeSetting.value}/`) && p.endsWith('View.vue'),
+  );
+  return key ? defineAsyncComponent(modules[key]) : null;
 });
 </script>

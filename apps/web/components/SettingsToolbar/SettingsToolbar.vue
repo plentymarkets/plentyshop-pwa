@@ -64,7 +64,7 @@ const {
   updateSecondaryColor,
   updateHeaderBackgroundColor,
   loadGoogleFont,
-  setActiveSetting
+  setActiveSetting,
 } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');

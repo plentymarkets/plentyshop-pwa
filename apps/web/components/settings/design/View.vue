@@ -1,10 +1,7 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title>
-      Settings
-    </template>
+    <template #setting-group-title> Settings </template>
   </SiteConfigurationView>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

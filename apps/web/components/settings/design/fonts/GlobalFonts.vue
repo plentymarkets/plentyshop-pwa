@@ -43,12 +43,15 @@ onMounted(async () => {
   }
 });
 
-const { updateSetting, getSetting } = useSiteSettings('font')
+const { updateSetting, getSetting } = useSiteSettings('font');
 
 const font = computed({
   get: () => {
-    return fonts.value.find((f: FontSetting) => f.value === getSetting()) ?? {}
+    return fonts.value.find((f: FontSetting) => f.value === getSetting()) ?? {};
   },
-  set: (value: FontSetting) => { console.log('update value: ', value); updateSetting(value.value)},
+  set: (value: FontSetting) => {
+    console.log('update value: ', value);
+    updateSetting(value.value);
+  },
 });
 </script>
