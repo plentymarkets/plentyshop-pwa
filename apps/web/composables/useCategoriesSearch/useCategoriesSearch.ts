@@ -87,7 +87,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     const pageKey = categoryType === 'item' ? 'itemPage' : 'contentPage';
     const itemsKey = categoryType === 'item' ? 'itemItems' : 'contentItems';
 
-
     if (state.value[loadingKey] || !state.value[hasMoreKey]) return;
 
     state.value[loadingKey] = true;
