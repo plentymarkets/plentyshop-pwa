@@ -62,11 +62,13 @@ const {
   updatePrimaryColor,
   updateSecondaryColor,
   updateHeaderBackgroundColor,
+  loadGoogleFont
 } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');
 const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor');
 const { getSetting: getHeaderBackgroundSetting } = useSiteSettings('headerBackgroundColor');
+const { getSetting: getFontSetting } = useSiteSettings('font');
 
 function toggleDrawerView(view: DrawerView) {
   if (drawerView.value === view) {
@@ -94,6 +96,13 @@ watch(
   () => getHeaderBackgroundSetting(),
   (newValue) => {
     updateHeaderBackgroundColor(newValue);
+  },
+);
+
+watch(
+  () => getFontSetting(),
+  (newValue) => {
+    loadGoogleFont(newValue);
   },
 );
 </script>

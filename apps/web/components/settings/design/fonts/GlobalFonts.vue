@@ -23,7 +23,6 @@
       class="cursor-pointer"
       select-label=""
       deselect-label="Selected"
-      @select="updateSetting(font)"
     />
     <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
   </div>
@@ -32,6 +31,7 @@
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import { FontSetting } from '~/composables/useSiteSettings';
 
 const fonts = ref([]);
 
@@ -43,10 +43,12 @@ onMounted(async () => {
   }
 });
 
-const { updateSetting, getSetting } = useSiteSettings('font');
+const { updateSetting, getSetting } = useSiteSettings('font')
 
 const font = computed({
-  get: () => getSetting(),
-  set: (value) => updateSetting(value),
+  get: () => {
+    return fonts.value.find((f: FontSetting) => f.value === getSetting()) ?? {}
+  },
+  set: (value: FontSetting) => { console.log('update value: ', value); updateSetting(value.value)},
 });
 </script>
