@@ -88,19 +88,19 @@ function toggleDrawerView(view: DrawerView) {
   }
 }
 
-const triggerModules = import.meta.glob(
-  '@/components/**/settings/*/*ToolbarTrigger.vue',
-) as Record<string, () => Promise<{ default: unknown }>>;
+const triggerModules = import.meta.glob('@/components/**/settings/*/*ToolbarTrigger.vue') as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
 
 const stripPrefix = (raw: string) => raw.replace(/^(\\d+)\\./, '');
 
 const triggers = computed(() => {
   return Object.entries(triggerModules).map(([path, loader]) => {
-
     const match = path.match(/settings\/([^/]+)\//);
     const settingFolder = match ? match[1] : '';
 
-    console.log('settingFolder: ', settingFolder)
+    console.log('settingFolder: ', settingFolder);
     return {
       slug: stripPrefix(settingFolder),
       component: defineAsyncComponent(loader),
