@@ -1,7 +1,7 @@
 import { defineNuxtModule, updateRuntimeConfig } from '@nuxt/kit';
 
 export default defineNuxtModule({
-  setup(options, nuxt) {
+  setup() {
     updateRuntimeConfig({
       public: {
         secondaryColor: '#fff',

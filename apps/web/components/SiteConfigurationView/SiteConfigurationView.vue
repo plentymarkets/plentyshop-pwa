@@ -13,7 +13,7 @@
       <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.title}-section`">
         <template #settings-group-title>{{ group.title }}</template>
 
-        <component v-for="(component, index) in group.components" :is="component" :key="index" />
+        <component :is="component" v-for="(component, index) in group.components" :key="index" />
       </SettingsGroup>
     </div>
   </div>

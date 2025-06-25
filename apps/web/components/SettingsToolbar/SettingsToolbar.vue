@@ -18,8 +18,8 @@
       </button>
 
       <component
-        v-for="trigger in triggers"
         :is="trigger.component"
+        v-for="trigger in triggers"
         :key="trigger.slug"
         :active="activeSetting === trigger.slug"
         @click="setActiveSetting(trigger.slug)"
@@ -58,8 +58,6 @@ import gearBlack from 'assets/icons/paths/gear-black.svg';
 import gearWhite from 'assets/icons/paths/gear-white.svg';
 
 import { SfIconSearch } from '@storefront-ui/vue';
-import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
-import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 

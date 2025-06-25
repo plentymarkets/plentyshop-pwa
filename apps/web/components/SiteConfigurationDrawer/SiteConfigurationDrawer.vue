@@ -12,7 +12,7 @@
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
-    <component v-if="getViewComponent" :is="getViewComponent" />
+    <component :is="getViewComponent" v-if="getViewComponent" />
     <!--      TODO: remove once all settings are moved to new structure-->
     <component :is="getDrawerView(drawerView)" v-else-if="drawerView" />
   </SfDrawer>

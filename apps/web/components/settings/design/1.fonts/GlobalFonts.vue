@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import { FontSetting } from '~/composables/useSiteSettings';
+import type { FontSetting } from '~/composables/useSiteSettings';
 
 const fonts = ref([]);
 
@@ -50,7 +50,6 @@ const font = computed({
     return fonts.value.find((f: FontSetting) => f.value === getSetting()) ?? {};
   },
   set: (value: FontSetting) => {
-    console.log('update value: ', value);
     updateSetting(value.value);
   },
 });
