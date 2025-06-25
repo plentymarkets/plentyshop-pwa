@@ -49,24 +49,11 @@ jobs:
             repository: 'plentymarkets/plentymarkets-sdk'
             token: ${{ secrets.ORGA_PAT_CICD1_FULL_REPO_AND_PACKAGES }}
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.5'
-          cache: 'yarn'
-
-      - run: |
-          yarn set version stable
-          yarn set version 3.6.1
-
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Build packages
-        run: yarn build
+      - name: Setup Node
+        uses: ./.github/actions/setup
 
       - name: Build typedoc
-        run: yarn publish-typedoc
+        run: npm run publish-typedoc
     
       - name: Upload artifact
         uses: actions/upload-artifact@v4
