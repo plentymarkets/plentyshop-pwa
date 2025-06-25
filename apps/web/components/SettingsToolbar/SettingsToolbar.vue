@@ -98,7 +98,6 @@ const triggers = computed(() => {
     const match = path.match(/settings\/([^/]+)\//);
     const settingFolder = match ? match[1] : '';
 
-    console.log('settingFolder: ', settingFolder);
     return {
       slug: stripPrefix(settingFolder),
       component: defineAsyncComponent(loader),

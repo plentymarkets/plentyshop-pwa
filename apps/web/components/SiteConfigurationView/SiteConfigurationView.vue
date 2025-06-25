@@ -10,7 +10,7 @@
     </header>
 
     <div class="h-[calc(100vh-150px)] overflow-y-auto">
-      <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.title}-section`">
+      <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.slug}-section`">
         <template #settings-group-title>{{ group.title }}</template>
 
         <component :is="component" v-for="(component, index) in group.components" :key="index" />
@@ -41,7 +41,7 @@ const stripPrefix = (raw: string): string => raw.replace(/^(\d+)\./, '');
 
 const groups = computed(() => {
   const prefix = `/settings/${activeSetting.value}/`;
-  const map: Record<string, { title: string; components: unknown[] }> = {};
+  const map: Record<string, { title: string; components: unknown[]; slug: string }> = {};
 
   for (const [path, loader] of Object.entries(modules)) {
     if (!path.includes(prefix)) continue;
@@ -57,6 +57,7 @@ const groups = computed(() => {
     if (!map[groupSlug]) {
       map[groupSlug] = {
         title: formatTitle(groupSlug),
+        slug: groupSlug,
         components: [],
       };
     }
