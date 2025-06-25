@@ -125,13 +125,16 @@ const getSlideAdjustedIndex = (slideIndex: number) => {
 watch(
   () => activeSlideIndex.value[meta.uuid],
   (newIndex) => {
-    if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
+    if (!slider || slider.destroyed) return;
+
+    if (slider.realIndex !== newIndex) {
       isInternalChange.value = true;
       if (slider.params.loop) {
         slider.slideToLoop(newIndex);
       } else {
         slider.slideTo(newIndex);
       }
+
     }
   },
   { flush: 'post' },

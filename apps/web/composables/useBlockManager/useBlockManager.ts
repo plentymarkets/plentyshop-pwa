@@ -31,7 +31,6 @@ export const useBlockManager = () => {
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
   const { openDrawerWithView } = useSiteConfiguration();
-  const { setIndex } = useCarousel();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -105,10 +104,26 @@ export const useBlockManager = () => {
     updatedBlocks.splice(newIndex, 0, blockToChange);
 
     updateBlocks(updatedBlocks);
+
     const movedBlock = updatedBlocks[newIndex];
+
     if (movedBlock?.name === 'Carousel') {
-      setIndex(movedBlock.meta.uuid, 0);
+      const uuid = movedBlock.meta.uuid;
+      const { activeSlideIndex, setIndex } = useCarousel();
+      const { drawerOpen, drawerView, blockUuid } = useSiteConfiguration();
+
+      if (activeSlideIndex.value[uuid] !== 0) {
+        setIndex(uuid, 0);
+      }
+
+      if (drawerOpen.value && drawerView.value === 'blocksSettings' && blockUuid.value === uuid) {
+        const event = new CustomEvent('carousel-reset-slide', {
+          detail: { uuid, index: 0 },
+        });
+        window.dispatchEvent(event);
+      }
     }
+
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
