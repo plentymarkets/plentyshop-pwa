@@ -10,11 +10,11 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get fontSection() {
-    return cy.getByTestId('font-section');
+    return cy.getByTestId('fonts-section');
   }
 
   get colorSection() {
-    return cy.getByTestId('color-section');
+    return cy.getByTestId('colors-section');
   }
 
   get blockSpacingSection() {

@@ -16,7 +16,15 @@
         <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
         <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
       </button>
-      <SettingsDesignToolbarTrigger :active="activeSetting === 'design'" @click="setActiveSetting('design')" />
+
+      <component
+        v-for="trigger in triggers"
+        :is="trigger.component"
+        :key="trigger.slug"
+        :active="activeSetting === trigger.slug"
+        @click="setActiveSetting(trigger.slug)"
+      />
+
       <button
         v-if="runtimeConfig.public.isDev"
         type="button"
@@ -79,6 +87,26 @@ function toggleDrawerView(view: DrawerView) {
     openDrawerWithView(view);
   }
 }
+
+const triggerModules = import.meta.glob(
+  '@/components/**/settings/*/*ToolbarTrigger.vue',
+) as Record<string, () => Promise<{ default: unknown }>>;
+
+const stripPrefix = (raw: string) => raw.replace(/^(\\d+)\\./, '');
+
+const triggers = computed(() => {
+  return Object.entries(triggerModules).map(([path, loader]) => {
+
+    const match = path.match(/settings\/([^/]+)\//);
+    const settingFolder = match ? match[1] : '';
+
+    console.log('settingFolder: ', settingFolder)
+    return {
+      slug: stripPrefix(settingFolder),
+      component: defineAsyncComponent(loader),
+    };
+  });
+});
 
 watch(
   () => getPrimaryColorSetting(),
