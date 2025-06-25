@@ -4,6 +4,7 @@ export interface useCategorySettingsCollectionState {
   data: CategoryEntry[];
   initialData: CategoryEntry[];
   loading: boolean;
+  hasChanges: boolean;
 }
 
 export interface useCategorySettingsCollection {

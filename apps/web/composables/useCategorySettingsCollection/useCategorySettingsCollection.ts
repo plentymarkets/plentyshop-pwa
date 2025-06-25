@@ -1,11 +1,13 @@
 import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 
+
 export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
     data: [],
     initialData: [],
     loading: false,
+    hasChanges: false,
   }));
 
   const { send } = useNotification();
@@ -21,9 +23,13 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     state.value.initialData.push(JSON.parse(JSON.stringify(category)));
   };
 
-  const hasChanges = computed(() => {
-    return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
-  });
+  watch(
+    () => state.value.data,
+    () => {
+      state.value.hasChanges = JSON.stringify({ ...state.value.data, previewUrl: '', updatedAt: '' }) !== JSON.stringify({ ...state.value.initialData, previewUrl: '', updatedAt: '' });
+    },
+    { deep: true },
+  );
 
   const isCategoryDirty = (id: number) => {
     const current = state.value.data.find((item) => item.id === id);
@@ -81,27 +87,37 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         ),
       );
       const response = await useSdk().plentysystems.setCategorySettings(settings);
-      console.log('Response from setCategorySettings:', response);
 
-      // Flatten the response data
-      const updatedCategories = Array.isArray(response?.data)
-        ? response.data.flat()
-        : [];
-      console.log('Updated categories:', updatedCategories);
-
-      // Update state.value.data and state.value.initialData
-      updatedCategories.forEach((updatedCategory: CategoryEntry) => {
-        const dataIdx = state.value.data.findIndex((item) => item.id === updatedCategory.id);
-        if (dataIdx !== -1) {
-          console.log('Updating data for category:', updatedCategory.id);
-          state.value.data[dataIdx] = JSON.parse(JSON.stringify(updatedCategory));
-        }
-        const initialIdx = state.value.initialData.findIndex((item) => item.id === updatedCategory.id);
+      response.data.categories[0].forEach((category) => {
+        
+        // Update initialData
+        const initialIdx = state.value.initialData.findIndex((item) => item.id === category.id);
         if (initialIdx !== -1) {
-          console.log('Updating initial data for category:', updatedCategory.id);
-          state.value.initialData[initialIdx] = JSON.parse(JSON.stringify(updatedCategory));
+          const newInitialData = [...state.value.initialData];
+          newInitialData[initialIdx] = JSON.parse(JSON.stringify(category));
+          state.value.initialData = newInitialData;
         }
       });
+
+      // Flatten the response data
+      // const updatedCategories = Array.isArray(response?.data)
+      //   ? response.data.flat()
+      //   : [];
+      // console.log('Updated categories:', updatedCategories);
+
+      // Update state.value.data and state.value.initialData
+      // updatedCategories.forEach((updatedCategory: CategoryEntry) => {
+      //   const dataIdx = state.value.data.findIndex((item) => item.id === updatedCategory.id);
+      //   if (dataIdx !== -1) {
+      //     console.log('Updating data for category:', updatedCategory.id);
+      //     state.value.data[dataIdx] = JSON.parse(JSON.stringify(updatedCategory));
+      //   }
+      //   const initialIdx = state.value.initialData.findIndex((item) => item.id === updatedCategory.id);
+      //   if (initialIdx !== -1) {
+      //     console.log('Updating initial data for category:', updatedCategory.id);
+      //     state.value.initialData[initialIdx] = JSON.parse(JSON.stringify(updatedCategory));
+      //   }
+      // });
 
       state.value.loading = false;
     } catch (e) {
@@ -134,8 +150,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const editedNameUrl = categoryAfterEdit?.details[0]?.nameUrl;
     const newSlug = buildNewSlug(editedPreviewUrl, editedNameUrl);
 
-    console.log(initialCategories, categoryFromRoute, categoryAfterEdit, newSlug);
-
     const isSaved = await saveCategorySettings();
 
     if (isSaved) {
@@ -161,11 +175,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     return firstSlashIndex !== -1 ? previewUrl.slice(firstSlashIndex) || '/' : '/';
   };
 
-  const extractCategorySlug = (path: string): string | undefined => {
-    const segments = path.split('/').filter(Boolean);
-    return segments.length ? segments[segments.length - 1] : undefined;
-  };
-
   const buildNewSlug = (previewUrl: string | undefined, nameUrl: string | undefined): string => {
     if (!previewUrl || !nameUrl) return '/';
     try {
@@ -185,6 +194,5 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     isCategoryDirty,
     saveCategorySettings,
     save,
-    hasChanges,
   };
 };
