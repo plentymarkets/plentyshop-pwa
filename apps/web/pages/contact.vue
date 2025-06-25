@@ -159,6 +159,7 @@ import { paths } from '~/utils/paths';
 
 definePageMeta({
   layout: false,
+  pageType: 'static',
 });
 
 const runtimeConfig = useRuntimeConfig();
