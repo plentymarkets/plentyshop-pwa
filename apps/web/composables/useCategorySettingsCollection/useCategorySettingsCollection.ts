@@ -12,7 +12,9 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   const { $i18n } = useNuxtApp();
 
   const addCategorySettings = async (category: CategoryEntry) => {
-    const exists = state.value.data.some((item) => item.id === category.id);
+    const exists = state.value.data.some(
+      (item) => item.id === category.id && item.details[0].lang === category.details[0].lang,
+    );
     if (exists) return;
 
     state.value.data.push(category);
@@ -34,42 +36,58 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
     state.value.loading = true;
     try {
+      const dirtyCategories = state.value.data.filter((category) => {
+        const initial = state.value.initialData.find((item) => item.id === category.id);
+        if (!initial) return false;
+        return JSON.stringify(category) !== JSON.stringify(initial);
+      });
+      if (dirtyCategories.length === 0) {
+        state.value.loading = false;
+        return true;
+      }
       const settings = JSON.parse(
         JSON.stringify(
-          state.value.data.map((category) => {
-            const detail = category.details[0];
-            return {
-              id: category.id,
-              parentCategoryId: category.parentCategoryId,
-              sitemap: category.sitemap,
-              linklist: category.linklist,
-              linkCategoryToWebstore: category.isLinkedToWebstore,
-              right: category.right,
-              categoryId: detail.categoryId,
-              lang: detail.lang,
-              name: detail.name,
-              nameUrl: detail.nameUrl,
-              type: category.type,
-              position: detail.position,
-              metaTitle: detail.metaTitle,
-              metaDescription: detail.metaDescription,
-              metaKeywords: detail.metaKeywords,
-              metaRobots: detail.metaRobots,
-              canonicalLink: detail.canonicalLink,
-              pageView: detail.pageView,
-              itemListView: detail.itemListView,
-              singleItemView: detail.singleItemView,
-              clients: category.clients.map((client) => ({
-                categoryId: client.categoryId,
-                plentyId: client.plentyId,
-              })),
-            };
-          }),
+          dirtyCategories
+            .filter((category) => category.details && category.details.length > 0)
+            .map((category) => {
+              const detail = category.details[0];
+              return {
+                id: category.id,
+                parentCategoryId: category.parentCategoryId,
+                sitemap: category.sitemap,
+                linklist: category.linklist,
+                linkCategoryToWebstore: category.isLinkedToWebstore,
+                right: category.right,
+                categoryId: detail.categoryId,
+                lang: detail.lang,
+                name: detail.name,
+                nameUrl: detail.nameUrl,
+                type: category.type,
+                position: detail.position,
+                metaTitle: detail.metaTitle,
+                metaDescription: detail.metaDescription,
+                metaKeywords: detail.metaKeywords,
+                metaRobots: detail.metaRobots,
+                canonicalLink: detail.canonicalLink,
+                pageView: detail.pageView,
+                itemListView: detail.itemListView,
+                singleItemView: detail.singleItemView,
+                clients: category.clients.map((client) => ({
+                  categoryId: client.categoryId,
+                  plentyId: client.plentyId,
+                })),
+              };
+            }),
         ),
       );
       await useSdk().plentysystems.setCategorySettings(settings);
 
-      state.value.initialData = JSON.parse(JSON.stringify(state.value.data));
+      dirtyCategories.forEach((category) => {
+        const idx = state.value.initialData.findIndex((item) => item.id === category.id);
+        if (idx !== -1) {
+          state.value.initialData[idx] = JSON.parse(JSON.stringify(category));
+        }
+      });
       state.value.loading = false;
     } catch (e) {
       console.error('Error saving category settings:', e);

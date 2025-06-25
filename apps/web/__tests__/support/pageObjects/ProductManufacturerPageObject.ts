@@ -45,11 +45,11 @@ export class ProductManufacturerPageObject extends PageObject {
     this.manufacturerResponsibleInfo.should('be.visible');
     this.manufacturerResponsibleInformation.should('be.visible');
 
-    // this.manufacturerResponsibleInformationName.should('be.visible');
-    // this.manufacturerResponsibleInformationStreet.should('be.visible');
-    // this.manufacturerResponsibleInformationPostcode.should('be.visible');
-    // this.manufacturerResponsibleInformationPhone.should('be.visible');
-    // this.manufacturerResponsibleInformationEmail.should('be.visible');
+    this.manufacturerResponsibleInformationName.should('be.visible');
+    this.manufacturerResponsibleInformationStreet.should('be.visible');
+    this.manufacturerResponsibleInformationPostcode.should('be.visible');
+    this.manufacturerResponsibleInformationPhone.should('be.visible');
+    this.manufacturerResponsibleInformationEmail.should('be.visible');
 
     this.manufacturerResponsibleInformation.click();
     // this.manufacturerInformationName.should('be.visible');
