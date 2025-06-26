@@ -19,7 +19,7 @@
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
-          :title="imageTitle"
+          :title="imageTitle ? imageTitle : null"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
