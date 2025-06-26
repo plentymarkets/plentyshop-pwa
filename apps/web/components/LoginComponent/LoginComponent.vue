@@ -48,9 +48,8 @@ const loginUser = async () => {
     send({ message: t('auth.login.success'), type: 'positive' });
     if (!skipReload) {
       window.location.reload();
-    } else {
-      emits('loggedIn', skipReload);
     }
+    emits('loggedIn', skipReload);
   }
 };
 </script>
