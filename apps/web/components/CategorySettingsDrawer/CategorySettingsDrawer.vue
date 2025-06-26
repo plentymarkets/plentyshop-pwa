@@ -35,9 +35,6 @@
       >
         SEO
       </button>
-      <button @click="debugMyLife">
-        Debug
-      </button>
     </div>
     <ul v-if="!activeView" class="flex flex-col gap-1 flex-grow">
       <li
@@ -144,11 +141,4 @@ watch(locale, () => {
   setCategoryId({});
   setParentName('');
 });
-
-const { hasChanges, data, initialData } = useCategorySettingsCollection();
-const debugMyLife = () => {
-  console.log('Debug 1', hasChanges.value);
-  console.log('Debug 2', data.value);
-  console.log('Debug 3', initialData.value);
-};
 </script>

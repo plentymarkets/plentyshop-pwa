@@ -271,7 +271,6 @@ const detailField = <K extends keyof CategoryDetails>(field: K) =>
     },
   });
 
-// Cumva astea trebuie sa fie in useCategorySettingsCollection?
 const pageName = detailField('name');
 const pageNameUrl = detailField('nameUrl');
 const pagePosition = detailField('position');
