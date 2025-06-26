@@ -1,6 +1,6 @@
 import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
-import { watchDebounced } from '@vueuse/core';
+
 
 export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
@@ -13,24 +13,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const editableCategoryProperties = [
-    'parentCategoryId',
-    'sitemap',
-    'linklist',
-    'isLinkedToWebstore',
-    'right',
-    'type',
-  ];
-
-  const editableCategoryDetailsProperties = [
-    'name',
-    'nameUrl',
-    'metaTitle',
-    'metaDescription',
-    'metaKeywords',
-    'metaRobots',
-  ];
-
   const addCategorySettings = async (category: CategoryEntry) => {
     const exists = state.value.data.some(
       (item) => item.id === category.id && item.details[0].lang === category.details[0].lang,
@@ -41,47 +23,20 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     state.value.initialData.push(JSON.parse(JSON.stringify(category)));
   };
 
-  watchDebounced(
+  watch(
     () => state.value.data,
     () => {
-      state.value.hasChanges = state.value.data.some((category) => isCategoryDirty(category.id));
+      state.value.hasChanges = JSON.stringify({ ...state.value.data, previewUrl: '', updatedAt: '' }) !== JSON.stringify({ ...state.value.initialData, previewUrl: '', updatedAt: '' });
     },
-    { deep: true, debounce: 300 },
+    { deep: true },
   );
 
   const isCategoryDirty = (id: number) => {
     const current = state.value.data.find((item) => item.id === id);
     const initial = state.value.initialData.find((item) => item.id === id);
-
     if (!current || !initial) return false;
 
-    let isDirty = false;
-
-    editableCategoryProperties.forEach((property) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const currentValue = (current as any)[property];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const initialValue = (initial as any)[property];
-
-      if (currentValue !== initialValue) {
-        isDirty = true;
-      }
-    });
-
-    editableCategoryDetailsProperties.forEach((property) => {
-      const currentDetail = current.details[0];
-      const initialDetail = initial.details[0];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const currentValue = (currentDetail as any)[property];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const initialValue = (initialDetail as any)[property];
-
-      if (currentValue !== initialValue) {
-        isDirty = true;
-      }
-    });
-
-    return isDirty;
+    return JSON.stringify(current) !== JSON.stringify(initial);
   };
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
@@ -133,17 +88,36 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
       );
       const response = await useSdk().plentysystems.setCategorySettings(settings);
 
-      response.data.categories[0].forEach((updatedCategory: CategoryEntry) => {
-        const dataIdx = state.value.data.findIndex((item) => item.id === updatedCategory.id);
-        const initialIdx = state.value.initialData.findIndex((item) => item.id === updatedCategory.id);
+      response.data.categories[0].forEach((category) => {
         
-        if (dataIdx !== -1) {
-          Object.assign(state.value.data[dataIdx], updatedCategory);
-        }
+        // Update initialData
+        const initialIdx = state.value.initialData.findIndex((item) => item.id === category.id);
         if (initialIdx !== -1) {
-          Object.assign(state.value.initialData[initialIdx],JSON.parse(JSON.stringify(updatedCategory)));
-  }
+          const newInitialData = [...state.value.initialData];
+          newInitialData[initialIdx] = JSON.parse(JSON.stringify(category));
+          state.value.initialData = newInitialData;
+        }
       });
+
+      // Flatten the response data
+      // const updatedCategories = Array.isArray(response?.data)
+      //   ? response.data.flat()
+      //   : [];
+      // console.log('Updated categories:', updatedCategories);
+
+      // Update state.value.data and state.value.initialData
+      // updatedCategories.forEach((updatedCategory: CategoryEntry) => {
+      //   const dataIdx = state.value.data.findIndex((item) => item.id === updatedCategory.id);
+      //   if (dataIdx !== -1) {
+      //     console.log('Updating data for category:', updatedCategory.id);
+      //     state.value.data[dataIdx] = JSON.parse(JSON.stringify(updatedCategory));
+      //   }
+      //   const initialIdx = state.value.initialData.findIndex((item) => item.id === updatedCategory.id);
+      //   if (initialIdx !== -1) {
+      //     console.log('Updating initial data for category:', updatedCategory.id);
+      //     state.value.initialData[initialIdx] = JSON.parse(JSON.stringify(updatedCategory));
+      //   }
+      // });
 
       state.value.loading = false;
     } catch (e) {
