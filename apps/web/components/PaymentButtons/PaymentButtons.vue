@@ -168,6 +168,7 @@ const PayPalIsAPM = computed(() => {
 const handlePayUponInvoiceModalClosing = () => {
   payPalPayUponInvoice.value = false;
   processingOrder.value = false;
+  usePayUponInvoice().resetState();
 };
 
 const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {

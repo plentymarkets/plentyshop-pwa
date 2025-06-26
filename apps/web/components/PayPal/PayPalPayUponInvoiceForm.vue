@@ -37,7 +37,7 @@
     <UiTelephoneInput
       v-model="phoneWithPrefix"
       :label="`${t('checkoutPayment.phoneLabel')} &#8727;`"
-      :only-countries="onlyCountries"
+      :only-countries="billingCountries.map((country) => country.isoCode2.toLowerCase())"
       :default-country="defaultCountry"
       :error="phoneError"
       @valid-phone-number="handlePhoneNumberValidation"
@@ -61,42 +61,36 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, type ApiError, cartGetters } from '@plentymarkets/shop-api';
+import type { ApiError } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 
 const emit = defineEmits(['confirmCancel']);
 
 const { t } = useI18n();
 const { config, loadConfig, getFraudId, getScript } = usePayPal();
-const { billingCountries, getCountryIsoCode } = useAggregatedCountries();
-const { checkoutAddress: billingAddress } = useCheckoutAddress(AddressType.Billing);
+const { billingCountries } = useAggregatedCountries();
 const { emit: plentyEmit } = usePlentyEvent();
-const { data: cart } = useCart();
 const localePath = useLocalePath();
-
-const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-const loading = ref(false);
-const submitFirstTime = ref(true);
-const birthDate = ref('');
-const validBirthDate = ref(true);
-const phoneWithPrefix = ref('');
-const validPhone = ref(true);
-const phoneError = ref('');
-const phoneNumber = ref('');
-const phoneCountryCode = ref('');
-
-const onlyCountries = billingCountries.value.map((country) => country.isoCode2.toLowerCase());
-const defaultCountry = billingAddress.value?.country ? getCountryIsoCode(billingAddress.value.country) : '';
-const fraudNet = {
-  merchantId: null as string | null,
-  fraudId: null as string | null,
-  pageId: 'checkout-page',
-};
+const {
+  loading,
+  submitFirstTime,
+  birthDate,
+  validBirthDate,
+  phoneWithPrefix,
+  validPhone,
+  phoneError,
+  phoneNumber,
+  phoneCountryCode,
+  fraudNet,
+  currency,
+  defaultCountry,
+  isDateValid,
+  handlePhoneNumberValidation,
+} = usePayUponInvoice();
 
 onNuxtReady(async () => {
   await fetchDependencies();
-  if (fraudNet.merchantId && fraudNet.fraudId) insertFraudNetScript();
+  if (fraudNet.value.merchantId && fraudNet.value.fraudId) insertFraudNetScript();
 });
 
 watch(validPhone, (updatedStatus) => {
@@ -108,8 +102,8 @@ watch(birthDate, () => {
 });
 
 const fetchDependencies = async () => {
-  await loadConfig().then(() => (fraudNet.merchantId = config.value?.merchantId || null));
-  fraudNet.fraudId = await getFraudId();
+  await loadConfig().then(() => (fraudNet.value.merchantId = config.value?.merchantId || null));
+  fraudNet.value.fraudId = await getFraudId();
   await insertLegalText();
 };
 
@@ -132,8 +126,8 @@ const insertFraudNetScript = () => {
   scriptTag.type = 'application/json';
   scriptTag.setAttribute('fncls', 'fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99');
   scriptTag.textContent = JSON.stringify({
-    f: fraudNet.fraudId,
-    s: `${fraudNet.merchantId}_${fraudNet.pageId}`,
+    f: fraudNet.value.fraudId,
+    s: `${fraudNet.value.merchantId}_${fraudNet.value.pageId}`,
     sandbox: true,
   });
 
@@ -143,17 +137,6 @@ const insertFraudNetScript = () => {
   loader.src = 'https://c.paypal.com/da/r/fb.js';
   loader.async = true;
   document.body.appendChild(loader);
-};
-
-const handlePhoneNumberValidation = (validation: PhoneValidationResult) => {
-  validPhone.value = validation.valid;
-  phoneNumber.value = validation.nationalNumber;
-  phoneCountryCode.value = validation.countryCallingCode;
-};
-
-const isDateValid = (): boolean => {
-  const date = new Date(birthDate.value);
-  return birthDate.value !== '' && !Number.isNaN(date.getTime()) && date < new Date();
 };
 
 const validateAndSubmitForm = async () => {
