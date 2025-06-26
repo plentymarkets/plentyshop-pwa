@@ -5,7 +5,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 # v1.xx.xx (xxxx-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.15.0...v1.x.x" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New
-
+- Just testing checkout tests on github
 - Added DHL delivery location finder functionality.
 - Added robots for declaration of accessibility page
 - Displaying correct prices for B2B customers.
