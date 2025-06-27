@@ -5,7 +5,6 @@
   >
     <div class="relative flex flex-col px-1 py-1">
       <button
-        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
@@ -26,7 +25,6 @@
       />
 
       <button
-        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"
@@ -38,7 +36,6 @@
         <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
       </button>
       <button
-        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SeoView' }"
@@ -60,7 +57,6 @@ import gearWhite from 'assets/icons/paths/gear-white.svg';
 import { SfIconSearch } from '@storefront-ui/vue';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
-import { triggersModules } from '~/utils/triggers-imports';
 
 const {
   drawerView,
