@@ -12,7 +12,7 @@
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
-    <component :is="getViewComponent" v-if="getViewComponent" />
+    <component :is="viewComponent" v-if="viewComponent" />
     <!--      TODO: remove once all settings are moved to new structure-->
     <component :is="getDrawerView(drawerView)" v-else-if="drawerView" />
   </SfDrawer>
@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
+import { getViewComponent } from '~/utils/settings-groups';
 
 const { drawerOpen, drawerView, placement, activeSetting } = useSiteConfiguration();
 
@@ -32,15 +33,5 @@ const getDrawerView = (view: string) => {
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };
 
-const modules = import.meta.glob(`@/components/**/settings/**/*.vue`) as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
-const getViewComponent = computed(() => {
-  const key = Object.keys(modules).find(
-    (p) => p.includes(`/settings/${activeSetting.value}/`) && p.endsWith('View.vue'),
-  );
-  return key ? defineAsyncComponent(modules[key]) : null;
-});
+const viewComponent = computed(() => getViewComponent(activeSetting.value));
 </script>

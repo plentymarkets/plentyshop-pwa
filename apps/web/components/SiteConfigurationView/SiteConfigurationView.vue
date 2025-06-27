@@ -22,49 +22,9 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import { SfIconClose } from '@storefront-ui/vue';
+import { getSettingsGroups } from '~/utils/settings-groups';
 
 const { closeDrawer, activeSetting } = useSiteConfiguration();
 
-const modules = import.meta.glob('@/components/**/settings/**/*.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
-const formatTitle = (folderName: string): string => {
-  return folderName
-    .split(/[-_]/)
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join(' ');
-};
-
-const stripPrefix = (raw: string): string => raw.replace(/^(\d+)\./, '');
-
-const groups = computed(() => {
-  const prefix = `/settings/${activeSetting.value}/`;
-  const map: Record<string, { title: string; components: unknown[]; slug: string }> = {};
-
-  for (const [path, loader] of Object.entries(modules)) {
-    if (!path.includes(prefix)) continue;
-
-    const afterPrefix = path.split(prefix)[1];
-    if (!afterPrefix) continue;
-
-    const segments = afterPrefix.split('/');
-    if (segments.length < 2) continue;
-
-    const groupSlug = stripPrefix(segments[0]);
-
-    if (!map[groupSlug]) {
-      map[groupSlug] = {
-        title: formatTitle(groupSlug),
-        slug: groupSlug,
-        components: [],
-      };
-    }
-
-    map[groupSlug].components.push(defineAsyncComponent(loader));
-  }
-
-  return Object.values(map);
-});
+const groups = computed(() => getSettingsGroups(activeSetting.value));
 </script>

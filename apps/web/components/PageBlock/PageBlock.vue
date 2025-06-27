@@ -103,22 +103,17 @@ const props = defineProps<Props>();
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const { visiblePlaceholder, togglePlaceholder, modules, isDragging } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, isDragging } = useBlockManager();
 const attrs = useAttrs();
 
 const blockSize = computed(() => getBlockSize());
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
-  const regex = new RegExp(`${props.block.name}\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path));
 
-  if (matched) {
-    return defineAsyncComponent({
-      loader: modules[matched],
-    });
-  }
-  return '';
+  return defineAsyncComponent({
+    loader: getBlockLoader(props.block.name),
+  });
 });
 
 const contentProps = computed(() => {
