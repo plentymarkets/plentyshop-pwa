@@ -167,7 +167,7 @@
         <SfIconClose />
       </UiButton>
     </header>
-    <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" />
+    <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" :skipReload="false" />
     <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
