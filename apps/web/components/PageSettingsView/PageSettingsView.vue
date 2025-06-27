@@ -91,7 +91,7 @@
             </SfInput>
           </label>
         </div>
-        <!-- <div class="py-2">
+        <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
             <SfTooltip
@@ -104,18 +104,20 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="selectedPage"
-            data-testid="page-parent"
-            :options="pageOptions"
-            label="name"
+            v-model="parentPageValue"
+            data-testid="new-parent-page"
+            :options="categoriesWithFallback"
+            :custom-label="getLabel"
             placeholder="Select a parent page"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
-            track-by="id"
             deselect-label="Selected"
+            :searchable="true"
+            :internal-search="false"
+            @search-change="handleSearch"
           />
-        </div> -->
+        </div>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -216,6 +218,24 @@ const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
+const { categoriesWithFallback, handleSearch, getLabel, initializeModalState } = useAddPageModal();
+
+const parentPageValue = computed({
+  get() {
+    if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
+      return categoriesWithFallback.value.find((cat) => cat.id === 0) || categoriesWithFallback.value[0];
+    }
+
+    return (
+      categoriesWithFallback.value.find((cat) => cat.id === data.value.parentCategoryId) ||
+      categoriesWithFallback.value[0]
+    );
+  },
+  set(val) {
+    data.value.parentCategoryId = val?.id || 0;
+  },
+});
+
 const isLoginRequired = computed({
   get() {
     return data.value.right === 'customer';
@@ -274,4 +294,14 @@ const detailField = <K extends keyof CategoryDetails>(field: K) =>
 const pageName = detailField('name');
 const pageNameUrl = detailField('nameUrl');
 const pagePosition = detailField('position');
+
+onMounted(() => {
+  initializeModalState();
+});
+
+watch(getCategoryId, (newId) => {
+  if (newId !== undefined) {
+    initializeModalState();
+  }
+});
 </script>
