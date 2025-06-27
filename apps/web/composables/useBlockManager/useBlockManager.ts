@@ -207,6 +207,6 @@ export const useBlockManager = () => {
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
-    findOrDeleteBlockByUuid
+    findOrDeleteBlockByUuid,
   };
 };

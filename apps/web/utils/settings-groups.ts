@@ -1,21 +1,16 @@
-import { type Component } from 'vue'
+import { type Component } from 'vue';
 
-type Loader = () => Promise<Component>
+type Loader = () => Promise<Component>;
 
-const customer = import.meta.glob(
-  '/node_modules/*/runtime/components/settings/**/*.vue',
-  { import: 'default' }
-) as Record<string, Loader>
+const customer = import.meta.glob('/node_modules/*/runtime/components/settings/**/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
 
-const nuxtModules = import.meta.glob(
-  '/modules/*/runtime/components/settings/**/*.vue',
-  { import: 'default' }
-) as Record<string, Loader>
+const nuxtModules = import.meta.glob('/modules/*/runtime/components/settings/**/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
 
-const core = import.meta.glob(
-  '@/components/**/settings/**/*.vue',
-  { import: 'default' }
-) as Record<string, Loader>
+const core = import.meta.glob('@/components/**/settings/**/*.vue', { import: 'default' }) as Record<string, Loader>;
 
 const stripPrefix = (raw: string): string => raw.replace(/^(\d+)\./, '');
 
@@ -30,16 +25,16 @@ const normalize = (path: string) => {
   const pop = path.split('/settings/').pop();
 
   if (pop) {
-    return pop.replace(/\.vue$/, '')
+    return pop.replace(/\.vue$/, '');
   }
   return path;
-}
+};
 
-const modules: Record<string, Loader> = {}
+const modules: Record<string, Loader> = {};
 
-Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loader))
-Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader))
-Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader))
+Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loader));
+Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));
+Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 
 export const getSettingsGroups = (activeSetting: string) => {
   const prefix = `${activeSetting}/`;
@@ -68,12 +63,10 @@ export const getSettingsGroups = (activeSetting: string) => {
   }
 
   return Object.values(map);
-}
+};
 
 export const getViewComponent = (activeSetting: string) => {
-  const key = Object.keys(modules).find(
-    (path) => path.includes(`${activeSetting}/`) && path.endsWith('View'),
-  );
+  const key = Object.keys(modules).find((path) => path.includes(`${activeSetting}/`) && path.endsWith('View'));
 
   return key ? defineAsyncComponent(modules[key]) : null;
-}
+};
