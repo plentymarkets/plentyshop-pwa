@@ -167,7 +167,13 @@
         <SfIconClose />
       </UiButton>
     </header>
-    <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" :skipReload="false" />
+    <LoginComponent
+      v-if="isLogin"
+      :is-modal="true"
+      :skip-reload="false"
+      @change-view="isLogin = false"
+      @logged-in="closeAuthentication"
+    />
     <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
@@ -257,7 +263,7 @@ watch(
 const logOut = async () => {
   accountDropdownToggle();
   await logout();
-  navigateTo(localePath(paths.home));
+  window.location.reload();
 };
 
 const accountDropdown = computed(() => [
