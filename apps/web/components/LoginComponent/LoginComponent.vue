@@ -36,7 +36,7 @@ const { login, loading } = useCustomer();
 const { send } = useNotification();
 const { t } = useI18n();
 
-const { isSoftLogin = false, isModal = false, skipReload = false } = defineProps<LoginProps>();
+const { isSoftLogin = false, isModal = false, skipReload = true } = defineProps<LoginProps>();
 const emits = defineEmits(['loggedIn', 'change-view']);
 
 const email = ref('');
@@ -47,6 +47,9 @@ const loginUser = async () => {
   if (success) {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn', skipReload);
+    if (!skipReload) {
+      window.location.reload();
+    }
   }
 };
 </script>
