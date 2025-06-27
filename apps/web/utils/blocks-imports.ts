@@ -1,4 +1,6 @@
-type Loader = () => Promise<any>;
+import type { Component } from 'vue';
+
+type Loader = () => Promise<Component>;
 
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',

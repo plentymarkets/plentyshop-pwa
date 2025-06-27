@@ -1,4 +1,6 @@
-type Loader = () => Promise<any>;
+import type { Component } from 'vue';
+
+type Loader = () => Promise<Component>;
 
 const customerTriggers = import.meta.glob('/node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
@@ -12,12 +14,10 @@ const coreTriggers = import.meta.glob('@/components/**/settings/*/*ToolbarTrigge
   import: 'default',
 }) as Record<string, Loader>;
 
-const stripOrderPrefix = (raw: string) => raw.replace(/^\d+[\._-]?/i, '');
-
 function slug(path: string) {
   const norm = path.replace(/\\/g, '/');
   const match = norm.match(/settings\/([^/]+)\//i);
-  return match ? stripOrderPrefix(match[1]).toLowerCase() : '';
+  return match ? match[1].toLowerCase() : '';
 }
 
 const ordered: Record<string, Loader> = {};
