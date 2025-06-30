@@ -4,7 +4,7 @@
       <div class="flex items-center text-xl font-bold">
         <slot name="setting-group-title" />
       </div>
-      <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
+      <button data-testid="view-close" class="!p-0" @click="closeDrawer">
         <SfIconClose />
       </button>
     </header>
@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import 'vue-multiselect/dist/vue-multiselect.min.css';
 import { SfIconClose } from '@storefront-ui/vue';
 import { getSettingsGroups } from '~/utils/settings-groups';
 

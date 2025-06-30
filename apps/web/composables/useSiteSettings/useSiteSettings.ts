@@ -25,7 +25,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     state.value.data = { ...state.value.data, [setting as string]: value };
   };
 
-  const getSetting: GetSetting = (): string => {
+  const getSetting: GetSetting = () => {
     return (
       (state.value.data?.[setting as string] as string) || (useRuntimeConfig().public?.[setting as string] as string)
     );

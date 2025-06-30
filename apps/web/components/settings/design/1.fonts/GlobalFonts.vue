@@ -29,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { FontSetting } from '~/composables/useSiteSettings';
@@ -44,6 +45,7 @@ onMounted(async () => {
 });
 
 const { updateSetting, getSetting } = useSiteSettings('font');
+const { loadGoogleFont } = useSiteConfiguration();
 
 const font = computed({
   get: () => {
@@ -51,6 +53,7 @@ const font = computed({
   },
   set: (value: FontSetting) => {
     updateSetting(value.value);
+    loadGoogleFont(value.value);
   },
 });
 </script>

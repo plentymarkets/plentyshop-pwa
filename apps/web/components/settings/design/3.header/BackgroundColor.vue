@@ -31,9 +31,13 @@
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
+const { updateHeaderBackgroundColor } = useSiteConfiguration();
 
 const headerBackgroundColor = computed({
   get: () => getSetting(),
-  set: (value) => updateSetting(value),
+  set: (value) => {
+    updateSetting(value);
+    updateHeaderBackgroundColor(value);
+  },
 });
 </script>

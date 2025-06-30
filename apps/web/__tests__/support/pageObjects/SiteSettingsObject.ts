@@ -2,7 +2,7 @@ import { PageObject } from './PageObject';
 
 export class SiteSettingsObject extends PageObject {
   get closeButton() {
-    return cy.getByTestId('design-view-close');
+    return cy.getByTestId('view-close');
   }
 
   get settingsDrawer() {

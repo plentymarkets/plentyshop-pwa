@@ -31,9 +31,13 @@
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('secondaryColor');
+const { updateSecondaryColor } = useSiteConfiguration();
 
 const secondaryColor = computed({
   get: () => getSetting(),
-  set: (value) => updateSetting(value),
+  set: (value) => {
+    updateSetting(value);
+    updateSecondaryColor(value);
+  }
 });
 </script>
