@@ -1,5 +1,3 @@
-export type FontSetting = { caption: string; value: string };
-
 export interface UseSiteSettingsState {
   data: {
     [key: string]: unknown;

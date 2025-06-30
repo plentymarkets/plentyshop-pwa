@@ -29,9 +29,17 @@
 </template>
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
+import { getPaletteFromColor, TailwindPalette, setColorProperties } from '~/utils/tailwindHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
-const { updateHeaderBackgroundColor } = useSiteConfiguration();
+
+const updateHeaderBackgroundColor = (hexColor: string) => {
+  const tailwindColors: TailwindPalette = getPaletteFromColor('header', hexColor).map((color) => ({
+    ...color,
+  }));
+
+  setColorProperties('header', tailwindColors);
+};
 
 const headerBackgroundColor = computed({
   get: () => getSetting(),

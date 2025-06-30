@@ -2,15 +2,11 @@ import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
-  SetTailwindColorProperties,
-  SetColorPalette,
   DrawerView,
   SaveSettings,
   SettingsType,
   SetActiveSetting,
 } from '~/composables/useSiteConfiguration/types';
-import type { TailwindPalette } from '~/utils/tailwindHelper';
-import { getPaletteFromColor } from '~/utils/tailwindHelper';
 import { metaDefaults, openGraph, favicon } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
@@ -72,38 +68,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     document.head.appendChild(link);
 
     state.value.currentFont = `font-family: '${fontName}'`;
-  };
-
-  const setColorProperties: SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
-    tailwindPalette.forEach((shade) => {
-      if (shade.rgb) {
-        document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
-      }
-    });
-  };
-
-  const updatePrimaryColor: SetColorPalette = (hexColor: string) => {
-    const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
-      ...color,
-    }));
-
-    setColorProperties('primary', tailwindColors);
-  };
-
-  const updateSecondaryColor: SetColorPalette = (hexColor: string) => {
-    const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
-      ...color,
-    }));
-
-    setColorProperties('secondary', tailwindColors);
-  };
-
-  const updateHeaderBackgroundColor: SetColorPalette = (hexColor: string) => {
-    const tailwindColors: TailwindPalette = getPaletteFromColor('header', hexColor).map((color) => ({
-      ...color,
-    }));
-
-    setColorProperties('header', tailwindColors);
   };
 
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
@@ -235,9 +199,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   return {
-    updatePrimaryColor,
-    updateSecondaryColor,
-    updateHeaderBackgroundColor,
     ...toRefs(state.value),
     updateNewBlockPosition,
     loadGoogleFont,

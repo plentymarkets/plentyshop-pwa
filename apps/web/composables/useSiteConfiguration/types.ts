@@ -55,8 +55,6 @@ export interface UseSiteConfigurationState {
 
 export type LoadGoogleFont = (font: string) => void;
 export type UpdateNewBlockPosition = (position: number) => void;
-export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
-export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
@@ -88,9 +86,6 @@ export interface UseSiteConfiguration {
   setActiveSetting: SetActiveSetting;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
-  updatePrimaryColor: SetColorPalette;
-  updateSecondaryColor: SetColorPalette;
-  updateHeaderBackgroundColor: SetColorPalette;
   saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
   togglePageModal: TogglePageModal;

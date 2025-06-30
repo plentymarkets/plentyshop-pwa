@@ -32,7 +32,7 @@
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import type { FontSetting } from '~/composables/useSiteSettings';
+import type { FontSetting } from './types';
 
 const fonts = ref([]);
 
