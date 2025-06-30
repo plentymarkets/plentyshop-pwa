@@ -38,6 +38,6 @@ const primaryColor = computed({
   set: (value) => {
     updateSetting(value);
     updatePrimaryColor(value);
-  }
+  },
 });
 </script>

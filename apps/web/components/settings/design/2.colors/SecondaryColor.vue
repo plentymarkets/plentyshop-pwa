@@ -38,6 +38,6 @@ const secondaryColor = computed({
   set: (value) => {
     updateSetting(value);
     updateSecondaryColor(value);
-  }
+  },
 });
 </script>

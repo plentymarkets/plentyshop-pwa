@@ -58,13 +58,7 @@ import { SfIconSearch } from '@storefront-ui/vue';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 
-const {
-  drawerView,
-  activeSetting,
-  openDrawerWithView,
-  closeDrawer,
-  setActiveSetting,
-} = useSiteConfiguration();
+const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
 
 function toggleDrawerView(view: DrawerView) {
   if (drawerView.value === view) {
