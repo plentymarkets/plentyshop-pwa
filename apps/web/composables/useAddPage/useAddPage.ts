@@ -148,6 +148,11 @@ export const useAddPageModal = () => {
   const [pageName, pageNameAttributes] = defineField('pageName');
 
   const getLabel = (option: CategoryEntry) => {
+    if (!categoryEntryGetters.getDetails(option)[0]) {
+      const categoryId = categoryEntryGetters.getId(option);
+      return `ID: ${categoryId}`;
+    }
+
     return categoryEntryGetters.getDetails(option)[0].name;
   };
 
@@ -182,6 +187,7 @@ export const useAddPageModal = () => {
       parentId: newCategory.parentCategoryId,
       name: newCategory.details[0].name,
       path: newCategory.details[0].nameUrl,
+      details: newCategory.details,
     });
     setSettingsCategory({} as CategoryTreeItem, 'general-menu');
   };
