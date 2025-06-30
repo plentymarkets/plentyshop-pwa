@@ -22,7 +22,7 @@
     </p>
     <p v-else class="text-right">{{ getShippingAmount(orderGetters.getOriginalShippingCost(order)) }}</p>
   </div>
-  <div class="grid grid-cols-2 mt-2">
+  <div v-if="orderGetters.getCouponValue(order.totals) < 0" class="grid grid-cols-2 mt-2">
     <p class="font-medium text-base">{{ t('coupon.name') }}:</p>
     <p class="text-right">{{ format(orderGetters.getCouponValue(order.totals)) }}</p>
   </div>
