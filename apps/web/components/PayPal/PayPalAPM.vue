@@ -96,6 +96,9 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
   if (paypalScript.value?.Buttons && fundingSource) {
     const button = paypalScript.value?.Buttons({
       fundingSource: fundingSource,
+      style: {
+        label: 'buynow',
+      },
       async onClick(data, actions) {
         const success = await onValidationCallback();
         if (!success) {
