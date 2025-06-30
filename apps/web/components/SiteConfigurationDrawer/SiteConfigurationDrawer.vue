@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
-import { getViewComponent } from '~/utils/settings-groups';
 
 const { drawerOpen, drawerView, placement, activeSetting } = useSiteConfiguration();
 

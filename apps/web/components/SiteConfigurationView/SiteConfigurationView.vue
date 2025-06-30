@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-import { getSettingsGroups } from '~/utils/settings-groups';
 
 const { closeDrawer, activeSetting } = useSiteConfiguration();
 
