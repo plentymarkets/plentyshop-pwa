@@ -1,4 +1,3 @@
-import type { TailwindPalette } from '~/utils/tailwindHelper';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView =
   | 'SeoView'

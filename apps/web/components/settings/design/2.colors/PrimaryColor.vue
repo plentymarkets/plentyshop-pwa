@@ -29,12 +29,12 @@
 </template>
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
-import { getPaletteFromColor, TailwindPalette, setColorProperties } from '~/utils/tailwindHelper';
+import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('primaryColor');
 
 const updatePrimaryColor = (hexColor: string) => {
-  const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
+  const tailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({
     ...color,
   }));
 
