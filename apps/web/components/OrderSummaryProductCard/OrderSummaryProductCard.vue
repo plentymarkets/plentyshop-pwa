@@ -96,7 +96,9 @@
       <div class="items-start sm:items-center sm:mt-auto text-sm">
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.price') }}:</p>
-          <p v-if="showNetPrices" class="text-right">{{ format(orderGetters.getOriginalItemNetPrice(props.orderItem)) }}</p>
+          <p v-if="showNetPrices" class="text-right">
+            {{ format(orderGetters.getOriginalItemNetPrice(props.orderItem)) }}
+          </p>
           <p v-else class="text-right">{{ format(orderGetters.getOriginalItemPrice(props.orderItem)) }}</p>
         </div>
         <div class="grid grid-cols-2 w-full">
@@ -106,7 +108,9 @@
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('orderConfirmation.total') }}:</p>
           <p v-if="showNetPrices" class="text-right">
-            {{ format(orderGetters.getOriginalItemNetPrice(props.orderItem) * orderGetters.getItemQty(props.orderItem)) }}
+            {{
+              format(orderGetters.getOriginalItemNetPrice(props.orderItem) * orderGetters.getItemQty(props.orderItem))
+            }}
           </p>
           <p v-else class="text-right">
             {{ format(orderGetters.getOriginalItemPrice(props.orderItem) * orderGetters.getItemQty(props.orderItem)) }}
