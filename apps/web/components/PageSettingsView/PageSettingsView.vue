@@ -106,7 +106,7 @@
           <Multiselect
             v-model="parentPageValue"
             data-testid="new-parent-page"
-            :options="categoriesWithFallback"
+            :options="allItems"
             :custom-label="getLabel"
             placeholder="Select a parent page"
             :allow-empty="false"
@@ -114,7 +114,7 @@
             select-label=""
             deselect-label="Selected"
             :searchable="true"
-            :internal-search="false"
+            :internal-search="true"
             @search-change="handleSearch"
           />
         </div>
@@ -218,23 +218,28 @@ const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
-const { categoriesWithFallback, handleSearch, getLabel, initializeModalState } = useAddPageModal();
+
+const { allItems } = useCategoriesSearch();
+
+console.log('data', data);
+
+const {  handleSearch, getLabel, initializeModalState } = useAddPageModal();
+
 
 const parentPageValue = computed({
   get() {
+    // Always get the 'None' item from allItems (id: 0)
     if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
-      return categoriesWithFallback.value.find((cat) => cat.id === 0) || categoriesWithFallback.value[0];
+      return allItems.value.find((cat) => cat.id === 0) || null;
     }
-
-    return (
-      categoriesWithFallback.value.find((cat) => cat.id === data.value.parentCategoryId) ||
-      categoriesWithFallback.value[0]
-    );
+    return allItems.value.find((cat) => cat.id === data.value.parentCategoryId) || allItems.value.find((cat) => cat.id === 0) || null;
   },
   set(val) {
     data.value.parentCategoryId = val?.id || 0;
   },
 });
+
+console.log('Parent Page Value: ', parentPageValue);
 
 const isLoginRequired = computed({
   get() {
