@@ -116,6 +116,10 @@
             {
                 "text": "Inject components into shop areas",
                 "link": "/guide/how-to/module/inject-components.md"
+            },
+            {
+                "text": "Extensible Site‑Settings",
+                "link": "/guide/how-to/module/site-settings-architecture.md"
             }
         ]
     }
