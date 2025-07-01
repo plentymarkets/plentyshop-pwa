@@ -16,8 +16,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     hasMoreItem: true,
   }));
 
-
-
   const insertIntoParent = (newPage: CategoryEntry, nodes: CategoryEntry[]): boolean => {
     return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
@@ -210,7 +208,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     };
   };
 
-
   const noneCategoryItem: CategoryEntry = {
     id: 0,
     type: 'none',
@@ -257,7 +254,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     hasChildren: false,
   };
 
-  function flattenCategories(categories: CategoryEntry[]): CategoryEntry[] {
+  const flattenCategories = (categories: CategoryEntry[]): CategoryEntry[] => {
     const flat: CategoryEntry[] = [];
     function recurse(nodes: CategoryEntry[]) {
       for (const node of nodes) {
@@ -269,13 +266,11 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     }
     recurse(categories);
     return flat;
-  }
+  };
 
-  const allItems = computed(() => flattenCategories([
-    ...[noneCategoryItem],
-    ...state.value.contentItems,
-    ...state.value.itemItems
-  ]));
+  const allItems = computed(() =>
+    flattenCategories([...[noneCategoryItem], ...state.value.contentItems, ...state.value.itemItems]),
+  );
 
   return {
     ...toRefs(state.value),
@@ -285,6 +280,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     deletePageFromTree,
     getCategories,
     resetCategories,
-    allItems, 
+    allItems,
   };
 };

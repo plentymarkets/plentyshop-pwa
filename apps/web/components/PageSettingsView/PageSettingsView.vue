@@ -221,25 +221,26 @@ const { data, loading, fetchCategorySettings } = useCategorySettings();
 
 const { allItems } = useCategoriesSearch();
 
-console.log('data', data);
 
-const {  handleSearch, getLabel, initializeModalState } = useAddPageModal();
+const { handleSearch, getLabel, initializeModalState } = useAddPageModal();
 
+console.log('data', allItems);
 
 const parentPageValue = computed({
   get() {
-    // Always get the 'None' item from allItems (id: 0)
     if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
       return allItems.value.find((cat) => cat.id === 0) || null;
     }
-    return allItems.value.find((cat) => cat.id === data.value.parentCategoryId) || allItems.value.find((cat) => cat.id === 0) || null;
+    return (
+      allItems.value.find((cat) => cat.id === data.value.parentCategoryId) ||
+      allItems.value.find((cat) => cat.id === 0) ||
+      null
+    );
   },
   set(val) {
-    data.value.parentCategoryId = val?.id || 0;
+    data.value.parentCategoryId = val?.id || null;
   },
 });
-
-console.log('Parent Page Value: ', parentPageValue);
 
 const isLoginRequired = computed({
   get() {
@@ -309,4 +310,12 @@ watch(getCategoryId, (newId) => {
     initializeModalState();
   }
 });
+
+watch(
+  () => data.value.parentCategoryId,
+  (newVal, oldVal) => {
+    console.log('parentCategoryId changed:', { oldVal, newVal });
+  },
+  { immediate: true },
+);
 </script>
