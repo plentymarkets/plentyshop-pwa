@@ -170,9 +170,8 @@
     <LoginComponent
       v-if="isLogin"
       :is-modal="true"
-      :skip-reload="false"
       @change-view="isLogin = false"
-      @logged-in="navigateAfterAuth"
+      @logged-in="navigateAfterAuth(true)"
     />
     <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
@@ -251,8 +250,8 @@ onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 
-const navigateAfterAuth = (skipReload: boolean) => {
-  if (!skipReload) {
+const navigateAfterAuth = (reload: boolean) => {
+  if (reload) {
     window.location.reload();
   } else {
     closeAuthentication();
