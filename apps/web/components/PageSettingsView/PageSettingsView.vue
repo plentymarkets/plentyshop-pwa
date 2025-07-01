@@ -221,9 +221,7 @@ const { data, loading, fetchCategorySettings } = useCategorySettings();
 
 const { allItems } = useCategoriesSearch();
 
-
 const { handleSearch, getLabel, initializeModalState } = useAddPageModal();
-
 
 const parentPageValue = computed({
   get() {
