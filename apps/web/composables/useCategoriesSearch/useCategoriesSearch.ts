@@ -90,10 +90,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     const pageKey = categoryType === 'item' ? 'itemPage' : 'contentPage';
     const itemsKey = categoryType === 'item' ? 'itemItems' : 'contentItems';
 
-    state.value[itemsKey] = [];
-    state.value[pageKey] = 1;
-    state.value[hasMoreKey] = true;
-
     if (state.value[loadingKey] || !state.value[hasMoreKey]) return;
 
     state.value[loadingKey] = true;
@@ -133,9 +129,14 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       state.value.loadingContent = false;
     }
   };
+
   const resetCategories = () => {
     state.value.contentItems = [];
+    state.value.contentPage = 1;
+    state.value.hasMoreContent = true;
     state.value.itemItems = [];
+    state.value.itemPage = 1;
+    state.value.hasMoreItem = true;
   };
 
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
