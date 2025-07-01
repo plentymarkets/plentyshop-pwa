@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="auth" :heading="''">
-    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="navigateAfterAuth" />
+    <LoginComponent v-if="isLogin" :skip-reload="false" @change-view="isLogin = false" @logged-in="navigateAfterAuth" />
     <Register v-else @change-view="isLogin = true" @registered="navigateAfterAuth" />
   </NuxtLayout>
 </template>
