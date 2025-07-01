@@ -172,7 +172,7 @@
       :is-modal="true"
       :skip-reload="false"
       @change-view="isLogin = false"
-      @logged-in="closeAuthentication"
+      @logged-in="navigateAfterAuth"
     />
     <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
@@ -242,9 +242,18 @@ const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
+
 onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
+
+const navigateAfterAuth = (skipReload: boolean) => {
+  if (!skipReload) {
+    window.location.reload();
+  } else {
+    closeAuthentication();
+  }
+};
 
 watch(
   () => cart.value?.items,
