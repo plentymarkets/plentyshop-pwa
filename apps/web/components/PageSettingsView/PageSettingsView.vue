@@ -224,11 +224,14 @@ const { allItems } = useCategoriesSearch();
 
 const { handleSearch, getLabel, initializeModalState } = useAddPageModal();
 
-console.log('data', allItems);
 
 const parentPageValue = computed({
   get() {
-    if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
+    if (
+      data.value.parentCategoryId === 0 ||
+      data.value.parentCategoryId === null ||
+      data.value.parentCategoryId === undefined
+    ) {
       return allItems.value.find((cat) => cat.id === 0) || null;
     }
     return (
@@ -238,7 +241,7 @@ const parentPageValue = computed({
     );
   },
   set(val) {
-    data.value.parentCategoryId = val?.id || null;
+    data.value.parentCategoryId = val?.id === 0 ? 0 : val?.id || 0;
   },
 });
 
@@ -311,11 +314,10 @@ watch(getCategoryId, (newId) => {
   }
 });
 
+// Remove debug console.log to fix linter error
 watch(
   () => data.value.parentCategoryId,
-  (newVal, oldVal) => {
-    console.log('parentCategoryId changed:', { oldVal, newVal });
-  },
+  () => {},
   { immediate: true },
 );
 </script>
