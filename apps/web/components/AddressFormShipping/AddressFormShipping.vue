@@ -277,7 +277,7 @@ const validateAndSubmitForm = async () => {
       await submitForm();
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === 'Retry') {
+        if (error.message === getErrorCode('1400')) {
           await useCustomer().getSession();
           await submitForm();
         }
