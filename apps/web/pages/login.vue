@@ -22,8 +22,6 @@ const isLogin = ref(true);
 
 const navigateAfterAuth = () => {
   const redirectUrl = router.currentRoute.value.query.redirect as string;
-  if (redirectUrl) {
-    window.location.href = localePath(redirectUrl);
-  }
+  window.location.href = redirectUrl ? localePath(redirectUrl) : localePath(paths.home);
 };
 </script>
