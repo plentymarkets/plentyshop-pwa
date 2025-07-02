@@ -36,3 +36,11 @@ export const getPaletteFromColor = (type: string, hexColor: string, config: Pale
   });
   return rgbPalette;
 };
+
+export const setColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
+  tailwindPalette.forEach((shade) => {
+    if (shade.rgb) {
+      document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
+    }
+  });
+};
