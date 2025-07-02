@@ -169,7 +169,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, ApiError, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { AddressFormShippingProps } from './types';
@@ -275,14 +275,13 @@ const validateAndSubmitForm = async () => {
   if (formData.valid) {
     try {
       await submitForm();
-    } catch (error: any) {
-      // silent refresh of csrf token
-      console.log(error);
-      if (error === 'Retry') {
-        await useCustomer().getSession();
-        await submitForm();
-      }
-      else {
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === 'Retry') {
+          await useCustomer().getSession();
+          await submitForm();
+        }
+      } else if (error instanceof ApiError) {
         useHandleError(error);
       }
     }
@@ -304,7 +303,7 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
-    .then(() => handleCartTotalChanges())
+    .then(() => handleCartTotalChanges());
 });
 
 const edit = (address: Address) => {

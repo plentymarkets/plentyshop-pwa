@@ -164,7 +164,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, ApiError, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { AddressFormBillingProps } from './types';
@@ -232,7 +232,18 @@ const validateAndSubmitForm = async () => {
   if (missingGuestCheckoutEmail.value) return backToContactInformation();
 
   if (formData.valid) {
-    await submitForm();
+    try {
+      await submitForm();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === 'Retry') {
+          await useCustomer().getSession();
+          await submitForm();
+        }
+      } else if (error instanceof ApiError) {
+        useHandleError(error);
+      }
+    }
     if (showNewForm.value) showNewForm.value = false;
   }
 };
@@ -247,10 +258,9 @@ const submitForm = handleSubmit((billingAddressForm) => {
     addressToSave.value.vatNumber = '';
   }
 
-  saveAddress()
+  return saveAddress()
     .then(() => syncCheckoutAddress())
-    .then(() => refreshAddressDependencies())
-    .catch((error) => useHandleError(error));
+    .then(() => refreshAddressDependencies());
 });
 
 const edit = (address: Address) => {

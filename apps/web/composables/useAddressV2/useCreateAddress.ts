@@ -24,11 +24,9 @@ export const useCreateAddress = (type: AddressType) => {
         useHandleError(error as ApiError);
         return Promise.reject(new Error('Failed to create address'));
       }
-    }
-    finally {
+    } finally {
       state.value.loading = false;
     }
-      
   };
 
   return {

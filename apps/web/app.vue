@@ -59,7 +59,7 @@ await callOnce(async () => {
 
 const breakCSRFTOKEN = () => {
   useCsrfToken().token.value = 'break-stuff';
-}
+};
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
