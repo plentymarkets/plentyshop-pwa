@@ -273,7 +273,19 @@ const validateAndSubmitForm = async () => {
   if (missingGuestCheckoutEmail.value) return backToContactInformation();
 
   if (formData.valid) {
-    await submitForm();
+    try {
+      await submitForm();
+    } catch (error: any) {
+      // silent refresh of csrf token
+      console.log(error);
+      if (error === 'Retry') {
+        await useCustomer().getSession();
+        await submitForm();
+      }
+      else {
+        useHandleError(error);
+      }
+    }
     if (showNewForm.value) showNewForm.value = false;
   }
 };
@@ -287,13 +299,12 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     shippingAddressToSave.value.vatNumber = '';
   }
 
-  saveShippingAddress()
+  return saveShippingAddress()
     .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
     .then(() => handleCartTotalChanges())
-    .catch((error) => useHandleError(error));
 });
 
 const edit = (address: Address) => {
