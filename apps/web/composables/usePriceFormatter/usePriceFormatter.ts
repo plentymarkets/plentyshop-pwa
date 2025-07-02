@@ -24,7 +24,7 @@ export const usePriceFormatter = () => {
     }
   };
 
-  const format = (value: number) => {
+  const formatWithSymbol = (value: number, symbol: string) => {
     if (state.value.pattern === '') {
       const { $i18n } = useNuxtApp();
       // eslint-disable-next-line custom-rules/no-i18n-globals
@@ -34,6 +34,12 @@ export const usePriceFormatter = () => {
     const numberParts = value.toFixed(state.value.decimalPlaces).split('.');
     let integerPart = numberParts[0];
     const decimalPart = numberParts[1];
+
+    let spaceBeforeSymbol = state.value.spaceBeforeSymbol;
+
+    if (!spaceBeforeSymbol && symbol.length > 1) {
+      spaceBeforeSymbol = true;
+    }
 
     if (state.value.thousandSeparator) {
       integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, state.value.thousandSeparator);
@@ -45,16 +51,21 @@ export const usePriceFormatter = () => {
     }
 
     if (state.value.symbolBeforeValue) {
-      formattedNumber = state.value.currency + (state.value.spaceBeforeSymbol ? ' ' : '') + formattedNumber;
+      formattedNumber = symbol + (spaceBeforeSymbol ? ' ' : '') + formattedNumber;
     } else {
-      formattedNumber += (state.value.spaceBeforeSymbol ? ' ' : '') + state.value.currency;
+      formattedNumber += (spaceBeforeSymbol ? ' ' : '') + symbol;
     }
 
     return formattedNumber;
   };
 
+  const format = (value: number) => {
+    return formatWithSymbol(value, state.value.currency);
+  };
+
   return {
     setPattern,
     format,
+    formatWithSymbol,
   };
 };
