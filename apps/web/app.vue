@@ -8,7 +8,6 @@
       'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen && $isPreview,
     }"
   >
-    <div>test</div>
     <component
       :is="SettingsToolbar"
       v-if="$isPreview && disableActions"
@@ -33,7 +32,6 @@
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
-      <button @click="breakCSRFTOKEN()">Break CSRF token</button>
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <NuxtLayout>
         <NuxtPage />
@@ -57,9 +55,6 @@ await callOnce(async () => {
   await setInitialDataSSR();
 });
 
-const breakCSRFTOKEN = () => {
-  useCsrfToken().token.value = 'break-stuff';
-};
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
