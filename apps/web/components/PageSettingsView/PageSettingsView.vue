@@ -106,7 +106,7 @@
           <Multiselect
             v-model="parentPageValue"
             data-testid="new-parent-page"
-            :options="allItems"
+            :options="filteredParentOptions"
             :custom-label="getLabel"
             placeholder="Select a parent page"
             :allow-empty="false"
@@ -318,4 +318,8 @@ watch(
   () => {},
   { immediate: true },
 );
+
+const filteredParentOptions = computed(() => {
+  return allItems.value.filter((cat) => cat.id !== data.value.id);
+});
 </script>
