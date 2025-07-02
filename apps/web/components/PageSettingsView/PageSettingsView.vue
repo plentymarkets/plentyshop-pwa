@@ -223,13 +223,10 @@ const { allItems } = useCategoriesSearch();
 
 const { handleSearch, getLabel, initializeModalState } = useAddPageModal();
 
+
 const parentPageValue = computed({
   get() {
-    if (
-      data.value.parentCategoryId === 0 ||
-      data.value.parentCategoryId === null ||
-      data.value.parentCategoryId === undefined
-    ) {
+    if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
       return allItems.value.find((cat) => cat.id === 0) || null;
     }
     return (
@@ -239,7 +236,7 @@ const parentPageValue = computed({
     );
   },
   set(val) {
-    data.value.parentCategoryId = val?.id === 0 ? 0 : val?.id || 0;
+    data.value.parentCategoryId = val?.id || null;
   },
 });
 

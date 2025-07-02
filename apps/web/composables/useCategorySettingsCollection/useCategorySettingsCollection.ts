@@ -81,7 +81,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         ),
       );
       await useSdk().plentysystems.setCategorySettings(settings);
-
       dirtyCategories.forEach((category) => {
         const idx = state.value.initialData.findIndex((item) => item.id === category.id);
         if (idx !== -1) {
@@ -89,13 +88,16 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         }
       });
       state.value.loading = false;
-    } catch (e) {
-      console.error('Error saving category settings:', e);
-    } finally {
+      return true;
+    } catch (error) {
+      const err = error as { message?: string };
+      send({
+        type: 'negative',
+        message: err?.message || String(error) || 'Unknown error',
+      });
       state.value.loading = false;
+      return false;
     }
-
-    return true;
   };
 
   const save = async () => {
