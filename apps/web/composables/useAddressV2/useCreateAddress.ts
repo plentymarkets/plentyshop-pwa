@@ -8,7 +8,6 @@ export const useCreateAddress = (type: AddressType) => {
   const create = async (address: Address) => {
     try {
       state.value.loading = true;
-      console.log('Saved address:', address);
       const data = await useSdk().plentysystems.doSaveAddress({
         typeId: type,
         addressData: address,
