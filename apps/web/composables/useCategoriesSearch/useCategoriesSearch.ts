@@ -36,8 +36,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       target.unshift(page);
       return;
     }
-   insertIntoParent(page, target);
-
+    insertIntoParent(page, target);
   };
 
   const movePagesInTree = (pages: CategoryEntry | CategoryEntry[]): void => {
@@ -45,7 +44,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
     for (const p of list) {
       state.value.contentItems = deleteFromTree(p.id, state.value.contentItems);
-      state.value.itemItems    = deleteFromTree(p.id, state.value.itemItems);
+      state.value.itemItems = deleteFromTree(p.id, state.value.itemItems);
 
       if (!state.value.newPages.includes(p.id)) {
         state.value.newPages.push(p.id);
@@ -55,9 +54,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     list.sort((a, b) => getLevel(a) - getLevel(b));
 
     for (const p of list) {
-      const target = p.type === 'content'
-        ? state.value.contentItems
-        : state.value.itemItems;
+      const target = p.type === 'content' ? state.value.contentItems : state.value.itemItems;
 
       insertPageIntoTree(p, target);
     }
