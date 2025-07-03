@@ -100,7 +100,7 @@ export const usePayPal = () => {
         });
 
         if (script) {
-          updateAvailableAPMs(script).then();
+          await updateAvailableAPMs(script);
         }
 
         return script;
