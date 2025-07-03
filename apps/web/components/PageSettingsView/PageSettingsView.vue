@@ -104,6 +104,7 @@
             </SfTooltip>
           </div>
           <Multiselect
+            v-if="runtimeConfig.public.isDev"
             v-model="parentPageValue"
             data-testid="new-parent-page"
             :options="filteredParentOptions"
@@ -213,6 +214,7 @@
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
+const runtimeConfig = useRuntimeConfig();
 
 const basicSettingsOpen = ref(true);
 
@@ -221,7 +223,7 @@ const { data, loading, fetchCategorySettings } = useCategorySettings();
 
 const { allItems } = useCategoriesSearch();
 
-const { handleSearch, getLabel, initializeModalState } = useAddPageModal();
+const { handleSearch, getLabel, initializeModalState: initializeParentCategoryList } = useAddPageModal();
 
 const parentPageValue = computed({
   get() {
@@ -299,12 +301,12 @@ const pageNameUrl = detailField('nameUrl');
 const pagePosition = detailField('position');
 
 onMounted(() => {
-  initializeModalState();
+  initializeParentCategoryList();
 });
 
 watch(getCategoryId, (newId) => {
   if (newId !== undefined) {
-    initializeModalState();
+    initializeParentCategoryList();
   }
 });
 
