@@ -134,7 +134,6 @@ watch(
       } else {
         slider.slideTo(newIndex);
       }
-
     }
   },
   { flush: 'post' },
@@ -145,7 +144,7 @@ watch(
     if (oldLength <= 1 && newLength > 1) {
       await reinitializeSwiper();
     }
-  }
+  },
 );
 watch(
   () => configuration.controls.color,
