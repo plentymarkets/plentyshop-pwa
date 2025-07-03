@@ -27,10 +27,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       return node.children ? insertIntoParent(newPage, node.children) : false;
     });
   };
-  const insertPageIntoTree = (
-    page: CategoryEntry,
-    targetArray: CategoryEntry[],
-  ) => {
+  const insertPageIntoTree = (page: CategoryEntry, targetArray: CategoryEntry[]) => {
     if (!page.parentCategoryId) {
       targetArray.unshift(page);
       return;
@@ -41,19 +38,10 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     }
   };
   const movePageInTree = (updatedPage: CategoryEntry) => {
-    state.value.contentItems = deleteFromTree(
-      updatedPage.id,
-      state.value.contentItems,
-    );
-    state.value.itemItems = deleteFromTree(
-      updatedPage.id,
-      state.value.itemItems,
-    );
+    state.value.contentItems = deleteFromTree(updatedPage.id, state.value.contentItems);
+    state.value.itemItems = deleteFromTree(updatedPage.id, state.value.itemItems);
 
-    const targetArray =
-      updatedPage.type === 'content'
-        ? state.value.contentItems
-        : state.value.itemItems;
+    const targetArray = updatedPage.type === 'content' ? state.value.contentItems : state.value.itemItems;
 
     insertPageIntoTree(updatedPage, targetArray);
   };
@@ -108,7 +96,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     lastPageNumber: 1,
     firstOnPage: 0,
     lastOnPage: 0,
-    itemsPerPage: 50,
+    itemsPerPage: 30,
   });
 
   const fetchCategories = async (categoryType: 'item' | 'content') => {

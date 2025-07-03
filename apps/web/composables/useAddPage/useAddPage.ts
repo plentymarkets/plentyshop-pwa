@@ -229,6 +229,6 @@ export const useAddPageModal = () => {
     getLevel,
     isValidParentPage,
     handleSearch,
-    initializeModalState
+    initializeModalState,
   };
 };

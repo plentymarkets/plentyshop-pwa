@@ -223,7 +223,6 @@ const { allItems } = useCategoriesSearch();
 
 const { handleSearch, getLabel, initializeModalState } = useAddPageModal();
 
-
 const parentPageValue = computed({
   get() {
     if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
@@ -309,7 +308,6 @@ watch(getCategoryId, (newId) => {
   }
 });
 
-// Remove debug console.log to fix linter error
 watch(
   () => data.value.parentCategoryId,
   () => {},

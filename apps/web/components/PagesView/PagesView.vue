@@ -127,10 +127,8 @@ const { locale, defaultLocale } = useI18n();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
-const { contentItems, itemItems, allItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
+const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
   useCategoriesSearch();
-
-console.log('Content', allItems);
 
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);

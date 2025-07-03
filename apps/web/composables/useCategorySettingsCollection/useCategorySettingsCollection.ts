@@ -107,7 +107,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const errorMessage = $i18n.t('errorMessages.editor.categories.error');
     const route = useRoute();
     const router = useRouter();
-    const currentId      = getCategoryId.value;
+    const currentId = getCategoryId.value;
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
     const currentCategorySlug = extractCategorySlug(route.path);
 
