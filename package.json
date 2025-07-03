@@ -46,6 +46,7 @@
     "country-flag-icons": "^1.5.12",
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
+    "vue-tel-input": "^9.3.0",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.2.0",
     "vuedraggable": "^4.1.0"
@@ -56,7 +57,8 @@
     "@lhci/cli": "^0.15.0",
     "@nuxt/test-utils": "^3.19.0",
     "@nuxtjs/turnstile": "^0.8.0",
-    "@paypal/paypal-js": "8.1.0",
+    "@paypal/paypal-js": "8.2.0",
+    "@types/vue-tel-input": "^2.1.7",
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^1.0.1",

@@ -338,6 +338,12 @@
   "checkoutPayment": {
     "comingSoon": "Bald verfügbar",
     "creditCard": "Kreditkarte",
+    "payUponInvoice": "Bezahlen Sie per Rechnung",
+    "birthdateLabel": "Geburtsdatum",
+    "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
+    "countrySearch": "Suche nach einem Land",
+    "phoneLabel": "Telefonnummer",
+    "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
     "heading": "Zahlungsart",
     "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },
@@ -498,7 +504,8 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren."
+      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren.",
+      "missingBillingAddress": "Bitte geben Sie Ihre Rechnungsadresse ein, um mit dem Bezahlvorgang fortzufahren."
     },
     "contact": {
       "messageRequired": "Nachricht ist erforderlich.",
@@ -789,7 +796,10 @@
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
     "unbrandedPay": "Bezahlen",
-    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
+    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+    "puiBankDataAvailable": "Überweisen Sie den Betrag an die angegebenen Bankdaten. Sie können die Bankdaten zudem auch Ihrer Rechnung entnehmen.",
+    "puiBankDataNotAvailable": "Die Bankdaten für die Überweisung werden abgerufen und stehen in Kürze zur Verfügung. Die Daten sind dann hier verfügbar oder können Ihrer Rechnung entnommen werden.",
+    "puiDesignedUse": "Verwendungszweck"
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
