@@ -54,7 +54,6 @@
 
         <OrderDocumentsList :order="order" />
 
-        <OrderTrackingButton :order="order"/>
         <OrderReturnItems
           v-if="orderGetters.isReturnable(order) && orderGetters.hasReturnableItems(order)"
           :order="order"
