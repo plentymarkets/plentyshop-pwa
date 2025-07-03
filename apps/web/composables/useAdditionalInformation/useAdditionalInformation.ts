@@ -45,7 +45,13 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
 
       return state.value.data;
     } catch (error) {
-      useHandleError(error as ApiError);
+      const exception = error as ApiError;
+      if (Number(exception?.code) === 1400) {
+        await useCustomer().getSession();
+        await useSdk().plentysystems.doAdditionalInformation(params);
+      } else {
+        useHandleError(error as ApiError);
+      }
       return state.value.data;
     } finally {
       state.value.loading = false;

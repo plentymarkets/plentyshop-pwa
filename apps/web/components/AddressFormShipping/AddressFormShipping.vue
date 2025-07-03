@@ -169,7 +169,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, ApiError, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { AddressFormShippingProps } from './types';
@@ -273,7 +273,18 @@ const validateAndSubmitForm = async () => {
   if (missingGuestCheckoutEmail.value) return backToContactInformation();
 
   if (formData.valid) {
-    await submitForm();
+    try {
+      await submitForm();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === getErrorCode('1400')) {
+          await useCustomer().getSession();
+          await submitForm();
+        }
+      } else if (error instanceof ApiError) {
+        useHandleError(error);
+      }
+    }
     if (showNewForm.value) showNewForm.value = false;
   }
 };
@@ -287,13 +298,12 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     shippingAddressToSave.value.vatNumber = '';
   }
 
-  saveShippingAddress()
+  return saveShippingAddress()
     .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
-    .then(() => handleCartTotalChanges())
-    .catch((error) => useHandleError(error));
+    .then(() => handleCartTotalChanges());
 });
 
 const edit = (address: Address) => {
