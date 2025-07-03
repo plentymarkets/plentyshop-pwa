@@ -5,12 +5,7 @@
     </p>
     <p>
       <span v-for="(number, index) in trackingNumbers" :key="index">
-        <a
-          :href="trackingUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-blue-600 underline"
-        >
+        <a :href="trackingUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">
           {{ number }}
         </a>
         <span v-if="index < trackingNumbers.length - 1">, </span>
@@ -20,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {orderGetters} from '@plentymarkets/shop-api';
+import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderTrackingButtonProps } from './types';
 
 const { t } = useI18n();

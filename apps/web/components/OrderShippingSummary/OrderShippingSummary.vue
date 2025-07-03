@@ -12,7 +12,7 @@
     <p>{{ shippingMethod }}</p>
   </template>
 
-  <OrderTrackingButton :order="order"/>
+  <OrderTrackingButton :order="order" />
 
   <template v-if="preferredDeliveryServices">
     <h2 class="font-medium text-base mt-4">
