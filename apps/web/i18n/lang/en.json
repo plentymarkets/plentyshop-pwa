@@ -796,7 +796,10 @@
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
     "unbrandedPay": "Pay",
-    "invalidOrder": "The order cannot be processed. Please try again."
+    "invalidOrder": "The order cannot be processed. Please try again.",
+    "puiBankDataAvailable": "Transfer the amount to the bank details provided. You can also find the bank details on your invoice.",
+    "puiBankDataNotAvailable": "The bank data for the transfer are retrieved and will be available shortly. The data will then be available here or can be found on your invoice.",
+    "puiDesignedUse": "Reason for payment"
   },
   "perPage": "Per page",
   "phone": "Phone",
