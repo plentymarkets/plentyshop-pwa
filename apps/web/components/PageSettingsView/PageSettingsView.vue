@@ -91,7 +91,7 @@
             </SfInput>
           </label>
         </div>
-        <div class="py-2">
+        <div v-if="runtimeConfig.public.isDev" class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
             <SfTooltip
@@ -104,7 +104,6 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-if="runtimeConfig.public.isDev"
             v-model="parentPageValue"
             data-testid="new-parent-page"
             :options="filteredParentOptions"
