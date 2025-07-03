@@ -10,6 +10,7 @@ export const useCarousel: UseCarouselReturn = () => {
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
   const { data } = useCategoryTemplate();
+  const { drawerOpen, drawerView, blockUuid } = useSiteConfiguration();
 
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
@@ -24,7 +25,28 @@ export const useCarousel: UseCarouselReturn = () => {
     if (current === slideIndex) return;
     state.value.activeSlideIndex[blockUuid] = slideIndex;
   };
+  onMounted(() => {
+    const onBlockMoved = (e: CustomEvent<{ uuid: string; name: string }>) => {
+      if (e.detail.name !== 'Carousel') return;
+      const uuid = e.detail.uuid;
 
+      if (state.value.activeSlideIndex[uuid] !== 0) {
+        setIndex(uuid, 0);
+      }
+
+      if (drawerOpen.value && drawerView.value === 'blocksSettings' && blockUuid.value === uuid) {
+        window.dispatchEvent(
+          new CustomEvent('carousel-reset-slide', {
+            detail: { uuid, index: 0 },
+          }),
+        );
+      }
+    };
+
+    window.addEventListener('block-moved', onBlockMoved as EventListener);
+
+    onBeforeUnmount(() => window.removeEventListener('block-moved', onBlockMoved as EventListener));
+  });
   return {
     updateBannerItems,
     setIndex,
