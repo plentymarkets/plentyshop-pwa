@@ -34,10 +34,10 @@ export const useAddressForm = (type: AddressType) => {
     if (!state.value.addressToSave) return true;
     state.value.isLoading = true;
 
-    await create(state.value.addressToSave as Address);
+    const response = await create(state.value.addressToSave as Address);
     state.value.open = false;
     state.value.isLoading = false;
-    return true;
+    return response;
   };
 
   const validationSchema = toTypedSchema(

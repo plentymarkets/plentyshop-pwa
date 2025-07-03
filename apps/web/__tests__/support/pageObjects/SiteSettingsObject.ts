@@ -2,7 +2,7 @@ import { PageObject } from './PageObject';
 
 export class SiteSettingsObject extends PageObject {
   get closeButton() {
-    return cy.getByTestId('design-view-close');
+    return cy.getByTestId('view-close');
   }
 
   get settingsDrawer() {
@@ -10,11 +10,11 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get fontSection() {
-    return cy.getByTestId('font-section');
+    return cy.getByTestId('fonts-section');
   }
 
   get colorSection() {
-    return cy.getByTestId('color-section');
+    return cy.getByTestId('colors-section');
   }
 
   get blockSpacingSection() {

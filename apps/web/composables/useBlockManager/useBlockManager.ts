@@ -17,11 +17,6 @@ const togglePlaceholder = (uuid: string, position: 'top' | 'bottom') => {
   visiblePlaceholder.value = { uuid, position };
 };
 
-const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
 const dragState = reactive({
   isDragging: false,
 });
@@ -232,6 +227,5 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
-    modules,
   };
 };
