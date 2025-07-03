@@ -106,7 +106,8 @@
                 {{ t('itemsInCart', offerGetters.getItemsCountInOffer(offer.order.orderItems)) }}
               </p>
             </div>
-            <OrderTotals :order="offer" />
+            <!-- @TODO: Fix typing -->
+            <OrderTotals :order="offer as any" />
             <UiButton
               type="submit"
               :disabled="offerLoading"
