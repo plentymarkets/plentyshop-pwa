@@ -45,6 +45,7 @@ describe('Checkout Addresses', () => {
       })
       .shouldShowShippingAsBillingText()
       .editBillingAddress();
+    cy.wait(1000);
     checkout.firstNameInput.clear();
     checkout.firstNameInput.type('John Guest Edit');
     checkout.saveBilling.click({ force: true });

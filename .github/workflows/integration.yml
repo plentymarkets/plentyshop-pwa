@@ -146,7 +146,7 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: E2E tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress
@@ -187,7 +187,7 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: E2E tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress-checkout
@@ -225,7 +225,7 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: E2E tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress-editor
@@ -264,7 +264,7 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: E2E tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress-quarantine
