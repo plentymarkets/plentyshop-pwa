@@ -18,9 +18,12 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   const insertIntoParent = (newPage: CategoryEntry, nodes: CategoryEntry[]): boolean => {
     return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
-        node.children = node.children || [];
         node.hasChildren = true;
-        node.children.unshift(newPage);
+        if (node.children) {
+          if (!node.children.some((c) => c.id === newPage.id)) {
+            node.children.unshift(newPage);
+          }
+        }
         return true;
       }
       return node.children ? insertIntoParent(newPage, node.children) : false;
@@ -33,8 +36,8 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       target.unshift(page);
       return;
     }
-    const inserted = insertIntoParent(page, target);
-    if (!inserted) target.unshift(page);
+   insertIntoParent(page, target);
+
   };
 
   const movePagesInTree = (pages: CategoryEntry | CategoryEntry[]): void => {
@@ -43,17 +46,22 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     for (const p of list) {
       state.value.contentItems = deleteFromTree(p.id, state.value.contentItems);
       state.value.itemItems    = deleteFromTree(p.id, state.value.itemItems);
+
+      if (!state.value.newPages.includes(p.id)) {
+        state.value.newPages.push(p.id);
+      }
     }
 
     list.sort((a, b) => getLevel(a) - getLevel(b));
 
     for (const p of list) {
-      const target =
-        p.type === 'content' ? state.value.contentItems : state.value.itemItems;
+      const target = p.type === 'content'
+        ? state.value.contentItems
+        : state.value.itemItems;
+
       insertPageIntoTree(p, target);
     }
   };
-
   const addNewPageToTree = (newPage: CategoryEntry) => {
     if (state.value.contentItems.length === 0 && state.value.itemItems.length === 0) {
       return;
