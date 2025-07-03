@@ -27,36 +27,34 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       return node.children ? insertIntoParent(newPage, node.children) : false;
     });
   };
-  const insertPageIntoTree = (
-    page: CategoryEntry,
-    targetArray: CategoryEntry[],
-  ) => {
+  const getLevel = (cat: CategoryEntry): number => cat.level ?? 0;
+
+  const insertPageIntoTree = (page: CategoryEntry, target: CategoryEntry[]) => {
     if (!page.parentCategoryId) {
-      targetArray.unshift(page);
+      target.unshift(page);
       return;
     }
-    const inserted = insertIntoParent(page, targetArray);
-    if (!inserted) {
-      targetArray.unshift(page);
+    const inserted = insertIntoParent(page, target);
+    if (!inserted) target.unshift(page);
+  };
+
+  const movePagesInTree = (pages: CategoryEntry | CategoryEntry[]): void => {
+    const list = Array.isArray(pages) ? pages : [pages];
+
+    for (const p of list) {
+      state.value.contentItems = deleteFromTree(p.id, state.value.contentItems);
+      state.value.itemItems    = deleteFromTree(p.id, state.value.itemItems);
+    }
+
+    list.sort((a, b) => getLevel(a) - getLevel(b));
+
+    for (const p of list) {
+      const target =
+        p.type === 'content' ? state.value.contentItems : state.value.itemItems;
+      insertPageIntoTree(p, target);
     }
   };
-  const movePageInTree = (updatedPage: CategoryEntry) => {
-    state.value.contentItems = deleteFromTree(
-      updatedPage.id,
-      state.value.contentItems,
-    );
-    state.value.itemItems = deleteFromTree(
-      updatedPage.id,
-      state.value.itemItems,
-    );
 
-    const targetArray =
-      updatedPage.type === 'content'
-        ? state.value.contentItems
-        : state.value.itemItems;
-
-    insertPageIntoTree(updatedPage, targetArray);
-  };
   const addNewPageToTree = (newPage: CategoryEntry) => {
     if (state.value.contentItems.length === 0 && state.value.itemItems.length === 0) {
       return;
@@ -311,6 +309,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     resetCategories,
     allItems,
     insertPageIntoTree,
-    movePageInTree,
+    movePagesInTree,
   };
 };
