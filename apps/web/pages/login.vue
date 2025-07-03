@@ -20,10 +20,8 @@ const router = useRouter();
 const localePath = useLocalePath();
 const isLogin = ref(true);
 
-const navigateAfterAuth = (skipReload: boolean) => {
+const navigateAfterAuth = () => {
   const redirectUrl = router.currentRoute.value.query.redirect as string;
-  if (redirectUrl && !skipReload) {
-    window.location.href = localePath(redirectUrl);
-  }
+  window.location.href = redirectUrl ? localePath(redirectUrl) : localePath(paths.home);
 };
 </script>

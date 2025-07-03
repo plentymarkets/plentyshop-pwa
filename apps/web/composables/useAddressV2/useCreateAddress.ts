@@ -12,11 +12,18 @@ export const useCreateAddress = (type: AddressType) => {
         typeId: type,
         addressData: address,
       });
-
       useAddressStore(type).set(data.data);
       state.value.loading = false;
+      return Promise.resolve(true);
     } catch (error: unknown) {
-      useHandleError(error as ApiError);
+      const apiError = error as ApiError;
+      if (Number(apiError?.code) === 1400) {
+        return Promise.reject(new Error(getErrorCode(apiError.code)));
+      } else {
+        useHandleError(error as ApiError);
+        return Promise.reject(new Error('Failed to create address'));
+      }
+    } finally {
       state.value.loading = false;
     }
   };
