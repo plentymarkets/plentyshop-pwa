@@ -27,7 +27,36 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       return node.children ? insertIntoParent(newPage, node.children) : false;
     });
   };
+  const insertPageIntoTree = (
+    page: CategoryEntry,
+    targetArray: CategoryEntry[],
+  ) => {
+    if (!page.parentCategoryId) {
+      targetArray.unshift(page);
+      return;
+    }
+    const inserted = insertIntoParent(page, targetArray);
+    if (!inserted) {
+      targetArray.unshift(page);
+    }
+  };
+  const movePageInTree = (updatedPage: CategoryEntry) => {
+    state.value.contentItems = deleteFromTree(
+      updatedPage.id,
+      state.value.contentItems,
+    );
+    state.value.itemItems = deleteFromTree(
+      updatedPage.id,
+      state.value.itemItems,
+    );
 
+    const targetArray =
+      updatedPage.type === 'content'
+        ? state.value.contentItems
+        : state.value.itemItems;
+
+    insertPageIntoTree(updatedPage, targetArray);
+  };
   const addNewPageToTree = (newPage: CategoryEntry) => {
     if (state.value.contentItems.length === 0 && state.value.itemItems.length === 0) {
       return;
@@ -281,5 +310,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     getCategories,
     resetCategories,
     allItems,
+    insertPageIntoTree,
+    movePageInTree,
   };
 };
