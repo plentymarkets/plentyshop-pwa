@@ -13,8 +13,6 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
-const { send } = useNotification();
-
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
     data: [],
@@ -23,8 +21,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     loading: false,
   }));
 
-  const { $i18n } = useNuxtApp();
-
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(`${type}-${identifier}`, () =>
@@ -32,12 +28,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     );
 
     if (error.value) {
+      const { send } = useNotification();
       send({ type: 'negative', message: error?.value?.message });
     }
 
     state.value.loading = false;
 
     if (!data?.value?.data.length && type === 'immutable') {
+      const { $i18n } = useNuxtApp();
       state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     } else {
       state.value.data = data?.value?.data ?? state.value.data;
@@ -62,17 +60,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
    * ```
    */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
-    try {
-      state.value.loading = true;
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
 
-      const data = await useSdk().plentysystems.getCategoryTemplate({ id: categoryId });
-
-      state.value.categoryTemplateData = data.data ?? state.value.categoryTemplateData;
-    } catch (error) {
-      console.error('Error fetching category template:', error);
-    } finally {
-      state.value.loading = false;
-    }
+    state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {

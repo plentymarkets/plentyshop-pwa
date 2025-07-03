@@ -35,8 +35,9 @@
         :prev-disabled="activeIndex === 0"
         :next-disabled="activeIndex === images.length - 1"
       >
-        <template #previousButton>
+        <template #previousButton="defaultProps">
           <UiButton
+            v-bind="defaultProps"
             variant="secondary"
             size="sm"
             square
@@ -63,6 +64,7 @@
         >
           <NuxtImg
             :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
+            :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"
             class="object-contain"
             :width="productImageGetters.getImageWidth(image) ?? 80"
             :height="productImageGetters.getImageHeight(image) ?? 80"
@@ -72,8 +74,9 @@
           />
         </button>
 
-        <template #nextButton>
+        <template #nextButton="defaultProps">
           <UiButton
+            v-bind="defaultProps"
             variant="secondary"
             size="sm"
             square

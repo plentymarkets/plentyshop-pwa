@@ -1,19 +1,38 @@
 <template>
-  <li class="border border-[#D9E2DC] rounded-[5px] mb-3">
+  <li
+    class="border border-[#D9E2DC] rounded-[5px] mb-3"
+    :class="[isDisabled ? 'text-gray-400 bg-gray-100' : '', hasEmptyDetails ? 'bg-disabled-200 opacity-70' : '']"
+  >
     <div
-      class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
-      :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
+      class="relative px-4 py-2 group flex items-center justify-between"
+      :class="[
+        isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent',
+        isDisabled ? 'text-gray-400' : 'cursor-pointer',
+      ]"
       @click="toggleOnTablet"
     >
+      <template v-if="isDisabled">
+        <NuxtImg
+          width="24"
+          height="24px"
+          :src="disabled"
+          class="text-primary-900 transition-opacity duration-200 mr-1"
+          @click="handleSettingsClick"
+        />
+      </template>
       <span v-if="item.hasChildren" @click="toggleOnDesktop">
         <SfIconExpandMore v-if="!open" />
         <SfIconExpandLess v-else />
       </span>
-      <router-link v-if="!isTablet" :to="pagePath" class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+      <router-link
+        v-if="!isTablet && !hasEmptyDetails"
+        :to="pagePath"
+        class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
+      >
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
-        {{ item.details[0].name }}
+        {{ itemDisplayName }}
       </router-link>
 
       <span
@@ -24,7 +43,7 @@
         <span v-if="props.icon">
           <component :is="icon" class="w-4 h-4 mr-2" />
         </span>
-        {{ item.details[0].name }}
+        {{ itemDisplayName }}
       </span>
       <div class="flex items-center gap-x-2 ml-2">
         <SfTooltip
@@ -36,11 +55,12 @@
         >
           <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
         </SfTooltip>
+
         <SfIconBase
           v-if="!props.hideSettings"
           size="base"
           viewBox="0 0 24 24"
-          class="text-primary-900 transition-opacity duration-200"
+          class="text-primary-900 transition-opacity duration-200 cursor-pointer"
           :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
           @click="handleSettingsClick"
         >
@@ -63,12 +83,7 @@
     >
       <SfLoaderCircular size="sm" />
     </li>
-    <PagesItem
-      v-for="child in childrenPagination.items.value"
-      :key="child.details[0].nameUrl"
-      :item="child"
-      :parent-id="item.id"
-    />
+    <PagesItem v-for="child in childrenPagination.items.value" :key="child.id" :item="child" :parent-id="item.id" />
     <li
       v-if="childrenPagination.loading.value && childrenPagination.items.value.length > 0"
       class="flex justify-center items-center py-4"
@@ -87,8 +102,11 @@ import {
   SfIconBase,
 } from '@storefront-ui/vue';
 import type { PagesItemProps } from './types';
+
 import { gearPath } from 'assets/icons/paths/gear';
-const { isCategoryDirty } = useCategorySettingsCollection();
+import disabled from 'assets/icons/paths/disabled.svg';
+
+const { isCategoryDirty, data: collectionData } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
 const { setSettingsCategory, settingsType } = useSiteConfiguration();
 const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
@@ -98,7 +116,22 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const props = defineProps<PagesItemProps>();
 const item = props.item;
 
+const isDisabled = computed(() => {
+  const collection = Array.isArray(collectionData.value)
+    ? collectionData.value
+    : collectionData.value
+      ? [collectionData.value]
+      : [];
+  const category = collection.find((cat) => cat.id === item.id);
+  return (category?.isLinkedToWebstore ?? item.isLinkedToWebstore) === false;
+});
+const itemDisplayName = computed(() => item.details[0]?.name ?? `ID: ${item.id}`);
+const hasEmptyDetails = computed(() => !item.details || item.details.length === 0);
 const pagePath = computed(() => {
+  if (item.details[0]?.pageView === 'Homepage') {
+    return item.details[0]?.nameUrl || '/';
+  }
+
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
   return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
 });
@@ -109,13 +142,13 @@ const childrenPagination = usePaginatedChildren(item);
 
 const toggleOpen = async (isTabletCheck = false) => {
   if (item.level === 5) {
-    setParentName(item.details[0].name);
+    setParentName(itemDisplayName.value);
   }
   if (isTabletCheck && !isTablet.value) return;
 
   open.value = !open.value;
   if (item.level === 5) {
-    setParentName(item.details[0].name);
+    setParentName(itemDisplayName.value);
   }
   if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
     await childrenPagination.fetchMore();
@@ -125,12 +158,15 @@ const handleSettingsClick = () => {
   openSettingsMenu(item.id, item.type);
   setCategoryId({
     id: item.id,
-    parentId: props.parentId,
-    name: item.details[0].name,
-    path: item.details[0].nameUrl,
+    parentId: props.parentId ?? 0,
+    name: itemDisplayName.value,
+    path: item.details[0]?.nameUrl || pagePath.value,
     level: item.level,
+    previewUrl: item.details[0]?.previewUrl,
+    details: item.details,
   });
   checkIfItemHasChildren();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 const toggleOnDesktop = () => toggleOpen();
 const toggleOnTablet = () => toggleOpen(true);

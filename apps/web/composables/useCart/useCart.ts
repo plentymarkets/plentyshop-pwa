@@ -161,10 +161,13 @@ export const useCart: UseCartReturn = () => {
       return !!data;
     } catch (error) {
       const apiError = error as ApiError;
-      if (apiError.events?.AfterBasketChanged?.basket) {
+      // @TODO: Update ApiError type definition
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorEvents = apiError.events as any;
+      if (errorEvents?.AfterBasketChanged?.basket) {
         state.value.data = {
-          ...apiError.events.AfterBasketChanged.basket,
-          items: apiError.events.AfterBasketChanged.basketItems,
+          ...errorEvents.AfterBasketChanged.basket,
+          items: errorEvents.AfterBasketChanged.basketItems,
         };
       }
       useHandleError(apiError);
@@ -209,10 +212,13 @@ export const useCart: UseCartReturn = () => {
       return !!data;
     } catch (error) {
       const apiError = error as ApiError;
-      if (apiError.events?.AfterBasketChanged?.basket) {
+      // @TODO: Update ApiError type definition
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorEvents = apiError.events as any;
+      if (errorEvents?.AfterBasketChanged?.basket) {
         state.value.data = {
-          ...apiError.events.AfterBasketChanged.basket,
-          items: apiError.events.AfterBasketChanged.basketItems,
+          ...errorEvents.AfterBasketChanged.basket,
+          items: errorEvents.AfterBasketChanged.basketItems,
         };
       }
       useHandleError(apiError);

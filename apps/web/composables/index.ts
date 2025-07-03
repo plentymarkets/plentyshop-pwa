@@ -92,3 +92,5 @@ export * from './useWishlist';
 export * from './useModuleRendering';
 export * from './useRobots';
 export * from './useAddPage';
+export * from './useTranslations';
+export * from './useSiteSettings';

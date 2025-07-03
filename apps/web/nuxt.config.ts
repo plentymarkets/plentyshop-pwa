@@ -64,8 +64,8 @@ export default defineNuxtConfig({
       isDev: process.env.NODE_ENV === 'development',
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
-      useAvif: process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
-      useWebp: process.env?.NUXT_PUBLIC_USE_WEBP === 'true',
+      useAvif: process.env?.IMAGEAVIF === 'true' || process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
+      useWebp: process.env?.IMAGEWEBP === 'true' || process.env?.NUXT_PUBLIC_USE_WEBP === 'true',
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       useTagsOnCategoryPage: process.env.USE_TAGS_ON_CATEGORY_PAGE === '1',
@@ -73,8 +73,8 @@ export default defineNuxtConfig({
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo:
-        process.env.LOGO ||
         process.env.NUXT_PUBLIC_HEADER_LOGO ||
+        process.env.LOGO ||
         'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
@@ -90,6 +90,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
+      fetchDynamicTranslations: false,
     },
   },
   modules: [

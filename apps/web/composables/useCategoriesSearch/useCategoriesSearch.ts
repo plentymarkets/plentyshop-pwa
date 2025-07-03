@@ -50,23 +50,19 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   };
 
   const deleteFromTree = (id: number, nodes: CategoryEntry[]): CategoryEntry[] => {
-    return nodes.reduce<CategoryEntry[]>((acc, node) => {
-      if (node.id === id) return acc;
-
-      const updatedNode: CategoryEntry = { ...node };
+    return nodes.filter((node) => {
+      if (node.id === id) return false;
 
       if (node.children) {
-        const prunedChildren = deleteFromTree(id, node.children);
-        if (prunedChildren.length) {
-          updatedNode.children = prunedChildren;
-        } else {
-          delete updatedNode.children;
+        node.children = deleteFromTree(id, node.children);
+        if (node.children.length === 0) {
+          node.hasChildren = false;
+          delete node.children;
         }
       }
 
-      acc.push(updatedNode);
-      return acc;
-    }, []);
+      return true;
+    });
   };
 
   const deletePageFromTree = (id: number) => {
@@ -129,6 +125,15 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     } finally {
       state.value.loadingContent = false;
     }
+  };
+
+  const resetCategories = () => {
+    state.value.contentItems = [];
+    state.value.contentPage = 1;
+    state.value.hasMoreContent = true;
+    state.value.itemItems = [];
+    state.value.itemPage = 1;
+    state.value.hasMoreItem = true;
   };
 
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
@@ -209,5 +214,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     addNewPageToTree,
     deletePageFromTree,
     getCategories,
+    resetCategories,
   };
 };
