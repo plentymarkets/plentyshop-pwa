@@ -15,7 +15,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     hasMoreContent: true,
     hasMoreItem: true,
   }));
-
   const insertIntoParent = (newPage: CategoryEntry, nodes: CategoryEntry[]): boolean => {
     return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
@@ -106,7 +105,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     lastPageNumber: 1,
     firstOnPage: 0,
     lastOnPage: 0,
-    itemsPerPage: 50,
+    itemsPerPage: 30,
   });
 
   const fetchCategories = async (categoryType: 'item' | 'content') => {
