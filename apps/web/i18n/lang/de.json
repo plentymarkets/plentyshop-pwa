@@ -504,7 +504,8 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren."
+      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren.",
+      "missingBillingAddress": "Bitte geben Sie Ihre Rechnungsadresse ein, um mit dem Bezahlvorgang fortzufahren."
     },
     "contact": {
       "messageRequired": "Nachricht ist erforderlich.",

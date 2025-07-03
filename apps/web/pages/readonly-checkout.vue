@@ -11,14 +11,12 @@
         <UiDivider :class="dividerClass" />
         <ContactInformation disabled />
         <UiDivider :class="dividerClass" />
-        <AddressContainer id="shipping-address" :key="0" :disabled="false" :type="AddressType.Shipping" />
+        <AddressContainer id="shipping-address" :key="0" :type="AddressType.Shipping" />
         <UiDivider :class="dividerClass" />
-        <AddressContainer id="billing-address" :key="1" :disabled="true" :type="AddressType.Billing" />
+        <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
         <UiDivider :class="dividerClass" />
         <div class="relative">
-          <ShippingMethod disabled />
-          <UiDivider :class="dividerClass" />
-          <CheckoutPayment disabled />
+          <ShippingMethod />
         </div>
         <UiDivider :class="dividerClass" />
         <CustomerWish />
@@ -109,10 +107,12 @@ const {
 const {
   anyAddressFormIsOpen,
   hasShippingAddress,
+  hasBillingAddress,
   persistShippingAddress,
   persistBillingAddress,
   backToFormEditing,
   scrollToShippingAddress,
+  scrollToBillingAddress,
   setBillingSkeleton,
   setShippingSkeleton,
 } = useCheckout();
@@ -201,6 +201,12 @@ const validateFields = async () => {
     return false;
   }
 
+  if (!hasBillingAddress.value) {
+    send({ type: 'secondary', message: t('errorMessages.checkout.missingBillingAddress') });
+    scrollToBillingAddress();
+    return false;
+  }
+
   if (!termsAccepted.value) {
     scrollToTerms();
     return false;
@@ -234,7 +240,7 @@ const buy = async () => {
         navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
       }
     } else {
-      send({ type: 'negative', message: 'Fehler beim Erstellen der Order bre.' });
+      send({ type: 'negative', message: t('paypal.invalidOrder') });
       navigateTo(localePath(paths.cart));
     }
   }

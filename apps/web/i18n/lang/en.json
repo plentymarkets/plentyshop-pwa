@@ -504,7 +504,8 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Please provide your address to continue with the checkout."
+      "missingAddress": "Please provide your address to continue with the checkout.",
+      "missingBillingAddress": "Please provide a billing address to continue with the checkout."
     },
     "contact": {
       "messageRequired": "Message is required.",
