@@ -237,7 +237,7 @@ const buy = async () => {
 
       if (order?.order?.id) {
         emit('frontend:orderCreated', order);
-        navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+        navigateTo(localePath(`${paths.confirmation}/${order.order.id}/${order.order.accessKey}`));
       }
     } else {
       send({ type: 'negative', message: t('paypal.invalidOrder') });
