@@ -167,7 +167,12 @@
         <SfIconClose />
       </UiButton>
     </header>
-    <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" />
+    <LoginComponent
+      v-if="isLogin"
+      :is-modal="true"
+      @change-view="isLogin = false"
+      @logged-in="navigateAfterAuth(true)"
+    />
     <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
@@ -240,9 +245,18 @@ const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
+
 onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
+
+const navigateAfterAuth = (reload: boolean) => {
+  if (reload) {
+    window.location.reload();
+  } else {
+    closeAuthentication();
+  }
+};
 
 watch(
   () => cart.value?.items,
@@ -261,7 +275,7 @@ watch(
 const logOut = async () => {
   accountDropdownToggle();
   await logout();
-  navigateTo(localePath(paths.home));
+  window.location.reload();
 };
 
 const accountDropdown = computed(() => [
