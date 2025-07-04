@@ -5,9 +5,9 @@
     </p>
     <p>
       <span v-for="(number, index) in trackingNumbers" :key="index">
-        <a :href="trackingUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">
+        <NuxtLink :to="trackingUrl">
           {{ number }}
-        </a>
+        </NuxtLink>
         <span v-if="index < trackingNumbers.length - 1">, </span>
       </span>
     </p>
@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
-import type { OrderTrackingButtonProps } from './types';
+import type { OrderTrackingProps } from './types';
 
 const { t } = useI18n();
-const { order } = defineProps<OrderTrackingButtonProps>();
+const { order } = defineProps<OrderTrackingProps>();
 
 const trackingNumbers = computed(() => orderGetters.getOrderTrackingNumbers(order));
 const trackingUrl = computed(() => orderGetters.getOrderTrackingUrl(order));
