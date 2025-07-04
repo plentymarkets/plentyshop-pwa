@@ -733,6 +733,7 @@
   "openSearchModalButtonLabel": "Suche öffnen",
   "or": "oder",
   "orderConfirmation": {
+    "trackingOrder": "Bestellung nachverfolgen",
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
     "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
     "sameAsShippingAddress": "Entspricht der Lieferadresse",
