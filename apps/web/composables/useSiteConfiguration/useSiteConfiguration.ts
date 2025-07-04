@@ -40,6 +40,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     activeSetting: '',
     blockType: '',
     blockUuid: '',
+    blockSize: useRuntimeConfig().public.blockSize,
+    selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+
     initialData: {
       seoSettings: structuredClone(metaDefaults),
       headerLogo: useRuntimeConfig().public.headerLogo,
