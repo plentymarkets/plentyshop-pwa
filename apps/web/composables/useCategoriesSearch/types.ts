@@ -4,6 +4,7 @@ export interface UseCategoriesSearchState {
   data: CategoryData;
   contentItems: CategoryEntry[];
   itemItems: CategoryEntry[];
+  allItems: CategoryEntry[];
   newPages: number[];
   loadingContent: boolean;
   loadingItem: boolean;
@@ -22,6 +23,7 @@ export interface UseCategoriesSearchMethods {
   data: Ref<CategoryData>;
   contentItems: Readonly<Ref<CategoryEntry[]>>;
   itemItems: Readonly<Ref<CategoryEntry[]>>;
+  allItems: Readonly<Ref<CategoryEntry[]>>;
   loadingContent: Readonly<Ref<boolean>>;
   loadingItem: Readonly<Ref<boolean>>;
   hasMoreContent: Readonly<Ref<boolean>>;
@@ -32,6 +34,7 @@ export interface UseCategoriesSearchMethods {
   deletePageFromTree: (id: number) => void;
   getCategories: (params: CategorySearchCriteria) => Promise<void>;
   resetCategories: () => void;
+  movePagesInTree(pages: CategoryEntry | CategoryEntry[]): void;
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;
