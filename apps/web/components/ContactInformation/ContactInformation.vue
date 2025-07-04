@@ -83,7 +83,9 @@ const { errors, defineField, validate } = useForm({ validationSchema: emailValid
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
 
 watch(isAuthorized, (updatedStatus) => {
-  customerEmail.value = updatedStatus ? sessionData.value.user?.email ?? '' : sessionData.value.user?.guestMail ?? '';
+  customerEmail.value = updatedStatus
+    ? (sessionData.value.user?.email ?? '')
+    : (sessionData.value.user?.guestMail ?? '');
 });
 
 const validateAndSubmitEmail = async () => {

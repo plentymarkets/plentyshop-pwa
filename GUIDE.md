@@ -146,7 +146,6 @@ We are using internal [Nuxt.js state management](https://nuxt.com/docs/getting-s
 Components used in the boilerplate web app are located in the `components` directory and each component has the following file structure:
 
 - Project components:
-
   - Representational components that are designed to fulfill project requirements.
   - TypeScript types and tests ale located close to the component
 
@@ -163,7 +162,6 @@ components/
 ```
 
 - Storefront UI 2 Block components
-
   - Reusable/generic components used across the monorepo.
   - TypeScript types and tests are located close to the component
 
