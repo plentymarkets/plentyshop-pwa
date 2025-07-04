@@ -7,6 +7,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     contentItems: [],
     itemItems: [],
     newPages: [],
+    allItems: [],
     loadingContent: false,
     loadingItem: false,
     contentPage: 1,
@@ -14,19 +15,50 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     hasMoreContent: true,
     hasMoreItem: true,
   }));
-
   const insertIntoParent = (newPage: CategoryEntry, nodes: CategoryEntry[]): boolean => {
     return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
-        node.children = node.children || [];
         node.hasChildren = true;
-        node.children.unshift(newPage);
+        if (node.children) {
+          if (!node.children.some((c) => c.id === newPage.id)) {
+            node.children.unshift(newPage);
+          }
+        }
         return true;
       }
       return node.children ? insertIntoParent(newPage, node.children) : false;
     });
   };
+  const getLevel = (cat: CategoryEntry): number => cat.level ?? 0;
 
+  const insertPageIntoTree = (page: CategoryEntry, target: CategoryEntry[]) => {
+    if (!page.parentCategoryId) {
+      target.unshift(page);
+      return;
+    }
+    insertIntoParent(page, target);
+  };
+
+  const movePagesInTree = (pages: CategoryEntry | CategoryEntry[]): void => {
+    const list = Array.isArray(pages) ? pages : [pages];
+
+    for (const p of list) {
+      state.value.contentItems = deleteFromTree(p.id, state.value.contentItems);
+      state.value.itemItems = deleteFromTree(p.id, state.value.itemItems);
+
+      if (!state.value.newPages.includes(p.id)) {
+        state.value.newPages.push(p.id);
+      }
+    }
+
+    list.sort((a, b) => getLevel(a) - getLevel(b));
+
+    for (const p of list) {
+      const target = p.type === 'content' ? state.value.contentItems : state.value.itemItems;
+
+      insertPageIntoTree(p, target);
+    }
+  };
   const addNewPageToTree = (newPage: CategoryEntry) => {
     if (state.value.contentItems.length === 0 && state.value.itemItems.length === 0) {
       return;
@@ -207,6 +239,70 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     };
   };
 
+  const noneCategoryItem: CategoryEntry = {
+    id: 0,
+    type: 'none',
+    itemCount: [],
+    childCount: 0,
+    right: 'all',
+    details: [
+      {
+        name: 'None',
+        lang: '',
+        nameUrl: '',
+        metaTitle: '',
+        imagePath: '',
+        image2Path: '',
+        canonicalLink: '',
+        categoryId: '0',
+        description: '',
+        description2: '',
+        fulltext: 'N',
+        image: 0,
+        image2: '',
+        itemListView: '',
+        metaDescription: '',
+        metaKeywords: '',
+        metaRobots: '',
+        pageView: '',
+        position: '0',
+        previewUrl: '',
+        plenty_category_details_image_path: '',
+        plenty_category_details_image2_path: '',
+        plentyId: 0,
+        shortDescription: '',
+        singleItemView: '',
+        updatedAt: '',
+        updatedBy: '',
+      },
+    ],
+    clients: [],
+    level: 0,
+    linklist: '',
+    parentCategoryId: 0,
+    sitemap: 'N',
+    isLinkedToWebstore: false,
+    hasChildren: false,
+  };
+
+  const flattenCategories = (categories: CategoryEntry[]): CategoryEntry[] => {
+    const flat: CategoryEntry[] = [];
+    function recurse(nodes: CategoryEntry[]) {
+      for (const node of nodes) {
+        flat.push(node);
+        if (node.children && Array.isArray(node.children)) {
+          recurse(node.children);
+        }
+      }
+    }
+    recurse(categories);
+    return flat;
+  };
+
+  const allItems = computed(() =>
+    flattenCategories([...[noneCategoryItem], ...state.value.contentItems, ...state.value.itemItems]),
+  );
+
   return {
     ...toRefs(state.value),
     fetchCategories,
@@ -215,5 +311,8 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     deletePageFromTree,
     getCategories,
     resetCategories,
+    allItems,
+    insertPageIntoTree,
+    movePagesInTree,
   };
 };
