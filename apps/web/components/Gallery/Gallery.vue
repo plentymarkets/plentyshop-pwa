@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4 relative" data-testid="gallery">
+  <div class="flex-col md:flex-row h-full flex scroll-smooth md:gap-4 relative" data-testid="gallery">
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
@@ -54,7 +54,7 @@
         <button
           v-for="(image, index) in images"
           :key="`imagebutton-${index}-thumbnail`"
-          :ref="(el) => assignReference(el, index)"
+          :ref="(el: Element | ComponentPublicInstance | null) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="t('gallery.thumb', index)"
