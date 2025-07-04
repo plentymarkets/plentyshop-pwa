@@ -100,6 +100,25 @@ export const useBlockManager = () => {
 
     updateBlocks(updatedBlocks);
 
+    const movedBlock = updatedBlocks[newIndex];
+
+    if (movedBlock?.name === 'Carousel') {
+      const uuid = movedBlock.meta.uuid;
+      const { activeSlideIndex, setIndex } = useCarousel();
+      const { drawerOpen, drawerView, blockUuid } = useSiteConfiguration();
+
+      if (activeSlideIndex.value[uuid] !== 0) {
+        setIndex(uuid, 0);
+      }
+
+      if (drawerOpen.value && drawerView.value === 'blocksSettings' && blockUuid.value === uuid) {
+        const event = new CustomEvent('carousel-reset-slide', {
+          detail: { uuid, index: 0 },
+        });
+        window.dispatchEvent(event);
+      }
+    }
+
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
