@@ -158,7 +158,7 @@ const handleSettingsClick = () => {
   openSettingsMenu(item.id, item.type);
   setCategoryId({
     id: item.id,
-    parentId: props.parentId,
+    parentId: props.parentId ?? 0,
     name: itemDisplayName.value,
     path: item.details[0]?.nameUrl || pagePath.value,
     level: item.level,
