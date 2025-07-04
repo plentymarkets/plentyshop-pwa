@@ -91,7 +91,7 @@
             </SfInput>
           </label>
         </div>
-        <!-- <div class="py-2">
+        <div v-if="runtimeConfig.public.isDev" class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
             <SfTooltip
@@ -104,18 +104,20 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="selectedPage"
-            data-testid="page-parent"
-            :options="pageOptions"
-            label="name"
+            v-model="parentPageValue"
+            data-testid="new-parent-page"
+            :options="filteredParentOptions"
+            :custom-label="getLabel"
             placeholder="Select a parent page"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
-            track-by="id"
             deselect-label="Selected"
+            :searchable="true"
+            :internal-search="true"
+            @search-change="handleSearch"
           />
-        </div> -->
+        </div>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -211,11 +213,33 @@
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
+const runtimeConfig = useRuntimeConfig();
 
 const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
+
+const { allItems } = useCategoriesSearch();
+
+const { handleSearch, getLabel, initializeModalState: initializeParentCategoryList } = useAddPageModal();
+
+const parentPageValue = computed({
+  get() {
+    if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
+      return allItems.value.find((cat) => cat.id === 0) || null;
+    }
+    return (
+      allItems.value.find((cat) => cat.id === data.value.parentCategoryId) ||
+      allItems.value.find((cat) => cat.id === 0) ||
+      null
+    );
+  },
+  set(val) {
+    data.value.parentCategoryId = val?.id || null;
+  },
+});
+
 const isLoginRequired = computed({
   get() {
     return data.value.right === 'customer';
@@ -274,4 +298,24 @@ const detailField = <K extends keyof CategoryDetails>(field: K) =>
 const pageName = detailField('name');
 const pageNameUrl = detailField('nameUrl');
 const pagePosition = detailField('position');
+
+onMounted(() => {
+  initializeParentCategoryList();
+});
+
+watch(getCategoryId, (newId) => {
+  if (newId !== undefined) {
+    initializeParentCategoryList();
+  }
+});
+
+watch(
+  () => data.value.parentCategoryId,
+  () => {},
+  { immediate: true },
+);
+
+const filteredParentOptions = computed(() => {
+  return allItems.value.filter((cat) => cat.id !== data.value.id);
+});
 </script>

@@ -60,7 +60,7 @@
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^1.0.1",
-    "@vue-storefront/eslint-config": "~2.0.0",
+    "@vue-storefront/eslint-config": "^4.1.0",
     "@vue/test-utils": "^2.4.6",
     "commitizen": "^4.3.0",
     "concurrently": "^8.2.2",
