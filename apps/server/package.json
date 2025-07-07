@@ -15,7 +15,7 @@
     "@vue-storefront/middleware": "5.4.0",
     "consola": "^3.2.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.6.1"
   },
   "devDependencies": {
     "eslint": "^9.29.0",
