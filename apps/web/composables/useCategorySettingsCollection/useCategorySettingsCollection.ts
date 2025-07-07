@@ -10,6 +10,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
 
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
+  const { movePagesInTree } = useCategoriesSearch();
 
   const addCategorySettings = async (category: CategoryEntry) => {
     const exists = state.value.data.some(
@@ -81,7 +82,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         ),
       );
       await useSdk().plentysystems.setCategorySettings(settings);
-
+      movePagesInTree(dirtyCategories);
       dirtyCategories.forEach((category) => {
         const idx = state.value.initialData.findIndex((item) => item.id === category.id);
         if (idx !== -1) {
@@ -89,18 +90,38 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         }
       });
       state.value.loading = false;
-    } catch (e) {
-      console.error('Error saving category settings:', e);
-    } finally {
+      return true;
+    } catch (error) {
+      const err = error as { message?: string };
+      send({
+        type: 'negative',
+        message: err?.message || String(error) || 'Unknown error',
+      });
       state.value.loading = false;
+      return false;
     }
-
-    return true;
   };
 
   const save = async () => {
     const successMessage = $i18n.t('errorMessages.editor.categories.success');
     const errorMessage = $i18n.t('errorMessages.editor.categories.error');
+    const route = useRoute();
+    const router = useRouter();
+    const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
+    const currentCategorySlug = extractCategorySlug(route.path);
+
+    const categoryFromRoute = initialCategories.find(
+      (category: CategoryEntry) => currentCategorySlug === category.details[0]?.nameUrl,
+    );
+
+    const categoryAfterEdit = categoryFromRoute
+      ? state.value.data.find((category) => category.id === categoryFromRoute.id)
+      : undefined;
+
+    const editedPreviewUrl = categoryAfterEdit?.details[0]?.previewUrl;
+    const editedNameUrl = categoryAfterEdit?.details[0]?.nameUrl;
+    const newSlug = buildNewSlug(editedPreviewUrl, editedNameUrl);
+    const ensureTrailingSlash = (path: string) => (path.endsWith('/') ? path : path + '/');
 
     const isSaved = await saveCategorySettings();
 
@@ -109,11 +130,33 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         message: successMessage,
         type: 'positive',
       });
+
+      if (categoryFromRoute && newSlug && ensureTrailingSlash(route.path) !== newSlug) {
+        await router.push(newSlug);
+      }
     } else {
       send({
         message: errorMessage,
         type: 'negative',
       });
+    }
+  };
+
+  const extractCategorySlug = (path: string): string | undefined => {
+    const segments = path.split('/').filter(Boolean);
+    return segments.length ? segments[segments.length - 1] : undefined;
+  };
+
+  const buildNewSlug = (previewUrl: string | undefined, nameUrl: string | undefined): string => {
+    if (!previewUrl || !nameUrl) return '/';
+    try {
+      const url = new URL(previewUrl);
+      const segments = url.pathname.split('/').filter(Boolean);
+      if (segments.length === 0) return `/${nameUrl}/`;
+      segments[segments.length - 1] = nameUrl;
+      return '/' + segments.join('/') + '/';
+    } catch {
+      return `/${nameUrl}/`;
     }
   };
 

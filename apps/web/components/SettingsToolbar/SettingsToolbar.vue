@@ -5,7 +5,6 @@
   >
     <div class="relative flex flex-col px-1 py-1">
       <button
-        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
@@ -16,19 +15,16 @@
         <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
         <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
       </button>
+
+      <component
+        :is="trigger.component"
+        v-for="trigger in triggersModules"
+        :key="trigger.slug"
+        :active="activeSetting === trigger.slug"
+        @click="setActiveSetting(trigger.slug)"
+      />
+
       <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'DesignView' }"
-        aria-label="Open design drawer"
-        data-testid="open-design-drawer"
-        @click="toggleDrawerView('DesignView')"
-      >
-        <NuxtImg v-if="drawerView === 'DesignView'" width="24" height="24px" :src="paintBrushWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
-      </button>
-      <button
-        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"
@@ -40,7 +36,6 @@
         <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
       </button>
       <button
-        v-if="runtimeConfig.public.isDev"
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SeoView' }"
@@ -60,13 +55,10 @@ import gearBlack from 'assets/icons/paths/gear-black.svg';
 import gearWhite from 'assets/icons/paths/gear-white.svg';
 
 import { SfIconSearch } from '@storefront-ui/vue';
-import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
-import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 
-const { drawerView, openDrawerWithView, closeDrawer } = useSiteConfiguration();
-const runtimeConfig = useRuntimeConfig();
+const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
 
 function toggleDrawerView(view: DrawerView) {
   if (drawerView.value === view) {

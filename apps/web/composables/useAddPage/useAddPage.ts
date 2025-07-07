@@ -184,7 +184,7 @@ export const useAddPageModal = () => {
     await router.push({ path });
     setCategoryId({
       id: newCategory.id,
-      parentId: newCategory.parentCategoryId,
+      parentId: newCategory.parentCategoryId ?? 0,
       name: newCategory.details[0].name,
       path: newCategory.details[0].nameUrl,
       details: newCategory.details,
@@ -222,11 +222,13 @@ export const useAddPageModal = () => {
     categoriesWithFallback,
     _isReady,
     errors,
+    noneCategoryItem,
     onSubmit,
     closeModal,
     getLabel,
     getLevel,
     isValidParentPage,
     handleSearch,
+    initializeModalState,
   };
 };

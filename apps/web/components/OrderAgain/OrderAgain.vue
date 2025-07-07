@@ -91,7 +91,7 @@
                         v-if="
                           orderGetters.getOrderAgainOrderProperty(item, property) &&
                           productPropertyGetters.getOrderPropertyLabel(
-                            orderGetters.getOrderAgainOrderProperty(item, property),
+                            orderGetters.getOrderAgainOrderProperty(item, property)!,
                           ).surchargeType
                         "
                       >
@@ -99,14 +99,14 @@
                           t(
                             'orderProperties.vat.' +
                               productPropertyGetters.getOrderPropertyLabel(
-                                orderGetters.getOrderAgainOrderProperty(item, property),
+                                orderGetters.getOrderAgainOrderProperty(item, property)!,
                               ).surchargeType,
                           )
                         }}
                         {{
                           format(
                             productPropertyGetters.getOrderPropertySurcharge(
-                              orderGetters.getOrderAgainOrderProperty(item, property),
+                              orderGetters.getOrderAgainOrderProperty(item, property)!,
                             ),
                           )
                         }})</span
