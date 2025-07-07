@@ -23,10 +23,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
   const { $i18n } = useNuxtApp();
 
-  const getBlocks: GetBlocks = async (identifier, type) => {
+  const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
-    const response = await useSdk().plentysystems.getBlocks({ identifier, type });
+    const response = await useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) });
     const data = response?.data;
 
     state.value.loading = false;

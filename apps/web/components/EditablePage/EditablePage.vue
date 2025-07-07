@@ -53,7 +53,12 @@ const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
-await getBlocks(props.identifier, props.type);
+await getBlocks(props.identifier, props.type, 'Footer');
+
+console.log('EditablePage data:', data.value);
+console.log('Identifier:', props.identifier);
+console.log('Type:', props.type);
+
 const route = useRoute();
 if (route.meta.isBlockified) {
   const footerExists = data.value.some((block) => block.name === 'Footer');
