@@ -10,6 +10,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
 
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
+  const { movePagesInTree } = useCategoriesSearch();
 
   const addCategorySettings = async (category: CategoryEntry) => {
     const exists = state.value.data.some(
@@ -81,7 +82,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         ),
       );
       await useSdk().plentysystems.setCategorySettings(settings);
-
+      movePagesInTree(dirtyCategories);
       dirtyCategories.forEach((category) => {
         const idx = state.value.initialData.findIndex((item) => item.id === category.id);
         if (idx !== -1) {
@@ -89,13 +90,16 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         }
       });
       state.value.loading = false;
-    } catch (e) {
-      console.error('Error saving category settings:', e);
-    } finally {
+      return true;
+    } catch (error) {
+      const err = error as { message?: string };
+      send({
+        type: 'negative',
+        message: err?.message || String(error) || 'Unknown error',
+      });
       state.value.loading = false;
+      return false;
     }
-
-    return true;
   };
 
   const save = async () => {
@@ -103,7 +107,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const errorMessage = $i18n.t('errorMessages.editor.categories.error');
     const route = useRoute();
     const router = useRouter();
-
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
     const currentCategorySlug = extractCategorySlug(route.path);
 

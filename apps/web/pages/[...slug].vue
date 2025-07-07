@@ -88,20 +88,20 @@ watch(
 
 const headTitle = computed(() =>
   productsCatalog.value?.category
-    ? (categoryGetters.getMetaTitle(productsCatalog.value.category) || process.env.METATITLE) ?? ''
-    : process.env.METATITLE ?? '',
+    ? ((categoryGetters.getMetaTitle(productsCatalog.value.category) || process.env.METATITLE) ?? '')
+    : (process.env.METATITLE ?? ''),
 );
 
 const descriptionContent = computed(() =>
   productsCatalog.value?.category
-    ? (categoryGetters.getMetaDescription(productsCatalog.value.category) || process.env.METADESC) ?? ''
-    : process.env.METADESC ?? '',
+    ? ((categoryGetters.getMetaDescription(productsCatalog.value.category) || process.env.METADESC) ?? '')
+    : (process.env.METADESC ?? ''),
 );
 
 const keywordsContent = computed((): string =>
   productsCatalog.value?.category
-    ? (categoryGetters.getMetaKeywords(productsCatalog.value.category) || process.env.METAKEYWORDS) ?? ''
-    : process.env.METAKEYWORDS ?? '',
+    ? ((categoryGetters.getMetaKeywords(productsCatalog.value.category) || process.env.METAKEYWORDS) ?? '')
+    : (process.env.METAKEYWORDS ?? ''),
 );
 
 const robotsContent = computed((): string =>

@@ -222,11 +222,13 @@ export const useAddPageModal = () => {
     categoriesWithFallback,
     _isReady,
     errors,
+    noneCategoryItem,
     onSubmit,
     closeModal,
     getLabel,
     getLevel,
     isValidParentPage,
     handleSearch,
+    initializeModalState,
   };
 };
