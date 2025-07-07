@@ -133,7 +133,7 @@ const pagePath = computed(() => {
   }
 
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
-  return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
+  return firstSlashIndex !== -1 ? (item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/') : '/';
 });
 
 const currentGeneralPageId = ref<number | null>(null);
