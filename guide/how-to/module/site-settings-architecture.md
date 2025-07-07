@@ -38,7 +38,7 @@ export default defineNuxtModule({
     setup() {
         updateRuntimeConfig({
             public: {
-                primaryColor: '#fff',
+                primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
             },
         });
     },
