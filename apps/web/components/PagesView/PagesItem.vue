@@ -133,7 +133,7 @@ const pagePath = computed(() => {
   }
 
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
-  return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
+  return firstSlashIndex !== -1 ? (item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/') : '/';
 });
 
 const currentGeneralPageId = ref<number | null>(null);
@@ -158,7 +158,7 @@ const handleSettingsClick = () => {
   openSettingsMenu(item.id, item.type);
   setCategoryId({
     id: item.id,
-    parentId: props.parentId,
+    parentId: props.parentId ?? 0,
     name: itemDisplayName.value,
     path: item.details[0]?.nameUrl || pagePath.value,
     level: item.level,
