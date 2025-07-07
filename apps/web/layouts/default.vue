@@ -10,9 +10,9 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <NuxtLazyHydrate when-visible>
+    <!-- <NuxtLazyHydrate when-visible>
       <UiFooter />
-    </NuxtLazyHydrate>
+    </NuxtLazyHydrate> -->
 
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
