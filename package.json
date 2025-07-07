@@ -71,7 +71,7 @@
     "happy-dom": "^15.11.7",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
-    "nuxt": "^3.17.6",
+    "nuxt": "3.17.5",
     "nuxt-security": "2.2.0",
     "nuxt-viewport": "^2.3.1",
     "playwright-core": "^1.53.1",
