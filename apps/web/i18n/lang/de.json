@@ -929,25 +929,41 @@
   "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
   "sortBy": "Sortieren nach",
   "sortType": {
-    "nameA-Z": "Name A-Z",
-    "nameZ-A": "Name Z-A",
-    "priceDown": "Preis ⬇",
-    "priceUp": "Preis ⬆",
-    "reviewsDown": "Kundenbewertung ⬇",
-    "reviewsUp": "Kundenbewertung ⬆",
-    "recommended": "Empfohlen",
-    "newest": "Neueste Artikel",
-    "oldest": "Älteste Artikel",
-    "availabilityUp": "Verfügbarkeit ⬆",
-    "availabilityDown": "Verfügbarkeit ⬇",
-    "variationNumberUp": "Variantennummer ⬆",
-    "variationNumberDown": "Variantennummer ⬇",
-    "lastUpdate": "Letzte Aktualisierung",
-    "firstUpdate": "Erste Aktualisierung",
-    "manufacturerAsc": "Hersteller A-Z",
-    "manufacturerDesc": "Hersteller Z-A",
-    "topSellerUp": "Meistverkaufte Artikel ⬆",
-    "topSellerDown": "Meistverkaufte Artikel ⬇"
+    "default": {
+      "recommended_sorting": "Empfohlen"
+    },
+    "texts": {
+      "name1_asc": "Name A-Z",
+      "name1_desc": "Name Z-A"
+    },
+    "sorting": {
+      "price": {
+        "avg_asc": "Preis ⬆",
+        "avg_desc": "Preis ⬇"
+      }
+    },
+    "variation": {
+      "createdAt_desc": "Neueste Artikel",
+      "createdAt_asc": "Älteste Artikel",
+      "availability": {
+        "averageDays_asc": "Verfügbarkeit ⬆",
+        "averageDays_desc": "Verfügbarkeit ⬇"
+      },
+      "number_asc": "Variantennummer ⬆",
+      "number_desc": "Variantennummer ⬇",
+      "updatedAt_asc": "Letzte Aktualisierung",
+      "updatedAt_desc": "Erste Aktualisierung",
+      "position_asc": "Meistverkaufte Artikel ⬆",
+      "position_desc": "Meistverkaufte Artikel ⬇"
+    },
+    "item": {
+      "manufacturer": {
+        "externalName_asc": "Hersteller A-Z",
+        "externalName_desc": "Hersteller Z-A"
+      },
+      "feedbackDecimal_asc": "Kundenbewertung ⬆",
+      "feedbackDecimal_desc": "Kundenbewertung ⬇"
+    }
   },
   "storefrontError": {
     "offer": {

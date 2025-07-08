@@ -6,9 +6,9 @@
       {{ t('sortBy') }}
     </h6>
     <div class="px-4">
-      <SfSelect id="sortBy" v-model="selected" :aria-label="t('sortBy')" @change="sortingChanged">
-        <option v-for="{ value, label } in options" :key="value" :value="value">
-          {{ t(`sortType.${label}`) }}
+      <SfSelect id="sortBy" v-model="selected" :aria-label="t('sortBy')">
+        <option v-for="option in options" :key="option" :value="option">
+          {{ t(`sortType.${option}`) }}
         </option>
       </SfSelect>
     </div>
@@ -18,103 +18,19 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 
-const { getFacetsFromURL, updateSorting } = useCategoryFilter();
+const { updateSorting } = useCategoryFilter();
 const { t } = useI18n();
-const options = ref([
-  {
-    label: 'recommended',
-    value: 'default.recommended_sorting',
-  },
-  {
-    label: 'nameA-Z',
-    value: 'texts.name1_asc',
-  },
-  {
-    label: 'nameZ-A',
-    value: 'texts.name1_desc',
-  },
-  {
-    label: 'priceUp',
-    value: 'sorting.price.avg_asc',
-  },
-  {
-    label: 'priceDown',
-    value: 'sorting.price.avg_desc',
-  },
-  {
-    label: 'newest',
-    value: 'variation.createdAt_desc',
-  },
-  {
-    label: 'oldest',
-    value: 'variation.createdAt_asc',
-  },
-  {
-    label: 'availabilityUp',
-    value: 'variation.availability.averageDays_asc',
-  },
-  {
-    label: 'availabilityDown',
-    value: 'variation.availability.averageDays_desc',
-  },
-  {
-    label: 'variationNumberUp',
-    value: 'variation.number_asc',
-  },
-  {
-    label: 'variationNumberDown',
-    value: 'variation.number_desc',
-  },
-  {
-    label: 'lastUpdate',
-    value: 'variation.updatedAt_asc',
-  },
-  {
-    label: 'firstUpdate',
-    value: 'variation.updatedAt_desc',
-  },
-  {
-    label: 'manufacturerAsc',
-    value: 'item.manufacturer.externalName_asc',
-  },
-  {
-    label: 'manufacturerDesc',
-    value: 'item.manufacturer.externalName_desc',
-  },
-  {
-    label: 'topSellerUp',
-    value: 'variation.position_asc',
-  },
-  {
-    label: 'topSellerDown',
-    value: 'variation.position_desc',
-  },
-  {
-    label: 'reviewsUp',
-    value: 'item.feedbackDecimal_asc',
-  },
-  {
-    label: 'reviewsDown',
-    value: 'item.feedbackDecimal_desc',
-  },
-]);
-const selected = ref(options.value[0].value);
+const { getSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
+const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
-function sortingChanged() {
-  updateSorting(selected.value);
-}
+const options = computed(() => JSON.parse(availableSortingOptions()));
 
-function sortQueryChanged() {
-  const facets = getFacetsFromURL();
-  selected.value = facets.sort ?? options.value[0].value;
-}
-
-sortQueryChanged();
-
-watch(
-  () => useNuxtApp().$router.currentRoute.value.query.sort,
-  () => {
-    sortQueryChanged();
+const selected = computed({
+  get: () => {
+    return useNuxtApp().$router.currentRoute.value.query.sort || defaultSortingOption() || options.value[0];
   },
-);
+  set: (selectedOption) => {
+    updateSorting(selectedOption);
+  },
+});
 </script>
