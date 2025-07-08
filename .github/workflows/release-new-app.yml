@@ -14,7 +14,7 @@ jobs:
           ref: ${{ github.event.release.tag_name }}
 
       - name: Compress repo to Tar
-        uses: a7ul/tar-action@v1.1.0
+        uses: a7ul/tar-action@v1.2.0
         id: compress
         with:
           command: c
