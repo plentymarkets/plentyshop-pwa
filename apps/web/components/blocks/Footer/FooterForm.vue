@@ -1,5 +1,5 @@
 <template>
-  <div class="footer-settings-view sticky top-[52px]" data-testid="footer-settings-drawer">
+  <div class="footer-settings-view sticky" data-testid="footer-settings-drawer">
     <UiAccordionItem
       v-model="firstColumnOpen"
       data-testid="first-column-section"
