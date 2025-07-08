@@ -78,9 +78,7 @@
         }"
         v-html="props.content.footnote"
       />
-      <!-- {{ props.content.footnote }} -->
     </div>
-    <!-- </div> -->
   </footer>
 </template>
 

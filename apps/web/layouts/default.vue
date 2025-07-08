@@ -25,6 +25,7 @@ definePageMeta({
 defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
+const { t } = useI18n();
 const viewport = useViewport();
 const route = useRoute();
 setLogoMeta();
@@ -38,8 +39,8 @@ if (footerBlock) {
   footerContent = footerBlock.content;
 } else {
   footerContent = {
-    column1: { title: 'Legal' },
-    column2: { title: 'Contact', description: '', showContactLink: true },
+    column1: { title: t('categories.legal.label') },
+    column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
     column3: { title: '', description: '' },
     column4: { title: '', description: '' },
     footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
