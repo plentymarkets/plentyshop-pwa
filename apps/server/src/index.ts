@@ -17,7 +17,6 @@ const checkEnvironments = (integrations: any) => {
   }
 };
 
-
 const validateApiUrl = (url: string | undefined): string | undefined => {
   return url?.replace(/[/\\]+$/, '');
 };
