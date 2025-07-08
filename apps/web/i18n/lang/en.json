@@ -740,6 +740,7 @@
   "openSearchModalButtonLabel": "Open item search",
   "or": "or",
   "orderConfirmation": {
+    "trackingOrder": "Track your order",
     "confirmationSendTo": "A confirmation with all details has been sent to {email}",
     "createAccountForBenefits": "Create an account to enjoy all benefits!",
     "sameAsShippingAddress": "Same as shipping address",
