@@ -84,6 +84,7 @@
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd } from '@storefront-ui/vue';
+
 const runtimeConfig = useRuntimeConfig();
 
 const { $isPreview } = useNuxtApp();
