@@ -4,10 +4,10 @@
       {{ t('orderConfirmation.trackingOrder') }}
     </p>
     <p>
-      <span v-for="(number, index) in trackingNumbers" :key="index">
-        <NuxtLink :to="trackingUrl">
+      <span v-for="(number, index) in trackingNumbers" :key="index" class="text-primary-900">
+        <SfLink :href="trackingUrl" target="_blank" class="hover:cursor-pointer">
           {{ number }}
-        </NuxtLink>
+        </SfLink>
         <span v-if="index < trackingNumbers.length - 1">, </span>
       </span>
     </p>
@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderTrackingProps } from './types';
+import { SfLink } from '@storefront-ui/vue';
 
 const { t } = useI18n();
 const { order } = defineProps<OrderTrackingProps>();
