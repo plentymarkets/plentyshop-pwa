@@ -10,7 +10,7 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <FooterBlock v-if="!route.meta.isBlockified" :content="footerContent as any" />
+    <FooterBlock v-if="!route.meta.isBlockified" :content="footerContent as FooterSettings" />
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
@@ -18,6 +18,8 @@
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
 import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+import type { FooterSettings } from '~/components/blocks/Footer/types';
+import { v4 as uuid } from 'uuid';
 
 definePageMeta({
   isBlockified: false,
@@ -36,9 +38,13 @@ await getBlocks('index', 'immutable', 'Footer');
 let footerContent;
 const footerBlock = data.value.find((block) => block.name === 'Footer');
 if (footerBlock) {
-  footerContent = footerBlock.content;
+  footerContent = footerBlock.content as FooterSettings;
 } else {
   footerContent = {
+    meta: {
+      uuid: uuid(),
+      isGlobalTemplate: true,
+    },
     column1: { title: t('categories.legal.label') },
     column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
     column3: { title: '', description: '' },
@@ -48,8 +54,8 @@ if (footerBlock) {
     colors: {
       background: '#cfe4ec',
       text: '#1c1c1c',
-      noteBackground: '#161a16',
-      noteText: '#959795',
+      footnoteBackground: '#161a16',
+      footnoteText: '#959795',
     },
   };
 }
