@@ -1,9 +1,10 @@
 <template>
   <footer
+    v-if="resolvedContent"
     class="pt-10"
     :style="{
-      backgroundColor: props.content?.colors?.background || '#cfe4ec',
-      color: props.content?.colors?.text || '#1c1c1c',
+      backgroundColor: resolvedContent.colors?.background || '#cfe4ec',
+      color: resolvedContent.colors?.text || '#1c1c1c',
     }"
     data-testid="footer"
   >
@@ -11,7 +12,7 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         <div class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
-            {{ props.content?.column1?.title }}
+            {{ resolvedContent.column1?.title }}
           </div>
           <ul>
             <SfListItem
@@ -21,7 +22,7 @@
             >
               <SfLink
                 :tag="NuxtLink"
-                :style="{ color: props.content?.colors?.text || undefined }"
+                :style="{ color: resolvedContent.colors?.text || undefined }"
                 class="no-underline text-neutral-600 hover:underline active:underline"
                 variant="secondary"
                 :to="localePath(link)"
@@ -33,7 +34,7 @@
         </div>
 
         <div
-          v-for="(column, i) in [props.content?.column2, props.content?.column3, props.content?.column4]"
+          v-for="(column, i) in [resolvedContent.column2, resolvedContent.column3, resolvedContent.column4]"
           :key="i"
           class="max-w-[280px] break-words"
         >
@@ -45,7 +46,7 @@
               class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
             >
               <SfLink
-                :style="{ color: props.content?.colors?.text || '#1c1c1c' }"
+                :style="{ color: resolvedContent.colors?.text || '#1c1c1c' }"
                 :tag="NuxtLink"
                 class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
                 variant="secondary"
@@ -65,18 +66,18 @@
     </div>
     <div>
       <div
-        v-if="props.content?.footnote && props.content.footnote.trim() !== ''"
+        v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
         class="text-sm py-10 md:py-6 px-10"
         :class="{
-          'text-left': props.content?.footnoteAlign === 'left',
-          'text-center': props.content?.footnoteAlign === 'center',
-          'text-right': props.content?.footnoteAlign === 'right',
+          'text-left': resolvedContent.footnoteAlign === 'left',
+          'text-center': resolvedContent.footnoteAlign === 'center',
+          'text-right': resolvedContent.footnoteAlign === 'right',
         }"
         :style="{
-          color: props.content?.colors?.footnoteText || '#959795',
-          backgroundColor: props.content?.colors?.footnoteBackground || '#161a16',
+          color: resolvedContent.colors?.footnoteText || '#959795',
+          backgroundColor: resolvedContent.colors?.footnoteBackground || '#161a16',
         }"
-        v-html="props.content.footnote"
+        v-html="resolvedContent.footnote"
       />
     </div>
   </footer>
@@ -85,13 +86,14 @@
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import type { FooterProps } from './types';
-
 import { categories } from '~/mocks';
 const { t } = useI18n();
 const props = defineProps<FooterProps>();
-
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
+
+
+const { resolvedContent } = useFooterBlock(props.content ?? null);
 </script>
 
 <style scoped>

@@ -1,3 +1,5 @@
+import type { FooterSettings } from '~/components/blocks/Footer/types';
+
 export const useToolbar = () => {
   const { isEditingEnabled } = useEditor();
   const { send } = useNotification();
@@ -38,6 +40,7 @@ export const useToolbar = () => {
         message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',
       });
+
     }
 
     if (hasError) {
@@ -51,5 +54,9 @@ export const useToolbar = () => {
     return route.path === '/' || dataProduct.value.category?.type === 'content';
   });
 
-  return { save, isEditablePage };
+  function refreshFooterBlockCache(cachedFooter: Ref<FooterSettings | null>) {
+    cachedFooter.value = null;
+  }
+
+  return { save, isEditablePage, refreshFooterBlockCache };
 };
