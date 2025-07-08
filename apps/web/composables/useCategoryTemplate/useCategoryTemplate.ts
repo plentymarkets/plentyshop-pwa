@@ -13,8 +13,8 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
-export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
-  const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
+export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) => {
+  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${blocks}`, () => ({
     data: [],
     cleanData: [],
     categoryTemplateData: null,

@@ -23,4 +23,4 @@ export interface UseCategoryTemplate {
   updateBlocks: UpdateBlocks;
 }
 
-export type UseCategoryTemplateReturn = () => UseCategoryTemplate;
+export type UseCategoryTemplateReturn = (blocks?: string) => UseCategoryTemplate;
