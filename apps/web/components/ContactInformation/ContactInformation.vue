@@ -4,11 +4,9 @@
       {{ t('contactInfo.heading') }}
     </h2>
 
-    <div v-if="customerEmail && (isAuthorized || disabled)" class="w-full">
-      {{ t('contactInfo.email') }}: {{ customerEmail }}
-    </div>
+    <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contactInfo.email') }}: {{ customerEmail }}</div>
 
-    <form v-if="!disabled && isGuest && !isAuthorized && !isGuest" data-testid="contact-information-form" novalidate>
+    <form v-if="(!isAuthorized && !isGuest) || isGuest" data-testid="contact-information-form" novalidate>
       <label>
         <UiFormLabel>{{ t('contactInfo.email') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
@@ -84,10 +82,10 @@ const { persistShippingAddress, persistBillingAddress } = useCheckout();
 const { errors, defineField, validate } = useForm({ validationSchema: emailValidationSchema });
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
 
-const email = computed(() => sessionData.value?.user?.email ?? sessionData.value.user?.guestMail ?? '');
-
-watch(email, () => {
-  customerEmail.value = email.value;
+watch(isAuthorized, (updatedStatus) => {
+  customerEmail.value = updatedStatus
+    ? (sessionData.value.user?.email ?? '')
+    : (sessionData.value.user?.guestMail ?? '');
 });
 
 const validateAndSubmitEmail = async () => {
