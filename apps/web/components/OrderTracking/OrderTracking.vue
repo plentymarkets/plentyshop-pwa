@@ -4,7 +4,7 @@
       {{ t('orderConfirmation.trackingOrder') }}
     </p>
     <p>
-      <span v-for="(number, index) in trackingNumbers" :key="index" class="text-primary-900">
+      <span v-for="(number, index) in trackingNumbers" :key="index">
         <SfLink :href="trackingUrl" target="_blank" class="hover:cursor-pointer">
           {{ number }}
         </SfLink>
