@@ -57,6 +57,7 @@ const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
 
 const { t } = useI18n();
+const { cachedFooter } = useFooterBlock();
 
 const footerExists = data.value.some((block) => block.name === 'Footer');
 
@@ -68,7 +69,7 @@ if (!footerExists) {
       uuid: uuid(),
       isGlobalTemplate: true,
     },
-    content: {
+    content: cachedFooter.value || {
       column1: { title: t('categories.legal.label') },
       column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
       column3: { title: '', description: '' },
