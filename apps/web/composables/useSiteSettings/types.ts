@@ -10,7 +10,7 @@ export interface UseSiteSettingsState {
 
 export type UpdateSetting = (value: string) => void;
 export type GetSetting = () => string;
-export type GetJsonSetting = () => unknown;
+export type GetJsonSetting = () => string[];
 export type IsDirty = ComputedRef<boolean>;
 export type SaveSiteSettings = () => void;
 

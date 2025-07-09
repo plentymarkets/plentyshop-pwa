@@ -31,7 +31,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     );
   };
 
-  const getJsonSetting: GetSetting = () => {
+  const getJsonSetting: () => string[] = () => {
     const runtimeSetting = useRuntimeConfig().public?.[setting as string];
 
     const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);

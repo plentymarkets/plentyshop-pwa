@@ -27,7 +27,7 @@ const options = computed(() => availableSortingOptions());
 
 const selected = computed({
   get: () => {
-    return useNuxtApp().$router.currentRoute.value.query.sort || defaultSortingOption() || options.value[0];
+    return (useNuxtApp().$router.currentRoute.value.query.sort || defaultSortingOption() || options.value[0]) as string;
   },
   set: (selectedOption) => {
     updateSorting(selectedOption);
