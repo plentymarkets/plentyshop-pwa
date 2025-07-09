@@ -72,7 +72,7 @@
 
         <div
           :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']"
-          @scroll="(e) => handleScroll(e, 'content')"
+          @scroll="(e: Event) => handleScroll(e, 'content')"
         >
           <ul class="rounded-lg">
             <PagesItem
@@ -102,7 +102,7 @@
 
         <div
           :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']"
-          @scroll="(e) => handleScroll(e, 'item')"
+          @scroll="(e: Event) => handleScroll(e, 'item')"
         >
           <ul class="rounded-lg">
             <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
