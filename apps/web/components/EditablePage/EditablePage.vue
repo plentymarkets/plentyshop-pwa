@@ -52,12 +52,12 @@ import type { DragEvent, EditablePageProps } from './types';
 import { v4 as uuid } from 'uuid';
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
+const { cachedFooter } = useFooterBlock();
 const { data, getBlocks } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
 
 const { t } = useI18n();
-const { cachedFooter } = useFooterBlock();
 
 const footerExists = data.value.some((block) => block.name === 'Footer');
 
@@ -96,6 +96,7 @@ const {
   handleDragStart,
   handleDragEnd,
 } = useBlockManager();
+
 const scrollToBlock = (evt: DragEvent) => {
   if (evt.moved) {
     const { newIndex } = evt.moved;
@@ -147,4 +148,27 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
+watch(
+  () => cachedFooter.value,
+  (newFooter) => {
+    const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
+    if (footerIndex !== -1) {
+      data.value.splice(footerIndex, 1, {
+        ...data.value[footerIndex],
+        content: newFooter,
+      });
+    } else if (newFooter) {
+      data.value.push({
+        name: 'Footer',
+        type: 'content',
+        meta: {
+          uuid: uuid(),
+          isGlobalTemplate: true,
+        },
+        content: newFooter,
+      });
+    }
+  },
+  { immediate: true, once: true },
+);
 </script>

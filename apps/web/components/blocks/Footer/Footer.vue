@@ -92,7 +92,6 @@ const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 
-
 const { resolvedContent } = useFooterBlock(props.content ?? null);
 </script>
 
