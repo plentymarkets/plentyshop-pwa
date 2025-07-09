@@ -3,26 +3,21 @@
     class="absolute z-[0] md:z-[1] lg:z-[9] right-0 top-0 flex items-center space-x-3 border border-[#538AEA] bg-white p-2 shadow-md"
     data-testid="edit-block-actions"
   >
-    <SfTooltip
-      v-if="isEditDisabled"
-      label="You can only edit the footer on the homepage"
-      placement="left"
-      class="flex"
-    >
-    <button
-      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
-      data-testid="open-editor-button"
-      aria-label="editor button"
-      :disabled="isEditDisabled"
-      :class="{ 'opacity-40 cursor-not-allowed': isEditDisabled }"
-      @click.stop="triggerEdit"
-    >
+    <SfTooltip v-if="isEditDisabled" label="You can only edit the footer on the homepage" placement="left" class="flex">
+      <button
+        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+        data-testid="open-editor-button"
+        aria-label="editor button"
+        :disabled="isEditDisabled"
+        :class="{ 'opacity-40 cursor-not-allowed': isEditDisabled }"
+        @click.stop="triggerEdit"
+      >
         <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path :d="editPath" fill="black" />
           </svg>
         </SfIconBase>
-    </button>
+      </button>
     </SfTooltip>
     <button
       v-else
