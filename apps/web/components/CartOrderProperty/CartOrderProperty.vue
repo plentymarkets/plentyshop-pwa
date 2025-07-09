@@ -2,7 +2,7 @@
   <div v-if="property" class="ml-4">
     <span class="font-bold">
       {{ basketItemOrderParam.name }}
-      <span v-if="productPropertyGetters.getOrderPropertyLabel(property).surchargeType">
+      <span v-if="productPropertyGetters.getOrderPropertyLabel(property).surchargeType" data-testid="order-property-surcharge">
         ({{ t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(property).surchargeType) }}
         {{ format(productPropertyGetters.getOrderPropertySurcharge(property)) }})</span
       >
