@@ -22,26 +22,6 @@ export interface FooterFootnotes {
   color: FooterColor;
 }
 
-export interface FooterContent {
-  firstColumn: FooterColumn;
-  secondColumn: FooterColumn;
-  thirdColumn: FooterColumn;
-  fourthColumn: FooterColumn;
-  color: FooterColor;
-  footnotes: FooterFootnotes;
-}
-
-export interface FooterMeta {
-  uuid: string;
-}
-
-export interface FooterBlock {
-  name: string;
-  type: string;
-  meta: FooterMeta;
-  content: FooterContent;
-}
-
 export interface FooterSettingsColumn {
   title: string;
   description?: string;
