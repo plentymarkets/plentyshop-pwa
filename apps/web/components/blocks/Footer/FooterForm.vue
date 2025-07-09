@@ -331,6 +331,7 @@ const props = defineProps<{ uuid?: string }>();
 const footerBlock = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as FooterSettings,
 );
+
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
 const thirdColumnOpen = ref(false);

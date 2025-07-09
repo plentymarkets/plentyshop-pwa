@@ -246,8 +246,8 @@
       "colors": {
         "background": "#cfe4ec",
         "text": "#151a16",
-        "noteBackground": "#151a16",
-        "noteText": "#8b8d8b"
+        "footnoteBackground": "#151a16",
+        "footnoteText": "#8b8d8b"
       }
     }
   }

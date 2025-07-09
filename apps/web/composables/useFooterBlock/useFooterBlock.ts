@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
-
+import type { FooterColumn } from '~/composables/useFooterBlock/types';
 export function useFooterBlock(content?: FooterSettings | null) {
   const { t } = useI18n();
   const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
@@ -11,18 +11,50 @@ export function useFooterBlock(content?: FooterSettings | null) {
     const { data, getBlocks } = useCategoryTemplate('footer-block');
     await getBlocks('index', 'immutable', 'Footer');
     const footerBlock = data.value.find((block) => block.name === 'Footer');
+
+    const normalizeColumn = (col: FooterColumn | undefined) => {
+      if (!col) return { title: '', description: '', showContactLink: false };
+      if ('text' in col && col.text) {
+        const { title, description, showContactLink, showLinkToContact, ...restText } = col.text as Record<
+          string,
+          unknown
+        >;
+        return {
+          ...col,
+          ...restText,
+          title: (title as string) || col.title || '',
+          description: (description as string) || col.description || '',
+          showContactLink: Boolean(
+            showContactLink || showLinkToContact || col.showContactLink || col.showLinkToContact,
+          ),
+        };
+      }
+      return {
+        ...col,
+        title: col.title || '',
+        description: col.description || '',
+        showContactLink: Boolean(col.showContactLink || col.showLinkToContact),
+      };
+    };
     if (footerBlock) {
-      cachedFooter.value = footerBlock.content as FooterSettings;
+      const content = footerBlock.content as FooterSettings;
+      cachedFooter.value = {
+        ...content,
+        column1: normalizeColumn(content.column1),
+        column2: { ...normalizeColumn(content.column2), showContactLink: true },
+        column3: normalizeColumn(content.column3),
+        column4: normalizeColumn(content.column4),
+      } as FooterSettings;
     } else {
       cachedFooter.value = {
         meta: {
           uuid: uuid(),
           isGlobalTemplate: true,
         },
-        column1: { title: t('categories.legal.label') },
-        column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
-        column3: { title: '', description: '' },
-        column4: { title: '', description: '' },
+        column1: normalizeColumn({ title: t('categories.legal.label') }),
+        column2: normalizeColumn({ title: t('categories.contact.label'), description: '', showContactLink: true }),
+        column3: normalizeColumn({ title: '', description: '' }),
+        column4: normalizeColumn({ title: '', description: '' }),
         footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
         footnoteAlign: 'right',
         colors: {
