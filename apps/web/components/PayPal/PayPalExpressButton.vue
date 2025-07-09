@@ -22,6 +22,7 @@ const {
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
+const { t } = useI18n();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
@@ -118,8 +119,17 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       onInit(data, actions) {
         onInit(actions);
       },
-      onError() {
-        // TODO: handle error
+      onError(error) {
+        useNotification().send({
+          message: error?.toString() || t('errorMessages.paymentFailed'),
+          type: 'negative',
+        });
+      },
+      onCancel() {
+        useNotification().send({
+          message: t('errorMessages.paymentCancelled'),
+          type: 'negative',
+        });
       },
       async createOrder() {
         const order = await createTransaction({

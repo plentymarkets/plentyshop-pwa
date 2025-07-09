@@ -545,6 +545,7 @@
       }
     },
     "paymentFailed": "Die Zahlung ist fehlgeschlagen. Versuche es bitte erneut.",
+    "paymentCancelled": "Die Zahlung wurde abgebrochen. Versuche es bitte erneut.",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
     "requiredField": "Dieses Feld ist erforderlich.",
     "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",

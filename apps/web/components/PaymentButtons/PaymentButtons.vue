@@ -34,7 +34,11 @@
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
-    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="!termsAccepted || disableBuyButton" />
+    <PayPalAPM
+      v-else-if="PayPalIsAPM"
+      :disabled="!termsAccepted || disableBuyButton"
+      @validation-callback="handlePreparePayment"
+    />
 
     <UiButton
       v-else

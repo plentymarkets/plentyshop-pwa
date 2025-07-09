@@ -545,6 +545,7 @@
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",
+    "paymentCancelled": "The payment has been cancelled. Please try again.",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
     "requiredField": "This is a mandatory field.",
     "turnstileRequired": "Please check the box to verify that you are human.",
