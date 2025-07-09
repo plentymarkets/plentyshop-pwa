@@ -1,5 +1,3 @@
-import type { FooterSettings } from '~/components/blocks/Footer/types';
-
 export const useToolbar = () => {
   const { isEditingEnabled } = useEditor();
   const { send } = useNotification();
@@ -56,10 +54,5 @@ export const useToolbar = () => {
     return route.path === '/' || dataProduct.value.category?.type === 'content';
   });
 
-  function refreshFooterBlockCache(cachedFooter: Ref<FooterSettings | null>) {
-    cachedFooter.value = null;
-  }
-
-  return { save, isEditablePage, refreshFooterBlockCache };
+  return { save, isEditablePage };
 };
-
