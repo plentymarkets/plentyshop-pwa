@@ -229,7 +229,10 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const updateSorting = (sort: string): void => {
-    navigateTo({ query: { ...route.query, sort } });
+    const query = { ...route.query };
+    if (sort) query.sort = sort;
+    else delete query.sort;
+    navigateTo({ query });
   };
 
   /**
