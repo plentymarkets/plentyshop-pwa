@@ -1,17 +1,21 @@
 import { v4 as uuid } from 'uuid';
+import { callOnce } from '#app';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 import type { FooterColumn } from '~/composables/useFooterBlock/types';
 
-export function useFooterBlock(content?: FooterSettings | null, skipFetch = false) {
+export function useFooterBlock(content?: FooterSettings | null) {
   const { t } = useI18n();
   const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
   const resolvedContent = ref<FooterSettings | null>(content ?? null);
   let footerBlockPromise: Promise<void> | null = null;
 
-  async function fetchFooterBlock() {
-    if (skipFetch) return;
+  async function fetchFooterBlock(callOnceMode = true) {
     const { data, getBlocks } = useCategoryTemplate('footer-block');
-    await getBlocks('index', 'immutable', 'Footer');
+    if (callOnceMode) {
+      await callOnce(() => getBlocks('index', 'immutable', 'Footer'));
+    } else {
+      await getBlocks('index', 'immutable', 'Footer');
+    }
     const footerBlock = data.value.find((block) => block.name === 'Footer');
 
     const normalizeColumn = (col: FooterColumn | undefined) => {
@@ -78,16 +82,16 @@ export function useFooterBlock(content?: FooterSettings | null, skipFetch = fals
         return;
       }
       if (!footerBlockPromise) {
-        footerBlockPromise = fetchFooterBlock();
+        footerBlockPromise = fetchFooterBlock(true);
       }
       await footerBlockPromise;
       resolvedContent.value = cachedFooter.value;
       footerBlockPromise = null;
     }
 
-    if (import.meta.client && !skipFetch) {
+    if (import.meta.client) {
       const handler = async () => {
-        await fetchFooterBlock();
+        await fetchFooterBlock(false);
       };
       window.addEventListener('footer-block-refetch', handler);
       onBeforeUnmount(() => window.removeEventListener('footer-block-refetch', handler));
