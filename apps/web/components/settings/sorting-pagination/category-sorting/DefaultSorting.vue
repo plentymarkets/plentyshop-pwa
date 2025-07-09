@@ -22,6 +22,7 @@
       class="cursor-pointer"
       select-label=""
       deselect-label="Selected"
+      :allow-empty="true"
     />
   </div>
 </template>
@@ -31,35 +32,21 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
+import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('defaultSortingOption');
-const { getSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
+const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
+const { updateSorting } = useCategoryFilter();
 
-const { t: tEn } = useI18n({
-  inheritLocale: false,
-  locale: 'en',
-});
-
-const labelFor = (key: string): string => {
-  return tEn(`sortType.${key}`);
-};
-
-const sortingOptions = computed(() => {
-  const availableOptions = JSON.parse(availableSortingOptions());
-  if (!availableOptions) return [];
-
-  return availableOptions.map((key: string) => ({
-    label: labelFor(key),
-    value: key,
-  }));
-});
+const sortingOptions = computed(() => getMappedOptions(availableSortingOptions(), 'en'));
 
 const defaultSortingOption = computed({
   get: () => {
     return sortingOptions.value.find((o: SortingOption) => o.value === getSetting());
   },
   set: (option) => {
-    updateSetting(option.value);
+    updateSetting(option?.value ?? '');
+    updateSorting(option?.value ?? '');
   },
 });
 </script>

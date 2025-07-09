@@ -25,6 +25,8 @@
       deselect-label="Selected"
       :multiple="true"
       :taggable="true"
+      tag-placeholder=""
+      @remove="removeOption"
     />
   </div>
 </template>
@@ -34,43 +36,39 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
+import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 
-const sortingOptions = ref([
-  { label: 'Recommended', value: 'default.recommended_sorting' },
+const { updateSetting, getJsonSetting } = useSiteSettings('availableSortingOptions');
+const { updateSetting: updateDefaultSorting } = useSiteSettings('defaultSortingOption');
+const { updateSorting } = useCategoryFilter();
 
-  { label: 'Name A-Z', value: 'texts.name1_asc' },
-  { label: 'Name Z-A', value: 'texts.name1_desc' },
+const sortingOptionValues = [
+  'default.recommended_sorting',
+  'texts.name1_asc',
+  'texts.name1_desc',
+  'sorting.price.avg_asc',
+  'sorting.price.avg_desc',
+  'variation.createdAt_desc',
+  'variation.createdAt_asc',
+  'variation.availability.averageDays_asc',
+  'variation.availability.averageDays_desc',
+  'variation.number_asc',
+  'variation.number_desc',
+  'variation.updatedAt_asc',
+  'variation.updatedAt_desc',
+  'item.manufacturer.externalName_asc',
+  'item.manufacturer.externalName_desc',
+  'variation.position_asc',
+  'variation.position_desc',
+  'item.feedbackDecimal_asc',
+  'item.feedbackDecimal_desc',
+];
 
-  { label: 'Price ⬆', value: 'sorting.price.avg_asc' },
-  { label: 'Price ⬇', value: 'sorting.price.avg_desc' },
-
-  { label: 'Newest items', value: 'variation.createdAt_desc' },
-  { label: 'Oldest items', value: 'variation.createdAt_asc' },
-
-  { label: 'Availability ⬆', value: 'variation.availability.averageDays_asc' },
-  { label: 'Availability ⬇', value: 'variation.availability.averageDays_desc' },
-
-  { label: 'Variation number ⬆', value: 'variation.number_asc' },
-  { label: 'Variation number ⬇', value: 'variation.number_desc' },
-
-  { label: 'Last update', value: 'variation.updatedAt_asc' },
-  { label: 'First update', value: 'variation.updatedAt_desc' },
-
-  { label: 'Manufacturer A-Z', value: 'item.manufacturer.externalName_asc' },
-  { label: 'Manufacturer Z-A', value: 'item.manufacturer.externalName_desc' },
-
-  { label: 'Top seller ⬆', value: 'variation.position_asc' },
-  { label: 'Top seller ⬇', value: 'variation.position_desc' },
-
-  { label: 'Item reviews ⬆', value: 'item.feedbackDecimal_asc' },
-  { label: 'Item reviews ⬇', value: 'item.feedbackDecimal_desc' },
-]);
-
-const { updateSetting, getSetting } = useSiteSettings('availableSortingOptions');
+const sortingOptions = computed(() => getMappedOptions(sortingOptionValues, 'en'));
 
 const availableSortingOptions = computed({
   get: () => {
-    const values: string[] = getSetting() ? JSON.parse(getSetting()) : [];
+    const values: string[] = getJsonSetting() || [];
 
     return sortingOptions.value.filter((sortingOption: SortingOption) => values.includes(sortingOption.value));
   },
@@ -79,4 +77,9 @@ const availableSortingOptions = computed({
     updateSetting(JSON.stringify(values));
   },
 });
+
+const removeOption = () => {
+  updateSorting('');
+  updateDefaultSorting('');
+};
 </script>

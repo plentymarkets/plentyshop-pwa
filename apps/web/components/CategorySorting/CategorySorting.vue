@@ -20,10 +20,10 @@ import { SfSelect } from '@storefront-ui/vue';
 
 const { updateSorting } = useCategoryFilter();
 const { t } = useI18n();
-const { getSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
+const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
-const options = computed(() => JSON.parse(availableSortingOptions()));
+const options = computed(() => availableSortingOptions());
 
 const selected = computed({
   get: () => {
