@@ -57,7 +57,7 @@ const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
 
 const { t } = useI18n();
-const { cachedFooter } = useFooterBlock();
+const { cachedFooter } = useFooterBlock(undefined, true);
 
 const footerExists = data.value.some((block) => block.name === 'Footer');
 

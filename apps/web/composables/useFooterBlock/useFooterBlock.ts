@@ -1,13 +1,15 @@
 import { v4 as uuid } from 'uuid';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 import type { FooterColumn } from '~/composables/useFooterBlock/types';
-export function useFooterBlock(content?: FooterSettings | null) {
+
+export function useFooterBlock(content?: FooterSettings | null, skipFetch = false) {
   const { t } = useI18n();
   const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
   const resolvedContent = ref<FooterSettings | null>(content ?? null);
   let footerBlockPromise: Promise<void> | null = null;
 
   async function fetchFooterBlock() {
+    if (skipFetch) return;
     const { data, getBlocks } = useCategoryTemplate('footer-block');
     await getBlocks('index', 'immutable', 'Footer');
     const footerBlock = data.value.find((block) => block.name === 'Footer');
@@ -36,6 +38,7 @@ export function useFooterBlock(content?: FooterSettings | null) {
         showContactLink: Boolean(col.showContactLink || col.showLinkToContact),
       };
     };
+
     if (footerBlock) {
       const content = footerBlock.content as FooterSettings;
       cachedFooter.value = {
@@ -82,7 +85,7 @@ export function useFooterBlock(content?: FooterSettings | null) {
       footerBlockPromise = null;
     }
 
-    if (import.meta.client) {
+    if (import.meta.client && !skipFetch) {
       const handler = async () => {
         await fetchFooterBlock();
       };
