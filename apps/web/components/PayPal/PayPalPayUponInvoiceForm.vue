@@ -37,7 +37,6 @@
     <UiTelephoneInput
       v-model="phoneWithPrefix"
       :label="`${t('checkoutPayment.phoneLabel')} &#8727;`"
-      :only-countries="billingCountries.map((country) => country.isoCode2.toLowerCase())"
       :default-country="defaultCountry"
       :error="phoneError"
       @valid-phone-number="handlePhoneNumberValidation"
@@ -68,7 +67,6 @@ const emit = defineEmits(['confirmCancel']);
 
 const { t } = useI18n();
 const { config, loadConfig, getFraudId, getScript } = usePayPal();
-const { billingCountries } = useAggregatedCountries();
 const { emit: plentyEmit } = usePlentyEvent();
 const localePath = useLocalePath();
 const {
