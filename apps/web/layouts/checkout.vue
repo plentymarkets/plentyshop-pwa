@@ -42,5 +42,5 @@ const backUrl = localePath(historyState?.back?.toString() ?? paths.home);
 const backHref = backUrl === localePath(router.currentRoute.value.path) ? localePath(paths.home) : backUrl;
 const goToPreviousRoute = () => (backToCart ? navigateTo(localePath(paths.cart)) : navigateTo(localePath(backHref)));
 
-onNuxtReady(async() => await setInitialData());
+onNuxtReady(async () => await setInitialData());
 </script>
