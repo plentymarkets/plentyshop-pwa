@@ -14,3 +14,7 @@ export const getMappedOptions = (options: string[], locale: string): SortingOpti
     value: key,
   }));
 };
+
+export const getOptionTranslation = (key: string, locale: string): string => {
+  return getLocaleKey(`sortingAndPagination.recommendedSorting.options.${key}`, locale as 'en' | 'de')
+};
