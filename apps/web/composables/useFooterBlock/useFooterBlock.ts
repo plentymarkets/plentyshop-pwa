@@ -75,28 +75,27 @@ export function useFooterBlock(content?: FooterSettings | null) {
     resolvedContent.value = cachedFooter.value;
   }
 
-  onMounted(async () => {
-    if (!resolvedContent.value) {
-      if (cachedFooter.value) {
-        resolvedContent.value = cachedFooter.value;
-        return;
-      }
+  if (!resolvedContent.value) {
+    if (cachedFooter.value) {
+      resolvedContent.value = cachedFooter.value;
+    } else {
       if (!footerBlockPromise) {
         footerBlockPromise = fetchFooterBlock(true);
       }
-      await footerBlockPromise;
-      resolvedContent.value = cachedFooter.value;
-      footerBlockPromise = null;
+      footerBlockPromise.then(() => {
+        resolvedContent.value = cachedFooter.value;
+        footerBlockPromise = null;
+      });
     }
+  }
 
-    if (import.meta.client) {
-      const handler = async () => {
-        await fetchFooterBlock(false);
-      };
-      window.addEventListener('footer-block-refetch', handler);
-      onBeforeUnmount(() => window.removeEventListener('footer-block-refetch', handler));
-    }
-  });
+  if (import.meta.client) {
+    const handler = async () => {
+      await fetchFooterBlock(false);
+    };
+    window.addEventListener('footer-block-refetch', handler);
+    onBeforeUnmount(() => window.removeEventListener('footer-block-refetch', handler));
+  }
 
   return { resolvedContent, cachedFooter };
 }
