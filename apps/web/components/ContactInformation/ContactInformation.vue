@@ -15,6 +15,7 @@
           :autofocus="!customerEmail"
           v-bind="customerEmailAttributes"
           :invalid="Boolean(errors['customerEmail'])"
+          :disabled="disabled"
           name="customerEmail"
           type="email"
           autocomplete="email"

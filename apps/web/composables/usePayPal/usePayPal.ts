@@ -56,7 +56,7 @@ export const usePayPal = () => {
     }
   };
 
-  const updateAvailableAPMs = async (script: PayPalNamespace) => {
+  const updateAvailableAPMs = async (script: PayPalNamespace, commit = false) => {
     if (script.getFundingSources && !state.value.activatedAPMs) {
       state.value.activatedAPMs = true;
       const availableFoundingSources = new Map();
@@ -69,7 +69,9 @@ export const usePayPal = () => {
       await useSdk().plentysystems.doHandlePayPalPaymentFundingSources({
         availableFoundingSources: Object.fromEntries(availableFoundingSources),
       });
-      await usePaymentMethods().fetchPaymentMethods();
+      if (commit) {
+        await usePaymentMethods().fetchPaymentMethods();
+      }
     }
   };
 
@@ -100,7 +102,7 @@ export const usePayPal = () => {
         });
 
         if (script) {
-          await updateAvailableAPMs(script);
+          await updateAvailableAPMs(script, commit);
         }
 
         return script;

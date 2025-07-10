@@ -801,7 +801,8 @@
     "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
     "puiBankDataAvailable": "Überweisen Sie den Betrag an die angegebenen Bankdaten. Sie können die Bankdaten zudem auch Ihrer Rechnung entnehmen.",
     "puiBankDataNotAvailable": "Die Bankdaten für die Überweisung werden abgerufen und stehen in Kürze zur Verfügung. Die Daten sind dann hier verfügbar oder können Ihrer Rechnung entnommen werden.",
-    "puiDesignedUse": "Verwendungszweck"
+    "puiDesignedUse": "Verwendungszweck",
+    "expressNotAvailable": "PayPal ist für das Lieferland nicht verfügbar. Bitte passen Sie Ihre Adresse entsprechend an oder gehen Sie zur Kasse, um die Bestellung mit einem anderen Zahlungsanbieter abzuschließen."
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",

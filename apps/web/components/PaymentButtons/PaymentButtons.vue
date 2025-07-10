@@ -8,11 +8,7 @@
   />
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
-      <PayPalExpressButton
-        :disabled="!termsAccepted || disableBuyButton"
-        type="Checkout"
-        @validation-callback="handlePreparePayment"
-      />
+      <PayPalExpressButton :disabled="disableBuyButton" type="Checkout" @validation-callback="handlePreparePayment" />
       <PayPalPayLaterBanner
         placement="payment"
         :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
@@ -34,11 +30,7 @@
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
-    <PayPalAPM
-      v-else-if="PayPalIsAPM"
-      :disabled="!termsAccepted || disableBuyButton"
-      @validation-callback="handlePreparePayment"
-    />
+    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="disableBuyButton" @validation-callback="handlePreparePayment" />
 
     <UiButton
       v-else
@@ -92,7 +84,6 @@ import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
 const { t } = useI18n();
 const { components } = useDynamicPaymentButtons();
-const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { processingOrder } = useProcessingOrder();

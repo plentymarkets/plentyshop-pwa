@@ -16,7 +16,7 @@
         <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
         <UiDivider :class="dividerClass" />
         <div class="relative">
-          <ShippingMethod />
+          <ShippingMethod disabled />
         </div>
         <UiDivider :class="dividerClass" />
         <CustomerWish />
@@ -36,7 +36,7 @@
             <div v-if="payPalAvailable">
               <PayPalExpressButton
                 v-if="changedTotal"
-                :disabled="!termsAccepted || interactionDisabled"
+                :disabled="interactionDisabled"
                 type="Checkout"
                 @validation-callback="payPalValidateCallback"
               />
@@ -53,14 +53,18 @@
                 <template v-else>{{ t('buy') }}</template>
               </UiButton>
             </div>
-            <div
-              v-else
-              class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
-            >
-              <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
-              <div class="py-2 mr-2">
-                PayPal is not available for this order. Please change your address or payment method to continue.
+            <div v-else>
+              <div
+                class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+              >
+                <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
+                <div class="py-2 mr-2">
+                  {{ t('paypal.expressNotAvailable') }}
+                </div>
               </div>
+              <NuxtLink :to="localePath(paths.checkout)">
+                <UiButton class="w-full">{{ t('goToCheckout') }}</UiButton>
+              </NuxtLink>
             </div>
           </OrderSummary>
         </div>
@@ -164,7 +168,7 @@ const handle = async () => {
   }
 
   if (customer.value.user === null) {
-    return navigateTo(localePath('/checkout'));
+    return navigateTo(localePath(paths.checkout));
   }
 
   await Promise.all([

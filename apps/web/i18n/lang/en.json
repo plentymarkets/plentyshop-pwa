@@ -801,7 +801,8 @@
     "invalidOrder": "The order cannot be processed. Please try again.",
     "puiBankDataAvailable": "Transfer the amount to the bank details provided. You can also find the bank details on your invoice.",
     "puiBankDataNotAvailable": "The bank data for the transfer are retrieved and will be available shortly. The data will then be available here or can be found on your invoice.",
-    "puiDesignedUse": "Reason for payment"
+    "puiDesignedUse": "Reason for payment",
+    "expressNotAvailable": "PayPal is not available for this delivery country. Please adjust your address accordingly or proceed to checkout to complete your order with another payment provider."
   },
   "perPage": "Per page",
   "phone": "Phone",
