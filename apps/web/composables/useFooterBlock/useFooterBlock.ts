@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { callOnce } from '#app';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 import type { FooterColumn } from '~/composables/useFooterBlock/types';
 
@@ -30,7 +31,7 @@ export function useFooterBlock(content?: FooterSettings | null) {
           title: (title as string) || col.title || '',
           description: (description as string) || col.description || '',
           showContactLink: Boolean(
-            showContactLink || showLinkToContact,
+            showContactLink || showLinkToContact || col.showContactLink || col.showLinkToContact,
           ),
         };
       }
@@ -42,7 +43,7 @@ export function useFooterBlock(content?: FooterSettings | null) {
       };
     };
 
-    if (footerBlock) {
+    if (footerBlock && footerBlock.content) {
       const content = footerBlock.content as FooterSettings;
       cachedFooter.value = {
         ...content,
