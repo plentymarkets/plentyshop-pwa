@@ -27,11 +27,12 @@
 <script setup lang="ts">
 import { VueTelInput } from 'vue-tel-input';
 import 'vue-tel-input/vue-tel-input.css';
+import { v4 as uuid } from 'uuid';
 import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 import type { TelephoneInputProps } from './types';
 
 const props = withDefaults(defineProps<TelephoneInputProps>(), {
-  id: () => `tel-input-${Math.random().toString(36).substring(2, 7)}`,
+  id: () => `tel-input-${uuid()}`,
   label: '',
   placeholder: 'Enter phone number',
   preferredCountries: () => [],

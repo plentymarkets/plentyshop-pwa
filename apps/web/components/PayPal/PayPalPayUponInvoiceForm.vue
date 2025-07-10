@@ -88,19 +88,6 @@ const {
   handlePhoneNumberValidation,
 } = usePayUponInvoice();
 
-onNuxtReady(async () => {
-  await fetchDependencies();
-  if (fraudNet.value.merchantId && fraudNet.value.fraudId) insertFraudNetScript();
-});
-
-watch(validPhone, (updatedStatus) => {
-  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkoutPayment.phoneError') : '';
-});
-
-watch(birthDate, () => {
-  if (!submitFirstTime.value) validBirthDate.value = isDateValid();
-});
-
 const fetchDependencies = async () => {
   await loadConfig().then(() => (fraudNet.value.merchantId = config.value?.merchantId || null));
   fraudNet.value.fraudId = await getFraudId();
@@ -128,7 +115,7 @@ const insertFraudNetScript = () => {
   scriptTag.textContent = JSON.stringify({
     f: fraudNet.value.fraudId,
     s: `${fraudNet.value.merchantId}_${fraudNet.value.pageId}`,
-    sandbox: true,
+    sandbox: config.value?.extra?.sandbox ?? true,
   });
 
   document.body.appendChild(scriptTag);
@@ -185,4 +172,17 @@ const createPayPalPayUponInvoiceOrder = async () => {
     useHandleError(error as ApiError);
   }
 };
+
+onNuxtReady(async () => {
+  await fetchDependencies();
+  if (fraudNet.value.merchantId && fraudNet.value.fraudId) insertFraudNetScript();
+});
+
+watch(validPhone, (updatedStatus) => {
+  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkoutPayment.phoneError') : '';
+});
+
+watch(birthDate, () => {
+  if (!submitFirstTime.value) validBirthDate.value = isDateValid();
+});
 </script>
