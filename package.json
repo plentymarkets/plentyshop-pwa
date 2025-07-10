@@ -48,7 +48,7 @@
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.2.0",
-    "vue-tsc": "^2.2.12",
+    "vue-tsc": "^3.0.1",
     "vuedraggable": "^4.1.0",
     "yup": "^1.6.1"
   },
