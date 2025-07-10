@@ -6,16 +6,17 @@
       :class="[
         'relative block-wrapper',
         {
-          'mb-s': blockSize === 's' && root && block.name !== 'Footer',
-          'mb-m': blockSize === 'm' && root && block.name !== 'Footer',
-          'mb-l': blockSize === 'l' && root && block.name !== 'Footer',
-          'mb-xl': blockSize === 'xl' && root && block.name !== 'Footer',
+          'mb-s': blockSize === 's' && isRootNonFooter,
+          'mb-m': blockSize === 'm' && isRootNonFooter,
+          'mb-l': blockSize === 'l' && isRootNonFooter,
+          'mb-xl': blockSize === 'xl' && isRootNonFooter,
         },
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
         {
-          'hover:outline hover:outline-4 hover:outline-[#538AEA]': disableActions && !isTablet && root && !isDragging,
+          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
+            disableActions && !isTablet && props.root && props.block.name && !isDragging,
         },
       ]"
     >
@@ -38,9 +39,6 @@
             'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
             'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
           },
-          // {
-          //   'max-w-max max-h-max bottom-0 left-0 m-auto': block.type === 'content',
-          // },
         ]"
         :index="index"
         :block="block"
@@ -66,7 +64,7 @@
       </component>
 
       <button
-        v-if="disableActions && $isPreview && root && !isDragging && props.block.name !== 'Footer'"
+        v-if="disableActions && $isPreview && root && !isDragging && isRootNonFooter"
         :key="isDragging ? 'dragging' : 'not-dragging'"
         class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
         :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
@@ -154,4 +152,6 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
 };
+
+const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
 </script>

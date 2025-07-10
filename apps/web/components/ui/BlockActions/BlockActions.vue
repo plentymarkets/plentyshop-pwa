@@ -53,8 +53,8 @@
         class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
         data-testid="move-down-button"
         aria-label="move down button"
-        :disabled="isLastBlock(index)"
-        :class="{ 'opacity-40 cursor-not-allowed': isLastBlock(index) }"
+        :disabled="isLastNonFooterBlock(index)"
+        :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
         @click="changePosition(1)"
       >
         <SfIconExpandMore />
@@ -96,7 +96,7 @@ const props = defineProps<{ index: number; block: Block }>();
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const route = useRoute();
 const { openDrawerWithView } = useSiteConfiguration();
-const { deleteBlock, isLastBlock } = useBlockManager();
+const { deleteBlock, isLastNonFooterBlock } = useBlockManager();
 
 const triggerEdit = () => {
   openDrawerWithView('blocksSettings', props.block);

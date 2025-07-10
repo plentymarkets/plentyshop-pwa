@@ -25,19 +25,7 @@
           :change-block-position="changeBlockPosition"
           :root="true"
           class="group"
-          :class="[
-            {
-              'max-w-screen-3xl mx-auto lg:px-10 mt-3':
-                block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
-            },
-            {
-              'px-4 md:px-6':
-                block.name !== 'Carousel' &&
-                block.name !== 'Banner' &&
-                block.name !== 'NewsletterSubscribe' &&
-                block.name !== 'Footer',
-            },
-          ]"
+          :class="getBlockClass(block).value"
           data-testid="block-wrapper"
           @click="tabletEdit(index)"
         />
@@ -49,7 +37,9 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
+import { addFooterBlock } from '../../utils/addFooterBlock';
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
 const { cachedFooter } = useFooterBlock();
@@ -59,32 +49,12 @@ await getBlocks(props.identifier, props.type);
 
 const { t } = useI18n();
 
-const footerExists = data.value.some((block) => block.name === 'Footer');
-
-if (!footerExists) {
-  data.value.push({
-    name: 'Footer',
-    type: 'content',
-    meta: {
-      uuid: uuid(),
-      isGlobalTemplate: true,
-    },
-    content: cachedFooter.value || {
-      column1: { title: t('categories.legal.label') },
-      column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
-      column3: { title: '', description: '' },
-      column4: { title: '', description: '' },
-      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-      footnoteAlign: 'right',
-      colors: {
-        background: '#cfe4ec',
-        text: '#1c1c1c',
-        footnoteBackground: '#161a16',
-        footnoteText: '#959795',
-      },
-    },
-  });
-}
+addFooterBlock({
+  data,
+  cachedFooter,
+  t,
+  uuid,
+});
 
 const {
   isClicked,
@@ -171,4 +141,19 @@ watch(
   },
   { immediate: true, once: true },
 );
+const getBlockClass = (block: Block) => {
+  return computed(() => [
+    {
+      'max-w-screen-3xl mx-auto lg:px-10 mt-3':
+        block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
+    },
+    {
+      'px-4 md:px-6':
+        block.name !== 'Carousel' &&
+        block.name !== 'Banner' &&
+        block.name !== 'NewsletterSubscribe' &&
+        block.name !== 'Footer',
+    },
+  ]);
+};
 </script>
