@@ -928,6 +928,43 @@
     "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen."
   },
   "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
+  "sortingAndPagination": {
+    "recommendedSorting": {
+      "title": "Empfohlene Sortierung",
+      "description": "Du kannst selbst bestimmen, wie sich der Wert \"Empfohlen\" zusammensetzt. Wähle drei Sortierungswerte. Der erste Sortierungswert hat die höchste Priorität bei der Sortierung, der zweite Wert die zweithöchste, usw.",
+      "firstSortingOptionLabel": "Erster Sortierungswert",
+      "secondSortingOptionLabel": "Zweiter Sortierungswert",
+      "thirdSortingOptionLabel": "Dritter Sortierungswert",
+      "options": {
+        "sortingPriorityCategoryItemIdAsc": "Artikel-ID ⬆",
+        "sortingPriorityCategoryItemIdDesc": "Artikel-ID ⬇",
+        "sortingPriorityCategoryNameAsc": "Artikelname A-Z",
+        "sortingPriorityCategoryNameDesc": "Artikelname Z-A",
+        "sortingPriorityCategoryPriceAsc": "Preis ⬆",
+        "sortingPriorityCategoryPriceDesc": "Preis ⬇",
+        "sortingPriorityCategoryVariationCreatedAtDesc": "Neueste Variante zuerst",
+        "sortingPriorityCategoryVariationCreatedAtAsc": "Älteste Variante zuerst",
+        "sortingPriorityCategoryVariationIdAsc": "Varianten-ID ⬆",
+        "sortingPriorityCategoryVariationIdDesc": "Varianten-ID ⬇",
+        "sortingPriorityCategoryVariationNumberAsc": "Variantennummer ⬆",
+        "sortingPriorityCategoryVariationNumberDesc": "Variantennummer ⬇",
+        "sortingPriorityCategoryAvailabilityAsc": "Verfügbarkeit ⬆",
+        "sortingPriorityCategoryAvailabilityDesc": "Verfügbarkeit ⬇",
+        "sortingPriorityCategoryVariationUpdatedAtAsc": "Zuletzt aktualisierte Variante zuerst",
+        "sortingPriorityCategoryVariationUpdatedAtDesc": "Zuerst aktualisierte Variante zuerst",
+        "sortingPriorityCategoryVariationPositionAsc": "Variantenposition ⬆",
+        "sortingPriorityCategoryVariationPositionDesc": "Variantenposition ⬇",
+        "sortingPriorityCategoryManufacturerAsc": "Hersteller A-Z",
+        "sortingPriorityCategoryManufacturerDesc": "Hersteller Z-A",
+        "sortingPriorityCategoryManufacturerPositionAsc": "Herstellerposition ⬆",
+        "sortingPriorityCategoryManufacturerPositionDesc": "Herstellerposition ⬇",
+        "sortingPriorityCategoryStockAsc": "Bestand ⬆",
+        "sortingPriorityCategoryStockDesc": "Bestand ⬇",
+        "sortDataRandom": "Zufällig",
+        "sortingPriorityCategoryNotSelected": "Keine Auswahl"
+      }
+    }
+  },
   "sortBy": "Sortieren nach",
   "sortType": {
     "default": {
