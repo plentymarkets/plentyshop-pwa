@@ -218,28 +218,28 @@
     },
     "content": {
       "column1": {
-        "text": {
+        
           "title": "Legal"
-        }
+        
       },
       "column2": {
-        "text": {
+       
           "title": "Contact",
           "showLinkToContact": false,
           "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
-        }
+        
       },
       "column3": {
-        "text": {
+      
           "title": "",
           "htmlDescription": ""
-        }
+        
       },
       "column4": {
-        "text": {
+     
           "title": "",
           "htmlDescription": ""
-        }
+       
       },
       "footnote": "© PlentyONE GmbH 2025",
       "footnoteAlign": "right",
