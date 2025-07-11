@@ -21,8 +21,8 @@ export const useCarousel: UseCarouselReturn = () => {
   };
 
   const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
-    const current = state.value.activeSlideIndex[blockUuid];
-    if (current === slideIndex) return;
+    const currentIndex = state.value.activeSlideIndex[blockUuid];
+    if (currentIndex === slideIndex) return;
     state.value.activeSlideIndex[blockUuid] = slideIndex;
   };
   onMounted(() => {
@@ -32,14 +32,6 @@ export const useCarousel: UseCarouselReturn = () => {
 
       if (state.value.activeSlideIndex[uuid] !== 0) {
         setIndex(uuid, 0);
-      }
-
-      if (drawerOpen.value && drawerView.value === 'blocksSettings' && blockUuid.value === uuid) {
-        window.dispatchEvent(
-          new CustomEvent('carousel-reset-slide', {
-            detail: { uuid, index: 0 },
-          }),
-        );
       }
     };
 

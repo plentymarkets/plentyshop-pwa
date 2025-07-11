@@ -83,7 +83,7 @@ const navigationConfig = computed(() => {
 const onSwiperInit = async (swiper: SwiperType) => {
   slider = swiper;
 
-  if (activeSlideIndex.value[meta.uuid] == null) {
+  if (activeSlideIndex.value[meta.uuid] === null) {
     setIndex(meta.uuid, swiper.realIndex);
   }
 };
