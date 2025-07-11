@@ -225,7 +225,7 @@
       "column2": {
        
           "title": "Contact",
-          "showLinkToContact": false,
+          "showLinkToContact": true,
           "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
         
       },
