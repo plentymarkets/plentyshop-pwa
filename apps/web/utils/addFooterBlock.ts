@@ -4,12 +4,13 @@ interface AddFooterBlockOptions {
   cachedFooter: Ref<unknown>;
   t: (key: string) => string;
   uuid: () => string;
+  cleanData?: Ref<Block[]>;
 }
 
-export function addFooterBlock({ data, cachedFooter, t, uuid }: AddFooterBlockOptions) {
+export function addFooterBlock({ data, cachedFooter, t, uuid, cleanData }: AddFooterBlockOptions) {
   const footerExists = data.value.some((block) => block.name === 'Footer');
   if (!footerExists) {
-    data.value.push({
+    const footerBlock = {
       name: 'Footer',
       type: 'content',
       meta: {
@@ -30,6 +31,10 @@ export function addFooterBlock({ data, cachedFooter, t, uuid }: AddFooterBlockOp
           footnoteText: '#959795',
         },
       },
-    });
+    };
+    data.value.push(footerBlock);
+    if (cleanData) {
+      cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
+    }
   }
 }

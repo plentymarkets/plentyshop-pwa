@@ -26,7 +26,7 @@
           :root="true"
           class="group"
           :class="getBlockClass(block).value"
-          data-testid="block-wrapper"
+          data-testid="block-wrapper" 
           @click="tabletEdit(index)"
         />
       </template>
@@ -42,7 +42,7 @@ import { v4 as uuid } from 'uuid';
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
 const { cachedFooter } = useFooterBlock();
-const { data, getBlocks } = useCategoryTemplate();
+const { data, getBlocks, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
 
@@ -53,6 +53,7 @@ addFooterBlock({
   cachedFooter,
   t,
   uuid,
+  cleanData,
 });
 
 const {
