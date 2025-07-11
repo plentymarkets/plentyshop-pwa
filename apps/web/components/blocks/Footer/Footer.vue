@@ -3,8 +3,8 @@
     v-if="resolvedContent"
     class="pt-10"
     :style="{
-      backgroundColor: resolvedContent.colors?.background || '#cfe4ec',
-      color: resolvedContent.colors?.text || '#1c1c1c',
+      backgroundColor: resolvedContent.colors?.background || FOOTER_COLORS.background,
+      color: resolvedContent.colors?.text || FOOTER_COLORS.text,
     }"
     data-testid="footer"
   >
@@ -74,8 +74,8 @@
           'text-right': resolvedContent.footnoteAlign === 'right',
         }"
         :style="{
-          color: resolvedContent.colors?.footnoteText || '#959795',
-          backgroundColor: resolvedContent.colors?.footnoteBackground || '#161a16',
+          color: resolvedContent.colors?.footnoteText || FOOTER_COLORS.footnoteText,
+          backgroundColor: resolvedContent.colors?.footnoteBackground || FOOTER_COLORS.footnoteBackground,
         }"
         v-html="resolvedContent.footnote"
       />
@@ -91,6 +91,13 @@ const { t } = useI18n();
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
+
+const FOOTER_COLORS = {
+  background: '#cfe4ec',
+  text: '#1c1c1c',
+  footnoteBackground: '#161a16',
+  footnoteText: '#959795',
+};
 
 const { resolvedContent } = useFooterBlock(props.content ?? null);
 </script>
