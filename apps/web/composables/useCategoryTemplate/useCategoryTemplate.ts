@@ -21,13 +21,38 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     loading: false,
   }));
 
-  const { $i18n } = useNuxtApp();
+  //  const { $i18n } = useNuxtApp();
+
+
+
+    const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
+    state.value.loading = true;
+    const { data, error } = await useAsyncData(`${type}-${identifier}-${blocks}`, () =>
+      useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) }),
+    );
+
+    if (error.value) {
+      const { send } = useNotification();
+      send({ type: 'negative', message: error?.value?.message });
+    }
+
+    state.value.loading = false;
+
+    if (!data?.value?.data.length && type === 'immutable') {
+      const { $i18n } = useNuxtApp();
+      state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+    } else {
+      state.value.data = data?.value?.data ?? state.value.data;
+    }
+    console.log('getBlocks', state.value.data);
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+  };
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
     const response = await useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) });
-    const data = response?.data;
+    const data = response?.data;o
 
     state.value.loading = false;
 

@@ -41,20 +41,20 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
-const { cachedFooter } = useFooterBlock();
+// const { cachedFooter } = useFooterBlock();
 const { data, getBlocks, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocks(props.identifier, props.type);
 
-const { t } = useI18n();
+// const { t } = useI18n();
 
-addFooterBlock({
-  data,
-  cachedFooter,
-  t,
-  uuid,
-  cleanData,
-});
+// addFooterBlock({
+//   data,
+//   cachedFooter,
+//   t,
+//   uuid,
+//   cleanData,
+// });
 
 const {
   isClicked,
@@ -135,27 +135,27 @@ const getBlockClass = (block: Block) => {
   ]);
 };
 
-watch(
-  () => cachedFooter.value,
-  (newFooter) => {
-    const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
-    if (footerIndex !== -1) {
-      data.value.splice(footerIndex, 1, {
-        ...data.value[footerIndex],
-        content: newFooter,
-      });
-    } else if (newFooter) {
-      data.value.push({
-        name: 'Footer',
-        type: 'content',
-        meta: {
-          uuid: uuid(),
-          isGlobalTemplate: true,
-        },
-        content: newFooter,
-      });
-    }
-  },
-  { immediate: true, once: true },
-);
+// watch(
+//   () => cachedFooter.value,
+//   (newFooter) => {
+//     const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
+//     if (footerIndex !== -1) {
+//       data.value.splice(footerIndex, 1, {
+//         ...data.value[footerIndex],
+//         content: newFooter,
+//       });
+//     } else if (newFooter) {
+//       data.value.push({
+//         name: 'Footer',
+//         type: 'content',
+//         meta: {
+//           uuid: uuid(),
+//           isGlobalTemplate: true,
+//         },
+//         content: newFooter,
+//       });
+//     }
+//   },
+//   { immediate: true, once: true },
+// );
 </script>
