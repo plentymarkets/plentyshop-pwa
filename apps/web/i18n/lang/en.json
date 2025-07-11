@@ -733,6 +733,7 @@
   "openSearchModalButtonLabel": "Open item search",
   "or": "or",
   "orderConfirmation": {
+    "trackingOrder": "Track your order",
     "confirmationSendTo": "A confirmation with all details has been sent to {email}",
     "createAccountForBenefits": "Create an account to enjoy all benefits!",
     "sameAsShippingAddress": "Same as shipping address",
@@ -929,25 +930,41 @@
   "somethingWentWrongImageAlt": "Image that describes that something went wrong",
   "sortBy": "Sort by",
   "sortType": {
-    "nameA-Z": "Name A-Z",
-    "nameZ-A": "Name Z-A",
-    "priceDown": "Price ⬇",
-    "priceUp": "Price ⬆",
-    "reviewsDown": "Item reviews ⬇",
-    "reviewsUp": "Item reviews ⬆",
-    "recommended": "Recommended",
-    "newest": "Newest items",
-    "oldest": "Oldest items",
-    "availabilityUp": "Availability ⬆",
-    "availabilityDown": "Availability ⬇",
-    "variationNumberUp": "Variation number ⬆",
-    "variationNumberDown": "Variation number ⬇",
-    "lastUpdate": "Last update",
-    "firstUpdate": "First update",
-    "manufacturerAsc": "Manufacturer A-Z",
-    "manufacturerDesc": "Manufacturer Z-A",
-    "topSellerUp": "Top seller ⬆",
-    "topSellerDown": "Top seller ⬇"
+    "default": {
+      "recommended_sorting": "Recommended"
+    },
+    "texts": {
+      "name1_asc": "Name A-Z",
+      "name1_desc": "Name Z-A"
+    },
+    "sorting": {
+      "price": {
+        "avg_asc": "Price ⬆",
+        "avg_desc": "Price ⬇"
+      }
+    },
+    "variation": {
+      "createdAt_desc": "Newest items",
+      "createdAt_asc": "Oldest items",
+      "availability": {
+        "averageDays_asc": "Availability ⬆",
+        "averageDays_desc": "Availability ⬇"
+      },
+      "number_asc": "Variation number ⬆",
+      "number_desc": "Variation number ⬇",
+      "updatedAt_asc": "Last update",
+      "updatedAt_desc": "First update",
+      "position_asc": "Top seller ⬆",
+      "position_desc": "Top seller ⬇"
+    },
+    "item": {
+      "manufacturer": {
+        "externalName_asc": "Manufacturer A-Z",
+        "externalName_desc": "Manufacturer Z-A"
+      },
+      "feedbackDecimal_asc": "Item reviews ⬆",
+      "feedbackDecimal_desc": "Item reviews ⬇"
+    }
   },
   "storefrontError": {
     "offer": {
