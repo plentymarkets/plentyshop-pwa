@@ -9,6 +9,10 @@ const scrollToShippingAddress = () => {
   scrollToHTMLObject(ID_SHIPPING_ADDRESS);
 };
 
+const scrollToBillingAddress = () => {
+  scrollToHTMLObject(ID_BILLING_ADDRESS);
+};
+
 export const useCheckout = (cacheKey = '') => {
   const state = useState('useCheckout' + cacheKey, () => ({
     combineShippingAndBilling: true,
@@ -131,6 +135,7 @@ export const useCheckout = (cacheKey = '') => {
     backToFormEditing,
     validateTerms,
     scrollToShippingAddress,
+    scrollToBillingAddress,
     setShippingSkeleton,
     setBillingSkeleton,
   };

@@ -1,7 +1,7 @@
 <template>
   <div data-testid="shipping-method" class="md:px-4 my-6">
     <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
-    <div class="mt-4">
+    <div v-if="!loading" class="mt-4">
       <ul
         v-if="shippingMethods && shippingMethods.length > 0"
         class="grid gap-y-4 md:grid-cols-2 md:gap-x-4"
@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+    <ShippingMethodSkeleton v-else />
 
     <ShippingPrivacy v-if="showShippingPrivacy" />
   </div>
@@ -66,7 +67,7 @@ import { AddressType, shippingProviderGetters, cartGetters } from '@plentymarket
 import { SfIconWarning, SfListItem, SfRadio } from '@storefront-ui/vue';
 import type { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
-const { disabled = false } = defineProps<ShippingMethodProps>();
+const { disabled = false, loading = false } = defineProps<ShippingMethodProps>();
 const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const emit = defineEmits<CheckoutShippingEmits>();
 

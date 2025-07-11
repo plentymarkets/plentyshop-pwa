@@ -1,5 +1,11 @@
+import type { Order } from '@plentymarkets/shop-api';
+
 export type PaypalButtonPropsType = {
   type: string;
+  disabled?: boolean;
+};
+
+export type PaypalAPMPropsType = {
   disabled?: boolean;
 };
 
@@ -143,4 +149,8 @@ export type GooglepayType = {
   config(): Promise<ConfigResponse>;
   validateMerchant(argument0: ValidateMerchantParams): Promise<ValidateMerchantResponse>;
   confirmOrder(argument0: ConfirmOrderParams): Promise<void>;
+};
+
+export type PayPalInvoiceDetailsProps = {
+  order: Order;
 };
