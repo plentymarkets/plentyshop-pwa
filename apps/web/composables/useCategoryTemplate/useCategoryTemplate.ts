@@ -13,18 +13,20 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
-export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
-  const state = useState<UseCategoryTemplateState>('useCategoryTemplate', () => ({
+export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) => {
+  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${blocks}`, () => ({
     data: [],
     cleanData: [],
     categoryTemplateData: null,
     loading: false,
   }));
 
+  const { $i18n } = useNuxtApp();
+
   const getBlocks: GetBlocks = async (identifier, type) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(`${type}-${identifier}`, () =>
-      useSdk().plentysystems.getBlocks({ identifier, type }),
+      useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) }),
     );
 
     if (error.value) {
@@ -35,7 +37,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     state.value.loading = false;
 
     if (!data?.value?.data.length && type === 'immutable') {
-      const { $i18n } = useNuxtApp();
+      // const { $i18n } = useNuxtApp();
       state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     } else {
       state.value.data = data?.value?.data ?? state.value.data;
@@ -43,6 +45,23 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
   };
+
+  // const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
+  //   state.value.loading = true;
+
+  //   const response = await useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) });
+  //   const data = response?.data;
+
+  //   state.value.loading = false;
+
+  //   if (!data?.length && type === 'immutable') {
+  //     state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+  //   } else {
+  //     state.value.data = data ?? state.value.data;
+  //   }
+
+  //   state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+  // };
 
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
