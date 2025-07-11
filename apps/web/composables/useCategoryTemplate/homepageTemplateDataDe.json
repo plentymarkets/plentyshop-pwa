@@ -218,28 +218,20 @@
     },
     "content": {
       "column1": {
-
-          "title": "Rechtliches"
-
+        "title": "Rechtliches"
       },
       "column2": {
-
-          "title": "Kontakt",
-          "showLinkToContact": true,
-          "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
-
+        "title": "Kontakt",
+        "showContactLink": true,
+        "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
       },
       "column3": {
-
-          "title": "",
-          "htmlDescription": ""
-
+        "title": "",
+        "htmlDescription": ""
       },
       "column4": {
-
-          "title": "",
-          "htmlDescription": ""
-
+        "title": "",
+        "htmlDescription": ""
       },
       "footnote": "© PlentyONE GmbH 2025",
       "footnoteAlign": "right",
