@@ -10,8 +10,6 @@ export const useCarousel: UseCarouselReturn = () => {
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
   const { data } = useCategoryTemplate();
-  const { drawerOpen, drawerView, blockUuid } = useSiteConfiguration();
-
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
