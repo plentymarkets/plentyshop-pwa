@@ -89,6 +89,12 @@ watch(isAuthorized, (updatedStatus) => {
     : (sessionData.value.user?.guestMail ?? '');
 });
 
+watch(isGuest, (isGuestStatus) => {
+  if (isGuestStatus) {
+    customerEmail.value = sessionData.value.user?.guestMail ?? '';
+  }
+});
+
 const validateAndSubmitEmail = async () => {
   const formData = await validate();
 

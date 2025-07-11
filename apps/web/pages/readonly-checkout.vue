@@ -16,7 +16,7 @@
         <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
         <UiDivider :class="dividerClass" />
         <div class="relative">
-          <ShippingMethod disabled />
+          <ShippingMethod :loading="loading" disabled />
         </div>
         <UiDivider :class="dividerClass" />
         <CustomerWish />
@@ -33,7 +33,12 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
-            <div v-if="payPalAvailable">
+            <div v-if="loading">
+              <UiButton class="w-full py-3" :disabled="true">
+                <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+              </UiButton>
+            </div>
+            <div v-else-if="payPalAvailable">
               <PayPalExpressButton
                 v-if="changedTotal"
                 :disabled="interactionDisabled"
@@ -89,6 +94,7 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { data: cart, cartIsEmpty, getCart, loading: cartLoading } = useCart();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { emit } = usePlentyEvent();
+const loading = ref(true);
 const {
   loading: executeOrderLoading,
   createPlentyOrder,
@@ -178,6 +184,8 @@ const handle = async () => {
   ]);
 
   await setInitialCartTotal();
+
+  loading.value = false;
 };
 
 const scrollToTerms = () => {
