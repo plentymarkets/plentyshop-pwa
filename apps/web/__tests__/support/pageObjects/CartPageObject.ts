@@ -1,6 +1,15 @@
 import { PageObject } from './PageObject';
 
 export class CartPageObject extends PageObject {
+  get surchargeOfOrderProperty() {
+    return cy.getByTestId('order-property-surcharge');
+  }
+  get cartItemFullPrice() {
+    return cy.getByTestId('product-full-price');
+  }
+  get cartItemPrice() {
+    return cy.getByTestId('cart-item-price');
+  }
   get cartPreview() {
     return cy.getByTestId('checkout-layout');
   }
@@ -43,6 +52,26 @@ export class CartPageObject extends PageObject {
 
   get cartIcon() {
     return cy.getByTestId('navbar-top').find('[data-testid="shopping-cart"]');
+  }
+
+  compareItemAndFullPriceNyQuantity(quantity: number) {
+    this.cartItemPrice.invoke('text').then((itemPriceText: string) => {
+      const itemPrice = parseFloat(itemPriceText.replace(/[^\d.-]/g, ''));
+
+      this.cartItemFullPrice.invoke('text').then((fullPriceText: string) => {
+        const fullPrice = parseFloat(fullPriceText.replace(/[^\d.-]/g, ''));
+
+        const expectedFullPrice = itemPrice * quantity;
+
+        expect(fullPrice).to.be.closeTo(expectedFullPrice, 0.01);
+      });
+    });
+    return this;
+  }
+
+  checkSurcharge(expectedSurcharge: string) {
+    this.surchargeOfOrderProperty.should('contain.text', expectedSurcharge);
+    return this;
   }
 
   checkCart() {
