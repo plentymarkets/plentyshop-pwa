@@ -1,10 +1,9 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Third sorting option</UiFormLabel>
-<!--      TODO translate here-->
+      <UiFormLabel>{{ t('sortingAndPagination.recommendedSorting.thirdSortingOptionLabel') }}</UiFormLabel>
       <SfTooltip
-          label="Third sorting option"
+          :label="t('sortingAndPagination.recommendedSorting.thirdSortingOptionLabel')"
           :placement="'top'"
           :show-arrow="true"
           class="ml-2 z-10"
@@ -14,7 +13,7 @@
     </div>
 
     <Multiselect
-        v-model="defaultSortingOption"
+        v-model="recommendedThirdSortingOption"
         data-testid="available-sorting-options"
         :options="sortingOptions"
         placeholder="Select default option"
@@ -33,21 +32,20 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
-import { getMappedOptions } from '~/utils/sortingOptionsHelper';
+import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
-const { updateSetting, getSetting } = useSiteSettings('defaultSortingOption');
-const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
+const { updateSetting, getSetting } = useSiteSettings('recommendedThirdSortingOption');
 const { updateSorting } = useCategoryFilter();
+const { t, locale } = useI18n();
 
-const sortingOptions = computed(() => getMappedOptions(availableSortingOptions(), 'en'));
+const sortingOptions = computed(() => getRecommendedSortingOptions(locale.value, true));
 
-const defaultSortingOption = computed({
+const recommendedThirdSortingOption = computed({
   get: () => {
     return sortingOptions.value.find((o: SortingOption) => o.value === getSetting());
   },
   set: (option) => {
     updateSetting(option?.value ?? '');
-    updateSorting(option?.value ?? '');
   },
 });
 </script>
