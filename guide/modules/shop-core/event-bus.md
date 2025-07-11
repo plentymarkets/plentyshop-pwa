@@ -51,3 +51,7 @@ Here are some common events you might use in your shop application:
 - `'backend:AfterAccountAuthentication': AfterAccountAuthentication;`
 - `'backend:FrontendUpdateCustomerSettings': FrontendUpdateCustomerSettings;`
 - `'module:clearCart': null;`
+
+::: tip Missing events?
+If you need any additional events we currently don't provide, reach out in the [community area](https://help.plentyone.com/hc/en-gb/community/topics/27021876313746-Shop).
+:::
