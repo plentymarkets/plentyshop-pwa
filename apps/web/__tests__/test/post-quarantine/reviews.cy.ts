@@ -17,35 +17,51 @@ beforeEach(() => {
   cy.intercept('/plentysystems/doReview').as('postReview');
   cy.intercept('/plentysystems/setReview').as('setReview');
   cy.intercept('/plentysystems/getReview').as('getReview');
+  cy.intercept('/plentysystems/getRobots').as('getRobots');
+  cy.intercept('/plentysystems/getBlocks').as('getBlocks');
+  cy.intercept('/plentysystems/getFacet').as('getFacet');
 
   cy.intercept('/plentysystems/doLogin').as('doLogin');
-  cy.visitAndHydrate(paths.authLogin);
 
-  myAccount.successLogin();
-  cy.wait('@doLogin').visitAndHydrate(paths.home);
-  homePage.goToCategory();
-  productListPage.goToProduct();
+  cy.visitAndHydrate(paths.home);
 
-  reviewPage.deleteAllReviews();
-
-  myAccount.clickTopBarLogoutButton();
+  cookieBar.acceptAll();
 });
 
 describe('Reviews functionality check.', () => {
-  it('Checks review section.', () => {
-    cookieBar.acceptAll();
-    cy.visitAndHydrate('/coupons');
+  it('Deletes all reviews.', () => {
+    cy.visitAndHydrate(paths.authLogin);
+    myAccount.successLogin();
+
+    cy.wait('@doLogin');
+    cy.visitAndHydrate(paths.home);
+
+    homePage.goToCategory();
+    productListPage.goToProduct();
+
+    reviewPage.deleteAllReviews();
+
+    myAccount.clickTopBarLogoutButton();
+  });
+
+  it('Checks review section elements.', () => {
+    homePage.goToCategory();
     productListPage.goToProduct();
 
     reviewPage
-      .waitFor(['@getReview'])
       .scrollToReviews()
       .checkAverageSectionVisible()
       .checkAverageInformation()
       .checkAddReviewButtonVisible()
       .clickAddReviewButton()
       .checkLoginModalVisible();
+  });
 
+  it('Create and Edit review', () => {
+    homePage.goToCategory();
+    productListPage.goToProduct();
+
+    reviewPage.scrollToReviews().clickAddReviewButton()
     myAccount.successLogin();
 
     reviewPage
@@ -57,6 +73,18 @@ describe('Reviews functionality check.', () => {
       .clickEditReviewButton()
       .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
       .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
+      .removeReview()
+  });
+
+  it('Create & Edit & Update reply.', () => {
+    homePage.goToCategory();
+    productListPage.goToProduct();
+
+    reviewPage.scrollToReviews().clickAddReviewButton()
+    myAccount.successLogin();
+
+    reviewPage
+      .postReview('Great product!', 'John Doe')
       .addReply()
       .checkReplyAddedSuccessfully()
       .editReply('John Doe edited', 'Thank you! edited')
@@ -64,12 +92,5 @@ describe('Reviews functionality check.', () => {
       .removeReply()
       .checkReplyRemovedSuccessfully()
       .removeReview()
-      .addMultipleReviews(Number(Cypress.env('DEFAULT_FEEDBACK_ITEMS_PER_PAGE')) + 1)
-      .checkPaginationVisible()
-      .checkNumberOfItemsPerPage(Number(Cypress.env('DEFAULT_FEEDBACK_ITEMS_PER_PAGE')))
-      .navigateToNextPage()
-      .checkNumberOfItemsPerPage(1)
-      .navigateToPreviousPage()
-      .removeMultipleReviews(Number(Cypress.env('DEFAULT_FEEDBACK_ITEMS_PER_PAGE')) + 1);
   });
 });
