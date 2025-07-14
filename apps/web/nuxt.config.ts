@@ -85,7 +85,7 @@ export default defineNuxtConfig({
       font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
-      defaultSortingOption: process.env.NUXT_PUBLIC_DEFAULT_SORTING_OPTION ?? 'default.recommended_sorting',
+      defaultSortingOption: process.env.NUXT_PUBLIC_DEFAULT_SORTING_OPTION ?? 'texts.name1_asc',
       availableSortingOptions:
           process.env.NUXT_PUBLIC_AVAILABLE_SORTING_OPTIONS ||
           '["texts.name1_asc","default.recommended_sorting","sorting.price.avg_asc","sorting.price.avg_desc","variation.availability.averageDays_asc","variation.availability.averageDays_desc"]',
