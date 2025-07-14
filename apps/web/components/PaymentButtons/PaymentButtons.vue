@@ -8,11 +8,7 @@
   />
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
-      <PayPalExpressButton
-        :disabled="!termsAccepted || disableBuyButton"
-        type="Checkout"
-        @validation-callback="handlePreparePayment"
-      />
+      <PayPalExpressButton :disabled="disableBuyButton" type="Checkout" @validation-callback="handlePreparePayment" />
       <PayPalPayLaterBanner
         placement="payment"
         :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
@@ -34,6 +30,8 @@
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
+    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="disableBuyButton" @validation-callback="handlePreparePayment" />
+
     <UiButton
       v-else
       type="submit"
@@ -43,13 +41,25 @@
       class="w-full mb-4 md:mb-0 cursor-pointer"
       @click="handlePreparePayment"
     >
-      <template v-if="createOrderLoading">
+      <template v-if="createOrderLoading || additionalInformationLoading">
         <SfLoaderCircular class="flex justify-center items-center" size="sm" />
       </template>
       <template v-else>{{ t('buy') }}</template>
     </UiButton>
   </div>
+
   <UiModal
+    v-if="payPalPayUponInvoice"
+    v-model="payPalPayUponInvoice"
+    class="h-full w-full md:w-[600px] md:h-fit"
+    tag="section"
+    disable-click-away
+  >
+    <PayPalPayUponInvoiceForm @confirm-cancel="handlePayUponInvoiceModalClosing" />
+  </UiModal>
+
+  <UiModal
+    v-if="paypalCardDialog"
     v-model="paypalCardDialog"
     class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
     tag="section"
@@ -74,15 +84,20 @@ import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
 const { t } = useI18n();
 const { components } = useDynamicPaymentButtons();
-const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();
-const { shippingPrivacyAgreement, customerWish, doAdditionalInformation } = useAdditionalInformation();
+const {
+  shippingPrivacyAgreement,
+  customerWish,
+  doAdditionalInformation,
+  loading: additionalInformationLoading,
+} = useAdditionalInformation();
 const paypalCardDialog = ref(false);
+const payPalPayUponInvoice = ref(false);
 
 const {
   cart,
@@ -103,6 +118,7 @@ const disableBuyButton = computed(
     createOrderLoading.value ||
     disableShippingPayment.value ||
     cartLoading.value ||
+    additionalInformationLoading.value ||
     navigationInProgress.value ||
     processingOrder.value,
 );
@@ -121,32 +137,62 @@ const paypalGooglePayPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
 });
+
 const paypalApplePayPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
 });
 
+const PayPalPayUponInvoiceId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPayUponInvoiceKey);
+});
+
+const PayPalIsAPM = computed(() => {
+  if (!paymentMethods.value.list) return false;
+  const selectedPayment = paymentProviderGetters.getPaymentMethodById(
+    paymentMethods.value.list,
+    selectedPaymentId.value,
+  );
+  return (
+    selectedPayment &&
+    Object.keys(PayPalAlternativeFundingSourceMapper).includes(paymentProviderGetters.getPaymentKey(selectedPayment))
+  );
+});
+
+const handlePayUponInvoiceModalClosing = () => {
+  payPalPayUponInvoice.value = false;
+  processingOrder.value = false;
+  usePayUponInvoice().resetState();
+};
+
 const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
-  if (!readyToBuy()) return;
+  if (!readyToBuy()) {
+    if (typeof callback === 'function' && callback) callback(false);
+    return;
+  }
+
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
   });
 
-  if (typeof callback === 'function' && callback) {
-    await callback(true);
-  } else {
-    await order();
-  }
+  typeof callback === 'function' && callback ? callback(true) : await order();
 };
 
 const order = async () => {
   processingOrder.value = true;
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
-  paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
-    ? (paypalCardDialog.value = true)
-    : await handleRegularOrder();
+  if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
+    selectedPaymentId.value === PayPalPayUponInvoiceId.value
+      ? (payPalPayUponInvoice.value = true)
+      : (paypalCardDialog.value = true);
+
+    return;
+  }
+
+  await handleRegularOrder();
 };
 
 const readyToBuy = () => {
