@@ -74,7 +74,7 @@
     <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
 
     <button
-      v-if="props.block.name !== 'Footer'" 
+      v-if="props.block.name !== 'Footer'"
       class="text-black hover:bg-gray-100 p-1 rounded no-drag"
       aria-label="delete block button"
       data-testid="delete-block-button"

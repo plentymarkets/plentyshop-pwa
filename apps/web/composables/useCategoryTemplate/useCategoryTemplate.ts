@@ -52,18 +52,18 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(fetchedBlocks)));
     if (!includeFooter) {
       const { data: footerData } = await useAsyncData('footer-block', () =>
-      useSdk().plentysystems.getBlocks({
-        identifier: 'index',
-        type: 'immutable',
-        blocks: 'Footer',
-      })
+        useSdk().plentysystems.getBlocks({
+          identifier: 'index',
+          type: 'immutable',
+          blocks: 'Footer',
+        }),
       );
 
       const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
 
       if (footerBlock?.content) {
-      const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
-      cachedFooter.value = footerBlock.content as FooterSettings;
+        const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
+        cachedFooter.value = footerBlock.content as FooterSettings;
       }
     }
   };
