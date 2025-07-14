@@ -95,3 +95,4 @@ export * from './useAddPage';
 export * from './useTranslations';
 export * from './usePayUponInvoice';
 export * from './useSiteSettings';
+export * from './useFooterBlock';

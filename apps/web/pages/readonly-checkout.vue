@@ -106,6 +106,7 @@ const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
+
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const {

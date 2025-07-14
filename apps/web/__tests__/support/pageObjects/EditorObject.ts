@@ -239,8 +239,22 @@ export class EditorObject extends PageObject {
   }
 
   checkLastBlock() {
-    this.blockWrappers.last().within(() => {
-      this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+    this.blockWrappers.then(($blocks) => {
+      let lastNonFooterIndex = -1;
+      $blocks.each((i, el) => {
+        if (!el.innerText.includes('Footer')) {
+          lastNonFooterIndex = i;
+        }
+      });
+      if (lastNonFooterIndex !== -1) {
+        cy.wrap($blocks[lastNonFooterIndex]).within(() => {
+          this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+        });
+      } else {
+        this.blockWrappers.last().within(() => {
+          this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+        });
+      }
     });
   }
 
