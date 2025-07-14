@@ -119,12 +119,6 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       onInit(data, actions) {
         onInit(actions);
       },
-      onError(error) {
-        useNotification().send({
-          message: error?.toString() || t('errorMessages.paymentFailed'),
-          type: 'negative',
-        });
-      },
       onCancel() {
         useNotification().send({
           message: t('errorMessages.paymentCancelled'),

@@ -1,9 +1,9 @@
-import { type FUNDING_SOURCE, loadScript as loadPayPalScript, type PayPalNamespace } from '@paypal/paypal-js';
+import { type FUNDING_SOURCE, loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import type {
+  ApiError,
   PayPalConfigResponse,
   PayPalCreateOrder,
   PayPalCreateOrderRequest,
-  ApiError,
 } from '@plentymarkets/shop-api';
 import { paypalGetters } from '@plentymarkets/shop-api';
 
@@ -56,8 +56,9 @@ export const usePayPal = () => {
     }
   };
 
-  const updateAvailableAPMs = async (script: PayPalNamespace, commit = false) => {
-    if (script.getFundingSources && !state.value.activatedAPMs) {
+  const updateAvailableAPMs = async (currency: string, commit: boolean = true) => {
+    const script = await getScript(currency, commit);
+    if (script && script.getFundingSources && !state.value.activatedAPMs) {
       state.value.activatedAPMs = true;
       const availableFoundingSources = new Map();
       const fundingSources = script.getFundingSources();
@@ -69,9 +70,6 @@ export const usePayPal = () => {
       await useSdk().plentysystems.doHandlePayPalPaymentFundingSources({
         availableFoundingSources: Object.fromEntries(availableFoundingSources),
       });
-      if (commit) {
-        await usePaymentMethods().fetchPaymentMethods();
-      }
     }
   };
 
@@ -90,7 +88,7 @@ export const usePayPal = () => {
     await loadConfig();
     if (state.value.config && paypalGetters.getClientId(state.value.config)) {
       try {
-        const script = await loadPayPalScript({
+        return await loadPayPalScript({
           clientId: paypalGetters.getClientId(state.value.config),
           merchantId: paypalGetters.getMerchantId(state.value.config),
           currency: currency,
@@ -100,12 +98,6 @@ export const usePayPal = () => {
           locale: locale,
           commit: commit,
         });
-
-        if (script) {
-          await updateAvailableAPMs(script, commit);
-        }
-
-        return script;
       } catch {
         // TODO: Handle error (not loading sdk)
       }
@@ -327,6 +319,7 @@ export const usePayPal = () => {
     captureOrder,
     getScript,
     getOrder,
+    updateAvailableAPMs,
     getFraudId,
     createPlentyPaymentFromPayPalOrder,
     setAddressesFromPayPal,
