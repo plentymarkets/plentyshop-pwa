@@ -27,28 +27,22 @@
       </div>
     </div>
     <hr />
-
     <div class="bg-neutral-900" data-testid="section-bottom">
-      <div class="justify-end px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">
-        <p class="flex items-center justify-center leading-5 text-center typography-text-sm text-white/50 md:ml-6">
+      <div class="text-sm py-10 md:py-6 px-10 text-right">
+        <p class="text-white/50">
           {{ companyName }}
         </p>
       </div>
     </div>
   </footer>
 </template>
-
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories } from '~/mocks';
 import type { FooterProps } from './types';
-
 const storename: string = useRuntimeConfig().public.storename;
-
 const companyName: string = `© ${storename} ${new Date().getFullYear()}`;
-
 const { simplifiedFooter = false } = defineProps<FooterProps>();
-
 const { t } = useI18n();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

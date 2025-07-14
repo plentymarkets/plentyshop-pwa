@@ -26,6 +26,8 @@
 defineProps<{
   heading: string;
 }>();
-
+definePageMeta({
+  isBlockified: false,
+});
 const viewport = useViewport();
 </script>
