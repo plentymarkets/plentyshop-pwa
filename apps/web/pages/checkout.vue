@@ -96,7 +96,6 @@ const checkPayPalPaymentsEligible = async () => {
 };
 await callOnce(async () => {
   await Promise.all([
-    useCartShippingMethods().getShippingMethods(),
     fetchPaymentMethods(),
     useAggregatedCountries().fetchAggregatedCountries(),
   ]);
@@ -115,7 +114,8 @@ onNuxtReady(async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  await checkPayPalPaymentsEligible();
+  useCartShippingMethods().getShippingMethods() 
+  checkPayPalPaymentsEligible();
 });
 
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
