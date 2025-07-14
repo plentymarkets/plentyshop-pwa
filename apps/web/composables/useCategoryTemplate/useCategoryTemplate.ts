@@ -6,6 +6,7 @@ import type {
   SaveBlocks,
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
+import type { FooterSettings } from '~/components/blocks/Footer/types';
 
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
@@ -25,25 +26,46 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
+
     const { data, error } = await useAsyncData(`${type}-${identifier}-${blocks}`, () =>
       useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) }),
     );
 
-    if (error.value) {
-      const { send } = useNotification();
-      send({ type: 'negative', message: error?.value?.message });
-    }
-
     state.value.loading = false;
 
-    if (!data?.value?.data.length && type === 'immutable') {
-      const { $i18n } = useNuxtApp();
-      state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
-    } else {
-      state.value.data = data?.value?.data ?? state.value.data;
+    if (error.value) {
+      const { send } = useNotification();
+      send({ type: 'negative', message: error.value.message });
+      return;
     }
 
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+    let fetchedBlocks: Block[] = data?.value?.data ?? [];
+
+    if (!fetchedBlocks.length && type === 'immutable') {
+      const { $i18n } = useNuxtApp();
+      fetchedBlocks = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+    }
+
+    const includeFooter = fetchedBlocks.find((block) => block.name === 'Footer');
+
+    state.value.data = fetchedBlocks;
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(fetchedBlocks)));
+    if (!includeFooter) {
+      const { data: footerData } = await useAsyncData('footer-block', () =>
+      useSdk().plentysystems.getBlocks({
+        identifier: 'index',
+        type: 'immutable',
+        blocks: 'Footer',
+      })
+      );
+
+      const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
+
+      if (footerBlock?.content) {
+      const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
+      cachedFooter.value = footerBlock.content as FooterSettings;
+      }
+    }
   };
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {

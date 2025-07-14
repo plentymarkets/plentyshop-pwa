@@ -134,35 +134,4 @@ const getBlockClass = (block: Block) => {
     },
   ]);
 };
-
-// watchEffect(() =>
-//   console.log(
-//     'Current block list:',
-//     data.value.map((b) => b.name),
-//   ),
-// );
-
-// watch(
-//   () => cachedFooter.value,
-//   (newFooter) => {
-//     const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
-//     if (footerIndex !== -1) {
-//       data.value.splice(footerIndex, 1, {
-//         ...data.value[footerIndex],
-//         content: newFooter,
-//       });
-//     } else if (newFooter) {
-//       data.value.push({
-//         name: 'Footer',
-//         type: 'content',
-//         meta: {
-//           uuid: uuid(),
-//           isGlobalTemplate: true,
-//         },
-//         content: newFooter,
-//       });
-//     }
-//   },
-//   { immediate: true, once: true },
-// );
 </script>

@@ -2,26 +2,6 @@ export type FooterProps = {
   content?: FooterSettings;
 };
 
-export interface FooterColumnText {
-  title: string;
-  showLinkToContact?: boolean;
-  htmlDescription?: string;
-}
-
-export interface FooterColumn {
-  text: FooterColumnText;
-}
-
-export interface FooterColor {
-  text: string;
-  background: string;
-}
-
-export interface FooterFootnotes {
-  text: string;
-  color: FooterColor;
-}
-
 export interface FooterSettingsColumn {
   title: string;
   description?: string;
