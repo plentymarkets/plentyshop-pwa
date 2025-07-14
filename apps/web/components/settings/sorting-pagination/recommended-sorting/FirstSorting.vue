@@ -3,26 +3,26 @@
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ t('sortingAndPagination.recommendedSorting.firstSortingOptionLabel') }}</UiFormLabel>
       <SfTooltip
-          :label="t('sortingAndPagination.recommendedSorting.firstSortingOptionLabel')"
-          :placement="'top'"
-          :show-arrow="true"
-          class="ml-2 z-10"
+        :label="t('sortingAndPagination.recommendedSorting.firstSortingOptionLabel')"
+        :placement="'top'"
+        :show-arrow="true"
+        class="ml-2 z-10"
       >
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
 
     <Multiselect
-        v-model="recommendedFirstSortingOption"
-        data-testid="available-sorting-options"
-        :options="sortingOptions"
-        placeholder="Select default option"
-        label="label"
-        track-by="value"
-        class="cursor-pointer"
-        select-label=""
-        deselect-label="Selected"
-        :allow-empty="true"
+      v-model="recommendedFirstSortingOption"
+      data-testid="available-sorting-options"
+      :options="sortingOptions"
+      placeholder="Select default option"
+      label="label"
+      track-by="value"
+      class="cursor-pointer"
+      select-label=""
+      deselect-label="Selected"
+      :allow-empty="true"
     />
   </div>
 </template>
