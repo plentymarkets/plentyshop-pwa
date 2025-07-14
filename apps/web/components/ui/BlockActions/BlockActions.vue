@@ -105,7 +105,14 @@ const triggerEdit = () => {
 const triggerDelete = () => {
   deleteBlock(props.block.meta.uuid);
 };
-const isEditDisabled = computed(() => props.block.name === 'Footer' && route.fullPath !== '/');
+const { locale, defaultLocale } = useI18n();
+
+const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
+
+const isEditDisabled = computed(() => {
+  const homePath = getHomePath(locale.value);
+  return props.block.name === 'Footer' && route.fullPath !== homePath;
+});
 
 const scrollToBlock = (newIndex: number) => {
   const block = document.getElementById(`block-${newIndex}`);

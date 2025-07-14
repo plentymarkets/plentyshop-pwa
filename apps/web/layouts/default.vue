@@ -10,8 +10,10 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-    <UiFooter v-if="!runtimeConfig.public.isDev" />
+    <NuxtLazyHydrate when-visible>
+      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+      <UiFooter v-if="!runtimeConfig.public.isDev" />
+    </NuxtLazyHydrate>
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>

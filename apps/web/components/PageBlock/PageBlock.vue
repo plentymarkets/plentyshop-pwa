@@ -15,7 +15,8 @@
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
         {
-          'hover:outline hover:outline-4 hover:outline-[#538AEA]': disableActions && !isTablet && root && !isDragging,
+          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
+            $isPreview && disableActions && !isTablet && root && !isDragging,
         },
       ]"
     >

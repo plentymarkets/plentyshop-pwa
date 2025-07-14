@@ -52,7 +52,7 @@
                 variant="secondary"
                 :to="localePath('/contact')"
               >
-                Contact
+                {{ t('categories.contact.label') }}
               </SfLink>
             </li>
           </div>

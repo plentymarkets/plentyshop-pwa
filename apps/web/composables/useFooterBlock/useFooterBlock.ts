@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
-import { useI18n } from '#imports';
 
 export function useFooterBlock(content?: FooterSettings | null) {
   const { t } = useI18n();
