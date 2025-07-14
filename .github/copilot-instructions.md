@@ -3,6 +3,7 @@
 ## Architecture Overview
 
 This is a **Turborepo monorepo** with two main apps:
+
 - `apps/web/` - Nuxt.js 3 PWA frontend with TypeScript
 - `apps/server/` - Alokai middleware server for PlentyONE integration
 
@@ -11,6 +12,7 @@ The project integrates **PlentyONE** e-commerce backend via **Alokai SDK** (@ple
 ## Essential Workflows
 
 ### Development Commands
+
 ```bash
 npm run dev          # Start both frontend and middleware
 npm run build        # Build both apps via Turbo
@@ -20,6 +22,7 @@ npm run lint:fix     # Auto-fix linting issues
 ```
 
 ### Environment Setup
+
 - Copy `apps/web/.env.example` to `apps/web/.env`
 - Set `API_ENDPOINT` (PlentyONE system URL) and `API_SECURITY_TOKEN`
 - The middleware reads web app's `.env` file (see `middleware.config.ts`)
@@ -28,6 +31,7 @@ npm run lint:fix     # Auto-fix linting issues
 ## Key Patterns & Conventions
 
 ### Component Architecture
+
 - **Atomic design**: Components in logical folders (`AddressForm/`, `ProductAccordion/`)
 - **Composition API**: All components use `<script setup>` with TypeScript
 - **Props typing**: Define interfaces in `types.ts` files alongside components
@@ -36,21 +40,25 @@ npm run lint:fix     # Auto-fix linting issues
 - **Settings system**: `components/settings/` contains admin configuration components dynamically imported via `utils/settings-groups-imports.ts` and `utils/triggers-imports.ts`
 
 ### State Management
+
 - **Composables pattern**: Business logic in `composables/` (e.g., `useCustomer`, `useCart`)
 - **State persistence**: `useState()` for reactive state across components
 - **Event system**: Custom `usePlentyEvent()` for cross-module communication
 
 ### API Integration
+
 - **Middleware layer**: Server app proxies requests to PlentyONE API
 - **SDK methods**: Use `@plentymarkets/shop-api` for all backend calls
 - **Error handling**: Custom error handler preserves PlentyONE response format
 
 ### Routing & i18n
+
 - **File-based routing**: Pages in `pages/` directory
 - **Nuxt-i18n**: Multi-language support with configuration in `configuration/i18n.config.ts`
 - **Dynamic routes**: Product/category pages use PlentyONE item/category IDs
 
 ### Dynamic Component System
+
 - **Block system**: CMS-like content blocks in `components/blocks/` (Image, TextCard, BannerCarousel)
 - **Settings panels**: Admin configuration components in `components/settings/` with nested folder structure
 - **Auto-discovery**: Three utils automatically discover and load components from core, modules, and customer locations:
