@@ -83,7 +83,7 @@ const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized, isGuest } = useCustomer();
 const { billingSkeleton, shippingSkeleton } = useCheckout();
 
-const isLoading = computed(() => (billingSkeleton.value && isBilling) || (shippingSkeleton.value && isShipping))
+const isLoading = computed(() => (billingSkeleton.value && isBilling) || (shippingSkeleton.value && isShipping));
 
 const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
 
