@@ -61,7 +61,7 @@ describe('Reviews functionality check.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
-    reviewPage.scrollToReviews().clickAddReviewButton()
+    reviewPage.scrollToReviews().clickAddReviewButton();
     myAccount.successLogin();
 
     reviewPage
@@ -73,14 +73,14 @@ describe('Reviews functionality check.', () => {
       .clickEditReviewButton()
       .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
       .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
-      .removeReview()
+      .removeReview();
   });
 
   it('Create & Edit & Update reply.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
-    reviewPage.scrollToReviews().clickAddReviewButton()
+    reviewPage.scrollToReviews().clickAddReviewButton();
     myAccount.successLogin();
 
     reviewPage
@@ -91,6 +91,6 @@ describe('Reviews functionality check.', () => {
       .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
       .removeReply()
       .checkReplyRemovedSuccessfully()
-      .removeReview()
+      .removeReview();
   });
 });
