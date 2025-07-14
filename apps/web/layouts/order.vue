@@ -5,5 +5,11 @@
       <slot />
     </NarrowContainer>
   </main>
-  <UiFooter />
+  <UiFooter v-if="route.meta.isBlockified" />
 </template>
+<script setup lang="ts">
+definePageMeta({
+  isBlockified: false,
+});
+const route = useRoute();
+</script>
