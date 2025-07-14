@@ -258,7 +258,7 @@ const openReviewsAccordion = () => {
 
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
-const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
+const showPayPalButtons = false; // computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {
