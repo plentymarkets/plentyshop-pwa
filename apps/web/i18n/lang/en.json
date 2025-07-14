@@ -338,6 +338,12 @@
   "checkoutPayment": {
     "comingSoon": "Coming soon",
     "creditCard": "Credit Card",
+    "payUponInvoice": "Pay upon invoice",
+    "birthdateLabel": "Date of Birth",
+    "birthdateError": "Enter a valid date of birth.",
+    "countrySearch": "Search for a country",
+    "phoneLabel": "Phone number",
+    "phoneError": "Enter a valid phone number.",
     "heading": "Payment method",
     "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },
@@ -498,7 +504,8 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Please provide your address to continue with the checkout."
+      "missingAddress": "Please provide your address to continue with the checkout.",
+      "missingBillingAddress": "Please provide a billing address to continue with the checkout."
     },
     "contact": {
       "messageRequired": "Message is required.",
@@ -538,6 +545,7 @@
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",
+    "paymentCancelled": "The payment has been cancelled. Please try again.",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
     "requiredField": "This is a mandatory field.",
     "turnstileRequired": "Please check the box to verify that you are human.",
@@ -790,7 +798,11 @@
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
     "unbrandedPay": "Pay",
-    "invalidOrder": "The order cannot be processed. Please try again."
+    "invalidOrder": "The order cannot be processed. Please try again.",
+    "puiBankDataAvailable": "Transfer the amount to the bank details provided. You can also find the bank details on your invoice.",
+    "puiBankDataNotAvailable": "The bank data for the transfer are retrieved and will be available shortly. The data will then be available here or can be found on your invoice.",
+    "puiDesignedUse": "Reason for payment",
+    "expressNotAvailable": "PayPal is not available for this delivery country. Please adjust your address accordingly or proceed to checkout to complete your order with another payment provider."
   },
   "perPage": "Per page",
   "phone": "Phone",

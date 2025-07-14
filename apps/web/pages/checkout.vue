@@ -83,12 +83,15 @@ emit('frontend:beginCheckout', cart.value);
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
-    const googlePayAvailable = await useGooglePay().checkIsEligible();
-    const applePayAvailable = await useApplePay().checkIsEligible();
+    const { data: cart } = useCart();
+    const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    if (googlePayAvailable || applePayAvailable) {
-      await fetchPaymentMethods();
-    }
+    await Promise.all([
+      useGooglePay().checkIsEligible(),
+      useApplePay().checkIsEligible(),
+      usePayPal().updateAvailableAPMs(currency.value, true),
+    ]);
+    await fetchPaymentMethods();
   }
 };
 await callOnce(async () => {
