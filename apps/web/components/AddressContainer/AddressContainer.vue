@@ -81,7 +81,6 @@ const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: saveAddressLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized, isGuest } = useCustomer();
-const { loading: fetchingAddress } = useFetchAddress(type);
 const { billingSkeleton, shippingSkeleton } = useCheckout();
 
 const isLoading = computed(() => (billingSkeleton.value && isBilling) || (shippingSkeleton.value && isShipping))
