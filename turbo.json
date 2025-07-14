@@ -44,6 +44,9 @@
     "test:cypress-quarantine": {
       "cache": false
     },
+    "test:cypress-post-quarantine": {
+      "cache": false
+    },
     "test:cypress": {
       "cache": false
     },
