@@ -95,11 +95,7 @@ const checkPayPalPaymentsEligible = async () => {
   }
 };
 await callOnce(async () => {
-  await Promise.all([
-    useCartShippingMethods().getShippingMethods(),
-    fetchPaymentMethods(),
-    useAggregatedCountries().fetchAggregatedCountries(),
-  ]);
+  await Promise.all([fetchPaymentMethods(), useAggregatedCountries().fetchAggregatedCountries()]);
 });
 
 onNuxtReady(async () => {
@@ -115,7 +111,8 @@ onNuxtReady(async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  await checkPayPalPaymentsEligible();
+  useCartShippingMethods().getShippingMethods();
+  checkPayPalPaymentsEligible();
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
