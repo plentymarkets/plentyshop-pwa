@@ -111,8 +111,8 @@ const {
   scrollToShippingAddress,
 } = useCheckout();
 
-const { loadPayment, loadShipping, paymentMethods, selectedPaymentId } = useCheckoutPagePaymentAndShipping();
-const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const { paymentLoading, shippingLoading, paymentMethods, selectedPaymentId } = useCheckoutPagePaymentAndShipping();
+const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const disableBuyButton = computed(
   () =>
     createOrderLoading.value ||
