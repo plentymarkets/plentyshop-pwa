@@ -24,25 +24,23 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const { $i18n } = useNuxtApp();
 
-  const ensureFooterBlock = async (blocks: Block[]) => {
-    const hasFooterBlock = blocks.find((block) => block.name === 'Footer');
-    if (!hasFooterBlock) {
-      await callOnce(async () => {
-        const { data: footerData } = await useAsyncData('footer-block', () =>
-          useSdk().plentysystems.getBlocks({
-            identifier: 'index',
-            type: 'immutable',
-            blocks: 'Footer',
-          }),
-        );
+  const ensureFooterBlock = async () => {
+    const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
 
-        const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
+    if (cachedFooter.value) return;
 
-        if (footerBlock?.content) {
-          const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
-          cachedFooter.value = footerBlock.content as FooterSettings;
-        }
-      });
+    const { data: footerData } = await useAsyncData('footer-block', () =>
+      useSdk().plentysystems.getBlocks({
+        identifier: 'index',
+        type: 'immutable',
+        blocks: 'Footer',
+      }),
+    );
+
+    const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
+
+    if (footerBlock?.content) {
+      cachedFooter.value = footerBlock.content as FooterSettings;
     }
   };
 
@@ -70,13 +68,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     state.value.data = fetchedBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(fetchedBlocks)));
 
-    await ensureFooterBlock(fetchedBlocks);
+    await ensureFooterBlock();
   };
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
-    const response = await useSdk().plentysystems.getBlocks({ identifier, type, ...(blocks ? { blocks } : {}) });
+    const response = await useSdk().plentysystems.getBlocks({ identifier, type, blocks });
     const data = response?.data;
 
     state.value.loading = false;
