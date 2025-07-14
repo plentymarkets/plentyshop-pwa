@@ -20,6 +20,7 @@ export interface UseCategoryTemplate {
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
+  getBlocksServer: GetBlocks;
   updateBlocks: UpdateBlocks;
 }
 

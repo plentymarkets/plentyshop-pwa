@@ -9,7 +9,7 @@ export function useFooterBlock(content?: FooterSettings | null) {
   let footerBlockPromise: Promise<void> | null = null;
 
   async function fetchFooterBlock() {
-    const { data, getBlocks } = useCategoryTemplate();
+    const { data, getBlocks } = useCategoryTemplate('footer');
     await getBlocks('index', 'immutable', 'Footer');
     const footerBlock = data.value.find((block) => block.name === 'Footer');
     if (footerBlock && footerBlock.content) {

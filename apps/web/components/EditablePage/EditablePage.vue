@@ -26,7 +26,7 @@
           :root="true"
           class="group"
           :class="getBlockClass(block).value"
-          data-testid="block-wrapper" 
+          data-testid="block-wrapper"
           @click="tabletEdit(index)"
         />
       </template>
@@ -41,20 +41,20 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
-// const { cachedFooter } = useFooterBlock();
-const { data, getBlocks, cleanData } = useCategoryTemplate();
+
+const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
-await getBlocks(props.identifier, props.type);
+await getBlocksServer(props.identifier, props.type);
+const { cachedFooter } = useFooterBlock();
+const { t } = useI18n();
 
-// const { t } = useI18n();
-
-// addFooterBlock({
-//   data,
-//   cachedFooter,
-//   t,
-//   uuid,
-//   cleanData,
-// });
+addFooterBlock({
+  data,
+  cachedFooter,
+  t,
+  uuid,
+  cleanData,
+});
 
 const {
   isClicked,
@@ -134,6 +134,13 @@ const getBlockClass = (block: Block) => {
     },
   ]);
 };
+
+// watchEffect(() =>
+//   console.log(
+//     'Current block list:',
+//     data.value.map((b) => b.name),
+//   ),
+// );
 
 // watch(
 //   () => cachedFooter.value,
