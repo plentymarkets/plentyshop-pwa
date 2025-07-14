@@ -105,7 +105,7 @@ const {
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
+const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const {
@@ -129,7 +129,7 @@ const {
 
 const paypalOrderId = route?.query?.orderId?.toString() || '';
 const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
-const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const interactionDisabled = computed(
   () =>
     disableShippingPayment.value ||

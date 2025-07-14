@@ -88,8 +88,8 @@ export const useCheckoutPagePaymentAndShipping = () => {
   };
 
   return {
-    loadPayment,
-    loadShipping,
+    paymentLoading: loadPayment,
+    shippingLoading: loadShipping,
     paymentMethods,
     shippingMethods,
     selectedPaymentId,
