@@ -76,7 +76,7 @@ const {
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
-const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
+const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
 emit('frontend:beginCheckout', cart.value);
@@ -118,7 +118,7 @@ onNuxtReady(async () => {
   await checkPayPalPaymentsEligible();
 });
 
-const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
 const { processingOrder } = useProcessingOrder();
 
