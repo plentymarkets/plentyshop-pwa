@@ -101,6 +101,14 @@ export const useBlockManager = () => {
 
     updateBlocks(updatedBlocks);
 
+    const movedBlock = updatedBlocks[newIndex];
+
+    window.dispatchEvent(
+      new CustomEvent('block-moved', {
+        detail: { uuid: movedBlock.meta.uuid, name: movedBlock.name },
+      }),
+    );
+
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
