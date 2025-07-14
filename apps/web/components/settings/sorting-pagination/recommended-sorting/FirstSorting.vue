@@ -33,14 +33,14 @@ import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
-const { t, locale } = useI18n();
 
 const { updateSetting, getSetting } = useSiteSettings('recommendedFirstSortingOption');
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 const { updateSorting } = useCategoryFilter();
+const { t, locale } = useI18n();
 
 const sortingOptions = computed(() => getRecommendedSortingOptions(locale.value, false));
-//
+
 const recommendedFirstSortingOption = computed({
   get: () => {
     return sortingOptions.value.find((o: SortingOption) => o.value === getSetting());
