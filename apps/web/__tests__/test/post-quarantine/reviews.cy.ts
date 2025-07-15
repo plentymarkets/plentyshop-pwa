@@ -37,8 +37,6 @@ describe('Reviews functionality check.', () => {
     productListPage.goToProduct();
 
     reviewPage.deleteAllReviews();
-
-    myAccount.clickTopBarLogoutButton();
   });
 
   it('Checks review section elements.', () => {
@@ -59,6 +57,7 @@ describe('Reviews functionality check.', () => {
     productListPage.goToProduct();
 
     reviewPage.scrollToReviews().clickAddReviewButton();
+
     myAccount.successLogin();
 
     reviewPage
@@ -78,6 +77,7 @@ describe('Reviews functionality check.', () => {
     productListPage.goToProduct();
 
     reviewPage.scrollToReviews().clickAddReviewButton();
+
     myAccount.successLogin();
 
     reviewPage
