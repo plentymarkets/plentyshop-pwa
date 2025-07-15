@@ -59,7 +59,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "happy-dom": "^15.11.7",
-    "msw": "^2.10.3",
+    "msw": "^2.10.4",
     "nuxt": "^3.17.5",
     "sass": "^1.77.6",
     "tsx": "^4.19.0",
