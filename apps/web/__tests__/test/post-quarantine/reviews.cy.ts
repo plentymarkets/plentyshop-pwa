@@ -17,9 +17,6 @@ beforeEach(() => {
   cy.intercept('/plentysystems/doReview').as('postReview');
   cy.intercept('/plentysystems/setReview').as('setReview');
   cy.intercept('/plentysystems/getReview').as('getReview');
-  cy.intercept('/plentysystems/getRobots').as('getRobots');
-  cy.intercept('/plentysystems/getBlocks').as('getBlocks');
-  cy.intercept('/plentysystems/getFacet').as('getFacet');
 
   cy.intercept('/plentysystems/doLogin').as('doLogin');
 
