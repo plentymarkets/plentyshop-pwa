@@ -9,7 +9,7 @@ export interface UseCategoryTemplateState {
 
 export type FetchCategoryTemplate = (categoryId: number) => Promise<void>;
 export type SaveBlocks = (identifier: string | number, type: string, content: string) => Promise<void>;
-export type GetBlocks = (identifier: number | string, type: string) => Promise<void>;
+export type GetBlocks = (identifier: number | string, type: string, block?: string) => Promise<void>;
 export type UpdateBlocks = (blocks: Block[]) => void;
 
 export interface UseCategoryTemplate {
@@ -20,7 +20,8 @@ export interface UseCategoryTemplate {
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
+  getBlocksServer: GetBlocks;
   updateBlocks: UpdateBlocks;
 }
 
-export type UseCategoryTemplateReturn = () => UseCategoryTemplate;
+export type UseCategoryTemplateReturn = (blocks?: string) => UseCategoryTemplate;

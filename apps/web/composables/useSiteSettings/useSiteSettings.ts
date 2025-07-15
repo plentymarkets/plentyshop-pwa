@@ -27,8 +27,16 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
 
   const getSetting: GetSetting = () => {
     return (
-      (state.value.data?.[setting as string] as string) || (useRuntimeConfig().public?.[setting as string] as string)
+      (state.value.data?.[setting as string] as string) ?? (useRuntimeConfig().public?.[setting as string] as string)
     );
+  };
+
+  const getJsonSetting: () => string[] = () => {
+    const runtimeSetting = useRuntimeConfig().public?.[setting as string];
+
+    const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);
+
+    return JSON.parse((state.value.data?.[setting as string] as string) || defaultSetting);
   };
 
   const isDirty = computed(() => {
@@ -46,6 +54,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     ...toRefs(state.value),
     updateSetting,
     getSetting,
+    getJsonSetting,
     isDirty,
     saveSiteSettings,
   };

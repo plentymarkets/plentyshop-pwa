@@ -338,6 +338,12 @@
   "checkoutPayment": {
     "comingSoon": "Bald verfügbar",
     "creditCard": "Kreditkarte",
+    "payUponInvoice": "Bezahlen Sie per Rechnung",
+    "birthdateLabel": "Geburtsdatum",
+    "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
+    "countrySearch": "Suche nach einem Land",
+    "phoneLabel": "Telefonnummer",
+    "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
     "heading": "Zahlungsart",
     "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },
@@ -498,7 +504,8 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren."
+      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren.",
+      "missingBillingAddress": "Bitte geben Sie Ihre Rechnungsadresse ein, um mit dem Bezahlvorgang fortzufahren."
     },
     "contact": {
       "messageRequired": "Nachricht ist erforderlich.",
@@ -538,6 +545,7 @@
       }
     },
     "paymentFailed": "Die Zahlung ist fehlgeschlagen. Versuche es bitte erneut.",
+    "paymentCancelled": "Die Zahlung wurde abgebrochen. Versuche es bitte erneut.",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
     "requiredField": "Dieses Feld ist erforderlich.",
     "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
@@ -733,6 +741,7 @@
   "openSearchModalButtonLabel": "Suche öffnen",
   "or": "oder",
   "orderConfirmation": {
+    "trackingOrder": "Bestellung nachverfolgen",
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
     "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
     "sameAsShippingAddress": "Entspricht der Lieferadresse",
@@ -789,7 +798,11 @@
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
     "unbrandedPay": "Bezahlen",
-    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
+    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+    "puiBankDataAvailable": "Überweisen Sie den Betrag an die angegebenen Bankdaten. Sie können die Bankdaten zudem auch Ihrer Rechnung entnehmen.",
+    "puiBankDataNotAvailable": "Die Bankdaten für die Überweisung werden abgerufen und stehen in Kürze zur Verfügung. Die Daten sind dann hier verfügbar oder können Ihrer Rechnung entnommen werden.",
+    "puiDesignedUse": "Verwendungszweck",
+    "expressNotAvailable": "PayPal ist für das Lieferland nicht verfügbar. Bitte passen Sie Ihre Adresse entsprechend an oder gehen Sie zur Kasse, um die Bestellung mit einem anderen Zahlungsanbieter abzuschließen."
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
@@ -929,25 +942,41 @@
   "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
   "sortBy": "Sortieren nach",
   "sortType": {
-    "nameA-Z": "Name A-Z",
-    "nameZ-A": "Name Z-A",
-    "priceDown": "Preis ⬇",
-    "priceUp": "Preis ⬆",
-    "reviewsDown": "Kundenbewertung ⬇",
-    "reviewsUp": "Kundenbewertung ⬆",
-    "recommended": "Empfohlen",
-    "newest": "Neueste Artikel",
-    "oldest": "Älteste Artikel",
-    "availabilityUp": "Verfügbarkeit ⬆",
-    "availabilityDown": "Verfügbarkeit ⬇",
-    "variationNumberUp": "Variantennummer ⬆",
-    "variationNumberDown": "Variantennummer ⬇",
-    "lastUpdate": "Letzte Aktualisierung",
-    "firstUpdate": "Erste Aktualisierung",
-    "manufacturerAsc": "Hersteller A-Z",
-    "manufacturerDesc": "Hersteller Z-A",
-    "topSellerUp": "Meistverkaufte Artikel ⬆",
-    "topSellerDown": "Meistverkaufte Artikel ⬇"
+    "default": {
+      "recommended_sorting": "Empfohlen"
+    },
+    "texts": {
+      "name1_asc": "Name A-Z",
+      "name1_desc": "Name Z-A"
+    },
+    "sorting": {
+      "price": {
+        "avg_asc": "Preis ⬆",
+        "avg_desc": "Preis ⬇"
+      }
+    },
+    "variation": {
+      "createdAt_desc": "Neueste Artikel",
+      "createdAt_asc": "Älteste Artikel",
+      "availability": {
+        "averageDays_asc": "Verfügbarkeit ⬆",
+        "averageDays_desc": "Verfügbarkeit ⬇"
+      },
+      "number_asc": "Variantennummer ⬆",
+      "number_desc": "Variantennummer ⬇",
+      "updatedAt_asc": "Letzte Aktualisierung",
+      "updatedAt_desc": "Erste Aktualisierung",
+      "position_asc": "Meistverkaufte Artikel ⬆",
+      "position_desc": "Meistverkaufte Artikel ⬇"
+    },
+    "item": {
+      "manufacturer": {
+        "externalName_asc": "Hersteller A-Z",
+        "externalName_desc": "Hersteller Z-A"
+      },
+      "feedbackDecimal_asc": "Kundenbewertung ⬆",
+      "feedbackDecimal_desc": "Kundenbewertung ⬇"
+    }
   },
   "storefrontError": {
     "offer": {
