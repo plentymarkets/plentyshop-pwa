@@ -29,9 +29,7 @@
 <script setup lang="ts">
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
-definePageMeta({
-  isBlockified: false,
-});
+
 const localePath = useLocalePath();
 const { t } = useI18n();
 const router = useRouter();
