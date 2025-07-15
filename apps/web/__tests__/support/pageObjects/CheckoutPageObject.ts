@@ -400,7 +400,7 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  shoulShowPaymentMethods() {
+  shouldShowPaymentMethods() {
     cy.getByTestId('no-payment-method-available').should('not.exist');
     return this;
   }
