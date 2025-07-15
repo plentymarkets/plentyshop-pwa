@@ -46,22 +46,11 @@ describe('Smoke: Checkout Page', () => {
 
   it('should load shipping methods after second clientside navigation to checkout', () => {
     cy.visitSmoke().addToCart();
-    checkout
-      .goToCheckoutPath()
-      .shouldShowShippingMethods()
-      .goBack()
-      .goToCheckoutPath()
-      .shouldShowShippingMethods();
+    checkout.goToCheckoutPath().shouldShowShippingMethods().goBack().goToCheckoutPath().shouldShowShippingMethods();
   });
 
   it('should load payment methods after second clientside navigation to checkout', () => {
     cy.visitSmoke().addToCart();
-    checkout
-      .goToCheckoutPath()
-      .shoulShowPaymentMethods()
-      .goBack()
-      .goToCheckoutPath()
-      .shoulShowPaymentMethods();
+    checkout.goToCheckoutPath().shoulShowPaymentMethods().goBack().goToCheckoutPath().shoulShowPaymentMethods();
   });
-
 });
