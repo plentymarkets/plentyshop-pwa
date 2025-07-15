@@ -1,15 +1,11 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div
-      v-if="billingSkeleton || shippingSkeleton || formIsLoading || fetchingAddress"
-      class="flex flex-col sm:flex-row sm:items-center justify-between"
-    >
+    <div v-if="isLoading" class="flex flex-col sm:flex-row sm:items-center justify-between">
       <div class="relative w-full">
         <h2 class="text-neutral-900 text-lg font-bold mb-5 mt-2">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
         <AddressDisplaySkeleton v-if="isAuthorized || (!isAuthorized && type !== AddressType.Shipping) || isGuest" />
-        <AddressFormSkeleton v-else />
       </div>
     </div>
     <div v-else>
@@ -29,7 +25,7 @@
 
           <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAdressSelection }" :label="t('editAddress')">
             <UiButton
-              :disabled="!hasCheckoutAddress || formIsLoading || disabled"
+              :disabled="!hasCheckoutAddress || saveAddressLoading || disabled"
               variant="secondary"
               :data-testid="'edit-address-' + type"
               @click="edit(checkoutAddress)"
@@ -82,11 +78,12 @@ const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
-const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
+const { isLoading: saveAddressLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const { isAuthorized, isGuest } = useCustomer();
-const { loading: fetchingAddress } = useFetchAddress(type);
 const { billingSkeleton, shippingSkeleton } = useCheckout();
+
+const isLoading = computed(() => (billingSkeleton.value && isBilling) || (shippingSkeleton.value && isShipping));
 
 const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
 

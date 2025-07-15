@@ -99,6 +99,13 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     return parseZipCodeRegex(country);
   };
 
+  const getCountryIsoCode = (countryId: string): string => {
+    const id = Number.parseInt(countryId);
+
+    if (Number.isNaN(id)) return '';
+    return billingCountries.value.find((country) => country.id === id)?.isoCode2?.toLowerCase() ?? '';
+  };
+
   return {
     parseZipCodeRegex,
     fetchAggregatedCountries,
@@ -106,6 +113,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     billingCountries,
     localeCountryName,
     getCountryZipCodeRegex,
+    getCountryIsoCode,
     ...toRefs(state.value),
   };
 };

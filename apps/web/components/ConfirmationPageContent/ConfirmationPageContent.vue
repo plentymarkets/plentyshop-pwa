@@ -37,6 +37,7 @@
           <OrderShippingSummary :order="order" />
           <OrderPaymentSummary :order="order" />
           <OrderBankDetails v-if="bankDetails" :bank-details="bankDetails" />
+          <PayPalInvoiceDetails :order="order" />
         </div>
 
         <div
