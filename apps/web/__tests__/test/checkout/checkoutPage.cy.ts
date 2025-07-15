@@ -43,4 +43,25 @@ describe('Smoke: Checkout Page', () => {
       })
       .shouldNotShowShippingMethods();
   });
+
+  it('should load shipping methods after second clientside navigation to checkout', () => {
+    cy.visitSmoke().addToCart();
+    checkout
+      .goToCheckoutPath()
+      .shouldShowShippingMethods()
+      .goBack()
+      .goToCheckoutPath()
+      .shouldShowShippingMethods();
+  });
+
+  it('should load payment methods after second clientside navigation to checkout', () => {
+    cy.visitSmoke().addToCart();
+    checkout
+      .goToCheckoutPath()
+      .shoulShowPaymentMethods()
+      .goBack()
+      .goToCheckoutPath()
+      .shoulShowPaymentMethods();
+  });
+
 });
