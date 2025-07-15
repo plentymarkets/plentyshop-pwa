@@ -23,7 +23,7 @@
       >
         <div class="">
           <label>
-            <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }}</UiFormLabel>
             <SfInput
               v-bind="nameAttributes"
               v-model="name"
@@ -54,12 +54,12 @@
           <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }}</UiFormLabel>
           <SfInput v-model="subject" name="subject" type="text" v-bind="subjectAttributes" />
           <ErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }}</UiFormLabel>
           <SfInput v-model="orderId" name="order-id" type="text" v-bind="orderIdAttributes" />
           <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
@@ -179,12 +179,9 @@ setPageMeta(t('categories.contact.label'), icon);
 
 const validationSchema = toTypedSchema(
   object({
-    name: string().required(t('errorMessages.contact.nameRequired')).default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     message: string().required(t('errorMessages.contact.messageRequired')).default(''),
-    subject: string().required(t('errorMessages.requiredField')).default(''),
     orderId: string()
-      .required(t('errorMessages.requiredField'))
       .test((value, context) => {
         if (value && /\D/.test(value)) {
           return context.createError({ message: t('errorMessages.wholeNumber') });
