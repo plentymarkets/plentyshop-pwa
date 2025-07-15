@@ -24,22 +24,18 @@ describe('Preferred Delivery', () => {
     preferredDeliveryObject.shouldShowPreferredDelivery();
   });
 
-  it.only('should buy with preferred delivery', () => {
+  it('should buy with preferred delivery', () => {
     cy.addToCart();
     checkout
       .goToCheckoutPath()
       .fillContactInformationForm()
       .fillShippingAddressForm({ country: '1', zipCode: '12345' });
 
-    
     preferredDeliveryObject
       .checkPreferredDeliveryDayCheckbox()
       .fillPreferredDeliveryLocation('Test Location')
       .submitPreferredDeliveryForm();
 
-    
-    checkout
-      .acceptTerms()
-      .placeOrderButton()
+    checkout.acceptTerms().placeOrderButton().displaySuccessPage();
   });
 });
