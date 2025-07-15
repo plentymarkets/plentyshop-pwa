@@ -27,6 +27,7 @@
     "test:cypress-checkout": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-checkout\" \"npm run start\"",
     "test:cypress-editor": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-editor\" \"npm run start\"",
     "test:cypress-quarantine": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"npm run start\"",
+    "test:cypress-post-quarantine": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-post-quarantine\" \"npm run start\"",
     "test:cypress": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress\" \"npm run start\"",
     "test:cypress-dev": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",

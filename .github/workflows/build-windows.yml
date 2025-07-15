@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  build:        
+  build:
     runs-on: windows-latest
 
     steps:
@@ -22,7 +22,6 @@ jobs:
           New-Item -ItemType File -Path apps/web/.env -Force
           Add-Content -Path apps/web/.env -Value "API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}"
           Add-Content -Path apps/web/.env -Value "API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com"
-          Add-Content -Path apps/web/.env -Value "DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1"
         shell: pwsh
 
       - name: Install dependencies
