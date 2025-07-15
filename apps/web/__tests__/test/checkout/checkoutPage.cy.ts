@@ -51,6 +51,6 @@ describe('Smoke: Checkout Page', () => {
 
   it('should load payment methods after second clientside navigation to checkout', () => {
     cy.visitSmoke().addToCart();
-    checkout.goToCheckoutPath().shoulShowPaymentMethods().goBack().goToCheckoutPath().shouldShowPaymentMethods();
+    checkout.goToCheckoutPath().shouldShowPaymentMethods().goBack().goToCheckoutPath().shouldShowPaymentMethods();
   });
 });
