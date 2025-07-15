@@ -17,10 +17,7 @@ export const useCartTotalChange = () => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const localePath = useLocalePath();
-    const paypalOrder = await getOrder({
-      paypalOrderId: route.query.orderId?.toString() || '',
-      payPalPayerId: route.query.payerId?.toString() || '',
-    });
+    const paypalOrder = await getOrder(route.query.orderId?.toString() || '');
 
     if (
       paypalOrder &&

@@ -59,8 +59,9 @@ export const useBlockManager = () => {
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    if (data.value.length === 0) {
-      updateBlocks([newBlock]);
+    const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
+    if (nonFooterBlocks.length === 0) {
+      updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
       return;
     }
@@ -100,10 +101,23 @@ export const useBlockManager = () => {
 
     updateBlocks(updatedBlocks);
 
+    const movedBlock = updatedBlocks[newIndex];
+
+    window.dispatchEvent(
+      new CustomEvent('block-moved', {
+        detail: { uuid: movedBlock.meta.uuid, name: movedBlock.name },
+      }),
+    );
+
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
-  const isLastBlock = (index: number) => index === data.value.length - 1;
+  const isLastNonFooterBlock = (index: number) => {
+    if (!data.value || data.value.length === 0) return false;
+    const hasFooter = data.value.length > 0 && data.value[data.value.length - 1].name === 'Footer';
+    const lastNonFooterIndex = hasFooter ? data.value.length - 2 : data.value.length - 1;
+    return index === lastNonFooterIndex;
+  };
 
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
     for (const [index, block] of blocks.entries()) {
@@ -202,7 +216,7 @@ export const useBlockManager = () => {
     deleteBlock,
     updateBlock,
     changeBlockPosition,
-    isLastBlock,
+    isLastNonFooterBlock,
     addNewBlock,
     handleEdit,
     visiblePlaceholder,

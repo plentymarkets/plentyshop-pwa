@@ -76,27 +76,26 @@ const {
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
-const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
+const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
 emit('frontend:beginCheckout', cart.value);
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
-    const googlePayAvailable = await useGooglePay().checkIsEligible();
-    const applePayAvailable = await useApplePay().checkIsEligible();
+    const { data: cart } = useCart();
+    const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    if (googlePayAvailable || applePayAvailable) {
-      await fetchPaymentMethods();
-    }
+    await Promise.all([
+      useGooglePay().checkIsEligible(),
+      useApplePay().checkIsEligible(),
+      usePayPal().updateAvailableAPMs(currency.value, true),
+    ]);
+    await fetchPaymentMethods();
   }
 };
 await callOnce(async () => {
-  await Promise.all([
-    useCartShippingMethods().getShippingMethods(),
-    fetchPaymentMethods(),
-    useAggregatedCountries().fetchAggregatedCountries(),
-  ]);
+  await Promise.all([fetchPaymentMethods(), useAggregatedCountries().fetchAggregatedCountries()]);
 });
 
 onNuxtReady(async () => {
@@ -112,10 +111,11 @@ onNuxtReady(async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  await checkPayPalPaymentsEligible();
+  useCartShippingMethods().getShippingMethods();
+  checkPayPalPaymentsEligible();
 });
 
-const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
 const { processingOrder } = useProcessingOrder();
 
