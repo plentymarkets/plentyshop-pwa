@@ -190,6 +190,7 @@ const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(Addre
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: billingSchema });
 const { billingCountries } = useAggregatedCountries();
 const { restrictedAddresses } = useRestrictedAddress();
+const { setBillingSkeleton } = useCheckout();
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -233,6 +234,7 @@ const validateAndSubmitForm = async () => {
 
   if (formData.valid) {
     try {
+      setBillingSkeleton(true);
       await submitForm();
     } catch (error) {
       if (error instanceof Error) {
@@ -243,6 +245,8 @@ const validateAndSubmitForm = async () => {
       } else if (error instanceof ApiError) {
         useHandleError(error);
       }
+    } finally {
+      setBillingSkeleton(false);
     }
     if (showNewForm.value) showNewForm.value = false;
   }
