@@ -76,9 +76,7 @@ describe('Reviews functionality check.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
-    reviewPage
-      .scrollToReviews()
-      .clickAddReviewButton();
+    reviewPage.scrollToReviews().clickAddReviewButton();
 
     myAccount.successLogin();
 
