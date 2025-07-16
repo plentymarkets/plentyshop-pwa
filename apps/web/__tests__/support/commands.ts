@@ -92,7 +92,6 @@ Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
 // Used to keep the reference to the popup window
 const state = {
   popup: null as Window | null,
-  originalOpen: null as ((url?: (string | URL), target?: string, features?: string) => (WindowProxy | null)) | null,
 };
 
 /**
