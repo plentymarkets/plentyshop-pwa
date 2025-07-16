@@ -1,9 +1,9 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>{{ t('sortingAndPagination.recommendedSorting.thirdSortingOptionLabel') }}</UiFormLabel>
+      <UiFormLabel>Third sorting option</UiFormLabel>
       <SfTooltip
-        :label="t('sortingAndPagination.recommendedSorting.thirdSortingOptionLabel')"
+        label="Third sorting option"
         :placement="'top'"
         :show-arrow="true"
         class="ml-2 z-10"
@@ -37,7 +37,7 @@ import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 const { updateSetting, getSetting } = useSiteSettings('recommendedThirdSortingOption');
 const { t, locale } = useI18n();
 
-const sortingOptions = computed(() => getRecommendedSortingOptions(locale.value, true));
+const sortingOptions = computed(() => getRecommendedSortingOptions('en', true));
 
 const recommendedThirdSortingOption = computed({
   get: () => {

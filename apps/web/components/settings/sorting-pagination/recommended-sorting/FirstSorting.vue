@@ -1,9 +1,9 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>{{ t('sortingAndPagination.recommendedSorting.firstSortingOptionLabel') }}</UiFormLabel>
+      <UiFormLabel>First sorting option</UiFormLabel>
       <SfTooltip
-        :label="t('sortingAndPagination.recommendedSorting.firstSortingOptionLabel')"
+        label="First sorting option"
         :placement="'top'"
         :show-arrow="true"
         class="ml-2 z-10"
@@ -37,7 +37,7 @@ import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 const { updateSetting, getSetting } = useSiteSettings('recommendedFirstSortingOption');
 const { t, locale } = useI18n();
 
-const sortingOptions = computed(() => getRecommendedSortingOptions(locale.value, false));
+const sortingOptions = computed(() => getRecommendedSortingOptions('en', false));
 
 const recommendedFirstSortingOption = computed({
   get: () => {
