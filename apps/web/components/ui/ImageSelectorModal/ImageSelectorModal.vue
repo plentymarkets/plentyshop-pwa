@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div v-if="open" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="props.open" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-[1500px] h-[800px] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col">
         <header class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold">Add image (XL, Desktop)</h2>
@@ -19,11 +19,7 @@
           <div class="flex-1 overflow-auto pr-4"/>
 
           <div class="w-1/3 flex flex-col justify-center items-center border border-dashed border-gray-300 rounded-md p-4">
-            <SfIconArrowUpward size="lg" class="mb-2" />
-            <p>
-              Drag file here or <span class="text-green-600 cursor-pointer">click to select file</span>
-            </p>
-            <p class="text-sm text-gray-500">Maximum upload file size 512MB</p>
+            Select an image from the list to preview it here
           </div>
         </main>
 
@@ -52,7 +48,7 @@
 </template>
 
 <script setup>
-import { SfIconClose, SfIconInfo, SfTooltip, SfIconArrowUpward } from '@storefront-ui/vue';
+import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps({
   open: Boolean,
@@ -60,9 +56,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 
-function close() {
-  emit('close');
-}
+const close = () => emit('close');
 
 const canAdd = ref(false);
 </script>

@@ -10,9 +10,6 @@
         <template #summary>
           <h2 data-testid="slider-image-group-title">Images</h2>
         </template>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded" @click="openModal = true">
-          Deschide Image Picker
-        </button>
 
         <div v-if="runtimeConfig.public.isDev" class="images">
           <UiImagePicker
@@ -23,12 +20,11 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
+            @select="openUploader"
             @delete="deleteImage(banner.content.image, type)"
           />
-          <ImageSelectorModal :open="openModal" @close="openModal = false" />
         </div>
         <div v-else class="images">
-        <div class="images">
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
@@ -466,6 +462,7 @@
       </UiAccordionItem>
     </div>
   </div>
+  <ImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
@@ -491,8 +488,15 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-const openModal = ref(false)
+const isUploaderOpen = ref(false);
 
+function openUploader() {
+  isUploaderOpen.value = true;
+}
+
+function closeUploader() {
+  isUploaderOpen.value = false;
+}
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
