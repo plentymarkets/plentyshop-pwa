@@ -20,6 +20,7 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
+            @select="openUploader"
             @delete="deleteImage(banner.content.image, type)"
           />
         </div>
@@ -461,6 +462,7 @@
       </UiAccordionItem>
     </div>
   </div>
+  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
@@ -485,7 +487,15 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
+const isUploaderOpen = ref(false);
 
+function openUploader() {
+  isUploaderOpen.value = true;
+}
+
+function closeUploader() {
+  isUploaderOpen.value = false;
+}
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);

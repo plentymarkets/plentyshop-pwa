@@ -18,6 +18,7 @@
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :show-tooltip="true"
+        @select="openUploader"
         @delete="deleteImage(uiImageTextBlock, type)"
       />
     </div>
@@ -136,6 +137,7 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
@@ -150,7 +152,15 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<ImageFormProps>();
+const isUploaderOpen = ref(false);
 
+function openUploader() {
+  isUploaderOpen.value = true;
+}
+
+function closeUploader() {
+  isUploaderOpen.value = false;
+}
 const uiImageTextBlock = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
 );
