@@ -17,15 +17,15 @@ export const usePickerHelper = () => {
     mobile: ' 320 x 320',
   };
 
-  const deleteImage = (imageObj: Record<string, unknown>, type: typeof imageTypes[number]) => {
+  const deleteImage = (imageObj: Record<string, unknown>, type: (typeof imageTypes)[number]) => {
     imageObj[type] = placeholderImg;
-  }
+  };
 
   return {
     placeholderImg,
     labels,
     imageDimensions,
     imageTypes,
-    deleteImage
+    deleteImage,
   };
 };
