@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { validateApiUrl } from './utils/pathHelper';
+import { validateApiUrl } from './app/utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
-import { paths } from './utils/paths';
+import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 
 export default defineNuxtConfig({
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     fallbackCurrency: 'GBP',
   },
   imports: {
-    dirs: ['composables', 'composables/**', 'utils/**'],
+    dirs: ['app/composables', 'app/composables/**', 'utils/**'],
   },
   vite: {
     server: {

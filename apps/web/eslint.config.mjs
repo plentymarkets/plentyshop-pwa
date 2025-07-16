@@ -1,4 +1,4 @@
-import withNuxt from './.nuxt/eslint.config.mjs';
+import withNuxt from '.nuxt/eslint.config.mjs';
 import { architecture, ecma } from "@vue-storefront/eslint-config";
 import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
 import { noI18nGlobals } from './eslint-rules/no-i18n-globals.js';

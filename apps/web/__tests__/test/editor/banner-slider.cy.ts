@@ -3,7 +3,7 @@ import {
   firstBannerBlockUuid,
   secondBannerBlockUuid,
 } from '../../support/pageObjects/BannerSliderObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Banner Slider Block Form', () => {

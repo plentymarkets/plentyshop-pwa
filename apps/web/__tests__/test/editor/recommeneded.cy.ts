@@ -1,4 +1,4 @@
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Recommended Block Form', () => {
