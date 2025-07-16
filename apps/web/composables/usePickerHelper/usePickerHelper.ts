@@ -1,6 +1,8 @@
 export const usePickerHelper = () => {
   const placeholderImg = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
+  const imageTypes = ['wideScreen', 'desktop', 'tablet', 'mobile'] as const;
+
   const labels = {
     wideScreen: 'Image XL (Desktop)',
     desktop: 'Image L (Desktop)',
@@ -19,5 +21,6 @@ export const usePickerHelper = () => {
     placeholderImg,
     labels,
     imageDimensions,
+    imageTypes,
   };
 };

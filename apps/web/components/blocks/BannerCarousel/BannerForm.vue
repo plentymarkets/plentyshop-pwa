@@ -13,16 +13,14 @@
 
         <div v-if="runtimeConfig.public.isDev" class="images">
           <UiImagePicker
-            v-for="type in ['wideScreen', 'desktop', 'tablet', 'mobile'] as Array<
-              'wideScreen' | 'desktop' | 'tablet' | 'mobile'
-            >"
+            v-for="type in imageTypes"
             :key="type"
             :label="labels[type]"
             :image="banner.content.image[type]"
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @delete="() => deleteImage(type)"
+            @delete="deleteImage(type)"
           />
         </div>
         <div v-else class="images">
@@ -475,7 +473,7 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { placeholderImg, labels, imageDimensions } = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 

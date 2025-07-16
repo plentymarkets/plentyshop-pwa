@@ -11,16 +11,14 @@
 
     <div v-if="runtimeConfig.public.isDev" class="images">
       <UiImagePicker
-        v-for="type in ['wideScreen', 'desktop', 'tablet', 'mobile'] as Array<
-          'wideScreen' | 'desktop' | 'tablet' | 'mobile'
-        >"
+        v-for="type in imageTypes"
         :key="type"
         :label="labels[type]"
         :image="uiImageTextBlock[type]"
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :show-tooltip="true"
-        @delete="() => deleteImage(type)"
+        @delete="deleteImage(type)"
       />
     </div>
     <div v-else class="images">
@@ -145,7 +143,7 @@ import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
 const runtimeConfig = useRuntimeConfig();
-const { placeholderImg, labels, imageDimensions } = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
 
 const deleteImage = (type: 'wideScreen' | 'desktop' | 'tablet' | 'mobile') => {
   uiImageTextBlock.value[type] = placeholderImg;
