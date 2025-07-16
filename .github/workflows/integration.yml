@@ -275,8 +275,6 @@ jobs:
           command: npm run test:cypress-paypal
         env:
           NUXT_PUBLIC_CONFIG_ID: 1
-          CYPRESS_E2E_TEST_PAYPAL_EMAIL: ${{ secrets.E2E_TEST_PAYPAL_EMAIL }}
-          CYPRESS_E2E_TEST_PAYPAL_PASSWORD: ${{ secrets.E2E_TEST_PAYPAL_PASSWORD }}
 
       - uses: actions/upload-artifact@v4
         if: failure()
