@@ -35,6 +35,7 @@ describe('PayPal Express Flows', () => {
 
     myAccount.successLogin();
     cy.wait('@doLogin');
+    cy.wait('@getSession');
 
     cartPage.openCart();
     cy.wait(['@getSession', '@getPayPalMerchantAndClientIds']);
