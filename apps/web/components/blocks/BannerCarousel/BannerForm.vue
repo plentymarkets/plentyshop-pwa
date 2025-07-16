@@ -10,7 +10,11 @@
         <template #summary>
           <h2 data-testid="slider-image-group-title">Images</h2>
         </template>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded" @click="openModal = true">
+          Deschide Image Picker
+        </button>
 
+        <ImageSelectorModal :open="openModal" @close="openModal = false" />
         <div class="images">
           <div class="mb-6 mt-4">
             <label>
@@ -455,6 +459,7 @@
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
+import ImageSelectorModal from '~/components/ui/ImageSelectorModal/ImageSelectorModal.vue';
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
@@ -471,6 +476,7 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
+const openModal = ref(false)
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
