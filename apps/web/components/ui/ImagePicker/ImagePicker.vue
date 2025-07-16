@@ -28,6 +28,7 @@
             <button
               type="button"
               class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800"
+              @click="emit('select')"
             >
               Select
             </button>
@@ -60,7 +61,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-  (e: 'delete'): void;
+  (e: 'delete' | 'select'): void;
 }>();
 
 const isPlaceholder = computed(() => props.image === props.placeholder);
