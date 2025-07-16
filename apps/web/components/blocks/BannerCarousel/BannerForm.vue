@@ -11,11 +11,18 @@
           <h2 data-testid="slider-image-group-title">Images</h2>
         </template>
 
-        <!-- New Image picker component -->
         <div v-if="runtimeConfig.public.isDev" class="images">
           <div class="mb-6 mt-4">
             <label>
-              <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
+              <div class="flex items-center justify-between mb-1">
+                <UiFormLabel>Image XL (Desktop)</UiFormLabel>
+                <SfTooltip
+                  v-if="banner.content.image.wideScreen !== placeholderImg"
+                  :label="imageDimensions.wideScreen"
+                >
+                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
+                </SfTooltip>
+              </div>
               <div class="flex items-start gap-4">
                 <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
                   <img
@@ -24,13 +31,16 @@
                     class="w-full h-full object-cover"
                   />
                 </div>
+
                 <div class="flex-1">
                   <template v-if="banner.content.image.wideScreen !== placeholderImg">
                     <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
                     <p class="text-sm text-gray-500">1920 × 1080 px</p>
                   </template>
                   <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Recommended dimensions: 1920 x 1080 px</p>
+                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+                      Recommended dimensions: 1920 x 1080 px
+                    </p>
                   </template>
                   <div class="mt-3 flex items-center gap-2">
                     <button
@@ -54,7 +64,12 @@
           </div>
           <div class="mb-6">
             <label>
-              <UiFormLabel class="mb-1">Image L (Desktop)</UiFormLabel>
+              <div class="flex items-center justify-between mb-1">
+                <UiFormLabel>Image L (Desktop)</UiFormLabel>
+                <SfTooltip v-if="banner.content.image.wideScreen !== placeholderImg" :label="imageDimensions.desktop">
+                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
+                </SfTooltip>
+              </div>
               <div class="flex items-start gap-4">
                 <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
                   <img
@@ -69,7 +84,9 @@
                     <p class="text-sm text-gray-500">1024 x 576 px</p>
                   </template>
                   <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Recommended dimensions: 1024 x 576 px</p>
+                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+                      Recommended dimensions: 1024 x 576 px
+                    </p>
                   </template>
                   <div class="mt-3 flex items-center gap-2">
                     <button
@@ -93,7 +110,12 @@
           </div>
           <div class="mb-6">
             <label>
-              <UiFormLabel class="mb-1">Image M (Desktop)</UiFormLabel>
+              <div class="flex items-center justify-between mb-1">
+                <UiFormLabel>Image M (Tablet)</UiFormLabel>
+                <SfTooltip v-if="banner.content.image.wideScreen !== placeholderImg" :label="imageDimensions.tablet">
+                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
+                </SfTooltip>
+              </div>
               <div class="flex items-start gap-4">
                 <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
                   <img
@@ -108,7 +130,9 @@
                     <p class="text-sm text-gray-500">768 x 432 px</p>
                   </template>
                   <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Recommended dimensions: 768 x 432 px</p>
+                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+                      Recommended dimensions: 768 x 432 px
+                    </p>
                   </template>
                   <div class="mt-3 flex items-center gap-2">
                     <button
@@ -132,7 +156,12 @@
           </div>
           <div class="mb-6">
             <label>
-              <UiFormLabel class="mb-1">Image S (Mobile)</UiFormLabel>
+              <div class="flex items-center justify-between mb-1">
+                <UiFormLabel>Image S (Mobile)</UiFormLabel>
+                <SfTooltip v-if="banner.content.image.wideScreen !== placeholderImg" :label="imageDimensions.mobile">
+                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
+                </SfTooltip>
+              </div>
               <div class="flex items-start gap-4">
                 <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
                   <img
@@ -147,7 +176,9 @@
                     <p class="text-sm text-gray-500">320 x 320 px</p>
                   </template>
                   <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Recommended dimensions: 320 x 320 px</p>
+                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+                      Recommended dimensions: 320 x 320 px
+                    </p>
                   </template>
                   <div class="mt-3 flex items-center gap-2">
                     <button
@@ -170,8 +201,6 @@
             </label>
           </div>
         </div>
-
-        <!-- End New Image picker component -->
 
         <div v-else class="images">
           <div class="mb-6 mt-4">
@@ -615,7 +644,7 @@
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfTextarea, SfInput, SfIconCheck, SfSwitch, SfIconDelete } from '@storefront-ui/vue';
+import { SfTextarea, SfInput, SfIconCheck, SfSwitch, SfIconDelete, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
 const runtimeConfig = useRuntimeConfig();
 
@@ -631,11 +660,17 @@ const banner = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as BannerProps,
 );
 
+const imageDimensions = {
+  wideScreen: '1920 × 1080',
+  desktop: '1024 x 576',
+  tablet: '768 x 432',
+  mobile: ' 320 x 320',
+};
+
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
 
-// const placeholderImg = 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/_shape.png';
 const placeholderImg = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
 const deleteImage = (type: 'wideScreen' | 'desktop' | 'tablet' | 'mobile') => {
