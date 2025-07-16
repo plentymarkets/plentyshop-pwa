@@ -261,6 +261,13 @@ jobs:
       - name: Extract build
         run: tar -xzf build.tar.gz
 
+      - name: Create Cypress env
+        run: |
+          echo '{
+            "E2E_TEST_PAYPAL_EMAIL": "${{ secrets.E2E_TEST_PAYPAL_EMAIL }}",
+            "E2E_TEST_PAYPAL_PASSWORD": "${{ secrets.E2E_TEST_PAYPAL_PASSWORD }}"
+          }' > apps/web/cypress.env.json
+
       - name: E2E tests
         uses: cypress-io/github-action@v6
         with:
