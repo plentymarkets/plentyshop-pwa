@@ -181,13 +181,12 @@ const validationSchema = toTypedSchema(
   object({
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     message: string().required(t('errorMessages.contact.messageRequired')).default(''),
-    orderId: string()
-      .test((value, context) => {
-        if (value && /\D/.test(value)) {
-          return context.createError({ message: t('errorMessages.wholeNumber') });
-        }
-        return true;
-      }),
+    orderId: string().test((value, context) => {
+      if (value && /\D/.test(value)) {
+        return context.createError({ message: t('errorMessages.wholeNumber') });
+      }
+      return true;
+    }),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
