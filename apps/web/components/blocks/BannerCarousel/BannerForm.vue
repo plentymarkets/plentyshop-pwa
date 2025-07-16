@@ -462,14 +462,13 @@
       </UiAccordionItem>
     </div>
   </div>
-  <ImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
+  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
-import ImageSelectorModal from '~/components/ui/ImageSelectorModal/ImageSelectorModal.vue';
 const runtimeConfig = useRuntimeConfig();
 
 const { blockUuid } = useSiteConfiguration();
