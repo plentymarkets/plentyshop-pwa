@@ -20,7 +20,7 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @delete="deleteImage(type)"
+            @delete="deleteImage(banner.content.image, type)"
           />
         </div>
         <div v-else class="images">
@@ -473,7 +473,7 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -485,10 +485,6 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-
-const deleteImage = (type: 'wideScreen' | 'desktop' | 'tablet' | 'mobile') => {
-  banner.value.content.image[type] = placeholderImg;
-};
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;

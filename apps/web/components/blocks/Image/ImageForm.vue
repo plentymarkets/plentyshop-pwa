@@ -18,7 +18,7 @@
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :show-tooltip="true"
-        @delete="deleteImage(type)"
+        @delete="deleteImage(uiImageTextBlock, type)"
       />
     </div>
     <div v-else class="images">
@@ -143,11 +143,8 @@ import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
 const runtimeConfig = useRuntimeConfig();
-const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
-const deleteImage = (type: 'wideScreen' | 'desktop' | 'tablet' | 'mobile') => {
-  uiImageTextBlock.value[type] = placeholderImg;
-};
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
