@@ -14,7 +14,20 @@
           Deschide Image Picker
         </button>
 
-        <ImageSelectorModal :open="openModal" @close="openModal = false" />
+        <div v-if="runtimeConfig.public.isDev" class="images">
+          <UiImagePicker
+            v-for="type in imageTypes"
+            :key="type"
+            :label="labels[type]"
+            :image="banner.content.image[type]"
+            :placeholder="placeholderImg"
+            :dimensions="imageDimensions[type]"
+            :show-tooltip="true"
+            @delete="deleteImage(banner.content.image, type)"
+          />
+          <ImageSelectorModal :open="openModal" @close="openModal = false" />
+        </div>
+        <div v-else class="images">
         <div class="images">
           <div class="mb-6 mt-4">
             <label>
@@ -460,11 +473,13 @@ import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
 import ImageSelectorModal from '~/components/ui/ImageSelectorModal/ImageSelectorModal.vue';
+const runtimeConfig = useRuntimeConfig();
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
