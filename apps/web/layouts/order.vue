@@ -5,11 +5,12 @@
       <slot />
     </NarrowContainer>
   </main>
-  <UiFooter v-if="route.meta.isBlockified" />
+  <NuxtLazyHydrate when-visible>
+    <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+    <UiFooter v-if="!runtimeConfig.public.isDev" />
+  </NuxtLazyHydrate>
 </template>
 <script setup lang="ts">
-definePageMeta({
-  isBlockified: false,
-});
+const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 </script>

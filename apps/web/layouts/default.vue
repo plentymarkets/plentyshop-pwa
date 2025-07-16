@@ -21,15 +21,14 @@
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
 import FooterBlock from '~/components/blocks/Footer/Footer.vue';
-const runtimeConfig = useRuntimeConfig();
 
-definePageMeta({
-  isBlockified: false,
-});
 defineProps<DefaultLayoutProps>();
+
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
+const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
+
 setLogoMeta();
 </script>
