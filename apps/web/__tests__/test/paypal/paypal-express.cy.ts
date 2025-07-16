@@ -11,15 +11,15 @@ const payPalEmail = Cypress.env('E2E_TEST_PAYPAL_EMAIL') ?? '';
 const payPalPassword = Cypress.env('E2E_TEST_PAYPAL_PASSWORD') ?? '';
 
 beforeEach(() => {
+  cy.resetPopupStub();
   cy.clearCookies();
   cy.addToCart();
 });
 
 describe('PayPal Express Flows', () => {
   it('[feature] Guest Flow', () => {
-    cy.visitAndHydrate(paths.cart);
     cy.intercept('/plentysystems/getPayPalMerchantAndClientIds').as('getPayPalMerchantAndClientIds');
-
+    cy.visitAndHydrate(paths.cart);
     cy.wait('@getPayPalMerchantAndClientIds');
     cy.paypalFlow(payPalEmail, payPalPassword)
     readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaid();
@@ -27,7 +27,6 @@ describe('PayPal Express Flows', () => {
 
   it('[feature] User Flow', () => {
     cy.intercept('/plentysystems/doLogin').as('doLogin');
-    cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
     cy.intercept('/plentysystems/getPayPalMerchantAndClientIds').as('getPayPalMerchantAndClientIds');
 
     cy.visitAndHydrate(paths.authLogin);

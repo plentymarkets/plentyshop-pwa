@@ -20,6 +20,7 @@ declare global {
       popup(): Cypress.Chainable;
       paypalFlow(email: string, password: string): Cypress.Chainable;
       firstIFrame(): Cypress.Chainable;
+      resetPopupStub(): Cypress.Chainable;
     }
   }
 }
@@ -91,34 +92,35 @@ Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
 // Used to keep the reference to the popup window
 const state = {
   popup: null as Window | null,
+  originalOpen: null as ((url?: (string | URL), target?: string, features?: string) => (WindowProxy | null)) | null,
 };
 
 /**
  * Intercepts calls to window.open() to keep a reference to the new window
  */
 Cypress.Commands.add('capturePopup', () => {
-  console.log('Capturing popup window...');
   cy.window().then((win) => {
-    console.log(`Current window location: ${win.location.href}`);
-    const open = win.open;
-    cy.stub(win, 'open').callsFake((...params) => {
-      console.log(`Intercepted window.open with params: ${JSON.stringify(params)}`);
-      const popup = open(...params);
-      console.log(`Popup window created with URL: ${popup?.location.href}`);
-      if (popup) {
-        console.log(`Captured popup window: ${popup.location.href}`);
-        state.popup = popup;
-      } else {
-        console.log('Failed to capture popup window. Ensure that the popup blocker is disabled.');
-      }
-      return state.popup;
-    });
+    const maybeStub = win.open as Partial<sinon.SinonStub>;
+
+    if (typeof maybeStub.restore !== 'function') {
+      const originalOpen = win.open;
+
+      cy.stub(win, 'open').callsFake((...args) => {
+        const popup = originalOpen(...args);
+        if (popup) {
+          state.popup = popup;
+        }
+        return popup;
+      });
+    }
   });
 });
+
 
 /**
  * Returns an iframe content
  */
+// @ts-ignore
 Cypress.Commands.add('firstIFrame', { prevSubject: 'element' }, $iframe => {
   return new Cypress.Promise(resolve => {
     $iframe.ready(function () {
@@ -138,6 +140,16 @@ Cypress.Commands.add('popup', (): any => {
     throw new Error('No popup window captured. Make sure to call `cy.capturePopup()` before using `cy.popup()`.');
   }
 });
+
+Cypress.Commands.add('resetPopupStub', () => {
+  cy.window().then((win) => {
+    const openStub = win.open as Partial<sinon.SinonStub>;
+    if (typeof openStub.restore === 'function') {
+      openStub.restore();
+    }
+  });
+});
+
 
 Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
