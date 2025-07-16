@@ -115,13 +115,12 @@ Cypress.Commands.add('capturePopup', () => {
   });
 });
 
-
 /**
  * Returns an iframe content
  */
-// @ts-ignore
-Cypress.Commands.add('firstIFrame', { prevSubject: 'element' }, $iframe => {
-  return new Cypress.Promise(resolve => {
+// @ts-expect-error prevSubject is not recognized by Cypress
+Cypress.Commands.add('firstIFrame', { prevSubject: 'element' }, ($iframe) => {
+  return new Cypress.Promise((resolve) => {
     $iframe.ready(function () {
       resolve($iframe.contents().find('body'));
     });
@@ -131,7 +130,7 @@ Cypress.Commands.add('firstIFrame', { prevSubject: 'element' }, $iframe => {
 /**
  * Returns a wrapped body of a captured popup
  */
-Cypress.Commands.add('popup', (): any => {
+Cypress.Commands.add('popup', (): Cypress.Chainable => {
   if (state.popup) {
     const popup = Cypress.$(state.popup.document);
     return cy.wrap(popup.contents().find('body'));
@@ -149,14 +148,13 @@ Cypress.Commands.add('resetPopupStub', () => {
   });
 });
 
-
 Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
 
   // Enable popup capture
-  cy.capturePopup()
+  cy.capturePopup();
   // Click on the PayPal button inside PayPal's iframe
-  cy.get('iframe').firstIFrame().find('div[data-funding-source="paypal"]').realClick()
+  cy.get('iframe').firstIFrame().find('div[data-funding-source="paypal"]').realClick();
   cy.wait('@doCreatePayPalOrder');
   cy.wait(4000);
   cy.popup().find('input#email').clear().type(email);
@@ -165,4 +163,4 @@ Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.popup().find('button#btnLogin').click();
   cy.wait(7000);
   cy.popup().find('button[data-id="payment-submit-btn"]').should('exist').click({ force: true });
-})
+});

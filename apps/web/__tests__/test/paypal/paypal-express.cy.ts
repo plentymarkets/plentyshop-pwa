@@ -42,5 +42,4 @@ describe('PayPal Express Flows', () => {
 
     readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaid();
   });
-
 });

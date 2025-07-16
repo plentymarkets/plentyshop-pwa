@@ -1,6 +1,4 @@
-import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
-import { paths } from '../../../utils/paths';
 
 export class ReadonlyCheckoutPageObject extends PageObject {
   get displaySuccessPages() {
