@@ -12,196 +12,19 @@
         </template>
 
         <div v-if="runtimeConfig.public.isDev" class="images">
-          <div class="mb-6 mt-4">
-            <label>
-              <div class="flex items-center justify-between mb-1">
-                <UiFormLabel>Image XL (Desktop)</UiFormLabel>
-                <SfTooltip
-                  v-if="banner.content.image.wideScreen !== placeholderImg"
-                  :label="imageDimensions.wideScreen"
-                >
-                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
-                </SfTooltip>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
-                  <img
-                    :src="banner.content.image.wideScreen || placeholderImg"
-                    alt="Banner Image XL"
-                    class="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div class="flex-1">
-                  <template v-if="banner.content.image.wideScreen !== placeholderImg">
-                    <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
-                    <p class="text-sm text-gray-500">1920 × 1080 px</p>
-                  </template>
-                  <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                      Recommended dimensions: 1920 x 1080 px
-                    </p>
-                  </template>
-                  <div class="mt-3 flex items-center gap-2">
-                    <button
-                      type="button"
-                      class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800 text-center"
-                    >
-                      Select
-                    </button>
-                    <button
-                      v-if="banner.content.image.wideScreen !== placeholderImg"
-                      type="button"
-                      class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-                      @click="deleteImage('wideScreen')"
-                    >
-                      <SfIconDelete />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <label>
-              <div class="flex items-center justify-between mb-1">
-                <UiFormLabel>Image L (Desktop)</UiFormLabel>
-                <SfTooltip v-if="banner.content.image.wideScreen !== placeholderImg" :label="imageDimensions.desktop">
-                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
-                </SfTooltip>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
-                  <img
-                    :src="banner.content.image.desktop || placeholderImg"
-                    alt="Banner Image L"
-                    class="w-full h-full object-cover"
-                  />
-                </div>
-                <div class="flex-1">
-                  <template v-if="banner.content.image.desktop !== placeholderImg">
-                    <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
-                    <p class="text-sm text-gray-500">1024 x 576 px</p>
-                  </template>
-                  <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                      Recommended dimensions: 1024 x 576 px
-                    </p>
-                  </template>
-                  <div class="mt-3 flex items-center gap-2">
-                    <button
-                      type="button"
-                      class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800 text-center"
-                    >
-                      Select
-                    </button>
-                    <button
-                      v-if="banner.content.image.desktop !== placeholderImg"
-                      type="button"
-                      class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-                      @click="deleteImage('desktop')"
-                    >
-                      <SfIconDelete />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <label>
-              <div class="flex items-center justify-between mb-1">
-                <UiFormLabel>Image M (Tablet)</UiFormLabel>
-                <SfTooltip v-if="banner.content.image.wideScreen !== placeholderImg" :label="imageDimensions.tablet">
-                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
-                </SfTooltip>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
-                  <img
-                    :src="banner.content.image.tablet || placeholderImg"
-                    alt="Banner Image M"
-                    class="w-full h-full object-cover"
-                  />
-                </div>
-                <div class="flex-1">
-                  <template v-if="banner.content.image.tablet !== placeholderImg">
-                    <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
-                    <p class="text-sm text-gray-500">768 x 432 px</p>
-                  </template>
-                  <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                      Recommended dimensions: 768 x 432 px
-                    </p>
-                  </template>
-                  <div class="mt-3 flex items-center gap-2">
-                    <button
-                      type="button"
-                      class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800 text-center"
-                    >
-                      Select
-                    </button>
-                    <button
-                      v-if="banner.content.image.tablet !== placeholderImg"
-                      type="button"
-                      class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-                      @click="deleteImage('tablet')"
-                    >
-                      <SfIconDelete />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <label>
-              <div class="flex items-center justify-between mb-1">
-                <UiFormLabel>Image S (Mobile)</UiFormLabel>
-                <SfTooltip v-if="banner.content.image.wideScreen !== placeholderImg" :label="imageDimensions.mobile">
-                  <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
-                </SfTooltip>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
-                  <img
-                    :src="banner.content.image.mobile || placeholderImg"
-                    alt="Banner Image S"
-                    class="w-full h-full object-cover"
-                  />
-                </div>
-                <div class="flex-1">
-                  <template v-if="banner.content.image.mobile !== placeholderImg">
-                    <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
-                    <p class="text-sm text-gray-500">320 x 320 px</p>
-                  </template>
-                  <template v-else>
-                    <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                      Recommended dimensions: 320 x 320 px
-                    </p>
-                  </template>
-                  <div class="mt-3 flex items-center gap-2">
-                    <button
-                      type="button"
-                      class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800 text-center"
-                    >
-                      Select
-                    </button>
-                    <button
-                      v-if="banner.content.image.mobile !== placeholderImg"
-                      type="button"
-                      class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-                      @click="deleteImage('mobile')"
-                    >
-                      <SfIconDelete />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </label>
-          </div>
+          <UiImagePicker
+            v-for="type in ['wideScreen', 'desktop', 'tablet', 'mobile'] as Array<
+              'wideScreen' | 'desktop' | 'tablet' | 'mobile'
+            >"
+            :key="type"
+            :label="labels[type]"
+            :image="banner.content.image[type]"
+            :placeholder="placeholderImg"
+            :dimensions="imageDimensions[type]"
+            :show-tooltip="true"
+            @delete="() => deleteImage(type)"
+          />
         </div>
-
         <div v-else class="images">
           <div class="mb-6 mt-4">
             <label>
@@ -644,7 +467,7 @@
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfTextarea, SfInput, SfIconCheck, SfSwitch, SfIconDelete, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
 const runtimeConfig = useRuntimeConfig();
 
@@ -652,6 +475,7 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { placeholderImg, labels, imageDimensions } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -660,18 +484,9 @@ const banner = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as BannerProps,
 );
 
-const imageDimensions = {
-  wideScreen: '1920 × 1080',
-  desktop: '1024 x 576',
-  tablet: '768 x 432',
-  mobile: ' 320 x 320',
-};
-
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-
-const placeholderImg = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
 const deleteImage = (type: 'wideScreen' | 'desktop' | 'tablet' | 'mobile') => {
   banner.value.content.image[type] = placeholderImg;
