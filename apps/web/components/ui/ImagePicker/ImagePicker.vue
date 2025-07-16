@@ -1,23 +1,3 @@
-<script setup lang="ts">
-import { SfTooltip, SfIconInfo, SfIconDelete } from '@storefront-ui/vue';
-
-interface Props {
-  label: string;
-  image: string | undefined;
-  placeholder: string;
-  dimensions: string;
-  showTooltip?: boolean;
-}
-
-const props = defineProps<Props>();
-
-const emit = defineEmits<{
-  (e: 'delete'): void;
-}>();
-
-const isPlaceholder = computed(() => props.image === props.placeholder);
-</script>
-
 <template>
   <div class="mb-6">
     <label>
@@ -65,3 +45,23 @@ const isPlaceholder = computed(() => props.image === props.placeholder);
     </label>
   </div>
 </template>
+
+<script setup lang="ts">
+import { SfTooltip, SfIconInfo, SfIconDelete } from '@storefront-ui/vue';
+
+interface Props {
+  label: string;
+  image: string | undefined;
+  placeholder: string;
+  dimensions: string;
+  showTooltip?: boolean;
+}
+
+const props = defineProps<Props>();
+
+const emit = defineEmits<{
+  (e: 'delete'): void;
+}>();
+
+const isPlaceholder = computed(() => props.image === props.placeholder);
+</script>
