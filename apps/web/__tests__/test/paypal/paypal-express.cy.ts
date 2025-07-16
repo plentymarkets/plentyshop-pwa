@@ -30,7 +30,6 @@ describe('PayPal Express Flows', () => {
     cy.intercept('/plentysystems/getPayPalMerchantAndClientIds').as('getPayPalMerchantAndClientIds');
 
     cy.visitAndHydrate(paths.authLogin);
-    cy.capturePopup();
 
     myAccount.successLogin();
     cy.wait('@doLogin');
