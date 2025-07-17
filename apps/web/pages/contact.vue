@@ -177,7 +177,7 @@ const validationSchema = toTypedSchema(
       .default(''),
     email: string()
       .trim()
-      .required(t('storefrontError.contactMail.emailRequired'))
+      .required(t('errorMessages.email.required'))
       .test('is-valid-email', t('storefrontError.contactMail.emailRequired'), (mail: string) =>
         userGetters.isValidEmailAddress(mail),
       )
@@ -197,7 +197,7 @@ const validationSchema = toTypedSchema(
       .default(''),
     orderId: string()
       .trim()
-      .required(t('storefrontError.contactMail.orderIdRequired'))
+      .required(t('errorMessages.orderId.required'))
       .matches(/^[1-9][0-9]*$/, t('storefrontError.contactMail.orderIdRequired'))
       .default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
@@ -236,7 +236,7 @@ const submitForm = async () => {
 
   const params = {
     name: name?.value || '',
-    email: email?.value || '',
+    email: '',
     subject: subject?.value || '',
     orderId: orderId?.value || '',
     message: message.value || '',
