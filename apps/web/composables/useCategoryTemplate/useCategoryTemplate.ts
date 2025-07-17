@@ -24,25 +24,25 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const { $i18n } = useNuxtApp();
 
-const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
+  const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
 
-const ensureFooterBlock = async () => {
-  if (cachedFooter.value) return;
+  const ensureFooterBlock = async () => {
+    if (cachedFooter.value) return;
 
-  const { data: footerData } = await useAsyncData('footer-block', () =>
-    useSdk().plentysystems.getBlocks({
-      identifier: 'index',
-      type: 'immutable',
-      blocks: 'Footer',
-    }),
-  );
+    const { data: footerData } = await useAsyncData('footer-block', () =>
+      useSdk().plentysystems.getBlocks({
+        identifier: 'index',
+        type: 'immutable',
+        blocks: 'Footer',
+      }),
+    );
 
-  const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
+    const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
 
-  if (footerBlock?.content) {
-    cachedFooter.value = footerBlock.content as FooterSettings;
-  }
-};
+    if (footerBlock?.content) {
+      cachedFooter.value = footerBlock.content as FooterSettings;
+    }
+  };
 
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
@@ -109,32 +109,30 @@ const ensureFooterBlock = async () => {
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
-const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
-  try {
-    state.value.loading = true;
+  const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
+    try {
+      state.value.loading = true;
 
-    const data = await useSdk().plentysystems.doSaveBlocks({
-      identifier,
-      entityType: type,
-      blocks: content,
-    });
+      const data = await useSdk().plentysystems.doSaveBlocks({
+        identifier,
+        entityType: type,
+        blocks: content,
+      });
 
-    state.value.data = data.data ?? state.value.data;
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+      state.value.data = data.data ?? state.value.data;
+      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
-
-    if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-      const footerCache = useState<FooterSettings | null>('footer-block-cache', () => null);
-      footerCache.value = null;
-      await ensureFooterBlock();
+      if (typeof content === 'string' && content.includes('"name":"Footer"')) {
+        const footerCache = useState<FooterSettings | null>('footer-block-cache', () => null);
+        footerCache.value = null;
+        await ensureFooterBlock();
+      }
+    } catch (error) {
+      console.error('Error saving blocks:', error);
+    } finally {
+      state.value.loading = false;
     }
-
-  } catch (error) {
-    console.error('Error saving blocks:', error);
-  } finally {
-    state.value.loading = false;
-  }
-};
+  };
   return {
     fetchCategoryTemplate,
     saveBlocks,
