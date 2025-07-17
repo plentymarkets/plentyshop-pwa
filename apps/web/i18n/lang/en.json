@@ -939,6 +939,43 @@
     "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details."
   },
   "somethingWentWrongImageAlt": "Image that describes that something went wrong",
+  "sortingAndPagination": {
+    "recommendedSorting": {
+      "title": "Recommended sorting",
+      "description": "You can decide how the \"Recommended\" option is composed. Select three sorting options. The first sorting option takes the highest priority, the second option the second highest, etc.",
+      "firstSortingOptionLabel": "First sorting option",
+      "secondSortingOptionLabel": "Second sorting option",
+      "thirdSortingOptionLabel": "Third sorting option",
+      "options": {
+        "sortingPriorityCategoryItemIdAsc": "Item ID ⬆",
+        "sortingPriorityCategoryItemIdDesc": "Item ID ⬇",
+        "sortingPriorityCategoryNameAsc": "Item name A-Z",
+        "sortingPriorityCategoryNameDesc": "Item name Z-A",
+        "sortingPriorityCategoryPriceAsc": "Price ⬆",
+        "sortingPriorityCategoryPriceDesc": "Price ⬇",
+        "sortingPriorityCategoryVariationCreatedAtDesc": "Newest variation",
+        "sortingPriorityCategoryVariationCreatedAtAsc": "Oldest variation",
+        "sortingPriorityCategoryVariationIdAsc": "Variation ID ⬆",
+        "sortingPriorityCategoryVariationIdDesc": "Variation ID ⬇",
+        "sortingPriorityCategoryVariationNumberAsc": "Variation number ⬆",
+        "sortingPriorityCategoryVariationNumberDesc": "Variation number ⬇",
+        "sortingPriorityCategoryAvailabilityAsc": "Availability ⬆",
+        "sortingPriorityCategoryAvailabilityDesc": "Availability ⬇",
+        "sortingPriorityCategoryVariationUpdatedAtAsc": "Last update",
+        "sortingPriorityCategoryVariationUpdatedAtDesc": "First update",
+        "sortingPriorityCategoryVariationPositionAsc": "Variation position ⬆",
+        "sortingPriorityCategoryVariationPositionDesc": "Variation position ⬇",
+        "sortingPriorityCategoryManufacturerAsc": "Manufacturer A-Z",
+        "sortingPriorityCategoryManufacturerDesc": "Manufacturer Z-A",
+        "sortingPriorityCategoryManufacturerPositionAsc": "Manufacturer position ⬆",
+        "sortingPriorityCategoryManufacturerPositionDesc": "Manufacturer position ⬇",
+        "sortingPriorityCategoryStockAsc": "Stock ⬆",
+        "sortingPriorityCategoryStockDesc": "Stock ⬇",
+        "sortDataRandom": "Random",
+        "sortingPriorityCategoryNotSelected": "Not selected"
+      }
+    }
+  },
   "sortBy": "Sort by",
   "sortType": {
     "default": {
