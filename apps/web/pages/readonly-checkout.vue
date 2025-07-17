@@ -51,6 +51,7 @@
                 type="submit"
                 :disabled="interactionDisabled"
                 size="lg"
+                data-testid="place-paypal-order-button"
                 class="w-full mb-4 md:mb-0 cursor-pointer"
                 @click="buy"
               >
