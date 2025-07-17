@@ -39,7 +39,8 @@ import type { SortingOption } from '~/components/settings/sorting-pagination/cat
 import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getJsonSetting } = useSiteSettings('availableSortingOptions');
-const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption } = useSiteSettings('defaultSortingOption');
+const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption } =
+  useSiteSettings('defaultSortingOption');
 const { updateSorting } = useCategoryFilter();
 
 const sortingOptionValues = [
