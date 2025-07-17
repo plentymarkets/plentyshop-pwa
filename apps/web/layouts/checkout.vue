@@ -34,17 +34,16 @@ import type { CheckoutLayoutProps } from './types';
 const localePath = useLocalePath();
 const { t } = useI18n();
 const router = useRouter();
-const { isAuthorized } = useCustomer()
+const { isAuthorized } = useCustomer();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
 const goToPreviousRoute = () => {
-  if(isAuthorized.value && router.options.history.state.back === paths.guestLogin){
+  if (isAuthorized.value && router.options.history.state.back === paths.guestLogin) {
     router.go(-2);
-  }
-  else{
-    (router.options.history.state.back) ? router.back() : router.push(localePath(paths.home));
+  } else {
+    router.options.history.state.back ? router.back() : router.push(localePath(paths.home));
   }
 };
 
