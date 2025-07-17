@@ -5,8 +5,12 @@ import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { paths } from './utils/paths';
 import { resolve } from 'pathe';
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
+    build: {
+    transpile: ['vuetify'],
+  },
   telemetry: false,
   devtools: { enabled: true },
   typescript: {
@@ -24,6 +28,12 @@ export default defineNuxtConfig({
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
   vite: {
+       vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+  
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
@@ -35,6 +45,7 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['dotenv', 'validator', 'js-sha256'],
     },
+    
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -113,6 +124,12 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+      (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    },
   ],
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',

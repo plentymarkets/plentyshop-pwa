@@ -1,6 +1,8 @@
 <template>
   <div>
+    <UiProductTable />
     <EditablePage :identifier="'index'" :type="'immutable'" />
+ 
   </div>
 </template>
 
@@ -18,4 +20,5 @@ setPageMeta(t('homepage.title'), icon);
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
 setRobotForStaticPage('Homepage');
+
 </script>
