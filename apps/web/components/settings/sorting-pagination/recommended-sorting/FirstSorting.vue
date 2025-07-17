@@ -2,12 +2,7 @@
   <div class="mt-4">
     <div class="flex justify-between mb-2">
       <UiFormLabel>First sorting option</UiFormLabel>
-      <SfTooltip
-        label="First sorting option"
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
+      <SfTooltip label="First sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
