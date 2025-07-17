@@ -1,11 +1,5 @@
 <template>
-  <NuxtLayout
-    name="checkout"
-    :back-to-cart="false"
-    :back-label-desktop="t('back')"
-    :back-label-mobile="t('back')"
-    :heading="t('myCart')"
-  >
+  <NuxtLayout name="checkout" :back-label-desktop="t('back')" :back-label-mobile="t('back')" :heading="t('myCart')">
     <div v-if="!cartIsEmpty" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
       <div class="col-span-7 mb-2 md:mb-0">
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
