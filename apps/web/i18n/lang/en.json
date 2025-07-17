@@ -1009,7 +1009,12 @@
       "unexpectedAddressFormat": "Unexpected address format"
     },
     "contactMail": {
-      "failed": "Message could not be sent."
+      "failed": "Message could not be sent.",
+      "emailRequired": "This field needs to be a valid email.",
+      "messageRequired": "Message is required.",
+      "nameRequired": "Name is required.",
+      "orderIdRequired": "This field needs to be a valid Order ID.",
+      "subjectRequired": "Subject is required."
     },
     "coupon": {
       "applyFailed": "The coupon could not be redeemed."

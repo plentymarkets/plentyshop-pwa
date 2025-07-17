@@ -21,64 +21,62 @@
         novalidate
         @submit.prevent="onSubmit"
       >
-        <div class="">
-          <label>
-            <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
-            <SfInput
-              v-bind="nameAttributes"
-              v-model="name"
-              name="name"
-              type="text"
-              :invalid="Boolean(errors['name'])"
-            />
-          </label>
+        <label>
+          <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <SfInput v-bind="nameAttributes" v-model="name" name="name" type="text" :invalid="Boolean(errors['name'])" />
           <ErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-        </div>
-        <div class="">
-          <label>
-            <UiFormLabel class="mb-1">{{ t('contact.form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
+        </label>
 
-            <SfInput
-              v-bind="emailAttributes"
-              v-model="email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              :invalid="Boolean(errors['email'])"
-            >
-              <template #prefix>
-                <SfIconEmail />
-              </template>
-            </SfInput>
-          </label>
+        <label>
+          <UiFormLabel class="mb-1">{{ t('contact.form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <SfInput
+            v-bind="emailAttributes"
+            v-model="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            :invalid="Boolean(errors['email'])"
+          />
           <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-        </div>
+        </label>
+
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
-          <SfInput v-model="subject" name="subject" type="text" v-bind="subjectAttributes" />
+          <SfInput
+            v-model="subject"
+            name="subject"
+            type="text"
+            v-bind="subjectAttributes"
+            :invalid="Boolean(errors['subject'])"
+          />
           <ErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
+
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
-          <SfInput v-model="orderId" name="order-id" type="text" v-bind="orderIdAttributes" />
+          <SfInput
+            v-model="orderId"
+            name="orderId"
+            type="text"
+            v-bind="orderIdAttributes"
+            :invalid="Boolean(errors['orderId'])"
+          />
           <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
 
-        <div>
-          <label class="flex flex-col">
-            <UiFormLabel class="mb-1">{{ t('contact.form.message') }} {{ t('form.required') }}</UiFormLabel>
-            <SfTextarea
-              v-bind="messageAttributes"
-              v-model="message"
-              :placeholder="t('contact.form.message-placeholder')"
-              class="w-full"
-              name="message"
-              :invalid="Boolean(errors['message'])"
-              required
-            />
-          </label>
+        <label class="flex flex-col">
+          <UiFormLabel class="mb-1">{{ t('contact.form.message') }} {{ t('form.required') }}</UiFormLabel>
+          <SfTextarea
+            v-model="message"
+            name="message"
+            type="text"
+            :placeholder="t('contact.form.message-placeholder')"
+            v-bind="messageAttributes"
+            :invalid="Boolean(errors['message'])"
+            class="w-full"
+          />
           <ErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-        </div>
+        </label>
 
         <div>
           <div class="flex items-center">
@@ -143,19 +141,12 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfInput,
-  SfCheckbox,
-  SfLink,
-  SfTextarea,
-  SfLoaderCircular,
-  SfIconEmail,
-  SfIconWarning,
-} from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { paths } from '~/utils/paths';
+import { userGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: false,
@@ -179,18 +170,36 @@ setPageMeta(t('categories.contact.label'), icon);
 
 const validationSchema = toTypedSchema(
   object({
-    name: string().required(t('errorMessages.contact.nameRequired')).default(''),
-    email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
-    message: string().required(t('errorMessages.contact.messageRequired')).default(''),
-    subject: string().required(t('errorMessages.requiredField')).default(''),
+    name: string()
+      .trim()
+      .required(t('storefrontError.contactMail.nameRequired'))
+      .min(3, t('storefrontError.contactMail.nameRequired'))
+      .default(''),
+    email: string()
+      .trim()
+      .required(t('storefrontError.contactMail.emailRequired'))
+      .test('is-valid-email', t('storefrontError.contactMail.emailRequired'), (mail: string) =>
+        userGetters.isValidEmailAddress(mail),
+      )
+      .default(''),
+    message: string()
+      .required(t('storefrontError.contactMail.messageRequired'))
+      .test('min-clean-length', t('storefrontError.contactMail.messageRequired'), (val: string | undefined) => {
+        if (!val) return false;
+        const cleaned = val.replace(/\n/g, '').trim();
+        return cleaned.length >= 3;
+      })
+      .default(''),
+    subject: string()
+      .trim()
+      .required(t('storefrontError.contactMail.subjectRequired'))
+      .min(3, t('storefrontError.contactMail.subjectRequired'))
+      .default(''),
     orderId: string()
-      .required(t('errorMessages.requiredField'))
-      .test((value, context) => {
-        if (value && /\D/.test(value)) {
-          return context.createError({ message: t('errorMessages.wholeNumber') });
-        }
-        return true;
-      }),
+      .trim()
+      .required(t('storefrontError.contactMail.orderIdRequired'))
+      .matches(/^[1-9][0-9]*$/, t('storefrontError.contactMail.orderIdRequired'))
+      .default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
@@ -220,7 +229,7 @@ const clearInputs = () => {
   privacyPolicy.value = false;
 };
 
-const sendContact = async () => {
+const submitForm = async () => {
   if (!meta.value.valid || !turnstile.value) {
     return;
   }
@@ -246,7 +255,7 @@ const sendContact = async () => {
   turnstileElement.value?.reset();
 };
 
-const onSubmit = handleSubmit(() => sendContact());
+const onSubmit = handleSubmit(() => submitForm());
 
 await getRobots();
 setRobotForStaticPage('ContactPage');
