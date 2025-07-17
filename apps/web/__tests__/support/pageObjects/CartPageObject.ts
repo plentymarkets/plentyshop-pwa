@@ -117,4 +117,8 @@ export class CartPageObject extends PageObject {
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('coupon-value').should('not.exist');
   }
+
+  get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
+  }
 }

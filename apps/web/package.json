@@ -21,6 +21,7 @@
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "test:cypress-checkout": "cypress run --browser chrome --headless --spec '__tests__/test/checkout/*.cy.{js,jsx,ts,tsx}'",
+    "test:cypress-paypal": "cypress run --browser chrome --headless --spec '__tests__/test/paypal/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-editor": "cypress run --browser chrome --headless --spec '__tests__/test/editor/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/quarantine/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-post-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/post-quarantine/*.cy.{js,jsx,ts,tsx}'",
