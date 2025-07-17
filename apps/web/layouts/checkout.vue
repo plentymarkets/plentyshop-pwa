@@ -8,6 +8,7 @@
             :class="[viewport.isLessThan('lg') ? 'flex lg:hidden whitespace-nowrap' : 'hidden lg:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
             :aria-label="t('prevAriaLabel')"
+            data-testid="checkout-back-button"
             variant="tertiary"
             @click="goToPreviousRoute"
           >
@@ -29,9 +30,7 @@
 <script setup lang="ts">
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
-definePageMeta({
-  isBlockified: false,
-});
+
 const localePath = useLocalePath();
 const { t } = useI18n();
 const router = useRouter();
