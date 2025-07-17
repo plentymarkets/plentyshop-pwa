@@ -5,7 +5,6 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { mount } from '@vue/test-utils';
 
 describe('<CategoryTree/>', () => {
-
   mockNuxtImport('useCategoryTree', () => {
     return () => {
       return { data: computed(() => CategoryTreeMock) };

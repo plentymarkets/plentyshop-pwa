@@ -2,7 +2,6 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useWishlist } from '../useWishlist';
 
 describe('useWishlist', () => {
-
   const { useSdk } = vi.hoisted(() => {
     return {
       useSdk: vi.fn().mockReturnValue({
@@ -10,19 +9,18 @@ describe('useWishlist', () => {
           getWishlist: vi.fn().mockResolvedValue(() => {
             return {
               data: [],
-            }
-          })
-        }
-      })
-    }
+            };
+          }),
+        },
+      }),
+    };
   });
 
   mockNuxtImport('useSdk', () => {
-    return useSdk
+    return useSdk;
   });
 
   it('should return wishlist', async () => {
-
     const { fetchWishlist, data } = useWishlist();
 
     await fetchWishlist();
