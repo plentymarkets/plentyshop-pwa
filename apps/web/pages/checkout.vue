@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('backToCart')"
+    :back-label-desktop="t('back')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
   >

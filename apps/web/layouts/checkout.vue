@@ -37,11 +37,10 @@ const router = useRouter();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const viewport = useViewport();
-const { backToCart = true, heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
-const historyState = router.options.history.state;
-const backUrl = localePath(historyState?.back?.toString() ?? paths.home);
-const backHref = backUrl === localePath(router.currentRoute.value.path) ? localePath(paths.home) : backUrl;
-const goToPreviousRoute = () => (backToCart ? navigateTo(localePath(paths.cart)) : navigateTo(localePath(backHref)));
+const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
+const goToPreviousRoute = () => {
+  router.options.history.state.back ? router.back() : router.push(localePath(paths.home));
+};
 
 onNuxtReady(async () => await setInitialData());
 </script>
