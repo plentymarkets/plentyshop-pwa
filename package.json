@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@plentymarkets/shop-core": "^1.6.9",
-    "@plentymarkets/shop-api": "^0.120.0",
+    "@plentymarkets/shop-api": "^0.121.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.0.6",
     "@types/applepayjs": "^14.0.8",
