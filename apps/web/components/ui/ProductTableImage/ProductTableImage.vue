@@ -24,7 +24,7 @@
       </template>
 
       <template #item.image="{ item }">
-        <v-card class="my-2" elevation="2" rounded>
+        <v-card class="my-2" elevation="2" rounded @click="$emit('select', `https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`)" style="cursor:pointer;">
           <v-img :src="`https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`" height="64" cover />
         </v-card>
       </template>
@@ -49,7 +49,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
+const emit = defineEmits(['select']);
 
 const search = ref('');
 const items = [
