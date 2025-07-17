@@ -1,6 +1,5 @@
 <template>
   <div class="mb-6">
-    <div>
       <div class="flex items-center justify-between mb-1">
         <UiFormLabel>{{ label }}</UiFormLabel>
         <SfTooltip v-if="showTooltip && !isPlaceholder" :label="dimensions">
@@ -43,7 +42,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
