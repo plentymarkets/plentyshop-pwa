@@ -39,7 +39,7 @@ import type { SortingOption } from '~/components/settings/sorting-pagination/cat
 import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getJsonSetting } = useSiteSettings('availableSortingOptions');
-const { updateSetting: updateDefaultSorting } = useSiteSettings('defaultSortingOption');
+const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption } = useSiteSettings('defaultSortingOption');
 const { updateSorting } = useCategoryFilter();
 
 const sortingOptionValues = [
@@ -78,8 +78,10 @@ const availableSortingOptions = computed({
   },
 });
 
-const removeOption = () => {
-  updateSorting('');
-  updateDefaultSorting('');
+const removeOption = (option: SortingOption) => {
+  if (option.value === getDefaultSortingOption()) {
+    updateSorting('');
+    updateDefaultSorting('');
+  }
 };
 </script>
