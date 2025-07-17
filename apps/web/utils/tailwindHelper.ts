@@ -1,4 +1,5 @@
-import { createPaletteFromColor, PaletteConfig } from '@plentymarkets/tailwind-colors';
+import type { PaletteConfig } from '@plentymarkets/tailwind-colors';
+import { createPaletteFromColor } from '@plentymarkets/tailwind-colors';
 
 interface RGB {
   r: number;
@@ -6,7 +7,7 @@ interface RGB {
   b: number;
 }
 
-interface Shade {
+export interface Shade {
   weight: string;
   rgb: string;
 }
@@ -24,9 +25,22 @@ const hex2rgb = (hex: string): RGB => {
 export const getPaletteFromColor = (type: string, hexColor: string, config: PaletteConfig = {}): TailwindPalette => {
   const paletteOutput = createPaletteFromColor(type, hexColor, config);
   const rgbPalette: TailwindPalette = [];
+
+  if (!paletteOutput || !paletteOutput[type]) {
+    return rgbPalette;
+  }
+
   Object.entries(paletteOutput[type]).forEach((entry) => {
     const rgb = hex2rgb(entry[1]) || '';
     rgbPalette.push({ weight: entry[0], rgb: `${rgb.r} ${rgb.g} ${rgb.b}` });
   });
   return rgbPalette;
+};
+
+export const setColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
+  tailwindPalette.forEach((shade) => {
+    if (shade.rgb) {
+      document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
+    }
+  });
 };

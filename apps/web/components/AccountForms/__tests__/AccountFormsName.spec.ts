@@ -5,6 +5,6 @@ describe('<AccountFormsName />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(AccountFormsName);
 
-    expect(getByTestId('account-forms-name'));    
+    expect(getByTestId('account-forms-name'));
   });
 });

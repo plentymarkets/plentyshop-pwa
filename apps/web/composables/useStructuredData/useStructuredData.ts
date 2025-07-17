@@ -1,9 +1,13 @@
-import type { useStructuredDataReturn } from './types';
-import type { SetLogoMeta, SetProductMetaData, SetProductRobotsMetaData, UseStructuredDataState } from './types';
+import type {
+  useStructuredDataReturn,
+  SetLogoMeta,
+  SetProductMetaData,
+  SetProductRobotsMetaData,
+  SetProductCanonicalMetaData,
+  UseStructuredDataState,
+} from './types';
 import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
-import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
-import { useProductReviews } from '../useProductReviews';
-import { useProductReviewAverage } from '../useProductReviewAverage';
+import type { CategoryTreeItem, Product, CanonicalAlternate } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing meta data
@@ -34,7 +38,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       url: runtimeConfig.public.domain,
-      logo: runtimeConfig.public.domain + '/images/logo.png',
+      logo: runtimeConfig.public.domain + '/_nuxt-plenty/images/logo.png',
     };
     useHead({
       script: [
@@ -134,6 +138,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
@@ -205,10 +210,37 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = false;
   };
 
+  const setProductCanonicalMetaData: SetProductCanonicalMetaData = (product: Product) => {
+    state.value.loading = true;
+
+    const canonical = productSeoSettingsGetters.getCanonical(product);
+
+    if (canonical) {
+      useHead({
+        link: [{ rel: 'canonical', href: productSeoSettingsGetters.getCanonicalHref(canonical) }],
+      });
+
+      const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
+      const alternateLocales = canonicalAlternates.map((item: CanonicalAlternate) => {
+        return {
+          rel: 'alternate',
+          hreflang: productSeoSettingsGetters.getCanonicalAlternateHreflang(item),
+          href: productSeoSettingsGetters.getCanonicalAlternateHref(item),
+        };
+      });
+
+      useHead({
+        link: alternateLocales,
+      });
+    }
+    state.value.loading = false;
+  };
+
   return {
     setLogoMeta,
     setProductMetaData,
     setProductRobotsMetaData,
+    setProductCanonicalMetaData,
     ...toRefs(state.value),
   };
 };

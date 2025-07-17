@@ -35,7 +35,9 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       sort: 'sorting.price.avg_asc',
     };
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(payload));
+    const { data, error } = await useAsyncData(`useProductRecommended-${categoryId}`, () =>
+      useSdk().plentysystems.getFacet(payload),
+    );
     useHandleError(error.value);
     state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;

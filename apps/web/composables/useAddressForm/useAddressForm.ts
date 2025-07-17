@@ -1,6 +1,6 @@
 import { type Address, AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
-import { object, string, boolean } from 'yup';
+import { boolean, object, string } from 'yup';
 
 export const useAddressForm = (type: AddressType) => {
   const { create } = useCreateAddress(type);
@@ -11,6 +11,7 @@ export const useAddressForm = (type: AddressType) => {
   const { data: cartData } = useCart();
   const { send } = useNotification();
   const { restrictedAddresses } = useRestrictedAddress();
+  const { getCountryZipCodeRegex } = useAggregatedCountries();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -33,44 +34,47 @@ export const useAddressForm = (type: AddressType) => {
     if (!state.value.addressToSave) return true;
     state.value.isLoading = true;
 
-    await create(state.value.addressToSave as Address);
+    const response = await create(state.value.addressToSave as Address);
     state.value.open = false;
     state.value.isLoading = false;
-    return true;
+    return response;
   };
 
   const validationSchema = toTypedSchema(
     object({
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       country: string()
         .required($i18n.t('errorMessages.requiredField'))
-        .default(cartGetters.getShippingCountryId(customerData.value?.basket)),
+        .default(cartGetters.getShippingCountryId(customerData.value?.basket).toString()),
       streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
       state: string().default('').optional(),
-      zipCode: string().required($i18n.t('errorMessages.requiredField')).min(5),
+      zipCode: string()
+        .required($i18n.t('errorMessages.requiredField'))
+        .when('country', ([countryId], schema) => {
+          const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), type);
+          return zipCodeRegex
+            ? schema.matches(zipCodeRegex, $i18n.t('PreferredDelivery.packstation.zipcodeInvalid'))
+            : schema;
+        }),
       primary: boolean().default(false),
       companyName: string().when([], {
         is: () => state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       vatNumber: string().when([], {
         is: () => state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
@@ -96,10 +100,17 @@ export const useAddressForm = (type: AddressType) => {
   };
 
   const refreshAddressDependencies = async () => {
-    if (type === AddressType.Shipping) {
-      await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
-      notifyIfShippingChanged();
-      notifyIfBillingChanged();
+    await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
+    notifyIfShippingChanged();
+    notifyIfBillingChanged();
+
+    if (
+      type === AddressType.Shipping &&
+      cartData.value.customerInvoiceAddressId === cartData.value.customerShippingAddressId
+    ) {
+      const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
+      const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
+      await setBillingAddress(shippingAddress.value, true);
     }
   };
 

@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class CartPageObject extends PageObject {
   get cartPreview() {
@@ -46,7 +46,7 @@ export class CartPageObject extends PageObject {
   }
 
   checkCart() {
-    cy.getFixture('products').then((fixture) => {
+    cy.getFixture('products').then(() => {
       this.assertCartPreviewElements();
     });
   }
@@ -90,6 +90,21 @@ export class CartPageObject extends PageObject {
     return this;
   }
 
+  increaseCartItemQuantity() {
+    cy.getByTestId('quantity-selector-increase-button').click();
+    return this;
+  }
+
+  decreaseCartItemQuantity() {
+    cy.getByTestId('quantity-selector-decrease-button').click();
+    return this;
+  }
+
+  summaryItems(expectedItems = 'Items: 2') {
+    cy.getByTestId('total-in-cart').invoke('text').should('include', expectedItems);
+    return this;
+  }
+
   orderSummaryAfterCouponApplied() {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('be.visible');
@@ -101,5 +116,9 @@ export class CartPageObject extends PageObject {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('coupon-value').should('not.exist');
+  }
+
+  get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
   }
 }

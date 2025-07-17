@@ -129,13 +129,13 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
     const value = item?.values.find((value) => value.attributeValueId === valueId) || undefined;
 
     if (!value || !valueId) {
-      delete state.value.attributeValues[attributeId];
+      delete state.value.attributeValues.attributeId;
       disableAttributes();
       return;
     }
 
     if (value.disabled) {
-      delete state.value.attributeValues[attributeId];
+      delete state.value.attributeValues.attributeId;
       const oldValues = { ...state.value.attributeValues };
       state.value.attributeValues = {};
       state.value.attributeValues[attributeId] = valueId;

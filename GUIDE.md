@@ -146,7 +146,6 @@ We are using internal [Nuxt.js state management](https://nuxt.com/docs/getting-s
 Components used in the boilerplate web app are located in the `components` directory and each component has the following file structure:
 
 - Project components:
-
   - Representational components that are designed to fulfill project requirements.
   - TypeScript types and tests ale located close to the component
 
@@ -163,7 +162,6 @@ components/
 ```
 
 - Storefront UI 2 Block components
-
   - Reusable/generic components used across the monorepo.
   - TypeScript types and tests are located close to the component
 
@@ -259,7 +257,7 @@ There are 2 options to run those tests:
 To run the Lighthouse CI (LHCI) test, go to your main project folder and run the following command
 
 ```shell
-yarn lhci:mobile
+npm run lhci:mobile
 ```
 
 If you didn’t run the production build earlier, before running test you will need to
@@ -267,13 +265,13 @@ If you didn’t run the production build earlier, before running test you will n
 ... install all dependencies by
 
 ```shell
-yarn install
+npm install
 ```
 
 ... then build project.
 
 ```shell
-yarn build
+npm run build
 ```
 
 LHCI configuration & assertion values are stored in `/lighthouserc.json`.

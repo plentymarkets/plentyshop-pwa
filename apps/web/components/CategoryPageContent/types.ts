@@ -1,4 +1,4 @@
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 
 export type CategoryPageContentProps = {
   title: string;

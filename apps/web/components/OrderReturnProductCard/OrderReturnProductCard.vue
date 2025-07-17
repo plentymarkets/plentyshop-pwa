@@ -1,8 +1,8 @@
 <template>
   <div
+    v-if="displayItem"
     class="flex flex-col sm:flex-none border-t-[1px] border-neutral-200 hover:shadow-lg last:mb-0 px-2 py-4"
     data-testid="cart-product-card"
-    v-if="displayItem"
   >
     <div class="md:flex flex-none p-2 w-full">
       <div class="flex md:flex-none w-full md:w-2/3">
@@ -17,7 +17,7 @@
               ref="img"
               :src="
                 addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
-                '/images/placeholder.png'
+                '/_nuxt-plenty/images/placeholder.png'
               "
               class="h-auto border rounded-md border-neutral-200"
               width="300"
@@ -28,11 +28,11 @@
           </SfLink>
           <UiQuantitySelector
             :key="quantity"
-            @change-quantity="debounceQuantity"
             :value="quantity"
             :min-value="0"
             :max-value="orderGetters.getItemReturnableQty(orderItem)"
             class="mt-4 w-full"
+            @change-quantity="debounceQuantity"
           />
         </div>
         <div class="flex self-start flex-col mx-4 w-2/3">
@@ -47,17 +47,17 @@
           <div class="mt-2 md:mb-2">
             <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
               <li>
-                <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
-                <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
+                <span class="font-bold mr-2">{{ t('account.ordersAndReturns.orderDetails.price') }}:</span>
+                <span>{{ format(orderGetters.getItemPrice(orderItem)) }}</span>
               </li>
               <li>
-                <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
+                <span class="font-bold mr-2">{{ t('returns.quantity') }}:</span>
                 <span>{{ orderGetters.getItemQty(orderItem) }}</span>
               </li>
               <li>
-                <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+                <span class="font-bold mr-2">{{ t('orderConfirmation.total') }}:</span>
                 <span>
-                  {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+                  {{ format(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem)) }}
                 </span>
               </li>
             </ul>
@@ -68,15 +68,15 @@
       <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-1/3">
         <div class="w-full md:self-end">
           <label>
-            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ t('returns.returnReason') }} </span>
             <SfSelect
-              @update:model-value="(event) => changeReason(Number(event))"
               :model-value="String(returnReasonId)"
               size="sm"
               class="h-fit"
-              :placeholder="$t(`returns.selectReturnReason`)"
+              :placeholder="t(`returns.selectReturnReason`)"
+              @update:model-value="(event) => changeReason(Number(event))"
             >
-              <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
+              <option :value="null">— {{ t('returns.selectReturnReason') }} —</option>
               <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
                 {{ name }}
               </option>
@@ -84,28 +84,28 @@
           </label>
         </div>
 
-        <div class="my-2 w-full md:self-end" v-if="hasProductDetails">
+        <div v-if="hasProductDetails" class="my-2 w-full md:self-end">
           <div class="border border-neutral-200 rounded-md divide-y text-neutral-900">
             <SfAccordionItem :model-value="opened" @update:model-value="toggleDropdown">
               <template #summary>
                 <div class="flex justify-between px-3.5 py-1.5 bg-neutral-100">
-                  {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
+                  {{ t('account.ordersAndReturns.orderDetails.showDetails') }}
                   <SfIconChevronLeft class="text-neutral-500" :class="{ 'rotate-90': opened, '-rotate-90': !opened }" />
                 </div>
               </template>
               <div>
                 <div
-                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
                   v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)"
                   :key="index"
+                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
                 >
                   <p>{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
                   <p class="text-gray-500">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
                 </div>
                 <div
-                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
                   v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)"
                   :key="index"
+                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
                 >
                   <p>{{ orderGetters.getItemOrderPropertyName(property) }}</p>
                   <p class="text-gray-500">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
@@ -123,8 +123,10 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
-import _ from 'lodash';
+import { debounce } from '~/utils/debounce';
 
+const { format } = usePriceFormatter();
+const { t } = useI18n();
 const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();
@@ -176,5 +178,5 @@ const returnReasonId = computed(
 const displayItem = computed(
   () => props.orderItem.typeId !== 6 && orderGetters.getItemReturnableQty(props.orderItem) > 0,
 );
-const debounceQuantity = _.debounce(changeQuantity, 500);
+const debounceQuantity = debounce(changeQuantity, 500);
 </script>

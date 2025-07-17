@@ -2,7 +2,8 @@ import sfTypography from '@storefront-ui/typography';
 import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import { fontFamilyText } from './fontFamily.config';
+
+const fontFamilyText = process.env.NUXT_PUBLIC_FONT || 'Red Hat Text';
 
 export default {
   presets: [tailwindConfig],
@@ -37,6 +38,7 @@ export default {
       }),
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
+        editor: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {
@@ -65,6 +67,24 @@ export default {
           '900': 'rgb(var(--colors-2-secondary-900) / <alpha-value>)',
           '950': 'rgb(var(--colors-2-secondary-950) / <alpha-value>)',
         },
+        editor: {
+          'body-bg': '#F1F3F5',
+          button: '#062633',
+        },
+
+        header: {
+          '50': 'rgb(var(--colors-2-header-50) / <alpha-value>)',
+          '100': 'rgb(var(--colors-2-header-100) / <alpha-value>)',
+          '200': 'rgb(var(--colors-2-header-200) / <alpha-value>)',
+          '300': 'rgb(var(--colors-2-header-300) / <alpha-value>)',
+          '400': 'rgb(var(--colors-2-header-400) / <alpha-value>)',
+          '500': 'rgb(var(--colors-2-header-500) / <alpha-value>)',
+          '600': 'rgb(var(--colors-2-header-600) / <alpha-value>)',
+          '700': 'rgb(var(--colors-2-header-700) / <alpha-value>)',
+          '800': 'rgb(var(--colors-2-header-800) / <alpha-value>)',
+          '900': 'rgb(var(--colors-2-header-900) / <alpha-value>)',
+          '950': 'rgb(var(--colors-2-header-950) / <alpha-value>)',
+        },
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],
@@ -89,7 +109,14 @@ export default {
       width: {
         '128': '32rem',
       },
+      spacing: {
+        s: '1.875rem',
+        m: '2.5rem',
+        l: '3.125rem',
+        xl: '3.75rem',
+      },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
 } as Config;

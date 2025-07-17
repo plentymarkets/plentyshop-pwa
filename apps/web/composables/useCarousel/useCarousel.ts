@@ -1,37 +1,45 @@
-const handleArrows = () => {
-  const viewport = useViewport();
-  return !viewport.isLessThan('md');
-};
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { UseCarouselState } from '~/composables/useCarousel/types';
 
-const applyPaginationStyles = () => {
-  const activePagination = document.querySelector('.swiper-pagination-bullet-active');
+export const useCarousel: UseCarouselReturn = () => {
+  const state = useState<UseCarouselState>('useCarousel', () => ({
+    data: [],
+    loading: false,
+    activeSlideIndex: {} as ActiveSlideIndex,
+  }));
 
-  if (activePagination) {
-    activePagination.classList.add('!bg-primary-500');
-  }
-};
+  const { findOrDeleteBlockByUuid } = useBlockManager();
+  const { data } = useCategoryTemplate();
+  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
+    const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
-const onSlideChange = () => {
-  const paginationBullets = document.querySelectorAll('.swiper-pagination-bullet');
-  paginationBullets.forEach((bullet) => {
-    bullet.classList.remove('!bg-primary-500');
-  });
+    if (carouselBlock) {
+      carouselBlock.content = [...newBannerItems];
+    }
+  };
 
-  const linkActivePagination = document.querySelector('.swiper-pagination-bullet-active');
-  if (linkActivePagination) {
-    linkActivePagination.classList.add('!bg-primary-500');
-  }
-};
-
-export const useCarousel = () => {
+  const setIndex: SetIndex = (blockUuid: string, slideIndex: number) => {
+    const currentIndex = state.value.activeSlideIndex[blockUuid];
+    if (currentIndex === slideIndex) return;
+    state.value.activeSlideIndex[blockUuid] = slideIndex;
+  };
   onMounted(() => {
-    applyPaginationStyles();
-    window.addEventListener('resize', applyPaginationStyles);
-  });
+    const onBlockMoved = (e: CustomEvent<{ uuid: string; name: string }>) => {
+      if (e.detail.name !== 'Carousel') return;
+      const uuid = e.detail.uuid;
 
+      if (state.value.activeSlideIndex[uuid] !== 0) {
+        setIndex(uuid, 0);
+      }
+    };
+
+    window.addEventListener('block-moved', onBlockMoved as EventListener);
+
+    onBeforeUnmount(() => window.removeEventListener('block-moved', onBlockMoved as EventListener));
+  });
   return {
-    handleArrows,
-    applyPaginationStyles,
-    onSlideChange,
+    updateBannerItems,
+    setIndex,
+    ...toRefs(state.value),
   };
 };

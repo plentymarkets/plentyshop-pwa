@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { PaymentOptionItemProps } from './types';
+import type { PaymentOptionItemProps } from './types';
 const { t } = useI18n();
 
 const props = defineProps<PaymentOptionItemProps>();

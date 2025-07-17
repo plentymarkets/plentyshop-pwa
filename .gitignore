@@ -21,6 +21,8 @@ node_modules
 cache
 .temp
 dist
+.data
+
 # testing
 coverage
 
@@ -42,6 +44,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+apps/web/cypress.env.json
 
 # turbo
 .turbo

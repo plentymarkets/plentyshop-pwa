@@ -1,4 +1,4 @@
-import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
   UseProductReviews,
@@ -8,7 +8,6 @@ import type {
   CreateProductReview,
 } from './types';
 import { reviewGetters } from '@plentymarkets/shop-api';
-import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing product reviews data
@@ -41,17 +40,18 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number) => {
     state.value.loading = true;
     const route = useRoute();
     const config = useRuntimeConfig().public;
+    const feedbackPerPage = Number(route.query.feedbackPage) || 1;
 
     try {
-      const { data, error } = await useAsyncData(() =>
+      const { data, error } = await useAsyncData(`${itemId}-${feedbackPerPage}`, () =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
           feedbacksPerPage: config.defaultItemsPerPage,
-          page: Number(route.query.feedbackPage) || 1,
+          page: feedbackPerPage,
         }),
       );
       useHandleError(error.value);
@@ -76,12 +76,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doReview(params));
-    useHandleError(error.value);
-    if (data.value?.data && typeof data.value.data === 'string') {
-      send({ type: 'negative', message: data.value.data });
-    } else {
+
+    try {
+      await useSdk().plentysystems.doReview(params);
       send({ type: 'positive', message: $i18n.t('review.notification.success') });
+    } catch (error) {
+      useHandleError(error as ApiError);
+      return state.value.data;
     }
 
     await fetchReviews();
@@ -93,10 +94,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     state.value.loading = true;
     closeReviewModal();
 
-    const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
+    try {
+      const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.deleteReview({ feedbackId }));
-    useHandleError(error.value);
+      await useSdk().plentysystems.deleteReview({ feedbackId });
+    } catch (error) {
+      useHandleError(error as ApiError);
+    }
 
     await fetchReviews();
 
@@ -110,11 +114,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.setReview(params));
-    useHandleError(error.value);
+    try {
+      await useSdk().plentysystems.setReview(params);
 
-    if (!error.value) {
       send({ type: 'positive', message: $i18n.t('review.notification.success') });
+    } catch (error) {
+      useHandleError(error as ApiError);
+      return state.value.data;
     }
 
     await fetchReviews();

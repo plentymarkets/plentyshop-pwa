@@ -8,9 +8,9 @@
         class="flex-none"
       >
         <NuxtImg
+          ref="image"
           :src="productBundleGetters.getBundleItemImage(item)"
           class="size-28 aspect-square object-contain pr-4"
-          ref="image"
           :alt="productBundleGetters.getBundleItemName(item)"
           loading="lazy"
         />
@@ -18,14 +18,14 @@
 
       <NuxtImg
         v-else
+        ref="image"
         :src="productBundleGetters.getBundleItemImage(item)"
         class="size-28 aspect-square mr-4 object-contain"
-        ref="image"
         :alt="productBundleGetters.getBundleItemName(item)"
         loading="lazy"
       />
 
-      <div class="h-24 self-center" v-if="isLinkable(item)">
+      <div v-if="isLinkable(item)" class="h-24 self-center">
         <div class="inline-flex font-medium typography-text-sm">
           <div class="mr-1">{{ productBundleGetters.getBundleItemQuantity(item) }} x</div>
           <SfLink :tag="NuxtLink" :to="localePath(productBundleGetters.getBundleItemUrl(item))" variant="secondary">
@@ -34,19 +34,15 @@
         </div>
 
         <div
-          class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm"
-          v-html="productBundleGetters.getBundleItemDescription(item)"
-        ></div>
+          class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm no-preflight"
+          v-html="productBundleGetters.getBundleItemShortDescription(item)"
+        />
       </div>
       <div v-else>
         <p class="font-medium text-sm">
-          {{ productBundleGetters.getBundleItemQuantity(item) }}x
-          <span class="h-auto">{{ t('products') }}</span>
+          {{ productBundleGetters.getBundleItemQuantity(item) }} x
+          <span class="h-auto">[{{ t('productAttributes.productNameMissing') }}]</span>
         </p>
-        <div
-          class="h-auto mt-1 font-normal typography-text-sm"
-          v-html="t('productAttributes.productInformationMissing')"
-        ></div>
       </div>
     </div>
   </div>

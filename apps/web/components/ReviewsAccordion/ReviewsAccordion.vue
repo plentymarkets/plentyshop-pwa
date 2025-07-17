@@ -2,13 +2,13 @@
   <div ref="reviewArea" class="relative col-span-5 h-fit" :class="{ 'pointer-events-none opacity-50': loadingReviews }">
     <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
 
-    <div data-testid="reviews-accordion" id="customerReviewsAccordion">
+    <div id="customerReviewsAccordion" data-testid="reviews-accordion">
       <UiAccordionItem
         v-model="reviewsOpen"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
       >
         <template #summary>
-          <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl" id="customerReviewsClick">
+          <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 md:text-2xl">
             {{ t('customerReviews') }}
           </h2>
         </template>
@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { type ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
+import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 
 const { product } = defineProps<ProductAccordionPropsType>();
 
@@ -66,7 +66,7 @@ const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(prod
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviews.value));
 
-const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 watch(
   () => reviewsOpen.value,

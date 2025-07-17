@@ -1,5 +1,5 @@
 <template>
-  <slot></slot>
+  <slot />
 </template>
 
 <script setup lang="ts">
@@ -9,18 +9,32 @@ import type { DriftProps } from '~/components/Drift/types';
 
 const { index } = defineProps<DriftProps>();
 
-onMounted(() => {
-  let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
-  let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
+let drift: Drift | null = null;
 
-  new Drift(demoTrigger, {
+onMounted(() => {
+  const demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
+  const paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
+
+  if (!demoTrigger || !paneContainer) {
+    return;
+  }
+
+  drift = new Drift(demoTrigger, {
     paneContainer: paneContainer,
     containInline: true,
     zoomFactor: 2,
     hoverBoundingBox: true,
-    handleTouch: true,
-    touchDelay: 300,
+    handleTouch: false,
     injectBaseStyles: true,
   });
 });
+
+const destroyDrift = () => {
+  if (drift) {
+    drift.destroy();
+    drift = null;
+  }
+};
+
+onUnmounted(() => destroyDrift());
 </script>

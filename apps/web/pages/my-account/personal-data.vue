@@ -4,13 +4,13 @@
     class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
     data-testid="account-orders-heading"
   >
-    {{ $t('account.accountSettings.section.personalData') }}
+    {{ t('account.accountSettings.section.personalData') }}
   </h2>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.yourName')"
-    :button-text="$t('account.accountSettings.personalData.edit')"
+    :header="t('account.accountSettings.personalData.yourName')"
+    :button-text="t('account.accountSettings.personalData.edit')"
     data-testid="account-name"
     @on-click="openModal('yourName')"
   >
@@ -19,8 +19,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.contactInformation')"
-    :button-text="$t('account.accountSettings.personalData.edit')"
+    :header="t('account.accountSettings.personalData.contactInformation')"
+    :button-text="t('account.accountSettings.personalData.edit')"
     data-testid="account-email"
     @on-click="openModal('contactInformation')"
   >
@@ -29,8 +29,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.yourPassword')"
-    :button-text="$t('account.accountSettings.personalData.change')"
+    :header="t('account.accountSettings.personalData.yourPassword')"
+    :button-text="t('account.accountSettings.personalData.change')"
     :show-edit-button="true"
     data-testid="account-password"
     @on-click="openModal('passwordChange')"
@@ -39,27 +39,29 @@
   </AccountData>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <UiModal
-    v-model="isOpen"
     ref="modalElement"
+    v-model="isOpen"
     tag="section"
     role="dialog"
     class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
     aria-labelledby="address-modal-title"
   >
     <header>
-      <UiButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="closeModal">
+      <UiButton
+        :aria-label="t('closeDialog')"
+        type="button"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="closeModal"
+      >
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-        {{ $t(`account.accountSettings.personalData.${openedForm}`) }}
+        {{ t(`account.accountSettings.personalData.${openedForm}`) }}
       </h3>
     </header>
     <AccountFormsName v-if="openedForm === 'yourName'" @on-save="closeModal" @on-cancel="closeModal" />
-    <ContactInformationForm
-      v-else-if="openedForm === 'contactInformation'"
-      @on-save="closeModal"
-      @on-cancel="closeModal"
-    />
     <AccountFormsPassword v-else-if="openedForm === 'passwordChange'" @on-save="closeModal" @on-cancel="closeModal" />
   </UiModal>
 </template>
@@ -74,6 +76,7 @@ definePageMeta({
   middleware: ['auth-guard'],
 });
 const { isOpen, open, close } = useDisclosure();
+const { t } = useI18n();
 const lastActiveElement = ref();
 const modalElement = ref();
 const openedForm = ref('');

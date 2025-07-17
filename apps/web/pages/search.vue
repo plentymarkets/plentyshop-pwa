@@ -4,7 +4,7 @@
       <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
       <CategoryPageContent
         v-if="productsCatalog"
-        :title="$t('resultsFor', { phrase: route.query.term })"
+        :title="t('resultsFor', { phrase: route.query.term })"
         :total-products="productsCatalog.pagination.totals"
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 definePageMeta({
   layout: false,
@@ -30,6 +31,7 @@ definePageMeta({
 const route = useRoute();
 const { getSearch, data: productsCatalog, productsPerPage, loading } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
+const { t } = useI18n();
 
 const handleQueryUpdate = async () => {
   await getSearch(getFacetsFromURL());
@@ -43,4 +45,7 @@ watch(
     handleQueryUpdate();
   },
 );
+
+await getRobots();
+setRobotForStaticPage('SearchResult');
 </script>

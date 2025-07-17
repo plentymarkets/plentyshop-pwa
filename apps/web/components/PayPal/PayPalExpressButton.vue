@@ -1,27 +1,28 @@
 <template>
-  <div
-    v-if="paypalUuid && consent"
-    ref="paypalButton"
-    :id="'paypal-' + paypalUuid"
-    class="z-0 relative paypal-button"
-  />
-  <PayPalCookieDisabledBanner v-else-if="!consent" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
 </template>
 
 <script setup lang="ts">
-import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
-import { type FUNDING_SOURCE, type OnApproveData, type OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
+import { cartGetters } from '@plentymarkets/shop-api';
+import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import { type PayPalAddToCartCallback, type PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(uuid());
 const paypalScript = ref<PayPalNamespace | null>(null);
 
-const { getScript, createTransaction, approveOrder, executeOrder } = usePayPal();
-const { createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
+const {
+  order: paypalOrder,
+  getScript,
+  createTransaction,
+  captureOrder,
+  createPlentyOrder,
+  createPlentyPaymentFromPayPalOrder,
+} = usePayPal();
 const { data: cart, clearCartItems } = useCart();
+const { emit } = usePlentyEvent();
+const { t } = useI18n();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
@@ -31,7 +32,6 @@ const emits = defineEmits<{
   (event: 'on-approved'): void;
 }>();
 
-const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const props = defineProps<PaypalButtonPropsType>();
 const currentInstance = getCurrentInstance();
 
@@ -74,32 +74,29 @@ const onValidationCallback = async () => {
 };
 
 const onApprove = async (data: OnApproveData) => {
-  const result = await approveOrder(data.orderID, data.payerID ?? '');
-
   emits('on-approved');
 
-  if ((props.type === TypeCartPreview || props.type === TypeSingleItem) && result?.url)
+  if (props.type === TypeCartPreview || props.type === TypeSingleItem)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (props.type === TypeCheckout) {
     useProcessingOrder().processingOrder.value = true;
-    const order = await createOrder({
-      paymentId: cart.value.methodOfPaymentId,
-      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
-    });
+    const order = await createPlentyOrder();
 
     if (order) {
-      await executeOrder({
-        mode: 'paypal',
-        plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-        paypalTransactionId: data.orderID,
-      });
+      if (!paypalOrder.value?.isAutocaptured) {
+        await captureOrder(data.orderID);
+      }
+      await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
     }
 
+    emit('module:clearCart', null);
     clearCartItems();
 
-    if (order?.order?.id)
+    if (order?.order?.id) {
+      emit('frontend:orderCreated', order);
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+    }
   }
 };
 
@@ -122,12 +119,16 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       onInit(data, actions) {
         onInit(actions);
       },
-      onError() {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
-        // TODO: handle error
+      onCancel() {
+        useNotification().send({
+          message: t('errorMessages.paymentCancelled'),
+          type: 'negative',
+        });
       },
       async createOrder() {
-        const order = await createTransaction(fundingSource);
+        const order = await createTransaction({
+          type: isCommit ? 'basket' : 'express',
+        });
         return order?.id ?? '';
       },
       async onApprove(data) {
@@ -157,12 +158,5 @@ onNuxtReady(async () => {
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
-});
-
-watch(consent, async () => {
-  if (consent.value) {
-    paypalScript.value = await getScript(currency.value, isCommit);
-    createButton();
-  }
 });
 </script>

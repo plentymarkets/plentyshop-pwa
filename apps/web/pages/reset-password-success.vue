@@ -2,14 +2,14 @@
   <NuxtLayout name="auth">
     <div class="mx-auto text-center rounded-md border border-neutral-200 p-4 md:p-6 mt-2">
       <NuxtImg
-        src="/images/email-sent.png"
-        :alt="$t('auth.resetPassword.emailSent')"
+        src="/_nuxt-plenty/images/email-sent.png"
+        :alt="t('auth.resetPassword.emailSent')"
         width="192"
         height="192"
         class="mx-auto mb-6"
         loading="lazy"
       />
-      <h1 class="typography-headline-3 font-bold">{{ $t('auth.resetPassword.heading') }}</h1>
+      <h1 class="typography-headline-3 font-bold">{{ t('auth.resetPassword.heading') }}</h1>
       <i18n-t
         tag="p"
         keypath="auth.resetPassword.thankYou"
@@ -24,7 +24,7 @@
         variant="tertiary"
         data-testid="reset-password-page-reset-button"
       >
-        {{ $t('auth.resetPassword.anotherEmail') }}
+        {{ t('auth.resetPassword.anotherEmail') }}
       </UiButton>
     </div>
   </NuxtLayout>
@@ -36,6 +36,11 @@ definePageMeta({
   layout: false,
 });
 
+const { t } = useI18n();
+const { setPageMeta } = usePageMeta();
+
+const icon = 'page';
+setPageMeta(t('auth.resetPassword.title'), icon);
 const localePath = useLocalePath();
 
 const email = ref('hieronim.anonim@gmail.com');

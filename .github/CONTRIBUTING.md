@@ -8,8 +8,8 @@ We welcome contributions from the community. Please follow these guidelines when
 
 1. Fork the repository.
 2. Create a new branch for your changes.
-3. Run `yarn format` to check for formatting errors. `yarn format:fix` resolves a subset of errors automatically.
-4. Run `yarn lint` to check for linting errors. `yarn lint:fix` resolves a subset of errors automatically.
+3. Run `npm run format` to check for formatting errors. `npm run format:fix` resolves a subset of errors automatically.
+4. Run `npm run lint` to check for linting errors. `npm run lint:fix` resolves a subset of errors automatically.
 5. Make your changes and commit them. Commit messages have to follow the [Conventional Commit specification](https://www.conventionalcommits.org/en/v1.0.0/). Allowed types: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`.
 6. Push your changes to your fork.
 7. Open a pull request from your branch to the main repository's `main` branch. Take care to open the pull request against the plentymarkets repository, not the Alokai repository upstream.
@@ -34,12 +34,12 @@ To keep the code base of plentymarkets/plentyshop-pwa neat and tidy, the followi
 
 ### Logic
 
-The data between plentysystems and the web app flows as follows:
+The data between PlentyONE and the web app flows as follows:
 
 ```mermaid
 flowchart LR
 
-A[plentysystems] --> B[REST API]
+A[PlentyONE] --> B[REST API]
 B --> C[SDK]
 C --> D[plentyShop Web App]
 ```

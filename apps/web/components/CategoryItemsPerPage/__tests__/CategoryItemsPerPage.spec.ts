@@ -5,8 +5,8 @@ describe('<CategoryItemsPerPage />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(CategoryItemsPerPage, {
       props: {
-        totalProducts: 10
-      }
+        totalProducts: 10,
+      },
     });
 
     expect(getByTestId('category-items-per-page'));

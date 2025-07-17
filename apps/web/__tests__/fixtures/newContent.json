@@ -1,0 +1,62 @@
+{
+  "name": "BannerCarousel",
+  "options": {
+    "controls": {
+      "color": "#000"
+    },
+    "bannerItems": [
+      {
+        "image": {
+          "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
+          "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
+          "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
+          "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif",
+          "alt": "",
+          "brightness": 0.5
+        },
+        "text": {
+          "color": "#fff",
+          "bgcolor": "#000",
+          "bgopacity": 0.9,
+          "pretitle": "New pretitle from cypress",
+          "title": "New title from cypress",
+          "htmlDescription": "Description from cypress.",
+          "textAlignment": "left",
+          "justify": "center",
+          "align": "left"
+        },
+        "button": {
+          "label": "Discover Capybara",
+          "link": "/gear/headphones-capybara_157",
+          "variant": "primary"
+        }
+      },
+      {
+        "image": {
+          "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+          "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+          "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
+          "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
+          "alt": "",
+          "brightness": 0.75
+        },
+        "text": {
+          "color": "#fff",
+          "bgcolor": "#000",
+          "bgopacity": 1,
+          "pretitle": "The Future of Aerial Photography",
+          "title": "Drone Omega",
+          "htmlDescription": "A lightweight drone designed for stunning aerial footage. With a high-resolution camera on a 3-axis gimbal and up to 45 minutes of flight time, it's perfect for capturing smooth, stable video. Featuring GPS-assisted hover, obstacle avoidance, and easy portability, the Drone brings innovation and simplicity to your aerial shots.",
+          "textAlignment": "left",
+          "justify": "center",
+          "align": "left"
+        },
+        "button": {
+          "label": "Discover Omega",
+          "link": "/gear/drone-omega_154",
+          "variant": "primary"
+        }
+      }
+    ]
+  }
+}

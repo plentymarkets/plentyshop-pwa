@@ -1,20 +1,21 @@
-import {
-  type Cart,
+import type {
   DoAddItemParams,
   SetCartItemQuantityParams,
-  DeleteCartItemParams,
   CartItem,
   CartItemError,
   ApiError,
+  Cart,
+  PlentyEvents,
 } from '@plentymarkets/shop-api';
-import {
-  type UseCartReturn,
+import type {
   UseCartState,
-  type GetCart,
-  type AddToCart,
-  type AddItemsToCart,
-  type DeleteCartItem,
-  type SetCartItemQuantity,
+  UseCartReturn,
+  GetCart,
+  AddToCart,
+  AddItemsToCart,
+  DeleteCartItem,
+  SetCartItemQuantity,
+  DeleteCart,
 } from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
@@ -55,6 +56,7 @@ const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
  * ```
  */
 export const useCart: UseCartReturn = () => {
+  const { emit } = usePlentyEvent();
   const state = useState<UseCartState>('useCart', () => ({
     data: {} as Cart,
     useAsShippingAddress: true,
@@ -73,13 +75,14 @@ export const useCart: UseCartReturn = () => {
   const getCart: GetCart = async () => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getCart());
-      useHandleError(error.value);
-      state.value.data = data?.value?.data ?? state.value.data;
+      const { data } = await useSdk().plentysystems.getCart();
+
+      setCart(data);
 
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      useHandleError(error as ApiError);
+      return state.value.data;
     } finally {
       state.value.loading = false;
     }
@@ -94,7 +97,9 @@ export const useCart: UseCartReturn = () => {
    * ```
    */
   const setCart = (data: Cart) => {
+    const { setPattern } = usePriceFormatter();
     state.value.data = data;
+    setPattern(data.currencyPattern);
   };
 
   /**
@@ -106,6 +111,21 @@ export const useCart: UseCartReturn = () => {
    */
   const clearCartItems = () => {
     state.value.data.items = [];
+  };
+
+  /**
+   * @description Function for deleting the cart.
+   * @example
+   * ``` ts
+   * await deleteCart()
+   * ```
+   */
+  const deleteCart: DeleteCart = async () => {
+    try {
+      await useSdk().plentysystems.deleteCart();
+    } finally {
+      clearCartItems();
+    }
   };
 
   /**
@@ -131,15 +151,23 @@ export const useCart: UseCartReturn = () => {
 
       if (item) {
         state.value.lastUpdatedCartItem = item;
+        emit('frontend:addToCart', {
+          item,
+          cart: state.value.data,
+          addItemParams: params,
+        });
       }
 
       return !!data;
     } catch (error) {
       const apiError = error as ApiError;
-      if (apiError.events?.AfterBasketChanged?.basket) {
+      // @TODO: Update ApiError type definition
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorEvents = apiError.events as any;
+      if (errorEvents?.AfterBasketChanged?.basket) {
         state.value.data = {
-          ...apiError.events.AfterBasketChanged.basket,
-          items: apiError.events.AfterBasketChanged.basketItems,
+          ...errorEvents.AfterBasketChanged.basket,
+          items: errorEvents.AfterBasketChanged.basketItems,
         };
       }
       useHandleError(apiError);
@@ -169,13 +197,28 @@ export const useCart: UseCartReturn = () => {
 
       state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
 
+      params.forEach((param) => {
+        const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
+
+        if (item) {
+          emit('frontend:addToCart', {
+            item,
+            cart: state.value.data,
+            addItemParams: param,
+          });
+        }
+      });
+
       return !!data;
     } catch (error) {
       const apiError = error as ApiError;
-      if (apiError.events?.AfterBasketChanged?.basket) {
+      // @TODO: Update ApiError type definition
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorEvents = apiError.events as any;
+      if (errorEvents?.AfterBasketChanged?.basket) {
         state.value.data = {
-          ...apiError.events.AfterBasketChanged.basket,
-          items: apiError.events.AfterBasketChanged.basketItems,
+          ...errorEvents.AfterBasketChanged.basket,
+          items: errorEvents.AfterBasketChanged.basketItems,
         };
       }
       useHandleError(apiError);
@@ -200,30 +243,36 @@ export const useCart: UseCartReturn = () => {
   const setCartItemQuantity: SetCartItemQuantity = async (params: SetCartItemQuantityParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() =>
-        useSdk().plentysystems.setCartItemQuantity({
-          productId: params.productId,
-          quantity: params.quantity,
-          cartItemId: params.cartItemId,
-        }),
-      );
+      const { data } = await useSdk().plentysystems.setCartItemQuantity({
+        productId: params.productId,
+        quantity: params.quantity,
+        cartItemId: params.cartItemId,
+      });
 
-      useHandleError(error.value);
-
-      if (isCartItemError(data.value?.data as unknown as Cart | CartItemError)) {
+      if (isCartItemError(data as unknown as Cart | CartItemError)) {
         const { $i18n } = useNuxtApp();
         const { send } = useNotification();
-        const responseData = data?.value?.data as CartItemError;
+        const responseData = data as CartItemError;
         state.value.data.itemQuantity = responseData.availableStock;
 
         send({ message: $i18n.t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
       } else {
-        state.value.data = migrateVariationData(state.value.data, data?.value?.data as Cart) ?? state.value.data;
+        state.value.data = migrateVariationData(state.value.data, data as Cart) ?? state.value.data;
+        // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+        if (state.value.data?.apiEvents) {
+          // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+          Object.entries(state.value.data.apiEvents as PlentyEvents).forEach(([event, data]) =>
+            // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+            emit(`backend:${event}`, data),
+          );
+          // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+          delete state.value.data.apiEvents;
+        }
       }
-
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      useHandleError(error as ApiError);
+      return state.value.data;
     } finally {
       state.value.loading = false;
     }
@@ -231,7 +280,7 @@ export const useCart: UseCartReturn = () => {
 
   /**
    * @description Function for removing cart items.
-   * @param params { DeleteCartItemParams }
+   * @param cartItem { CartItem }
    * @example
    * ``` ts
    * deleteCartItem({
@@ -239,21 +288,23 @@ export const useCart: UseCartReturn = () => {
    * });
    * ```
    */
-  const deleteCartItem: DeleteCartItem = async (params: DeleteCartItemParams) => {
+  const deleteCartItem: DeleteCartItem = async (cartItem: CartItem) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() =>
-        useSdk().plentysystems.deleteCartItem({
-          cartItemId: params.cartItemId,
-        }),
-      );
+      const { data } = await useSdk().plentysystems.deleteCartItem({
+        cartItemId: cartItem.id,
+      });
 
-      useHandleError(error.value);
-
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
+      emit('frontend:removeFromCart', {
+        deleteItemParams: { cartItemId: cartItem.id },
+        cart: state.value.data,
+        item: cartItem,
+      });
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      useHandleError(error as ApiError);
+      return state.value.data;
     } finally {
       state.value.loading = false;
     }
@@ -269,6 +320,7 @@ export const useCart: UseCartReturn = () => {
     addItemsToCart,
     deleteCartItem,
     getCart,
+    deleteCart,
     cartIsEmpty,
     ...toRefs(state.value),
   };

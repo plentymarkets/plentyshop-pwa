@@ -18,10 +18,10 @@
         class="self-start"
         @click.stop="emit('on-edit', userAddressGetters.getId(address))"
       >
-        {{ $t('account.accountSettings.edit') }}
+        {{ t('account.accountSettings.edit') }}
       </UiButton>
       <UiButton variant="tertiary" size="sm" class="self-start" @click.stop="emit('on-delete')">
-        {{ $t('account.accountSettings.delete') }}
+        {{ t('account.accountSettings.delete') }}
       </UiButton>
       <UiButton
         v-if="!isDefault && !isGuest"
@@ -30,7 +30,7 @@
         class="self-start"
         @click.stop="emit('make-default')"
       >
-        {{ $t('account.accountSettings.makeDefault') }}
+        {{ t('account.accountSettings.makeDefault') }}
       </UiButton>
     </div>
 
@@ -42,11 +42,12 @@
 
 <script lang="ts" setup>
 import { SfIconCheckCircle } from '@storefront-ui/vue';
-import { type AddressProps } from './types';
+import type { AddressProps } from './types';
 import { userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, isDefault, isSelected, showDivider } = defineProps<AddressProps>();
 
+const { t } = useI18n();
 const { isGuest } = useCustomer();
 const emit = defineEmits(['on-edit', 'on-delete', 'make-default']);
 </script>

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <client-only>
-      <UiToolbar data-testid="edit-mode-toolbar" v-show="isPreview" />
-    </client-only>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -14,26 +11,24 @@
     <Cookiebar />
     <PreviewMode />
     <NuxtLazyHydrate when-visible>
-      <UiFooter />
+      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+      <UiFooter v-if="!runtimeConfig.public.isDev" />
     </NuxtLazyHydrate>
-
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+
 defineProps<DefaultLayoutProps>();
+
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-setLogoMeta();
-const isPreview = ref(false);
-onMounted(() => {
-  const config = useRuntimeConfig().public;
-  const showConfigurationDrawer = config.showConfigurationDrawer;
+const runtimeConfig = useRuntimeConfig();
+const route = useRoute();
 
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-});
+setLogoMeta();
 </script>

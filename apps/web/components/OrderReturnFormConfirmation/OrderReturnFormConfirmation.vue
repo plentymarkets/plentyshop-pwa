@@ -1,7 +1,13 @@
 <template>
   <div>
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="$emit('closed')">
+      <UiButton
+        :aria-label="t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="$emit('closed')"
+      >
         <SfIconClose />
       </UiButton>
     </header>
@@ -19,11 +25,11 @@
     <div class="mb-2">{{ t('returns.commentOptional') }}</div>
     <SfTextarea v-model="returnData.returnNote" :placeholder="t('returns.tellUsMore')" class="w-full block" cols="10" />
     <div class="flex flex-row justify-between mt-5">
-      <UiButton @click="$emit('previous')" variant="secondary">
+      <UiButton variant="secondary" @click="$emit('previous')">
         <SfIconArrowBack />
         {{ t('prev') }}
       </UiButton>
-      <UiButton @click="confirmReturn()" :disabled="loading">
+      <UiButton :disabled="loading" @click="confirmReturn()">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('returns.confirmReturn') }}

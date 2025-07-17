@@ -9,6 +9,8 @@
       variantClasses[variant],
     ]"
     data-testid="button"
+    :aria-label="ariaLabel"
+    :aria-hidden="ariaHidden"
   >
     <slot v-if="$slots.prefix" name="prefix" />
     <slot />
@@ -17,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type ConcreteComponent } from 'vue';
+import type { ConcreteComponent } from 'vue';
 import { useAttrsRef, SfButtonSize, SfButtonVariant } from '@storefront-ui/vue';
 
 const props = defineProps({
@@ -40,6 +42,14 @@ const props = defineProps({
   tag: {
     type: [String, Object] as PropType<string | ConcreteComponent>,
     default: undefined,
+  },
+  ariaLabel: {
+    type: String,
+    default: '',
+  },
+  ariaHidden: {
+    type: Boolean,
+    default: false,
   },
 });
 

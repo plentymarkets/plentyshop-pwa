@@ -8,4 +8,4 @@ export type AddressFixtureOverride = {
   city?: string;
   state?: string;
   zipCode?: string;
-}
+};

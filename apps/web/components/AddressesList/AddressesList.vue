@@ -18,8 +18,8 @@
     />
 
     <div class="col-span-3 text-center">
-      <h3 class="typography-headline-3 font-bold mt-6 mb-4" v-if="addresses.length === 0">
-        {{ $t('account.accountSettings.noAddresses') }}
+      <h3 v-if="addresses.length === 0" class="typography-headline-3 font-bold mt-6 mb-4">
+        {{ t('account.accountSettings.noAddresses') }}
       </h3>
       <UiButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
         {{ addAddressText }}
@@ -59,11 +59,12 @@
 <script lang="ts" setup>
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { type AddressesListProps } from './types';
+import type { AddressesListProps } from './types';
 
 const { type, editAddressText, addAddressText } = defineProps<AddressesListProps>();
 
 const { isOpen, open, close } = useDisclosure();
+const { t } = useI18n();
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const {
   data: addresses,

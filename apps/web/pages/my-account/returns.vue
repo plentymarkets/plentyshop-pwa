@@ -10,7 +10,7 @@
     <div v-if="!data?.entries.length" class="col-span-3 text-center" data-testid="account-returns-content">
       <!-- TODO: add image when we find a suitable one in a format that works. -->
       <!--      <NuxtImg-->
-      <!--        src="/images/returns.png"-->
+      <!--        src="/_nuxt-plenty/images/returns.png"-->
       <!--        :alt="t('account.ordersAndReturns.returnsAltText')"-->
       <!--        width="192"-->
       <!--        height="192"-->
@@ -31,7 +31,7 @@
       <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
 
       <template v-if="!isTablet">
-        <ul class="my-4 last-of-type:mb-0" v-for="order in data.entries" :key="order.order.id">
+        <ul v-for="order in data.entries" :key="order.order.id" class="my-4 last-of-type:mb-0">
           <li>
             <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.returnId') }}</p>
             <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>

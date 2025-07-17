@@ -11,7 +11,7 @@
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
-        <Coupon class="mb-2" v-if="viewport.isLessThan('lg')" />
+        <Coupon v-if="viewport.isLessThan('lg')" class="mb-2" />
       </div>
       <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { cartGetters } from '@plentymarkets/shop-api';
+const { setPageMeta } = usePageMeta();
 
 definePageMeta({ pageType: 'static' });
 
@@ -52,4 +53,7 @@ const localePath = useLocalePath();
 const { isAuthorized } = useCustomer();
 const { data: cart, cartIsEmpty, loading } = useCart();
 const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));
+
+const icon = 'page';
+setPageMeta(t('cart'), icon);
 </script>

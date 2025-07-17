@@ -4,11 +4,10 @@
       <div v-if="propertyHasNameOrValue(variationProperty)" class="flex items-center variation-properties">
         <ClientOnly>
           <Component
+            :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
             v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
             :variation-property="variationProperty"
-            :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-          >
-          </Component>
+          />
         </ClientOnly>
       </div>
     </template>

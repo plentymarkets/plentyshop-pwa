@@ -1,10 +1,10 @@
 <template>
   <form ref="referenceRef" role="search" class="relative" @submit.prevent="handleSubmit">
     <SfInput
+      id="search-bar"
       ref="inputReference"
       v-model="inputModel"
       :aria-label="t('search')"
-      id="search-bar"
       :placeholder="t('search')"
       @focus="open"
     >
@@ -16,7 +16,7 @@
         <button
           v-if="inputModel"
           type="button"
-          aria-label="Reset search"
+          :aria-label="t('resetSearch')"
           class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
           @click="handleReset"
         >
@@ -41,6 +41,7 @@ const router = useRouter();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
 const { loading } = useSearch();
+const { emit } = usePlentyEvent();
 
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
@@ -55,6 +56,7 @@ const handleReset = () => {
 const handleSubmit = () => {
   props.close?.();
   updateSearchTerm(inputModel.value);
+  emit('frontend:searchProduct', inputModel.value);
   router.push({ path: localePath(paths.search), query: { term: inputModel.value } });
   handleReset();
 };

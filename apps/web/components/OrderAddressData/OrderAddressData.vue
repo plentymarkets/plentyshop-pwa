@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { type OrderAddressDataPropsType } from './types';
-import { type Address, type AddressData } from '@plentymarkets/shop-api';
+import type { OrderAddressDataPropsType } from './types';
+import type { Address, AddressData } from '@plentymarkets/shop-api';
 
 const props = defineProps<OrderAddressDataPropsType>();
 

@@ -5,7 +5,7 @@ describe('useProducts', () => {
     const { fetchProducts, data } = useProducts();
 
     await fetchProducts({
-      page: 1
+      page: 1,
     });
 
     expect(data.value).not.toBeUndefined();

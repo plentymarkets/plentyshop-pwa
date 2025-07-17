@@ -11,8 +11,8 @@
             tagGetters.getAgenciesTagCLass(tag),
             tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white',
           ]"
-          @click="onTagClick(tag)"
           :style="{ backgroundColor: tagGetters.getTagBackgroundColor(tag) }"
+          @click="onTagClick(tag)"
         >
           {{ tagGetters.getTagName(tag) }}
         </SfListItem>

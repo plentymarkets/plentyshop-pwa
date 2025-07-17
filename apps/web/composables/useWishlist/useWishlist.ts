@@ -1,5 +1,9 @@
-import type { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
-import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
+import type {
+  AddWishlistItemResponse,
+  WishlistItem,
+  AddWishlistItemParams,
+  DeleteWishlistItemParams,
+} from '@plentymarkets/shop-api';
 import type {
   FetchWishlist,
   UseWishlistReturn,
@@ -25,7 +29,7 @@ export const useWishlist: UseWishlistReturn = () => {
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
-    wishlistItemIds: [] as string[],
+    wishlistItemIds: [] as number[],
   }));
 
   /**
@@ -58,11 +62,11 @@ export const useWishlist: UseWishlistReturn = () => {
    * @param wishlistItemIds
    */
   const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
-    state.value.wishlistItemIds = wishlistItemIds.map((number) => number.toString());
+    state.value.wishlistItemIds = wishlistItemIds;
 
     if (state.value.data.length > 0) {
       state.value.data = state.value.data.filter((wishListItem) =>
-        state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
+        state.value.wishlistItemIds.includes(wishListItem.variation.id),
       );
     }
   };
@@ -80,13 +84,15 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const addWishlistItem: AddWishlistItem = async (params: AddWishlistItemParams) => {
+    const { emit } = usePlentyEvent();
     state.value.loading = true;
 
     return await useSdk()
       .plentysystems.doAddWishlistItem(params)
       .then(({ data }) => {
-        setWishlistItemIds([...state.value.wishlistItemIds, params.variationId.toString()]);
+        setWishlistItemIds([...state.value.wishlistItemIds, params.variationId]);
         state.value.loading = false;
+        emit('frontend:addToWishlist', { variationId: params.variationId });
         return data || ({} as AddWishlistItemResponse);
       });
   };
@@ -108,7 +114,7 @@ export const useWishlist: UseWishlistReturn = () => {
     return await useSdk()
       .plentysystems.deleteWishlistItem(params)
       .then(({ data }) => {
-        setWishlistItemIds(state.value.wishlistItemIds.filter((id: string) => id !== params.variationId.toString()));
+        setWishlistItemIds(state.value.wishlistItemIds.filter((id: number) => id !== params.variationId));
         state.value.loading = false;
         return !!data;
       });
@@ -126,7 +132,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const isWishlistItem: IsWishlistItem = (variationId: number) => {
-    return !!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item);
+    return !!state.value.wishlistItemIds?.find((item: number) => variationId === item);
   };
 
   /**

@@ -1,4 +1,4 @@
-import { DOMWrapper } from '@vue/test-utils';
+import type { DOMWrapper } from '@vue/test-utils';
 
 declare module '@vue/test-utils' {
   interface VueWrapper {

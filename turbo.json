@@ -1,23 +1,17 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "cache": false
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".output/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
+      "cache": true
     },
     "build:analyze": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "cache": false
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".output/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
+      "cache": true
     },
     "start": {
       "outputs": []
@@ -41,7 +35,19 @@
     "test:watch": {
       "cache": false
     },
+    "test:cypress-checkout": {
+      "cache": false
+    },
+    "test:cypress-paypal": {
+      "cache": false
+    },
+    "test:cypress-editor": {
+      "cache": false
+    },
     "test:cypress-quarantine": {
+      "cache": false
+    },
+    "test:cypress-post-quarantine": {
       "cache": false
     },
     "test:cypress": {

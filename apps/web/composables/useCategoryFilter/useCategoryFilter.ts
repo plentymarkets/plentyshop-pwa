@@ -1,5 +1,5 @@
-import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
-
+import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
+import type { RouteLocationNormalizedGeneric } from 'vue-router';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 
 const reduceFilters =
@@ -42,8 +42,8 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * } = useCategoryFilter();
  * ```
  */
-export const useCategoryFilter = (): UseCategoryFiltersResponse => {
-  const route = useRoute();
+export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
+  const route = to ?? useNuxtApp().$router.currentRoute.value;
 
   /**
    * @description Function for getting facets from url.
@@ -55,19 +55,22 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    */
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     const { getCategoryUrlFromRoute } = useLocalization();
+    const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
     const config = useRuntimeConfig().public;
 
+    const currentRoute = useNuxtApp().$router.currentRoute.value;
+
     return {
-      categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
-      page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
-      sort: route.query.sort?.toString(),
-      facets: route.query.facets?.toString(),
-      feedbackPage: Number(route.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
-      feedbacksPerPage: Number(route.query.feedbacksPerPage as string) || config.defaultItemsPerPage,
-      itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
-      term: route.query.term?.toString(),
-      priceMin: route.query.priceMin?.toString(),
-      priceMax: route.query.priceMax?.toString(),
+      categoryUrlPath: getCategoryUrlFromRoute(currentRoute.fullPath),
+      page: Number(currentRoute.query.page as string) || defaults.DEFAULT_PAGE,
+      sort: currentRoute.query.sort?.toString() ?? defaultSortingOption(),
+      facets: currentRoute.query.facets?.toString(),
+      feedbackPage: Number(currentRoute.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
+      feedbacksPerPage: Number(currentRoute.query.feedbacksPerPage as string) || config.defaultItemsPerPage,
+      itemsPerPage: Number(currentRoute.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
+      term: currentRoute.query.term?.toString(),
+      priceMin: currentRoute.query.priceMin?.toString(),
+      priceMax: currentRoute.query.priceMax?.toString(),
     };
   };
 
@@ -227,7 +230,10 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * ```
    */
   const updateSorting = (sort: string): void => {
-    navigateTo({ query: { ...route.query, sort } });
+    const query = { ...route.query };
+    if (sort) query.sort = sort;
+    else delete query.sort;
+    navigateTo({ query });
   };
 
   /**

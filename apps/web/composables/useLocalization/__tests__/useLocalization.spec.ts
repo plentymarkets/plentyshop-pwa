@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+
 describe('useLocalization', () => {
   const { useNuxtApp } = vi.hoisted(() => {
     return {
@@ -8,16 +9,15 @@ describe('useLocalization', () => {
             locale: ref('de'),
             defaultLocale: 'en',
             strategy: 'prefix_and_default',
-          }
-        }
-      })
-    }
+          },
+        };
+      }),
+    };
   });
 
   mockNuxtImport('useNuxtApp', () => {
-    return useNuxtApp
+    return useNuxtApp;
   });
-  
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -30,15 +30,14 @@ describe('useLocalization', () => {
   });
 
   it('should test strategy "prefix_except_default"', () => {
-
     useNuxtApp.mockImplementation(() => {
       return {
         $i18n: {
           locale: ref('de'),
           defaultLocale: 'de',
           strategy: 'prefix_except_default',
-        }
-      }
+        },
+      };
     });
     const path = '/category/subcategory';
 
@@ -54,8 +53,8 @@ describe('useLocalization', () => {
           locale: ref('en'),
           defaultLocale: 'de',
           strategy: 'prefix',
-        }
-      }
+        },
+      };
     });
 
     const path = '/en/category/subcategory';

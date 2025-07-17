@@ -1,5 +1,5 @@
-import { type Breadcrumb, Product, type ProductParams } from '@plentymarkets/shop-api';
-import { UseProductOrderProperties } from '../useProductOrderProperties/types';
+import type { Product, Breadcrumb, ProductParams } from '@plentymarkets/shop-api';
+import type { UseProductOrderProperties } from '../useProductOrderProperties/types';
 
 export interface UseProductState {
   data: Product;

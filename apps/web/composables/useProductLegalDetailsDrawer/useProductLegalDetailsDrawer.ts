@@ -1,4 +1,4 @@
-import { UseProductLegalDetailsMethodsReturn } from './types';
+import type { UseProductLegalDetailsMethodsReturn } from './types';
 
 const open = ref(false);
 

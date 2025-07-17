@@ -1,40 +1,14 @@
-name: 'Setup Node and Yarn'
-description: 'The default Node and Yarn setup for all workflows'
-inputs:
-  npm-auth-token:
-    description: 'NPM authentication token'
-    required: true
+name: 'Setup Node'
+description: 'The default Node setup for all workflows'
 runs:
   using: 'composite'
   steps:
-    - name: Enable corepack
-      run: corepack enable
-      shell: bash
-
     - name: Setup node
       uses: actions/setup-node@v4
       with:
         node-version-file: '.nvmrc'
-        cache: 'yarn'
-        registry-url: 'https://npm.pkg.github.com'
-
-    - name: Set yarn version
-      run: |
-        yarn set version stable
-        yarn set version 3.6.4
-      shell: bash
-
-    - name: Setup .yarnrc.yml
-      run: |
-        yarn config set nodeLinker node-modules
-        yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-        yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-        yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
-        yarn plugin import workspace-tools
-      shell: bash
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
-
-    - name: Install Dependencies
-      run: yarn --frozen-lockfile
+        cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install dependencies
+      run: npm ci
       shell: bash

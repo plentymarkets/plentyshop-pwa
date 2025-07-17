@@ -6,12 +6,14 @@ export interface UseStructuredDataState {
 export type SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => void;
 export type SetLogoMeta = () => void;
 export type SetProductRobotsMetaData = (product: Product) => void;
+export type SetProductCanonicalMetaData = (product: Product) => void;
 
 export interface UseStructuredData {
   loading: Readonly<Ref<boolean>>;
   setLogoMeta: SetLogoMeta;
   setProductMetaData: SetProductMetaData;
   setProductRobotsMetaData: SetProductRobotsMetaData;
+  setProductCanonicalMetaData: SetProductCanonicalMetaData;
 }
 
 export type useStructuredDataReturn = () => UseStructuredData;

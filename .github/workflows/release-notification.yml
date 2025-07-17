@@ -1,0 +1,42 @@
+name: Release Notification
+on:
+  release:
+    types: [published]
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push release notification
+        run: |
+          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+            "cardsV2": [
+                {
+                    "cardId": "${{ github.event.release.tag_name }}",
+                    "card": {
+                        "header": {
+                            "title": "New release created!",
+                            "subtitle": "Version: ${{ github.event.release.tag_name }}"
+                        },
+                        "sections": [
+                            {
+                                "widgets": [
+                                    {
+                                        "buttonList": {
+                                            "buttons": {
+                                                "text": "Open release",
+                                                "onClick": {
+                                                    "openLink": {
+                                                        "url": "https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]}'

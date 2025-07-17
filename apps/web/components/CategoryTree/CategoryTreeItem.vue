@@ -1,9 +1,9 @@
 <template>
   <SfListItem
+    v-if="name.length > 0"
     size="lg"
     :class="['md:py-1.5', { 'bg-primary-100 hover:bg-primary-100 active:bg-primary-100 font-medium': selected }]"
     data-testid="category-tree-item"
-    v-if="name.length > 0"
   >
     <NuxtLink :to="localePath(href)">
       <span class="flex gap-2 items-center">
@@ -13,9 +13,7 @@
         </span>
         <SfCounter v-if="Number(count) > -1" class="md:text-sm font-normal">{{ count }}</SfCounter>
       </span>
-      <template #suffix>
-        <SfIconCheck v-if="selected" size="sm" class="text-primary-500" />
-      </template>
+      <SfIconCheck v-if="selected" size="sm" class="text-primary-500" />
     </NuxtLink>
   </SfListItem>
 </template>

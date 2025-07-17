@@ -1,18 +1,18 @@
 <template>
   <form
-    @submit="submitForm"
     novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="shipping-address-form"
+    @submit.prevent="validateAndSubmitForm"
   >
     <label>
       <UiFormLabel>
-        {{ hasShippingCompany ? $t('form.firstNameLabel') : `${$t('form.firstNameLabel')} ${$t('form.required')}` }}
+        {{ hasShippingCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
+        v-model="firstName"
         name="firstName"
         autocomplete="given-name"
-        v-model="firstName"
         v-bind="firstNameAttributes"
         :invalid="Boolean(errors['firstName'])"
       />
@@ -21,12 +21,12 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasShippingCompany ? $t('form.lastNameLabel') : `${$t('form.lastNameLabel')} ${$t('form.required')}` }}
+        {{ hasShippingCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
+        v-model="lastName"
         name="lastName"
         autocomplete="family-name"
-        v-model="lastName"
         v-bind="lastNameAttributes"
         :invalid="Boolean(errors['lastName'])"
       />
@@ -34,17 +34,17 @@
     </label>
 
     <div class="md:col-span-3">
-      <SfLink @click="hasShippingCompany = !hasShippingCompany" class="select-none hover:cursor-pointer">
-        {{ !hasShippingCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
+      <SfLink class="select-none hover:cursor-pointer" @click="hasShippingCompany = !hasShippingCompany">
+        {{ !hasShippingCompany ? t('form.addCompany') : t('form.removeCompany') }}
       </SfLink>
     </div>
 
     <label v-if="hasShippingCompany">
-      <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="companyName"
         name="companyName"
         autocomplete="company"
-        v-model="companyName"
         v-bind="companyNameAttributes"
         :invalid="Boolean(errors['companyName'])"
       />
@@ -52,10 +52,10 @@
     </label>
 
     <label v-if="hasShippingCompany" class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
-        autocomplete="vatNumber"
         v-model="vatNumber"
+        autocomplete="vatNumber"
         v-bind="vatNumberAttributes"
         :invalid="Boolean(errors['vatNumber'])"
       />
@@ -63,11 +63,11 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="streetName"
         name="streetName"
         autocomplete="address-line1"
-        v-model="streetName"
         v-bind="streetNameAttributes"
         :invalid="Boolean(errors['streetName'])"
       />
@@ -75,11 +75,11 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="apartment"
         name="streetNumber"
         autocomplete="address-line2"
-        v-model="apartment"
         v-bind="apartmentAttributes"
         :invalid="Boolean(errors['apartment'])"
       />
@@ -87,11 +87,11 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="zipCode"
         name="zipCode"
         autocomplete="postal-code"
-        v-model="zipCode"
         v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['zipCode'])"
       />
@@ -99,11 +99,11 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="city"
         name="city"
         autocomplete="address-level2"
-        v-model="city"
         v-bind="cityAttributes"
         :invalid="Boolean(errors['city'])"
       />
@@ -111,12 +111,12 @@
     </label>
 
     <label class="md:col-span-3">
-      <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
-        name="country"
         v-model="country"
+        name="country"
         v-bind="countryAttributes"
-        :placeholder="$t('form.selectPlaceholder')"
+        :placeholder="t('form.selectPlaceholder')"
         :invalid="Boolean(errors['country'])"
         wrapper-class-name="bg-white"
         class="!ring-1 !ring-neutral-200"
@@ -133,32 +133,66 @@
       <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
-    <label v-if="!restrictedAddresses" class="flex items-center gap-2">
-      <SfCheckbox data-testid="use-shipping-as-billing" v-model="shippingAsBilling" />
-      <span class="cursor-pointer select-none">{{ $t('form.useAsBillingLabel') }}</span>
-    </label>
+    <div
+      v-if="!restrictedAddresses || showAddressSaveButton"
+      class="md:col-span-3 flex flex-col sm:flex-row sm:justify-between sm:items-center"
+    >
+      <label v-if="!restrictedAddresses" class="flex items-center gap-2">
+        <SfCheckbox v-model="shippingAsBilling" data-testid="use-shipping-as-billing" />
+        <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
+      </label>
+
+      <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
+        <UiButton
+          :data-testid="`save-address-${AddressType.Shipping}`"
+          :disabled="formIsLoading"
+          variant="secondary"
+          type="submit"
+        >
+          {{ t('saveAddress') }}
+        </UiButton>
+
+        <UiButton
+          v-if="hasShippingAddress"
+          :disabled="formIsLoading || disabled"
+          variant="secondary"
+          class="ml-2"
+          :data-testid="`close-address-${AddressType.Shipping}`"
+          :aria-label="t('closeAddressForm')"
+          @click="edit"
+        >
+          <SfIconClose />
+        </UiButton>
+      </div>
+    </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
-import { useForm, ErrorMessage } from 'vee-validate';
-import { type AddressFormProps } from './types';
-import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, ApiError, userAddressGetters } from '@plentymarkets/shop-api';
+import { SfCheckbox, SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
+import { ErrorMessage, useForm } from 'vee-validate';
+import type { AddressFormShippingProps } from './types';
 
-const { address, addAddress = false } = defineProps<AddressFormProps>();
+const { disabled, address, addAddress = false } = defineProps<AddressFormShippingProps>();
 
-const { isGuest } = useCustomer();
+const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
+const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { handleCartTotalChanges } = useCartTotalChange();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
-const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
+const { set: setShippingAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
 const { restrictedAddresses } = useRestrictedAddress();
+const { setShippingSkeleton } = useCheckout();
 const {
+  isLoading: formIsLoading,
+  add: showNewForm,
+  open: editing,
+  addressToEdit,
   hasCompany: hasShippingCompany,
   addressToSave: shippingAddressToSave,
   save: saveShippingAddress,
@@ -177,9 +211,12 @@ const [zipCode, zipCodeAttributes] = defineField('zipCode');
 const [companyName, companyNameAttributes] = defineField('companyName');
 const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 
-if (!addAddress) {
+const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
+
+if (!addAddress && address) {
   hasShippingCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
-  setValues(address as any);
+  setValues(address as unknown as Record<string, string>);
+
   if (!hasShippingCompany.value) {
     companyName.value = '';
     vatNumber.value = '';
@@ -230,6 +267,32 @@ const handleBillingPrimaryAddress = async () => {
   }
 };
 
+const validateAndSubmitForm = async () => {
+  const formData = await validate();
+
+  if (formIsLoading.value) return;
+  if (missingGuestCheckoutEmail.value) return backToContactInformation();
+
+  if (formData.valid) {
+    try {
+      setShippingSkeleton(true);
+      await submitForm();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === getErrorCode('1400')) {
+          await useCustomer().getSession();
+          await submitForm();
+        }
+      } else if (error instanceof ApiError) {
+        useHandleError(error);
+      }
+    } finally {
+      setShippingSkeleton(false);
+    }
+    if (showNewForm.value) showNewForm.value = false;
+  }
+};
+
 const submitForm = handleSubmit((shippingAddressForm) => {
   shippingAddressToSave.value = shippingAddressForm as Address;
 
@@ -238,15 +301,18 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     shippingAddressToSave.value.companyName = '';
     shippingAddressToSave.value.vatNumber = '';
   }
-
-  saveShippingAddress()
+  return saveShippingAddress()
     .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
-    .then(() => handleCartTotalChanges())
-    .catch((error) => useHandleError(error));
+    .then(() => handleCartTotalChanges());
 });
 
-defineExpose({ validate, submitForm });
+const edit = (address: Address) => {
+  if (disabled) return;
+  addressToEdit.value = editing.value || showNewForm.value ? ({} as Address) : address;
+  editing.value = !(editing.value || showNewForm.value);
+  showNewForm.value = false;
+};
 </script>

@@ -17,10 +17,10 @@
         </div>
         <p class="text-xs text-center" data-testid="review-count">{{ t('basedOnratings', { count: totalReviews }) }}</p>
         <UiButton
-          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.createReview)"
           data-testid="add-review-button"
           class="mt-2 mb-4 mx-auto"
           size="base"
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.createReview)"
         >
           {{ t('createCustomerReview') }}
         </UiButton>

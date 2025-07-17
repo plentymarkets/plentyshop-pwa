@@ -19,8 +19,8 @@
     "strict": true,
     "target": "ES2019",
     "types": [
-      "@types/express",
-      "jest"
+      "jest",
+      "@vue-storefront/middleware",
     ],
     "rootDir": ".",
     "outDir": "lib"

@@ -1,5 +1,4 @@
-import type { Facet } from '@plentymarkets/shop-api';
-import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
 export interface UseCanonicalState {
   loading: boolean;
 }

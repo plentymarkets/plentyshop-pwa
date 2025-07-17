@@ -5,6 +5,7 @@ export interface UseOfferState {
   relatedOrder: Order | null;
   loading: boolean;
   error: GetOfferError | null;
+  hasError: boolean;
 }
 
 export type FetchOffer = (params: OfferSearchParams) => Promise<Offer | string>;
@@ -19,5 +20,6 @@ export interface UseOffer {
   declineOffer: DeclineOffer;
   acceptOffer: AcceptOffer;
   error: Readonly<Ref<UseOfferState['error']>>;
+  hasError: Readonly<Ref<UseOfferState['hasError']>>;
 }
 export type UseOfferReturn = () => UseOffer;

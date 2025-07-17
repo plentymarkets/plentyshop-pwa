@@ -22,7 +22,7 @@ definePageMeta({
 
 if (error.value) {
   send({
-    type: 'negative',
+    type: 'warning',
     message: error.value.error.message,
   });
 }

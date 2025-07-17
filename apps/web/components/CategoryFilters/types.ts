@@ -7,7 +7,3 @@ export type CategoryFiltersProps = {
 export type FilterProps = {
   facet?: FilterGroup;
 };
-
-export type FilterEmits = {
-  // (event: 'update:selected', parameter: FilterProps['selected']): void;
-};

@@ -7,7 +7,7 @@ import type {
   UseReturnOrderState,
   CleanReturnData,
 } from './types';
-import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
+import type { Order, MakeOrderReturnParams, ApiError } from '@plentymarkets/shop-api';
 import { orderGetters, returnGetters } from '@plentymarkets/shop-api';
 
 /**
@@ -137,7 +137,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
   const cleanReturnData: CleanReturnData = () => {
     const data = state.value.returnData['variationIds'];
 
-    const filteredObject = Object.fromEntries(Object.entries(data).filter(([key, value]) => value.quantity > 0));
+    const filteredObject = Object.fromEntries(Object.entries(data).filter(([_, value]) => value.quantity > 0));
 
     state.value.returnData['variationIds'] = filteredObject;
   };
@@ -151,9 +151,14 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * ```
    */
   const makeOrderReturn = async () => {
-    state.value.loading = true;
-    await useAsyncData(() => useSdk().plentysystems.doMakeOrderReturn(state.value.returnData));
-    state.value.loading = false;
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.doMakeOrderReturn(state.value.returnData);
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
   };
   /**
    * @description Function checking if user selected at least 1 product for return

@@ -1,4 +1,7 @@
 import { defineConfig } from 'cypress';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig({
   fixturesFolder: '__tests__/fixtures',
@@ -12,8 +15,12 @@ export default defineConfig({
   chromeWebSecurity: false,
   env: {
     DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 10,
+    POST_CODE_VALIDATION_COUNTRY: 'United Kingdom',
+    E2E_TEST_PAYPAL_EMAIL: process.env.E2E_TEST_PAYPAL_EMAIL || '',
+    E2E_TEST_PAYPAL_PASSWORD: process.env.E2E_TEST_PAYPAL_PASSWORD || '',
   },
   e2e: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },

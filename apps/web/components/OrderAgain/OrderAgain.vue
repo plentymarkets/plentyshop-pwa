@@ -1,19 +1,25 @@
 <template>
   <UiModal v-model="isOpen" tag="section" class="w-full h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto">
     <header>
-      <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+      <h2 class="font-bold text-lg leading-6 md:text-2xl">
         <span>{{ t('account.ordersAndReturns.orderAgain.heading') }}</span>
       </h2>
       <div v-if="!loading">
-        <div class="font-medium" v-if="hasItemsChanged">
+        <div v-if="hasItemsChanged" class="font-medium">
           {{ t('account.ordersAndReturns.orderAgain.subtextChanges') }}
         </div>
-        <div class="font-medium" v-else>
+        <div v-else class="font-medium">
           {{ t('account.ordersAndReturns.orderAgain.subtext') }}
         </div>
       </div>
       <div class="absolute right-2 top-2 flex items-center">
-        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton
+          :aria-label="t('quickCheckout.close')"
+          data-testid="quick-checkout-close"
+          square
+          variant="tertiary"
+          @click="close"
+        >
           <SfIconClose />
         </UiButton>
       </div>
@@ -33,7 +39,8 @@
               <NuxtImg
                 ref="img"
                 :src="
-                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) || '/images/placeholder.png'
+                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) ||
+                  '/_nuxt-plenty/images/placeholder.png'
                 "
                 :alt="orderGetters.getItemName(item)"
                 width="300"
@@ -51,8 +58,8 @@
                 v-if="
                   orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesAvailable(item)
                 "
-                :price="orderGetters.getOrderAgainInformationPrice(item)"
-                :crossed-price="orderGetters.getItemPrice(item)"
+                :price="roundAmount(orderGetters.getOrderAgainInformationPrice(item))"
+                :crossed-price="itemPrice(item)"
               />
               <div
                 v-if="orderGetters.getItemShortDescription(order, item)"
@@ -61,13 +68,13 @@
               >
                 {{ orderGetters.getItemShortDescription(order, item) }}
               </div>
-              <div class="mb-2" v-if="!orderGetters.isBundleComponents(item)">
+              <div v-if="!orderGetters.isBundleComponents(item)" class="mb-2">
                 <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
                   <li v-for="(attribute, index) in orderGetters.getOrderAttributes(item)" :key="index">
-                    <span class="mr-1" v-if="orderGetters.getOrderItemAttributeName(attribute)">
+                    <span v-if="orderGetters.getOrderItemAttributeName(attribute)" class="mr-1">
                       {{ orderGetters.getOrderItemAttributeName(attribute) }}:
                     </span>
-                    <span class="font-medium" v-if="orderGetters.getOrderItemAttributeValue(attribute)">
+                    <span v-if="orderGetters.getOrderItemAttributeValue(attribute)" class="font-medium">
                       {{ orderGetters.getOrderItemAttributeValue(attribute) }}
                     </span>
                   </li>
@@ -84,7 +91,7 @@
                         v-if="
                           orderGetters.getOrderAgainOrderProperty(item, property) &&
                           productPropertyGetters.getOrderPropertyLabel(
-                            orderGetters.getOrderAgainOrderProperty(item, property),
+                            orderGetters.getOrderAgainOrderProperty(item, property)!,
                           ).surchargeType
                         "
                       >
@@ -92,22 +99,21 @@
                           t(
                             'orderProperties.vat.' +
                               productPropertyGetters.getOrderPropertyLabel(
-                                orderGetters.getOrderAgainOrderProperty(item, property),
+                                orderGetters.getOrderAgainOrderProperty(item, property)!,
                               ).surchargeType,
                           )
                         }}
                         {{
-                          n(
+                          format(
                             productPropertyGetters.getOrderPropertySurcharge(
-                              orderGetters.getOrderAgainOrderProperty(item, property),
+                              orderGetters.getOrderAgainOrderProperty(item, property)!,
                             ),
-                            'currency',
                           )
                         }})</span
                       >
                       <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
                     </span>
-                    <span class="font-medium" v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
+                    <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0" class="font-medium">
                       {{ orderGetters.getItemOrderPropertyValue(property) }}
                     </span>
                   </li>
@@ -163,7 +169,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.orderPropertyNotAvailableOrChanged') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="orderGetters.getOrderAgainInformationPrice(item) > orderGetters.getItemPrice(item)"
+                  v-else-if="roundAmount(orderGetters.getOrderAgainInformationPrice(item)) > itemPrice(item)"
                   variant="secondary"
                   size="sm"
                   class="!font-medium"
@@ -172,7 +178,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.priceUp') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="orderGetters.getOrderAgainInformationPrice(item) < orderGetters.getItemPrice(item)"
+                  v-else-if="roundAmount(orderGetters.getOrderAgainInformationPrice(item)) < itemPrice(item)"
                   variant="positive"
                   size="sm"
                   class="!font-medium"
@@ -184,7 +190,7 @@
             </div>
           </div>
         </div>
-        <div class="w-full" v-else>
+        <div v-else class="w-full">
           <SkeletonsOrderAgainItem v-for="item in orderGetters.getItems(order)" :key="item.id" />
         </div>
       </div>
@@ -193,18 +199,28 @@
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
-          <span>{{ t('excludedShipping') }}</span>
+          <i18n-t keypath="excludedShipping" scope="global">
+            <template #shipping>
+              <SfLink
+                :href="localePath(paths.shipping)"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ t('delivery') }}
+              </SfLink>
+            </template>
+          </i18n-t>
         </div>
         <div class="ml-auto float-right">
-          <UiButton class="mr-2" variant="secondary" @click="close()" size="lg">
+          <UiButton class="mr-2" variant="secondary" size="lg" @click="close()">
             {{ t('account.ordersAndReturns.orderAgain.cancel') }}
           </UiButton>
           <UiButton
             data-testid="quick-checkout-cart-button"
-            @click="addToCart"
             :disabled="loading || loadingAddToCart || !canAddToCart"
             size="lg"
             variant="primary"
+            @click="addToCart"
           >
             <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
             <span v-else>{{ t('account.ordersAndReturns.orderAgain.addToCart') }}</span>
@@ -223,15 +239,19 @@ import {
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfListItem,
+  SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
+import type { OrderItem } from '@plentymarkets/shop-api';
 import { orderGetters, productPropertyGetters } from '@plentymarkets/shop-api';
+import { paths } from '~/utils/paths';
 
 const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const { showNetPrices } = useCustomer();
 
 const localePath = useLocalePath();
@@ -262,5 +282,16 @@ const addToCart = async () => {
     goToPage(paths.cart);
   }
   loadingAddToCart.value = false;
+};
+
+const roundAmount = (value: number) => {
+  return Math.round(value * 100) / 100;
+};
+const itemPrice = (item: OrderItem): number => {
+  if (showNetPrices) {
+    return roundAmount(orderGetters.getItemNetPrice(item));
+  } else {
+    return roundAmount(orderGetters.getItemPrice(item));
+  }
 };
 </script>

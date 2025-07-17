@@ -1,7 +1,7 @@
 <template>
   <div data-testid="shipping-method" class="md:px-4 my-6">
     <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
-    <div class="mt-4">
+    <div v-if="!loading" class="mt-4">
       <ul
         v-if="shippingMethods && shippingMethods.length > 0"
         class="grid gap-y-4 md:grid-cols-2 md:gap-x-4"
@@ -12,10 +12,10 @@
           v-for="(method, index) in shippingMethods"
           :key="`shipping-method-${index}`"
           :disabled="disabled"
-          @click.prevent="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
           tag="label"
           children-tag="div"
           class="border rounded-md items-start select-none"
+          @click.prevent="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
         >
           <template #prefix>
             <SfRadio
@@ -32,6 +32,15 @@
             <span>{{ shippingProviderGetters.getShippingMethodName(method) }}</span>
             <span class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</span>
           </div>
+          <div v-if="getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method))">
+            <span class="text-sm">
+              {{
+                t('shippingMethod.maxDeliveryDays', {
+                  days: getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method)),
+                })
+              }}</span
+            >
+          </div>
         </SfListItem>
       </ul>
 
@@ -47,31 +56,38 @@
         </div>
       </div>
     </div>
+    <ShippingMethodSkeleton v-else />
 
     <ShippingPrivacy v-if="showShippingPrivacy" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfIconWarning, SfListItem, SfRadio } from '@storefront-ui/vue';
-import { type CheckoutShippingEmits, type ShippingMethodProps } from './types';
+import type { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
-const { shippingMethods, disabled = false } = defineProps<ShippingMethodProps>();
+const { disabled = false, loading = false } = defineProps<ShippingMethodProps>();
 const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const emit = defineEmits<CheckoutShippingEmits>();
 
 const { data: cart } = useCart();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const { selectedMethod } = useCartShippingMethods();
+const { shippingMethods } = useCheckoutPagePaymentAndShipping();
 const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
 
 const showShippingPrivacy = computed(
   () =>
-    shippingMethods.length > 0 &&
+    shippingMethods.value.length > 0 &&
     selectedMethod.value &&
     shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod.value),
 );
+
+const getDeliveryDays = (method: string) => {
+  return cartGetters.getMaxDeliveryDays(cart.value, Number(method));
+};
 
 const updateShippingMethod = (shippingId: string) => {
   if (disabled) return;
@@ -80,6 +96,6 @@ const updateShippingMethod = (shippingId: string) => {
 };
 
 const getShippingAmount = (amount: string) => {
-  return amount === '0' ? t('shippingMethod.free') : n(Number(amount), 'currency');
+  return amount === '0' ? t('shippingMethod.free') : format(Number(amount));
 };
 </script>

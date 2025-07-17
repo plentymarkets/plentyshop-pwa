@@ -1,9 +1,9 @@
-import { AdditionalInformationParams } from '@plentymarkets/shop-api';
-import {
-  type DoAdditionalInformation,
-  type DoAdditionalInformationReturn,
-  type SetShippingPrivacyAgreement,
+import type { AdditionalInformationParams, ApiError } from '@plentymarkets/shop-api';
+import type {
   UseAdditionalInformationState,
+  DoAdditionalInformation,
+  DoAdditionalInformationReturn,
+  SetShippingPrivacyAgreement,
 } from './types';
 
 /**
@@ -21,6 +21,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     data: null,
     loading: false,
     shippingPrivacyAgreement: false,
+    customerWish: null,
     showErrors: false,
   }));
 
@@ -39,13 +40,19 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const doAdditionalInformation: DoAdditionalInformation = async (params: AdditionalInformationParams) => {
     state.value.loading = true;
     try {
-      const { error } = await useAsyncData(() => useSdk().plentysystems.doAdditionalInformation(params));
-      useHandleError(error.value);
+      await useSdk().plentysystems.doAdditionalInformation(params);
       state.value.data = null;
 
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      const exception = error as ApiError;
+      if (Number(exception?.code) === 1400) {
+        await useCustomer().getSession();
+        await useSdk().plentysystems.doAdditionalInformation(params);
+      } else {
+        useHandleError(error as ApiError);
+      }
+      return state.value.data;
     } finally {
       state.value.loading = false;
     }
@@ -71,9 +78,25 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     state.value.loading = false;
   };
 
+  /**
+   * @description Function for setting the customer wish value.
+   * @example
+   * ``` ts
+   * setCustomerWish({
+   *   customerWish: 'example custom wish'
+   * });
+   * ```
+   */
+  const setCustomerWish = (customerWish: string | null) => {
+    state.value.loading = true;
+    state.value.customerWish = customerWish;
+    state.value.loading = false;
+  };
+
   return {
     setShippingPrivacyAgreementErrors,
     setShippingPrivacyAgreement,
+    setCustomerWish,
     doAdditionalInformation,
     ...toRefs(state.value),
   };

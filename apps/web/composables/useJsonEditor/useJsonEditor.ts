@@ -6,6 +6,7 @@ export const useJsonEditor = (initialJson: string) => {
   const lineNumberContainer = ref<HTMLElement | null>(null);
 
   const jsonText = useState<string>('jsonText', () => initialJson);
+  const originalJsonText = jsonText.value;
 
   const syncScroll = () => {
     if (lineNumberContainer.value && textarea.value) {
@@ -25,8 +26,15 @@ export const useJsonEditor = (initialJson: string) => {
       JSON.parse(jsonText.value);
       errorMessage.value = '';
       isEditingEnabled.value = true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingEnabled.value = false;
+    }
+  };
+
+  const checkInputChange = () => {
+    if (jsonText.value === originalJsonText) {
       isEditingEnabled.value = false;
     }
   };
@@ -35,6 +43,8 @@ export const useJsonEditor = (initialJson: string) => {
     try {
       validateJson();
       updateLineCount();
+      checkInputChange();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
       isEditingEnabled.value = false;

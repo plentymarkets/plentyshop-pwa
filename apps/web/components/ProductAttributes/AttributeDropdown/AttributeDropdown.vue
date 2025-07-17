@@ -8,11 +8,11 @@
     </label>
     <SfSelect
       :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
-      size="lg"
       v-model="value"
-      @update:model-value="(event) => doUpdateValue(Number(event))"
+      size="lg"
       :placeholder="t('pleaseSelect')"
       :invalid="Boolean(errors['selectedValue'])"
+      @update:model-value="(event) => doUpdateValue(Number(event))"
     >
       <option :value="undefined">{{ t('pleaseSelect') }}</option>
       <option

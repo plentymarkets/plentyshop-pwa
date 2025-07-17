@@ -10,6 +10,11 @@ definePageMeta({
   layout: false,
   middleware: ['guest-guard'],
 });
+const { t } = useI18n();
+const { setPageMeta } = usePageMeta();
+
+const icon = 'page';
+setPageMeta(t('auth.login.submitLabel'), icon);
 
 const router = useRouter();
 const localePath = useLocalePath();
@@ -17,12 +22,6 @@ const isLogin = ref(true);
 
 const navigateAfterAuth = () => {
   const redirectUrl = router.currentRoute.value.query.redirect as string;
-
-  if (redirectUrl) {
-    router.push(localePath(redirectUrl));
-    return;
-  }
-
-  router.go(-1);
+  window.location.href = redirectUrl ? localePath(redirectUrl) : localePath(paths.home);
 };
 </script>

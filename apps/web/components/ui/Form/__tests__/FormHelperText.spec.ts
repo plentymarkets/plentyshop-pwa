@@ -5,6 +5,6 @@ describe('<FormHelperText />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(UiFormHelperText);
 
-    expect(getByTestId('form-helper-text')); 
+    expect(getByTestId('form-helper-text'));
   });
 });

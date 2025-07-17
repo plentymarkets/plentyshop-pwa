@@ -11,10 +11,10 @@
     </template>
 
     <div class="flex gap-x-4">
-      <UiButton @click="closeReviewModal" type="button" variant="secondary" class="flex-1">
+      <UiButton type="button" variant="secondary" class="flex-1" @click="closeReviewModal">
         {{ t('review.cancel') }}
       </UiButton>
-      <UiButton @click="deleteProductReview" type="button" class="flex-1" data-testid="confirm-delete">
+      <UiButton type="button" class="flex-1" data-testid="confirm-delete" @click="deleteProductReview">
         {{ t('review.deleteReviewConfirmation') }}
       </UiButton>
     </div>

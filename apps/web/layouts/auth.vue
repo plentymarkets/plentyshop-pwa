@@ -17,7 +17,8 @@
       <PreviewMode />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
-      <UiFooter />
+      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+      <UiFooter v-if="!runtimeConfig.public.isDev" />
     </NuxtLazyHydrate>
   </div>
 </template>
@@ -27,5 +28,7 @@ defineProps<{
   heading: string;
 }>();
 
+const runtimeConfig = useRuntimeConfig();
+const route = useRoute();
 const viewport = useViewport();
 </script>

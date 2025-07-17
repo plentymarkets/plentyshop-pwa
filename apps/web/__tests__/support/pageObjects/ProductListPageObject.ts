@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class ProductListPageObject extends PageObject {
   get categoryGrid() {
@@ -71,8 +71,8 @@ export class ProductListPageObject extends PageObject {
 
   addToCart() {
     this.products.find(`[data-testid="add-to-basket-short"]`).first().click();
-    cy.wait(1000)
-    cy.getByTestId('quick-checkout-close').click()
+    cy.wait(1000);
+    cy.getByTestId('quick-checkout-close').click();
     return this;
   }
 
@@ -80,8 +80,7 @@ export class ProductListPageObject extends PageObject {
     cy.intercept('/plentysystems/getProduct').as('getProduct');
     cy.intercept('/plentysystems/getReview').as('getReview');
     this.products.first().click();
-    cy.wait('@getProduct');
-    cy.wait('@getReview');
+    cy.wait(['@getProduct', '@getReview']);
     return this;
   }
 }

@@ -7,7 +7,13 @@
     aria-labelledby="return-modal-title"
   >
     <header class="mb-4">
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close()">
+      <UiButton
+        :aria-label="t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="close()"
+      >
         <SfIconClose />
       </UiButton>
     </header>
@@ -25,26 +31,26 @@
             </div>
           </div>
           <label
-            @click="selectAll(!selectAllItems)"
             for="selectAll"
             class="cursor-pointer w-fit select-none bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1 flex items-center"
+            @click="selectAll(!selectAllItems)"
           >
-            <SfCheckbox class="text-primary-800 mr-2" id="selectAll" v-model="selectAllItems" value="value" />
+            <SfCheckbox id="selectAll" v-model="selectAllItems" class="text-primary-800 mr-2" value="value" />
             {{ t('returns.selectAll') }}
           </label>
         </div>
 
         <OrderReturnProductCard
           v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
+          :key="item.id"
           :order="currentReturnOrder"
           :order-item="item"
           :index="index"
-          :key="item.id"
         />
       </template>
 
       <div class="flex flex-row justify-between mt-5">
-        <UiButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </UiButton>
+        <UiButton variant="secondary" @click="close()"> {{ t('returns.cancel') }} </UiButton>
         <UiButton @click="initiateReturn()">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />

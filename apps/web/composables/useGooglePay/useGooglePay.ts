@@ -1,5 +1,6 @@
-import { GooglePayConfig, GooglePayPayPal } from '~/composables/useGooglePay/types';
-import { cartGetters, orderGetters, paypalGetters, PayPalGooglePayAllowedPaymentMethod } from '@plentymarkets/shop-api';
+import type { GooglePayConfig, GooglePayPayPal } from '~/composables/useGooglePay/types';
+import type { PayPalGooglePayAllowedPaymentMethod } from '@plentymarkets/shop-api';
+import { cartGetters, paypalGetters } from '@plentymarkets/shop-api';
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
@@ -42,6 +43,7 @@ export const useGooglePay = () => {
       state.value.scriptLoaded = true;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state.value.script = (script as any).Googlepay() as GooglePayPayPal;
     state.value.googleConfig = await state.value.script.config();
     state.value.paymentsClient = getPaymentsClient();
@@ -81,16 +83,18 @@ export const useGooglePay = () => {
   const processPayment = async (paymentData: google.payments.api.PaymentData) => {
     if (!state.value.script) return;
     const localePath = useLocalePath();
-    const { createCreditCardTransaction, getOrder, captureOrder, executeOrder } = usePayPal();
-    const { data: cart, clearCartItems } = useCart();
-    const { shippingPrivacyAgreement } = useAdditionalInformation();
-    const { createOrder } = useMakeOrder();
+    const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
+      usePayPal();
+    const { clearCartItems } = useCart();
     const { $i18n } = useNuxtApp();
     const { processingOrder } = useProcessingOrder();
+    const { emit } = usePlentyEvent();
 
     state.value.paymentLoading = true;
 
-    const transaction = await createCreditCardTransaction();
+    const transaction = await createTransaction({
+      type: 'basket',
+    });
     if (!transaction || !transaction.id) {
       showErrorNotification($i18n.t('storefrontError.order.createFailed'));
       return;
@@ -103,36 +107,24 @@ export const useGooglePay = () => {
 
     if (status === 'PAYER_ACTION_REQUIRED') {
       await state.value.script.initiatePayerAction({ orderId: transaction.id });
-      const paypalOrder = await getOrder({
-        paypalOrderId: transaction.id,
-        payPalPayerId: transaction.payPalPayerId,
-      });
+      const paypalOrder = await getOrder(transaction.id);
       status = paypalOrder?.result?.status || 'ERROR';
     }
 
     if (status === 'APPROVED') {
-      await captureOrder({
-        paypalOrderId: transaction.id,
-        paypalPayerId: transaction.payPalPayerId,
-      });
-
-      const order = await createOrder({
-        paymentId: cart.value.methodOfPaymentId,
-        additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
-      });
+      const order = await createPlentyOrder();
 
       if (!order || !order.order || !order.order.id) {
         showErrorNotification($i18n.t('storefrontError.order.createFailed'));
         return;
       }
 
-      await executeOrder({
-        mode: 'paypal',
-        plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-        paypalTransactionId: transaction.id,
-      });
+      await captureOrder(transaction.id);
+      await createPlentyPaymentFromPayPalOrder(transaction.id, order.order.id);
 
       processingOrder.value = true;
+      emit('frontend:orderCreated', order);
+      emit('module:clearCart', null);
       clearCartItems();
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
       state.value.paymentLoading = false;

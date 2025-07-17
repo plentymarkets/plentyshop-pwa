@@ -1,7 +1,7 @@
 <template>
   <fieldset class="md:mx-4 my-6" data-testid="checkout-payment">
     <legend class="text-neutral-900 text-lg font-bold mb-4">{{ t('checkoutPayment.heading') }}</legend>
-    <div v-if="paymentMethods.list.length > 0" class="grid gap-4 grid-cols-2">
+    <div v-if="paymentMethods?.list && paymentMethods.list.length > 0" class="grid gap-4 grid-cols-2">
       <label v-for="paymentMethod in paymentMethods.list" :key="paymentMethod.id" class="relative">
         <input
           type="radio"
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { paymentProviderGetters, type PaymentMethod } from '@plentymarkets/shop-api';
 import { SfIconCreditCard, SfIconWarning } from '@storefront-ui/vue';
-import { type CheckoutPaymentEmits, type CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
+import type { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
 const { disabled = false } = defineProps<CheckoutPaymentProps>();
 const emit = defineEmits<CheckoutPaymentEmits>();
@@ -56,6 +56,7 @@ const { t } = useI18n();
 const { send } = useNotification();
 const { data: cart } = useCart();
 const { selectedMethod: selectedShippingMethod } = useCartShippingMethods();
+const { paymentMethods } = useCheckoutPagePaymentAndShipping();
 
 const isPaymentMethodChecked = (paymentMethod: PaymentMethod): boolean =>
   !paymentProviderGetters.isPaymentMethodExcluded(selectedShippingMethod.value, paymentMethod.id) &&

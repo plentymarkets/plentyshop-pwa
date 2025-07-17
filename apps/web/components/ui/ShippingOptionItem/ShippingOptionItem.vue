@@ -12,13 +12,14 @@
 </template>
 
 <script setup lang="ts">
-import { ShippingOptionItemProps } from './types';
+import type { ShippingOptionItemProps } from './types';
 import { SfRadio } from '@storefront-ui/vue';
 
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const props = defineProps<ShippingOptionItemProps>();
 
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shippingMethod.free') : n(amount, 'currency');
+  return amount === 0 ? t('shippingMethod.free') : format(amount);
 };
 </script>

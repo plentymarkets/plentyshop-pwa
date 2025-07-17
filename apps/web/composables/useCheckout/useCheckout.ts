@@ -9,10 +9,16 @@ const scrollToShippingAddress = () => {
   scrollToHTMLObject(ID_SHIPPING_ADDRESS);
 };
 
+const scrollToBillingAddress = () => {
+  scrollToHTMLObject(ID_BILLING_ADDRESS);
+};
+
 export const useCheckout = (cacheKey = '') => {
   const state = useState('useCheckout' + cacheKey, () => ({
     combineShippingAndBilling: true,
     init: false,
+    shippingSkeleton: true,
+    billingSkeleton: true,
   }));
 
   const { data: cart, cartIsEmpty, getCart, clearCartItems, loading: cartLoading } = useCart();
@@ -75,14 +81,24 @@ export const useCheckout = (cacheKey = '') => {
     return isValid;
   };
 
+  const setShippingSkeleton = (loading: boolean) => {
+    state.value.shippingSkeleton = loading;
+  };
+
+  const setBillingSkeleton = (loading: boolean) => {
+    state.value.billingSkeleton = loading;
+  };
+
   const persistShippingAddress = async () => {
     setShippingInitialState();
     const cartAddress = ref();
     const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
+
     const primaryAddress =
       shippingAddresses.value.length > 0 ? userAddressGetters.getDefault(shippingAddresses.value) : undefined;
 
     if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
+
     if (cartAddress.value || primaryAddress) {
       await setShippingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
     } else {
@@ -119,5 +135,8 @@ export const useCheckout = (cacheKey = '') => {
     backToFormEditing,
     validateTerms,
     scrollToShippingAddress,
+    scrollToBillingAddress,
+    setShippingSkeleton,
+    setBillingSkeleton,
   };
 };

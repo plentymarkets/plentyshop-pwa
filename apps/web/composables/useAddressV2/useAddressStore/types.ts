@@ -1,4 +1,4 @@
-import { Address } from '@plentymarkets/shop-api';
+import type { Address } from '@plentymarkets/shop-api';
 
 export type AddressState = {
   addresses: Address[];

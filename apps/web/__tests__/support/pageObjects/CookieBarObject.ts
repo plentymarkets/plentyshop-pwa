@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class CookieBarObject extends PageObject {
   get openBtn() {
@@ -21,8 +21,8 @@ export class CookieBarObject extends PageObject {
   }
 
   checkExternalScript() {
-    return cy.document().then((doc) => {
-      document.head.innerHTML.includes('test-cookie-external-script.js')
-    })
+    return cy.document().then(() => {
+      document.head.innerHTML.includes('test-cookie-external-script.js');
+    });
   }
 }

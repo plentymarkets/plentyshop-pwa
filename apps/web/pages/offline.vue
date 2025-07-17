@@ -111,13 +111,14 @@
       <path d="M39 50a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" stroke="#18181B" stroke-width="1.5" />
       <path d="M39 27.5v14.3" stroke="#18181B" stroke-width="1.5" stroke-linecap="round" />
     </svg>
-    <p class="mt-8 text-center">{{ $t('youAreOfflineText') }}</p>
+    <p class="mt-8 text-center">{{ t('youAreOfflineText') }}</p>
   </section>
 </template>
 
 <script setup lang="ts">
 import { useOnline, whenever } from '@vueuse/core';
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 const isOnline = useOnline();
 

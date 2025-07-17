@@ -1,5 +1,11 @@
-import { type AggregatedCountries } from '@plentymarkets/shop-api';
-import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type FetchAggregatedCountries } from './types';
+import type {
+  ActiveShippingCountry,
+  AggregatedCountries,
+  ApiError,
+  GeoRegulatedCountry,
+} from '@plentymarkets/shop-api';
+import { AddressType } from '@plentymarkets/shop-api';
+import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
 
 /**
  * @description Composable for getting `AggregatedCountries`:
@@ -54,7 +60,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     );
 
     return [...uniqueCountries.values()].sort((firstCountry, secondCountry) =>
-      firstCountry.currLangName.localeCompare(secondCountry.currLangName, useI18n().locale.value),
+      firstCountry.currLangName.localeCompare(secondCountry.currLangName, useNuxtApp().$i18n.locale.value),
     );
   });
 
@@ -65,11 +71,49 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     return billingCountries.value.find((country) => country.id === id)?.currLangName ?? '';
   };
 
+  const parseZipCodeRegex = (country: ActiveShippingCountry | GeoRegulatedCountry) => {
+    let pattern = country?.zipCodeRegex ?? null;
+
+    try {
+      if (typeof pattern !== 'string') return null;
+      let flags = '';
+
+      if (pattern.startsWith('/') && pattern.endsWith('/i')) {
+        pattern = pattern.slice(1, -2);
+        flags = 'i';
+      } else if (pattern.startsWith('/') && pattern.endsWith('/')) {
+        pattern = pattern.slice(1, -1);
+      }
+
+      return new RegExp(pattern, flags);
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
+      return null;
+    }
+  };
+
+  const getCountryZipCodeRegex = (countryId: number, type: AddressType): RegExp | null => {
+    const countries = type === AddressType.Billing ? billingCountries.value : state.value.default;
+    const country = countries.find((country: ActiveShippingCountry | GeoRegulatedCountry) => country.id === countryId);
+    if (!country) return null;
+    return parseZipCodeRegex(country);
+  };
+
+  const getCountryIsoCode = (countryId: string): string => {
+    const id = Number.parseInt(countryId);
+
+    if (Number.isNaN(id)) return '';
+    return billingCountries.value.find((country) => country.id === id)?.isoCode2?.toLowerCase() ?? '';
+  };
+
   return {
+    parseZipCodeRegex,
     fetchAggregatedCountries,
     useGeoRegulatedCountries,
     billingCountries,
     localeCountryName,
+    getCountryZipCodeRegex,
+    getCountryIsoCode,
     ...toRefs(state.value),
   };
 };

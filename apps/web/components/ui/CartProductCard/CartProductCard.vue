@@ -4,8 +4,13 @@
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
           ref="img"
-          :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
-          :alt="cartGetters.getItemName(cartItem)"
+          :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
+          :alt="imageAlt"
+          :title="
+            productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              ? productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              : null
+          "
           width="300"
           height="300"
           loading="lazy"
@@ -25,7 +30,7 @@
       </SfLink>
 
       <div v-if="!cartItem.variation?.bundleComponents">
-        {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
+        {{ format(cartGetters.getCartItemPrice(cartItem)) }}
       </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
@@ -47,8 +52,8 @@
             </li>
           </ul>
           <div
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
             v-if="cartItem.basketItemOrderParams.length > 0"
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
           >
             <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
             <CartOrderProperty
@@ -69,8 +74,8 @@
       <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
-            :tag="NuxtLink"
             v-if="productBundleGetters.isItemBundleSalable(item)"
+            :tag="NuxtLink"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
@@ -80,7 +85,7 @@
               <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
             </p>
           </SfLink>
-          <p class="text-sm" v-else>
+          <p v-else class="text-sm">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
             <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>
@@ -92,16 +97,16 @@
           v-if="currentFullPrice"
           class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ n(currentFullPrice || 0, 'currency') }}
+          {{ format(currentFullPrice || 0) }}
         </span>
         <UiQuantitySelector
           ref="quantitySelectorReference"
           :disabled="disabled"
-          @change-quantity="debounceQuantity"
           :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           :max-value="maximumOrderQuantity"
           class="mt-4 sm:mt-0"
+          @change-quantity="debounceQuantity"
         />
       </div>
     </div>
@@ -112,12 +117,12 @@
 
     <UiButton
       v-else-if="!disabled"
-      @click="deleteItem"
       square
       :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="absolute top-2 right-2 bg-white"
+      @click="deleteItem"
     >
       <SfIconClose size="sm" />
     </UiButton>
@@ -125,11 +130,11 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
+import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
-import _ from 'lodash';
+import { debounce } from '../../../utils/debounce';
 
 const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
@@ -137,12 +142,14 @@ const emit = defineEmits(['load']);
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const localePath = useLocalePath();
 
 const imageLoaded = ref(false);
 const img = ref();
 const deleteLoading = ref(false);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
@@ -199,9 +206,7 @@ const changeQuantity = async (quantity: string) => {
 
 const deleteItem = async () => {
   deleteLoading.value = true;
-  await deleteCartItem({
-    cartItemId: cartItem.id,
-  });
+  await deleteCartItem(cartItem);
   send({ message: t('deletedFromCart'), type: 'positive' });
   deleteLoading.value = false;
 };
@@ -217,7 +222,7 @@ const cartItemImage = computed(() => {
   return '';
 });
 
-const debounceQuantity = _.debounce(changeQuantity, 500);
+const debounceQuantity = debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
@@ -228,4 +233,9 @@ const basePriceSingleValue = computed(
 );
 
 const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem)));
+
+const imageAlt = computed(() => {
+  const image = cartItem?.variation?.images?.all[0];
+  return image ? productImageGetters.getImageAlternate(image) : '';
+});
 </script>

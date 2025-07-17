@@ -1,9 +1,9 @@
 <template>
-  <div id="apple-pay-button"></div>
+  <div id="apple-pay-button" />
 </template>
 
 <script lang="ts" setup>
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const { initialize, config, processPayment } = useApplePay();
 const emits = defineEmits<{
@@ -19,12 +19,8 @@ const renderButton = async () => {
 
       const applePayButton = document.querySelector('#btn-appl');
       if (applePayButton) {
-        applePayButton.addEventListener('click', async () => {
-          await emits('button-clicked', async (successfully) => {
-            if (successfully) {
-              processPayment();
-            }
-          });
+        applePayButton.addEventListener('click', () => {
+          processPayment(emits);
         });
       }
     }

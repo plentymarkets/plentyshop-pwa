@@ -1,6 +1,6 @@
 import { writeFileSync, existsSync } from 'node:fs';
-import { Writer } from './types';
-import { Logger } from '../logs/types';
+import type { Writer } from './types';
+import type { Logger } from '../logs/types';
 
 export class DataToFileWriter implements Writer {
   private logger: Logger;

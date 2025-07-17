@@ -1,15 +1,26 @@
-import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import {
+  AddressType,
+  type ApiError,
+  type RegisterParams,
+  type SessionResult,
+  type UserChangePasswordParams,
+  userGetters,
+} from '@plentymarkets/shop-api';
+import { toTypedSchema } from '@vee-validate/yup';
+import { object, string } from 'yup';
 import type {
+  ChangePassword,
+  GetSession,
+  Login,
+  LoginAsGuest,
+  Logout,
+  Register,
   UseCustomerReturn,
   UseCustomerState,
-  GetSession,
-  LoginAsGuest,
-  Login,
-  Register,
-  Logout,
-  ChangePassword,
 } from '~/composables/useCustomer/types';
-import { ApiError } from '@plentymarkets/shop-api';
+import { scrollToHTMLObject } from '~/utils/scollHelper';
+
+const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
@@ -22,11 +33,14 @@ import { ApiError } from '@plentymarkets/shop-api';
  * ```
  */
 export const useCustomer: UseCustomerReturn = () => {
+  const { emit } = usePlentyEvent();
+  const { $i18n } = useNuxtApp();
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
     data: {} as SessionResult,
     loading: false,
     isAuthorized: false,
     isGuest: false,
+    validGuestEmail: false,
   }));
 
   /** Function for checking if user is guest or authorized
@@ -38,18 +52,14 @@ export const useCustomer: UseCustomerReturn = () => {
   const checkUserState = () => {
     if (state.value.data?.user?.guestMail) {
       state.value.isGuest = true;
+      state.value.validGuestEmail = true;
       state.value.isAuthorized = false;
       return;
     }
 
-    if (state.value.data?.user?.email) {
-      state.value.isGuest = false;
-      state.value.isAuthorized = true;
-      return;
-    }
-
     state.value.isGuest = false;
-    state.value.isAuthorized = false;
+    state.value.validGuestEmail = false;
+    state.value.isAuthorized = !!state.value.data?.user?.email;
   };
 
   /** Function for getting current user/cart data from session
@@ -60,13 +70,17 @@ export const useCustomer: UseCustomerReturn = () => {
    */
   const getSession: GetSession = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
-    useHandleError(error.value);
-    state.value.data = data?.value?.data ?? state.value.data;
-    checkUserState();
-    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || []);
+    try {
+      const { data } = await useSdk().plentysystems.getSession();
+      state.value.data = data ?? null;
+      checkUserState();
+      useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || []));
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
-    state.value.loading = false;
     return state.value.data;
   };
 
@@ -91,13 +105,15 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const loginAsGuest: LoginAsGuest = async (email: string) => {
-    state.value.loading = true;
-
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doLoginAsGuest({ email: email }));
-    useHandleError(error.value);
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.doLoginAsGuest({ email: email });
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
     checkUserState();
-
-    state.value.loading = false;
   };
 
   /** Function for user login.
@@ -115,7 +131,13 @@ export const useCustomer: UseCustomerReturn = () => {
     try {
       await useSdk()
         .plentysystems.doLogin({ email: email, password: password })
-        .then(async () => await getSession());
+        .then(async () => {
+          await getSession();
+
+          if (state.value.data?.user) {
+            emit('frontend:login', { user: state.value.data.user });
+          }
+        });
 
       return state.value.isAuthorized;
     } catch (error) {
@@ -133,13 +155,18 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const logout: Logout = async () => {
-    state.value.loading = true;
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.doLogoutUser();
+      state.value.data.user = null;
+      useCheckoutAddress(AddressType.Shipping).clear();
+      useCheckoutAddress(AddressType.Billing).clear();
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doLogoutUser());
-    state.value.loading = false;
-    useHandleError(error.value);
-
-    state.value.data.user = null;
     checkUserState();
     useWishlist().setWishlistItemIds([]);
   };
@@ -153,18 +180,23 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const register: Register = async (params: RegisterParams) => {
-    state.value.loading = true;
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.doRegisterUser(params);
+      if (data) {
+        await getSession();
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doRegisterUser(params));
-
-    useHandleError(error.value);
-    state.value.loading = false;
-
-    if (data.value) {
-      await getSession();
+        if (state.value.data?.user) {
+          emit('frontend:signUp', { user: state.value.data.user });
+        }
+      }
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
-
-    return data.value?.data ?? null;
+    return null;
   };
 
   /** Function for changing the user password
@@ -182,11 +214,52 @@ export const useCustomer: UseCustomerReturn = () => {
   const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
     state.value.loading = true;
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doChangeUserPassword(params));
-    state.value.loading = false;
-    useHandleError(error.value);
+    try {
+      await useSdk().plentysystems.doChangeUserPassword(params);
+      return true;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return false;
+  };
 
-    return !error.value;
+  const emailValidationSchema = toTypedSchema(
+    object({
+      customerEmail: string()
+        .required($i18n.t('errorMessages.email.required'))
+        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) =>
+          userGetters.isValidEmailAddress(email),
+        )
+        .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
+    }),
+  );
+
+  const missingGuestCheckoutEmail = computed(
+    () => (state.value.isGuest || (!state.value.isGuest && !state.value.isAuthorized)) && !state.value.validGuestEmail,
+  );
+
+  const backToContactInformation = (): boolean => {
+    const classList = ['bg-primary-50', 'rounded-md'];
+    const opacityClass = 'opacity-0';
+    const targetId = CONTACT_INFORMATION;
+
+    const targetElement = document.querySelector(targetId);
+    const firstDivider = document.querySelector('#top-contact-information-divider');
+    const secondDivider = document.querySelector('#top-shipping-divider');
+
+    scrollToHTMLObject(targetId);
+
+    targetElement?.classList.add(...classList);
+    [firstDivider, secondDivider].forEach((divider) => divider?.classList.add(opacityClass));
+
+    setTimeout(() => {
+      targetElement?.classList.remove(...classList);
+      [firstDivider, secondDivider].forEach((divider) => divider?.classList.remove(opacityClass));
+    }, 1000);
+
+    return false;
   };
 
   return {
@@ -197,6 +270,9 @@ export const useCustomer: UseCustomerReturn = () => {
     register,
     loginAsGuest,
     changePassword,
+    emailValidationSchema,
+    missingGuestCheckoutEmail,
+    backToContactInformation,
     showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };
