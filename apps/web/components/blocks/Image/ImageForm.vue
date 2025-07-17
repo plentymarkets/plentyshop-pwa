@@ -9,76 +9,90 @@
       <h2>Images</h2>
     </template>
 
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>Image XL (Desktop) </UiFormLabel>
-      </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.wideScreen" type="text" data-testid="wide-screen-input">
-          <template #suffix>
-            <label for="image-tablet" class="rounded-lg cursor-pointer">
-              <input id="image-tablet" v-model="uiImageTextBlock.wideScreen" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-        <span class="typography-text-xs text-neutral-700">Recommended dimensions: 1920 x 1080 px </span>
-      </label>
+    <div v-if="runtimeConfig.public.isDev" class="images">
+      <UiImagePicker
+        v-for="type in imageTypes"
+        :key="type"
+        :label="labels[type]"
+        :image="uiImageTextBlock[type]"
+        :placeholder="placeholderImg"
+        :dimensions="imageDimensions[type]"
+        :show-tooltip="true"
+        @select="openUploader"
+        @delete="deleteImage(uiImageTextBlock, type)"
+      />
     </div>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>Image L (Desktop) </UiFormLabel>
+    <div v-else class="images">
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Image XL (Desktop) </UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="uiImageTextBlock.wideScreen" type="text" data-testid="wide-screen-input">
+            <template #suffix>
+              <label for="image-tablet" class="rounded-lg cursor-pointer">
+                <input id="image-tablet" v-model="uiImageTextBlock.wideScreen" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions: 1920 x 1080 px </span>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.desktop" type="text" data-testid="large-screen-input">
-          <template #suffix>
-            <label for="image-tablet" class="rounded-lg cursor-pointer">
-              <input id="image-tablet" v-model="uiImageTextBlock.desktop" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-        <span class="typography-text-xs text-neutral-700">Recommended dimensions: 1024 x 576 px</span>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>Image M (Laptop) </UiFormLabel>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Image L (Desktop) </UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="uiImageTextBlock.desktop" type="text" data-testid="large-screen-input">
+            <template #suffix>
+              <label for="image-tablet" class="rounded-lg cursor-pointer">
+                <input id="image-tablet" v-model="uiImageTextBlock.desktop" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions: 1024 x 576 px</span>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.tablet" type="text" data-testid="medium-screen-input">
-          <template #suffix>
-            <label for="image-tablet" class="rounded-lg cursor-pointer">
-              <input id="image-tablet" v-model="uiImageTextBlock.tablet" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-        <span class="typography-text-xs text-neutral-700">Recommended dimensions: 768 x 432 px</span>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>Image S (Mobile) </UiFormLabel>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Image M (Laptop) </UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="uiImageTextBlock.tablet" type="text" data-testid="medium-screen-input">
+            <template #suffix>
+              <label for="image-tablet" class="rounded-lg cursor-pointer">
+                <input id="image-tablet" v-model="uiImageTextBlock.tablet" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions: 768 x 432 px</span>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.mobile" type="text" data-testid="small-screen-input">
-          <template #suffix>
-            <label for="image-mobile" class="rounded-lg cursor-pointer">
-              <input
-                id="image-mobile"
-                v-model="uiImageTextBlock.mobile"
-                data-testid="small-screen-input"
-                type="text"
-                class="invisible w-8"
-              />
-            </label>
-          </template>
-        </SfInput>
-        <span class="typography-text-xs text-neutral-700">Recommended dimensions: 320 x 320 px </span>
-      </label>
-    </div>
 
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Image S (Mobile) </UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="uiImageTextBlock.mobile" type="text" data-testid="small-screen-input">
+            <template #suffix>
+              <label for="image-mobile" class="rounded-lg cursor-pointer">
+                <input
+                  id="image-mobile"
+                  v-model="uiImageTextBlock.mobile"
+                  data-testid="small-screen-input"
+                  type="text"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions: 320 x 320 px </span>
+        </label>
+      </div>
+    </div>
     <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>Alt</UiFormLabel>
@@ -123,18 +137,30 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
-import type { ImageFormProps, ImageContent } from './types';
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
+import type { ImageFormProps, ImageContent } from './types';
+
+const runtimeConfig = useRuntimeConfig();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<ImageFormProps>();
+const isUploaderOpen = ref(false);
 
+function openUploader() {
+  isUploaderOpen.value = true;
+}
+
+function closeUploader() {
+  isUploaderOpen.value = false;
+}
 const uiImageTextBlock = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
 );
