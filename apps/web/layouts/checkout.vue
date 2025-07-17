@@ -40,11 +40,19 @@ const { setInitialData } = useInitialSetup();
 const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
 const goToPreviousRoute = () => {
-  if (isAuthorized.value && router.options.history.state.back === paths.guestLogin) {
+  const backPath = router.options.history.state?.back;
+
+  if (isAuthorized.value && backPath === paths.guestLogin) {
     router.go(-2);
-  } else {
-    router.options.history.state.back ? router.back() : router.push(localePath(paths.home));
+    return;
   }
+
+  if (backPath) {
+    router.back();
+    return;
+  }
+
+  router.push(localePath(paths.home));
 };
 
 onNuxtReady(async () => await setInitialData());
