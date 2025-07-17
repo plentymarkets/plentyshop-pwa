@@ -21,7 +21,7 @@ export interface UseCategoryTemplate {
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
   getBlocksServer: GetBlocks;
-  updateBlocks: UpdateBlocks;
+  updateBlocks: UpdateBlocks; 
 }
 
 export type UseCategoryTemplateReturn = (blocks?: string) => UseCategoryTemplate;
