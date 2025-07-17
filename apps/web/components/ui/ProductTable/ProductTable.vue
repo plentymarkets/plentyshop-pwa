@@ -118,9 +118,3 @@ const desserts = [
   },
 ];
 </script>
-
-<style scoped>
-.v-card {
-  background-color: red;
-}
-</style>

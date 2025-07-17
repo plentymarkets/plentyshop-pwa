@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiProductTable />
+
     <EditablePage :identifier="'index'" :type="'immutable'" />
  
   </div>

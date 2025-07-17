@@ -16,8 +16,9 @@
         </header>
 
         <main class="flex flex-1 overflow-hidden">
-          <div class="flex-1 overflow-auto pr-4" />
-
+          <div class="flex-1 overflow-auto " />
+          <!-- <UiProductTable /> -->
+          <UiProductTableImage />
           <div
             class="w-1/3 flex flex-col justify-center items-center border border-dashed border-gray-300 rounded-md p-4"
           >
