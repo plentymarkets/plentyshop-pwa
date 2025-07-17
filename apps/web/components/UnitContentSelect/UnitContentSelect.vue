@@ -1,5 +1,5 @@
 <template>
-  <div  class="mt-2" data-testing="variation-select-unit-wrapper">
+  <div class="mt-2" data-testing="variation-select-unit-wrapper">
     <div class="input-unit w-full">
       <label for="unit-combination" data-testing="variation-select-unit-label">{{ t('content') }}</label>
       <SfSelect
@@ -14,7 +14,7 @@
           :key="unit.variationId"
           :value="unit.variationId"
         >
-            {{ unit.unitName }}
+          {{ unit.unitName }}
         </option>
       </SfSelect>
     </div>
@@ -26,13 +26,13 @@ import { SfSelect } from '@storefront-ui/vue';
 import { type Product, productGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<{
-  product: Product
-}>()
+  product: Product;
+}>();
 
 const route = useRoute();
 const { productParams } = createProductParams(route.params);
 const { buildProductLanguagePath } = useLocalization();
-const { t } = useI18n()
+const { t } = useI18n();
 
 const selectedUnit = ref(productParams?.variationId?.toString() || '');
 
