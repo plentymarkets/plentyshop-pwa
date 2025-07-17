@@ -11,7 +11,6 @@ export type MyAccountSubsection = {
 };
 
 export type CheckoutLayoutProps = {
-  backToCart?: boolean;
   heading: string;
   backLabelMobile: string;
   backLabelDesktop: string;
