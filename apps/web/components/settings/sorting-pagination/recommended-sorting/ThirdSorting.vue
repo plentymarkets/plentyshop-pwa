@@ -30,7 +30,6 @@ import type { SortingOption } from '~/components/settings/sorting-pagination/cat
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('recommendedThirdSortingOption');
-const { t, locale } = useI18n();
 
 const sortingOptions = computed(() => getRecommendedSortingOptions('en', true));
 
