@@ -3,7 +3,6 @@ import { WishlistPageContent } from '#components';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
 describe('<CategoryPageContent />', () => {
-
   mockNuxtImport('useWishlist', () => {
     return () => {
       return { data: computed(() => []), fetchWishlist: () => {} };
