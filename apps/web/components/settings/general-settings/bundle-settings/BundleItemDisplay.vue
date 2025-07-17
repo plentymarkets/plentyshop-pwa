@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
+const { updateSetting, getSetting } = useSiteSettings('bundleItemDisplay');
 
 const bundleSetting = ref(false);
 const bundleSettingsOptions = ref([
@@ -25,5 +26,8 @@ const bundleSettingsOptions = ref([
     text: 'Only list the components of the item bundle and replace the item bundle with the basic items in the order process',
   },
 ]);
-const selectedBundleOption = ref('0');
+const selectedBundleOption = computed({
+  get: () => getSetting(),
+  set: (value) => updateSetting(value),
+});
 </script>
