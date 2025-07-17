@@ -236,9 +236,9 @@ const submitForm = async () => {
 
   const params = {
     name: name?.value || '',
-    email: '',
+    email: email?.value || '',
     subject: subject?.value || '',
-    orderId: orderId?.value || '',
+    orderId: Number(orderId?.value) || 0,
     message: message.value || '',
     'cf-turnstile-response': turnstile.value,
   };
