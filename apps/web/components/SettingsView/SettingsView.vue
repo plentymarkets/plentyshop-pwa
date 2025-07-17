@@ -154,9 +154,8 @@
                 :show-arrow="true"
                 class="ml-2 z-10"
               >
-                <SfIconInfo :size="'sm'" />
-              </SfTooltip>
-            </UiFormLabel>
+                <SfIconInfo :size="'sm'" /> </SfTooltip
+            ></UiFormLabel>
             <SfSwitch
               v-model="useWebp"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
@@ -166,32 +165,6 @@
             >Better compression than JPEG, PNG, and GIF. Supported by most modern browsers. If AVIF is enabled, WebP
             serves as a fallback for unsupported browsers.
           </span>
-        </div>
-      </UiAccordionItem>
-
-      <UiAccordionItem
-        v-model="bundleSetting"
-        data-testid="bundle-display-section"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Bundle Settings</h2>
-        </template>
-        <div class="py-2">
-          <UiFormLabel>
-            How do you want to display item bundles in checkout?
-            <SfSelect v-model="selectedBundleOption" data-testid="editor-bundleSettings-select">
-              <option
-                v-for="bundleOption in bundleSettingsOptions"
-                :key="bundleOption.key"
-                :value="bundleOption.key"
-                class="font-medium text-sm md:text-base"
-              >
-                {{ bundleOption.text }}
-              </option>
-            </SfSelect>
-          </UiFormLabel>
         </div>
       </UiAccordionItem>
     </div>
@@ -240,7 +213,6 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip, SfSwitch } from '@storefront-ui/vue';
 // import Multiselect from 'vue-multiselect';
-import { SfSelect } from '@storefront-ui/vue';
 
 // const { fields, selectedFields} = useSiteConfiguration();
 const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer } = useSiteConfiguration();
@@ -248,17 +220,4 @@ const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer } = u
 const branding = ref(false);
 const socialMedia = ref(false);
 const optimisation = ref(false);
-const bundleSetting = ref(false);
-const bundleSettingsOptions = ref([
-  { key: '0', text: 'List both the item bundle and its individual components' },
-  {
-    key: '1',
-    text: 'Only show item bundle without individual components and do not split the item bundle in the order process',
-  },
-  {
-    key: '2',
-    text: 'Only list the components of the item bundle and replace the item bundle with the basic items in the order process',
-  },
-]);
-const selectedBundleOption = ref('0');
 </script>
