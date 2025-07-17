@@ -17,18 +17,18 @@
       <PreviewMode />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
-      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-      <UiFooter v-if="!runtimeConfig.public.isDev" />
+      <FooterBlock v-if="!route.meta.isBlockified" />
     </NuxtLazyHydrate>
   </div>
 </template>
 
 <script setup lang="ts">
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+
 defineProps<{
   heading: string;
 }>();
 
-const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 const viewport = useViewport();
 </script>

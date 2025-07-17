@@ -6,11 +6,11 @@
     </NarrowContainer>
   </main>
   <NuxtLazyHydrate when-visible>
-    <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-    <UiFooter v-if="!runtimeConfig.public.isDev" />
+    <FooterBlock v-if="!route.meta.isBlockified" />
   </NuxtLazyHydrate>
 </template>
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+
 const route = useRoute();
 </script>
