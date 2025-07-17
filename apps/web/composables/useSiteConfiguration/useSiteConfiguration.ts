@@ -35,6 +35,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     ogImg: structuredClone(openGraph).image,
     useAvif: useRuntimeConfig().public.useAvif,
     useWebp: useRuntimeConfig().public.useWebp,
+    bundleItemDisplay: useRuntimeConfig().public.bundleItemDisplay,
     seoSettings: metaDefaults,
     drawerView: null,
     activeSetting: '',
@@ -48,6 +49,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
+      bundleItemDisplay: useRuntimeConfig().public.bundleItemDisplay
     },
   }));
 
@@ -103,6 +105,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.ogImg !== state.value.initialData.ogImg ||
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
+      state.value.bundleItemDisplay !== state.value.initialData.bundleItemDisplay ||
       JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings) ||
       isDirty.value
     );
