@@ -1,5 +1,6 @@
 <template>
   <div class="mt-4">
+    <p class="mb-4">Note: These settings are only applied after saving the changes and reloading the page</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>First sorting option</UiFormLabel>
       <SfTooltip label="First sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
