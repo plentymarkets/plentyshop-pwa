@@ -1,4 +1,4 @@
-import { matchOldConfirmationUrl } from "~/middleware/confirmation-redirect.global";
+import { matchOldConfirmationUrl } from '~/middleware/confirmation-redirect.global';
 
 describe('matchOldConfirmationUrl', () => {
   const testCases = [
@@ -15,21 +15,27 @@ describe('matchOldConfirmationUrl', () => {
     // with language prefix
     { path: '/de/-/akQQABC123/idQQ456789.html', expected: { lang: 'de', orderAccessKey: 'ABC123', orderId: '456789' } },
     { path: '/en/_py-/akQQXYZ987/idQQ123456', expected: { lang: 'en', orderAccessKey: 'XYZ987', orderId: '123456' } },
-    { path: '/fr/_plentyShop__/akQQLANG789/idQQ888888', expected: { lang: 'fr', orderAccessKey: 'LANG789', orderId: '888888' } },
+    {
+      path: '/fr/_plentyShop__/akQQLANG789/idQQ888888',
+      expected: { lang: 'fr', orderAccessKey: 'LANG789', orderId: '888888' },
+    },
 
     // with ending slash
-    { path: '/de/_py-/akQQTRAIL123/idQQ999999/', expected: { lang: 'de', orderAccessKey: 'TRAIL123', orderId: '999999' } },
+    {
+      path: '/de/_py-/akQQTRAIL123/idQQ999999/',
+      expected: { lang: 'de', orderAccessKey: 'TRAIL123', orderId: '999999' },
+    },
 
     // invalid paths
     { path: '/some/invalid/path', expected: null },
     { path: '/akQQmissingPrefix/idQQ123', expected: null },
-    { path: '/de/akQQX/idQQabc', expected: null }
-  ]
+    { path: '/de/akQQX/idQQabc', expected: null },
+  ];
 
   testCases.forEach(({ path, expected }) => {
     it(`should parse ${path} correctly`, () => {
-      const result = matchOldConfirmationUrl(path)
-      expect(result).toEqual(expected)
-    })
-  })
-})
+      const result = matchOldConfirmationUrl(path);
+      expect(result).toEqual(expected);
+    });
+  });
+});
