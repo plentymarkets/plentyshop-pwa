@@ -14,6 +14,7 @@ describe('<PurchaseCard />', () => {
         stubs: {
           PayPalExpressButton: true,
           PayPalPayLaterBanner: true,
+          UnitContentSelect: true,
         },
       },
     });
