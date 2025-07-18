@@ -34,7 +34,9 @@
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <NuxtLayout>
-        <NuxtPage />
+        <!-- <v-app> -->
+          <NuxtPage />
+        <!-- </v-app> -->
       </NuxtLayout>
     </div>
   </div>
