@@ -15,6 +15,7 @@ export type ConfigurationSettings = {
   ogImg: string;
   useAvif: boolean;
   useWebp: boolean;
+  bundleItemDisplay: string;
   seoSettings: {
     title: string;
     description: string;
@@ -38,6 +39,7 @@ export interface UseSiteConfigurationState {
   ogImg: string;
   useAvif: boolean;
   useWebp: boolean;
+  bundleItemDisplay: string;
   placement: string;
   drawerView: DrawerView;
   activeSetting: string;
@@ -76,6 +78,7 @@ export interface UseSiteConfiguration {
   ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;
   ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
   useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
+  bundleItemDisplay: Readonly<Ref<UseSiteConfigurationState['bundleItemDisplay']>>;
   useWebp: Readonly<Ref<UseSiteConfigurationState['useWebp']>>;
   seoSettings: Readonly<Ref<UseSiteConfigurationState['seoSettings']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;

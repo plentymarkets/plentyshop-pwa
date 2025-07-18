@@ -19,6 +19,7 @@ const main = async () => {
   const configKeys = [
     'NUXT_PUBLIC_PRIMARY_COLOR',
     'NUXT_PUBLIC_SECONDARY_COLOR',
+    'NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY',
     'DEFAULTLANGUAGE',
     'LANGUAGELIST',
     'LOGO',
