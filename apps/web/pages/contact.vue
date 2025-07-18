@@ -34,8 +34,8 @@
             v-model="email"
             name="email"
             type="email"
-            autocomplete="email"
             :invalid="Boolean(errors['email'])"
+            autocomplete="email"
           />
           <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
@@ -43,10 +43,10 @@
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput
+            v-bind="subjectAttributes"
             v-model="subject"
             name="subject"
             type="text"
-            v-bind="subjectAttributes"
             :invalid="Boolean(errors['subject'])"
           />
           <ErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -55,10 +55,10 @@
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput
+            v-bind="orderIdAttributes"
             v-model="orderId"
             name="orderId"
             type="text"
-            v-bind="orderIdAttributes"
             :invalid="Boolean(errors['orderId'])"
           />
           <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -67,12 +67,12 @@
         <label class="flex flex-col">
           <UiFormLabel class="mb-1">{{ t('contact.form.message') }} {{ t('form.required') }}</UiFormLabel>
           <SfTextarea
+            v-bind="messageAttributes"
             v-model="message"
             name="message"
             type="text"
-            :placeholder="t('contact.form.message-placeholder')"
-            v-bind="messageAttributes"
             :invalid="Boolean(errors['message'])"
+            :placeholder="t('contact.form.message-placeholder')"
             class="w-full"
           />
           <ErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -82,12 +82,11 @@
           <div class="flex items-center">
             <SfCheckbox
               id="terms"
+              v-bind="privacyPolicyAttributes"
               v-model="privacyPolicy"
               :invalid="Boolean(errors['privacyPolicy'])"
-              v-bind="privacyPolicyAttributes"
               value="value"
               class="peer"
-              required
             />
             <label
               class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
