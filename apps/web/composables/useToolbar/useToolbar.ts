@@ -38,6 +38,9 @@ export const useToolbar = () => {
         message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',
       });
+      if (import.meta.client) {
+        window.dispatchEvent(new CustomEvent('footer-block-refetch'));
+      }
     }
 
     if (hasError) {

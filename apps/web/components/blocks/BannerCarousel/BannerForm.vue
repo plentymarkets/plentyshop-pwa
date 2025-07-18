@@ -11,7 +11,20 @@
           <h2 data-testid="slider-image-group-title">Images</h2>
         </template>
 
-        <div class="images">
+        <div v-if="runtimeConfig.public.isDev" class="images">
+          <UiImagePicker
+            v-for="type in imageTypes"
+            :key="type"
+            :label="labels[type]"
+            :image="banner.content.image[type]"
+            :placeholder="placeholderImg"
+            :dimensions="imageDimensions[type]"
+            :show-tooltip="true"
+            @select="openUploader"
+            @delete="deleteImage(banner.content.image, type)"
+          />
+        </div>
+        <div v-else class="images">
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
@@ -449,17 +462,20 @@
       </UiAccordionItem>
     </div>
   </div>
+  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
+const runtimeConfig = useRuntimeConfig();
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -471,7 +487,15 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
+const isUploaderOpen = ref(false);
 
+function openUploader() {
+  isUploaderOpen.value = true;
+}
+
+function closeUploader() {
+  isUploaderOpen.value = false;
+}
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
