@@ -16,7 +16,11 @@ declare global {
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
       isScrolledTo(): Cypress.Chainable;
-      addToCart(id?: number, quantity?: number): Cypress.Chainable;
+      addToCart(
+        id?: number,
+        quantity?: number,
+        basketItemOrderParam?: BasketItemOrderParamsProperty[],
+      ): Cypress.Chainable;
       capturePopup(): Cypress.Chainable;
       popup(): Cypress.Chainable;
       paypalFlow(email: string, password: string): Cypress.Chainable;
