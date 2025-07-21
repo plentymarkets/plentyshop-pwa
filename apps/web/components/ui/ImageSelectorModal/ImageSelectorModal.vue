@@ -16,12 +16,17 @@
         </header>
 
         <main class="flex flex-1 overflow-hidden">
-          <div class="flex-1 overflow-auto pr-4" />
+          <div class="flex-1 overflow-auto pr-4">
+            <UiImageTable @select="handleSelect" />
+          </div>
 
           <div
             class="w-1/3 flex flex-col justify-center items-center border border-dashed border-gray-300 rounded-md p-4"
           >
-            Select an image from the list to preview it here
+            <template v-if="selectedImage">
+              <img :src="selectedImage" alt="Selected" class="w-full h-auto rounded" />
+            </template>
+            <template v-else> Select an image from the list to preview it here </template>
           </div>
         </main>
 
