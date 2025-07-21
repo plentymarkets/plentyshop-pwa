@@ -1,5 +1,6 @@
 <template>
   <button
+    v-if="runtimeConfig.public.isDev"
     type="button"
     class="editor-button relative py-2 flex justify-center"
     :class="{ 'bg-editor-button text-white rounded-md': active }"
@@ -14,6 +15,7 @@
 <script setup lang="ts">
 import gearWhite from 'assets/icons/paths/gear-white.svg';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
+const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,

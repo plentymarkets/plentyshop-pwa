@@ -35,7 +35,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     ogImg: structuredClone(openGraph).image,
     useAvif: useRuntimeConfig().public.useAvif,
     useWebp: useRuntimeConfig().public.useWebp,
-    bundleItemDisplay: useRuntimeConfig().public.bundleItemDisplay,
     seoSettings: metaDefaults,
     drawerView: null,
     activeSetting: '',
