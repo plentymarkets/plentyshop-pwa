@@ -47,7 +47,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogTitle: structuredClone(openGraph).title,
       ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
-      useWebp: useRuntimeConfig().public.useWebp
+      useWebp: useRuntimeConfig().public.useWebp,
     },
   }));
 
@@ -170,7 +170,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         ogImg: state.value.ogImg,
         useAvif: state.value.useAvif,
         useWebp: state.value.useWebp,
-        seoSettings: state.value.seoSettings
+        seoSettings: state.value.seoSettings,
       };
 
       saveSiteSettings();

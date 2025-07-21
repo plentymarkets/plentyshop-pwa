@@ -18,7 +18,6 @@
 import { SfSelect } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('bundleItemDisplay');
 
-const bundleSetting = ref(false);
 const bundleSettingsOptions = ref([
   {
     key: '0',
