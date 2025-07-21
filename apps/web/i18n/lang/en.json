@@ -1050,10 +1050,10 @@
     "contactMail": {
       "failed": "Message could not be sent.",
       "emailInvalid": "The email address is not valid.",
-      "messageInvalid": "Message is required.",
-      "nameInvalid": "Name is required.",
+      "messageInvalid": "The message is not valid.",
+      "nameInvalid": "The name is not valid.",
       "orderIdInvalid": "The Order ID is not valid.",
-      "subjectInvalid": "Subject is required."
+      "subjectInvalid": "The subject is not valid."
     },
     "coupon": {
       "applyFailed": "The coupon could not be redeemed."

@@ -22,7 +22,7 @@
         @submit.prevent="onSubmit"
       >
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }}</UiFormLabel>
           <SfInput v-bind="nameAttributes" v-model="name" name="name" type="text" :invalid="Boolean(errors['name'])" />
           <ErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
@@ -41,7 +41,7 @@
         </label>
 
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }}</UiFormLabel>
           <SfInput
             v-bind="subjectAttributes"
             v-model="subject"
@@ -53,7 +53,7 @@
         </label>
 
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }}</UiFormLabel>
           <SfInput
             v-bind="orderIdAttributes"
             v-model="orderId"
@@ -140,6 +140,7 @@
 </template>
 
 <script setup lang="ts">
+import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
 import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
@@ -169,36 +170,27 @@ setPageMeta(t('categories.contact.label'), icon);
 
 const validationSchema = toTypedSchema(
   object({
-    name: string()
-      .trim()
-      .required(t('storefrontError.contactMail.nameRequired'))
-      .min(3, t('storefrontError.contactMail.nameRequired'))
-      .default(''),
     email: string()
       .trim()
       .required(t('errorMessages.email.required'))
-      .test('is-valid-email', t('storefrontError.contactMail.emailRequired'), (mail: string) =>
+      .test('is-valid-email', t('storefrontError.contactMail.emailInvalid'), (mail: string) =>
         userGetters.isValidEmailAddress(mail),
       )
       .default(''),
     message: string()
-      .required(t('storefrontError.contactMail.messageRequired'))
-      .test('min-clean-length', t('storefrontError.contactMail.messageRequired'), (val: string | undefined) => {
+      .required(t('errorMessages.contact.messageRequired'))
+      .test('min-clean-length', t('storefrontError.contactMail.messageInvalid'), (val: string | undefined) => {
         if (!val) return false;
         const cleaned = val.replace(/\n/g, '').trim();
         return cleaned.length >= 3;
       })
       .default(''),
-    subject: string()
-      .trim()
-      .required(t('storefrontError.contactMail.subjectRequired'))
-      .min(3, t('storefrontError.contactMail.subjectRequired'))
-      .default(''),
+    name: string().trim().min(3, t('storefrontError.contactMail.nameInvalid')).optional(),
+    subject: string().trim().min(3, t('storefrontError.contactMail.subjectInvalid')).optional(),
     orderId: string()
       .trim()
-      .required(t('errorMessages.orderId.required'))
-      .matches(/^[1-9][0-9]*$/, t('storefrontError.contactMail.orderIdRequired'))
-      .default(''),
+      .matches(/^[1-9][0-9]*$/, t('storefrontError.contactMail.orderIdInvalid'))
+      .optional(),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
@@ -220,33 +212,29 @@ const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 
 const clearInputs = () => {
-  name.value = '';
+  name.value = undefined;
   email.value = '';
   message.value = '';
-  orderId.value = '';
-  subject.value = '';
+  orderId.value = undefined;
+  subject.value = undefined;
   privacyPolicy.value = false;
 };
 
 const submitForm = async () => {
-  if (!meta.value.valid || !turnstile.value) {
-    return;
-  }
+  if (!meta.value.valid || !turnstile.value) return;
 
-  const params = {
-    name: name?.value || '',
-    email: email?.value || '',
-    subject: subject?.value || '',
-    orderId: Number(orderId?.value) || 0,
+  const params: CustomerContactEmailParams = {
+    email: email.value || '',
     message: message.value || '',
     'cf-turnstile-response': turnstile.value,
   };
 
+  if (name.value) params.name = name.value;
+  if (subject.value) params.subject = subject.value;
+  if (orderId.value) params.orderId = Number(orderId.value);
+
   if (await doCustomerContactMail(params)) {
-    send({
-      type: 'positive',
-      message: t('contact.success'),
-    });
+    send({ type: 'positive', message: t('contact.success') });
     resetForm();
   }
 

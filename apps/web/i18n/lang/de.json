@@ -1050,10 +1050,10 @@
     "contactMail": {
       "failed": "Nachricht konnte nicht gesendet werden.",
       "emailInvalid": "Die E-Mail-Adresse ist ungültig.",
-      "messageInvalid": "Nachricht ist erforderlich.",
-      "nameInvalid": "Name ist erforderlich.",
+      "messageInvalid": "Die Nachricht ist ungültig.",
+      "nameInvalid": "Der Name ist ungültig.",
       "orderIdInvalid": "Die Bestellnummer ist ungültig.",
-      "subjectInvalid": "Betreff ist erforderlich."
+      "subjectInvalid": "Der Betreff ist ungültig."
     },
     "coupon": {
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
