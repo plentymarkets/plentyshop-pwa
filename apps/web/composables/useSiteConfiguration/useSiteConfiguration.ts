@@ -47,8 +47,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogTitle: structuredClone(openGraph).title,
       ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
-      useWebp: useRuntimeConfig().public.useWebp,
-      bundleItemDisplay: useRuntimeConfig().public.bundleItemDisplay
+      useWebp: useRuntimeConfig().public.useWebp
     },
   }));
 

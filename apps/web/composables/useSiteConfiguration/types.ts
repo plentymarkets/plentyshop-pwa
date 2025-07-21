@@ -15,7 +15,6 @@ export type ConfigurationSettings = {
   ogImg: string;
   useAvif: boolean;
   useWebp: boolean;
-  bundleItemDisplay: string;
   seoSettings: {
     title: string;
     description: string;
