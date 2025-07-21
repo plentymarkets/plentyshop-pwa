@@ -41,6 +41,9 @@
     "test:cypress-paypal": {
       "cache": false
     },
+    "test:cypress-dhl": {
+      "cache": false
+    },
     "test:cypress-editor": {
       "cache": false
     },

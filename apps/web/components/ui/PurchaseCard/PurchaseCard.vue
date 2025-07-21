@@ -79,6 +79,8 @@
           <OrderProperties :product="product" />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
+          <UnitContentSelect v-if="productGetters.getAttributeMapVariations(product).length > 1" :product="product" />
+
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
               <UiQuantitySelector
