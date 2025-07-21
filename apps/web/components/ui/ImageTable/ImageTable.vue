@@ -1,54 +1,28 @@
 <template>
   <VCard flat>
-    <v-card-title class="d-flex align-center pe-2">
-      <v-spacer />
+    <v-text-field
+      v-model="search"
+      density="compact"
+      label="Search"
+      prepend-inner-icon="mdi-magnify"
+      variant="solo-filled"
+      class="mb-5 border border-gray-300 rounded"
+      flat
+      hide-details
+      single-line
+    />
 
-      <v-text-field
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
-        flat
-        hide-details
-        single-line
-      />
-    </v-card-title>
-
-    <v-divider />
-    <v-data-table v-model:search="search" :filter-keys="['name']" :items="items" :headers="headers">
+    <v-data-table
+      v-model:search="search"
+      :filter-keys="['name']"
+      class="border border-gray-300 rounded-md"
+      :items="items"
+      :headers="headers"
+    >
       <template #item.name="{ item }">
         <div class="flex items-center gap-2">
-          <img :src="item.image" alt="" class="w-8 h-8 rounded object-cover" />
+          <NuxtImg :src="item.image" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
           <span>{{ item.name }}</span>
-        </div>
-      </template>
-
-      <template #item.image="{ item }">
-        <v-card
-          class="my-2"
-          elevation="2"
-          rounded
-          style="cursor: pointer"
-          @click="$emit('select', `https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`)"
-        >
-          <v-img :src="`https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`" height="64" cover />
-        </v-card>
-      </template>
-
-      <template #item.rating="{ item }">
-        <v-rating :model-value="item.rating" color="orange-darken-2" density="compact" size="small" readonly />
-      </template>
-
-      <template #item.stock="{ item }">
-        <div class="text-end">
-          <v-chip
-            :color="item.stock ? 'green' : 'red'"
-            :text="item.stock ? 'In stock' : 'Out of stock'"
-            class="text-uppercase"
-            size="small"
-            label
-          />
         </div>
       </template>
     </v-data-table>
@@ -56,7 +30,7 @@
 </template>
 
 <script setup>
-import { VCard, VCardTitle, VSpacer, VTextField, VDataTable, VDivider, VRating, VChip, VImg } from 'vuetify/components';
+import { VCard, VTextField, VDataTable } from 'vuetify/components';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const emit = defineEmits(['select']);
@@ -131,3 +105,10 @@ const items = [
   },
 ];
 </script>
+
+<style>
+.v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
+.v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
+  border-bottom: none !important;
+}
+</style>
