@@ -104,7 +104,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.ogImg !== state.value.initialData.ogImg ||
       state.value.useAvif !== state.value.initialData.useAvif ||
       state.value.useWebp !== state.value.initialData.useWebp ||
-      state.value.bundleItemDisplay !== state.value.initialData.bundleItemDisplay ||
       JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings) ||
       isDirty.value
     );
@@ -172,7 +171,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         ogImg: state.value.ogImg,
         useAvif: state.value.useAvif,
         useWebp: state.value.useWebp,
-        seoSettings: state.value.seoSettings,
+        seoSettings: state.value.seoSettings
       };
 
       saveSiteSettings();
