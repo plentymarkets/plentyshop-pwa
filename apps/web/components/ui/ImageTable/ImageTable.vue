@@ -1,0 +1,133 @@
+<template>
+  <VCard flat>
+    <v-card-title class="d-flex align-center pe-2">
+      <v-spacer />
+
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="solo-filled"
+        flat
+        hide-details
+        single-line
+      />
+    </v-card-title>
+
+    <v-divider />
+    <v-data-table v-model:search="search" :filter-keys="['name']" :items="items" :headers="headers">
+      <template #item.name="{ item }">
+        <div class="flex items-center gap-2">
+          <img :src="item.image" alt="" class="w-8 h-8 rounded object-cover" />
+          <span>{{ item.name }}</span>
+        </div>
+      </template>
+
+      <template #item.image="{ item }">
+        <v-card
+          class="my-2"
+          elevation="2"
+          rounded
+          style="cursor: pointer"
+          @click="$emit('select', `https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`)"
+        >
+          <v-img :src="`https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`" height="64" cover />
+        </v-card>
+      </template>
+
+      <template #item.rating="{ item }">
+        <v-rating :model-value="item.rating" color="orange-darken-2" density="compact" size="small" readonly />
+      </template>
+
+      <template #item.stock="{ item }">
+        <div class="text-end">
+          <v-chip
+            :color="item.stock ? 'green' : 'red'"
+            :text="item.stock ? 'In stock' : 'Out of stock'"
+            class="text-uppercase"
+            size="small"
+            label
+          />
+        </div>
+      </template>
+    </v-data-table>
+  </VCard>
+</template>
+
+<script setup>
+import { VCard, VCardTitle, VSpacer, VTextField, VDataTable, VDivider, VRating, VChip, VImg } from 'vuetify/components';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const emit = defineEmits(['select']);
+const headers = [
+  { title: 'File name', key: 'name' },
+  { title: 'Image size', key: 'size' },
+  { title: 'Last change', key: 'change' },
+];
+
+const search = ref('');
+const items = [
+  {
+    name: 'Nebula GTX 3080',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Galaxy RTX 3080',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Orion RX 6800 XT',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Vortex RTX 3090',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Cosmos GTX 1660 Super',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+
+  {
+    name: 'Nebula GTX 3080',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Galaxy RTX 3080',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Orion RX 6800 XT',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Vortex RTX 3090',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Cosmos GTX 1660 Super',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+];
+</script>
