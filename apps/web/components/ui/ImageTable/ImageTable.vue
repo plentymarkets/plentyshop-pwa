@@ -18,6 +18,7 @@
       class="border border-gray-300 rounded-md"
       :items="items"
       :headers="headers"
+      no-data-text="No images found"
     >
       <template #item.name="{ item }">
         <div class="flex items-center gap-2">
@@ -110,5 +111,12 @@ const items = [
 .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
 .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
   border-bottom: none !important;
+}
+.v-data-table-footer__items-per-page {
+  display: none !important;
+}
+
+.v-data-table-footer__info {
+  display: none !important;
 }
 </style>
