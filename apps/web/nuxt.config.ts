@@ -117,7 +117,13 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+    'vuetify-nuxt-module',
   ],
+  vuetify: {
+    moduleOptions: {
+      disableVuetifyStyles: true,
+    },
+  },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },
