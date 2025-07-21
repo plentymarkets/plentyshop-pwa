@@ -120,7 +120,7 @@ export default defineNuxtConfig({
   ],
   vuetify: {
     moduleOptions: {
-      disableVuetifyStyles: true
+      disableVuetifyStyles: true,
     },
   },
   shopCore: {
