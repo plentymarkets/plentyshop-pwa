@@ -24,7 +24,7 @@
             :placeholder="placeholderImg"
             dimensions="150x40px (SVG) or max 180x80px"
             :show-tooltip="true"
-            @select="openUploader('logo')"
+            @select="openUploader(undefined, 'Logo')"
             @delete="deleteLogo()"
           />
 
@@ -34,7 +34,7 @@
             :placeholder="placeholderImg"
             dimensions="32x32px or 48x48px (.ico)"
             :show-tooltip="true"
-            @select="openUploader('favicon')"
+            @select="openUploader(undefined, 'Favicon')"
             @delete="deleteFavicon()"
           />
         </div>
@@ -226,7 +226,7 @@
     <!-- </div>
       <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span> -->
     <!-- </UiAccordionItem> -->
-    <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
+    <UiImageSelectorModal :open="isUploaderOpen" :custom-label="customLabel" @close="closeUploader" />
   </div>
 </template>
 
@@ -238,7 +238,7 @@ const runtimeConfig = useRuntimeConfig();
 const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer, updateHeaderLogo, updateFavicon } =
   useSiteConfiguration();
 
-const { placeholderImg, isUploaderOpen, openUploader, closeUploader } = usePickerHelper();
+const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
 
 const branding = ref(false);
 const socialMedia = ref(false);

@@ -21,17 +21,21 @@ export const usePickerHelper = () => {
     imageObj[type] = placeholderImg;
   };
 
-  const selectedImageType = ref('wideScreen'); 
+  const selectedImageType = ref('wideScreen');
+  const customLabel = ref('');
 
   const isUploaderOpen = ref(false);
 
-  const openUploader = (type: string) => {
-    selectedImageType.value = type;
+  const openUploader = (type: string | undefined, label?: string) => {
+    if (type) selectedImageType.value = type;
+    if (label) customLabel.value = label;
+    else customLabel.value = '';
     isUploaderOpen.value = true;
   };
 
   const closeUploader = () => {
     isUploaderOpen.value = false;
+    customLabel.value = '';
   };
 
   return {
@@ -44,5 +48,6 @@ export const usePickerHelper = () => {
     openUploader,
     closeUploader,
     selectedImageType,
+    customLabel,
   };
 };

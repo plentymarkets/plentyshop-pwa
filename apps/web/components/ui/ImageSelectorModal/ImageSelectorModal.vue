@@ -62,6 +62,10 @@ const props = defineProps({
     type: String,
     default: 'xl',
   },
+  customLabel: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits(['close']);
@@ -71,6 +75,7 @@ const close = () => emit('close');
 const canAdd = ref(false);
 
 const imageTypeLabel = computed(() => {
+  if (props.customLabel) return props.customLabel;
   switch (props.imageType) {
     case 'xl':
     case 'wideScreen':
