@@ -111,7 +111,7 @@ watch(
           `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`,
         ),
         query: route.query,
-        replace: true
+        replace: true,
       });
     }
   },
