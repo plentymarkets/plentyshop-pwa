@@ -21,11 +21,24 @@ export const usePickerHelper = () => {
     imageObj[type] = placeholderImg;
   };
 
+  const isUploaderOpen = ref(false);
+
+  const openUploader = () => {
+    isUploaderOpen.value = true;
+  };
+
+  const closeUploader = () => {
+    isUploaderOpen.value = false;
+  };
+
   return {
     placeholderImg,
     labels,
     imageDimensions,
     imageTypes,
     deleteImage,
+    isUploaderOpen,
+    openUploader,
+    closeUploader,
   };
 };

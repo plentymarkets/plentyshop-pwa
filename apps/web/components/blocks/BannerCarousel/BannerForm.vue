@@ -475,7 +475,16 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const {
+  placeholderImg,
+  labels,
+  imageDimensions,
+  imageTypes,
+  deleteImage,
+  isUploaderOpen,
+  openUploader,
+  closeUploader,
+} = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -487,15 +496,7 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-const isUploaderOpen = ref(false);
 
-function openUploader() {
-  isUploaderOpen.value = true;
-}
-
-function closeUploader() {
-  isUploaderOpen.value = false;
-}
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);

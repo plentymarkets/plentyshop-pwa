@@ -145,22 +145,23 @@ import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
 const runtimeConfig = useRuntimeConfig();
-const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const {
+  placeholderImg,
+  labels,
+  imageDimensions,
+  imageTypes,
+  deleteImage,
+  isUploaderOpen,
+  openUploader,
+  closeUploader,
+} = usePickerHelper();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<ImageFormProps>();
-const isUploaderOpen = ref(false);
 
-function openUploader() {
-  isUploaderOpen.value = true;
-}
-
-function closeUploader() {
-  isUploaderOpen.value = false;
-}
 const uiImageTextBlock = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
 );

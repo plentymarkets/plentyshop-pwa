@@ -238,26 +238,16 @@ const runtimeConfig = useRuntimeConfig();
 const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer, updateHeaderLogo, updateFavicon } =
   useSiteConfiguration();
 
-const { placeholderImg } = usePickerHelper();
+const { placeholderImg, isUploaderOpen, openUploader, closeUploader } = usePickerHelper();
 
 const branding = ref(false);
 const socialMedia = ref(false);
 const optimisation = ref(false);
 
-const isUploaderOpen = ref(false);
-
-function deleteLogo() {
+const deleteLogo = () => {
   updateHeaderLogo();
-}
-function deleteFavicon() {
+};
+const deleteFavicon = () => {
   updateFavicon();
-}
-
-function openUploader() {
-  isUploaderOpen.value = true;
-}
-
-function closeUploader() {
-  isUploaderOpen.value = false;
-}
+};
 </script>
