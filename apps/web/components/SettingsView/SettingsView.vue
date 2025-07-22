@@ -239,6 +239,7 @@
     <UiImageSelectorModal
       :open="isUploaderOpen"
       :custom-label="customLabel"
+      :current-image="activeImage"
       @close="closeUploader"
       @add="handleImageAdd"
     />
@@ -261,6 +262,7 @@ const {
   updateFavicon,
   handleImageAdd,
   setImageActiveSetting,
+  activeSetting: imageActiveSetting,
 } = useSiteConfiguration();
 
 const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
@@ -275,4 +277,10 @@ const deleteLogo = () => {
 const deleteFavicon = () => {
   updateFavicon();
 };
+
+const activeImage = computed(() => {
+  if (imageActiveSetting.value === 'Logo') return headerLogo.value;
+  if (imageActiveSetting.value === 'Favicon') return favicon.value;
+  return '';
+});
 </script>
