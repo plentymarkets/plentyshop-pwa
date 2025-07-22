@@ -91,6 +91,8 @@ export interface UseSiteConfiguration {
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
+  updateHeaderLogo: () => void;
+  updateFavicon: () => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

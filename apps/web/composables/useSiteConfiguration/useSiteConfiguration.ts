@@ -193,9 +193,20 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const setActiveSetting: SetActiveSetting = (setting: string) => {
     state.value.activeSetting = setting;
-    state.value.drawerOpen = true;
+    state.value.drawerOpen = true;  
     state.value.placement = 'left';
     state.value.drawerView = null; // TODO: remove once all settings are moved to new structure
+  };
+
+  const { placeholderImg } = usePickerHelper();
+
+
+  const updateHeaderLogo = () => {
+    state.value.headerLogo = placeholderImg;
+  };
+
+  const updateFavicon = () => {
+    state.value.favicon = placeholderImg;
   };
 
   return {
@@ -209,5 +220,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     togglePageModal,
     setSettingsCategory,
     setActiveSetting,
+    updateHeaderLogo,
+    updateFavicon
   };
 };
