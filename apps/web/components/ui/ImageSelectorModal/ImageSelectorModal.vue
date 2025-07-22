@@ -23,10 +23,11 @@
           <div
             class="w-1/3 flex flex-col justify-center items-center border border-dashed border-gray-300 rounded-md p-4"
           >
-            <template v-if="selectedImage">
-              <img :src="selectedImage" alt="Selected" class="w-full h-auto rounded" />
-            </template>
-            <template v-else> Select an image from the list to preview it here </template>
+            <UiImagePreview
+              :image="selectedImage?.image || null"
+              :name="selectedImage?.name || ''"
+              @close="selectedImage = null"
+            />
           </div>
         </main>
 
@@ -53,7 +54,7 @@
   </teleport>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps({
@@ -71,6 +72,10 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 const close = () => emit('close');
+const selectedImage = ref<null | {
+  image: string
+  name: string
+}>(null)
 
 const canAdd = ref(false);
 
@@ -90,4 +95,11 @@ const imageTypeLabel = computed(() => {
       return props.imageType;
   }
 });
+const handleSelect = (image: { image: string; name: string; }) => {
+  selectedImage.value = {
+    image: image.image,
+    name: image.name,
+  }
+}
+const canAdd = computed(() => !!selectedImage.value)
 </script>
