@@ -39,8 +39,8 @@ const headers = [
   { title: 'Last change', key: 'change' },
 ];
 const emit = defineEmits<{
-  (e: 'select', item: { name: string; image: string }): void
-}>()
+  (e: 'select', item: { name: string; image: string }): void;
+}>();
 
 const handleRowClick = (item: { name: string; image: string; size: string; change: string }) => {
   emit('select', {
@@ -108,6 +108,12 @@ const items = [
   {
     name: 'Cosmos GTX 1660 Super',
     image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Drone A',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif',
     size: '5.25 MB',
     change: 'Apr 6, 2024, 4:55:05 PM',
   },

@@ -73,11 +73,11 @@ const emit = defineEmits(['close']);
 
 const close = () => emit('close');
 const selectedImage = ref<null | {
-  image: string
-  name: string
-}>(null)
+  image: string;
+  name: string;
+}>(null);
 
-const canAdd = ref(false);
+const canAdd = computed(() => !!selectedImage.value);
 
 const imageTypeLabel = computed(() => {
   if (props.customLabel) return props.customLabel;
@@ -95,11 +95,10 @@ const imageTypeLabel = computed(() => {
       return props.imageType;
   }
 });
-const handleSelect = (image: { image: string; name: string; }) => {
+const handleSelect = (image: { image: string; name: string }) => {
   selectedImage.value = {
     image: image.image,
     name: image.name,
-  }
-}
-const canAdd = computed(() => !!selectedImage.value)
+  };
+};
 </script>
