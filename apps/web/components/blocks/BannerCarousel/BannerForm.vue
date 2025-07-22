@@ -462,7 +462,12 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal :open="isUploaderOpen" :image-type="selectedImageType" @close="closeUploader" />
+  <UiImageSelectorModal
+    :open="isUploaderOpen"
+    :image-type="selectedImageType"
+    @close="closeUploader"
+    @add="handleImageAdd"
+  />
 </template>
 
 <script setup lang="ts">
@@ -497,12 +502,6 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-// const selectedImageType = ref('xl'); // default value
-
-// function openUploader(type: string) {
-//   selectedImageType.value = type;
-//   isUploaderOpen.value = true;
-// }
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
@@ -513,6 +512,12 @@ const clampBrightness = (event: Event, type: string) => {
   }
   if (type === 'text') {
     banner.value.content.text.bgopacity = clamp(nextValue, 0, 1);
+  }
+};
+
+const handleImageAdd = ({ image, type }: { image: string; name: string; type: string }) => {
+  if (banner.value?.content?.image && type) {
+    (banner.value.content.image as Record<string, string>)[type] = image;
   }
 };
 </script>

@@ -45,6 +45,7 @@
             :disabled="!canAdd"
             data-testid="image-uploader-add-button"
             class="bg-editor-button text-white py-1 px-4 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            @click="addImage"
           >
             Add image
           </button>
@@ -69,7 +70,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'add']);
 
 const close = () => emit('close');
 const selectedImage = ref<null | {
@@ -100,5 +101,16 @@ const handleSelect = (image: { image: string; name: string }) => {
     image: image.image,
     name: image.name,
   };
+};
+
+const addImage = () => {
+  if (selectedImage.value) {
+    emit('add', {
+      image: selectedImage.value.image,
+      name: selectedImage.value.name,
+      type: props.imageType,
+    });
+    close();
+  }
 };
 </script>
