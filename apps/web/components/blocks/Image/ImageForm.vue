@@ -137,7 +137,12 @@
       </div>
     </fieldset>
   </UiAccordionItem>
-  <UiImageSelectorModal :open="isUploaderOpen" :image-type="selectedImageType" @close="closeUploader" />
+  <UiImageSelectorModal
+    :open="isUploaderOpen"
+    :image-type="selectedImageType"
+    @close="closeUploader"
+    @add="handleImageAdd"
+  />
 </template>
 
 <script setup lang="ts">
@@ -168,4 +173,10 @@ const uiImageTextBlock = computed(
 );
 
 const imageGroupOpen = ref(false);
+
+const handleImageAdd = ({ image, type }: { image: string; name: string; type: string }) => {
+  if (uiImageTextBlock.value && type && typeof image === 'string') {
+    (uiImageTextBlock.value as Record<string, unknown>)[type] = image;
+  }
+};
 </script>
