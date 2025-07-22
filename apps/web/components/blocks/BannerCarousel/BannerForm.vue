@@ -465,6 +465,7 @@
   <UiImageSelectorModal
     :open="isUploaderOpen"
     :image-type="selectedImageType"
+    :current-image="banner.content.image[selectedImageType as BannerImageType]"
     @close="closeUploader"
     @add="handleImageAdd"
   />
@@ -520,6 +521,8 @@ const handleImageAdd = ({ image, type }: { image: string; name: string; type: st
     (banner.value.content.image as Record<string, string>)[type] = image;
   }
 };
+
+type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>
 
 <style scoped>

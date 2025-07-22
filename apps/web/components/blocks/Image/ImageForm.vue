@@ -140,6 +140,7 @@
   <UiImageSelectorModal
     :open="isUploaderOpen"
     :image-type="selectedImageType"
+    :current-image="uiImageTextBlock[selectedImageType as ImageType]"
     @close="closeUploader"
     @add="handleImageAdd"
   />
@@ -148,6 +149,8 @@
 <script setup lang="ts">
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
+
+type ImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
 const runtimeConfig = useRuntimeConfig();
 const {

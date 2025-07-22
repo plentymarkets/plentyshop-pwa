@@ -58,6 +58,8 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
+const { placeholderImg } = usePickerHelper();
+
 const props = defineProps({
   open: Boolean,
   imageType: {
@@ -65,6 +67,10 @@ const props = defineProps({
     default: 'xl',
   },
   customLabel: {
+    type: String,
+    default: '',
+  },
+  currentImage: {
     type: String,
     default: '',
   },
@@ -78,7 +84,27 @@ const selectedImage = ref<null | {
   name: string;
 }>(null);
 
-const canAdd = computed(() => !!selectedImage.value);
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen && props.currentImage) {
+      selectedImage.value = {
+        image: props.currentImage,
+        name: '',
+      };
+    } else if (!isOpen) {
+      selectedImage.value = null;
+    }
+  },
+);
+
+const canAdd = computed(() => {
+  if (!selectedImage.value) return false;
+  if (!selectedImage.value.image) return false;
+  if (selectedImage.value.image === props.currentImage) return false;
+  if (selectedImage.value.image === placeholderImg) return false;
+  return true;
+});
 
 const imageTypeLabel = computed(() => {
   if (props.customLabel) return props.customLabel;

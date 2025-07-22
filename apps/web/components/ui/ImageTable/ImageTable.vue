@@ -51,69 +51,52 @@ const handleRowClick = (item: { name: string; image: string; size: string; chang
 const search = ref('');
 const items = [
   {
-    name: 'Nebula GTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    name: 'XL Image Headphone Guy',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif',
     size: '5.25 MB',
     change: 'Apr 6, 2024, 4:55:05 PM',
   },
   {
-    name: 'Galaxy RTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    name: 'L Image Headphone Guy',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif',
     size: '5.25 MB',
     change: 'Apr 6, 2024, 4:55:05 PM',
   },
   {
-    name: 'Orion RX 6800 XT',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
+    name: 'MD Image Headphone Guy',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif',
     size: '5.25 MB',
     change: 'Apr 6, 2024, 4:55:05 PM',
   },
   {
-    name: 'Vortex RTX 3090',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Cosmos GTX 1660 Super',
+    name: 'XS Image Headphone Guy',
     image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
     size: '5.25 MB',
     change: 'Apr 6, 2024, 4:55:05 PM',
   },
 
   {
-    name: 'Nebula GTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Galaxy RTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Orion RX 6800 XT',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Vortex RTX 3090',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Cosmos GTX 1660 Super',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Drone A',
+    name: 'Drone A XL',
     image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+
+  {
+    name: 'Drone A L',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Drone A L',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif',
+    size: '5.25 MB',
+    change: 'Apr 6, 2024, 4:55:05 PM',
+  },
+  {
+    name: 'Drone A L',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif',
     size: '5.25 MB',
     change: 'Apr 6, 2024, 4:55:05 PM',
   },
