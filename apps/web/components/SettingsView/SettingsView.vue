@@ -24,7 +24,12 @@
             :placeholder="placeholderImg"
             dimensions="150x40px (SVG) or max 180x80px"
             :show-tooltip="true"
-            @select="openUploader(undefined, 'Logo')"
+            @select="
+              () => {
+                setImageActiveSetting('Logo');
+                openUploader(undefined, 'Logo');
+              }
+            "
             @delete="deleteLogo()"
           />
 
@@ -34,7 +39,12 @@
             :placeholder="placeholderImg"
             dimensions="32x32px or 48x48px (.ico)"
             :show-tooltip="true"
-            @select="openUploader(undefined, 'Favicon')"
+            @select="
+              () => {
+                setImageActiveSetting('Favicon');
+                openUploader(undefined, 'Favicon');
+              }
+            "
             @delete="deleteFavicon()"
           />
         </div>
@@ -226,17 +236,32 @@
     <!-- </div>
       <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span> -->
     <!-- </UiAccordionItem> -->
-    <UiImageSelectorModal :open="isUploaderOpen" :custom-label="customLabel" @close="closeUploader" />
+    <UiImageSelectorModal
+      :open="isUploaderOpen"
+      :custom-label="customLabel"
+      @close="closeUploader"
+      @add="handleImageAdd"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip, SfSwitch } from '@storefront-ui/vue';
-import UiImagePicker from '../ui/ImagePicker/ImagePicker.vue';
-import { usePickerHelper } from '~/composables/usePickerHelper/usePickerHelper';
+
 const runtimeConfig = useRuntimeConfig();
-const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer, updateHeaderLogo, updateFavicon } =
-  useSiteConfiguration();
+const {
+  headerLogo,
+  favicon,
+  ogTitle,
+  ogImg,
+  useAvif,
+  useWebp,
+  closeDrawer,
+  updateHeaderLogo,
+  updateFavicon,
+  handleImageAdd,
+  setImageActiveSetting,
+} = useSiteConfiguration();
 
 const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
 

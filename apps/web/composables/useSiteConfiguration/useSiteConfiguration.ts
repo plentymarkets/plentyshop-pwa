@@ -193,13 +193,16 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const setActiveSetting: SetActiveSetting = (setting: string) => {
     state.value.activeSetting = setting;
-    state.value.drawerOpen = true;  
+    state.value.drawerOpen = true;
     state.value.placement = 'left';
     state.value.drawerView = null; // TODO: remove once all settings are moved to new structure
   };
 
-  const { placeholderImg } = usePickerHelper();
+  const setImageActiveSetting = (setting: string) => {
+    state.value.activeSetting = setting;
+  };
 
+  const { placeholderImg } = usePickerHelper();
 
   const updateHeaderLogo = () => {
     state.value.headerLogo = placeholderImg;
@@ -207,6 +210,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const updateFavicon = () => {
     state.value.favicon = placeholderImg;
+  };
+
+  const handleImageAdd = ({ image }: { image: string; name: string }) => {
+    if (state.value.activeSetting === 'Logo') {
+      state.value.headerLogo = image;
+    } else if (state.value.activeSetting === 'Favicon') {
+      state.value.favicon = image;
+    }
   };
 
   return {
@@ -220,7 +231,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     togglePageModal,
     setSettingsCategory,
     setActiveSetting,
+    setImageActiveSetting,
     updateHeaderLogo,
-    updateFavicon
+    updateFavicon,
+    handleImageAdd,
   };
 };

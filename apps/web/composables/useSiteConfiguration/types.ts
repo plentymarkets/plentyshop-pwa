@@ -93,6 +93,8 @@ export interface UseSiteConfiguration {
   settingsIsDirty: ComputedRef<boolean>;
   updateHeaderLogo: () => void;
   updateFavicon: () => void;
+  handleImageAdd: ({ image, name }: { image: string; name: string }) => void;
+  setImageActiveSetting: (setting: string) => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
