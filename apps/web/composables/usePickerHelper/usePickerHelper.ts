@@ -21,9 +21,12 @@ export const usePickerHelper = () => {
     imageObj[type] = placeholderImg;
   };
 
+  const selectedImageType = ref('wideScreen'); 
+
   const isUploaderOpen = ref(false);
 
-  const openUploader = () => {
+  const openUploader = (type: string) => {
+    selectedImageType.value = type;
     isUploaderOpen.value = true;
   };
 
@@ -40,5 +43,6 @@ export const usePickerHelper = () => {
     isUploaderOpen,
     openUploader,
     closeUploader,
+    selectedImageType,
   };
 };

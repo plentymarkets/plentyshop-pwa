@@ -18,7 +18,7 @@
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :show-tooltip="true"
-        @select="openUploader"
+        @select="openUploader(type)"
         @delete="deleteImage(uiImageTextBlock, type)"
       />
     </div>
@@ -137,7 +137,7 @@
       </div>
     </fieldset>
   </UiAccordionItem>
-  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
+  <UiImageSelectorModal :open="isUploaderOpen" :image-type="selectedImageType" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
@@ -154,6 +154,7 @@ const {
   isUploaderOpen,
   openUploader,
   closeUploader,
+  selectedImageType,
 } = usePickerHelper();
 
 const { data } = useCategoryTemplate();

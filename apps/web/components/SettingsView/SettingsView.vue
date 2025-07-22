@@ -24,7 +24,7 @@
             :placeholder="placeholderImg"
             dimensions="150x40px (SVG) or max 180x80px"
             :show-tooltip="true"
-            @select="openUploader"
+            @select="openUploader('logo')"
             @delete="deleteLogo()"
           />
 
@@ -34,7 +34,7 @@
             :placeholder="placeholderImg"
             dimensions="32x32px or 48x48px (.ico)"
             :show-tooltip="true"
-            @select="openUploader"
+            @select="openUploader('favicon')"
             @delete="deleteFavicon()"
           />
         </div>

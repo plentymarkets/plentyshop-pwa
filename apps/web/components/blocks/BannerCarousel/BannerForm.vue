@@ -20,7 +20,7 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @select="openUploader"
+            @select="openUploader(type)"
             @delete="deleteImage(banner.content.image, type)"
           />
         </div>
@@ -462,7 +462,7 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
+  <UiImageSelectorModal :open="isUploaderOpen" :image-type="selectedImageType" @close="closeUploader" />
 </template>
 
 <script setup lang="ts">
@@ -484,6 +484,7 @@ const {
   isUploaderOpen,
   openUploader,
   closeUploader,
+  selectedImageType,
 } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
@@ -496,6 +497,12 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
+// const selectedImageType = ref('xl'); // default value
+
+// function openUploader(type: string) {
+//   selectedImageType.value = type;
+//   isUploaderOpen.value = true;
+// }
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
@@ -518,6 +525,7 @@ input::-webkit-inner-spin-button {
 }
 
 input[type='number'] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 </style>
