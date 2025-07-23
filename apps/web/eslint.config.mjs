@@ -51,6 +51,7 @@ export default withNuxt(
       'vue/no-console': ['error'],
       'vue/no-multiple-template-root': ['off'],
       'vue/no-v-html': ['off'],
+      'vue/valid-v-slot': ['off'],
       'vue/html-self-closing': ['error', { html: { void: 'always' } }],
       'vuejs-accessibility/click-events-have-key-events': 'off',
       'vuejs-accessibility/form-control-has-label': 'off',
