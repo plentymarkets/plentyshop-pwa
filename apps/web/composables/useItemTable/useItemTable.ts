@@ -62,15 +62,21 @@ export const useItemsTable: UseItemTableReturn = () => {
   };
 
   const bytesToMB = (bytes: string | number): string => {
-  const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
-  return (num / (1024 * 1024)).toFixed(2) + ' MB';
-};
+    const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
+    return (num / (1024 * 1024)).toFixed(2) + ' MB';
+  };
+
+  const getStorageMetadata = async (key: string) => {
+    const response = await useSdk().plentysystems.getStorageMetadata({ key });
+
+    return response.data;
+  };
 
   return {
     getStorageItemsServer,
     getStorageItems,
+    getStorageMetadata,
     bytesToMB,
     ...toRefs(state.value),
   };
 };
-

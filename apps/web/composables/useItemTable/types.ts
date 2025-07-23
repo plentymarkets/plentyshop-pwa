@@ -1,4 +1,4 @@
-// import type { StorageObject } from '@plentymarkets/shop-api';
+ // import type { StorageObject } from '@plentymarkets/shop-api';
 
 interface StorageObject {
   key: string;
@@ -8,6 +8,11 @@ interface StorageObject {
   storageClass: string;
   publicUrl: string;
   previewUrl?: string;
+}
+
+interface StorageMetadataData {
+  width: string;
+  height: string;
 }
 
 export interface UseItemTableState {
@@ -23,6 +28,7 @@ export interface UseItemTableTemplate {
   getStorageItemsServer: GetStorageItems;
   getStorageItems: GetStorageItems;
   bytesToMB: (bytes: string | number) => string;
+  getStorageMetadata: (key: string) => Promise<StorageMetadataData>;
 }
 
 export type UseItemTableReturn = () => UseItemTableTemplate;

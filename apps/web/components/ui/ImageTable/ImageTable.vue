@@ -21,13 +21,25 @@
       no-data-text="No images found"
     >
       <template #item.key="{ item }">
-        <div class="flex items-center gap-2 cursor-pointer" @click="handleRowClick(item)">
-          <NuxtImg
-            :src="item.previewUrl || item.publicUrl"
-            alt="table thumbnail"
-            class="w-8 h-8 rounded object-cover"
-          />
-          <span>{{ item.key }}</span>
+        <div class="flex flex-col gap-1 cursor-pointer">
+          <div
+            class="flex items-center gap-2"
+            @click="
+              handleRowClick(item);
+              fetchMetadata(item.key);
+            "
+          >
+            <NuxtImg
+              :src="item.previewUrl || item.publicUrl"
+              alt="table thumbnail"
+              class="w-8 h-8 rounded object-cover"
+            />
+            <span>{{ item.key }}</span>
+          </div>
+          <div v-if="metadata[item.key]">
+            <p class="text-xs text-gray-500">Width: {{ metadata[item.key].width }}</p>
+            <p class="text-xs text-gray-500">Height: {{ metadata[item.key].height }}</p>
+          </div>
         </div>
       </template>
       <template #item.size="{ item }">
@@ -50,8 +62,21 @@ interface StorageObject {
   previewUrl?: string;
 }
 
-const { data: items, getStorageItemsServer, bytesToMB } = useItemsTable();
+const { data: items, getStorageItemsServer, bytesToMB, getStorageMetadata } = useItemsTable();
 await getStorageItemsServer();
+
+const metadata = ref<Record<string, { width: string; height: string }>>({});
+const width = ref<string>('');
+const height = ref<string>('');
+
+const fetchMetadata = async (key: string) => {
+  const data = await getStorageMetadata(key);
+  if (data && data.width && data.height) {
+    metadata.value[key] = { width: data.width, height: data.height };
+    width.value = data.width;
+    height.value = data.height;
+  }
+};
 
 const headers = [
   { title: 'File name', key: 'key' },
