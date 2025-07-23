@@ -22,9 +22,16 @@
     >
       <template #item.key="{ item }">
         <div class="flex items-center gap-2 cursor-pointer" @click="handleRowClick(item)">
-          <NuxtImg :src="item.previewUrl || item.publicUrl" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
+          <NuxtImg
+            :src="item.previewUrl || item.publicUrl"
+            alt="table thumbnail"
+            class="w-8 h-8 rounded object-cover"
+          />
           <span>{{ item.key }}</span>
         </div>
+      </template>
+      <template #item.size="{ item }">
+        <span>{{ bytesToMB(item.size) }}</span>
       </template>
     </v-data-table>
   </VCard>
@@ -43,7 +50,7 @@ interface StorageObject {
   previewUrl?: string;
 }
 
-const { data: items, getStorageItemsServer } = useItemsTable();
+const { data: items, getStorageItemsServer, bytesToMB } = useItemsTable();
 await getStorageItemsServer();
 
 const headers = [

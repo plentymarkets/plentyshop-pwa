@@ -16,8 +16,16 @@ export const useItemsTable: UseItemTableReturn = () => {
     loading: false,
   }));
 
+  const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
+
   const getStorageItemsServer = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
     state.value.loading = true;
+
+    if (cachedImages.value.length > 0) {
+      state.value.data = cachedImages.value;
+      state.value.loading = false;
+      return;
+    }
 
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.getStorageItems({
@@ -35,6 +43,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     const items: StorageObject[] = data?.value?.data ?? [];
 
     state.value.data = items;
+    cachedImages.value = items;
   };
 
   const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
@@ -52,9 +61,16 @@ export const useItemsTable: UseItemTableReturn = () => {
     }
   };
 
+  const bytesToMB = (bytes: string | number): string => {
+  const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
+  return (num / (1024 * 1024)).toFixed(2) + ' MB';
+};
+
   return {
     getStorageItemsServer,
     getStorageItems,
+    bytesToMB,
     ...toRefs(state.value),
   };
 };
+

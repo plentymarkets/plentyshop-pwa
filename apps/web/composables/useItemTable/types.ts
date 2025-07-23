@@ -22,6 +22,7 @@ export interface UseItemTableTemplate {
   loading: Readonly<Ref<boolean>>;
   getStorageItemsServer: GetStorageItems;
   getStorageItems: GetStorageItems;
+  bytesToMB: (bytes: string | number) => string;
 }
 
 export type UseItemTableReturn = () => UseItemTableTemplate;
