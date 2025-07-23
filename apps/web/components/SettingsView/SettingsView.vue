@@ -25,10 +25,8 @@
             dimensions="150x40px (SVG) or max 180x80px"
             :show-tooltip="true"
             @select="
-              () => {
-                setImageActiveSetting('Logo');
-                openUploader(undefined, 'Logo');
-              }
+              setImageActiveSetting('Logo');
+              openUploader(undefined, 'Logo');
             "
             @delete="deleteLogo()"
           />
@@ -40,10 +38,8 @@
             dimensions="32x32px or 48x48px (.ico)"
             :show-tooltip="true"
             @select="
-              () => {
-                setImageActiveSetting('Favicon');
-                openUploader(undefined, 'Favicon');
-              }
+              setImageActiveSetting('Favicon');
+              openUploader(undefined, 'Favicon');
             "
             @delete="deleteFavicon()"
           />
