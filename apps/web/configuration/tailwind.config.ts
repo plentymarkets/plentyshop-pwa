@@ -70,6 +70,7 @@ export default {
         editor: {
           'body-bg': '#F1F3F5',
           button: '#062633',
+          'mint': '#EFF4F1',
         },
 
         header: {

@@ -17,7 +17,11 @@
 
         <main class="flex flex-1 overflow-hidden">
           <div class="flex-1 overflow-auto pr-4">
-            <UiImageTable @select="handleSelect" />
+            <UiImageTable
+              :selected-name="selectedImage?.name || null"
+              @select="handleSelect"
+              @unselect="selectedImage = null"
+            />
           </div>
 
           <div
@@ -65,15 +69,15 @@ const emit = defineEmits(['close']);
 
 const close = () => emit('close');
 const selectedImage = ref<null | {
-  image: string
-  name: string
-}>(null)
+  image: string;
+  name: string;
+}>(null);
 
-const handleSelect = (image: { image: string; name: string; }) => {
+const handleSelect = (image: { image: string; name: string }) => {
   selectedImage.value = {
     image: image.image,
     name: image.name,
-  }
-}
-const canAdd = computed(() => !!selectedImage.value)
+  };
+};
+const canAdd = computed(() => !!selectedImage.value);
 </script>
