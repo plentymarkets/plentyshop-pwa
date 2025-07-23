@@ -9,7 +9,7 @@
     data-testid="footer"
   >
     <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
             {{ resolvedContent.column1?.title }}
