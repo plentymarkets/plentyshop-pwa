@@ -14,16 +14,16 @@
 
     <v-data-table
       v-model:search="search"
-      :filter-keys="['name']"
+      :filter-keys="['key']"
       class="border border-gray-300 rounded-md"
       :items="items"
       :headers="headers"
       no-data-text="No images found"
     >
-      <template #item.name="{ item }">
+      <template #item.key="{ item }">
         <div class="flex items-center gap-2 cursor-pointer" @click="handleRowClick(item)">
-          <NuxtImg :src="item.image" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
-          <span>{{ item.name }}</span>
+          <NuxtImg :src="item.previewUrl || item.publicUrl" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
+          <span>{{ item.key }}</span>
         </div>
       </template>
     </v-data-table>
@@ -33,74 +33,36 @@
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 
+interface StorageObject {
+  key: string;
+  lastModified: string;
+  eTag: string;
+  size: string;
+  storageClass: string;
+  publicUrl: string;
+  previewUrl?: string;
+}
+
+const { data: items, getStorageItemsServer } = useItemsTable();
+await getStorageItemsServer();
+
 const headers = [
-  { title: 'File name', key: 'name' },
+  { title: 'File name', key: 'key' },
   { title: 'Image size', key: 'size' },
-  { title: 'Last change', key: 'change' },
+  { title: 'Last change', key: 'lastModified' },
 ];
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;
 }>();
 
-const handleRowClick = (item: { name: string; image: string; size: string; change: string }) => {
+const handleRowClick = (item: StorageObject) => {
   emit('select', {
-    name: item.name,
-    image: item.image,
+    name: item.key,
+    image: item.publicUrl,
   });
 };
+
 const search = ref('');
-const items = [
-  {
-    name: 'XL Image Headphone Guy',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'L Image Headphone Guy',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'MD Image Headphone Guy',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'XS Image Headphone Guy',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-
-  {
-    name: 'Drone A XL',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-
-  {
-    name: 'Drone A L',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Drone A L',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Drone A L',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-];
 </script>
 
 <style>
