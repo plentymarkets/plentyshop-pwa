@@ -98,3 +98,4 @@ export * from './useSiteSettings';
 export * from './useFooterBlock';
 export * from './usePickerHelper';
 export * from './useItemTable';
+export * from './useImageMetadata';

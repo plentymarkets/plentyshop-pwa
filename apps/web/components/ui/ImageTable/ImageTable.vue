@@ -65,16 +65,15 @@ interface StorageObject {
 const { data: items, getStorageItemsServer, bytesToMB, getStorageMetadata } = useItemsTable();
 await getStorageItemsServer();
 
-const metadata = ref<Record<string, { width: string; height: string }>>({});
-const width = ref<string>('');
-const height = ref<string>('');
+const { metadata, setMetadata } = useImageMetadata();
 
 const fetchMetadata = async (key: string) => {
   const data = await getStorageMetadata(key);
   if (data && data.width && data.height) {
-    metadata.value[key] = { width: data.width, height: data.height };
-    width.value = data.width;
-    height.value = data.height;
+    //     metadata.value[key] = { width: data.width, height: data.height };
+    // width.value = data.width;
+    // height.value = data.height;
+    setMetadata(key, { width: data.width, height: data.height });
   }
 };
 
