@@ -3,7 +3,7 @@
     <div v-if="props.open" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-[1500px] h-[800px] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col">
         <header class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold">Add image (XL, Desktop)</h2>
+          <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
           <div class="flex items-center gap-2">
             <SfTooltip label="This is a placeholder label" placement="top" :show-arrow="true" class="z-10">
               <SfIconInfo size="sm" />
@@ -23,10 +23,11 @@
           <div
             class="w-1/3 flex flex-col justify-center items-center border border-dashed border-gray-300 rounded-md p-4"
           >
-            <template v-if="selectedImage">
-              <img :src="selectedImage" alt="Selected" class="w-full h-auto rounded" />
-            </template>
-            <template v-else> Select an image from the list to preview it here </template>
+            <UiImagePreview
+              :image="selectedImage?.image || null"
+              :name="selectedImage?.name || ''"
+              @close="selectedImage = null"
+            />
           </div>
         </main>
 
@@ -44,6 +45,7 @@
             :disabled="!canAdd"
             data-testid="image-uploader-add-button"
             class="bg-editor-button text-white py-1 px-4 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            @click="addImage"
           >
             Add image
           </button>
@@ -53,16 +55,88 @@
   </teleport>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+
+const { placeholderImg } = usePickerHelper();
 
 const props = defineProps({
   open: Boolean,
+  imageType: {
+    type: String,
+    default: 'xl',
+  },
+  customLabel: {
+    type: String,
+    default: '',
+  },
+  currentImage: {
+    type: String,
+    default: '',
+  },
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'add']);
 
 const close = () => emit('close');
+const selectedImage = ref<null | {
+  image: string;
+  name: string;
+}>(null);
 
-const canAdd = ref(false);
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen && props.currentImage) {
+      selectedImage.value = {
+        image: props.currentImage,
+        name: '',
+      };
+    } else if (!isOpen) {
+      selectedImage.value = null;
+    }
+  },
+);
+
+const canAdd = computed(() => {
+  if (!selectedImage.value) return false;
+  if (!selectedImage.value.image) return false;
+  if (selectedImage.value.image === props.currentImage) return false;
+  if (selectedImage.value.image === placeholderImg) return false;
+  return true;
+});
+
+const imageTypeLabel = computed(() => {
+  if (props.customLabel) return props.customLabel;
+  switch (props.imageType) {
+    case 'xl':
+    case 'wideScreen':
+      return 'XL (Desktop)';
+    case 'desktop':
+      return 'L (Desktop)';
+    case 'tablet':
+      return 'M (Tablet)';
+    case 'mobile':
+      return 'S (Mobile)';
+    default:
+      return props.imageType;
+  }
+});
+const handleSelect = (image: { image: string; name: string }) => {
+  selectedImage.value = {
+    image: image.image,
+    name: image.name,
+  };
+};
+
+const addImage = () => {
+  if (selectedImage.value) {
+    emit('add', {
+      image: selectedImage.value.image,
+      name: selectedImage.value.name,
+      type: props.imageType,
+    });
+    close();
+  }
+};
 </script>
