@@ -81,6 +81,6 @@ export const usePickerHelper = () => {
     selectedImageType,
     customLabel,
     getImageTypeLabel,
-    useCanAddImage
+    useCanAddImage,
   };
 };

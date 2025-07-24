@@ -46,16 +46,6 @@
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 import type { StorageObject } from '@plentymarkets/shop-api';
 
-// interface StorageObject {
-//   key: string;
-//   lastModified: string;
-//   eTag: string;
-//   size: string;
-//   storageClass: string;
-//   publicUrl: string;
-//   previewUrl?: string;
-// }
-
 const { data: items, headers, getStorageItemsServer, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 await getStorageItemsServer();
 
