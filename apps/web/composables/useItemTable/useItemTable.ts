@@ -1,14 +1,14 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
-// import type { StorageObject } from '@plentymarkets/shop-api';
-interface StorageObject {
-  key: string;
-  lastModified: string;
-  eTag: string;
-  size: string;
-  storageClass: string;
-  publicUrl: string;
-  previewUrl?: string;
-}
+import type { StorageObject } from '@plentymarkets/shop-api';
+// interface StorageObject {
+//   key: string;
+//   lastModified: string;
+//   eTag: string;
+//   size: string;
+//   storageClass: string;
+//   publicUrl: string;
+//   previewUrl?: string;
+// }
 
 export const useItemsTable: UseItemTableReturn = () => {
   const state = useState<UseItemTableState>('useItemTable', () => ({

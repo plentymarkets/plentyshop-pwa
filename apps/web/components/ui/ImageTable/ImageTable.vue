@@ -44,16 +44,17 @@
 
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
+import type { StorageObject } from '@plentymarkets/shop-api';
 
-interface StorageObject {
-  key: string;
-  lastModified: string;
-  eTag: string;
-  size: string;
-  storageClass: string;
-  publicUrl: string;
-  previewUrl?: string;
-}
+// interface StorageObject {
+//   key: string;
+//   lastModified: string;
+//   eTag: string;
+//   size: string;
+//   storageClass: string;
+//   publicUrl: string;
+//   previewUrl?: string;
+// }
 
 const { data: items, headers, getStorageItemsServer, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 await getStorageItemsServer();
@@ -86,14 +87,6 @@ const handleRowClick = (item: StorageObject) => {
     image: item.publicUrl,
   });
 };
-
-// const handleRowClick = (item: { name: string; image: string }) => {
-//   if (props.selectedName === item.name) {
-//     emit('unselect');
-//   } else {
-//     emit('select', item);
-//   }
-// };
 
 const search = ref('');
 </script>

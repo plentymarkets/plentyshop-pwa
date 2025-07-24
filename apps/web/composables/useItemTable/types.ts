@@ -1,19 +1,19 @@
-// import type { StorageObject, StorageMetadataData } from '@plentymarkets/shop-api';
+import type { StorageObject, StorageMetadataData } from '@plentymarkets/shop-api';
 
-interface StorageObject {
-  key: string;
-  lastModified: string;
-  eTag: string;
-  size: string;
-  storageClass: string;
-  publicUrl: string;
-  previewUrl?: string;
-}
+// interface StorageObject {
+//   key: string;
+//   lastModified: string;
+//   eTag: string;
+//   size: string;
+//   storageClass: string;
+//   publicUrl: string;
+//   previewUrl?: string;
+// }
 
-interface StorageMetadataData {
-  width: string;
-  height: string;
-}
+// interface StorageMetadataData {
+//   width: string;
+//   height: string;
+// }
 
 export interface UseItemTableState {
   data: StorageObject[];
