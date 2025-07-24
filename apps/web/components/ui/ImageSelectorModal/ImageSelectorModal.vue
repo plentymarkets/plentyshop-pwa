@@ -63,7 +63,7 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
-const { placeholderImg } = usePickerHelper();
+const { placeholderImg, useCanAddImage, getImageTypeLabel } = usePickerHelper();
 
 const props = defineProps({
   open: Boolean,
@@ -103,30 +103,10 @@ watch(
   },
 );
 
-const canAdd = computed(() => {
-  if (!selectedImage.value) return false;
-  if (!selectedImage.value.image) return false;
-  if (selectedImage.value.image === props.currentImage) return false;
-  if (selectedImage.value.image === placeholderImg) return false;
-  return true;
-});
+const canAdd = useCanAddImage(selectedImage, props.currentImage, placeholderImg);
 
-const imageTypeLabel = computed(() => {
-  if (props.customLabel) return props.customLabel;
-  switch (props.imageType) {
-    case 'xl':
-    case 'wideScreen':
-      return 'XL (Desktop)';
-    case 'desktop':
-      return 'L (Desktop)';
-    case 'tablet':
-      return 'M (Tablet)';
-    case 'mobile':
-      return 'S (Mobile)';
-    default:
-      return props.imageType;
-  }
-});
+const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
+
 const handleSelect = (image: { image: string; name: string }) => {
   selectedImage.value = {
     image: image.image,

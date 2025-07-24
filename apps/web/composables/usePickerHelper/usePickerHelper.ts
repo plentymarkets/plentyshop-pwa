@@ -38,6 +38,37 @@ export const usePickerHelper = () => {
     customLabel.value = '';
   };
 
+  const getImageTypeLabel = (imageType: string, customLabel = ''): string => {
+    if (customLabel) return customLabel;
+    switch (imageType) {
+      case 'xl':
+      case 'wideScreen':
+        return 'XL (Desktop)';
+      case 'desktop':
+        return 'L (Desktop)';
+      case 'tablet':
+        return 'M (Tablet)';
+      case 'mobile':
+        return 'S (Mobile)';
+      default:
+        return imageType;
+    }
+  };
+
+  const useCanAddImage = (
+    selectedImage: Ref<{ image: string } | null>,
+    currentImage: string,
+    placeholderImg: string,
+  ) => {
+    return computed(() => {
+      if (!selectedImage.value) return false;
+      if (!selectedImage.value.image) return false;
+      if (selectedImage.value.image === currentImage) return false;
+      if (selectedImage.value.image === placeholderImg) return false;
+      return true;
+    });
+  };
+
   return {
     placeholderImg,
     labels,
@@ -49,5 +80,7 @@ export const usePickerHelper = () => {
     closeUploader,
     selectedImageType,
     customLabel,
+    getImageTypeLabel,
+    useCanAddImage
   };
 };

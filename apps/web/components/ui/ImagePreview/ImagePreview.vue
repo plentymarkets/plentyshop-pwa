@@ -1,6 +1,8 @@
 <template>
-  <div class="relative w-full border rounded overflow-hidden min-h-[400px] flex flex-col bg-gray-50">
-    <div class="flex justify-between items-center p-4">
+  <div
+    class="relative w-full rounded overflow-hidden min-h-[500px] flex flex-col"
+    :class="{ 'bg-[#EFF4F1]': props.image }"
+  >    <div class="flex justify-between items-center p-4">
       <div class="text-sm text-gray-700">
         <strong>{{ props.name }}</strong>
         <div v-if="meta.width && meta.height" class="text-xs  mt-1">
