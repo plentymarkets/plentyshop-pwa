@@ -1,7 +1,7 @@
 <template>
   <div
     class="relative w-full rounded overflow-hidden min-h-[500px] flex flex-col"
-    :class="{ 'bg-editor-mint': props.image }"
+    :class="{ 'bg-[#EFF4F1]': props.image }"
   >
     <div class="flex justify-between items-center p-4">
       <div class="text-sm text-gray-700">
