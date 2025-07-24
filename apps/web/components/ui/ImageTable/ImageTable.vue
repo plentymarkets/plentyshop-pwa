@@ -42,7 +42,7 @@
   </VCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 import type { StorageObject } from '@plentymarkets/shop-api';
 
