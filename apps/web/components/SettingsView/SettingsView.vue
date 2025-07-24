@@ -280,3 +280,9 @@ const activeImage = computed(() => {
   return '';
 });
 </script>
+
+<style>
+.images img[alt='Logo'] {
+  background-color: #f3f4f6;
+}
+</style>

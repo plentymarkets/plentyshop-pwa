@@ -46,20 +46,11 @@ export const useItemsTable: UseItemTableReturn = () => {
     cachedImages.value = items;
   };
 
-  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
-    state.value.loading = true;
-
-    const response = await useSdk().plentysystems.getStorageItems({ fileTypes });
-    const items: StorageObject[] = response?.data ?? [];
-
-    state.value.loading = false;
-
-    if (!items.length) {
-      state.value.data = [];
-    } else {
-      state.value.data = items;
-    }
-  };
+  const headers = ref([
+    { title: 'File name', key: 'key' },
+    { title: 'Image size', key: 'size' },
+    { title: 'Last change', key: 'lastModified' },
+  ]);
 
   const bytesToMB = (bytes: string | number): string => {
     const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
@@ -88,10 +79,10 @@ export const useItemsTable: UseItemTableReturn = () => {
 
   return {
     getStorageItemsServer,
-    getStorageItems,
     getStorageMetadata,
     bytesToMB,
     formatDate,
+    headers,
     ...toRefs(state.value),
   };
 };

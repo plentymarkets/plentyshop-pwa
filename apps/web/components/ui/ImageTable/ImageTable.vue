@@ -55,7 +55,7 @@ interface StorageObject {
   previewUrl?: string;
 }
 
-const { data: items, getStorageItemsServer, bytesToMB, getStorageMetadata, formatDate } = useItemsTable();
+const { data: items, headers, getStorageItemsServer, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 await getStorageItemsServer();
 
 const { setMetadata } = useImageMetadata();
@@ -75,11 +75,6 @@ const fetchMetadata = async (key: string) => {
   }
 };
 
-const headers = [
-  { title: 'File name', key: 'key' },
-  { title: 'Image size', key: 'size' },
-  { title: 'Last change', key: 'lastModified' },
-];
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;
 }>();
