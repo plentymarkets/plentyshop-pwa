@@ -17,42 +17,14 @@
       :filter-keys="['name']"
       class="border border-gray-300 rounded-md"
       :items="items"
-      :headers="[]"
-      hide-default-header
+      :headers="headers"
       no-data-text="No images found"
     >
-      <template #body="{ items }">
-        <table class="w-full table-fixed">
-          <thead>
-          <tr class="text-left text-sm font-normal text-gray-700">
-            <th class="px-4 py-2 w-1/3">File name</th>
-            <th class="px-4 py-2 w-1/3">Image size</th>
-            <th class="px-4 py-2 w-1/3">Last change</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            v-for="item in items"
-            :key="item.name"
-            class="cursor-pointer transition-colors"
-            :class="{ 'bg-editor-mint': props.selectedName === item.name }"
-            @click="handleRowClick(item)"
-          >
-            <td class="px-4 py-2">
-              <div class="flex items-center gap-2">
-                <NuxtImg :src="item.image" alt="thumbnail" class="w-8 h-8 rounded object-cover" />
-                <span>{{ item.name }}</span>
-              </div>
-            </td>
-            <td class="px-4 py-2 text-sm text-gray-700">
-              {{ item.size }}
-            </td>
-            <td class="px-4 py-2 text-xs text-gray-700 ">
-              {{ item.change }}
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <template #item.name="{ item }">
+        <div class="flex items-center gap-2" @click="handleRowClick(item)">
+          <NuxtImg :src="item.image" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
+          <span>{{ item.name }}</span>
+        </div>
       </template>
     </v-data-table>
   </VCard>
@@ -63,6 +35,11 @@ import { VCard, VTextField, VDataTable } from 'vuetify/components';
 const props = defineProps<{
   selectedName: string | null
 }>();
+const headers = [
+  { title: 'File name', key: 'name' },
+  { title: 'Image size', key: 'size' },
+  { title: 'Last change', key: 'change' },
+];
 
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;

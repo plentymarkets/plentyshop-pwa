@@ -25,7 +25,9 @@
           </div>
 
           <div
-            class="w-1/3 flex flex-col justify-center items-center border border-dashed border-gray-300 rounded-md p-4"
+            class="w-1/3 flex flex-col justify-center items-center rounded-md p-4"
+            :class="selectedImage ? 'bg-editor-mint' : 'border border-dashed border-gray-300'"
+
           >
             <UiImagePreview
               :image="selectedImage?.image || null"
