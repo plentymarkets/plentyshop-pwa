@@ -77,6 +77,7 @@ const fetchMetadata = async (key: string) => {
 
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;
+  (e: 'unselect'): void;
 }>();
 
 const handleRowClick = (item: StorageObject) => {
@@ -85,6 +86,14 @@ const handleRowClick = (item: StorageObject) => {
     image: item.publicUrl,
   });
 };
+
+// const handleRowClick = (item: { name: string; image: string }) => {
+//   if (props.selectedName === item.name) {
+//     emit('unselect');
+//   } else {
+//     emit('select', item);
+//   }
+// };
 
 const search = ref('');
 </script>
