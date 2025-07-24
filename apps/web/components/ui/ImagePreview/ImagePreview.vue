@@ -3,7 +3,9 @@
     <div class="flex justify-between items-center p-4">
       <div class="text-sm text-gray-700">
         <strong>{{ props.name }}</strong>
-        <span v-if="props.dimensions" class="ml-2 text-gray-500">({{ props.dimensions }})</span>
+        <div v-if="meta.width && meta.height" class="text-xs  mt-1">
+          {{ meta.width }} x {{ meta.height }} px
+        </div>
       </div>
       <button class="text-gray-500 hover:text-gray-700 text-xl leading-none" @click="close">&times;</button>
     </div>
@@ -25,10 +27,15 @@ const { placeholderImg } = usePickerHelper();
 const props = defineProps<{
   image: string | null;
   name: string;
-  dimensions?: string;
 }>();
 const emit = defineEmits(['close']);
 const close = () => emit('close');
 
 const isPlaceholder = computed(() => !props.image || props.image === placeholderImg);
+
+
+const { getMetadata } = useImageMetadata();
+
+const meta = computed(() => getMetadata(props.name));
+
 </script>

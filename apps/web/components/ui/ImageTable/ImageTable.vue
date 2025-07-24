@@ -20,30 +20,23 @@
       :headers="headers"
       no-data-text="No images found"
     >
-      <template #item.key="{ item }">
-        <div class="flex flex-col gap-1 cursor-pointer">
-          <div
-            class="flex items-center gap-2"
-            @click="
-              handleRowClick(item);
-              fetchMetadata(item.key);
-            "
-          >
-            <NuxtImg
-              :src="item.previewUrl || item.publicUrl"
-              alt="table thumbnail"
-              class="w-8 h-8 rounded object-cover"
-            />
-            <span>{{ item.key }}</span>
-          </div>
-          <div v-if="metadata[item.key]">
-            <p class="text-xs text-gray-500">Width: {{ metadata[item.key].width }}</p>
-            <p class="text-xs text-gray-500">Height: {{ metadata[item.key].height }}</p>
-          </div>
-        </div>
-      </template>
-      <template #item.size="{ item }">
-        <span>{{ bytesToMB(item.size) }}</span>
+      <template #item="{ item }">
+        <tr :class="item.key === selectedKey ? 'bg-[#EFF4F1]' : ''">
+          <td>
+            <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item)">
+              <div class="flex items-center gap-2">
+                <NuxtImg
+                  :src="item.previewUrl || item.publicUrl"
+                  alt="table thumbnail"
+                  class="w-8 h-8 rounded object-cover"
+                />
+                <span>{{ item.key }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ bytesToMB(item.size) }}</td>
+          <td>{{ formatDate(item.lastModified) }}</td>
+        </tr>
       </template>
     </v-data-table>
   </VCard>
@@ -62,17 +55,22 @@ interface StorageObject {
   previewUrl?: string;
 }
 
-const { data: items, getStorageItemsServer, bytesToMB, getStorageMetadata } = useItemsTable();
+const { data: items, getStorageItemsServer, bytesToMB, getStorageMetadata, formatDate } = useItemsTable();
 await getStorageItemsServer();
 
-const { metadata, setMetadata } = useImageMetadata();
+const { setMetadata } = useImageMetadata();
+
+const selectedKey = ref<string | null>(null);
+
+const onRowClick = (item: StorageObject) => {
+  selectedKey.value = item.key;
+  handleRowClick(item);
+  fetchMetadata(item.key);
+};
 
 const fetchMetadata = async (key: string) => {
   const data = await getStorageMetadata(key);
   if (data && data.width && data.height) {
-    //     metadata.value[key] = { width: data.width, height: data.height };
-    // width.value = data.width;
-    // height.value = data.height;
     setMetadata(key, { width: data.width, height: data.height });
   }
 };

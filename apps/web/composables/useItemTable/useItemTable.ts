@@ -66,6 +66,20 @@ export const useItemsTable: UseItemTableReturn = () => {
     return (num / (1024 * 1024)).toFixed(2) + ' MB';
   };
 
+  const formatDate = (dateStr: string): string => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    });
+  };
+
   const getStorageMetadata = async (key: string) => {
     const response = await useSdk().plentysystems.getStorageMetadata({ key });
 
@@ -77,6 +91,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     getStorageItems,
     getStorageMetadata,
     bytesToMB,
+    formatDate,
     ...toRefs(state.value),
   };
 };
