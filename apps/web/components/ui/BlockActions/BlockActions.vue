@@ -67,6 +67,8 @@
       v-if="props.block.name !== 'Footer'"
       class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
       aria-label="Drag to reorder block"
+      :disabled="isLastNonFooterBlock(index)"
+      :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
     >
       <NuxtImg width="18" height="18" :src="dragIcon" />
     </button>
