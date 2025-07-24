@@ -122,6 +122,6 @@ watch(cartIsEmpty, async () => {
 });
 
 watch(itemSumNet, async () => {
-  await fetchPaymentMethods();
+  await Promise.all([useCartShippingMethods().getShippingMethods(), fetchPaymentMethods()]);
 });
 </script>
