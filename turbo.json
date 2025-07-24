@@ -58,6 +58,10 @@
     },
     "test:cypress-dev": {
       "cache": false
+    },
+    "generate": {
+      "cache": false,
+      "outputs": []
     }
   }
 }

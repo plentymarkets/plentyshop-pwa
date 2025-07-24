@@ -1,0 +1,44 @@
+{
+  "name": "@plentymarkets/shop-generators",
+  "version": "1.0.0",
+  "description": "PlopJS code generators for PlentyONE Shop",
+  "type": "module",
+  "main": "plopfile.js",
+  "bin": {
+    "plenty-plop": "./bin/plenty-plop.js"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "lint": "echo 'No linting rules defined'",
+    "lint:fix": "echo 'No linting rules defined'"
+  },
+  "keywords": [
+    "plop",
+    "generator",
+    "plentymarkets",
+    "plentyshop",
+    "vue",
+    "nuxt",
+    "typescript"
+  ],
+  "author": "PlentyMarkets GmbH",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "plop": "^4.0.1"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "plopfile.js",
+    "src/",
+    "templates/",
+    "bin/",
+    "README.md"
+  ]
+}

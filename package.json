@@ -4,7 +4,8 @@
   "private": true,
   "license": "BSD-3-Clause",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "update:core": "npm update @plentymarkets/shop-core",
@@ -33,7 +34,9 @@
     "test:cypress": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress\" \"npm run start\"",
     "test:cypress-dev": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
-    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
+    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
+    "generate": "cd packages/shop-generators && npx plop --plopfile plopfile.js",
+    "plop": "npm run generate"
   },
   "dependencies": {
     "@plentymarkets/shop-core": "^1.6.9",
