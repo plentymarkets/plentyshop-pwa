@@ -69,7 +69,7 @@ export default {
         },
         editor: {
           'body-bg': '#F1F3F5',
-          button: '#062633'
+          button: '#062633',
         },
 
         header: {
