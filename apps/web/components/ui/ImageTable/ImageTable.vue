@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 const props = defineProps<{
-  selectedName: string | null
+  selectedName: string | null;
 }>();
 const headers = [
   { title: 'File name', key: 'name' },
@@ -43,9 +43,8 @@ const headers = [
 
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;
-  (e: 'unselect'): void
+  (e: 'unselect'): void;
 }>();
-
 
 const handleRowClick = (item: { name: string; image: string }) => {
   if (props.selectedName === item.name) {
