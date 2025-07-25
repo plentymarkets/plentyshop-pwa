@@ -6,7 +6,6 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: ['confirmation-redirect'],
   pageType: 'static',
   isBlockified: true,
 });
