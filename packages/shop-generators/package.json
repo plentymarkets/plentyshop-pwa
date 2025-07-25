@@ -8,8 +8,9 @@
     "plenty-plop": "./bin/plenty-plop.js"
   },
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --run",
     "test:watch": "vitest --watch",
+    "test:ci": "vitest run --reporter=verbose",
     "lint": "echo 'No linting rules defined'",
     "lint:fix": "echo 'No linting rules defined'"
   },

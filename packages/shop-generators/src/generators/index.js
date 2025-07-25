@@ -3,14 +3,15 @@
  */
 
 export default function (plop) {
-  // Placeholder for generators - these will be implemented in subsequent tasks
+  // Generators will be implemented in Phase 2
+  // This placeholder ensures the plopfile loads without errors
   console.log('✅ Generators module loaded (generators will be added in Phase 2)');
   
-  // TODO: Load individual generators
-  // plop.load('./component.js');
-  // plop.load('./composable.js');
-  // plop.load('./settings.js');
-  // plop.load('./page.js');
-  // plop.load('./ui.js');
-  // plop.load('./test.js');
+  // Note: Individual generators will be loaded here when implemented:
+  // - Component generator (Task 2.1)
+  // - UI Component generator (Task 2.2) 
+  // - Settings Component generator (Task 2.3)
+  // - Composables generator (Task 3.1)
+  // - Pages generator (Task 3.2)
+  // - Block Component generator (Task 3.3)
 }
