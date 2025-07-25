@@ -28,7 +28,7 @@ export const ERROR_CODES = {
   INVALID_PATH: 'INVALID_PATH',
   TEMPLATE_ERROR: 'TEMPLATE_ERROR',
   PERMISSION_DENIED: 'PERMISSION_DENIED',
-  UNKNOWN_GENERATOR: 'UNKNOWN_GENERATOR'
+  UNKNOWN_GENERATOR: 'UNKNOWN_GENERATOR',
 };
 
 /**
@@ -43,10 +43,7 @@ export function formatValidationErrors(errors: string[]): string | null {
     return `❌ ${errors[0]}`;
   }
 
-  return [
-    '❌ Multiple validation errors:',
-    ...errors.map((error: string) => `   • ${error}`)
-  ].join('\n');
+  return ['❌ Multiple validation errors:', ...errors.map((error: string) => `   • ${error}`)].join('\n');
 }
 
 /**
@@ -57,22 +54,22 @@ export function handleGeneratorError(error: any): string {
     switch (error.code) {
       case ERROR_CODES.VALIDATION_FAILED:
         return `❌ Validation Error: ${error.message}`;
-      
+
       case ERROR_CODES.FILE_EXISTS:
         return `❌ File Conflict: ${error.message}\n💡 Use --force to overwrite or choose a different name.`;
-      
+
       case ERROR_CODES.INVALID_PATH:
         return `❌ Invalid Path: ${error.message}`;
-      
+
       case ERROR_CODES.TEMPLATE_ERROR:
         return `❌ Template Error: ${error.message}\n💡 Please check the template files and try again.`;
-      
+
       case ERROR_CODES.PERMISSION_DENIED:
         return `❌ Permission Error: ${error.message}\n💡 Check file permissions and try again.`;
-      
+
       case ERROR_CODES.UNKNOWN_GENERATOR:
         return `❌ Unknown Generator: ${error.message}\n💡 Run 'npm run generate' to see available generators.`;
-      
+
       default:
         return `❌ Generator Error: ${error.message}`;
     }
@@ -104,12 +101,12 @@ export async function safeExecute<T>(fn: () => Promise<T> | T, context = 'Genera
   } catch (error) {
     const formattedError = handleGeneratorError(error);
     console.error(`\n${formattedError}\n`);
-    
+
     // Log detailed error in development
     if (process.env.NODE_ENV === 'development') {
       console.error('Detailed error:', error);
     }
-    
+
     throw error;
   }
 }
@@ -118,37 +115,37 @@ export async function safeExecute<T>(fn: () => Promise<T> | T, context = 'Genera
  * User-friendly error messages for common issues
  */
 export const USER_FRIENDLY_MESSAGES = {
-  componentExists: (name: string) => 
+  componentExists: (name: string) =>
     `Component "${name}" already exists. Consider:\n` +
     `   • Choosing a different name\n` +
     `   • Using the existing component\n` +
     `   • Removing the existing component first`,
-  
+
   invalidComponentName: (name: string) =>
     `"${name}" is not a valid component name. Component names should:\n` +
     `   • Start with a capital letter\n` +
     `   • Use PascalCase (e.g., ProductCard)\n` +
     `   • Not contain spaces or special characters\n` +
     `   • Not be HTML element names or reserved words`,
-  
+
   invalidComposableName: (name: string) =>
     `"${name}" is not a valid composable name. Composable names should:\n` +
     `   • Start with "use"\n` +
     `   • Use camelCase (e.g., useProductCart)\n` +
     `   • Not contain spaces or special characters\n` +
     `   • Not be reserved words`,
-  
+
   projectNotFound: () =>
     `Cannot find PlentyONE Shop PWA project structure.\n` +
     `   • Make sure you're running this from the project root\n` +
     `   • Ensure the project has apps/web/ directory\n` +
     `   • Check that you're in the correct workspace`,
-  
+
   noWritePermission: (path: string) =>
     `Cannot write to "${path}". This might be due to:\n` +
     `   • Insufficient file permissions\n` +
     `   • The directory is read-only\n` +
-    `   • Antivirus software blocking the operation`
+    `   • Antivirus software blocking the operation`,
 } as const;
 
 /**

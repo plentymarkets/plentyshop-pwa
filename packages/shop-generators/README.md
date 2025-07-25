@@ -31,16 +31,19 @@ npx plop --plopfile node_modules/@plentymarkets/shop-generators/plopfile.js
 🚧 **Work in Progress** - Generators will be added in the following phases:
 
 ### Phase 2 (Week 2)
+
 - [ ] Vue Component Generator
-- [ ] UI Component Generator  
+- [ ] UI Component Generator
 - [ ] Settings Component Generator
 
 ### Phase 3 (Week 3)
+
 - [ ] Composables Generator
 - [ ] Pages Generator
 - [ ] Block Component Generator
 
 ### Phase 4 (Week 4)
+
 - [ ] Test File Generator
 
 ## Features
@@ -59,6 +62,7 @@ This package is part of the PlentyONE Shop PWA monorepo and follows the establis
 ### Template Structure
 
 Templates are organized by type:
+
 - `templates/component/` - Vue component templates
 - `templates/composable/` - Composable templates
 - `templates/settings/` - Settings component templates
@@ -69,6 +73,7 @@ Templates are organized by type:
 ### Custom Helpers
 
 The package includes custom Handlebars helpers for consistent naming:
+
 - `pascalCase` - PascalCase conversion
 - `camelCase` - camelCase conversion
 - `kebabCase` - kebab-case conversion

@@ -5,7 +5,7 @@ import {
   validatePageName,
   validateDescription,
   validateNotEmpty,
-  validateSettingsCategory
+  validateSettingsCategory,
 } from '../src/utils/validation';
 
 describe('Validation Utilities', () => {

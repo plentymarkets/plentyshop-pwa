@@ -26,13 +26,13 @@ export function getWebAppPath() {
 export function createComponentPaths(componentName: string) {
   const webAppPath = getWebAppPath();
   const componentDir = join(webAppPath, 'components', componentName);
-  
+
   return {
     baseDir: componentDir,
     component: join(componentDir, `${componentName}.vue`),
     types: join(componentDir, 'types.ts'),
     index: join(componentDir, 'index.ts'),
-    test: join(componentDir, '__tests__', `${componentName}.spec.ts`)
+    test: join(componentDir, '__tests__', `${componentName}.spec.ts`),
   };
 }
 
@@ -42,13 +42,13 @@ export function createComponentPaths(componentName: string) {
 export function createComposablePaths(composableName: string) {
   const webAppPath = getWebAppPath();
   const composableDir = join(webAppPath, 'composables', composableName);
-  
+
   return {
     baseDir: composableDir,
     composable: join(composableDir, `${composableName}.ts`),
     types: join(composableDir, 'types.ts'),
     index: join(composableDir, 'index.ts'),
-    test: join(composableDir, '__tests__', `${composableName}.spec.ts`)
+    test: join(composableDir, '__tests__', `${composableName}.spec.ts`),
   };
 }
 
@@ -58,13 +58,13 @@ export function createComposablePaths(composableName: string) {
 export function createUIComponentPaths(componentName: string) {
   const webAppPath = getWebAppPath();
   const componentDir = join(webAppPath, 'components/ui', componentName);
-  
+
   return {
     baseDir: componentDir,
     component: join(componentDir, `${componentName}.vue`),
     types: join(componentDir, 'types.ts'),
     index: join(componentDir, 'index.ts'),
-    test: join(componentDir, '__tests__', `${componentName}.spec.ts`)
+    test: join(componentDir, '__tests__', `${componentName}.spec.ts`),
   };
 }
 
@@ -76,13 +76,13 @@ export function createUIComponentPaths(componentName: string) {
 export function createSettingsComponentPaths(categoryName: string, settingName: string) {
   const webAppPath = getWebAppPath();
   const componentDir = join(webAppPath, 'components/settings', categoryName, settingName);
-  
+
   return {
     baseDir: componentDir,
     component: join(componentDir, `${settingName}.vue`),
     trigger: join(componentDir, 'ToolbarTrigger.vue'),
     types: join(componentDir, 'types.ts'),
-    test: join(componentDir, '__tests__', `${settingName}.spec.ts`)
+    test: join(componentDir, '__tests__', `${settingName}.spec.ts`),
   };
 }
 
@@ -92,8 +92,8 @@ export function createSettingsComponentPaths(categoryName: string, settingName: 
 export function createPagePaths(pageName: string, isDynamic = false) {
   const webAppPath = getWebAppPath();
   const fileName = isDynamic ? `[${pageName}].vue` : `${pageName}.vue`;
-  
+
   return {
-    page: join(webAppPath, 'pages', fileName)
+    page: join(webAppPath, 'pages', fileName),
   };
 }

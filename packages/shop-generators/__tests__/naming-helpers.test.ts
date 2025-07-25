@@ -9,7 +9,7 @@ import {
   filePath,
   importPath,
   currentDate,
-  currentYear
+  currentYear,
 } from '../src/helpers/naming';
 
 describe('Naming Helpers', () => {

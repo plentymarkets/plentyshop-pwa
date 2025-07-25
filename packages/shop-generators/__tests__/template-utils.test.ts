@@ -6,7 +6,7 @@ import {
   createComposableTemplateFiles,
   createPageTemplateFiles,
   createSettingsTemplateFiles,
-  createGeneratorConfig
+  createGeneratorConfig,
 } from '../src/utils/template-utils';
 
 describe('Template Utilities', () => {
@@ -48,30 +48,30 @@ describe('Template Utilities', () => {
       const files = createComponentTemplateFiles();
       expect(files).toContainEqual({
         name: '{{pascalCase name}}.vue',
-        template: 'component.vue.hbs'
+        template: 'component.vue.hbs',
       });
       expect(files).toContainEqual({
         name: 'types.ts',
-        template: 'types.ts.hbs'
+        template: 'types.ts.hbs',
       });
     });
 
     it('includes optional files when specified', () => {
       const files = createComponentTemplateFiles({
-        includeTests: true
+        includeTests: true,
       });
-      
-      expect(files.some(f => f.template === 'component.spec.ts.hbs')).toBe(true);
+
+      expect(files.some((f) => f.template === 'component.spec.ts.hbs')).toBe(true);
     });
 
     it('excludes optional files when not specified', () => {
       const files = createComponentTemplateFiles({
         includeTypes: false,
-        includeTests: false
+        includeTests: false,
       });
-      
-      expect(files.some(f => f.name === 'types.ts')).toBe(false);
-      expect(files.some(f => f.template === 'component.spec.ts.hbs')).toBe(false);
+
+      expect(files.some((f) => f.name === 'types.ts')).toBe(false);
+      expect(files.some((f) => f.template === 'component.spec.ts.hbs')).toBe(false);
     });
   });
 
@@ -80,11 +80,11 @@ describe('Template Utilities', () => {
       const files = createComposableTemplateFiles();
       expect(files).toContainEqual({
         name: '{{camelCase name}}.ts',
-        template: 'composable.ts.hbs'
+        template: 'composable.ts.hbs',
       });
       expect(files).toContainEqual({
         name: 'types.ts',
-        template: 'types.ts.hbs'
+        template: 'types.ts.hbs',
       });
     });
   });
@@ -94,7 +94,7 @@ describe('Template Utilities', () => {
       const files = createPageTemplateFiles();
       expect(files).toContainEqual({
         name: '{{kebabCase name}}.vue',
-        template: 'page.vue.hbs'
+        template: 'page.vue.hbs',
       });
     });
 
@@ -102,18 +102,18 @@ describe('Template Utilities', () => {
       const files = createPageTemplateFiles({ isDynamic: true });
       expect(files).toContainEqual({
         name: '[slug].vue',
-        template: 'page.vue.hbs'
+        template: 'page.vue.hbs',
       });
     });
 
     it('includes layout and middleware when specified', () => {
       const files = createPageTemplateFiles({
         includeLayout: true,
-        includeMiddleware: true
+        includeMiddleware: true,
       });
-      
-      expect(files.some(f => f.name === 'layouts/{{kebabCase name}}.vue')).toBe(true);
-      expect(files.some(f => f.name === 'middleware/{{kebabCase name}}.ts')).toBe(true);
+
+      expect(files.some((f) => f.name === 'layouts/{{kebabCase name}}.vue')).toBe(true);
+      expect(files.some((f) => f.name === 'middleware/{{kebabCase name}}.ts')).toBe(true);
     });
   });
 
@@ -122,13 +122,13 @@ describe('Template Utilities', () => {
       const files = createSettingsTemplateFiles();
       expect(files).toContainEqual({
         name: '{{pascalCase name}}.vue',
-        template: 'settings.vue.hbs'
+        template: 'settings.vue.hbs',
       });
     });
 
     it('includes toolbar trigger when specified', () => {
       const files = createSettingsTemplateFiles({ includeToolbarTrigger: true });
-      expect(files.some(f => f.name === '{{pascalCase name}}ToolbarTrigger.vue')).toBe(true);
+      expect(files.some((f) => f.name === '{{pascalCase name}}ToolbarTrigger.vue')).toBe(true);
     });
   });
 
@@ -137,9 +137,9 @@ describe('Template Utilities', () => {
       const config = createGeneratorConfig('component', {
         description: 'Test generator',
         prompts: [{ name: 'test', message: 'Test?' }],
-        templateFiles: [{ name: 'test.vue', template: 'test.hbs' }]
+        templateFiles: [{ name: 'test.vue', template: 'test.hbs' }],
       });
-      
+
       expect(config.description).toBe('Test generator');
       expect(config.prompts).toHaveLength(1);
       expect(config.actions).toHaveLength(1);

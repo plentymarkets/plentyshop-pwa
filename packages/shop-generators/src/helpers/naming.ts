@@ -18,7 +18,7 @@ interface HelperOptions {
 export function pascalCase(str: string): string {
   if (!str) return '';
   return str
-    .replace(/[-_\s]+(.)?/g, (_, char) => char ? char.toUpperCase() : '')
+    .replace(/[-_\s]+(.)?/g, (_, char) => (char ? char.toUpperCase() : ''))
     .replace(/^(.)/, (_, char) => char.toUpperCase());
 }
 
@@ -91,17 +91,17 @@ export function filePath(...parts: string[]): string {
  */
 export function importPath(from: string, to: string): string {
   if (!from || !to) return '';
-  
+
   // If it's in the same directory
   if (!to.includes('/')) {
     return `./${to}`;
   }
-  
+
   // If it's already a relative path
   if (to.startsWith('./') || to.startsWith('../')) {
     return to;
   }
-  
+
   // Default to relative path
   return `./${to}`;
 }

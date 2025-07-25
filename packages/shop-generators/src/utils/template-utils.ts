@@ -6,7 +6,7 @@ import type {
   SettingsOptions,
   TemplateFile,
   TemplateAction,
-  GeneratorConfigOptions
+  GeneratorConfigOptions,
 } from '../types/template-utils';
 
 /**
@@ -26,31 +26,31 @@ export function getTemplatePath(generatorType: string): string {
  */
 export function getDestinationPath(generatorType: string, name: string, options: DestinationOptions = {}): string {
   const { webAppPath = '../../apps/web' } = options;
-  
+
   switch (generatorType) {
     case 'component':
       return join(webAppPath, 'components', name);
-    
+
     case 'ui':
       return join(webAppPath, 'components/ui', name);
-    
+
     case 'composable':
       return join(webAppPath, 'composables', name);
-    
+
     case 'page':
       return join(webAppPath, 'pages');
-    
+
     case 'settings': {
       const { category = 'general' } = options;
       return join(webAppPath, 'components/settings', category, name);
     }
-    
+
     case 'block':
       return join(webAppPath, 'components/blocks', name);
-    
+
     case 'test':
       return join(webAppPath, '__tests__');
-    
+
     default:
       throw new Error(`Unknown generator type: ${generatorType}`);
   }
@@ -59,28 +59,32 @@ export function getDestinationPath(generatorType: string, name: string, options:
 /**
  * Creates template actions for PlopJS
  */
-export function createTemplateActions(generatorType: string, templateFiles: TemplateFile[], options: DestinationOptions = {}): TemplateAction[] {
+export function createTemplateActions(
+  generatorType: string,
+  templateFiles: TemplateFile[],
+  options: DestinationOptions = {},
+): TemplateAction[] {
   const actions: TemplateAction[] = [];
   const templatePath = getTemplatePath(generatorType);
   const destinationBase = getDestinationPath(generatorType, '{{pascalCase name}}', options);
-  
+
   for (const templateFile of templateFiles) {
     const action: TemplateAction = {
       type: 'add',
       path: join(destinationBase, templateFile.destination || templateFile.name),
       templateFile: join(templatePath, templateFile.template || templateFile.name),
       skipIfExists: templateFile.skipIfExists !== false,
-      force: false
+      force: false,
     };
-    
+
     // Add conditional logic if specified
     if (templateFile.condition) {
       action.skip = templateFile.condition;
     }
-    
+
     actions.push(action);
   }
-  
+
   return actions;
 }
 
@@ -88,37 +92,33 @@ export function createTemplateActions(generatorType: string, templateFiles: Temp
  * Creates template file definitions for common patterns
  */
 export function createComponentTemplateFiles(options: ComponentOptions = {}) {
-  const {
-    includeTypes = true,
-    includeIndex = true,
-    includeTests = true
-  } = options;
-  
+  const { includeTypes = true, includeIndex = true, includeTests = true } = options;
+
   const files = [
     {
       name: '{{pascalCase name}}.vue',
-      template: 'component.vue.hbs'
-    }
+      template: 'component.vue.hbs',
+    },
   ];
-  
+
   if (includeTypes) {
     files.push({
       name: 'types.ts',
-      template: 'types.ts.hbs'
+      template: 'types.ts.hbs',
     });
   }
-  
+
   if (includeIndex) {
     files.push({
       name: 'index.ts',
-      template: 'index.ts.hbs'
+      template: 'index.ts.hbs',
     });
   }
-  
+
   if (includeTests) {
     files.push({
       name: '__tests__/{{pascalCase name}}.spec.ts',
-      template: 'component.spec.ts.hbs'
+      template: 'component.spec.ts.hbs',
     });
   }
 
@@ -129,40 +129,36 @@ export function createComponentTemplateFiles(options: ComponentOptions = {}) {
  * Creates template file definitions for composables
  */
 export function createComposableTemplateFiles(options: ComponentOptions = {}): TemplateFile[] {
-  const {
-    includeTypes = true,
-    includeIndex = true,
-    includeTests = true
-  } = options;
-  
+  const { includeTypes = true, includeIndex = true, includeTests = true } = options;
+
   const files = [
     {
       name: '{{camelCase name}}.ts',
-      template: 'composable.ts.hbs'
-    }
+      template: 'composable.ts.hbs',
+    },
   ];
-  
+
   if (includeTypes) {
     files.push({
       name: 'types.ts',
-      template: 'types.ts.hbs'
+      template: 'types.ts.hbs',
     });
   }
-  
+
   if (includeIndex) {
     files.push({
       name: 'index.ts',
-      template: 'index.ts.hbs'
+      template: 'index.ts.hbs',
     });
   }
-  
+
   if (includeTests) {
     files.push({
       name: '__tests__/{{camelCase name}}.spec.ts',
-      template: 'composable.spec.ts.hbs'
+      template: 'composable.spec.ts.hbs',
     });
   }
-  
+
   return files;
 }
 
@@ -170,35 +166,31 @@ export function createComposableTemplateFiles(options: ComponentOptions = {}): T
  * Creates template file definitions for pages
  */
 export function createPageTemplateFiles(options: PageOptions = {}): TemplateFile[] {
-  const {
-    isDynamic = false,
-    includeLayout = false,
-    includeMiddleware = false
-  } = options;
-  
+  const { isDynamic = false, includeLayout = false, includeMiddleware = false } = options;
+
   const fileName = isDynamic ? '[slug].vue' : '{{kebabCase name}}.vue';
-  
+
   const files = [
     {
       name: fileName,
-      template: 'page.vue.hbs'
-    }
+      template: 'page.vue.hbs',
+    },
   ];
-  
+
   if (includeLayout) {
     files.push({
       name: 'layouts/{{kebabCase name}}.vue',
-      template: 'layout.vue.hbs'
+      template: 'layout.vue.hbs',
     });
   }
-  
+
   if (includeMiddleware) {
     files.push({
       name: 'middleware/{{kebabCase name}}.ts',
-      template: 'middleware.ts.hbs'
+      template: 'middleware.ts.hbs',
     });
   }
-  
+
   return files;
 }
 
@@ -206,40 +198,36 @@ export function createPageTemplateFiles(options: PageOptions = {}): TemplateFile
  * Creates template file definitions for settings components
  */
 export function createSettingsTemplateFiles(options: SettingsOptions = {}): TemplateFile[] {
-  const {
-    includeTypes = true,
-    includeToolbarTrigger = false,
-    includeTests = true
-  } = options;
-  
+  const { includeTypes = true, includeToolbarTrigger = false, includeTests = true } = options;
+
   const files = [
     {
       name: '{{pascalCase name}}.vue',
-      template: 'settings.vue.hbs'
-    }
+      template: 'settings.vue.hbs',
+    },
   ];
-  
+
   if (includeTypes) {
     files.push({
       name: 'types.ts',
-      template: 'types.ts.hbs'
+      template: 'types.ts.hbs',
     });
   }
-  
+
   if (includeToolbarTrigger) {
     files.push({
       name: '{{pascalCase name}}ToolbarTrigger.vue',
-      template: 'toolbar-trigger.vue.hbs'
+      template: 'toolbar-trigger.vue.hbs',
     });
   }
-  
+
   if (includeTests) {
     files.push({
       name: '__tests__/{{pascalCase name}}.spec.ts',
-      template: 'settings.spec.ts.hbs'
+      template: 'settings.spec.ts.hbs',
     });
   }
-  
+
   return files;
 }
 
@@ -257,7 +245,7 @@ export function validateTemplateFiles(generatorType: string, templateFiles: Temp
   const errors: string[] = [];
   // Note: In real implementation, we'd validate file existence here
   // For now, validation happens during actual generation
-  
+
   return errors;
 }
 
@@ -265,19 +253,11 @@ export function validateTemplateFiles(generatorType: string, templateFiles: Temp
  * Creates a complete generator configuration
  */
 export function createGeneratorConfig(type: string, options: GeneratorConfigOptions = {}) {
-  const {
-    description = `Generate a new ${type}`,
-    prompts = [],
-    templateFiles = [],
-    actions = []
-  } = options;
-  
+  const { description = `Generate a new ${type}`, prompts = [], templateFiles = [], actions = [] } = options;
+
   return {
     description,
     prompts,
-    actions: [
-      ...actions,
-      ...createTemplateActions(type, templateFiles, options)
-    ]
+    actions: [...actions, ...createTemplateActions(type, templateFiles, options)],
   };
 }

@@ -13,7 +13,7 @@ const plopfilePath = join(__dirname, '..', 'plopfile.ts');
 // Run plop with our plopfile
 const plopProcess = spawn('npx', ['plop', '--plopfile', plopfilePath, ...process.argv.slice(2)], {
   stdio: 'inherit',
-  shell: true
+  shell: true,
 });
 
 plopProcess.on('exit', (code) => {

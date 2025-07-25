@@ -35,19 +35,19 @@ describe('DryRunManager', () => {
 
     it('should log file creation operations', () => {
       dryRunManager.logOperation('create', '/test/path/Component.vue', '<template></template>');
-      
+
       expect(dryRunManager.operations).toHaveLength(1);
       expect(dryRunManager.operations[0]).toMatchObject({
         type: 'create',
         path: '/test/path/Component.vue',
-        content: '<template></template>'
+        content: '<template></template>',
       });
     });
 
     it('should log multiple operations', () => {
       dryRunManager.logOperation('create', '/test/Component.vue', 'content1');
       dryRunManager.logOperation('create', '/test/types.ts', 'content2');
-      
+
       expect(dryRunManager.operations).toHaveLength(2);
     });
   });
@@ -64,7 +64,7 @@ describe('DryRunManager', () => {
 
     it('should generate summary for create operations', () => {
       dryRunManager.logOperation('create', '/project/apps/web/components/Test.vue', 'content');
-      
+
       const summary = dryRunManager.getSummary();
       expect(summary).toContain('📋 Planned Operations:');
       expect(summary).toContain('✅ Files to create:');
@@ -75,7 +75,7 @@ describe('DryRunManager', () => {
       // Mock existing file
       const existingPath = process.cwd() + '/README.md'; // Assume this exists
       dryRunManager.logOperation('create', existingPath, 'content');
-      
+
       const summary = dryRunManager.getSummary();
       if (summary.includes('CONFLICTS DETECTED')) {
         expect(summary).toContain('❌ CONFLICTS DETECTED');
@@ -95,7 +95,7 @@ describe('DryRunManager', () => {
 
     it('should handle execution prevention in dry-run mode', () => {
       dryRunManager.enableDryRun();
-      
+
       expect(() => {
         dryRunManager.execute();
       }).toThrow('Cannot execute operations in dry-run mode');
@@ -106,7 +106,7 @@ describe('DryRunManager', () => {
     it('should clear operations after execution attempt', () => {
       dryRunManager.disableDryRun();
       dryRunManager.logOperation('create', '/test/Component.vue', 'content');
-      
+
       try {
         // This might fail due to file system, but operations should still be cleared
         dryRunManager.execute();
@@ -114,7 +114,7 @@ describe('DryRunManager', () => {
         // Expected for non-existent paths - we're testing that operations get cleared
         expect(error).toBeDefined();
       }
-      
+
       // Operations should be cleared regardless of success/failure
       expect(dryRunManager.operations).toEqual([]);
     });

@@ -40,14 +40,14 @@ export class DryRunManager {
    */
   logOperation(type: string, path: string, content = ''): void {
     const relativePath = relative(getProjectBasePath(), path);
-    
+
     this.operations.push({
       type,
       path,
       relativePath,
       content,
       exists: existsSync(path),
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -60,14 +60,14 @@ export class DryRunManager {
     }
 
     const summary = ['📋 Planned Operations:', ''];
-    
-    const creates = this.operations.filter(op => op.type === 'create');
-    const updates = this.operations.filter(op => op.type === 'update');
-    const conflicts = this.operations.filter(op => op.exists && op.type === 'create');
+
+    const creates = this.operations.filter((op) => op.type === 'create');
+    const updates = this.operations.filter((op) => op.type === 'update');
+    const conflicts = this.operations.filter((op) => op.exists && op.type === 'create');
 
     if (conflicts.length > 0) {
       summary.push('❌ CONFLICTS DETECTED:');
-      conflicts.forEach(op => {
+      conflicts.forEach((op) => {
         summary.push(`   ${op.relativePath} (already exists)`);
       });
       summary.push('');
@@ -75,15 +75,17 @@ export class DryRunManager {
 
     if (creates.length > 0) {
       summary.push('✅ Files to create:');
-      creates.filter(op => !op.exists).forEach(op => {
-        summary.push(`   ${op.relativePath}`);
-      });
+      creates
+        .filter((op) => !op.exists)
+        .forEach((op) => {
+          summary.push(`   ${op.relativePath}`);
+        });
       summary.push('');
     }
 
     if (updates.length > 0) {
       summary.push('📝 Files to update:');
-      updates.forEach(op => {
+      updates.forEach((op) => {
         summary.push(`   ${op.relativePath}`);
       });
       summary.push('');
@@ -96,7 +98,7 @@ export class DryRunManager {
    * Check if there are any conflicts
    */
   hasConflicts() {
-    return this.operations.some(op => op.exists && op.type === 'create');
+    return this.operations.some((op) => op.exists && op.type === 'create');
   }
 
   /**
@@ -108,7 +110,7 @@ export class DryRunManager {
     }
 
     try {
-      this.operations.forEach(op => {
+      this.operations.forEach((op) => {
         if (op.type === 'create') {
           // Ensure directory exists
           mkdirSync(dirname(op.path), { recursive: true });
@@ -116,7 +118,7 @@ export class DryRunManager {
           writeFileSync(op.path, op.content, 'utf8');
         }
       });
-    
+
       console.log(`✅ Successfully created ${this.operations.length} files`);
     } catch (error) {
       console.error(`❌ Error creating files: ${error instanceof Error ? error.message : String(error)}`);
@@ -135,17 +137,14 @@ export const dryRunManager = new DryRunManager();
  * Plop action that respects dry-run mode
  */
 export function createDryRunAction(type: string) {
-  return function(answers: any, config: any, plop: any) {
+  return function (answers: any, config: any, plop: any) {
     const path = plop.renderString(config.path, answers);
     const template = config.template || config.templateFile;
     let content = '';
 
     if (template) {
       if (config.templateFile) {
-        content = plop.renderString(
-          plop.getHelper('fileContents')(config.templateFile),
-          answers
-        );
+        content = plop.renderString(plop.getHelper('fileContents')(config.templateFile), answers);
       } else {
         content = plop.renderString(template, answers);
       }

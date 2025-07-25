@@ -22,10 +22,10 @@ export function createConfirmationPrompt(answers: GeneratorAnswers, actionType =
       if (dryRunManager.isDryRun) {
         return true;
       }
-      
+
       // Show confirmation for potentially destructive operations
       return answers.force || hasComplexOperation(answers);
-    }
+    },
   };
 }
 
@@ -37,7 +37,7 @@ export function createDryRunPrompt(): PromptConfig {
     type: 'confirm',
     name: 'dryRun',
     message: '🔍 Run in preview mode? (shows what would be created without making changes)',
-    default: false
+    default: false,
   };
 }
 
@@ -53,7 +53,7 @@ export function createForcePrompt(): PromptConfig {
     when: (answers: GeneratorAnswers) => {
       // Only show if files would conflict
       return wouldHaveConflicts(answers);
-    }
+    },
   };
 }
 
@@ -62,20 +62,20 @@ export function createForcePrompt(): PromptConfig {
  */
 function buildOperationSummary(answers: GeneratorAnswers, actionType: string): string {
   const lines = [`📋 ${actionType.charAt(0).toUpperCase() + actionType.slice(1)} Summary:`];
-  
+
   // Add component/generator specific information
   if (answers.name) {
     lines.push(`   Name: ${answers.name}`);
   }
-  
+
   if (answers.description) {
     lines.push(`   Description: ${answers.description}`);
   }
-  
+
   if (answers.type) {
     lines.push(`   Type: ${answers.type}`);
   }
-  
+
   // Add file information if in dry-run mode
   if (dryRunManager.isDryRun) {
     const summary = dryRunManager.getSummary();
@@ -84,15 +84,15 @@ function buildOperationSummary(answers: GeneratorAnswers, actionType: string): s
       lines.push(summary);
     }
   }
-  
+
   // Add warnings if applicable
   const warnings = buildWarnings(answers);
   if (warnings.length > 0) {
     lines.push('');
     lines.push('⚠️  Warnings:');
-    warnings.forEach(warning => lines.push(`   ${warning}`));
+    warnings.forEach((warning) => lines.push(`   ${warning}`));
   }
-  
+
   return lines.join('\n');
 }
 
@@ -101,12 +101,7 @@ function buildOperationSummary(answers: GeneratorAnswers, actionType: string): s
  */
 function hasComplexOperation(answers: GeneratorAnswers): boolean {
   // Define what constitutes a "complex" operation
-  return !!(
-    answers.force ||
-    answers.withTests === false ||
-    answers.overwrite ||
-    answers.generateMultiple
-  );
+  return !!(answers.force || answers.withTests === false || answers.overwrite || answers.generateMultiple);
 }
 
 /**
@@ -116,7 +111,7 @@ function wouldHaveConflicts(answers: GeneratorAnswers): boolean {
   if (dryRunManager.isDryRun) {
     return dryRunManager.hasConflicts();
   }
-  
+
   // For non-dry-run mode, we'd need to check file existence
   // This would be implemented based on the specific generator type
   return false;
@@ -127,23 +122,23 @@ function wouldHaveConflicts(answers: GeneratorAnswers): boolean {
  */
 function buildWarnings(answers: GeneratorAnswers): string[] {
   const warnings: string[] = [];
-  
+
   if (answers.force) {
     warnings.push('Existing files will be overwritten');
   }
-  
+
   if (answers.withTests === false) {
     warnings.push('Test files will not be generated');
   }
-  
+
   if (answers.name && answers.name.length > 30) {
     warnings.push('Component name is quite long - consider a shorter name');
   }
-  
+
   if (answers.description && answers.description.length < 20) {
     warnings.push('Consider adding a more detailed description');
   }
-  
+
   return warnings;
 }
 
@@ -161,7 +156,7 @@ export function createDestructiveConfirmationPrompt(operation: string): PromptCo
       }
       return true;
     },
-    when: (answers: GeneratorAnswers) => !!(answers.force && wouldHaveConflicts(answers))
+    when: (answers: GeneratorAnswers) => !!(answers.force && wouldHaveConflicts(answers)),
   };
 }
 
@@ -176,16 +171,16 @@ export function processConfirmationAnswers(answers: GeneratorAnswers): Generator
   } else {
     dryRunManager.disableDryRun();
   }
-  
+
   // Handle force mode
   if (answers.force) {
     console.log('⚠️  Force mode enabled - existing files will be overwritten\n');
   }
-  
+
   // Validate destructive confirmation if needed
   if (answers.destructiveConfirmation && answers.destructiveConfirmation.toLowerCase() !== 'yes') {
     throw new Error('Operation cancelled by user');
   }
-  
+
   return answers;
 }

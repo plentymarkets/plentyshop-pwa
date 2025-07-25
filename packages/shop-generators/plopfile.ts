@@ -8,7 +8,7 @@ import registerGenerators from './src/generators/index';
 export default function (plop: NodePlopAPI): void {
   // Register handlebars helpers for naming conventions
   registerHelpers(plop);
-  
+
   // Register template partials
   plop.setPartial('jsdoc', '{{> (lookup this "jsdoc")}}');
   plop.setPartial('vue-template', '{{> (lookup this "vue-template")}}');
@@ -16,7 +16,7 @@ export default function (plop: NodePlopAPI): void {
   plop.setPartial('typescript-interface', '{{> (lookup this "typescript-interface")}}');
   plop.setPartial('test-setup', '{{> (lookup this "test-setup")}}');
   plop.setPartial('export-statement', '{{> (lookup this "export-statement")}}');
-  
+
   // Load template partials from files
   plop.setPartial('jsdoc', 'templates/partials/jsdoc.hbs');
   plop.setPartial('vue-template', 'templates/partials/vue-template.hbs');
@@ -24,9 +24,9 @@ export default function (plop: NodePlopAPI): void {
   plop.setPartial('typescript-interface', 'templates/partials/typescript-interface.hbs');
   plop.setPartial('test-setup', 'templates/partials/test-setup.hbs');
   plop.setPartial('export-statement', 'templates/partials/export-statement.hbs');
-  
+
   // Register all generators
   registerGenerators(plop);
-  
+
   console.log('🚀 PlopJS generators ready for PlentyONE Shop');
 }

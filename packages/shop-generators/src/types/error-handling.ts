@@ -6,7 +6,7 @@ export interface ErrorDetails {
   [key: string]: any;
 }
 
-export type UserFriendlyMessageKey = 
+export type UserFriendlyMessageKey =
   | 'componentExists'
   | 'invalidComponentName'
   | 'invalidComposableName'

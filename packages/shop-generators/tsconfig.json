@@ -20,14 +20,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "plopfile.ts",
-    "__tests__/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "templates"
-  ]
+  "include": ["src/**/*", "plopfile.ts", "__tests__/**/*"],
+  "exclude": ["node_modules", "dist", "templates"]
 }
