@@ -2,11 +2,16 @@
  * Error handling utilities for PlentyONE Shop generators
  */
 
+import type { ErrorDetails, UserFriendlyMessageKey } from '../types/error-handling';
+
 /**
  * Custom error class for generator-specific errors
  */
 export class GeneratorError extends Error {
-  constructor(message, code, details = {}) {
+  public code: string;
+  public details: ErrorDetails;
+
+  constructor(message: string, code: string, details: ErrorDetails = {}) {
     super(message);
     this.name = 'GeneratorError';
     this.code = code;
@@ -29,7 +34,7 @@ export const ERROR_CODES = {
 /**
  * Formats validation errors for display
  */
-export function formatValidationErrors(errors) {
+export function formatValidationErrors(errors: string[]): string | null {
   if (!errors || errors.length === 0) {
     return null;
   }
@@ -40,14 +45,14 @@ export function formatValidationErrors(errors) {
 
   return [
     '❌ Multiple validation errors:',
-    ...errors.map(error => `   • ${error}`)
+    ...errors.map((error: string) => `   • ${error}`)
   ].join('\n');
 }
 
 /**
  * Handles and formats different types of errors
  */
-export function handleGeneratorError(error) {
+export function handleGeneratorError(error: any): string {
   if (error instanceof GeneratorError) {
     switch (error.code) {
       case ERROR_CODES.VALIDATION_FAILED:
@@ -93,7 +98,7 @@ export function handleGeneratorError(error) {
 /**
  * Wrapper for safe execution of generator functions
  */
-export async function safeExecute(fn, context = 'Generator') {
+export async function safeExecute<T>(fn: () => Promise<T> | T, context = 'Generator'): Promise<T> {
   try {
     return await fn();
   } catch (error) {
@@ -113,20 +118,20 @@ export async function safeExecute(fn, context = 'Generator') {
  * User-friendly error messages for common issues
  */
 export const USER_FRIENDLY_MESSAGES = {
-  componentExists: (name) => 
+  componentExists: (name: string) => 
     `Component "${name}" already exists. Consider:\n` +
     `   • Choosing a different name\n` +
     `   • Using the existing component\n` +
     `   • Removing the existing component first`,
   
-  invalidComponentName: (name) =>
+  invalidComponentName: (name: string) =>
     `"${name}" is not a valid component name. Component names should:\n` +
     `   • Start with a capital letter\n` +
     `   • Use PascalCase (e.g., ProductCard)\n` +
     `   • Not contain spaces or special characters\n` +
     `   • Not be HTML element names or reserved words`,
   
-  invalidComposableName: (name) =>
+  invalidComposableName: (name: string) =>
     `"${name}" is not a valid composable name. Composable names should:\n` +
     `   • Start with "use"\n` +
     `   • Use camelCase (e.g., useProductCart)\n` +
@@ -139,20 +144,20 @@ export const USER_FRIENDLY_MESSAGES = {
     `   • Ensure the project has apps/web/ directory\n` +
     `   • Check that you're in the correct workspace`,
   
-  noWritePermission: (path) =>
+  noWritePermission: (path: string) =>
     `Cannot write to "${path}". This might be due to:\n` +
     `   • Insufficient file permissions\n` +
     `   • The directory is read-only\n` +
     `   • Antivirus software blocking the operation`
-};
+} as const;
 
 /**
  * Creates user-friendly messages with suggestions
  */
-export function createFriendlyMessage(messageKey, ...args) {
+export function createFriendlyMessage(messageKey: UserFriendlyMessageKey, ...args: any[]): string {
   const messageFunction = USER_FRIENDLY_MESSAGES[messageKey];
   if (typeof messageFunction === 'function') {
-    return messageFunction(...args);
+    return (messageFunction as any)(...args);
   }
   return `Unknown error: ${messageKey}`;
 }

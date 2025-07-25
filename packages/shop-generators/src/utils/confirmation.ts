@@ -1,4 +1,5 @@
-import { dryRunManager } from './dry-run.js';
+import { dryRunManager } from './dry-run';
+import type { GeneratorAnswers, PromptConfig } from '../types/confirmation';
 
 /**
  * User confirmation utilities for PlentyONE Shop generators
@@ -7,16 +8,16 @@ import { dryRunManager } from './dry-run.js';
 /**
  * Prompts for user confirmation with detailed information
  */
-export function createConfirmationPrompt(answers, actionType = 'create') {
+export function createConfirmationPrompt(answers: GeneratorAnswers, actionType = 'create'): PromptConfig {
   return {
     type: 'confirm',
     name: 'confirmGeneration',
-    message: (answers) => {
+    message: (answers: GeneratorAnswers) => {
       const summary = buildOperationSummary(answers, actionType);
       return `${summary}\n\nProceed with ${actionType} operation?`;
     },
     default: true,
-    when: (answers) => {
+    when: (answers: GeneratorAnswers) => {
       // Always show confirmation in dry-run mode
       if (dryRunManager.isDryRun) {
         return true;
@@ -31,7 +32,7 @@ export function createConfirmationPrompt(answers, actionType = 'create') {
 /**
  * Creates a dry-run mode prompt
  */
-export function createDryRunPrompt() {
+export function createDryRunPrompt(): PromptConfig {
   return {
     type: 'confirm',
     name: 'dryRun',
@@ -43,13 +44,13 @@ export function createDryRunPrompt() {
 /**
  * Creates a force overwrite prompt
  */
-export function createForcePrompt() {
+export function createForcePrompt(): PromptConfig {
   return {
     type: 'confirm',
     name: 'force',
     message: '⚠️  Force overwrite existing files?',
     default: false,
-    when: (answers) => {
+    when: (answers: GeneratorAnswers) => {
       // Only show if files would conflict
       return wouldHaveConflicts(answers);
     }
@@ -59,7 +60,7 @@ export function createForcePrompt() {
 /**
  * Builds a summary of what will be created/modified
  */
-function buildOperationSummary(answers, actionType) {
+function buildOperationSummary(answers: GeneratorAnswers, actionType: string): string {
   const lines = [`📋 ${actionType.charAt(0).toUpperCase() + actionType.slice(1)} Summary:`];
   
   // Add component/generator specific information
@@ -98,9 +99,9 @@ function buildOperationSummary(answers, actionType) {
 /**
  * Checks if the operation involves complex or potentially problematic changes
  */
-function hasComplexOperation(answers) {
+function hasComplexOperation(answers: GeneratorAnswers): boolean {
   // Define what constitutes a "complex" operation
-  return (
+  return !!(
     answers.force ||
     answers.withTests === false ||
     answers.overwrite ||
@@ -111,7 +112,7 @@ function hasComplexOperation(answers) {
 /**
  * Checks if there would be file conflicts
  */
-function wouldHaveConflicts(answers) {
+function wouldHaveConflicts(answers: GeneratorAnswers): boolean {
   if (dryRunManager.isDryRun) {
     return dryRunManager.hasConflicts();
   }
@@ -124,8 +125,8 @@ function wouldHaveConflicts(answers) {
 /**
  * Builds a list of warnings for the operation
  */
-function buildWarnings(answers) {
-  const warnings = [];
+function buildWarnings(answers: GeneratorAnswers): string[] {
+  const warnings: string[] = [];
   
   if (answers.force) {
     warnings.push('Existing files will be overwritten');
@@ -149,25 +150,25 @@ function buildWarnings(answers) {
 /**
  * Creates a final confirmation prompt for destructive operations
  */
-export function createDestructiveConfirmationPrompt(operation) {
+export function createDestructiveConfirmationPrompt(operation: string): PromptConfig {
   return {
     type: 'input',
     name: 'destructiveConfirmation',
     message: `⚠️  This operation will ${operation}. Type "yes" to confirm:`,
-    validate: (input) => {
+    validate: (input: any) => {
       if (input.toLowerCase() !== 'yes') {
         return 'Please type "yes" to confirm this destructive operation';
       }
       return true;
     },
-    when: (answers) => answers.force && wouldHaveConflicts(answers)
+    when: (answers: GeneratorAnswers) => !!(answers.force && wouldHaveConflicts(answers))
   };
 }
 
 /**
  * Processes confirmation results and sets appropriate flags
  */
-export function processConfirmationAnswers(answers) {
+export function processConfirmationAnswers(answers: GeneratorAnswers): GeneratorAnswers {
   // Handle dry-run mode
   if (answers.dryRun) {
     dryRunManager.enableDryRun();

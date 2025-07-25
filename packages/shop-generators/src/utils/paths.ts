@@ -8,7 +8,7 @@ import { join, resolve } from 'node:path';
  * Gets the base path for the PlentyONE Shop PWA project
  * Assumes the generator is run from within the project
  */
-export function getProjectBasePath() {
+export function getProjectBasePath(): string {
   // When run from packages/shop-generators, go up two levels to reach project root
   return resolve(process.cwd(), '../../');
 }
@@ -23,7 +23,7 @@ export function getWebAppPath() {
 /**
  * Creates paths for component generation
  */
-export function createComponentPaths(componentName) {
+export function createComponentPaths(componentName: string) {
   const webAppPath = getWebAppPath();
   const componentDir = join(webAppPath, 'components', componentName);
   
@@ -39,7 +39,7 @@ export function createComponentPaths(componentName) {
 /**
  * Creates paths for composable generation
  */
-export function createComposablePaths(composableName) {
+export function createComposablePaths(composableName: string) {
   const webAppPath = getWebAppPath();
   const composableDir = join(webAppPath, 'composables', composableName);
   
@@ -55,7 +55,7 @@ export function createComposablePaths(composableName) {
 /**
  * Creates paths for UI component generation
  */
-export function createUIComponentPaths(componentName) {
+export function createUIComponentPaths(componentName: string) {
   const webAppPath = getWebAppPath();
   const componentDir = join(webAppPath, 'components/ui', componentName);
   
@@ -73,7 +73,7 @@ export function createUIComponentPaths(componentName) {
  * @todo Distinguish between individual settings and grouped categories
  * Creates paths for settings component generation
  */
-export function createSettingsComponentPaths(categoryName, settingName) {
+export function createSettingsComponentPaths(categoryName: string, settingName: string) {
   const webAppPath = getWebAppPath();
   const componentDir = join(webAppPath, 'components/settings', categoryName, settingName);
   
@@ -89,7 +89,7 @@ export function createSettingsComponentPaths(categoryName, settingName) {
 /**
  * Creates paths for page generation
  */
-export function createPagePaths(pageName, isDynamic = false) {
+export function createPagePaths(pageName: string, isDynamic = false) {
   const webAppPath = getWebAppPath();
   const fileName = isDynamic ? `[${pageName}].vue` : `${pageName}.vue`;
   

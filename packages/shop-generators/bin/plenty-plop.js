@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Path to the plopfile
-const plopfilePath = join(__dirname, '..', 'plopfile.js');
+const plopfilePath = join(__dirname, '..', 'plopfile.ts');
 
 // Run plop with our plopfile
 const plopProcess = spawn('npx', ['plop', '--plopfile', plopfilePath, ...process.argv.slice(2)], {

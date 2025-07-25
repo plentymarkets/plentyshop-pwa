@@ -6,7 +6,7 @@ import {
   validateComponentDirectory,
   validateWebAppStructure,
   getProjectStructureSuggestions
-} from '../src/utils/project-validation.js';
+} from '../src/utils/project-validation';
 
 describe('Project Validation Utilities', () => {
   const testDir = join(process.cwd(), '__test-project');
@@ -63,7 +63,7 @@ describe('Project Validation Utilities', () => {
     it('should handle non-existent directory', () => {
       const result = validateProjectStructure('/non/existent/path');
       expect(result.valid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
+      expect(result.errors?.length).toBeGreaterThan(0);
     });
   });
 
@@ -86,8 +86,8 @@ describe('Project Validation Utilities', () => {
       
       const result = validateComponentDirectory(componentPath);
       expect(result.valid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
-      expect(result.errors[0]).toContain('File already exists');
+      expect(result.errors?.length).toBeGreaterThan(0);
+      expect(result.errors?.[0]).toContain('File already exists');
       expect(result.message).toContain('--force to overwrite');
     });
   });

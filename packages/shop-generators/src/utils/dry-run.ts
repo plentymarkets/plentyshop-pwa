@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
-import { getProjectBasePath } from './paths.js';
+import { getProjectBasePath } from './paths';
+import type { Operation } from '../types/dry-run';
 
 /**
  * Dry-run utilities for PlentyONE Shop generators
@@ -10,6 +11,9 @@ import { getProjectBasePath } from './paths.js';
  * Class to handle dry-run functionality
  */
 export class DryRunManager {
+  public operations: Operation[] = [];
+  public isDryRun = false;
+
   constructor() {
     this.operations = [];
     this.isDryRun = false;
@@ -34,16 +38,16 @@ export class DryRunManager {
   /**
    * Log a file operation
    */
-  logOperation(type, path, content = '') {
-    const projectBasePath = getProjectBasePath();
-    const relativePath = relative(projectBasePath, path);
+  logOperation(type: string, path: string, content = ''): void {
+    const relativePath = relative(getProjectBasePath(), path);
     
     this.operations.push({
       type,
       path,
       relativePath,
       content,
-      exists: existsSync(path)
+      exists: existsSync(path),
+      timestamp: new Date()
     });
   }
 
@@ -115,7 +119,7 @@ export class DryRunManager {
     
       console.log(`✅ Successfully created ${this.operations.length} files`);
     } catch (error) {
-      console.error(`❌ Error creating files: ${error.message}`);
+      console.error(`❌ Error creating files: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       this.operations = [];
     }
@@ -130,8 +134,8 @@ export const dryRunManager = new DryRunManager();
 /**
  * Plop action that respects dry-run mode
  */
-export function createDryRunAction(type) {
-  return function(answers, config, plop) {
+export function createDryRunAction(type: string) {
+  return function(answers: any, config: any, plop: any) {
     const path = plop.renderString(config.path, answers);
     const template = config.template || config.templateFile;
     let content = '';

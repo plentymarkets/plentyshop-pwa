@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import type { ValidationResult } from '../types/project-validation';
 
 /**
  * Project structure validation utilities for PlentyONE Shop generators
@@ -8,8 +9,8 @@ import { join } from 'node:path';
 /**
  * Validates that we're running from within a PlentyONE Shop PWA project
  */
-export function validateProjectStructure(basePath = process.cwd()) {
-  const errors = [];
+export function validateProjectStructure(basePath = process.cwd()): ValidationResult {
+  const errors: string[] = [];
   
   // Check for key project files/directories
   const requiredPaths = [
@@ -38,14 +39,11 @@ export function validateProjectStructure(basePath = process.cwd()) {
     };
   }
   
-  return { valid: true };
+  return { valid: true, errors: [] };
 }
 
-/**
- * Validates that a component directory is valid
- */
-export function validateComponentDirectory(componentPath) {
-  const errors = [];
+export function validateComponentDirectory(componentPath: string): ValidationResult {
+  const errors: string[] = [];
   
   if (!existsSync(componentPath)) {
     return { valid: true, message: 'Component directory does not exist (will be created)' };
@@ -53,13 +51,13 @@ export function validateComponentDirectory(componentPath) {
   
   // Check for existing files that might conflict
   const componentName = componentPath.split('/').pop();
-  const potentialFiles = [
+  const potentialFiles: string[] = [
     join(componentPath, `${componentName}.vue`),
     join(componentPath, 'index.ts'),
     join(componentPath, 'types.ts')
   ];
   
-  const existingFiles = potentialFiles.filter(existsSync);
+  const existingFiles: string[] = potentialFiles.filter(existsSync);
   
   if (existingFiles.length > 0) {
     errors.push(...existingFiles.map(file => `File already exists: ${file}`));
@@ -76,13 +74,10 @@ export function validateComponentDirectory(componentPath) {
   return { valid: true };
 }
 
-/**
- * Validates the workspace structure for the web app
- */
-export function validateWebAppStructure(webAppPath) {
-  const errors = [];
+export function validateWebAppStructure(webAppPath: string): ValidationResult {
+  const errors: string[] = [];
   
-  const requiredDirs = [
+  const requiredDirs: string[] = [
     'components',
     'composables',
     'pages',
@@ -105,26 +100,26 @@ export function validateWebAppStructure(webAppPath) {
     };
   }
   
-  return { valid: true };
+  return { valid: true, errors: [] };
 }
 
 /**
  * Gets suggestions for fixing project structure issues
  */
-export function getProjectStructureSuggestions(errors) {
-  const suggestions = [];
+export function getProjectStructureSuggestions(errors: string[]): string[] {
+  const suggestions: string[] = [];
   
-  if (errors.some(e => e.includes('apps/web'))) {
+  if (errors.some((e: string) => e.includes('apps/web'))) {
     suggestions.push('• Ensure you are in the project root directory');
     suggestions.push('• Check that the PlentyONE Shop PWA is properly set up');
   }
   
-  if (errors.some(e => e.includes('turbo.json'))) {
+  if (errors.some((e: string) => e.includes('turbo.json'))) {
     suggestions.push('• This should be a Turborepo project');
     suggestions.push('• Verify the monorepo structure is intact');
   }
   
-  if (errors.some(e => e.includes('components'))) {
+  if (errors.some((e: string) => e.includes('components'))) {
     suggestions.push('• Components directory might need to be created');
     suggestions.push('• Check that the Nuxt.js app is properly initialized');
   }

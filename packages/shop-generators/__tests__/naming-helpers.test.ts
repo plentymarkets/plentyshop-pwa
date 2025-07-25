@@ -10,7 +10,7 @@ import {
   importPath,
   currentDate,
   currentYear
-} from '../src/helpers/naming.js';
+} from '../src/helpers/naming';
 
 describe('Naming Helpers', () => {
   describe('pascalCase', () => {
@@ -23,8 +23,8 @@ describe('Naming Helpers', () => {
 
     it('handles edge cases', () => {
       expect(pascalCase('')).toBe('');
-      expect(pascalCase(null)).toBe('');
-      expect(pascalCase(undefined)).toBe('');
+      expect(pascalCase(null as any)).toBe('');
+      expect(pascalCase(undefined as any)).toBe('');
     });
   });
 

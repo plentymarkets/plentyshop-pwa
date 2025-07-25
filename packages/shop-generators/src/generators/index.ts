@@ -2,7 +2,9 @@
  * Generator loader for PlentyONE Shop generators
  */
 
-export default function (plop) {
+import type { NodePlopAPI } from 'plop';
+
+export default function (plop: NodePlopAPI): void {
   // Generators will be implemented in Phase 2
   // This placeholder ensures the plopfile loads without errors
   console.log('✅ Generators module loaded (generators will be added in Phase 2)');

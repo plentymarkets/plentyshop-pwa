@@ -1,4 +1,13 @@
 import { join } from 'node:path';
+import type {
+  DestinationOptions,
+  ComponentOptions,
+  PageOptions,
+  SettingsOptions,
+  TemplateFile,
+  TemplateAction,
+  GeneratorConfigOptions
+} from '../types/template-utils';
 
 /**
  * Template utilities for PlentyONE Shop generators
@@ -8,14 +17,14 @@ import { join } from 'node:path';
 /**
  * Gets the template directory for a specific generator type
  */
-export function getTemplatePath(generatorType) {
+export function getTemplatePath(generatorType: string): string {
   return join(process.cwd(), 'templates', generatorType);
 }
 
 /**
  * Gets the destination path for a specific generator type
  */
-export function getDestinationPath(generatorType, name, options = {}) {
+export function getDestinationPath(generatorType: string, name: string, options: DestinationOptions = {}): string {
   const { webAppPath = '../../apps/web' } = options;
   
   switch (generatorType) {
@@ -50,13 +59,13 @@ export function getDestinationPath(generatorType, name, options = {}) {
 /**
  * Creates template actions for PlopJS
  */
-export function createTemplateActions(generatorType, templateFiles, options = {}) {
-  const actions = [];
+export function createTemplateActions(generatorType: string, templateFiles: TemplateFile[], options: DestinationOptions = {}): TemplateAction[] {
+  const actions: TemplateAction[] = [];
   const templatePath = getTemplatePath(generatorType);
   const destinationBase = getDestinationPath(generatorType, '{{pascalCase name}}', options);
   
   for (const templateFile of templateFiles) {
-    const action = {
+    const action: TemplateAction = {
       type: 'add',
       path: join(destinationBase, templateFile.destination || templateFile.name),
       templateFile: join(templatePath, templateFile.template || templateFile.name),
@@ -78,7 +87,7 @@ export function createTemplateActions(generatorType, templateFiles, options = {}
 /**
  * Creates template file definitions for common patterns
  */
-export function createComponentTemplateFiles(options = {}) {
+export function createComponentTemplateFiles(options: ComponentOptions = {}) {
   const {
     includeTypes = true,
     includeIndex = true,
@@ -119,7 +128,7 @@ export function createComponentTemplateFiles(options = {}) {
 /**
  * Creates template file definitions for composables
  */
-export function createComposableTemplateFiles(options = {}) {
+export function createComposableTemplateFiles(options: ComponentOptions = {}): TemplateFile[] {
   const {
     includeTypes = true,
     includeIndex = true,
@@ -160,7 +169,7 @@ export function createComposableTemplateFiles(options = {}) {
 /**
  * Creates template file definitions for pages
  */
-export function createPageTemplateFiles(options = {}) {
+export function createPageTemplateFiles(options: PageOptions = {}): TemplateFile[] {
   const {
     isDynamic = false,
     includeLayout = false,
@@ -196,7 +205,7 @@ export function createPageTemplateFiles(options = {}) {
 /**
  * Creates template file definitions for settings components
  */
-export function createSettingsTemplateFiles(options = {}) {
+export function createSettingsTemplateFiles(options: SettingsOptions = {}): TemplateFile[] {
   const {
     includeTypes = true,
     includeToolbarTrigger = false,
@@ -237,15 +246,15 @@ export function createSettingsTemplateFiles(options = {}) {
 /**
  * Resolves template file paths relative to the templates directory
  */
-export function resolveTemplatePath(generatorType, fileName) {
+export function resolveTemplatePath(generatorType: string, fileName: string): string {
   return join(getTemplatePath(generatorType), fileName);
 }
 
 /**
  * Validates that required template files exist
  */
-export function validateTemplateFiles(generatorType, templateFiles) {
-  const errors = [];
+export function validateTemplateFiles(generatorType: string, templateFiles: TemplateFile[]): string[] {
+  const errors: string[] = [];
   // Note: In real implementation, we'd validate file existence here
   // For now, validation happens during actual generation
   
@@ -255,7 +264,7 @@ export function validateTemplateFiles(generatorType, templateFiles) {
 /**
  * Creates a complete generator configuration
  */
-export function createGeneratorConfig(type, options = {}) {
+export function createGeneratorConfig(type: string, options: GeneratorConfigOptions = {}) {
   const {
     description = `Generate a new ${type}`,
     prompts = [],

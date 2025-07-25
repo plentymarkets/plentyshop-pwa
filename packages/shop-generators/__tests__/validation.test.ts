@@ -6,7 +6,7 @@ import {
   validateDescription,
   validateNotEmpty,
   validateSettingsCategory
-} from '../src/utils/validation.js';
+} from '../src/utils/validation';
 
 describe('Validation Utilities', () => {
   describe('validateComponentName', () => {

@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import type { ValidationReturn } from '../types/validation';
 
 /**
  * Validation utilities for PlentyONE Shop generators
@@ -40,7 +41,7 @@ const HTML_ELEMENTS = [
 /**
  * Validates if a component name follows PascalCase convention
  */
-export function validateComponentName(name) {
+export function validateComponentName(name: any): string | true {
   if (!name || typeof name !== 'string') {
     return 'Component name is required';
   }
@@ -85,7 +86,7 @@ export function validateComponentName(name) {
 /**
  * Validates if a composable name follows camelCase with 'use' prefix
  */
-export function validateComposableName(name) {
+export function validateComposableName(name: any): string | true {
   if (!name || typeof name !== 'string') {
     return 'Composable name is required';
   }
@@ -123,7 +124,7 @@ export function validateComposableName(name) {
 /**
  * Validates if a file or directory already exists at the given path
  */
-export function validateFileExists(basePath, relativePath) {
+export function validateFileExists(basePath: string, relativePath: string): string | true {
   const fullPath = join(basePath, relativePath);
   
   if (existsSync(fullPath)) {
@@ -136,7 +137,7 @@ export function validateFileExists(basePath, relativePath) {
 /**
  * Validates if a string is not empty and contains only valid characters
  */
-export function validateNotEmpty(value) {
+export function validateNotEmpty(value: any): string | true {
   if (!value || typeof value !== 'string' || value.trim().length === 0) {
     return 'This field is required';
   }
@@ -147,7 +148,7 @@ export function validateNotEmpty(value) {
 /**
  * Validates if a description is appropriate
  */
-export function validateDescription(description) {
+export function validateDescription(description: any): string | true {
   if (!description || typeof description !== 'string') {
     return true; // Description is optional
   }
@@ -166,10 +167,10 @@ export function validateDescription(description) {
 /**
  * Creates a generic path validator for different component types
  */
-export function createPathValidator(basePath, componentType) {
-  return function(name) {
+export function createPathValidator(basePath: string, componentType: string) {
+  return function(name: any): string | true {
     // First validate the name format
-    let nameValidation;
+    let nameValidation: string | true;
     
     switch (componentType) {
       case 'component':
@@ -216,7 +217,7 @@ export function createPathValidator(basePath, componentType) {
 /**
  * Validates page name (kebab-case for URL-friendly names)
  */
-export function validatePageName(name) {
+export function validatePageName(name: any): string | true {
   if (!name || typeof name !== 'string') {
     return 'Page name is required';
   }
@@ -255,7 +256,7 @@ export function validatePageName(name) {
 /**
  * Validates settings category name
  */
-export function validateSettingsCategory(category) {
+export function validateSettingsCategory(category: any): string | true {
   if (!category || typeof category !== 'string') {
     return 'Settings category is required';
   }
@@ -270,8 +271,8 @@ export function validateSettingsCategory(category) {
 /**
  * Comprehensive validation function that combines multiple checks
  */
-export function validateGeneratorInput(answers, generatorType) {
-  const errors = [];
+export function validateGeneratorInput(answers: any, generatorType: string): string[] {
+  const errors: string[] = [];
   
   // Validate based on generator type
   switch (generatorType) {

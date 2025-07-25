@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { DryRunManager } from '../src/utils/dry-run.js';
+import { DryRunManager } from '../src/utils/dry-run';
 
 describe('DryRunManager', () => {
-  let dryRunManager;
+  let dryRunManager: DryRunManager;
 
   beforeEach(() => {
     dryRunManager = new DryRunManager();

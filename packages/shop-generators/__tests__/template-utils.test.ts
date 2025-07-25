@@ -7,7 +7,7 @@ import {
   createPageTemplateFiles,
   createSettingsTemplateFiles,
   createGeneratorConfig
-} from '../src/utils/template-utils.js';
+} from '../src/utils/template-utils';
 
 describe('Template Utilities', () => {
   describe('getTemplatePath', () => {

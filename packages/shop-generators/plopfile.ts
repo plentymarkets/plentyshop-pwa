@@ -1,11 +1,11 @@
-import registerHelpers from './src/helpers/index.js';
-import registerGenerators from './src/generators/index.js';
+import { NodePlopAPI } from 'plop';
+import registerHelpers from './src/helpers/index';
+import registerGenerators from './src/generators/index';
 
 /**
  * Plop configuration for PlentyONE Shop generators
- * @param {import('plop').NodePlopAPI} plop - The Plop API instance
  */
-export default function (plop) {
+export default function (plop: NodePlopAPI): void {
   // Register handlebars helpers for naming conventions
   registerHelpers(plop);
   
