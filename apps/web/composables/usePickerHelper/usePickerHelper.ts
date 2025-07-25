@@ -21,11 +21,51 @@ export const usePickerHelper = () => {
     imageObj[type] = placeholderImg;
   };
 
+  const selectedImageType = ref('wideScreen');
+  const customLabel = ref('');
+
+  const isUploaderOpen = ref(false);
+
+  const openUploader = (type: string | undefined, label?: string) => {
+    if (type) selectedImageType.value = type;
+    if (label) customLabel.value = label;
+    else customLabel.value = '';
+    isUploaderOpen.value = true;
+  };
+
+  const closeUploader = () => {
+    isUploaderOpen.value = false;
+    customLabel.value = '';
+  };
+
+  const getImageTypeLabel = (imageType: string, customLabel = ''): string => {
+    if (customLabel) return customLabel;
+    switch (imageType) {
+      case 'xl':
+      case 'wideScreen':
+        return 'XL (Desktop)';
+      case 'desktop':
+        return 'L (Desktop)';
+      case 'tablet':
+        return 'M (Tablet)';
+      case 'mobile':
+        return 'S (Mobile)';
+      default:
+        return imageType;
+    }
+  };
+
   return {
     placeholderImg,
     labels,
     imageDimensions,
     imageTypes,
     deleteImage,
+    isUploaderOpen,
+    openUploader,
+    closeUploader,
+    selectedImageType,
+    customLabel,
+    getImageTypeLabel,
   };
 };
