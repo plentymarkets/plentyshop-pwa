@@ -1,0 +1,16 @@
+{{!-- 
+  JSDoc comment block partial
+  Usage: {{> jsdoc description="Component description" params=paramsArray returns="ReturnType"}}
+--}}
+/**
+ * {{description}}
+{{#if params}}
+ *
+{{#each params}}
+ * @param {{{type}}} {{name}} {{description}}
+{{/each}}
+{{/if}}
+{{#if returns}}
+ * @returns {{{returns}}}
+{{/if}}
+ */

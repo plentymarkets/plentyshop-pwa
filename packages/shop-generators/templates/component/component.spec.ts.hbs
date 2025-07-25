@@ -1,0 +1,39 @@
+{{> test-setup name=name type="component" hasTypes=hasTypes}}
+
+{{#if hasProps}}
+  const defaultProps: {{pascalCase name}}Props = {
+    // Add default props for testing
+  };
+{{/if}}
+
+  it('renders correctly', () => {
+    const wrapper = mount({{pascalCase name}}{{#if hasProps}}, {
+      props: defaultProps
+    }{{/if}});
+    
+    expect(wrapper.find('[data-testid="{{testId name}}"]').exists()).toBe(true);
+  });
+
+{{#if hasProps}}
+  it('accepts props correctly', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: defaultProps
+    });
+    
+    // Test that props are handled correctly
+    expect(wrapper.props()).toEqual(defaultProps);
+  });
+{{/if}}
+
+{{#if hasEmits}}
+  it('emits events correctly', () => {
+    const wrapper = mount({{pascalCase name}}{{#if hasProps}}, {
+      props: defaultProps
+    }{{/if}});
+    
+    // Test event emission
+    // wrapper.vm.$emit('eventName', eventData);
+    // expect(wrapper.emitted('eventName')).toBeTruthy();
+  });
+{{/if}}
+});

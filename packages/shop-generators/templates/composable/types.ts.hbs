@@ -1,0 +1,35 @@
+{{#if hasParams}}
+{{> jsdoc description=(concat "Parameters for " (camelCase name) " composable")}}
+{{> typescript-interface name=(concat (pascalCase (composableBaseName name)) "Params") properties=params}}
+
+{{/if}}
+{{> jsdoc description=(concat "Return type for " (camelCase name) " composable")}}
+export interface {{pascalCase (composableBaseName name)}}Return {
+  // State
+  readonly isLoading: Ref<boolean>;
+  readonly error: Ref<string | null>;
+  readonly isReady: ComputedRef<boolean>;
+  
+  {{#if hasState}}
+  // Additional state
+  {{#each state}}
+  {{camelCase name}}: Ref<{{type}}>;
+  {{/each}}
+  {{/if}}
+  
+  {{#if hasComputedValues}}
+  // Computed values
+  {{#each computedValues}}
+  {{camelCase name}}: ComputedRef<{{type}}>;
+  {{/each}}
+  {{/if}}
+  
+  // Methods
+  {{#if hasMethods}}
+  {{#each methods}}
+  {{camelCase name}}: ({{#if params}}{{params}}{{/if}}) => Promise<{{returnType}}>;
+  {{/each}}
+  {{else}}
+  execute: () => Promise<void>;
+  {{/if}}
+}

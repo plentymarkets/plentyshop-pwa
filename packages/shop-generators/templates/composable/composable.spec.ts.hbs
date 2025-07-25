@@ -1,0 +1,51 @@
+{{> test-setup name=name type="composable" hasTypes=hasTypes}}
+
+  it('initializes with correct default state', () => {
+    const {
+      isLoading,
+      error,
+      isReady
+    } = {{camelCase name}}({{#if hasParams}}{
+      // Add test parameters here
+    }{{/if}});
+    
+    expect(isLoading.value).toBe(false);
+    expect(error.value).toBe(null);
+    expect(isReady.value).toBe(true);
+  });
+
+  {{#if hasMethods}}
+  {{#each methods}}
+  it('{{camelCase name}} works correctly', async () => {
+    const composable = {{../name}}({{#if ../hasParams}}{
+      // Add test parameters here
+    }{{/if}});
+    
+    // Test the method
+    // await composable.{{camelCase name}}();
+    
+    expect(true).toBe(true); // Replace with actual assertions
+  });
+  {{/each}}
+  {{else}}
+  it('execute method works correctly', async () => {
+    const composable = {{camelCase name}}({{#if hasParams}}{
+      // Add test parameters here
+    }{{/if}});
+    
+    // Test the execute method
+    // await composable.execute();
+    
+    expect(true).toBe(true); // Replace with actual assertions
+  });
+  {{/if}}
+
+  it('handles errors correctly', async () => {
+    const composable = {{camelCase name}}({{#if hasParams}}{
+      // Add test parameters that will cause an error
+    }{{/if}});
+    
+    // Test error handling
+    expect(composable.error.value).toBe(null);
+  });
+});

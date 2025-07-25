@@ -1,0 +1,100 @@
+import { ref, computed{{#if hasReactive}}, reactive{{/if}}{{#if hasWatch}}, watch{{/if}} } from 'vue';
+import type { {{pascalCase (composableBaseName name)}}Return{{#if hasParams}}, {{pascalCase (composableBaseName name)}}Params{{/if}} } from './types';
+
+{{> jsdoc description=(concat "Composable for " (composableBaseName name)) params=params returns=(concat (pascalCase (composableBaseName name)) "Return")}}
+export const {{camelCase name}} = ({{#if hasParams}}params: {{pascalCase (composableBaseName name)}}Params{{/if}}): {{pascalCase (composableBaseName name)}}Return => {
+  // Reactive state
+  const isLoading = ref(false);
+  const error = ref<string | null>(null);
+  
+  {{#if hasState}}
+  // Additional state
+  {{#each state}}
+  const {{camelCase name}} = ref{{#if defaultValue}}({{defaultValue}}){{else}}<{{type}}>(){{/if}};
+  {{/each}}
+  {{/if}}
+
+  // Computed values
+  const isReady = computed(() => !isLoading.value && !error.value);
+  
+  {{#if hasComputedValues}}
+  {{#each computedValues}}
+  const {{camelCase name}} = computed(() => {
+    // {{description}}
+    return {{defaultImplementation}};
+  });
+  {{/each}}
+  {{/if}}
+
+  // Methods
+  {{#if hasMethods}}
+  {{#each methods}}
+  const {{camelCase name}} = async ({{#if params}}{{params}}{{/if}}) => {
+    try {
+      isLoading.value = true;
+      error.value = null;
+      
+      // {{description}}
+      
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'An error occurred';
+      throw err;
+    } finally {
+      isLoading.value = false;
+    }
+  };
+  {{/each}}
+  {{else}}
+  const execute = async () => {
+    try {
+      isLoading.value = true;
+      error.value = null;
+      
+      // Implementation goes here
+      
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'An error occurred';
+      throw err;
+    } finally {
+      isLoading.value = false;
+    }
+  };
+  {{/if}}
+
+  {{#if hasWatch}}
+  // Watchers
+  {{#each watchers}}
+  watch({{source}}, ({{params}}) => {
+    // {{description}}
+  }{{#if options}}, {{options}}{{/if}});
+  {{/each}}
+  {{/if}}
+
+  return {
+    // State
+    isLoading: readonly(isLoading),
+    error: readonly(error),
+    isReady,
+    {{#if hasState}}
+    {{#each state}}
+    {{camelCase name}},
+    {{/each}}
+    {{/if}}
+    
+    // Computed
+    {{#if hasComputedValues}}
+    {{#each computedValues}}
+    {{camelCase name}},
+    {{/each}}
+    {{/if}}
+    
+    // Methods
+    {{#if hasMethods}}
+    {{#each methods}}
+    {{camelCase name}},
+    {{/each}}
+    {{else}}
+    execute,
+    {{/if}}
+  };
+};

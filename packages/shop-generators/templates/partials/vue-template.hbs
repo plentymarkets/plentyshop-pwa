@@ -1,0 +1,16 @@
+{{!-- 
+  Vue component template with basic structure
+  Usage: {{> vue-template name="ComponentName" hasSlots=true}}
+--}}
+<template>
+  <div 
+    data-testid="{{testId name}}"
+    class="{{kebabCase name}}"
+  >
+{{#if hasSlots}}
+    <slot />
+{{else}}
+    <!-- {{pascalCase name}} content goes here -->
+{{/if}}
+  </div>
+</template>

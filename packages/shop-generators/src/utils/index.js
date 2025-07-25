@@ -4,3 +4,4 @@ export * from './dry-run.js';
 export * from './error-handling.js';
 export * from './confirmation.js';
 export * from './project-validation.js';
+export * from './template-utils.js';
