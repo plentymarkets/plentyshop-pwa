@@ -17,7 +17,11 @@
 
         <main class="flex flex-1 overflow-hidden">
           <div class="flex-1 overflow-auto pr-4">
+            <div v-if="loading" class="flex items-center justify-center h-full w-full min-h-[400px]">
+              <SfLoaderCircular size="2xl" class="text-gray-400" />
+            </div>
             <UiImageTable
+              v-else
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"
@@ -61,9 +65,10 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 
-const { placeholderImg, useCanAddImage, getImageTypeLabel } = usePickerHelper();
+const { placeholderImg, getImageTypeLabel } = usePickerHelper();
+const { loading, getStorageItemsServer } = useItemsTable();
 
 const props = defineProps({
   open: Boolean,
@@ -92,6 +97,16 @@ const selectedImage = ref<null | {
 watch(
   () => props.open,
   (isOpen) => {
+    if (isOpen) {
+      getStorageItemsServer();
+    }
+  },
+  { immediate: true },
+);
+
+watch(
+  () => props.open,
+  (isOpen) => {
     if (isOpen && props.currentImage) {
       selectedImage.value = {
         image: props.currentImage,
@@ -103,7 +118,13 @@ watch(
   },
 );
 
-const canAdd = useCanAddImage(selectedImage, props.currentImage, placeholderImg);
+const canAdd = computed(() => {
+  if (!selectedImage.value) return false;
+  if (!selectedImage.value.image) return false;
+  if (selectedImage.value.image === props.currentImage) return false;
+  if (selectedImage.value.image === placeholderImg) return false;
+  return true;
+});
 
 const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
 

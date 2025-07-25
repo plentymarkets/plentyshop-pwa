@@ -55,20 +55,6 @@ export const usePickerHelper = () => {
     }
   };
 
-  const useCanAddImage = (
-    selectedImage: Ref<{ image: string } | null>,
-    currentImage: string,
-    placeholderImg: string,
-  ) => {
-    return computed(() => {
-      if (!selectedImage.value) return false;
-      if (!selectedImage.value.image) return false;
-      if (selectedImage.value.image === currentImage) return false;
-      if (selectedImage.value.image === placeholderImg) return false;
-      return true;
-    });
-  };
-
   return {
     placeholderImg,
     labels,
@@ -81,6 +67,5 @@ export const usePickerHelper = () => {
     selectedImageType,
     customLabel,
     getImageTypeLabel,
-    useCanAddImage,
   };
 };

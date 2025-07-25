@@ -12,7 +12,11 @@
       single-line
     />
 
+    <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
+      <SfLoaderCircular size="2xl" class="text-gray-400" />
+    </div>
     <v-data-table
+      v-else
       v-model:search="search"
       :filter-keys="['key']"
       class="border border-gray-300 rounded-md"
@@ -45,9 +49,9 @@
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 import type { StorageObject } from '@plentymarkets/shop-api';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
-const { data: items, headers, getStorageItemsServer, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
-await getStorageItemsServer();
+const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 
 const { setMetadata } = useImageMetadata();
 
