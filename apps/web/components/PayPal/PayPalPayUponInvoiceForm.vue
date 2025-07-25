@@ -42,7 +42,10 @@
       @valid-phone-number="handlePhoneNumberValidation"
     />
 
-    <div id="paypal-legal-container" class="text-sm text-neutral-800 mb-4" />
+    <div
+      id="paypal-legal-container"
+      class="text-sm text-neutral-800 mb-4 [&_a]:text-primary-300 [&_a:hover]:underline"
+    />
 
     <div class="text-sm text-neutral-500">&#8727; {{ t('contact.form.asterixHint') }}</div>
 
