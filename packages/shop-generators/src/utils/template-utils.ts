@@ -22,38 +22,36 @@ export function getTemplatePath(generatorType: string): string {
 }
 
 /**
+ * Path mappings for different generator types
+ */
+const GENERATOR_PATHS = {
+  component: (webAppPath: string, name: string) => join(webAppPath, 'components', name),
+  ui: (webAppPath: string, name: string) => join(webAppPath, 'components/ui', name),
+  composable: (webAppPath: string, name: string) => join(webAppPath, 'composables', name),
+  page: (webAppPath: string) => join(webAppPath, 'pages'),
+  block: (webAppPath: string, name: string) => join(webAppPath, 'components/blocks', name),
+  test: (webAppPath: string) => join(webAppPath, '__tests__'),
+} as const;
+
+/**
  * Gets the destination path for a specific generator type
  */
 export function getDestinationPath(generatorType: string, name: string, options: DestinationOptions = {}): string {
   const { webAppPath = '../../apps/web' } = options;
 
-  switch (generatorType) {
-    case 'component':
-      return join(webAppPath, 'components', name);
-
-    case 'ui':
-      return join(webAppPath, 'components/ui', name);
-
-    case 'composable':
-      return join(webAppPath, 'composables', name);
-
-    case 'page':
-      return join(webAppPath, 'pages');
-
-    case 'settings': {
-      const { category = 'general' } = options;
-      return join(webAppPath, 'components/settings', category, name);
-    }
-
-    case 'block':
-      return join(webAppPath, 'components/blocks', name);
-
-    case 'test':
-      return join(webAppPath, '__tests__');
-
-    default:
-      throw new Error(`Unknown generator type: ${generatorType}`);
+  // Handle special case for settings which needs category
+  if (generatorType === 'settings') {
+    const { category = 'general' } = options;
+    return join(webAppPath, 'components/settings', category, name);
   }
+
+  // Use path mapping for other types
+  const pathGenerator = GENERATOR_PATHS[generatorType as keyof typeof GENERATOR_PATHS];
+  if (pathGenerator) {
+    return pathGenerator(webAppPath, name);
+  }
+
+  throw new Error(`Unknown generator type: ${generatorType}`);
 }
 
 /**
@@ -241,7 +239,7 @@ export function resolveTemplatePath(generatorType: string, fileName: string): st
 /**
  * Validates that required template files exist
  */
-export function validateTemplateFiles(generatorType: string, templateFiles: TemplateFile[]): string[] {
+export function validateTemplateFiles(_generatorType: string, _templateFiles: TemplateFile[]): string[] {
   const errors: string[] = [];
   // Note: In real implementation, we'd validate file existence here
   // For now, validation happens during actual generation

@@ -107,7 +107,7 @@ function hasComplexOperation(answers: GeneratorAnswers): boolean {
 /**
  * Checks if there would be file conflicts
  */
-function wouldHaveConflicts(answers: GeneratorAnswers): boolean {
+function wouldHaveConflicts(_answers: GeneratorAnswers): boolean {
   if (dryRunManager.isDryRun) {
     return dryRunManager.hasConflicts();
   }
@@ -150,8 +150,8 @@ export function createDestructiveConfirmationPrompt(operation: string): PromptCo
     type: 'input',
     name: 'destructiveConfirmation',
     message: `⚠️  This operation will ${operation}. Type "yes" to confirm:`,
-    validate: (input: any) => {
-      if (input.toLowerCase() !== 'yes') {
+    validate: (input: unknown) => {
+      if (typeof input !== 'string' || input.toLowerCase() !== 'yes') {
         return 'Please type "yes" to confirm this destructive operation';
       }
       return true;

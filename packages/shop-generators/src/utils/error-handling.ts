@@ -47,55 +47,80 @@ export function formatValidationErrors(errors: string[]): string | null {
 }
 
 /**
- * Handles and formats different types of errors
+ * Handles GeneratorError instances with specific error codes
  */
-export function handleGeneratorError(error: any): string {
-  if (error instanceof GeneratorError) {
-    switch (error.code) {
-      case ERROR_CODES.VALIDATION_FAILED:
-        return `❌ Validation Error: ${error.message}`;
+function handleGeneratorErrorCode(error: GeneratorError): string {
+  switch (error.code) {
+    case ERROR_CODES.VALIDATION_FAILED:
+      return `❌ Validation Error: ${error.message}`;
 
-      case ERROR_CODES.FILE_EXISTS:
-        return `❌ File Conflict: ${error.message}\n💡 Use --force to overwrite or choose a different name.`;
+    case ERROR_CODES.FILE_EXISTS:
+      return `❌ File Conflict: ${error.message}\n💡 Use --force to overwrite or choose a different name.`;
 
-      case ERROR_CODES.INVALID_PATH:
-        return `❌ Invalid Path: ${error.message}`;
+    case ERROR_CODES.INVALID_PATH:
+      return `❌ Invalid Path: ${error.message}`;
 
-      case ERROR_CODES.TEMPLATE_ERROR:
-        return `❌ Template Error: ${error.message}\n💡 Please check the template files and try again.`;
+    case ERROR_CODES.TEMPLATE_ERROR:
+      return `❌ Template Error: ${error.message}\n💡 Please check the template files and try again.`;
 
-      case ERROR_CODES.PERMISSION_DENIED:
-        return `❌ Permission Error: ${error.message}\n💡 Check file permissions and try again.`;
+    case ERROR_CODES.PERMISSION_DENIED:
+      return `❌ Permission Error: ${error.message}\n💡 Check file permissions and try again.`;
 
-      case ERROR_CODES.UNKNOWN_GENERATOR:
-        return `❌ Unknown Generator: ${error.message}\n💡 Run 'npm run generate' to see available generators.`;
+    case ERROR_CODES.UNKNOWN_GENERATOR:
+      return `❌ Unknown Generator: ${error.message}\n💡 Run 'npm run generate' to see available generators.`;
 
-      default:
-        return `❌ Generator Error: ${error.message}`;
+    default:
+      return `❌ Generator Error: ${error.message}`;
+  }
+}
+
+/**
+ * Handles standard Node.js error codes
+ */
+function handleNodeError(error: unknown): string | null {
+  if (typeof error === 'object' && error !== null && 'code' in error) {
+    const nodeError = error as { code: string; path?: string; message?: string };
+    
+    if (nodeError.code === 'ENOENT') {
+      return `❌ File not found: ${nodeError.path || nodeError.message}`;
+    }
+
+    if (nodeError.code === 'EACCES') {
+      return `❌ Permission denied: ${nodeError.path || nodeError.message}`;
+    }
+
+    if (nodeError.code === 'EEXIST') {
+      return `❌ File already exists: ${nodeError.path || nodeError.message}`;
     }
   }
 
-  // Handle standard errors
-  if (error.code === 'ENOENT') {
-    return `❌ File not found: ${error.path || error.message}`;
+  return null;
+}
+
+/**
+ * Handles and formats different types of errors
+ */
+export function handleGeneratorError(error: unknown): string {
+  // Handle GeneratorError instances
+  if (error instanceof GeneratorError) {
+    return handleGeneratorErrorCode(error);
   }
 
-  if (error.code === 'EACCES') {
-    return `❌ Permission denied: ${error.path || error.message}`;
-  }
-
-  if (error.code === 'EEXIST') {
-    return `❌ File already exists: ${error.path || error.message}`;
+  // Handle standard Node.js errors
+  const nodeErrorMessage = handleNodeError(error);
+  if (nodeErrorMessage) {
+    return nodeErrorMessage;
   }
 
   // Generic error handling
-  return `❌ Unexpected error: ${error.message}`;
+  const message = error instanceof Error ? error.message : String(error);
+  return `❌ Unexpected error: ${message}`;
 }
 
 /**
  * Wrapper for safe execution of generator functions
  */
-export async function safeExecute<T>(fn: () => Promise<T> | T, context = 'Generator'): Promise<T> {
+export async function safeExecute<T>(fn: () => Promise<T> | T, _context = 'Generator'): Promise<T> {
   try {
     return await fn();
   } catch (error) {
@@ -151,9 +176,10 @@ export const USER_FRIENDLY_MESSAGES = {
 /**
  * Creates user-friendly messages with suggestions
  */
-export function createFriendlyMessage(messageKey: UserFriendlyMessageKey, ...args: any[]): string {
+export function createFriendlyMessage(messageKey: UserFriendlyMessageKey, ...args: unknown[]): string {
   const messageFunction = USER_FRIENDLY_MESSAGES[messageKey];
   if (typeof messageFunction === 'function') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (messageFunction as any)(...args);
   }
   return `Unknown error: ${messageKey}`;

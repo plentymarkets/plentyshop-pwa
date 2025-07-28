@@ -3,7 +3,7 @@
  */
 
 export interface ErrorDetails {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export type UserFriendlyMessageKey =

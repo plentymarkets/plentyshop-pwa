@@ -7,16 +7,16 @@ import type Handlebars from 'handlebars';
 
 // Handlebars helper options interface
 interface HelperOptions {
-  fn: (context: any) => string;
-  inverse: (context: any) => string;
+  fn: (context: unknown) => string;
+  inverse: (context: unknown) => string;
 }
 
 /**
  * Converts string to PascalCase (for components)
  * Examples: 'hello world' -> 'HelloWorld', 'my-component' -> 'MyComponent'
  */
-export function pascalCase(str: string): string {
-  if (!str) return '';
+export function pascalCase(str: unknown): string {
+  if (!str || typeof str !== 'string') return '';
   return str
     .replace(/[-_\s]+(.)?/g, (_, char) => (char ? char.toUpperCase() : ''))
     .replace(/^(.)/, (_, char) => char.toUpperCase());
@@ -26,8 +26,8 @@ export function pascalCase(str: string): string {
  * Converts string to camelCase (for composables, variables)
  * Examples: 'hello world' -> 'helloWorld', 'my-component' -> 'myComponent'
  */
-export function camelCase(str: string): string {
-  if (!str) return '';
+export function camelCase(str: unknown): string {
+  if (!str || typeof str !== 'string') return '';
   const pascal = pascalCase(str);
   return pascal.charAt(0).toLowerCase() + pascal.slice(1);
 }
@@ -36,8 +36,8 @@ export function camelCase(str: string): string {
  * Converts string to kebab-case (for files, CSS, data-testid)
  * Examples: 'HelloWorld' -> 'hello-world', 'myComponent' -> 'my-component'
  */
-export function kebabCase(str: string): string {
-  if (!str) return '';
+export function kebabCase(str: unknown): string {
+  if (!str || typeof str !== 'string') return '';
   return str
     .replace(/([a-z])([A-Z])/g, '$1-$2')
     .replace(/[\s_]+/g, '-')
@@ -48,8 +48,8 @@ export function kebabCase(str: string): string {
  * Extracts the main part from a composable name (removes 'use' prefix)
  * Examples: 'useProductCart' -> 'ProductCart', 'useAPI' -> 'API'
  */
-export function composableBaseName(str: string): string {
-  if (!str) return '';
+export function composableBaseName(str: unknown): string {
+  if (!str || typeof str !== 'string') return '';
   if (str.startsWith('use')) {
     return str.slice(3);
   }
@@ -60,8 +60,8 @@ export function composableBaseName(str: string): string {
  * Creates a composable name from a base name
  * Examples: 'ProductCart' -> 'useProductCart', 'API' -> 'useAPI'
  */
-export function makeComposableName(str: string): string {
-  if (!str) return '';
+export function makeComposableName(str: unknown): string {
+  if (!str || typeof str !== 'string') return '';
   if (str.startsWith('use')) {
     return str;
   }
@@ -72,8 +72,8 @@ export function makeComposableName(str: string): string {
  * Creates a data-testid attribute value
  * Examples: 'ProductCard' -> 'product-card', 'UserProfile' -> 'user-profile'
  */
-export function testId(str: string): string {
-  if (!str) return '';
+export function testId(str: unknown): string {
+  if (!str || typeof str !== 'string') return '';
   return kebabCase(str);
 }
 
@@ -123,7 +123,7 @@ export function currentYear(): number {
 /**
  * Conditionally includes content if values are equal
  */
-export function ifEquals(a: any, b: any, options: HelperOptions): string {
+export function ifEquals(a: unknown, b: unknown, options: HelperOptions): string {
   if (a === b) {
     return options.fn({});
   }
@@ -133,8 +133,8 @@ export function ifEquals(a: any, b: any, options: HelperOptions): string {
 /**
  * Conditionally includes content if value is not empty
  */
-export function ifNotEmpty(value: any, options: HelperOptions): string {
-  if (value?.trim?.() && value.trim() !== '') {
+export function ifNotEmpty(value: unknown, options: HelperOptions): string {
+  if (typeof value === 'string' && value.trim() !== '') {
     return options.fn({});
   }
   return options.inverse({});
@@ -150,7 +150,7 @@ export function registerHelpers(handlebars: typeof Handlebars): void {
   handlebars.registerHelper('composableBaseName', composableBaseName);
   handlebars.registerHelper('makeComposableName', makeComposableName);
   handlebars.registerHelper('testId', testId);
-  handlebars.registerHelper('filePath', (...args: any[]) => {
+  handlebars.registerHelper('filePath', (...args: unknown[]) => {
     // Remove Handlebars options from args and call filePath
     const parts = args.slice(0, -1) as string[];
     return filePath(...parts);

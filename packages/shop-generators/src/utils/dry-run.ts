@@ -1,5 +1,7 @@
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { relative, dirname } from 'path';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import type { NodePlopAPI } from 'plop';
+import type { GeneratorAnswers } from '../types/confirmation';
 import { getProjectBasePath } from './paths';
 import type { Operation } from '../types/dry-run';
 
@@ -133,11 +135,18 @@ export class DryRunManager {
  */
 export const dryRunManager = new DryRunManager();
 
+interface PlopActionConfig {
+  path: string;
+  template?: string;
+  templateFile?: string;
+  [key: string]: unknown;
+}
+
 /**
  * Plop action that respects dry-run mode
  */
 export function createDryRunAction(type: string) {
-  return function (answers: any, config: any, plop: any) {
+  return function (answers: GeneratorAnswers, config: PlopActionConfig, plop: NodePlopAPI) {
     const path = plop.renderString(config.path, answers);
     const template = config.template || config.templateFile;
     let content = '';

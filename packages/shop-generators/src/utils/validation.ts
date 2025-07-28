@@ -1,135 +1,16 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import type { ValidationReturn } from '../types/validation';
+import { RESERVED_WORDS, VUE_RESERVED_NAMES, HTML_ELEMENTS, RESERVED_ROUTES } from './validation-constants';
+import type { GeneratorInputAnswers } from '../types/validation';
 
 /**
  * Validation utilities for PlentyONE Shop generators
  */
 
 /**
- * Reserved words that cannot be used as component names
- */
-const RESERVED_WORDS = [
-  'abstract',
-  'arguments',
-  'await',
-  'boolean',
-  'break',
-  'byte',
-  'case',
-  'catch',
-  'char',
-  'class',
-  'const',
-  'continue',
-  'debugger',
-  'default',
-  'delete',
-  'do',
-  'double',
-  'else',
-  'enum',
-  'eval',
-  'export',
-  'extends',
-  'false',
-  'final',
-  'finally',
-  'float',
-  'for',
-  'function',
-  'goto',
-  'if',
-  'implements',
-  'import',
-  'in',
-  'instanceof',
-  'int',
-  'interface',
-  'let',
-  'long',
-  'native',
-  'new',
-  'null',
-  'package',
-  'private',
-  'protected',
-  'public',
-  'return',
-  'short',
-  'static',
-  'super',
-  'switch',
-  'synchronized',
-  'this',
-  'throw',
-  'throws',
-  'transient',
-  'true',
-  'try',
-  'typeof',
-  'var',
-  'void',
-  'volatile',
-  'while',
-  'with',
-  'yield',
-];
-
-/**
- * Vue reserved component names
- */
-const VUE_RESERVED_NAMES = [
-  'Component',
-  'Transition',
-  'TransitionGroup',
-  'KeepAlive',
-  'Suspense',
-  'Teleport',
-  'Fragment',
-  'Text',
-  'Comment',
-  'Static',
-];
-
-/**
- * HTML element names that shouldn't be used as component names
- */
-const HTML_ELEMENTS = [
-  'div',
-  'span',
-  'p',
-  'a',
-  'img',
-  'form',
-  'input',
-  'button',
-  'header',
-  'footer',
-  'nav',
-  'main',
-  'section',
-  'article',
-  'aside',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'ul',
-  'ol',
-  'li',
-  'table',
-  'tr',
-  'td',
-  'th',
-];
-
-/**
  * Validates if a component name follows PascalCase convention
  */
-export function validateComponentName(name: any): string | true {
+export function validateComponentName(name: unknown): string | true {
   if (!name || typeof name !== 'string') {
     return 'Component name is required';
   }
@@ -174,7 +55,7 @@ export function validateComponentName(name: any): string | true {
 /**
  * Validates if a composable name follows camelCase with 'use' prefix
  */
-export function validateComposableName(name: any): string | true {
+export function validateComposableName(name: unknown): string | true {
   if (!name || typeof name !== 'string') {
     return 'Composable name is required';
   }
@@ -225,7 +106,7 @@ export function validateFileExists(basePath: string, relativePath: string): stri
 /**
  * Validates if a string is not empty and contains only valid characters
  */
-export function validateNotEmpty(value: any): string | true {
+export function validateNotEmpty(value: unknown): string | true {
   if (!value || typeof value !== 'string' || value.trim().length === 0) {
     return 'This field is required';
   }
@@ -236,7 +117,7 @@ export function validateNotEmpty(value: any): string | true {
 /**
  * Validates if a description is appropriate
  */
-export function validateDescription(description: any): string | true {
+export function validateDescription(description: unknown): string | true {
   if (!description || typeof description !== 'string') {
     return true; // Description is optional
   }
@@ -256,7 +137,7 @@ export function validateDescription(description: any): string | true {
  * Creates a generic path validator for different component types
  */
 export function createPathValidator(basePath: string, componentType: string) {
-  return function (name: any): string | true {
+  return function (name: unknown): string | true {
     // First validate the name format
     let nameValidation: string | true;
 
@@ -305,7 +186,7 @@ export function createPathValidator(basePath: string, componentType: string) {
 /**
  * Validates page name (kebab-case for URL-friendly names)
  */
-export function validatePageName(name: any): string | true {
+export function validatePageName(name: unknown): string | true {
   if (!name || typeof name !== 'string') {
     return 'Page name is required';
   }
@@ -324,24 +205,7 @@ export function validatePageName(name: any): string | true {
   }
 
   // Check for reserved route names
-  const reservedRoutes = [
-    'api',
-    'admin',
-    'www',
-    'mail',
-    'ftp',
-    'localhost',
-    'assets',
-    'static',
-    'config',
-    'dashboard',
-    'login',
-    'logout',
-    'register',
-    'profile',
-  ];
-
-  if (reservedRoutes.includes(name)) {
+  if (RESERVED_ROUTES.includes(name)) {
     return `"${name}" is a reserved route name and cannot be used`;
   }
 
@@ -356,7 +220,7 @@ export function validatePageName(name: any): string | true {
 /**
  * Validates settings category name
  */
-export function validateSettingsCategory(category: any): string | true {
+export function validateSettingsCategory(category: unknown): string | true {
   if (!category || typeof category !== 'string') {
     return 'Settings category is required';
   }
@@ -369,39 +233,50 @@ export function validateSettingsCategory(category: any): string | true {
 }
 
 /**
+ * Validates name based on generator type
+ */
+function validateNameByType(name: unknown, generatorType: string): string | null {
+  if (!name) return null;
+
+  switch (generatorType) {
+    case 'component': {
+      const componentValidation = validateComponentName(name);
+      return componentValidation !== true ? componentValidation : null;
+    }
+
+    case 'composable': {
+      const composableValidation = validateComposableName(name);
+      return composableValidation !== true ? composableValidation : null;
+    }
+
+    case 'page': {
+      const pageValidation = validatePageName(name);
+      return pageValidation !== true ? pageValidation : null;
+    }
+
+    default:
+      return null;
+  }
+}
+
+/**
  * Comprehensive validation function that combines multiple checks
  */
-export function validateGeneratorInput(answers: any, generatorType: string): string[] {
+export function validateGeneratorInput(answers: GeneratorInputAnswers, generatorType: string): string[] {
   const errors: string[] = [];
 
-  // Validate based on generator type
-  switch (generatorType) {
-    case 'component':
-      if (answers.name) {
-        const nameValidation = validateComponentName(answers.name);
-        if (nameValidation !== true) errors.push(nameValidation);
-      }
-      break;
-
-    case 'composable':
-      if (answers.name) {
-        const nameValidation = validateComposableName(answers.name);
-        if (nameValidation !== true) errors.push(nameValidation);
-      }
-      break;
-
-    case 'page':
-      if (answers.name) {
-        const nameValidation = validatePageName(answers.name);
-        if (nameValidation !== true) errors.push(nameValidation);
-      }
-      break;
+  // Validate name based on generator type
+  const nameError = validateNameByType(answers.name, generatorType);
+  if (nameError) {
+    errors.push(nameError);
   }
 
   // Validate description if provided
   if (answers.description) {
     const descValidation = validateDescription(answers.description);
-    if (descValidation !== true) errors.push(descValidation);
+    if (descValidation !== true) {
+      errors.push(descValidation);
+    }
   }
 
   return errors;

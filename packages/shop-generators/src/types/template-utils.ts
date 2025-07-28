@@ -2,6 +2,17 @@
  * Type definitions for template utilities
  */
 
+import type { PromptConfig } from './confirmation';
+
+export interface ActionConfig {
+  type: string;
+  path: string;
+  templateFile?: string;
+  data?: Record<string, unknown>;
+  skipIfExists?: boolean;
+  force?: boolean;
+}
+
 export interface DestinationOptions {
   webAppPath?: string;
   category?: string;
@@ -44,7 +55,7 @@ export interface TemplateAction {
 
 export interface GeneratorConfigOptions extends DestinationOptions {
   description?: string;
-  prompts?: any[];
+  prompts?: PromptConfig[];
   templateFiles?: TemplateFile[];
-  actions?: any[];
+  actions?: ActionConfig[];
 }

@@ -12,7 +12,7 @@ export interface GeneratorAnswers {
   overwrite?: boolean;
   generateMultiple?: boolean;
   destructiveConfirmation?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface PromptConfig {
@@ -21,5 +21,5 @@ export interface PromptConfig {
   message: string | ((answers: GeneratorAnswers) => string);
   default?: boolean;
   when?: (answers: GeneratorAnswers) => boolean;
-  validate?: (input: any) => boolean | string;
+  validate?: (input: unknown) => boolean | string;
 }

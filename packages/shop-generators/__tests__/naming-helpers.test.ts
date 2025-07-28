@@ -23,8 +23,8 @@ describe('Naming Helpers', () => {
 
     it('handles edge cases', () => {
       expect(pascalCase('')).toBe('');
-      expect(pascalCase(null as any)).toBe('');
-      expect(pascalCase(undefined as any)).toBe('');
+      expect(pascalCase(null as unknown)).toBe('');
+      expect(pascalCase(undefined as unknown)).toBe('');
     });
   });
 
