@@ -136,7 +136,7 @@ describe('Template Utilities', () => {
     it('creates complete generator configuration', () => {
       const config = createGeneratorConfig('component', {
         description: 'Test generator',
-        prompts: [{ name: 'test', message: 'Test?' }],
+        prompts: [{ type: 'input', name: 'test', message: 'Test?' }],
         templateFiles: [{ name: 'test.vue', template: 'test.hbs' }],
       });
 

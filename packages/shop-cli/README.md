@@ -1,15 +1,15 @@
-# @plentymarkets/shop-generators
+# @plentymarkets/shop-cli
 
-PlopJS code generators for PlentyONE Shop PWA development.
+Official CLI for PlentyONE Shop development - code generators, utilities, and development tools.
 
 ## Overview
 
-This package provides standardized code generators for creating consistent components, composables, pages, and other code structures in PlentyONE Shop PWA projects.
+This package provides a unified command-line interface for PlentyONE Shop PWA development, including code generators for creating consistent components, composables, pages, and other development utilities.
 
 ## Installation
 
 ```bash
-npm install @plentymarkets/shop-generators
+npm install @plentymarkets/shop-cli
 ```
 
 ## Usage
@@ -17,7 +17,14 @@ npm install @plentymarkets/shop-generators
 ### Using the CLI
 
 ```bash
-npx plenty-plop
+# Generate code (interactive)
+npx plentyshop init
+
+# Or using the generate command
+npx plentyshop generate
+
+# For help
+npx plentyshop --help
 ```
 
 ### Using with Plop directly

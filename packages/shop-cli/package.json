@@ -1,11 +1,11 @@
 {
-  "name": "@plentymarkets/shop-generators",
+  "name": "@plentymarkets/shop-cli",
   "version": "1.0.0",
-  "description": "PlopJS code generators for PlentyONE Shop",
+  "description": "Official CLI for PlentyONE Shop development - code generators, utilities, and development tools",
   "type": "module",
   "main": "plopfile.ts",
   "bin": {
-    "plenty-plop": "./bin/plenty-plop.js"
+    "plentyshop": "./bin/plentyshop.js"
   },
   "scripts": {
     "build": "tsc",
@@ -20,13 +20,15 @@
     "lint:fix": "eslint . --fix --max-warnings 0"
   },
   "keywords": [
+    "cli",
     "plop",
     "generator",
     "plentymarkets",
     "plentyshop",
     "vue",
     "nuxt",
-    "typescript"
+    "typescript",
+    "development-tools"
   ],
   "author": "PlentyMarkets GmbH",
   "license": "BSD-3-Clause",

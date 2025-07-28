@@ -9,7 +9,7 @@ import { join, resolve } from 'node:path';
  * Assumes the generator is run from within the project
  */
 export function getProjectBasePath(): string {
-  // When run from packages/shop-generators, go up two levels to reach project root
+  // When run from packages/shop-cli, go up two levels to reach project root
   return resolve(process.cwd(), '../../');
 }
 
