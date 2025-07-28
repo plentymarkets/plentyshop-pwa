@@ -284,5 +284,6 @@ const activeImage = computed(() => {
 <style>
 .images img[alt='Logo'] {
   background-color: #f3f4f6;
+  object-fit: none;
 }
 </style>

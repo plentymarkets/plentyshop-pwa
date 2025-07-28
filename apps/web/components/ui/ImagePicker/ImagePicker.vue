@@ -9,7 +9,7 @@
 
     <div class="flex items-start gap-4">
       <div class="w-[120px] h-[90px] flex-shrink-0 rounded overflow-hidden border">
-        <NuxtImg :src="image || placeholder" :alt="label" class="w-full h-full" />
+        <NuxtImg :src="image || placeholder" :alt="label" class="w-full h-full object-cover" />
       </div>
 
       <div class="flex-1">
