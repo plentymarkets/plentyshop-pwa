@@ -12,3 +12,17 @@ export type UserFriendlyMessageKey =
   | 'invalidComposableName'
   | 'projectNotFound'
   | 'noWritePermission';
+
+/**
+ * Custom error class for generator-specific errors
+ */
+export class GeneratorError extends Error {
+  constructor(
+    public readonly code: UserFriendlyMessageKey,
+    message: string,
+    public readonly details?: ErrorDetails
+  ) {
+    super(message);
+    this.name = 'GeneratorError';
+  }
+}

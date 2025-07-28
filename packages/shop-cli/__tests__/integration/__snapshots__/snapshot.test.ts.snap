@@ -1,0 +1,176 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Generator File Structure Snapshots > Component Structure Snapshots > should match expected UI component structure > ui-component-button-structure 1`] = `
+{
+  "children": [
+    {
+      "name": "Button.vue",
+      "size": 26,
+      "type": "file",
+    },
+    {
+      "children": [
+        {
+          "name": "Button.spec.ts",
+          "size": 40,
+          "type": "file",
+        },
+      ],
+      "name": "__tests__",
+      "type": "directory",
+    },
+    {
+      "name": "index.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "name": "types.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "children": [
+        {
+          "name": "Primary.vue",
+          "size": 36,
+          "type": "file",
+        },
+        {
+          "name": "Secondary.vue",
+          "size": 38,
+          "type": "file",
+        },
+      ],
+      "name": "variants",
+      "type": "directory",
+    },
+  ],
+  "name": "Button",
+  "type": "directory",
+}
+`;
+
+exports[`Generator File Structure Snapshots > Component Structure Snapshots > should match expected component file structure > component-product-card-structure 1`] = `
+{
+  "children": [
+    {
+      "name": "ProductCard.vue",
+      "size": 31,
+      "type": "file",
+    },
+    {
+      "children": [
+        {
+          "name": "ProductCard.spec.ts",
+          "size": 45,
+          "type": "file",
+        },
+      ],
+      "name": "__tests__",
+      "type": "directory",
+    },
+    {
+      "name": "index.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "name": "types.ts",
+      "size": 24,
+      "type": "file",
+    },
+  ],
+  "name": "ProductCard",
+  "type": "directory",
+}
+`;
+
+exports[`Generator File Structure Snapshots > Composable Structure Snapshots > should match expected composable file structure > composable-product-cart-structure 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "name": "useProductCart.spec.ts",
+          "size": 48,
+          "type": "file",
+        },
+      ],
+      "name": "__tests__",
+      "type": "directory",
+    },
+    {
+      "name": "index.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "name": "types.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "name": "useProductCart.ts",
+      "size": 33,
+      "type": "file",
+    },
+  ],
+  "name": "useProductCart",
+  "type": "directory",
+}
+`;
+
+exports[`Generator File Structure Snapshots > Page Structure Snapshots > should match expected page structure > page-product-detail-structure 1`] = `
+{
+  "children": [
+    {
+      "name": "[slug].vue",
+      "size": 26,
+      "type": "file",
+    },
+    {
+      "name": "product-detail.vue",
+      "size": 34,
+      "type": "file",
+    },
+  ],
+  "name": "pages",
+  "type": "directory",
+}
+`;
+
+exports[`Generator File Structure Snapshots > Settings Structure Snapshots > should match expected settings component structure > settings-product-display-structure 1`] = `
+{
+  "children": [
+    {
+      "name": "ProductDisplaySettings.vue",
+      "size": 42,
+      "type": "file",
+    },
+    {
+      "name": "ToolbarTrigger.vue",
+      "size": 34,
+      "type": "file",
+    },
+    {
+      "children": [
+        {
+          "name": "ProductDisplaySettings.spec.ts",
+          "size": 56,
+          "type": "file",
+        },
+      ],
+      "name": "__tests__",
+      "type": "directory",
+    },
+    {
+      "name": "types.ts",
+      "size": 24,
+      "type": "file",
+    },
+  ],
+  "name": "display",
+  "type": "directory",
+}
+`;
