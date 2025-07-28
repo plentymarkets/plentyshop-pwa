@@ -10,7 +10,7 @@
         <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
         <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
-          <ShippingMethod :disabled="disableShippingPayment" @update:shipping-method="handleShippingMethodUpdate" />
+          <ShippingMethod :disabled="disableShippingPayment" @update:shipping-method="handleShippingMethodUpdate" :loading="!checkoutReady" />
           <SfLoaderCircular
             v-if="disableShippingPayment"
             class="absolute mt-5 right-0 left-0 m-auto z-[999]"
@@ -60,6 +60,7 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
+const checkoutReady = ref(false);
 const {
   cart,
   cartIsEmpty,
@@ -106,8 +107,11 @@ onNuxtReady(async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  useCartShippingMethods().getShippingMethods();
-  checkPayPalPaymentsEligible();
+  await Promise.all([
+    useCartShippingMethods().getShippingMethods(),
+    checkPayPalPaymentsEligible(),
+  ]);
+  checkoutReady.value = true;
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
