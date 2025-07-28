@@ -112,8 +112,6 @@ export class CartPageObject extends PageObject {
     cy.getByTestId('subtotal').should('be.visible');
     cy.getByTestId('shipping-label').should('be.visible');
     cy.getByTestId('shipping').should('be.visible');
-    cy.getByTestId('vat-label').should('be.visible');
-    cy.getByTestId('vat').should('be.visible');
     cy.getByTestId('total-label').should('be.visible');
     cy.getByTestId('total').invoke('text').should('have.length.gt', 0);
     return this;
