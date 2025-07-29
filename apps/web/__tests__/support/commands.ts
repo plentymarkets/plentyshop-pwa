@@ -1,5 +1,6 @@
 import 'cypress-wait-until';
 import 'cypress-iframe';
+import type { DoAddItemParams, BasketItemOrderParamsProperty } from '@plentymarkets/shop-api';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -15,7 +16,11 @@ declare global {
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
       isScrolledTo(): Cypress.Chainable;
-      addToCart(id?: number, quantity?: number): Cypress.Chainable;
+      addToCart(
+        id?: number,
+        quantity?: number,
+        basketItemOrderParam?: BasketItemOrderParamsProperty[],
+      ): Cypress.Chainable;
       capturePopup(): Cypress.Chainable;
       popup(): Cypress.Chainable;
       paypalFlow(email: string, password: string): Cypress.Chainable;
@@ -65,9 +70,18 @@ Cypress.Commands.add('clearServiceWorkers', () => {
   }
 });
 
-Cypress.Commands.add('addToCart', (id = 1072, quantity: number = 1) => {
-  cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', { productId: id, quantity: quantity });
-});
+Cypress.Commands.add(
+  'addToCart',
+  (id: number = 1072, quantity: number = 1, basketItemOrderParams?: BasketItemOrderParamsProperty[]) => {
+    const payload: DoAddItemParams = {
+      productId: id,
+      quantity,
+      basketItemOrderParams,
+    };
+
+    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', payload);
+  },
+);
 
 Cypress.Commands.add('visitSmoke', () => {
   cy.visitAndHydrate('/smoke-e2e');
