@@ -1,0 +1,97 @@
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+import {{pascalCase name}} from '../{{pascalCase name}}.vue';
+import type { {{pascalCase name}}Props } from '../types';
+
+describe('{{pascalCase name}}', () => {
+  const defaultProps: {{pascalCase name}}Props = {
+    tag: 'div',
+    variant: 'default',
+    disabled: false,
+  };
+
+  it('renders correctly as a UI component', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: defaultProps
+    });
+    
+    expect(wrapper.find('[data-testid="{{testId name}}"]').exists()).toBe(true);
+    expect(wrapper.classes()).toContain('ui-{{kebabCase name}}');
+  });
+
+  it('renders with the correct HTML tag', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: { ...defaultProps, tag: 'button' }
+    });
+    
+    expect(wrapper.element.tagName).toBe('BUTTON');
+  });
+
+  it('applies variant classes correctly', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: { ...defaultProps, variant: 'primary' }
+    });
+    
+    expect(wrapper.classes()).toContain('text-primary-600');
+    expect(wrapper.classes()).toContain('bg-primary-50');
+    expect(wrapper.classes()).toContain('border-primary-200');
+  });
+
+  it('applies disabled state correctly', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: { ...defaultProps, disabled: true }
+    });
+
+    expect(wrapper.attributes('aria-disabled')).toBe('true');
+  });
+
+  it('accepts additional CSS classes', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: defaultProps,
+      attrs: {
+        class: 'custom-class'
+      }
+    });
+    
+    expect(wrapper.classes()).toContain('custom-class');
+  });
+
+  it('renders slots correctly', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: defaultProps,
+      slots: {
+        default: 'Main content',
+        prefix: 'Prefix content',
+        suffix: 'Suffix content'
+      }
+    });
+    
+    expect(wrapper.text()).toContain('Main content');
+    expect(wrapper.text()).toContain('Prefix content');
+    expect(wrapper.text()).toContain('Suffix content');
+  });
+
+  it('passes through attributes correctly', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: defaultProps,
+      attrs: {
+        'data-custom': 'test-value',
+        id: 'custom-id'
+      }
+    });
+    
+    expect(wrapper.attributes('data-custom')).toBe('test-value');
+    expect(wrapper.attributes('id')).toBe('custom-id');
+  });
+
+  it('handles accessibility props correctly', () => {
+    const wrapper = mount({{pascalCase name}}, {
+      props: {
+        ...defaultProps,
+        ariaLabel: 'Custom label'
+      }
+    });
+    
+    expect(wrapper.attributes('aria-label')).toBe('Custom label');
+  });
+});
