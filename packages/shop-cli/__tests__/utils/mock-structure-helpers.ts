@@ -19,11 +19,11 @@ export interface MockFileStructure {
 export async function createMockFileStructure(
   testDir: TestDirectory,
   structure: MockFileStructure,
-  basePath = ''
+  basePath = '',
 ): Promise<void> {
   for (const [name, content] of Object.entries(structure)) {
     const fullPath = join(basePath, name);
-    
+
     if (typeof content === 'string') {
       await testDir.createFile(fullPath, content);
     } else {

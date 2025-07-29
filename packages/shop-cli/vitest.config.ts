@@ -8,14 +8,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/**',
-        '__tests__/**',
-        'bin/**',
-        'templates/**',
-        '*.config.*',
-        'plopfile.ts',
-      ],
+      exclude: ['node_modules/**', '__tests__/**', 'bin/**', 'templates/**', '*.config.*', 'plopfile.ts'],
       thresholds: {
         global: {
           branches: 80,

@@ -18,9 +18,9 @@ export default function (plop: NodePlopAPI): void {
 
   // Load template partials from files
   const partialsDir = path.join(__dirname, 'templates/partials');
-  const partialFiles = fs.readdirSync(partialsDir).filter(file => file.endsWith('.hbs'));
-  
-  partialFiles.forEach(file => {
+  const partialFiles = fs.readdirSync(partialsDir).filter((file) => file.endsWith('.hbs'));
+
+  partialFiles.forEach((file) => {
     const partialName = path.basename(file, '.hbs');
     const partialContent = fs.readFileSync(path.join(partialsDir, file), 'utf-8');
     plop.setPartial(partialName, partialContent);

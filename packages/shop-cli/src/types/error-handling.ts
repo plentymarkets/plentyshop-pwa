@@ -20,7 +20,7 @@ export class GeneratorError extends Error {
   constructor(
     public readonly code: UserFriendlyMessageKey,
     message: string,
-    public readonly details?: ErrorDetails
+    public readonly details?: ErrorDetails,
   ) {
     super(message);
     this.name = 'GeneratorError';

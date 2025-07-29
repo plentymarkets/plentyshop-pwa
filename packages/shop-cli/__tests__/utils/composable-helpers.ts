@@ -7,12 +7,12 @@ import { readFile } from 'fs/promises';
 import { TestDirectory } from './directory-helpers';
 
 export async function createComposableStructure(
-  testDir: TestDirectory, 
-  composableName: string, 
-  expectedFiles: string[]
+  testDir: TestDirectory,
+  composableName: string,
+  expectedFiles: string[],
 ): Promise<void> {
   const composableDir = `composables/${composableName}`;
-  
+
   for (const file of expectedFiles) {
     const filePath = `${composableDir}/${file}`;
     const content = generateMockComposableFileContent(file, composableName);
@@ -23,7 +23,7 @@ export async function createComposableStructure(
 export async function validateComposableFiles(
   testDir: TestDirectory,
   composableName: string,
-  expectedFiles: string[]
+  expectedFiles: string[],
 ): Promise<{ filePath: string; content: string }[]> {
   const results = [];
   for (const file of expectedFiles) {
@@ -51,12 +51,12 @@ export const ${composableName} = (): UserDataReturn => {
     isLoggedIn,
   };
 };`,
-    
+
     'types.ts': `export interface UserDataReturn {
   user: Ref<unknown>;
   isLoading: Ref<boolean>;
   isLoggedIn: ComputedRef<boolean>;
-}`
+}`,
   };
 
   for (const [fileName, content] of Object.entries(files)) {
@@ -64,7 +64,10 @@ export const ${composableName} = (): UserDataReturn => {
   }
 }
 
-export async function validateTypedComposable(testDir: TestDirectory, composableName: string): Promise<{
+export async function validateTypedComposable(
+  testDir: TestDirectory,
+  composableName: string,
+): Promise<{
   fileContent: string;
   hasVueImport: boolean;
   hasExportConstant: boolean;
@@ -75,9 +78,9 @@ export async function validateTypedComposable(testDir: TestDirectory, composable
 
   return {
     fileContent,
-    hasVueImport: fileContent.includes('import { ref, computed } from \'vue\''),
+    hasVueImport: fileContent.includes("import { ref, computed } from 'vue'"),
     hasExportConstant: fileContent.includes(`export const ${composableName} = ()`),
-    hasTypeImport: fileContent.includes('import type {')
+    hasTypeImport: fileContent.includes('import type {'),
   };
 }
 
@@ -89,18 +92,21 @@ export async function createNamingTestComposable(testDir: TestDirectory, composa
   await testDir.createFile(`composables/${composableName}/${composableName}.ts`, content);
 }
 
-export async function validateComposableNaming(testDir: TestDirectory, composableName: string): Promise<{
+export async function validateComposableNaming(
+  testDir: TestDirectory,
+  composableName: string,
+): Promise<{
   fileContent: string;
   hasExportConstant: boolean;
   followsNamingConvention: boolean;
 }> {
   const composableFile = testDir.getPath(`composables/${composableName}/${composableName}.ts`);
   const fileContent = await readFile(composableFile, 'utf-8');
-  
+
   return {
     fileContent,
     hasExportConstant: fileContent.includes(`export const ${composableName} = ()`),
-    followsNamingConvention: /^use[A-Z]/.test(composableName)
+    followsNamingConvention: /^use[A-Z]/.test(composableName),
   };
 }
 
@@ -109,7 +115,7 @@ export function generateMockComposableFileContent(fileName: string, composableNa
     case 'index.ts':
       return `export { ${composableName} } from './${composableName}';
 // Generated for ${composableName}`;
-      
+
     case `${composableName}.ts`:
       return `import { ref } from 'vue';
 import type { ${composableName.charAt(3).toUpperCase()}${composableName.slice(4)}Return } from './types';
@@ -122,7 +128,7 @@ export const ${composableName} = () => {
     data,
   };
 };`;
-      
+
     case 'types.ts':
       return `import type { Ref } from 'vue';
 
@@ -131,7 +137,7 @@ export interface ${composableName.charAt(3).toUpperCase()}${composableName.slice
 }
 
 // Generated types for ${composableName}`;
-      
+
     case `__tests__/${composableName}.spec.ts`:
       return `import { describe, it, expect } from 'vitest';
 import { ${composableName} } from '../${composableName}';
@@ -142,7 +148,7 @@ describe('${composableName}', () => {
     expect(true).toBe(true);
   });
 });`;
-      
+
     default:
       return `// Generated file: ${fileName} for ${composableName}`;
   }

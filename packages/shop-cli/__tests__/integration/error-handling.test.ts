@@ -12,12 +12,12 @@ describe('Error Handling and Validation', () => {
     it('should handle invalid component names', () => {
       const invalidNames = [
         '',
-        'component',          // lowercase
-        'component-name',     // kebab-case
-        'component_name',     // snake_case
-        '123Component',       // starts with number
-        'Component Name',     // contains space
-        'Component-Name',     // contains hyphen
+        'component', // lowercase
+        'component-name', // kebab-case
+        'component_name', // snake_case
+        '123Component', // starts with number
+        'Component Name', // contains space
+        'Component-Name', // contains hyphen
       ];
 
       for (const name of invalidNames) {
@@ -30,11 +30,11 @@ describe('Error Handling and Validation', () => {
     it('should handle invalid composable names', () => {
       const invalidNames = [
         '',
-        'composable',         // missing 'use' prefix
-        'UseComposable',      // wrong case
-        'use-composable',     // kebab-case
-        'use_composable',     // snake_case
-        'usecomposable',      // missing PascalCase
+        'composable', // missing 'use' prefix
+        'UseComposable', // wrong case
+        'use-composable', // kebab-case
+        'use_composable', // snake_case
+        'usecomposable', // missing PascalCase
       ];
 
       for (const name of invalidNames) {
@@ -59,7 +59,7 @@ describe('Error Handling and Validation', () => {
     it('should handle GeneratorError instances', () => {
       const error = new GeneratorError('componentExists', 'TestComponent already exists');
       const message = handleGeneratorError(error);
-      
+
       expect(message).toContain('❌');
       expect(message).toContain('TestComponent');
       expect(message).toContain('already exists');
@@ -71,7 +71,7 @@ describe('Error Handling and Validation', () => {
         path: '/path/to/missing/file',
         message: 'File not found',
       };
-      
+
       const message = handleGeneratorError(error);
       expect(message).toContain('❌ File not found');
       expect(message).toContain('/path/to/missing/file');
@@ -83,7 +83,7 @@ describe('Error Handling and Validation', () => {
         path: '/restricted/path',
         message: 'Permission denied',
       };
-      
+
       const message = handleGeneratorError(error);
       expect(message).toContain('❌ Permission denied');
       expect(message).toContain('/restricted/path');
@@ -92,7 +92,7 @@ describe('Error Handling and Validation', () => {
     it('should handle generic errors', () => {
       const error = new Error('Something went wrong');
       const message = handleGeneratorError(error);
-      
+
       expect(message).toContain('❌ Unexpected error');
       expect(message).toContain('Something went wrong');
     });
@@ -100,7 +100,7 @@ describe('Error Handling and Validation', () => {
     it('should handle unknown error types', () => {
       const error = 'String error';
       const message = handleGeneratorError(error);
-      
+
       expect(message).toContain('❌ Unexpected error');
       expect(message).toContain('String error');
     });
@@ -125,12 +125,7 @@ describe('Error Handling and Validation', () => {
     });
 
     it('should handle unicode characters', () => {
-      const unicodeInputs = [
-        'Componént',
-        'Compønent',
-        'Component™',
-        'Cömponent',
-      ];
+      const unicodeInputs = ['Componént', 'Compønent', 'Component™', 'Cömponent'];
 
       for (const input of unicodeInputs) {
         const result = validateComponentName(input);
@@ -152,7 +147,7 @@ describe('Error Handling and Validation', () => {
       // For now, we'll test the concept
       const existingComponents = ['ProductCard', 'UserProfile', 'ShoppingCart'];
       const newComponent = 'ProductCard';
-      
+
       const hasConflict = existingComponents.includes(newComponent);
       expect(hasConflict).toBe(true);
     });
@@ -160,7 +155,7 @@ describe('Error Handling and Validation', () => {
     it('should allow new components when no conflicts exist', () => {
       const existingComponents = ['ProductCard', 'UserProfile', 'ShoppingCart'];
       const newComponent = 'OrderSummary';
-      
+
       const hasConflict = existingComponents.includes(newComponent);
       expect(hasConflict).toBe(false);
     });

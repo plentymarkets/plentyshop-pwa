@@ -80,7 +80,7 @@ function handleGeneratorErrorCode(error: GeneratorError): string {
 function handleNodeError(error: unknown): string | null {
   if (typeof error === 'object' && error !== null && 'code' in error) {
     const nodeError = error as { code: string; path?: string; message?: string };
-    
+
     if (nodeError.code === 'ENOENT') {
       return `❌ File not found: ${nodeError.path || nodeError.message}`;
     }

@@ -12,13 +12,13 @@ export const mockGeneratorData = {
     description: 'A test component for validation',
     path: 'components/TestComponent',
   },
-  
+
   composable: {
     name: 'useTestData',
     description: 'A test composable for validation',
     path: 'composables/useTestData',
   },
-  
+
   page: {
     name: 'test-page',
     description: 'A test page for validation',
@@ -30,29 +30,11 @@ export const mockGeneratorData = {
  * Expected file patterns for different generator types
  */
 export const expectedFilePatterns = {
-  component: [
-    'index.vue',
-    'types.ts',
-    '__tests__/index.test.ts',
-  ],
-  
-  composable: [
-    'useTestData.ts',
-    'types.ts',
-    'index.ts',
-    '__tests__/useTestData.spec.ts',
-  ],
-  
-  page: [
-    'index.vue',
-    'types.ts',
-    '__tests__/index.test.ts',
-  ],
-  
-  settings: [
-    'index.vue',
-    'types.ts',
-    'schema.ts',
-    '__tests__/index.test.ts',
-  ],
+  component: ['index.vue', 'types.ts', '__tests__/index.test.ts'],
+
+  composable: ['useTestData.ts', 'types.ts', 'index.ts', '__tests__/useTestData.spec.ts'],
+
+  page: ['index.vue', 'types.ts', '__tests__/index.test.ts'],
+
+  settings: ['index.vue', 'types.ts', 'schema.ts', '__tests__/index.test.ts'],
 };

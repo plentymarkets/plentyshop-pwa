@@ -11,7 +11,7 @@ import {
   createTypedComponent,
   validateTypedComponent,
   createNamingTestComponent,
-  validateNamingConvention
+  validateNamingConvention,
 } from '../utils/component-helpers';
 import { readFile } from 'fs/promises';
 
@@ -21,12 +21,12 @@ describe('Component Generator Output', () => {
   beforeEach(async () => {
     testDir = new TestDirectory('shop-cli-component-test');
     await testDir.create();
-    
+
     // Create a mock web app structure
     await createMockFileStructure(testDir, {
-      'components': {},
-      'composables': {},
-      'pages': {},
+      components: {},
+      composables: {},
+      pages: {},
       'package.json': JSON.stringify({ name: 'test-web-app' }),
       'nuxt.config.ts': 'export default defineNuxtConfig({})',
     });
@@ -40,11 +40,11 @@ describe('Component Generator Output', () => {
     it('should generate component with expected files', async () => {
       const componentName = mockGeneratorData.component.name;
       const expectedFiles = expectedFilePatterns.component;
-      
+
       // Mock generating a component
       await createComponentStructure(testDir, componentName, expectedFiles);
       const validationResults = await validateComponentStructure(testDir, componentName, expectedFiles);
-      
+
       // Validate the results
       for (const result of validationResults) {
         expect(result.hasContent).toBe(true);
@@ -54,10 +54,10 @@ describe('Component Generator Output', () => {
 
     it('should generate properly typed component files', async () => {
       const componentName = mockGeneratorData.component.name;
-      
+
       await createTypedComponent(testDir, componentName);
       const validation = await validateTypedComponent(testDir, componentName);
-      
+
       expect(validation.hasImport).toBe(true);
       expect(validation.hasDefineProps).toBe(true);
       expect(validation.hasInterface).toBe(true);
@@ -75,7 +75,7 @@ describe('Component Generator Output', () => {
       for (const { input, expected } of testCases) {
         await createNamingTestComponent(testDir, input, expected);
         const validation = await validateNamingConvention(testDir, input, expected);
-        
+
         expect(validation.containsExpected).toBe(true);
         expect(validation.containsInput).toBe(true);
       }
@@ -100,7 +100,7 @@ defineProps<Props>();
       `.trim();
 
       await testDir.createFile('components/TestComponent/index.vue', content);
-      
+
       const fileContent = await readFile(testFile, 'utf-8');
       expect(fileContent).toContain('<script setup lang="ts">');
       expect(fileContent).toContain('defineProps<Props>()');
@@ -122,7 +122,7 @@ export interface TestComponentEmits {
       `.trim();
 
       await testDir.createFile('components/TestComponent/types.ts', content);
-      
+
       const fileContent = await readFile(testFile, 'utf-8');
       expect(fileContent).toContain('export interface TestComponentProps');
       expect(fileContent).toContain('export interface TestComponentEmits');

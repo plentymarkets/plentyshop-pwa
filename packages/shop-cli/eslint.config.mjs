@@ -35,7 +35,7 @@ export default [
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       // Architecture rules similar to web app but simpler
-      'complexity': ['error', 10],
+      complexity: ['error', 10],
       'max-depth': ['error', 4],
       'max-lines': ['error', 300],
       'max-lines-per-function': ['error', 50],

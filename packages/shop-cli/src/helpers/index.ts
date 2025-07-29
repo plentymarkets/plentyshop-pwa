@@ -58,18 +58,28 @@ function registerUtilityHelpers(plop: NodePlopAPI): void {
     const values = args.slice(0, -1);
     return values.join('');
   });
-  plop.setHelper('ifEquals', function (value1: unknown, value2: unknown, options: { fn: (context: unknown) => string; inverse: (context: unknown) => string }) {
-    if (value1 === value2) {
-      return options.fn(value1);
-    }
-    return options.inverse(value1);
-  });
-  plop.setHelper('ifNotEmpty', function (value: unknown, options: { fn: (context: unknown) => string; inverse: (context: unknown) => string }) {
-    if (value && value !== '' && value !== null && value !== undefined) {
-      return options.fn(value);
-    }
-    return options.inverse(value);
-  });
+  plop.setHelper(
+    'ifEquals',
+    function (
+      value1: unknown,
+      value2: unknown,
+      options: { fn: (context: unknown) => string; inverse: (context: unknown) => string },
+    ) {
+      if (value1 === value2) {
+        return options.fn(value1);
+      }
+      return options.inverse(value1);
+    },
+  );
+  plop.setHelper(
+    'ifNotEmpty',
+    function (value: unknown, options: { fn: (context: unknown) => string; inverse: (context: unknown) => string }) {
+      if (value && value !== '' && value !== null && value !== undefined) {
+        return options.fn(value);
+      }
+      return options.inverse(value);
+    },
+  );
 }
 
 export default function (plop: NodePlopAPI): void {
