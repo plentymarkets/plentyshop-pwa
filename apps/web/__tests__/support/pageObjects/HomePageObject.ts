@@ -91,6 +91,7 @@ export class HomePageObject extends PageObject {
     cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.getByTestId('category-button').first().click();
     cy.wait('@getFacet');
+    cy.getByTestId('category-page-content').should('be.visible');
     return this;
   }
 

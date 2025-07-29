@@ -24,9 +24,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const { $i18n } = useNuxtApp();
 
-  const ensureFooterBlock = async () => {
-    const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
+  const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
 
+  const ensureFooterBlock = async () => {
     if (cachedFooter.value) return;
 
     const { data: footerData } = await useAsyncData('footer-block', () =>
@@ -113,21 +113,25 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     try {
       state.value.loading = true;
 
-      const data = await useSdk().plentysystems.doSaveBlocks({
-        identifier: identifier,
+      await useSdk().plentysystems.doSaveBlocks({
+        identifier,
         entityType: type,
         blocks: content,
       });
 
-      state.value.data = data.data ?? state.value.data;
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+
+      if (typeof content === 'string' && content.includes('"name":"Footer"')) {
+        const footerCache = useState<FooterSettings | null>('footer-block-cache', () => null);
+        footerCache.value = null;
+        await ensureFooterBlock();
+      }
     } catch (error) {
       console.error('Error saving blocks:', error);
     } finally {
       state.value.loading = false;
     }
   };
-
   return {
     fetchCategoryTemplate,
     saveBlocks,

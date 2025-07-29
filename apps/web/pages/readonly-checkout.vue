@@ -2,7 +2,7 @@
   <NuxtLayout
     name="checkout"
     page-type="static"
-    :back-label-desktop="t('backToCart')"
+    :back-label-desktop="t('back')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
   >
@@ -51,6 +51,7 @@
                 type="submit"
                 :disabled="interactionDisabled"
                 size="lg"
+                data-testid="place-paypal-order-button"
                 class="w-full mb-4 md:mb-0 cursor-pointer"
                 @click="buy"
               >

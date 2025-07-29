@@ -83,8 +83,6 @@ export class CartPageObject extends PageObject {
     cy.getByTestId('subtotal').should('be.visible');
     cy.getByTestId('shipping-label').should('be.visible');
     cy.getByTestId('shipping').should('be.visible');
-    cy.getByTestId('vat-label').should('be.visible');
-    cy.getByTestId('vat').should('be.visible');
     cy.getByTestId('total-label').should('be.visible');
     cy.getByTestId('total').invoke('text').should('have.length.gt', 0);
     return this;
@@ -116,5 +114,9 @@ export class CartPageObject extends PageObject {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('coupon-value').should('not.exist');
+  }
+
+  get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
   }
 }

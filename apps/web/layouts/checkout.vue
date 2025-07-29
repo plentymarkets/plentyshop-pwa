@@ -8,6 +8,7 @@
             :class="[viewport.isLessThan('lg') ? 'flex lg:hidden whitespace-nowrap' : 'hidden lg:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
             :aria-label="t('prevAriaLabel')"
+            data-testid="checkout-back-button"
             variant="tertiary"
             @click="goToPreviousRoute"
           >
@@ -29,20 +30,30 @@
 <script setup lang="ts">
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
-definePageMeta({
-  isBlockified: false,
-});
+
 const localePath = useLocalePath();
 const { t } = useI18n();
 const router = useRouter();
+const { isAuthorized } = useCustomer();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const viewport = useViewport();
-const { backToCart = true, heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
-const historyState = router.options.history.state;
-const backUrl = localePath(historyState?.back?.toString() ?? paths.home);
-const backHref = backUrl === localePath(router.currentRoute.value.path) ? localePath(paths.home) : backUrl;
-const goToPreviousRoute = () => (backToCart ? navigateTo(localePath(paths.cart)) : navigateTo(localePath(backHref)));
+const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
+const goToPreviousRoute = () => {
+  const backPath = router.options.history.state?.back;
+
+  if (isAuthorized.value && backPath === paths.guestLogin) {
+    router.go(-2);
+    return;
+  }
+
+  if (backPath) {
+    router.back();
+    return;
+  }
+
+  router.push(localePath(paths.home));
+};
 
 onNuxtReady(async () => await setInitialData());
 </script>

@@ -101,6 +101,7 @@
                 v-bind="locationValueAttributes"
                 :invalid="Boolean(errors['location.value'])"
                 :placeholder="t('PreferredDelivery.general.wunschortExample')"
+                data-testid="preferred-delivery-location"
               />
               <ErrorMessage as="span" name="location.value" class="flex text-negative-700 text-sm mt-2" />
             </template>
@@ -158,7 +159,7 @@
               <ErrorMessage as="span" name="neighbour.address" class="flex text-negative-700 text-sm mt-2" />
             </template>
 
-            <UiButton type="submit" variant="secondary" class="mt-4 w-fit">
+            <UiButton type="submit" variant="secondary" class="mt-4 w-fit" data-testid="preferred-delivery-submit">
               {{ t('PreferredDelivery.general.apply') }}
             </UiButton>
           </form>

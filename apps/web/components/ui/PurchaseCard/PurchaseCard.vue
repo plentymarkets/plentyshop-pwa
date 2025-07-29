@@ -75,9 +75,12 @@
           />
 
           <ProductAttributes :product="product" />
-          <BundleOrderItems v-if="product.bundleComponents" :product="product" />
+
+          <BundleOrderItems v-if="product.bundleComponents && showBundleComponents" :product="product" />
           <OrderProperties :product="product" />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
+
+          <UnitContentSelect v-if="productGetters.getAttributeMapVariations(product).length > 1" :product="product" />
 
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -147,6 +150,11 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
+
+const { getSetting } = useSiteSettings('bundleItemDisplay');
+const showBundleComponents = computed(() => {
+  return getSetting() !== '1';
+});
 
 const { showNetPrices } = useCustomer();
 const viewport = useViewport();
