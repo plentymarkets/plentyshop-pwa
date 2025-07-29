@@ -214,10 +214,9 @@ const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
 
 if (!addAddress && address) {
-  hasShippingCompany.value =
-    shippingAddressToSave.value?.companyName || shippingAddressToSave.value?.vatNumber
-      ? true
-      : Boolean(userAddressGetters.getCompanyName(address as Address));
+  hasShippingCompany.value = shippingAddressToSave.value?.companyName
+    ? true
+    : Boolean(userAddressGetters.getCompanyName(address as Address));
 
   setValues({
     ...address,

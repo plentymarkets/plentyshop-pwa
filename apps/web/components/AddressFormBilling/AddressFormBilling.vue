@@ -206,10 +206,9 @@ const showAddressSaveButton = computed(() => editing.value || showNewForm.value)
 const guestHasShippingAsBilling = computed(() => isGuest.value && shippingAsBilling.value);
 
 if (!addAddress && address) {
-  hasCompany.value =
-    addressToSave.value?.companyName || addressToSave.value?.vatNumber
-      ? true
-      : Boolean(userAddressGetters.getCompanyName(address as Address));
+  hasCompany.value = addressToSave.value?.companyName
+    ? true
+    : Boolean(userAddressGetters.getCompanyName(address as Address));
 
   setValues({
     ...address,
