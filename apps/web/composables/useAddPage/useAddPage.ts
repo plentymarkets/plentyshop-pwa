@@ -164,18 +164,48 @@ export const useAddPageModal = () => {
     return getLevel(parentPage.value) !== 6;
   };
 
-  const createNewPage = async () => {
-    if (!meta.value.valid) return;
-
-    await addCategory({
-      name: pageName?.value || '',
-      type: pageType.value.value,
-      parentCategoryId: categoryEntryGetters.getId(parentPage.value) || null,
-    });
-
-    addNewPageToTree(newCategory.value);
-    await redirectToNewPage(newCategory.value);
+  const buildFullParentSlug = (parentId: number | null, entries: CategoryEntry[]): string => {
+    if (!parentId || parentId === 0) return '';
+    const parent = entries.find((cat) => cat.id === parentId);
+    if (!parent) return '';
+    const parentSlug =
+      parent.details?.[0]?.nameUrl ||
+      parent.details?.[0]?.name?.replace(/\s+/g, '-').toLowerCase() ||
+      '';
+    // Recursively prepend ancestor slugs
+    const ancestorPath = buildFullParentSlug(parent.parentCategoryId, entries);
+    return ancestorPath
+      ? `${ancestorPath.replace(/^\/|\/$/g, '')}/${parentSlug.replace(/^\/|\/$/g, '')}`
+      : parentSlug.replace(/^\/|\/$/g, '');
   };
+
+const createNewPage = async () => {
+  if (!meta.value.valid) return;
+  const baseUrl = window?.location?.origin || '';
+  const name = pageName?.value?.trim() || '';
+  const slug = name.replace(/\s+/g, '-').toLowerCase();
+
+  let canonicalLink = '';
+  const parentId = categoryEntryGetters.getId(parentPage.value);
+
+  if (parentId && parentId !== 0) {
+    const entries = data.value.entries || [];
+    const fullParentPath = buildFullParentSlug(parentId, entries).replace(/^\/|\/$/g, '');
+    canonicalLink = `${baseUrl}/${fullParentPath ? fullParentPath + '/' : ''}${slug}`;
+  } else {
+    canonicalLink = `${baseUrl}/${slug}`;
+  }
+
+  await addCategory({
+    name,
+    type: pageType.value.value,
+    parentCategoryId: parentId || null,
+    canonicalLink,
+  });
+
+  addNewPageToTree(newCategory.value);
+  await redirectToNewPage(newCategory.value);
+};
 
   const redirectToNewPage = async (newCategory: CategoryEntry) => {
     const previewUrl = newCategory.details[0]?.previewUrl;
