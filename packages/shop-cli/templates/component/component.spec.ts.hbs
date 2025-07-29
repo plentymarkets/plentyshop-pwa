@@ -1,20 +1,21 @@
-{{> test-setup name=name type="component" hasTypes=hasTypes}}
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+import {{pascalCase name}} from '../{{pascalCase name}}.vue';
+import type { {{pascalCase name}}Props } from '../types';
 
-{{#if hasProps}}
+describe('{{pascalCase name}}', () => {
   const defaultProps: {{pascalCase name}}Props = {
     // Add default props for testing
   };
-{{/if}}
 
   it('renders correctly', () => {
-    const wrapper = mount({{pascalCase name}}{{#if hasProps}}, {
+    const wrapper = mount({{pascalCase name}}, {
       props: defaultProps
-    }{{/if}});
+    });
     
     expect(wrapper.find('[data-testid="{{testId name}}"]').exists()).toBe(true);
   });
 
-{{#if hasProps}}
   it('accepts props correctly', () => {
     const wrapper = mount({{pascalCase name}}, {
       props: defaultProps
@@ -23,17 +24,4 @@
     // Test that props are handled correctly
     expect(wrapper.props()).toEqual(defaultProps);
   });
-{{/if}}
-
-{{#if hasEmits}}
-  it('emits events correctly', () => {
-    const wrapper = mount({{pascalCase name}}{{#if hasProps}}, {
-      props: defaultProps
-    }{{/if}});
-    
-    // Test event emission
-    // wrapper.vm.$emit('eventName', eventData);
-    // expect(wrapper.emitted('eventName')).toBeTruthy();
-  });
-{{/if}}
 });

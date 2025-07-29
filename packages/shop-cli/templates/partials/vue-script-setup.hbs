@@ -1,33 +1,9 @@
 {{!-- 
   Vue component script setup block
-  Usage: {{> vue-script-setup name="ComponentName" hasProps=true hasEmits=false}}
+  Usage: {{> vue-script-setup name="ComponentName"}}
 --}}
 <script setup lang="ts">
-{{#if hasProps}}
 import type { {{pascalCase name}}Props } from './types';
-{{/if}}
-{{#if hasEmits}}
-import type { {{pascalCase name}}Emits } from './types';
-{{/if}}
-{{#if hasComposables}}
-{{#each composables}}
-import { {{this}} } from '{{importPath ../name this}}';
-{{/each}}
-{{/if}}
 
-{{#if hasProps}}
 defineProps<{{pascalCase name}}Props>();
-{{/if}}
-
-{{#if hasEmits}}
-defineEmits<{{pascalCase name}}Emits>();
-{{/if}}
-
-{{#if hasSlots}}
-defineSlots<{
-{{#each slots}}
-  {{name}}: (props: {{{props}}}) => any;
-{{/each}}
-}>();
-{{/if}}
 </script>

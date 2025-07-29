@@ -1,6 +1,13 @@
 import { NodePlopAPI } from 'plop';
 import registerHelpers from './src/helpers/index';
 import registerGenerators from './src/generators/index';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Plop configuration for PlentyONE Shop generators
@@ -9,21 +16,15 @@ export default function (plop: NodePlopAPI): void {
   // Register handlebars helpers for naming conventions
   registerHelpers(plop);
 
-  // Register template partials
-  plop.setPartial('jsdoc', '{{> (lookup this "jsdoc")}}');
-  plop.setPartial('vue-template', '{{> (lookup this "vue-template")}}');
-  plop.setPartial('vue-script-setup', '{{> (lookup this "vue-script-setup")}}');
-  plop.setPartial('typescript-interface', '{{> (lookup this "typescript-interface")}}');
-  plop.setPartial('test-setup', '{{> (lookup this "test-setup")}}');
-  plop.setPartial('export-statement', '{{> (lookup this "export-statement")}}');
-
   // Load template partials from files
-  plop.setPartial('jsdoc', 'templates/partials/jsdoc.hbs');
-  plop.setPartial('vue-template', 'templates/partials/vue-template.hbs');
-  plop.setPartial('vue-script-setup', 'templates/partials/vue-script-setup.hbs');
-  plop.setPartial('typescript-interface', 'templates/partials/typescript-interface.hbs');
-  plop.setPartial('test-setup', 'templates/partials/test-setup.hbs');
-  plop.setPartial('export-statement', 'templates/partials/export-statement.hbs');
+  const partialsDir = path.join(__dirname, 'templates/partials');
+  const partialFiles = fs.readdirSync(partialsDir).filter(file => file.endsWith('.hbs'));
+  
+  partialFiles.forEach(file => {
+    const partialName = path.basename(file, '.hbs');
+    const partialContent = fs.readFileSync(path.join(partialsDir, file), 'utf-8');
+    plop.setPartial(partialName, partialContent);
+  });
 
   // Register all generators
   registerGenerators(plop);

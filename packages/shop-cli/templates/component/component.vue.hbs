@@ -1,11 +1,3 @@
-{{> vue-template name=name hasSlots=hasSlots}}
+{{> vue-template name=name}}
 
-{{> vue-script-setup name=name hasProps=hasProps hasEmits=hasEmits hasComposables=hasComposables composables=composables}}
-
-{{#ifNotEmpty styling}}
-<style scoped>
-.{{kebabCase name}} {
-  /* {{pascalCase name}} styles */
-}
-</style>
-{{/ifNotEmpty}}
+{{> vue-script-setup name=name}}
