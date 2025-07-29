@@ -68,7 +68,7 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((b) => b.name === 'Footer');
+  const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = data.value.splice(footerIndex, 1)[0];
