@@ -227,5 +227,5 @@ const robotsTooltip =
 const keywordsTooltip =
   'List of relevant terms, separated by commas. Some search engines may use them to improve discoverability,';
 const canonicalTooltip =
-  'Specify a canonical URL only if it differs from this page’s default URL. Helps avoid duplicate content issues.';
+  'Specify a canonical URL only if it differs from this page’s own URL. Helps avoid duplicate content issues.';
 </script>
