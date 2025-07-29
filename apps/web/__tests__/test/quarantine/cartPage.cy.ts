@@ -50,4 +50,23 @@ describe('Smoke: Cart Page', () => {
 
     cart.increaseCartItemQuantity().increaseCartItemQuantity().summaryItems('Items: 4');
   });
+
+  it('should display product with surcharge order property correct', () => {
+    const quantity = 2;
+    const Expected_Surcharge = '21.56';
+    cy.addToCart(1025, quantity, [
+      {
+        property: {
+          id: 27,
+          valueType: 'empty',
+          value: 'true',
+          names: {
+            name: 'Order Properties - without markup/surcharge  With option "Preselected" and "Required"',
+          },
+        },
+      },
+    ]);
+
+    cart.openCart().compareItemAndFullPriceNyQuantity(quantity).checkSurcharge(Expected_Surcharge);
+  });
 });
