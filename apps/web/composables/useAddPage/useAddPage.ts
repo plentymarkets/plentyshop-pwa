@@ -164,48 +164,46 @@ export const useAddPageModal = () => {
     return getLevel(parentPage.value) !== 6;
   };
 
-  const buildFullParentSlug = (parentId: number | null, entries: CategoryEntry[]): string => {
+  const buildFullSlug = (parentId: number | null, entries: CategoryEntry[]): string => {
     if (!parentId || parentId === 0) return '';
     const parent = entries.find((cat) => cat.id === parentId);
     if (!parent) return '';
     const parentSlug =
-      parent.details?.[0]?.nameUrl ||
-      parent.details?.[0]?.name?.replace(/\s+/g, '-').toLowerCase() ||
-      '';
-    // Recursively prepend ancestor slugs
-    const ancestorPath = buildFullParentSlug(parent.parentCategoryId, entries);
+      parent.details?.[0]?.nameUrl || parent.details?.[0]?.name?.replace(/\s+/g, '-').toLowerCase() || '';
+
+    const ancestorPath = buildFullSlug(parent.parentCategoryId, entries);
     return ancestorPath
       ? `${ancestorPath.replace(/^\/|\/$/g, '')}/${parentSlug.replace(/^\/|\/$/g, '')}`
       : parentSlug.replace(/^\/|\/$/g, '');
   };
 
-const createNewPage = async () => {
-  if (!meta.value.valid) return;
-  const baseUrl = window?.location?.origin || '';
-  const name = pageName?.value?.trim() || '';
-  const slug = name.replace(/\s+/g, '-').toLowerCase();
+  const createNewPage = async () => {
+    if (!meta.value.valid) return;
+    const baseUrl = window?.location?.origin || '';
+    const name = pageName?.value?.trim() || '';
+    const slug = name.replace(/\s+/g, '-').toLowerCase();
 
-  let canonicalLink = '';
-  const parentId = categoryEntryGetters.getId(parentPage.value);
+    let canonicalLink = '';
+    const parentId = categoryEntryGetters.getId(parentPage.value);
 
-  if (parentId && parentId !== 0) {
-    const entries = data.value.entries || [];
-    const fullParentPath = buildFullParentSlug(parentId, entries).replace(/^\/|\/$/g, '');
-    canonicalLink = `${baseUrl}/${fullParentPath ? fullParentPath + '/' : ''}${slug}`;
-  } else {
-    canonicalLink = `${baseUrl}/${slug}`;
-  }
+    if (parentId && parentId !== 0) {
+      const entries = data.value.entries || [];
+      const fullPath = buildFullSlug(parentId, entries).replace(/^\/|\/$/g, '');
+      canonicalLink = `${baseUrl}/${fullPath ? fullPath + '/' : ''}${slug}`;
+    } else {
+      canonicalLink = `${baseUrl}/${slug}`;
+    }
 
-  await addCategory({
-    name,
-    type: pageType.value.value,
-    parentCategoryId: parentId || null,
-    canonicalLink,
-  });
+    await addCategory({
+      name,
+      type: pageType.value.value,
+      parentCategoryId: parentId || null,
+      canonicalLink,
+    });
 
-  addNewPageToTree(newCategory.value);
-  await redirectToNewPage(newCategory.value);
-};
+    addNewPageToTree(newCategory.value);
+    await redirectToNewPage(newCategory.value);
+  };
 
   const redirectToNewPage = async (newCategory: CategoryEntry) => {
     const previewUrl = newCategory.details[0]?.previewUrl;

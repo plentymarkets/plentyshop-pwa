@@ -68,7 +68,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       state.value.newPages.push(newPage.id);
     }
 
-
     const targetArray = {
       content: state.value.contentItems,
       item: state.value.itemItems,
