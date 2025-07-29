@@ -33,9 +33,10 @@ describe('CLI Command Execution', () => {
     it('should display help when no arguments are provided', async () => {
       const result = await runCLI([]);
       
-      expect(result.stdout).toContain('PlopJS generators ready for PlentyONE Shop');
-      // Expect exit code 1 since no generators are registered yet (Phase 1 - testing infrastructure only)
-      expect(result.exitCode).toBe(1);
+      expect(result.stdout).toContain('PlentyONE Shop CLI');
+      expect(result.stdout).toContain('Usage:');
+      expect(result.stdout).toContain('plentyshop generate');
+      expect(result.exitCode).toBe(0);
     });
   });
 
@@ -47,21 +48,27 @@ describe('CLI Command Execution', () => {
       expect(result.exitCode).toBe(0);
     });
 
-    it('should accept generate command', async () => {
-      // This will fail until we have generators, but tests the command parsing
+    it('should accept generate command and show available generators', async () => {
+      // This test has a longer timeout since it launches the interactive generator selection
       const result = await runCLI(['generate']);
       
-      // Should try to run plop, even if no generators exist yet
-      expect(result.stderr).toContain('No generator found');
-      expect(result.exitCode).toBe(1);
-    });
+      // Should launch plop interactive interface and show our generators
+      expect(result.stdout).toContain('Loading PlentyONE Shop generators');
+      expect(result.stdout).toContain('Component generator loaded successfully!');
+      expect(result.stdout).toContain('UI Component generator loaded successfully!');
+      expect(result.stdout).toContain('[PLOP] Please choose a generator');
+      expect(result.stdout).toContain('component - Generate a Vue component');
+      expect(result.stdout).toContain('ui-component - Generate a UI component');
+    }, 10000);  // 10 second timeout for interactive command
 
-    it('should accept init command as alias for generate', async () => {
+    it('should initialize CLI and show help with init command', async () => {
       const result = await runCLI(['init']);
       
-      // Should try to run plop, even if no generators exist yet
-      expect(result.stderr).toContain('No generator found');
-      expect(result.exitCode).toBe(1);
+      // Should show initialization message and help
+      expect(result.stdout).toContain('PlentyONE Shop CLI initialized successfully!');
+      expect(result.stdout).toContain('Usage:');
+      expect(result.stdout).toContain('plentyshop generate');
+      expect(result.exitCode).toBe(0);
     });
   });
 });
