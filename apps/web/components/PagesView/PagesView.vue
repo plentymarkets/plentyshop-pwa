@@ -61,9 +61,7 @@
       </div>
       <div class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
         <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-        <span class="italic">
-    Changes to page settings are only reflected on reload.
-  </span>
+        <span class="italic"> Changes to page settings are only reflected on reload. </span>
       </div>
 
       <UiAccordionItem
