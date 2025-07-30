@@ -1,100 +1,74 @@
-import { ref, computed{{#if hasReactive}}, reactive{{/if}}{{#if hasWatch}}, watch{{/if}} } from 'vue';
-import type { {{pascalCase (composableBaseName name)}}Return{{#if hasParams}}, {{pascalCase (composableBaseName name)}}Params{{/if}} } from './types';
+import type { ApiError } from '@plentymarkets/shop-api';
+import type { {{pascalCase name}}State } from './types';
 
-{{> jsdoc description=(concat "Composable for " (composableBaseName name)) params=params returns=(concat (pascalCase (composableBaseName name)) "Return")}}
-export const {{camelCase name}} = ({{#if hasParams}}params: {{pascalCase (composableBaseName name)}}Params{{/if}}): {{pascalCase (composableBaseName name)}}Return => {
-  // Reactive state
-  const isLoading = ref(false);
-  const error = ref<string | null>(null);
-  
-  {{#if hasState}}
-  // Additional state
-  {{#each state}}
-  const {{camelCase name}} = ref{{#if defaultValue}}({{defaultValue}}){{else}}<{{type}}>(){{/if}};
-  {{/each}}
-  {{/if}}
+/**
+ * @description Composable for managing {{humanCase (composableBaseName name)}} data
+ * @param {{camelCase (composableBaseName name)}}Id - Unique identifier for the {{humanCase (composableBaseName name)}}
+ * @returns {{pascalCase name}} composable interface
+ * @example
+ * ``` ts
+ * const { data, loading, error, fetch, fetchServer } = {{name}}('unique-id');
+ * ```
+ */
+export const {{name}} = ({{camelCase (composableBaseName name)}}Id: string) => {
+  const state = useState<{{pascalCase name}}State>('{{name}}-' + {{camelCase (composableBaseName name)}}Id, () => ({
+    data: null,
+    loading: false,
+    error: null,
+  }));
 
-  // Computed values
-  const isReady = computed(() => !isLoading.value && !error.value);
-  
-  {{#if hasComputedValues}}
-  {{#each computedValues}}
-  const {{camelCase name}} = computed(() => {
-    // {{description}}
-    return {{defaultImplementation}};
-  });
-  {{/each}}
-  {{/if}}
+  // TODO: Replace with actual SDK method call
+  // SDK method call - reused by both fetch methods
+  const sdkCall = (params: unknown) => 
+    useSdk().plentysystems.get{{pascalCase (composableBaseName name)}}(params);
 
-  // Methods
-  {{#if hasMethods}}
-  {{#each methods}}
-  const {{camelCase name}} = async ({{#if params}}{{params}}{{/if}}) => {
+  /**
+   * @description Client-side fetch method
+   * @param params - Parameters for fetching {{humanCase (composableBaseName name)}} data
+   * @returns Promise<unknown | null>
+   */
+  const fetch = async (params: unknown) => {
     try {
-      isLoading.value = true;
-      error.value = null;
-      
-      // {{description}}
-      
-    } catch (err) {
-      error.value = err instanceof Error ? err.message : 'An error occurred';
-      throw err;
-    } finally {
-      isLoading.value = false;
+      state.value.loading = true;
+      state.value.error = null;
+      const data = await sdkCall(params);
+      state.value.data = data.data;
+      state.value.loading = false;
+      return data.data;
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
+      state.value.error = error as ApiError;
+      state.value.loading = false;
+      return null;
     }
   };
-  {{/each}}
-  {{else}}
-  const execute = async () => {
-    try {
-      isLoading.value = true;
-      error.value = null;
-      
-      // Implementation goes here
-      
-    } catch (err) {
-      error.value = err instanceof Error ? err.message : 'An error occurred';
-      throw err;
-    } finally {
-      isLoading.value = false;
-    }
-  };
-  {{/if}}
 
-  {{#if hasWatch}}
-  // Watchers
-  {{#each watchers}}
-  watch({{source}}, ({{params}}) => {
-    // {{description}}
-  }{{#if options}}, {{options}}{{/if}});
-  {{/each}}
-  {{/if}}
+  /**
+   * @description Server-side fetch method with useAsyncData
+   * @param params - Parameters for fetching {{humanCase (composableBaseName name)}} data
+   * @returns Promise<any | null>
+   */
+  const fetchServer = async (params: any) => {
+    state.value.loading = true;
+    state.value.error = null;
+    
+    const { data, error } = await useAsyncData(
+      '{{name}}-' + {{camelCase (composableBaseName name)}}Id + '-' + JSON.stringify(params),
+      () => sdkCall(params)
+    );
+
+    useHandleError(error.value);
+    
+    state.value.data = data.value?.data || null;
+    state.value.error = error.value;
+    state.value.loading = false;
+    
+    return state.value.data;
+  };
 
   return {
-    // State
-    isLoading: readonly(isLoading),
-    error: readonly(error),
-    isReady,
-    {{#if hasState}}
-    {{#each state}}
-    {{camelCase name}},
-    {{/each}}
-    {{/if}}
-    
-    // Computed
-    {{#if hasComputedValues}}
-    {{#each computedValues}}
-    {{camelCase name}},
-    {{/each}}
-    {{/if}}
-    
-    // Methods
-    {{#if hasMethods}}
-    {{#each methods}}
-    {{camelCase name}},
-    {{/each}}
-    {{else}}
-    execute,
-    {{/if}}
+    fetch,
+    fetchServer,
+    ...toRefs(state.value),
   };
 };

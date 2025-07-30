@@ -28,6 +28,15 @@ function registerCaseHelpers(plop: NodePlopAPI): void {
           .toLowerCase()
       : '',
   );
+
+  plop.setHelper('humanCase', (str: string) =>
+    str
+      ? str
+          .replace(/([a-z])([A-Z])/g, '$1 $2')
+          .replace(/[-_]+/g, ' ')
+          .replace(/\b\w/g, (char) => char.toUpperCase())
+      : '',
+  );
 }
 
 /**

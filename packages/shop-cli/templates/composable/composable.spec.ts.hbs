@@ -1,51 +1,55 @@
-{{> test-setup name=name type="composable" hasTypes=hasTypes}}
+import { {{name}} } from '~/composables/{{name}}/{{name}}';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
-  it('initializes with correct default state', () => {
-    const {
-      isLoading,
-      error,
-      isReady
-    } = {{camelCase name}}({{#if hasParams}}{
-      // Add test parameters here
-    }{{/if}});
-    
-    expect(isLoading.value).toBe(false);
+// Mock the SDK
+mockNuxtImport('useSdk', () => () => ({
+  plentysystems: {
+    get{{pascalCase (composableBaseName name)}}: vi.fn().mockResolvedValue({
+      data: { id: 1, name: 'Test {{humanCase (composableBaseName name)}}' }
+    })
+  }
+}));
+
+describe('{{name}}', () => {
+  it('should initialize with correct default state', () => {
+    const { data, loading, error } = {{name}}('test-id');
+
+    expect(data.value).toBe(null);
+    expect(loading.value).toBe(false);
     expect(error.value).toBe(null);
-    expect(isReady.value).toBe(true);
   });
 
-  {{#if hasMethods}}
-  {{#each methods}}
-  it('{{camelCase name}} works correctly', async () => {
-    const composable = {{../name}}({{#if ../hasParams}}{
-      // Add test parameters here
-    }{{/if}});
-    
-    // Test the method
-    // await composable.{{camelCase name}}();
-    
-    expect(true).toBe(true); // Replace with actual assertions
-  });
-  {{/each}}
-  {{else}}
-  it('execute method works correctly', async () => {
-    const composable = {{camelCase name}}({{#if hasParams}}{
-      // Add test parameters here
-    }{{/if}});
-    
-    // Test the execute method
-    // await composable.execute();
-    
-    expect(true).toBe(true); // Replace with actual assertions
-  });
-  {{/if}}
+  it('should fetch {{humanCase (composableBaseName name)}} data successfully', async () => {
+    const { fetch, data, loading } = {{name}}('test-id');
 
-  it('handles errors correctly', async () => {
-    const composable = {{camelCase name}}({{#if hasParams}}{
-      // Add test parameters that will cause an error
-    }{{/if}});
+    expect(loading.value).toBe(false);
     
-    // Test error handling
-    expect(composable.error.value).toBe(null);
+    await fetch({ id: 1 });
+
+    expect(data.value).toEqual({ id: 1, name: 'Test {{humanCase (composableBaseName name)}}' });
+    expect(loading.value).toBe(false);
+  });
+
+  it('should fetch {{humanCase (composableBaseName name)}} data on server', async () => {
+    const { fetchServer, data, loading } = {{name}}('test-id');
+
+    expect(loading.value).toBe(false);
+    
+    await fetchServer({ id: 1 });
+
+    expect(data.value).toEqual({ id: 1, name: 'Test {{humanCase (composableBaseName name)}}' });
+    expect(loading.value).toBe(false);
+  });
+
+  it('should handle errors properly', async () => {
+    const { fetch, error } = {{name}}('test-id');
+    
+    // Mock SDK to throw error
+    const mockSdk = vi.mocked(useSdk);
+    mockSdk().plentysystems.get{{pascalCase (composableBaseName name)}}.mockRejectedValueOnce(new Error('API Error'));
+
+    await fetch({ id: 1 });
+
+    expect(error.value).toBeTruthy();
   });
 });
