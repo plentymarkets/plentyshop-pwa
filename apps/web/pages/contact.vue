@@ -185,12 +185,28 @@ const validationSchema = toTypedSchema(
         return cleaned.length >= 3;
       })
       .default(''),
-    name: string().trim().min(3, t('storefrontError.contactMail.nameInvalid')).optional(),
-    subject: string().trim().min(3, t('storefrontError.contactMail.subjectInvalid')).optional(),
+    name: string()
+      .trim()
+      .notRequired()
+      .default('')
+      .test('min-if-not-empty', t('storefrontError.contactMail.nameInvalid'), (val) => {
+        if (!val || val.length === 0) return true;
+        return val.length >= 3;
+      }),
+    subject: string()
+      .trim()
+      .notRequired()
+      .default('')
+      .test('min-if-not-empty', t('storefrontError.contactMail.subjectInvalid'), (val) => !val || val.length >= 3),
     orderId: string()
       .trim()
-      .matches(/^[1-9][0-9]*$/, t('storefrontError.contactMail.orderIdInvalid'))
-      .optional(),
+      .notRequired()
+      .default('')
+      .test(
+        'digits-if-not-empty',
+        t('storefrontError.contactMail.orderIdInvalid'),
+        (val) => !val || /^[1-9][0-9]*$/.test(val),
+      ),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
@@ -203,20 +219,23 @@ const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: validationSchema,
 });
 
-const [name, nameAttributes] = defineField('name');
+const [rawName, nameAttributes] = defineField('name');
+const name = rawName as Ref<string>;
 const [email, emailAttributes] = defineField('email');
-const [subject, subjectAttributes] = defineField('subject');
-const [orderId, orderIdAttributes] = defineField('orderId');
+const [rawSubject, subjectAttributes] = defineField('subject');
+const subject = rawSubject as Ref<string>;
+const [rawOrderId, orderIdAttributes] = defineField('orderId');
+const orderId = rawOrderId as Ref<string>;
 const [message, messageAttributes] = defineField('message');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 
 const clearInputs = () => {
-  name.value = undefined;
+  name.value = '';
   email.value = '';
   message.value = '';
-  orderId.value = undefined;
-  subject.value = undefined;
+  orderId.value = '';
+  subject.value = '';
   privacyPolicy.value = false;
 };
 
