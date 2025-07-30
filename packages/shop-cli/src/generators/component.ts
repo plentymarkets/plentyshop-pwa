@@ -4,9 +4,8 @@
  */
 
 import type { NodePlopAPI } from 'plop';
-import { BaseGenerator } from '../core/BaseGenerator';
+import { BaseGenerator, ActionBuilder } from '../core';
 import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
-import { getDestinationPath } from '../utils/template-utils';
 import { componentPrompts } from './component-prompts';
 
 /**
@@ -21,27 +20,12 @@ class ComponentGenerator extends BaseGenerator {
   }
 
   createActions(data: PromptAnswers): GeneratorAction[] {
-    const componentPath = getDestinationPath('component', data.name);
-
-    return [
-      {
-        type: 'add',
-        path: `${componentPath}/{{pascalCase name}}.vue`,
-        templateFile: 'templates/component/component.vue.hbs',
-        data,
-      },
-      {
-        type: 'add',
-        path: `${componentPath}/types.ts`,
-        templateFile: 'templates/component/types.ts.hbs',
-      },
-      {
-        type: 'add',
-        path: `${componentPath}/__tests__/{{pascalCase name}}.spec.ts`,
-        templateFile: 'templates/component/component.spec.ts.hbs',
-        data,
-      },
-    ];
+    return ActionBuilder.forGenerator('component', data.name)
+      .withData(data)
+      .addMainFile()
+      .addTypes()
+      .addTests()
+      .build();
   }
 }
 
