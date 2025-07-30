@@ -4,13 +4,23 @@
  */
 
 import { NodePlopAPI } from 'plop';
+import { BaseGenerator } from '../core/BaseGenerator';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
 import { composablePrompts } from './composable-prompts.js';
 
-export default function composableGenerator(plop: NodePlopAPI): void {
-  plop.setGenerator('composable', {
-    description: 'Generate a new Vue composable with API integration',
-    prompts: composablePrompts,
-    actions: [
+/**
+ * Composable Generator using BaseGenerator pattern
+ */
+class ComposableGenerator extends BaseGenerator {
+  readonly name = 'composable';
+  readonly description = 'Generate a new Vue composable with API integration';
+
+  getPrompts(): GeneratorPrompt[] {
+    return composablePrompts as GeneratorPrompt[];
+  }
+
+  createActions(_data: PromptAnswers): GeneratorAction[] {
+    return [
       {
         type: 'add',
         path: '../../apps/web/composables/{{name}}/{{name}}.ts',
@@ -31,6 +41,11 @@ export default function composableGenerator(plop: NodePlopAPI): void {
         path: '../../apps/web/composables/{{name}}/__tests__/{{name}}.spec.ts',
         templateFile: 'templates/composable/composable.spec.ts.hbs',
       },
-    ],
-  });
+    ];
+  }
+}
+
+export default function composableGenerator(plop: NodePlopAPI): void {
+  const generator = new ComposableGenerator();
+  generator.register(plop);
 }
