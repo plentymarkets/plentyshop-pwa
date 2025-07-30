@@ -115,7 +115,7 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 
 const props = defineProps<PagesItemProps>();
 const item = props.item;
-
+console.log('item', item)
 const isDisabled = computed(() => {
   const collection = Array.isArray(collectionData.value)
     ? collectionData.value

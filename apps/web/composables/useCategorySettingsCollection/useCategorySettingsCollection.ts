@@ -22,6 +22,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     state.value.initialData.push(JSON.parse(JSON.stringify(category)));
   };
 
+
   const hasChanges = computed(() => {
     return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
   });

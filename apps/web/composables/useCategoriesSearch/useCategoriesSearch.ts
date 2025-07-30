@@ -59,6 +59,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       insertPageIntoTree(p, target);
     }
   };
+  console.log('state.value.contentItems', state.value.contentItems);
   const addNewPageToTree = (newPage: CategoryEntry) => {
     if (state.value.contentItems.length === 0 && state.value.itemItems.length === 0) {
       return;
@@ -200,8 +201,9 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       if (!parent.children) {
         parent.children = [];
       }
-
+console.log('adauga copii la parinte', parentId, parent, children);
       parent.children.push(...children);
+      console.log('parinte dupa adaugare', parent);
     };
 
     const fetchMore = async () => {
