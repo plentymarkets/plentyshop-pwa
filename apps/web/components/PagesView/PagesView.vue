@@ -59,6 +59,12 @@
           <template v-else> Save Settings </template>
         </button>
       </div>
+      <div class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
+        <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
+        <span class="italic">
+    Changes to page settings are only reflected on reload.
+  </span>
+      </div>
 
       <UiAccordionItem
         v-model="contentPagesOpen"
@@ -120,7 +126,15 @@
 
 <script setup lang="ts">
 import PagesItem from '~/components/PagesView/PagesItem.vue';
-import { SfIconClose, SfIconHelp, SfTooltip, SfIconAdd, SfIconHome, SfLoaderCircular } from '@storefront-ui/vue';
+import {
+  SfIconClose,
+  SfIconHelp,
+  SfTooltip,
+  SfIconAdd,
+  SfIconHome,
+  SfLoaderCircular,
+  SfIconWarning,
+} from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale, defaultLocale } = useI18n();
 
