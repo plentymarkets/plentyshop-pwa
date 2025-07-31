@@ -93,7 +93,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
           state.value.initialData[idx] = JSON.parse(JSON.stringify(category));
         }
       });
-      state.value.initialData = JSON.parse(JSON.stringify(state.value.data));
       state.value.loading = false;
       return true;
     } catch (error) {
