@@ -104,11 +104,13 @@ export const useAddressForm = (type: AddressType) => {
     notifyIfShippingChanged();
     notifyIfBillingChanged();
 
+    const { hasCheckoutAddress: hasBillingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
+
     if (
       type === AddressType.Shipping &&
+      !hasBillingAddress &&
       cartData.value.customerInvoiceAddressId === cartData.value.customerShippingAddressId
     ) {
-      const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
       const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
       await setBillingAddress(shippingAddress.value, true);
     }
