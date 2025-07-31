@@ -71,10 +71,9 @@ const handleQueryUpdate = async () => {
     });
   }
 };
-
-await handleQueryUpdate();
 const canonicalDb = category.value.details?.[0]?.canonicalLink;
-setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
+
+await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb));
 
 const { setPageMeta } = usePageMeta();
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
