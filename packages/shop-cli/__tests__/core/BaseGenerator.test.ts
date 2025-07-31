@@ -22,6 +22,13 @@ class TestGenerator extends BaseGenerator {
     ];
   }
 
+  validateInput(data: PromptAnswers): string | true {
+    if (!data.name || typeof data.name !== 'string' || data.name.trim().length === 0) {
+      return 'Name is required and must be a non-empty string';
+    }
+    return true;
+  }
+
   createActions(data: PromptAnswers): GeneratorAction[] {
     return [
       {
@@ -80,7 +87,7 @@ describe('BaseGenerator', () => {
     expect(typeof registeredConfig.actions).toBe('function');
   });
 
-  it('should handle data validation in actions function', () => {
+  it('should handle data validation with error handling', () => {
     const generator = new TestGenerator();
     const mockPlop = {
       setGenerator: vi.fn(),
@@ -92,8 +99,9 @@ describe('BaseGenerator', () => {
     const registeredConfig = mockPlop.setGenerator.mock.calls[0][1];
     const actionsFunction = registeredConfig.actions;
 
-    // Should throw error for undefined data
-    expect(() => actionsFunction(undefined)).toThrow('No data provided for test generation');
+    // Should return empty array for undefined data (error handling behavior)
+    const emptyResult = actionsFunction(undefined);
+    expect(emptyResult).toEqual([]);
 
     // Should work for valid data
     const validData = { name: 'TestComponent' };

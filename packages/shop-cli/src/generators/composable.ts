@@ -3,10 +3,11 @@
  * Creates Vue composables with API integration, state management, and dual fetch methods
  */
 
-import { NodePlopAPI } from 'plop';
+import type { NodePlopAPI } from 'plop';
 import { BaseGenerator, ActionBuilder } from '../core';
 import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
-import { composablePrompts } from './composable-prompts.js';
+import { composablePrompts } from './composable-prompts';
+import { validateComposableName } from '../utils/validation';
 
 /**
  * Composable Generator using BaseGenerator pattern
@@ -27,6 +28,10 @@ class ComposableGenerator extends BaseGenerator {
       .addIndex()
       .addTests()
       .build();
+  }
+
+  validateInput(data: PromptAnswers): string | true {
+    return validateComposableName(data.name);
   }
 }
 

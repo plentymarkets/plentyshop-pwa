@@ -6,62 +6,91 @@
 
 import type { NodePlopAPI } from 'plop';
 import type { GeneratorAction, GeneratorPrompt, PromptAnswers } from '../types';
+import { defaultErrorHandler } from './error-handling';
+import type { ErrorHandler } from './error-handling';
 
 /**
- * Abstract base class for all generators
- * Provides consistent structure and eliminates duplication
+ * Abstract base class for all PlopJS generators
+ * Provides common structure, validation, and error handling
  */
 export abstract class BaseGenerator {
+  /** Unique identifier for the generator */
   abstract readonly name: string;
+  
+  /** Human-readable description */
   abstract readonly description: string;
 
+  /** Error handler for consistent error management */
+  protected errorHandler: ErrorHandler;
+
+  constructor(errorHandler?: ErrorHandler) {
+    this.errorHandler = errorHandler || defaultErrorHandler;
+  }
+
   /**
-   * Get prompts for this generator
+   * Define prompts for user input
+   * Must be implemented by subclasses
    */
   abstract getPrompts(): GeneratorPrompt[];
 
   /**
-   * Create actions based on user input
+   * Create actions for file generation
+   * Must be implemented by subclasses
    */
   abstract createActions(data: PromptAnswers): GeneratorAction[];
 
   /**
-   * Register this generator with PlopJS
+   * Validate user input
+   * Return true if valid, error message if invalid
+   */
+  abstract validateInput(data: PromptAnswers): string | true;
+
+  /**
+   * Register this generator with plop
    */
   register(plop: NodePlopAPI): void {
     plop.setGenerator(this.name, {
       description: this.description,
       prompts: this.getPrompts(),
-      actions: (data: unknown) => {
-        const ensuredData = this.ensureData(data as PromptAnswers);
-        return this.createActions(ensuredData);
-      },
+      actions: (data) => this.generateWithErrorHandling(data as PromptAnswers),
     });
   }
 
   /**
-   * Optional: Validate user input before generating
+   * Protected helper to ensure data is provided with error handling
    */
-  protected validateInput(data: PromptAnswers): string | true {
-    if (!data.name || typeof data.name !== 'string') {
-      return 'Name is required and must be a string';
-    }
-    return true;
+  protected ensureData(data: PromptAnswers | undefined): PromptAnswers | null {
+    const result = this.errorHandler.wrapValidation(() => {
+      if (!data) {
+        throw new Error(`No data provided for ${this.name} generation`);
+      }
+
+      const validation = this.validateInput(data);
+      if (validation !== true) {
+        throw new Error(validation);
+      }
+
+      return data;
+    }, `${this.name} data validation`);
+
+    return result.success ? result.data : null;
   }
 
   /**
-   * Protected helper to ensure data is provided
+   * Generate actions with error handling wrapper
    */
-  protected ensureData(data: PromptAnswers | undefined): PromptAnswers {
-    if (!data) {
-      throw new Error(`No data provided for ${this.name} generation`);
-    }
+  private generateWithErrorHandling(data: PromptAnswers | undefined): GeneratorAction[] {
+    const result = this.errorHandler.wrapGeneratorExecution(
+      this.name,
+      () => {
+        const validatedData = this.ensureData(data);
+        if (!validatedData) {
+          return []; // Return empty array for graceful degradation
+        }
+        return this.createActions(validatedData);
+      }
+    );
 
-    const validation = this.validateInput(data);
-    if (validation !== true) {
-      throw new Error(validation);
-    }
-
-    return data;
+    return result.success ? (result.data as GeneratorAction[]) : [];
   }
 }

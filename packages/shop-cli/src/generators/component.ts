@@ -7,6 +7,7 @@ import type { NodePlopAPI } from 'plop';
 import { BaseGenerator, ActionBuilder } from '../core';
 import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
 import { componentPrompts } from './component-prompts';
+import { validateComponentName } from '../utils/validation';
 
 /**
  * Component Generator using BaseGenerator pattern
@@ -26,6 +27,10 @@ class ComponentGenerator extends BaseGenerator {
       .addTypes()
       .addTests()
       .build();
+  }
+
+  validateInput(data: PromptAnswers): string | true {
+    return validateComponentName(data.name);
   }
 }
 
