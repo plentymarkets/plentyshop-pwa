@@ -6,12 +6,12 @@ describe('ErrorUtils', () => {
   describe('createErrorInfo', () => {
     it('should create error info from Error objects', () => {
       const error = new Error('Test error message');
-      
+
       const errorInfo = ErrorUtils.createErrorInfo(error, {
         type: ErrorType.VALIDATION,
         context: 'test context',
       });
-      
+
       expect(errorInfo.type).toBe(ErrorType.VALIDATION);
       expect(errorInfo.message).toBe('Test error message');
       expect(errorInfo.context).toBe('test context');
@@ -22,7 +22,7 @@ describe('ErrorUtils', () => {
       const errorInfo = ErrorUtils.createErrorInfo('String error', {
         type: ErrorType.FILESYSTEM,
       });
-      
+
       expect(errorInfo.type).toBe(ErrorType.FILESYSTEM);
       expect(errorInfo.message).toBe('String error');
       expect(errorInfo.originalError).toBeUndefined();
@@ -30,7 +30,7 @@ describe('ErrorUtils', () => {
 
     it('should handle unknown error types', () => {
       const errorInfo = ErrorUtils.createErrorInfo({ custom: 'object' });
-      
+
       expect(errorInfo.message).toBe('[object Object]');
     });
   });
@@ -53,9 +53,9 @@ describe('ErrorUtils', () => {
         context: 'test context',
         suggestions: ['Try this', 'Or that'],
       };
-      
+
       ErrorUtils.reportToConsole(errorInfo, true, true);
-      
+
       expect(consoleSpy).toHaveBeenCalledWith('❌ [VALIDATION] Test error');
       expect(consoleSpy).toHaveBeenCalledWith('   Context: test context');
       expect(consoleSpy).toHaveBeenCalledWith('   Suggestions:');
@@ -70,9 +70,9 @@ describe('ErrorUtils', () => {
         context: 'test context',
         suggestions: ['Try this'],
       };
-      
+
       ErrorUtils.reportToConsole(errorInfo, false, false);
-      
+
       expect(consoleSpy).toHaveBeenCalledWith('❌ [VALIDATION] Test error');
       expect(consoleSpy).not.toHaveBeenCalledWith('   Context: test context');
       expect(consoleSpy).not.toHaveBeenCalledWith('   Suggestions:');
@@ -86,22 +86,22 @@ describe('createErrorHandler', () => {
       failFast: true,
       verbose: false,
     };
-    
+
     const handler = createErrorHandler(config);
-    
+
     expect(handler).toBeDefined();
-    
+
     // Test that config is applied by checking fail-fast behavior
     const operation = () => {
       throw new Error('Test error');
     };
-    
+
     expect(() => handler.wrapValidation(operation)).toThrow('Test error');
   });
 
   it('should create error handler with default config when no config provided', () => {
     const handler = createErrorHandler();
-    
+
     expect(handler).toBeDefined();
   });
 });

@@ -3,7 +3,7 @@ import { ErrorHandler, ErrorType } from '../../src/core/error-handling';
 
 // Test helper functions to reduce nesting
 const createSuccessfulOperation = () => () => [
-  'add:test.js:content' // Simple string format for ActionType
+  'add:test.js:content', // Simple string format for ActionType
 ];
 
 const createFailingOperation = (message: string) => () => {
@@ -29,9 +29,9 @@ describe('Error Handling System', () => {
   describe('ErrorHandler - Generator Execution', () => {
     it('should return success result for successful operations', () => {
       const operation = createSuccessfulOperation();
-      
+
       const result = errorHandler.wrapGeneratorExecution('test-generator', operation);
-      
+
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data).toHaveLength(1);
@@ -41,9 +41,9 @@ describe('Error Handling System', () => {
 
     it('should handle errors and return error result', () => {
       const operation = createFailingOperation('Test error');
-      
+
       const result = errorHandler.wrapGeneratorExecution('test-generator', operation);
-      
+
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.type).toBe(ErrorType.GENERATION);
@@ -55,13 +55,13 @@ describe('Error Handling System', () => {
     it('should include data context in verbose mode', () => {
       const operation = createFailingOperation('Test error');
       const testData = { name: 'TestComponent' };
-      
+
       errorHandler.wrapGeneratorExecution('test-generator', operation, testData);
-      
+
       expect(mockReporter).toHaveBeenCalledWith(
         expect.objectContaining({
           context: expect.stringContaining('TestComponent'),
-        })
+        }),
       );
     });
   });
@@ -69,9 +69,9 @@ describe('Error Handling System', () => {
   describe('ErrorHandler - Validation', () => {
     it('should return success result for valid operations', () => {
       const operation = createValidOperation();
-      
+
       const result = errorHandler.wrapValidation(operation, 'test validation');
-      
+
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data).toBe('valid result');
@@ -80,9 +80,9 @@ describe('Error Handling System', () => {
 
     it('should handle validation errors', () => {
       const operation = createFailingOperation('Validation failed');
-      
+
       const result = errorHandler.wrapValidation(operation, 'test validation');
-      
+
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.type).toBe(ErrorType.VALIDATION);
@@ -95,9 +95,9 @@ describe('Error Handling System', () => {
   describe('ErrorHandler - File System Operations', () => {
     it('should handle file system errors', () => {
       const operation = createFailingOperation('ENOENT: File not found');
-      
+
       const result = errorHandler.wrapFileSystemOperation(operation, 'file read');
-      
+
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.type).toBe(ErrorType.FILESYSTEM);
@@ -109,9 +109,9 @@ describe('Error Handling System', () => {
   describe('ErrorHandler - Template Processing', () => {
     it('should handle template errors', () => {
       const operation = createFailingOperation('Template syntax error');
-      
+
       const result = errorHandler.wrapTemplateProcessing(operation, 'component.hbs');
-      
+
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.type).toBe(ErrorType.TEMPLATE);
@@ -124,9 +124,9 @@ describe('Error Handling System', () => {
   describe('ErrorHandler - Plugin Operations', () => {
     it('should handle plugin errors', () => {
       const operation = createFailingOperation('Plugin initialization failed');
-      
+
       const result = errorHandler.wrapPluginOperation(operation, 'string-case-plugin');
-      
+
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.type).toBe(ErrorType.PLUGIN);
@@ -140,13 +140,13 @@ describe('Error Handling System', () => {
     it('should throw errors when failFast is true', () => {
       const failFastHandler = new ErrorHandler({ failFast: true });
       const operation = createFailingOperation('Test error');
-      
+
       expect(() => failFastHandler.wrapValidation(operation)).toThrow('Test error');
     });
 
     it('should not throw errors when failFast is false', () => {
       const operation = createFailingOperation('Test error');
-      
+
       expect(() => errorHandler.wrapValidation(operation)).not.toThrow();
     });
   });

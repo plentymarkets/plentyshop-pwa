@@ -16,7 +16,7 @@ import type { ErrorHandler } from './error-handling';
 export abstract class BaseGenerator {
   /** Unique identifier for the generator */
   abstract readonly name: string;
-  
+
   /** Human-readable description */
   abstract readonly description: string;
 
@@ -80,16 +80,13 @@ export abstract class BaseGenerator {
    * Generate actions with error handling wrapper
    */
   private generateWithErrorHandling(data: PromptAnswers | undefined): GeneratorAction[] {
-    const result = this.errorHandler.wrapGeneratorExecution(
-      this.name,
-      () => {
-        const validatedData = this.ensureData(data);
-        if (!validatedData) {
-          return []; // Return empty array for graceful degradation
-        }
-        return this.createActions(validatedData);
+    const result = this.errorHandler.wrapGeneratorExecution(this.name, () => {
+      const validatedData = this.ensureData(data);
+      if (!validatedData) {
+        return []; // Return empty array for graceful degradation
       }
-    );
+      return this.createActions(validatedData);
+    });
 
     return result.success ? (result.data as GeneratorAction[]) : [];
   }

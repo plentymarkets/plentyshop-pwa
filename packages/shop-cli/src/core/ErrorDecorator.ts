@@ -8,16 +8,16 @@ import { ErrorHandler, defaultErrorHandler } from './error-handling';
 export function wrapGeneratorMethod(
   method: (...args: unknown[]) => ActionType[],
   context: string,
-  errorHandler: ErrorHandler = defaultErrorHandler
+  errorHandler: ErrorHandler = defaultErrorHandler,
 ): (...args: unknown[]) => ActionType[] {
   return (...args: unknown[]): ActionType[] => {
     const operation = () => method(...args);
     const result = errorHandler.wrapGeneratorExecution(context, operation);
-    
+
     if (!result.success) {
       return []; // Return empty actions on error
     }
-    
+
     return result.data;
   };
 }

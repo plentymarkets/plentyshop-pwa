@@ -7,14 +7,11 @@ export class ErrorUtils {
   /**
    * Create an error info object from an unknown error
    */
-  static createErrorInfo(
-    error: unknown,
-    overrides: Partial<ErrorInfo> = {}
-  ): ErrorInfo {
+  static createErrorInfo(error: unknown, overrides: Partial<ErrorInfo> = {}): ErrorInfo {
     const baseInfo: ErrorInfo = {
       type: 'unknown' as ErrorType,
       message: 'An unknown error occurred',
-      ...overrides
+      ...overrides,
     };
 
     if (error instanceof Error) {
@@ -34,7 +31,7 @@ export class ErrorUtils {
    */
   static reportToConsole(errorInfo: ErrorInfo, verbose = true, showSuggestions = true): void {
     console.error(`❌ [${errorInfo.type.toUpperCase()}] ${errorInfo.message}`);
-    
+
     if (verbose && errorInfo.context) {
       console.error(`   Context: ${errorInfo.context}`);
     }
@@ -45,7 +42,7 @@ export class ErrorUtils {
 
     if (showSuggestions && errorInfo.suggestions?.length) {
       console.error(`   Suggestions:`);
-      errorInfo.suggestions.forEach(suggestion => {
+      errorInfo.suggestions.forEach((suggestion) => {
         console.error(`   • ${suggestion}`);
       });
     }

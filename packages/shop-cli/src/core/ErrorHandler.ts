@@ -11,7 +11,7 @@ export enum ErrorType {
   FILESYSTEM = 'filesystem',
   TEMPLATE = 'template',
   PLUGIN = 'plugin',
-  UNKNOWN = 'unknown'
+  UNKNOWN = 'unknown',
 }
 
 /**
@@ -42,13 +42,15 @@ export interface ErrorHandlingConfig {
 /**
  * Result type for operations that can fail
  */
-export type ErrorResult<T> = {
-  success: true;
-  data: T;
-} | {
-  success: false;
-  error: ErrorInfo;
-};
+export type ErrorResult<T> =
+  | {
+      success: true;
+      data: T;
+    }
+  | {
+      success: false;
+      error: ErrorInfo;
+    };
 
 /**
  * Default error handling configuration
@@ -76,13 +78,13 @@ export class ErrorHandler {
   wrapGeneratorExecution(
     generatorName: string,
     operation: () => ActionType[],
-    data?: PromptAnswers
+    data?: PromptAnswers,
   ): ErrorResult<ActionType[]> {
     try {
       const result = operation();
       return {
         success: true,
-        data: result
+        data: result,
       };
     } catch (error) {
       return this.handleGeneratorError(error, generatorName, data);
@@ -92,82 +94,67 @@ export class ErrorHandler {
   /**
    * Wrap validation operations with error handling
    */
-  wrapValidation<T>(
-    operation: () => T,
-    context: string = 'Validation'
-  ): ErrorResult<T> {
+  wrapValidation<T>(operation: () => T, context: string = 'Validation'): ErrorResult<T> {
     return this.wrapOperation(operation, {
       type: ErrorType.VALIDATION,
       context,
       suggestions: [
         'Check input format and requirements',
         'Verify naming conventions',
-        'Ensure required fields are provided'
-      ]
+        'Ensure required fields are provided',
+      ],
     });
   }
 
   /**
    * Wrap file system operations with error handling
    */
-  wrapFileSystemOperation<T>(
-    operation: () => T,
-    context: string = 'File operation'
-  ): ErrorResult<T> {
+  wrapFileSystemOperation<T>(operation: () => T, context: string = 'File operation'): ErrorResult<T> {
     return this.wrapOperation(operation, {
       type: ErrorType.FILESYSTEM,
       context,
       suggestions: [
         'Check file and directory permissions',
         'Verify paths exist and are accessible',
-        'Ensure sufficient disk space'
-      ]
+        'Ensure sufficient disk space',
+      ],
     });
   }
 
   /**
    * Wrap template processing with error handling
    */
-  wrapTemplateProcessing<T>(
-    operation: () => T,
-    templateName: string
-  ): ErrorResult<T> {
+  wrapTemplateProcessing<T>(operation: () => T, templateName: string): ErrorResult<T> {
     return this.wrapOperation(operation, {
       type: ErrorType.TEMPLATE,
       context: `Template: ${templateName}`,
       suggestions: [
         'Check template syntax and helpers',
         'Verify all required data is provided',
-        'Ensure template file exists'
-      ]
+        'Ensure template file exists',
+      ],
     });
   }
 
   /**
    * Wrap plugin operations with error handling
    */
-  wrapPluginOperation<T>(
-    operation: () => T,
-    pluginName: string
-  ): ErrorResult<T> {
+  wrapPluginOperation<T>(operation: () => T, pluginName: string): ErrorResult<T> {
     return this.wrapOperation(operation, {
       type: ErrorType.PLUGIN,
       context: `Plugin: ${pluginName}`,
       suggestions: [
         'Check plugin configuration',
         'Verify plugin dependencies',
-        'Ensure plugin is properly initialized'
-      ]
+        'Ensure plugin is properly initialized',
+      ],
     });
   }
 
   /**
    * Create an error info object from an unknown error
    */
-  createErrorInfo(
-    error: unknown,
-    overrides: Partial<ErrorInfo> = {}
-  ): ErrorInfo {
+  createErrorInfo(error: unknown, overrides: Partial<ErrorInfo> = {}): ErrorInfo {
     return ErrorUtils.createErrorInfo(error, overrides);
   }
 
@@ -186,15 +173,12 @@ export class ErrorHandler {
   /**
    * Generic operation wrapper
    */
-  private wrapOperation<T>(
-    operation: () => T,
-    errorConfig: Partial<ErrorInfo>
-  ): ErrorResult<T> {
+  private wrapOperation<T>(operation: () => T, errorConfig: Partial<ErrorInfo>): ErrorResult<T> {
     try {
       const result = operation();
       return {
         success: true,
-        data: result
+        data: result,
       };
     } catch (error) {
       const errorInfo = this.createErrorInfo(error, errorConfig);
@@ -206,7 +190,7 @@ export class ErrorHandler {
 
       return {
         success: false,
-        error: errorInfo
+        error: errorInfo,
       };
     }
   }
@@ -214,19 +198,15 @@ export class ErrorHandler {
   /**
    * Handle generator-specific errors
    */
-  private handleGeneratorError(
-    error: unknown,
-    generatorName: string,
-    data?: PromptAnswers
-  ): ErrorResult<ActionType[]> {
+  private handleGeneratorError(error: unknown, generatorName: string, data?: PromptAnswers): ErrorResult<ActionType[]> {
     const errorInfo = this.createErrorInfo(error, {
       type: ErrorType.GENERATION,
       context: `Generator: ${generatorName}`,
       suggestions: [
         'Check if all required data is provided',
         'Verify template files exist',
-        'Ensure target directories are writable'
-      ]
+        'Ensure target directories are writable',
+      ],
     });
 
     // Add context data if available
@@ -242,7 +222,7 @@ export class ErrorHandler {
 
     return {
       success: false,
-      error: errorInfo
+      error: errorInfo,
     };
   }
 }
