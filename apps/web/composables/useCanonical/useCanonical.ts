@@ -99,14 +99,22 @@ export const useCanonical: UseCanonicalReturn = () => {
    * setCategoriesPageMeta()
    * ```
    */
-  const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
+  const setCategoriesPageMeta: CategoriesPageMeta = (
+    productsCatalog: Facet,
+    facetsFromUrl: FacetSearchCriteria,
+    canonicalOverride?: string,
+  ) => {
     state.value.loading = true;
     const { $i18n, $router } = useNuxtApp();
     const route = $router.currentRoute.value;
     const localePath = useLocalePath();
     const runtimeConfig = useRuntimeConfig();
 
-    const canonicalLink = `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
+    const canonicalLink =
+      canonicalOverride && canonicalOverride.trim() !== ''
+        ? canonicalOverride
+        : `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
+
     useHead({
       link: [
         {
@@ -115,6 +123,7 @@ export const useCanonical: UseCanonicalReturn = () => {
         },
       ],
     });
+
     if (productsCatalog.languageUrls) {
       Object.keys(productsCatalog.languageUrls).forEach((key) => {
         useHead({
