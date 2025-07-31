@@ -43,6 +43,9 @@
             <PaymentButtons />
             <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
+
+          <div @click="googlePay">Google Pay</div>
+          <div @click="applePay">Apple Pay</div>
         </div>
       </div>
     </div>
@@ -81,16 +84,22 @@ const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePayme
 
 emit('frontend:beginCheckout', cart.value);
 
+const applePay = async () => {
+  const { data } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
+  console.log(data);
+};
+
+const googlePay = async () => {
+  const { data } = await useSdk().plentysystems.getPayPalGooglePayTransactionInfo({});
+  console.log(data);
+};
+
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
     const { data: cart } = useCart();
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    await Promise.all([
-      useGooglePay().checkIsEligible(),
-      useApplePay().checkIsEligible(),
-      usePayPal().updateAvailableAPMs(currency.value, true),
-    ]);
+    await usePayPal().updateAvailableAPMs(currency.value, true);
     await fetchPaymentMethods();
   }
 };

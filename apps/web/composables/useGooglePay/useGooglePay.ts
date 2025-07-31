@@ -151,11 +151,6 @@ export const useGooglePay = () => {
         const response = await toRaw(state.value.paymentsClient).isReadyToPay(request);
 
         if (response.result) {
-          await useSdk().plentysystems.doHandleAllowPaymentGooglePay({
-            allowedPaymentMethods: toRaw(
-              state.value.googleConfig.allowedPaymentMethods,
-            ) as PayPalGooglePayAllowedPaymentMethod[],
-          });
           return true;
         }
       }

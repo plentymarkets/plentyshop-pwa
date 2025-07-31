@@ -163,9 +163,6 @@ export const useApplePay = () => {
         ApplePaySession.canMakePayments() &&
         state.value.config.isEligible
       ) {
-        await useSdk().plentysystems.doHandleAllowPaymentApplePay({
-          canMakePayments: true,
-        });
         return true;
       }
       return false;

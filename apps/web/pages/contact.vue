@@ -234,6 +234,7 @@ const sendContact = async () => {
     'cf-turnstile-response': turnstile.value,
   };
 
+  /*
   if (await doCustomerContactMail(params)) {
     send({
       type: 'positive',
@@ -241,6 +242,7 @@ const sendContact = async () => {
     });
     resetForm();
   }
+   */
 
   turnstile.value = '';
   turnstileElement.value?.reset();

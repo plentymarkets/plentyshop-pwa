@@ -29,7 +29,7 @@ export const usePayPal = () => {
     loadedConfig: false,
     isAvailable: false,
     isReady: false,
-    activatedAPMs: false,
+    activatedAPMs: '',
     fraudId: null as string | null,
   }));
 
@@ -58,8 +58,8 @@ export const usePayPal = () => {
 
   const updateAvailableAPMs = async (currency: string, commit: boolean = true) => {
     const script = await getScript(currency, commit);
-    if (script && script.getFundingSources && !state.value.activatedAPMs) {
-      state.value.activatedAPMs = true;
+    if (script && script.getFundingSources && state.value.activatedAPMs !== currency) {
+      state.value.activatedAPMs = currency;
       const availableFoundingSources = new Map();
       const fundingSources = script.getFundingSources();
       fundingSources.forEach((fundingSource: string) => {
@@ -67,8 +67,12 @@ export const usePayPal = () => {
           availableFoundingSources.set(fundingSource, script.isFundingEligible(fundingSource as FUNDING_SOURCE));
         }
       });
-      await useSdk().plentysystems.doHandlePayPalPaymentFundingSources({
-        availableFoundingSources: Object.fromEntries(availableFoundingSources),
+
+      availableFoundingSources.set('googlepay', await useGooglePay().checkIsEligible());
+      availableFoundingSources.set('applepay', await useApplePay().checkIsEligible());
+
+      await useSdk().plentysystems.doHandlePayPalFundingSources({
+        availableFundingSources: Object.fromEntries(availableFoundingSources),
       });
     }
   };
