@@ -1,5 +1,5 @@
 import { NodePlopAPI } from 'plop';
-import registerHelpers from './src/helpers/index';
+import { registerDefaultHelpers } from './src/helpers';
 import registerGenerators from './src/generators/index';
 import path from 'path';
 import fs from 'fs';
@@ -13,8 +13,8 @@ const __dirname = path.dirname(__filename);
  * Plop configuration for PlentyONE Shop generators
  */
 export default function (plop: NodePlopAPI): void {
-  // Register handlebars helpers for naming conventions
-  registerHelpers(plop);
+  // Register handlebars helpers using the modern plugin system
+  registerDefaultHelpers(plop, true);
 
   // Load template partials from files
   const partialsDir = path.join(__dirname, 'templates/partials');
