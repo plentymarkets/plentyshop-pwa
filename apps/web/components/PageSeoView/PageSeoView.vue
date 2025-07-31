@@ -219,7 +219,6 @@ const pageRobots = computed({
   },
 });
 
-
 const titleTooltip =
   'Title displayed in search results of search engines. Enter text here to add a prefix before the shop name in the page title (shown as “your text / shop name”).';
 const descTooltip =
