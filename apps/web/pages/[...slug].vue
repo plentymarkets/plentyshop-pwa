@@ -60,9 +60,11 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
+await fetchCategorySettings(categoryGetters.getId(productsCatalog.value.category));
+const canonicalDb = category.value.details?.[0]?.canonicalLink;
+
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
-  await fetchCategorySettings(categoryGetters.getId(productsCatalog.value.category));
 
   if (!productsCatalog.value.category) {
     throw createError({
@@ -71,7 +73,6 @@ const handleQueryUpdate = async () => {
     });
   }
 };
-const canonicalDb = category.value.details?.[0]?.canonicalLink;
 
 await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb));
 
