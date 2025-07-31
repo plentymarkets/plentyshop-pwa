@@ -56,12 +56,12 @@ export abstract class BaseGenerator {
     if (!data) {
       throw new Error(`No data provided for ${this.name} generation`);
     }
-    
+
     const validation = this.validateInput(data);
     if (validation !== true) {
       throw new Error(validation);
     }
-    
+
     return data;
   }
 }

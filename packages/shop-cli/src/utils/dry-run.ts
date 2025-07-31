@@ -2,7 +2,7 @@ import { relative, dirname } from 'path';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import type { NodePlopAPI } from 'plop';
 import type { GeneratorAnswers } from '../types/confirmation';
-import { getProjectBasePath } from './paths';
+import { pathResolver } from '../core/PathResolver';
 import type { Operation } from '../types/dry-run';
 
 /**
@@ -41,7 +41,7 @@ export class DryRunManager {
    * Log a file operation
    */
   logOperation(type: string, path: string, content = ''): void {
-    const relativePath = relative(getProjectBasePath(), path);
+    const relativePath = relative(pathResolver.getProjectRoot(), path);
 
     this.operations.push({
       type,

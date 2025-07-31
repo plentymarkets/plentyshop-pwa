@@ -5,7 +5,7 @@
  */
 
 import type { GeneratorAction, PromptAnswers } from '../types';
-import { getDestinationPath } from '../utils/template-utils';
+import { PathResolver } from './PathResolver';
 
 /**
  * Fluent builder for creating PlopJS actions
@@ -15,21 +15,26 @@ export class ActionBuilder {
   private readonly actions: GeneratorAction[] = [];
   private readonly basePath: string;
   private readonly templatePath: string;
+  private readonly name: string;
+  private readonly generatorType: string;
   private data?: PromptAnswers;
 
   constructor(
-    private readonly generatorType: string,
-    private readonly name: string
+    name: string,
+    generatorType: string,
+    private readonly pathResolver: PathResolver = new PathResolver(),
   ) {
+    this.name = name;
+    this.generatorType = generatorType;
     this.basePath = this.resolveBasePath();
-    this.templatePath = `templates/${generatorType}`;
+    this.templatePath = this.pathResolver.getRelativeTemplatePath(generatorType);
   }
 
   /**
    * Create a new ActionBuilder for a specific generator type
    */
   static forGenerator(type: string, name: string): ActionBuilder {
-    return new ActionBuilder(type, name);
+    return new ActionBuilder(name, type);
   }
 
   /**
@@ -43,11 +48,13 @@ export class ActionBuilder {
   /**
    * Add the main component/composable file
    */
-  addMainFile(options: {
-    template?: string;
-    extension?: string;
-    fileName?: string;
-  } = {}): this {
+  addMainFile(
+    options: {
+      template?: string;
+      extension?: string;
+      fileName?: string;
+    } = {},
+  ): this {
     const {
       template = `${this.generatorType}.${this.getDefaultExtension()}.hbs`,
       fileName = this.getMainFileName(options.extension),
@@ -82,14 +89,13 @@ export class ActionBuilder {
   /**
    * Add test file
    */
-  addTests(options: {
-    template?: string;
-    fileName?: string;
-  } = {}): this {
-    const {
-      template = `${this.generatorType}.spec.ts.hbs`,
-      fileName = this.getTestFileName(),
-    } = options;
+  addTests(
+    options: {
+      template?: string;
+      fileName?: string;
+    } = {},
+  ): this {
+    const { template = `${this.generatorType}.spec.ts.hbs`, fileName = this.getTestFileName() } = options;
 
     this.actions.push({
       type: 'add',
@@ -120,11 +126,7 @@ export class ActionBuilder {
   /**
    * Add a custom file with full control
    */
-  addCustomFile(
-    fileName: string,
-    templateFile: string,
-    customData?: PromptAnswers
-  ): this {
+  addCustomFile(fileName: string, templateFile: string, customData?: PromptAnswers): this {
     this.actions.push({
       type: 'add',
       path: `${this.basePath}/${fileName}`,
@@ -138,11 +140,7 @@ export class ActionBuilder {
   /**
    * Add a file to a custom path (outside the base path)
    */
-  addFileToPath(
-    fullPath: string,
-    templateFile: string,
-    customData?: PromptAnswers
-  ): this {
+  addFileToPath(fullPath: string, templateFile: string, customData?: PromptAnswers): this {
     this.actions.push({
       type: 'add',
       path: fullPath,
@@ -161,24 +159,12 @@ export class ActionBuilder {
   }
 
   /**
-   * Resolve base path based on generator type
+   * Resolve base path using PathResolver
    */
   private resolveBasePath(): string {
-    switch (this.generatorType) {
-      case 'component':
-        return getDestinationPath('component', this.name);
-      case 'ui-component':
-        return getDestinationPath('ui', this.name);
-      case 'composable':
-        return `../../apps/web/composables/${this.name}`;
-      case 'settings':
-        return getDestinationPath('settings', this.name);
-      default:
-        return getDestinationPath(this.generatorType, this.name);
-    }
-  }
-
-  /**
+    const result = this.pathResolver.resolve(this.generatorType, this.name);
+    return result.basePath;
+  } /**
    * Get default file extension based on generator type
    */
   private getDefaultExtension(): string {
@@ -199,7 +185,7 @@ export class ActionBuilder {
    */
   private getMainFileName(extension?: string): string {
     const ext = extension || this.getDefaultExtension();
-    
+
     switch (this.generatorType) {
       case 'component':
       case 'ui-component':

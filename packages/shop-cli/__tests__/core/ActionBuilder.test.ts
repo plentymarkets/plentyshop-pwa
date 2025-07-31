@@ -16,7 +16,7 @@ describe('ActionBuilder', () => {
         .build();
 
       expect(actions).toHaveLength(3);
-      
+
       // Main file
       expect(actions[0]).toEqual({
         type: 'add',
@@ -52,7 +52,7 @@ describe('ActionBuilder', () => {
         .build();
 
       expect(actions).toHaveLength(4);
-      
+
       // Main file
       expect(actions[0]).toEqual({
         type: 'add',
@@ -105,7 +105,7 @@ describe('ActionBuilder', () => {
         .build();
 
       expect(actions).toHaveLength(2);
-      
+
       expect(actions[0]).toEqual({
         type: 'add',
         path: '../../apps/web/components/CustomComponent/README.md',
@@ -132,25 +132,19 @@ describe('ActionBuilder', () => {
 
   describe('Path Resolution', () => {
     it('should resolve component paths correctly', () => {
-      const actions = ActionBuilder.forGenerator('component', 'TestComponent')
-        .addMainFile()
-        .build();
+      const actions = ActionBuilder.forGenerator('component', 'TestComponent').addMainFile().build();
 
       expect(actions[0].path).toMatch(/components\/TestComponent\/{{pascalCase name}}\.vue$/);
     });
 
     it('should resolve ui-component paths correctly', () => {
-      const actions = ActionBuilder.forGenerator('ui-component', 'TestButton')
-        .addMainFile()
-        .build();
+      const actions = ActionBuilder.forGenerator('ui-component', 'TestButton').addMainFile().build();
 
       expect(actions[0].path).toMatch(/components\/ui\/TestButton\/{{pascalCase name}}\.vue$/);
     });
 
     it('should resolve composable paths correctly', () => {
-      const actions = ActionBuilder.forGenerator('composable', 'useTestData')
-        .addMainFile()
-        .build();
+      const actions = ActionBuilder.forGenerator('composable', 'useTestData').addMainFile().build();
 
       expect(actions[0].path).toBe('../../apps/web/composables/useTestData/{{name}}.ts');
     });
@@ -199,7 +193,7 @@ describe('ActionBuilderPresets', () => {
     const customData = { name: 'TestComponent', description: 'A test component' };
     const actions = ActionBuilderPresets.vueComponent('TestComponent', customData);
 
-    actions.forEach(action => {
+    actions.forEach((action) => {
       expect(action.data).toEqual(customData);
     });
   });
@@ -208,19 +202,14 @@ describe('ActionBuilderPresets', () => {
 describe('ActionBuilder Type Safety', () => {
   it('should return correct types for fluent interface', () => {
     const builder = ActionBuilder.forGenerator('component', 'Test');
-    
+
     // These should all return 'this' type for chaining
-    const chainedBuilder = builder
-      .withData({ name: 'Test' })
-      .addMainFile()
-      .addTypes()
-      .addTests()
-      .addIndex();
+    const chainedBuilder = builder.withData({ name: 'Test' }).addMainFile().addTypes().addTests().addIndex();
 
     // Final build should return GeneratorAction[]
     const actions = chainedBuilder.build();
-    
+
     expect(Array.isArray(actions)).toBe(true);
-    expect(actions.every(action => typeof action === 'object')).toBe(true);
+    expect(actions.every((action) => typeof action === 'object')).toBe(true);
   });
 });
