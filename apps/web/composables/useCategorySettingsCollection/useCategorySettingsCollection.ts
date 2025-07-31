@@ -17,7 +17,9 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
       (item) => item.id === category.id && item.details[0].lang === category.details[0].lang,
     );
     if (exists) return;
-
+    if (category.details[0]?.metaRobots === '') {
+      category.details[0].metaRobots = 'ALL';
+    }
     state.value.data.push(category);
     state.value.initialData.push(JSON.parse(JSON.stringify(category)));
   };
@@ -30,7 +32,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const current = state.value.data.find((item) => item.id === id);
     const initial = state.value.initialData.find((item) => item.id === id);
     if (!current || !initial) return false;
-
     return JSON.stringify(current) !== JSON.stringify(initial);
   };
 

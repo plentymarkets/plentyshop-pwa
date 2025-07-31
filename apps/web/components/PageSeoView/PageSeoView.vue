@@ -165,10 +165,10 @@ const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
 const isInSitemap = computed({
   get() {
-    return data.value.sitemap === 'Y';
+    return data.value.sitemap === 'N';
   },
   set(value: boolean) {
-    data.value.sitemap = value ? 'Y' : 'N';
+    data.value.sitemap = value ? 'N' : 'Y';
   },
 });
 
@@ -211,7 +211,8 @@ const robotNames = [
 
 const pageRobots = computed({
   get() {
-    return robotNames.find((option) => option.value === data.value.details[0]?.metaRobots) || null;
+    const current = data.value.details[0]?.metaRobots;
+    return robotNames.find((option) => option.value === current) || robotNames[0];
   },
   set(selectedOption) {
     data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';
