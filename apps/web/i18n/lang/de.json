@@ -517,6 +517,9 @@
       "required": "E-Mail ist erforderlich.",
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln."
     },
+    "orderId": {
+      "required": "Die Bestellnummer ist erforderlich."
+    },
     "maxCharacters": "Geben Sie maximal {max} Zeichen ein.",
     "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "newsletter": {
@@ -1028,7 +1031,9 @@
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
-      "validationFailed": "Die Adresse ist ungültig."
+      "validationFailed": "Die Adresse ist ungültig.",
+      "vatInvalid": "Die USt-IdNr. ist ungültig.",
+      "vatValidationClientBusy": "Der USt-Validierungsdienst ist derzeit nicht verfügbar, bitte versuchen Sie es später erneut."
     },
     "cart": {
       "addToBasket": {
@@ -1049,7 +1054,12 @@
       "unexpectedAddressFormat": "Unerwartetes Adressformat"
     },
     "contactMail": {
-      "failed": "Nachricht konnte nicht gesendet werden."
+      "failed": "Nachricht konnte nicht gesendet werden.",
+      "emailInvalid": "Die E-Mail-Adresse ist ungültig.",
+      "messageInvalid": "Die Nachricht ist ungültig.",
+      "nameInvalid": "Der Name ist ungültig.",
+      "orderIdInvalid": "Die Bestellnummer ist ungültig.",
+      "subjectInvalid": "Der Betreff ist ungültig."
     },
     "coupon": {
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."

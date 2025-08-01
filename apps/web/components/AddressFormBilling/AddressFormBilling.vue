@@ -206,8 +206,15 @@ const showAddressSaveButton = computed(() => editing.value || showNewForm.value)
 const guestHasShippingAsBilling = computed(() => isGuest.value && shippingAsBilling.value);
 
 if (!addAddress && address) {
-  hasCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
-  setValues(address as unknown as Record<string, string>);
+  hasCompany.value = addressToSave.value?.companyName
+    ? true
+    : Boolean(userAddressGetters.getCompanyName(address as Address));
+
+  setValues({
+    ...address,
+    companyName: address?.companyName || addressToSave.value?.companyName || '',
+    vatNumber: address?.vatNumber || addressToSave.value?.vatNumber || '',
+  } as unknown as Record<string, string>);
 
   if (!hasCompany.value) {
     companyName.value = '';
@@ -247,6 +254,7 @@ const validateAndSubmitForm = async () => {
       }
     } finally {
       setBillingSkeleton(false);
+      formIsLoading.value = false;
     }
     if (showNewForm.value) showNewForm.value = false;
   }
