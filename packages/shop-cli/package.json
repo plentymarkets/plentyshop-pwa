@@ -9,13 +9,13 @@
   },
   "scripts": {
     "build": "tsc",
+    "generate": "cross-env NODE_OPTIONS='--import tsx' plop --plopfile=plopfile.ts",
     "test": "vitest --run",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --run --coverage",
     "test:coverage:watch": "vitest --watch --coverage",
     "test:ci": "vitest run --reporter=verbose --coverage",
     "type-check": "tsc --noEmit",
-    "plop": "cross-env NODE_OPTIONS='--import tsx' plop --plopfile=plopfile.ts",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint . --max-warnings 0",
@@ -32,7 +32,7 @@
     "typescript",
     "development-tools"
   ],
-  "author": "PlentyMarkets GmbH",
+  "author": "PlentyONE GmbH",
   "license": "BSD-3-Clause",
   "dependencies": {
     "plop": "^4.0.1"
