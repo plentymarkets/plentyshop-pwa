@@ -67,6 +67,66 @@ npm install
 
 Run `npm run dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
+## Code Generation
+
+This project includes the **PlentyONE Shop CLI** for automated code generation. Use it to create consistent components, composables, and other files following project standards.
+
+### Initialization
+
+From the project root, run `npm run cli:init`
+
+### Available Generators
+
+```bash
+# Generate Vue components
+npx plentyshop generate component
+
+# Generate UI components (Storefront UI patterns)
+npx plentyshop generate ui-component
+
+# Generate Vue composables
+npx plentyshop generate composable
+
+# See all available generators
+npx plentyshop generate
+```
+
+### Generated File Structures
+
+**Components** (`components/ComponentName/`):
+- `ComponentName.vue` - Main component file
+- `types.ts` - TypeScript interfaces
+- `__tests__/ComponentName.spec.ts` - Test file
+
+**UI Components** (`components/ui/ComponentName/`):
+- `ComponentName.vue` - Reusable UI component
+- `types.ts` - TypeScript interfaces  
+- `__tests__/ComponentName.spec.ts` - Test file
+
+**Composables** (`composables/useFeatureName/`):
+- `useFeatureName.ts` - Main composable
+- `types.ts` - TypeScript interfaces
+- `index.ts` - Clean exports
+- `__tests__/useFeatureName.spec.ts` - Test file
+
+### Quick Examples
+
+```bash
+# Create a new product card component
+npx plentyshop generate component
+# Enter: ProductCard
+
+# Create a reusable button UI component
+npx plentyshop generate ui-component
+# Enter: Button
+
+# Create a shopping cart composable
+npx plentyshop generate composable
+# Enter: useShoppingCart
+```
+
+The generators will create all necessary files with proper TypeScript types, test stubs, and follow the project's established patterns.
+
 ## Resources
 
 ### Documentation
