@@ -95,6 +95,7 @@ src/generators/my-generator/
 ### Step 2: Implement the Generator
 
 **my-generator-prompts.ts:**
+
 ```typescript
 import type { GeneratorPrompt } from '../../core';
 
@@ -113,6 +114,7 @@ export const myGeneratorPrompts: GeneratorPrompt[] = [
 ```
 
 **my-generator.ts:**
+
 ```typescript
 import type { NodePlopAPI } from 'plop';
 import { BaseGenerator, ActionBuilder } from '../../core';
@@ -149,6 +151,7 @@ export default function myGenerator(plop: NodePlopAPI): void {
 ```
 
 **index.ts:**
+
 ```typescript
 export { default } from './my-generator';
 ```
@@ -165,17 +168,17 @@ templates/my-generator/
 ```
 
 Example template (`my-generator.vue.hbs`):
+
 ```handlebars
 <template>
-  <div class="{{kebabCase name}}">
+  <div class='{{kebabCase name}}'>
     <!-- Component content -->
   </div>
 </template>
 
-<script setup lang="ts">
-import type { {{pascalCase name}}Props } from './types';
-
-defineProps<{{pascalCase name}}Props>();
+<script setup lang='ts'>
+  import type {
+  {{pascalCase name}}Props } from './types'; defineProps<{{pascalCase name}}Props>();
 </script>
 ```
 
@@ -193,6 +196,7 @@ export class MyGeneratorPathStrategy extends BasePathStrategy {
 ```
 
 Register it in `PathResolver.ts`:
+
 ```typescript
 private registerDefaultStrategies(): void {
   // ... existing strategies
@@ -209,7 +213,7 @@ export function validateMyGeneratorName(name: string): void {
   if (!name || name.trim().length === 0) {
     throw new Error('Generator name is required');
   }
-  
+
   if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(name)) {
     throw new Error('Generator name must be alphanumeric');
   }
@@ -225,7 +229,7 @@ import myGenerator from './my-generator';
 
 export default function (plop: NodePlopAPI): void {
   // ... existing generators
-  
+
   // Load my generator
   myGenerator(plop);
   console.log('🎯 My Generator loaded successfully!');
@@ -300,17 +304,20 @@ npx plentyshop generate my-generator
 ## File Structure Conventions
 
 ### Generator Structure
+
 - Each generator lives in `src/generators/[name]/`
 - Main implementation in `[name].ts`
 - Prompts in `[name]-prompts.ts`
 - Export in `index.ts`
 
 ### Template Structure
+
 - Templates in `templates/[generator-name]/`
 - Use `.hbs` extension for Handlebars templates
 - Follow naming: `[main-file].hbs`, `types.ts.hbs`, `[name].spec.ts.hbs`
 
 ### Test Structure
+
 - Tests in `__tests__/generators/[name]/`
 - Unit tests for generator logic
 - Integration tests for file generation
@@ -319,18 +326,21 @@ npx plentyshop generate my-generator
 ## Best Practices
 
 ### Generator Design
+
 1. **Extend BaseGenerator** - Use the base class for consistency
 2. **Validate Input** - Implement proper validation in `validateInput()`
 3. **Error Handling** - Use the built-in error handling system
 4. **Naming Conventions** - Follow PlentyONE naming patterns
 
 ### Template Design
+
 1. **Use Partials** - Reuse common template parts
 2. **Handlebars Helpers** - Leverage case conversion helpers
 3. **Conditional Content** - Use `{{#if}}` for optional features
 4. **Type Safety** - Generate proper TypeScript interfaces
 
 ### Testing
+
 1. **Unit Tests** - Test generator logic in isolation
 2. **Integration Tests** - Test actual file generation
 3. **Snapshot Tests** - Verify generated file content
@@ -350,20 +360,24 @@ This package is part of the PlentyONE Shop PWA monorepo. Please follow the estab
 ### Common Issues
 
 **Generator not found**
+
 - Ensure the generator is registered in `src/generators/index.ts`
 - Check that the generator exports are correct
 
 **Template errors**
+
 - Verify template syntax and helper usage
 - Check that required data is passed to templates
 
 **Path resolution issues**
+
 - Ensure path strategies are properly configured
 - Verify the generator type is registered in PathResolver
 
 ### Debug Mode
 
 Enable verbose logging:
+
 ```bash
 DEBUG=plop:* npx plentyshop generate
 ```
