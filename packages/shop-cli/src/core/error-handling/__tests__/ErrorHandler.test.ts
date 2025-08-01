@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ErrorHandler, ErrorType } from '../../src/core/error-handling';
+import { ErrorHandler } from '../index';
+import { ErrorType } from '../types';
 
 // Test helper functions to reduce nesting
 const createSuccessfulOperation = () => () => [

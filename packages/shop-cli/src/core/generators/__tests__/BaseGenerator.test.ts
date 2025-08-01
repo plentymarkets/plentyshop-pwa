@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { BaseGenerator } from '../../src/core/BaseGenerator';
-import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../../src/types';
+import { BaseGenerator } from '../index';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '..//types';
 
 // Mock generator for testing
 class TestGenerator extends BaseGenerator {

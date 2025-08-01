@@ -4,8 +4,7 @@
  * Eliminates duplication in manual action array building
  */
 
-import type { GeneratorAction, PromptAnswers } from '../types';
-import { PathResolver } from './PathResolver';
+import { PathResolver, type GeneratorAction, type PromptAnswers } from '../index';
 
 /**
  * Fluent builder for creating PlopJS actions

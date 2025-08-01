@@ -5,9 +5,8 @@
  */
 
 import type { NodePlopAPI } from 'plop';
-import type { GeneratorAction, GeneratorPrompt, PromptAnswers } from '../types';
-import { defaultErrorHandler } from './error-handling';
-import type { ErrorHandler } from './error-handling';
+import type { GeneratorAction, GeneratorPrompt, PromptAnswers } from './types';
+import { defaultErrorHandler, type ErrorHandler } from '../index';
 
 /**
  * Abstract base class for all PlopJS generators

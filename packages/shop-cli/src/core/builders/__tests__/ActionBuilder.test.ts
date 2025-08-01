@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { ActionBuilder, ActionBuilderPresets } from '../../src/core/ActionBuilder';
+import { ActionBuilder, ActionBuilderPresets } from '../index';
 
 describe('ActionBuilder', () => {
   describe('Fluent API', () => {

@@ -5,7 +5,8 @@
  */
 
 import type { NodePlopAPI } from 'plop';
-import { HelperPluginManager, StringCasePlugin, ComposablePlugin, UtilityPlugin } from './plugins';
+import { StringCasePlugin, ComposablePlugin, UtilityPlugin } from './plugins';
+import { HelperPluginManager } from '../core'
 
 /**
  * Register all default helper plugins with a plop instance
@@ -48,14 +49,3 @@ export function createHelperManager(config?: {
 
   return manager;
 }
-
-// Re-export the plugin system for advanced usage
-export { HelperPluginManager, BaseHelperPlugin, StringCasePlugin, ComposablePlugin, UtilityPlugin } from './plugins';
-
-// Re-export types from types directory
-export type {
-  HelperPlugin,
-  PluginManagerConfig,
-  PluginManagerSummary,
-  PluginRegistrationResult,
-} from '../types/helper-plugin-system';

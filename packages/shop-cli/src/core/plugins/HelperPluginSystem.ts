@@ -6,7 +6,7 @@
  */
 
 import type { NodePlopAPI } from 'plop';
-import type { HelperPlugin, PluginManagerConfig, PluginManagerSummary } from '../types/helper-plugin-system';
+import type { HelperPlugin, PluginManagerConfig, PluginManagerSummary } from './types';
 
 /**
  * Base abstract class for helper plugins

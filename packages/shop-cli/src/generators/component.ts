@@ -5,7 +5,7 @@
 
 import type { NodePlopAPI } from 'plop';
 import { BaseGenerator, ActionBuilder } from '../core';
-import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../core';
 import { componentPrompts } from './component-prompts';
 import { validateComponentName } from '../utils/validation';
 

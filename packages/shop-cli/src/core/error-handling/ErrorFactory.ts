@@ -1,5 +1,5 @@
 import { ErrorHandler } from './ErrorHandler';
-import type { ErrorHandlingConfig } from './ErrorHandler';
+import type { ErrorHandlingConfig } from './types';
 
 /**
  * Global error handler instance with default configuration

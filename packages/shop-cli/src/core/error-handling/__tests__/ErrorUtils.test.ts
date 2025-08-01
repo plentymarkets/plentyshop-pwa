@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { ErrorUtils, ErrorType, createErrorHandler } from '../../src/core/error-handling';
-import type { ErrorHandlingConfig } from '../../src/core/error-handling';
+import { ErrorUtils, createErrorHandler } from '../index';
+import { ErrorHandlingConfig, ErrorType } from '../types';
 
 describe('ErrorUtils', () => {
   describe('createErrorInfo', () => {

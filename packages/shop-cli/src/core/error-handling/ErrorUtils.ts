@@ -1,4 +1,4 @@
-import type { ErrorInfo, ErrorType } from './ErrorHandler';
+import type { ErrorInfo, ErrorType } from './types';
 
 /**
  * Utility functions for error handling

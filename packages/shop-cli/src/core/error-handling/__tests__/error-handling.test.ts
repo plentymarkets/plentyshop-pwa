@@ -3,9 +3,9 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { validateComponentName, validateComposableName, validateNotEmpty } from '../../src/utils/validation';
-import { handleGeneratorError } from '../../src/utils/error-handling';
-import { GeneratorError } from '../../src/types/error-handling';
+import { validateComponentName, validateComposableName, validateNotEmpty } from '../../../utils/validation';
+import { handleGeneratorError } from '../utils';
+import { GeneratorError } from '../types';
 
 describe('Error Handling and Validation', () => {
   describe('Input Validation Errors', () => {

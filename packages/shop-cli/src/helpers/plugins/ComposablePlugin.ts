@@ -5,7 +5,7 @@
  */
 
 import type { NodePlopAPI } from 'plop';
-import { BaseHelperPlugin } from '../../core/HelperPluginSystem';
+import { BaseHelperPlugin } from '../../core';
 
 /**
  * Plugin for composable-specific helpers

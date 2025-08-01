@@ -2,7 +2,7 @@
  * Error handling utilities for PlentyONE Shop generators
  */
 
-import type { ErrorDetails, UserFriendlyMessageKey } from '../types/error-handling';
+import type { ErrorDetails, UserFriendlyMessageKey } from './types';
 
 /**
  * Custom error class for generator-specific errors

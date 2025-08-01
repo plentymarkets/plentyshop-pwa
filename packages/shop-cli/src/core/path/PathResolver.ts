@@ -6,7 +6,7 @@
  */
 
 import { join, resolve } from 'node:path';
-import type { PathOptions, PathResult, PathStrategy, PathConfig } from '../types/';
+import type { PathOptions, PathResult, PathStrategy, PathConfig } from './types';
 import {
   ComponentPathStrategy,
   UIComponentPathStrategy,

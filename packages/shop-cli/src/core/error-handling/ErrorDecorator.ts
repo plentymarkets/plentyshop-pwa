@@ -1,5 +1,5 @@
 import type { ActionType } from 'plop';
-import { ErrorHandler, defaultErrorHandler } from './error-handling';
+import { ErrorHandler, defaultErrorHandler } from './index';
 
 /**
  * Simple error wrapper function for generator methods

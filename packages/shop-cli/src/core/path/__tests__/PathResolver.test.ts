@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { PathResolver, pathResolver } from '../../src/core/PathResolver';
-import type { PathConfig, PathOptions } from '../../src/types/path-resolver';
+import { PathResolver, pathResolver } from '../index';
+import type { PathConfig, PathOptions } from '../types';
 
 describe('PathResolver', () => {
   describe('Default Configuration', () => {

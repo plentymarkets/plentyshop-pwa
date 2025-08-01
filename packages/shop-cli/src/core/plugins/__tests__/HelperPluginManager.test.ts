@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { HelperPluginManager, BaseHelperPlugin } from '../../src/core/HelperPluginSystem';
+import { HelperPluginManager, BaseHelperPlugin } from '../index';
 import type { NodePlopAPI } from 'plop';
 
 // Mock plop instance

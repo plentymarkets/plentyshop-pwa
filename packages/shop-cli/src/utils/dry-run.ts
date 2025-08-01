@@ -2,7 +2,7 @@ import { relative, dirname } from 'path';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import type { NodePlopAPI } from 'plop';
 import type { GeneratorAnswers } from '../types/confirmation';
-import { pathResolver } from '../core/PathResolver';
+import { pathResolver } from '../core';
 import type { Operation } from '../types/dry-run';
 
 /**

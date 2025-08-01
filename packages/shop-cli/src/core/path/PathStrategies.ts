@@ -3,7 +3,7 @@
  */
 
 import { join } from 'node:path';
-import type { PathOptions, PathResult, PathStrategy, PathConfig } from '../types/path-resolver';
+import type { PathOptions, PathResult, PathStrategy, PathConfig } from './types';
 
 /**
  * Base strategy for path resolution
