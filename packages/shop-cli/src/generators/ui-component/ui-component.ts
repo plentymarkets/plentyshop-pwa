@@ -5,10 +5,10 @@
  */
 
 import type { NodePlopAPI } from 'plop';
-import { BaseGenerator, ActionBuilder } from '../core';
-import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../core';
+import { BaseGenerator, ActionBuilder } from '../../core';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../../core';
 import { uiComponentPrompts } from './ui-component-prompts';
-import { validateComponentName } from '../utils/validation';
+import { validateComponentName } from '../../utils/validation';
 
 /**
  * UI Component Generator using BaseGenerator pattern

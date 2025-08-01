@@ -3,7 +3,7 @@
  * Enforces Vue.js style guide patterns for base and single-instance components
  */
 
-import { validateComponentName } from '../utils/validation.js';
+import { validateComponentName } from '../../utils/validation';
 
 export const uiComponentPrompts = [
   {

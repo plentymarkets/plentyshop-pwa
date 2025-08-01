@@ -3,7 +3,7 @@
  * Generates Vue composables with API integration patterns
  */
 
-import { validateComposableName } from '../utils/validation.js';
+import { validateComposableName } from '../../utils/validation';
 
 export const composablePrompts = [
   {

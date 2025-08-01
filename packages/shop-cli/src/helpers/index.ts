@@ -6,7 +6,7 @@
 
 import type { NodePlopAPI } from 'plop';
 import { StringCasePlugin, ComposablePlugin, UtilityPlugin } from './plugins';
-import { HelperPluginManager } from '../core'
+import { HelperPluginManager } from '../core';
 
 /**
  * Register all default helper plugins with a plop instance

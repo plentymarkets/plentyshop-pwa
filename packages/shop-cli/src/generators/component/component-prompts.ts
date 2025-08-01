@@ -2,7 +2,7 @@
  * Component generator prompts configuration
  */
 
-import { validateComponentName } from '../utils/validation';
+import { validateComponentName } from '../../utils/validation';
 
 export const componentPrompts = [
   {
