@@ -97,4 +97,16 @@ const search = ref('');
 .v-data-table-footer__info {
   display: none !important;
 }
+
+.v-ripple__container {
+  display: none !important;
+}
+
+div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__next > button:active {
+  background-color: gray;
+}
+
+div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__prev > button:active {
+  background-color: gray;
+}
 </style>
