@@ -1,7 +1,9 @@
 import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
 
-export const getLocaleKey = (key: string, locale: 'en' | 'de'): string => {
+export const getEditorTranslation = (key: string): string => {
   const { $i18n } = useNuxtApp();
+
+  const locale = 'en';
 
   return $i18n.t(key, 0, { locale: locale }) as string;
 };
@@ -10,7 +12,7 @@ export const getMappedOptions = (options: string[], locale: string): SortingOpti
   if (!options) return [];
 
   return options.map((key: string) => ({
-    label: getLocaleKey(`sortType.${key}`, locale as 'en' | 'de'),
+    label: getEditorTranslation(`sortType.${key}`),
     value: key,
   }));
 };
@@ -21,7 +23,7 @@ export const getRecommendedSortingOptions = (locale: string, notSelectedOption: 
     filteredOptions.unshift({ label: 'sortingPriorityCategoryNotSelected', value: 'notSelected' });
   }
   return filteredOptions.map((item: SortingOption) => ({
-    label: getLocaleKey(`sortingAndPagination.recommendedSorting.options.${item.label}`, locale as 'en' | 'de'),
+    label: getEditorTranslation(`sortingAndPagination.recommendedSorting.options.${item.label}`),
     value: item.value,
   }));
 };
