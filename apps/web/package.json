@@ -70,7 +70,7 @@
     "typedoc-plugin-markdown": "^4.7.0",
     "typedoc-vitepress-theme": "1.1.2",
     "vitepress": "^1.2.3",
-    "vitest": "^3.0.5",
+    "vitest": "^3.2.4",
     "vue-tsc": "^3.0.1",
     "vuepress": "^2.0.0-rc.24",
     "vuetify-nuxt-module": "^0.18.7"
