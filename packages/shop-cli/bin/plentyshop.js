@@ -23,7 +23,6 @@ if (command === 'generate') {
     ['cross-env', 'NODE_OPTIONS=--import=tsx', 'plop', '--plopfile', plopfilePath, ...plopArgs],
     {
       stdio: 'inherit',
-      shell: true,
     },
   );
 
