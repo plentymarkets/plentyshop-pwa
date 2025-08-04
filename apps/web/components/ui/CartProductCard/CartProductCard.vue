@@ -24,7 +24,7 @@
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
-        class="w-fit no-underline typography-text-sm sm:typography-text-lg"
+        class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word"
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
@@ -122,7 +122,7 @@
       :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
-      class="absolute top-2 right-2 bg-white"
+      class="top-2 right-2 bg-white items-start h-fit"
       @click="deleteItem"
     >
       <SfIconClose size="sm" />
