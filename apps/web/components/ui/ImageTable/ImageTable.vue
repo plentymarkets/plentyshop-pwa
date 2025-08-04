@@ -21,7 +21,7 @@
       no-data-text="No images found"
     >
       <template #item.name="{ item }">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2" @click="handleRowClick(item)">
           <NuxtImg :src="item.image" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
           <span>{{ item.name }}</span>
         </div>
@@ -30,17 +30,29 @@
   </VCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const emit = defineEmits(['select']);
+const props = defineProps<{
+  selectedName: string | null;
+}>();
 const headers = [
   { title: 'File name', key: 'name' },
   { title: 'Image size', key: 'size' },
   { title: 'Last change', key: 'change' },
 ];
 
+const emit = defineEmits<{
+  (e: 'select', item: { name: string; image: string }): void;
+  (e: 'unselect'): void;
+}>();
+
+const handleRowClick = (item: { name: string; image: string }) => {
+  if (props.selectedName === item.name) {
+    emit('unselect');
+  } else {
+    emit('select', item);
+  }
+};
 const search = ref('');
 const items = [
   {

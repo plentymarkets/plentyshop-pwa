@@ -8,7 +8,7 @@
       <div class="drift-zoom-image">
         <section class="p-4 xl:p-6">
           <div class="grid grid-cols-[2fr_1fr] mt-4">
-            <h1 class="font-bold typography-headline-4" data-testid="product-name">
+            <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
               {{ productGetters.getName(product) }}
             </h1>
             <div class="flex items-center justify-center">
@@ -75,7 +75,8 @@
           />
 
           <ProductAttributes :product="product" />
-          <BundleOrderItems v-if="product.bundleComponents" :product="product" />
+
+          <BundleOrderItems v-if="product.bundleComponents && showBundleComponents" :product="product" />
           <OrderProperties :product="product" />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
@@ -149,6 +150,11 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
+
+const { getSetting } = useSiteSettings('bundleItemDisplay');
+const showBundleComponents = computed(() => {
+  return getSetting() !== '1';
+});
 
 const { showNetPrices } = useCustomer();
 const viewport = useViewport();
