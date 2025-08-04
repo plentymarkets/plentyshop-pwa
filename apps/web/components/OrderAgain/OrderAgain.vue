@@ -51,7 +51,10 @@
             </div>
 
             <div class="ml-3 w-full flex flex-col">
-              <h1 class="w-fit no-underline typography-text-sm sm:typography-text-lg" data-testid="product-name">
+              <h1
+                class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word"
+                data-testid="product-name"
+              >
                 {{ orderGetters.getItemQty(item) }}x {{ orderGetters.getItemName(item) }}
               </h1>
               <Price
