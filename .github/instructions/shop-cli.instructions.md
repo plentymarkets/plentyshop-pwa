@@ -31,6 +31,7 @@ src/core/
 ### Critical Components
 
 #### BaseGenerator (src/core/generators/BaseGenerator.ts)
+
 Abstract base class that all generators must extend:
 
 ```typescript
@@ -40,38 +41,37 @@ export abstract class BaseGenerator {
   abstract getPrompts(): GeneratorPrompt[];
   abstract createActions(data: PromptAnswers): GeneratorAction[];
   abstract validateInput(data: PromptAnswers): void;
-  
-  register(plop: NodePlopAPI): void { /* Registration logic */ }
+
+  register(plop: NodePlopAPI): void {
+    /* Registration logic */
+  }
 }
 ```
 
 **Why this matters**: Ensures all generators follow the same pattern, provides consistent error handling, and enforces validation.
 
 #### ActionBuilder (src/core/builders/ActionBuilder.ts)
+
 Fluent API for building PlopJS actions:
 
 ```typescript
 // Instead of manually building action arrays
-ActionBuilder.forGenerator('component', name)
-  .withData(data)
-  .addMainFile()
-  .addTypes()
-  .addTests()
-  .build()
+ActionBuilder.forGenerator('component', name).withData(data).addMainFile().addTypes().addTests().build();
 
 // Presets for common patterns
-ActionBuilderPresets.vueComponent(name, data)
+ActionBuilderPresets.vueComponent(name, data);
 ```
 
 **Why this matters**: Eliminates duplication, reduces errors, and provides consistent file structures.
 
 #### PathResolver (src/core/path/PathResolver.ts)
+
 Strategy-based path resolution:
 
 ```typescript
 export class PathResolver {
   private readonly strategies = new Map<string, PathStrategy>();
-  
+
   resolve(type: string, name: string, options?: PathOptions): PathResult {
     const strategy = this.strategies.get(type);
     return strategy.resolve(name, options);
@@ -84,13 +84,14 @@ export class PathResolver {
 **Why this matters**: Centralizes path logic, makes it easy to add new generator types, and ensures consistent file placement.
 
 #### Error Handling System (src/core/error-handling/)
+
 Centralized error handling with user-friendly messages:
 
 ```typescript
 export class ErrorHandler {
-  wrapGeneratorExecution(name: string, operation: () => ActionType[], data?: PromptAnswers): ErrorResult<ActionType[]>
-  wrapValidation<T>(operation: () => T, context?: string): ErrorResult<T>
-  wrapFileSystemOperation<T>(operation: () => T, context?: string): ErrorResult<T>
+  wrapGeneratorExecution(name: string, operation: () => ActionType[], data?: PromptAnswers): ErrorResult<ActionType[]>;
+  wrapValidation<T>(operation: () => T, context?: string): ErrorResult<T>;
+  wrapFileSystemOperation<T>(operation: () => T, context?: string): ErrorResult<T>;
 }
 ```
 
@@ -107,8 +108,8 @@ export const generatorPrompts: GeneratorPrompt[] = [
     type: 'input',
     name: 'name',
     message: 'Component name?',
-    validate: validateComponentName
-  }
+    validate: validateComponentName,
+  },
 ];
 
 // 2. Generator class
@@ -144,6 +145,7 @@ export default function componentGenerator(plop: NodePlopAPI): void {
 ### Template System
 
 #### Template Structure
+
 ```
 templates/
 ├── component/          # Vue component templates
@@ -159,6 +161,7 @@ templates/
 ```
 
 #### Handlebars Helpers
+
 Custom helpers provided by the HelperPluginSystem:
 
 - **StringCasePlugin**: `pascalCase`, `camelCase`, `kebabCase`, `snakeCase`, `constantCase`
@@ -166,6 +169,7 @@ Custom helpers provided by the HelperPluginSystem:
 - **UtilityPlugin**: `concat`, `eq`, `includes`
 
 #### Template Partials
+
 Reusable template fragments:
 
 ```handlebars
@@ -178,13 +182,14 @@ Reusable template fragments:
 ### Validation System
 
 #### Centralized Validation (src/utils/validation.ts)
+
 ```typescript
 // Component naming validation
 export function validateComponentName(name: string): void {
   if (!name || name.trim().length === 0) {
     throw new Error('Component name is required');
   }
-  
+
   if (!/^[A-Z][a-zA-Z0-9]*$/.test(name)) {
     throw new Error('Component name must be PascalCase');
   }
@@ -195,7 +200,7 @@ export function validateComposableName(name: string): void {
   if (!name.startsWith('use')) {
     throw new Error('Composable name must start with "use"');
   }
-  
+
   if (!/^use[A-Z][a-zA-Z0-9]*$/.test(name)) {
     throw new Error('Composable name must be camelCase starting with "use"');
   }
@@ -203,6 +208,7 @@ export function validateComposableName(name: string): void {
 ```
 
 #### Project Structure Validation (src/utils/project-validation.ts)
+
 Validates that the CLI is being run in a valid PlentyONE Shop PWA project:
 
 ```typescript
@@ -228,6 +234,7 @@ export function validateProjectStructure(): ValidationResult {
 ### Testing Strategy
 
 #### Test Structure
+
 ```
 __tests__/
 ├── generators/         # Generator-specific tests
@@ -256,6 +263,7 @@ __tests__/
 ### Extension Points
 
 #### Adding New Generators
+
 1. Create generator in `src/generators/[name]/`
 2. Implement BaseGenerator abstract methods
 3. Add path strategy in `src/core/path/PathStrategies.ts`
@@ -264,6 +272,7 @@ __tests__/
 6. Register in `src/generators/index.ts`
 
 #### Adding New Path Strategies
+
 ```typescript
 export class CustomPathStrategy extends BasePathStrategy {
   resolve(name: string, options: PathOptions = {}): PathResult {
@@ -273,11 +282,12 @@ export class CustomPathStrategy extends BasePathStrategy {
 ```
 
 #### Adding New Handlebars Helpers
+
 ```typescript
 export class CustomHelperPlugin extends BaseHelperPlugin {
   readonly name = 'custom';
   readonly helpers = ['customHelper'];
-  
+
   register(plop: NodePlopAPI): void {
     plop.setHelper('customHelper', (value) => {
       // Custom helper logic
@@ -303,18 +313,21 @@ export class CustomHelperPlugin extends BaseHelperPlugin {
 ### Maintenance Guidelines
 
 #### Code Organization
+
 - Keep generators focused and single-purpose
 - Use composition over inheritance where possible
 - Maintain clear separation between core and generator logic
 - Follow TypeScript strict mode conventions
 
 #### Testing Requirements
+
 - All new generators must have comprehensive tests
 - Core changes require both unit and integration tests
 - Template changes should include snapshot tests
 - Error paths must be tested
 
 #### Documentation Standards
+
 - All public APIs must have JSDoc comments
 - Complex algorithms should have inline documentation
 - Changes must update relevant documentation files
@@ -323,6 +336,7 @@ export class CustomHelperPlugin extends BaseHelperPlugin {
 ### Common Patterns & Anti-Patterns
 
 #### ✅ Recommended Patterns
+
 ```typescript
 // Use BaseGenerator for all generators
 class MyGenerator extends BaseGenerator {
@@ -332,10 +346,7 @@ class MyGenerator extends BaseGenerator {
 }
 
 // Use ActionBuilder for action creation
-return ActionBuilder.forGenerator('my-type', name)
-  .withData(data)
-  .addMainFile()
-  .build();
+return ActionBuilder.forGenerator('my-type', name).withData(data).addMainFile().build();
 
 // Use centralized validation
 export function validateMyInput(name: string): void {
@@ -346,6 +357,7 @@ export function validateMyInput(name: string): void {
 ```
 
 #### ❌ Anti-Patterns
+
 ```typescript
 // Don't create generators without BaseGenerator
 function myGenerator(plop: NodePlopAPI) {
@@ -359,8 +371,8 @@ const actions = [
   {
     type: 'add',
     path: 'hardcoded/path/{{name}}.vue',
-    templateFile: 'templates/my-template.hbs'
-  }
+    templateFile: 'templates/my-template.hbs',
+  },
 ];
 
 // Don't inline validation
@@ -372,12 +384,14 @@ if (name.length === 0) {
 ### Debugging & Troubleshooting
 
 #### Common Issues
+
 1. **Template Errors**: Check Handlebars syntax and helper usage
 2. **Path Resolution**: Verify strategy registration and path logic
 3. **Validation Failures**: Ensure validation functions are properly imported
 4. **Generation Failures**: Check file permissions and target directories
 
 #### Debug Tools
+
 - Enable PlopJS debug mode: `DEBUG=plop:* npx plentyshop generate`
 - Use error handler verbose mode for detailed error information
 - Check generated file snapshots in tests for expected output

@@ -90,29 +90,32 @@ The project includes `@plentymarkets/shop-cli` for automated code generation. **
 #### Available Generators
 
 - **Components**: `npx plentyshop generate component` - Generate Vue 3 components with TypeScript, tests, and proper structure
-- **UI Components**: `npx plentyshop generate ui-component` - Generate reusable UI components following Storefront UI patterns  
+- **UI Components**: `npx plentyshop generate ui-component` - Generate reusable UI components following Storefront UI patterns
 - **Composables**: `npx plentyshop generate composable` - Generate Vue 3 composables with TypeScript, tests, and index files
 
 #### When to Use Generators
 
 **Always use generators for:**
+
 - Creating new Vue components in `apps/web/components/`
 - Creating new UI components in `apps/web/components/ui/`
 - Creating new composables in `apps/web/composables/`
 - Any standardized file structures that follow project patterns
 
 **Generator workflow:**
+
 1. Use `run_in_terminal` to execute the appropriate generator command
 2. The generator will prompt for required information interactively
 3. Generated files will include proper TypeScript types, tests, and follow naming conventions
 4. Verify the generated structure matches project standards
 
 **Example usage:**
+
 ```bash
 # Generate a new component
 npx plentyshop generate component
 
-# Generate a UI component  
+# Generate a UI component
 npx plentyshop generate ui-component
 
 # Generate a composable
@@ -130,6 +133,7 @@ npx plentyshop generate composable
 #### Generated File Structure
 
 **Components:**
+
 ```
 components/ComponentName/
 ├── ComponentName.vue      # Main component
@@ -139,6 +143,7 @@ components/ComponentName/
 ```
 
 **UI Components:**
+
 ```
 components/ui/ComponentName/
 ├── ComponentName.vue      # Main UI component
@@ -148,6 +153,7 @@ components/ui/ComponentName/
 ```
 
 **Composables:**
+
 ```
 composables/useFeatureName/
 ├── useFeatureName.ts     # Main composable

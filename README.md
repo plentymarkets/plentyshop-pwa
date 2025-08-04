@@ -94,16 +94,19 @@ npx plentyshop generate
 ### Generated File Structures
 
 **Components** (`components/ComponentName/`):
+
 - `ComponentName.vue` - Main component file
 - `types.ts` - TypeScript interfaces
 - `__tests__/ComponentName.spec.ts` - Test file
 
 **UI Components** (`components/ui/ComponentName/`):
+
 - `ComponentName.vue` - Reusable UI component
-- `types.ts` - TypeScript interfaces  
+- `types.ts` - TypeScript interfaces
 - `__tests__/ComponentName.spec.ts` - Test file
 
 **Composables** (`composables/useFeatureName/`):
+
 - `useFeatureName.ts` - Main composable
 - `types.ts` - TypeScript interfaces
 - `index.ts` - Clean exports
