@@ -4,9 +4,8 @@
 
 import { describe, it, expect, vi } from 'vitest';
 import { BaseGenerator } from '../index';
-import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '..//types';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
 
-// Mock generator for testing
 class TestGenerator extends BaseGenerator {
   readonly name = 'test';
   readonly description = 'Test generator for BaseGenerator pattern';
@@ -76,10 +75,8 @@ describe('BaseGenerator', () => {
 
     generator.register(mockPlop as unknown as Parameters<typeof generator.register>[0]);
 
-    // Verify the generator was registered with correct name
     expect(mockPlop.setGenerator).toHaveBeenCalledWith('test', expect.any(Object));
 
-    // Verify the registered config has the right structure
     const registeredConfig = mockPlop.setGenerator.mock.calls[0][1];
     expect(registeredConfig.description).toBe('Test generator for BaseGenerator pattern');
     expect(Array.isArray(registeredConfig.prompts)).toBe(true);
@@ -95,15 +92,12 @@ describe('BaseGenerator', () => {
 
     generator.register(mockPlop as unknown as Parameters<typeof generator.register>[0]);
 
-    // Get the actions function that was registered
     const registeredConfig = mockPlop.setGenerator.mock.calls[0][1];
     const actionsFunction = registeredConfig.actions;
 
-    // Should return empty array for undefined data (error handling behavior)
     const emptyResult = actionsFunction(undefined);
     expect(emptyResult).toEqual([]);
 
-    // Should work for valid data
     const validData = { name: 'TestComponent' };
     const actions = actionsFunction(validData);
     expect(actions).toHaveLength(1);

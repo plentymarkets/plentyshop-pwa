@@ -91,7 +91,6 @@ describe('createErrorHandler', () => {
 
     expect(handler).toBeDefined();
 
-    // Test that config is applied by checking fail-fast behavior
     const operation = () => {
       throw new Error('Test error');
     };

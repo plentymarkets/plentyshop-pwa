@@ -12,14 +12,12 @@ describe('Project Validation Utilities', () => {
   const testDir = join(process.cwd(), '__test-project');
 
   beforeEach(() => {
-    // Clean up any existing test directory
     if (existsSync(testDir)) {
       rmSync(testDir, { recursive: true, force: true });
     }
   });
 
   afterEach(() => {
-    // Clean up test directory
     if (existsSync(testDir)) {
       rmSync(testDir, { recursive: true, force: true });
     }
@@ -27,8 +25,7 @@ describe('Project Validation Utilities', () => {
 
   describe('validateProjectStructure', () => {
     it('should validate a complete project structure', () => {
-      // Create a mock project structure
-      const requiredPaths = [
+      const mockProjectPaths = [
         'apps/web',
         'apps/server',
         'apps/web/components',
@@ -36,11 +33,10 @@ describe('Project Validation Utilities', () => {
         'apps/web/pages',
       ];
 
-      requiredPaths.forEach((path) => {
+      mockProjectPaths.forEach((path) => {
         mkdirSync(join(testDir, path), { recursive: true });
       });
 
-      // Create required files
       writeFileSync(join(testDir, 'apps/web/nuxt.config.ts'), 'export default {}');
       writeFileSync(join(testDir, 'apps/server/middleware.config.ts'), 'export default {}');
       writeFileSync(join(testDir, 'turbo.json'), '{}');
@@ -51,7 +47,6 @@ describe('Project Validation Utilities', () => {
     });
 
     it('should detect missing project structure', () => {
-      // Create incomplete structure
       mkdirSync(testDir, { recursive: true });
 
       const result = validateProjectStructure(testDir);
@@ -80,7 +75,6 @@ describe('Project Validation Utilities', () => {
       const componentPath = join(testDir, 'ExistingComponent');
       mkdirSync(componentPath, { recursive: true });
 
-      // Create conflicting files
       writeFileSync(join(componentPath, 'ExistingComponent.vue'), '<template></template>');
       writeFileSync(join(componentPath, 'index.ts'), 'export default {}');
 

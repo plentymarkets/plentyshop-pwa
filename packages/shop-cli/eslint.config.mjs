@@ -34,7 +34,6 @@ export default [
       'arrow-parens': ['error', 'always'],
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      // Architecture rules similar to web app but simpler
       complexity: ['error', 10],
       'max-depth': ['error', 4],
       'max-lines': ['error', 300],
@@ -44,13 +43,12 @@ export default [
       'max-params': ['error', 4],
     },
   },
-  // Relaxed rules for test files
   {
     files: ['**/__tests__/**/*.{js,ts}', '**/*.test.{js,ts}', '**/*.spec.{js,ts}'],
     rules: {
-      'max-lines-per-function': ['error', 200], // Relaxed for test files
-      'max-nested-callbacks': ['error', 5], // Relaxed for describe/it nesting
-      'max-lines': ['error', 500], // Relaxed for test files
+      'max-lines-per-function': ['error', 200],
+      'max-nested-callbacks': ['error', 5],
+      'max-lines': ['error', 500],
     },
   },
   prettier,

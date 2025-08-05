@@ -5,7 +5,6 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-// Get __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -13,10 +12,8 @@ const __dirname = path.dirname(__filename);
  * Plop configuration for PlentyONE Shop generators
  */
 export default function (plop: NodePlopAPI): void {
-  // Register handlebars helpers using the modern plugin system
   registerDefaultHelpers(plop, true);
 
-  // Load template partials from files
   const partialsDir = path.join(__dirname, 'templates/partials');
   const partialFiles = fs.readdirSync(partialsDir).filter((file) => file.endsWith('.hbs'));
 
@@ -26,7 +23,6 @@ export default function (plop: NodePlopAPI): void {
     plop.setPartial(partialName, partialContent);
   });
 
-  // Register all generators
   registerGenerators(plop);
 
   console.log('🚀 PlopJS generators ready for PlentyONE Shop');

@@ -41,11 +41,9 @@ describe('Component Generator Output', () => {
       const componentName = mockGeneratorData.component.name;
       const expectedFiles = expectedFilePatterns.component;
 
-      // Mock generating a component
       await createComponentStructure(testDir, componentName, expectedFiles);
       const validationResults = await validateComponentStructure(testDir, componentName, expectedFiles);
 
-      // Validate the results
       for (const result of validationResults) {
         expect(result.hasContent).toBe(true);
         expect(result.containsComponentName).toBe(true);

@@ -15,7 +15,7 @@ export function wrapGeneratorMethod(
     const result = errorHandler.wrapGeneratorExecution(context, operation);
 
     if (!result.success) {
-      return []; // Return empty actions on error
+      return [];
     }
 
     return result.data;

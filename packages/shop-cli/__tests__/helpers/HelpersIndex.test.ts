@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { registerDefaultHelpers, createHelperManager } from '../../src/helpers';
 import type { NodePlopAPI } from 'plop';
 
-// Mock plop instance
 const createMockPlop = (): NodePlopAPI => {
   return {
     setHelper: vi.fn(),
@@ -16,7 +15,6 @@ describe('Helpers Index', () => {
 
       registerDefaultHelpers(mockPlop);
 
-      // Verify that helpers were registered
       expect(mockPlop.setHelper).toHaveBeenCalledWith('pascalCase', expect.any(Function));
       expect(mockPlop.setHelper).toHaveBeenCalledWith('camelCase', expect.any(Function));
       expect(mockPlop.setHelper).toHaveBeenCalledWith('kebabCase', expect.any(Function));
@@ -60,7 +58,6 @@ describe('Helpers Index', () => {
         failOnError: true,
       });
 
-      // The manager should be configured with these options
       expect(manager).toBeDefined();
     });
   });

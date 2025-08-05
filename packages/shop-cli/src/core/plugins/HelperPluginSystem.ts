@@ -29,9 +29,7 @@ export abstract class BaseHelperPlugin implements HelperPlugin {
   /**
    * Default initialization - no-op
    */
-  init(_config?: Record<string, unknown>): void {
-    // Default implementation does nothing
-  }
+  init(_config?: Record<string, unknown>): void {}
 
   /**
    * Helper method to safely register a helper with error handling
@@ -46,10 +44,10 @@ export abstract class BaseHelperPlugin implements HelperPlugin {
 
   /**
    * Check if a helper is already registered
+   * Plop doesn't provide a direct way to check if helpers are registered
+   * This method is provided for potential future use or subclass implementation
    */
   protected isHelperRegistered(_plop: NodePlopAPI, _helperName: string): boolean {
-    // Note: Plop doesn't provide a direct way to check if helpers are registered
-    // This method is provided for potential future use or subclass implementation
     return false;
   }
 }
@@ -83,7 +81,6 @@ export class HelperPluginManager {
       return this;
     }
 
-    // Validate plugin
     if (plugin.validate && !plugin.validate()) {
       const message = `Plugin '${plugin.name}' failed validation`;
       if (this.config.failOnError) {
@@ -93,7 +90,6 @@ export class HelperPluginManager {
       return this;
     }
 
-    // Initialize plugin
     if (plugin.init) {
       plugin.init(this.config.globalConfig);
     }
@@ -123,7 +119,6 @@ export class HelperPluginManager {
       try {
         plugin.register(plop);
 
-        // Track registered helpers
         plugin.helpers.forEach((helper) => this.registeredHelpers.add(helper));
 
         if (this.config.verbose) {

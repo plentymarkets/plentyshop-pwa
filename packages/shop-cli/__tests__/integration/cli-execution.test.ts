@@ -10,12 +10,10 @@ describe('CLI Command Execution', () => {
   let testDir: string;
 
   beforeEach(async () => {
-    // Create a temporary directory for each test
     testDir = await createTempTestDirectory();
   });
 
   afterEach(async () => {
-    // Clean up test directory
     await cleanupTestDirectory(testDir);
   });
 
@@ -49,10 +47,8 @@ describe('CLI Command Execution', () => {
     });
 
     it('should accept generate command and show available generators', async () => {
-      // This test has a longer timeout since it launches the interactive generator selection
       const result = await runCLI(['generate']);
 
-      // Should launch plop interactive interface and show our generators
       expect(result.stdout).toContain('Loading PlentyONE Shop generators');
       expect(result.stdout).toContain('Component generator loaded successfully!');
       expect(result.stdout).toContain('[PLOP] Please choose a generator');
@@ -62,7 +58,6 @@ describe('CLI Command Execution', () => {
     it('should initialize CLI and show help with init command', async () => {
       const result = await runCLI(['init']);
 
-      // Should show initialization message and help
       expect(result.stdout).toContain('PlentyONE Shop CLI initialized successfully!');
       expect(result.stdout).toContain('Usage:');
       expect(result.stdout).toContain('plentyshop generate');

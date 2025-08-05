@@ -44,7 +44,6 @@ describe('Composable Generator Output', () => {
 
       const results = await validateComposableFiles(testDir, composableName, expectedFiles);
 
-      // Validate each file was created with content
       results.forEach((result) => {
         expect(result.content.length).toBeGreaterThan(0);
         expect(result.content).toContain(composableName);

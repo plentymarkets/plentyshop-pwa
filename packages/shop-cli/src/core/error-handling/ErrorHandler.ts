@@ -160,7 +160,6 @@ export class ErrorHandler {
       ],
     });
 
-    // Add context data if available
     if (data && this.config.verbose) {
       errorInfo.context = `${errorInfo.context} | Data: ${JSON.stringify(data, null, 2)}`;
     }

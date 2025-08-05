@@ -101,18 +101,15 @@ function handleNodeError(error: unknown): string | null {
  * Handles and formats different types of errors
  */
 export function handleGeneratorError(error: unknown): string {
-  // Handle GeneratorError instances
   if (error instanceof GeneratorError) {
     return handleGeneratorErrorCode(error);
   }
 
-  // Handle standard Node.js errors
   const nodeErrorMessage = handleNodeError(error);
   if (nodeErrorMessage) {
     return nodeErrorMessage;
   }
 
-  // Generic error handling
   const message = error instanceof Error ? error.message : String(error);
   return `❌ Unexpected error: ${message}`;
 }
@@ -127,7 +124,6 @@ export async function safeExecute<T>(fn: () => Promise<T> | T, _context = 'Gener
     const formattedError = handleGeneratorError(error);
     console.error(`\n${formattedError}\n`);
 
-    // Log detailed error in development
     if (process.env.NODE_ENV === 'development') {
       console.error('Detailed error:', error);
     }

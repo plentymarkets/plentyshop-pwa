@@ -72,8 +72,7 @@ describe('DryRunManager', () => {
     });
 
     it('should detect conflicts for existing files', () => {
-      // Mock existing file
-      const existingPath = process.cwd() + '/README.md'; // Assume this exists
+      const existingPath = process.cwd() + '/README.md';
       dryRunManager.logOperation('create', existingPath, 'content');
 
       const summary = dryRunManager.getSummary();
@@ -108,14 +107,11 @@ describe('DryRunManager', () => {
       dryRunManager.logOperation('create', '/test/Component.vue', 'content');
 
       try {
-        // This might fail due to file system, but operations should still be cleared
         dryRunManager.execute();
       } catch (error) {
-        // Expected for non-existent paths - we're testing that operations get cleared
         expect(error).toBeDefined();
       }
 
-      // Operations should be cleared regardless of success/failure
       expect(dryRunManager.operations).toEqual([]);
     });
   });

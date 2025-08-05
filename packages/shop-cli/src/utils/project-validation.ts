@@ -12,7 +12,6 @@ import type { ValidationResult } from '../types/project-validation';
 export function validateProjectStructure(basePath = process.cwd()): ValidationResult {
   const errors: string[] = [];
 
-  // Check for key project files/directories
   const requiredPaths = [
     'apps/web/nuxt.config.ts',
     'apps/server/middleware.config.ts',
@@ -50,7 +49,6 @@ export function validateComponentDirectory(componentPath: string): ValidationRes
     return { valid: true, message: 'Component directory does not exist (will be created)' };
   }
 
-  // Check for existing files that might conflict
   const componentName = componentPath.split('/').pop();
   const potentialFiles: string[] = [
     join(componentPath, `${componentName}.vue`),

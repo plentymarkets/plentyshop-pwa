@@ -114,9 +114,7 @@ export class DryRunManager {
     try {
       this.operations.forEach((op) => {
         if (op.type === 'create') {
-          // Ensure directory exists
           mkdirSync(dirname(op.path), { recursive: true });
-          // Write file
           writeFileSync(op.path, op.content, 'utf8');
         }
       });
@@ -164,7 +162,6 @@ export function createDryRunAction(type: string) {
       return `Planned: ${type} ${path}`;
     }
 
-    // Normal plop action execution
     if (type === 'add') {
       if (existsSync(path)) {
         throw new Error(`File already exists: ${path}`);

@@ -28,11 +28,6 @@ describe('Template Utilities', () => {
       expect(path).toContain('composables/useProductCart');
     });
 
-    it('returns correct destination paths for settings with category', () => {
-      const path = getDestinationPath('settings', 'ShopConfig', { category: 'shop' });
-      expect(path).toContain('components/settings/shop/ShopConfig');
-    });
-
     it('throws error for unknown generator type', () => {
       expect(() => getDestinationPath('unknown', 'Test')).toThrow('Unknown generator type: unknown');
     });

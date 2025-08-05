@@ -82,7 +82,7 @@ export abstract class BaseGenerator {
     const result = this.errorHandler.wrapGeneratorExecution(this.name, () => {
       const validatedData = this.ensureData(data);
       if (!validatedData) {
-        return []; // Return empty array for graceful degradation
+        return [];
       }
       return this.createActions(validatedData);
     });

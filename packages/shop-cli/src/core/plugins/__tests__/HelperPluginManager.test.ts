@@ -2,14 +2,12 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { HelperPluginManager, BaseHelperPlugin } from '../index';
 import type { NodePlopAPI } from 'plop';
 
-// Mock plop instance
 const createMockPlop = (): NodePlopAPI => {
   return {
     setHelper: vi.fn(),
   } as unknown as NodePlopAPI;
 };
 
-// Test plugin implementation
 class TestPlugin extends BaseHelperPlugin {
   readonly name = 'test-plugin';
   readonly description = 'Test plugin for unit testing';
@@ -21,7 +19,6 @@ class TestPlugin extends BaseHelperPlugin {
   }
 }
 
-// Plugin that fails validation
 class FailingPlugin extends BaseHelperPlugin {
   readonly name = 'failing-plugin';
   readonly description = 'Plugin that fails validation';
@@ -37,7 +34,6 @@ class FailingPlugin extends BaseHelperPlugin {
   }
 }
 
-// Plugin with initialization
 class InitPlugin extends BaseHelperPlugin {
   readonly name = 'init-plugin';
   readonly description = 'Plugin with initialization';
@@ -84,7 +80,7 @@ describe('HelperPluginManager', () => {
     manager.register(plugin2);
 
     expect(manager.getPluginNames()).toEqual(['test-plugin']);
-    expect(manager.getPlugin('test-plugin')).toBe(plugin1); // First one wins
+    expect(manager.getPlugin('test-plugin')).toBe(plugin1);
   });
 
   it('should register multiple plugins', () => {

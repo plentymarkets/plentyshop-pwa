@@ -11,13 +11,10 @@ const __dirname = dirname(__filename);
 const command = process.argv[2];
 
 if (command === 'generate') {
-  // Path to the plopfile for code generation
   const plopfilePath = join(__dirname, '..', 'plopfile.ts');
 
-  // Remove the command from argv when passing to plop
   const plopArgs = process.argv.slice(3);
 
-  // Run plop with our plopfile using tsx for TypeScript support
   const plopProcess = spawn(
     'npx',
     ['cross-env', 'NODE_OPTIONS=--import=tsx', 'plop', '--plopfile', plopfilePath, ...plopArgs],
@@ -30,7 +27,6 @@ if (command === 'generate') {
     process.exit(code || 0);
   });
 } else if (command === 'init') {
-  // Initialize CLI and show help
   console.log(`
 PlentyONE Shop CLI initialized successfully!
 

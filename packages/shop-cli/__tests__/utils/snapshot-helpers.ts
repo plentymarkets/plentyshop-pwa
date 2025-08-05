@@ -59,10 +59,7 @@ export async function createMockSettingsStructure(settingsDir: string, settingsN
 export async function createMockPageStructure(pageDir: string, pageName: string): Promise<void> {
   await mkdir(pageDir, { recursive: true });
 
-  const files = [
-    `${pageName}.vue`,
-    '[slug].vue', // Dynamic page example
-  ];
+  const files = [`${pageName}.vue`, '[slug].vue'];
 
   for (const file of files) {
     await writeFile(join(pageDir, file), `// Mock ${file} content`);

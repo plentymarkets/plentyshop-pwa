@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { StringCasePlugin, ComposablePlugin, UtilityPlugin } from '../../src/helpers/plugins';
 import type { NodePlopAPI } from 'plop';
 
-// Mock plop instance with helper storage
 const createMockPlop = (): NodePlopAPI & { getHelper: (name: string) => (...args: unknown[]) => unknown } => {
   const helpers = new Map<string, (...args: unknown[]) => unknown>();
 

@@ -17,10 +17,8 @@ export function registerDefaultHelpers(plop: NodePlopAPI, verbose = false): void
     failOnError: false,
   });
 
-  // Register all default plugins
   manager.register(new StringCasePlugin()).register(new ComposablePlugin()).register(new UtilityPlugin());
 
-  // Apply all plugins to plop
   manager.applyTo(plop);
 
   if (verbose) {
@@ -42,7 +40,6 @@ export function createHelperManager(config?: {
     failOnError: config?.failOnError ?? false,
   });
 
-  // Optionally include default plugins
   if (config?.includeDefaults !== false) {
     manager.register(new StringCasePlugin()).register(new ComposablePlugin()).register(new UtilityPlugin());
   }

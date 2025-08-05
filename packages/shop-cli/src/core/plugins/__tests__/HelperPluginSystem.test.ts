@@ -2,15 +2,12 @@ import { describe, it, expect, vi } from 'vitest';
 import { BaseHelperPlugin } from '../index';
 import type { NodePlopAPI } from 'plop';
 
-// Mock plop instance
 const createMockPlop = (): NodePlopAPI => {
   return {
     setHelper: vi.fn(),
-    // Add other required methods as needed
   } as unknown as NodePlopAPI;
 };
 
-// Test plugin implementation
 class TestPlugin extends BaseHelperPlugin {
   readonly name = 'test-plugin';
   readonly description = 'Test plugin for unit testing';

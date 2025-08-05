@@ -42,35 +42,30 @@ export class UtilityPlugin extends BaseHelperPlugin {
     this.safeRegister(plop, 'currentYear', () => new Date().getFullYear());
 
     this.safeRegister(plop, 'concat', (...args: unknown[]) => {
-      // Remove the options object (last argument in Handlebars helpers)
-      const values = args.slice(0, -1);
+      const values = this.removeOptionsObject(args);
       return values.join('');
     });
   }
 
   private registerPathHelpers(plop: NodePlopAPI): void {
     this.safeRegister(plop, 'filePath', (...args: unknown[]) => {
-      // Remove the options object (last argument in Handlebars helpers)
-      const parts = args.slice(0, -1) as string[];
+      const parts = this.removeOptionsObject(args);
       return parts.filter(Boolean).join('/');
     });
 
     this.safeRegister(plop, 'importPath', (from: unknown, to: unknown) => {
       if (typeof from !== 'string' || typeof to !== 'string' || !from || !to) return '';
 
-      // If it's in the same directory
-      if (!to.includes('/')) {
-        return `./${to}`;
-      }
-
-      // If it's already a relative path
       if (to.startsWith('./') || to.startsWith('../')) {
         return to;
       }
 
-      // Default to relative path
       return `./${to}`;
     });
+  }
+
+  private removeOptionsObject(args: unknown[]) {
+    return args.slice(0, -1) as string[];
   }
 
   private registerConditionalHelpers(plop: NodePlopAPI): void {

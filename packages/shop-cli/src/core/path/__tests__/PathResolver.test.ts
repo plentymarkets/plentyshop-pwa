@@ -29,7 +29,7 @@ describe('PathResolver', () => {
       expect(result.mainFile).toBe('../../apps/web/components/TestComponent/{{pascalCase name}}.vue');
       expect(result.typesFile).toBe('../../apps/web/components/TestComponent/types.ts');
       expect(result.testFile).toBe('../../apps/web/components/TestComponent/__tests__/{{pascalCase name}}.spec.ts');
-      expect(result.indexFile).toBeUndefined(); // Components don't have index files
+      expect(result.indexFile).toBeUndefined();
       expect(result.files).toHaveLength(3);
     });
 
@@ -130,7 +130,6 @@ describe('PathResolver', () => {
     it('should resolve paths with custom config', () => {
       const result = customResolver.resolve('component', 'TestComponent');
 
-      // Should still provide relative paths from shop-cli perspective
       expect(result.basePath).toBe('../../apps/web/components/TestComponent');
     });
   });

@@ -26,26 +26,17 @@ export function getTemplatePath(generatorType: string): string {
  */
 const GENERATOR_PATHS = {
   component: (webAppPath: string, name: string) => join(webAppPath, 'components', name),
-  ui: (webAppPath: string, name: string) => join(webAppPath, 'components/ui', name),
   composable: (webAppPath: string, name: string) => join(webAppPath, 'composables', name),
-  page: (webAppPath: string) => join(webAppPath, 'pages'),
-  block: (webAppPath: string, name: string) => join(webAppPath, 'components/blocks', name),
   test: (webAppPath: string) => join(webAppPath, '__tests__'),
 } as const;
 
 /**
  * Gets the destination path for a specific generator type
+ * @todo Implement special case for settings which need a category
  */
 export function getDestinationPath(generatorType: string, name: string, options: DestinationOptions = {}): string {
   const { webAppPath = '../../apps/web' } = options;
 
-  // Handle special case for settings which needs category
-  if (generatorType === 'settings') {
-    const { category = 'general' } = options;
-    return join(webAppPath, 'components/settings', category, name);
-  }
-
-  // Use path mapping for other types
   const pathGenerator = GENERATOR_PATHS[generatorType as keyof typeof GENERATOR_PATHS];
   if (pathGenerator) {
     return pathGenerator(webAppPath, name);
@@ -75,7 +66,6 @@ export function createTemplateActions(
       force: false,
     };
 
-    // Add conditional logic if specified
     if (templateFile.condition) {
       action.skip = templateFile.condition;
     }
@@ -238,11 +228,11 @@ export function resolveTemplatePath(generatorType: string, fileName: string): st
 
 /**
  * Validates that required template files exist
+ * @todo Implement validation logic
+ * For now, validation happens during actual generation
  */
 export function validateTemplateFiles(_generatorType: string, _templateFiles: TemplateFile[]): string[] {
   const errors: string[] = [];
-  // Note: In real implementation, we'd validate file existence here
-  // For now, validation happens during actual generation
 
   return errors;
 }

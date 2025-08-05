@@ -134,7 +134,6 @@ export class SettingsPathStrategy extends BasePathStrategy {
       testFileName: '{{pascalCase name}}',
     });
 
-    // Add toolbar trigger for settings
     const relativePath = this.getRelativePath(basePath);
     const triggerFile = `${relativePath}/ToolbarTrigger.vue`;
     result.triggerFile = triggerFile;
@@ -180,7 +179,6 @@ export class BlockPathStrategy extends BasePathStrategy {
       testFileName: '{{pascalCase name}}',
     });
 
-    // Add form component for blocks
     const relativePath = this.getRelativePath(basePath);
     const formFile = `${relativePath}/{{pascalCase name}}Form.vue`;
     result.formFile = formFile;

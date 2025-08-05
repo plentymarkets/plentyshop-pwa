@@ -37,10 +37,8 @@ describe('Generator File Structure Snapshots', () => {
       // Create expected component structure
       await createMockComponentStructure(componentDir, componentName);
 
-      // Generate file tree
       const fileTree = await generateFileTree(componentDir);
 
-      // Snapshot test - this will create/compare against stored snapshot
       expect(fileTree).toMatchSnapshot('component-product-card-structure');
     });
   });

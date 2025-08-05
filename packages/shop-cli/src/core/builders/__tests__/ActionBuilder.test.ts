@@ -17,7 +17,6 @@ describe('ActionBuilder', () => {
 
       expect(actions).toHaveLength(3);
 
-      // Main file
       expect(actions[0]).toEqual({
         type: 'add',
         path: '../../apps/web/components/TestComponent/{{pascalCase name}}.vue',
@@ -25,7 +24,6 @@ describe('ActionBuilder', () => {
         data: { name: 'TestComponent' },
       });
 
-      // Types file
       expect(actions[1]).toEqual({
         type: 'add',
         path: '../../apps/web/components/TestComponent/types.ts',
@@ -33,7 +31,6 @@ describe('ActionBuilder', () => {
         data: { name: 'TestComponent' },
       });
 
-      // Test file
       expect(actions[2]).toEqual({
         type: 'add',
         path: '../../apps/web/components/TestComponent/__tests__/{{pascalCase name}}.spec.ts',
@@ -53,7 +50,6 @@ describe('ActionBuilder', () => {
 
       expect(actions).toHaveLength(4);
 
-      // Main file
       expect(actions[0]).toEqual({
         type: 'add',
         path: '../../apps/web/composables/useTestData/{{name}}.ts',
@@ -61,7 +57,6 @@ describe('ActionBuilder', () => {
         data: { name: 'useTestData' },
       });
 
-      // Types file
       expect(actions[1]).toEqual({
         type: 'add',
         path: '../../apps/web/composables/useTestData/types.ts',
@@ -69,7 +64,6 @@ describe('ActionBuilder', () => {
         data: { name: 'useTestData' },
       });
 
-      // Index file
       expect(actions[2]).toEqual({
         type: 'add',
         path: '../../apps/web/composables/useTestData/index.ts',
@@ -77,7 +71,6 @@ describe('ActionBuilder', () => {
         data: { name: 'useTestData' },
       });
 
-      // Test file
       expect(actions[3]).toEqual({
         type: 'add',
         path: '../../apps/web/composables/useTestData/__tests__/{{name}}.spec.ts',
@@ -179,10 +172,8 @@ describe('ActionBuilder Type Safety', () => {
   it('should return correct types for fluent interface', () => {
     const builder = ActionBuilder.forGenerator('component', 'Test');
 
-    // These should all return 'this' type for chaining
     const chainedBuilder = builder.withData({ name: 'Test' }).addMainFile().addTypes().addTests().addIndex();
 
-    // Final build should return GeneratorAction[]
     const actions = chainedBuilder.build();
 
     expect(Array.isArray(actions)).toBe(true);

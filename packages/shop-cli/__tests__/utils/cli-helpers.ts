@@ -29,9 +29,7 @@ export async function runCLI(args: string[]): Promise<CLIResult> {
     let stdout = '';
     let stderr = '';
 
-    // For interactive commands like 'generate', we need to send input or terminate
     if (args.includes('generate')) {
-      // Send Ctrl+C after a short delay to exit interactive mode
       setTimeout(() => {
         child.stdin.write('\x03'); // Ctrl+C
         child.stdin.end();

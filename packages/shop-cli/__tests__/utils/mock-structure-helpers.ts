@@ -13,6 +13,10 @@ export interface MockFileStructure {
   [path: string]: string | MockFileStructure;
 }
 
+function isNestedDirectoryStructure(content: string | MockFileStructure): content is MockFileStructure {
+  return typeof content === 'object' && !Array.isArray(content);
+}
+
 /**
  * Create a mock file structure in a test directory
  */
@@ -24,11 +28,10 @@ export async function createMockFileStructure(
   for (const [name, content] of Object.entries(structure)) {
     const fullPath = join(basePath, name);
 
-    if (typeof content === 'string') {
-      await testDir.createFile(fullPath, content);
-    } else {
-      // It's a nested directory structure
+    if (isNestedDirectoryStructure(content)) {
       await createMockFileStructure(testDir, content, fullPath);
+    } else {
+      await testDir.createFile(fullPath, content);
     }
   }
 }

@@ -22,7 +22,7 @@ describe('Error Handling and Validation', () => {
 
       for (const name of invalidNames) {
         const result = validateComponentName(name);
-        expect(typeof result).toBe('string'); // Should return error message
+        expect(typeof result).toBe('string');
         expect(result).not.toBe(true);
       }
     });
@@ -39,7 +39,7 @@ describe('Error Handling and Validation', () => {
 
       for (const name of invalidNames) {
         const result = validateComposableName(name);
-        expect(typeof result).toBe('string'); // Should return error message
+        expect(typeof result).toBe('string');
         expect(result).not.toBe(true);
       }
     });
@@ -49,7 +49,7 @@ describe('Error Handling and Validation', () => {
 
       for (const input of emptyInputs) {
         const result = validateNotEmpty(input);
-        expect(typeof result).toBe('string'); // Should return error message
+        expect(typeof result).toBe('string');
         expect(result).not.toBe(true);
       }
     });
@@ -143,8 +143,6 @@ describe('Error Handling and Validation', () => {
 
   describe('Conflict Detection', () => {
     it('should detect existing component conflicts', () => {
-      // This would test the file conflict detection logic
-      // For now, we'll test the concept
       const existingComponents = ['ProductCard', 'UserProfile', 'ShoppingCart'];
       const newComponent = 'ProductCard';
 
@@ -163,7 +161,6 @@ describe('Error Handling and Validation', () => {
 
   describe('Dry Run Validation', () => {
     it('should validate dry run scenarios', () => {
-      // Test that dry run mode would work correctly
       const dryRunData = {
         component: 'TestComponent',
         path: '/test/path',

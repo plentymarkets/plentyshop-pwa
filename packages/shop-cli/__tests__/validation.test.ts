@@ -2,10 +2,8 @@ import { describe, it, expect } from 'vitest';
 import {
   validateComponentName,
   validateComposableName,
-  validatePageName,
   validateDescription,
   validateNotEmpty,
-  validateSettingsCategory,
 } from '../src/utils/validation';
 
 describe('Validation Utilities', () => {
@@ -86,32 +84,6 @@ describe('Validation Utilities', () => {
     });
   });
 
-  describe('validatePageName', () => {
-    it('should accept valid kebab-case names', () => {
-      expect(validatePageName('product-details')).toBe(true);
-      expect(validatePageName('user-profile')).toBe(true);
-      expect(validatePageName('about')).toBe(true);
-      expect(validatePageName('checkout-page-2')).toBe(true);
-    });
-
-    it('should reject invalid formats', () => {
-      expect(validatePageName('ProductDetails')).toContain('kebab-case');
-      expect(validatePageName('product_details')).toContain('kebab-case');
-      expect(validatePageName('product details')).toContain('kebab-case');
-      expect(validatePageName('123product')).toContain('kebab-case');
-    });
-
-    it('should reject reserved route names', () => {
-      expect(validatePageName('api')).toContain('reserved route name');
-      expect(validatePageName('admin')).toContain('reserved route name');
-      expect(validatePageName('login')).toContain('reserved route name');
-    });
-
-    it('should reject names with consecutive hyphens', () => {
-      expect(validatePageName('product--details')).toContain('consecutive hyphens');
-    });
-  });
-
   describe('validateDescription', () => {
     it('should accept valid descriptions', () => {
       expect(validateDescription('This is a valid description for the component')).toBe(true);
@@ -144,20 +116,6 @@ describe('Validation Utilities', () => {
       expect(validateNotEmpty('   ')).toContain('required');
       expect(validateNotEmpty(null)).toContain('required');
       expect(validateNotEmpty(undefined)).toContain('required');
-    });
-  });
-
-  describe('validateSettingsCategory', () => {
-    it('should accept valid category names', () => {
-      expect(validateSettingsCategory('shop-settings')).toBe(true);
-      expect(validateSettingsCategory('user-preferences')).toBe(true);
-      expect(validateSettingsCategory('api')).toBe(true);
-    });
-
-    it('should reject invalid formats', () => {
-      expect(validateSettingsCategory('ShopSettings')).toContain('kebab-case');
-      expect(validateSettingsCategory('shop_settings')).toContain('kebab-case');
-      expect(validateSettingsCategory('123settings')).toContain('kebab-case');
     });
   });
 });

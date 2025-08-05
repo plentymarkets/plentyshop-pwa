@@ -18,12 +18,10 @@ export function createConfirmationPrompt(answers: GeneratorAnswers, actionType =
     },
     default: true,
     when: (answers: GeneratorAnswers) => {
-      // Always show confirmation in dry-run mode
       if (dryRunManager.isDryRun) {
         return true;
       }
 
-      // Show confirmation for potentially destructive operations
       return answers.force || hasComplexOperation(answers);
     },
   };
@@ -51,7 +49,6 @@ export function createForcePrompt(): PromptConfig {
     message: '⚠️  Force overwrite existing files?',
     default: false,
     when: (answers: GeneratorAnswers) => {
-      // Only show if files would conflict
       return wouldHaveConflicts(answers);
     },
   };
@@ -63,7 +60,6 @@ export function createForcePrompt(): PromptConfig {
 function buildOperationSummary(answers: GeneratorAnswers, actionType: string): string {
   const lines = [`📋 ${actionType.charAt(0).toUpperCase() + actionType.slice(1)} Summary:`];
 
-  // Add component/generator specific information
   if (answers.name) {
     lines.push(`   Name: ${answers.name}`);
   }
@@ -76,7 +72,6 @@ function buildOperationSummary(answers: GeneratorAnswers, actionType: string): s
     lines.push(`   Type: ${answers.type}`);
   }
 
-  // Add file information if in dry-run mode
   if (dryRunManager.isDryRun) {
     const summary = dryRunManager.getSummary();
     if (summary !== 'No operations planned.') {
@@ -85,7 +80,6 @@ function buildOperationSummary(answers: GeneratorAnswers, actionType: string): s
     }
   }
 
-  // Add warnings if applicable
   const warnings = buildWarnings(answers);
   if (warnings.length > 0) {
     lines.push('');
@@ -100,20 +94,18 @@ function buildOperationSummary(answers: GeneratorAnswers, actionType: string): s
  * Checks if the operation involves complex or potentially problematic changes
  */
 function hasComplexOperation(answers: GeneratorAnswers): boolean {
-  // Define what constitutes a "complex" operation
   return !!(answers.force || answers.withTests === false || answers.overwrite || answers.generateMultiple);
 }
 
 /**
  * Checks if there would be file conflicts
+ * @todo Implement actual file existence checks for non-dry-run mode
  */
 function wouldHaveConflicts(_answers: GeneratorAnswers): boolean {
   if (dryRunManager.isDryRun) {
     return dryRunManager.hasConflicts();
   }
 
-  // For non-dry-run mode, we'd need to check file existence
-  // This would be implemented based on the specific generator type
   return false;
 }
 
@@ -164,7 +156,6 @@ export function createDestructiveConfirmationPrompt(operation: string): PromptCo
  * Processes confirmation results and sets appropriate flags
  */
 export function processConfirmationAnswers(answers: GeneratorAnswers): GeneratorAnswers {
-  // Handle dry-run mode
   if (answers.dryRun) {
     dryRunManager.enableDryRun();
     console.log('🔍 Running in preview mode...\n');
@@ -172,12 +163,10 @@ export function processConfirmationAnswers(answers: GeneratorAnswers): Generator
     dryRunManager.disableDryRun();
   }
 
-  // Handle force mode
   if (answers.force) {
     console.log('⚠️  Force mode enabled - existing files will be overwritten\n');
   }
 
-  // Validate destructive confirmation if needed
   if (answers.destructiveConfirmation && answers.destructiveConfirmation.toLowerCase() !== 'yes') {
     throw new Error('Operation cancelled by user');
   }

@@ -2,10 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ErrorHandler } from '../index';
 import { ErrorType } from '../types';
 
-// Test helper functions to reduce nesting
-const createSuccessfulOperation = () => () => [
-  'add:test.js:content', // Simple string format for ActionType
-];
+const createSuccessfulOperation = () => () => ['add:test.js:content'];
 
 const createFailingOperation = (message: string) => () => {
   throw new Error(message);
