@@ -1,5 +1,6 @@
 import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
+import { stripChildren } from '~/utils/stripChildren';
 
 export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
@@ -23,15 +24,18 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   };
 
   const hasChanges = computed(() => {
-    return JSON.stringify(state.value.data) !== JSON.stringify(state.value.initialData);
+    const dataNoChildren = stripChildren(state.value.data);
+    const initialNoChildren = stripChildren(state.value.initialData);
+    return JSON.stringify(dataNoChildren) !== JSON.stringify(initialNoChildren);
   });
 
   const isCategoryDirty = (id: number) => {
     const current = state.value.data.find((item) => item.id === id);
     const initial = state.value.initialData.find((item) => item.id === id);
     if (!current || !initial) return false;
-
-    return JSON.stringify(current) !== JSON.stringify(initial);
+    const currentNoChildren = stripChildren(current);
+    const initialNoChildren = stripChildren(initial);
+    return JSON.stringify(currentNoChildren) !== JSON.stringify(initialNoChildren);
   };
 
   const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
