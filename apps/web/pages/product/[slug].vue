@@ -30,9 +30,7 @@
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
-        <NuxtLazyHydrate when-visible>
-          <RecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
-        </NuxtLazyHydrate>
+        <LazyRecommendedProducts hydrate-on-visible :category-id="productGetters.getCategoryIds(product)[0]" />
       </section>
     </NarrowContainer>
 
