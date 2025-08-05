@@ -164,13 +164,10 @@ const { getCategoryId } = useCategoryIdHelper();
 
 const { data, loading, fetchCategorySettings } = useCategorySettings();
 const isInSitemap = computed({
-  get() {
-    return data.value.sitemap === 'N';
-  },
-  set(value: boolean) {
-    data.value.sitemap = value ? 'N' : 'Y';
-  },
+  get: () => data.value.sitemap === 'Y',
+  set: (val: boolean) => (data.value.sitemap = val ? 'Y' : 'N'),
 });
+
 
 watch(
   getCategoryId,
@@ -210,14 +207,10 @@ const robotNames = [
 ];
 
 const pageRobots = computed({
-  get() {
-    const current = data.value.details[0]?.metaRobots;
-    return robotNames.find((option) => option.value === current) || robotNames[0];
-  },
-  set(selectedOption) {
-    data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';
-  },
+  get: () => robotNames.find((robot) => robot.value === data.value.details[0].metaRobots) || robotNames[0],
+  set: (val) => { data.value.details[0].metaRobots = val.value }
 });
+
 
 const titleTooltip =
   'Title displayed in search results of search engines. Enter text here to add a prefix before the shop name in the page title (shown as “your text / shop name”).';

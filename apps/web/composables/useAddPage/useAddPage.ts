@@ -171,6 +171,8 @@ export const useAddPageModal = () => {
       name: pageName?.value || '',
       type: pageType.value.value,
       parentCategoryId: categoryEntryGetters.getId(parentPage.value) || null,
+      sitemap: 'Y',
+      metaRobots: 'ALL'
     });
 
     addNewPageToTree(newCategory.value);
