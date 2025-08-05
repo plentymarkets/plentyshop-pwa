@@ -18,6 +18,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
       (item) => item.id === category.id && item.details[0].lang === category.details[0].lang,
     );
     if (exists) return;
+
     state.value.data.push(category);
     state.value.initialData.push(JSON.parse(JSON.stringify(category)));
   };

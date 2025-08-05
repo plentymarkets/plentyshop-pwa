@@ -172,7 +172,7 @@ export const useAddPageModal = () => {
       type: pageType.value.value,
       parentCategoryId: categoryEntryGetters.getId(parentPage.value) || null,
       sitemap: 'Y',
-      metaRobots: 'ALL'
+      metaRobots: 'ALL',
     });
 
     addNewPageToTree(newCategory.value);

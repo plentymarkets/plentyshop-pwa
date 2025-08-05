@@ -168,7 +168,6 @@ const isInSitemap = computed({
   set: (val: boolean) => (data.value.sitemap = val ? 'Y' : 'N'),
 });
 
-
 watch(
   getCategoryId,
   async (newId: number | undefined) => {
@@ -208,9 +207,10 @@ const robotNames = [
 
 const pageRobots = computed({
   get: () => robotNames.find((robot) => robot.value === data.value.details[0].metaRobots) || robotNames[0],
-  set: (val) => { data.value.details[0].metaRobots = val.value }
+  set: (val) => {
+    data.value.details[0].metaRobots = val.value;
+  },
 });
-
 
 const titleTooltip =
   'Title displayed in search results of search engines. Enter text here to add a prefix before the shop name in the page title (shown as “your text / shop name”).';
