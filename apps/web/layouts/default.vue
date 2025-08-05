@@ -9,8 +9,8 @@
     </main>
     <Cookiebar />
     <LazyPreviewMode hydrate-on-idle />
-    <LazyFooterBlock hydrate-on-visible v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-    <LazyUiFooter hydrate-on-visible v-if="!runtimeConfig.public.isDev" />
+    <LazyFooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" hydrate-on-visible />
+    <LazyUiFooter v-if="!runtimeConfig.public.isDev" hydrate-on-visible />
     <LazyQuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
