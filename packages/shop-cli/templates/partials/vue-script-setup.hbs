@@ -1,0 +1,9 @@
+{{!-- 
+  Vue component script setup block
+  Usage: {{> vue-script-setup name="ComponentName"}}
+--}}
+<script setup lang="ts">
+import type { {{pascalCase name}}Props } from './types';
+
+defineProps<{{pascalCase name}}Props>();
+</script>

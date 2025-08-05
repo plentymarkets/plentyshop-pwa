@@ -81,6 +81,81 @@ npm run lint:fix     # Auto-fix linting issues
 - `apps/web/composables/` - Business logic and API interactions
 - `turbo.json` - Monorepo task pipeline configuration
 
+## Code Generation & CLI Tools
+
+### PlentyONE Shop CLI
+
+The project includes `@plentymarkets/shop-cli` for automated code generation. **Always use the CLI generators** when asked to create components, composables, or other standardized files.
+
+#### Available Generators
+
+- **Components**: `npx plentyshop generate component` - Generate Vue 3 components with TypeScript, tests, and proper structure
+- **Composables**: `npx plentyshop generate composable` - Generate Vue 3 composables with TypeScript, tests, and index files
+
+#### When to Use Generators
+
+**Always use generators for:**
+
+- Creating new Vue components in `apps/web/components/`
+- Creating new composables in `apps/web/composables/`
+- Any standardized file structures that follow project patterns
+
+**Generator workflow:**
+
+1. Use `run_in_terminal` to execute the appropriate generator command
+2. The generator will prompt for required information interactively
+3. Generated files will include proper TypeScript types, tests, and follow naming conventions
+4. Verify the generated structure matches project standards
+
+**Example usage:**
+
+```bash
+# Generate a new component
+npx plentyshop generate component
+
+# Generate a composable
+npx plentyshop generate composable
+```
+
+#### CLI Features
+
+- **Input Validation**: Enforces PlentyONE naming conventions
+- **Conflict Detection**: Prevents overwriting existing files
+- **TypeScript Support**: Generates proper types and interfaces
+- **Test Generation**: Creates test files with basic structure
+- **Consistent Structure**: Follows established project patterns
+
+#### Generated File Structure
+
+**Components:**
+
+```
+components/ComponentName/
+├── ComponentName.vue      # Main component
+├── types.ts              # TypeScript interfaces
+└── __tests__/
+    └── ComponentName.spec.ts
+```
+
+**Composables:**
+
+```
+composables/useFeatureName/
+├── useFeatureName.ts     # Main composable
+├── types.ts             # TypeScript interfaces
+├── index.ts             # Clean exports
+└── __tests__/
+    └── useFeatureName.spec.ts
+```
+
+#### CLI Integration Rules
+
+1. **Before creating files manually**, check if a generator exists
+2. **Use generators as the first option** for any standardized code creation
+3. **Run from the project root** for proper path resolution
+4. **Follow prompts carefully** to ensure proper naming and structure
+5. **Verify generated files** match the expected structure and conventions
+
 ## Common Gotchas
 
 - Environment variables must be set in `apps/web/.env` (not root)

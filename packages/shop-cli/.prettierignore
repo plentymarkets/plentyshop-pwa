@@ -1,0 +1,7 @@
+node_modules
+.turbo
+dist
+coverage
+*.min.js
+*.min.css
+templates/
