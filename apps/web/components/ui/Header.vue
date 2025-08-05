@@ -149,7 +149,7 @@
       </UiButton>
     </div>
   </MegaMenu>
-  <LanguageSelector />
+  <LazyLanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
