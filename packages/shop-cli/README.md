@@ -27,7 +27,6 @@ npx plentyshop generate
 
 # Generate specific types
 npx plentyshop generate component
-npx plentyshop generate ui-component
 npx plentyshop generate composable
 
 # Get help
@@ -39,7 +38,6 @@ npx plentyshop --help
 ### ✅ Production Ready
 
 - **component** - Generate Vue 3 components with TypeScript, tests, and proper structure
-- **ui-component** - Generate reusable UI components following Storefront UI patterns
 - **composable** - Generate Vue 3 composables with TypeScript, tests, and index files
 
 ### 🚧 Planned (Future Releases)

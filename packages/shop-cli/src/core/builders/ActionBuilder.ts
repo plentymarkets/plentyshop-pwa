@@ -169,7 +169,6 @@ export class ActionBuilder {
   private getDefaultExtension(): string {
     switch (this.generatorType) {
       case 'component':
-      case 'ui-component':
       case 'settings':
         return 'vue';
       case 'composable':
@@ -187,7 +186,6 @@ export class ActionBuilder {
 
     switch (this.generatorType) {
       case 'component':
-      case 'ui-component':
         return `{{pascalCase name}}.${ext}`;
       case 'composable':
         return `{{name}}.${ext}`;
@@ -202,7 +200,6 @@ export class ActionBuilder {
   private getTestFileName(): string {
     switch (this.generatorType) {
       case 'component':
-      case 'ui-component':
         return '{{pascalCase name}}.spec.ts';
       case 'composable':
         return '{{name}}.spec.ts';
@@ -229,18 +226,6 @@ export class ActionBuilderPresets {
   }
 
   /**
-   * UI component with types and tests
-   */
-  static uiComponent(name: string, data?: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('ui-component', name)
-      .withData(data || { name })
-      .addMainFile()
-      .addTypes()
-      .addTests()
-      .build();
-  }
-
-  /**
    * Composable with types, index, and tests
    */
   static composable(name: string, data?: PromptAnswers): GeneratorAction[] {
@@ -249,18 +234,6 @@ export class ActionBuilderPresets {
       .addMainFile()
       .addTypes()
       .addIndex()
-      .addTests()
-      .build();
-  }
-
-  /**
-   * Settings component with types and tests
-   */
-  static settingsComponent(name: string, data?: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('settings', name)
-      .withData(data || { name })
-      .addMainFile()
-      .addTypes()
       .addTests()
       .build();
   }

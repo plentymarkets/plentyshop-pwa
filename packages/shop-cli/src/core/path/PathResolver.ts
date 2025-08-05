@@ -9,7 +9,6 @@ import { join, resolve } from 'node:path';
 import type { PathOptions, PathResult, PathStrategy, PathConfig } from './types';
 import {
   ComponentPathStrategy,
-  UIComponentPathStrategy,
   ComposablePathStrategy,
   SettingsPathStrategy,
   PagePathStrategy,
@@ -59,7 +58,6 @@ export class PathResolver {
    */
   private registerDefaultStrategies(): void {
     this.strategies.set('component', new ComponentPathStrategy(this.config));
-    this.strategies.set('ui-component', new UIComponentPathStrategy(this.config));
     this.strategies.set('composable', new ComposablePathStrategy(this.config));
     this.strategies.set('settings', new SettingsPathStrategy(this.config));
     this.strategies.set('page', new PagePathStrategy(this.config));

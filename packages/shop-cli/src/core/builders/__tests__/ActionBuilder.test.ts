@@ -137,12 +137,6 @@ describe('ActionBuilder', () => {
       expect(actions[0].path).toMatch(/components\/TestComponent\/{{pascalCase name}}\.vue$/);
     });
 
-    it('should resolve ui-component paths correctly', () => {
-      const actions = ActionBuilder.forGenerator('ui-component', 'TestButton').addMainFile().build();
-
-      expect(actions[0].path).toMatch(/components\/ui\/TestButton\/{{pascalCase name}}\.vue$/);
-    });
-
     it('should resolve composable paths correctly', () => {
       const actions = ActionBuilder.forGenerator('composable', 'useTestData').addMainFile().build();
 
@@ -161,15 +155,6 @@ describe('ActionBuilderPresets', () => {
     expect(actions[2].templateFile).toBe('templates/component/component.spec.ts.hbs');
   });
 
-  it('should create ui component preset', () => {
-    const actions = ActionBuilderPresets.uiComponent('TestButton');
-
-    expect(actions).toHaveLength(3);
-    expect(actions[0].templateFile).toBe('templates/ui-component/ui-component.vue.hbs');
-    expect(actions[1].templateFile).toBe('templates/ui-component/types.ts.hbs');
-    expect(actions[2].templateFile).toBe('templates/ui-component/ui-component.spec.ts.hbs');
-  });
-
   it('should create composable preset', () => {
     const actions = ActionBuilderPresets.composable('useTestData');
 
@@ -178,15 +163,6 @@ describe('ActionBuilderPresets', () => {
     expect(actions[1].templateFile).toBe('templates/composable/types.ts.hbs');
     expect(actions[2].templateFile).toBe('templates/composable/index.ts.hbs');
     expect(actions[3].templateFile).toBe('templates/composable/composable.spec.ts.hbs');
-  });
-
-  it('should create settings component preset', () => {
-    const actions = ActionBuilderPresets.settingsComponent('TestSetting');
-
-    expect(actions).toHaveLength(3);
-    expect(actions[0].templateFile).toBe('templates/settings/settings.vue.hbs');
-    expect(actions[1].templateFile).toBe('templates/settings/types.ts.hbs');
-    expect(actions[2].templateFile).toBe('templates/settings/settings.spec.ts.hbs');
   });
 
   it('should accept custom data in presets', () => {

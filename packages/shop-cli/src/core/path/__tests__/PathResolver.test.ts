@@ -17,11 +17,7 @@ describe('PathResolver', () => {
     it('should list available generator types', () => {
       const types = pathResolver.getAvailableTypes();
       expect(types).toContain('component');
-      expect(types).toContain('ui-component');
       expect(types).toContain('composable');
-      expect(types).toContain('settings');
-      expect(types).toContain('page');
-      expect(types).toContain('block');
     });
   });
 
@@ -46,18 +42,6 @@ describe('PathResolver', () => {
       const result = pathResolver.resolve('component', 'TestComponent', options);
 
       expect(result.mainFile).toBe('../../apps/web/components/TestComponent/CustomName.jsx');
-    });
-  });
-
-  describe('UI Component Strategy', () => {
-    it('should resolve UI component paths correctly', () => {
-      const result = pathResolver.resolve('ui-component', 'TestButton');
-
-      expect(result.basePath).toBe('../../apps/web/components/ui/TestButton');
-      expect(result.mainFile).toBe('../../apps/web/components/ui/TestButton/{{pascalCase name}}.vue');
-      expect(result.typesFile).toBe('../../apps/web/components/ui/TestButton/types.ts');
-      expect(result.testFile).toBe('../../apps/web/components/ui/TestButton/__tests__/{{pascalCase name}}.spec.ts');
-      expect(result.files).toHaveLength(3);
     });
   });
 

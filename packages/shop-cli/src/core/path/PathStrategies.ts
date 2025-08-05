@@ -96,26 +96,6 @@ export class ComponentPathStrategy extends BasePathStrategy {
 }
 
 /**
- * UI Component path strategy
- */
-export class UIComponentPathStrategy extends BasePathStrategy {
-  resolve(name: string, options: PathOptions = {}): PathResult {
-    const basePath = join(this.config.webAppRoot, 'components/ui', name);
-    const mainFileName = options.fileName || `{{pascalCase name}}`;
-    const extension = options.extension || 'vue';
-
-    return this.buildFileStructure(basePath, name, {
-      mainFileExtension: extension,
-      mainFileName,
-      includeTypes: true,
-      includeIndex: false,
-      includeTests: true,
-      testFileName: '{{pascalCase name}}',
-    });
-  }
-}
-
-/**
  * Composable path strategy
  */
 export class ComposablePathStrategy extends BasePathStrategy {

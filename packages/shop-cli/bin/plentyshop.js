@@ -40,15 +40,10 @@ Usage:
   plentyshop --help                     Show this help
 
 Available generators:
-  - ui-component    Generate a new UI component
   - component       Generate a new Vue component
   - composable      Generate a new Vue composable
-  - page            Generate a new Nuxt page
-  - utils           Generate utility functions
-  - types           Generate TypeScript type definitions
 
 Examples:
-  plentyshop generate ui-component
   plentyshop generate component
   `);
   process.exit(0);
@@ -62,15 +57,10 @@ Usage:
   plentyshop --help                     Show this help
 
 Available generators:
-  - ui-component    Generate a new UI component
   - component       Generate a new Vue component
   - composable      Generate a new Vue composable
-  - page            Generate a new Nuxt page
-  - utils           Generate utility functions
-  - types           Generate TypeScript type definitions
 
 Examples:
-  plentyshop generate ui-component
   plentyshop generate component
   `);
 }

@@ -81,9 +81,6 @@ From the project root, run `npm run cli:init`
 # Generate Vue components
 npx plentyshop generate component
 
-# Generate UI components (Storefront UI patterns)
-npx plentyshop generate ui-component
-
 # Generate Vue composables
 npx plentyshop generate composable
 
@@ -96,12 +93,6 @@ npx plentyshop generate
 **Components** (`components/ComponentName/`):
 
 - `ComponentName.vue` - Main component file
-- `types.ts` - TypeScript interfaces
-- `__tests__/ComponentName.spec.ts` - Test file
-
-**UI Components** (`components/ui/ComponentName/`):
-
-- `ComponentName.vue` - Reusable UI component
 - `types.ts` - TypeScript interfaces
 - `__tests__/ComponentName.spec.ts` - Test file
 
@@ -118,10 +109,6 @@ npx plentyshop generate
 # Create a new product card component
 npx plentyshop generate component
 # Enter: ProductCard
-
-# Create a reusable button UI component
-npx plentyshop generate ui-component
-# Enter: Button
 
 # Create a shopping cart composable
 npx plentyshop generate composable

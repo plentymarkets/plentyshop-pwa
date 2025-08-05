@@ -34,25 +34,6 @@ export async function createMockComponentStructure(componentDir: string, compone
   }
 }
 
-export async function createMockUIComponentStructure(componentDir: string, componentName: string): Promise<void> {
-  await mkdir(componentDir, { recursive: true });
-  await mkdir(join(componentDir, '__tests__'), { recursive: true });
-  await mkdir(join(componentDir, 'variants'), { recursive: true });
-
-  const files = [
-    `${componentName}.vue`,
-    'types.ts',
-    'index.ts',
-    `__tests__/${componentName}.spec.ts`,
-    'variants/Primary.vue',
-    'variants/Secondary.vue',
-  ];
-
-  for (const file of files) {
-    await writeFile(join(componentDir, file), `// Mock ${file} content`);
-  }
-}
-
 export async function createMockComposableStructure(composableDir: string, composableName: string): Promise<void> {
   await mkdir(composableDir, { recursive: true });
   await mkdir(join(composableDir, '__tests__'), { recursive: true });

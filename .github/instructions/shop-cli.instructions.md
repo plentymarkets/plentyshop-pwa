@@ -79,7 +79,7 @@ export class PathResolver {
 }
 ```
 
-**Path Strategies**: ComponentPathStrategy, UIComponentPathStrategy, ComposablePathStrategy, etc.
+**Path Strategies**: ComponentPathStrategy, ComposablePathStrategy, etc.
 
 **Why this matters**: Centralizes path logic, makes it easy to add new generator types, and ensures consistent file placement.
 
@@ -153,7 +153,6 @@ templates/
 │   ├── types.ts.hbs
 │   └── component.spec.ts.hbs
 ├── composable/         # Composable templates
-├── ui-component/       # UI component templates
 └── partials/          # Shared template parts
     ├── jsdoc.hbs
     ├── typescript-interface.hbs
@@ -239,7 +238,6 @@ export function validateProjectStructure(): ValidationResult {
 __tests__/
 ├── generators/         # Generator-specific tests
 │   ├── component/
-│   ├── ui-component/
 │   └── composable/
 ├── core/              # Core module tests
 │   ├── builders/

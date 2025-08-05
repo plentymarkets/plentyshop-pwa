@@ -1,56 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Generator File Structure Snapshots > Component Structure Snapshots > should match expected UI component structure > ui-component-button-structure 1`] = `
-{
-  "children": [
-    {
-      "name": "Button.vue",
-      "size": 26,
-      "type": "file",
-    },
-    {
-      "children": [
-        {
-          "name": "Button.spec.ts",
-          "size": 40,
-          "type": "file",
-        },
-      ],
-      "name": "__tests__",
-      "type": "directory",
-    },
-    {
-      "name": "index.ts",
-      "size": 24,
-      "type": "file",
-    },
-    {
-      "name": "types.ts",
-      "size": 24,
-      "type": "file",
-    },
-    {
-      "children": [
-        {
-          "name": "Primary.vue",
-          "size": 36,
-          "type": "file",
-        },
-        {
-          "name": "Secondary.vue",
-          "size": 38,
-          "type": "file",
-        },
-      ],
-      "name": "variants",
-      "type": "directory",
-    },
-  ],
-  "name": "Button",
-  "type": "directory",
-}
-`;
-
 exports[`Generator File Structure Snapshots > Component Structure Snapshots > should match expected component file structure > component-product-card-structure 1`] = `
 {
   "children": [

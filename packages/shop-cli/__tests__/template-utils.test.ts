@@ -23,11 +23,6 @@ describe('Template Utilities', () => {
       expect(path).toContain('components/ProductCard');
     });
 
-    it('returns correct destination paths for UI components', () => {
-      const path = getDestinationPath('ui', 'Button');
-      expect(path).toContain('components/ui/Button');
-    });
-
     it('returns correct destination paths for composables', () => {
       const path = getDestinationPath('composable', 'useProductCart');
       expect(path).toContain('composables/useProductCart');

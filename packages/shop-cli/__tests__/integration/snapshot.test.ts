@@ -9,7 +9,6 @@ import {
   createSnapshotTestDirectory,
   cleanupTestDirectory,
   createMockComponentStructure,
-  createMockUIComponentStructure,
   createMockComposableStructure,
   createMockSettingsStructure,
   createMockPageStructure,
@@ -43,16 +42,6 @@ describe('Generator File Structure Snapshots', () => {
 
       // Snapshot test - this will create/compare against stored snapshot
       expect(fileTree).toMatchSnapshot('component-product-card-structure');
-    });
-
-    it('should match expected UI component structure', async () => {
-      const componentName = 'Button';
-      const componentDir = join(testWebAppPath, 'components', 'ui', componentName);
-
-      await createMockUIComponentStructure(componentDir, componentName);
-
-      const fileTree = await generateFileTree(componentDir);
-      expect(fileTree).toMatchSnapshot('ui-component-button-structure');
     });
   });
 
