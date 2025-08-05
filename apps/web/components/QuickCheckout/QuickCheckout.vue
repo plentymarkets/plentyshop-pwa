@@ -41,7 +41,7 @@
           class="mb-3"
         />
         <div class="flex mb-1">
-          <h1 class="font-bold typography-headline-4" data-testid="product-name">
+          <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
             {{ productGetters.getName(props.product) }}
           </h1>
         </div>
