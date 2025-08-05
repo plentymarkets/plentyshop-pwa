@@ -34,7 +34,7 @@
         <ul
           class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
           @blur="
-            (event) => {
+            (event: FocusEvent) => {
               if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
                 close();
               }
@@ -219,16 +219,18 @@ const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
-const { headerBackgroundColor } = useSiteConfiguration();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const { setDrawerOpen } = useDrawerState();
+const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
   onClose: close,
   placement: 'bottom-start',
   middleware: [],
 });
+
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const isTouchDevice = ref(false);
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));

@@ -149,29 +149,32 @@
       </UiButton>
     </div>
   </MegaMenu>
-  <LazyLanguageSelector hydrate-on-idle />
-  <NuxtLazyHydrate when-idle>
-    <UiModal
-      v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
-      v-model="isAuthenticationOpen"
-      tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
-    >
-      <header>
-        <UiButton
-          :aria-label="t('closeDialog')"
-          square
-          variant="tertiary"
-          class="absolute right-2 top-2"
-          @click="closeAuthentication"
-        >
-          <SfIconClose />
-        </UiButton>
-      </header>
-      <LoginComponent v-if="isLogin" :is-modal="true" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-      <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
-    </UiModal>
-  </NuxtLazyHydrate>
+  <LanguageSelector />
+  <UiModal
+    v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
+    v-model="isAuthenticationOpen"
+    tag="section"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+  >
+    <header>
+      <UiButton
+        :aria-label="t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="closeAuthentication"
+      >
+        <SfIconClose />
+      </UiButton>
+    </header>
+    <LoginComponent
+      v-if="isLogin"
+      :is-modal="true"
+      @change-view="isLogin = false"
+      @logged-in="navigateAfterAuth(true)"
+    />
+    <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
+  </UiModal>
 
   <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
     <SfModal
@@ -220,7 +223,11 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
-const { iconColor, headerBackgroundColor } = useSiteConfiguration();
+const { getSetting: getIconColor } = useSiteSettings('iconColor');
+const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+
+const iconColor = computed(() => getIconColor());
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t, localeCodes } = useI18n();
@@ -237,9 +244,18 @@ const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
+
 onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
+
+const navigateAfterAuth = (reload: boolean) => {
+  if (reload) {
+    window.location.reload();
+  } else {
+    closeAuthentication();
+  }
+};
 
 watch(
   () => cart.value?.items,
@@ -258,7 +274,7 @@ watch(
 const logOut = async () => {
   accountDropdownToggle();
   await logout();
-  navigateTo(localePath(paths.home));
+  window.location.reload();
 };
 
 const accountDropdown = computed(() => [

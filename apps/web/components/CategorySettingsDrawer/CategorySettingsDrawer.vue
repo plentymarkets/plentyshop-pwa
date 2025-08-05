@@ -7,10 +7,13 @@
     :class="[{ 'max-w-[370px]': placement === 'left' || placement === 'right' }]"
   >
     <div class="px-4 py-5 border-b flex justify-between items-center">
-      <h3 class="font-bold typography-headline-3">
-        {{ getCategoryName }}
+      <h3 class="font-bold typography-headline-3 truncate overflow-hidden whitespace-nowrap max-w-[75%]">
+        <SfTooltip v-if="getCategoryName && getCategoryName.length > 27" :label="getCategoryName" placement="bottom">
+          <span>{{ getCategoryName }}</span>
+        </SfTooltip>
+        <span v-else>{{ getCategoryName }}</span>
       </h3>
-      <SfIconChevronLeft class="cursor-pointer" @click="handleBack" />
+      <SfIconChevronLeft class="cursor-pointer flex-shrink-0 ml-2" @click="handleBack" />
     </div>
 
     <div v-if="activeView" class="flex px-4 pt-2 gap-4 pb-2">
@@ -56,8 +59,22 @@
     <div v-if="!activeView" class="py-4">
       <h3 class="font-bold text-center flex flex-col gap-4 items-start ml-4 mb-3">Actions</h3>
       <div class="flex flex-col gap-4 justify-center items-center">
+        <div
+          v-if="isCategoryDetailsEmpty"
+          class="w-[90%] flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+        >
+          <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
+          <span class="py-2 mr-2">
+            <p>
+              This page isn't set up for '{{ locale.toUpperCase() }}' yet. To start editing page contents, go to General
+              settings, enter a name and a URL, and save the changes.
+            </p>
+          </span>
+        </div>
         <button
           class="border border-editor-button py-2 rounded-md flex items-center justify-center w-[90%] text-editor-button hover:bg-gray-50"
+          :class="{ 'cursor-not-allowed opacity-40': isCategoryDetailsEmpty }"
+          :disabled="isCategoryDetailsEmpty"
           @click="redirectToPage()"
         >
           <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
@@ -80,17 +97,27 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconBase, SfIconChevronLeft, SfIconChevronRight, SfIconDelete } from '@storefront-ui/vue';
+import {
+  SfDrawer,
+  SfIconBase,
+  SfIconChevronLeft,
+  SfIconChevronRight,
+  SfIconDelete,
+  SfIconWarning,
+  SfTooltip,
+} from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 const { toggleDeleteModal } = useCategorySettings();
 const { setSettingsCategory } = useSiteConfiguration();
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
-const { getCategoryName, getCategoryPath, setParentName, setCategoryId } = useCategoryIdHelper();
+const { getCategoryName, getCategoryPreviewPath, getCategoryDetails, setParentName, setCategoryId } =
+  useCategoryIdHelper();
+const { locale } = useI18n();
 
 const activeView = ref<null | 'general' | 'seo'>(null);
 const redirectToPage = () => {
-  const targetUrl = getCategoryPath.value;
+  const targetUrl = getCategoryPreviewPath.value;
   navigateTo(targetUrl);
   setSettingsCategory(null);
   setCategoryId({});
@@ -104,4 +131,14 @@ const handleBack = () => {
     setParentName('');
   }
 };
+
+const isCategoryDetailsEmpty = computed(() => {
+  return getCategoryDetails.value.length === 0;
+});
+
+watch(locale, () => {
+  setSettingsCategory(null);
+  setCategoryId({});
+  setParentName('');
+});
 </script>

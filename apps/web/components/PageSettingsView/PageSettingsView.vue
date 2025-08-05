@@ -82,16 +82,16 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].name" type="text" data-testid="page-name">
+            <SfInput v-model="pageName" type="text" data-testid="page-name">
               <template #suffix>
                 <label for="page-name" class="rounded-lg cursor-pointer">
-                  <input id="page-name" v-model="data.details[0].name" type="text" class="invisible w-8" />
+                  <input id="page-name" v-model="pageName" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
           </label>
         </div>
-        <!-- <div class="py-2">
+        <div v-if="runtimeConfig.public.isDev" class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
             <SfTooltip
@@ -104,18 +104,20 @@
             </SfTooltip>
           </div>
           <Multiselect
-            v-model="selectedPage"
-            data-testid="page-parent"
-            :options="pageOptions"
-            label="name"
+            v-model="parentPageValue"
+            data-testid="new-parent-page"
+            :options="filteredParentOptions"
+            :custom-label="getLabel"
             placeholder="Select a parent page"
             :allow-empty="false"
             class="cursor-pointer"
             select-label=""
-            track-by="id"
             deselect-label="Selected"
+            :searchable="true"
+            :internal-search="true"
+            @search-change="handleSearch"
           />
-        </div> -->
+        </div>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -130,10 +132,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].nameUrl" type="text" data-testid="page-url-slug">
+            <SfInput v-model="pageNameUrl" type="text" data-testid="page-url-slug">
               <template #suffix>
                 <label for="page-url-slug" class="rounded-lg cursor-pointer">
-                  <input id="page-url-slug" v-model="data.details[0].nameUrl" type="text" class="invisible w-8" />
+                  <input id="page-url-slug" v-model="pageNameUrl" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -152,10 +154,10 @@
             </SfTooltip>
           </div>
           <label>
-            <SfInput v-model="data.details[0].position" type="text" data-testid="page-position">
+            <SfInput v-model="pagePosition" type="text" data-testid="page-position">
               <template #suffix>
                 <label for="page-position" class="rounded-lg cursor-pointer">
-                  <input id="page-position" v-model="data.details[0].position" type="text" class="invisible w-8" />
+                  <input id="page-position" v-model="pagePosition" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -185,7 +187,7 @@
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Display in header navigation</UiFormLabel>
             <SfSwitch
-              v-model="isInLinkedList"
+              v-model="isLinkedList"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
@@ -210,12 +212,35 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
+import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
+const runtimeConfig = useRuntimeConfig();
 
 const basicSettingsOpen = ref(true);
 
 const { getCategoryId } = useCategoryIdHelper();
 const { data, loading, fetchCategorySettings } = useCategorySettings();
-const isInLinkedList = computed({
+
+const { allItems } = useCategoriesSearch();
+
+const { handleSearch, getLabel, initializeModalState: initializeParentCategoryList } = useAddPageModal();
+
+const parentPageValue = computed({
+  get() {
+    if (!data.value.parentCategoryId || data.value.parentCategoryId === 0) {
+      return allItems.value.find((cat) => cat.id === 0) || null;
+    }
+    return (
+      allItems.value.find((cat) => cat.id === data.value.parentCategoryId) ||
+      allItems.value.find((cat) => cat.id === 0) ||
+      null
+    );
+  },
+  set(val) {
+    data.value.parentCategoryId = val?.id || null;
+  },
+});
+
+const isLoginRequired = computed({
   get() {
     return data.value.right === 'customer';
   },
@@ -224,7 +249,7 @@ const isInLinkedList = computed({
   },
 });
 
-const isLoginRequired = computed({
+const isLinkedList = computed({
   get() {
     return data.value.linklist === 'Y';
   },
@@ -255,5 +280,42 @@ const selectedPageType = computed({
   set(selectedOption) {
     data.value.type = selectedOption ? selectedOption.value : '';
   },
+});
+
+const detailField = <K extends keyof CategoryDetails>(field: K) =>
+  computed({
+    get() {
+      return data.value.details[0]?.[field] ?? '';
+    },
+    set(val: CategoryDetails[K]) {
+      if (!data.value.details.length) {
+        data.value.details.push({} as CategoryDetails);
+      }
+      data.value.details[0][field] = val;
+    },
+  });
+
+const pageName = detailField('name');
+const pageNameUrl = detailField('nameUrl');
+const pagePosition = detailField('position');
+
+onMounted(() => {
+  initializeParentCategoryList();
+});
+
+watch(getCategoryId, (newId) => {
+  if (newId !== undefined) {
+    initializeParentCategoryList();
+  }
+});
+
+watch(
+  () => data.value.parentCategoryId,
+  () => {},
+  { immediate: true },
+);
+
+const filteredParentOptions = computed(() => {
+  return allItems.value.filter((cat) => cat.id !== data.value.id);
 });
 </script>

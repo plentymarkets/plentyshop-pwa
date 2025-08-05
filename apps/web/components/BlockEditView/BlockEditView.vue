@@ -8,8 +8,9 @@
         <SfIconClose />
       </button>
     </header>
-
-    <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
+    <div class="h-[calc(100vh-150px)] overflow-y-auto">
+      <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
+    </div>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ const blockTypeNames: Record<string, string> = {
   ProductRecommendedProducts: 'Product Gallery',
   TextCard: 'Rich Text',
   MultiGrid: 'Image + Text',
+  Footer: 'Footer',
 };
 
 const getBlockTypeName = (blockType: string) => {

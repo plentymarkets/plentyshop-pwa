@@ -28,16 +28,21 @@
     <div class="lg:grid lg:grid-cols-2 lg:gap-4">
       <div class="lg:border-r-2 flex flex-col items-center p-8">
         <NuxtImg
-          :src="addModernImageExtension(productGetters.getMiddleImage(product))"
-          :alt="t('imageOfSth', { name: productGetters.getName(product) })"
+          :src="addModernImageExtension(productGetters.getMiddleImage(props.product))"
+          :alt="imageAlt"
+          :title="
+            productImageGetters.getImageName(productImageGetters.getFirstImage(props.product))
+              ? productImageGetters.getImageName(productImageGetters.getFirstImage(props.product))
+              : null
+          "
           width="240"
           height="240"
           loading="lazy"
           class="mb-3"
         />
         <div class="flex mb-1">
-          <h1 class="font-bold typography-headline-4" data-testid="product-name">
-            {{ productGetters.getName(product) }}
+          <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
+            {{ productGetters.getName(props.product) }}
           </h1>
         </div>
         <div class="mb-3">
@@ -46,12 +51,12 @@
           </span>
         </div>
 
-        <ProductPrice :product="product" />
+        <ProductPrice :product="props.product" />
 
         <div
           class="mb-4 font-normal typography-text-sm"
           data-testid="product-description"
-          v-html="productGetters.getShortDescription(product)"
+          v-html="productGetters.getShortDescription(props.product)"
         />
 
         <div class="mt-4 typography-text-xs flex gap-1">
@@ -115,11 +120,11 @@
 import { SfIconClose, SfLink } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
 import type { Product } from '@plentymarkets/shop-api';
-import { cartGetters, productGetters } from '@plentymarkets/shop-api';
+import { cartGetters, productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 import { paths } from '~/utils/paths';
 
-defineProps<QuickCheckoutProps>();
+const props = defineProps<QuickCheckoutProps>();
 
 const { t } = useI18n();
 const { format } = usePriceFormatter();
@@ -149,6 +154,11 @@ const totals = computed(() => {
     subTotal: totalsData.subtotal,
     vats: totalsData.totalVats,
   };
+});
+
+const imageAlt = computed(() => {
+  const image = props.product?.images?.all[0];
+  return image ? productImageGetters.getImageAlternate(image) : '';
 });
 
 const goToCheckout = () => (isAuthorized.value ? goToPage(paths.checkout) : goToPage(paths.guestLogin));

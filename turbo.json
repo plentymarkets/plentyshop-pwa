@@ -38,10 +38,19 @@
     "test:cypress-checkout": {
       "cache": false
     },
+    "test:cypress-paypal": {
+      "cache": false
+    },
+    "test:cypress-dhl": {
+      "cache": false
+    },
     "test:cypress-editor": {
       "cache": false
     },
     "test:cypress-quarantine": {
+      "cache": false
+    },
+    "test:cypress-post-quarantine": {
       "cache": false
     },
     "test:cypress": {

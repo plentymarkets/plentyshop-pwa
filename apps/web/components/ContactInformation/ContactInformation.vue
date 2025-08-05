@@ -15,6 +15,7 @@
           :autofocus="!customerEmail"
           v-bind="customerEmailAttributes"
           :invalid="Boolean(errors['customerEmail'])"
+          :disabled="disabled"
           name="customerEmail"
           type="email"
           autocomplete="email"
@@ -83,7 +84,15 @@ const { errors, defineField, validate } = useForm({ validationSchema: emailValid
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
 
 watch(isAuthorized, (updatedStatus) => {
-  customerEmail.value = updatedStatus ? sessionData.value.user?.email ?? '' : sessionData.value.user?.guestMail ?? '';
+  customerEmail.value = updatedStatus
+    ? (sessionData.value.user?.email ?? '')
+    : (sessionData.value.user?.guestMail ?? '');
+});
+
+watch(isGuest, (isGuestStatus) => {
+  if (isGuestStatus) {
+    customerEmail.value = sessionData.value.user?.guestMail ?? '';
+  }
 });
 
 const validateAndSubmitEmail = async () => {

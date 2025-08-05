@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('backToCart')"
+    :back-label-desktop="t('back')"
     :back-label-mobile="t('back')"
     :heading="t('offerForm.offer')"
   >
@@ -106,7 +106,8 @@
                 {{ t('itemsInCart', offerGetters.getItemsCountInOffer(offer.order.orderItems)) }}
               </p>
             </div>
-            <OrderTotals :order="offer" />
+            <!-- @TODO: Fix typing -->
+            <OrderTotals :order="offer as any" />
             <UiButton
               type="submit"
               :disabled="offerLoading"

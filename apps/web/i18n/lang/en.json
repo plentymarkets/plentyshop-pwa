@@ -267,7 +267,6 @@
   },
   "averageRating": "Average rating",
   "back": "Back",
-  "backToCart": "Back to My Cart",
   "backToCheckout": "Back to Checkout",
   "backToShopping": "Back To Shopping",
   "basePrice": "Base price",
@@ -338,6 +337,12 @@
   "checkoutPayment": {
     "comingSoon": "Coming soon",
     "creditCard": "Credit Card",
+    "payUponInvoice": "Pay upon invoice",
+    "birthdateLabel": "Date of Birth",
+    "birthdateError": "Enter a valid date of birth.",
+    "countrySearch": "Search for a country",
+    "phoneLabel": "Phone number",
+    "phoneError": "Enter a valid phone number.",
     "heading": "Payment method",
     "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },
@@ -498,7 +503,8 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Please provide your address to continue with the checkout."
+      "missingAddress": "Please provide your address to continue with the checkout.",
+      "missingBillingAddress": "Please provide a billing address to continue with the checkout."
     },
     "contact": {
       "messageRequired": "Message is required.",
@@ -538,6 +544,7 @@
       }
     },
     "paymentFailed": "The payment has failed. Please try again.",
+    "paymentCancelled": "The payment has been cancelled. Please try again.",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
     "requiredField": "This is a mandatory field.",
     "turnstileRequired": "Please check the box to verify that you are human.",
@@ -643,6 +650,10 @@
   "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "itemExclVAT": "Excl. VAT",
   "itemInclVAT": "Incl. VAT",
+  "includedTax": "included VAT",
+  "excludedTax": "plus VAT",
+  "netPrice": "Net",
+  "grossPrice": "Gross",
   "itemNotAvailable": "This item is not available.",
   "itemsInCart": "(Items: {count})",
   "itemsSubtotal": "Items subtotal",
@@ -733,6 +744,7 @@
   "openSearchModalButtonLabel": "Open item search",
   "or": "or",
   "orderConfirmation": {
+    "trackingOrder": "Track your order",
     "confirmationSendTo": "A confirmation with all details has been sent to {email}",
     "createAccountForBenefits": "Create an account to enjoy all benefits!",
     "sameAsShippingAddress": "Same as shipping address",
@@ -789,7 +801,11 @@
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
     "unbrandedPay": "Pay",
-    "invalidOrder": "The order cannot be processed. Please try again."
+    "invalidOrder": "The order cannot be processed. Please try again.",
+    "puiBankDataAvailable": "Transfer the amount to the bank details provided. You can also find the bank details on your invoice.",
+    "puiBankDataNotAvailable": "The bank data for the transfer are retrieved and will be available shortly. The data will then be available here or can be found on your invoice.",
+    "puiDesignedUse": "Reason for payment",
+    "expressNotAvailable": "PayPal is not available for this delivery country. Please adjust your address accordingly or proceed to checkout to complete your order with another payment provider."
   },
   "perPage": "Per page",
   "phone": "Phone",
@@ -927,27 +943,80 @@
     "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details."
   },
   "somethingWentWrongImageAlt": "Image that describes that something went wrong",
+  "sortingAndPagination": {
+    "recommendedSorting": {
+      "title": "Recommended sorting",
+      "description": "You can decide how the \"Recommended\" option is composed. Select three sorting options. The first sorting option takes the highest priority, the second option the second highest, etc.",
+      "firstSortingOptionLabel": "First sorting option",
+      "secondSortingOptionLabel": "Second sorting option",
+      "thirdSortingOptionLabel": "Third sorting option",
+      "options": {
+        "sortingPriorityCategoryItemIdAsc": "Item ID ⬆",
+        "sortingPriorityCategoryItemIdDesc": "Item ID ⬇",
+        "sortingPriorityCategoryNameAsc": "Item name A-Z",
+        "sortingPriorityCategoryNameDesc": "Item name Z-A",
+        "sortingPriorityCategoryPriceAsc": "Price ⬆",
+        "sortingPriorityCategoryPriceDesc": "Price ⬇",
+        "sortingPriorityCategoryVariationCreatedAtDesc": "Newest variation",
+        "sortingPriorityCategoryVariationCreatedAtAsc": "Oldest variation",
+        "sortingPriorityCategoryVariationIdAsc": "Variation ID ⬆",
+        "sortingPriorityCategoryVariationIdDesc": "Variation ID ⬇",
+        "sortingPriorityCategoryVariationNumberAsc": "Variation number ⬆",
+        "sortingPriorityCategoryVariationNumberDesc": "Variation number ⬇",
+        "sortingPriorityCategoryAvailabilityAsc": "Availability ⬆",
+        "sortingPriorityCategoryAvailabilityDesc": "Availability ⬇",
+        "sortingPriorityCategoryVariationUpdatedAtAsc": "Last update",
+        "sortingPriorityCategoryVariationUpdatedAtDesc": "First update",
+        "sortingPriorityCategoryVariationPositionAsc": "Variation position ⬆",
+        "sortingPriorityCategoryVariationPositionDesc": "Variation position ⬇",
+        "sortingPriorityCategoryManufacturerAsc": "Manufacturer A-Z",
+        "sortingPriorityCategoryManufacturerDesc": "Manufacturer Z-A",
+        "sortingPriorityCategoryManufacturerPositionAsc": "Manufacturer position ⬆",
+        "sortingPriorityCategoryManufacturerPositionDesc": "Manufacturer position ⬇",
+        "sortingPriorityCategoryStockAsc": "Stock ⬆",
+        "sortingPriorityCategoryStockDesc": "Stock ⬇",
+        "sortDataRandom": "Random",
+        "sortingPriorityCategoryNotSelected": "Not selected"
+      }
+    }
+  },
   "sortBy": "Sort by",
   "sortType": {
-    "nameA-Z": "Name A-Z",
-    "nameZ-A": "Name Z-A",
-    "priceDown": "Price ⬇",
-    "priceUp": "Price ⬆",
-    "reviewsDown": "Item reviews ⬇",
-    "reviewsUp": "Item reviews ⬆",
-    "recommended": "Recommended",
-    "newest": "Newest items",
-    "oldest": "Oldest items",
-    "availabilityUp": "Availability ⬆",
-    "availabilityDown": "Availability ⬇",
-    "variationNumberUp": "Variation number ⬆",
-    "variationNumberDown": "Variation number ⬇",
-    "lastUpdate": "Last update",
-    "firstUpdate": "First update",
-    "manufacturerAsc": "Manufacturer A-Z",
-    "manufacturerDesc": "Manufacturer Z-A",
-    "topSellerUp": "Top seller ⬆",
-    "topSellerDown": "Top seller ⬇"
+    "default": {
+      "recommended_sorting": "Recommended"
+    },
+    "texts": {
+      "name1_asc": "Name A-Z",
+      "name1_desc": "Name Z-A"
+    },
+    "sorting": {
+      "price": {
+        "avg_asc": "Price ⬆",
+        "avg_desc": "Price ⬇"
+      }
+    },
+    "variation": {
+      "createdAt_desc": "Newest items",
+      "createdAt_asc": "Oldest items",
+      "availability": {
+        "averageDays_asc": "Availability ⬆",
+        "averageDays_desc": "Availability ⬇"
+      },
+      "number_asc": "Variation number ⬆",
+      "number_desc": "Variation number ⬇",
+      "updatedAt_asc": "Last update",
+      "updatedAt_desc": "First update",
+      "position_asc": "Top seller ⬆",
+      "position_desc": "Top seller ⬇"
+    },
+    "item": {
+      "manufacturer": {
+        "externalName_asc": "Manufacturer A-Z",
+        "externalName_desc": "Manufacturer Z-A"
+      },
+      "feedbackDecimal_asc": "Item reviews ⬆",
+      "feedbackDecimal_desc": "Item reviews ⬇"
+    }
   },
   "storefrontError": {
     "offer": {

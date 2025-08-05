@@ -11,10 +11,11 @@
       <h1 v-if="heading" class="font-bold mb-10 typography-headline-3 md:typography-headline-2">{{ heading }}</h1>
       <slot />
     </main>
-    <Cookiebar />
     <LazyUiNavbarBottom v-if="viewport.isLessThan('md')" />
-    <LazyPreviewMode hydrate-on-idle />
-    <LazyUiFooter hydrate-on-visible />
+    <Cookiebar />
+    <LazyPreviewMode hydrate-on-idle/>
+    <LazyFooterBlock hydrate-on-visible v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+    <LazyUiFooter hydrate-on-visible v-if="!runtimeConfig.public.isDev" />
   </div>
 </template>
 
@@ -23,5 +24,7 @@ defineProps<{
   heading: string;
 }>();
 
+const runtimeConfig = useRuntimeConfig();
+const route = useRoute();
 const viewport = useViewport();
 </script>

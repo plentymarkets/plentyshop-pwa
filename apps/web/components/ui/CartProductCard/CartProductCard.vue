@@ -5,7 +5,12 @@
         <NuxtImg
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
-          :alt="cartGetters.getItemName(cartItem)"
+          :alt="imageAlt"
+          :title="
+            productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              ? productImageGetters.getImageName(productImageGetters.getFirstImage(cartItem.variation || Product))
+              : null
+          "
           width="300"
           height="300"
           loading="lazy"
@@ -19,18 +24,17 @@
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
-        class="w-fit no-underline typography-text-sm sm:typography-text-lg"
+        class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word"
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
 
-      <div v-if="!cartItem.variation?.bundleComponents">
+      <div v-if="!cartItem.variation?.bundleComponents" data-testid="cart-item-price">
         {{ format(cartGetters.getCartItemPrice(cartItem)) }}
       </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
-
-      <div v-if="!cartItem.variation?.bundleComponents">
+      <div v-if="!cartItem.variation?.bundleComponents && showBundleComponents">
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
             v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -66,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
+      <div v-if="cartItem.variation?.bundleComponents && showBundleComponents">
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
             v-if="productBundleGetters.isItemBundleSalable(item)"
@@ -90,17 +94,19 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
+          data-testid="product-full-price"
           class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
           {{ format(currentFullPrice || 0) }}
         </span>
+
         <UiQuantitySelector
           ref="quantitySelectorReference"
           :disabled="disabled"
           :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           :max-value="maximumOrderQuantity"
-          class="mt-4 sm:mt-0"
+          class="mt-6 sm:mt-2"
           @change-quantity="debounceQuantity"
         />
       </div>
@@ -116,7 +122,7 @@
       :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
-      class="absolute top-2 right-2 bg-white"
+      class="top-2 right-2 bg-white items-start h-fit"
       @click="deleteItem"
     >
       <SfIconClose size="sm" />
@@ -125,7 +131,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
+import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
@@ -148,6 +154,10 @@ const deleteLoading = ref(false);
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
+const { getSetting } = useSiteSettings('bundleItemDisplay');
+const showBundleComponents = computed(() => {
+  return getSetting() !== '1';
+});
 
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;
@@ -228,4 +238,9 @@ const basePriceSingleValue = computed(
 );
 
 const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem)));
+
+const imageAlt = computed(() => {
+  const image = cartItem?.variation?.images?.all[0];
+  return image ? productImageGetters.getImageAlternate(image) : '';
+});
 </script>

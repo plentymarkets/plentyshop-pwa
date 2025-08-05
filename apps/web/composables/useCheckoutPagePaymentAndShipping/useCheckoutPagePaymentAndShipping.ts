@@ -20,12 +20,17 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const { $i18n } = useNuxtApp();
   const { send } = useNotification();
   const { getCart, data: cart } = useCart();
-  const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+  const {
+    loading: paymentLoading,
+    data: paymentMethodData,
+    fetchPaymentMethods,
+    savePaymentMethod,
+  } = usePaymentMethods();
   const { shippingPrivacyAgreement, setShippingPrivacyAgreement, setShippingPrivacyAgreementErrors } =
     useAdditionalInformation();
 
   const {
-    loading: loadShipping,
+    loading: shippingLoading,
     data: shippingMethodData,
     selectedMethod: selectedShippingMethod,
     getShippingMethods,
@@ -69,6 +74,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
   };
 
   const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
+    if (cart.value.methodOfPaymentId === paymentMethodId) return;
     await savePaymentMethod(paymentMethodId);
     await getShippingMethods();
     await getCart();
@@ -88,8 +94,8 @@ export const useCheckoutPagePaymentAndShipping = () => {
   };
 
   return {
-    loadPayment,
-    loadShipping,
+    paymentLoading,
+    shippingLoading,
     paymentMethods,
     shippingMethods,
     selectedPaymentId,

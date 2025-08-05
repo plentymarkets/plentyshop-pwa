@@ -9,17 +9,22 @@
     </main>
     <Cookiebar />
     <LazyPreviewMode hydrate-on-idle />
-    <LazyUiNavbarBottom v-if="viewport.isLessThan('lg')" />
-    <LazyUiFooter hydrate-on-visible />
+    <LazyFooterBlock hydrate-on-visible v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+    <LazyUiFooter hydrate-on-visible v-if="!runtimeConfig.public.isDev" />
     <LazyQuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
+import LazyFooterBlock from '~/components/blocks/Footer/Footer.vue';
+
 defineProps<DefaultLayoutProps>();
+
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
-const viewport = useViewport();
+const runtimeConfig = useRuntimeConfig();
+const route = useRoute();
+
 setLogoMeta();
 </script>

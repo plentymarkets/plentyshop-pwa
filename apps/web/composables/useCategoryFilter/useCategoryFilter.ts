@@ -55,6 +55,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    */
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     const { getCategoryUrlFromRoute } = useLocalization();
+    const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
     const config = useRuntimeConfig().public;
 
     const currentRoute = useNuxtApp().$router.currentRoute.value;
@@ -62,7 +63,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
     return {
       categoryUrlPath: getCategoryUrlFromRoute(currentRoute.fullPath),
       page: Number(currentRoute.query.page as string) || defaults.DEFAULT_PAGE,
-      sort: currentRoute.query.sort?.toString(),
+      sort: currentRoute.query.sort?.toString() ?? defaultSortingOption(),
       facets: currentRoute.query.facets?.toString(),
       feedbackPage: Number(currentRoute.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
       feedbacksPerPage: Number(currentRoute.query.feedbacksPerPage as string) || config.defaultItemsPerPage,
@@ -229,7 +230,10 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const updateSorting = (sort: string): void => {
-    navigateTo({ query: { ...route.query, sort } });
+    const query = { ...route.query };
+    if (sort) query.sort = sort;
+    else delete query.sort;
+    navigateTo({ query });
   };
 
   /**

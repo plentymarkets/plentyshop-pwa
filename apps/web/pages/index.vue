@@ -6,7 +6,8 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: ['confirmation-redirect'],
+  pageType: 'static',
+  isBlockified: true,
 });
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
