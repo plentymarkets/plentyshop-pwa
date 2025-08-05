@@ -8,6 +8,7 @@
       <slot />
     </main>
     <Cookiebar />
+    <LazyUiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <LazyPreviewMode hydrate-on-idle />
     <LazyFooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" hydrate-on-visible />
     <LazyUiFooter v-if="!runtimeConfig.public.isDev" hydrate-on-visible />
@@ -25,6 +26,7 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
+const viewport = useViewport();
 
 setLogoMeta();
 </script>
