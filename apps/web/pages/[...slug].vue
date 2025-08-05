@@ -60,7 +60,11 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
-await fetchCategorySettings(categoryGetters.getId(productsCatalog.value.category));
+const categoryId = productsCatalog.value.category ? categoryGetters.getId(productsCatalog.value.category) : undefined;
+
+if (categoryId !== undefined) {
+  await fetchCategorySettings(categoryId);
+}
 const canonicalDb = category.value.details?.[0]?.canonicalLink;
 
 const handleQueryUpdate = async () => {
