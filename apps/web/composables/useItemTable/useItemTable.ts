@@ -1,5 +1,6 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
 import type { StorageObject } from '@plentymarkets/shop-api';
+import { fileToBase64 } from '../../utils/fileHelper';
 
 export const useItemsTable: UseItemTableReturn = () => {
   const state = useState<UseItemTableState>('useItemTable', () => ({
@@ -8,6 +9,42 @@ export const useItemsTable: UseItemTableReturn = () => {
   }));
 
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
+
+  const uploadStorageItem = async (file: File) => {
+    state.value.loading = true;
+
+    const base64String = await fileToBase64(file);
+    if (!base64String) {
+      state.value.loading = false;
+      return null;
+    }
+
+    try {
+      const { error } = await useAsyncData(() =>
+        useSdk().plentysystems.doUploadStorageItem({
+          base64: base64String,
+          filename: file.name,
+          type: file.type,
+        }),
+      );
+
+      if (error.value) {
+        const { send } = useNotification();
+        send({ type: 'negative', message: error.value.message });
+        return;
+      }
+
+      // const newItem = data?.value?.data;
+      // if (newItem) {
+      //   state.value.data.push(newItem);
+      //   cachedImages.value.push(newItem);
+      // }
+    } catch (error) {
+      console.error('Error uploading storage item:', error);
+    } finally {
+      state.value.loading = false;
+    }
+  }
 
   const getStorageItemsServer = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
     state.value.loading = true;
@@ -69,6 +106,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   };
 
   return {
+    uploadStorageItem,
     getStorageItemsServer,
     getStorageMetadata,
     bytesToMB,
