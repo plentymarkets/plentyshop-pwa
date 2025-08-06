@@ -517,6 +517,9 @@
       "required": "Email is required.",
       "valid": "This field needs to be a valid email."
     },
+    "orderId": {
+      "required": "Order ID is required."
+    },
     "maxCharacters": "Enter a maximum of {max} characters.",
     "missingOrWrongProperties": "The following fields are required or have been filled in incorrectly:",
     "newsletter": {
@@ -1049,7 +1052,12 @@
       "unexpectedAddressFormat": "Unexpected address format"
     },
     "contactMail": {
-      "failed": "Message could not be sent."
+      "failed": "Message could not be sent.",
+      "emailInvalid": "The email address is not valid.",
+      "messageInvalid": "The message is not valid.",
+      "nameInvalid": "The name is not valid.",
+      "orderIdInvalid": "The Order ID is not valid.",
+      "subjectInvalid": "The subject is not valid."
     },
     "coupon": {
       "applyFailed": "The coupon could not be redeemed."
