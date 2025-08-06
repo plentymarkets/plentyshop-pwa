@@ -164,12 +164,8 @@ const { getCategoryId } = useCategoryIdHelper();
 
 const { data, loading, fetchCategorySettings } = useCategorySettings();
 const isInSitemap = computed({
-  get() {
-    return data.value.sitemap === 'Y';
-  },
-  set(value: boolean) {
-    data.value.sitemap = value ? 'Y' : 'N';
-  },
+  get: () => data.value.sitemap === 'Y',
+  set: (val: boolean) => (data.value.sitemap = val ? 'Y' : 'N'),
 });
 
 watch(
@@ -210,11 +206,9 @@ const robotNames = [
 ];
 
 const pageRobots = computed({
-  get() {
-    return robotNames.find((option) => option.value === data.value.details[0]?.metaRobots) || null;
-  },
-  set(selectedOption) {
-    data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';
+  get: () => robotNames.find((robot) => robot.value === data.value.details[0].metaRobots) || robotNames[0],
+  set: (val) => {
+    data.value.details[0].metaRobots = val.value;
   },
 });
 
