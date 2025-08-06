@@ -4,6 +4,7 @@
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
+      role="group"
       aria-roledescription="carousel"
       :loop="true"
       :pagination="paginationConfig"
@@ -12,16 +13,25 @@
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
     >
-      <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
+      <SwiperSlide
+        v-for="(banner, slideIndex) in content"
+        :key="slideIndex"
+        :aria-labelledby="`carousel_item-${slideIndex}_heading`"
+        role="group"
+        aria-roledescription="slide"
+      >
         <slot
           name="content"
           :content-block="banner"
           :index="getSlideAdjustedIndex(slideIndex)"
+          :slide-index="slideIndex"
           :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
         />
       </SwiperSlide>
       <div
         v-if="enableModules"
+        role="group"
+        aria-label="Slide controls"
         :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
       />
     </Swiper>
