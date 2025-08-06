@@ -4,6 +4,7 @@
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
+      aria-roledescription="carousel"
       :loop="true"
       :pagination="paginationConfig"
       :navigation="navigationConfig"
@@ -29,12 +30,16 @@
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
+      aria-controls="carousel-{{index}}"
+      aria-label="Previous slide"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
     <div
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       :class="`swiper-button-next swiper-button-next-${index}`"
+      aria-controls="carousel-{{index}}"
+      aria-label="Next slide"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
   </NuxtErrorBoundary>
