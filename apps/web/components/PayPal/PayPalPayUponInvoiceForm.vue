@@ -5,6 +5,7 @@
     </h3>
 
     <UiButton
+      v-if="!disableCloseButton"
       :aria-label="t('closeDialog')"
       type="button"
       square
@@ -50,7 +51,7 @@
     <div class="text-sm text-neutral-500">&#8727; {{ t('contact.form.asterixHint') }}</div>
 
     <div class="flex justify-end gap-x-4">
-      <UiButton type="button" variant="secondary" @click="emit('confirmCancel')">
+      <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="emit('confirmCancel')">
         {{ t('paypal.unbrandedCancel') }}
       </UiButton>
 
@@ -72,6 +73,7 @@ const { t } = useI18n();
 const { config, loadConfig, getFraudId, getScript } = usePayPal();
 const { emit: plentyEmit } = usePlentyEvent();
 const localePath = useLocalePath();
+const { processingOrder } = useProcessingOrder();
 const {
   loading,
   submitFirstTime,
@@ -88,6 +90,7 @@ const {
   isDateValid,
   handlePhoneNumberValidation,
 } = usePayUponInvoice();
+const disableCloseButton = computed(() => processingOrder.value || loading.value);
 
 const fetchDependencies = async () => {
   await loadConfig().then(() => (fraudNet.value.merchantId = config.value?.merchantId || null));
@@ -153,6 +156,11 @@ const createPayPalPayUponInvoiceOrder = async () => {
       },
     };
 
+    if (!await useCartStockReservation().reserve()) {
+      loading.value = false;
+      return;
+    }
+
     const transactionOrder = await createTransaction(orderData);
 
     if (transactionOrder) {
@@ -162,13 +170,16 @@ const createPayPalPayUponInvoiceOrder = async () => {
         emit('confirmCancel');
         plentyEmit('frontend:orderCreated', plentyOrder);
         plentyEmit('module:clearCart', null);
-        useProcessingOrder().processingOrder.value = true;
+        processingOrder.value = true;
         navigateTo(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey));
       }
     }
 
+    await useCartStockReservation().unreserve();
+
     loading.value = false;
   } catch (error) {
+    await useCartStockReservation().unreserve();
     loading.value = false;
     useHandleError(error as ApiError);
   }

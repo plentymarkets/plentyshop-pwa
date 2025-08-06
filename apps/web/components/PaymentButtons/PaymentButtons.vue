@@ -181,7 +181,6 @@ const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
 };
 
 const order = async () => {
-  processingOrder.value = true;
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
   if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
@@ -192,6 +191,7 @@ const order = async () => {
     return;
   }
 
+  processingOrder.value = true;
   await handleRegularOrder();
 };
 
@@ -229,6 +229,9 @@ const handleRegularOrder = async () => {
     emit('frontend:orderCreated', data);
     clearCartItems();
     navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
+  } else {
+    await useCartStockReservation().unreserve();
+    processingOrder.value = false;
   }
 };
 

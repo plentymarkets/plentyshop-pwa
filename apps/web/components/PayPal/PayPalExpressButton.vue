@@ -119,17 +119,22 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       onInit(data, actions) {
         onInit(actions);
       },
-      onCancel() {
+      async onCancel() {
         useNotification().send({
           message: t('errorMessages.paymentCancelled'),
           type: 'negative',
         });
+        await useCartStockReservation().unreserve();
       },
       async createOrder() {
         const order = await createTransaction({
           type: isCommit ? 'basket' : 'express',
         });
-        return order?.id ?? '';
+
+        if (order?.id && await useCartStockReservation().reserve()) {
+          return order.id;
+        }
+        return '';
       },
       async onApprove(data) {
         await onApprove(data);
