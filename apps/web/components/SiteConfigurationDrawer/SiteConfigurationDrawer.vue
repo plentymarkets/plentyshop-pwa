@@ -12,14 +12,10 @@
       { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
-    <!--      TODO: remove once all settings are moved to new structure-->
-    <component :is="getDrawerView(drawerView)" v-if="drawerView" />
-
-    <div v-else-if="viewComponent">
-      <Transition :name="transitionName" mode="out-in" appear>
-        <component :is="viewComponent" :key="viewComponent" />
-      </Transition>
-    </div>
+    <Transition :name="transitionName" mode="out-in" appear>
+      <component :is="getDrawerView(drawerView)" v-if="drawerView" />
+      <component :is="viewComponent" v-else-if="viewComponent" :key="viewComponent" />
+    </Transition>
   </SfDrawer>
 </template>
 
@@ -36,7 +32,15 @@ const getDrawerView = (view: string) => {
 };
 
 const viewComponent = computed(() => getViewComponent(activeSetting.value, activeSubCategory.value));
-const transitionName = computed(() => (activeSubCategory.value ? 'cover-in' : 'cover-out'));
+const transitionName = ref('cover-in');
+
+watch(activeSubCategory, (next, prev) => {
+  const entering = !prev && next;
+  const exiting = prev && !next;
+
+  if (entering) transitionName.value = 'cover-in';
+  if (exiting) transitionName.value = 'cover-out';
+});
 </script>
 
 <style scoped>
