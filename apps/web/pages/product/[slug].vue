@@ -82,6 +82,7 @@ await fetchProduct(productParams).then(() => {
 });
 
 if (Object.keys(product.value).length === 0) {
+  reloadNuxtApp();
   throw createError({
     statusCode: 404,
     statusMessage: 'Product not found',
