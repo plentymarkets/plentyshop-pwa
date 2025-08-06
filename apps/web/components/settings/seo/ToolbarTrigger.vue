@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import whiteIcon from 'assets/icons/paths/seo-white.svg';
 import blackIcon from 'assets/icons/paths/seo-black.svg';
-const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,

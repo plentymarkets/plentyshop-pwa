@@ -14,8 +14,6 @@
 <script setup lang="ts">
 import { SfIconSell } from '@storefront-ui/vue';
 
-const runtimeConfig = useRuntimeConfig();
-
 defineProps({
   active: Boolean,
 });

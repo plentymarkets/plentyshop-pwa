@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import gearWhite from 'assets/icons/paths/gear-white.svg';
 import gearBlack from 'assets/icons/paths/gear-black.svg';
-const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,
