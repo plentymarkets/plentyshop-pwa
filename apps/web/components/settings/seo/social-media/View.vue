@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Social Media </template>
+    <template #setting-title> Social Media </template>
   </SiteConfigurationView>
 </template>
 

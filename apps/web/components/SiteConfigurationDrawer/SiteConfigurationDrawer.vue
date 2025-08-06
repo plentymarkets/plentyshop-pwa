@@ -16,7 +16,7 @@
     <component :is="getDrawerView(drawerView)" v-if="drawerView" />
 
     <div v-else-if="viewComponent">
-      <Transition name="slide-cover" mode="out-in" appear>
+      <Transition :name="transitionName" mode="out-in" appear>
         <component :is="viewComponent" :key="viewComponent" />
       </Transition>
     </div>
@@ -36,31 +36,27 @@ const getDrawerView = (view: string) => {
 };
 
 const viewComponent = computed(() => getViewComponent(activeSetting.value, activeSubCategory.value));
+const transitionName = computed(() => (activeSubCategory.value ? 'cover-in' : 'cover-out'))
 </script>
 
 <style scoped>
-.slide-cover-enter-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transition: transform 0.3s ease-in-out;
-}
-.slide-cover-enter-from {
-  transform: translateX(-100%);
-}
-.slide-cover-enter-to {
-  transform: translateX(0);
+.cover-in-enter-active,
+.cover-in-leave-active,
+.cover-out-enter-active,
+.cover-out-leave-active{
+  position:absolute;
+  inset:0;
+  width:100%;
+  transition:transform .3s ease-in-out;
 }
 
-.slide-cover-leave-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-.slide-cover-leave-from,
-.slide-cover-leave-to {
-  transform: translateX(0);
-}
+.cover-in-enter-from{transform:translateX(-100%)}
+.cover-in-enter-to,
+.cover-in-leave-from{transform:translateX(0)}
+.cover-in-leave-active{transition:none}
+
+.cover-out-enter-from,
+.cover-out-enter-to{transform:translateX(0)}
+.cover-out-leave-from{transform:translateX(0)}
+.cover-out-leave-to{transform:translateX(-100%)}
 </style>

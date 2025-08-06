@@ -1,7 +1,14 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Item Settings </template>
+    <template #setting-title> Item Settings </template>
   </SiteConfigurationView>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { $registerMessages } = useNuxtApp()
+
+$registerMessages({
+  en: { 'item': 'Item'},
+  de: { 'item': 'Item' }
+})
+</script>

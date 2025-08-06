@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Sorting </template>
+    <template #setting-title> Sorting </template>
   </SiteConfigurationView>
 </template>
 

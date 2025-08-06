@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Item Settings </template>
+    <template #setting-title> Item Settings </template>
   </SiteConfigurationView>
 </template>
 

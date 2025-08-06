@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Robots </template>
+    <template #setting-title> Robots </template>
   </SiteConfigurationView>
 </template>
 

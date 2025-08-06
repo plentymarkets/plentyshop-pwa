@@ -28,11 +28,13 @@
 
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig();
-const { headerLogo } = useSiteConfiguration();
+const { getSetting: getHeaderLogo } = useSiteSettings('headerLogo');
+
+const headerLogo = computed(() => getHeaderLogo())
 
 const storeName = runtimeConfig.public.storename;
 
-const imageExtension = runtimeConfig.public.headerLogo.split('.').pop();
+const imageExtension = computed(() => headerLogo.value.split('.').pop());
 const logo = ref<HTMLImageElement | null>(null);
 const imgWidth = ref<string>('');
 const imgHeight = ref<string>('');

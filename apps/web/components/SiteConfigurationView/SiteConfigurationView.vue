@@ -1,13 +1,17 @@
 <template>
   <div class="site-settings-view sticky top-[52px] relative overflow-hidden" data-testid="site-settings-drawer">
     <div v-if="!activeSubCategory" key="sub-list" class="sub-categories">
-      <header class="flex items-center justify-between px-4 py-5 border-b">
-        <div class="flex items-center text-xl font-bold">
-          <slot name="setting-group-title" />
+      <header class="border-b">
+        <div class="flex items-center justify-between px-4 py-5">
+          <div class="flex items-center text-xl font-bold">
+            <slot name="setting-title" />
+          </div>
+          <button data-testid="view-close" class="!p-0" @click="closeDrawer">
+            <SfIconClose />
+          </button>
         </div>
-        <button data-testid="view-close" class="!p-0" @click="closeDrawer">
-          <SfIconClose />
-        </button>
+
+        <slot name="setting-description" />
       </header>
 
       <div class="h-[calc(100vh-150px)] overflow-y-auto">
@@ -18,7 +22,7 @@
           @click="activeSubCategory = subCategory"
         >
           <span class="break-words">
-            {{ t(`settings.subCategory.${subCategory}`) }}
+            {{ t(`${subCategory}`) }}
           </span>
           <template #suffix><SfIconChevronRight /></template>
         </SfListItem>
@@ -27,7 +31,7 @@
     <div v-else key="groups" class="groups">
       <header class="flex items-center justify-between px-4 py-5 border-b">
         <div class="flex items-center text-xl font-bold">
-          <slot name="setting-group-title" />
+          <slot name="setting-title" />
         </div>
         <button data-testid="view-close" class="!p-0" @click="activeSubCategory = ''">
           <SfIconChevronLeft />

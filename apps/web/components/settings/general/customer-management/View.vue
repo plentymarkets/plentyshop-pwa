@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Customer Management </template>
+    <template #setting-title> Customer Management </template>
   </SiteConfigurationView>
 </template>
 

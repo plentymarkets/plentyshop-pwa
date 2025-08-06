@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Meta Data </template>
+    <template #setting-title> Meta Data </template>
   </SiteConfigurationView>
 </template>
 

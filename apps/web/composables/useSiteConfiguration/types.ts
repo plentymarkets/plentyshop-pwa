@@ -1,20 +1,6 @@
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView = 'blocksList' | 'DesignView' | 'PagesView' | 'blocksSettings' | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
-export type ConfigurationSettings = {
-  headerLogo: string;
-  favicon: string;
-  ogTitle: string;
-  ogImg: string;
-  useAvif: boolean;
-  useWebp: boolean;
-  seoSettings: {
-    title: string;
-    description: string;
-    keywords: string;
-    robots: string;
-  };
-};
 
 export interface UseSiteConfigurationState {
   data: [];
@@ -25,25 +11,12 @@ export interface UseSiteConfigurationState {
   pageModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
-  headerLogo: string;
-  favicon: string;
-  ogTitle: string;
-  ogImg: string;
-  useAvif: boolean;
-  useWebp: boolean;
   placement: string;
   drawerView: DrawerView;
   activeSetting: string;
   activeSubCategory: string;
   blockType: string;
   blockUuid: string;
-  initialData: ConfigurationSettings;
-  seoSettings: {
-    title: string;
-    description: string;
-    keywords: string;
-    robots: string;
-  };
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -65,18 +38,10 @@ export interface UseSiteConfiguration {
   blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
-  headerLogo: Readonly<Ref<UseSiteConfigurationState['headerLogo']>>;
-  favicon: Readonly<Ref<UseSiteConfigurationState['favicon']>>;
-  ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;
-  ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
-  useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
-  useWebp: Readonly<Ref<UseSiteConfigurationState['useWebp']>>;
-  seoSettings: Readonly<Ref<UseSiteConfigurationState['seoSettings']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
   activeSubCategory: Readonly<Ref<UseSiteConfigurationState['activeSubCategory']>>;
-  initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
   setActiveSetting: SetActiveSetting;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
