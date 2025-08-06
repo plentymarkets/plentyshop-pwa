@@ -33,7 +33,10 @@
           </div>
           <div class="flex space-x-2">
             <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
-            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0 && showBundleComponents" class="m-auto">
+            <div
+              v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0 && showBundleComponents"
+              class="m-auto"
+            >
               <UiTag :size="'sm'" :variant="'secondary'">{{
                 t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
               }}</UiTag>
