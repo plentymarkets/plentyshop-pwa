@@ -65,7 +65,7 @@ const sortingOptionValues = [
   'item.feedbackDecimal_desc',
 ];
 
-const sortingOptions = computed(() => getMappedOptions(sortingOptionValues, 'en'));
+const sortingOptions = computed(() => getMappedOptions(sortingOptionValues));
 
 const availableSortingOptions = computed({
   get: () => {

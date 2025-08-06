@@ -38,7 +38,7 @@ const { updateSetting, getSetting } = useSiteSettings('defaultSortingOption');
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 const { updateSorting } = useCategoryFilter();
 
-const sortingOptions = computed(() => getMappedOptions(availableSortingOptions(), 'en'));
+const sortingOptions = computed(() => getMappedOptions(availableSortingOptions()));
 
 const defaultSortingOption = computed({
   get: () => {
