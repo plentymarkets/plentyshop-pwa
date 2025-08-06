@@ -15,7 +15,11 @@
     <!--      TODO: remove once all settings are moved to new structure-->
     <component :is="getDrawerView(drawerView)" v-if="drawerView" />
 
-    <component :is="viewComponent" v-else-if="viewComponent" />
+    <div v-else-if="viewComponent">
+      <Transition name="slide-cover" mode="out-in" appear>
+        <component :is="viewComponent" :key="viewComponent" />
+      </Transition>
+    </div>
   </SfDrawer>
 </template>
 
@@ -23,15 +27,40 @@
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
 
-const { drawerOpen, drawerView, placement, activeSetting } = useSiteConfiguration();
+const { drawerOpen, drawerView, placement, activeSetting, activeSubCategory } = useSiteConfiguration();
 
 const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
-  if (view === 'SettingsView') return resolveComponent('SettingsView');
-  if (view === 'SeoView') return resolveComponent('SeoView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };
 
-const viewComponent = computed(() => getViewComponent(activeSetting.value));
+const viewComponent = computed(() => getViewComponent(activeSetting.value, activeSubCategory.value));
 </script>
+
+<style scoped>
+.slide-cover-enter-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+.slide-cover-enter-from {
+  transform: translateX(-100%);
+}
+.slide-cover-enter-to {
+  transform: translateX(0);
+}
+
+.slide-cover-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.slide-cover-leave-from,
+.slide-cover-leave-to {
+  transform: translateX(0);
+}
+</style>

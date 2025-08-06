@@ -1,12 +1,5 @@
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
-export type DrawerView =
-  | 'SeoView'
-  | 'SettingsView'
-  | 'blocksList'
-  | 'DesignView'
-  | 'PagesView'
-  | 'blocksSettings'
-  | null;
+export type DrawerView = 'blocksList' | 'DesignView' | 'PagesView' | 'blocksSettings' | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type ConfigurationSettings = {
   headerLogo: string;
@@ -41,6 +34,7 @@ export interface UseSiteConfigurationState {
   placement: string;
   drawerView: DrawerView;
   activeSetting: string;
+  activeSubCategory: string;
   blockType: string;
   blockUuid: string;
   initialData: ConfigurationSettings;
@@ -81,6 +75,7 @@ export interface UseSiteConfiguration {
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
+  activeSubCategory: Readonly<Ref<UseSiteConfigurationState['activeSubCategory']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
   setActiveSetting: SetActiveSetting;
   updateNewBlockPosition: UpdateNewBlockPosition;

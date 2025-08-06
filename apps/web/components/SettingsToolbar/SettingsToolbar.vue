@@ -23,38 +23,11 @@
         :active="activeSetting === trigger.slug"
         @click="setActiveSetting(trigger.slug)"
       />
-
-      <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SettingsView' }"
-        aria-label="Open settings drawer"
-        data-testid="open-settings-drawer"
-        @click="toggleDrawerView('SettingsView')"
-      >
-        <NuxtImg v-if="drawerView === 'SettingsView'" width="24" height="24px" :src="gearWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
-      </button>
-      <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'SeoView' }"
-        aria-label="Open SEO settings drawer"
-        data-testid="open-seo-drawer"
-        @click="toggleDrawerView('SeoView')"
-      >
-        <SfIconSearch v-if="drawerView === 'SeoView'" class="text-white" />
-        <SfIconSearch v-else />
-      </button>
     </div>
   </aside>
 </template>
 
 <script setup lang="ts">
-import gearBlack from 'assets/icons/paths/gear-black.svg';
-import gearWhite from 'assets/icons/paths/gear-white.svg';
-
-import { SfIconSearch } from '@storefront-ui/vue';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 

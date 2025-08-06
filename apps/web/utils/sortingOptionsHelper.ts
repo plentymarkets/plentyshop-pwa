@@ -1,4 +1,4 @@
-import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
+import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 
 export const getLocaleKey = (key: string, locale: 'en' | 'de'): string => {
   const { $i18n } = useNuxtApp();

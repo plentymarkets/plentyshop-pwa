@@ -1,14 +1,14 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Third sorting option</UiFormLabel>
-      <SfTooltip label="Third sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <UiFormLabel>Second sorting option</UiFormLabel>
+      <SfTooltip label="Second sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
 
     <Multiselect
-      v-model="recommendedThirdSortingOption"
+      v-model="recommendedSecondSortingOption"
       data-testid="available-sorting-options"
       :options="sortingOptions"
       placeholder="Select default option"
@@ -26,14 +26,14 @@
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
+import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
-const { updateSetting, getSetting } = useSiteSettings('recommendedThirdSortingOption');
+const { updateSetting, getSetting } = useSiteSettings('recommendedSecondSortingOption');
 
 const sortingOptions = computed(() => getRecommendedSortingOptions('en', true));
 
-const recommendedThirdSortingOption = computed({
+const recommendedSecondSortingOption = computed({
   get: () => {
     return sortingOptions.value.find((o: SortingOption) => o.value === getSetting());
   },

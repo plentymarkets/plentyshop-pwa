@@ -38,6 +38,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     seoSettings: metaDefaults,
     drawerView: null,
     activeSetting: '',
+    activeSubCategory: '',
     blockType: '',
     blockUuid: '',
     initialData: {
@@ -192,6 +193,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const setActiveSetting: SetActiveSetting = (setting: string) => {
+    state.value.activeSubCategory = '';
     state.value.activeSetting = setting;
     state.value.drawerOpen = true;
     state.value.placement = 'left';
