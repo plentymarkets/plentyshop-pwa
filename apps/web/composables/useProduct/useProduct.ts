@@ -37,13 +37,14 @@ export const useProduct: UseProductReturn = (slug) => {
     state.value.loading = true;
     const { $i18n } = useNuxtApp();
 
-    const { data, error } = await useAsyncData(`fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`, () =>
-      useSdk().plentysystems.getProduct(params),
+    const { data, error } = await useAsyncData(
+      `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
+      () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value);
 
     properties.setProperties(data.value?.data.properties ?? []);
-    state.value.data = data.value?.data ?? {} as Product;
+    state.value.data = data.value?.data ?? ({} as Product);
     state.value.loading = false;
     return state.value.data;
   };
