@@ -30,7 +30,7 @@
 const runtimeConfig = useRuntimeConfig();
 const { getSetting: getHeaderLogo } = useSiteSettings('headerLogo');
 
-const headerLogo = computed(() => getHeaderLogo())
+const headerLogo = computed(() => getHeaderLogo());
 
 const storeName = runtimeConfig.public.storename;
 

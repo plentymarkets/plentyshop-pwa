@@ -53,31 +53,31 @@ const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { setStaticPageMeta } = useCanonical();
 const { setInitialDataSSR } = useInitialSetup();
 
-const { getSetting: getFavicon } = useSiteSettings('favicon')
-const { getSetting: getOgTitle } = useSiteSettings('ogTitle')
-const { getSetting: getOgImage } = useSiteSettings('ogImage')
-const { getSetting: getMetaTitle } = useSiteSettings('metaTitle')
-const { getSetting: getMetaDescription } = useSiteSettings('metaDescription')
-const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords')
-const { getSetting: getRobots } = useSiteSettings('robots')
+const { getSetting: getFavicon } = useSiteSettings('favicon');
+const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
+const { getSetting: getOgImage } = useSiteSettings('ogImage');
+const { getSetting: getMetaTitle } = useSiteSettings('metaTitle');
+const { getSetting: getMetaDescription } = useSiteSettings('metaDescription');
+const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
+const { getSetting: getRobots } = useSiteSettings('robots');
 
-const title = ref(getMetaTitle())
-const ogTitle = ref(getOgTitle())
-const ogImage = ref(getOgImage())
-const description = ref(getMetaDescription())
-const keywords = ref(getMetaKeywords())
-const robots = ref(getRobots())
-const fav = ref(getFavicon())
+const title = ref(getMetaTitle());
+const ogTitle = ref(getOgTitle());
+const ogImage = ref(getOgImage());
+const description = ref(getMetaDescription());
+const keywords = ref(getMetaKeywords());
+const robots = ref(getRobots());
+const fav = ref(getFavicon());
 
 watchEffect(() => {
-  title.value = getMetaTitle()
-  ogTitle.value = getOgTitle()
-  ogImage.value = getOgImage()
-  description.value = getMetaDescription()
-  keywords.value = getMetaKeywords()
-  robots.value = getRobots()
-  fav.value = getFavicon()
-})
+  title.value = getMetaTitle();
+  ogTitle.value = getOgTitle();
+  ogImage.value = getOgImage();
+  description.value = getMetaDescription();
+  keywords.value = getMetaKeywords();
+  robots.value = getRobots();
+  fav.value = getFavicon();
+});
 
 useSeoMeta({
   title: () => title.value,
@@ -86,15 +86,15 @@ useSeoMeta({
   description: () => description.value,
   keywords: () => keywords.value,
   robots: () => robots.value,
-  generator: 'plentymarkets'
-})
+  generator: 'plentymarkets',
+});
 
 useHead({
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: favicon.appleTouchIcon },
   ],
-})
+});
 
 await callOnce(async () => {
   await setInitialDataSSR();

@@ -7,9 +7,7 @@
           <SfIconInfo size="sm" />
           <span class="px-2 align-middle font-bold">Global defaults</span>
         </p>
-        <p>
-          The settings below apply to any page without its own, page-specific settings.
-        </p>
+        <p>The settings below apply to any page without its own, page-specific settings.</p>
       </div>
     </template>
   </SiteConfigurationView>
@@ -17,10 +15,10 @@
 
 <script setup lang="ts">
 import { SfIconInfo } from '@storefront-ui/vue';
-const { $registerMessages } = useNuxtApp()
+const { $registerMessages } = useNuxtApp();
 
 $registerMessages({
-  en: { 'social-media': 'Social Media', 'robots': 'Robots', 'meta-data': 'Meta Data' },
-  de: { 'social-media': 'Social Media DE', 'robots': 'Robots', 'meta-data': 'Meta Data' }
-})
+  en: { 'social-media': 'Social Media', robots: 'Robots', 'meta-data': 'Meta Data' },
+  de: { 'social-media': 'Social Media DE', robots: 'Robots', 'meta-data': 'Meta Data' },
+});
 </script>

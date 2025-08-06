@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-const { $registerMessages } = useNuxtApp()
+const { $registerMessages } = useNuxtApp();
 
 $registerMessages({
-  en: { 'item': 'Item'},
-  de: { 'item': 'Item' }
-})
+  en: { item: 'Item' },
+  de: { item: 'Item' },
+});
 </script>

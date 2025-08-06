@@ -80,9 +80,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const settingsIsDirty = computed(() => {
     const { isDirty } = useSiteSettings();
 
-    return (
-      isDirty.value
-    );
+    return isDirty.value;
   });
 
   const saveSettings: SaveSettings = async (): Promise<boolean> => {

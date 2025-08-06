@@ -17,15 +17,15 @@ export const favicon = {
 };
 
 export const appConfiguration = {
-    head: {
-      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-      htmlAttrs: {
-        lang: process.env.DEFAULTLANGUAGE ?? 'en',
-      },
-      meta: [
-        { name: 'theme-color', content: metaDefaults.themeColor },
-        { property: 'og:type', content: openGraph.type },
-        { property: 'og:url', content: process.env.API_ENDPOINT },
-      ],
+  head: {
+    viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
+    htmlAttrs: {
+      lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
+    meta: [
+      { name: 'theme-color', content: metaDefaults.themeColor },
+      { property: 'og:type', content: openGraph.type },
+      { property: 'og:url', content: process.env.API_ENDPOINT },
+    ],
+  },
 };
