@@ -46,6 +46,16 @@
         </main>
 
         <footer class="mt-4 flex justify-end gap-2">
+          <div>
+            <label for="folder-select" class="block text-sm font-medium text-gray-700 mb-1">Select folder</label>
+            <select id="folder-select" class="border border-gray-300 rounded px-2 py-1 w-full">
+              <option value="">All folders</option>
+              <option v-for="folder in folders" :key="folder" :value="folder">
+                {{ folder }}
+              </option>
+            </select>
+          </div>
+
           <button
             type="button"
             data-testid="image-uploader-close-button"
@@ -73,7 +83,7 @@
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItemsServer } = useItemsTable();
+const { loading, getStorageItemsServer, folders } = useItemsTable();
 
 const props = defineProps({
   open: Boolean,
@@ -99,11 +109,29 @@ const selectedImage = ref<null | {
   name: string;
 }>(null);
 
+// const folders = ref<string[]>([]);
+
+// console.log(folders);
+
+// const getFoldersFromImages = () => {
+//   const folderSet = new Set<string>();
+//   data.value.forEach((item: { key: string }) => {
+//     const key = item.key;
+//     const lastSlash = key.lastIndexOf('/');
+//     if (lastSlash > 0) {
+//       const folder = key.substring(0, lastSlash);
+//       folderSet.add(folder);
+//     }
+//   });
+//   folders.value = Array.from(folderSet);
+// };
+
 watch(
   () => props.open,
   (isOpen) => {
     if (isOpen) {
       getStorageItemsServer();
+      console.log('Folders', folders);
     }
   },
   { immediate: true },
