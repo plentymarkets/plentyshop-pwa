@@ -35,13 +35,15 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(`fetchProduct-${params.id}-${params.variationId}`, () =>
+    const { $i18n } = useNuxtApp();
+
+    const { data, error } = await useAsyncData(`fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`, () =>
       useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value);
 
     properties.setProperties(data.value?.data.properties ?? []);
-    state.value.data = data.value?.data ?? state.value.data;
+    state.value.data = data.value?.data ?? {} as Product;
     state.value.loading = false;
     return state.value.data;
   };
