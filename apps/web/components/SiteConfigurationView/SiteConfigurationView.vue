@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose  } from '@storefront-ui/vue';
+import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
 import { getSubCategories } from '~/utils/settings-groups-imports';
 const { t } = useI18n();
 
