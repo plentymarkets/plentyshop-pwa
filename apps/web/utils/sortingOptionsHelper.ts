@@ -8,7 +8,7 @@ export const getEditorTranslation = (key: string): string => {
   return $i18n.t(key, 0, { locale: locale }) as string;
 };
 
-export const getMappedOptions = (options: string[], locale: string): SortingOption[] => {
+export const getMappedOptions = (options: string[]): SortingOption[] => {
   if (!options) return [];
 
   return options.map((key: string) => ({
