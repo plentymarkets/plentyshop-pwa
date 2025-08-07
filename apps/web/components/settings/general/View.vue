@@ -8,7 +8,7 @@
 const { $registerMessages } = useNuxtApp();
 
 $registerMessages({
-  en: { 'customer-management': 'Customer Management' },
-  de: { 'customer-management': 'Customer Management' },
+  en: { general: 'General Settings', 'customer-management': 'Customer Management' },
+  de: { general: 'General Settings', 'customer-management': 'Customer Management' },
 });
 </script>

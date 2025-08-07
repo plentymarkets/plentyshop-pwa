@@ -45,8 +45,6 @@ watch(activeSubCategory, (next, prev) => {
   if (entering) transitionName.value = 'cover-in';
   if (exiting) transitionName.value = 'cover-out';
 });
-
-const drawerFx = computed(() => (placement.value === 'left' ? 'drawer-left' : 'drawer-right'));
 </script>
 
 <style scoped>

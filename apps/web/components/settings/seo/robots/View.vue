@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title> Robots </template>
+    <template #setting-title> Robot settings </template>
   </SiteConfigurationView>
 </template>
 

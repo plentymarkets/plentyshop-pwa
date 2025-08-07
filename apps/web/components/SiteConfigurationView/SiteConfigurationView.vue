@@ -3,8 +3,13 @@
     <div v-if="!activeSubCategory" key="sub-list" class="sub-categories">
       <header class="border-b">
         <div class="flex items-center justify-between px-4 py-5">
-          <div class="flex items-center text-xl font-bold">
-            <slot name="setting-title" />
+          <div class="flex items-center">
+            <div class="flex items-center">
+              <slot name="setting-breadcrumbs" />
+            </div>
+            <div class="text-xl font-bold">
+              <slot name="setting-title" />
+            </div>
           </div>
           <button data-testid="view-close" class="!p-0" @click="closeDrawer">
             <SfIconClose />
@@ -30,8 +35,15 @@
     </div>
     <div v-else key="groups" class="groups">
       <header class="flex items-center justify-between px-4 py-5 border-b">
-        <div class="flex items-center text-xl font-bold">
-          <slot name="setting-title" />
+        <div class="flex items-start flex-col">
+          <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
+            <slot name="setting-breadcrumbs">
+              {{ t(`${activeSetting}`) }}
+            </slot>
+          </div>
+          <div class="text-xl font-bold">
+            <slot name="setting-title" />
+          </div>
         </div>
         <button data-testid="view-close" class="!p-0" @click="activeSubCategory = ''">
           <SfIconChevronLeft />

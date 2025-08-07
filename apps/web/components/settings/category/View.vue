@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title> Sorting and Pagination </template>
+    <template #setting-title> Category Settings </template>
   </SiteConfigurationView>
 </template>
 
@@ -8,7 +8,7 @@
 const { $registerMessages } = useNuxtApp();
 
 $registerMessages({
-  en: { sorting: 'Sorting' },
-  de: { sorting: 'Sorting' },
+  en: { category: 'Category Settings', sorting: 'Sorting' },
+  de: { category: 'Category Settings', sorting: 'Sorting' },
 });
 </script>
