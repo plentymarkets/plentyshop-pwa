@@ -28,8 +28,7 @@ export const usePickerHelper = () => {
 
   const openUploader = (type: string | undefined, label?: string) => {
     if (type) selectedImageType.value = type;
-    if (label) customLabel.value = label;
-    else customLabel.value = '';
+    customLabel.value = label ?? '';
     isUploaderOpen.value = true;
   };
 

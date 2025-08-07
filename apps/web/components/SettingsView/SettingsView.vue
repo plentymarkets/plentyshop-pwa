@@ -24,10 +24,7 @@
             :placeholder="placeholderImg"
             dimensions="150x40px (SVG) or max 180x80px"
             :show-tooltip="true"
-            @select="
-              setImageActiveSetting('Logo');
-              openUploader(undefined, 'Logo');
-            "
+            @select="onImageSelect('Logo')"
             @delete="deleteLogo()"
           />
 
@@ -37,10 +34,7 @@
             :placeholder="placeholderImg"
             dimensions="32x32px or 48x48px (.ico)"
             :show-tooltip="true"
-            @select="
-              setImageActiveSetting('Favicon');
-              openUploader(undefined, 'Favicon');
-            "
+            @select="onImageSelect('Favicon')"
             @delete="deleteFavicon()"
           />
         </div>
@@ -262,6 +256,11 @@ const {
 } = useSiteConfiguration();
 
 const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
+
+const onImageSelect = (setting: 'Logo' | 'Favicon') => {
+  setImageActiveSetting(setting);
+  openUploader(undefined, setting);
+};
 
 const branding = ref(false);
 const socialMedia = ref(false);
