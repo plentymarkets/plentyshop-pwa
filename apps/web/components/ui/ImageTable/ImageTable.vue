@@ -1,8 +1,5 @@
 <template>
-
-      
   <VCard flat>
-    
     <v-text-field
       v-model="search"
       density="compact"
@@ -21,15 +18,13 @@
 
     <v-data-table
       v-else
-      v-model:search="search"
-      :filter-keys="['key']"
-      class="border border-gray-300 rounded-md"
       :items="tableRows"
       :headers="headers"
+      class="border border-gray-300 rounded-md"
       no-data-text="No images found"
     >
       <template #item="{ item }">
-        <tr v-if="item.type === 'folder'" class="cursor-pointer bg-gray-100" @dblclick="toggleFolder(item.name)">
+        <tr v-if="item.type === 'folder'" class="cursor-pointer" @dblclick="toggleFolder(item.name)">
           <td colspan="3">
             <span class="flex items-center">
               <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +64,6 @@
       </template>
     </v-data-table>
   </VCard>
-
 </template>
 
 <script setup lang="ts">
@@ -83,7 +77,61 @@ const { setMetadata } = useImageMetadata();
 
 const openFolders = ref<string[]>([]);
 
+// const tableRows = computed(() => {
+//   const query = search.value.toLowerCase().trim();
+
+//   const foldersMap: Record<string, StorageObject[]> = {};
+//   const rootImages: StorageObject[] = [];
+
+//   items.value.forEach((item) => {
+//     const key = item.key;
+//     const lastSlash = key.lastIndexOf('/');
+//     if (lastSlash > 0) {
+//       const folder = key.substring(0, lastSlash);
+//       if (!foldersMap[folder]) foldersMap[folder] = [];
+//       foldersMap[folder].push(item);
+//     } else {
+//       rootImages.push(item);
+//     }
+//   });
+
+//   const rows: Array<{ type: 'folder'; name: string } | { type: 'image'; item: StorageObject }> = [];
+
+//   if (query) {
+//     const matchedFolders = Object.keys(foldersMap).filter((folder) => folder.toLowerCase().includes(query));
+//     matchedFolders.forEach((folder) => {
+//       rows.push({ type: 'folder', name: folder });
+//     });
+
+//     Object.values(foldersMap).forEach((images) => {
+//       images
+//         .filter((item) => item.key.toLowerCase().includes(query))
+//         .forEach((item) => rows.push({ type: 'image', item }));
+//     });
+
+//     rootImages
+//       .filter((item) => item.key.toLowerCase().includes(query))
+//       .forEach((item) => rows.push({ type: 'image', item }));
+
+//     return rows;
+//   }
+
+//   Object.keys(foldersMap).forEach((folder) => {
+//     rows.push({ type: 'folder', name: folder });
+
+//     if (openFolders.value.includes(folder)) {
+//       foldersMap[folder].forEach((item) => rows.push({ type: 'image', item }));
+//     }
+//   });
+
+//   rootImages.forEach((item) => rows.push({ type: 'image', item }));
+
+//   return rows;
+// });
+
 const tableRows = computed(() => {
+  const query = search.value.toLowerCase().trim();
+
   const foldersMap: Record<string, StorageObject[]> = {};
   const rootImages: StorageObject[] = [];
 
@@ -101,8 +149,47 @@ const tableRows = computed(() => {
 
   const rows: Array<{ type: 'folder'; name: string } | { type: 'image'; item: StorageObject }> = [];
 
+  if (query) {
+    const matchedFolders = new Set<string>();
+
+    // 1. Show folders that match the query
+    Object.keys(foldersMap).forEach((folder) => {
+      if (folder.toLowerCase().includes(query)) {
+        matchedFolders.add(folder);
+        rows.push({ type: 'folder', name: folder });
+      }
+    });
+
+    // 2. Show images that match individually (but not if already under a matched folder)
+    Object.entries(foldersMap).forEach(([folder, items]) => {
+      items.forEach((item) => {
+        const fileName = item.key.substring(item.key.lastIndexOf('/') + 1);
+        const matches = item.key.toLowerCase().includes(query) || fileName.toLowerCase().includes(query);
+
+        if (matches && !matchedFolders.has(folder)) {
+          rows.push({ type: 'image', item });
+        }
+        if (matchedFolders.has(folder) && openFolders.value.includes(folder)) {
+          foldersMap[folder].forEach((item) => {
+            rows.push({ type: 'image', item });
+          });
+        }
+      });
+    });
+
+    rootImages.forEach((item) => {
+      if (item.key.toLowerCase().includes(query)) {
+        rows.push({ type: 'image', item });
+      }
+    });
+
+    return rows;
+  }
+
+  // Normal folder structure (no search)
   Object.keys(foldersMap).forEach((folder) => {
     rows.push({ type: 'folder', name: folder });
+
     if (openFolders.value.includes(folder)) {
       foldersMap[folder].forEach((item) => rows.push({ type: 'image', item }));
     }
