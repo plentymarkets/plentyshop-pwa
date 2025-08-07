@@ -110,7 +110,7 @@ export const usePayPal = () => {
   };
 
   const getCurrentScript = () => {
-    return state.value.paypalScript;
+    return state.value.paypalScript?.script ?? null;
   };
 
   /**
