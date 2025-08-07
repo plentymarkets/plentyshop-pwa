@@ -1,22 +1,26 @@
 <template>
-  <SfDrawer
-    ref="drawerRef"
-    v-model="drawerOpen"
-    :placement="placement as SfDrawerPlacement"
-    :disable-click-away="true"
-    :class="[
-      'bg-neutral-50',
-      'border-0',
-      'border-gray-300',
-      'z-[15]',
-      { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
-    ]"
-  >
-    <Transition :name="transitionName" mode="out-in" appear>
-      <component :is="getDrawerView(drawerView)" v-if="drawerView" />
-      <component :is="viewComponent" v-else-if="viewComponent" :key="viewComponent" />
-    </Transition>
-  </SfDrawer>
+  <Transition :name="placement === 'left' ? 'drawer-left' : ''" appear>
+    <SfDrawer
+      v-if="drawerOpen"
+      ref="drawerRef"
+      v-model="drawerOpen"
+      :placement="placement as SfDrawerPlacement"
+      :disable-click-away="true"
+      :transition="false"
+      :class="[
+        'bg-neutral-50',
+        'border-0',
+        'border-gray-300',
+        'z-[15]',
+        { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
+      ]"
+    >
+      <Transition :name="placement === 'left' ? transitionName : ''" mode="out-in" appear>
+        <component :is="getDrawerView(drawerView)" v-if="drawerView" />
+        <component :is="viewComponent" v-else-if="viewComponent" :key="viewComponent" />
+      </Transition>
+    </SfDrawer>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -41,6 +45,8 @@ watch(activeSubCategory, (next, prev) => {
   if (entering) transitionName.value = 'cover-in';
   if (exiting) transitionName.value = 'cover-out';
 });
+
+const drawerFx = computed(() => (placement.value === 'left' ? 'drawer-left' : 'drawer-right'));
 </script>
 
 <style scoped>
@@ -73,6 +79,21 @@ watch(activeSubCategory, (next, prev) => {
   transform: translateX(0);
 }
 .cover-out-leave-to {
+  transform: translateX(-100%);
+}
+
+.drawer-left-enter-active,
+.drawer-left-leave-active {
+  transition: transform 0.3s ease-in-out;
+}
+
+.drawer-left-enter-from {
+  transform: translateX(-100%);
+}
+.drawer-left-leave-from {
+  transform: translateX(0);
+}
+.drawer-left-leave-to {
   transform: translateX(-100%);
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <UiFormLabel>
     How do you want to display item bundles in checkout?
-    <SfSelect v-model="selectedBundleOption" data-testid="editor-bundleSettings-select">
+    <SfSelect v-model="selectedBundleOption" data-testid="editor-bundleSettings-select" class="w-full">
       <option
         v-for="bundleOption in bundleSettingsOptions"
         :key="bundleOption.key"
