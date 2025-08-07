@@ -15,6 +15,7 @@
     <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
       <SfLoaderCircular size="2xl" class="text-gray-400" />
     </div>
+
     <v-data-table
       v-else
       v-model:search="search"
@@ -49,7 +50,13 @@
                   alt="table thumbnail"
                   class="w-8 h-8 rounded object-cover"
                 />
-                <span>{{ item.item.key }}</span>
+                <span>
+                  {{
+                    item.item.key.includes('/')
+                      ? item.item.key.substring(item.item.key.lastIndexOf('/') + 1)
+                      : item.item.key
+                  }}
+                </span>
               </div>
             </div>
           </td>
@@ -64,7 +71,7 @@
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 import type { StorageObject } from '@plentymarkets/shop-api';
-import { SfLoaderCircular, SfIconVuejs } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 
@@ -165,5 +172,3 @@ div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-
   background-color: gray;
 }
 </style>
-
-
