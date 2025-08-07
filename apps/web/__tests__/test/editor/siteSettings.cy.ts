@@ -27,6 +27,7 @@ describe('SiteSettings', () => {
     siteSettings
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
+      .toggleBrandingAndDesign()
       .toggleFonts()
       .changeFont(font)
       .checkFontPreview(font)
@@ -43,6 +44,7 @@ describe('SiteSettings', () => {
     siteSettings
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
+      .toggleBrandingAndDesign()
       .toggleColor()
       .changeColor(primaryColor, secondaryColor)
       .checkColorPreview(primaryColor)
@@ -59,6 +61,7 @@ describe('SiteSettings', () => {
     siteSettings
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
+      .toggleBrandingAndDesign()
       .toggleBlockSpacing()
       .changeBlockSpacing(blockSpacing)
       .checkBlockSpacingPreview(blockSpacingMargin)

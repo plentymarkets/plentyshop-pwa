@@ -24,6 +24,7 @@
           v-for="subCategory in subCategories"
           :key="subCategory"
           class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+          :data-e2e="`site-settings-sub-category-${subCategory}`"
           @click="activeSubCategory = subCategory"
         >
           <span class="break-words">

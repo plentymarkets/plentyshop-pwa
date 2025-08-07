@@ -9,6 +9,10 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('site-settings-drawer');
   }
 
+  get brandingAndDesign() {
+    return cy.getByTestId('site-settings-sub-category-branding-and-design');
+  }
+
   get fontSection() {
     return cy.getByTestId('fonts-section');
   }
@@ -75,6 +79,11 @@ export class SiteSettingsObject extends PageObject {
 
   checkSaveButtonEnabled() {
     this.saveButton.should('be.enabled');
+    return this;
+  }
+
+  toggleBrandingAndDesign() {
+    this.brandingAndDesign.should('be.visible').click();
     return this;
   }
 
