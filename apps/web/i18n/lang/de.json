@@ -616,7 +616,12 @@
       "moto2": "Neue Wireless Pro",
       "moto3": "Räumlicher Klang. Verstellbare Ohrmuscheln. Gerätesteuerung. Ganztägige Batterie.",
       "orderNow": "Jetzt bestellen",
-      "showMore": "Mehr anzeigen"
+      "showMore": "Mehr anzeigen",
+      "ariaLabelSlideControls": "Schieberegler",
+      "ariaLabelNextSlide": "Nächste Folie",
+      "ariaLabelPreviousSlide": "Vorherige Folie",
+      "ariaRoleDescriptionCarousel": "Karussell",
+      "ariaRoleDescriptionSlide": "Folie"
     },
     "displayDetails": {
       "detail1": {
