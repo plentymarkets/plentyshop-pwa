@@ -1,7 +1,6 @@
 <template>
   <Transition :name="placement === 'left' ? 'drawer-left' : ''" appear>
     <SfDrawer
-      v-if="drawerOpen"
       ref="drawerRef"
       v-model="drawerOpen"
       :placement="placement as SfDrawerPlacement"
@@ -15,9 +14,10 @@
         { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
       ]"
     >
-      <Transition :name="placement === 'left' ? transitionName : ''" mode="out-in" appear>
-        <component :is="getDrawerView(drawerView)" v-if="drawerView" />
-        <component :is="viewComponent" v-else-if="viewComponent" :key="viewComponent" />
+      <component :is="getDrawerView(drawerView)" v-if="drawerView" />
+
+      <Transition  v-else-if="viewComponent" :name="placement === 'left' ? transitionName : ''" mode="out-in" appear>
+        <component :is="viewComponent" :key="viewComponent" />
       </Transition>
     </SfDrawer>
   </Transition>
