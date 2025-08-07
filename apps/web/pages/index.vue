@@ -1,40 +1,3 @@
-<!-- <template>
-  <div>
-    <form @submit="handleFileUpload">
-      <h1 class="text-2xl font-bold mb-4">Upload File</h1>
-      <p class="mb-2">Select a file to upload:</p>
-      <input type="file" />
-      <button type="submit">Submit</button>
-    </form>
-    <EditablePage :identifier="'index'" :type="'immutable'" />
-  </div>
-</template>
-
-<script lang="ts" setup>
-const { uploadStorageItem } = useItemsTable();
-definePageMeta({
-  pageType: 'static',
-  isBlockified: true,
-});
-const { t } = useI18n();
-const { setPageMeta } = usePageMeta();
-const icon = 'home';
-setPageMeta(t('homepage.title'), icon);
-
-const { getRobots, setRobotForStaticPage } = useRobots();
-getRobots();
-setRobotForStaticPage('Homepage');
-
-const handleFileUpload = async (event: Event) => {
-  event.preventDefault();
-  const target = event.target as HTMLFormElement;
-  const input = target.querySelector('input[type=file]') as HTMLInputElement;
-  if (input && input.files && input.files.length > 0) {
-    await uploadStorageItem(input.files[0]);
-  }
-};
-</script> -->
-
 <template>
   <div>
     <form @submit="handleFileUpload">
@@ -46,7 +9,7 @@ const handleFileUpload = async (event: Event) => {
       <button class="mr-5 text-red-500" type="submit">Submit</button>
     </form>
     <label for="folder-select" class="block text-sm font-medium text-gray-700 mb-1">Select folder</label>
-    <select  id="folder-select" v-model="filePath" class="border border-gray-300 rounded px-2 py-1 w-full">
+    <select id="folder-select" v-model="filePath" class="border border-gray-300 rounded px-2 py-1 w-full">
       <option value="">All folders</option>
       <option v-for="folder in folders" :key="folder" :value="folder">
         {{ folder }}

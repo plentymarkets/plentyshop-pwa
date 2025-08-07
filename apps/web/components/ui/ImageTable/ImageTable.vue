@@ -1,5 +1,8 @@
 <template>
+
+      
   <VCard flat>
+    
     <v-text-field
       v-model="search"
       density="compact"
@@ -66,6 +69,7 @@
       </template>
     </v-data-table>
   </VCard>
+
 </template>
 
 <script setup lang="ts">

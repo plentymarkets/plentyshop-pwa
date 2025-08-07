@@ -33,29 +33,37 @@
             />
           </div>
 
-          <div
-            class="w-1/3 flex flex-col justify-center items-center rounded-md p-4"
-            :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
-          >
-            <UiImagePreview
-              :image="selectedImage?.image || null"
-              :name="selectedImage?.name || ''"
-              @close="selectedImage = null"
-            />
+          <div class="w-1/3 flex flex-col gap-4">
+            <div class="flex items-center gap-2">
+              <select v-model="filePath" class=" h-11 border border-gray-300 rounded px-2 py-1 w-1/2 text-sm">
+                <option value="">Root</option>
+                <option v-for="folder in folders" :key="folder" :value="folder">
+                  {{ folder }}
+                </option>
+              </select>
+              <span>/</span>
+              <input
+                v-model="filePath"
+                type="text"
+                placeholder="dir/subdir"
+                class="h-11 qborder border-gray-300 rounded px-2 py-1 w-1/2 text-sm"
+              />
+            </div>
+
+            <div
+              class="flex-1 flex flex-col justify-center items-center rounded-md p-4"
+              :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
+            >
+              <UiImagePreview
+                :image="selectedImage?.image || null"
+                :name="selectedImage?.name || ''"
+                @close="selectedImage = null"
+              />
+            </div>
           </div>
         </main>
 
         <footer class="mt-4 flex justify-end gap-2">
-          <div>
-            <label for="folder-select" class="block text-sm font-medium text-gray-700 mb-1">Select folder</label>
-            <select id="folder-select" class="border border-gray-300 rounded px-2 py-1 w-full">
-              <option value="">All folders</option>
-              <option v-for="folder in folders" :key="folder" :value="folder">
-                {{ folder }}
-              </option>
-            </select>
-          </div>
-
           <button
             type="button"
             data-testid="image-uploader-close-button"
@@ -81,7 +89,7 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
-
+const filePath = ref('');
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
 const { loading, getStorageItemsServer, folders } = useItemsTable();
 
@@ -109,29 +117,11 @@ const selectedImage = ref<null | {
   name: string;
 }>(null);
 
-// const folders = ref<string[]>([]);
-
-// console.log(folders);
-
-// const getFoldersFromImages = () => {
-//   const folderSet = new Set<string>();
-//   data.value.forEach((item: { key: string }) => {
-//     const key = item.key;
-//     const lastSlash = key.lastIndexOf('/');
-//     if (lastSlash > 0) {
-//       const folder = key.substring(0, lastSlash);
-//       folderSet.add(folder);
-//     }
-//   });
-//   folders.value = Array.from(folderSet);
-// };
-
 watch(
   () => props.open,
   (isOpen) => {
     if (isOpen) {
       getStorageItemsServer();
-      console.log('Folders', folders);
     }
   },
   { immediate: true },
