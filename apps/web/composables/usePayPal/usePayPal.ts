@@ -1,4 +1,4 @@
-import { type FUNDING_SOURCE, loadScript as loadPayPalScript } from '@paypal/paypal-js';
+import { type FUNDING_SOURCE, loadScript as loadPayPalScript, PayPalNamespace } from '@paypal/paypal-js';
 import type {
   ApiError,
   PayPalConfigResponse,
@@ -56,8 +56,7 @@ export const usePayPal = () => {
     }
   };
 
-  const updateAvailableAPMs = async (currency: string, commit: boolean = true) => {
-    const script = await getScript(currency, commit);
+  const updateAvailableAPMs = async (script: PayPalNamespace, currency: string) => {
     if (script && script.getFundingSources && state.value.activatedAPMs !== currency) {
       state.value.activatedAPMs = currency;
       const availableFoundingSources = new Map();
@@ -110,6 +109,10 @@ export const usePayPal = () => {
     return null;
   };
 
+  const getCurrentScript = () => {
+    return state.value.paypalScript;
+  };
+
   /**
    * @description Function to get the PayPal SDK script.
    * @param currency
@@ -138,9 +141,14 @@ export const usePayPal = () => {
     state.value.isReady = false;
     state.value.paypalScript = null;
     state.value.loadingScripts[scriptKey] = loadScript(currency, localePayPal, commit)
-      .then((paypalScript) => {
+      .then(async (paypalScript) => {
         state.value.paypalScript = { script: paypalScript, currency, locale: localePayPal, commit };
         state.value.isReady = true;
+
+        if (paypalScript) {
+          await updateAvailableAPMs(paypalScript, currency);
+        }
+
         return paypalScript;
       })
       .finally(() => {
@@ -322,6 +330,7 @@ export const usePayPal = () => {
     loadConfig,
     captureOrder,
     getScript,
+    getCurrentScript,
     getOrder,
     updateAvailableAPMs,
     getFraudId,

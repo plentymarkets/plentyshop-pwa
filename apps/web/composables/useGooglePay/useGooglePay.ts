@@ -31,10 +31,8 @@ export const useGooglePay = () => {
   }));
 
   const initialize = async () => {
-    const { data: cart } = useCart();
-    const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-    const { getScript } = usePayPal();
-    const script = await getScript(currency.value, true);
+    const { getCurrentScript } = usePayPal();
+    const script = getCurrentScript();
 
     if (!script) return false;
 
