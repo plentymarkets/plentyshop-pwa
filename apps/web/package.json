@@ -35,7 +35,7 @@
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
     "nuxt-lazy-hydrate": "^1.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.7.2",
