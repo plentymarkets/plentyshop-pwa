@@ -1,6 +1,10 @@
 import { PageObject } from './PageObject';
 
 export class SiteSettingsObject extends PageObject {
+  get backButton() {
+    return cy.getByTestId('view-back');
+  }
+
   get closeButton() {
     return cy.getByTestId('view-close');
   }
@@ -55,6 +59,11 @@ export class SiteSettingsObject extends PageObject {
 
   get blockSpacingButton() {
     return cy.getByTestId(`block-spacing-btn`);
+  }
+
+  back() {
+    this.backButton.should('be.visible').click();
+    return this;
   }
 
   closeDrawer() {

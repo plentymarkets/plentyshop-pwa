@@ -46,7 +46,7 @@
             <slot name="setting-title" />
           </div>
         </div>
-        <button data-testid="view-close" class="!p-0" @click="activeSubCategory = ''">
+        <button data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
           <SfIconChevronLeft />
         </button>
       </header>
