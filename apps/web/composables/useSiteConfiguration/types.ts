@@ -22,7 +22,6 @@ export interface UseSiteConfigurationState {
 export type LoadGoogleFont = (font: string) => void;
 export type UpdateNewBlockPosition = (position: number) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
-export type SaveSettings = () => Promise<boolean>;
 export type TogglePageModal = (value: boolean) => void;
 export type SetActiveSetting = (setting: string) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
@@ -45,12 +44,10 @@ export interface UseSiteConfiguration {
   setActiveSetting: SetActiveSetting;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
-  saveSettings: SaveSettings;
   openDrawerWithView: OpenDrawerView;
   togglePageModal: TogglePageModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
-  settingsIsDirty: ComputedRef<boolean>;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

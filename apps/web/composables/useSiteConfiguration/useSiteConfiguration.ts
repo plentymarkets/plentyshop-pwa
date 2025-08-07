@@ -3,7 +3,6 @@ import type {
   UseSiteConfigurationState,
   LoadGoogleFont,
   DrawerView,
-  SaveSettings,
   SettingsType,
   SetActiveSetting,
 } from '~/composables/useSiteConfiguration/types';
@@ -62,7 +61,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.drawerView = view;
     state.value.drawerOpen = true;
-    state.value.activeSetting = ''; // TODO: remove once all settings are moved to new structure
+    state.value.activeSetting = '';
 
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
@@ -75,36 +74,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const updateNewBlockPosition = (position: number) => {
     state.value.newBlockPosition = position;
-  };
-
-  const settingsIsDirty = computed(() => {
-    const { isDirty } = useSiteSettings();
-
-    return isDirty.value;
-  });
-
-  const saveSettings: SaveSettings = async (): Promise<boolean> => {
-    try {
-      state.value.loading = true;
-
-      const { data, saveSiteSettings } = useSiteSettings();
-
-      const settings = [
-        ...Object.entries(data.value || {}).map(([key, val]) => ({
-          key,
-          value: String(val || ''),
-        })),
-      ];
-
-      await useSdk().plentysystems.setConfiguration({ settings });
-
-      saveSiteSettings();
-    } catch (error) {
-      console.error('Error saving settings:', error);
-    } finally {
-      state.value.loading = false;
-    }
-    return true;
   };
 
   const togglePageModal = (value: boolean) => {
@@ -121,7 +90,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.activeSetting = setting;
     state.value.drawerOpen = true;
     state.value.placement = 'left';
-    state.value.drawerView = null; // TODO: remove once all settings are moved to new structure
+    state.value.drawerView = null;
   };
 
   return {
@@ -130,8 +99,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loadGoogleFont,
     openDrawerWithView,
     closeDrawer,
-    settingsIsDirty,
-    saveSettings,
     togglePageModal,
     setSettingsCategory,
     setActiveSetting,
