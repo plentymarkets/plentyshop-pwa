@@ -12,6 +12,7 @@ const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
   props.content.categoryId + props.content.cacheKey,
 );
+const { lastLanguageChange } = useLocalization();
 
 if (props.content.categoryId) {
   fetchProductRecommended(props.content.categoryId);
@@ -19,6 +20,14 @@ if (props.content.categoryId) {
 
 watch(
   () => props.content.categoryId,
+  () => {
+    if (props.content.categoryId) {
+      fetchProductRecommended(props.content.categoryId);
+    }
+  },
+);
+watch(
+  () => lastLanguageChange.value,
   () => {
     if (props.content.categoryId) {
       fetchProductRecommended(props.content.categoryId);
