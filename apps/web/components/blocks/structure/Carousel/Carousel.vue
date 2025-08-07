@@ -4,6 +4,8 @@
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
+      role="group"
+      aria-roledescription="carousel"
       :loop="true"
       :pagination="paginationConfig"
       :navigation="navigationConfig"
@@ -11,16 +13,25 @@
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
     >
-      <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
+      <SwiperSlide
+        v-for="(banner, slideIndex) in content"
+        :key="slideIndex"
+        :aria-labelledby="`carousel_item-${slideIndex}_heading`"
+        role="group"
+        aria-roledescription="slide"
+      >
         <slot
           name="content"
           :content-block="banner"
           :index="getSlideAdjustedIndex(slideIndex)"
+          :slide-index="slideIndex"
           :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
         />
       </SwiperSlide>
       <div
         v-if="enableModules"
+        role="group"
+        aria-label="Slide controls"
         :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
       />
     </Swiper>
@@ -29,12 +40,16 @@
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
+      aria-controls="carousel-{{index}}"
+      aria-label="Previous slide"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
     <div
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       :class="`swiper-button-next swiper-button-next-${index}`"
+      aria-controls="carousel-{{index}}"
+      aria-label="Next slide"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
   </NuxtErrorBoundary>
