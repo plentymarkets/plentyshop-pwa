@@ -28,11 +28,16 @@
             class="w-1/3 flex flex-col justify-center items-center rounded-md p-4"
             :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
           >
-            <UiImagePreview
-              :image="selectedImage?.image || null"
-              :name="selectedImage?.name || ''"
-              @close="selectedImage = null"
-            />
+            <template v-if="selectedImage">
+              <UiImagePreview
+                :image="selectedImage?.image"
+                :name="selectedImage?.name"
+                @close="selectedImage = null"
+              />
+            </template>
+            <template v-else>
+              <UiImageUpload @file-selected="handleUpload"/>
+            </template>
           </div>
         </main>
 
@@ -61,12 +66,15 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-
+const { uploadStorageItem, getStorageItemsServer } = useItemsTable();
 const props = defineProps({
   open: Boolean,
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits<{
+  (e: 'close'): void;
+  (e: 'select', image: { image: string; name: string }): void;
+}>();
 
 const close = () => emit('close');
 const selectedImage = ref<null | {
@@ -74,6 +82,12 @@ const selectedImage = ref<null | {
   name: string;
 }>(null);
 
+// const addImage = () => {
+//   if (selectedImage.value) {
+//     emit('select', selectedImage.value);
+//     emit('close');
+//   }
+// };
 const handleSelect = (image: { image: string; name: string }) => {
   selectedImage.value = {
     image: image.image,
@@ -81,4 +95,19 @@ const handleSelect = (image: { image: string; name: string }) => {
   };
 };
 const canAdd = computed(() => !!selectedImage.value);
+const handleUpload = async (file: File) => {
+  console.log('file in handleUpload:', file);
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    selectedImage.value = {
+      image: e.target?.result as string,
+      name: file.name,
+    }
+  }
+  reader.readAsDataURL(file)
+
+  await uploadStorageItem(file)
+
+await getStorageItemsServer()
+}
 </script>

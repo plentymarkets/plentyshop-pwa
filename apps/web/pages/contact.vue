@@ -224,23 +224,23 @@ const sendContact = async () => {
   if (!meta.value.valid || !turnstile.value) {
     return;
   }
-
-  const params = {
-    name: name?.value || '',
-    email: email?.value || '',
-    subject: subject?.value || '',
-    orderId: orderId?.value || '',
-    message: message.value || '',
-    'cf-turnstile-response': turnstile.value,
-  };
-
-  if (await doCustomerContactMail(params)) {
-    send({
-      type: 'positive',
-      message: t('contact.success'),
-    });
-    resetForm();
-  }
+  //
+  // const params = {
+  //   name: name?.value || '',
+  //   email: email?.value || '',
+  //   subject: subject?.value || '',
+  //   orderId: orderId?.value || '',
+  //   message: message.value || '',
+  //   'cf-turnstile-response': turnstile.value,
+  // };
+  //
+  // if (await doCustomerContactMail(params)) {
+  //   send({
+  //     type: 'positive',
+  //     message: t('contact.success'),
+  //   });
+  //   resetForm();
+  // }
 
   turnstile.value = '';
   turnstileElement.value?.reset();

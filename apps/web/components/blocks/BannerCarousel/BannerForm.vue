@@ -462,7 +462,8 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader" />
+  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader"
+  />
 </template>
 
 <script setup lang="ts">
@@ -507,6 +508,9 @@ const clampBrightness = (event: Event, type: string) => {
     banner.value.content.text.bgopacity = clamp(nextValue, 0, 1);
   }
 };
+// const handleImageSelected = (image: { image: string; name: string }) => {
+//   console.log('Selected image:', image);
+// };
 </script>
 
 <style scoped>
