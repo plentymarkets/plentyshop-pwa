@@ -35,6 +35,7 @@ const close = () => emit('close');
 const isPlaceholder = computed(() => !props.image || props.image === placeholderImg);
 
 const { getMetadata } = useImageMetadata();
-
-const meta = computed(() => getMetadata(props.name));
+const meta = computed(() => {
+  return props.name ? getMetadata(props.name) : { width: '', height: '' };
+});
 </script>

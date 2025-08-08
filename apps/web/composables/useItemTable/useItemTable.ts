@@ -9,7 +9,7 @@ export const useItemsTable: UseItemTableReturn = () => {
 
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
 
-  const getStorageItemsServer = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
+  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
@@ -18,20 +18,16 @@ export const useItemsTable: UseItemTableReturn = () => {
       return;
     }
 
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.getStorageItems({
-        fileTypes,
-      }),
-    );
+    const response = await useSdk().plentysystems.getStorageItems({ fileTypes });
     state.value.loading = false;
 
-    if (error.value) {
+    if (!response || !response.data) {
       const { send } = useNotification();
-      send({ type: 'negative', message: error.value.message });
+      send({ type: 'negative', message: 'Failed to fetch images.' });
       return;
     }
 
-    const items: StorageObject[] = data?.value?.data ?? [];
+    const items: StorageObject[] = response.data ?? [];
 
     state.value.data = items;
     cachedImages.value = items;
@@ -51,7 +47,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   const formatDate = (dateStr: string): string => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
-    return date.toLocaleString('en-US', {
+    return date.toLocaleString('en-GB', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -69,7 +65,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   };
 
   return {
-    getStorageItemsServer,
+    getStorageItems,
     getStorageMetadata,
     bytesToMB,
     formatDate,

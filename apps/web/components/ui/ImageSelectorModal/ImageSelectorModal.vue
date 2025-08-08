@@ -71,25 +71,12 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
+import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
 
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItemsServer } = useItemsTable();
+const { loading, getStorageItems } = useItemsTable();
 
-const props = defineProps({
-  open: Boolean,
-  imageType: {
-    type: String,
-    default: 'xl',
-  },
-  customLabel: {
-    type: String,
-    default: '',
-  },
-  currentImage: {
-    type: String,
-    default: '',
-  },
-});
+const props = defineProps<ImageSelectorModalProps>();
 
 const emit = defineEmits(['close', 'add']);
 
@@ -103,7 +90,7 @@ watch(
   () => props.open,
   (isOpen) => {
     if (isOpen) {
-      getStorageItemsServer();
+      getStorageItems();
     }
   },
   { immediate: true },

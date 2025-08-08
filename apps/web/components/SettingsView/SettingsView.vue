@@ -229,6 +229,7 @@
     <UiImageSelectorModal
       :open="isUploaderOpen"
       :custom-label="customLabel"
+      :image-type="''"
       :current-image="activeImage"
       @close="closeUploader"
       @add="handleImageAdd"

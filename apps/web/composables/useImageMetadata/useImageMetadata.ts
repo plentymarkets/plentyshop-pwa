@@ -1,19 +1,19 @@
-const metadata = ref<Record<string, { width: string; height: string }>>({});
+import type { MetadataRecord, SetMetadata, GetMetadata, UseImageMetadata } from './types';
+
+const metadata = ref<MetadataRecord>({});
 const currentKey = ref<string | null>(null);
 
-const setMetadata = (key: string, data: { width: string; height: string }) => {
+const setMetadata: SetMetadata = (key, data) => {
   metadata.value[key] = data;
 };
 
-const getMetadata = (key: string) => {
+const getMetadata: GetMetadata = (key) => {
   return metadata.value[key] || { width: '', height: '' };
 };
 
-export const useImageMetadata = () => {
-  return {
-    metadata,
-    currentKey,
-    setMetadata,
-    getMetadata,
-  };
-};
+export const useImageMetadata = (): UseImageMetadata => ({
+  metadata,
+  currentKey,
+  setMetadata,
+  getMetadata,
+});
