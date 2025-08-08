@@ -97,28 +97,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.drawerView = null;
   };
 
-  const setImageActiveSetting = (setting: string) => {
-    state.value.activeSetting = setting;
-  };
-
-  const { placeholderImg } = usePickerHelper();
-
-  const updateHeaderLogo = () => {
-    state.value.headerLogo = placeholderImg;
-  };
-
-  const updateFavicon = () => {
-    state.value.favicon = placeholderImg;
-  };
-
-  const handleImageAdd = ({ image }: { image: string; name: string }) => {
-    if (state.value.activeSetting === 'Logo') {
-      state.value.headerLogo = image;
-    } else if (state.value.activeSetting === 'Favicon') {
-      state.value.favicon = image;
-    }
-  };
-
   return {
     ...toRefs(state.value),
     updateNewBlockPosition,
@@ -129,9 +107,5 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     setSettingsCategory,
     setActiveSubCategory,
     setActiveSetting,
-    setImageActiveSetting,
-    updateHeaderLogo,
-    updateFavicon,
-    handleImageAdd,
   };
 };

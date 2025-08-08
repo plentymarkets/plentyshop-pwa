@@ -50,10 +50,6 @@ export interface UseSiteConfiguration {
   togglePageModal: TogglePageModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
-  updateHeaderLogo: () => void;
-  updateFavicon: () => void;
-  handleImageAdd: ({ image, name }: { image: string; name: string }) => void;
-  setImageActiveSetting: (setting: string) => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
