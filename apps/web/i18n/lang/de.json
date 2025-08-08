@@ -616,7 +616,12 @@
       "moto2": "Neue Wireless Pro",
       "moto3": "Räumlicher Klang. Verstellbare Ohrmuscheln. Gerätesteuerung. Ganztägige Batterie.",
       "orderNow": "Jetzt bestellen",
-      "showMore": "Mehr anzeigen"
+      "showMore": "Mehr anzeigen",
+      "ariaLabelSlideControls": "Steuerelemente für die Slides",
+      "ariaLabelNextSlide": "Nächste Slide",
+      "ariaLabelPreviousSlide": "Vorherige Slide",
+      "ariaRoleDescriptionCarousel": "Karussell",
+      "ariaRoleDescriptionSlide": "Slide"
     },
     "displayDetails": {
       "detail1": {
@@ -1031,7 +1036,9 @@
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
-      "validationFailed": "Die Adresse ist ungültig."
+      "validationFailed": "Die Adresse ist ungültig.",
+      "vatInvalid": "Die USt-IdNr. ist ungültig.",
+      "vatValidationClientBusy": "Der USt-Validierungsdienst ist derzeit nicht verfügbar, bitte versuchen Sie es später erneut."
     },
     "cart": {
       "addToBasket": {
