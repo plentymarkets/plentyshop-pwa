@@ -47,8 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { favicon } from '~/configuration/app.config';
-
 const { $pwa, $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
@@ -64,6 +62,7 @@ const { getSetting: getMetaTitle } = useSiteSettings('metaTitle');
 const { getSetting: getMetaDescription } = useSiteSettings('metaDescription');
 const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
 const { getSetting: getRobots } = useSiteSettings('robots');
+const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 
 const title = ref(getMetaTitle());
 const ogTitle = ref(getOgTitle());
@@ -72,6 +71,7 @@ const description = ref(getMetaDescription());
 const keywords = ref(getMetaKeywords());
 const robots = ref(getRobots());
 const fav = ref(getFavicon());
+const themeColor = ref(getPrimaryColor());
 
 watchEffect(() => {
   title.value = getMetaTitle();
@@ -81,6 +81,7 @@ watchEffect(() => {
   keywords.value = getMetaKeywords();
   robots.value = getRobots();
   fav.value = getFavicon();
+  themeColor.value = getPrimaryColor();
 });
 
 useSeoMeta({
@@ -90,6 +91,7 @@ useSeoMeta({
   description: () => description.value,
   keywords: () => keywords.value,
   robots: () => robots.value,
+  themeColor: () => themeColor.value,
   generator: 'plentymarkets',
 });
 

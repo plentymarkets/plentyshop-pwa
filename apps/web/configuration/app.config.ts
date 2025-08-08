@@ -23,7 +23,6 @@ export const appConfiguration = {
       lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
-      { name: 'theme-color', content: metaDefaults.themeColor },
       { property: 'og:type', content: openGraph.type },
       { property: 'og:url', content: process.env.API_ENDPOINT },
     ],
