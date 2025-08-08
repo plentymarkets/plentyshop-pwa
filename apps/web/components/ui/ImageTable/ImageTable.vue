@@ -12,19 +12,35 @@
       single-line
     />
 
+    <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
+      <SfLoaderCircular size="2xl" class="text-gray-400" />
+    </div>
     <v-data-table
+      v-else
       v-model:search="search"
-      :filter-keys="['name']"
+      :filter-keys="['key']"
       class="border border-gray-300 rounded-md"
       :items="items"
       :headers="headers"
       no-data-text="No images found"
     >
-      <template #item.name="{ item }">
-        <div class="flex items-center gap-2" @click="handleRowClick(item)">
-          <NuxtImg :src="item.image" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
-          <span>{{ item.name }}</span>
-        </div>
+      <template #item="{ item }">
+        <tr :class="item.key === selectedKey ? 'bg-[#EFF4F1]' : ''">
+          <td>
+            <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item)">
+              <div class="flex items-center gap-2">
+                <NuxtImg
+                  :src="item.previewUrl || item.publicUrl"
+                  alt="table thumbnail"
+                  class="w-8 h-8 rounded object-cover"
+                />
+                <span>{{ item.key }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ bytesToMB(item.size) }}</td>
+          <td>{{ formatDate(item.lastModified) }}</td>
+        </tr>
       </template>
     </v-data-table>
   </VCard>
@@ -32,91 +48,41 @@
 
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
-const props = defineProps<{
-  selectedName: string | null;
-}>();
-const headers = [
-  { title: 'File name', key: 'name' },
-  { title: 'Image size', key: 'size' },
-  { title: 'Last change', key: 'change' },
-];
+import type { StorageObject } from '@plentymarkets/shop-api';
+import { SfLoaderCircular } from '@storefront-ui/vue';
+
+const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
+
+const { setMetadata } = useImageMetadata();
+
+const selectedKey = ref<string | null>(null);
+
+const onRowClick = (item: StorageObject) => {
+  selectedKey.value = item.key;
+  handleRowClick(item);
+  fetchMetadata(item.key);
+};
+
+const fetchMetadata = async (key: string) => {
+  const data = await getStorageMetadata(key);
+  if (data && data.width && data.height) {
+    setMetadata(key, { width: data.width, height: data.height });
+  }
+};
 
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;
   (e: 'unselect'): void;
 }>();
 
-const handleRowClick = (item: { name: string; image: string }) => {
-  if (props.selectedName === item.name) {
-    emit('unselect');
-  } else {
-    emit('select', item);
-  }
+const handleRowClick = (item: StorageObject) => {
+  emit('select', {
+    name: item.key,
+    image: item.publicUrl,
+  });
 };
-const search = ref('');
-const items = [
-  {
-    name: 'Nebula GTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Galaxy RTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Orion RX 6800 XT',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Vortex RTX 3090',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Cosmos GTX 1660 Super',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
 
-  {
-    name: 'Nebula GTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Galaxy RTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Orion RX 6800 XT',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Vortex RTX 3090',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Cosmos GTX 1660 Super',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-];
+const search = ref('');
 </script>
 
 <style>
@@ -130,5 +96,17 @@ const items = [
 
 .v-data-table-footer__info {
   display: none !important;
+}
+
+.v-ripple__container {
+  display: none !important;
+}
+
+div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__next > button:active {
+  background-color: gray;
+}
+
+div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__prev > button:active {
+  background-color: gray;
 }
 </style>
