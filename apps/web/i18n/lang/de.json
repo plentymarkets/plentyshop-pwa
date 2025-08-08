@@ -617,11 +617,11 @@
       "moto3": "Räumlicher Klang. Verstellbare Ohrmuscheln. Gerätesteuerung. Ganztägige Batterie.",
       "orderNow": "Jetzt bestellen",
       "showMore": "Mehr anzeigen",
-      "ariaLabelSlideControls": "Schieberegler",
-      "ariaLabelNextSlide": "Nächste Folie",
-      "ariaLabelPreviousSlide": "Vorherige Folie",
+      "ariaLabelSlideControls": "Steuerelemente für die Slides",
+      "ariaLabelNextSlide": "Nächste Slide",
+      "ariaLabelPreviousSlide": "Vorherige Slide",
       "ariaRoleDescriptionCarousel": "Karussell",
-      "ariaRoleDescriptionSlide": "Folie"
+      "ariaRoleDescriptionSlide": "Slide"
     },
     "displayDetails": {
       "detail1": {
