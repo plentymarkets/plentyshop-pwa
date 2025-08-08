@@ -96,7 +96,7 @@ useSeoMeta({
 useHead({
   link: () => [
     { rel: 'icon', href: fav.value },
-    { rel: 'apple-touch-icon', href: favicon.appleTouchIcon },
+    { rel: 'apple-touch-icon', href: fav.value },
   ],
 });
 
