@@ -38,7 +38,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     return JSON.stringify(currentNoChildren) !== JSON.stringify(initialNoChildren);
   };
 
-  const saveCategorySettings: SaveSettings = async (): Promise<boolean> => {
+  const saveCategorySettings = async (): Promise<boolean> => {
     state.value.loading = true;
     try {
       const dirtyCategories = state.value.data.filter((category) => {

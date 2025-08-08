@@ -13,7 +13,6 @@ export const openGraph = {
 };
 
 export const favicon = {
-  icon: process.env.NUXT_PUBLIC_FAVICON || process.env.FAVICON || '/_nuxt-plenty/favicon.ico',
   appleTouchIcon: process.env.NUXT_PUBLIC_FAVICON || process.env.FAVICON || '/_nuxt-plenty/favicon.ico',
 };
 
@@ -24,20 +23,8 @@ export const appConfiguration = {
       lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
-      { name: 'description', content: metaDefaults.description },
-      { name: 'keywords', content: metaDefaults.keywords },
-      { name: 'robots', content: metaDefaults.robots },
-      { name: 'theme-color', content: metaDefaults.themeColor },
-      { name: 'generator', content: 'plentymarkets' },
-      { property: 'og:title', content: openGraph.title },
       { property: 'og:type', content: openGraph.type },
-      { property: 'og:image', content: openGraph.image },
       { property: 'og:url', content: process.env.API_ENDPOINT },
     ],
-    link: [
-      { rel: 'icon', href: favicon.icon },
-      { rel: 'apple-touch-icon', href: favicon.appleTouchIcon },
-    ],
-    title: metaDefaults.title,
   },
 };

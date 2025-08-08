@@ -39,15 +39,33 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     return JSON.parse((state.value.data?.[setting as string] as string) || defaultSetting);
   };
 
-  const isDirty = computed(() => {
+  const settingsIsDirty = computed(() => {
     const config = state.value.initialData;
     const currentData = state.value.data;
 
     return Object.keys(currentData).some((key) => key in config && currentData[key] !== config[key]);
   });
 
-  const saveSiteSettings: SaveSiteSettings = () => {
-    state.value.initialData = { ...state.value.initialData, ...state.value.data };
+  const saveSiteSettings: SaveSiteSettings = async () => {
+    try {
+      state.value.loading = true;
+
+      const settings = [
+        ...Object.entries(state.value.data.value || {}).map(([key, val]) => ({
+          key,
+          value: String(val || ''),
+        })),
+      ];
+
+      await useSdk().plentysystems.setConfiguration({ settings });
+
+      state.value.initialData = { ...state.value.initialData, ...state.value.data };
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    } finally {
+      state.value.loading = false;
+    }
+    return true;
   };
 
   return {
@@ -55,7 +73,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     updateSetting,
     getSetting,
     getJsonSetting,
-    isDirty,
+    settingsIsDirty,
     saveSiteSettings,
   };
 };

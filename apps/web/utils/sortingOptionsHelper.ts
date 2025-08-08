@@ -1,4 +1,4 @@
-import type { SortingOption } from '~/components/settings/sorting-pagination/category-sorting/types';
+import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 
 export const getEditorTranslation = (key: string): string => {
   const { $i18n } = useNuxtApp();

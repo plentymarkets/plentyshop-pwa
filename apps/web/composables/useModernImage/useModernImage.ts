@@ -13,7 +13,9 @@ const getImageForViewport = (product: Product, context: string, isTablet: boolea
 };
 
 export const useModernImage: UseModernImageReturn = () => {
-  const config = useRuntimeConfig().public;
+  const { getSetting: useAvif } = useSiteSettings('useAvif');
+  const { getSetting: useWebp } = useSiteSettings('useWebp');
+
   const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
   const avifExtension = 'avif';
   const webpExtension = 'webp';
@@ -27,8 +29,8 @@ export const useModernImage: UseModernImageReturn = () => {
     const baseExtension = String(matches[1].split('.').pop());
 
     if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(url)) return url;
-    if (config.useAvif && baseExtension !== avifExtension) return `${url}.${avifExtension}`;
-    if (config.useWebp && baseExtension !== webpExtension) return `${url}.${webpExtension}`;
+    if (useAvif() && baseExtension !== avifExtension) return `${url}.${avifExtension}`;
+    if (useWebp() && baseExtension !== webpExtension) return `${url}.${webpExtension}`;
 
     return url;
   };
