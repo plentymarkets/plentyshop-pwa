@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { PickerHelperTemplate, UsePickerHelperReturn, ImageType } from './types';
 
 export const usePickerHelper: UsePickerHelperReturn = () => {
