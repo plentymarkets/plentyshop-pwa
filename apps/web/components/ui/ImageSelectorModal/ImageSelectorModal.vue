@@ -1,11 +1,16 @@
 <template>
   <teleport to="body">
     <div v-if="props.open" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white w-[1500px] h-[800px] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col">
+      <div class="bg-white w-[1500px] h-[840px] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col">
         <header class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold">Add image (XL, Desktop)</h2>
+          <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
           <div class="flex items-center gap-2">
-            <SfTooltip label="This is a placeholder label" placement="top" :show-arrow="true" class="z-10">
+            <SfTooltip
+              label="Manage your images centrally in the Webspace (under Shop). Deleting is not yet possible in the editor."
+              placement="top"
+              :show-arrow="true"
+              class="z-10"
+            >
               <SfIconInfo size="sm" />
             </SfTooltip>
 
@@ -15,9 +20,13 @@
           </div>
         </header>
 
-        <main class="flex flex-1 overflow-hidden">
+        <main class="flex flex-1">
           <div class="flex-1 overflow-auto pr-4">
+            <div v-if="loading" class="flex items-center justify-center h-full w-full min-h-[400px]">
+              <SfLoaderCircular size="2xl" class="text-gray-400" />
+            </div>
             <UiImageTable
+              v-else
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"
@@ -50,6 +59,7 @@
             :disabled="!canAdd"
             data-testid="image-uploader-add-button"
             class="bg-editor-button text-white py-1 px-4 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            @click="addImage"
           >
             Add image
           </button>
@@ -60,13 +70,15 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
+import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
 
-const props = defineProps({
-  open: Boolean,
-});
+const { placeholderImg, getImageTypeLabel } = usePickerHelper();
+const { loading, getStorageItems } = useItemsTable();
 
-const emit = defineEmits(['close']);
+const props = defineProps<ImageSelectorModalProps>();
+
+const emit = defineEmits(['close', 'add']);
 
 const close = () => emit('close');
 const selectedImage = ref<null | {
@@ -74,11 +86,61 @@ const selectedImage = ref<null | {
   name: string;
 }>(null);
 
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen) {
+      getStorageItems();
+    }
+  },
+  { immediate: true },
+);
+
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen && props.currentImage) {
+      selectedImage.value = {
+        image: props.currentImage,
+        name: '',
+      };
+    } else if (!isOpen) {
+      selectedImage.value = null;
+    }
+  },
+);
+
+const canAdd = computed(() => {
+  const image = selectedImage.value?.image;
+  return !!image && image !== props.currentImage && image !== placeholderImg;
+});
+
+const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
+
 const handleSelect = (image: { image: string; name: string }) => {
   selectedImage.value = {
     image: image.image,
     name: image.name,
   };
 };
-const canAdd = computed(() => !!selectedImage.value);
+
+const addImage = () => {
+  if (selectedImage.value) {
+    emit('add', {
+      image: selectedImage.value.image,
+      name: selectedImage.value.name,
+      type: props.imageType,
+    });
+    close();
+  }
+};
 </script>
+
+<style>
+.v-field--prepended {
+  padding-inline-start: 0;
+}
+.mdi-magnify {
+  padding: 0 20px;
+}
+</style>
