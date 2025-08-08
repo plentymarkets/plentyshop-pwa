@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title> Branding & design </template>
+    <template #setting-title> Branding & Design </template>
   </SiteConfigurationView>
 </template>
 
