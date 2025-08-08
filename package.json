@@ -51,7 +51,7 @@
     "drift-zoom": "^1.5.1",
     "vue-tel-input": "^9.3.0",
     "nuxt-swiper": "^1.2.2",
-    "vue-multiselect": "^3.2.0",
+    "vue-multiselect": "^3.3.1",
     "vue-tsc": "^3.0.1",
     "vuedraggable": "^4.1.0",
     "yup": "^1.6.1"
@@ -77,16 +77,16 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "nuxt": "3.17.5",
-    "nuxt-security": "2.2.0",
+    "nuxt-security": "2.3.0",
     "nuxt-viewport": "^2.3.1",
-    "playwright-core": "^1.53.2",
+    "playwright-core": "^1.54.1",
     "prettier": "^3.6.2",
     "rimraf": "^5.0.7",
-    "rollup": "^4.44.2",
-    "turbo": "^2.5.4",
-    "typescript": "5.8.3",
+    "rollup": "^4.46.2",
+    "turbo": "^2.5.5",
+    "typescript": "5.9.2",
     "vitest": "^3.2.4",
-    "wait-on": "^8.0.3"
+    "wait-on": "^8.0.4"
   },
   "overrides": {
     "@vue-storefront/eslint-config": {
