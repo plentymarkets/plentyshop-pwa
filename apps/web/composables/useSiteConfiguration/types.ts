@@ -24,6 +24,7 @@ export type UpdateNewBlockPosition = (position: number) => void;
 export type OpenDrawerView = (view: DrawerView, block?: Block) => void;
 export type TogglePageModal = (value: boolean) => void;
 export type SetActiveSetting = (setting: string) => void;
+export type SetActiveSubCategory = (subCategory: string) => void;
 export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsType?: SettingsType) => void;
 
 export interface UseSiteConfiguration {
@@ -42,6 +43,7 @@ export interface UseSiteConfiguration {
   activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
   activeSubCategory: Readonly<Ref<UseSiteConfigurationState['activeSubCategory']>>;
   setActiveSetting: SetActiveSetting;
+  setActiveSubCategory: SetActiveSubCategory;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   openDrawerWithView: OpenDrawerView;

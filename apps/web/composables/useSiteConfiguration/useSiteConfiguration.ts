@@ -85,6 +85,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.settingsCategory = category;
   };
 
+  const setActiveSubCategory = (subCategory: string) => {
+    state.value.activeSubCategory = subCategory;
+  };
+
   const setActiveSetting: SetActiveSetting = (setting: string) => {
     state.value.activeSubCategory = '';
     state.value.activeSetting = setting;
@@ -101,6 +105,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     closeDrawer,
     togglePageModal,
     setSettingsCategory,
+    setActiveSubCategory,
     setActiveSetting,
   };
 };

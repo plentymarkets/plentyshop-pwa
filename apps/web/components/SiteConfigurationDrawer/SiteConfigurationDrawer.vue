@@ -45,6 +45,10 @@ watch(activeSubCategory, (next, prev) => {
   if (entering) transitionName.value = 'cover-in';
   if (exiting) transitionName.value = 'cover-out';
 });
+
+watch(activeSetting, () => {
+  transitionName.value = 'cover-in';
+});
 </script>
 
 <style scoped>

@@ -15,10 +15,4 @@
 
 <script setup lang="ts">
 import { SfIconInfo } from '@storefront-ui/vue';
-const { $registerMessages } = useNuxtApp();
-
-$registerMessages({
-  en: { seo: 'SEO Settings', 'social-media': 'Social Media', robots: 'Robots', 'meta-data': 'Meta Data' },
-  de: { seo: 'SEO Settings', 'social-media': 'Social Media DE', robots: 'Robots', 'meta-data': 'Meta Data' },
-});
 </script>

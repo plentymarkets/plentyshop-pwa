@@ -46,7 +46,10 @@
             <slot name="setting-title" />
           </div>
         </div>
-        <button data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
+        <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeDrawer">
+          <SfIconClose />
+        </button>
+        <button v-else data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
           <SfIconChevronLeft />
         </button>
       </header>
@@ -65,10 +68,27 @@
 <script setup lang="ts">
 import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
 import { getSubCategories } from '~/utils/settings-groups-imports';
+import type { Messages } from '~/components/SiteConfigurationView/types';
+import { getSettingsTranslations } from '~/utils/settings-translations-imports';
 const { t } = useI18n();
 
-const { closeDrawer, activeSetting, activeSubCategory } = useSiteConfiguration();
+const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 
 const groups = computed(() => getSettingsGroups(activeSetting.value, activeSubCategory.value));
 const subCategories = computed(() => getSubCategories(activeSetting.value));
+setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : '');
+
+const messages: Messages = {};
+
+const { $registerMessages } = useNuxtApp();
+Object.values(getSettingsTranslations()).forEach((fileContent) => {
+  Object.entries(fileContent).forEach(([locale, translations]) => {
+    if (!messages[locale as keyof typeof messages]) {
+      messages[locale as keyof typeof messages] = {};
+    }
+    Object.assign(messages[locale as keyof typeof messages], translations);
+  });
+});
+
+$registerMessages(messages);
 </script>
