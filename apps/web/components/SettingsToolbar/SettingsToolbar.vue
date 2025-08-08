@@ -21,7 +21,7 @@
         v-for="trigger in triggersModules"
         :key="trigger.slug"
         :active="activeSetting === trigger.slug"
-        @click="setActiveSetting(trigger.slug)"
+        @click="trigger.slug !== activeSetting && setActiveSetting(trigger.slug)"
       />
     </div>
   </aside>

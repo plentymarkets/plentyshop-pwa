@@ -39,6 +39,7 @@ const viewComponent = computed(() => getViewComponent(activeSetting.value, activ
 const transitionName = ref('cover-in');
 
 watch(activeSubCategory, (next, prev) => {
+  if (next === prev) return;
   const entering = !prev && next;
   const exiting = prev && !next;
 

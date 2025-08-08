@@ -1,6 +1,6 @@
 <template>
   <div class="site-settings-view sticky top-[52px] relative overflow-hidden" data-testid="site-settings-drawer">
-    <div v-if="!activeSubCategory" key="sub-list" class="sub-categories">
+    <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
       <header class="border-b">
         <div class="flex items-center justify-between px-4 py-5">
           <div class="flex items-center">
@@ -74,9 +74,11 @@ const { t } = useI18n();
 
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 
-const groups = computed(() => getSettingsGroups(activeSetting.value, activeSubCategory.value));
 const subCategories = computed(() => getSubCategories(activeSetting.value));
-setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : '');
+
+setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : activeSubCategory.value);
+
+const groups = computed(() => getSettingsGroups(activeSetting.value, activeSubCategory.value));
 
 const messages: Messages = {};
 
