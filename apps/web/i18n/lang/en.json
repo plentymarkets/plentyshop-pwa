@@ -616,7 +616,12 @@
       "moto2": "New Wireless Pro",
       "moto3": "Spatial audio. Adjustable ear cups. On-device controls. All-day battery.",
       "orderNow": "Order now",
-      "showMore": "Show more"
+      "showMore": "Show more",
+      "ariaLabelSlideControls": "Slide controls",
+      "ariaLabelNextSlide": "Next slide",
+      "ariaLabelPreviousSlide": "Previous slide",
+      "ariaRoleDescriptionCarousel": "Carousel",
+      "ariaRoleDescriptionSlide": "Slide"
     },
     "displayDetails": {
       "detail1": {
