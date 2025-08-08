@@ -11,6 +11,7 @@ export interface UseItemTableTemplate {
   data: Readonly<Ref<UseItemTableState['data']>>;
   loading: Readonly<Ref<boolean>>;
   headers: Readonly<Ref<{ title: string; key: string }[]>>;
+  getStorageItems: GetStorageItems;
   uploadStorageItem: (file: File) => any;
   getStorageItemsServer: GetStorageItems;
   bytesToMB: (bytes: string | number) => string;

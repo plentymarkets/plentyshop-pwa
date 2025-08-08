@@ -20,7 +20,7 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @select="openUploader"
+            @select="openUploader(type)"
             @delete="deleteImage(banner.content.image, type)"
           />
         </div>
@@ -462,7 +462,12 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal :open="isUploaderOpen" @close="closeUploader"
+  <UiImageSelectorModal
+    :open="isUploaderOpen"
+    :image-type="selectedImageType"
+    :current-image="banner.content.image[selectedImageType as BannerImageType]"
+    @close="closeUploader"
+    @add="handleImageAdd"
   />
 </template>
 
@@ -476,7 +481,17 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const {
+  placeholderImg,
+  labels,
+  imageDimensions,
+  imageTypes,
+  deleteImage,
+  isUploaderOpen,
+  openUploader,
+  closeUploader,
+  selectedImageType,
+} = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -488,15 +503,7 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-const isUploaderOpen = ref(false);
 
-function openUploader() {
-  isUploaderOpen.value = true;
-}
-
-function closeUploader() {
-  isUploaderOpen.value = false;
-}
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
@@ -508,9 +515,14 @@ const clampBrightness = (event: Event, type: string) => {
     banner.value.content.text.bgopacity = clamp(nextValue, 0, 1);
   }
 };
-// const handleImageSelected = (image: { image: string; name: string }) => {
-//   console.log('Selected image:', image);
-// };
+
+const handleImageAdd = ({ image, type }: { image: string; name: string; type: string }) => {
+  if (banner.value?.content?.image && type) {
+    (banner.value.content.image as Record<string, string>)[type] = image;
+  }
+};
+
+type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>
 
 <style scoped>
@@ -521,6 +533,7 @@ input::-webkit-inner-spin-button {
 }
 
 input[type='number'] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 </style>
