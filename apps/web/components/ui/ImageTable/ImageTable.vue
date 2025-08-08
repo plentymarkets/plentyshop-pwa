@@ -12,19 +12,55 @@
       single-line
     />
 
+    <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
+      <SfLoaderCircular size="2xl" class="text-gray-400" />
+    </div>
+
     <v-data-table
-      v-model:search="search"
-      :filter-keys="['name']"
-      class="border border-gray-300 rounded-md"
-      :items="items"
+      v-else
+      :items="tableRows"
       :headers="headers"
+      class="border border-gray-300 rounded-md"
       no-data-text="No images found"
     >
-      <template #item.name="{ item }">
-        <div class="flex items-center gap-2" @click="handleRowClick(item)">
-          <NuxtImg :src="item.image" alt="table thumbnail" class="w-8 h-8 rounded object-cover" />
-          <span>{{ item.name }}</span>
-        </div>
+      <template #item="{ item }">
+        <tr v-if="item.type === 'folder'" class="cursor-pointer" @dblclick="toggleFolder(item.name)">
+          <td colspan="3">
+            <span class="flex items-center">
+              <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-7l-2-2H5a2 2 0 00-2 2z"
+                />
+              </svg>
+              <span class="font-semibold">{{ item.name }}</span>
+            </span>
+          </td>
+        </tr>
+        <tr v-else :class="item.item.key === selectedKey ? 'bg-[#EFF4F1]' : ''">
+          <td>
+            <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item.item)">
+              <div class="flex items-center gap-2">
+                <NuxtImg
+                  :src="item.item.previewUrl || item.item.publicUrl"
+                  alt="table thumbnail"
+                  class="w-8 h-8 rounded object-cover"
+                />
+                <span>
+                  {{
+                    item.item.key.includes('/')
+                      ? item.item.key.substring(item.item.key.lastIndexOf('/') + 1)
+                      : item.item.key
+                  }}
+                </span>
+              </div>
+            </div>
+          </td>
+          <td>{{ bytesToMB(item.item.size) }}</td>
+          <td>{{ formatDate(item.item.lastModified) }}</td>
+        </tr>
       </template>
     </v-data-table>
   </VCard>
@@ -32,91 +68,174 @@
 
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
-const props = defineProps<{
-  selectedName: string | null;
-}>();
-const headers = [
-  { title: 'File name', key: 'name' },
-  { title: 'Image size', key: 'size' },
-  { title: 'Last change', key: 'change' },
-];
+import type { StorageObject } from '@plentymarkets/shop-api';
+import { SfLoaderCircular } from '@storefront-ui/vue';
+
+const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
+
+const { setMetadata } = useImageMetadata();
+
+const openFolders = ref<string[]>([]);
+
+// const tableRows = computed(() => {
+//   const query = search.value.toLowerCase().trim();
+
+//   const foldersMap: Record<string, StorageObject[]> = {};
+//   const rootImages: StorageObject[] = [];
+
+//   items.value.forEach((item) => {
+//     const key = item.key;
+//     const lastSlash = key.lastIndexOf('/');
+//     if (lastSlash > 0) {
+//       const folder = key.substring(0, lastSlash);
+//       if (!foldersMap[folder]) foldersMap[folder] = [];
+//       foldersMap[folder].push(item);
+//     } else {
+//       rootImages.push(item);
+//     }
+//   });
+
+//   const rows: Array<{ type: 'folder'; name: string } | { type: 'image'; item: StorageObject }> = [];
+
+//   if (query) {
+//     const matchedFolders = Object.keys(foldersMap).filter((folder) => folder.toLowerCase().includes(query));
+//     matchedFolders.forEach((folder) => {
+//       rows.push({ type: 'folder', name: folder });
+//     });
+
+//     Object.values(foldersMap).forEach((images) => {
+//       images
+//         .filter((item) => item.key.toLowerCase().includes(query))
+//         .forEach((item) => rows.push({ type: 'image', item }));
+//     });
+
+//     rootImages
+//       .filter((item) => item.key.toLowerCase().includes(query))
+//       .forEach((item) => rows.push({ type: 'image', item }));
+
+//     return rows;
+//   }
+
+//   Object.keys(foldersMap).forEach((folder) => {
+//     rows.push({ type: 'folder', name: folder });
+
+//     if (openFolders.value.includes(folder)) {
+//       foldersMap[folder].forEach((item) => rows.push({ type: 'image', item }));
+//     }
+//   });
+
+//   rootImages.forEach((item) => rows.push({ type: 'image', item }));
+
+//   return rows;
+// });
+
+const tableRows = computed(() => {
+  const query = search.value.toLowerCase().trim();
+
+  const foldersMap: Record<string, StorageObject[]> = {};
+  const rootImages: StorageObject[] = [];
+
+  items.value.forEach((item) => {
+    const key = item.key;
+    const lastSlash = key.lastIndexOf('/');
+    if (lastSlash > 0) {
+      const folder = key.substring(0, lastSlash);
+      if (!foldersMap[folder]) foldersMap[folder] = [];
+      foldersMap[folder].push(item);
+    } else {
+      rootImages.push(item);
+    }
+  });
+
+  const rows: Array<{ type: 'folder'; name: string } | { type: 'image'; item: StorageObject }> = [];
+
+  if (query) {
+    const matchedFolders = new Set<string>();
+
+    // 1. Show folders that match the query
+    Object.keys(foldersMap).forEach((folder) => {
+      if (folder.toLowerCase().includes(query)) {
+        matchedFolders.add(folder);
+        rows.push({ type: 'folder', name: folder });
+      }
+    });
+
+    // 2. Show images that match individually (but not if already under a matched folder)
+    Object.entries(foldersMap).forEach(([folder, items]) => {
+      items.forEach((item) => {
+        const fileName = item.key.substring(item.key.lastIndexOf('/') + 1);
+        const matches = item.key.toLowerCase().includes(query) || fileName.toLowerCase().includes(query);
+
+        if (matches && !matchedFolders.has(folder)) {
+          rows.push({ type: 'image', item });
+        }
+        if (matchedFolders.has(folder) && openFolders.value.includes(folder)) {
+          foldersMap[folder].forEach((item) => {
+            rows.push({ type: 'image', item });
+          });
+        }
+      });
+    });
+
+    rootImages.forEach((item) => {
+      if (item.key.toLowerCase().includes(query)) {
+        rows.push({ type: 'image', item });
+      }
+    });
+
+    return rows;
+  }
+
+  // Normal folder structure (no search)
+  Object.keys(foldersMap).forEach((folder) => {
+    rows.push({ type: 'folder', name: folder });
+
+    if (openFolders.value.includes(folder)) {
+      foldersMap[folder].forEach((item) => rows.push({ type: 'image', item }));
+    }
+  });
+
+  rootImages.forEach((item) => rows.push({ type: 'image', item }));
+
+  return rows;
+});
+
+const toggleFolder = (folder: string) => {
+  if (openFolders.value.includes(folder)) {
+    openFolders.value = openFolders.value.filter((f) => f !== folder);
+  } else {
+    openFolders.value.push(folder);
+  }
+};
+
+const selectedKey = ref<string | null>(null);
+
+const onRowClick = (item: StorageObject) => {
+  selectedKey.value = item.key;
+  handleRowClick(item);
+  fetchMetadata(item.key);
+};
+
+const fetchMetadata = async (key: string) => {
+  const data = await getStorageMetadata(key);
+  if (data && data.width && data.height) {
+    setMetadata(key, { width: data.width, height: data.height });
+  }
+};
 
 const emit = defineEmits<{
   (e: 'select', item: { name: string; image: string }): void;
   (e: 'unselect'): void;
 }>();
 
-const handleRowClick = (item: { name: string; image: string }) => {
-  if (props.selectedName === item.name) {
-    emit('unselect');
-  } else {
-    emit('select', item);
-  }
+const handleRowClick = (item: StorageObject) => {
+  emit('select', {
+    name: item.key,
+    image: item.publicUrl,
+  });
 };
-const search = ref('');
-const items = [
-  {
-    name: 'Nebula GTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Galaxy RTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Orion RX 6800 XT',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Vortex RTX 3090',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Cosmos GTX 1660 Super',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
 
-  {
-    name: 'Nebula GTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Galaxy RTX 3080',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Orion RX 6800 XT',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Vortex RTX 3090',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-  {
-    name: 'Cosmos GTX 1660 Super',
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
-    size: '5.25 MB',
-    change: 'Apr 6, 2024, 4:55:05 PM',
-  },
-];
+const search = ref('');
 </script>
 
 <style>
@@ -130,5 +249,17 @@ const items = [
 
 .v-data-table-footer__info {
   display: none !important;
+}
+
+.v-ripple__container {
+  display: none !important;
+}
+
+div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__next > button:active {
+  background-color: gray;
+}
+
+div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__prev > button:active {
+  background-color: gray;
 }
 </style>
