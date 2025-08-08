@@ -7,31 +7,19 @@
 
 <script setup lang="ts">
 import type { ProductRecommendedProductsProps } from './types';
-
+const { locale } = useI18n();
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
   props.content.categoryId + props.content.cacheKey,
 );
-const { lastLanguageChange } = useLocalization();
 
 if (props.content.categoryId) {
   fetchProductRecommended(props.content.categoryId);
 }
 
-watch(
-  () => props.content.categoryId,
-  () => {
-    if (props.content.categoryId) {
-      fetchProductRecommended(props.content.categoryId);
-    }
-  },
-);
-watch(
-  () => lastLanguageChange.value,
-  () => {
-    if (props.content.categoryId) {
-      fetchProductRecommended(props.content.categoryId);
-    }
-  },
-);
+watch([() => props.content.categoryId, () => locale], () => {
+  if (props.content.categoryId) {
+    fetchProductRecommended(props.content.categoryId);
+  }
+});
 </script>

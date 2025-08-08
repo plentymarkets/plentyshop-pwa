@@ -5,7 +5,6 @@ import { createSharedComposable } from '@vueuse/core';
 
 export const useLocalization = createSharedComposable(() => {
   const isOpen = ref(false);
-  const lastLanguageChange = ref(Date.now());
 
   const toggle = () => (isOpen.value = !isOpen.value);
 
@@ -124,7 +123,6 @@ export const useLocalization = createSharedComposable(() => {
       path: switchLocalePath(language),
       query: route.query,
     });
-    lastLanguageChange.value = Date.now();
     await getCart();
   };
 
@@ -134,7 +132,6 @@ export const useLocalization = createSharedComposable(() => {
     buildCategoryLanguagePath,
     buildProductLanguagePath,
     isOpen,
-    lastLanguageChange,
     toggle,
     switchLocale,
     createLocalePath,
