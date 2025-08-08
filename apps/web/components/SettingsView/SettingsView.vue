@@ -16,47 +16,66 @@
         <template #summary>
           <h2 class="">Branding</h2>
         </template>
-        <div class="py-2">
-          <div class="flex justify-between mb-2">
-            <UiFormLabel>Logo</UiFormLabel>
-            <SfTooltip
-              label="The logo is displayed in the header of the onlineshop. For the best performance, you should choose an image file in one of the following formats: SVG, AVIF or WebP."
-              :placement="'top'"
-              :show-arrow="true"
-              class="ml-2 z-10"
-            >
-              <SfIconInfo :size="'sm'" />
-            </SfTooltip>
-          </div>
-          <label>
-            <SfInput v-model="headerLogo" type="text" placeholder="Enter URL of the image" data-testid="logo-field" />
+
+        <div v-if="runtimeConfig.public.isDev" class="images">
+          <UiImagePicker
+            label="Logo"
+            :image="headerLogo"
+            :placeholder="placeholderImg"
+            dimensions="150x40px (SVG) or max 180x80px"
+            :show-tooltip="true"
+            @select="onImageSelect('Logo')"
+            @delete="deleteLogo()"
+          />
+
+          <UiImagePicker
+            label="Favicon"
+            :image="favicon"
+            :placeholder="placeholderImg"
+            dimensions="32x32px or 48x48px (.ico)"
+            :show-tooltip="true"
+            @select="onImageSelect('Favicon')"
+            @delete="deleteFavicon()"
+          />
+        </div>
+
+        <div v-else class="images">
+          <div class="py-2">
+            <div class="flex justify-between mb-2">
+              <UiFormLabel>Logo</UiFormLabel>
+              <SfTooltip
+                label="The logo is displayed in the header of the onlineshop. For the best performance, you should choose an image file in one of the following formats: SVG, AVIF or WebP."
+                :placement="'top'"
+                :show-arrow="true"
+                class="ml-2 z-10"
+              >
+                <SfIconInfo :size="'sm'" />
+              </SfTooltip>
+            </div>
 
             <span class="typography-text-xs text-neutral-700"
               >If you choose SVG, the size must be 150 x 40 px. For other formats, the maximum size is 180 px (width) by
               80 px (height).</span
             >
-          </label>
-        </div>
-
-        <div class="py-2">
-          <div class="flex justify-between mb-2">
-            <UiFormLabel>Favicon</UiFormLabel>
-            <SfTooltip
-              label="A favicon helps customers recognize your site in browser tabs and bookmarks. Required file format: .ico"
-              :placement="'top'"
-              :show-arrow="true"
-              class="ml-2 z-10"
-            >
-              <SfIconInfo :size="'sm'" />
-            </SfTooltip>
           </div>
-          <label>
-            <SfInput v-model="favicon" type="text" placeholder="Enter URL of the image" data-testid="favicon-field" />
+
+          <div class="py-2">
+            <div class="flex justify-between mb-2">
+              <UiFormLabel>Favicon</UiFormLabel>
+              <SfTooltip
+                label="A favicon helps customers recognize your site in browser tabs and bookmarks. Required file format: .ico"
+                :placement="'top'"
+                :show-arrow="true"
+                class="ml-2 z-10"
+              >
+                <SfIconInfo :size="'sm'" />
+              </SfTooltip>
+            </div>
 
             <span class="typography-text-xs text-neutral-700"
               >Recommended dimensions: A square of 32 × 32 px or 48 × 48 px
             </span>
-          </label>
+          </div>
         </div>
       </UiAccordionItem>
 
@@ -207,17 +226,64 @@
     <!-- </div>
       <span class="typography-text-xs text-neutral-700">Show these manufacturer details. </span> -->
     <!-- </UiAccordionItem> -->
+    <UiImageSelectorModal
+      :open="isUploaderOpen"
+      :custom-label="customLabel"
+      :image-type="''"
+      :current-image="activeImage"
+      @close="closeUploader"
+      @add="handleImageAdd"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip, SfSwitch } from '@storefront-ui/vue';
-// import Multiselect from 'vue-multiselect';
 
-// const { fields, selectedFields} = useSiteConfiguration();
-const { headerLogo, favicon, ogTitle, ogImg, useAvif, useWebp, closeDrawer } = useSiteConfiguration();
+const runtimeConfig = useRuntimeConfig();
+const {
+  headerLogo,
+  favicon,
+  ogTitle,
+  ogImg,
+  useAvif,
+  useWebp,
+  closeDrawer,
+  updateHeaderLogo,
+  updateFavicon,
+  handleImageAdd,
+  setImageActiveSetting,
+  activeSetting: imageActiveSetting,
+} = useSiteConfiguration();
+
+const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
+
+const onImageSelect = (setting: 'Logo' | 'Favicon') => {
+  setImageActiveSetting(setting);
+  openUploader(undefined, setting);
+};
 
 const branding = ref(false);
 const socialMedia = ref(false);
 const optimisation = ref(false);
+
+const deleteLogo = () => {
+  updateHeaderLogo();
+};
+const deleteFavicon = () => {
+  updateFavicon();
+};
+
+const activeImage = computed(() => {
+  if (imageActiveSetting.value === 'Logo') return headerLogo.value;
+  if (imageActiveSetting.value === 'Favicon') return favicon.value;
+  return '';
+});
 </script>
+
+<style>
+.images img[alt='Logo'] {
+  background-color: #f3f4f6;
+  object-fit: none;
+}
+</style>

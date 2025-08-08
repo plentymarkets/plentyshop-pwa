@@ -6,20 +6,14 @@
     <div class="flex justify-between items-center p-4">
       <div class="text-sm text-gray-700">
         <strong>{{ props.name }}</strong>
-        <span v-if="props.dimensions" class="ml-2 text-gray-500">({{ props.dimensions }})</span>
+        <div v-if="meta.width && meta.height" class="text-xs mt-1">{{ meta.width }} x {{ meta.height }} px</div>
       </div>
-      <button
-        v-if="props.name && props.image"
-        class="text-gray-500 hover:text-gray-700 text-xl leading-none"
-        @click="close"
-      >
-        &times;
-      </button>
+      <button class="text-gray-500 hover:text-gray-700 text-xl leading-none" @click="close">&times;</button>
     </div>
 
     <div class="flex-1 flex items-center justify-center p-4">
-      <template v-if="props.image">
-        <img :src="props.image" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
+      <template v-if="!isPlaceholder">
+        <img :src="props.image || undefined" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
       </template>
       <template v-else>
         <span class="text-gray-400">Select an image from the list to preview it here</span>
@@ -29,15 +23,19 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+const { placeholderImg } = usePickerHelper();
 
 const props = defineProps<{
   image: string | null;
   name: string;
-  dimensions?: string;
 }>();
-const emit = defineEmits<{
-  (e: 'close', value: null): void;
-}>();
-const close = () => emit('close', null);
+const emit = defineEmits(['close']);
+const close = () => emit('close');
+
+const isPlaceholder = computed(() => !props.image || props.image === placeholderImg);
+
+const { getMetadata } = useImageMetadata();
+const meta = computed(() => {
+  return props.name ? getMetadata(props.name) : { width: '', height: '' };
+});
 </script>
