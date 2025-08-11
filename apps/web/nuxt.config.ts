@@ -35,6 +35,15 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['dotenv', 'validator', 'js-sha256'],
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vuetify: ['vuetify'],
+          },
+        },
+      },
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
