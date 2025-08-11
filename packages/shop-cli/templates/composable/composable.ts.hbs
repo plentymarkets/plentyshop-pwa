@@ -19,7 +19,7 @@ export const {{name}} = ({{camelCase (composableBaseName name)}}Id: string) => {
 
   // TODO: Replace with actual SDK method call
   // SDK method call - reused by both fetch methods
-  const sdkCall = (params: unknown) => 
+  const sdkCall = (params: unknown) =>
     useSdk().plentysystems.get{{pascalCase (composableBaseName name)}}(params);
 
   /**
@@ -48,21 +48,21 @@ export const {{name}} = ({{camelCase (composableBaseName name)}}Id: string) => {
    * @param params - Parameters for fetching {{humanCase (composableBaseName name)}} data
    * @returns Promise<any | null>
    */
-  const fetchServer = async (params: any) => {
+  const fetchServer = async (params: unknown) => {
     state.value.loading = true;
     state.value.error = null;
-    
+
     const { data, error } = await useAsyncData(
       '{{name}}-' + {{camelCase (composableBaseName name)}}Id + '-' + JSON.stringify(params),
       () => sdkCall(params)
     );
 
     useHandleError(error.value);
-    
+
     state.value.data = data.value?.data || null;
     state.value.error = error.value;
     state.value.loading = false;
-    
+
     return state.value.data;
   };
 
