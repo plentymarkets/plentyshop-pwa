@@ -6,22 +6,71 @@ This document explains how the settings drawer works, why the folder structure l
 
 ### Folder Layout Conventions
 
-The folder-layout convention defines a single, predictable path for every settings component, enabling automatic discovery, clean overrides, and zero manual registration. By adhering to `settings/<section>/<group>/<Setting>.vue` with `View.vue` and `ToolbarTrigger.vue`, core code, Nuxt modules, and client customisations integrate seamlessly.
+The folder-layout convention defines a single, predictable path for every settings component, enabling automatic discovery, clean overrides, and zero manual registration. By adhering to `settings/<mainCategory>/<subCategory>/<group>/<Setting>.vue` with `View.vue` and `ToolbarTrigger.vue`, core code, Nuxt modules, and client customisations integrate seamlessly.
 
 ![Site settings diagram](images/site-settings.png)
 
 ```
 components/
 └─ settings/
-   └─ design/                     # section (one Toolbar button)
-      ├─ 1.fonts/                 # group (order via prefix)
-      │  └─ PrimaryFont.vue       # individual setting
-      ├─ 2.colors/
-      │  ├─ PrimaryColor.vue
-      │  └─ SecondaryColor.vue
-      ├─ View.vue                 # wrapper for the whole section
-      └─ ToolbarTrigger.vue       # how the button looks in the side bar
+   └─ branding-and-design/           # mainCategory ( one Toolbar button )
+      ├─ View.vue                    # wrapper for the mainCategory section
+      ├─ ToolbarTrigger.vue          # how the button looks in the side bar
+      ├─ lang.json                   # translation file for the section
+      └─ branding-and-design/        # subCategory ( intermediate section )
+         ├─ 1.fonts/                 # group (order via prefix)
+         │  └─ PrimaryFont.vue       # individual setting
+         ├─ 2.colors/
+         │  ├─ PrimaryColor.vue
+         │  └─ SecondaryColor.vue
+         ├─ lang.json                # translation file for the section
+         └─ View.vue                 # wrapper for the subCategory section
 ```
+> [!NOTE]
+> The structure will be visually displayed if there is a valid individual setting component in the folder.
+
+> [!NOTE]
+> If there is only one subCategory, it will be automatically selected when the settings drawer is opened and groups will be displayed.
+
+---
+
+### View.vue
+
+`View.vue` is a mandatory wrapper component for the mainCategory and subCategory sections. It is responsible for displaying the settings components in the correct order and structure. It also handles the section **title** and **description**.
+
+```vue
+<template>
+  <SiteConfigurationView>
+    <template #setting-title> SEO Settings </template>
+    <template #setting-description>
+      <div class="flex flex-col px-4 py-5 border-t text-sm">
+        <p class="pb-2">
+          <SfIconInfo size="sm" />
+          <span class="px-2 align-middle font-bold">Global defaults</span>
+        </p>
+        <p>The settings below apply to any page without its own, page-specific settings.</p>
+      </div>
+    </template>
+  </SiteConfigurationView>
+</template>
+
+<script setup lang="ts">
+import { SfIconInfo } from '@storefront-ui/vue';
+</script>
+```
+
+---
+
+### Lang.json
+
+This file is optional but recommended. It is used to provide translations for the folder names. These translations will be used in the settings drawer for the intermediate section name and the group names. 
+
+```json
+{
+  "branding-and-design": "Branding & Design"
+}
+```
+
 ---
 
 ### Working with Settings in modules
@@ -95,6 +144,44 @@ if (isDirty.value) await saveSiteSettings();
 - **`getSetting(key)`** – read the staged *or* saved value (staged takes precedence).
 - **`isDirty`** – `true` when staged data differs from saved data; useful for change notifications.
 - **`saveSiteSettings()`** – commit staged data to `initialData`; long-term persistence is handled in `useSiteConfiguration.ts`.
+
+---
+
+### Migration guide
+
+If you are migrating from an older version of the site settings architecture, the only breaking change is the addition of the subCategory folder. This intermediate folder will have it's own `View.vue` and `lang.json` files, which will be used to display the subCategory section in the settings drawer. If you have custom settings that do not follow this structure, you will need to update them accordingly.
+
+For example
+
+```
+components/
+└─ settings/
+   └─ branding-and-design/
+      ├─ 1.fonts/
+      │  └─ PrimaryFont.vue
+      ├─ 2.colors/
+      │  ├─ PrimaryColor.vue
+      │  └─ SecondaryColor.vue
+      ├─ ToolbarTrigger.vue
+      └─ View.vue
+```
+
+will be migrated to
+
+```
+components/
+└─ settings/
+   └─ branding-and-design/
+      ├─ View.vue                    # wrapper for the mainCategory section
+      ├─ ToolbarTrigger.vue
+      └─ branding-and-design/        # subCategory ( intermediate section )
+         ├─ 1.fonts/
+         │  └─ PrimaryFont.vue
+         ├─ 2.colors/
+         │  ├─ PrimaryColor.vue
+         │  └─ SecondaryColor.vue
+         └─ View.vue                 # wrapper for the subCategory section
+```
 
 ---
 
