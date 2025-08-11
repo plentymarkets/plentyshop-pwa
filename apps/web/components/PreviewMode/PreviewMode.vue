@@ -62,7 +62,7 @@ const { $isPreview } = useNuxtApp();
 
 const { t } = useI18n();
 const { isEditingEnabled } = useEditor();
-const { settingsIsDirty } = useSiteConfiguration();
+const { settingsIsDirty } = useSiteSettings();
 const { save: saveBlocksAndSiteSettings } = useToolbar();
 const { save: saveCategorySettings, hasChanges } = useCategorySettingsCollection();
 
