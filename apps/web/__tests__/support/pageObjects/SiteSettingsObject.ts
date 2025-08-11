@@ -1,12 +1,20 @@
 import { PageObject } from './PageObject';
 
 export class SiteSettingsObject extends PageObject {
+  get backButton() {
+    return cy.getByTestId('view-back');
+  }
+
   get closeButton() {
     return cy.getByTestId('view-close');
   }
 
   get settingsDrawer() {
     return cy.getByTestId('site-settings-drawer');
+  }
+
+  get brandingAndDesign() {
+    return cy.getByTestId('site-settings-sub-category-branding-and-design');
   }
 
   get fontSection() {
@@ -53,6 +61,11 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId(`block-spacing-btn`);
   }
 
+  back() {
+    this.backButton.should('be.visible').click();
+    return this;
+  }
+
   closeDrawer() {
     this.closeButton.should('be.visible').click();
     return this;
@@ -75,6 +88,11 @@ export class SiteSettingsObject extends PageObject {
 
   checkSaveButtonEnabled() {
     this.saveButton.should('be.enabled');
+    return this;
+  }
+
+  toggleBrandingAndDesign() {
+    this.brandingAndDesign.should('be.visible').click();
     return this;
   }
 
