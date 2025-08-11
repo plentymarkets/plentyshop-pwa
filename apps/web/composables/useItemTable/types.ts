@@ -13,7 +13,7 @@ export interface UseItemTableTemplate {
   headers: Readonly<Ref<{ title: string; key: string }[]>>;
   getStorageItems: GetStorageItems;
   uploadStorageItem: (file: File) => any;
-  getStorageItemsServer: GetStorageItems;
+  // getStorageItemsServer: GetStorageItems;
   bytesToMB: (bytes: string | number) => string;
   formatDate: (dateString: string) => string;
   getStorageMetadata: (key: string) => Promise<StorageMetadataData>;

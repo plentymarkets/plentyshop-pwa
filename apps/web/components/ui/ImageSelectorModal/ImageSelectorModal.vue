@@ -79,7 +79,7 @@ import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefron
 import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
 
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItems, getStorageItemsServer, uploadStorageItem } = useItemsTable();
+const { loading, getStorageItems, uploadStorageItem } = useItemsTable();
 
 const props = defineProps<ImageSelectorModalProps>();
 
@@ -129,7 +129,6 @@ const handleSelect = (image: { image: string; name: string }) => {
   };
 };
 const handleUpload = async (file: File) => {
-  console.log('file in handleUpload:', file);
   const reader = new FileReader()
   reader.onload = (e) => {
     selectedImage.value = {
@@ -138,10 +137,7 @@ const handleUpload = async (file: File) => {
     }
   }
   reader.readAsDataURL(file)
-
   await uploadStorageItem(file)
-
-  await getStorageItemsServer()
 }
 const addImage = () => {
   if (selectedImage.value) {

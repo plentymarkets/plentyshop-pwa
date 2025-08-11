@@ -1,7 +1,5 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
-import type { StorageObject } from '@plentymarkets/shop-api';
-import { ApiError, StorageObject } from '@plentymarkets/shop-api';
-import { fileToBase64 } from '~/utils/fileHelper';
+import type { ApiError, StorageObject } from '@plentymarkets/shop-api';
 
 export const useItemsTable: UseItemTableReturn = () => {
   const state = useState<UseItemTableState>('useItemTable', () => ({
@@ -34,43 +32,43 @@ export const useItemsTable: UseItemTableReturn = () => {
     state.value.data = items;
     cachedImages.value = items;
   };
-const uploadStorageItem = async (file: File) => {
-  state.value.loading = true;
-
-  const base64String = await fileToBase64(file);
-  if (!base64String) {
-    state.value.loading = false;
-    return null;
-  }
-
-  try {
-    const result = await useSdk().plentysystems.doUploadStorageItem({
-      base64: base64String,
-      key: file.name,
-      type: file.type,
-    });
-    return result.data;
-  } catch (error) {
-    const { send } = useNotification();
-
-    const err = error as ApiError;
-
-    send({
-      type: 'negative',
-      message: err.message || 'Image upload failed.',
-    });
-
-    console.error('Upload error:', error);
-  } finally {
-    state.value.loading = false;
-  }
-};
 
   const headers = ref([
     { title: 'File name', key: 'key' },
     { title: 'Image size', key: 'size' },
     { title: 'Last change', key: 'lastModified' },
   ]);
+  const uploadStorageItem = async (file: File) => {
+    state.value.loading = true;
+
+    const base64String = await fileToBase64(file);
+    if (!base64String) {
+      state.value.loading = false;
+      return null;
+    }
+
+    try {
+      const result = await useSdk().plentysystems.doUploadStorageItem({
+        base64: base64String,
+        key: file.name,
+        type: file.type,
+      });
+      return result.data;
+    } catch (error) {
+      const { send } = useNotification();
+
+      const err = error as ApiError;
+
+      send({
+        type: 'negative',
+        message: err.message || 'Image upload failed.',
+      });
+
+      console.error('Upload error:', error);
+    } finally {
+      state.value.loading = false;
+    }
+  };
 
   const bytesToMB = (bytes: string | number): string => {
     const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
@@ -99,6 +97,7 @@ const uploadStorageItem = async (file: File) => {
 
   return {
     getStorageItems,
+    uploadStorageItem,
     getStorageMetadata,
     bytesToMB,
     formatDate,
