@@ -35,10 +35,9 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;
-    const { $i18n } = useNuxtApp();
 
     const { data, error } = await useAsyncData(
-      `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
+      `fetchProduct-${params.id}-${params.variationId}`,
       () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value);
