@@ -33,20 +33,54 @@
             />
           </div>
 
-          <div
-            class="w-1/3 flex flex-col justify-center items-center rounded-md p-4"
-            :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
-          >
-            <template v-if="selectedImage">
-              <UiImagePreview
-                :image="selectedImage?.image"
-                :name="selectedImage?.name"
-                @close="selectedImage = null"
-              />
-            </template>
-            <template v-else>
-              <UiImageUpload @file-selected="handleUpload"/>
-            </template>
+          <div class="w-1/3 flex flex-col gap-4">
+            <div class="flex items-center gap-3 w-full">
+              <div class="shrink-0">
+                <SfTooltip
+                  label="f you want to delete images or create/delete folders, please do this in the Webspace (under Shop), as these functions are not yet available in the editor."
+                  placement="left"
+                >
+                  <SfIconInfo size="sm" />
+                </SfTooltip>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <Multiselect
+                  v-model="filePath"
+                  :options="folders"
+                  :searchable="true"
+                  :allow-empty="true"
+                  :show-labels="false"
+                  placeholder="Root Folder"
+                  class="w-full"
+                  :disabled="!showUpload"
+                  :multiple="false"
+                >
+                  <template #option="{ option }">
+                    <span>{{ option || 'Root Folder' }}</span>
+                  </template>
+                  <template #singleLabel="{ option }">
+                    <span>{{ option || 'Root Folder' }}</span>
+                  </template>
+                </Multiselect>
+              </div>
+            </div>
+
+            <div
+              class="flex-1 flex flex-col justify-center items-center rounded-md p-4"
+              :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
+            >
+              <template v-if="selectedImage">
+                <UiImagePreview
+                  :image="selectedImage?.image"
+                  :name="selectedImage?.name"
+                  @close="selectedImage = null"
+                />
+              </template>
+              <template v-else>
+                <UiImageUpload @file-selected="handleUpload" />
+              </template>
+            </div>
           </div>
         </main>
 
@@ -76,14 +110,18 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
-import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
+import Multiselect from 'vue-multiselect';
 
+import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
+const filePath = ref('');
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItems, uploadStorageItem } = useItemsTable();
+const { loading, getStorageItems, uploadStorageItem, folders } = useItemsTable();
 
 const props = defineProps<ImageSelectorModalProps>();
 
 const emit = defineEmits(['close', 'add']);
+
+const showUpload = computed(() => !selectedImage.value);
 
 const close = () => emit('close');
 const selectedImage = ref<null | {
@@ -129,16 +167,16 @@ const handleSelect = (image: { image: string; name: string }) => {
   };
 };
 const handleUpload = async (file: File) => {
-  const reader = new FileReader()
+  const reader = new FileReader();
   reader.onload = (e) => {
     selectedImage.value = {
       image: e.target?.result as string,
       name: file.name,
-    }
-  }
-  reader.readAsDataURL(file)
-  await uploadStorageItem(file)
-}
+    };
+  };
+  reader.readAsDataURL(file);
+  await uploadStorageItem(file, filePath.value);
+};
 const addImage = () => {
   if (selectedImage.value) {
     emit('add', {

@@ -12,11 +12,11 @@ export interface UseItemTableTemplate {
   loading: Readonly<Ref<boolean>>;
   headers: Readonly<Ref<{ title: string; key: string }[]>>;
   getStorageItems: GetStorageItems;
-  uploadStorageItem: (file: File) => any;
-  // getStorageItemsServer: GetStorageItems;
+  uploadStorageItem: (file: File, filePath: string) => unknown; 
   bytesToMB: (bytes: string | number) => string;
   formatDate: (dateString: string) => string;
   getStorageMetadata: (key: string) => Promise<StorageMetadataData>;
+  folders: Readonly<Ref<string[]>>;
 }
 
 export type UseItemTableReturn = () => UseItemTableTemplate;

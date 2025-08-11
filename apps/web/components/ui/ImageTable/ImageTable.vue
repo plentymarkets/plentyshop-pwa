@@ -17,11 +17,9 @@
     </div>
     <v-data-table
       v-else
-      v-model:search="search"
-      :filter-keys="['key']"
-      class="border border-gray-300 rounded-md"
-      :items="items"
+      :items="filteredItems"
       :headers="headers"
+      class="border border-gray-300 rounded-md"
       no-data-text="No images found"
     >
       <template #item="{ item }">
@@ -34,10 +32,11 @@
                   alt="table thumbnail"
                   class="w-8 h-8 rounded object-cover"
                 />
-                <span>{{ item.key }}</span>
+                <span>{{ item.fileName }}</span>
               </div>
             </div>
           </td>
+          <td>{{ item.path }}</td>
           <td>{{ bytesToMB(item.size) }}</td>
           <td>{{ formatDate(item.lastModified) }}</td>
         </tr>
@@ -52,10 +51,27 @@ import type { StorageObject } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
-
 const { setMetadata } = useImageMetadata();
 
 const selectedKey = ref<string | null>(null);
+const search = ref('');
+
+const itemsWithPath = computed(() =>
+  items.value.map((item: StorageObject) => {
+    const lastSlash = item.key.lastIndexOf('/');
+    return {
+      ...item,
+      fileName: lastSlash >= 0 ? item.key.slice(lastSlash + 1) : item.key,
+      path: lastSlash >= 0 ? item.key.slice(0, lastSlash + 1) : '',
+    };
+  }),
+);
+
+const filteredItems = computed(() => {
+  if (!search.value) return itemsWithPath.value;
+  const s = search.value.toLowerCase();
+  return itemsWithPath.value.filter((item) => item.fileName.toLowerCase().includes(s));
+});
 
 const onRowClick = (item: StorageObject) => {
   selectedKey.value = item.key;
@@ -81,8 +97,6 @@ const handleRowClick = (item: StorageObject) => {
     image: item.publicUrl,
   });
 };
-
-const search = ref('');
 </script>
 
 <style>

@@ -8,12 +8,28 @@ export const useItemsTable: UseItemTableReturn = () => {
   }));
 
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
+  const folders = useState<string[]>('image-table-folders', () => []);
+
+  const extractFolders = (items: StorageObject[]): string[] => {
+    const folderSet = new Set<string>();
+    items.forEach((item) => {
+      const key = item.key;
+      const lastSlash = key.lastIndexOf('/');
+      if (lastSlash > 0) {
+        const folder = key.substring(0, lastSlash);
+        folderSet.add(folder);
+      }
+    });
+    return Array.from(folderSet);
+  };
 
   const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
       state.value.data = cachedImages.value;
+
+      folders.value = extractFolders(cachedImages.value);
       state.value.loading = false;
       return;
     }
@@ -28,17 +44,19 @@ export const useItemsTable: UseItemTableReturn = () => {
     }
 
     const items: StorageObject[] = response.data ?? [];
-
     state.value.data = items;
     cachedImages.value = items;
+
+    folders.value = extractFolders(items);
   };
 
   const headers = ref([
-    { title: 'File name', key: 'key' },
+    { title: 'File name', key: 'fileName' },
+    { title: 'Path', key: 'path' },
     { title: 'Image size', key: 'size' },
     { title: 'Last change', key: 'lastModified' },
   ]);
-  const uploadStorageItem = async (file: File) => {
+  const uploadStorageItem = async (file: File, path = '') => {
     state.value.loading = true;
 
     const base64String = await fileToBase64(file);
@@ -47,29 +65,29 @@ export const useItemsTable: UseItemTableReturn = () => {
       return null;
     }
 
+    const key = path ? `${path.replace(/\/$/, '')}/${file.name}` : file.name;
+
     try {
       const result = await useSdk().plentysystems.doUploadStorageItem({
         base64: base64String,
-        key: file.name,
+        filename: key,
         type: file.type,
       });
-      return result.data;
+
+      if (result?.data) {
+        const { send } = useNotification();
+        send({ type: 'positive', message: `Uploaded: ${result.data.key}` });
+
+        return result.data;
+      }
     } catch (error) {
+      console.error('Error uploading storage item:', error);
       const { send } = useNotification();
-
-      const err = error as ApiError;
-
-      send({
-        type: 'negative',
-        message: err.message || 'Image upload failed.',
-      });
-
-      console.error('Upload error:', error);
+      send({ type: 'negative', message: 'Error uploading storage item.' });
     } finally {
       state.value.loading = false;
     }
   };
-
   const bytesToMB = (bytes: string | number): string => {
     const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
     return (num / (1024 * 1024)).toFixed(2) + ' MB';
@@ -102,6 +120,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     bytesToMB,
     formatDate,
     headers,
+    folders,
     ...toRefs(state.value),
   };
 };
