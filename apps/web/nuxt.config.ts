@@ -39,11 +39,11 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            'vuetify': ['vuetify'],
-          }
-        }
-      }
-    }
+            vuetify: ['vuetify'],
+          },
+        },
+      },
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
