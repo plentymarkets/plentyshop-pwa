@@ -30,6 +30,7 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.0",
     "@nuxt/fonts": "^0.11.4",
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@vueuse/core": "^10.11.0",
