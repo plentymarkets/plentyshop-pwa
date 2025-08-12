@@ -64,12 +64,11 @@ export const usePayPal = () => {
       const fundingSources = script.getFundingSources();
       fundingSources.forEach((fundingSource: string) => {
         if (script.isFundingEligible) {
-          availableFoundingSources.set(fundingSource, true);
+          availableFoundingSources.set(fundingSource, script.isFundingEligible(fundingSource as FUNDING_SOURCE));
         }
       });
-      availableFoundingSources.set('googlepay', true);
-      await useSdk().plentysystems.doHandlePayPalFundingSources({
-        availableFundingSources: Object.fromEntries(availableFoundingSources),
+      await useSdk().plentysystems.doHandlePayPalPaymentFundingSources({
+        availableFoundingSources: Object.fromEntries(availableFoundingSources),
       });
     }
   };
