@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  validateComponentName,
-  validateComposableName,
-  validateDescription,
-  validateNotEmpty,
-} from '../validation';
+import { validateComponentName, validateComposableName, validateDescription, validateNotEmpty } from '../validation';
 
 describe('Validation Utilities', () => {
   describe('validateComponentName', () => {

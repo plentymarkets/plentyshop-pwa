@@ -7,10 +7,7 @@
 
 import { join, resolve } from 'node:path';
 import type { PathOptions, PathResult, PathStrategy, PathConfig } from './types';
-import {
-  ComponentPathStrategy,
-  ComposablePathStrategy,
-} from './PathStrategies';
+import { ComponentPathStrategy, ComposablePathStrategy } from './PathStrategies';
 
 /**
  * Default path configuration
