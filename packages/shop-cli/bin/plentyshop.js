@@ -32,7 +32,6 @@ PlentyONE Shop CLI
 
 Usage:
   plentyshop generate [generator-type]  Generate components, composables, pages, etc.
-  plentyshop init                       Initialize CLI and show help
   plentyshop --help                     Show this help
 
 Available generators:
