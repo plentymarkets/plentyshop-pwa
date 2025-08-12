@@ -49,14 +49,14 @@ const onImageSelect = (setting: 'Logo' | 'Favicon') => {
 };
 
 const deleteFavicon = () => {
-  updateSetting(placeholderImg);
+    deleteSetting();
 };
 
 const handleImageAdd = ({ image }: { image: string; name: string }) => {
   updateSetting(image);
 };
 
-const { updateSetting, getSetting } = useSiteSettings('favicon');
+const { updateSetting, getSetting, deleteSetting } = useSiteSettings('favicon');
 
 const favicon = computed({
   get: () => getSetting(),

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 logo-container">
     <div v-if="!runtimeConfig.public.isDev" class="flex justify-between mb-2">
       <UiFormLabel>Logo</UiFormLabel>
       <SfTooltip
@@ -50,14 +50,14 @@ const onImageSelect = (setting: 'Logo' | 'Favicon') => {
 };
 
 const deleteLogo = () => {
-  updateSetting(placeholderImg);
+  deleteSetting();
 };
 
 const handleImageAdd = ({ image }: { image: string; name: string }) => {
   updateSetting(image);
 };
 
-const { updateSetting, getSetting } = useSiteSettings('headerLogo');
+const { updateSetting, getSetting, deleteSetting } = useSiteSettings('headerLogo');
 
 const headerLogo = computed({
   get: () => getSetting(),
@@ -66,3 +66,10 @@ const headerLogo = computed({
 
 const activeImage = computed(() => headerLogo.value);
 </script>
+
+<style>
+.logo-container img[alt='Logo'] {
+  background-color: #f3f4f6;
+  object-fit: none;
+}
+</style>

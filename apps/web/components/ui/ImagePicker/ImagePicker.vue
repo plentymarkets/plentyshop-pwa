@@ -35,7 +35,7 @@
             v-if="!isPlaceholder"
             type="button"
             class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-            @click="emit('delete')"
+            @click.stop="emit('delete')"
           >
             <SfIconDelete />
           </button>

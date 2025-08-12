@@ -1,5 +1,6 @@
 import type {
   UpdateSetting,
+  DeleteSetting,
   UseSiteSettingsReturn,
   UseSiteSettingsState,
   GetSetting,
@@ -21,9 +22,15 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     initialData: useRuntimeConfig().public || {},
   }));
 
+  const {placeholderImg} = usePickerHelper();
+
   const updateSetting: UpdateSetting = async (value) => {
     state.value.data = { ...state.value.data, [setting as string]: value };
   };
+
+const deleteSetting: DeleteSetting = () => {
+  state.value.data = { ...state.value.data, [setting as string]: placeholderImg };
+};
 
   const getSetting: GetSetting = () => {
     return (
@@ -75,5 +82,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     getJsonSetting,
     settingsIsDirty,
     saveSiteSettings,
+    deleteSetting,
   };
 };

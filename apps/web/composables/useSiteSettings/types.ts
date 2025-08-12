@@ -9,6 +9,7 @@ export interface UseSiteSettingsState {
 }
 
 export type UpdateSetting = (value: string) => void;
+export type DeleteSetting = () => void;
 export type GetSetting = () => string;
 export type GetJsonSetting = () => string[];
 export type IsDirty = ComputedRef<boolean>;
@@ -23,6 +24,7 @@ export interface UseSiteSettings {
   getJsonSetting: GetJsonSetting;
   settingsIsDirty: IsDirty;
   saveSiteSettings: SaveSiteSettings;
+  deleteSetting: DeleteSetting;
 }
 
 export type UseSiteSettingsReturn = (setting?: string) => UseSiteSettings;
