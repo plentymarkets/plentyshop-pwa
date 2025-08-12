@@ -71,10 +71,6 @@ Run `npm run dev` to start the development server. The app will be served with h
 
 This project includes the **PlentyONE Shop CLI** for automated code generation. Use it to create consistent components, composables, and other files following project standards.
 
-### Initialization
-
-From the project root, run `npm run cli:init`
-
 ### Available Generators
 
 ```bash

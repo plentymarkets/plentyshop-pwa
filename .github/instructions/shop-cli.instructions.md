@@ -236,19 +236,30 @@ export function validateProjectStructure(): ValidationResult {
 
 ```
 __tests__/
-├── generators/         # Generator-specific tests
-│   ├── component/
-│   └── composable/
-├── core/              # Core module tests
-│   ├── builders/
-│   ├── error-handling/
-│   ├── generators/
-│   └── path/
+├── integration/         # Generator-specific tests
+│   └── __snapshots__/
 └── utils/             # Test utilities
     ├── cli-helpers.ts
     ├── component-helpers.ts
     ├── directory-helpers.ts
     └── snapshot-helpers.ts
+```
+```
+src/
+├── core/
+│   ├── builders/
+│   │   ├── __tests__/
+│   ├── error-handling/
+│   │   ├── __tests__/
+│   ├── generators/
+│   │   ├── __tests__/
+│   └── path/
+│       └── __tests__/
+├── helpers/
+│   ├── __tests__/
+│   └── plugins/
+└──  utils/
+     └──  __tests__/
 ```
 
 #### Test Categories
@@ -256,7 +267,6 @@ __tests__/
 1. **Unit Tests**: Test individual components in isolation
 2. **Integration Tests**: Test complete file generation workflows
 3. **Snapshot Tests**: Verify generated file content against snapshots
-4. **Error Tests**: Verify error handling and validation
 
 ### Extension Points
 

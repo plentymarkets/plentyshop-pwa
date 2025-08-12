@@ -19,9 +19,6 @@ npx @plentymarkets/shop-cli
 ## Quick Start
 
 ```bash
-# Initialize CLI and see available commands
-npx plentyshop init
-
 # Generate code interactively
 npx plentyshop generate
 
@@ -39,12 +36,6 @@ npx plentyshop --help
 
 - **component** - Generate Vue 3 components with TypeScript, tests, and proper structure
 - **composable** - Generate Vue 3 composables with TypeScript, tests, and index files
-
-### 🚧 Planned (Future Releases)
-
-- **settings** - Generate settings components for admin configuration
-- **page** - Generate Nuxt.js pages with routing and layout support
-- **block** - Generate CMS-like content blocks for dynamic content
 
 ## Architecture Overview
 
