@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title> Vat Validation </template>
+    <template #setting-title> Checkout </template>
   </SiteConfigurationView>
 </template>
 
