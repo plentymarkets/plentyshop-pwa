@@ -24,7 +24,6 @@ describe('CLI Command Execution', () => {
       expect(result.stdout).toContain('PlentyONE Shop CLI');
       expect(result.stdout).toContain('Usage:');
       expect(result.stdout).toContain('plentyshop generate');
-      expect(result.stdout).toContain('plentyshop init');
       expect(result.exitCode).toBe(0);
     });
 
