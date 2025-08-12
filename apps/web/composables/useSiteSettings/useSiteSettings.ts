@@ -51,7 +51,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
       state.value.loading = true;
 
       const settings = [
-        ...Object.entries(state.value.data.value || {}).map(([key, val]) => ({
+        ...Object.entries(state.value.data || {}).map(([key, val]) => ({
           key,
           value: String(val || ''),
         })),
