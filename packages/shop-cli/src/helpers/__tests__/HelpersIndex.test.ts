@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { registerDefaultHelpers, createHelperManager } from '../../src/helpers';
+import { registerDefaultHelpers, createHelperManager } from '..';
 import type { NodePlopAPI } from 'plop';
 
 const createMockPlop = (): NodePlopAPI => {

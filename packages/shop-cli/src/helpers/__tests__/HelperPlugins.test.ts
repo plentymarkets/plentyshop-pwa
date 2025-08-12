@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { StringCasePlugin, ComposablePlugin, UtilityPlugin } from '../../src/helpers/plugins';
+import { StringCasePlugin, ComposablePlugin, UtilityPlugin } from '../plugins';
 import type { NodePlopAPI } from 'plop';
 
 const createMockPlop = (): NodePlopAPI & { getHelper: (name: string) => (...args: unknown[]) => unknown } => {

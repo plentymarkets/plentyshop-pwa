@@ -5,7 +5,7 @@ import {
   createComponentTemplateFiles,
   createComposableTemplateFiles,
   createGeneratorConfig,
-} from '../src/utils/template-utils';
+} from '../template-utils';
 
 describe('Template Utilities', () => {
   describe('getTemplatePath', () => {

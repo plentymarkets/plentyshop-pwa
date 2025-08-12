@@ -6,7 +6,7 @@ import {
   validateComponentDirectory,
   validateWebAppStructure,
   getProjectStructureSuggestions,
-} from '../src/utils/project-validation';
+} from '../project-validation';
 
 describe('Project Validation Utilities', () => {
   const testDir = join(process.cwd(), '__test-project');

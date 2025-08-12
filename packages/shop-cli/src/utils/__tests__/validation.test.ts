@@ -4,7 +4,7 @@ import {
   validateComposableName,
   validateDescription,
   validateNotEmpty,
-} from '../src/utils/validation';
+} from '../validation';
 
 describe('Validation Utilities', () => {
   describe('validateComponentName', () => {
