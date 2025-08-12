@@ -24,18 +24,6 @@ export interface ComponentOptions {
   includeTests?: boolean;
 }
 
-export interface PageOptions {
-  isDynamic?: boolean;
-  includeLayout?: boolean;
-  includeMiddleware?: boolean;
-}
-
-export interface SettingsOptions {
-  includeTypes?: boolean;
-  includeToolbarTrigger?: boolean;
-  includeTests?: boolean;
-}
-
 export interface TemplateFile {
   name: string;
   template?: string;

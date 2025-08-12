@@ -10,8 +10,6 @@ import {
   cleanupTestDirectory,
   createMockComponentStructure,
   createMockComposableStructure,
-  createMockSettingsStructure,
-  createMockPageStructure,
   generateFileTree,
 } from '../utils/index.js';
 
@@ -52,30 +50,6 @@ describe('Generator File Structure Snapshots', () => {
 
       const fileTree = await generateFileTree(composableDir);
       expect(fileTree).toMatchSnapshot('composable-product-cart-structure');
-    });
-  });
-
-  describe('Settings Structure Snapshots', () => {
-    it('should match expected settings component structure', async () => {
-      const settingsName = 'ProductDisplaySettings';
-      const settingsDir = join(testWebAppPath, 'components', 'settings', 'product', 'display');
-
-      await createMockSettingsStructure(settingsDir, settingsName);
-
-      const fileTree = await generateFileTree(settingsDir);
-      expect(fileTree).toMatchSnapshot('settings-product-display-structure');
-    });
-  });
-
-  describe('Page Structure Snapshots', () => {
-    it('should match expected page structure', async () => {
-      const pageName = 'product-detail';
-      const pageDir = join(testWebAppPath, 'pages');
-
-      await createMockPageStructure(pageDir, pageName);
-
-      const fileTree = await generateFileTree(pageDir);
-      expect(fileTree).toMatchSnapshot('page-product-detail-structure');
     });
   });
 });

@@ -27,7 +27,7 @@ export async function createMockComponentStructure(componentDir: string, compone
   await mkdir(componentDir, { recursive: true });
   await mkdir(join(componentDir, '__tests__'), { recursive: true });
 
-  const files = [`${componentName}.vue`, 'types.ts', 'index.ts', `__tests__/${componentName}.spec.ts`];
+  const files = [`${componentName}.vue`, 'types.ts', `__tests__/${componentName}.spec.ts`];
 
   for (const file of files) {
     await writeFile(join(componentDir, file), `// Mock ${file} content`);
@@ -42,27 +42,6 @@ export async function createMockComposableStructure(composableDir: string, compo
 
   for (const file of files) {
     await writeFile(join(composableDir, file), `// Mock ${file} content`);
-  }
-}
-
-export async function createMockSettingsStructure(settingsDir: string, settingsName: string): Promise<void> {
-  await mkdir(settingsDir, { recursive: true });
-  await mkdir(join(settingsDir, '__tests__'), { recursive: true });
-
-  const files = [`${settingsName}.vue`, 'ToolbarTrigger.vue', 'types.ts', `__tests__/${settingsName}.spec.ts`];
-
-  for (const file of files) {
-    await writeFile(join(settingsDir, file), `// Mock ${file} content`);
-  }
-}
-
-export async function createMockPageStructure(pageDir: string, pageName: string): Promise<void> {
-  await mkdir(pageDir, { recursive: true });
-
-  const files = [`${pageName}.vue`, '[slug].vue'];
-
-  for (const file of files) {
-    await writeFile(join(pageDir, file), `// Mock ${file} content`);
   }
 }
 

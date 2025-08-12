@@ -15,7 +15,6 @@
     "build:analyze": "npm run turbo:disable-telemetry && turbo run build:analyze",
     "dev": "npm run turbo:disable-telemetry && turbo run dev",
     "start": "npm run turbo:disable-telemetry && turbo run start",
-    "cli:init": "cd packages/shop-cli && npx plentyshop init",
     "lint": "npm run turbo:disable-telemetry && turbo run lint",
     "lint:fix": "npm run turbo:disable-telemetry && turbo run lint:fix",
     "format": "prettier --check \"**/*.{ts,vue,css,scss,md}\"",

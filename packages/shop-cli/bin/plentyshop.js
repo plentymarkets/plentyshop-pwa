@@ -26,23 +26,6 @@ if (command === 'generate') {
   plopProcess.on('exit', (code) => {
     process.exit(code || 0);
   });
-} else if (command === 'init') {
-  console.log(`
-PlentyONE Shop CLI initialized successfully!
-
-Usage:
-  plentyshop generate [generator-type]  Generate components, composables, pages, etc.
-  plentyshop init                       Initialize CLI and show help
-  plentyshop --help                     Show this help
-
-Available generators:
-  - component       Generate a new Vue component
-  - composable      Generate a new Vue composable
-
-Examples:
-  plentyshop generate component
-  `);
-  process.exit(0);
 } else {
   console.log(`
 PlentyONE Shop CLI

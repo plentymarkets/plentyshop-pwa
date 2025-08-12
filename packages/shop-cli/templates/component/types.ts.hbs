@@ -1,16 +1,2 @@
 {{> jsdoc description=(concat "Props for " (pascalCase name) " component")}}
 {{> typescript-interface name=(concat (pascalCase name) "Props") properties=props}}
-
-{{#if hasEmits}}
-{{> jsdoc description=(concat "Emits for " (pascalCase name) " component")}}
-{{> typescript-interface name=(concat (pascalCase name) "Emits") properties=emits}}
-{{/if}}
-
-{{#if hasSlots}}
-{{> jsdoc description=(concat "Slots for " (pascalCase name) " component")}}
-export interface {{pascalCase name}}Slots {
-{{#each slots}}
-  {{name}}: (props: {{{props}}}) => any;
-{{/each}}
-}
-{{/if}}

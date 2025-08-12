@@ -56,10 +56,8 @@ describe('Composable Generator Output', () => {
 
       const validation = await validateTypedComposable(testDir, composableName);
 
-      expect(validation.hasVueImport).toBe(true);
       expect(validation.hasExportConstant).toBe(true);
       expect(validation.hasTypeImport).toBe(true);
-      expect(validation.fileContent).toContain("import { ref, computed } from 'vue'");
       expect(validation.fileContent).toContain(`export const ${composableName} = ()`);
     });
 
@@ -86,8 +84,7 @@ describe('Composable Generator Output', () => {
   describe('Composable Content Validation', () => {
     it('should include proper Vue imports', async () => {
       const composableName = 'useTestComposable';
-      const content = `import { ref, computed, onMounted } from 'vue';
-import type { TestComposableReturn } from './types';
+      const content = `import type { TestComposableReturn } from './types';
 
 export const ${composableName} = (): TestComposableReturn => {
   const data = ref(null);
@@ -110,16 +107,12 @@ export const ${composableName} = (): TestComposableReturn => {
       const composableFile = testDir.getPath(`composables/${composableName}/${composableName}.ts`);
       const fileContent = await readFile(composableFile, 'utf-8');
 
-      expect(fileContent).toMatch(/import \{ .+ \} from 'vue'/);
-      expect(fileContent).toContain('ref, computed');
       expect(fileContent).toContain(`export const ${composableName} = ()`);
     });
 
     it('should include proper return type annotation', async () => {
       const composableName = 'useApiData';
-      const content = `import type { Ref, ComputedRef } from 'vue';
-
-export interface ApiDataReturn {
+      const content = `export interface ApiDataReturn {
   data: Ref<unknown>;
   isLoading: Ref<boolean>;
   error: Ref<string | null>;
@@ -131,7 +124,6 @@ export interface ApiDataReturn {
       const typesFile = testDir.getPath(`composables/${composableName}/types.ts`);
       const fileContent = await readFile(typesFile, 'utf-8');
 
-      expect(fileContent).toContain("import type { Ref, ComputedRef } from 'vue'");
       expect(fileContent).toContain('export interface');
       expect(fileContent).toMatch(/\w+Return/);
     });

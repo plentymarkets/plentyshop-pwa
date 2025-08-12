@@ -36,8 +36,7 @@ export async function validateComposableFiles(
 
 export async function createTypedComposable(testDir: TestDirectory, composableName: string): Promise<void> {
   const files = {
-    [`${composableName}.ts`]: `import { ref, computed } from 'vue';
-import type { UserDataReturn } from './types';
+    [`${composableName}.ts`]: `import type { UserDataReturn } from './types';
 
 export const ${composableName} = (): UserDataReturn => {
   const user = ref(null);
@@ -69,7 +68,6 @@ export async function validateTypedComposable(
   composableName: string,
 ): Promise<{
   fileContent: string;
-  hasVueImport: boolean;
   hasExportConstant: boolean;
   hasTypeImport: boolean;
 }> {
@@ -78,7 +76,6 @@ export async function validateTypedComposable(
 
   return {
     fileContent,
-    hasVueImport: fileContent.includes("import { ref, computed } from 'vue'"),
     hasExportConstant: fileContent.includes(`export const ${composableName} = ()`),
     hasTypeImport: fileContent.includes('import type {'),
   };

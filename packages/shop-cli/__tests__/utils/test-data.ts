@@ -18,12 +18,6 @@ export const mockGeneratorData = {
     description: 'A test composable for validation',
     path: 'composables/useTestData',
   },
-
-  page: {
-    name: 'test-page',
-    description: 'A test page for validation',
-    path: 'pages/test-page',
-  },
 };
 
 /**
@@ -33,8 +27,4 @@ export const expectedFilePatterns = {
   component: ['index.vue', 'types.ts', '__tests__/index.test.ts'],
 
   composable: ['useTestData.ts', 'types.ts', 'index.ts', '__tests__/useTestData.spec.ts'],
-
-  page: ['index.vue', 'types.ts', '__tests__/index.test.ts'],
-
-  settings: ['index.vue', 'types.ts', 'schema.ts', '__tests__/index.test.ts'],
 };

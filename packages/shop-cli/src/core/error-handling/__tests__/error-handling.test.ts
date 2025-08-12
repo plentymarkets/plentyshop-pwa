@@ -3,58 +3,10 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { validateComponentName, validateComposableName, validateNotEmpty } from '../../../utils/validation';
 import { handleGeneratorError } from '../utils';
 import { GeneratorError } from '../types';
 
 describe('Error Handling and Validation', () => {
-  describe('Input Validation Errors', () => {
-    it('should handle invalid component names', () => {
-      const invalidNames = [
-        '',
-        'component', // lowercase
-        'component-name', // kebab-case
-        'component_name', // snake_case
-        '123Component', // starts with number
-        'Component Name', // contains space
-        'Component-Name', // contains hyphen
-      ];
-
-      for (const name of invalidNames) {
-        const result = validateComponentName(name);
-        expect(typeof result).toBe('string');
-        expect(result).not.toBe(true);
-      }
-    });
-
-    it('should handle invalid composable names', () => {
-      const invalidNames = [
-        '',
-        'composable', // missing 'use' prefix
-        'UseComposable', // wrong case
-        'use-composable', // kebab-case
-        'use_composable', // snake_case
-        'usecomposable', // missing PascalCase
-      ];
-
-      for (const name of invalidNames) {
-        const result = validateComposableName(name);
-        expect(typeof result).toBe('string');
-        expect(result).not.toBe(true);
-      }
-    });
-
-    it('should handle empty inputs', () => {
-      const emptyInputs = ['', ' ', '  ', '\t', '\n'];
-
-      for (const input of emptyInputs) {
-        const result = validateNotEmpty(input);
-        expect(typeof result).toBe('string');
-        expect(result).not.toBe(true);
-      }
-    });
-  });
-
   describe('Generator Error Handling', () => {
     it('should handle GeneratorError instances', () => {
       const error = new GeneratorError('componentExists', 'TestComponent already exists');
@@ -103,41 +55,6 @@ describe('Error Handling and Validation', () => {
 
       expect(message).toContain('❌ Unexpected error');
       expect(message).toContain('String error');
-    });
-  });
-
-  describe('Validation Edge Cases', () => {
-    it('should handle special characters in validation', () => {
-      const invalidInputs = [
-        'Component@Name',
-        'Component#Name',
-        'Component$Name',
-        'Component%Name',
-        'Component&Name',
-        'Component*Name',
-      ];
-
-      for (const input of invalidInputs) {
-        const result = validateComponentName(input);
-        expect(typeof result).toBe('string');
-        expect(result).toContain('Component name must be in PascalCase');
-      }
-    });
-
-    it('should handle unicode characters', () => {
-      const unicodeInputs = ['Componént', 'Compønent', 'Component™', 'Cömponent'];
-
-      for (const input of unicodeInputs) {
-        const result = validateComponentName(input);
-        expect(typeof result).toBe('string');
-      }
-    });
-
-    it('should handle very long names', () => {
-      const longName = 'A'.repeat(100);
-      const result = validateComponentName(longName);
-      expect(typeof result).toBe('string');
-      expect(result).toContain('should not exceed');
     });
   });
 

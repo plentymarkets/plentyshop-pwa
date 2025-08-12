@@ -4,8 +4,6 @@ import {
   getDestinationPath,
   createComponentTemplateFiles,
   createComposableTemplateFiles,
-  createPageTemplateFiles,
-  createSettingsTemplateFiles,
   createGeneratorConfig,
 } from '../src/utils/template-utils';
 
@@ -76,49 +74,6 @@ describe('Template Utilities', () => {
         name: 'types.ts',
         template: 'types.ts.hbs',
       });
-    });
-  });
-
-  describe('createPageTemplateFiles', () => {
-    it('creates static page files', () => {
-      const files = createPageTemplateFiles();
-      expect(files).toContainEqual({
-        name: '{{kebabCase name}}.vue',
-        template: 'page.vue.hbs',
-      });
-    });
-
-    it('creates dynamic page files', () => {
-      const files = createPageTemplateFiles({ isDynamic: true });
-      expect(files).toContainEqual({
-        name: '[slug].vue',
-        template: 'page.vue.hbs',
-      });
-    });
-
-    it('includes layout and middleware when specified', () => {
-      const files = createPageTemplateFiles({
-        includeLayout: true,
-        includeMiddleware: true,
-      });
-
-      expect(files.some((f) => f.name === 'layouts/{{kebabCase name}}.vue')).toBe(true);
-      expect(files.some((f) => f.name === 'middleware/{{kebabCase name}}.ts')).toBe(true);
-    });
-  });
-
-  describe('createSettingsTemplateFiles', () => {
-    it('creates basic settings files', () => {
-      const files = createSettingsTemplateFiles();
-      expect(files).toContainEqual({
-        name: '{{pascalCase name}}.vue',
-        template: 'settings.vue.hbs',
-      });
-    });
-
-    it('includes toolbar trigger when specified', () => {
-      const files = createSettingsTemplateFiles({ includeToolbarTrigger: true });
-      expect(files.some((f) => f.name === '{{pascalCase name}}ToolbarTrigger.vue')).toBe(true);
     });
   });
 

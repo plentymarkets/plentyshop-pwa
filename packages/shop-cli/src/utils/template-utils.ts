@@ -2,8 +2,6 @@ import { join } from 'node:path';
 import type {
   DestinationOptions,
   ComponentOptions,
-  PageOptions,
-  SettingsOptions,
   TemplateFile,
   TemplateAction,
   GeneratorConfigOptions,
@@ -144,75 +142,6 @@ export function createComposableTemplateFiles(options: ComponentOptions = {}): T
     files.push({
       name: '__tests__/{{camelCase name}}.spec.ts',
       template: 'composable.spec.ts.hbs',
-    });
-  }
-
-  return files;
-}
-
-/**
- * Creates template file definitions for pages
- */
-export function createPageTemplateFiles(options: PageOptions = {}): TemplateFile[] {
-  const { isDynamic = false, includeLayout = false, includeMiddleware = false } = options;
-
-  const fileName = isDynamic ? '[slug].vue' : '{{kebabCase name}}.vue';
-
-  const files = [
-    {
-      name: fileName,
-      template: 'page.vue.hbs',
-    },
-  ];
-
-  if (includeLayout) {
-    files.push({
-      name: 'layouts/{{kebabCase name}}.vue',
-      template: 'layout.vue.hbs',
-    });
-  }
-
-  if (includeMiddleware) {
-    files.push({
-      name: 'middleware/{{kebabCase name}}.ts',
-      template: 'middleware.ts.hbs',
-    });
-  }
-
-  return files;
-}
-
-/**
- * Creates template file definitions for settings components
- */
-export function createSettingsTemplateFiles(options: SettingsOptions = {}): TemplateFile[] {
-  const { includeTypes = true, includeToolbarTrigger = false, includeTests = true } = options;
-
-  const files = [
-    {
-      name: '{{pascalCase name}}.vue',
-      template: 'settings.vue.hbs',
-    },
-  ];
-
-  if (includeTypes) {
-    files.push({
-      name: 'types.ts',
-      template: 'types.ts.hbs',
-    });
-  }
-
-  if (includeToolbarTrigger) {
-    files.push({
-      name: '{{pascalCase name}}ToolbarTrigger.vue',
-      template: 'toolbar-trigger.vue.hbs',
-    });
-  }
-
-  if (includeTests) {
-    files.push({
-      name: '__tests__/{{pascalCase name}}.spec.ts',
-      template: 'settings.spec.ts.hbs',
     });
   }
 

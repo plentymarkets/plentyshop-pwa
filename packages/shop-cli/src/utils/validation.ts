@@ -153,12 +153,6 @@ export function createPathValidator(basePath: string, componentType: string) {
       case 'composable':
         relativePath = `apps/web/composables/${name}`;
         break;
-      case 'ui':
-        relativePath = `apps/web/components/ui/${name}`;
-        break;
-      case 'page':
-        relativePath = `apps/web/pages/${name}.vue`;
-        break;
       default:
         return true;
     }

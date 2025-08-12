@@ -20,11 +20,6 @@ exports[`Generator File Structure Snapshots > Component Structure Snapshots > sh
       "type": "directory",
     },
     {
-      "name": "index.ts",
-      "size": 24,
-      "type": "file",
-    },
-    {
       "name": "types.ts",
       "size": 24,
       "type": "file",
@@ -66,60 +61,6 @@ exports[`Generator File Structure Snapshots > Composable Structure Snapshots > s
     },
   ],
   "name": "useProductCart",
-  "type": "directory",
-}
-`;
-
-exports[`Generator File Structure Snapshots > Page Structure Snapshots > should match expected page structure > page-product-detail-structure 1`] = `
-{
-  "children": [
-    {
-      "name": "[slug].vue",
-      "size": 26,
-      "type": "file",
-    },
-    {
-      "name": "product-detail.vue",
-      "size": 34,
-      "type": "file",
-    },
-  ],
-  "name": "pages",
-  "type": "directory",
-}
-`;
-
-exports[`Generator File Structure Snapshots > Settings Structure Snapshots > should match expected settings component structure > settings-product-display-structure 1`] = `
-{
-  "children": [
-    {
-      "name": "ProductDisplaySettings.vue",
-      "size": 42,
-      "type": "file",
-    },
-    {
-      "name": "ToolbarTrigger.vue",
-      "size": 34,
-      "type": "file",
-    },
-    {
-      "children": [
-        {
-          "name": "ProductDisplaySettings.spec.ts",
-          "size": 56,
-          "type": "file",
-        },
-      ],
-      "name": "__tests__",
-      "type": "directory",
-    },
-    {
-      "name": "types.ts",
-      "size": 24,
-      "type": "file",
-    },
-  ],
-  "name": "display",
   "type": "directory",
 }
 `;

@@ -112,18 +112,12 @@ export interface TestComponentProps {
   title: string;
   description?: string;
 }
-
-export interface TestComponentEmits {
-  click: [event: MouseEvent];
-  change: [value: string];
-}
       `.trim();
 
       await testDir.createFile('components/TestComponent/types.ts', content);
 
       const fileContent = await readFile(testFile, 'utf-8');
       expect(fileContent).toContain('export interface TestComponentProps');
-      expect(fileContent).toContain('export interface TestComponentEmits');
     });
   });
 });

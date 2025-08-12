@@ -54,14 +54,5 @@ describe('CLI Command Execution', () => {
       expect(result.stdout).toContain('[PLOP] Please choose a generator');
       expect(result.stdout).toContain('component - Generate a Vue component');
     }, 10000); // 10 second timeout for interactive command
-
-    it('should initialize CLI and show help with init command', async () => {
-      const result = await runCLI(['init']);
-
-      expect(result.stdout).toContain('PlentyONE Shop CLI initialized successfully!');
-      expect(result.stdout).toContain('Usage:');
-      expect(result.stdout).toContain('plentyshop generate');
-      expect(result.exitCode).toBe(0);
-    });
   });
 });
