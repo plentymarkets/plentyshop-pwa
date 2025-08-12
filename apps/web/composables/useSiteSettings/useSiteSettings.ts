@@ -22,15 +22,15 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     initialData: useRuntimeConfig().public || {},
   }));
 
-  const {placeholderImg} = usePickerHelper();
+  const { placeholderImg } = usePickerHelper();
 
   const updateSetting: UpdateSetting = async (value) => {
     state.value.data = { ...state.value.data, [setting as string]: value };
   };
 
-const deleteSetting: DeleteSetting = () => {
-  state.value.data = { ...state.value.data, [setting as string]: placeholderImg };
-};
+  const deleteSetting: DeleteSetting = () => {
+    state.value.data = { ...state.value.data, [setting as string]: placeholderImg };
+  };
 
   const getSetting: GetSetting = () => {
     return (
