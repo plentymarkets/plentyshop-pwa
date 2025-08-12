@@ -239,7 +239,7 @@ const handleAddToCart = async (quickCheckout = true) => {
       : send({ message: t('addedToCart'), type: 'positive' });
 
     if (getSetting() === '0') {
-      send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' })
+      send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' });
     }
   }
 
