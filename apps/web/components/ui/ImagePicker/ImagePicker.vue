@@ -27,7 +27,7 @@
           <button
             type="button"
             class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800"
-            @click="emit('select')"
+            @click.prevent="emit('select')"
           >
             Select
           </button>
@@ -35,7 +35,7 @@
             v-if="!isPlaceholder"
             type="button"
             class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-            @click="emit('delete')"
+            @click.prevent="emit('delete')"
           >
             <SfIconDelete />
           </button>
