@@ -37,7 +37,7 @@ export const {{name}} = ({{camelCase (composableBaseName name)}}Id: string) => {
       return data.data;
     } catch (error: unknown) {
       useHandleError(error as ApiError);
-      state.value.error = error as ApiError;
+      state.value.error = error as ApiError | null;
       state.value.loading = false;
       return null;
     }
