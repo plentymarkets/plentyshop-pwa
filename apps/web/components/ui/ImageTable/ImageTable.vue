@@ -20,7 +20,7 @@
       :items="filteredItems"
       :headers="headers"
       class="border border-gray-300 rounded-md"
-      no-data-text="No images found"
+      no-data-text="No images or folders found"
     >
       <template #item="{ item }">
         <UiImageTableSkeleton v-if="item.storageClass === UPLOADING_CLASS" />

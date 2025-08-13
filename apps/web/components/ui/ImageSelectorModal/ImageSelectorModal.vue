@@ -27,7 +27,7 @@
             </div>
             <UiImageTable
               v-else
-              :selected-key="selectedRowKey"
+              v-model:selected-key="selectedKey"
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"
@@ -128,6 +128,7 @@ const selectedImage = ref<null | {
   image: string;
   name: string;
 }>(null);
+const selectedKey = ref<string | null>(null);
 
 watch(
   () => props.open,
@@ -179,9 +180,16 @@ const handleUpload = async (file: File) => {
     };
   };
   reader.readAsDataURL(file);
+
   await uploadStorageItem(file, filePath.value);
   await nextTick();
-  selectedRowKey.value = items.value[0]?.key ?? null;
+
+  // Find the uploaded item by file name or key
+  const uploadedItem = items.value.find(
+    (item) => item.key === file.name || item.key.endsWith(`/${file.name}`) || item.key === file.name,
+  );
+  selectedRowKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
+  selectedKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
 };
 const addImage = () => {
   if (selectedImage.value) {
