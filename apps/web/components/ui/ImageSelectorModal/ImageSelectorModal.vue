@@ -27,6 +27,7 @@
             </div>
             <UiImageTable
               v-else
+              :selected-key="selectedRowKey"
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"
@@ -37,15 +38,11 @@
             class="w-1/3 flex flex-col justify-center items-center rounded-md p-4"
             :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
           >
-            <template v-if="selectedImage">
-              <UiImagePreview
-                :image="selectedImage?.image"
-                :name="selectedImage?.name"
-                @close="selectedImage = null"
-              />
+            <template v-if="selectedImage && !isPlaceholder">
+              <UiImagePreview :image="selectedImage?.image" :name="selectedImage?.name" @close="selectedImage = null" />
             </template>
             <template v-else>
-              <UiImageUpload @file-selected="handleUpload"/>
+              <UiImageUpload @file-selected="handleUpload" />
             </template>
           </div>
         </main>
@@ -79,13 +76,17 @@ import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefron
 import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
 
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItems, uploadStorageItem } = useItemsTable();
+const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls } = useItemsTable();
 
 const props = defineProps<ImageSelectorModalProps>();
+const selectedRowKey = ref<string | null>(null);
 
 const emit = defineEmits(['close', 'add']);
 
-const close = () => emit('close');
+const close = () => {
+  revokeAllBlobUrls();
+  emit('close');
+};
 const selectedImage = ref<null | {
   image: string;
   name: string;
@@ -119,6 +120,10 @@ const canAdd = computed(() => {
   const image = selectedImage.value?.image;
   return !!image && image !== props.currentImage && image !== placeholderImg;
 });
+const isPlaceholder = computed(() => {
+  const img = selectedImage.value?.image;
+  return !img || img === placeholderImg;
+});
 
 const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
 
@@ -129,16 +134,18 @@ const handleSelect = (image: { image: string; name: string }) => {
   };
 };
 const handleUpload = async (file: File) => {
-  const reader = new FileReader()
+  const reader = new FileReader();
   reader.onload = (e) => {
     selectedImage.value = {
       image: e.target?.result as string,
       name: file.name,
-    }
-  }
-  reader.readAsDataURL(file)
-  await uploadStorageItem(file)
-}
+    };
+  };
+  reader.readAsDataURL(file);
+  await uploadStorageItem(file);
+  await nextTick();
+  selectedRowKey.value = items.value[0]?.key ?? null;
+};
 const addImage = () => {
   if (selectedImage.value) {
     emit('add', {
@@ -149,6 +156,10 @@ const addImage = () => {
     close();
   }
 };
+
+onBeforeUnmount(() => {
+  revokeAllBlobUrls();
+});
 </script>
 
 <style>
