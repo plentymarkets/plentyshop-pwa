@@ -4,7 +4,7 @@
       v-model="search"
       density="compact"
       label="Search"
-      prepend-inner-icon="mdi-magnify"
+      prepend-inner-icon="fa-solid fa-magnifying-glass"
       variant="solo-filled"
       class="mb-5 border border-gray-300 rounded"
       flat
@@ -115,6 +115,10 @@ const search = ref('');
 
 .v-data-table-footer__info {
   display: none !important;
+}
+
+.v-icon {
+  --v-icon-size-multiplier: 0.55;
 }
 
 .v-btn--icon .v-icon {
