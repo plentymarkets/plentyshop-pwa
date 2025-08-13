@@ -140,7 +140,8 @@ const addImage = () => {
 .v-field--prepended {
   padding-inline-start: 0;
 }
-.mdi-magnify {
+.fa-solid.fa-magnifying-glass {
+  --v-icon-size-multiplier: 0.55;
   padding: 0 20px;
 }
 </style>
