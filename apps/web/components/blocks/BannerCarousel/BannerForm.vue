@@ -20,8 +20,8 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @select="openUploader(type)"
-            @delete="deleteImage(banner.content.image, type)"
+            :type="type"
+            @update:image="handleImageAdd"
           />
         </div>
         <div v-else class="images">
@@ -462,13 +462,6 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal
-    :open="isUploaderOpen"
-    :image-type="selectedImageType"
-    :current-image="banner.content.image[selectedImageType as BannerImageType]"
-    @close="closeUploader"
-    @add="handleImageAdd"
-  />
 </template>
 
 <script setup lang="ts">

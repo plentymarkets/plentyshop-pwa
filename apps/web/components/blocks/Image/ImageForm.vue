@@ -18,8 +18,8 @@
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :show-tooltip="true"
-        @select="openUploader(type)"
-        @delete="deleteImage(uiImageTextBlock, type)"
+        :type="type"
+        @update:image="handleImageAdd"
       />
     </div>
     <div v-else class="images">
@@ -137,13 +137,13 @@
       </div>
     </fieldset>
   </UiAccordionItem>
-  <UiImageSelectorModal
+  <!-- <UiImageSelectorModal
     :open="isUploaderOpen"
     :image-type="selectedImageType"
     :current-image="uiImageTextBlock[selectedImageType as ImageType]"
     @close="closeUploader"
     @add="handleImageAdd"
-  />
+  /> -->
 </template>
 
 <script setup lang="ts">

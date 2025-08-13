@@ -11,55 +11,37 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <UiImagePicker
-        v-if="runtimeConfig.public.isDev"
-        label="Favicon"
-        :image="favicon"
-        :placeholder="placeholderImg"
-        dimensions="32x32px or 48x48px (.ico)"
-        :show-tooltip="true"
-        @select="onImageSelect('Favicon')"
-        @delete="deleteFavicon()"
-      />
-
-      <span v-if="!runtimeConfig.public.isDev" class="typography-text-xs text-neutral-700"
-        >Recommended dimensions: A square of 32 × 32 px or 48 × 48 px
-      </span>
-    </label>
-
-    <UiImageSelectorModal
-      :open="isUploaderOpen"
-      :custom-label="customLabel"
-      :image-type="''"
-      :current-image="activeImage"
-      @close="closeUploader"
-      @add="handleImageAdd"
+    <UiImagePicker
+      label="Favicon"
+      :image="favicon"
+      :placeholder="placeholderImg"
+      dimensions="32x32px or 48x48px (.ico)"
+      :show-tooltip="true"
+      @update:image="handleImageAdd"
     />
+    <span v-if="!runtimeConfig.public.isDev" class="typography-text-xs text-neutral-700">
+      Recommended dimensions: A square of 32 × 32 px or 48 × 48 px
+    </span>
   </div>
 </template>
+
 <script setup lang="ts">
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import UiImagePicker from '~/components/ui/ImagePicker/ImagePicker.vue';
+import { usePickerHelper } from '~/composables/usePickerHelper/usePickerHelper';
+import { useSiteSettings } from '~/composables/useSiteSettings/useSiteSettings';
 
-const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
+const { placeholderImg } = usePickerHelper();
 const runtimeConfig = useRuntimeConfig();
 
 const { updateSetting, getSetting } = useSiteSettings('favicon');
-
-const onImageSelect = (setting: 'Logo' | 'Favicon') => {
-  openUploader(undefined, setting);
-};
-
-const deleteFavicon = () => {
-  updateSetting(placeholderImg);
-};
 
 const favicon = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
 
+// This handler works for both add and delete (delete sets image to placeholder)
 const { handleImageAdd } = useImageAdd(favicon);
-
-const activeImage = computed(() => favicon.value);
 </script>
+
