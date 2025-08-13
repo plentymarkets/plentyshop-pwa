@@ -71,7 +71,7 @@
               class="flex-1 flex flex-col justify-center items-center rounded-md p-4"
               :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
             >
-              <template v-if="selectedImage  && !isPlaceholder">
+              <template v-if="selectedImage && !isPlaceholder">
                 <UiImagePreview
                   :image="selectedImage?.image"
                   :name="selectedImage?.name"
@@ -116,7 +116,7 @@ import Multiselect from 'vue-multiselect';
 import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
 const filePath = ref('');
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const {data: items, loading, getStorageItems, uploadStorageItem,revokeAllBlobUrls, folders } = useItemsTable();
+const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
 
 const props = defineProps<ImageSelectorModalProps>();
 const selectedRowKey = ref<string | null>(null);
@@ -129,7 +129,6 @@ const close = () => {
 };
 const showUpload = computed(() => !selectedImage.value);
 
-const close = () => emit('close');
 const selectedImage = ref<null | {
   image: string;
   name: string;
