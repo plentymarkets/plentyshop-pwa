@@ -6,7 +6,7 @@
           <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
           <div class="flex items-center gap-2">
             <SfTooltip
-              label="Manage your images centrally in the Webspace (under Shop). Deleting is not yet possible in the editor."
+              label="If you want to delete images or create/delete folders, please do this in the Webspace (under Shop), as these functions are not yet available in the editor."
               placement="top"
               :show-arrow="true"
               class="z-10"
@@ -35,12 +35,9 @@
           </div>
 
           <div class="w-1/3 flex flex-col gap-4">
-            <div class="flex items-center gap-3 w-full">
+            <div v-if="showUpload" class="flex items-center gap-3 w-full">
               <div class="shrink-0">
-                <SfTooltip
-                  label="f you want to delete images or create/delete folders, please do this in the Webspace (under Shop), as these functions are not yet available in the editor."
-                  placement="left"
-                >
+                <SfTooltip label="Select the folder path for the upload." placement="left">
                   <SfIconInfo size="sm" />
                 </SfTooltip>
               </div>
@@ -54,7 +51,6 @@
                   :show-labels="false"
                   placeholder="Root Folder"
                   class="w-full"
-                  :disabled="!showUpload"
                   :multiple="false"
                 >
                   <template #option="{ option }">
