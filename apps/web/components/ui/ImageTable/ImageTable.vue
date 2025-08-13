@@ -4,7 +4,7 @@
       v-model="search"
       density="compact"
       label="Search"
-      prepend-inner-icon="mdi-magnify"
+      prepend-inner-icon="fa-solid fa-magnifying-glass"
       variant="solo-filled"
       class="mb-5 border border-gray-300 rounded"
       flat
@@ -25,7 +25,8 @@
       no-data-text="No images found"
     >
       <template #item="{ item }">
-        <tr :class="item.key === selectedKey ? 'bg-[#EFF4F1]' : ''">
+        <UiImageTableSkeleton v-if="item.storageClass === UPLOADING_CLASS" />
+        <tr v-else :class="item.key === props.selectedKey ? 'bg-[#EFF4F1]' : ''">
           <td>
             <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item)">
               <div class="flex items-center gap-2">
@@ -54,11 +55,28 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 
 const { setMetadata } = useImageMetadata();
+const lastFetchedKey = ref<string | null>(null);
 
-const selectedKey = ref<string | null>(null);
+const props = defineProps<{
+  selectedKey: string | null;
+}>();
+watch(
+  () => props.selectedKey,
+  (key) => {
+    if (!key || key === lastFetchedKey.value) return;
 
+    const row = items.value.find((item) => item.key === key);
+    if (!row || row.storageClass === UPLOADING_CLASS) return;
+
+    lastFetchedKey.value = key;
+
+    emit('select', { name: row.key, image: row.publicUrl });
+    fetchMetadata(key);
+  },
+  { immediate: false },
+);
 const onRowClick = (item: StorageObject) => {
-  selectedKey.value = item.key;
+  emit('update:selectedKey', item.key);
   handleRowClick(item);
   fetchMetadata(item.key);
 };
@@ -71,6 +89,7 @@ const fetchMetadata = async (key: string) => {
 };
 
 const emit = defineEmits<{
+  (e: 'update:selectedKey', value: string | null): void;
   (e: 'select', item: { name: string; image: string }): void;
   (e: 'unselect'): void;
 }>();
@@ -96,6 +115,10 @@ const search = ref('');
 
 .v-data-table-footer__info {
   display: none !important;
+}
+
+.v-icon {
+  --v-icon-size-multiplier: 0.55;
 }
 
 .v-btn--icon .v-icon {
