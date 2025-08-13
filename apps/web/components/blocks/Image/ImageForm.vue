@@ -177,9 +177,5 @@ const uiImageTextBlock = computed(
 
 const imageGroupOpen = ref(false);
 
-const handleImageAdd = ({ image, type }: { image: string; name: string; type: string }) => {
-  if (uiImageTextBlock.value && type && typeof image === 'string') {
-    (uiImageTextBlock.value as Record<string, unknown>)[type] = image;
-  }
-};
+const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
 </script>
