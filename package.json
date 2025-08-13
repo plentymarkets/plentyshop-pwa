@@ -26,6 +26,7 @@
     "test:coverage": "npm run turbo:disable-telemetry && npx turbo run test:coverage",
     "test:cypress-checkout": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-checkout\" \"npm run start\"",
     "test:cypress-paypal": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-paypal\" \"npm run start\"",
+    "test:cypress-dhl": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dhl\" \"npm run start\"",
     "test:cypress-editor": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-editor\" \"npm run start\"",
     "test:cypress-quarantine": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"npm run start\"",
     "test:cypress-post-quarantine": "concurrently -k -s=first \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-post-quarantine\" \"npm run start\"",
@@ -35,8 +36,8 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.6.9",
-    "@plentymarkets/shop-api": "^0.120.0",
+    "@plentymarkets/shop-core": "^1.8.0",
+    "@plentymarkets/shop-api": "^0.125.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.0.6",
     "@types/applepayjs": "^14.0.8",

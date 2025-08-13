@@ -9,13 +9,12 @@ const pymentStatus = new PaymentStatusScreen();
 
 beforeEach(() => {
   cy.clearCookies();
+  cy.addToCart();
   cy.visitAndHydrate(paths.authLogin);
 
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   myAccount.successLogin();
   cy.wait('@doLogin');
-
-  cy.addToCart();
   checkout.goToCheckoutPath().acceptTerms();
 });
 

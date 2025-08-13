@@ -120,7 +120,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Canonical URL</UiFormLabel>
-            <SfTooltip :label="canicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="canonicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -164,12 +164,8 @@ const { getCategoryId } = useCategoryIdHelper();
 
 const { data, loading, fetchCategorySettings } = useCategorySettings();
 const isInSitemap = computed({
-  get() {
-    return data.value.sitemap === 'Y';
-  },
-  set(value: boolean) {
-    data.value.sitemap = value ? 'Y' : 'N';
-  },
+  get: () => data.value.sitemap === 'Y',
+  set: (val: boolean) => (data.value.sitemap = val ? 'Y' : 'N'),
 });
 
 watch(
@@ -210,11 +206,9 @@ const robotNames = [
 ];
 
 const pageRobots = computed({
-  get() {
-    return robotNames.find((option) => option.value === data.value.details[0]?.metaRobots) || null;
-  },
-  set(selectedOption) {
-    data.value.details[0].metaRobots = selectedOption ? selectedOption.value : '';
+  get: () => robotNames.find((robot) => robot.value === data.value.details[0].metaRobots) || robotNames[0],
+  set: (val) => {
+    data.value.details[0].metaRobots = val.value;
   },
 });
 
@@ -226,5 +220,6 @@ const robotsTooltip =
   'This setting controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
 const keywordsTooltip =
   'List of relevant terms, separated by commas. Some search engines may use them to improve discoverability,';
-const canicalTooltip = 'Select a page to be used as the canonical URL for variations.';
+const canonicalTooltip =
+  'Specify a canonical URL only if it differs from this page’s own URL. Helps avoid duplicate content issues.';
 </script>

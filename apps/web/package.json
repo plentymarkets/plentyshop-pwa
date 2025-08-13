@@ -22,6 +22,7 @@
     "test:watch": "vitest",
     "test:cypress-checkout": "cypress run --browser chrome --headless --spec '__tests__/test/checkout/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-paypal": "cypress run --browser chrome --headless --spec '__tests__/test/paypal/*.cy.{js,jsx,ts,tsx}'",
+    "test:cypress-dhl": "cypress run --browser chrome --headless --spec '__tests__/test/dhl/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-editor": "cypress run --browser chrome --headless --spec '__tests__/test/editor/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/quarantine/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-post-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/post-quarantine/*.cy.{js,jsx,ts,tsx}'",
@@ -29,6 +30,7 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.0",
     "@nuxt/fonts": "^0.11.4",
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@vueuse/core": "^10.11.0",
@@ -71,7 +73,8 @@
     "vitepress": "^1.2.3",
     "vitest": "^3.0.5",
     "vue-tsc": "^3.0.1",
-    "vuepress": "^2.0.0-rc.24"
+    "vuepress": "^2.0.0-rc.24",
+    "vuetify-nuxt-module": "^0.18.7"
   },
   "overrides": {
     "@vue-storefront/eslint-config": {

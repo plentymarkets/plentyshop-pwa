@@ -35,6 +35,15 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['dotenv', 'validator', 'js-sha256'],
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vuetify: ['vuetify', '@fortawesome/fontawesome-free'],
+          },
+        },
+      },
+    },
   },
   css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -72,6 +81,16 @@ export default defineNuxtConfig({
       isPreview: false,
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
+      favicon: process.env.NUXT_PUBLIC_FAVICON || '/_nuxt-plenty/favicon.ico',
+      ogTitle: process.env.NUXT_PUBLIC_OG_TITLE || process.env.OG_TITLE || 'PlentyONE Shop',
+      ogImg: process.env.NUXT_PUBLIC_OG_IMG || process.env.OG_IMG || '/_nuxt-plenty/images/logo.svg',
+      ogType: process.env.NUXT_PUBLIC_OG_TYPE || process.env.OG_TYPE || 'website',
+      metaTitle: process.env.NUXT_PUBLIC_META_TITLE || process.env.METATITLE || 'PlentyONE Shop',
+      metaDescription:
+        process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
+      metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
+      robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
+      themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||
         process.env.LOGO ||
@@ -89,14 +108,18 @@ export default defineNuxtConfig({
       availableSortingOptions:
         process.env.NUXT_PUBLIC_AVAILABLE_SORTING_OPTIONS ||
         '["texts.name1_asc","default.recommended_sorting","sorting.price.avg_asc","sorting.price.avg_desc","variation.availability.averageDays_asc","variation.availability.averageDays_desc"]',
-      recommendedFirstSortingOption: process.env.NUXT_PUBLIC_RECOMMENDED_FIRST_SORTING_OPTION ?? 'texts.name_asc',
-      recommendedSecondSortingOption: process.env.NUXT_PUBLIC_RECOMMENDED_SECOND_SORTING_OPTION ?? 'notSelected',
-      recommendedThirdSortingOption: process.env.NUXT_PUBLIC_RECOMMENDED_THIRD_SORTING_OPTION ?? 'notSelected',
+      recommendedFirstSortingOption:
+        process.env.NUXT_PUBLIC_RECOMMENDED_FIRST_SORTING_OPTION ?? 'variation.position_desc',
+      recommendedSecondSortingOption:
+        process.env.NUXT_PUBLIC_RECOMMENDED_SECOND_SORTING_OPTION ?? 'sorting.price.avg_asc',
+      recommendedThirdSortingOption:
+        process.env.NUXT_PUBLIC_RECOMMENDED_THIRD_SORTING_OPTION ?? 'variation.availability.averageDays_asc',
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
       headerBackgroundColor:
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
+      bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       fetchDynamicTranslations: false,
     },
   },
@@ -116,7 +139,18 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+    'vuetify-nuxt-module',
   ],
+  vuetify: {
+    moduleOptions: {
+      disableVuetifyStyles: true,
+    },
+    vuetifyOptions: {
+      icons: {
+        defaultSet: 'fa',
+      },
+    },
+  },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },

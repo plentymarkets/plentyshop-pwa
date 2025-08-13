@@ -68,6 +68,13 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
+  const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
+  const lastIndex = data.value.length - 1;
+  if (footerIndex !== -1 && footerIndex !== lastIndex) {
+    const footerBlock = data.value.splice(footerIndex, 1)[0];
+    data.value.push(footerBlock);
+  }
+
   if (evt.moved) {
     const { newIndex } = evt.moved;
     const block = document.getElementById(`block-${newIndex}`);
@@ -79,7 +86,8 @@ const scrollToBlock = (evt: DragEvent) => {
   }
 };
 
-const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
+const { closeDrawer } = useSiteConfiguration();
+const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 onMounted(() => {
   isEditingEnabled.value = false;

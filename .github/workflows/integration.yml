@@ -58,8 +58,8 @@ jobs:
 
       - name: Scan for malicious code
         run: >
-          semgrep scan 
-          --error 
+          semgrep scan
+          --error
           --severity ERROR
           .
   fitness-code-quality:
@@ -138,7 +138,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -177,7 +177,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -189,6 +189,44 @@ jobs:
         with:
           install: false
           command: npm run test:cypress-checkout
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/web/__tests__/report/screenshots
+          if-no-files-found: ignore
+  test-e2e-dhl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v5
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          command: npm run test:cypress-dhl
         env:
           NUXT_PUBLIC_CONFIG_ID: 1
 
@@ -215,7 +253,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -254,7 +292,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -299,7 +337,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -337,7 +375,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -375,7 +413,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -403,7 +441,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build
 

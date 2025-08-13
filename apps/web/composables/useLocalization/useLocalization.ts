@@ -5,6 +5,7 @@ import { createSharedComposable } from '@vueuse/core';
 
 export const useLocalization = createSharedComposable(() => {
   const isOpen = ref(false);
+
   const toggle = () => (isOpen.value = !isOpen.value);
 
   /**
@@ -118,7 +119,6 @@ export const useLocalization = createSharedComposable(() => {
     if (hideMenu) {
       toggle();
     }
-
     await navigateTo({
       path: switchLocalePath(language),
       query: route.query,
