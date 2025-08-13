@@ -184,7 +184,6 @@ const handleUpload = async (file: File) => {
   await uploadStorageItem(file, filePath.value);
   await nextTick();
 
-  // Find the uploaded item by file name or key
   const uploadedItem = items.value.find(
     (item) => item.key === file.name || item.key.endsWith(`/${file.name}`) || item.key === file.name,
   );
