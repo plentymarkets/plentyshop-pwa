@@ -39,7 +39,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            vuetify: ['vuetify'],
+            vuetify: ['vuetify', '@fortawesome/fontawesome-free'],
           },
         },
       },
@@ -144,6 +144,11 @@ export default defineNuxtConfig({
   vuetify: {
     moduleOptions: {
       disableVuetifyStyles: true,
+    },
+    vuetifyOptions: {
+      icons: {
+        defaultSet: 'fa',
+      },
     },
   },
   shopCore: {
