@@ -18,7 +18,9 @@ export const useItemsTable: UseItemTableReturn = () => {
     for (const url of pendingBlobUrls.value) {
       try {
         URL.revokeObjectURL(url);
-      } catch { /* empty */ }
+      } catch {
+        /* empty */
+      }
     }
     pendingBlobUrls.value = [];
   };
@@ -109,7 +111,6 @@ export const useItemsTable: UseItemTableReturn = () => {
       previewUrl: api.publicUrl ? undefined : (objectUrl as string),
     };
   };
-
 
   const uploadStorageItem = async (file: File): Promise<StorageObject | null> => {
     const errorMsg = validateImageFile(file);

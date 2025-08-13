@@ -55,7 +55,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 
 const { setMetadata } = useImageMetadata();
-const lastFetchedKey = ref<string | null>(null)
+const lastFetchedKey = ref<string | null>(null);
 
 const props = defineProps<{
   selectedKey: string | null;
@@ -63,18 +63,18 @@ const props = defineProps<{
 watch(
   () => props.selectedKey,
   (key) => {
-    if (!key || key === lastFetchedKey.value) return
+    if (!key || key === lastFetchedKey.value) return;
 
-    const row = items.value.find((item) => item.key === key)
-    if (!row || row.storageClass === UPLOADING_CLASS) return
+    const row = items.value.find((item) => item.key === key);
+    if (!row || row.storageClass === UPLOADING_CLASS) return;
 
-    lastFetchedKey.value = key
+    lastFetchedKey.value = key;
 
-    emit('select', { name: row.key, image: row.publicUrl })
-    fetchMetadata(key)
+    emit('select', { name: row.key, image: row.publicUrl });
+    fetchMetadata(key);
   },
-  { immediate: false }
-)
+  { immediate: false },
+);
 const onRowClick = (item: StorageObject) => {
   emit('update:selectedKey', item.key);
   handleRowClick(item);

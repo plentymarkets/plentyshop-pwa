@@ -11,7 +11,6 @@ export const base64ToBlob = (base64: string, contentType: string): Blob => {
 };
 
 export const fileToBase64 = async (file: File): Promise<string | null> => {
-  console.log('file in fileToBase64', file);
   return new Promise((resolve) => {
     const reader = new FileReader();
 

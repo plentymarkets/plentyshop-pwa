@@ -9,25 +9,25 @@
         <div v-if="meta.width && meta.height" class="text-xs mt-1">{{ meta.width }} x {{ meta.height }} px</div>
       </div>
       <SfTooltip label="Click here to upload" placement="top" :show-arrow="true" class="z-10">
-      <button
-        type="button"
-        aria-label="Close preview"
-        class="h-8 w-8 flex items-center justify-center rounded text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
-        @click="close"
-      >
-        <SfIconUpload size="sm" />
-      </button>
+        <button
+          type="button"
+          aria-label="Close preview"
+          class="h-8 w-8 flex items-center justify-center rounded text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+          @click="close"
+        >
+          <SfIconUpload size="sm" />
+        </button>
       </SfTooltip>
     </div>
 
     <div class="flex-1 flex items-center justify-center p-4">
-        <img :src="props.image || undefined" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
+      <img :src="props.image || undefined" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconUpload, SfTooltip } from '@storefront-ui/vue'
+import { SfIconUpload, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<{
   image: string | null;
