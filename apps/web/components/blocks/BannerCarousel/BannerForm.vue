@@ -516,11 +516,7 @@ const clampBrightness = (event: Event, type: string) => {
   }
 };
 
-const handleImageAdd = ({ image, type }: { image: string; name: string; type: string }) => {
-  if (banner.value?.content?.image && type) {
-    (banner.value.content.image as Record<string, string>)[type] = image;
-  }
-};
+const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
 
 type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>

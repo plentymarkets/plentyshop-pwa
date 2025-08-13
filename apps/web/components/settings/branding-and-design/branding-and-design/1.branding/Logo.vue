@@ -53,16 +53,19 @@ const deleteLogo = () => {
   updateSetting(placeholderImg);
 };
 
-const handleImageAdd = ({ image }: { image: string; name: string }) => {
-  updateSetting(image);
-};
-
 const { updateSetting, getSetting } = useSiteSettings('headerLogo');
 
 const headerLogo = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
+const { handleImageAdd } = useImageAdd(headerLogo);
 
 const activeImage = computed(() => headerLogo.value);
 </script>
+<style>
+img[alt='Logo'] {
+  background-color: #f3f4f6;
+  object-fit: none;
+}
+</style>
