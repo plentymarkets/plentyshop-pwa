@@ -75,7 +75,6 @@ watch(
   { immediate: false },
 );
 
-const selectedKey = ref<string | null>(null);
 const search = ref('');
 
 const itemsWithPath = computed(() =>
@@ -92,9 +91,10 @@ const itemsWithPath = computed(() =>
 const filteredItems = computed(() => {
   if (!search.value) return itemsWithPath.value;
   const s = search.value.toLowerCase();
-  return itemsWithPath.value.filter((item) => item.fileName.toLowerCase().includes(s));
+  return itemsWithPath.value.filter(
+    (item) => item.fileName.toLowerCase().includes(s) || item.path.toLowerCase().includes(s),
+  );
 });
-
 const onRowClick = (item: StorageObject) => {
   emit('update:selectedKey', item.key);
   handleRowClick(item);

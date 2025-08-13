@@ -116,7 +116,6 @@ const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobU
 
 const props = defineProps<ImageSelectorModalProps>();
 const selectedRowKey = ref<string | null>(null);
-
 const emit = defineEmits(['close', 'add']);
 
 const close = () => {
