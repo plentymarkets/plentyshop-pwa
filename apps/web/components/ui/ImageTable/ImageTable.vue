@@ -117,6 +117,10 @@ const search = ref('');
   display: none !important;
 }
 
+.v-btn--icon .v-icon {
+  --v-icon-size-multiplier: 0.55;
+}
+
 .v-ripple__container {
   display: none !important;
 }

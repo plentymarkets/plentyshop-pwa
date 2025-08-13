@@ -62,7 +62,8 @@ const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
 const { data, loading, cleanData } = useCategoryTemplate();
-const { closeDrawer, settingsIsDirty, loading: settingsLoading } = useSiteConfiguration();
+const { closeDrawer } = useSiteConfiguration();
+const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
 
 const { save } = useToolbar();
 

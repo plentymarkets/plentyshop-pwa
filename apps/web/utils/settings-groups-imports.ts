@@ -36,8 +36,8 @@ Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loa
 Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 
-export const getSettingsGroups = (activeSetting: string) => {
-  const prefix = `${activeSetting}/`;
+export const getSettingsGroups = (activeSetting: string, subCategory: string = '') => {
+  const prefix = subCategory ? `${activeSetting}/${subCategory}/` : `${activeSetting}/`;
   const map: Record<string, { title: string; components: unknown[]; slug: string }> = {};
 
   for (const [path, loader] of Object.entries(modules)) {
@@ -65,8 +65,29 @@ export const getSettingsGroups = (activeSetting: string) => {
   return Object.values(map);
 };
 
-export const getViewComponent = (activeSetting: string) => {
-  const key = Object.keys(modules).find((path) => path.includes(`${activeSetting}/`) && path.endsWith('View'));
+export const getSubCategories = (activeSetting: string): string[] => {
+  const prefix = `${activeSetting}/`;
+  const set = new Set<string>();
+
+  Object.keys(modules).forEach((path) => {
+    if (!path.startsWith(prefix)) return;
+
+    const remainder = path.slice(prefix.length);
+
+    const [first] = remainder.split('/');
+
+    if (first === 'View' || first === 'ToolbarTrigger') return;
+
+    set.add(stripPrefix(first));
+  });
+
+  return [...set];
+};
+
+export const getViewComponent = (activeSetting: string, subCategory = '') => {
+  const key = Object.keys(modules).find(
+    (path) => path.includes(`${activeSetting}/${subCategory}`) && path.endsWith('View'),
+  );
 
   return key ? defineAsyncComponent(modules[key]) : null;
 };

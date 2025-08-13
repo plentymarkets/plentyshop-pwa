@@ -11,7 +11,7 @@
           aria-label="Sf Homepage"
           class="flex shrink-0 w-full h-8 lg:w-48 lg:h-8 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
-          <UiVsfLogo />
+          <UiLogo />
         </NuxtLink>
       </div>
     </div>
