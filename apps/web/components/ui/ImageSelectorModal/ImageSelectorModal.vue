@@ -184,7 +184,7 @@ const handleUpload = async (file: File) => {
     };
   };
   reader.readAsDataURL(file);
-  await uploadStorageItem(file);
+  await uploadStorageItem(file, filePath.value);
   await nextTick();
   selectedRowKey.value = items.value[0]?.key ?? null;
 };

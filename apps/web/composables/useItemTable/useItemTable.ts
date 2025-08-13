@@ -109,14 +109,14 @@ export const useItemsTable: UseItemTableReturn = () => {
     cachedImages.value = replace(cachedImages.value);
   };
 
-  const uploadFile = async (base64: string, file: File) => {
-    const { data } = await useSdk().plentysystems.doUploadStorageItem({
-      base64,
-      key: file.name,
-      type: file.type,
-    });
-    return data as Partial<StorageObject>;
-  };
+  // const uploadFile = async (base64: string, file: File) => {
+  //   const { data } = await useSdk().plentysystems.doUploadStorageItem({
+  //     base64,
+  //     key: file.name,
+  //     type: file.type,
+  //   });
+  //   return data as Partial<StorageObject>;
+  // };
 
   const buildItemFrom = (api: Partial<StorageObject>, file: File): StorageObject => {
     const objectUrl = api.publicUrl ? undefined : URL.createObjectURL(file);
@@ -133,7 +133,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     };
   };
 
-  const uploadStorageItem = async (file: File): Promise<StorageObject | null> => {
+  const uploadStorageItem = async (file: File, path = ''): Promise<StorageObject | null> => {
     const errorMsg = validateImageFile(file);
     if (!errorMsg.ok) {
       const { send } = useNotification();
@@ -141,30 +141,45 @@ export const useItemsTable: UseItemTableReturn = () => {
       return null;
     }
 
+    state.value.loading = true;
+
+    const base64String = await fileToBase64(file);
+    if (!base64String) {
+      state.value.loading = false;
+      return null;
+    }
+
+    const key = path ? `${path.replace(/\/$/, '')}/${file.name}` : file.name;
+
     const tempKey = makeTempKey(file.name);
     addPlaceholderFirst(tempKey, file.size);
 
     try {
-      const base64 = await fileToBase64(file);
-      if (!base64) {
-        removeByKey(tempKey);
-        return null;
+      const api = await useSdk().plentysystems.doUploadStorageItem({
+        base64: base64String,
+        key: key,
+        type: file.type,
+      });
+
+      if (api?.data) {
+        const { send } = useNotification();
+        send({ type: 'positive', message: `Uploaded: ${api.data.key}` });
+
+        const newItem = buildItemFrom(api.data, file);
+        replaceByKey(tempKey, newItem);
+
+        return newItem;
       }
-
-      const api = await uploadFile(base64, file);
-
-      const newItem = buildItemFrom(api, file);
-
-      replaceByKey(tempKey, newItem);
-
-      return newItem;
     } catch (e) {
       removeByKey(tempKey);
       const { send } = useNotification();
       send({ type: 'negative', message: (e as ApiError).message || 'Image upload failed.' });
       console.error('Upload error:', e);
       return null;
+    } finally {
+      state.value.loading = false;
     }
+    return null;
   };
 
   const bytesToMB = (bytes: string | number): string => {
