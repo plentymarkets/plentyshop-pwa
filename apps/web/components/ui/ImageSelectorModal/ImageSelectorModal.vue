@@ -27,6 +27,7 @@
             </div>
             <UiImageTable
               v-else
+              :selected-key="selectedRowKey"
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"
@@ -70,7 +71,7 @@
               class="flex-1 flex flex-col justify-center items-center rounded-md p-4"
               :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
             >
-              <template v-if="selectedImage">
+              <template v-if="selectedImage  && !isPlaceholder">
                 <UiImagePreview
                   :image="selectedImage?.image"
                   :name="selectedImage?.name"
@@ -115,12 +116,17 @@ import Multiselect from 'vue-multiselect';
 import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
 const filePath = ref('');
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItems, uploadStorageItem, folders } = useItemsTable();
+const {data: items, loading, getStorageItems, uploadStorageItem,revokeAllBlobUrls, folders } = useItemsTable();
 
 const props = defineProps<ImageSelectorModalProps>();
+const selectedRowKey = ref<string | null>(null);
 
 const emit = defineEmits(['close', 'add']);
 
+const close = () => {
+  revokeAllBlobUrls();
+  emit('close');
+};
 const showUpload = computed(() => !selectedImage.value);
 
 const close = () => emit('close');
@@ -157,6 +163,10 @@ const canAdd = computed(() => {
   const image = selectedImage.value?.image;
   return !!image && image !== props.currentImage && image !== placeholderImg;
 });
+const isPlaceholder = computed(() => {
+  const img = selectedImage.value?.image;
+  return !img || img === placeholderImg;
+});
 
 const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
 
@@ -175,7 +185,9 @@ const handleUpload = async (file: File) => {
     };
   };
   reader.readAsDataURL(file);
-  await uploadStorageItem(file, filePath.value);
+  await uploadStorageItem(file);
+  await nextTick();
+  selectedRowKey.value = items.value[0]?.key ?? null;
 };
 const addImage = () => {
   if (selectedImage.value) {
@@ -187,13 +199,18 @@ const addImage = () => {
     close();
   }
 };
+
+onBeforeUnmount(() => {
+  revokeAllBlobUrls();
+});
 </script>
 
 <style>
 .v-field--prepended {
   padding-inline-start: 0;
 }
-.mdi-magnify {
+.fa-solid.fa-magnifying-glass {
+  --v-icon-size-multiplier: 0.55;
   padding: 0 20px;
 }
 </style>

@@ -3,7 +3,7 @@ export const useToolbar = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const { saveSettings, settingsIsDirty } = useSiteConfiguration();
+  const { settingsIsDirty, saveSiteSettings } = useSiteSettings();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
   const route = useRoute();
@@ -30,7 +30,7 @@ export const useToolbar = () => {
     }
 
     if (settingsIsDirty.value) {
-      await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
+      await handleSave(saveSiteSettings, $i18n.t('errorMessages.editor.save.settings'));
     }
 
     if (saved && !hasError) {
