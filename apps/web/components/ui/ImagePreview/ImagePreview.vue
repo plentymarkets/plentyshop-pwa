@@ -11,9 +11,9 @@
       <SfTooltip label="Click here to upload" placement="top" :show-arrow="true" class="z-10">
         <button
           type="button"
-          aria-label="Close preview"
+          aria-label="Close preview and open upload"
           class="h-8 w-8 flex items-center justify-center rounded text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
-          @click="close"
+          @click="toggleUpload"
         >
           <SfIconUpload size="sm" />
         </button>
@@ -34,7 +34,7 @@ const props = defineProps<{
   name: string;
 }>();
 const emit = defineEmits(['close']);
-const close = () => emit('close');
+const toggleUpload = () => emit('close');
 const { getMetadata } = useImageMetadata();
 const meta = computed(() => {
   return props.name ? getMetadata(props.name) : { width: '', height: '' };

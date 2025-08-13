@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { SfIconUpload } from '@storefront-ui/vue';
 const { send } = useNotification();
 const emit = defineEmits(['file-selected']);

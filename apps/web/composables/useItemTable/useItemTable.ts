@@ -1,6 +1,6 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
 import type { ApiError, StorageObject } from '@plentymarkets/shop-api';
-import { validateImageFile } from '~/utils/allowedFilesHelper';
+import { validateImageFile } from '~/utils/allowedImageFilesHelper';
 export const UPLOADING_CLASS = '__uploading__';
 
 export const useItemsTable: UseItemTableReturn = () => {
@@ -57,7 +57,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   const makeTempKey = (name: string) => `__uploading__:${Date.now()}:${name}`;
 
   const addPlaceholderFirst = (key: string, size: number) => {
-    const ph: StorageObject = {
+    const placeholder: StorageObject = {
       key,
       eTag: '',
       size: String(size),
@@ -66,8 +66,8 @@ export const useItemsTable: UseItemTableReturn = () => {
       publicUrl: '',
       previewUrl: '',
     };
-    state.value.data = [ph, ...state.value.data];
-    cachedImages.value = [ph, ...cachedImages.value];
+    state.value.data = [placeholder, ...state.value.data];
+    cachedImages.value = [placeholder, ...cachedImages.value];
   };
 
   const removeByKey = (key: string) => {
@@ -170,10 +170,6 @@ export const useItemsTable: UseItemTableReturn = () => {
 
     return response.data;
   };
-
-  onBeforeUnmount(() => {
-    revokeAllBlobUrls();
-  });
 
   return {
     getStorageItems,
