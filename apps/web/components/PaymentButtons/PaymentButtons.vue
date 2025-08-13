@@ -4,7 +4,7 @@
     v-for="(component, index) in filteredComponents"
     :key="index"
     :disabled="disableBuyButton"
-    @click="validateOnClickComponents($event)"
+    @click="validateOnClickComponents($event, component)"
   />
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
@@ -253,7 +253,10 @@ const renderPaymentComponent = (component: PaymentButtonComponent) => {
   return !(component.excludePaymentKeys && component.excludePaymentKeys.includes(selectedPayment?.paymentKey));
 };
 const filteredComponents = computed(() => components.value.filter((component) => renderPaymentComponent(component)));
-const validateOnClickComponents = async (event: MouseEvent) => {
+const validateOnClickComponents = async (event: MouseEvent, component: PaymentButtonComponent) => {
+  if (component.disableClickEvent) {
+    return;
+  }
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,

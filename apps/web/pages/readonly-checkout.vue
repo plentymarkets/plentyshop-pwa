@@ -107,6 +107,7 @@ const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
+const { unreserve } = useCartStockReservation();
 
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
@@ -147,7 +148,10 @@ const payPalAvailable = computed(() =>
 );
 
 const handle = async () => {
-  if (!paypalOrderId) return navigateTo(localePath(paths.cart));
+  if (!paypalOrderId) {
+    await unreserve();
+    return navigateTo(localePath(paths.cart));
+  }
 
   await setAddressesFromPayPal(paypalOrderId);
   await getCart();
@@ -176,6 +180,7 @@ const handle = async () => {
   }
 
   if (customer.value.user === null) {
+    await unreserve();
     return navigateTo(localePath(paths.checkout));
   }
 

@@ -131,7 +131,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
           type: isCommit ? 'basket' : 'express',
         });
 
-        if (order?.id && await useCartStockReservation().reserve()) {
+        if (order?.id && (await useCartStockReservation().reserve())) {
           return order.id;
         }
         return '';

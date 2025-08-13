@@ -42,7 +42,9 @@
 
     <div class="flex justify-end gap-x-4 mt-6">
       <div>
-        <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="confirmCancel">{{ t('paypal.unbrandedCancel') }}</UiButton>
+        <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="confirmCancel">{{
+          t('paypal.unbrandedCancel')
+        }}</UiButton>
       </div>
       <div>
         <UiButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
@@ -84,7 +86,7 @@ onMounted(() => {
     const cardFields = paypal.CardFields({
       async createOrder() {
         loading.value = true;
-        if (!await useCartStockReservation().reserve()) {
+        if (!(await useCartStockReservation().reserve())) {
           loading.value = false;
           return '';
         }

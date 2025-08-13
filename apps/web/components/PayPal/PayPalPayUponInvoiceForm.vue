@@ -156,7 +156,7 @@ const createPayPalPayUponInvoiceOrder = async () => {
       },
     };
 
-    if (!await useCartStockReservation().reserve()) {
+    if (!(await useCartStockReservation().reserve())) {
       loading.value = false;
       return;
     }

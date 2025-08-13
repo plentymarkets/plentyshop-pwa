@@ -92,7 +92,7 @@ export const useGooglePay = () => {
 
     state.value.paymentLoading = true;
 
-    if (!await useCartStockReservation().reserve()) {
+    if (!(await useCartStockReservation().reserve())) {
       state.value.paymentLoading = false;
       return;
     }

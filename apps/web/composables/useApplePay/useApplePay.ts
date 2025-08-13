@@ -99,7 +99,7 @@ export const useApplePay = () => {
 
       paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
         try {
-          if (!await useCartStockReservation().reserve()) {
+          if (!(await useCartStockReservation().reserve())) {
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             return;
           }
