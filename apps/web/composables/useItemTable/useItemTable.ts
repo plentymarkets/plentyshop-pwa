@@ -25,12 +25,28 @@ export const useItemsTable: UseItemTableReturn = () => {
     pendingBlobUrls.value = [];
   };
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
+  const folders = useState<string[]>('image-table-folders', () => []);
+
+  const extractFolders = (items: StorageObject[]): string[] => {
+    const folderSet = new Set<string>();
+    items.forEach((item) => {
+      const key = item.key;
+      const lastSlash = key.lastIndexOf('/');
+      if (lastSlash > 0) {
+        const folder = key.substring(0, lastSlash);
+        folderSet.add(folder);
+      }
+    });
+    return Array.from(folderSet);
+  };
 
   const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
       state.value.data = cachedImages.value;
+
+      folders.value = extractFolders(cachedImages.value);
       state.value.loading = false;
       return;
     }
@@ -45,11 +61,16 @@ export const useItemsTable: UseItemTableReturn = () => {
     }
 
     const items: StorageObject[] = response.data ?? [];
+
     state.value.data = items;
     cachedImages.value = items;
+
+    folders.value = extractFolders(items);
   };
+
   const headers = ref([
-    { title: 'File name', key: 'key' },
+    { title: 'File name', key: 'fileName' },
+    { title: 'Path', key: 'path' },
     { title: 'Image size', key: 'size' },
     { title: 'Last change', key: 'lastModified' },
   ]);
@@ -88,10 +109,12 @@ export const useItemsTable: UseItemTableReturn = () => {
     cachedImages.value = replace(cachedImages.value);
   };
 
-  const uploadFile = async (base64: string, file: File) => {
+  const uploadFile = async (base64: string, file: File, folderPath: string = '') => {
+    const filename = folderPath ? `${folderPath.replace(/\/$/, '')}/${file.name}` : file.name;
+
     const { data } = await useSdk().plentysystems.doUploadStorageItem({
       base64,
-      key: file.name,
+      key: filename,
       type: file.type,
     });
     return data as Partial<StorageObject>;
@@ -112,7 +135,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     };
   };
 
-  const uploadStorageItem = async (file: File): Promise<StorageObject | null> => {
+  const uploadStorageItem = async (file: File, filePath = ''): Promise<StorageObject | null> => {
     const errorMsg = validateImageFile(file);
     if (!errorMsg.ok) {
       const { send } = useNotification();
@@ -130,7 +153,7 @@ export const useItemsTable: UseItemTableReturn = () => {
         return null;
       }
 
-      const api = await uploadFile(base64, file);
+      const api = await uploadFile(base64, file, filePath);
 
       const newItem = buildItemFrom(api, file);
 
@@ -145,7 +168,6 @@ export const useItemsTable: UseItemTableReturn = () => {
       return null;
     }
   };
-
   const bytesToMB = (bytes: string | number): string => {
     const num = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
     return (num / (1024 * 1024)).toFixed(2) + ' MB';
@@ -179,6 +201,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     formatDate,
     headers,
     revokeAllBlobUrls,
+    folders,
     ...toRefs(state.value),
   };
 };
