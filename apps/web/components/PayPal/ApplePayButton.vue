@@ -27,7 +27,7 @@ const renderButton = async () => {
   }
 };
 
-onMounted(async () => {
+onNuxtReady(async () => {
   await renderButton();
 });
 </script>
