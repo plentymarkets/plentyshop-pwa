@@ -1,0 +1,8 @@
+{{!-- 
+  Export statement for index files
+  Usage: {{> export-statement name="ComponentName" hasTypes=true}}
+--}}
+export { default{{#unless isDefault}} as {{pascalCase name}}{{/unless}} } from './{{pascalCase name}}.vue';
+{{#if hasTypes}}
+export type * from './types';
+{{/if}}

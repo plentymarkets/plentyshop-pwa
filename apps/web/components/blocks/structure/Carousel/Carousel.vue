@@ -4,6 +4,8 @@
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
+      role="group"
+      :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
       :loop="true"
       :pagination="paginationConfig"
       :navigation="navigationConfig"
@@ -11,16 +13,25 @@
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
     >
-      <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
+      <SwiperSlide
+        v-for="(banner, slideIndex) in content"
+        :key="slideIndex"
+        :aria-labelledby="`carousel_item-${slideIndex}_heading`"
+        role="group"
+        :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
+      >
         <slot
           name="content"
           :content-block="banner"
           :index="getSlideAdjustedIndex(slideIndex)"
+          :slide-index="slideIndex"
           :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
         />
       </SwiperSlide>
       <div
         v-if="enableModules"
+        role="group"
+        :aria-label="t('homepage.banner.ariaLabelSlideControls')"
         :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
       />
     </Swiper>
@@ -29,12 +40,16 @@
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
+      aria-controls="carousel-{{index}}"
+      :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
     <div
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       :class="`swiper-button-next swiper-button-next-${index}`"
+      aria-controls="carousel-{{index}}"
+      :aria-label="t('homepage.banner.ariaLabelNextSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
   </NuxtErrorBoundary>
@@ -45,7 +60,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
-
+const { t } = useI18n();
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);

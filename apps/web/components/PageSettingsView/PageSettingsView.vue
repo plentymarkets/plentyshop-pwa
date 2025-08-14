@@ -91,7 +91,7 @@
             </SfInput>
           </label>
         </div>
-        <div v-if="runtimeConfig.public.isDev" class="py-2">
+        <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel class="mb-1">Parent Page</UiFormLabel>
             <SfTooltip
@@ -213,7 +213,6 @@
 import { SfIconInfo, SfInput, SfSwitch, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryDetails } from '@plentymarkets/shop-api/lib/types/api/category';
-const runtimeConfig = useRuntimeConfig();
 
 const basicSettingsOpen = ref(true);
 

@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import type { RecommendedProductsProps } from './types';
 
-const props = defineProps<RecommendedProductsProps>();
+const props = withDefaults(defineProps<RecommendedProductsProps>(), { cacheKey: '' });
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
 
 if (props.categoryId) {
