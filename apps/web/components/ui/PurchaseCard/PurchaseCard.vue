@@ -240,6 +240,10 @@ const handleAddToCart = async (quickCheckout = true) => {
     quickCheckout
       ? openQuickCheckout(product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
+
+    if (getSetting() === '0') {
+      send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' });
+    }
   }
 
   return addedToCart;
