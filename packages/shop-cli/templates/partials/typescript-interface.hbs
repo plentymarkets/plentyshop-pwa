@@ -1,0 +1,14 @@
+{{!-- 
+  TypeScript interface definition
+  Usage: {{> typescript-interface name="ComponentProps" properties=propertiesArray}}
+--}}
+export interface {{pascalCase name}} {
+{{#each properties}}
+  {{#if description}}
+  /**
+   * {{description}}
+   */
+  {{/if}}
+  {{name}}{{#unless required}}?{{/unless}}: {{type}};
+{{/each}}
+}
