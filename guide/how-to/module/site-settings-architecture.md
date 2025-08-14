@@ -8,8 +8,9 @@ This document explains how the settings drawer works, why the folder structure l
 
 The folder-layout convention defines a single, predictable path for every settings component, enabling automatic discovery, clean overrides, and zero manual registration. By adhering to `settings/<mainCategory>/<subCategory>/<group>/<Setting>.vue` with `View.vue` and `ToolbarTrigger.vue`, core code, Nuxt modules, and client customisations integrate seamlessly.
 
-![Site settings diagram](images/site-settings.png)
-
+| | |
+| --- | --- |
+| ![Settings subcategories](images/settings-subcategories.png) | ![Site settings](images/site-settings.png) |
 ```
 components/
 └─ settings/
