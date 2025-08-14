@@ -1,8 +1,8 @@
 <template>
   <div class="py-2">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Robots</UiFormLabel>
-      <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
@@ -10,7 +10,7 @@
       <Multiselect
         v-model="robots"
         :options="robotOptions"
-        placeholder="Select robots meta tag"
+        :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
         data-testid="seo-robots"
@@ -30,7 +30,19 @@ const robots = computed({
 });
 
 const robotOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
-
-const robotsTooltip =
-  'Controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Robots",
+    "tooltip": "Controls how search engines treat your pages. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "placeholder": "Select robots meta tag"
+  },
+  "de": {
+    "label": "Robots",
+    "tooltip": "Controls how search engines treat your pages. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "placeholder": "Select robots meta tag"
+  }
+}
+</i18n>

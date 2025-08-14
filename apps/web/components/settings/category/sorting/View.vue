@@ -1,7 +1,18 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title> Sorting </template>
+    <template #setting-title>{{ getEditorTranslation('label') }}</template>
   </SiteConfigurationView>
 </template>
 
 <script setup lang="ts"></script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Sorting"
+  },
+  "de": {
+    "label": "Sorting"
+  }
+}
+</i18n>

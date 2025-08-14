@@ -1,13 +1,8 @@
 <template>
   <div class="py-2">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Meta description</UiFormLabel>
-      <SfTooltip
-        label="Short description of the page shown in search results of search engines. Should be engaging and informative."
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
@@ -16,7 +11,7 @@
         v-model="metaDescription"
         data-testid="seo-description"
         class="w-full"
-        placeholder="Enter description"
+        :placeholder="getEditorTranslation('placeholder')"
         rows="3"
       />
     </label>
@@ -32,3 +27,18 @@ const metaDescription = computed({
   set: (value) => updateSetting(value),
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Meta description",
+    "tooltip": "Short description of the page shown in search results of search engines. Should be engaging and informative.",
+    "placeholder": "Enter description"
+  },
+  "de": {
+    "label": "Meta description",
+    "tooltip": "Short description of the page shown in search results of search engines. Should be engaging and informative.",
+    "placeholder": "Enter description"
+  }
+}
+</i18n>

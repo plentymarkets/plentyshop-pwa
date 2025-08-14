@@ -3,8 +3,13 @@
     <div class="pages-view sticky top-[52px] h-[calc(100vh-50px)] z-[2]" data-testid="pages-management-drawer">
       <header class="flex items-center justify-between px-4 py-5 border-b">
         <div class="flex items-center text-xl font-bold">
-          Pages
-          <SfTooltip label="Open manual" placement="right" :show-arrow="true" class="flex">
+          {{ getEditorTranslation('label') }}
+          <SfTooltip
+            :label="getEditorTranslation('open-manual-tooltip')"
+            placement="right"
+            :show-arrow="true"
+            class="flex"
+          >
             <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
           </SfTooltip>
         </div>
@@ -20,13 +25,13 @@
           class="border border-editor-button w-full py-1 rounded-md flex align-center justify-center text-editor-button"
           @click="togglePageModal(true)"
         >
-          <SfIconAdd /> Add Page
+          <SfIconAdd /> {{ getEditorTranslation('add-page-label') }}
         </button>
       </div>
 
       <div v-else class="mx-4 mb-4 mt-4">
         <SfTooltip
-          label="You can only add pages in the default language of your shop."
+          :label="getEditorTranslation('add-page-disabled-tooltip')"
           placement="right"
           :show-arrow="true"
           class="flex"
@@ -38,7 +43,7 @@
             disabled="true"
             @click="null"
           >
-            <SfIconAdd /> Add Page
+            <SfIconAdd /> {{ getEditorTranslation('add-page-label') }}
           </button>
         </SfTooltip>
       </div>
@@ -56,12 +61,12 @@
           <template v-if="loading">
             <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px]" />
           </template>
-          <template v-else> Save Settings </template>
+          <template v-else>{{ getEditorTranslation('save-settings-label') }}</template>
         </button>
       </div>
       <div class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
         <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-        <span class="italic"> Changes to page settings are only reflected on reload. </span>
+        <span class="italic">{{ getEditorTranslation('reload-hint') }}</span>
       </div>
 
       <UiAccordionItem
@@ -71,7 +76,7 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
         <template #summary>
-          <h2>Content Pages</h2>
+          <h2>{{ getEditorTranslation('content-pages-label') }}</h2>
         </template>
 
         <div
@@ -101,7 +106,7 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
         <template #summary>
-          <h2>Product Categories</h2>
+          <h2>{{ getEditorTranslation('product-categories-label') }}</h2>
         </template>
 
         <div
@@ -237,3 +242,28 @@ const homepageItem = computed<CategoryEntry>(() => ({
   isLinkedToWebstore: true,
 }));
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Pages",
+    "open-manual-tooltip": "Open manual",
+    "add-page-label": "Add Page",
+    "add-page-disabled-tooltip": "You can only add pages in the default language of your shop.",
+    "save-settings-label": "Save Settings",
+    "reload-hint": "Changes to page settings are only reflected on reload.",
+    "content-pages-label": "Content Pages",
+    "product-categories-label": "Product Categories"
+  },
+  "de": {
+    "label": "Pages",
+    "open-manual-tooltip": "Open manual",
+    "add-page-label": "Add Page",
+    "add-page-disabled-tooltip": "You can only add pages in the default language of your shop.",
+    "save-settings-label": "Save Settings",
+    "reload-hint": "Changes to page settings are only reflected on reload.",
+    "content-pages-label": "Content Pages",
+    "product-categories-label": "Product Categories"
+  }
+}
+</i18n>
