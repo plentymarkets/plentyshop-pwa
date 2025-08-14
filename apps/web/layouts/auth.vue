@@ -16,9 +16,9 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <NuxtLazyHydrate when-visible>
+    <ClientOnly>
       <FooterBlock v-if="!route.meta.isBlockified" />
-    </NuxtLazyHydrate>
+    </ClientOnly>
   </div>
 </template>
 

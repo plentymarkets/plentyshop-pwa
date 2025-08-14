@@ -5,9 +5,9 @@
       <slot />
     </NarrowContainer>
   </main>
-  <NuxtLazyHydrate when-visible>
+  <ClientOnly>
     <FooterBlock v-if="!route.meta.isBlockified" />
-  </NuxtLazyHydrate>
+  </ClientOnly>
 </template>
 <script setup lang="ts">
 import FooterBlock from '~/components/blocks/Footer/Footer.vue';
