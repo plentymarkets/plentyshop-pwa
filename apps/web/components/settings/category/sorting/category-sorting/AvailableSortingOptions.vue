@@ -1,9 +1,9 @@
 <template>
   <div class="">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Available Sorting Options</UiFormLabel>
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip
-        label="Which of the following sorting options do you want to make available to your customers in the category view?"
+        :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
         class="ml-2 z-10"
@@ -16,13 +16,13 @@
       v-model="availableSortingOptions"
       data-testid="available-sorting-options"
       :options="sortingOptions"
-      placeholder="Mark some options as available"
+      :placeholder="getEditorTranslation('placeholder')"
       label="label"
       track-by="value"
       :allow-empty="false"
       class="cursor-pointer"
       select-label=""
-      deselect-label="Selected"
+      :deselect-label="getEditorTranslation('deselect-label')"
       :multiple="true"
       :taggable="true"
       tag-placeholder=""
@@ -70,7 +70,6 @@ const sortingOptions = computed(() => getMappedOptions(sortingOptionValues));
 const availableSortingOptions = computed({
   get: () => {
     const values: string[] = getJsonSetting() || [];
-
     return sortingOptions.value.filter((sortingOption: SortingOption) => values.includes(sortingOption.value));
   },
   set: (selectedOptions: SortingOption[]) => {
@@ -86,3 +85,20 @@ const removeOption = (option: SortingOption) => {
   }
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Available Sorting Options",
+    "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view?",
+    "placeholder": "Mark some options as available",
+    "deselect-label": "Selected"
+  },
+  "de": {
+    "label": "Available Sorting Options",
+    "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view?",
+    "placeholder": "Mark some options as available",
+    "deselect-label": "Selected"
+  }
+}
+</i18n>

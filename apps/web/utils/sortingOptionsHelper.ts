@@ -1,11 +1,13 @@
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 
 export const getEditorTranslation = (key: string): string => {
-  const { $i18n } = useNuxtApp();
-
   const locale = 'en';
 
-  return $i18n.t(key, 0, { locale: locale }) as string;
+  const { t } = useI18n({
+    locale: locale
+  });
+
+  return t(key, 0, { locale: locale }) as string;
 };
 
 export const getMappedOptions = (options: string[]): SortingOption[] => {

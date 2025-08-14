@@ -1,9 +1,9 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Default Sorting</UiFormLabel>
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip
-        label="Which sorting option do you want to preselect by default for the category view?"
+        :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
         class="ml-2 z-10"
@@ -16,12 +16,12 @@
       v-model="defaultSortingOption"
       data-testid="available-sorting-options"
       :options="sortingOptions"
-      placeholder="Select default option"
+      :placeholder="getEditorTranslation('placeholder')"
       label="label"
       track-by="value"
       class="cursor-pointer"
       select-label=""
-      deselect-label="Selected"
+      :deselect-label="getEditorTranslation('deselect-label')"
       :allow-empty="true"
     />
   </div>
@@ -50,3 +50,20 @@ const defaultSortingOption = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Default Sorting",
+    "tooltip": "Which sorting option do you want to preselect by default for the category view?",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  },
+  "de": {
+    "label": "Default Sorting",
+    "tooltip": "Which sorting option do you want to preselect by default for the category view?",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  }
+}
+</i18n>

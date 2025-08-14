@@ -1,9 +1,9 @@
 <template>
   <div class="py-2">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Primary color</UiFormLabel>
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip
-        label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+        :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
         class="ml-2 z-10"
@@ -23,7 +23,7 @@
           </label>
         </template>
       </SfInput>
-      <span class="typography-text-xs text-neutral-700">Choose primary color</span>
+      <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('hint') }}</span>
     </label>
   </div>
 </template>
@@ -49,3 +49,18 @@ const primaryColor = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Primary color",
+    "tooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process.",
+    "hint": "Choose primary color"
+  },
+  "de": {
+    "label": "Primary color",
+    "tooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process.",
+    "hint": "Choose primary color"
+  }
+}
+</i18n>

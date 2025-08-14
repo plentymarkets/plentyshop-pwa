@@ -1,9 +1,14 @@
 <template>
   <div class="mt-4">
-    <p class="mb-4">Note: These settings are only applied after saving the changes and reloading the page</p>
+    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
-      <UiFormLabel>First sorting option</UiFormLabel>
-      <SfTooltip label="First sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip
+        :label="getEditorTranslation('tooltip')"
+        :placement="'top'"
+        :show-arrow="true"
+        class="ml-2 z-10"
+      >
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
@@ -12,12 +17,12 @@
       v-model="recommendedFirstSortingOption"
       data-testid="available-sorting-options"
       :options="sortingOptions"
-      placeholder="Select default option"
+      :placeholder="getEditorTranslation('placeholder')"
       label="label"
       track-by="value"
       class="cursor-pointer"
       select-label=""
-      deselect-label="Selected"
+      :deselect-label="getEditorTranslation('deselect-label')"
       :allow-empty="true"
     />
   </div>
@@ -43,3 +48,22 @@ const recommendedFirstSortingOption = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "description": "Note: These settings are only applied after saving the changes and reloading the page",
+    "label": "First sorting option",
+    "tooltip": "First sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  },
+  "de": {
+    "description": "Note: These settings are only applied after saving the changes and reloading the page",
+    "label": "First sorting option",
+    "tooltip": "First sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  }
+}
+</i18n>
