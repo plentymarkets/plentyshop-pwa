@@ -5,12 +5,12 @@
       <slot />
     </NarrowContainer>
   </main>
-  <NuxtLazyHydrate when-visible>
-    <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-    <UiFooter v-if="!runtimeConfig.public.isDev" />
-  </NuxtLazyHydrate>
+  <ClientOnly>
+    <FooterBlock v-if="!route.meta.isBlockified" />
+  </ClientOnly>
 </template>
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+
 const route = useRoute();
 </script>

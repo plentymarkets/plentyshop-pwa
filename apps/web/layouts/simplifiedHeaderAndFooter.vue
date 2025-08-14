@@ -8,17 +8,15 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <NuxtLazyHydrate when-visible>
-      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-      <UiFooter v-if="!runtimeConfig.public.isDev" />
-    </NuxtLazyHydrate>
+    <ClientOnly>
+      <FooterBlock v-if="!route.meta.isBlockified" />
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
 import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 
-const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
 usePageTitle();

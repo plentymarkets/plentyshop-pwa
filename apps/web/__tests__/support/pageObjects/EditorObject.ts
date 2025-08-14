@@ -91,6 +91,10 @@ export class EditorObject extends PageObject {
     return el[0].innerHTML.includes('newsletter-block');
   }
 
+  blockIsFooter(el: HTMLElement) {
+    return el.innerHTML.includes('footer');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -238,23 +242,25 @@ export class EditorObject extends PageObject {
     });
   }
 
-  checkLastBlock() {
+  checkLastNonFooterBlock() {
     this.blockWrappers.then(($blocks) => {
       let lastNonFooterIndex = -1;
       $blocks.each((i, el) => {
-        if (!el.innerText.includes('Footer')) {
+        if (!this.blockIsFooter(el)) {
           lastNonFooterIndex = i;
         }
       });
-      if (lastNonFooterIndex !== -1) {
-        cy.wrap($blocks[lastNonFooterIndex]).within(() => {
-          this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
-        });
-      } else {
-        this.blockWrappers.last().within(() => {
-          this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
-        });
-      }
+      cy.wrap($blocks[lastNonFooterIndex]).within(() => {
+        this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+      });
+    });
+  }
+
+  checkFooterBlock() {
+    this.blockWrappers.last().within(() => {
+      this.topMoveBlockButton.should('not.exist');
+      this.bottomMoveBlockButton.should('not.exist');
+      this.deleteBlockButton.should('not.exist');
     });
   }
 

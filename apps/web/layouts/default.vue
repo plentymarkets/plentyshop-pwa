@@ -10,10 +10,9 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <NuxtLazyHydrate when-visible>
-      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
-      <UiFooter v-if="!runtimeConfig.public.isDev" />
-    </NuxtLazyHydrate>
+    <ClientOnly>
+      <FooterBlock v-if="!route.meta.isBlockified" />
+    </ClientOnly>
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
@@ -27,7 +26,6 @@ defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
 setLogoMeta();
