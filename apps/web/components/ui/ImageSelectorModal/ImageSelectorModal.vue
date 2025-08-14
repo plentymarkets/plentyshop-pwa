@@ -6,7 +6,7 @@
           <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
           <div class="flex items-center gap-2">
             <SfTooltip
-              label="Manage your images centrally in the Webspace (under Shop). Deleting is not yet possible in the editor."
+              label="If you want to delete images or create/delete folders, please do this in the Webspace (under Shop), as these functions are not yet available in the editor."
               placement="top"
               :show-arrow="true"
               class="z-10"
@@ -27,21 +27,57 @@
             </div>
             <UiImageTable
               v-else
+              v-model:selected-key="selectedKey"
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"
             />
           </div>
 
-          <div
-            class="w-1/3 flex flex-col justify-center items-center rounded-md p-4"
-            :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
-          >
-            <UiImagePreview
-              :image="selectedImage?.image || null"
-              :name="selectedImage?.name || ''"
-              @close="selectedImage = null"
-            />
+          <div class="w-1/3 flex flex-col gap-4">
+            <div v-if="showUpload" class="flex items-center gap-3 w-full">
+              <div class="shrink-0">
+                <SfTooltip label="Select the folder path for the upload." placement="left">
+                  <SfIconInfo size="sm" />
+                </SfTooltip>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <Multiselect
+                  v-model="filePath"
+                  :options="folders"
+                  :searchable="true"
+                  :allow-empty="true"
+                  :show-labels="false"
+                  placeholder="Root Folder"
+                  class="w-full"
+                  :multiple="false"
+                >
+                  <template #option="{ option }">
+                    <span>{{ option || 'Root Folder' }}</span>
+                  </template>
+                  <template #singleLabel="{ option }">
+                    <span>{{ option || 'Root Folder' }}</span>
+                  </template>
+                </Multiselect>
+              </div>
+            </div>
+
+            <div
+              class="flex-1 flex flex-col justify-center items-center rounded-md p-4"
+              :class="selectedImage ? 'bg-[#EFF4F1]' : 'border border-dashed border-gray-300'"
+            >
+              <template v-if="selectedImage && !isPlaceholder">
+                <UiImagePreview
+                  :image="selectedImage?.image"
+                  :name="selectedImage?.name"
+                  @close="selectedImage = null"
+                />
+              </template>
+              <template v-else>
+                <UiImageUpload @file-selected="handleUpload" />
+              </template>
+            </div>
           </div>
         </main>
 
@@ -71,20 +107,29 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
-import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
+import Multiselect from 'vue-multiselect';
 
+import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
+const filePath = ref('');
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { loading, getStorageItems } = useItemsTable();
+const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
 
 const props = defineProps<ImageSelectorModalProps>();
-
+const selectedRowKey = ref<string | null>(null);
 const emit = defineEmits(['close', 'add']);
 
-const close = () => emit('close');
+const close = () => {
+  revokeAllBlobUrls();
+  emit('close');
+};
+const showUpload = computed(() => {
+  return !selectedImage.value || !selectedImage.value.image || selectedImage.value.image === placeholderImg;
+});
 const selectedImage = ref<null | {
   image: string;
   name: string;
 }>(null);
+const selectedKey = ref<string | null>(null);
 
 watch(
   () => props.open,
@@ -114,6 +159,10 @@ const canAdd = computed(() => {
   const image = selectedImage.value?.image;
   return !!image && image !== props.currentImage && image !== placeholderImg;
 });
+const isPlaceholder = computed(() => {
+  const img = selectedImage.value?.image;
+  return !img || img === placeholderImg;
+});
 
 const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
 
@@ -123,7 +172,25 @@ const handleSelect = (image: { image: string; name: string }) => {
     name: image.name,
   };
 };
+const handleUpload = async (file: File) => {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    selectedImage.value = {
+      image: e.target?.result as string,
+      name: file.name,
+    };
+  };
+  reader.readAsDataURL(file);
 
+  await uploadStorageItem(file, filePath.value);
+  await nextTick();
+
+  const uploadedItem = items.value.find(
+    (item) => item.key === file.name || item.key.endsWith(`/${file.name}`) || item.key === file.name,
+  );
+  selectedRowKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
+  selectedKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
+};
 const addImage = () => {
   if (selectedImage.value) {
     emit('add', {
@@ -134,13 +201,18 @@ const addImage = () => {
     close();
   }
 };
+
+onBeforeUnmount(() => {
+  revokeAllBlobUrls();
+});
 </script>
 
 <style>
 .v-field--prepended {
   padding-inline-start: 0;
 }
-.mdi-magnify {
+.fa-solid.fa-magnifying-glass {
+  --v-icon-size-multiplier: 0.55;
   padding: 0 20px;
 }
 </style>

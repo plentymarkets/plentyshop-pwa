@@ -1,0 +1,20 @@
+import type { ApiError } from '@plentymarkets/shop-api';
+
+export interface {{pascalCase name}}State {
+  data: unknown | null;
+  loading: boolean;
+  error: ApiError | null;
+}
+
+export type Fetch{{pascalCase (composableBaseName name)}} = (params: unknown) => Promise<unknown | null>;
+export type FetchServer{{pascalCase (composableBaseName name)}} = (params: unknown) => Promise<unknown | null>;
+
+export interface {{pascalCase name}} {
+  data: Readonly<Ref<{{pascalCase name}}State['data']>>;
+  loading: Readonly<Ref<boolean>>;
+  error: Readonly<Ref<{{pascalCase name}}State['error']>>;
+  fetch: Fetch{{pascalCase (composableBaseName name)}};
+  fetchServer: FetchServer{{pascalCase (composableBaseName name)}};
+}
+
+export type {{pascalCase name}}Return = ({{camelCase (composableBaseName name)}}Id: string) => {{pascalCase name}};
