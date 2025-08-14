@@ -467,7 +467,7 @@
     :image-type="selectedImageType"
     :current-image="banner.content.image[selectedImageType as BannerImageType]"
     @close="closeUploader"
-    @add="handleImageAddWrapper"
+    @add="handleImageAddBanner"
   />
 </template>
 
@@ -516,7 +516,7 @@ const clampBrightness = (event: Event, type: string) => {
   }
 };
 
-const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
+const handleImageAddBanner = ({ image, type }: { image: string; type: string }) => {
   const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
   handleImageAdd({ image, type });
 };
