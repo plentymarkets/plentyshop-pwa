@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Generator File Structure Snapshots > Component Structure Snapshots > should match expected component file structure > component-product-card-structure 1`] = `
+{
+  "children": [
+    {
+      "name": "ProductCard.vue",
+      "size": 31,
+      "type": "file",
+    },
+    {
+      "children": [
+        {
+          "name": "ProductCard.spec.ts",
+          "size": 45,
+          "type": "file",
+        },
+      ],
+      "name": "__tests__",
+      "type": "directory",
+    },
+    {
+      "name": "types.ts",
+      "size": 24,
+      "type": "file",
+    },
+  ],
+  "name": "ProductCard",
+  "type": "directory",
+}
+`;
+
+exports[`Generator File Structure Snapshots > Composable Structure Snapshots > should match expected composable file structure > composable-product-cart-structure 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "name": "useProductCart.spec.ts",
+          "size": 48,
+          "type": "file",
+        },
+      ],
+      "name": "__tests__",
+      "type": "directory",
+    },
+    {
+      "name": "index.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "name": "types.ts",
+      "size": 24,
+      "type": "file",
+    },
+    {
+      "name": "useProductCart.ts",
+      "size": 33,
+      "type": "file",
+    },
+  ],
+  "name": "useProductCart",
+  "type": "directory",
+}
+`;
