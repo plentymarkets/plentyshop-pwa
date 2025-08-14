@@ -4,7 +4,12 @@
       <header class="flex items-center justify-between px-4 py-5 border-b">
         <div class="flex items-center text-xl font-bold">
           {{ getEditorTranslation('label') }}
-          <SfTooltip :label="getEditorTranslation('open-manual-tooltip')" placement="right" :show-arrow="true" class="flex">
+          <SfTooltip
+            :label="getEditorTranslation('open-manual-tooltip')"
+            placement="right"
+            :show-arrow="true"
+            class="flex"
+          >
             <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
           </SfTooltip>
         </div>

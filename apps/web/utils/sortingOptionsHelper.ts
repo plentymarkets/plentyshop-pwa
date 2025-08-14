@@ -4,7 +4,7 @@ export const getEditorTranslation = (key: string): string => {
   const locale = 'en';
 
   const { t } = useI18n({
-    locale: locale
+    locale: locale,
   });
 
   return t(key, 0, { locale: locale }) as string;

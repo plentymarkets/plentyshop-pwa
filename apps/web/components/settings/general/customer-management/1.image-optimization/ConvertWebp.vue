@@ -3,12 +3,7 @@
     <div class="flex justify-between mb-2">
       <UiFormLabel class="mb-1">
         {{ getEditorTranslation('label') }}
-        <SfTooltip
-          :label="getEditorTranslation('tooltip')"
-          :placement="'top'"
-          :show-arrow="true"
-          class="ml-2 z-10"
-        >
+        <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
           <SfIconInfo :size="'sm'" />
         </SfTooltip>
       </UiFormLabel>

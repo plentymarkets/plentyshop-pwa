@@ -43,7 +43,9 @@
                 newsletterBlock.input.displayNameInput === false ? (newsletterBlock.input.nameIsRequired = false) : null
               "
             />
-            <span class="text-sm ml-2 align-top cursor-pointer font-body">{{ getEditorTranslation('display-name-input-label') }}</span>
+            <span class="text-sm ml-2 align-top cursor-pointer font-body">{{
+              getEditorTranslation('display-name-input-label')
+            }}</span>
           </label>
         </div>
         <div class="mb-6">
@@ -53,7 +55,9 @@
               :disabled="!newsletterBlock.input.displayNameInput"
               data-testid="newsletter-form-mandatory-name"
             />
-            <span class="text-sm ml-2 align-top cursor-pointer font-body">{{ getEditorTranslation('name-required-label') }}</span>
+            <span class="text-sm ml-2 align-top cursor-pointer font-body">{{
+              getEditorTranslation('name-required-label')
+            }}</span>
           </label>
         </div>
       </div>
