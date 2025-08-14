@@ -122,8 +122,9 @@ const close = () => {
   revokeAllBlobUrls();
   emit('close');
 };
-const showUpload = computed(() => !selectedImage.value);
-
+const showUpload = computed(() => {
+  return !selectedImage.value || !selectedImage.value.image || selectedImage.value.image === placeholderImg;
+});
 const selectedImage = ref<null | {
   image: string;
   name: string;
