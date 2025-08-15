@@ -6,6 +6,7 @@ For changelogs of newer versions, refer to the [Releases](https://github.com/ple
 
 ### 🚀 New
 
+- Just testing checkout tests on github
 - Added DHL delivery location finder functionality.
 - Added robots for declaration of accessibility page
 - Displaying correct prices for B2B customers.
