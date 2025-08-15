@@ -149,7 +149,7 @@
       </UiButton>
     </div>
   </MegaMenu>
-  <LanguageSelector />
+  <LazyLanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
@@ -217,7 +217,6 @@ import {
   SfIconFavorite,
   useDisclosure,
 } from '@storefront-ui/vue';
-import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
 
 const isLogin = ref(true);
