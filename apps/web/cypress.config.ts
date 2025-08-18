@@ -18,6 +18,7 @@ export default defineConfig({
     POST_CODE_VALIDATION_COUNTRY: 'United Kingdom',
     E2E_TEST_PAYPAL_EMAIL: process.env.E2E_TEST_PAYPAL_EMAIL || '',
     E2E_TEST_PAYPAL_PASSWORD: process.env.E2E_TEST_PAYPAL_PASSWORD || '',
+    CONFIG_ID: process.env.CONFIG_ID || '1',
   },
   e2e: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
