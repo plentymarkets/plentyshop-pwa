@@ -141,7 +141,7 @@
     :image-type="selectedImageType"
     :current-image="uiImageTextBlock[selectedImageType as ImageType]"
     @close="closeUploader"
-    @add="handleImageAdd"
+    @add="handleImageAddWrapper"
   />
 </template>
 
@@ -176,7 +176,10 @@ const uiImageTextBlock = computed(
 
 const imageGroupOpen = ref(false);
 
-const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
+const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
+  const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
+  handleImageAdd({ image, type });
+};
 </script>
 
 <i18n lang="json">

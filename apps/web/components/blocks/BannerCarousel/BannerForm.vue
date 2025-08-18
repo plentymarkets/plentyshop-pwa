@@ -469,7 +469,7 @@
     :image-type="selectedImageType"
     :current-image="banner.content.image[selectedImageType as BannerImageType]"
     @close="closeUploader"
-    @add="handleImageAdd"
+    @add="handleImageAddBanner"
   />
 </template>
 
@@ -518,7 +518,10 @@ const clampBrightness = (event: Event, type: string) => {
   }
 };
 
-const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
+const handleImageAddBanner = ({ image, type }: { image: string; type: string }) => {
+  const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
+  handleImageAdd({ image, type });
+};
 
 type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>
