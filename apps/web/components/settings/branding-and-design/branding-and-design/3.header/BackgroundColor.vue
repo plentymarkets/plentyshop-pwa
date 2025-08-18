@@ -1,13 +1,8 @@
 <template>
   <div class="py-2">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Background color</UiFormLabel>
-      <SfTooltip
-        label="If set, this background color will take precedence over your defined primary color for the header."
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
@@ -23,7 +18,7 @@
           </label>
         </template>
       </SfInput>
-      <span class="typography-text-xs text-neutral-700">Choose header background color</span>
+      <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('hint') }}</span>
     </label>
   </div>
 </template>
@@ -49,3 +44,18 @@ const headerBackgroundColor = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Background color",
+    "tooltip": "If set, this background color will take precedence over your defined primary color for the header.",
+    "hint": "Choose header background color"
+  },
+  "de": {
+    "label": "Background color",
+    "tooltip": "If set, this background color will take precedence over your defined primary color for the header.",
+    "hint": "Choose header background color"
+  }
+}
+</i18n>
