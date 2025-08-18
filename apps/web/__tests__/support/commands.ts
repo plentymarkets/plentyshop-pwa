@@ -79,7 +79,16 @@ Cypress.Commands.add(
       basketItemOrderParams,
     };
 
-    cy.request('POST', 'http://localhost:8181/plentysystems/doAddCartItem', payload);
+    const configID = Cypress.env('CONFIG_ID') ?? '';
+
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8181/plentysystems/doAddCartItem',
+      headers: {
+        'x-config-id': configID
+      },
+      body: payload
+    });
   },
 );
 
