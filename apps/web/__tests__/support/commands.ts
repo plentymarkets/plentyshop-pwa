@@ -85,9 +85,9 @@ Cypress.Commands.add(
       method: 'POST',
       url: 'http://localhost:8181/plentysystems/doAddCartItem',
       headers: {
-        'x-config-id': configID
+        'x-config-id': configID,
       },
-      body: payload
+      body: payload,
     });
   },
 );
