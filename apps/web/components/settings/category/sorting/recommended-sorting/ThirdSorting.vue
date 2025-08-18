@@ -1,8 +1,8 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Third sorting option</UiFormLabel>
-      <SfTooltip label="Third sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
@@ -11,12 +11,12 @@
       v-model="recommendedThirdSortingOption"
       data-testid="available-sorting-options"
       :options="sortingOptions"
-      placeholder="Select default option"
+      :placeholder="getEditorTranslation('placeholder')"
       label="label"
       track-by="value"
       class="cursor-pointer"
       select-label=""
-      deselect-label="Selected"
+      :deselect-label="getEditorTranslation('deselect-label')"
       :allow-empty="true"
     />
   </div>
@@ -42,3 +42,20 @@ const recommendedThirdSortingOption = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Third sorting option",
+    "tooltip": "Third sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  },
+  "de": {
+    "label": "Third sorting option",
+    "tooltip": "Third sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  }
+}
+</i18n>
