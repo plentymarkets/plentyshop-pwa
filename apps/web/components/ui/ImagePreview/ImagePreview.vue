@@ -8,32 +8,33 @@
         <strong>{{ props.name }}</strong>
         <div v-if="meta.width && meta.height" class="text-xs mt-1">{{ meta.width }} x {{ meta.height }} px</div>
       </div>
-      <button class="text-gray-500 hover:text-gray-700 text-xl leading-none" @click="close">&times;</button>
+      <SfTooltip label="Click here to upload" placement="top" :show-arrow="true" class="z-10">
+        <button
+          type="button"
+          aria-label="Close preview and open upload"
+          class="h-8 w-8 flex items-center justify-center rounded text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+          @click="toggleUpload"
+        >
+          <SfIconUpload size="sm" />
+        </button>
+      </SfTooltip>
     </div>
 
     <div class="flex-1 flex items-center justify-center p-4">
-      <template v-if="!isPlaceholder">
-        <img :src="props.image || undefined" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
-      </template>
-      <template v-else>
-        <span class="text-gray-400">Select an image from the list to preview it here</span>
-      </template>
+      <img :src="props.image || undefined" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { placeholderImg } = usePickerHelper();
+import { SfIconUpload, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<{
   image: string | null;
   name: string;
 }>();
 const emit = defineEmits(['close']);
-const close = () => emit('close');
-
-const isPlaceholder = computed(() => !props.image || props.image === placeholderImg);
-
+const toggleUpload = () => emit('close');
 const { getMetadata } = useImageMetadata();
 const meta = computed(() => {
   return props.name ? getMetadata(props.name) : { width: '', height: '' };

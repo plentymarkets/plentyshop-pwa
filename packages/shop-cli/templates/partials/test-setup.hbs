@@ -1,0 +1,31 @@
+{{!-- 
+  Test setup and imports
+  Usage: {{> test-setup name="ComponentName" type="component"}}
+--}}
+import { describe, it, expect{{#if hasBeforeEach}}, beforeEach{{/if}} } from 'vitest';
+{{#ifEquals type "component"}}
+import { mount } from '@vue/test-utils';
+import {{pascalCase name}} from '../{{pascalCase name}}.vue';
+{{#if hasTypes}}
+import type { {{pascalCase name}}Props } from '../types';
+{{/if}}
+{{/ifEquals}}
+{{#ifEquals type "composable"}}
+import { {{camelCase name}} } from '../{{camelCase name}}';
+{{#if hasTypes}}
+import type { {{pascalCase (composableBaseName name)}}Return } from '../types';
+{{/if}}
+{{/ifEquals}}
+
+describe('{{pascalCase name}}', () => {
+{{#if hasBeforeEach}}
+  beforeEach(() => {
+    // Setup before each test
+  });
+
+{{/if}}
+  it('should work correctly', () => {
+    // Test implementation
+    expect(true).toBe(true);
+  });
+});
