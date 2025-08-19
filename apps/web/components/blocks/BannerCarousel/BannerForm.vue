@@ -20,7 +20,8 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @select="openUploader(type)"
+            :selected-image-type="type"
+            @add="(payload) => handleImageAddBanner(payload)"
             @delete="deleteImage(banner.content.image, type)"
           />
         </div>
@@ -464,13 +465,13 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal
+  <!-- <UiImageSelectorModal
     :open="isUploaderOpen"
     :image-type="selectedImageType"
     :current-image="banner.content.image[selectedImageType as BannerImageType]"
     @close="closeUploader"
     @add="handleImageAddBanner"
-  />
+  /> -->
 </template>
 
 <script setup lang="ts">
@@ -489,10 +490,6 @@ const {
   imageDimensions,
   imageTypes,
   deleteImage,
-  isUploaderOpen,
-  openUploader,
-  closeUploader,
-  selectedImageType,
 } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
@@ -523,7 +520,7 @@ const handleImageAddBanner = ({ image, type }: { image: string; type: string }) 
   handleImageAdd({ image, type });
 };
 
-type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
+// type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>
 
 <style scoped>
