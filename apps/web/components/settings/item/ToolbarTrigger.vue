@@ -1,5 +1,6 @@
 <template>
   <button
+    v-if="runtimeConfig.public.isDev"
     type="button"
     class="editor-button relative py-2 flex justify-center"
     :class="{ 'bg-editor-button text-white rounded-md': active }"
@@ -17,4 +18,6 @@ import { SfIconSell } from '@storefront-ui/vue';
 defineProps({
   active: Boolean,
 });
+
+const runtimeConfig = useRuntimeConfig();
 </script>
