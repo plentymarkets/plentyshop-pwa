@@ -203,10 +203,7 @@ export const useBlockManager = () => {
   const getBlockDepth = (uuid: string): number => {
     const search = (blocks: Block[], targetUuid: string, depth: number): number => {
       for (const block of blocks) {
-        if (block.meta.uuid === targetUuid) {
-          console.log(`Block ${targetUuid} at depth ${depth}`);
-          return depth;
-        }
+        if (block.meta.uuid === targetUuid) return depth;
         if (block.type === 'structure' && Array.isArray(block.content)) {
           const found = search(block.content, targetUuid, depth + 1);
           if (found !== -1) return found;
@@ -214,13 +211,7 @@ export const useBlockManager = () => {
       }
       return -1;
     };
-    const result = Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
-
-    if (result === -1) {
-      console.log(`Block ${uuid} not found!`);
-    }
-    return result;
-    // return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
+    return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
   };
 
   return {
