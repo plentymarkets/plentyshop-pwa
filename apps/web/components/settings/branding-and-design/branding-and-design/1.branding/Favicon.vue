@@ -19,7 +19,9 @@
         :placeholder="placeholderImg"
         :dimensions="getEditorTranslation('favicon.description')"
         :show-tooltip="true"
-        @select="onImageSelect('Favicon')"
+        :selected-image-type="'Favicon'"
+        :custom-label="'Change Favicon'"
+        @add="handleImageAdd"
         @delete="deleteFavicon()"
       />
       <SfInput v-else v-model="favicon" placeholder="Enter Favicon URL" type="text" />
@@ -27,30 +29,16 @@
         {{ getEditorTranslation('favicon.hint') }}
       </span>
     </label>
-
-    <UiImageSelectorModal
-      v-if="runtimeConfig.public.isDev"
-      :open="isUploaderOpen"
-      :custom-label="customLabel"
-      :image-type="''"
-      :current-image="activeImage"
-      @close="closeUploader"
-      @add="handleImageAdd"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
+const { placeholderImg } = usePickerHelper();
 const runtimeConfig = useRuntimeConfig();
 
 const { updateSetting, getSetting } = useSiteSettings('favicon');
-
-const onImageSelect = (setting: 'Logo' | 'Favicon') => {
-  openUploader(undefined, setting);
-};
 
 const deleteFavicon = () => {
   updateSetting(placeholderImg);
@@ -61,9 +49,9 @@ const favicon = computed({
   set: (value) => updateSetting(value),
 });
 
-const { handleImageAdd } = useImageAdd(favicon);
-
-const activeImage = computed(() => favicon.value);
+function handleImageAdd({ image }: { image: string }) {
+  updateSetting(image);
+}
 </script>
 
 <i18n lang="json">
