@@ -54,6 +54,7 @@ const emits = defineEmits<{
 
 const props = defineProps<PaypalAPMPropsType>();
 const currentInstance = getCurrentInstance();
+const showError = ref(false);
 
 const checkonValidationCallbackEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
@@ -139,10 +140,12 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError(error) {
-        useNotification().send({
-          message: error?.toString() || t('errorMessages.paymentFailed'),
-          type: 'negative',
-        });
+        if (showError.value) {
+          useNotification().send({
+            message: error?.toString() || t('errorMessages.paymentFailed'),
+            type: 'negative',
+          });
+        }
       },
       onCancel() {
         useNotification().send({
@@ -151,6 +154,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         });
       },
       async createOrder() {
+        showError.value = true;
         const order = await createTransaction({
           type: 'basket',
         });

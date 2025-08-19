@@ -6,38 +6,37 @@
     <div class="flex justify-between items-center p-4">
       <div class="text-sm text-gray-700">
         <strong>{{ props.name }}</strong>
-        <span v-if="props.dimensions" class="ml-2 text-gray-500">({{ props.dimensions }})</span>
+        <div v-if="meta.width && meta.height" class="text-xs mt-1">{{ meta.width }} x {{ meta.height }} px</div>
       </div>
-      <button
-        v-if="props.name && props.image"
-        class="text-gray-500 hover:text-gray-700 text-xl leading-none"
-        @click="close"
-      >
-        &times;
-      </button>
+      <SfTooltip label="Click here to upload" placement="top" :show-arrow="true" class="z-10">
+        <button
+          type="button"
+          aria-label="Close preview and open upload"
+          class="h-8 w-8 flex items-center justify-center rounded text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+          @click="toggleUpload"
+        >
+          <SfIconUpload size="sm" />
+        </button>
+      </SfTooltip>
     </div>
 
     <div class="flex-1 flex items-center justify-center p-4">
-      <template v-if="props.image">
-        <img :src="props.image" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
-      </template>
-      <template v-else>
-        <span class="text-gray-400">Select an image from the list to preview it here</span>
-      </template>
+      <img :src="props.image || undefined" alt="Preview" class="max-w-full max-h-[600px] object-contain rounded-md" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { SfIconUpload, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<{
   image: string | null;
   name: string;
-  dimensions?: string;
 }>();
-const emit = defineEmits<{
-  (e: 'close', value: null): void;
-}>();
-const close = () => emit('close', null);
+const emit = defineEmits(['close']);
+const toggleUpload = () => emit('close');
+const { getMetadata } = useImageMetadata();
+const meta = computed(() => {
+  return props.name ? getMetadata(props.name) : { width: '', height: '' };
+});
 </script>

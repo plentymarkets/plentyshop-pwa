@@ -1,0 +1,143 @@
+/**
+ * Constants for validation utilities
+ */
+
+/**
+ * Reserved words that cannot be used as component names
+ */
+export const RESERVED_WORDS = [
+  'abstract',
+  'arguments',
+  'await',
+  'boolean',
+  'break',
+  'byte',
+  'case',
+  'catch',
+  'char',
+  'class',
+  'const',
+  'continue',
+  'debugger',
+  'default',
+  'delete',
+  'do',
+  'double',
+  'else',
+  'enum',
+  'eval',
+  'export',
+  'extends',
+  'false',
+  'final',
+  'finally',
+  'float',
+  'for',
+  'function',
+  'goto',
+  'if',
+  'implements',
+  'import',
+  'in',
+  'instanceof',
+  'int',
+  'interface',
+  'let',
+  'long',
+  'native',
+  'new',
+  'null',
+  'package',
+  'private',
+  'protected',
+  'public',
+  'return',
+  'short',
+  'static',
+  'super',
+  'switch',
+  'synchronized',
+  'this',
+  'throw',
+  'throws',
+  'transient',
+  'true',
+  'try',
+  'typeof',
+  'var',
+  'void',
+  'volatile',
+  'while',
+  'with',
+  'yield',
+];
+
+/**
+ * Vue reserved component names
+ */
+export const VUE_RESERVED_NAMES = [
+  'Component',
+  'Transition',
+  'TransitionGroup',
+  'KeepAlive',
+  'Suspense',
+  'Teleport',
+  'Fragment',
+  'Text',
+  'Comment',
+  'Static',
+];
+
+/**
+ * HTML element names that shouldn't be used as component names
+ */
+export const HTML_ELEMENTS = [
+  'div',
+  'span',
+  'p',
+  'a',
+  'img',
+  'form',
+  'input',
+  'button',
+  'header',
+  'footer',
+  'nav',
+  'main',
+  'section',
+  'article',
+  'aside',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'ul',
+  'ol',
+  'li',
+  'table',
+  'tr',
+  'td',
+  'th',
+];
+
+/**
+ * Reserved route names
+ */
+export const RESERVED_ROUTES = [
+  'api',
+  'admin',
+  'www',
+  'mail',
+  'ftp',
+  'localhost',
+  'assets',
+  'static',
+  'config',
+  'dashboard',
+  'login',
+  'logout',
+  'register',
+  'profile',
+];

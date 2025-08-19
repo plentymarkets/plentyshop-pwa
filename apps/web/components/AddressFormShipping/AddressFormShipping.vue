@@ -214,8 +214,15 @@ const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
 
 if (!addAddress && address) {
-  hasShippingCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
-  setValues(address as unknown as Record<string, string>);
+  hasShippingCompany.value = shippingAddressToSave.value?.companyName
+    ? true
+    : Boolean(userAddressGetters.getCompanyName(address as Address));
+
+  setValues({
+    ...address,
+    companyName: address?.companyName || shippingAddressToSave.value?.companyName || '',
+    vatNumber: address?.vatNumber || shippingAddressToSave.value?.vatNumber || '',
+  } as unknown as Record<string, string>);
 
   if (!hasShippingCompany.value) {
     companyName.value = '';
@@ -288,6 +295,7 @@ const validateAndSubmitForm = async () => {
       }
     } finally {
       setShippingSkeleton(false);
+      formIsLoading.value = false;
     }
     if (showNewForm.value) showNewForm.value = false;
   }

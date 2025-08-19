@@ -1,4 +1,4 @@
-const ignoreErrors = ['zoid', 'paypal', 'turnstile', 'cookie'];
+const ignoreErrors = ['zoid', 'paypal', 'turnstile', 'cookie', 'postMessage'];
 
 Cypress.on('window:before:load', (win) => {
   cy.stub(win.console, 'error').callsFake((msg) => {

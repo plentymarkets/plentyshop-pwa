@@ -3,11 +3,9 @@ import type {
   UseSiteConfigurationState,
   LoadGoogleFont,
   DrawerView,
-  SaveSettings,
   SettingsType,
   SetActiveSetting,
 } from '~/composables/useSiteConfiguration/types';
-import { metaDefaults, openGraph, favicon } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
@@ -29,26 +27,11 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     placement: 'left',
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
-    headerLogo: useRuntimeConfig().public.headerLogo,
-    favicon: structuredClone(favicon).icon,
-    ogTitle: structuredClone(openGraph).title,
-    ogImg: structuredClone(openGraph).image,
-    useAvif: useRuntimeConfig().public.useAvif,
-    useWebp: useRuntimeConfig().public.useWebp,
-    seoSettings: metaDefaults,
     drawerView: null,
     activeSetting: '',
+    activeSubCategory: '',
     blockType: '',
     blockUuid: '',
-    initialData: {
-      seoSettings: structuredClone(metaDefaults),
-      headerLogo: useRuntimeConfig().public.headerLogo,
-      favicon: structuredClone(favicon).icon,
-      ogTitle: structuredClone(openGraph).title,
-      ogImg: structuredClone(openGraph).image,
-      useAvif: useRuntimeConfig().public.useAvif,
-      useWebp: useRuntimeConfig().public.useWebp,
-    },
   }));
 
   /**
@@ -78,7 +61,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.drawerView = view;
     state.value.drawerOpen = true;
-    state.value.activeSetting = ''; // TODO: remove once all settings are moved to new structure
+    state.value.activeSetting = '';
 
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
@@ -93,95 +76,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.newBlockPosition = position;
   };
 
-  const settingsIsDirty = computed(() => {
-    const { isDirty } = useSiteSettings();
-
-    return (
-      state.value.headerLogo !== state.value.initialData.headerLogo ||
-      state.value.favicon !== state.value.initialData.favicon ||
-      state.value.ogTitle !== state.value.initialData.ogTitle ||
-      state.value.ogImg !== state.value.initialData.ogImg ||
-      state.value.useAvif !== state.value.initialData.useAvif ||
-      state.value.useWebp !== state.value.initialData.useWebp ||
-      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings) ||
-      isDirty.value
-    );
-  });
-
-  const saveSettings: SaveSettings = async (): Promise<boolean> => {
-    try {
-      state.value.loading = true;
-
-      const { data, saveSiteSettings } = useSiteSettings();
-
-      const settings = [
-        {
-          key: 'headerLogo',
-          value: state.value.headerLogo,
-        },
-        {
-          key: 'favicon',
-          value: state.value.favicon,
-        },
-        {
-          key: 'ogTitle',
-          value: state.value.ogTitle,
-        },
-        {
-          key: 'ogImg',
-          value: state.value.ogImg,
-        },
-        {
-          key: 'useAvif',
-          value: state.value.useAvif ? 'true' : 'false',
-        },
-        {
-          key: 'useWebp',
-          value: state.value.useWebp ? 'true' : 'false',
-        },
-        {
-          key: 'metaTitle',
-          value: state.value.seoSettings.title,
-        },
-        {
-          key: 'metaDescription',
-          value: state.value.seoSettings.description,
-        },
-        {
-          key: 'metaKeywords',
-          value: state.value.seoSettings.keywords,
-        },
-        {
-          key: 'robots',
-          value: state.value.seoSettings.robots,
-        },
-        ...Object.entries(data.value || {}).map(([key, val]) => ({
-          key,
-          value: String(val || ''),
-        })),
-      ];
-
-      await useSdk().plentysystems.setConfiguration({ settings });
-
-      state.value.initialData = {
-        headerLogo: state.value.headerLogo,
-        favicon: state.value.favicon,
-        ogTitle: state.value.ogTitle,
-        ogImg: state.value.ogImg,
-        useAvif: state.value.useAvif,
-        useWebp: state.value.useWebp,
-        seoSettings: state.value.seoSettings,
-      };
-
-      saveSiteSettings();
-    } catch (error) {
-      console.error('Error saving settings:', error);
-    } finally {
-      state.value.loading = false;
-    }
-    return true;
-  };
-
   const togglePageModal = (value: boolean) => {
     state.value.pageModalOpen = value;
   };
@@ -191,11 +85,16 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.settingsCategory = category;
   };
 
+  const setActiveSubCategory = (subCategory: string) => {
+    state.value.activeSubCategory = subCategory;
+  };
+
   const setActiveSetting: SetActiveSetting = (setting: string) => {
+    state.value.activeSubCategory = '';
     state.value.activeSetting = setting;
     state.value.drawerOpen = true;
     state.value.placement = 'left';
-    state.value.drawerView = null; // TODO: remove once all settings are moved to new structure
+    state.value.drawerView = null;
   };
 
   return {
@@ -204,10 +103,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loadGoogleFont,
     openDrawerWithView,
     closeDrawer,
-    settingsIsDirty,
-    saveSettings,
     togglePageModal,
     setSettingsCategory,
+    setActiveSubCategory,
     setActiveSetting,
   };
 };

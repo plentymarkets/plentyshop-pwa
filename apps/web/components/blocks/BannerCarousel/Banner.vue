@@ -40,6 +40,7 @@
         <template v-if="!props.index">
           <h1
             v-if="banner.text.title"
+            :id="`carousel_item-${props.slideIndex}_heading`"
             class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
             :data-testid="'banner-title-' + meta.uuid"
             v-html="banner.text.title"
@@ -49,6 +50,7 @@
         <template v-else>
           <h2
             v-if="banner.text.title"
+            :id="`carousel_item-${props.slideIndex}_heading`"
             class="text-2xl font-semibold mb-4"
             :data-testid="'banner-title-' + meta.uuid"
             v-html="banner.text.title"
@@ -94,7 +96,7 @@ const localePath = useLocalePath();
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
-const props = defineProps<BannerProps>();
+const props = defineProps<BannerProps & { slideIndex?: number }>();
 
 const banner = computed(() => props.content);
 
