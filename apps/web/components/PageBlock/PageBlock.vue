@@ -85,6 +85,9 @@ import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const runtimeConfig = useRuntimeConfig();
+const { locale, defaultLocale } = useI18n();
+const route = useRoute();
+
 
 const { $isPreview } = useNuxtApp();
 
@@ -155,11 +158,19 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 
 const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
+const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
+
+const isEditDisabled = computed(() => {
+  const homePath = getHomePath(locale.value);
+  return route.fullPath !== homePath;
+});
 const getBlockActions = (block: Block) => {
   if (block.name === 'Footer') {
     return {
+      isEditable: !isEditDisabled.value,
       isMovable: false,
       isDeletable: false,
+      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
     };
   }
   return undefined;

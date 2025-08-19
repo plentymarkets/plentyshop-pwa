@@ -14,13 +14,13 @@
     ]"
     data-testid="edit-block-actions"
   >
-    <SfTooltip v-if="isEditDisabled" label="You can only edit the footer on the homepage" placement="left" class="flex">
+    <SfTooltip v-if="!props.actions.isEditable" label="You can only edit the footer on the homepage" placement="left" class="flex">
       <button
         class="text-black hover:bg-gray-100 p-1 rounded no-drag"
         data-testid="open-editor-button"
         aria-label="editor button"
-        :disabled="isEditDisabled"
-        :class="{ 'opacity-40 cursor-not-allowed': isEditDisabled }"
+        :disabled="!props.actions.isEditable"
+        :class="{ 'opacity-40 cursor-not-allowed': !props.actions.isEditable }"
         @click.stop="triggerEdit"
       >
         <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900">
@@ -111,7 +111,6 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
   }),
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);
-const route = useRoute();
 const { openDrawerWithView } = useSiteConfiguration();
 const { deleteBlock, isLastNonFooterBlock } = useBlockManager();
 
@@ -122,14 +121,6 @@ const triggerEdit = () => {
 const triggerDelete = () => {
   deleteBlock(props.block.meta.uuid);
 };
-const { locale, defaultLocale } = useI18n();
-
-const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
-
-const isEditDisabled = computed(() => {
-  const homePath = getHomePath(locale.value);
-  return props.actions.isEditable && route.fullPath !== homePath;
-});
 
 const scrollToBlock = (newIndex: number) => {
   const block = document.getElementById(`block-${newIndex}`);
