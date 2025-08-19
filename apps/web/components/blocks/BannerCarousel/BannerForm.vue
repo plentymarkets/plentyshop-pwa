@@ -20,7 +20,8 @@
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
             :show-tooltip="true"
-            @select="openUploader(type)"
+            :selected-image-type="type"
+            @add="(payload) => handleImageAddBanner(payload)"
             @delete="deleteImage(banner.content.image, type)"
           />
         </div>
@@ -464,13 +465,6 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal
-    :open="isUploaderOpen"
-    :image-type="selectedImageType"
-    :current-image="banner.content.image[selectedImageType as BannerImageType]"
-    @close="closeUploader"
-    @add="handleImageAddBanner"
-  />
 </template>
 
 <script setup lang="ts">
@@ -483,17 +477,7 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const {
-  placeholderImg,
-  labels,
-  imageDimensions,
-  imageTypes,
-  deleteImage,
-  isUploaderOpen,
-  openUploader,
-  closeUploader,
-  selectedImageType,
-} = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -522,8 +506,6 @@ const handleImageAddBanner = ({ image, type }: { image: string; type: string }) 
   const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
   handleImageAdd({ image, type });
 };
-
-type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>
 
 <style scoped>
