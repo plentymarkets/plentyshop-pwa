@@ -4,6 +4,7 @@
     :key="categoryIndex"
     summary-active-class="bg-neutral-100 border-t-0"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :data-testid="'block-category-' + categoryIndex"
   >
     <template #summary>
       <h2>{{ category.title }}</h2>
