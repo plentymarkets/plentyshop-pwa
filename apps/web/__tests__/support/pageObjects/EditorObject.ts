@@ -47,6 +47,10 @@ export class EditorObject extends PageObject {
     return cy.get('[data-testid*="block-wrapper"]');
   }
 
+  get blocksAccordionImage() {
+    return cy.get('[data-testid*="block-category-image-with-text"]');
+  }
+
   get topBlockButton() {
     return cy.getByTestId('top-add-block');
   }
@@ -214,6 +218,8 @@ export class EditorObject extends PageObject {
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
+      this.blocksAccordionImage.should('exist').click();
+      cy.wait(1000);
       this.addBlockButton.should('exist').click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
@@ -225,6 +231,8 @@ export class EditorObject extends PageObject {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blocksAccordionImage.should('exist').click();
       cy.wait(1000);
       this.addBlockButton.click();
       cy.wait(1000);
