@@ -19,69 +19,73 @@
         </SfIconBase>
       </button>
     </SfTooltip>
-    <button
-      v-else
-      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
-      data-testid="open-editor-button"
-      aria-label="editor button"
-      @click.stop="triggerEdit"
-    >
-      <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path :d="editPath" fill="black" />
-        </svg>
-      </SfIconBase>
-    </button>
-
+    <SfTooltip v-else :label="editLabel" placement="left" :show-arrow="true">
+      <button
+        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+        data-testid="open-editor-button"
+        aria-label="editor button"
+        @click.stop="triggerEdit"
+      >
+        <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path :d="editPath" fill="black" />
+          </svg>
+        </SfIconBase>
+      </button>
+    </SfTooltip>
     <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
 
     <div class="flex flex-col">
-      <button
-        v-if="props.block.name !== 'Footer'"
-        class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-        data-testid="move-up-button"
-        aria-label="move up button"
-        :disabled="props.index === 0"
-        :class="{ 'opacity-40 cursor-not-allowed': props.index === 0 }"
-        @click="changePosition(-1)"
-      >
-        <SfIconExpandLess />
-      </button>
-
-      <button
-        v-if="props.block.name !== 'Footer'"
-        class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-        data-testid="move-down-button"
-        aria-label="move down button"
-        :disabled="isLastNonFooterBlock(index)"
-        :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
-        @click="changePosition(1)"
-      >
-        <SfIconExpandMore />
-      </button>
+      <SfTooltip :label="positionLabel" placement="left" :show-arrow="true">
+        <button
+          v-if="props.block.name !== 'Footer'"
+          class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
+          data-testid="move-up-button"
+          aria-label="move up button"
+          :disabled="props.index === 0"
+          :class="{ 'opacity-40 cursor-not-allowed': props.index === 0 }"
+          @click="changePosition(-1)"
+        >
+          <SfIconExpandLess />
+        </button>
+      </SfTooltip>
+      <SfTooltip :label="positionLabel" placement="bottom" :show-arrow="true">
+        <button
+          v-if="props.block.name !== 'Footer'"
+          class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
+          data-testid="move-down-button"
+          aria-label="move down button"
+          :disabled="isLastNonFooterBlock(index)"
+          :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
+          @click="changePosition(1)"
+        >
+          <SfIconExpandMore />
+        </button>
+      </SfTooltip>
     </div>
 
     <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
-
-    <button
-      v-if="props.block.name !== 'Footer'"
-      class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
-      aria-label="Drag to reorder block"
-    >
-      <NuxtImg width="18" height="18" :src="dragIcon" />
-    </button>
-
+    <SfTooltip :label="positionLabel" placement="bottom" :show-arrow="true">
+      <button
+        v-if="props.block.name !== 'Footer'"
+        class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
+        aria-label="Drag to reorder block"
+      >
+        <NuxtImg width="18" height="18" :src="dragIcon" />
+      </button>
+    </SfTooltip>
     <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
-
-    <button
-      v-if="props.block.name !== 'Footer'"
-      class="text-black hover:bg-gray-100 p-1 rounded no-drag"
-      aria-label="delete block button"
-      data-testid="delete-block-button"
-      @click="triggerDelete"
-    >
-      <SfIconDelete />
-    </button>
+    <SfTooltip :label="deleteLabel" placement="bottom" :show-arrow="true">
+      <button
+        v-if="props.block.name !== 'Footer'"
+        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+        aria-label="delete block button"
+        data-testid="delete-block-button"
+        @click="triggerDelete"
+      >
+        <SfIconDelete />
+      </button>
+    </SfTooltip>
   </div>
 </template>
 
@@ -92,6 +96,10 @@ import { editPath } from 'assets/icons/paths/edit';
 import type { Block } from '@plentymarkets/shop-api';
 
 const props = defineProps<{ index: number; block: Block }>();
+
+const editLabel = 'Click to edit this block.';
+const positionLabel = 'Change block position.';
+const deleteLabel = 'Delete this block.';
 
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const route = useRoute();

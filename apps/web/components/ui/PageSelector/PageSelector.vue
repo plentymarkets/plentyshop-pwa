@@ -1,4 +1,6 @@
 <template>
+    <SfTooltip :label="pageLabel" placement="bottom" :show-arrow="true">
+
   <div class="page-selector relative flex items-center space-x-1 md:space-x-2">
     <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative flex items-center">
@@ -11,10 +13,12 @@
     </div>
   </div>
   <UiPageSearch v-if="isOpen" @close="closeDropdown" @page-selected="handlePageSelected" />
+  </SfTooltip>
+
 </template>
 
 <script setup lang="ts">
-import { SfIconHome, SfIconExpandMore } from '@storefront-ui/vue';
+import { SfIconHome, SfIconExpandMore, SfTooltip } from '@storefront-ui/vue';
 const { pageMeta } = usePageMeta();
 const currentPageName = ref('Homepage');
 const currentPageIcon = ref('home');
@@ -25,6 +29,9 @@ const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
   currentPageName.value = name;
   currentPageIcon.value = icon;
 };
+
+const pageLabel = 'Quickly search and jump to pages for editing';
+
 const closeDropdown = () => {
   isOpen.value = false;
 };

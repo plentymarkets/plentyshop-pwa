@@ -28,8 +28,11 @@
         aria-label="top add block"
         @click.stop="addNewBlock(block, 'top')"
       >
-        <SfIconAdd class="cursor-pointer" />
+        <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
+          <SfIconAdd class="cursor-pointer" />
+        </SfTooltip>
       </button>
+
       <UiBlockActions
         v-if="disableActions && blockHasData && blockHasData(block) && $isPreview && root && !isDragging"
         :key="`${block.meta.uuid}`"
@@ -72,7 +75,9 @@
         aria-label="bottom add block"
         @click.stop="addNewBlock(block, 'bottom')"
       >
-        <SfIconAdd class="cursor-pointer" />
+        <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
+          <SfIconAdd class="cursor-pointer" />
+        </SfTooltip>
       </button>
     </div>
     <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
@@ -81,7 +86,7 @@
 
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
-import { SfIconAdd } from '@storefront-ui/vue';
+import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -100,6 +105,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const buttonLabel = 'Insert a new block at this position.';
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
