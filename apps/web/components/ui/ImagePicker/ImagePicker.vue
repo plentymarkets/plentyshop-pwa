@@ -53,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import { SfTooltip, SfIconInfo, SfIconDelete } from '@storefront-ui/vue';
 
 interface Props {
@@ -75,8 +74,8 @@ const isPlaceholder = computed(() => props.image === props.placeholder);
 const isUploaderOpen = ref(false);
 const selectedImageType = ref(props.selectedImageType || 'wideScreen');
 
-function handleImageAdd({ image, type }: { image: string; type: string }) {
+const handleImageAdd = ({ image, type }: { image: string; type: string }) => {
   emit('add', { image, type });
   isUploaderOpen.value = false;
-}
+};
 </script>

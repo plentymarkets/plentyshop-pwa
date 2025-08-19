@@ -49,9 +49,7 @@ const favicon = computed({
   set: (value) => updateSetting(value),
 });
 
-function handleImageAdd({ image }: { image: string }) {
-  updateSetting(image);
-}
+const { handleImageAdd } = useImageAdd(favicon);
 </script>
 
 <i18n lang="json">
