@@ -47,6 +47,10 @@ export class EditorObject extends PageObject {
     return cy.get('[data-testid*="block-wrapper"]');
   }
 
+  get blocksAccordionImage() {
+    return cy.get('[data-testid*="block-category-image-with-text"]');
+  }
+
   get topBlockButton() {
     return cy.getByTestId('top-add-block');
   }
@@ -89,6 +93,10 @@ export class EditorObject extends PageObject {
 
   blockIsNewsletter(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('newsletter-block');
+  }
+
+  blockIsFooter(el: HTMLElement) {
+    return el.innerHTML.includes('footer');
   }
 
   togglePreviewMode() {
@@ -214,6 +222,8 @@ export class EditorObject extends PageObject {
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
+      this.blocksAccordionImage.should('exist').click();
+      cy.wait(1000);
       this.addBlockButton.should('exist').click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
@@ -225,6 +235,8 @@ export class EditorObject extends PageObject {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blocksAccordionImage.should('exist').click();
       cy.wait(1000);
       this.addBlockButton.click();
       cy.wait(1000);
@@ -238,23 +250,25 @@ export class EditorObject extends PageObject {
     });
   }
 
-  checkLastBlock() {
+  checkLastNonFooterBlock() {
     this.blockWrappers.then(($blocks) => {
       let lastNonFooterIndex = -1;
       $blocks.each((i, el) => {
-        if (!el.innerText.includes('Footer')) {
+        if (!this.blockIsFooter(el)) {
           lastNonFooterIndex = i;
         }
       });
-      if (lastNonFooterIndex !== -1) {
-        cy.wrap($blocks[lastNonFooterIndex]).within(() => {
-          this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
-        });
-      } else {
-        this.blockWrappers.last().within(() => {
-          this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
-        });
-      }
+      cy.wrap($blocks[lastNonFooterIndex]).within(() => {
+        this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+      });
+    });
+  }
+
+  checkFooterBlock() {
+    this.blockWrappers.last().within(() => {
+      this.topMoveBlockButton.should('not.exist');
+      this.bottomMoveBlockButton.should('not.exist');
+      this.deleteBlockButton.should('not.exist');
     });
   }
 
@@ -274,7 +288,7 @@ export class EditorObject extends PageObject {
 
   checkWrapperSpacings() {
     this.blockWrappers.each((el) => {
-      if (this.blockIsBanner(el) || this.blockIsNewsletter(el)) {
+      if (this.blockIsBanner(el) || this.blockIsNewsletter(el) || this.blockIsFooter(el.get(0))) {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
       } else {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="block.meta && (block.name !== 'Footer' || runtimeConfig.public.isDev)" :key="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
@@ -87,8 +87,6 @@
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
-
-const runtimeConfig = useRuntimeConfig();
 
 const { $isPreview } = useNuxtApp();
 
