@@ -1,6 +1,17 @@
 <template>
   <div
-    class="absolute z-[0] md:z-[1] lg:z-[9] right-0 top-0 flex items-center space-x-3 border border-[#538AEA] bg-white p-2 shadow-md"
+    :class="[
+      'absolute',
+      'z-[0]',
+      'md:z-[1]',
+      'lg:z-[9]',
+      'flex',
+      'items-center',
+      'space-x-3',
+      'p-2',
+      'shadow-md',
+      ...(props.actions?.classes || []),
+    ]"
     data-testid="edit-block-actions"
   >
     <SfTooltip v-if="isEditDisabled" label="You can only edit the footer on the homepage" placement="left" class="flex">
@@ -33,11 +44,11 @@
       </SfIconBase>
     </button>
 
-    <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
 
     <div class="flex flex-col">
       <button
-        v-if="props.block.name !== 'Footer'"
+        v-if="props.actions.isMovable"
         class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
         data-testid="move-up-button"
         aria-label="move up button"
@@ -49,7 +60,7 @@
       </button>
 
       <button
-        v-if="props.block.name !== 'Footer'"
+        v-if="props.actions.isMovable"
         class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
         data-testid="move-down-button"
         aria-label="move down button"
@@ -61,20 +72,20 @@
       </button>
     </div>
 
-    <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
 
     <button
-      v-if="props.block.name !== 'Footer'"
+      v-if="props.actions.isMovable"
       class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
       aria-label="Drag to reorder block"
     >
       <NuxtImg width="18" height="18" :src="dragIcon" />
     </button>
 
-    <div v-if="props.block.name !== 'Footer'" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
 
     <button
-      v-if="props.block.name !== 'Footer'"
+      v-if="props.actions.isDeletable"
       class="text-black hover:bg-gray-100 p-1 rounded no-drag"
       aria-label="delete block button"
       data-testid="delete-block-button"
@@ -91,7 +102,26 @@ import { SfIconDelete, SfIconExpandLess, SfIconExpandMore, SfIconBase, SfTooltip
 import { editPath } from 'assets/icons/paths/edit';
 import type { Block } from '@plentymarkets/shop-api';
 
-const props = defineProps<{ index: number; block: Block }>();
+const props = withDefaults(
+  defineProps<{
+    index: number;
+    block: Block;
+    actions?: {
+      isEditable?: boolean;
+      isMovable?: boolean;
+      isDeletable?: boolean;
+      classes?: string[];
+    };
+  }>(),
+  {
+    actions: () => ({
+      isEditable: true,
+      isMovable: true,
+      isDeletable: true,
+      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    }),
+  },
+);
 
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const route = useRoute();
@@ -111,7 +141,7 @@ const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' 
 
 const isEditDisabled = computed(() => {
   const homePath = getHomePath(locale.value);
-  return props.block.name === 'Footer' && route.fullPath !== homePath;
+  return props.actions.isEditable && route.fullPath !== homePath;
 });
 
 const scrollToBlock = (newIndex: number) => {

@@ -42,6 +42,7 @@
         ]"
         :index="index"
         :block="block"
+        :actions="getBlockActions(block)"
         @change-position="changeBlockPosition"
       />
 
@@ -154,4 +155,13 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 
 const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
+const getBlockActions = (block: Block) => {
+  if (block.name === 'Footer') {
+    return {
+      isMovable: false,
+      isDeletable: false,
+    }
+  }
+  return undefined;
+}
 </script>
