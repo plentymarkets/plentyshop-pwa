@@ -87,7 +87,6 @@ import { SfIconAdd } from '@storefront-ui/vue';
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
 
-
 const { $isPreview } = useNuxtApp();
 
 interface Props {

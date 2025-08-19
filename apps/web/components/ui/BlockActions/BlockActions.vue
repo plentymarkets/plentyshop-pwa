@@ -14,7 +14,12 @@
     ]"
     data-testid="edit-block-actions"
   >
-    <SfTooltip v-if="!props.actions.isEditable" label="You can only edit the footer on the homepage" placement="left" class="flex">
+    <SfTooltip
+      v-if="!props.actions.isEditable"
+      label="You can only edit the footer on the homepage"
+      placement="left"
+      class="flex"
+    >
       <button
         class="text-black hover:bg-gray-100 p-1 rounded no-drag"
         data-testid="open-editor-button"
