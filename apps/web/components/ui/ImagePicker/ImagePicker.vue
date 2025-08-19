@@ -27,7 +27,7 @@
           <button
             type="button"
             class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800"
-            @click.prevent="emit('select')"
+            @click.prevent="isUploaderOpen = true"
           >
             Select
           </button>
@@ -40,6 +40,13 @@
             <SfIconDelete />
           </button>
         </div>
+        <UiImageSelectorModal
+          :open="isUploaderOpen"
+          :image-type="selectedImageType"
+          :current-image="props.image"
+          @close="isUploaderOpen = false"
+          @add="handleImageAdd"
+        />
       </div>
     </div>
   </div>
@@ -54,13 +61,21 @@ interface Props {
   placeholder: string;
   dimensions: string;
   showTooltip?: boolean;
+  selectedImageType?: string;
 }
 
 const props = defineProps<Props>();
-
 const emit = defineEmits<{
-  (e: 'delete' | 'select'): void;
+  (e: 'delete'): void;
+  (e: 'add', payload: { image: string; type: string }): void;
 }>();
 
 const isPlaceholder = computed(() => props.image === props.placeholder);
+const isUploaderOpen = ref(false);
+const selectedImageType = ref(props.selectedImageType || 'wideScreen');
+
+const handleImageAdd = ({ image, type }: { image: string; type: string }) => {
+  emit('add', { image, type });
+  isUploaderOpen.value = false;
+};
 </script>
