@@ -80,7 +80,7 @@
       </SfTooltip>
     </div>
 
-    <div  v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
+    <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
     <SfTooltip :label="positionLabel" placement="bottom" :show-arrow="true">
       <button
         v-if="props.actions.isMovable"
