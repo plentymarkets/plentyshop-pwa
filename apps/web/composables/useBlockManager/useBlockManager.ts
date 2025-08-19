@@ -245,6 +245,6 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
-    getBlockDepth
+    getBlockDepth,
   };
 };

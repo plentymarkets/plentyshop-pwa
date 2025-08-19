@@ -65,7 +65,7 @@ const {
   changeBlockPosition,
   handleDragStart,
   handleDragEnd,
-  getBlockDepth
+  getBlockDepth,
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
