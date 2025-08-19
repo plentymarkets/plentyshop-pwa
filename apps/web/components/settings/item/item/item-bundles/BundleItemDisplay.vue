@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-const { updateSetting, getSetting } = useSiteSettings('bundleItemDisplay');
+const { updateSetting, getSetting } = useSiteSettings('dontSplitItemBundle');
 
 const bundleSettingsOptions = ref([
   {

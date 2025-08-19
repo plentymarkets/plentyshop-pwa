@@ -13,7 +13,9 @@
       :placeholder="placeholderImg"
       :dimensions="getEditorTranslation('description')"
       :show-tooltip="true"
-      @select="onImageSelect('Logo')"
+      :selected-image-type="'Logo'"
+      :custom-label="'Change Logo'"
+      @add="handleImageAdd"
       @delete="deleteLogo()"
     />
     <SfInput v-else v-model="headerLogo" placeholder="Enter Logo URL" type="text" />
@@ -21,28 +23,14 @@
     <span class="typography-text-xs text-neutral-700">
       {{ getEditorTranslation('hint') }}
     </span>
-
-    <UiImageSelectorModal
-      v-if="runtimeConfig.public.isDev"
-      :open="isUploaderOpen"
-      :custom-label="customLabel"
-      :image-type="''"
-      :current-image="activeImage"
-      @close="closeUploader"
-      @add="handleImageAdd"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { placeholderImg, isUploaderOpen, openUploader, closeUploader, customLabel } = usePickerHelper();
+const { placeholderImg } = usePickerHelper();
 const runtimeConfig = useRuntimeConfig();
-
-const onImageSelect = (setting: 'Logo' | 'Favicon') => {
-  openUploader(undefined, setting);
-};
 
 const deleteLogo = () => {
   updateSetting(placeholderImg);
@@ -54,9 +42,8 @@ const headerLogo = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
-const { handleImageAdd } = useImageAdd(headerLogo);
 
-const activeImage = computed(() => headerLogo.value);
+const { handleImageAdd } = useImageAdd(headerLogo);
 </script>
 <style>
 img[alt='Logo'] {
