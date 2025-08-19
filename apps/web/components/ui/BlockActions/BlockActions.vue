@@ -100,29 +100,16 @@
 import dragIcon from 'assets/icons/paths/drag.svg';
 import { SfIconDelete, SfIconExpandLess, SfIconExpandMore, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
-import type { Block } from '@plentymarkets/shop-api';
+import type { BlockActionsProps } from '~/components/ui/BlockActions/types';
 
-const props = withDefaults(
-  defineProps<{
-    index: number;
-    block: Block;
-    actions?: {
-      isEditable?: boolean;
-      isMovable?: boolean;
-      isDeletable?: boolean;
-      classes?: string[];
-    };
-  }>(),
-  {
-    actions: () => ({
-      isEditable: true,
-      isMovable: true,
-      isDeletable: true,
-      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
-    }),
-  },
-);
-
+const props = withDefaults(defineProps<BlockActionsProps>(), {
+  actions: () => ({
+    isEditable: true,
+    isMovable: true,
+    isDeletable: true,
+    classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+  }),
+});
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const route = useRoute();
 const { openDrawerWithView } = useSiteConfiguration();

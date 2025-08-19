@@ -160,8 +160,8 @@ const getBlockActions = (block: Block) => {
     return {
       isMovable: false,
       isDeletable: false,
-    }
+    };
   }
   return undefined;
-}
+};
 </script>

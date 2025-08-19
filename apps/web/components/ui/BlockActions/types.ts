@@ -5,11 +5,10 @@ type BlockActionOptions = {
   isMovable?: boolean;
   isDeletable?: boolean;
   classes?: string[];
-}
+};
 
 export interface BlockActionsProps {
   index: number;
   block: Block;
   actions?: BlockActionOptions;
-
 }
