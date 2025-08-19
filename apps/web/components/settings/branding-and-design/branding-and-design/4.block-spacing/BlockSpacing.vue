@@ -9,11 +9,13 @@
         :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
         @click="updateSetting(blocksSpacingSize)"
       >
-        {{ blocksSpacingSize }}
+        {{ getEditorTranslation('block-spacing-size-' + blocksSpacingSize) }}
       </button>
     </div>
     <div class="px-4 py-3">
-      <span class="typography-text-xs text-neutral-700">Spacing between blocks: {{ spacingInPx }}px</span>
+      <span class="typography-text-xs text-neutral-700">
+        {{ getEditorTranslation('spacing-between-blocks') }}: {{ spacingInPx }}px
+      </span>
     </div>
   </div>
 </template>
@@ -48,3 +50,22 @@ const spacingInPx = computed(() => {
   return remValue * 16;
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "block-spacing-size-s": "s",
+    "block-spacing-size-m": "m",
+    "block-spacing-size-l": "l",
+    "block-spacing-size-xl": "xl",
+    "spacing-between-blocks": "Spacing between blocks"
+  },
+  "de": {
+    "block-spacing-size-s": "s",
+    "block-spacing-size-m": "m",
+    "block-spacing-size-l": "l",
+    "block-spacing-size-xl": "xl",
+    "spacing-between-blocks": "Spacing between blocks"
+  }
+}
+</i18n>

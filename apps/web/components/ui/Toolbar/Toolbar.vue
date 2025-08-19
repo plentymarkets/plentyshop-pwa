@@ -18,7 +18,7 @@
         >
           <template v-if="disableActions">
             <SfIconVisibility class="mr-[5px] md:mr-[10px]" />
-            Preview
+            {{ getEditorTranslation('preview') }}
           </template>
           <template v-else>
             <SfIconBase size="xs" viewBox="0 0 18 18" class="mr-[5px] md:mr-[10px] fill-primary-900 cursor-pointer">
@@ -26,7 +26,7 @@
                 <path :d="editPath" fill="black" />
               </svg>
             </SfIconBase>
-            Edit
+            {{ getEditorTranslation('edit') }}
           </template>
         </button>
         <button
@@ -46,7 +46,7 @@
               </svg>
             </SfIconBase>
           </template>
-          Save changes
+          {{ getEditorTranslation('save-changes') }}
         </button>
       </div>
     </div>
@@ -87,3 +87,18 @@ watch(
   { deep: true },
 );
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "save-changes": "Save changes",
+    "preview": "Preview",
+    "edit": "Edit"
+  },
+  "de": {
+    "save-changes": "Save changes",
+    "preview": "Preview",
+    "edit": "Edit"
+  }
+}
+</i18n>

@@ -1,8 +1,8 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Second sorting option</UiFormLabel>
-      <SfTooltip label="Second sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
@@ -11,12 +11,12 @@
       v-model="recommendedSecondSortingOption"
       data-testid="available-sorting-options"
       :options="sortingOptions"
-      placeholder="Select default option"
+      :placeholder="getEditorTranslation('placeholder')"
       label="label"
       track-by="value"
       class="cursor-pointer"
       select-label=""
-      deselect-label="Selected"
+      :deselect-label="getEditorTranslation('deselect-label')"
       :allow-empty="true"
     />
   </div>
@@ -42,3 +42,20 @@ const recommendedSecondSortingOption = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Second sorting option",
+    "tooltip": "Second sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  },
+  "de": {
+    "label": "Second sorting option",
+    "tooltip": "Second sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  }
+}
+</i18n>
