@@ -19,6 +19,7 @@
         :dimensions="imageDimensions[type]"
         :show-tooltip="true"
         @select="openUploader(type)"
+        @update="handleImageAddWrapper"
         @delete="deleteImage(uiImageTextBlock, type)"
       />
     </div>
@@ -136,33 +137,14 @@
       </div>
     </fieldset>
   </UiAccordionItem>
-  <!-- <UiImageSelectorModal
-    :open="isUploaderOpen"
-    :image-type="selectedImageType"
-    :current-image="uiImageTextBlock[selectedImageType as ImageType]"
-    @close="closeUploader"
-    @add="handleImageAdd"
-  /> -->
 </template>
 
 <script setup lang="ts">
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
-type ImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
-
 const runtimeConfig = useRuntimeConfig();
-const {
-  placeholderImg,
-  labels,
-  imageDimensions,
-  imageTypes,
-  deleteImage,
-  isUploaderOpen,
-  openUploader,
-  closeUploader,
-  selectedImageType,
-} = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage, openUploader } = usePickerHelper();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
@@ -174,12 +156,12 @@ const uiImageTextBlock = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
 );
 
-const imageGroupOpen = ref(false);
-
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
   const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
   handleImageAdd({ image, type });
 };
+
+const imageGroupOpen = ref(false);
 </script>
 
 <i18n lang="json">

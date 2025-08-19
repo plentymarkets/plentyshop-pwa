@@ -476,17 +476,7 @@ const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const {
-  placeholderImg,
-  labels,
-  imageDimensions,
-  imageTypes,
-  deleteImage,
-  isUploaderOpen,
-  openUploader,
-  closeUploader,
-  selectedImageType,
-} = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage, openUploader } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -510,13 +500,6 @@ const clampBrightness = (event: Event, type: string) => {
     banner.value.content.text.bgopacity = clamp(nextValue, 0, 1);
   }
 };
-
-const handleImageAddBanner = ({ image, type }: { image: string; type: string }) => {
-  const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
-  handleImageAdd({ image, type });
-};
-
-type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 </script>
 
 <style scoped>

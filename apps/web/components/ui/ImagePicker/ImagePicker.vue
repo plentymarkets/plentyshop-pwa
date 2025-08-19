@@ -99,7 +99,6 @@ function handleAdd({ image }: { image: string; name: string }) {
   emit('update:image', { image, type: props.type });
   closeModal();
 }
-
 function deleteImage() {
   internalImage.value = props.placeholder;
   emit('update:image', { image: props.placeholder, type: props.type });
