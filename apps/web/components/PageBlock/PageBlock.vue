@@ -103,7 +103,7 @@ const props = defineProps<Props>();
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const { visiblePlaceholder, togglePlaceholder, isDragging } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, isDragging, getBlockDepth } = useBlockManager();
 const attrs = useAttrs();
 
 const blockSize = computed(() => getBlockSize());
@@ -153,5 +153,7 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   openDrawerWithView('blocksList');
 };
 
-const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
+const isRootNonFooter = computed(
+  () => props.root && getBlockDepth(props.block.meta.uuid) && props.block.name !== 'Footer'
+);
 </script>
