@@ -49,12 +49,12 @@
         </SfIconBase>
       </button>
     </SfTooltip>
+
     <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
 
     <div class="flex flex-col">
-      <SfTooltip :label="positionLabel" placement="left" :show-arrow="true">
+      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="left" :show-arrow="true">
         <button
-          v-if="props.actions.isMovable"
           class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
           data-testid="move-up-button"
           aria-label="move up button"
@@ -65,9 +65,8 @@
           <SfIconExpandLess />
         </button>
       </SfTooltip>
-      <SfTooltip :label="positionLabel" placement="bottom" :show-arrow="true">
+      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
         <button
-          v-if="props.actions.isMovable"
           class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
           data-testid="move-down-button"
           aria-label="move down button"
@@ -81,19 +80,20 @@
     </div>
 
     <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
-    <SfTooltip :label="positionLabel" placement="bottom" :show-arrow="true">
+
+    <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
       <button
-        v-if="props.actions.isMovable"
         class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
         aria-label="Drag to reorder block"
       >
         <NuxtImg width="18" height="18" :src="dragIcon" />
       </button>
     </SfTooltip>
+
     <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
-    <SfTooltip :label="deleteLabel" placement="bottom" :show-arrow="true">
+
+    <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="bottom" :show-arrow="true">
       <button
-        v-if="props.actions.isDeletable"
         class="text-black hover:bg-gray-100 p-1 rounded no-drag"
         aria-label="delete block button"
         data-testid="delete-block-button"
