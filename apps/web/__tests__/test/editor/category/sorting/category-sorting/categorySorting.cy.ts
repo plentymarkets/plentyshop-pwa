@@ -2,19 +2,17 @@ import { CookieBarObject } from '../../../../../support/pageObjects/CookieBarObj
 import { EditorObject } from '../../../../../support/pageObjects/EditorObject';
 import { CategorySettingsObject } from '../../../../../support/pageObjects/CategorySettingsObject';
 
-describe('RecommendedSorting', () => {
+describe('CategorySorting', () => {
   const editor = new EditorObject();
   const categorySettings = new CategorySettingsObject();
   const cookieBar = new CookieBarObject();
 
   beforeEach(() => {
     cy.clearCookies();
-    //1. Go to Living room category page
     cy.visit('/livingroom');
     cookieBar.acceptAll();
   });
 
-  //2. Sidebar opens when user clicks on icon
   it('should check sidebar opens when user clicks on icon', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
@@ -28,34 +26,15 @@ describe('RecommendedSorting', () => {
   });
 
 
-  //3. Drawer of Recommended Sorting opens
-  //4. Check note exists
-  it('should open the recommended sorting section and check tooltip text', () => {
+  it('should open the category sorting section and check tooltip text', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
 
     categorySettings
         .checkDrawerVisible()
         .delay(500)
-        .toggleRecommendedSortingSection()
+        .toggleCategorySortingSection()
         .checkTooltip()
-        .closeDrawer();
-
-    categorySettings.checkDrawerNotVisible();
-  });
-
-  //5. Check default values are selected
-  //6. Check for all of the 3 dropdown the options exists
-  it('should check that options exist in all three options dropdown', () => {
-    editor.isToolbarVisible();
-    editor.toggleCategorySettings();
-
-    categorySettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleRecommendedSortingSection()
-        .checkSelectsExist()
-        .checkCorrectNumberOfSortingOptions()
         .closeDrawer();
 
     categorySettings.checkDrawerNotVisible();

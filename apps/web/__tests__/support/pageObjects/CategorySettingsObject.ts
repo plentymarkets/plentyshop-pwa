@@ -12,6 +12,11 @@ export class CategorySettingsObject extends PageObject {
         return this;
     }
 
+    toggleCategorySortingSection() {
+        this.recommendedSortingSection.should('be.visible').click();
+        return this;
+    }
+
     checkSelectsExist() {
         this.recommendedSortingSelect('recommended-first-sorting-select').should('exist').as('firstSorting');
         this.recommendedSortingSelect('recommended-second-sorting-select').should('exist').as('secondSorting');
@@ -50,6 +55,10 @@ export class CategorySettingsObject extends PageObject {
 
     get recommendedSortingSection() {
         return cy.getByTestId('recommended-sorting-section');
+    }
+
+    get categorySortingSection() {
+        return cy.getByTestId('category-sorting-section');
     }
 
     recommendedSortingSelect(sortingSelect) {

@@ -10,7 +10,7 @@ describe('ItemBundles', () => {
 
   beforeEach(() => {
     cy.clearCookies();
-    cy.visitAndHydrate(paths.home);
+    cy.visit('/livingroom');
     cookieBar.acceptAll();
   });
 
