@@ -13,8 +13,8 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('site-settings-drawer');
   }
 
-  get brandingAndDesign() {
-    return cy.getByTestId('site-settings-sub-category-branding-and-design');
+  get designSubcategory() {
+    return cy.getByTestId('site-settings-sub-category-design');
   }
 
   get fontSection() {
@@ -91,8 +91,8 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  toggleBrandingAndDesign() {
-    this.brandingAndDesign.should('be.visible').click();
+  openDesignSubcategory() {
+    this.designSubcategory.should('be.visible').click();
     return this;
   }
 
