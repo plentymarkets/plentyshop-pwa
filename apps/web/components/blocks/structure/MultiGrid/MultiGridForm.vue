@@ -23,8 +23,6 @@ const multiGridStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as MultiGridProps,
 );
 
-console.log('multiGridStructure', multiGridStructure.value);
-
 const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
   string,
   () => Promise<{ default: unknown }>
