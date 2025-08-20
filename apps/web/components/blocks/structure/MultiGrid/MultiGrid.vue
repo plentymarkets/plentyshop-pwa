@@ -4,15 +4,11 @@
     class="grid grid-cols-1 gap-4 items-center"
     :class="`lg:grid-cols-${configuration.columnWidths.length}`"
   >
-    <div
-      v-for="(col, index) in configuration.columnWidths"
-      :key="index"
-      :class="`col-${col}`"
-    >
+    <div v-for="(col, index) in configuration.columnWidths" :key="index" :class="`col-${col}`">
       <component
-        :is="getBlockComponent(content?.[index]?.name)"
-        v-if="content?.[index] && getBlockComponent(content[index].name)"
-        v-bind="content[index]"
+        :is="getBlockComponent(alignedContent[index]?.name)"
+        v-if="alignedContent[index] && getBlockComponent(alignedContent[index].name)"
+        v-bind="alignedContent[index]"
       />
       <EmptyBlock v-else />
     </div>
@@ -21,47 +17,57 @@
 
 <script setup lang="ts">
 import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
-// import type { ImageTextProps } from '~/components/blocks/Image/types';
-// import type { TextCardProps } from '~/components/blocks/TextCard/types';
+import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
 
-// Currently the alignment is not working
-
-// const imageBlock = computed(() => (content.find((block) => block.name === 'Image') || {}) as ImageTextProps);
-// const textCardBlock = computed(() => (content.find((block) => block.name === 'TextCard') || {}) as TextCardProps);
-//
-// const swap = (arr: unknown[], from: number, to: number) => {
-//   arr.splice(from, 1, arr.splice(to, 1, arr[from])[0]);
-// };
-//
-// const alignment = computed(() => imageBlock?.value?.content?.imageAlignment || 'left');
-//
-// watch(
-//   alignment,
-//   () => {
-//     if (alignment.value === 'right' && content[0]?.name === 'Image') {
-//       swap(content, 0, 1);
-//     }
-//     if (alignment.value === 'left' && content[0]?.name !== 'Image') {
-//       swap(content, 0, 1);
-//     }
-//   },
-//   { immediate: true },
-// );
-
-// Auto-discover all block components (not forms)
 const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
   string,
   () => Promise<{ default: unknown }>
 >;
 
-// Dynamic block component resolver
 const getBlockComponent = (blockName: string) => {
   if (!blockName) return null;
-  // Exclude *Form.vue files
   const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
   const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
   return matched ? defineAsyncComponent(modules[matched]) : null;
 };
+
+type AlignableBlock = Block & {
+  content?: {
+    imageAlignment?: string;
+    alignment?: string;
+    [key: string]: unknown;
+  };
+};
+
+const alignBlock = computed<AlignableBlock | undefined>(
+  () =>
+    content.find(
+      (block: Block) =>
+        typeof block.content === 'object' &&
+        block.content !== null &&
+        ('imageAlignment' in block.content || 'alignment' in block.content),
+    ) as AlignableBlock | undefined,
+);
+
+const alignment = computed<string>(
+  () => alignBlock.value?.content?.imageAlignment ?? alignBlock.value?.content?.alignment ?? 'left',
+);
+
+const alignedContent = computed<AlignableBlock[]>(() => {
+  if (!alignBlock.value || content.length < 2) return content as AlignableBlock[];
+  if (alignment.value === 'right' && content[0] === alignBlock.value) {
+    const swapped = [...content] as AlignableBlock[];
+    [swapped[0], swapped[1]] = [swapped[1], swapped[0]];
+    return swapped;
+  }
+  if (alignment.value === 'left' && content[0] !== alignBlock.value) {
+    const swapped = [...content] as AlignableBlock[];
+    const idx = swapped.indexOf(alignBlock.value);
+    [swapped[0], swapped[idx]] = [swapped[idx], swapped[0]];
+    return swapped;
+  }
+  return content as AlignableBlock[];
+});
 </script>
