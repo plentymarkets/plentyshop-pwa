@@ -151,7 +151,5 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   openDrawerWithView('blocksList');
 };
 
-const isRootNonFooter = computed(
-  () => props.root && props.block.name !== 'Footer',
-);
+const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
 </script>
