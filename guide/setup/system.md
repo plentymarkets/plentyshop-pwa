@@ -1,7 +1,7 @@
 # PlentyONE system setup
 
 ::: info
-To establish a local connection between the shop and your plentysystem system, kindly reach out to us via the [forum](https://forum.plentymarkets.com/t/plentyshop-pwa-release/736055). Your PID is necessary for assistance.
+To establish a local connection between the shop and your PlentyONE system, kindly reach out to us via the [help desk](help.plentyone.com). Your PID is necessary for assistance.
 :::
 
 To run this project, you need a PlentyONE system. Get started on our website and view our [pricing options](https://www.plentyone.com/pricing).
