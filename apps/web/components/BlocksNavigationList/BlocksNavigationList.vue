@@ -1,18 +1,20 @@
 <template>
-  <div class="bg-[#F1F3F5] overflow-y-auto max-h-[100vh] pt-5 sticky top-0 px-2">
-    <div class="overflow-y-auto">
-      <div v-for="(category, categoryIndex) in blocksLists" :key="categoryIndex">
-        <div :class="['mb-3 relative', 'md:text-center', 'lg:left-[15%] lg:text-left']">
-          {{ category.title }}
-        </div>
-        <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="relative mb-10">
-          <NuxtImg :src="variation.image" class="block mx-auto" :alt="variation.title" width="253" height="120" />
+  <UiAccordionItem
+    v-for="(category, categoryIndex) in blocksLists"
+    :key="categoryIndex"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :data-testid="'block-category-' + categoryIndex"
+  >
+    <template #summary>
+      <h2>{{ category.title }}</h2>
+    </template>
+    <div class="px-4 py-4 mb-4">
+      <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="mb-10">
+        <div class="relative w-fit mx-auto">
+          <NuxtImg :src="variation.image" class="block" :alt="variation.title" width="253" height="120" />
           <button
-            :class="[
-              'transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md cursor-pointer',
-              'md:block md:mx-auto',
-              'lg:right-[15%] lg:absolute',
-            ]"
+            class="absolute right-[-5px] top-[100%] -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md cursor-pointer"
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               drawerOpen = false;
@@ -24,12 +26,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
-
 const { blocksLists, getBlocksLists } = useBlockManager();
 getBlocksLists();
 
