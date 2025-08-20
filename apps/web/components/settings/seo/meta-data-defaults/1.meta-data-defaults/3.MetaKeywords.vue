@@ -8,9 +8,9 @@
     </div>
     <label>
       <SfInput
-        v-model="metaTitle"
+        v-model="metaKeywords"
         type="text"
-        data-testid="seo-title"
+        data-testid="seo-keywords"
         :placeholder="getEditorTranslation('placeholder')"
       />
     </label>
@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('metaTitle');
+const { updateSetting, getSetting } = useSiteSettings('metaKeywords');
 
-const metaTitle = computed({
+const metaKeywords = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
@@ -30,14 +30,14 @@ const metaTitle = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Title",
-    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop name). To update the shop name, open your Plenty system and go to Setup » Client » [Client name] » Settings.",
-    "placeholder": "Enter title"
+    "label": "Default meta keywords",
+    "tooltip": "List of relevant search terms, seperated by commas. Some search engines may use them to improve discoverability.",
+    "placeholder": "Enter keywords"
   },
   "de": {
-    "label": "Title",
-    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop name). To update the shop name, open your Plenty system and go to Setup » Client » [Client name] » Settings.",
-    "placeholder": "Enter title"
+    "label": "Default meta keywords",
+    "tooltip": "List of relevant search terms, seperated by commas. Some search engines may use them to improve discoverability.",
+    "placeholder": "Enter keywords"
   }
 }
 </i18n>
