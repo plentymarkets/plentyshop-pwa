@@ -18,7 +18,6 @@
           </label>
         </template>
       </SfInput>
-      <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('hint') }}</span>
     </label>
   </div>
 </template>
@@ -48,14 +47,12 @@ const headerBackgroundColor = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Background color",
-    "tooltip": "If set, this background color will take precedence over your defined primary color for the header.",
-    "hint": "Choose header background color"
+    "label": "Background colour",
+    "tooltip": "If set, this background colour takes priority over your defined primary colour for the header."
   },
   "de": {
-    "label": "Background color",
-    "tooltip": "If set, this background color will take precedence over your defined primary color for the header.",
-    "hint": "Choose header background color"
+    "label": "Background colour",
+    "tooltip": "If set, this background colour takes priority over your defined primary colour for the header."
   }
 }
 </i18n>
