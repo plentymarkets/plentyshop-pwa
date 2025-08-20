@@ -154,6 +154,6 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 
 const isRootNonFooter = computed(
-  () => props.root && getBlockDepth(props.block.meta.uuid) && props.block.name !== 'Footer',
+  () => props.root && props.block.name !== 'Footer',
 );
 </script>
