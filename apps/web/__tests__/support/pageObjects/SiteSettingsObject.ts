@@ -22,11 +22,11 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get colorSection() {
-    return cy.getByTestId('colors-section');
+    return cy.getByTestId('colours-section');
   }
 
   get blockSpacingSection() {
-    return cy.getByTestId('block-spacing-section');
+    return cy.getByTestId('spacing-section');
   }
 
   get fontInput() {

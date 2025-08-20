@@ -33,6 +33,7 @@ describe('SiteSettings', () => {
       .changeFont(font)
       .checkFontPreview(font)
       .checkSaveButtonEnabled()
+      .back()
       .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
@@ -51,6 +52,7 @@ describe('SiteSettings', () => {
       .changeColor(primaryColor, secondaryColor)
       .checkColorPreview(primaryColor)
       .checkSaveButtonEnabled()
+      .back()
       .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
@@ -69,6 +71,7 @@ describe('SiteSettings', () => {
       .changeBlockSpacing(blockSpacing)
       .checkBlockSpacingPreview(blockSpacingMargin)
       .checkSaveButtonEnabled()
+      .back()
       .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
