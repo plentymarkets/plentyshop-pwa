@@ -29,6 +29,10 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('block-spacing-section');
   }
 
+  get itemBundlesSection() {
+    return cy.getByTestId('item-bundles-section');
+  }
+
   get fontInput() {
     return cy.getByTestId('font-select');
   }
@@ -59,6 +63,10 @@ export class SiteSettingsObject extends PageObject {
 
   get blockSpacingButton() {
     return cy.getByTestId(`block-spacing-btn`);
+  }
+
+  get itemBundlesSelect() {
+    return cy.getByTestId('editor-bundleSettings-select');
   }
 
   back() {
@@ -111,6 +119,11 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
+  toggleItemBundlesSection() {
+    this.itemBundlesSection.should('be.visible').click();
+    return this;
+  }
+
   changeFont(fontColor: string) {
     this.fontInput.click().type(fontColor);
     cy.get('.multiselect__element').contains(fontColor).click();
@@ -140,6 +153,13 @@ export class SiteSettingsObject extends PageObject {
 
   checkBlockSpacingPreview(blockSpacingMargin: string) {
     this.block.first().should('have.attr', { 'margin-bottom': `${blockSpacingMargin}px` });
+    return this;
+  }
+
+  checkOptionsExist() {
+    this.itemBundlesSelect.select("Only list the components of the item bundle and replace the item bundle with the basic items in the order process").should('have.value', '0');
+    this.itemBundlesSelect.select("Only show item bundle without individual components and do not split the item bundle in the order process").should('have.value', '1');
+    this.itemBundlesSelect.select("List both the item bundle and its individual components").should('have.value', '2');
     return this;
   }
 }

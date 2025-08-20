@@ -5,7 +5,7 @@
     class="editor-button relative py-2 flex justify-center"
     :class="{ 'bg-editor-button text-white rounded-md': active }"
     aria-label="Open general settings drawer"
-    data-testid="open-general-settings-drawer"
+    data-testid="open-item-settings-drawer"
   >
     <SfIconSell v-if="active" class="text-white" />
     <SfIconSell v-else class="text-black" />

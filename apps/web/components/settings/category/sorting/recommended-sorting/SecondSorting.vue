@@ -9,7 +9,7 @@
 
     <Multiselect
       v-model="recommendedSecondSortingOption"
-      data-testid="available-sorting-options"
+      data-testid="recommended-second-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"

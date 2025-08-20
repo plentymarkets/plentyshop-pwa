@@ -87,6 +87,14 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('open-design-drawer');
   }
 
+  get itemSettingsButton() {
+    return cy.getByTestId('open-item-settings-drawer');
+  }
+
+  get categorySettingsButton() {
+    return cy.getByTestId('open-category-drawer');
+  }
+
   blockIsBanner(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('banner-image');
   }
@@ -112,6 +120,16 @@ export class EditorObject extends PageObject {
 
   toggleDesignSettings() {
     this.designSettingsButton.should('be.visible').click();
+    return this;
+  }
+
+  toggleItemSettings() {
+    this.itemSettingsButton.should('be.visible').click();
+    return this;
+  }
+
+  toggleCategorySettings() {
+    this.categorySettingsButton.should('be.visible').click();
     return this;
   }
 
