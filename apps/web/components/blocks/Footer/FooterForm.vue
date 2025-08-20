@@ -369,11 +369,11 @@ const footerColors = ref(false);
     "footnotes-align-option-center-label": "Center",
     "footnotes-align-option-right-label": "Right",
 
-    "colors-group-label": "Color",
-    "colors-text-label": "Text color",
-    "colors-background-label": "Background color",
-    "colors-footnote-text-label": "Footnote Text color",
-    "colors-footnote-background-label": "Footnote Background color"
+    "colors-group-label": "Colour",
+    "colors-text-label": "Text colour",
+    "colors-background-label": "Background colour",
+    "colors-footnote-text-label": "Footnote Text colour",
+    "colors-footnote-background-label": "Footnote Background colour"
   },
   "de": {
     "column-1-group-label": "First column",
@@ -402,11 +402,11 @@ const footerColors = ref(false);
     "footnotes-align-option-center-label": "Center",
     "footnotes-align-option-right-label": "Right",
 
-    "colors-group-label": "Color",
-    "colors-text-label": "Text color",
+    "colors-group-label": "Colour",
+    "colors-text-label": "Text colour",
     "colors-background-label": "Background color",
-    "colors-footnote-text-label": "Footnote Text color",
-    "colors-footnote-background-label": "Footnote Background color"
+    "colors-footnote-text-label": "Footnote Text colour",
+    "colors-footnote-background-label": "Footnote Background colour"
   }
 }
 </i18n>

@@ -9,10 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Branding & Design"
+    "label": "Branding & design"
   },
   "de": {
-    "label": "Branding & Design"
+    "label": "Branding & design"
   }
 }
 </i18n>

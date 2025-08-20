@@ -329,7 +329,7 @@ input[type='number'] {
     "drag-reorder-aria": "Drag to reorder slide",
 
     "controls-group-label": "Controls",
-    "controls-color-label": "Slider Controls Color"
+    "controls-color-label": "Slider Controls Colour"
   },
   "de": {
     "slides-group-label": "Slides",
@@ -338,7 +338,7 @@ input[type='number'] {
     "drag-reorder-aria": "Drag to reorder slide",
 
     "controls-group-label": "Controls",
-    "controls-color-label": "Slider Controls Color"
+    "controls-color-label": "Slider Controls Colour"
   }
 }
 </i18n>

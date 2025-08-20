@@ -56,15 +56,15 @@ img[alt='Logo'] {
 {
   "en": {
     "label": "Logo",
-    "tooltip": "The logo is displayed in the header of the onlineshop. For the best performance, you should choose an image file in one of the following formats: SVG, AVIF or WebP.",
+    "tooltip": "The logo is displayed in the header of the shop. For the best performance you should choose an image in one of the following formats: .svg, .avif or .webp.",
     "description": "150×40 px (SVG) or max 180×80 px",
-    "hint": "If you choose SVG, the size must be 150 × 40 px. For other formats, the maximum size is 180 px (width) by 80 px (height)."
+    "hint": "If you choose SVG, the size must be 150 x 40 px. For other formats, the maximum size is 180 px (width) by 80 px (height)."
   },
   "de": {
     "label": "Logo",
-    "tooltip": "The logo is displayed in the header of the onlineshop. For the best performance, you should choose an image file in one of the following formats: SVG, AVIF or WebP.",
+    "tooltip": "The logo is displayed in the header of the shop. For the best performance you should choose an image in one of the following formats: .svg, .avif or .webp.",
     "description": "150×40 px (SVG) or max 180×80 px",
-    "hint": "If you choose SVG, the size must be 150 × 40 px. For other formats, the maximum size is 180 px (width) by 80 px (height)."
+    "hint": "If you choose SVG, the size must be 150 x 40 px. For other formats, the maximum size is 180 px (width) by 80 px (height)."
   }
 }
 </i18n>
