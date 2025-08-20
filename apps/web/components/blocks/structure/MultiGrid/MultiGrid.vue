@@ -2,19 +2,19 @@
   <div
     data-testid="multi-grid-structure"
     class="grid grid-cols-1 gap-4 items-center"
-    :class="`lg:grid-cols-${configuration.columnWidths.length}`"
+    :class="`lg:grid-cols-${multiGridProps.configuration.columnWidths.length}`"
   >
     <div
-      v-for="(col, index) in configuration.columnWidths"
+      v-for="(col, index) in multiGridProps.configuration.columnWidths"
       :key="index"
       :class="`col-${col}`"
     >
       <component
-        :is="getBlockComponent(content?.[index]?.name)"
-        v-if="content?.[index] && getBlockComponent(content[index].name)"
-        v-bind="content[index]"
+        :is="getBlockComponent(multiGridProps.content?.[index]?.name)"
+        v-if="multiGridProps.content?.[index] && getBlockComponent(multiGridProps.content[index].name)"
+        v-bind="multiGridProps.content[index]"
       />
-      <EmptyBlock v-else />
+      <EmptyBlock v-else :parent="multiGridProps" :column-uuid="multiGridProps.content[index].meta.uuid" />
     </div>
   </div>
 </template>
@@ -24,7 +24,8 @@ import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/typ
 // import type { ImageTextProps } from '~/components/blocks/Image/types';
 // import type { TextCardProps } from '~/components/blocks/TextCard/types';
 
-const { content, configuration } = defineProps<MultiGridProps>();
+const multiGridProps = defineProps<MultiGridProps>();
+// console.log('MultiGrid props:', { type, name, content, configuration });
 
 // Currently the alignment is not working
 

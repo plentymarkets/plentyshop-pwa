@@ -33,6 +33,12 @@ export const useBlockManager = () => {
   const clickedBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
+  const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
+
+  const updateMultigridColumnUuid = (uuid: string) => {
+    multigridColumnUuid.value = uuid;
+    console.log('Updating multigrid column uuid -> ', multigridColumnUuid);
+  }
 
   const getBlocksLists = async () => {
     try {
@@ -59,6 +65,8 @@ export const useBlockManager = () => {
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
+    console.log('Adding new block:', newBlock, category, variationIndex, targetUuid, position);
+
     const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
@@ -68,6 +76,12 @@ export const useBlockManager = () => {
 
     const copiedData = JSON.parse(JSON.stringify(data.value));
     const parentInfo = findBlockParent(copiedData, targetUuid);
+    // let parentInfo = null;
+    // if (newBlock.name === 'MultiGrid') {
+    //   parentInfo = findBlockParent(copiedData, newBlock.content[0].meta.uuid);
+    // } else {
+    //   parentInfo = findBlockParent(copiedData, targetUuid);
+    // }
 
     if (!parentInfo) {
       console.error('block not found');
@@ -207,6 +221,8 @@ export const useBlockManager = () => {
     isClicked,
     clickedBlockIndex,
     isTablet,
+    multigridColumnUuid,
+    updateMultigridColumnUuid,
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,

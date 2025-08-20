@@ -18,7 +18,7 @@
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               drawerOpen = false;
-              addNewBlock(category.category, variationIndex, visiblePlaceholder.uuid, visiblePlaceholder.position);
+              addNewBlock(category.category, variationIndex, blockUuid, visiblePlaceholder.position);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -34,6 +34,16 @@ import { SfIconAdd } from '@storefront-ui/vue';
 const { blocksLists, getBlocksLists } = useBlockManager();
 getBlocksLists();
 
-const { addNewBlock, visiblePlaceholder } = useBlockManager();
+const { addNewBlock, visiblePlaceholder, multigridColumnUuid } = useBlockManager();
+// console.log('visiblePlaceholder', visiblePlaceholder);
 const { drawerOpen } = useSiteConfiguration();
+const blockUuid = computed(() => {
+  console.log('blockUuid computed:', multigridColumnUuid.value, visiblePlaceholder.value.uuid);
+  return multigridColumnUuid.value || visiblePlaceholder.value.uuid;
+});
+
+// Watch multigridColumnUuid to update blockUuid when it changes
+watch(multigridColumnUuid, (newValue) => {
+  console.log('multigridColumnUuid changed:', newValue);
+}, { immediate: true });
 </script>
