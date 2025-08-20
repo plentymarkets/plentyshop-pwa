@@ -38,7 +38,7 @@ describe('RecommendedSorting', () => {
         .checkDrawerVisible()
         .delay(500)
         .toggleRecommendedSortingSection()
-        .checkTooltip()
+        .checkTooltip('first-option-tooltip', 'First sorting option')
         .closeDrawer();
 
     categorySettings.checkDrawerNotVisible();

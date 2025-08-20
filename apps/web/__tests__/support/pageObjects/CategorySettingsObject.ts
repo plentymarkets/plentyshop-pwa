@@ -13,14 +13,21 @@ export class CategorySettingsObject extends PageObject {
     }
 
     toggleCategorySortingSection() {
-        this.recommendedSortingSection.should('be.visible').click();
+        this.categorySortingSection.should('be.visible').click();
         return this;
     }
 
     checkSelectsExist() {
-        this.recommendedSortingSelect('recommended-first-sorting-select').should('exist').as('firstSorting');
-        this.recommendedSortingSelect('recommended-second-sorting-select').should('exist').as('secondSorting');
-        this.recommendedSortingSelect('recommended-third-sorting-select').should('exist').as('thirdSorting');
+        this.sortingSelect('recommended-first-sorting-select').should('exist').as('firstSorting');
+        this.sortingSelect('recommended-second-sorting-select').should('exist').as('secondSorting');
+        this.sortingSelect('recommended-third-sorting-select').should('exist').as('thirdSorting');
+
+        return this;
+    }
+
+    checkCategorySelectsExist() {
+        this.sortingSelect('available-sorting-select').should('exist').as('availableSorting');
+        this.sortingSelect('default-sorting-select').should('exist').as('defaultSorting');
 
         return this;
     }
@@ -46,9 +53,9 @@ export class CategorySettingsObject extends PageObject {
         return this;
     }
 
-    checkTooltip() {
-        cy.getByTestId('first-option-tooltip').trigger('mouseover');
-        cy.contains('First sorting option').should('be.visible');
+    checkTooltip(tooltip, textToContain ) {
+        cy.getByTestId(tooltip).trigger('mouseenter');
+        cy.contains(textToContain).should('be.visible');
         return this;
     }
 
@@ -61,7 +68,7 @@ export class CategorySettingsObject extends PageObject {
         return cy.getByTestId('category-sorting-section');
     }
 
-    recommendedSortingSelect(sortingSelect) {
+    sortingSelect(sortingSelect) {
         return cy.getByTestId(sortingSelect);
     }
 

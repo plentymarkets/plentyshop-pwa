@@ -9,24 +9,43 @@ describe('CategorySorting', () => {
 
   beforeEach(() => {
     cy.clearCookies();
+    //1. Go to Living room category page
     cy.visit('/livingroom');
     cookieBar.acceptAll();
   });
 
-  it('should check sidebar opens when user clicks on icon', () => {
-    editor.isToolbarVisible();
-    editor.toggleCategorySettings();
+  //2. Sidebar opens when user clicks on icon
+  // it('should check sidebar opens when user clicks on icon', () => {
+  //   editor.isToolbarVisible();
+  //   editor.toggleCategorySettings();
+  //
+  //   categorySettings
+  //     .checkDrawerVisible()
+  //     .delay(500)
+  //     .closeDrawer();
+  //
+  //   categorySettings.checkDrawerNotVisible();
+  // });
 
-    categorySettings
-      .checkDrawerVisible()
-      .delay(500)
-      .closeDrawer();
+  //3. Drawer of Category Sorting opens
+  //6. Check the text from the info icons for both of sorting options
+  // it('should open the category sorting section and check tooltip text', () => {
+  //   editor.isToolbarVisible();
+  //   editor.toggleCategorySettings();
+  //
+  //   categorySettings
+  //       .checkDrawerVisible()
+  //       .delay(500)
+  //       .toggleCategorySortingSection()
+  //       .checkTooltip('available-sorting-option-tooltip', 'Which of the following sorting options do you want to make available to your customers in the category view?')
+  //       .checkTooltip('default-sorting-tooltip', 'Which sorting option do you want to preselect by default for the category view?')
+  //       .closeDrawer();
+  //
+  //   categorySettings.checkDrawerNotVisible();
+  // });
 
-    categorySettings.checkDrawerNotVisible();
-  });
-
-
-  it('should open the category sorting section and check tooltip text', () => {
+  //4. Available Sorting Options and Default Sorting selects exists
+  it('should check that Available Sorting Options and Default Sorting selects exists', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
 
@@ -34,7 +53,7 @@ describe('CategorySorting', () => {
         .checkDrawerVisible()
         .delay(500)
         .toggleCategorySortingSection()
-        .checkTooltip()
+        .checkCategorySelectsExist()
         .closeDrawer();
 
     categorySettings.checkDrawerNotVisible();

@@ -2,14 +2,20 @@
   <div class="mt-4">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <SfTooltip
+          :label="getEditorTranslation('tooltip')"
+          :placement="'top'"
+          :show-arrow="true"
+          class="ml-2 z-10"
+          data-testid="default-sorting-tooltip"
+      >
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
 
     <Multiselect
       v-model="defaultSortingOption"
-      data-testid="available-sorting-options"
+      data-testid="default-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"
