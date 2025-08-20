@@ -19,9 +19,6 @@
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
     />
-    <span class="typography-text-xs text-neutral-700">
-      {{ getEditorTranslation('hint') }}
-    </span>
   </div>
 </template>
 
@@ -58,17 +55,15 @@ const font = computed({
 {
   "en": {
     "label": "Global fonts",
-    "tooltip": "The shop supports Google Fonts. Fonts are downloaded during the build process. This means the shop does not connect to Google while the shop is running.",
+    "tooltip": "Choose one Google Font for all texts. Fonts are served locally to ensure privacy compliance, with no live requests to Google.",
     "placeholder": "Select a font",
-    "deselect-label": "Selected",
-    "hint": "Choose one Google font for all texts"
+    "deselect-label": "Selected"
   },
   "de": {
     "label": "Global fonts",
-    "tooltip": "The shop supports Google Fonts. Fonts are downloaded during the build process. This means the shop does not connect to Google while the shop is running.",
+    "tooltip": "Choose one Google Font for all texts. Fonts are served locally to ensure privacy compliance, with no live requests to Google.",
     "placeholder": "Select a font",
-    "deselect-label": "Selected",
-    "hint": "Choose one Google font for all texts"
+    "deselect-label": "Selected"
   }
 }
 </i18n>
