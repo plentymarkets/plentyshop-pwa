@@ -9,7 +9,7 @@
       <h2>{{ getEditorTranslation('images-group-label') }}</h2>
     </template>
 
-    <div v-if="runtimeConfig.public.isDev" class="images">
+    <div class="images">
       <UiImagePicker
         v-for="type in imageTypes"
         :key="type"
@@ -22,77 +22,6 @@
         @add="(payload) => handleImageAddWrapper(payload)"
         @delete="deleteImage(uiImageTextBlock, type)"
       />
-    </div>
-    <div v-else class="images">
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('image-xl-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="uiImageTextBlock.wideScreen" type="text" data-testid="wide-screen-input">
-            <template #suffix>
-              <label for="image-tablet" class="rounded-lg cursor-pointer">
-                <input id="image-tablet" v-model="uiImageTextBlock.wideScreen" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('image-xl-hint') }}</span>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('image-l-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="uiImageTextBlock.desktop" type="text" data-testid="large-screen-input">
-            <template #suffix>
-              <label for="image-tablet" class="rounded-lg cursor-pointer">
-                <input id="image-tablet" v-model="uiImageTextBlock.desktop" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('image-l-hint') }}</span>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('image-m-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="uiImageTextBlock.tablet" type="text" data-testid="medium-screen-input">
-            <template #suffix>
-              <label for="image-tablet" class="rounded-lg cursor-pointer">
-                <input id="image-tablet" v-model="uiImageTextBlock.tablet" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('image-m-hint') }}</span>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('image-s-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="uiImageTextBlock.mobile" type="text" data-testid="small-screen-input">
-            <template #suffix>
-              <label for="image-mobile" class="rounded-lg cursor-pointer">
-                <input
-                  id="image-mobile"
-                  v-model="uiImageTextBlock.mobile"
-                  data-testid="small-screen-input"
-                  type="text"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-          <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('image-s-hint') }}</span>
-        </label>
-      </div>
     </div>
     <div class="py-2">
       <div class="flex justify-between mb-2">
@@ -143,7 +72,6 @@
 import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
-const runtimeConfig = useRuntimeConfig();
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const { data } = useCategoryTemplate();

@@ -7,7 +7,6 @@
       </SfTooltip>
     </div>
     <UiImagePicker
-      v-if="runtimeConfig.public.isDev"
       :label="getEditorTranslation('label')"
       :image="headerLogo"
       :placeholder="placeholderImg"
@@ -18,7 +17,6 @@
       @add="handleImageAdd"
       @delete="deleteLogo()"
     />
-    <SfInput v-else v-model="headerLogo" placeholder="Enter Logo URL" type="text" />
 
     <span class="typography-text-xs text-neutral-700">
       {{ getEditorTranslation('hint') }}
@@ -27,10 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
+import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const { placeholderImg } = usePickerHelper();
-const runtimeConfig = useRuntimeConfig();
 
 const deleteLogo = () => {
   updateSetting(placeholderImg);
