@@ -549,9 +549,9 @@ input[type='number'] {
     "subtitle-placeholder": "SubTitle",
     "description-label": "Description",
     "description-placeholder": "Text that supports HTML formatting",
-    "text-color-label": "Text Color",
+    "text-color-label": "Text Colour",
     "textbox-background-label": "Textbox Background",
-    "textbox-color-label": "Textbox Color",
+    "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
@@ -604,9 +604,9 @@ input[type='number'] {
     "subtitle-placeholder": "SubTitle",
     "description-label": "Description",
     "description-placeholder": "Text that supports HTML formatting",
-    "text-color-label": "Text Color",
+    "text-color-label": "Text Colour",
     "textbox-background-label": "Textbox Background",
-    "textbox-color-label": "Textbox Color",
+    "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
     "textbox-align-x-label": "Textbox Alignment (x)",

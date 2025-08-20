@@ -18,7 +18,6 @@
           </label>
         </template>
       </SfInput>
-      <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('hint') }}</span>
     </label>
   </div>
 </template>
@@ -48,13 +47,13 @@ const secondaryColor = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Secondary color",
-    "tooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process.",
+    "label": "Secondary colour",
+    "tooltip": "Choose a secondary colour to complement your main one. A palette of 10 shades will be generated and used for highlights and accent elements throughout the shop.",
     "hint": "Choose secondary color"
   },
   "de": {
-    "label": "Secondary color",
-    "tooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process.",
+    "label": "Secondary colour",
+    "tooltip": "Choose a secondary colour to complement your main one. A palette of 10 shades will be generated and used for highlights and accent elements throughout the shop.",
     "hint": "Choose secondary color"
   }
 }
