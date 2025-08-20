@@ -23,8 +23,10 @@ For the shop to run, you have to install plugins that provide additional REST ro
 Optionally, install additional plugins to add more payment or shipping providers to your shop.
 
 ::: details Available payment providers
-- [Cash in advance](https://marketplace.plentymarkets.com/prepayment_4758)
-- [Pay upon pickup](https://marketplace.plentymarkets.com/payuponpickup_4757)
+- [Cash in advance](https://knowledge.plentymarkets.com/en-gb/manual/main/payment/cash-in-advance.html)
+- [Pay upon pickup](https://knowledge.plentymarkets.com/en-gb/manual/main/payment/pay-upon-pickup.html)
+- [PayPal](https://knowledge.plentymarkets.com/en-gb/manual/main/payment/paypal.html)
+- [Mollie](https://knowledge.plentymarkets.com/en-gb/manual/main/payment/mollie.html)
 :::
 
 ::: details Available shipping providers
