@@ -1,5 +1,6 @@
 <template>
   <div class="py-2">
+    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
@@ -34,13 +35,15 @@ const ogImg = computed({
 {
   "en": {
     "label": "Image for OpenGraph",
-    "tooltip": "The Open Graph image is the preview thumbnail shown when your page is shared on social media.",
+    "description": "Set the title and image shown when your shop is shared on social media",
+    "tooltip": "The Open Graph image is the preview thumbnail shown when your shop is shared on social media.",
     "placeholder": "Enter URL of the image",
     "hint": "Optimal image dimensions: 1200 × 630 px (min. 600 × 315 px) for best display on social media."
   },
   "de": {
     "label": "Image for OpenGraph",
-    "tooltip": "The Open Graph image is the preview thumbnail shown when your page is shared on social media.",
+    "description": "Set the title and image shown when your shop is shared on social media",
+    "tooltip": "The Open Graph image is the preview thumbnail shown when your shop is shared on social media.",
     "placeholder": "Enter URL of the image",
     "hint": "Optimal image dimensions: 1200 × 630 px (min. 600 × 315 px) for best display on social media."
   }
