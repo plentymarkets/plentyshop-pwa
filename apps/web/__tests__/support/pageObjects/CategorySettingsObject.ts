@@ -32,6 +32,30 @@ export class CategorySettingsObject extends PageObject {
         return this;
     }
 
+
+    checkCategoryOptions() {
+        cy.get('@availableSorting').click();
+
+        cy.get('@availableSorting')
+            .find('.multiselect__element')
+            .each(($option, index) => {
+                if (index < 4) {
+                    cy.wrap($option).click();
+                    cy.get('@availableSorting').click();
+                }
+            });
+
+        const expectedOptionCount = 4;
+
+        cy.getByTestId('select-sort-by')
+            // 2. Find all the option children within the select element.
+            .find('option')
+            // 3. Assert that the number of options is 4.
+            .should('have.length', expectedOptionCount)
+
+        return this;
+    }
+
     checkCorrectNumberOfSortingOptions() {
         const expectedOptionCount = 25;
 
