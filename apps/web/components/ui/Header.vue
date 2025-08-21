@@ -174,7 +174,7 @@
       @change-forgot-password="isForgotPassword = true"
       @logged-in="navigateAfterAuth(true)"
     />
-    <ForgotPasswordComponent v-else-if="isForgotPassword" @change-view="isLogin = true, isForgotPassword = false" />
+    <ForgotPasswordComponent v-else-if="isForgotPassword" @change-view-login="isLogin = true, isForgotPassword = false" @change-view-register="isLogin = false, isForgotPassword = false"/>
     <Register v-else-if="!isLogin && !isForgotPassword" :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 

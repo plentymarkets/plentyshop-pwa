@@ -1,7 +1,12 @@
 <template>
-  <div class="text-lg font-medium text-center">{{ t('auth.resetPassword.heading') }}</div>
   <div class="flex flex-col items-center justify-center my-1">
     <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="sendMail">
+      <div class="text-lg font-medium">
+        {{ t('auth.resetPassword.heading') }}
+      </div>
+      <p class="text-gray-700 text-sm mb-2">
+        {{ t('auth.resetPassword.subHeading') }}
+      </p>
       <label>
         <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput v-model="email" name="email" type="email" autocomplete="email" required />
@@ -13,12 +18,23 @@
           {{ t('auth.resetPassword.resetPassword') }}
         </span>
       </UiButton>
-      <UiButton type="reset" variant="secondary" :disabled="loading" data-testid="login-submit" @click="$emit('change-view')">
+      <UiButton type="reset" variant="secondary" :disabled="loading" data-testid="login-submit" @click="$emit('change-view-login')">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.resetPassword.backToLogin') }}
         </span>
       </UiButton>
+
+      <div class="text-sm text-center">
+        <span>{{ t('auth.login.createAccount') }}</span>
+        <SfLink
+          variant="primary"
+          class="ml-1 cursor-pointer underline"
+          @click="$emit('change-view-register')"
+        >
+          {{ t('auth.login.createAccountLinkLabel') }}
+        </SfLink>
+      </div>
     </form>
   </div>
 </template>
@@ -30,13 +46,13 @@ const { sendEmail, loading } = useResetPassword();
 const { send } = useNotification();
 const { t } = useI18n();
 
-const emits = defineEmits(['change-view']);
+const emits = defineEmits(['change-view-login', 'change-view-register']);
 
 const email = ref('');
 
 const sendMail = async () => {
   await sendEmail(email.value);
   send({ message: t('auth.login.success'), type: 'positive' });
-  emits('change-view');
+  emits('change-view-login');
 };
 </script>

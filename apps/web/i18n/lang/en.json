@@ -234,6 +234,7 @@
       "email": "Email",
       "emailSent": "Email sent",
       "heading": "Forgot password?",
+      "subHeading": "Don’t worry. We’ll send instructions on how to reset your password to your E-Mail",
       "info": "Enter the email address you used to sign up. We will send you a password reset link, that you’ll be able to use to set a new password for your account.",
       "thankYou": "Thank you, if there is an account registered with {0}, you should receive the password reset link in your inbox."
     },
