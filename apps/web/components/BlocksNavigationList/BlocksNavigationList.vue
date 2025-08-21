@@ -18,7 +18,7 @@
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               drawerOpen = false;
-              addNewBlock(category.category, variationIndex, visiblePlaceholder.uuid, visiblePlaceholder.position);
+              addNewBlock(category.category, variationIndex, targetUuid, visiblePlaceholder.position);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -36,4 +36,7 @@ getBlocksLists();
 
 const { addNewBlock, visiblePlaceholder } = useBlockManager();
 const { drawerOpen } = useSiteConfiguration();
+const { multigridColumnUuid } = useBlockManager();
+
+const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
 </script>
