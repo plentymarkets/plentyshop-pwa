@@ -159,7 +159,7 @@ const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });
 
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
