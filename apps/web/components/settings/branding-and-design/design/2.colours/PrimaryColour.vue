@@ -18,7 +18,6 @@
           </label>
         </template>
       </SfInput>
-      <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('hint') }}</span>
     </label>
   </div>
 </template>
@@ -48,13 +47,13 @@ const primaryColor = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Primary color",
-    "tooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process.",
+    "label": "Primary colour",
+    "tooltip": "Select the main colour for the shop. We’ll generate 10 matching shades and apply them to key elements to define your shop's overall look and feel.",
     "hint": "Choose primary color"
   },
   "de": {
-    "label": "Primary color",
-    "tooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process.",
+    "label": "Primary colour",
+    "tooltip": "Select the main colour for the shop. We’ll generate 10 matching shades and apply them to key elements to define your shop's overall look and feel.",
     "hint": "Choose primary color"
   }
 }

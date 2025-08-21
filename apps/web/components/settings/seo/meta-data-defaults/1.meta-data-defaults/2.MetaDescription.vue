@@ -31,13 +31,13 @@ const metaDescription = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Meta description",
-    "tooltip": "Short description of the page shown in search results of search engines. Should be engaging and informative.",
+    "label": "Default meta description",
+    "tooltip": "Short description of the shop shown in search results of search engines. Should be engaging and informative.",
     "placeholder": "Enter description"
   },
   "de": {
-    "label": "Meta description",
-    "tooltip": "Short description of the page shown in search results of search engines. Should be engaging and informative.",
+    "label": "Default meta description",
+    "tooltip": "Short description of the shop shown in search results of search engines. Should be engaging and informative.",
     "placeholder": "Enter description"
   }
 }

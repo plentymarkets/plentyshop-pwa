@@ -35,23 +35,27 @@
       </div>
     </div>
     <div v-else key="groups" class="groups">
-      <header class="flex items-center justify-between px-4 py-5 border-b">
-        <div class="flex items-start flex-col">
-          <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
-            <slot name="setting-breadcrumbs">
-              {{ t(`${activeSetting}`) }}
-            </slot>
+      <header class="border-b">
+        <div class="flex items-center justify-between px-4 py-4">
+          <div class="flex items-start flex-col">
+            <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
+              <slot name="setting-breadcrumbs">
+                {{ t(`${activeSetting}`) }}
+              </slot>
+            </div>
+            <div class="text-xl font-bold">
+              <slot name="setting-title" />
+            </div>
           </div>
-          <div class="text-xl font-bold">
-            <slot name="setting-title" />
-          </div>
+          <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeDrawer">
+            <SfIconClose />
+          </button>
+          <button v-else data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
+            <SfIconChevronLeft />
+          </button>
         </div>
-        <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeDrawer">
-          <SfIconClose />
-        </button>
-        <button v-else data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
-          <SfIconChevronLeft />
-        </button>
+
+        <slot name="setting-description" />
       </header>
 
       <div class="h-[calc(100vh-150px)] overflow-y-auto">

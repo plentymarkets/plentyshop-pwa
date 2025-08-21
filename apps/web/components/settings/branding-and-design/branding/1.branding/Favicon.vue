@@ -56,15 +56,15 @@ const { handleImageAdd } = useImageAdd(favicon);
 {
   "en": {
     "favicon.label": "Favicon",
-    "favicon.tooltip": "A favicon helps customers recognize your site in browser tabs and bookmarks. Required file format: .ico",
+    "favicon.tooltip": "A favicon helps customers recognise your shop in browser tabs and bookmarks.",
     "favicon.description": "32×32 px or 48×48 px (.ico)",
-    "favicon.hint": "Recommended dimensions: A square of 32 × 32 px or 48 × 48 px"
+    "favicon.hint": "Required format: ICO\nRecommended dimensions: A square of 32 × 32 px or 48 × 48 px"
   },
   "de": {
     "favicon.label": "Favicon",
-    "favicon.tooltip": "A favicon helps customers recognize your site in browser tabs and bookmarks. Required file format: .ico",
+    "favicon.tooltip": "A favicon helps customers recognise your shop in browser tabs and bookmarks.",
     "favicon.description": "32×32 px or 48×48 px (.ico)",
-    "favicon.hint": "Recommended dimensions: A square of 32 × 32 px or 48 × 48 px"
+    "favicon.hint": "Required format: ICO\nRecommended dimensions: A square of 32 × 32 px or 48 × 48 px"
   }
 }
 </i18n>
