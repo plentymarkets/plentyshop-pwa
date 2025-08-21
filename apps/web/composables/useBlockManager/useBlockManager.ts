@@ -3,6 +3,8 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
 const blocksLists = ref<BlocksList>({});
+const activeColumnUuid = ref<string | null>(null);
+
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.content;
@@ -38,6 +40,10 @@ export const useBlockManager = () => {
   const updateMultigridColumnUuid = (uuid: string) => {
     multigridColumnUuid.value = uuid;
   }
+
+  const setActiveColumnUuid = (uuid: string) => {
+  activeColumnUuid.value = uuid;
+};
 
   const getBlocksLists = async () => {
     try {
@@ -266,5 +272,7 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
+    setActiveColumnUuid,
+    activeColumnUuid
   };
 };
