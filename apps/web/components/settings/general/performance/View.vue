@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title>{{ getEditorTranslation('label') }}</template>
+    <template #setting-title>{{ getEditorTranslation('groups-title') }}</template>
 
     <template #setting-description>
       <div class="flex flex-col px-4 text-sm">
@@ -17,12 +17,12 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Item",
-    "description": "Manage settings that affect the user experience on item pages."
+    "groups-title": "Performance",
+    "description": "Settings that control the performance of the shop."
   },
   "de": {
-    "label": "Item",
-    "description": "Manage settings that affect the user experience on item pages."
+    "groups-title": "Performance",
+    "description": "Settings that control the performance of the shop."
   }
 }
 </i18n>

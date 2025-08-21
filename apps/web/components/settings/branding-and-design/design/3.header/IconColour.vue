@@ -18,7 +18,6 @@
           </label>
         </template>
       </SfInput>
-      <span class="typography-text-xs text-neutral-700">{{ getEditorTranslation('hint') }}</span>
     </label>
   </div>
 </template>
@@ -36,14 +35,12 @@ const iconColor = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Icon color",
-    "tooltip": "Use this to override the default white icon color in the header, ensuring sufficient contrast with your chosen background.",
-    "hint": "Choose icon color"
+    "label": "Icon colour",
+    "tooltip": "If set, this colour overrides the default white of the icons in the header, ensuring sufficient contrast with your chosen background."
   },
   "de": {
-    "label": "Icon color",
-    "tooltip": "Use this to override the default white icon color in the header, ensuring sufficient contrast with your chosen background.",
-    "hint": "Choose icon color"
+    "label": "Icon colour",
+    "tooltip": "If set, this colour overrides the default white of the icons in the header, ensuring sufficient contrast with your chosen background."
   }
 }
 </i18n>
