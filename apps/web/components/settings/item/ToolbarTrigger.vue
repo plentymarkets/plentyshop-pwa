@@ -1,7 +1,7 @@
 <template>
   <SfTooltip :label="itemLabel" placement="right" class="inline-grid" :show-arrow="true">
     <button
-      v-if="true"
+      v-if="runtimeConfig.public.isDev"
       type="button"
       class="editor-button relative py-2 flex justify-center"
       :class="{ 'bg-editor-button text-white rounded-md': active }"

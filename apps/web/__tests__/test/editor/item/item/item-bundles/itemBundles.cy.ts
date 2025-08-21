@@ -1,5 +1,4 @@
 import { CookieBarObject } from '../../../../../support/pageObjects/CookieBarObject';
-import { paths } from '../../../../../../utils/paths';
 import { EditorObject } from '../../../../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../../../../support/pageObjects/SiteSettingsObject';
 
