@@ -8,9 +8,9 @@
     </div>
     <label>
       <SfInput
-        v-model="metaKeywords"
+        v-model="metaTitle"
         type="text"
-        data-testid="seo-keywords"
+        data-testid="seo-title"
         :placeholder="getEditorTranslation('placeholder')"
       />
     </label>
@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('metaKeywords');
+const { updateSetting, getSetting } = useSiteSettings('metaTitle');
 
-const metaKeywords = computed({
+const metaTitle = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
@@ -30,14 +30,14 @@ const metaKeywords = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Meta keywords",
-    "tooltip": "List of relevant terms, separated by commas. Some search engines may use them to improve discoverability.",
-    "placeholder": "Enter keywords"
+    "label": "Default title",
+    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
+    "placeholder": "Enter title"
   },
   "de": {
-    "label": "Meta keywords",
-    "tooltip": "List of relevant terms, separated by commas. Some search engines may use them to improve discoverability.",
-    "placeholder": "Enter keywords"
+    "label": "Title",
+    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
+    "placeholder": "Enter title"
   }
 }
 </i18n>

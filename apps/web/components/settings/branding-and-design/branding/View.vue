@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title>{{ getEditorTranslation('groups-title') }}</template>
+    <template #setting-title>{{ getEditorTranslation('label') }}</template>
   </SiteConfigurationView>
 </template>
 
@@ -9,10 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "groups-title": "Customer Management"
+    "label": "Branding"
   },
   "de": {
-    "groups-title": "Customer Management"
+    "label": "Branding"
   }
 }
 </i18n>

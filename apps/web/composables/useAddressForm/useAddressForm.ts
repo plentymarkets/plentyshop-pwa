@@ -75,7 +75,7 @@ export const useAddressForm = (type: AddressType) => {
       }),
       vatNumber: string().when([], {
         is: () => state.value.hasCompany,
-        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
+        then: () => string().default(''),
         otherwise: () => string().optional().default(''),
       }),
     }),
