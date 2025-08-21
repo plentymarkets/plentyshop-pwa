@@ -13,7 +13,6 @@ export type MultiGridProps = {
   index?: number;
 };
 
-
 export type AlignableBlock = Block & {
   content?: {
     imageAlignment?: string;
