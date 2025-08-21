@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div v-if="cartItem.variation?.bundleComponents && showBundleComponents">
+      <div v-if="cartItem.variation?.bundleComponents && showBundleComponents" data-testid="cart-product-card-bundle-components-list">
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
             v-if="productBundleGetters.isItemBundleSalable(item)"
@@ -154,7 +154,7 @@ const deleteLoading = ref(false);
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
-const { getSetting } = useSiteSettings('bundleItemDisplay');
+const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });

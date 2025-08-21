@@ -6,11 +6,12 @@ describe('CategorySorting', () => {
   const editor = new EditorObject();
   const categorySettings = new CategorySettingsObject();
   const cookieBar = new CookieBarObject();
+  const categoryPage = '/living-room';
 
   beforeEach(() => {
     cy.clearCookies();
     //1. Go to Living room category page
-    cy.visit('/livingroom');
+    cy.visit(categoryPage);
     cookieBar.acceptAll();
   });
 
