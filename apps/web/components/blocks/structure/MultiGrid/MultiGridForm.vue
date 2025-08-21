@@ -2,11 +2,7 @@
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div data-testid="image-text-form">
       <div v-for="block in multiGridStructure.content" :key="block.meta.uuid">
-        <component
-          :is="getComponent(block.name)"
-          v-if="getComponent(block.name)"
-          :uuid="block.meta?.uuid || ''"
-        />
+        <component :is="getComponent(block.name)" v-if="getComponent(block.name)" :uuid="block.meta?.uuid || ''" />
       </div>
     </div>
   </div>
