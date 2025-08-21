@@ -112,7 +112,7 @@ const buttonLabel = 'Insert a new block at this position.';
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const { visiblePlaceholder, togglePlaceholder, isDragging } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, isDragging, multigridColumnUuid } = useBlockManager();
 const attrs = useAttrs();
 
 const blockSize = computed(() => getBlockSize());
@@ -160,6 +160,7 @@ const displayBottomPlaceholder = (uuid: string): boolean => {
 const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
+  multigridColumnUuid.value = null;
 };
 
 const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');

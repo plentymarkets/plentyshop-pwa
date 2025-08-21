@@ -11,11 +11,12 @@
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const { columnUuid } = defineProps<{columnUuid: string}>();
-const { updateMultigridColumnUuid } = useBlockManager();
+const { updateMultigridColumnUuid, visiblePlaceholder } = useBlockManager();
 const { openDrawerWithView } = useSiteConfiguration();
 
 const addBlockToColumn = () => {
   updateMultigridColumnUuid(columnUuid);
   openDrawerWithView('blocksList');
+  visiblePlaceholder.value = { uuid: '', position: 'top' };
 };
 </script>

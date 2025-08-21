@@ -12,10 +12,11 @@ import { SfIconAdd } from '@storefront-ui/vue';
 const { t } = useI18n();
 
 const { openDrawerWithView } = useSiteConfiguration();
-const { togglePlaceholder } = useBlockManager();
+const { togglePlaceholder, multigridColumnUuid } = useBlockManager();
 
 const addNewBlock = (position: 'top' | 'bottom') => {
   togglePlaceholder('0', position);
   openDrawerWithView('blocksList');
+  multigridColumnUuid.value = null;
 };
 </script>
