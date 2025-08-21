@@ -12,6 +12,12 @@
         <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
       </label>
 
+      <div class="text-end">
+        <SfLink variant="primary" class="cursor-pointer" @click="$emit('change-forgot-password')">
+          {{ t('auth.login.forgotPasswordLabel') }}
+        </SfLink>
+      </div>
+
       <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="login-submit">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
@@ -37,7 +43,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 
 const { isSoftLogin = false, isModal = false } = defineProps<LoginProps>();
-const emits = defineEmits(['loggedIn', 'change-view']);
+const emits = defineEmits(['loggedIn', 'change-view', 'change-forgot-password']);
 
 const email = ref('');
 const password = ref('');

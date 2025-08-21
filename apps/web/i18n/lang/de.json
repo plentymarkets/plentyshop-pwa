@@ -230,9 +230,10 @@
       "anotherEmail": "Ich muss eine andere E-Mail-Adresse ausprobieren",
       "backToLogin": "Zurück zum Login",
       "continue": "Weiter",
+      "resetPassword": "Passwort zurücksetzen",
       "email": "E-Mail",
       "emailSent": "E-Mail verschickt",
-      "heading": "Passwort zurücksetzen",
+      "heading": "Passwort vergessen?",
       "info": "Geben Sie die E-Mail-Adresse ein, die Sie bei der Anmeldung verwendet haben. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts. Mit dem Link können Sie ein neues Passwort für Ihr Konto festlegen.",
       "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten."
     },
