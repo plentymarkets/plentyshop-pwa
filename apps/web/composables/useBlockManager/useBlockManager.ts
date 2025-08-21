@@ -200,6 +200,20 @@ export const useBlockManager = () => {
     dragState.isDragging = false;
   };
 
+  const getBlockDepth = (uuid: string): number => {
+    const search = (blocks: Block[], targetUuid: string, depth: number): number => {
+      for (const block of blocks) {
+        if (block.meta.uuid === targetUuid) return depth;
+        if (block.type === 'structure' && Array.isArray(block.content)) {
+          const found = search(block.content, targetUuid, depth + 1);
+          if (found !== -1) return found;
+        }
+      }
+      return -1;
+    };
+    return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
+  };
+
   return {
     blocksLists,
     currentBlock,
@@ -222,5 +236,6 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
+    getBlockDepth,
   };
 };
