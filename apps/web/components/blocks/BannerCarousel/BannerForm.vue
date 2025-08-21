@@ -19,7 +19,6 @@
             :image="banner.content.image[type]"
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
-            :tooltip="imageDimensions[type]"
             :selected-image-type="type"
             @add="(payload) => handleImageAddBanner(payload)"
             @delete="deleteImage(banner.content.image, type)"
