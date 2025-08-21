@@ -49,13 +49,13 @@ const defaultSortingOption = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Default Sorting",
+    "label": "Default sorting",
     "tooltip": "Which sorting option do you want to preselect by default for the category view?",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
   "de": {
-    "label": "Default Sorting",
+    "label": "Default sorting",
     "tooltip": "Which sorting option do you want to preselect by default for the category view?",
     "placeholder": "Select default option",
     "deselect-label": "Selected"

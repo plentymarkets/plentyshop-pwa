@@ -28,8 +28,11 @@
         aria-label="top add block"
         @click.stop="addNewBlock(block, 'top')"
       >
-        <SfIconAdd class="cursor-pointer" />
+        <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
+          <SfIconAdd class="cursor-pointer" />
+        </SfTooltip>
       </button>
+
       <UiBlockActions
         v-if="disableActions && blockHasData && blockHasData(block) && $isPreview && root && !isDragging"
         :key="`${block.meta.uuid}`"
@@ -42,6 +45,7 @@
         ]"
         :index="index"
         :block="block"
+        :actions="getBlockActions(block)"
         @change-position="changeBlockPosition"
       />
 
@@ -72,7 +76,9 @@
         aria-label="bottom add block"
         @click.stop="addNewBlock(block, 'bottom')"
       >
-        <SfIconAdd class="cursor-pointer" />
+        <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
+          <SfIconAdd class="cursor-pointer" />
+        </SfTooltip>
       </button>
     </div>
     <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
@@ -81,7 +87,10 @@
 
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
-import { SfIconAdd } from '@storefront-ui/vue';
+import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
+
+const { locale, defaultLocale } = useI18n();
+const route = useRoute();
 
 const { $isPreview } = useNuxtApp();
 
@@ -98,6 +107,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const buttonLabel = 'Insert a new block at this position.';
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
@@ -152,4 +163,21 @@ const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
 };
 
 const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
+const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
+
+const isEditDisabled = computed(() => {
+  const homePath = getHomePath(locale.value);
+  return route.fullPath !== homePath;
+});
+const getBlockActions = (block: Block) => {
+  if (block.name === 'Footer') {
+    return {
+      isEditable: !isEditDisabled.value,
+      isMovable: false,
+      isDeletable: false,
+      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    };
+  }
+  return undefined;
+};
 </script>

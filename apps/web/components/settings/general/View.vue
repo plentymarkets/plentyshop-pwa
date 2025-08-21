@@ -1,6 +1,14 @@
 <template>
   <SiteConfigurationView>
     <template #setting-title>{{ getEditorTranslation('subcategory-title') }}</template>
+
+    <template #setting-description>
+      <div class="flex flex-col px-4 text-sm">
+        <p class="pb-2">
+          <span class="align-middle font-bold">{{ getEditorTranslation('description') }}</span>
+        </p>
+      </div>
+    </template>
   </SiteConfigurationView>
 </template>
 
@@ -9,10 +17,12 @@
 <i18n lang="json">
 {
   "en": {
-    "subcategory-title": "General Settings"
+    "subcategory-title": "General settings",
+    "description": "Manage basic settings that control the shop’s language, currency, customer defaults, security, and performance."
   },
   "de": {
-    "subcategory-title": "General Settings"
+    "subcategory-title": "General settings",
+    "description": "Manage basic settings that control the shop’s language, currency, customer defaults, security, and performance."
   }
 }
 </i18n>

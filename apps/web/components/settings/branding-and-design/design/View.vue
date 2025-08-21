@@ -9,10 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Meta Data"
+    "label": "Design"
   },
   "de": {
-    "label": "Meta Data"
+    "label": "Design"
   }
 }
 </i18n>
