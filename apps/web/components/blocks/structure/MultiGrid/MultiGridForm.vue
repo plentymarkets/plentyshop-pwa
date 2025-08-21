@@ -1,23 +1,39 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div data-testid="image-text-form">
-      <div v-for="block in multiGridStructure.content" :key="block.meta.uuid">
-        <component :is="getComponent(block.name)" v-if="getComponent(block.name)" :uuid="block.meta?.uuid || ''" />
+      <div
+        v-for="column in multiGridStructure.content"
+        :key="column.meta.uuid"
+      >
+        <div
+          v-for="block in column.content"
+          :key="block.meta.uuid"
+        >
+          <component
+            :is="getComponent(block.name)"
+            v-if="getComponent(block.name)"
+            :uuid="block.meta?.uuid || ''"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
+import type { Block } from '@plentymarkets/shop-api';
+
+type ColumnBlock = Block & { content?: Block[] };
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const multiGridStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as MultiGridProps,
-);
+const multiGridStructure = computed(() => {
+  return (findOrDeleteBlockByUuid(data.value, blockUuid.value) || { content: [] }) as {
+    content: ColumnBlock[];
+  };
+});
 
 const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
   string,

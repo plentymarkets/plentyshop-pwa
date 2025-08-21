@@ -33,6 +33,11 @@ export const useBlockManager = () => {
   const clickedBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
+  const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
+
+  const updateMultigridColumnUuid = (uuid: string) => {
+    multigridColumnUuid.value = uuid;
+  }
 
   const getBlocksLists = async () => {
     try {
@@ -75,19 +80,56 @@ export const useBlockManager = () => {
     }
 
     const { parent, index } = parentInfo;
+    const targetBlock = parent[index];
+
+    if (isMultiGridColumn(targetBlock, parent)) {
+      insertIntoColumn(targetBlock, newBlock);
+    } else {
+      insertNextToBlock(parent, index, newBlock, position);
+    }
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }
 
-    const insertIndex = position === 'top' ? index : index + 1;
-
-    parent.splice(insertIndex, 0, newBlock);
-
     updateBlocks(copiedData);
     openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+  };
+
+  // TODO: Maybe add a isColumn property to metadata so we avoid checking it by name?
+  const isMultiGridColumn = (targetBlock: Block, parent: Block[]): boolean => {
+    return (
+      Array.isArray(targetBlock?.content) &&
+      parent.some(
+        (block: Block) =>
+          block.name?.toLowerCase().includes('column') &&
+          Array.isArray(block.content)
+      )
+    );
+  };
+
+  const insertIntoColumn = (targetBlock: Block, newBlock: Block) => {
+    if (Array.isArray(targetBlock.content)) {
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
+      targetBlock.content!.push(newBlock);
+    }
+  };
+
+  const insertNextToBlock = (
+    parent: Block[],
+    index: number,
+    newBlock: Block,
+    position: 'top' | 'bottom'
+  ) => {
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
+    const insertIndex = position === 'top' ? index : index + 1;
+    parent.splice(insertIndex, 0, newBlock);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -221,6 +263,8 @@ export const useBlockManager = () => {
     isClicked,
     clickedBlockIndex,
     isTablet,
+    multigridColumnUuid,
+    updateMultigridColumnUuid,
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,

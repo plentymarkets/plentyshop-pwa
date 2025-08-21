@@ -4,13 +4,20 @@
     class="grid grid-cols-1 gap-4 items-center"
     :class="`lg:grid-cols-${configuration.columnWidths.length}`"
   >
-    <div v-for="(col, index) in configuration.columnWidths" :key="index" :class="`col-${col}`">
-      <component
-        :is="getBlockComponent(alignedContent[index]?.name)"
-        v-if="alignedContent[index] && getBlockComponent(alignedContent[index].name)"
-        v-bind="alignedContent[index]"
-      />
-      <EmptyBlock v-else />
+    <div
+      v-for="(column, colIndex) in content"
+      :key="column.meta.uuid"
+      :class="`col-${configuration.columnWidths[colIndex]}`"
+    >
+      <template v-if="Array.isArray(column.content) && column.content.length">
+        <component
+          :is="getBlockComponent(block.name)"
+          v-for="(block) in column.content"
+          :key="block.meta.uuid"
+          v-bind="block"
+        />
+      </template>
+      <EmptyGridBlock v-else :column-uuid="column.meta.uuid" />
     </div>
   </div>
 </template>
@@ -18,6 +25,7 @@
 <script setup lang="ts">
 import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
+import EmptyGridBlock from '~/components/blocks/structure/MultiGrid/EmptyGridBlock.vue';
 
 const { content, configuration } = defineProps<MultiGridProps>();
 
