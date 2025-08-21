@@ -101,7 +101,7 @@ const props = defineProps<Props>();
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const { visiblePlaceholder, togglePlaceholder, isDragging, getBlockDepth } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, isDragging } = useBlockManager();
 const attrs = useAttrs();
 
 const blockSize = computed(() => getBlockSize());
