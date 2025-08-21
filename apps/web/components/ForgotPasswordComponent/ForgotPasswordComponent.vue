@@ -51,8 +51,8 @@ const emits = defineEmits(['change-view-login', 'change-view-register']);
 const email = ref('');
 
 const sendMail = async () => {
-  await sendEmail(email.value);
-  send({ message: t('auth.login.success'), type: 'positive' });
+  await sendEmail({email: email.value});
+  send({ message: t('auth.resetPassword.emailSent'), type: 'positive' });
   emits('change-view-login');
 };
 </script>

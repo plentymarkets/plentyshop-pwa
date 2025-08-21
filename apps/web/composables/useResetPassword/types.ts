@@ -1,10 +1,10 @@
-// import type { RequestPasswordResetParams } from '@plentymarkets/shop-api'; TODO: after shop api release use this line
+import type { RequestPasswordResetParams } from '@plentymarkets/shop-api';
 
 export interface UseResetPasswordState {
   loading: boolean;
 }
 
-export type SendEmail = (emal: string) => void; // TODO: replace email: string with "RequestPasswordResetParams" after shop-api release
+export type SendEmail = (params: RequestPasswordResetParams) => void;
 
 export interface UseResetPassword {
   loading: Readonly<Ref<UseReturnOrderState['loading']>>;

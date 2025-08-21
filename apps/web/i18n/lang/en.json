@@ -232,7 +232,7 @@
       "continue": "Continue",
       "resetPassword": "Reset Password",
       "email": "Email",
-      "emailSent": "Email sent",
+      "emailSent": "Check your e-mail: We have sent instructions on how to reset your password",
       "heading": "Forgot password?",
       "subHeading": "Don’t worry. We’ll send instructions on how to reset your password to your E-Mail",
       "info": "Enter the email address you used to sign up. We will send you a password reset link, that you’ll be able to use to set a new password for your account.",
