@@ -9,15 +9,10 @@
       :key="column.meta.uuid"
       :class="`col-${configuration.columnWidths[colIndex]}`"
     >
-      <template v-if="Array.isArray(column.content) && column.content.length">
-        <component
-          :is="getBlockComponent(block.name)"
-          v-for="(block) in column.content"
-          :key="block.meta.uuid"
-          v-bind="block"
-        />
-      </template>
-      <EmptyGridBlock v-else :column-uuid="column.meta.uuid" />
+      <component
+        :is="getBlockComponent(column.name)"
+        v-bind="column"
+      />
     </div>
   </div>
 </template>
@@ -25,7 +20,6 @@
 <script setup lang="ts">
 import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-import EmptyGridBlock from '~/components/blocks/structure/MultiGrid/EmptyGridBlock.vue';
 
 const { content, configuration } = defineProps<MultiGridProps>();
 

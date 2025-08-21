@@ -12,3 +12,12 @@ export type MultiGridProps = {
   };
   index?: number;
 };
+
+export type EmptyGridBlockProps = {
+  name: string;
+  type: string;
+  content: [];
+  meta: {
+    uuid: string;
+  };
+};

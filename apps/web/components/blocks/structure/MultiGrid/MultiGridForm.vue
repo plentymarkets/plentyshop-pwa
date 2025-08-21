@@ -5,16 +5,11 @@
         v-for="column in multiGridStructure.content"
         :key="column.meta.uuid"
       >
-        <div
-          v-for="block in column.content"
-          :key="block.meta.uuid"
-        >
-          <component
-            :is="getComponent(block.name)"
-            v-if="getComponent(block.name)"
-            :uuid="block.meta?.uuid || ''"
-          />
-        </div>
+        <component
+          :is="getComponent(column.name)"
+          v-if="column.name !== 'EmptyGridBlock'"
+          :uuid="column.meta?.uuid || ''"
+        />
       </div>
     </div>
   </div>
