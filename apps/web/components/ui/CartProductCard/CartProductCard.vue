@@ -70,7 +70,10 @@
           </div>
         </div>
       </div>
-      <div v-if="cartItem.variation?.bundleComponents && showBundleComponents" data-testid="cart-product-card-bundle-components-list">
+      <div
+        v-if="cartItem.variation?.bundleComponents && showBundleComponents"
+        data-testid="cart-product-card-bundle-components-list"
+      >
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
             v-if="productBundleGetters.isItemBundleSalable(item)"

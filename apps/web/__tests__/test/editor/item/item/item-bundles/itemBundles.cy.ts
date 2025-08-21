@@ -21,10 +21,7 @@ describe('ItemBundles', () => {
     editor.isToolbarVisible();
     editor.toggleItemSettings();
 
-    siteSettings
-      .checkDrawerVisible()
-      .delay(500)
-      .closeDrawer();
+    siteSettings.checkDrawerVisible().delay(500).closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
   });
@@ -35,12 +32,7 @@ describe('ItemBundles', () => {
     editor.isToolbarVisible();
     editor.toggleItemSettings();
 
-    siteSettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleItemBundlesSection()
-        .checkOptionsExist()
-        .closeDrawer();
+    siteSettings.checkDrawerVisible().delay(500).toggleItemBundlesSection().checkOptionsExist().closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
   });
@@ -51,11 +43,11 @@ describe('ItemBundles', () => {
     editor.toggleItemSettings();
 
     siteSettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleItemBundlesSection()
-        .checkVisibilityOfBundleComponentsOnItemPage()
-        .closeDrawer();
+      .checkDrawerVisible()
+      .delay(500)
+      .toggleItemBundlesSection()
+      .checkVisibilityOfBundleComponentsOnItemPage()
+      .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
   });
@@ -64,10 +56,7 @@ describe('ItemBundles', () => {
   it('should check the visibility of bundle components based on dropdown select on cart and checkout', () => {
     siteSettings.addBundleToCartAndVisitCartPage();
 
-    siteSettings
-        .checkVisibilityOfBundleComponentsOnCart()
-        .checkVisibilityOfBundleComponentsOnCheckout()
-        .closeDrawer();
+    siteSettings.checkVisibilityOfBundleComponentsOnCart().checkVisibilityOfBundleComponentsOnCheckout().closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
   });

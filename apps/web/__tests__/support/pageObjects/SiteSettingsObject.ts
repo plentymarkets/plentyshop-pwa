@@ -173,13 +173,9 @@ export class SiteSettingsObject extends PageObject {
     ];
 
     expectedTextsAndValues.forEach((option) => {
-      this.itemBundlesSelect
-          .select(option.text)
-          .should('have.value', option.value);
+      this.itemBundlesSelect.select(option.text).should('have.value', option.value);
 
-      this.itemBundlesSelect
-          .find('option:selected')
-          .should('have.text', option.text);
+      this.itemBundlesSelect.find('option:selected').should('have.text', option.text);
     });
     return this;
   }
@@ -215,18 +211,19 @@ export class SiteSettingsObject extends PageObject {
 
   visibleBundleComponents(list) {
     const options = [
-      "Only list the components of the item bundle and replace the item bundle with the basic items in the order process",
-      "List both the item bundle and its individual components"
+      'Only list the components of the item bundle and replace the item bundle with the basic items in the order process',
+      'List both the item bundle and its individual components',
     ];
     options.forEach((option) => {
       this.itemBundlesSelect.select(option);
-      cy.getByTestId(list).children()
-          .should('have.length', 3);
+      cy.getByTestId(list).children().should('have.length', 3);
     });
   }
 
   notVisibleBundleComponents(list) {
-    this.itemBundlesSelect.select("Only show item bundle without individual components and do not split the item bundle in the order process");
+    this.itemBundlesSelect.select(
+      'Only show item bundle without individual components and do not split the item bundle in the order process',
+    );
     cy.getByTestId(list).should('not.exist');
   }
 

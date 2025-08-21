@@ -20,14 +20,10 @@ describe('RecommendedSorting', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
 
-    categorySettings
-      .checkDrawerVisible()
-      .delay(500)
-      .closeDrawer();
+    categorySettings.checkDrawerVisible().delay(500).closeDrawer();
 
     categorySettings.checkDrawerNotVisible();
   });
-
 
   //3. Drawer of Recommended Sorting opens
   //4. Check note exists
@@ -36,11 +32,11 @@ describe('RecommendedSorting', () => {
     editor.toggleCategorySettings();
 
     categorySettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleRecommendedSortingSection()
-        .checkTooltip('first-option-tooltip', 'First sorting option')
-        .closeDrawer();
+      .checkDrawerVisible()
+      .delay(500)
+      .toggleRecommendedSortingSection()
+      .checkTooltip('first-option-tooltip', 'First sorting option')
+      .closeDrawer();
 
     categorySettings.checkDrawerNotVisible();
   });
@@ -52,12 +48,12 @@ describe('RecommendedSorting', () => {
     editor.toggleCategorySettings();
 
     categorySettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleRecommendedSortingSection()
-        .checkSelectsExist()
-        .checkCorrectNumberOfSortingOptions()
-        .closeDrawer();
+      .checkDrawerVisible()
+      .delay(500)
+      .toggleRecommendedSortingSection()
+      .checkSelectsExist()
+      .checkCorrectNumberOfSortingOptions()
+      .closeDrawer();
 
     categorySettings.checkDrawerNotVisible();
   });
