@@ -1,23 +1,12 @@
 <template>
   <div class="py-2">
-    <div class="flex justify-between mb-2">
-      <UiFormLabel>{{ getEditorTranslation('favicon.label') }}</UiFormLabel>
-      <SfTooltip
-        :label="getEditorTranslation('favicon.tooltip')"
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
-    </div>
     <UiImagePicker
       :id="'favicon'"
       :label="getEditorTranslation('favicon.label')"
       :image="favicon"
       :placeholder="placeholderImg"
       :dimensions="getEditorTranslation('favicon.description')"
-      :show-tooltip="true"
+      :tooltip="getEditorTranslation('favicon.tooltip')"
       :selected-image-type="'Favicon'"
       :custom-label="'Change Favicon'"
       @add="handleImageAdd"
@@ -30,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-
 const { placeholderImg } = usePickerHelper();
 
 const { updateSetting, getSetting } = useSiteSettings('favicon');

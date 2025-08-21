@@ -1,17 +1,11 @@
 <template>
   <div class="py-2">
-    <div class="flex justify-between mb-2">
-      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
-    </div>
     <UiImagePicker
       :label="getEditorTranslation('label')"
       :image="headerLogo"
       :placeholder="placeholderImg"
       :dimensions="getEditorTranslation('description')"
-      :show-tooltip="true"
+      :tooltip="getEditorTranslation('tooltip')"
       :selected-image-type="'Logo'"
       :custom-label="'Change Logo'"
       @add="handleImageAdd"
@@ -25,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-
 const { placeholderImg } = usePickerHelper();
 
 const deleteLogo = () => {

@@ -17,7 +17,7 @@
         :image="uiImageTextBlock[type]"
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
-        :show-tooltip="true"
+        :tooltip="imageDimensions[type]"
         :selected-image-type="type"
         @add="(payload) => handleImageAddWrapper(payload)"
         @delete="deleteImage(uiImageTextBlock, type)"

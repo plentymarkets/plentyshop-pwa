@@ -2,7 +2,7 @@
   <div class="mb-6">
     <div class="flex items-center justify-between mb-1">
       <UiFormLabel>{{ label }}</UiFormLabel>
-      <SfTooltip v-if="showTooltip && !isPlaceholder" :label="dimensions">
+      <SfTooltip v-if="tooltip && !isPlaceholder" :placement="'top'" :label="tooltip">
         <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
       </SfTooltip>
     </div>
@@ -54,17 +54,9 @@
 
 <script setup lang="ts">
 import { SfTooltip, SfIconInfo, SfIconDelete } from '@storefront-ui/vue';
+import type { ImagePickerProps } from './types';
 
-interface Props {
-  label: string;
-  image: string | undefined;
-  placeholder: string;
-  dimensions: string;
-  showTooltip?: boolean;
-  selectedImageType?: string;
-}
-
-const props = defineProps<Props>();
+const props = defineProps<ImagePickerProps>();
 const emit = defineEmits<{
   (e: 'delete'): void;
   (e: 'add', payload: { image: string; type: string }): void;
