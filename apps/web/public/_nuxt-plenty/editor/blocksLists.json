@@ -47,7 +47,24 @@
                 6
               ]
             },
-            "content": []
+            "content": [
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": {
+                  "uuid": "12345678-1234-4123-8123-123456789012"
+                },
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": {
+                  "uuid": "23456789-2345-4234-8234-234567890123"
+                },
+                "content": []
+              }
+            ]
           }
         }
       }
