@@ -17,7 +17,7 @@
             class="absolute right-[-5px] top-[100%] -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md"
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             :disabled="isNestedMultigrid(category, targetUuid)"
-            :class="{'cursor-not-allowed opacity-50': isNestedMultigrid(category, targetUuid)}"
+            :class="{ 'cursor-not-allowed opacity-50': isNestedMultigrid(category, targetUuid) }"
             @click="
               drawerOpen = false;
               addNewBlock(category.category, variationIndex, targetUuid, visiblePlaceholder.position);
@@ -44,5 +44,5 @@ const { multigridColumnUuid } = useBlockManager();
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
 const isNestedMultigrid = (category: Category, uuid: string) => {
   return category.blockName === 'MultiGrid' && getBlockDepth(uuid) > 0;
-}
+};
 </script>

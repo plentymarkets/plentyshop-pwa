@@ -9,10 +9,7 @@
       :key="column.meta.uuid"
       :class="`col-${configuration.columnWidths[colIndex]}`"
     >
-      <component
-        :is="getBlockComponent(alignedContent[colIndex].name)"
-        v-bind="alignedContent[colIndex]"
-      />
+      <component :is="getBlockComponent(alignedContent[colIndex].name)" v-bind="alignedContent[colIndex]" />
     </div>
   </div>
 </template>

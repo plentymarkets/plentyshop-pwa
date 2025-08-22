@@ -37,7 +37,7 @@ export const useBlockManager = () => {
 
   const updateMultigridColumnUuid = (uuid: string) => {
     multigridColumnUuid.value = uuid;
-  }
+  };
 
   const getBlocksLists = async () => {
     try {
@@ -103,25 +103,18 @@ export const useBlockManager = () => {
   };
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
-    const colIndex = parent.findIndex(
-      (block) => block.meta?.uuid === targetBlock.meta?.uuid
-    );
+    const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
 
     if (colIndex === -1) return;
 
     const updatedBlock = {
-      ...newBlock
+      ...newBlock,
     };
 
     parent.splice(colIndex, 1, updatedBlock);
   };
 
-  const insertNextToBlock = (
-    parent: Block[],
-    index: number,
-    newBlock: Block,
-    position: 'top' | 'bottom'
-  ) => {
+  const insertNextToBlock = (parent: Block[], index: number, newBlock: Block, position: 'top' | 'bottom') => {
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }

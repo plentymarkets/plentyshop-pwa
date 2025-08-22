@@ -1,7 +1,7 @@
 <template>
   <div v-if="$isPreview" class="flex flex-col items-center justify-start p-10 font-editor">
     <UiButton class="mb-4 mt-20">
-      <SfIconAdd class="cursor-pointer text-xl" @click.stop="addBlockToColumn()"/>
+      <SfIconAdd class="cursor-pointer text-xl" @click.stop="addBlockToColumn()" />
     </UiButton>
     <p class="font-bold text-lg">Add block to column</p>
   </div>
