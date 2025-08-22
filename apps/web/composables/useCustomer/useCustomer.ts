@@ -273,7 +273,6 @@ export const useCustomer: UseCustomerReturn = () => {
     emailValidationSchema,
     missingGuestCheckoutEmail,
     backToContactInformation,
-    showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };
 };

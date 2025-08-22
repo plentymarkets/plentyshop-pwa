@@ -51,7 +51,7 @@ import type { ProductSliderProps } from '~/components/ProductSlider/types';
 import { paths } from '~/utils/paths';
 
 const { addModernImageExtension } = useModernImage();
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 const localePath = useLocalePath();
 const { t } = useI18n();
 

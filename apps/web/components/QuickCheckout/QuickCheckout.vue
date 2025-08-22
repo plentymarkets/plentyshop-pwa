@@ -129,7 +129,7 @@ const props = defineProps<QuickCheckoutProps>();
 const { t } = useI18n();
 const { format } = usePriceFormatter();
 
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 
 const localePath = useLocalePath();
 const { data: cart, lastUpdatedCartItem } = useCart();

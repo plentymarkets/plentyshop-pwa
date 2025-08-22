@@ -99,7 +99,7 @@ import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
 const { t } = useI18n();
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 const { format } = usePriceFormatter();
 
 const totals = computed(() => {
