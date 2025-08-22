@@ -12,7 +12,7 @@
         <SfInput v-model="email" name="email" type="email" autocomplete="email" required />
       </label>
 
-      <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="login-submit">
+      <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="reset-password-mail-submit">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.resetPassword.resetPassword') }}
