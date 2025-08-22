@@ -13,10 +13,11 @@ export type MultiGridProps = {
   index?: number;
 };
 
-export type AlignableBlock = Block & {
-  content?: {
-    imageAlignment?: string;
-    alignment?: string;
-    [key: string]: unknown;
+export type EmptyGridBlockProps = {
+  name: string;
+  type: string;
+  content: [];
+  meta: {
+    uuid: string;
   };
 };

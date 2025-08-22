@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-start p-10 font-editor">
+  <div v-if="$isPreview" class="flex flex-col items-center justify-start p-10 font-editor">
     <UiButton class="mb-4 mt-20">
       <SfIconAdd class="cursor-pointer text-xl" @click.stop="addBlockToColumn()"/>
     </UiButton>
@@ -9,13 +9,15 @@
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
+import type { EmptyGridBlockProps } from '~/components/blocks/structure/MultiGrid/types';
 
-const { columnUuid } = defineProps<{columnUuid: string}>();
+const { $isPreview } = useNuxtApp();
+const props = defineProps<EmptyGridBlockProps>();
 const { updateMultigridColumnUuid, visiblePlaceholder } = useBlockManager();
 const { openDrawerWithView } = useSiteConfiguration();
 
 const addBlockToColumn = () => {
-  updateMultigridColumnUuid(columnUuid);
+  updateMultigridColumnUuid(props.meta.uuid);
   openDrawerWithView('blocksList');
   visiblePlaceholder.value = { uuid: '', position: 'top' };
 };
