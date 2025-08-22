@@ -173,7 +173,7 @@
       @change-view="isLogin = false"
       @logged-in="navigateAfterAuth(true)"
     />
-    <Register v-else-if="!isLogin" :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
+    <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
   <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
