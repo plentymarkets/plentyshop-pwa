@@ -13,9 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Block } from '@plentymarkets/shop-api';
-
-type ColumnBlock = Block & { content?: Block[] };
+import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();

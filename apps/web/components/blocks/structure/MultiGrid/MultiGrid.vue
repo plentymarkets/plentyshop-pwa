@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
+import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
@@ -30,14 +30,6 @@ const getBlockComponent = (blockName: string) => {
   const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
   const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
   return matched ? defineAsyncComponent(modules[matched]) : null;
-};
-
-type AlignableBlock = Block & {
-  content?: {
-    imageAlignment?: string;
-    alignment?: string;
-    [key: string]: unknown;
-  };
 };
 
 const alignBlock = computed<AlignableBlock | undefined>(
