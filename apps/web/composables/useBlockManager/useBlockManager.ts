@@ -88,8 +88,8 @@ export const useBlockManager = () => {
     const { parent, index } = parentInfo;
     const targetBlock = parent[index];
 
-    if (isMultiGridColumn(targetBlock, parent)) {
-      insertIntoColumn(targetBlock, newBlock);
+    if (isMultiGridColumn(targetBlock)) {
+      insertIntoColumn(targetBlock, newBlock, parent);
     } else {
       insertNextToBlock(parent, index, newBlock, position);
     }
@@ -104,25 +104,22 @@ export const useBlockManager = () => {
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
   };
 
-  // TODO: Maybe add a isColumn property to metadata so we avoid checking it by name?
-  const isMultiGridColumn = (targetBlock: Block, parent: Block[]): boolean => {
-    return (
-      Array.isArray(targetBlock?.content) &&
-      parent.some(
-        (block: Block) =>
-          block.name?.toLowerCase().includes('column') &&
-          Array.isArray(block.content)
-      )
-    );
+  const isMultiGridColumn = (targetBlock: Block): boolean => {
+    return targetBlock?.name === 'EmptyGridBlock';
   };
 
-  const insertIntoColumn = (targetBlock: Block, newBlock: Block) => {
-    if (Array.isArray(targetBlock.content)) {
-      if (Array.isArray(newBlock.content) && newBlock.content.length) {
-        setUuid(newBlock.content as Block[]);
-      }
-      targetBlock.content!.push(newBlock);
-    }
+  const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
+    const colIndex = parent.findIndex(
+      (block) => block.meta?.uuid === targetBlock.meta?.uuid
+    );
+
+    if (colIndex === -1) return;
+
+    const updatedBlock = {
+      ...newBlock
+    };
+
+    parent.splice(colIndex, 1, updatedBlock);
   };
 
   const insertNextToBlock = (

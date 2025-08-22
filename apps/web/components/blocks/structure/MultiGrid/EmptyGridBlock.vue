@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full max-w-4xl mx-auto">
+  <div v-if="$isPreview" class="flex w-full max-w-4xl mx-auto">
     <div
       v-if="drawerOpen && isActiveColumn"
       class="h-[196px] flex-1 border-2 border-dashed border-sky-400 bg-sky-50 p-6 flex flex-col items-center justify-center text-center"
@@ -20,15 +20,22 @@
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
-const { columnUuid } = defineProps<{ columnUuid: string }>();
-const { updateMultigridColumnUuid, setActiveColumnUuid, activeColumnUuid } = useBlockManager();
+import type { EmptyGridBlockProps } from '~/components/blocks/structure/MultiGrid/types';
+const { $isPreview } = useNuxtApp();
+
+const props = defineProps<EmptyGridBlockProps>();
+
+
+const { updateMultigridColumnUuid, setActiveColumnUuid, activeColumnUuid, visiblePlaceholder } = useBlockManager();
 const { openDrawerWithView, drawerOpen } = useSiteConfiguration();
 
 const isActiveColumn = computed(() => activeColumnUuid.value === columnUuid);
 
 const addBlockToColumn = () => {
-  updateMultigridColumnUuid(columnUuid);
+  updateMultigridColumnUuid(props.meta.uuid);
   setActiveColumnUuid(columnUuid);
   openDrawerWithView('blocksList');
+  visiblePlaceholder.value = { uuid: '', position: 'top' };
+
 };
 </script>

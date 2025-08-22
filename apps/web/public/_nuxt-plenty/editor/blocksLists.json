@@ -20,19 +20,17 @@
             },
             "content": [
               {
-                "name": "Column 1",
+                "name": "EmptyGridBlock",
                 "type": "content",
                 "meta": {
-                  "isColumn": true,
                   "uuid": "12345678-1234-4123-8123-123456789012"
                 },
                 "content": []
               },
               {
-                "name": "Column 2",
+                "name": "EmptyGridBlock",
                 "type": "content",
                 "meta": {
-                    "isColumn": true,
                   "uuid": "23456789-2345-4234-8234-234567890123"
                 },
                 "content": []
