@@ -53,7 +53,7 @@
     "@vite-pwa/nuxt": "^1.0.1",
     "@vitest/coverage-v8": "^3.0.5",
     "@vue-storefront/eslint-config": "^5.1.1",
-    "@vue-storefront/middleware": "5.4.0",
+    "@vue-storefront/middleware": "5.4.1",
     "@vue-storefront/unified-data-model": "^3.0.0",
     "@vue/test-utils": "^2.4.6",
     "cypress": "14.5.4",
