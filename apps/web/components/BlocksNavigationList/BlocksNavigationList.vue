@@ -20,7 +20,7 @@
             :class="{ 'cursor-not-allowed opacity-50': isNestedMultigrid(category, targetUuid) }"
             @click="
               drawerOpen = false;
-              addNewBlock(category.category, variationIndex, targetUuid, visiblePlaceholder.position);
+              addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
             "
           >
             <SfIconAdd />
@@ -45,4 +45,8 @@ const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholde
 const isNestedMultigrid = (category: Category, uuid: string) => {
   return category.blockName === 'MultiGrid' && getBlockDepth(uuid) > 0;
 };
+const blockPosition = computed(() => {
+  if (multigridColumnUuid.value) return 'inside';
+  return visiblePlaceholder.value.position;
+});
 </script>
