@@ -10,8 +10,8 @@
       :class="`col-${configuration.columnWidths[colIndex]}`"
     >
       <component
-        :is="getBlockComponent(column.name)"
-        v-bind="column"
+        :is="getBlockComponent(alignedContent[colIndex].name)"
+        v-bind="alignedContent[colIndex]"
       />
     </div>
   </div>
