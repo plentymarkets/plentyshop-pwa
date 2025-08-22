@@ -18,7 +18,7 @@
           {{ t('auth.resetPassword.resetPassword') }}
         </span>
       </UiButton>
-      <UiButton v-if="!isForgotPasswordOnly" type="reset" variant="secondary" :disabled="loading" data-testid="login-submit" @click="$emit('change-view-login')">
+      <UiButton v-if="!isForgotPasswordOnly" type="reset" variant="secondary" :disabled="loading" data-testid="reset-password-mail-submit" @click="$emit('change-view-login')">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.resetPassword.backToLogin') }}
