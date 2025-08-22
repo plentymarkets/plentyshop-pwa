@@ -168,14 +168,12 @@
       </UiButton>
     </header>
     <LoginComponent
-      v-if="isLogin && !isForgotPassword"
+      v-if="isLogin"
       :is-modal="true"
       @change-view="isLogin = false"
-      @change-forgot-password="isForgotPassword = true"
       @logged-in="navigateAfterAuth(true)"
     />
-    <ForgotPasswordComponent v-else-if="isForgotPassword" @change-view-login="isLogin = true, isForgotPassword = false" @change-view-register="isLogin = false, isForgotPassword = false"/>
-    <Register v-else-if="!isLogin && !isForgotPassword" :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
+    <Register v-else-if="!isLogin" :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
   <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
@@ -223,7 +221,6 @@ import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue
 import { paths } from '~/utils/paths';
 
 const isLogin = ref(true);
-const isForgotPassword = ref(false);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center justify-center my-1">
-    <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="sendMail">
+  <div class="flex flex-col items-center justify-center">
+    <form class="flex flex-col gap-4 p-1 rounded-md w-full md:w-[400px]" @submit.prevent="sendMail">
       <div class="text-lg font-medium">
         {{ t('auth.resetPassword.heading') }}
       </div>
@@ -18,14 +18,14 @@
           {{ t('auth.resetPassword.resetPassword') }}
         </span>
       </UiButton>
-      <UiButton type="reset" variant="secondary" :disabled="loading" data-testid="login-submit" @click="$emit('change-view-login')">
+      <UiButton v-if="!isForgotPasswordOnly" type="reset" variant="secondary" :disabled="loading" data-testid="login-submit" @click="$emit('change-view-login')">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.resetPassword.backToLogin') }}
         </span>
       </UiButton>
 
-      <div class="text-sm text-center">
+      <div v-if="!isSoftLogin && !isForgotPasswordOnly" class="text-sm text-center">
         <span>{{ t('auth.login.createAccount') }}</span>
         <SfLink
           variant="primary"
@@ -41,6 +41,9 @@
 
 <script lang="ts" setup>
 import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import type {ForgotPasswordProps} from './types';
+
+const { isSoftLogin = false, isForgotPasswordOnly = false} = defineProps<ForgotPasswordProps>();
 
 const { sendEmail, loading } = useResetPassword();
 const { send } = useNotification();

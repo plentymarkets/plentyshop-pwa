@@ -34,6 +34,12 @@
             <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
           </label>
 
+          <div class="text-end mt-4">
+            <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
+              {{ t('auth.login.forgotPasswordLabel') }}
+            </SfLink>
+          </div>
+
           <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">
             <SfLoaderCircular v-if="loading || loginSubmit" class="flex justify-center items-center" size="base" />
             <template v-else>{{ t('auth.login.loginAndContinue') }}</template>
@@ -45,6 +51,25 @@
           </div>
         </form>
       </div>
+      <UiModal
+        v-if="isAuthenticationOpen"
+        v-model="isAuthenticationOpen"
+        tag="section"
+        class="h-full w-full overflow-auto md:w-[500px] md:h-fit"
+      >
+        <header>
+          <UiButton
+            :aria-label="t('closeDialog')"
+            square
+            variant="tertiary"
+            class="absolute right-2 top-2"
+            @click="toggleForgotPasswordModal"
+          >
+            <SfIconClose />
+          </UiButton>
+          <ForgotPasswordComponent :is-forgot-password-only="true"/>
+        </header>
+      </UiModal>
     </div>
   </NuxtLayout>
 </template>
@@ -59,6 +84,7 @@ definePageMeta({
   middleware: ['guest-guard'],
 });
 
+const isAuthenticationOpen = ref(false);
 const { login, loading } = useCustomer();
 const { send } = useNotification();
 const { data: cart } = useCart();
@@ -72,6 +98,10 @@ onBeforeMount(async () => await loadConfig());
 const email = ref('');
 const password = ref('');
 const loginSubmit = ref(false);
+
+const toggleForgotPasswordModal = () => {
+ isAuthenticationOpen.value = !isAuthenticationOpen.value;
+};
 
 const loginUser = async () => {
   loginSubmit.value = true;
