@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div v-if="props.open" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="props.open" data-testid="image-selector-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-[1500px] h-[840px] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col">
         <header class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
@@ -23,11 +23,12 @@
         <main class="flex flex-1">
           <div class="flex-1 overflow-auto pr-4">
             <div v-if="loading" class="flex items-center justify-center h-full w-full min-h-[400px]">
-              <SfLoaderCircular size="2xl" class="text-gray-400" />
+              <SfLoaderCircular data-testId="image-selector-loader" size="2xl" class="text-gray-400" />
             </div>
             <UiImageTable
               v-else
               v-model:selected-key="selectedKey"
+              data-testId="image-selector-table"
               :selected-name="selectedImage?.name || null"
               @select="handleSelect"
               @unselect="selectedImage = null"

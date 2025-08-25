@@ -25,6 +25,7 @@
 
         <div class="mt-3 flex items-center gap-2">
           <button
+            :data-testId="`image-picker-select-button-${selectedImageType}`"
             type="button"
             class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800"
             @click.prevent="isUploaderOpen = true"
