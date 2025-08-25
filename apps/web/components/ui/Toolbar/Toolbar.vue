@@ -34,7 +34,7 @@
           </template>
         </button>
         <SfTooltip
-          :label="!isTouched || settingsLoading ? 'No changes to save' : 'You have unsaved changes. Click to save.'"
+          :label="!isTouched || settingsLoading ? 'No changes to save.' : 'You have unsaved changes. Click to save.'"
           placement="bottom"
           :show-arrow="true"
         >
