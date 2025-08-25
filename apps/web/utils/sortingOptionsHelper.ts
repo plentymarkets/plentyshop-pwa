@@ -1,4 +1,4 @@
-import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
+import type { SortingOption } from '~/components/settings/6-category/sorting/category-sorting/types';
 
 export const getEditorTranslation = (key: string): string => {
   const locale = 'en';

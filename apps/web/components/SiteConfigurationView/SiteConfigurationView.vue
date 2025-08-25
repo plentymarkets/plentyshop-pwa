@@ -28,7 +28,7 @@
           @click="activeSubCategory = subCategory"
         >
           <span class="break-words">
-            {{ t(`${subCategory}`) }}
+            {{ t(`${noPrefix(subCategory)}`) }}
           </span>
           <template #suffix><SfIconChevronRight /></template>
         </SfListItem>
@@ -40,7 +40,7 @@
           <div class="flex items-start flex-col">
             <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
               <slot name="setting-breadcrumbs">
-                {{ t(`${activeSetting}`) }}
+                {{ t(`${activeSettingNoPrefix}`) }}
               </slot>
             </div>
             <div class="text-xl font-bold">
@@ -79,6 +79,8 @@ const { t } = useI18n();
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 
 const subCategories = computed(() => getSubCategories(activeSetting.value));
+const activeSettingNoPrefix = computed(() => activeSetting.value.replace(/^\d+-/, ''));
+const noPrefix = (category: string) => { return category.replace(/^\d+-/, '') };
 
 setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : activeSubCategory.value);
 

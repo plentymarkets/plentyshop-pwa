@@ -15,7 +15,6 @@
       ]"
     >
       <component :is="getDrawerView(drawerView)" v-if="drawerView" />
-
       <Transition v-else-if="viewComponent" :name="placement === 'left' ? transitionName : ''" mode="out-in" appear>
         <component :is="viewComponent" :key="viewComponent" />
       </Transition>
