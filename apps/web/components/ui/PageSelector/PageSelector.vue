@@ -28,7 +28,7 @@ const handlePageSelected = ({ name, icon }: { name: string; icon: string }) => {
   currentPageIcon.value = icon;
 };
 
-const pageLabel = 'Quickly search and jump to pages for editing';
+const pageLabel = 'Quickly search and jump to pages for editing.';
 
 const closeDropdown = () => {
   isOpen.value = false;
