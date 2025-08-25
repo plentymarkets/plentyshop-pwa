@@ -92,7 +92,8 @@
   "overrides": {
     "@vue-storefront/eslint-config": {
       "prettier": "3.6.2"
-    }
+    },
+    "@vitejs/plugin-vue-jsx": "5.0.1"
   },
   "engines": {
     "node": ">=20.0.0"
