@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     <div class="border-b py-1">
       <button
         v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
@@ -58,14 +59,16 @@ const spacingInPx = computed(() => {
     "block-spacing-size-m": "m",
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
-    "spacing-between-blocks": "Spacing between blocks"
+    "spacing-between-blocks": "Spacing between blocks",
+    "label": "Default spacing"
   },
   "de": {
     "block-spacing-size-s": "s",
     "block-spacing-size-m": "m",
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
-    "spacing-between-blocks": "Spacing between blocks"
+    "spacing-between-blocks": "Spacing between blocks",
+    "label": "Default spacing"
   }
 }
 </i18n>
