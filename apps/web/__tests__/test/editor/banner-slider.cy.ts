@@ -17,23 +17,23 @@ describe('Banner Slider Block Form', () => {
   };
 
   beforeEach(() => {
-    cy.intercept('plentysystems/getStorageItems', { 
-      statusCode: 200, 
+    cy.intercept('plentysystems/getStorageItems', {
+      statusCode: 200,
       body: {
-      "data": [
-        {
-        "key": "123-demo-picture.jpeg",
-        "lastModified": "2025-08-06T11:06:05+00:00",
-        "eTag": "4db976b8578d71ee74710e48ad01dc35",
-        "size": "1009370",
-        "storageClass": "STANDARD",
-        "publicUrl": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg",
-        "previewUrl": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/.thumbs/123-demo-picture.jpeg"
-        }
-      ]
-      }
+        data: [
+          {
+            key: '123-demo-picture.jpeg',
+            lastModified: '2025-08-06T11:06:05+00:00',
+            eTag: '4db976b8578d71ee74710e48ad01dc35',
+            size: '1009370',
+            storageClass: 'STANDARD',
+            publicUrl: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg',
+            previewUrl: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/.thumbs/123-demo-picture.jpeg',
+          },
+        ],
+      },
     }).as('getStorageItems');
-    cy.intercept('plentysystems/getStorageMetadata', {statusCode: 200, body: {}}).as('getStorageMetadata');
+    cy.intercept('plentysystems/getStorageMetadata', { statusCode: 200, body: {} }).as('getStorageMetadata');
 
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);
