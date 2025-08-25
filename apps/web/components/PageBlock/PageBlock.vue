@@ -88,6 +88,7 @@
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
+import type { BlockPosition } from '~/composables/useBlockManager/types';
 
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
@@ -112,7 +113,7 @@ const buttonLabel = 'Insert a new block at this position.';
 
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const { visiblePlaceholder, togglePlaceholder, isDragging } = useBlockManager();
+const { visiblePlaceholder, togglePlaceholder, isDragging, multigridColumnUuid } = useBlockManager();
 const attrs = useAttrs();
 
 const blockSize = computed(() => getBlockSize());
@@ -157,9 +158,10 @@ const displayBottomPlaceholder = (uuid: string): boolean => {
   );
 };
 
-const addNewBlock = (block: Block, position: 'top' | 'bottom') => {
+const addNewBlock = (block: Block, position: BlockPosition) => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
+  multigridColumnUuid.value = null;
 };
 
 const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');

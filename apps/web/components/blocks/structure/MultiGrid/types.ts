@@ -12,3 +12,22 @@ export type MultiGridProps = {
   };
   index?: number;
 };
+
+export type EmptyGridBlockProps = {
+  name: string;
+  type: string;
+  content: [];
+  meta: {
+    uuid: string;
+  };
+};
+
+export type AlignableBlock = Block & {
+  content?: {
+    imageAlignment?: string;
+    alignment?: string;
+    [key: string]: unknown;
+  };
+};
+
+export type ColumnBlock = Block & { content?: Block[] };
