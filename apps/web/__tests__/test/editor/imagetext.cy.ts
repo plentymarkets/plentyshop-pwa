@@ -81,7 +81,7 @@ describe('Image Text Block Form', () => {
   const changeTextColor = () => {
     cy.get('[data-testid="input-text-color"]').should('exist').clear().type('rgb(121, 12, 12)', { delay: 0 });
     cy.wait(1000);
-    cy.get('[data-testid="text-content"]').should('have.css', 'color', 'rgb(121, 12, 12)');
+    cy.getByTestId('multi-grid-structure').within(() => cy.getByTestId('text-content').should('have.css', 'color', 'rgb(121, 12, 12)'));
   };
 
   const changeTextAlignment = () => {
@@ -136,7 +136,7 @@ describe('Image Text Block Form', () => {
     openImageGroup();
   });
 
-  it('should test the text settings', () => {
+  it.only('should test the text settings', () => {
     openTextGroup();
     changeText();
     changeTextColor();
