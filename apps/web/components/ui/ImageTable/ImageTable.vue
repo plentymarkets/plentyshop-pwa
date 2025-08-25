@@ -29,17 +29,18 @@
             <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item)">
               <div class="flex items-center gap-2">
                 <NuxtImg
+                  data-testid="image-table-thumbnail"
                   :src="item.previewUrl || item.publicUrl"
                   alt="table thumbnail"
                   class="w-8 h-8 rounded object-cover"
                 />
-                <span>{{ item.fileName }}</span>
+                <span data-testid="image-table-file-name">{{ item.fileName }}</span>
               </div>
             </div>
           </td>
-          <td>{{ item.path }}</td>
-          <td>{{ bytesToMB(item.size) }}</td>
-          <td>{{ formatDate(item.lastModified) }}</td>
+          <td data-testid="image-table-path">{{ item.path }}</td>
+          <td data-testid="image-table-size">{{ bytesToMB(item.size) }}</td>
+          <td data-testid="image-table-last-modified">{{ formatDate(item.lastModified) }}</td>
         </tr>
       </template>
     </v-data-table>

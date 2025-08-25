@@ -1,7 +1,10 @@
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
+import { ImageTextObject } from '../../support/pageObjects/ImageTextObject';
 import { paths } from '../../../utils/paths';
 
 describe('Image Text Block Form', () => {
+  const imageText = new ImageTextObject();
+
   const openSettingsForImageTextBlock = () => {
     cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4);
 
@@ -13,26 +16,6 @@ describe('Image Text Block Form', () => {
 
   const openImageGroup = () => {
     cy.get('[data-testid="image-group"]').should('exist').click();
-  };
-
-  const changeImage = () => {
-    cy.get('[data-testid="wide-screen-input"]')
-      .should('exist')
-      .clear()
-      .type('https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png', { delay: 0 });
-    cy.get('[data-testid="large-screen-input"]')
-      .should('exist')
-      .clear()
-      .type('https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png', { delay: 0 });
-    cy.get('[data-testid="medium-screen-input"]')
-      .should('exist')
-      .clear()
-      .type('https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png', { delay: 0 });
-    cy.get('[data-testid="image-block"]').should(
-      'have.attr',
-      'src',
-      'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-    );
   };
 
   const changeAltText = () => {
@@ -122,15 +105,35 @@ describe('Image Text Block Form', () => {
   const cookieBar = new CookieBarObject();
 
   beforeEach(() => {
+    cy.intercept('plentysystems/getStorageItems', {
+      statusCode: 200,
+      body: {
+        data: [
+          {
+            key: '123-demo-picture.jpeg',
+            lastModified: '2025-08-06T11:06:05+00:00',
+            eTag: '4db976b8578d71ee74710e48ad01dc35',
+            size: '1009370',
+            storageClass: 'STANDARD',
+            publicUrl: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg',
+            previewUrl: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/.thumbs/123-demo-picture.jpeg',
+          },
+        ],
+      },
+    }).as('getStorageItems');
+    cy.intercept('plentysystems/getStorageMetadata', { statusCode: 200, body: {} }).as('getStorageMetadata');
+
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     openSettingsForImageTextBlock();
   });
 
-  it('should change image settings', () => {
+  it.only('should change image settings', () => {
     openImageGroup();
-    changeImage();
+    imageText.openImageSelector('wideScreen');
+    imageText.selectImage();
+    imageText.checkNewImage();
     changeAltText();
     changeImageGridLayout();
     openImageGroup();

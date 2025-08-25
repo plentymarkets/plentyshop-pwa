@@ -1,42 +1,25 @@
 <template>
   <div class="py-2">
-    <div class="flex justify-between mb-2">
-      <UiFormLabel>{{ getEditorTranslation('favicon.label') }}</UiFormLabel>
-      <SfTooltip
-        :label="getEditorTranslation('favicon.tooltip')"
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
-    </div>
-    <label>
-      <UiImagePicker
-        v-if="runtimeConfig.public.isDev"
-        :label="getEditorTranslation('favicon.label')"
-        :image="favicon"
-        :placeholder="placeholderImg"
-        :dimensions="getEditorTranslation('favicon.description')"
-        :show-tooltip="true"
-        :selected-image-type="'Favicon'"
-        :custom-label="'Change Favicon'"
-        @add="handleImageAdd"
-        @delete="deleteFavicon()"
-      />
-      <SfInput v-else v-model="favicon" placeholder="Enter Favicon URL" type="text" />
-      <span class="typography-text-xs text-neutral-700">
-        {{ getEditorTranslation('favicon.hint') }}
-      </span>
-    </label>
+    <UiImagePicker
+      :id="'favicon'"
+      :label="getEditorTranslation('favicon.label')"
+      :image="favicon"
+      :placeholder="placeholderImg"
+      :dimensions="getEditorTranslation('favicon.description')"
+      :tooltip="getEditorTranslation('favicon.tooltip')"
+      :selected-image-type="'Favicon'"
+      :custom-label="'Change Favicon'"
+      @add="handleImageAdd"
+      @delete="deleteFavicon()"
+    />
+    <span class="typography-text-xs text-neutral-700">
+      {{ getEditorTranslation('favicon.hint') }}
+    </span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
-
 const { placeholderImg } = usePickerHelper();
-const runtimeConfig = useRuntimeConfig();
 
 const { updateSetting, getSetting } = useSiteSettings('favicon');
 
