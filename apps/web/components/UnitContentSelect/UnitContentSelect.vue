@@ -1,5 +1,9 @@
 <template>
-  <div v-if="productGetters.possibleUnitCombination(product).length > 1" class="mt-2" data-testing="variation-select-unit-wrapper">
+  <div
+    v-if="productGetters.possibleUnitCombination(product).length > 1"
+    class="mt-2"
+    data-testing="variation-select-unit-wrapper"
+  >
     <div class="input-unit w-full">
       <label for="unit-combination" data-testing="variation-select-unit-label">{{ t('content') }}</label>
       <SfSelect
