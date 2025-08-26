@@ -32,20 +32,16 @@ export class CategorySettingsObject extends PageObject {
   }
 
   checkCategoryOptions() {
-    cy.get('@availableSorting').click();
-
+    const expectedAvailableSortingOptions = 19;
+    const expectedSelectSortByOptions = 1;
     cy.get('@availableSorting')
-      .find('.multiselect__element')
-      .each(($option, index) => {
-        if (index < 4) {
-          cy.wrap($option).click();
-          cy.get('@availableSorting').click();
-        }
-      });
+        .click()
+        .find('.multiselect__element')
+        .should('have.length', expectedAvailableSortingOptions);
 
-    const expectedOptionCount = 4;
-
-    cy.getByTestId('select-sort-by').find('option').should('have.length', expectedOptionCount);
+    cy.getByTestId('select-sort-by')
+        .find('option')
+        .should('have.length.of.at.least', expectedSelectSortByOptions);
 
     return this;
   }

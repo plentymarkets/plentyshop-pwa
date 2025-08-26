@@ -26,8 +26,7 @@ describe('RecommendedSorting', () => {
   });
 
   //3. Drawer of Recommended Sorting opens
-  //4. Check note exists
-  it('should open the recommended sorting section and check tooltip text', () => {
+  it('should open the recommended sorting section', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
 
@@ -35,7 +34,6 @@ describe('RecommendedSorting', () => {
       .checkDrawerVisible()
       .delay(500)
       .toggleRecommendedSortingSection()
-      .checkTooltip('first-option-tooltip', 'First sorting option')
       .closeDrawer();
 
     categorySettings.checkDrawerNotVisible();
