@@ -245,7 +245,7 @@
       "repeatPassword": "Neues Passwort wiederholen"
     },
     "signup": {
-      "alreadyHaveAccount": "Du hast schon ein Konto?",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
       "benefits": {
         "orderHistory": "Ihre komplette Bestellhistorie an einem Ort",
         "orderTracking": "Behalten Sie den Überblick über Ihre Bestellungen",
@@ -534,6 +534,10 @@
       "valid": "Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Buchstaben und eine Zahl enthalten."
     },
     "editor": {
+      "add": {
+        "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead.",
+        "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout."
+      },
       "save": {
         "success": "Die Änderungen wurden gespeichert.",
         "settings": "Um Änderungen an den Einstellungen anzuwenden, aktualisiere deinen Shop.",
@@ -639,7 +643,7 @@
         "title": "Packen Sie Es"
       },
       "detail3": {
-        "alt": "Frisch und Kühn - Setze Akzente mit Farbe in deinem Outfit",
+        "alt": "Frisch und Kühn - Setzen Sie Akzente mit Farbe in Ihrem Outfit",
         "buttonText": "Jetzt entdecken",
         "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
         "subtitle": "Neue Kollektion",
@@ -826,7 +830,7 @@
   "prevAriaLabel": "Zur vorherigen Seite navigieren",
   "privacyPolicy": "Datenschutzerklärung",
   "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
-  "procentageSavings": "Du sparst {percent} % auf dieses Bundle",
+  "procentageSavings": "Sie sparen {percent} % mit diesem Bundle",
   "productAttributes": {
     "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
     "productNameMissing": "Artikelname fehlt",
@@ -893,7 +897,7 @@
       "answerSuccess": "Ihre Antwort wurde übermittelt.",
       "success": "Ihre Bewertung wurde übermittelt."
     },
-    "reviewAuthor": "Dein Name (optional)",
+    "reviewAuthor": "Ihr Name (optional)",
     "reviewText": "Artikelbewertung (optional)",
     "saveAnswer": "Antwort abgeben",
     "showAnswers": "Antworten anzeigen",
@@ -1083,7 +1087,7 @@
       "additionalAuthenticationRequiredPostcode": "Für diese Bestellung ist die Bestätigung der verwendenten Postleitzahl notwendig.",
       "createFailed": "Die Bestellung konnte nicht erstellt werden.",
       "loadOrdersFailed": "Die Bestellungen konnten nicht geladen werden.",
-      "migrateUnauthorized": "Die Bestellung konnte nicht zu deinem Account hinzugefügt werden.",
+      "migrateUnauthorized": "Die Bestellung konnte nicht zu Ihrem Account hinzugefügt werden.",
       "notFound": "Die Bestellung existiert nicht.",
       "softLoginFailed": "Die angegebenen Daten sind ungültig.",
       "assignPaymentFailed": "Die Zahlung konnte nicht zugewiesen werden."

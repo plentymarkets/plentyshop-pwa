@@ -1,16 +1,17 @@
 <template>
   <div
     class="grid gap-4 isolate"
-    :class="`grid-cols-${configuration.columnWidths.length}`"
     data-testid="multi-grid-structure"
+    :class="`lg:grid-cols-${configuration.columnWidths.length}`"
   >
     <div
-      v-for="(column, colIndex) in alignedContent"
+      v-for="(column, colIndex) in content"
       :key="column.meta.uuid"
       class="relative overflow-hidden"
       :class="hoveredIndex === colIndex ? 'border-2 border-purple-600' : ''"
       @mouseenter="hoveredIndex = colIndex"
       @mouseleave="hoveredIndex = null"
+      :class="`col-${configuration.columnWidths[colIndex]}`"
     >
       <div
         v-if="hoveredIndex === colIndex"
@@ -25,8 +26,7 @@
           :actions="getBlockActions()"
         />
       </div>
-
-      <component :is="getBlockComponent(column.name)" v-bind="column" class="relative z-0" />
+      <component :is="getBlockComponent(alignedContent[colIndex].name)" v-bind="alignedContent[colIndex]" />
     </div>
   </div>
 </template>

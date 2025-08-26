@@ -21,6 +21,7 @@ export type EmptyGridBlockProps = {
     uuid: string;
   };
 };
+
 export type AlignableBlock = Block & {
   content?: {
     imageAlignment?: string;
@@ -28,3 +29,5 @@ export type AlignableBlock = Block & {
     [key: string]: unknown;
   };
 };
+
+export type ColumnBlock = Block & { content?: Block[] };

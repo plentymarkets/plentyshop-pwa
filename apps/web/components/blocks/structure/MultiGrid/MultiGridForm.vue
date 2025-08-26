@@ -1,10 +1,7 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div data-testid="image-text-form">
-      <div
-        v-for="column in multiGridStructure.content"
-        :key="column.meta.uuid"
-      >
+      <div v-for="column in multiGridStructure.content" :key="column.meta.uuid">
         <component
           :is="getComponent(column.name)"
           v-if="column.name !== 'EmptyGridBlock'"
@@ -16,9 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Block } from '@plentymarkets/shop-api';
-
-type ColumnBlock = Block & { content?: Block[] };
+import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
