@@ -138,7 +138,7 @@ describe('Image Text Block Form', () => {
     openImageGroup();
   });
 
-  it.only('should test the text settings', () => {
+  it('should test the text settings', () => {
     openTextGroup();
     changeText();
     changeTextColor();
