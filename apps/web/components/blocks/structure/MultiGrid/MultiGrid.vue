@@ -8,10 +8,12 @@
       v-for="(column, colIndex) in content"
       :key="column.meta.uuid"
       class="relative overflow-hidden"
-      :class="hoveredIndex === colIndex ? 'border-2 border-purple-600' : ''"
+      :class="[
+        `col-${configuration.columnWidths[colIndex]}`,
+        hoveredIndex === colIndex ? 'border-2 border-purple-600' : '',
+      ]"
       @mouseenter="hoveredIndex = colIndex"
       @mouseleave="hoveredIndex = null"
-      :class="`col-${configuration.columnWidths[colIndex]}`"
     >
       <div
         v-if="hoveredIndex === colIndex"
