@@ -1,24 +1,16 @@
 <template>
   <div class="py-2">
-    <div class="flex justify-between mb-2">
-      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
-    </div>
     <UiImagePicker
-      v-if="runtimeConfig.public.isDev"
       :label="getEditorTranslation('label')"
       :image="headerLogo"
       :placeholder="placeholderImg"
       :dimensions="getEditorTranslation('description')"
-      :show-tooltip="true"
+      :tooltip="getEditorTranslation('tooltip')"
       :selected-image-type="'Logo'"
       :custom-label="'Change Logo'"
       @add="handleImageAdd"
       @delete="deleteLogo()"
     />
-    <SfInput v-else v-model="headerLogo" placeholder="Enter Logo URL" type="text" />
 
     <span class="typography-text-xs text-neutral-700">
       {{ getEditorTranslation('hint') }}
@@ -27,10 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
-
 const { placeholderImg } = usePickerHelper();
-const runtimeConfig = useRuntimeConfig();
 
 const deleteLogo = () => {
   updateSetting(placeholderImg);

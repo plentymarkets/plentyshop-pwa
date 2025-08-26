@@ -11,7 +11,7 @@
           <h2 data-testid="slider-image-group-title">{{ getEditorTranslation('images-group-label') }}</h2>
         </template>
 
-        <div v-if="runtimeConfig.public.isDev" class="images">
+        <div class="images">
           <UiImagePicker
             v-for="type in imageTypes"
             :key="type"
@@ -19,106 +19,10 @@
             :image="banner.content.image[type]"
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
-            :show-tooltip="true"
             :selected-image-type="type"
             @add="(payload) => handleImageAddBanner(payload)"
             @delete="deleteImage(banner.content.image, type)"
           />
-        </div>
-        <div v-else class="images">
-          <div class="mb-6 mt-4">
-            <label>
-              <UiFormLabel class="mb-1">{{ getEditorTranslation('image-xl-label') }}</UiFormLabel>
-              <SfInput
-                v-model="banner.content.image.wideScreen"
-                name="desktopImage"
-                data-testid="slide-4xl-image-input"
-                type="text"
-                :placeholder="getEditorTranslation('image-url-placeholder')"
-              />
-              <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                {{ getEditorTranslation('image-xl-hint') }}
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <label>
-              <UiFormLabel class="mb-1">{{ getEditorTranslation('image-l-label') }}</UiFormLabel>
-              <SfInput
-                v-model="banner.content.image.desktop"
-                name="desktopImage"
-                data-testid="slide-desktop-image-input"
-                type="text"
-                :placeholder="getEditorTranslation('image-url-placeholder')"
-              />
-              <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                {{ getEditorTranslation('image-l-hint') }}
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('image-m-label') }}</UiFormLabel>
-            <SfInput
-              v-model="banner.content.image.tablet"
-              name="desktopImage"
-              type="text"
-              :placeholder="getEditorTranslation('image-url-placeholder')"
-            />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              {{ getEditorTranslation('image-m-hint') }}
-            </div>
-          </div>
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('image-s-label') }}</UiFormLabel>
-            <SfInput
-              v-model="banner.content.image.mobile"
-              name="desktopImage"
-              type="text"
-              :placeholder="getEditorTranslation('image-url-placeholder')"
-            />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              {{ getEditorTranslation('image-s-hint') }}
-            </div>
-          </div>
-
-          <div class="mb-6">
-            <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('brightness-label') }}</label>
-            <div class="flex items-center gap-4">
-              <div class="flex-1 space-y-1">
-                <div class="flex justify-between text-xs text-gray-500">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
-                <input
-                  v-model.number="banner.content.image.brightness"
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  class="w-full"
-                />
-              </div>
-
-              <div class="relative">
-                <input
-                  v-model.number="banner.content.image.brightness"
-                  type="number"
-                  min="0"
-                  max="1"
-                  class="w-20 px-2 py-1 border rounded text-color-red-500"
-                  @input="clampBrightness($event, 'image')"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('alt-label') }}</UiFormLabel>
-            <SfInput v-model="banner.content.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              {{ getEditorTranslation('alt-hint') }}
-            </div>
-          </div>
         </div>
       </UiAccordionItem>
 
@@ -471,7 +375,6 @@
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
-const runtimeConfig = useRuntimeConfig();
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
