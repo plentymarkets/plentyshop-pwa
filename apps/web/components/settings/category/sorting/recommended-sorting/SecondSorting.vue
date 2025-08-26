@@ -2,9 +2,6 @@
   <div class="mt-4">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
     </div>
 
     <Multiselect
@@ -47,13 +44,11 @@ const recommendedSecondSortingOption = computed({
 {
   "en": {
     "label": "Second sorting option",
-    "tooltip": "Second sorting option",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Second sorting option",
-    "tooltip": "Second sorting option",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   }
