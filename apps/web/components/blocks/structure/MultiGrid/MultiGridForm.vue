@@ -1,29 +1,39 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div data-testid="image-text-form">
-      <BlocksImageForm :uuid="imageBlock?.meta?.uuid || ''" />
-      <BlocksTextCardForm :uuid="textCardBlock?.meta?.uuid || ''" />
+      <div v-for="column in multiGridStructure.content" :key="column.meta.uuid">
+        <component
+          :is="getComponent(column.name)"
+          v-if="column.name !== 'EmptyGridBlock'"
+          :uuid="column.meta?.uuid || ''"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
-import type { TextCardProps } from '~/components/blocks/TextCard/types';
-import type { ImageTextProps } from '~/components/blocks/Image/types';
+import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const multiGridStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as MultiGridProps,
-);
+const multiGridStructure = computed(() => {
+  return (findOrDeleteBlockByUuid(data.value, blockUuid.value) || { content: [] }) as {
+    content: ColumnBlock[];
+  };
+});
 
-const imageBlock = computed(
-  () => (multiGridStructure.value.content.find((block) => block.name === 'Image') || {}) as ImageTextProps,
-);
-const textCardBlock = computed(
-  () => (multiGridStructure.value.content.find((block) => block.name === 'TextCard') || {}) as TextCardProps,
-);
+const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
+
+const getComponent = (blockName: string) => {
+  if (!blockName) return null;
+  const regex = new RegExp(`${blockName}Form\\.vue$`, 'i');
+  const matched = Object.keys(modules).find((path) => regex.test(path));
+  return matched ? defineAsyncComponent(modules[matched]) : null;
+};
 </script>
