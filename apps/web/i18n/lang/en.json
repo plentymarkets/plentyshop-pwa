@@ -534,6 +534,10 @@
       "valid": "Password must be at least 8 characters long and include at least one letter and one number."
     },
     "editor": {
+      "add": {
+        "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead.",
+        "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout."
+      },
       "save": {
         "success": "Your changes have been saved.",
         "settings": "For settings changes to take effect, update your shop.",
