@@ -176,7 +176,9 @@ const getBlockActions = (block: Block) => {
       isEditable: !isEditDisabled.value,
       isMovable: false,
       isDeletable: false,
-      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+      classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+      buttonClasses: [],
+      hoverBackground: ['hover:bg-gray-100'],
     };
   }
   return undefined;

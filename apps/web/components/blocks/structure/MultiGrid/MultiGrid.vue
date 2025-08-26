@@ -1,18 +1,32 @@
 <template>
   <div
+    class="grid gap-4 isolate"
+    :class="`grid-cols-${configuration.columnWidths.length}`"
     data-testid="multi-grid-structure"
-    class="grid grid-cols-1 gap-4 items-center"
-    :class="`lg:grid-cols-${configuration.columnWidths.length}`"
   >
     <div
-      v-for="(column, colIndex) in content"
+      v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
-      :class="`col-${configuration.columnWidths[colIndex]}`"
+      class="relative overflow-hidden"
+      :class="hoveredIndex === colIndex ? 'border-2 border-purple-600' : ''"
+      @mouseenter="hoveredIndex = colIndex"
+      @mouseleave="hoveredIndex = null"
     >
-      <component
-        :is="getBlockComponent(column.name)"
-        v-bind="column"
+      <div
+        v-if="hoveredIndex === colIndex"
+        class="absolute inset-0 bg-purple-400 opacity-20 transition-opacity duration-300 z-10 pointer-events-none"
       />
+
+      <div v-if="hoveredIndex === colIndex" class="absolute inset-0 flex items-center justify-center z-30">
+        <UiBlockActions
+          v-if="hoveredIndex === colIndex"
+          :block="column"
+          :index="colIndex"
+          :actions="getBlockActions()"
+        />
+      </div>
+
+      <component :is="getBlockComponent(column.name)" v-bind="column" class="relative z-0" />
     </div>
   </div>
 </template>
@@ -27,7 +41,17 @@ const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
   string,
   () => Promise<{ default: unknown }>
 >;
-
+const hoveredIndex = ref<number | null>(null);
+const getBlockActions = () => {
+  return {
+    isEditable: true,
+    isMovable: false,
+    isDeletable: false,
+    classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+    buttonClasses: ['border-2', 'border-purple-600'],
+    hoverBackground: ['hover:bg-purple-500'],
+  };
+};
 const getBlockComponent = (blockName: string) => {
   if (!blockName) return null;
   const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
