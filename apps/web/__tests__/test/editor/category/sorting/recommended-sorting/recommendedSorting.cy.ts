@@ -30,11 +30,7 @@ describe('RecommendedSorting', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
 
-    categorySettings
-      .checkDrawerVisible()
-      .delay(500)
-      .toggleRecommendedSortingSection()
-      .closeDrawer();
+    categorySettings.checkDrawerVisible().delay(500).toggleRecommendedSortingSection().closeDrawer();
 
     categorySettings.checkDrawerNotVisible();
   });

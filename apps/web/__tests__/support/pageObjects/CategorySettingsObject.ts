@@ -35,13 +35,11 @@ export class CategorySettingsObject extends PageObject {
     const expectedAvailableSortingOptions = 19;
     const expectedSelectSortByOptions = 1;
     cy.get('@availableSorting')
-        .click()
-        .find('.multiselect__element')
-        .should('have.length', expectedAvailableSortingOptions);
+      .click()
+      .find('.multiselect__element')
+      .should('have.length', expectedAvailableSortingOptions);
 
-    cy.getByTestId('select-sort-by')
-        .find('option')
-        .should('have.length.of.at.least', expectedSelectSortByOptions);
+    cy.getByTestId('select-sort-by').find('option').should('have.length.of.at.least', expectedSelectSortByOptions);
 
     return this;
   }
