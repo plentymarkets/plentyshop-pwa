@@ -154,7 +154,7 @@ import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
-const { getSetting } = useSiteSettings('bundleItemDisplay');
+const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });
