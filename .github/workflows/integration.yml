@@ -9,6 +9,10 @@ permissions:
   packages: read
   pull-requests: write
 
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   meta:
     runs-on: ubuntu-latest
