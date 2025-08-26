@@ -129,7 +129,7 @@ describe('Image Text Block Form', () => {
     openSettingsForImageTextBlock();
   });
 
-  it.only('should change image settings', () => {
+  it('should change image settings', () => {
     openImageGroup();
     imageText.openImageSelector('wideScreen');
     imageText.selectImage();

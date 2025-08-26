@@ -86,7 +86,7 @@ describe('Banner Slider Block Form', () => {
   });
 
   describe('Image Settings', () => {
-    it.only('should open the image settings', () => {
+    it('should open the image settings', () => {
       cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('be.visible');
       bannerSlider.openImageGroup();
       bannerSlider.openImageSelector('wideScreen');
