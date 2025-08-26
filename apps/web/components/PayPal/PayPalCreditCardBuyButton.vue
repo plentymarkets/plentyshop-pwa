@@ -2,7 +2,7 @@
   <UiButton
     type="submit"
     data-testid="place-order-button"
-    :disabled="disabled"
+    :disabled="props.disabled"
     size="lg"
     class="w-full mb-4 md:mb-0 cursor-pointer"
     @click="emits('click')"
@@ -13,5 +13,8 @@
 <script lang="ts" setup>
 const emits = defineEmits(['click']);
 const { t } = useI18n();
-const { disabled = false } = defineProps<{ disabled: boolean }>();
+
+const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
+  disabled: false,
+});
 </script>
