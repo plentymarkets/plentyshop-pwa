@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 

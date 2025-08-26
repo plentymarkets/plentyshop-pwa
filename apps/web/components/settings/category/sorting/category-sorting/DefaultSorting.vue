@@ -56,13 +56,13 @@ const defaultSortingOption = computed({
 {
   "en": {
     "label": "Default sorting",
-    "tooltip": "Which sorting option do you want to preselect by default for the category view?",
+    "tooltip": "Which sorting option do you want to preselect by default for the category page?",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Default sorting",
-    "tooltip": "Which sorting option do you want to preselect by default for the category view?",
+    "tooltip": "Which sorting option do you want to preselect by default for the category page?",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   }
