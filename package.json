@@ -50,10 +50,10 @@
     "country-flag-icons": "^1.5.19",
     "dotenv": "^16.6.1",
     "drift-zoom": "^1.5.1",
-    "vue-tel-input": "^9.3.0",
+    "vue-tel-input": "^9.5.0",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.3.1",
-    "vue-tsc": "^3.0.1",
+    "vue-tsc": "^3.0.6",
     "vuedraggable": "^4.1.0",
     "yup": "^1.7.0"
   },
@@ -67,7 +67,7 @@
     "@types/vue-tel-input": "^2.1.7",
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
-    "@vite-pwa/nuxt": "^1.0.1",
+    "@vite-pwa/nuxt": "^1.0.4",
     "@vue-storefront/eslint-config": "^5.1.1",
     "@vue/test-utils": "^2.4.6",
     "commitizen": "^4.3.0",
@@ -77,13 +77,13 @@
     "happy-dom": "^15.11.7",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
-    "nuxt": "3.17.5",
-    "nuxt-security": "2.3.0",
+    "nuxt": "3.18.1",
+    "nuxt-security": "2.4.0",
     "nuxt-viewport": "^2.3.1",
     "playwright-core": "^1.54.2",
     "prettier": "^3.6.2",
     "rimraf": "^5.0.7",
-    "rollup": "^4.46.2",
+    "rollup": "^4.46.4",
     "turbo": "^2.5.6",
     "typescript": "5.9.2",
     "vitest": "^3.2.4",
@@ -92,7 +92,8 @@
   "overrides": {
     "@vue-storefront/eslint-config": {
       "prettier": "3.6.2"
-    }
+    },
+    "@vitejs/plugin-vue-jsx": "5.0.1"
   },
   "engines": {
     "node": ">=20.0.0"
