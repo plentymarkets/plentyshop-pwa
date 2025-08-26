@@ -4,9 +4,6 @@
     <p class="mb-4">{{ getEditorTranslation('note') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
     </div>
 
     <Multiselect
@@ -27,7 +24,6 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
@@ -51,7 +47,6 @@ const recommendedFirstSortingOption = computed({
     "description": "Control how the \"Recommended\" sorting option is composed. Select three sorting options. The first sorting option takes the highest priority, the second option the second highest, etc.",
     "note": "Note: These settings are only applied after saving the changes and reloading the page",
     "label": "First sorting option",
-    "tooltip": "First sorting option",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
@@ -59,7 +54,6 @@ const recommendedFirstSortingOption = computed({
     "description": "Control how the \"Recommended\" sorting option is composed. Select three sorting options. The first sorting option takes the highest priority, the second option the second highest, etc.",
     "note": "Note: These settings are only applied after saving the changes and reloading the page",
     "label": "First sorting option",
-    "tooltip": "First sorting option",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   }
