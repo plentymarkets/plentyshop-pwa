@@ -3,7 +3,6 @@ import type { ApiError, RequestPasswordResetParams, ResetPasswordParams } from '
 
 export const useResetPassword: UseResetPasswordReturn = () => {
   const state = useState<UseResetPasswordState>(`useResetPassword`, () => ({
-    data: null,
     loading: false,
   }));
 
@@ -21,8 +20,7 @@ export const useResetPassword: UseResetPasswordReturn = () => {
   const resetPassword: ResetPassword = async (params: ResetPasswordParams) => {
     try {
       state.value.loading = true;
-      const { data } = await useSdk().plentysystems.doResetPassword(params);
-      state.value.data = data ?? null;
+      await useSdk().plentysystems.doResetPassword(params);
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
