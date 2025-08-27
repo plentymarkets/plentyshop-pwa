@@ -1,34 +1,35 @@
 <template>
-  <div
-    class="grid gap-4 isolate"
-    data-testid="multi-grid-structure"
-    :class="`lg:grid-cols-${configuration.columnWidths.length}`"
-  >
+  <div class="grid isolate" :class="`lg:grid-cols-${configuration.columnWidths.length}`">
     <div
       v-for="(column, colIndex) in content"
       :key="column.meta.uuid"
-      class="relative overflow-hidden"
-      :class="[
-        `col-${configuration.columnWidths[colIndex]}`,
-        hoveredIndex === colIndex ? 'border-2 border-purple-600' : '',
-      ]"
-      @mouseenter="hoveredIndex = colIndex"
-      @mouseleave="hoveredIndex = null"
+      class="group/col relative overflow-hidden"
+      :class="[`col-${configuration.columnWidths[colIndex]}`]"
     >
       <div
-        v-if="hoveredIndex === colIndex"
-        class="absolute inset-0 bg-purple-400 opacity-20 transition-opacity duration-300 z-10 pointer-events-none"
+        class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
+        style="box-shadow: inset 0 0 0 2px #7c3aed"
       />
 
-      <div v-if="hoveredIndex === colIndex" class="absolute inset-0 flex items-center justify-center z-30">
-        <UiBlockActions
-          v-if="hoveredIndex === colIndex"
-          :block="column"
-          :index="colIndex"
-          :actions="getBlockActions()"
-        />
+      <div
+        class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
+      />
+
+      <div
+        class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
+        :class="
+          blockHasData(column)
+            ? 'group-hover/col:opacity-100 group-hover/col:visible group-hover/col:pointer-events-auto'
+            : ''
+        "
+      >
+        <UiBlockActions :block="column" :index="colIndex" :actions="getBlockActions()" />
       </div>
-      <component :is="getBlockComponent(alignedContent[colIndex].name)" v-bind="alignedContent[colIndex]" />
+      <component
+        :is="getBlockComponent(alignedContent[colIndex].name)"
+        v-bind="alignedContent[colIndex]"
+        class="relative z-0"
+      />
     </div>
   </div>
 </template>
@@ -43,7 +44,6 @@ const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
   string,
   () => Promise<{ default: unknown }>
 >;
-const hoveredIndex = ref<number | null>(null);
 const getBlockActions = () => {
   return {
     isEditable: true,
@@ -54,13 +54,16 @@ const getBlockActions = () => {
     hoverBackground: ['hover:bg-purple-500'],
   };
 };
+
 const getBlockComponent = (blockName: string) => {
   if (!blockName) return null;
   const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
   const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
   return matched ? defineAsyncComponent(modules[matched]) : null;
 };
-
+const blockHasData = (block: Block): boolean => {
+  return !!block.content && Object.keys(block.content).length > 0;
+};
 const alignBlock = computed<AlignableBlock | undefined>(
   () =>
     content.find(
@@ -91,3 +94,4 @@ const alignedContent = computed<AlignableBlock[]>(() => {
   return content as AlignableBlock[];
 });
 </script>
+<style scoped></style>
