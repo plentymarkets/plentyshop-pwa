@@ -90,6 +90,15 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
       metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
       robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
+      robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
+      robotsContactPage: process.env.NUXT_PUBLIC_ROBOTS_CONTACT_PAGE || 'all',
+      robotsCancellationRights: process.env.NUXT_PUBLIC_ROBOTS_CANCELATION_RIGHTS || 'all',
+      robotsCancellationForm: process.env.NUXT_PUBLIC_ROBOTS_CANCELATION_FORM || 'all',
+      robotsLegalDisclosure: process.env.NUXT_PUBLIC_ROBOTS_LEGAL_DISCOLSURE || 'all',
+      robotsPrivacyPolicy: process.env.NUXT_PUBLIC_ROBOTS_PRIVACY_POLICY || 'all',
+      robotsTermsAndConditions: process.env.NUXT_PUBLIC_ROBOTS_TERMS_AND_CONDITIONS || 'all',
+      robotsSearchResult: process.env.NUXT_PUBLIC_SEARCH_RESULT || 'all',
+      robotsAccessibilityDeclarationResult: process.env.NUXT_PUBLIC_DECLARATION_RESULT || 'all',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||

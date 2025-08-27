@@ -11,7 +11,7 @@
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
-        data-testid="seo-robots"
+        data-testid="seo-robots-terms-and-conditions"
       />
     </label>
   </div>
@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
 
-const { updateSetting, getSetting } = useSiteSettings('robots');
+const { updateSetting, getSetting } = useSiteSettings('robotsTermsAndConditions');
 
 const robots = computed({
   get: () => getSetting(),
@@ -32,14 +32,14 @@ const robotOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 <i18n lang="json">
 {
   "en": {
-    "label": "Robots",
-    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
-    "placeholder": "Select robots meta tag"
+    "label": "Robots for Terms and Conditions",
+    "description": "Controls how search engines should treat Contact Page. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "placeholder": "Select robots"
   },
   "de": {
-    "label": "Robots",
-    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
-    "placeholder": "Select robots meta tag"
+    "label": "Robots for Terms and Conditions",
+    "description": "Controls how search engines should treat Contact Page. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "placeholder": "Select robots"
   }
 }
 </i18n>
