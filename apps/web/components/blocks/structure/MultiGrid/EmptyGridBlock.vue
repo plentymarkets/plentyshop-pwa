@@ -5,8 +5,8 @@
       data-testid="active-empty-multicolumn"
       class="h-[196px] flex-1 border-2 border-dashed border-sky-400 bg-sky-50 p-6 flex flex-col items-center justify-center text-center"
     >
-      <p class="font-semibold text-gray-800">Block will be placed here</p>
-      <p class="text-sm text-gray-500">Choose one from templates</p>
+      <p class="font-semibold text-gray-800">{{ getEditorTranslation('placeholder') }}</p>
+      <p class="text-sm text-gray-500">{{ getEditorTranslation('choose') }}</p>
     </div>
     <div
       v-else
@@ -36,3 +36,16 @@ const addBlockToColumn = () => {
   visiblePlaceholder.value = { uuid: '', position: 'top' };
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "placeholder": "Block will be placed here",
+    "choose": "Choose one from templates"
+  },
+  "de": {
+    "placeholder": "Block will be placed here",
+    "choose": "Choose one from templates"
+  }
+}
+</i18n>
