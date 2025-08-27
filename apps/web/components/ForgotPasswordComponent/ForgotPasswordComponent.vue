@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center">
+  <div class="flex flex-col items-center justify-center mb-2">
     <form class="flex flex-col gap-4 p-1 rounded-md w-full md:w-[400px]" @submit.prevent="sendMail">
       <div class="text-lg font-medium">
         {{ t('auth.resetPassword.heading') }}

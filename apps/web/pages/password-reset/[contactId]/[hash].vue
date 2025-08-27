@@ -1,48 +1,99 @@
 <template>
-  <div>
-    <div class="text-lg font-medium text-center !ml-0">Reset Password</div>
-    <div class="flex flex-col items-center justify-center my-1">
-      <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="executeResetPassword">
-        <label>
-          <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
-          <UiFormPasswordInput v-model="password" name="password" required />
-        </label>
+  <NuxtLayout name="auth" :heading="t('auth.setNewPassword.heading')">
+    <form class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md" @submit.prevent="executeResetPassword">
+      <p class="mb-6">
+        {{ t('auth.setNewPassword.description') }}
+      </p>
+      <label class="block mb-4">
+        <UiFormLabel>{{ t('auth.setNewPassword.password') }} {{ t('form.required') }}</UiFormLabel>
+        <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
+      </label>
+      <label>
+        <UiFormLabel>{{ t('auth.setNewPassword.repeatPassword') }} {{ t('form.required') }}</UiFormLabel>
+        <UiFormPasswordInput
+          v-model="password2"
+          name="repeatedPassword"
+          autocomplete="current-password"
+          required
+        />
+        <p v-if="password2 && !passwordsMatch" class="text-red-500 text-sm">
+          {{ t('auth.setNewPassword.passwordsNotMatching') }}
+        </p>
+      </label>
 
-        <label>
-          <UiFormLabel>{{ t('form.passwordLabel') }}2 {{ t('form.required') }}</UiFormLabel>
-          <UiFormPasswordInput v-model="password2" name="password2" required />
-        </label>
-
-        <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="login-submit">
+      <div class="text-center mt-6">
+        <UiButton type="submit" class="w-1/2" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <span v-else>
-            Save new password
+            {{ t('auth.setNewPassword.button') }}
           </span>
         </UiButton>
-        <div class="text-center">
-          <span class="my-5 font-bold">Remember your password?</span>
-          <SfLink variant="primary" class="cursor-pointer">
-            Login
-          </SfLink>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+
+      <div class="text-center mt-2">
+        <span class="my-5">{{ t('auth.setNewPassword.rememberPassword') }} </span>
+        <SfLink variant="primary" class="cursor-pointer" @click="openAuthentication">
+          {{ t('account.navBottomHeadingLogin') }}
+        </SfLink>
+      </div>
+    </form>
+    <UiModal
+      v-if="isAuthenticationOpen"
+      v-model="isAuthenticationOpen"
+      tag="section"
+      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+    >
+      <header>
+        <UiButton
+          :aria-label="t('closeDialog')"
+          square
+          variant="tertiary"
+          class="absolute right-2 top-2"
+          @click="closeAuthentication"
+        >
+          <SfIconClose />
+        </UiButton>
+      </header>
+      <LoginComponent
+        :is-soft-login="true"
+        :is-modal="true"
+        @logged-in="navigateAfterAuth(true)"
+      />
+    </UiModal>
+  </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
-import { SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose } from '@storefront-ui/vue';
 
-const { loading } = useResetPassword();
+const { resetPassword, loading } = useResetPassword();
 const { t } = useI18n();
 const route = useRoute();
+const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
+const localePath = useLocalePath();
 
+const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');
 const password2 = ref('');
-const hash = route.params.hash;
-const contactId =route.params.contactId;
+const hash = route.params.hash as string;
+const contactId = Number(route.params.contactId);
+
+definePageMeta({
+  layout: false,
+  middleware: ['guest-guard'],
+});
+
+const navigateAfterAuth = (reload: boolean) => {
+  if (reload) {
+    localePath(paths.home);
+  } else {
+    closeAuthentication();
+  }
+};
 
 const executeResetPassword = async () => {
-  // await login(email.value, password.value); //TODO: need to implement resetPassword function in useResetpassword and implement it here await resetPassword({password: password, password2: password2, contactId: contactId, hash: hash});
+  if(passwordsMatch.value){
+    await resetPassword({password: password.value, password2: password2.value, hash: hash, contactId: contactId});
+  }
 };
 </script>
