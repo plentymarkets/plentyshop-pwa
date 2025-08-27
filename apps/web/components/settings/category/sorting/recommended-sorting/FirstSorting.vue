@@ -8,7 +8,7 @@
 
     <Multiselect
       v-model="recommendedFirstSortingOption"
-      data-testid="available-sorting-options"
+      data-testid="recommended-first-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"
