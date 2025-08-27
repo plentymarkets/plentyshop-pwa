@@ -535,6 +535,8 @@
     },
     "editor": {
       "add": {
+        "placeholder": "Block will be placed here",
+        "choose": "Choose one from templates",
         "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead.",
         "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout."
       },
