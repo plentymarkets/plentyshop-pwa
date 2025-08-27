@@ -1,5 +1,5 @@
 <template>
-  <div v-if="product.bundleComponents" class="border-t-2 my-2">
+  <div v-if="product.bundleComponents" class="border-t-2 my-2" data-testid="bundle-components-list">
     <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-2">
       <SfLink
         v-if="isLinkable(item)"
