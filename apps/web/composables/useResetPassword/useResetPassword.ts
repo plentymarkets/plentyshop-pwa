@@ -22,7 +22,7 @@ export const useResetPassword: UseResetPasswordReturn = () => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.doResetPassword(params);
-      state.value.data = data.value ?? null;
+      state.value.data = data ?? null;
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
