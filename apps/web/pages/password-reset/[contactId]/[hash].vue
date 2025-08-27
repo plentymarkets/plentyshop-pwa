@@ -7,6 +7,7 @@
       <label class="block mb-4">
         <UiFormLabel>{{ t('auth.setNewPassword.password') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
+        <UiFormHelperText>{{ t('auth.setNewPassword.help') }}</UiFormHelperText>
       </label>
       <label>
         <UiFormLabel>{{ t('auth.setNewPassword.repeatPassword') }} {{ t('form.required') }}</UiFormLabel>
