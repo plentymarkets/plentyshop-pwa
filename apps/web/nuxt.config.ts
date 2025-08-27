@@ -47,6 +47,7 @@ export default defineNuxtConfig({
         'validator',
         'vue-multiselect',
         'vue3-lazy-hydration',
+        'vue-tel-input',
         'vuedraggable/src/vuedraggable',
       ],
     },
