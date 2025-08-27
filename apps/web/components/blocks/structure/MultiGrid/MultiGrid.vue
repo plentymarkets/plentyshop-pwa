@@ -11,9 +11,7 @@
         style="box-shadow: inset 0 0 0 2px #7c3aed"
       />
 
-      <div
-        class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
-      />
+      <div class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15" />
 
       <div
         class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
