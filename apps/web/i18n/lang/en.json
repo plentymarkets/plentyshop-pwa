@@ -239,6 +239,7 @@
       "thankYou": "Thank you, if there is an account registered with {0}, you should receive the password reset link in your inbox."
     },
     "setNewPassword": {
+      "resetSucceded": "Your password has been successfully reset. You can now log in with your new password.",
       "passwordsNotMatching": "Passwords do not match",
       "rememberPassword": "Remember your password?",
       "button": "Save new password",

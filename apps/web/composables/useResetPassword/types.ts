@@ -4,7 +4,7 @@ export interface UseResetPasswordState {
   loading: boolean;
 }
 
-export type ResetPassword = (params: ResetPasswordParams) => void;
+export type ResetPassword = (params: ResetPasswordParams) => Promise<boolean>;
 export type SendEmail = (params: RequestPasswordResetParams) => void;
 
 export interface UseResetPassword {

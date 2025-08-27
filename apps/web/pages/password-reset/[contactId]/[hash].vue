@@ -72,6 +72,7 @@ const { t } = useI18n();
 const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();
+const { send } = useNotification();
 
 const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');
@@ -94,7 +95,11 @@ const navigateAfterAuth = (reload: boolean) => {
 
 const executeResetPassword = async () => {
   if(passwordsMatch.value){
-    await resetPassword({password: password.value, password2: password2.value, hash: hash, contactId: contactId});
+    const success = await resetPassword({password: password.value, password2: password2.value, hash: hash, contactId: contactId});
+    if(success){
+      send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
+      openAuthentication();
+    }
   }
 };
 </script>

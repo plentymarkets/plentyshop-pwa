@@ -17,12 +17,16 @@ export const useResetPassword: UseResetPasswordReturn = () => {
     }
   };
 
-  const resetPassword: ResetPassword = async (params: ResetPasswordParams) => {
+  const resetPassword: ResetPassword = async (params: ResetPasswordParams): Promise<boolean> => {
     try {
+      const success = ref(false);
       state.value.loading = true;
       await useSdk().plentysystems.doResetPassword(params);
+      success.value = true;
+      return success.value;
     } catch (error) {
       useHandleError(error as ApiError);
+      return false;
     } finally {
       state.value.loading = false;
     }
