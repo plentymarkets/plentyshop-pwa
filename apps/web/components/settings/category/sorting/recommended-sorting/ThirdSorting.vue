@@ -6,7 +6,7 @@
 
     <Multiselect
       v-model="recommendedThirdSortingOption"
-      data-testid="available-sorting-options"
+      data-testid="recommended-third-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"
