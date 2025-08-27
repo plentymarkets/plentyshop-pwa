@@ -35,5 +35,4 @@ const selectAttributes = lastSegment.split('_').length > 2;
 onMounted(() => {
   setAttribute(product, selectAttributes);
 });
-
 </script>
