@@ -73,12 +73,11 @@ watch(
   value,
   (newVal) => {
     if (!newVal) {
-      setValue(newVal)
+      setValue(newVal);
     }
   },
-  { immediate: true }
-)
-
+  { immediate: true },
+);
 
 watch(
   () => meta.value,
