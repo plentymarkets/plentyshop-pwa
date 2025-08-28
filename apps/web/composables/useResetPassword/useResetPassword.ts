@@ -21,7 +21,6 @@ export const useResetPassword: UseResetPasswordReturn = () => {
     try {
       state.value.loading = true;
       await useSdk().plentysystems.doResetPassword(params);
-      success.value = true;
       return true;
     } catch (error) {
       useHandleError(error as ApiError);
