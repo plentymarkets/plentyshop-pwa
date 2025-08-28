@@ -58,7 +58,7 @@
       <LoginComponent
         :is-soft-login="true"
         :is-modal="true"
-        @logged-in="navigateAfterAuth(true)"
+        @logged-in="navigateAfterAuth"
       />
     </UiModal>
   </NuxtLayout>
@@ -82,15 +82,11 @@ const contactId = Number(route.params.contactId);
 
 definePageMeta({
   layout: false,
-  middleware: ['guest-guard'],
 });
 
-const navigateAfterAuth = (reload: boolean) => {
-  if (reload) {
-    localePath(paths.home);
-  } else {
-    closeAuthentication();
-  }
+const navigateAfterAuth = () => {
+  closeAuthentication();
+  window.location.href = localePath(paths.home);
 };
 
 const executeResetPassword = async () => {
