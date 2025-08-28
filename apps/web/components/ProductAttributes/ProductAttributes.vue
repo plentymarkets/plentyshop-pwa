@@ -28,12 +28,12 @@ const { product } = defineProps<ProductAttributesProps>();
 const route = useRoute();
 
 const lastSegment = route.path.split('/').pop() ?? '';
-const selectAttributes = lastSegment.split('_').length > 2;
+const selectAttributes = ref(lastSegment.split('_').length > 2);
 
 watch(
-  [selectAttributes],
+  selectAttributes,
   () => {
-    setAttribute(product, selectAttributes);
+    setAttribute(product, selectAttributes.value);
   },
   { immediate: true },
 );
