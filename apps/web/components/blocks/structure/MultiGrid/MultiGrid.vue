@@ -7,16 +7,20 @@
       :class="[`col-${configuration.columnWidths[colIndex]}`]"
     >
       <div
+        v-if="runtimeConfig.public.isDev"
         class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
         style="box-shadow: inset 0 0 0 2px #7c3aed"
       />
 
-      <div class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15" />
+      <div
+        v-if="runtimeConfig.public.isDev"
+        class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
+      />
 
       <div
         class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
         :class="
-          blockHasData(column)
+          blockHasData(column) && runtimeConfig.public.isDev
             ? 'group-hover/col:opacity-100 group-hover/col:visible group-hover/col:pointer-events-auto'
             : ''
         "
@@ -37,6 +41,7 @@ import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structu
 import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
+const runtimeConfig = useRuntimeConfig();
 
 const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
   string,
