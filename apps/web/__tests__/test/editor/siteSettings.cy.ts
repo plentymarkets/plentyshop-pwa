@@ -28,10 +28,12 @@ describe('SiteSettings', () => {
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
       .delay(500)
+      .openDesignSubcategory()
       .toggleFonts()
       .changeFont(font)
       .checkFontPreview(font)
       .checkSaveButtonEnabled()
+      .back()
       .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
@@ -45,10 +47,12 @@ describe('SiteSettings', () => {
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
       .delay(500)
+      .openDesignSubcategory()
       .toggleColor()
       .changeColor(primaryColor, secondaryColor)
       .checkColorPreview(primaryColor)
       .checkSaveButtonEnabled()
+      .back()
       .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();
@@ -62,10 +66,12 @@ describe('SiteSettings', () => {
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
       .delay(500)
+      .openDesignSubcategory()
       .toggleBlockSpacing()
       .changeBlockSpacing(blockSpacing)
       .checkBlockSpacingPreview(blockSpacingMargin)
       .checkSaveButtonEnabled()
+      .back()
       .closeDrawer();
 
     siteSettings.checkDrawerNotVisible();

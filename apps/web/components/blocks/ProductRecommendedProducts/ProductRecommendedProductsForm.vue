@@ -156,7 +156,7 @@ const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
     "category-id-label": "Category ID",
     "category-id-placeholder": "Enter Category Id",
 
-    "text-color-label": "Text Color",
+    "text-color-label": "Text Colour",
 
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
@@ -179,7 +179,7 @@ const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
     "category-id-label": "Category ID",
     "category-id-placeholder": "Enter Category Id",
 
-    "text-color-label": "Text Color",
+    "text-color-label": "Text Colour",
 
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",

@@ -1,15 +1,23 @@
 <template>
-  <div class="">
+  <div class="py-2">
+    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
+
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <SfTooltip
+        :label="getEditorTranslation('tooltip')"
+        :placement="'top'"
+        :show-arrow="true"
+        class="ml-2 z-10"
+        data-testid="available-sorting-option-tooltip"
+      >
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
 
     <Multiselect
       v-model="availableSortingOptions"
-      data-testid="available-sorting-options"
+      data-testid="available-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"
@@ -84,13 +92,15 @@ const removeOption = (option: SortingOption) => {
 <i18n lang="json">
 {
   "en": {
-    "label": "Available Sorting Options",
+    "label": "Enable item sorting by",
+    "description": "Control how the items on category pages are sorted and sortable by users.",
     "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view?",
     "placeholder": "Mark some options as available",
     "deselect-label": "Selected"
   },
   "de": {
-    "label": "Available Sorting Options",
+    "label": "Enable item sorting by",
+    "description": "Control how the items on category pages are sorted and sortable by users.",
     "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view?",
     "placeholder": "Mark some options as available",
     "deselect-label": "Selected"

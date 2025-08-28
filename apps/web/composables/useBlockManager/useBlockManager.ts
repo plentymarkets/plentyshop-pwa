@@ -1,5 +1,6 @@
 import type { BlocksList } from '../../components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
+import type { BlockPosition } from './types';
 import { v4 as uuid } from 'uuid';
 
 const blocksLists = ref<BlocksList>({});
@@ -9,11 +10,11 @@ const isEmptyBlock = (block: Block): boolean => {
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-const visiblePlaceholder = ref<{ uuid: string; position: 'top' | 'bottom' }>({
+const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
   position: 'top',
 });
-const togglePlaceholder = (uuid: string, position: 'top' | 'bottom') => {
+const togglePlaceholder = (uuid: string, position: BlockPosition) => {
   visiblePlaceholder.value = { uuid, position };
 };
 
@@ -26,6 +27,7 @@ export const useBlockManager = () => {
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
   const { openDrawerWithView } = useSiteConfiguration();
+  const { send } = useNotification();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -33,6 +35,11 @@ export const useBlockManager = () => {
   const clickedBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
+  const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
+
+  const updateMultigridColumnUuid = (uuid: string) => {
+    multigridColumnUuid.value = uuid;
+  };
 
   const getBlocksLists = async () => {
     try {
@@ -54,7 +61,7 @@ export const useBlockManager = () => {
     return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
   };
 
-  const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: 'top' | 'bottom') => {
+  const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
@@ -75,19 +82,45 @@ export const useBlockManager = () => {
     }
 
     const { parent, index } = parentInfo;
+    const targetBlock = parent[index];
+
+    if (position === 'inside') {
+      insertIntoColumn(targetBlock, newBlock, parent);
+    } else {
+      insertNextToBlock(parent, index, newBlock, position);
+    }
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }
 
-    const insertIndex = position === 'top' ? index : index + 1;
-
-    parent.splice(insertIndex, 0, newBlock);
-
     updateBlocks(copiedData);
     openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+  };
+
+  const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
+    const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
+
+    if (colIndex === -1) {
+      send({ type: 'negative', message: `Couldn't insert block.` });
+      return;
+    }
+
+    const updatedBlock = {
+      ...newBlock,
+    };
+
+    parent.splice(colIndex, 1, updatedBlock);
+  };
+
+  const insertNextToBlock = (parent: Block[], index: number, newBlock: Block, position: BlockPosition) => {
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
+    const insertIndex = position === 'top' ? index : index + 1;
+    parent.splice(insertIndex, 0, newBlock);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -200,6 +233,20 @@ export const useBlockManager = () => {
     dragState.isDragging = false;
   };
 
+  const getBlockDepth = (uuid: string): number => {
+    const search = (blocks: Block[], targetUuid: string, depth: number): number => {
+      for (const block of blocks) {
+        if (block.meta.uuid === targetUuid) return depth;
+        if (block.type === 'structure' && Array.isArray(block.content)) {
+          const found = search(block.content, targetUuid, depth + 1);
+          if (found !== -1) return found;
+        }
+      }
+      return -1;
+    };
+    return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
+  };
+
   return {
     blocksLists,
     currentBlock,
@@ -207,6 +254,8 @@ export const useBlockManager = () => {
     isClicked,
     clickedBlockIndex,
     isTablet,
+    multigridColumnUuid,
+    updateMultigridColumnUuid,
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,
@@ -222,5 +271,6 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
+    getBlockDepth,
   };
 };

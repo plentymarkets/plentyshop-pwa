@@ -34,13 +34,13 @@ const ogTitle = computed({
 {
   "en": {
     "label": "Title for OpenGraph",
-    "tooltip": "The Open Graph title appears as the headline when your page is shared on social media.",
+    "tooltip": "The Open Graph title appears as the headline when your shop is shared on social media.",
     "placeholder": "Enter title",
     "hint": "Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews."
   },
   "de": {
     "label": "Title for OpenGraph",
-    "tooltip": "The Open Graph title appears as the headline when your page is shared on social media.",
+    "tooltip": "The Open Graph title appears as the headline when your shop is shared on social media.",
     "placeholder": "Enter title",
     "hint": "Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews."
   }
