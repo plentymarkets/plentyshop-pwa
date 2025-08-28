@@ -239,9 +239,12 @@
       "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten."
     },
     "setNewPassword": {
-      "button": "Neues Passwort festlegen",
+      "resetSucceded": "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie können sich nun mit Ihrem neuen Passwort anmelden.",
+      "passwordsNotMatching": "Passwörter stimmen nicht überein",
+      "rememberPassword": "Erinnern Sie sich an Ihr Passwort?",
+      "button": "Neues Passwort speichern",
       "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten.",
-      "heading": "Neues Passwort festlegen",
+      "heading": "Passwort zurücksetzen",
       "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
       "password": "Neues Passwort",
       "repeatPassword": "Neues Passwort wiederholen"

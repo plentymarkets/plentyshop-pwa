@@ -1,5 +1,5 @@
-import type { UseResetPasswordState, UseResetPasswordReturn, SendEmail } from './types';
-import type { ApiError, RequestPasswordResetParams } from '@plentymarkets/shop-api';
+import type { UseResetPasswordState, UseResetPasswordReturn, SendEmail, ResetPassword } from './types';
+import type { ApiError, RequestPasswordResetParams, ResetPasswordParams } from '@plentymarkets/shop-api';
 
 export const useResetPassword: UseResetPasswordReturn = () => {
   const state = useState<UseResetPasswordState>(`useResetPassword`, () => ({
@@ -17,8 +17,22 @@ export const useResetPassword: UseResetPasswordReturn = () => {
     }
   };
 
+  const resetPassword: ResetPassword = async (params: ResetPasswordParams): Promise<boolean> => {
+    try {
+      state.value.loading = true;
+      await useSdk().plentysystems.doResetPassword(params);
+      return true;
+    } catch (error) {
+      useHandleError(error as ApiError);
+      return false;
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
   return {
     sendEmail,
+    resetPassword,
     ...toRefs(state.value),
   };
 };
