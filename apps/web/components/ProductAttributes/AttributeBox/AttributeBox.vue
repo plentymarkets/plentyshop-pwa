@@ -72,7 +72,7 @@ const setValue = (value: number | undefined) => {
 watch(
   value,
   (newVal) => {
-    if (!newVal) {
+    if (newVal) {
       setValue(newVal);
     }
   },
