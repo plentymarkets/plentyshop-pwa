@@ -19,7 +19,6 @@ export const useResetPassword: UseResetPasswordReturn = () => {
 
   const resetPassword: ResetPassword = async (params: ResetPasswordParams): Promise<boolean> => {
     try {
-      const success = ref(false);
       state.value.loading = true;
       await useSdk().plentysystems.doResetPassword(params);
       success.value = true;
