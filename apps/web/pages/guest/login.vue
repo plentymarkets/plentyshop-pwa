@@ -69,7 +69,7 @@
           >
             <SfIconClose />
           </UiButton>
-          <ForgotPasswordComponent :is-forgot-password-only="true"/>
+          <ForgotPasswordComponent :is-forgot-password-only="true" />
         </header>
       </UiModal>
     </div>
@@ -102,7 +102,7 @@ const password = ref('');
 const loginSubmit = ref(false);
 
 const toggleForgotPasswordModal = () => {
- isAuthenticationOpen.value = !isAuthenticationOpen.value;
+  isAuthenticationOpen.value = !isAuthenticationOpen.value;
 };
 
 const loginUser = async () => {

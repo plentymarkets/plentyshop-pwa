@@ -11,12 +11,7 @@
       </label>
       <label>
         <UiFormLabel>{{ t('auth.setNewPassword.repeatPassword') }} {{ t('form.required') }}</UiFormLabel>
-        <UiFormPasswordInput
-          v-model="password2"
-          name="repeatedPassword"
-          autocomplete="current-password"
-          required
-        />
+        <UiFormPasswordInput v-model="password2" name="repeatedPassword" autocomplete="current-password" required />
         <p v-if="password2 && !passwordsMatch" class="text-red-500 text-sm">
           {{ t('auth.setNewPassword.passwordsNotMatching') }}
         </p>
@@ -55,11 +50,7 @@
           <SfIconClose />
         </UiButton>
       </header>
-      <LoginComponent
-        :is-soft-login="true"
-        :is-modal="true"
-        @logged-in="navigateAfterAuth"
-      />
+      <LoginComponent :is-soft-login="true" :is-modal="true" @logged-in="navigateAfterAuth" />
     </UiModal>
   </NuxtLayout>
 </template>
@@ -90,9 +81,14 @@ const navigateAfterAuth = () => {
 };
 
 const executeResetPassword = async () => {
-  if(passwordsMatch.value){
-    const success = await resetPassword({password: password.value, password2: password2.value, hash: hash, contactId: contactId});
-    if(success){
+  if (passwordsMatch.value) {
+    const success = await resetPassword({
+      password: password.value,
+      password2: password2.value,
+      hash: hash,
+      contactId: contactId,
+    });
+    if (success) {
       send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
       openAuthentication();
     }

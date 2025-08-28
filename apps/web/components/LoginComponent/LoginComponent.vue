@@ -37,7 +37,11 @@
     </div>
   </div>
   <div v-else>
-    <ForgotPasswordComponent :is-soft-login="isSoftLogin" @change-view-login="changeToForgotPassword" @change-view-register="$emit('change-view')"/>
+    <ForgotPasswordComponent
+      :is-soft-login="isSoftLogin"
+      @change-view-login="changeToForgotPassword"
+      @change-view-register="$emit('change-view')"
+    />
   </div>
 </template>
 

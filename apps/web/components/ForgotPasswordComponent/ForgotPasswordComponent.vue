@@ -18,7 +18,14 @@
           {{ t('auth.resetPassword.resetPassword') }}
         </span>
       </UiButton>
-      <UiButton v-if="!isForgotPasswordOnly" type="reset" variant="secondary" :disabled="loading" data-testid="reset-password-mail-submit" @click="$emit('change-view-login')">
+      <UiButton
+        v-if="!isForgotPasswordOnly"
+        type="reset"
+        variant="secondary"
+        :disabled="loading"
+        data-testid="reset-password-mail-submit"
+        @click="$emit('change-view-login')"
+      >
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.resetPassword.backToLogin') }}
@@ -27,11 +34,7 @@
 
       <div v-if="!isSoftLogin && !isForgotPasswordOnly" class="text-sm text-center">
         <span>{{ t('auth.login.createAccount') }}</span>
-        <SfLink
-          variant="primary"
-          class="ml-1 cursor-pointer underline"
-          @click="$emit('change-view-register')"
-        >
+        <SfLink variant="primary" class="ml-1 cursor-pointer underline" @click="$emit('change-view-register')">
           {{ t('auth.login.createAccountLinkLabel') }}
         </SfLink>
       </div>
@@ -41,9 +44,9 @@
 
 <script lang="ts" setup>
 import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import type {ForgotPasswordProps} from './types';
+import type { ForgotPasswordProps } from './types';
 
-const { isSoftLogin = false, isForgotPasswordOnly = false} = defineProps<ForgotPasswordProps>();
+const { isSoftLogin = false, isForgotPasswordOnly = false } = defineProps<ForgotPasswordProps>();
 
 const { sendEmail, loading } = useResetPassword();
 const { send } = useNotification();
@@ -54,7 +57,7 @@ const emits = defineEmits(['change-view-login', 'change-view-register']);
 const email = ref('');
 
 const sendMail = async () => {
-  await sendEmail({email: email.value});
+  await sendEmail({ email: email.value });
   send({ message: t('auth.resetPassword.emailSent'), type: 'positive' });
   emits('change-view-login');
 };
