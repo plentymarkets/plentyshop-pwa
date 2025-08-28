@@ -6,8 +6,8 @@
     </div>
     <label>
       <Multiselect
-        v-model="seoRichSnippetBrand"
-        :options="seoRichSnippetBrands"
+        v-model="barCode"
+        :options="barCodes"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
@@ -19,25 +19,25 @@
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
 
-const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
+const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeGtin8');
 
-const seoRichSnippetBrand = computed({
+const barCode = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
 
-const seoRichSnippetBrands = ['Do not display', 'External name of the manufacturer', 'Use brand name from variation property of the type text'];
+const barCodes = ['Do not display', 'External name of the manufacturer', 'Name of the manufacturer'];
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for the brand in Rich Snippets of the item page",
+    "label": "Select source for GTIN-8 barcode in Rich Snippets of the item page",
     "description": "",
     "placeholder": ""
   },
   "de": {
-    "label": "Select source for the brand in Rich Snippets of the item page",
+    "label": "Select source for GTIN-8 barcode in Rich Snippets of the item page",
     "description": "",
     "placeholder": ""
   }

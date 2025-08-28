@@ -116,7 +116,16 @@ export default defineNuxtConfig({
       seoAvailability8: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY || 'In stock',
       seoAvailability9: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY || 'In stock',
       seoAvailability10: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY || 'In stock',
-      seoSourcebrand: process.env.NUXT_PUBLIC_ITEM_SEO_SOURCE_BRAND || 'External name of manufacturer',
+      seoRichSnippetBrand: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BRAND || 'Do not display',
+      seoRichSnippetManufacturer: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_MANUFACTURER || 'Do not display',
+      seoRichSnippetBarcodeGtin: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_GTIN || 'Do not display',
+      seoRichSnippetBarcodeGtin8: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_GTIN8 || 'Do not display',
+      seoRichSnippetBarcodeGtin13: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_GTIN13 || 'Do not display',
+      seoRichSnippetBarcodeIsbn: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_ISBN || 'Do not display',
+      seoRichSnippetMpnBarcode: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_MPN_BARCODE || 'Do not display',
+      seoRichSnippetBarcodeIdFromVariation: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_ID_FROM_VARIATION || 'Do not display',
+      seoRichSnippetIdForPriceValidity: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_PRICE_VALIDITY || 'Do not display',
+      seoRichSnippetSkuBarcode: process.env.NUXT_PUBLIC_SEO_RICH_SKU_BARCODE || 'Do not display',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||

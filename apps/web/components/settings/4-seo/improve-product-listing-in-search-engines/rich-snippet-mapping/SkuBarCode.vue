@@ -6,12 +6,12 @@
     </div>
     <label>
       <Multiselect
-        v-model="seoRichSnippetBrand"
-        :options="seoRichSnippetBrands"
+        v-model="skuCode"
+        :options="skuCodes"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
-        data-testid="seo-source-brand"
+        data-testid="seo-mpn-barcode"
       />
     </label>
   </div>
@@ -19,25 +19,25 @@
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
 
-const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
 
-const seoRichSnippetBrand = computed({
+const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetSkuBarcode');
+
+const skuCode = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
-
-const seoRichSnippetBrands = ['Do not display', 'External name of the manufacturer', 'Use brand name from variation property of the type text'];
+const skuCodes = ['Use variation ID', 'Use variation ID', 'Use SKU from variation property'];
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for the brand in Rich Snippets of the item page",
+    "label": "Select source Barcode Mpn",
     "description": "",
     "placeholder": ""
   },
   "de": {
-    "label": "Select source for the brand in Rich Snippets of the item page",
+    "label": "Select source Barcode Mpn",
     "description": "",
     "placeholder": ""
   }

@@ -6,8 +6,8 @@
     </div>
     <label>
       <Multiselect
-        v-model="seoRichSnippetBrand"
-        :options="seoRichSnippetBrands"
+        v-model="seoRichSnippetManufacturer"
+        :options="seoRichSnippetManufacturers"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
@@ -19,14 +19,14 @@
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
 
-const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
+const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetManufacturer');
 
-const seoRichSnippetBrand = computed({
+const seoRichSnippetManufacturer = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
 
-const seoRichSnippetBrands = ['Do not display', 'External name of the manufacturer', 'Use brand name from variation property of the type text'];
+const seoRichSnippetManufacturers = ['Do not display', 'External name of the manufacturer', 'Name of the manufacturer'];
 </script>
 
 <i18n lang="json">
