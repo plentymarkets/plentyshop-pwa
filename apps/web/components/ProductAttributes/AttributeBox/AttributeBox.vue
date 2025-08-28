@@ -69,15 +69,16 @@ const setValue = (value: number | undefined) => {
   selectedValue.value = value;
 };
 
-(watch(
-  () => value.value,
-  () => {
-    if (!value.value) {
-      setValue(value.value);
+watch(
+  value,
+  (newVal) => {
+    if (!newVal) {
+      setValue(newVal)
     }
   },
-),
-  { immediate: true });
+  { immediate: true }
+)
+
 
 watch(
   () => meta.value,
