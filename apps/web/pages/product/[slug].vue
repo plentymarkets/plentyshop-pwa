@@ -6,7 +6,9 @@
           <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
-          <LazyUiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
+          <NuxtLazyHydrate when-idle>
+            <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
+          </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />

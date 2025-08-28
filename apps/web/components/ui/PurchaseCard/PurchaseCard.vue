@@ -189,6 +189,8 @@ onMounted(() => {
 
 onBeforeRouteLeave(() => {
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) clear();
+  resetInvalidFields();
+  resetAttributeFields();
 });
 
 const priceWithProperties = computed(
