@@ -6,7 +6,7 @@
           <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
-          <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
+          <LazyUiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
