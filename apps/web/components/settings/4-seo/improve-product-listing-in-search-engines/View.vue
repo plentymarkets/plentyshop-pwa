@@ -20,14 +20,14 @@ import { SfIconInfo } from '@storefront-ui/vue';
 <i18n lang="json">
 {
   "en": {
-    "label": "Meta Data",
-    "description": "Global defaults",
-    "hint": "These settings apply to any page without its own, page-specific settings."
+    "label": "Improve product listings in search engines",
+    "description": "Control how item details are shown in search results. This helps search engines display your items more clearly and attractively.",
+    "hint": ""
   },
   "de": {
-    "label": "Meta Data",
-    "description": "Global defaults",
-    "hint": "These settings apply to any page without its own, page-specific settings."
+    "label": "Improve product listings in search engines",
+    "description": "Control how item details are shown in search results. This helps search engines display your items more clearly and attractively.",
+    "hint": ""
   }
 }
 </i18n>
