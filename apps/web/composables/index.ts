@@ -100,3 +100,4 @@ export * from './usePickerHelper';
 export * from './useItemTable';
 export * from './useImageMetadata';
 export * from './useImageAdd';
+export * from './useResetPassword';
