@@ -8,7 +8,7 @@
     </div>
     <label>
       <SfInput
-        v-model="metaKeywords"
+        v-model="googleAnalyticsTrakingId"
         type="text"
         data-testid="seo-keywords"
         :placeholder="getEditorTranslation('placeholder')"
@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('metaKeywords');
+const { updateSetting, getSetting } = useSiteSettings('googleAnalyticsTrakingId');
 
-const metaKeywords = computed({
+const googleAnalyticsTrakingId = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
@@ -30,14 +30,14 @@ const metaKeywords = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Default meta keywords",
-    "tooltip": "List of relevant search terms, seperated by commas. Some search engines may use them to improve discoverability.",
-    "placeholder": "Enter keywords"
+    "label": "Google analytics Tracking ID",
+    "tooltip": "",
+    "placeholder": ""
   },
   "de": {
-    "label": "Default meta keywords",
-    "tooltip": "List of relevant search terms, seperated by commas. Some search engines may use them to improve discoverability.",
-    "placeholder": "Enter keywords"
+    "label": "Google analytics Tracking ID",
+    "tooltip": "",
+    "placeholder": ""
   }
 }
 </i18n>

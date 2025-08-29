@@ -126,6 +126,10 @@ export default defineNuxtConfig({
       seoRichSnippetBarcodeIdFromVariation: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_ID_FROM_VARIATION || 'Do not display',
       seoRichSnippetIdForPriceValidity: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_PRICE_VALIDITY || 'Do not display',
       seoRichSnippetSkuBarcode: process.env.NUXT_PUBLIC_SEO_RICH_SKU_BARCODE || 'Do not display',
+      enableGoogleAnalytics: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_ANALITICS || 'false',
+      googleAnalyticsTrakingId: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_TRACKING_ID || '',
+      sendGrossPricesToGoogleAnalytics: process.env.NUXT_PUBLIC_SEND_GROSS_PRICES_TO_GOOGLE_ANALITICS || 'false',
+      googleAnalyticsCookieGroup: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_COOKIE_GROUP || 'Necessary',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||
