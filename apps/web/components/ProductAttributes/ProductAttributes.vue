@@ -1,13 +1,11 @@
 <template>
   <div v-if="attributes.length > 0" data-testid="product-attributes" class="mb-2">
     <div v-for="(attribute, index) in attributes" :key="index" class="mb-2">
-      <ClientOnly>
-        <Component
-          :is="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
-          v-if="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
-          :attribute="attribute"
-        />
-      </ClientOnly>
+      <Component
+        :is="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
+        v-if="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
+        :attribute="attribute"
+      />
     </div>
   </div>
 </template>
@@ -30,7 +28,13 @@ const { product } = defineProps<ProductAttributesProps>();
 const route = useRoute();
 
 const lastSegment = route.path.split('/').pop() ?? '';
-const selectAttributes = lastSegment.split('_').length > 2;
+const selectAttributes = ref(lastSegment.split('_').length > 2);
 
-onNuxtReady(() => setAttribute(product, selectAttributes));
+watch(
+  selectAttributes,
+  () => {
+    setAttribute(product, selectAttributes.value);
+  },
+  { immediate: true },
+);
 </script>
