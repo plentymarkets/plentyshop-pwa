@@ -130,6 +130,8 @@ export default defineNuxtConfig({
       googleAnalyticsTrakingId: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_TRACKING_ID || '',
       sendGrossPricesToGoogleAnalytics: process.env.NUXT_PUBLIC_SEND_GROSS_PRICES_TO_GOOGLE_ANALITICS || 'false',
       googleAnalyticsCookieGroup: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_COOKIE_GROUP || 'Necessary',
+      manufacturerExternalName: process.env.NUXT_PUBLIC_MANUFACTURER_EXTERNAL_NAME || '0',
+      manufacturerName: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || '0',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||
