@@ -13,13 +13,11 @@
           <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
         </label>
 
-        <DevOnly>
-          <div class="text-end">
-            <SfLink variant="primary" class="cursor-pointer" @click="changeToForgotPassword">
-              {{ t('auth.login.forgotPasswordLabel') }}
-            </SfLink>
-          </div>
-        </DevOnly>
+        <div class="text-end">
+          <SfLink variant="primary" class="cursor-pointer" @click="changeToForgotPassword">
+            {{ t('auth.login.forgotPasswordLabel') }}
+          </SfLink>
+        </div>
 
         <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="login-submit">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
