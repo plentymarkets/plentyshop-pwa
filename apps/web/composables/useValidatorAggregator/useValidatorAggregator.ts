@@ -27,6 +27,9 @@ export const useValidatorAggregator: UseValidatorAggregatorReturn = (type: strin
    * ```
    */
   const registerValidator = (validator: ValidatorMethodType) => {
+    if (import.meta.server) {
+      return;
+    }
     state.value.validators.push(validator);
   };
 
