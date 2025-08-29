@@ -5,6 +5,8 @@ type BlockActionOptions = {
   isMovable?: boolean;
   isDeletable?: boolean;
   classes?: string[];
+  buttonClasses: string[];
+  hoverBackground: string[];
 };
 
 export interface BlockActionsProps {
