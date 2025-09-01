@@ -212,12 +212,7 @@ export const useBlockManager = () => {
   const deleteBlock = (uuid: string) => {
     if (data.value && uuid !== null) {
       if (getBlockDepth(uuid) > 0) {
-        const parentInfo = findBlockParent(data.value, uuid);
-        if (parentInfo) {
-          const { parent, index } = parentInfo;
-          const newBlock = getTemplateByLanguage('layout', 0, $i18n.locale.value).content[0];
-          parent.splice(index, 1, newBlock);
-        }
+        replaceWithEmptyGridBlock(uuid);
       } else {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
@@ -225,6 +220,15 @@ export const useBlockManager = () => {
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
+    }
+  };
+
+  const replaceWithEmptyGridBlock = (uuid: string) => {
+    const parentInfo = findBlockParent(data.value, uuid);
+    if (parentInfo) {
+      const { parent, index } = parentInfo;
+      const newBlock = getTemplateByLanguage('layout', 0, $i18n.locale.value).content[0];
+      parent.splice(index, 1, newBlock);
     }
   };
 
