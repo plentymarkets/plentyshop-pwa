@@ -34,13 +34,11 @@
             <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
           </label>
 
-          <DevOnly>
-            <div class="text-end mt-4">
-              <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
-                {{ t('auth.login.forgotPasswordLabel') }}
-              </SfLink>
-            </div>
-          </DevOnly>
+          <div class="text-end mt-4">
+            <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
+              {{ t('auth.login.forgotPasswordLabel') }}
+            </SfLink>
+          </div>
 
           <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">
             <SfLoaderCircular v-if="loading || loginSubmit" class="flex justify-center items-center" size="base" />
