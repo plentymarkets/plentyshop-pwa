@@ -211,7 +211,16 @@ export const useBlockManager = () => {
 
   const deleteBlock = (uuid: string) => {
     if (data.value && uuid !== null) {
-      findOrDeleteBlockByUuid(data.value, uuid, true);
+      if (getBlockDepth(uuid) > 0) {
+        const parentInfo = findBlockParent(data.value, uuid);
+        if (parentInfo) {
+          const { parent, index } = parentInfo;
+          const newBlock = getTemplateByLanguage('layout', 0, $i18n.locale.value).content[0];
+          parent.splice(index, 1, newBlock);
+        }
+      } else {
+        findOrDeleteBlockByUuid(data.value, uuid, true);
+      }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
 
       const { closeDrawer } = useSiteConfiguration();
