@@ -1,16 +1,14 @@
 <template>
   <div class="py-2">
+    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Robots</UiFormLabel>
-      <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
     <label>
       <Multiselect
         v-model="robots"
         :options="robotOptions"
-        placeholder="Select robots meta tag"
+        :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
         data-testid="seo-robots"
@@ -19,7 +17,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 
 const { updateSetting, getSetting } = useSiteSettings('robots');
@@ -30,7 +27,19 @@ const robots = computed({
 });
 
 const robotOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
-
-const robotsTooltip =
-  'Controls how search engines treat your pages. Choose "all" to allow indexing and following links, or select other options to restrict them.';
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Robots",
+    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "placeholder": "Select robots meta tag"
+  },
+  "de": {
+    "label": "Robots",
+    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "placeholder": "Select robots meta tag"
+  }
+}
+</i18n>

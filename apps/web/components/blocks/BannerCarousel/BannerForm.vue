@@ -8,10 +8,10 @@
         data-testid="slider-image-group"
       >
         <template #summary>
-          <h2 data-testid="slider-image-group-title">Images</h2>
+          <h2 data-testid="slider-image-group-title">{{ getEditorTranslation('images-group-label') }}</h2>
         </template>
 
-        <div v-if="runtimeConfig.public.isDev" class="images">
+        <div class="images">
           <UiImagePicker
             v-for="type in imageTypes"
             :key="type"
@@ -19,103 +19,10 @@
             :image="banner.content.image[type]"
             :placeholder="placeholderImg"
             :dimensions="imageDimensions[type]"
-            :show-tooltip="true"
-            @select="openUploader(type)"
+            :selected-image-type="type"
+            @add="(payload) => handleImageAddBanner(payload)"
             @delete="deleteImage(banner.content.image, type)"
           />
-        </div>
-        <div v-else class="images">
-          <div class="mb-6 mt-4">
-            <label>
-              <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
-              <SfInput
-                v-model="banner.content.image.wideScreen"
-                name="desktopImage"
-                data-testid="slide-4xl-image-input"
-                type="text"
-                placeholder="Enter URL of image"
-              />
-              <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                Recommended dimensions: 1920 x 1080 px
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <label>
-              <UiFormLabel class="mb-1">Image L (Desktop)</UiFormLabel>
-              <SfInput
-                v-model="banner.content.image.desktop"
-                name="desktopImage"
-                data-testid="slide-desktop-image-input"
-                type="text"
-                placeholder="Enter URL of image"
-              />
-              <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                Recommended dimensions: 1024 x 576 px
-              </div>
-            </label>
-          </div>
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">Image M (Tablet)</UiFormLabel>
-            <SfInput
-              v-model="banner.content.image.tablet"
-              name="desktopImage"
-              type="text"
-              placeholder="Enter URL of image"
-            />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              Recommended dimensions: 768 x 432 px
-            </div>
-          </div>
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">Image S (Mobile)</UiFormLabel>
-            <SfInput
-              v-model="banner.content.image.mobile"
-              name="desktopImage"
-              type="text"
-              placeholder="Enter URL of image"
-            />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              Recommended dimensions: 320 x 320 px
-            </div>
-          </div>
-
-          <div class="mb-6">
-            <label class="block text-sm font-medium mb-4">Brightness</label>
-            <div class="flex items-center gap-4">
-              <div class="flex-1 space-y-1">
-                <div class="flex justify-between text-xs text-gray-500">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
-                <input
-                  v-model.number="banner.content.image.brightness"
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  class="w-full"
-                />
-              </div>
-
-              <div class="relative">
-                <input
-                  v-model.number="banner.content.image.brightness"
-                  type="number"
-                  min="0"
-                  max="1"
-                  class="w-20 px-2 py-1 border rounded text-color-red-500"
-                  @input="clampBrightness($event, 'image')"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">Alt</UiFormLabel>
-            <SfInput v-model="banner.content.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Alternative image text</div>
-          </div>
         </div>
       </UiAccordionItem>
 
@@ -126,53 +33,53 @@
         data-testid="banner-text-group"
       >
         <template #summary>
-          <h2 data-testid="slider-text-group-title">Text</h2>
+          <h2 data-testid="slider-text-group-title">{{ getEditorTranslation('text-group-label') }}</h2>
         </template>
 
         <div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Pre-title</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
             <SfInput
               v-model="banner.content.text.pretitle"
               name="preTitle"
               type="text"
-              placeholder="PreTitle"
+              :placeholder="getEditorTranslation('pretitle-placeholder')"
               data-testid="banner-input-pre-title"
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Main title</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
             <SfInput
               v-model="banner.content.text.title"
               name="mainTitle"
               type="text"
-              placeholder="Title"
+              :placeholder="getEditorTranslation('main-title-placeholder')"
               data-testid="banner-input-title"
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Subtitle</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
             <SfInput
               v-model="banner.content.text.subtitle"
               name="subtitle"
               type="text"
-              placeholder="SubTitle"
+              :placeholder="getEditorTranslation('subtitle-placeholder')"
               data-testid="banner-input-sub-title"
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Description</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
             <SfTextarea
               v-model="banner.content.text.htmlDescription"
               name="description"
               data-testid="banner-text-content"
               type="text"
               class="w-full min-h-[232px]"
-              placeholder="Text that supports HTML formatting"
+              :placeholder="getEditorTranslation('description-placeholder')"
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Text Color</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
 
             <SfInput v-model="banner.content.text.color" type="text">
               <template #suffix>
@@ -187,14 +94,14 @@
             </SfInput>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>
             <SfSwitch
               v-model="banner.content.text.background"
               class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
           <div v-if="banner.content.text.background" class="mb-6">
-            <UiFormLabel class="mb-1">Textbox Color</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
 
             <SfInput v-model="banner.content.text.bgcolor" type="text">
               <template #suffix>
@@ -209,7 +116,7 @@
             </SfInput>
           </div>
           <div v-if="banner.content.text.background" class="mb-6">
-            <label class="block text-sm font-medium mb-4">Textbox Opacity</label>
+            <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('textbox-opacity-label') }}</label>
             <div class="flex items-center gap-4">
               <div class="flex-1 space-y-1">
                 <div class="flex justify-between text-xs text-gray-500">
@@ -240,7 +147,7 @@
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Textbox Alignment (x)</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-x-label') }}</UiFormLabel>
 
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
@@ -255,7 +162,7 @@
                 @click="banner.content.text.justify = 'top'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'top' }" />
-                Top
+                {{ getEditorTranslation('textbox-align-x-top-label') }}
               </div>
 
               <div
@@ -268,7 +175,7 @@
                 @click="banner.content.text.justify = 'center'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'center' }" />
-                Center
+                {{ getEditorTranslation('textbox-align-x-center-label') }}
               </div>
 
               <div
@@ -281,13 +188,13 @@
                 @click="banner.content.text.justify = 'bottom'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'bottom' }" />
-                Bottom
+                {{ getEditorTranslation('textbox-align-x-bottom-label') }}
               </div>
             </div>
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Textbox Alignment (y)</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
 
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
@@ -302,7 +209,7 @@
                 @click="banner.content.text.align = 'left'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'left' }" />
-                Left
+                {{ getEditorTranslation('textbox-align-y-left-label') }}
               </div>
 
               <div
@@ -315,7 +222,7 @@
                 @click="banner.content.text.align = 'center'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'center' }" />
-                Center
+                {{ getEditorTranslation('textbox-align-y-center-label') }}
               </div>
 
               <div
@@ -328,13 +235,13 @@
                 @click="banner.content.text.align = 'right'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'right' }" />
-                Right
+                {{ getEditorTranslation('textbox-align-y-right-label') }}
               </div>
             </div>
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Text Alignment (y)</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
             >
@@ -351,7 +258,7 @@
                   class="mr-1 w-[1.1rem]"
                   :class="{ invisible: banner.content.text.textAlignment !== 'left' }"
                 />
-                Left
+                {{ getEditorTranslation('text-align-option-left-label') }}
               </div>
 
               <div
@@ -367,7 +274,7 @@
                   class="mr-1 w-[1.1rem]"
                   :class="{ invisible: banner.content.text.textAlignment !== 'center' }"
                 />
-                Center
+                {{ getEditorTranslation('text-align-option-center-label') }}
               </div>
 
               <div
@@ -383,7 +290,7 @@
                   class="mr-1 w-[1.1rem]"
                   :class="{ invisible: banner.content.text.textAlignment !== 'right' }"
                 />
-                Right
+                {{ getEditorTranslation('text-align-option-right-label') }}
               </div>
             </div>
           </div>
@@ -396,34 +303,34 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2 data-testid="slider-button-group-title">Button</h2>
+          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('button-group-label') }}</h2>
         </template>
 
         <div class="images">
           <div class="mb-6 mt-4">
             <label>
-              <UiFormLabel class="mb-1">Label</UiFormLabel>
+              <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
               <SfInput
                 v-model="banner.content.button.label"
                 data-testid="slider-button-label"
                 name="label"
                 type="text"
-                placeholder="Button"
+                :placeholder="getEditorTranslation('button-text-placeholder')"
               />
             </label>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Link Target</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
             <SfInput
               v-model="banner.content.button.link"
               name="link"
               data-testid="slider-button-link"
               type="text"
-              placeholder="Enter URL here"
+              :placeholder="getEditorTranslation('button-link-placeholder')"
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Variant</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('button-variant-label') }}</UiFormLabel>
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
             >
@@ -439,7 +346,7 @@
                   class="mr-1 w-[1.1rem]"
                   :class="{ invisible: banner.content.button.variant !== 'primary' }"
                 />
-                Primary
+                {{ getEditorTranslation('button-variant-primary-label') }}
               </div>
 
               <div
@@ -454,7 +361,7 @@
                   class="mr-1 w-[1.1rem]"
                   :class="{ invisible: banner.content.button.variant !== 'secondary' }"
                 />
-                Secondary
+                {{ getEditorTranslation('button-variant-secondary-label') }}
               </div>
             </div>
           </div>
@@ -462,36 +369,18 @@
       </UiAccordionItem>
     </div>
   </div>
-  <UiImageSelectorModal
-    :open="isUploaderOpen"
-    :image-type="selectedImageType"
-    :current-image="banner.content.image[selectedImageType as BannerImageType]"
-    @close="closeUploader"
-    @add="handleImageAdd"
-  />
 </template>
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
-const runtimeConfig = useRuntimeConfig();
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const {
-  placeholderImg,
-  labels,
-  imageDimensions,
-  imageTypes,
-  deleteImage,
-  isUploaderOpen,
-  openUploader,
-  closeUploader,
-  selectedImageType,
-} = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -516,9 +405,10 @@ const clampBrightness = (event: Event, type: string) => {
   }
 };
 
-const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
-
-type BannerImageType = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
+const handleImageAddBanner = ({ image, type }: { image: string; type: string }) => {
+  const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
+  handleImageAdd({ image, type });
+};
 </script>
 
 <style scoped>
@@ -533,3 +423,118 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 </style>
+
+<i18n lang="json">
+{
+  "en": {
+    "images-group-label": "Images",
+
+    "image-xl-label": "Image XL (Desktop)",
+    "image-l-label": "Image L (Desktop)",
+    "image-m-label": "Image M (Tablet)",
+    "image-s-label": "Image S (Mobile)",
+    "image-url-placeholder": "Enter URL of image",
+    "image-xl-hint": "Recommended dimensions: 1920 × 1080 px",
+    "image-l-hint": "Recommended dimensions: 1024 × 576 px",
+    "image-m-hint": "Recommended dimensions: 768 × 432 px",
+    "image-s-hint": "Recommended dimensions: 320 × 320 px",
+
+    "brightness-label": "Brightness",
+    "alt-label": "Alt",
+    "alt-hint": "Alternative image text",
+
+    "text-group-label": "Text",
+    "pretitle-label": "Pre-title",
+    "pretitle-placeholder": "PreTitle",
+    "main-title-label": "Main title",
+    "main-title-placeholder": "Title",
+    "subtitle-label": "Subtitle",
+    "subtitle-placeholder": "SubTitle",
+    "description-label": "Description",
+    "description-placeholder": "Text that supports HTML formatting",
+    "text-color-label": "Text Colour",
+    "textbox-background-label": "Textbox Background",
+    "textbox-color-label": "Textbox Colour",
+    "textbox-opacity-label": "Textbox Opacity",
+
+    "textbox-align-x-label": "Textbox Alignment (x)",
+    "textbox-align-x-top-label": "Top",
+    "textbox-align-x-center-label": "Center",
+    "textbox-align-x-bottom-label": "Bottom",
+
+    "textbox-align-y-label": "Textbox Alignment (y)",
+    "textbox-align-y-left-label": "Left",
+    "textbox-align-y-center-label": "Center",
+    "textbox-align-y-right-label": "Right",
+
+    "text-align-label": "Text Alignment (y)",
+    "text-align-option-left-label": "Left",
+    "text-align-option-center-label": "Center",
+    "text-align-option-right-label": "Right",
+
+    "button-group-label": "Button",
+    "button-text-label": "Label",
+    "button-text-placeholder": "Button",
+    "button-link-label": "Link Target",
+    "button-link-placeholder": "Enter URL here",
+    "button-variant-label": "Variant",
+    "button-variant-primary-label": "Primary",
+    "button-variant-secondary-label": "Secondary"
+  },
+  "de": {
+    "images-group-label": "Images",
+
+    "image-xl-label": "Image XL (Desktop)",
+    "image-l-label": "Image L (Desktop)",
+    "image-m-label": "Image M (Tablet)",
+    "image-s-label": "Image S (Mobile)",
+    "image-url-placeholder": "Enter URL of image",
+    "image-xl-hint": "Recommended dimensions: 1920 × 1080 px",
+    "image-l-hint": "Recommended dimensions: 1024 × 576 px",
+    "image-m-hint": "Recommended dimensions: 768 × 432 px",
+    "image-s-hint": "Recommended dimensions: 320 × 320 px",
+
+    "brightness-label": "Brightness",
+    "alt-label": "Alt",
+    "alt-hint": "Alternative image text",
+
+    "text-group-label": "Text",
+    "pretitle-label": "Pre-title",
+    "pretitle-placeholder": "PreTitle",
+    "main-title-label": "Main title",
+    "main-title-placeholder": "Title",
+    "subtitle-label": "Subtitle",
+    "subtitle-placeholder": "SubTitle",
+    "description-label": "Description",
+    "description-placeholder": "Text that supports HTML formatting",
+    "text-color-label": "Text Colour",
+    "textbox-background-label": "Textbox Background",
+    "textbox-color-label": "Textbox Colour",
+    "textbox-opacity-label": "Textbox Opacity",
+
+    "textbox-align-x-label": "Textbox Alignment (x)",
+    "textbox-align-x-top-label": "Top",
+    "textbox-align-x-center-label": "Center",
+    "textbox-align-x-bottom-label": "Bottom",
+
+    "textbox-align-y-label": "Textbox Alignment (y)",
+    "textbox-align-y-left-label": "Left",
+    "textbox-align-y-center-label": "Center",
+    "textbox-align-y-right-label": "Right",
+
+    "text-align-label": "Text Alignment (y)",
+    "text-align-option-left-label": "Left",
+    "text-align-option-center-label": "Center",
+    "text-align-option-right-label": "Right",
+
+    "button-group-label": "Button",
+    "button-text-label": "Label",
+    "button-text-placeholder": "Button",
+    "button-link-label": "Link Target",
+    "button-link-placeholder": "Enter URL here",
+    "button-variant-label": "Variant",
+    "button-variant-primary-label": "Primary",
+    "button-variant-secondary-label": "Secondary"
+  }
+}
+</i18n>

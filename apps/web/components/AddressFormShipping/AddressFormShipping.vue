@@ -52,7 +52,7 @@
     </label>
 
     <label v-if="hasShippingCompany" class="md:col-span-2">
-      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('form.vatIdLabel') }}</UiFormLabel>
       <SfInput
         v-model="vatNumber"
         autocomplete="vatNumber"

@@ -1,21 +1,20 @@
 <template>
   <div class="py-2">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Title for OpenGraph</UiFormLabel>
-      <SfTooltip
-        label="The Open Graph title appears as the headline when your page is shared on social media."
-        :placement="'top'"
-        :show-arrow="true"
-        class="ml-2 z-10"
-      >
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
     <label>
-      <SfInput v-model="ogTitle" type="text" placeholder="Enter URL of the image" data-testid="og-field" />
-
-      <span class="typography-text-xs text-neutral-700"
-        >Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews.
+      <SfInput
+        v-model="ogTitle"
+        type="text"
+        :placeholder="getEditorTranslation('placeholder')"
+        data-testid="og-field"
+      />
+      <span class="typography-text-xs text-neutral-700">
+        {{ getEditorTranslation('hint') }}
       </span>
     </label>
   </div>
@@ -30,3 +29,20 @@ const ogTitle = computed({
   set: (value) => updateSetting(value),
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Title for OpenGraph",
+    "tooltip": "The Open Graph title appears as the headline when your shop is shared on social media.",
+    "placeholder": "Enter title",
+    "hint": "Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews."
+  },
+  "de": {
+    "label": "Title for OpenGraph",
+    "tooltip": "The Open Graph title appears as the headline when your shop is shared on social media.",
+    "placeholder": "Enter title",
+    "hint": "Optimal length: 40–60 characters (max. ~80) to ensure full visibility in previews."
+  }
+}
+</i18n>

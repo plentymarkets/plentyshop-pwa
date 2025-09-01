@@ -1,22 +1,19 @@
 <template>
   <div class="mt-4">
     <div class="flex justify-between mb-2">
-      <UiFormLabel>Third sorting option</UiFormLabel>
-      <SfTooltip label="Third sorting option" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
+      <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
 
     <Multiselect
       v-model="recommendedThirdSortingOption"
-      data-testid="available-sorting-options"
+      data-testid="recommended-third-sorting-select"
       :options="sortingOptions"
-      placeholder="Select default option"
+      :placeholder="getEditorTranslation('placeholder')"
       label="label"
       track-by="value"
       class="cursor-pointer"
       select-label=""
-      deselect-label="Selected"
+      :deselect-label="getEditorTranslation('deselect-label')"
       :allow-empty="true"
     />
   </div>
@@ -25,7 +22,6 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
@@ -42,3 +38,18 @@ const recommendedThirdSortingOption = computed({
   },
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "label": "Third sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  },
+  "de": {
+    "label": "Third sorting option",
+    "placeholder": "Select default option",
+    "deselect-label": "Selected"
+  }
+}
+</i18n>

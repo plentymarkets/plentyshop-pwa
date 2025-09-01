@@ -4,18 +4,19 @@
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
-      <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
-        aria-label="Open pages drawer"
-        data-testid="open-pages-drawer"
-        @click="toggleDrawerView('PagesView')"
-      >
-        <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
-        <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
-      </button>
-
+      <SfTooltip :label="pagesLabel" placement="right" :show-arrow="true" class="inline-grid">
+        <button
+          type="button"
+          class="editor-button relative py-2 flex justify-center"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
+          aria-label="Open pages drawer"
+          data-testid="open-pages-drawer"
+          @click="toggleDrawerView('PagesView')"
+        >
+          <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
+          <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
+        </button>
+      </SfTooltip>
       <component
         :is="trigger.component"
         v-for="trigger in triggersModules"
@@ -28,10 +29,13 @@
 </template>
 
 <script setup lang="ts">
+import { SfTooltip } from '@storefront-ui/vue';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 
 const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
+
+const pagesLabel = 'Page and category management: create, update, and organize your content.';
 
 function toggleDrawerView(view: DrawerView) {
   if (drawerView.value === view) {
