@@ -64,6 +64,7 @@ const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();
 const { send } = useNotification();
+const { getSession } = useCustomer();
 
 const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');
@@ -88,9 +89,11 @@ const executeResetPassword = async () => {
       hash: hash,
       contactId: contactId,
     });
+
     if (success) {
+      await getSession();
       send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
-      openAuthentication();
+      await navigateTo(localePath(paths.home));
     }
   }
 };
