@@ -1,6 +1,7 @@
 <template>
   <header>
     <UiButton
+      v-if="!disableCloseButton"
       :aria-label="t('closeDialog')"
       type="button"
       square
@@ -41,7 +42,9 @@
 
     <div class="flex justify-end gap-x-4 mt-6">
       <div>
-        <UiButton type="button" variant="secondary" @click="confirmCancel">{{ t('paypal.unbrandedCancel') }}</UiButton>
+        <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="confirmCancel">{{
+          t('paypal.unbrandedCancel')
+        }}</UiButton>
       </div>
       <div>
         <UiButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
@@ -68,9 +71,11 @@ const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const localePath = useLocalePath();
 const { t } = useI18n();
+const { processingOrder } = useProcessingOrder();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
 const { emit: emitPlentyEvent } = usePlentyEvent();
+const disableCloseButton = computed(() => processingOrder.value || loading.value);
 
 const confirmCancel = () => {
   emit('confirmCancel');
@@ -81,6 +86,10 @@ onMounted(() => {
     const cardFields = paypal.CardFields({
       async createOrder() {
         loading.value = true;
+        if (!(await useCartStockReservation().reserve())) {
+          loading.value = false;
+          return '';
+        }
         const data = await createTransaction({
           type: 'basket',
         });
@@ -93,7 +102,7 @@ onMounted(() => {
           await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
 
           emitPlentyEvent('module:clearCart', null);
-          useProcessingOrder().processingOrder.value = true;
+          processingOrder.value = true;
           clearCartItems();
 
           emitPlentyEvent('frontend:orderCreated', order);
@@ -103,7 +112,8 @@ onMounted(() => {
         }
         loading.value = false;
       },
-      onError() {
+      async onError() {
+        await useCartStockReservation().unreserve();
         send({
           type: 'negative',
           message: t('paypal.errorMessageCreditCard'),

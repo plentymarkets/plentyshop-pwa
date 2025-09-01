@@ -22,6 +22,7 @@ describe('Mollie payment methods', () => {
   // The credit card test fails if "MOLLIE_TEST_MODE=true" is missing in the .env. Make sure it's set locally and in the GitHub Action runtime.
   it('[feature] Check mollie credit card payment and place a test order', () => {
     cy.intercept('/plentysystems/doAdditionalInformation').as('doAdditionalInformation');
+    cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
     cy.intercept('/plentysystems/doCreateMolliePaymentFromBasket').as('doCreateMolliePaymentFromBasket');
     cy.intercept('/plentysystems/doCreatePlentyPaymentFromMolliePayment').as('doCreatePlentyPaymentFromMolliePayment');
     cy.intercept('/plentysystems/doPlaceOrder').as('doPlaceOrder');
@@ -32,6 +33,7 @@ describe('Mollie payment methods', () => {
 
     checkout.fillMollieCreditCardForm();
     cy.getByTestId('pay-creditcard-button').click();
+    cy.wait('@doPreparePayment');
 
     cy.wait('@doCreateMolliePaymentFromBasket');
     cy.wait('@doCreatePlentyPaymentFromMolliePayment');
@@ -52,11 +54,13 @@ describe('Mollie payment methods', () => {
     cy.intercept('/plentysystems/doAdditionalInformation').as('doAdditionalInformation');
     cy.intercept('/plentysystems/doCreateMolliePaymentFromBasket').as('doCreateMolliePaymentFromBasket');
     cy.intercept('/plentysystems/doCreatePlentyPaymentFromMolliePayment').as('doCreatePlentyPaymentFromMolliePayment');
+    cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
     cy.intercept('/plentysystems/doPlaceOrder').as('doPlaceOrder');
     cy.intercept('/plentysystems/getOrder').as('getOrder');
 
     checkout.checkMolliePayPal().placeOrderButtons.click();
     cy.wait('@doAdditionalInformation');
+    cy.wait('@doPreparePayment');
     cy.wait('@doCreateMolliePaymentFromBasket');
     cy.wait('@doCreatePlentyPaymentFromMolliePayment');
 
@@ -74,11 +78,13 @@ describe('Mollie payment methods', () => {
 
   it('[feature] Check mollie PayPal and place a failed paid order', () => {
     cy.intercept('/plentysystems/doAdditionalInformation').as('doAdditionalInformation');
+    cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
     cy.intercept('/plentysystems/doCreateMolliePaymentFromBasket').as('doCreateMolliePaymentFromBasket');
     cy.intercept('/plentysystems/doCreatePlentyPaymentFromMolliePayment').as('doCreatePlentyPaymentFromMolliePayment');
 
     checkout.checkMolliePayPal().placeOrderButtons.click();
     cy.wait('@doAdditionalInformation');
+    cy.wait('@doPreparePayment');
     cy.wait('@doCreateMolliePaymentFromBasket');
     cy.wait('@doCreatePlentyPaymentFromMolliePayment');
 
