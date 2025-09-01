@@ -64,7 +64,6 @@
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/turnstile": "^0.8.0",
     "@paypal/paypal-js": "8.2.0",
-    "@types/vue-tel-input": "^2.1.7",
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^1.0.4",
