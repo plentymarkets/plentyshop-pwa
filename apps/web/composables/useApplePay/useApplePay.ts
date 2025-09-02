@@ -48,8 +48,9 @@ export const useApplePay = () => {
     return true;
   };
 
-  const createPaymentRequest = () => {
+  const createPaymentRequest = async () => {
     const { data: cart } = useCart();
+    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
     return {
       countryCode: state.value.config.countryCode,
       merchantCapabilities: state.value.config.merchantCapabilities,
@@ -57,15 +58,12 @@ export const useApplePay = () => {
       currencyCode: state.value.config.currencyCode,
       requiredShippingContactFields: [],
       requiredBillingContactFields: ['postalAddress'],
-      total: {
-        type: 'final',
-        label: useRuntimeConfig().public.storename ?? 'PlentyONE Shop',
-        amount: cartGetters.getTotals(cart.value).total.toString(),
-      },
+      lineItems: transaction.lineItems,
+      total: transaction.total,
     } as ApplePayJS.ApplePayPaymentRequest;
   };
 
-  const processPayment = (emits: ButtonClickedEmits) => {
+  const processPayment = async (emits: ButtonClickedEmits) => {
     const { processingOrder } = useProcessingOrder();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
@@ -74,7 +72,7 @@ export const useApplePay = () => {
     const { emit } = usePlentyEvent();
 
     try {
-      const paymentRequest = createPaymentRequest();
+      const paymentRequest = await createPaymentRequest();
       const paymentSession = new ApplePaySession(14, paymentRequest);
 
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {

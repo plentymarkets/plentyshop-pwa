@@ -30,7 +30,7 @@ const emits = defineEmits<{
 async function onGooglePaymentButtonClicked() {
   await emits('button-clicked', async (successfully) => {
     if (successfully) {
-      const paymentDataRequest = getGooglePaymentDataRequest();
+      const paymentDataRequest = await getGooglePaymentDataRequest();
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
