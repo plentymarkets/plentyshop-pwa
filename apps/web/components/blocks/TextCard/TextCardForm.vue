@@ -201,6 +201,88 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+  <UiAccordionItem
+    v-model="layoutSettings"
+    data-testid="layout-settings"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
+    </template>
+
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="textCardBlock.layout.backgroundColor" type="text" data-testid="input-background-color">
+          <template #suffix>
+            <label
+              for="background-color"
+              :style="{ backgroundColor: textCardBlock.layout.backgroundColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input
+                id="background-color"
+                v-model="textCardBlock.layout.backgroundColor"
+                data-testid="color-input-background"
+                type="color"
+                class="invisible w-8"
+              />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>    <div class="py-2">
+      <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+      <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span>↑</span>
+          <input
+            v-model.number="textCardBlock.layout.paddingTop"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-top"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span>↓</span>
+          <input
+            v-model.number="textCardBlock.layout.paddingBottom"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-bottom"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span>←</span>
+          <input
+            v-model.number="textCardBlock.layout.paddingLeft"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-left"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+          <span>→</span>
+          <input
+            v-model.number="textCardBlock.layout.paddingRight"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-right"
+          />
+        </div>
+      </div>
+    <div class="px-4 py-3">
+      <span class="typography-text-xs text-neutral-700">
+        {{ getEditorTranslation('spacing-around') }}
+      </span>
+    </div>
+    </div>
+
+  </UiAccordionItem>
+
 </template>
 
 <script setup lang="ts">
@@ -213,12 +295,32 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<TextCardFormProps>();
 
-const textCardBlock = computed(
-  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as TextCardContent,
-);
+const textCardBlock = computed<TextCardContent>(() => {
+  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
+
+  const content = rawContent as Partial<TextCardContent>;
+
+  if (!content.text) content.text = {};
+  if (!content.button) content.button = {};
+  if (!content.layout) {
+    content.layout = {
+      backgroundColor: '',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0',
+    };
+  }
+
+  return content as TextCardContent;
+});
+
+
+
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);
+const layoutSettings = ref(false);
 </script>
 
 <i18n lang="json">
@@ -240,7 +342,13 @@ const buttonSettings = ref(false);
     "button-link-label": "Link target",
     "outline-label": "Outline",
     "button-variant-primary-label": "Primary",
-    "button-variant-secondary-label": "Secondary"
+    "button-variant-secondary-label": "Secondary",
+
+    "layout-group-label": "Layout",
+    "background-color-label": "Background Color",
+    "padding-label": "Padding",
+    "spacing-around": "Spacing around the text elements"
+
   },
   "de": {
     "text-group-label": "Text",

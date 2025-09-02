@@ -23,6 +23,14 @@ export type TextCardContent = {
     link?: string;
     variant?: 'primary' | 'secondary';
   };
+layout: {
+  backgroundColor?: string;
+  paddingTop?: string;
+  paddingBottom?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
+}
+
 };
 
 export type TextCardFormProps = {
