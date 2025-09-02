@@ -144,7 +144,8 @@ export const useApplePay = () => {
       });
 
       paymentSession.begin();
-    } catch {
+    } catch (error) {
+      console.warn(error);
       showErrorNotification($i18n.t('storefrontError.unknownError'));
     }
   };
