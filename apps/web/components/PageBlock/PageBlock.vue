@@ -127,8 +127,15 @@ const getBlockComponent = computed(() => {
 });
 
 const contentProps = computed(() => {
-  return props.root ? { ...props.block } : { ...props.block, ...attrs };
+  const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
+
+  return {
+    ...baseProps,
+    disableActions: props.disableActions,
+    root: props.root,
+  };
 });
+
 
 const showOutline = computed(() => {
   return (

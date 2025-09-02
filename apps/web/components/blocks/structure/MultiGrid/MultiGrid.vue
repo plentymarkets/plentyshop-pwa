@@ -7,25 +7,25 @@
       :class="[`col-${configuration.columnWidths[colIndex]}`]"
     >
       <div
-        v-if="blockHasData(column) && runtimeConfig.public.isDev"
+        v-if="showOverlay(column)"
         class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
         style="box-shadow: inset 0 0 0 2px #7c3aed"
       />
 
       <div
-        v-if="blockHasData(column) && runtimeConfig.public.isDev"
+        v-if="showOverlay(column)"
         class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
       />
 
       <div
         class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
         :class="
-          blockHasData(column) && runtimeConfig.public.isDev
+          showOverlay(column)
             ? 'group-hover/col:opacity-100 group-hover/col:visible group-hover/col:pointer-events-auto'
             : ''
         "
       >
-        <UiBlockActions :block="column" :index="colIndex" :actions="getBlockActions()" />
+        <UiBlockActions v-if="showOverlay(column)" :block="column" :index="colIndex" :actions="getBlockActions()" />
       </div>
       <component
         :is="getBlockComponent(alignedContent[colIndex].name)"
@@ -42,6 +42,8 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
 const runtimeConfig = useRuntimeConfig();
+const { $isPreview } = useNuxtApp();
+const { isDragging } = useBlockManager();
 
 const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
   string,
@@ -57,7 +59,12 @@ const getBlockActions = () => {
     hoverBackground: ['hover:bg-purple-500'],
   };
 };
-
+const attrs = useAttrs() as {
+  disableActions?: boolean;
+  root?: boolean;
+};
+const disableActions = computed(() => attrs.disableActions === true);
+const root = computed(() => attrs.root === true);
 const getBlockComponent = (blockName: string) => {
   if (!blockName) return null;
   const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
@@ -67,6 +74,15 @@ const getBlockComponent = (blockName: string) => {
 const blockHasData = (block: Block): boolean => {
   return !!block.content && Object.keys(block.content).length > 0;
 };
+const showOverlay = computed(
+  () => (block: Block) =>
+    Boolean(runtimeConfig.public.isDev) &&
+    disableActions.value &&
+    $isPreview &&
+    root.value &&
+    !isDragging.value &&
+    blockHasData(block),
+);
 const alignBlock = computed<AlignableBlock | undefined>(
   () =>
     content.find(
