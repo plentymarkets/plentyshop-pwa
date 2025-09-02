@@ -1,5 +1,8 @@
 <template>
-  <div data-testid="text-card" :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]"     :style="inlineStyle"
+  <div
+    data-testid="text-card"
+    :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]"
+    :style="inlineStyle"
   >
     <TextContent :text="props.content.text" :button="props.content.button" :index="props.index" />
   </div>
@@ -22,9 +25,10 @@ const textAlignmentClass = computed(() => {
 });
 const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
+  const keepTransparent = layout.keepTransparent ?? true;
 
   return {
-    backgroundColor: layout.backgroundColor || 'transparent',
+    backgroundColor: keepTransparent ? 'transparent' : layout.backgroundColor || 'transparent',
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,

@@ -211,7 +211,20 @@
       <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
     </template>
 
-    <div class="py-2">
+    <div class="py-2 flex items-center justify-between gap-3">
+      <UiFormLabel for="keep-transparent" class="m-0">
+        {{ getEditorTranslation('keep-transparent-label') }}
+      </UiFormLabel>
+
+      <SfSwitch
+        id="keep-transparent"
+        v-model="textCardBlock.layout.keepTransparent"
+        data-testid="switch-keep-transparent"
+        class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+      />
+    </div>
+
+    <div class="py-2" v-if="!textCardBlock.layout.keepTransparent">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
@@ -234,7 +247,8 @@
           </template>
         </SfInput>
       </label>
-    </div>    <div class="py-2">
+    </div>
+    <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -274,19 +288,17 @@
           />
         </div>
       </div>
-    <div class="px-4 py-3">
-      <span class="typography-text-xs text-neutral-700">
-        {{ getEditorTranslation('spacing-around') }}
-      </span>
+      <div class="px-4 py-3">
+        <span class="typography-text-xs text-neutral-700">
+          {{ getEditorTranslation('spacing-around') }}
+        </span>
+      </div>
     </div>
-    </div>
-
   </UiAccordionItem>
-
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
 
 const { data } = useCategoryTemplate();
@@ -309,14 +321,14 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingBottom: '0',
       paddingLeft: '0',
       paddingRight: '0',
+      keepTransparent: true,
     };
+  } else if (content.layout.keepTransparent === undefined) {
+    content.layout.keepTransparent = true;
   }
 
   return content as TextCardContent;
 });
-
-
-
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);
@@ -347,8 +359,8 @@ const layoutSettings = ref(false);
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements"
-
+    "spacing-around": "Spacing around the text elements",
+    "keep-transparent-label": "Keep background transparent"
   },
   "de": {
     "text-group-label": "Text",
@@ -367,7 +379,13 @@ const layoutSettings = ref(false);
     "button-link-label": "Link target",
     "outline-label": "Outline",
     "button-variant-primary-label": "Primary",
-    "button-variant-secondary-label": "Secondary"
+    "button-variant-secondary-label": "Secondary",
+
+    "layout-group-label": "Layout",
+    "background-color-label": "Background Color",
+    "padding-label": "Padding",
+    "spacing-around": "Spacing around the text elements",
+    "keep-transparent-label": "or keep transparent"
   }
 }
 </i18n>
