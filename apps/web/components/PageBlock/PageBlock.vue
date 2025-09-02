@@ -136,7 +136,6 @@ const contentProps = computed(() => {
   };
 });
 
-
 const showOutline = computed(() => {
   return (
     $isPreview && props.disableActions && props.isClicked && props.isTablet && props.clickedBlockIndex === props.index
