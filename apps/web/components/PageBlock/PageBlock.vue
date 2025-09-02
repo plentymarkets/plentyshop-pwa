@@ -3,6 +3,13 @@
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
+      :ref="
+        shouldLazyLoad(props.block.name)
+          ? (el) => {
+              lazyLoadRefs[getLazyLoadKey(props.block.name)] = el as HTMLElement;
+            }
+          : undefined
+      "
       :class="[
         'relative block-wrapper',
         {
@@ -89,6 +96,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
 import type { BlockPosition } from '~/composables/useBlockManager/types';
+import { shouldLazyLoad, getLazyLoadKey, getLazyLoadConfig } from '~/utils/lazyBlockConfig';
 
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
@@ -127,7 +135,50 @@ const getBlockComponent = computed(() => {
 });
 
 const contentProps = computed(() => {
-  return props.root ? { ...props.block } : { ...props.block, ...attrs };
+  const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
+
+  // Add lazy-loading prop for blocks that support it
+  const config = getLazyLoadConfig(props.block.name);
+  if (config) {
+    return {
+      ...baseProps,
+      [config.propName]: lazyLoadStates.value[props.block.name] || false,
+    };
+  }
+
+  return baseProps;
+});
+
+// Generic lazy loading state management
+const lazyLoadStates = ref<Record<string, boolean>>({});
+const lazyLoadRefs = ref<Record<string, HTMLElement | null>>({});
+
+// Generic intersection observer function
+const observeLazyLoadSection = (blockName: string) => {
+  const config = getLazyLoadConfig(blockName);
+  const refKey = getLazyLoadKey(blockName);
+
+  if (import.meta.client && lazyLoadRefs.value[refKey] && config) {
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          lazyLoadStates.value[blockName] = true;
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: config.threshold || 0,
+        rootMargin: config.rootMargin || '0px 0px 250px 0px',
+      },
+    );
+    observer.observe(lazyLoadRefs.value[refKey]!);
+  }
+};
+
+onMounted(() => {
+  if (shouldLazyLoad(props.block.name)) {
+    observeLazyLoadSection(props.block.name);
+  }
 });
 
 const showOutline = computed(() => {
