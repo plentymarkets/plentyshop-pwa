@@ -2,7 +2,7 @@
   <div class="mb-6">
     <div class="flex items-center justify-between mb-1">
       <UiFormLabel>{{ label }}</UiFormLabel>
-      <SfTooltip v-if="showTooltip && !isPlaceholder" :label="dimensions">
+      <SfTooltip v-if="tooltip && !isPlaceholder" :placement="'top'" :label="tooltip">
         <SfIconInfo class="text-gray-500 hover:text-gray-700 cursor-pointer w-4 h-4" />
       </SfTooltip>
     </div>
@@ -25,9 +25,10 @@
 
         <div class="mt-3 flex items-center gap-2">
           <button
+            :data-testId="`image-picker-select-button-${selectedImageType}`"
             type="button"
             class="bg-slate-900 text-white text-sm px-4 py-1.5 h-[40px] rounded-md hover:bg-slate-800"
-            @click="emit('select')"
+            @click.prevent="isUploaderOpen = true"
           >
             Select
           </button>
@@ -35,11 +36,18 @@
             v-if="!isPlaceholder"
             type="button"
             class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-            @click="emit('delete')"
+            @click.prevent="emit('delete')"
           >
             <SfIconDelete />
           </button>
         </div>
+        <UiImageSelectorModal
+          :open="isUploaderOpen"
+          :image-type="selectedImageType"
+          :current-image="props.image"
+          @close="isUploaderOpen = false"
+          @add="handleImageAdd"
+        />
       </div>
     </div>
   </div>
@@ -47,20 +55,20 @@
 
 <script setup lang="ts">
 import { SfTooltip, SfIconInfo, SfIconDelete } from '@storefront-ui/vue';
+import type { ImagePickerProps } from './types';
 
-interface Props {
-  label: string;
-  image: string | undefined;
-  placeholder: string;
-  dimensions: string;
-  showTooltip?: boolean;
-}
-
-const props = defineProps<Props>();
-
+const props = defineProps<ImagePickerProps>();
 const emit = defineEmits<{
-  (e: 'delete' | 'select'): void;
+  (e: 'delete'): void;
+  (e: 'add', payload: { image: string; type: string }): void;
 }>();
 
 const isPlaceholder = computed(() => props.image === props.placeholder);
+const isUploaderOpen = ref(false);
+const selectedImageType = ref(props.selectedImageType || 'wideScreen');
+
+const handleImageAdd = ({ image, type }: { image: string; type: string }) => {
+  emit('add', { image, type });
+  isUploaderOpen.value = false;
+};
 </script>

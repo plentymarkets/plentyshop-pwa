@@ -33,7 +33,10 @@
           </div>
           <div class="flex space-x-2">
             <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
-            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+            <div
+              v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0 && showBundleComponents"
+              class="m-auto"
+            >
               <UiTag :size="'sm'" :variant="'secondary'">{{
                 t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
               }}</UiTag>
@@ -80,7 +83,10 @@
           <OrderProperties :product="product" />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
-          <UnitContentSelect v-if="productGetters.getAttributeMapVariations(product).length > 1" :product="product" />
+          <UnitContentSelect
+            v-if="product && productGetters.possibleUnitCombination(product).length > 1"
+            :product="product"
+          />
 
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -151,7 +157,7 @@ import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
-const { getSetting } = useSiteSettings('bundleItemDisplay');
+const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });
@@ -183,6 +189,8 @@ onMounted(() => {
 
 onBeforeRouteLeave(() => {
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) clear();
+  resetInvalidFields();
+  resetAttributeFields();
 });
 
 const priceWithProperties = computed(
@@ -237,6 +245,10 @@ const handleAddToCart = async (quickCheckout = true) => {
     quickCheckout
       ? openQuickCheckout(product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
+
+    if (getSetting() === '0') {
+      send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' });
+    }
   }
 
   return addedToCart;

@@ -1,0 +1,64 @@
+{
+  "name": "@plentymarkets/shop-cli",
+  "version": "1.0.0",
+  "description": "Official CLI for PlentyONE Shop development - code generators, utilities, and development tools",
+  "type": "module",
+  "main": "plopfile.ts",
+  "bin": {
+    "plentyshop": "./bin/plentyshop.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "generate": "cross-env NODE_OPTIONS='--import tsx' plop --plopfile=plopfile.ts",
+    "test": "vitest --run",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --run --coverage",
+    "test:coverage:watch": "vitest --watch --coverage",
+    "test:ci": "vitest run --reporter=verbose --coverage",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix --max-warnings 0"
+  },
+  "keywords": [
+    "cli",
+    "plop",
+    "generator",
+    "plentymarkets",
+    "plentyshop",
+    "vue",
+    "nuxt",
+    "typescript",
+    "development-tools"
+  ],
+  "author": "PlentyONE GmbH",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "plop": "^4.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^20.19.9",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^9.1.2",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "plopfile.js",
+    "src/",
+    "templates/",
+    "bin/",
+    "README.md"
+  ]
+}

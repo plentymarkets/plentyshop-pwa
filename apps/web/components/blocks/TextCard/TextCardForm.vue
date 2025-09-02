@@ -6,13 +6,13 @@
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
     <template #summary>
-      <h2>Text</h2>
+      <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
     <div data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Pre-title</UiFormLabel>
+          <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.text.pretitle" type="text" data-testid="input-pretitle">
@@ -27,7 +27,7 @@
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Main title</UiFormLabel>
+          <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.text.title" type="text" data-testid="input-main-title">
@@ -42,7 +42,7 @@
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Subtitle</UiFormLabel>
+          <UiFormLabel>{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.text.subtitle" type="text" data-testid="input-subtitle">
@@ -56,7 +56,7 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>HTML Description</UiFormLabel>
+        <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
         <SfTextarea
           id="text-html-description"
           v-model="textCardBlock.text.htmlDescription"
@@ -68,7 +68,7 @@
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Text Color</UiFormLabel>
+          <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
@@ -92,7 +92,7 @@
       </div>
 
       <fieldset class="py-2">
-        <legend class="text-sm font-medium text-black">Text alignment</legend>
+        <legend class="text-sm font-medium text-black">{{ getEditorTranslation('text-align-label') }}</legend>
 
         <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
@@ -103,7 +103,7 @@
             @click="textCardBlock.text.textAlignment = 'left'"
           >
             <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
-            Left
+            {{ getEditorTranslation('text-align-option-left-label') }}
           </div>
 
           <div
@@ -117,7 +117,7 @@
               :class="{ invisible: textCardBlock.text.textAlignment !== 'center' }"
               class="mr-1 w-[1.1rem]"
             />
-            Center
+            {{ getEditorTranslation('text-align-option-center-label') }}
           </div>
 
           <div
@@ -128,7 +128,7 @@
             @click="textCardBlock.text.textAlignment = 'right'"
           >
             <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
-            Right
+            {{ getEditorTranslation('text-align-option-right-label') }}
           </div>
         </div>
       </fieldset>
@@ -142,12 +142,12 @@
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
     <template #summary>
-      <h2>Button</h2>
+      <h2>{{ getEditorTranslation('button-group-label') }}</h2>
     </template>
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
-        <UiFormLabel>Label</UiFormLabel>
+        <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
       </div>
       <label>
         <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
@@ -162,7 +162,7 @@
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
-        <UiFormLabel>Link target</UiFormLabel>
+        <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
       </div>
       <label>
         <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
@@ -176,7 +176,7 @@
     </div>
 
     <fieldset class="py-2">
-      <UiFormLabel>Outline</UiFormLabel>
+      <UiFormLabel>{{ getEditorTranslation('outline-label') }}</UiFormLabel>
 
       <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
         <div
@@ -186,8 +186,7 @@
           @click="textCardBlock.button.variant = 'primary'"
         >
           <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'primary' }" class="mr-1 w-[1.1rem]" />
-
-          Primary
+          {{ getEditorTranslation('button-variant-primary-label') }}
         </div>
 
         <div
@@ -197,7 +196,7 @@
           @click="textCardBlock.button.variant = 'secondary'"
         >
           <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'secondary' }" class="mr-1 w-[1.1rem]" />
-          Secondary
+          {{ getEditorTranslation('button-variant-secondary-label') }}
         </div>
       </div>
     </fieldset>
@@ -221,3 +220,46 @@ const textCardBlock = computed(
 const textSettings = ref(false);
 const buttonSettings = ref(false);
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "text-group-label": "Text",
+    "pretitle-label": "Pre-title",
+    "main-title-label": "Main title",
+    "subtitle-label": "Subtitle",
+    "html-description-label": "HTML Description",
+    "text-color-label": "Text Color",
+    "text-align-label": "Text alignment",
+    "text-align-option-left-label": "Left",
+    "text-align-option-center-label": "Center",
+    "text-align-option-right-label": "Right",
+
+    "button-group-label": "Button",
+    "button-text-label": "Label",
+    "button-link-label": "Link target",
+    "outline-label": "Outline",
+    "button-variant-primary-label": "Primary",
+    "button-variant-secondary-label": "Secondary"
+  },
+  "de": {
+    "text-group-label": "Text",
+    "pretitle-label": "Pre-title",
+    "main-title-label": "Main title",
+    "subtitle-label": "Subtitle",
+    "html-description-label": "HTML Description",
+    "text-color-label": "Text Color",
+    "text-align-label": "Text alignment",
+    "text-align-option-left-label": "Left",
+    "text-align-option-center-label": "Center",
+    "text-align-option-right-label": "Right",
+
+    "button-group-label": "Button",
+    "button-text-label": "Label",
+    "button-link-label": "Link target",
+    "outline-label": "Outline",
+    "button-variant-primary-label": "Primary",
+    "button-variant-secondary-label": "Secondary"
+  }
+}
+</i18n>

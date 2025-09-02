@@ -23,7 +23,7 @@
           :is-tablet="isTablet"
           :block-has-data="blockHasData"
           :change-block-position="changeBlockPosition"
-          :root="true"
+          :root="getBlockDepth(block.meta.uuid) === 0"
           class="group"
           :class="getBlockClass(block).value"
           data-testid="block-wrapper"
@@ -65,6 +65,7 @@ const {
   changeBlockPosition,
   handleDragStart,
   handleDragEnd,
+  getBlockDepth,
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
@@ -86,7 +87,8 @@ const scrollToBlock = (evt: DragEvent) => {
   }
 };
 
-const { settingsIsDirty, closeDrawer } = useSiteConfiguration();
+const { closeDrawer } = useSiteConfiguration();
+const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 onMounted(() => {
   isEditingEnabled.value = false;

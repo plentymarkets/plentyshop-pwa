@@ -5,7 +5,7 @@
   >
     <div class="mb-6">
       <div class="flex item-center justify-between mb-4 p-4 pr-2">
-        <h2>Slides</h2>
+        <h2>{{ getEditorTranslation('slides-group-label') }}</h2>
         <div class="flex item-center">
           <button
             data-testid="quick-add-slide-button"
@@ -76,12 +76,12 @@
                         </div>
                         <button
                           class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
-                          aria-label="Drag to reorder block"
+                          :aria-label="getEditorTranslation('drag-reorder-aria')"
                           :data-testid="`actions-drag-slide-handle-${index}`"
                         >
                           <NuxtImg width="18" height="18" :src="dragIcon" />
                         </button>
-                        <span>Slide {{ index + 1 }}</span>
+                        <span>{{ getEditorTranslation('slide-label') }} {{ index + 1 }}</span>
                       </div>
 
                       <button
@@ -97,7 +97,7 @@
                 </draggable>
                 <hr />
                 <div class="pl-2 pr-2 pt-2 flex justify-between items-center">
-                  <p>Add Slide</p>
+                  <p>{{ getEditorTranslation('add-slide-label') }}</p>
                   <button
                     data-testid="actions-add-slide-button"
                     class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
@@ -142,7 +142,7 @@
             :class="activeSlide === index ? 'bg-editor-button text-white' : ''"
             @click="slideClick(index)"
           >
-            Slide {{ index + 1 }}
+            {{ getEditorTranslation('slide-label') }} {{ index + 1 }}
           </button>
         </div>
       </SfScrollable>
@@ -156,12 +156,12 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>Controls</h2>
+          <h2>{{ getEditorTranslation('controls-group-label') }}</h2>
         </template>
 
         <div class="controls">
           <div class="mb-6 mt-4">
-            <UiFormLabel class="mb-1">Slider Controls Color</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
 
             <SfInput v-model="controls.color" type="text">
               <template #suffix>
@@ -319,3 +319,26 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 </style>
+
+<i18n lang="json">
+{
+  "en": {
+    "slides-group-label": "Slides",
+    "slide-label": "Slide",
+    "add-slide-label": "Add Slide",
+    "drag-reorder-aria": "Drag to reorder slide",
+
+    "controls-group-label": "Controls",
+    "controls-color-label": "Slider Controls Colour"
+  },
+  "de": {
+    "slides-group-label": "Slides",
+    "slide-label": "Slide",
+    "add-slide-label": "Add Slide",
+    "drag-reorder-aria": "Drag to reorder slide",
+
+    "controls-group-label": "Controls",
+    "controls-color-label": "Slider Controls Colour"
+  }
+}
+</i18n>
