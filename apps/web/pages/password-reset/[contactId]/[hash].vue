@@ -27,7 +27,7 @@
       </div>
 
       <div class="text-center mt-2">
-        <span class="my-5 mr-1">{{ t('auth.setNewPassword.rememberPassword') }} </span>
+        <span class="my-5 mr-1">{{ t('auth.setNewPassword.rememberPassword') }}</span>
         <SfLink variant="primary" class="cursor-pointer" @click="openAuthentication">
           {{ t('account.navBottomHeadingLogin') }}
         </SfLink>
