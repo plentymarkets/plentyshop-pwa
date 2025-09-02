@@ -27,12 +27,13 @@
       </div>
 
       <div class="text-center mt-2">
-        <span class="my-5">{{ t('auth.setNewPassword.rememberPassword') }} </span>
+        <span class="my-5 mr-1">{{ t('auth.setNewPassword.rememberPassword') }}</span>
         <SfLink variant="primary" class="cursor-pointer" @click="openAuthentication">
           {{ t('account.navBottomHeadingLogin') }}
         </SfLink>
       </div>
     </form>
+
     <UiModal
       v-if="isAuthenticationOpen"
       v-model="isAuthenticationOpen"
@@ -56,6 +57,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { ApiError } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose } from '@storefront-ui/vue';
 
 const { resetPassword, loading } = useResetPassword();
@@ -64,6 +66,7 @@ const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();
 const { send } = useNotification();
+const { getSession } = useCustomer();
 
 const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');
@@ -82,15 +85,19 @@ const navigateAfterAuth = () => {
 
 const executeResetPassword = async () => {
   if (passwordsMatch.value) {
-    const success = await resetPassword({
-      password: password.value,
-      password2: password2.value,
-      hash: hash,
-      contactId: contactId,
-    });
-    if (success) {
+    try {
+      await resetPassword({
+        password: password.value,
+        password2: password2.value,
+        hash: hash,
+        contactId: contactId,
+      });
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      await getSession();
       send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
-      openAuthentication();
+      await navigateTo(localePath(paths.home));
     }
   }
 };
