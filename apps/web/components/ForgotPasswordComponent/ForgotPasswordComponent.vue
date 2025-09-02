@@ -18,6 +18,7 @@
           {{ t('auth.resetPassword.resetPassword') }}
         </span>
       </UiButton>
+
       <UiButton
         v-if="!isForgotPasswordOnly"
         type="reset"
@@ -26,14 +27,11 @@
         data-testid="reset-password-mail-submit"
         @click="$emit('change-view-login')"
       >
-        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-        <span v-else>
-          {{ t('auth.resetPassword.backToLogin') }}
-        </span>
+        {{ t('auth.resetPassword.backToLogin') }}
       </UiButton>
 
       <div v-if="!isSoftLogin && !isForgotPasswordOnly" class="text-sm text-center">
-        <span>{{ t('auth.login.createAccount') }}</span>
+        {{ t('auth.login.createAccount') }}
         <SfLink variant="primary" class="ml-1 cursor-pointer underline" @click="$emit('change-view-register')">
           {{ t('auth.login.createAccountLinkLabel') }}
         </SfLink>
@@ -43,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ForgotPasswordProps } from './types';
 
 const { isSoftLogin = false, isForgotPasswordOnly = false } = defineProps<ForgotPasswordProps>();
