@@ -14,25 +14,23 @@
       class="mt-2 flex items-center"
     >
       <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
-      <ClientOnly>
-        <Component
-          :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
-          v-if="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
-          :has-tooltip="hasTooltip"
-          :product-property="productProperty"
-        >
-          <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)" #tooltip>
-            <SfTooltip
-              :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
-              :placement="'bottom'"
-              :show-arrow="true"
-              class="ml-2 z-10"
-            >
-              <SfIconInfo :size="'sm'" />
-            </SfTooltip>
-          </template>
-        </Component>
-      </ClientOnly>
+      <Component
+        :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
+        v-if="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
+        :has-tooltip="hasTooltip"
+        :product-property="productProperty"
+      >
+        <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)" #tooltip>
+          <SfTooltip
+            :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
+            :placement="'bottom'"
+            :show-arrow="true"
+            class="ml-2 z-10"
+          >
+            <SfIconInfo :size="'sm'" />
+          </SfTooltip>
+        </template>
+      </Component>
     </div>
   </div>
 </template>

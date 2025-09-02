@@ -2,14 +2,11 @@
   <div class="mt-4">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
     </div>
 
     <Multiselect
       v-model="recommendedThirdSortingOption"
-      data-testid="available-sorting-options"
+      data-testid="recommended-third-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"
@@ -25,7 +22,6 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
@@ -47,13 +43,11 @@ const recommendedThirdSortingOption = computed({
 {
   "en": {
     "label": "Third sorting option",
-    "tooltip": "Third sorting option",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Third sorting option",
-    "tooltip": "Third sorting option",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   }
