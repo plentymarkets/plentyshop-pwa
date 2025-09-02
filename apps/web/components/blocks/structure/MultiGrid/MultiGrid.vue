@@ -1,14 +1,6 @@
 <template>
-  <div
-    data-testid="multi-grid-structure"
-    class="grid grid-cols-1 gap-4 items-center"
-    :class="`lg:grid-cols-${configuration.columnWidths.length}`"
-  >
-    <div
-      v-for="(column, colIndex) in content"
-      :key="column.meta.uuid"
-      :class="`col-${configuration.columnWidths[colIndex]}`"
-    >
+  <div data-testid="multi-grid-structure" :class="getGridClasses()">
+    <div v-for="(column, colIndex) in content" :key="column.meta.uuid" :class="getColumnClasses(colIndex)">
       <component :is="getBlockComponent(alignedContent[colIndex].name)" v-bind="alignedContent[colIndex]" />
     </div>
   </div>
@@ -30,6 +22,26 @@ const getBlockComponent = (blockName: string) => {
   const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
   const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
   return matched ? defineAsyncComponent(modules[matched]) : null;
+};
+
+const getGridClasses = () => {
+  const columnCount = configuration.columnWidths.length;
+
+  return ['grid', 'gap-4', 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+};
+
+const getColumnClasses = (colIndex: number) => {
+  const columnCount = configuration.columnWidths.length;
+  const isLastColumn = colIndex === columnCount - 1;
+  const isThreeColumnLayout = columnCount === 3;
+
+  const classes = [];
+
+  if (isThreeColumnLayout && isLastColumn) {
+    classes.push('md:col-span-2', 'lg:col-span-1');
+  }
+
+  return classes;
 };
 
 const alignBlock = computed<AlignableBlock | undefined>(
