@@ -43,7 +43,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   };
 
   const setInitialData: SetSettingsInitialData = (settings: Setting[]) => {
-    const result = settings.reduce((acc: Record<string, SettingValue>, { key, value }) => {
+    const result = settings.reduce((acc: Record<string, SettingValue>, { originalKey, value }) => {
       let parsedValue = value;
       if (typeof value === 'string') {
         try {
@@ -53,7 +53,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
         }
       }
 
-      acc[key] = parsedValue;
+      acc[originalKey] = parsedValue;
 
       return acc;
     }, {});
