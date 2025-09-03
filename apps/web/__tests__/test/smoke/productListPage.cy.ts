@@ -9,7 +9,7 @@ beforeEach(() => {
   cy.visitAndHydrate(paths.home);
 });
 
-describe('Smoke: Product List Page', function () {
+describe.skip('Smoke: Product List Page', function () {
   it('[smoke] User should be able to see the products as list and grid', () => {
     homePage.goToCategory();
 

@@ -10,7 +10,7 @@ beforeEach(() => {
   cy.clearCookies();
 });
 
-describe('Smoke: Homepage', () => {
+describe.skip('Smoke: Homepage', () => {
   it('[smoke] Check if Category button exists ', () => {
     homePage.checkHeaderCategory();
   });

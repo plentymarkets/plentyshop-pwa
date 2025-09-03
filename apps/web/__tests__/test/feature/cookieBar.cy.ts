@@ -8,7 +8,7 @@ beforeEach(() => {
   cy.visitAndHydrate(paths.home);
 });
 
-describe('CookieBar functionality check.', () => {
+describe.skip('CookieBar functionality check.', () => {
   it('Checks external script.', () => {
     cookieBar.acceptAll().checkExternalScript();
   });

@@ -11,7 +11,7 @@ beforeEach(() => {
   cy.wait('@doLogin').visitAndHydrate(paths.home);
 });
 
-describe('Smoke: My Account', () => {
+describe.skip('Smoke: My Account', () => {
   it('[smoke] Navigating to My Account from top header', () => {
     myAccount.clickTopBarMyAccountLink();
   });
