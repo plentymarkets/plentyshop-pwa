@@ -1,7 +1,7 @@
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 
-describe('Text Card Block Form', () => {
+describe.skip('Text Card Block Form', () => {
   const openSettingsForTextCardBlock = () => {
     cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4);
 

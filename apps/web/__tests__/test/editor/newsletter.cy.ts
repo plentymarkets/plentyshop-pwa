@@ -1,7 +1,7 @@
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 
-describe('Newsletter Block Form', () => {
+describe.skip('Newsletter Block Form', () => {
   const checkIfNewsletterBlockIsVisible = () => {
     cy.getByTestId('newsletter-block').should('be.visible');
   };

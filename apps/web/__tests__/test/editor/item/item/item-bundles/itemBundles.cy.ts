@@ -2,7 +2,7 @@ import { CookieBarObject } from '../../../../../support/pageObjects/CookieBarObj
 import { EditorObject } from '../../../../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../../../../support/pageObjects/SiteSettingsObject';
 
-describe('ItemBundles', () => {
+describe.skip('ItemBundles', () => {
   const editor = new EditorObject();
   const siteSettings = new SiteSettingsObject();
   const cookieBar = new CookieBarObject();

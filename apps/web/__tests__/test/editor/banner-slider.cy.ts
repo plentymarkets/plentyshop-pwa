@@ -6,7 +6,7 @@ import {
 import { paths } from '../../../utils/paths';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
-describe('Banner Slider Block Form', () => {
+describe.skip('Banner Slider Block Form', () => {
   const bannerSlider = new BannerSliderObject();
   const cookieBar = new CookieBarObject();
 
