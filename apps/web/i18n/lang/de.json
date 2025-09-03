@@ -239,7 +239,7 @@
       "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten."
     },
     "setNewPassword": {
-      "resetSucceded": "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie können sich nun mit Ihrem neuen Passwort anmelden.",
+      "resetSucceded": "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie sind nun mit Ihrem neuen Passwort authentifiziert.",
       "passwordsNotMatching": "Passwörter stimmen nicht überein",
       "rememberPassword": "Erinnern Sie sich an Ihr Passwort?",
       "button": "Neues Passwort speichern",
