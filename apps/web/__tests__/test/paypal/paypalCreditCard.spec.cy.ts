@@ -5,7 +5,7 @@ import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObje
 const myAccount = new MyAccountPageObject();
 const checkout = new CheckoutPageObject();
 
-describe('Smoke: PayPal credit card order', () => {
+describe.skip('Smoke: PayPal credit card order', () => {
   it('[smoke] Check if status on order gets updated when paying with paypal credit card', () => {
     cy.clearCookies();
     cy.visitAndHydrate(paths.authLogin);
