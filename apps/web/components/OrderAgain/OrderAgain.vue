@@ -255,7 +255,7 @@ const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
 const { t } = useI18n();
 const { format } = usePriceFormatter();
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 
 const localePath = useLocalePath();
 const loadingAddToCart = ref(false);
