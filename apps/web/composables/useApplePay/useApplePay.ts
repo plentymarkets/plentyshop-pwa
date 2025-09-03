@@ -1,4 +1,4 @@
-import { cartGetters } from '@plentymarkets/shop-api';
+import {cartGetters, PayPalApplePayTransactionInfo} from '@plentymarkets/shop-api';
 import type { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 type ButtonClickedEmits = {
@@ -28,6 +28,7 @@ export const useApplePay = () => {
     scriptLoaded: false,
     script: {} as ApplepayType,
     config: {} as ConfigResponse,
+    transactionData: null as PayPalApplePayTransactionInfo | null,
   }));
 
   const initialize = async () => {
@@ -48,9 +49,13 @@ export const useApplePay = () => {
     return true;
   };
 
+  const getTransactionInfo = async () => {
+    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
+    state.value.transactionData = transaction;
+  };
+
   const createPaymentRequest = async () => {
     const { data: cart } = useCart();
-    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
     return {
       countryCode: state.value.config.countryCode,
       merchantCapabilities: state.value.config.merchantCapabilities,
@@ -58,8 +63,8 @@ export const useApplePay = () => {
       currencyCode: state.value.config.currencyCode,
       requiredShippingContactFields: [],
       requiredBillingContactFields: ['postalAddress'],
-      lineItems: transaction.lineItems,
-      total: transaction.total,
+      lineItems: state.value.transactionData?.lineItems ?? [],
+      total: state.value.transactionData?.total ?? 0,
     } as ApplePayJS.ApplePayPaymentRequest;
   };
 
@@ -172,6 +177,7 @@ export const useApplePay = () => {
     initialize,
     checkIsEligible,
     processPayment,
+    getTransactionInfo,
     ...toRefs(state.value),
   };
 };
