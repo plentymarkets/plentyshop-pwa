@@ -66,6 +66,17 @@ export const useApplePay = () => {
       type: state.value.transactionData?.total.type ?? 'final',
     };
 
+    console.log({
+      countryCode: state.value.config.countryCode,
+      merchantCapabilities: state.value.config.merchantCapabilities,
+      supportedNetworks: state.value.config.supportedNetworks,
+      currencyCode: state.value.config.currencyCode,
+      requiredShippingContactFields: [],
+      requiredBillingContactFields: ['postalAddress'],
+      lineItems: lineItems,
+      total: total,
+    });
+
     return {
       countryCode: state.value.config.countryCode,
       merchantCapabilities: state.value.config.merchantCapabilities,
@@ -103,7 +114,8 @@ export const useApplePay = () => {
             });
             paymentSession.completeMerchantValidation(validationData.merchantSession);
           });
-        } catch {
+        } catch (error) {
+          console.warn(error);
           paymentSession.abort();
         }
       };
@@ -133,6 +145,7 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
+            console.warn(error);
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
             return;
@@ -149,6 +162,7 @@ export const useApplePay = () => {
           emit('frontend:orderCreated', order);
           navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
+          console.warn(error);
           showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
@@ -167,17 +181,12 @@ export const useApplePay = () => {
 
   const checkIsEligible = async () => {
     try {
-      if (
-        (await initialize()) &&
+      return (await initialize()) &&
         typeof ApplePaySession !== 'undefined' &&
         state.value.script &&
         ApplePaySession &&
         ApplePaySession.canMakePayments() &&
-        state.value.config.isEligible
-      ) {
-        return true;
-      }
-      return false;
+        state.value.config.isEligible;
     } catch {
       return false;
     }
