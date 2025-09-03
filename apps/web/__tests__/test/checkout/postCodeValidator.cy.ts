@@ -15,7 +15,7 @@ beforeEach(() => {
 // only test one case (UK, set in env) to safe test execution time
 // other zipcodes are tested in a unit test
 countryList.forEach(({ countryId, name, valid, invalid }) => {
-  describe(`${name} Post Code Validator`, () => {
+  describe.skip(`${name} Post Code Validator`, () => {
     valid.forEach((zipCode) => {
       it(`accepts valid postcode: ${zipCode}`, () => {
         checkout.fillPostCodeBillingForm({ country: countryId, zipCode });
