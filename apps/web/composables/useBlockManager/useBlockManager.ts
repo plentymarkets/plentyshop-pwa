@@ -264,8 +264,10 @@ export const useBlockManager = () => {
 
   const getLazyLoadKey = (blockName: string, blockUuid?: string): string => {
     const baseKey = blockName.charAt(0).toLowerCase() + blockName.slice(1);
-    if (!blockUuid) blockUuid = uuid();
-
+    if (!blockUuid) {
+      console.error('getLazyLoadKey called without blockUuid for', blockName);
+      return `${baseKey}-missing-uuid`;
+    }
     return `${baseKey}-${blockUuid}`;
   };
 
