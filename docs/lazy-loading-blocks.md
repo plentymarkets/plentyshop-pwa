@@ -10,10 +10,10 @@ The lazy-loading system uses IntersectionObserver to detect when a block comes i
 
 ### Step 1: Configure the Block
 
-Add your block to the `LAZY_LOAD_BLOCKS` configuration in `utils/lazyBlockConfig.ts`:
+Add your block to the `LAZY_LOAD_BLOCKS` configuration in `composables/useBlockManager/useBlockManager.ts`:
 
 ```typescript
-export const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
+const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
   ProductRecommendedProducts: {
     propName: 'shouldLoad',
     rootMargin: '0px 0px 150px 0px',
@@ -36,21 +36,9 @@ In your block component, add the lazy-loading prop to your types and props:
 ```typescript
 // types.ts
 export type MyNewLazyBlockProps = {
-  name: string;
-  type: string;
-  content: MyNewLazyBlockContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
   shouldLoad?: boolean; // Add this prop (must match propName in config)
+  // Other props
 };
-
-// Component
-interface Props extends MyNewLazyBlockProps {
-  shouldLoad?: boolean;
-}
 
 const props = withDefaults(defineProps<Props>(), {
   shouldLoad: false, // Default to false
@@ -64,7 +52,6 @@ In your component, implement the loading logic based on the prop:
 ```vue
 <template>
   <div>
-    <!-- Always render static content -->
     <h2>{{ content.title }}</h2>
 
     <!-- Only render heavy content when shouldLoad is true -->
@@ -89,34 +76,6 @@ watch(
   { immediate: true },
 );
 </script>
-```
-
-### Step 4: Write Tests
-
-Add tests to verify the lazy-loading behavior:
-
-```typescript
-it('should not render expensive content when shouldLoad is false', () => {
-  const wrapper = mount(MyNewLazyBlock, {
-    props: {
-      ...mockProps,
-      shouldLoad: false,
-    },
-  });
-
-  expect(wrapper.find('[data-testid="expensive-content"]').exists()).toBe(false);
-});
-
-it('should render expensive content when shouldLoad is true', () => {
-  const wrapper = mount(MyNewLazyBlock, {
-    props: {
-      ...mockProps,
-      shouldLoad: true,
-    },
-  });
-
-  expect(wrapper.find('[data-testid="expensive-content"]').exists()).toBe(true);
-});
 ```
 
 ## Configuration Options
@@ -151,18 +110,3 @@ it('should render expensive content when shouldLoad is true', () => {
   threshold: 0.5,
 }
 ```
-
-## Benefits
-
-- **Performance**: Prevents unnecessary API calls and rendering
-- **Memory**: Reduces initial memory usage
-- **UX**: Faster initial page load times
-- **Scalability**: Easy to add new lazy-loadable blocks
-
-## Best Practices
-
-1. **Always render static content**: Headers, titles, and layout should render immediately
-2. **Only lazy-load expensive operations**: API calls, large lists, heavy computations
-3. **Provide loading states**: Show skeletons or placeholders while loading
-4. **Test thoroughly**: Verify both lazy and non-lazy states work correctly
-5. **Use appropriate thresholds**: Balance between performance and user experience
