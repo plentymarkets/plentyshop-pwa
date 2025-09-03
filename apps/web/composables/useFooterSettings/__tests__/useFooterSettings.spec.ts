@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createDefaultFooterSettings } from '../useFooterSettings';
 
-// Mock for testing useFooterSettings composable functions
 vi.mock('#app', () => ({
   useState: vi.fn(() => ({ value: null })),
   useAsyncData: vi.fn(),

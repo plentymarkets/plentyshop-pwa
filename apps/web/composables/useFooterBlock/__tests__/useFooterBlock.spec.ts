@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from 'vitest';
 import { useFooterBlock } from '../useFooterBlock';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 
-// Mock the useFooterSettings composable
 vi.mock('~/composables/useFooterSettings', () => ({
   useFooterSettings: () => ({
     getFooterSettings: vi.fn().mockReturnValue({

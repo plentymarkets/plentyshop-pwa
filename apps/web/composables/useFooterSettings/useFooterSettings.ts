@@ -1,6 +1,5 @@
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 
-// Centralized default footer settings factory
 export function createDefaultFooterSettings(t: (key: string) => string): FooterSettings {
   return {
     meta: {
@@ -22,14 +21,13 @@ export function createDefaultFooterSettings(t: (key: string) => string): FooterS
   };
 }
 
-// Convenience function that uses useI18n internally
 export function getDefaultFooterSettings(): FooterSettings {
   const { t } = useI18n();
   return createDefaultFooterSettings(t);
 }
 
 /**
- * Simple composable for accessing global footer settings
+ * Composable for accessing global footer settings
  * Handles fetching and caching of footer configuration
  */
 export function useFooterSettings() {
@@ -59,7 +57,6 @@ export function useFooterSettings() {
       console.warn('Failed to fetch footer settings, using defaults:', error);
     }
 
-    // Fallback to defaults
     const defaults = getDefaultFooterSettings();
     footerCache.value = defaults;
     return defaults;
