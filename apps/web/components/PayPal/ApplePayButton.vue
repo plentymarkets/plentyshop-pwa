@@ -32,7 +32,8 @@ const renderButton = async () => {
 };
 
 watch(cart, async () => {
-  await getTransactionInfo();
+  console.log('Cart changed, re-rendering Apple Pay button');
+  await renderButton();
 });
 
 onNuxtReady(async () => {
