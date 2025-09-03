@@ -99,6 +99,7 @@ export const useApplePay = () => {
 
     try {
       const paymentRequest = await createPaymentRequest();
+      console.log('Payment Request:', paymentRequest);
       const paymentSession = new ApplePaySession(14, paymentRequest);
 
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
@@ -109,9 +110,12 @@ export const useApplePay = () => {
               return;
             }
 
+            console.log('Vali event:', event);
+
             const validationData = await state.value.script.validateMerchant({
               validationUrl: event.validationURL,
             });
+            console.log('Validation data:', validationData);
             paymentSession.completeMerchantValidation(validationData.merchantSession);
           });
         } catch (error) {
