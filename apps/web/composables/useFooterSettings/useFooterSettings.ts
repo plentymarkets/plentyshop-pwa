@@ -73,6 +73,24 @@ export function useFooterSettings() {
     footerCache.value = null;
   };
 
+  const updateFooterCache = (newFooterSettings: FooterSettings) => {
+    footerCache.value = newFooterSettings;
+  };
+
+  const extractFooterFromBlocks = (content: string): FooterSettings | null => {
+    try {
+      const blocks = JSON.parse(content);
+      const footerBlock = Array.isArray(blocks) 
+        ? blocks.find((block: { name?: string }) => block.name === 'Footer')
+        : null;
+      
+      return footerBlock?.content || null;
+    } catch (error) {
+      console.warn('Failed to extract footer from blocks:', error);
+      return null;
+    }
+  };
+
   return {
     footerCache: readonly(footerCache),
     fetchFooterSettings,
@@ -80,5 +98,7 @@ export function useFooterSettings() {
     getDefaultFooterSettings,
     createDefaultFooterSettings,
     clearFooterCache,
+    updateFooterCache,
+    extractFooterFromBlocks,
   };
 }

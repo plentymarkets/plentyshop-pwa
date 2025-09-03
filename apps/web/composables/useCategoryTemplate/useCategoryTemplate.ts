@@ -6,7 +6,6 @@ import type {
   SaveBlocks,
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { FooterSettings } from '~/components/blocks/Footer/types';
 
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
@@ -24,23 +23,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const { $i18n } = useNuxtApp();
 
-  const cachedFooter = useState<FooterSettings | null>('footer-block-cache', () => null);
-
   const ensureFooterBlock = async () => {
-    if (cachedFooter.value) return;
-
-    const { data: footerData } = await useAsyncData('footer-block', () =>
-      useSdk().plentysystems.getBlocks({
-        identifier: 'index',
-        type: 'immutable',
-        blocks: 'Footer',
-      }),
-    );
-
-    const footerBlock = footerData.value?.data?.find((block) => block.name === 'Footer');
-
-    if (footerBlock?.content) {
-      cachedFooter.value = footerBlock.content as FooterSettings;
+    // Use the unified footer settings system
+    const { fetchFooterSettings } = useFooterSettings();
+    
+    try {
+      await fetchFooterSettings();
+    } catch (error) {
+      console.warn('Failed to ensure footer block:', error);
     }
   };
 
@@ -121,10 +111,23 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
+      // Update footer cache when footer blocks are saved
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-        const footerCache = useState<FooterSettings | null>('footer-block-cache', () => null);
-        footerCache.value = null;
-        await ensureFooterBlock();
+        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = useFooterSettings();
+        
+        // Extract footer settings from the saved content and update cache directly
+        const footerSettings = extractFooterFromBlocks(content);
+        if (footerSettings) {
+          updateFooterCache(footerSettings);
+        } else {
+          // If extraction failed, clear cache and re-fetch
+          clearFooterCache();
+          try {
+            await fetchFooterSettings();
+          } catch (error) {
+            console.warn('Failed to refresh footer settings after save:', error);
+          }
+        }
       }
     } catch (error) {
       console.error('Error saving blocks:', error);
