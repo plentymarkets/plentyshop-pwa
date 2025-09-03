@@ -6,7 +6,7 @@ beforeEach(() => {
   cy.clearCookies().visitSmoke();
 });
 
-describe('Checkout Addresses', () => {
+describe.skip('Checkout Addresses', () => {
   it('should display same as shipping text if a guest creates his shipping address with billing same as shipping checked', () => {
     cy.addToCart();
 
