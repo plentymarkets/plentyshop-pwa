@@ -31,12 +31,12 @@ const renderButton = async () => {
   }
 };
 
-watch(cart, async () => {
-  console.log('Cart changed, re-rendering Apple Pay button');
-  await renderButton();
-});
-
 onNuxtReady(async () => {
   await renderButton();
+
+  watch(cart, async () => {
+    console.log('Cart changed, re-rendering Apple Pay button');
+    await renderButton();
+  });
 });
 </script>
