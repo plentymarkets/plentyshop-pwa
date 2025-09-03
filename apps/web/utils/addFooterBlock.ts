@@ -26,7 +26,7 @@ export function addFooterBlock({ data, cachedFooter, t, uuid, cleanData }: AddFo
         footnoteText: '#959795',
       },
     };
-    
+
     const footerBlock = {
       name: 'Footer',
       type: 'content',

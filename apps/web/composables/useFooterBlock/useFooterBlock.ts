@@ -6,18 +6,18 @@ import type { FooterSettings } from '~/components/blocks/Footer/types';
  */
 export function useFooterBlock(content?: FooterSettings | null) {
   const { getFooterSettings, footerCache } = useFooterSettings();
-  
+
   if (content) {
-    return { 
-      resolvedContent: ref(content), 
-      cachedFooter: footerCache 
+    return {
+      resolvedContent: ref(content),
+      cachedFooter: footerCache,
     };
   }
 
   const resolvedContent = computed(() => getFooterSettings());
 
-  return { 
-    resolvedContent, 
-    cachedFooter: footerCache 
+  return {
+    resolvedContent,
+    cachedFooter: footerCache,
   };
 }

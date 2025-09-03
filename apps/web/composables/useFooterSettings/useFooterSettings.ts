@@ -48,7 +48,7 @@ export function useFooterSettings() {
       );
 
       const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
-      
+
       if (footerBlock?.content) {
         footerCache.value = footerBlock.content as FooterSettings;
         return footerCache.value;
@@ -77,10 +77,10 @@ export function useFooterSettings() {
   const extractFooterFromBlocks = (content: string): FooterSettings | null => {
     try {
       const blocks = JSON.parse(content);
-      const footerBlock = Array.isArray(blocks) 
+      const footerBlock = Array.isArray(blocks)
         ? blocks.find((block: { name?: string }) => block.name === 'Footer')
         : null;
-      
+
       return footerBlock?.content || null;
     } catch (error) {
       console.warn('Failed to extract footer from blocks:', error);

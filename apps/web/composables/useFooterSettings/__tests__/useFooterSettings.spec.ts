@@ -39,7 +39,7 @@ describe('useFooterSettings', () => {
       expect(defaults).toHaveProperty('footnote');
       expect(defaults).toHaveProperty('footnoteAlign');
       expect(defaults).toHaveProperty('colors');
-      
+
       expect(defaults.footnoteAlign).toBe('right');
       expect(defaults.column1.title).toBe('Legal');
       expect(defaults.column2.title).toBe('Contact');
@@ -49,14 +49,14 @@ describe('useFooterSettings', () => {
     it('should include current year in footnote', () => {
       const defaults = createDefaultFooterSettings(mockT);
       const currentYear = new Date().getFullYear();
-      
+
       expect(defaults.footnote).toContain(currentYear.toString());
       expect(defaults.footnote).toContain('PlentyONE GmbH');
     });
 
     it('should have proper color defaults', () => {
       const defaults = createDefaultFooterSettings(mockT);
-      
+
       expect(defaults.colors.background).toBe('#cfe4ec');
       expect(defaults.colors.text).toBe('#1c1c1c');
       expect(defaults.colors.footnoteBackground).toBe('#161a16');
@@ -68,21 +68,21 @@ describe('useFooterSettings', () => {
     it('should extract footer settings from blocks JSON', async () => {
       const { useFooterSettings } = await import('../useFooterSettings');
       const { extractFooterFromBlocks } = useFooterSettings();
-      
+
       const mockBlocks = JSON.stringify([
         { name: 'Header', content: { title: 'Header' } },
-        { 
-          name: 'Footer', 
+        {
+          name: 'Footer',
           content: {
             column1: { title: 'Test Legal' },
             column2: { title: 'Test Contact' },
-            footnote: 'Test footnote'
-          }
-        }
+            footnote: 'Test footnote',
+          },
+        },
       ]);
 
       const result = extractFooterFromBlocks(mockBlocks);
-      
+
       expect(result).toBeDefined();
       expect(result?.column1.title).toBe('Test Legal');
       expect(result?.column2.title).toBe('Test Contact');
@@ -92,7 +92,7 @@ describe('useFooterSettings', () => {
     it('should return null for invalid JSON', async () => {
       const { useFooterSettings } = await import('../useFooterSettings');
       const { extractFooterFromBlocks } = useFooterSettings();
-      
+
       const result = extractFooterFromBlocks('invalid json');
       expect(result).toBeNull();
     });
@@ -100,10 +100,10 @@ describe('useFooterSettings', () => {
     it('should return null when no footer block exists', async () => {
       const { useFooterSettings } = await import('../useFooterSettings');
       const { extractFooterFromBlocks } = useFooterSettings();
-      
+
       const mockBlocks = JSON.stringify([
         { name: 'Header', content: { title: 'Header' } },
-        { name: 'Banner', content: { title: 'Banner' } }
+        { name: 'Banner', content: { title: 'Banner' } },
       ]);
 
       const result = extractFooterFromBlocks(mockBlocks);
