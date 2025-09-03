@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+
 interface AddFooterBlockOptions {
   data: Ref<Block[]>;
   cachedFooter: Ref<unknown>;
@@ -10,6 +11,22 @@ interface AddFooterBlockOptions {
 export function addFooterBlock({ data, cachedFooter, t, uuid, cleanData }: AddFooterBlockOptions) {
   const footerExists = data.value.some((block) => block.name === 'Footer');
   if (!footerExists) {
+    // Get default settings with proper i18n context
+    const defaultSettings = {
+      column1: { title: t('categories.legal.label') },
+      column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
+      column3: { title: '', description: '' },
+      column4: { title: '', description: '' },
+      footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
+      footnoteAlign: 'right' as const,
+      colors: {
+        background: '#cfe4ec',
+        text: '#1c1c1c',
+        footnoteBackground: '#161a16',
+        footnoteText: '#959795',
+      },
+    };
+    
     const footerBlock = {
       name: 'Footer',
       type: 'content',
@@ -18,17 +35,10 @@ export function addFooterBlock({ data, cachedFooter, t, uuid, cleanData }: AddFo
         isGlobalTemplate: true,
       },
       content: cachedFooter.value || {
-        column1: { title: t('categories.legal.label') },
-        column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
-        column3: { title: '', description: '' },
-        column4: { title: '', description: '' },
-        footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-        footnoteAlign: 'right',
-        colors: {
-          background: '#cfe4ec',
-          text: '#1c1c1c',
-          footnoteBackground: '#161a16',
-          footnoteText: '#959795',
+        ...defaultSettings,
+        meta: {
+          uuid: uuid(),
+          isGlobalTemplate: true,
         },
       },
     };
