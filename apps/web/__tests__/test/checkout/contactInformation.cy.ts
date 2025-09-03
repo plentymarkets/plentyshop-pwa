@@ -6,7 +6,7 @@ beforeEach(() => {
   cy.clearCookies().visitSmoke();
 });
 
-describe.skip('Contact Information', () => {
+describe('Contact Information', () => {
   it('should scroll to contact information if email is invalid and buy button is clicked', () => {
     cy.addToCart();
     checkout.goToCheckoutPath().contactInformationForm.type('invalid-email');
