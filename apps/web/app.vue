@@ -1,4 +1,5 @@
 <template>
+  <ReloadPWA />
   <component :is="Toolbar" v-if="$isPreview" />
   <div
     class="w-100 relative md:flex"
