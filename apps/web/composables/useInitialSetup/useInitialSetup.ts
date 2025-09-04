@@ -42,6 +42,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
+  const { setInitialData } = useSiteSettings();
 
   cartLoading.value = true;
 
@@ -51,6 +52,7 @@ const setInitialDataSSR: SetInitialData = async () => {
       setUser(data.value.data.session as SessionResult);
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
+      setInitialData(data.value.data.settings);
       setWishlistItemIds(Object.values(data.value.data.session?.basket?.itemWishListIds || []));
     }
   } catch (error) {
