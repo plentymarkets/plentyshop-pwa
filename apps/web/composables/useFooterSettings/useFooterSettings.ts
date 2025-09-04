@@ -1,37 +1,24 @@
 import type { FooterSettings } from '~/components/blocks/Footer/types';
-
-export function createDefaultFooterSettings(t: (key: string) => string): FooterSettings {
-  return {
-    meta: {
-      uuid: '',
-      isGlobalTemplate: true,
-    },
-    column1: { title: t('categories.legal.label') },
-    column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
-    column3: { title: '', description: '' },
-    column4: { title: '', description: '' },
-    footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
-    footnoteAlign: 'right',
-    colors: {
-      background: '#cfe4ec',
-      text: '#1c1c1c',
-      footnoteBackground: '#161a16',
-      footnoteText: '#959795',
-    },
-  };
-}
-
-export function getDefaultFooterSettings(): FooterSettings {
-  const { t } = useI18n();
-  return createDefaultFooterSettings(t);
-}
+import { getDefaultFooterSettings, extractFooterFromBlocks } from '~/utils/footerHelper';
 
 /**
  * Composable for accessing global footer settings
  * Handles fetching and caching of footer configuration
  */
-export function useFooterSettings() {
+export const useFooterSettings = () => {
   const footerCache = useState<FooterSettings | null>('footer-settings-cache', () => null);
+
+  const clearFooterCache = () => {
+    footerCache.value = null;
+  };
+
+  const updateFooterCache = (newFooterSettings: FooterSettings) => {
+    footerCache.value = newFooterSettings;
+  };
+
+  const getFooterSettings = (): FooterSettings => {
+    return footerCache.value || getDefaultFooterSettings();
+  };
 
   const fetchFooterSettings = async (): Promise<FooterSettings> => {
     if (footerCache.value) {
@@ -57,35 +44,8 @@ export function useFooterSettings() {
       console.warn('Failed to fetch footer settings, using defaults:', error);
     }
 
-    const defaults = getDefaultFooterSettings();
-    footerCache.value = defaults;
-    return defaults;
-  };
-
-  const getFooterSettings = (): FooterSettings => {
-    return footerCache.value || getDefaultFooterSettings();
-  };
-
-  const clearFooterCache = () => {
-    footerCache.value = null;
-  };
-
-  const updateFooterCache = (newFooterSettings: FooterSettings) => {
-    footerCache.value = newFooterSettings;
-  };
-
-  const extractFooterFromBlocks = (content: string): FooterSettings | null => {
-    try {
-      const blocks = JSON.parse(content);
-      const footerBlock = Array.isArray(blocks)
-        ? blocks.find((block: { name?: string }) => block.name === 'Footer')
-        : null;
-
-      return footerBlock?.content || null;
-    } catch (error) {
-      console.warn('Failed to extract footer from blocks:', error);
-      return null;
-    }
+    footerCache.value = getFooterSettings();
+    return footerCache.value;
   };
 
   return {
@@ -93,7 +53,6 @@ export function useFooterSettings() {
     fetchFooterSettings,
     getFooterSettings,
     getDefaultFooterSettings,
-    createDefaultFooterSettings,
     clearFooterCache,
     updateFooterCache,
     extractFooterFromBlocks,
