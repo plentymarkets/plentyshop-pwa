@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress';
+import cypressFailFast from "cypress-fail-fast/plugin";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,6 +15,7 @@ export default defineConfig({
   video: false,
   chromeWebSecurity: false,
   env: {
+    FAIL_FAST_STRATEGY: 'spec',
     DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 10,
     POST_CODE_VALIDATION_COUNTRY: 'United Kingdom',
     E2E_TEST_PAYPAL_EMAIL: process.env.E2E_TEST_PAYPAL_EMAIL || '',
@@ -21,9 +23,8 @@ export default defineConfig({
     CONFIG_ID: process.env.CONFIG_ID || '1',
   },
   e2e: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      cypressFailFast(on, config);
     },
     baseUrl: 'http://localhost:3000',
     specPattern: '__tests__/test/**/*.cy.{js,jsx,ts,tsx}',
