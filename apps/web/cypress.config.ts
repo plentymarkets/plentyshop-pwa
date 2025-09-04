@@ -1,5 +1,5 @@
 import { defineConfig } from 'cypress';
-import cypressFailFast from "cypress-fail-fast/plugin";
+import cypressFailFast from 'cypress-fail-fast/plugin';
 import dotenv from 'dotenv';
 
 dotenv.config();
