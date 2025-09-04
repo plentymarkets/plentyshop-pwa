@@ -1,9 +1,10 @@
-import type { FooterSettings } from '~/components/blocks/Footer/types';
+import type { FooterSettings, AddFooterBlock } from '~/components/blocks/Footer/types';
+import { v4 as uuid } from 'uuid';
 
 const createDefaultFooterSettings = (t: (key: string) => string): FooterSettings => {
   return {
     meta: {
-      uuid: '',
+      uuid: uuid(),
       isGlobalTemplate: true,
     },
     column1: { title: t('categories.legal.label') },
@@ -37,5 +38,34 @@ export const extractFooterFromBlocks = (content: string): FooterSettings | null 
   } catch (error) {
     console.warn('Failed to extract footer from blocks:', error);
     return null;
+  }
+};
+
+export const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
+  const footerExists = data.value.some((block) => block.name === 'Footer');
+
+  if (!footerExists) {
+    const defaultSettings = getDefaultFooterSettings();
+
+    const footerBlock = {
+      name: 'Footer',
+      type: 'content',
+      meta: {
+        uuid: uuid(),
+        isGlobalTemplate: true,
+      },
+      content: cachedFooter.value || {
+        ...defaultSettings,
+        meta: {
+          uuid: uuid(),
+          isGlobalTemplate: true,
+        },
+      },
+    };
+    data.value.push(footerBlock);
+
+    if (cleanData) {
+      cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
+    }
   }
 };

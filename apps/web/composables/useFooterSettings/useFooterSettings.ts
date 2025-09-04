@@ -1,5 +1,5 @@
 import type { FooterSettings } from '~/components/blocks/Footer/types';
-import { getDefaultFooterSettings, extractFooterFromBlocks } from '~/utils/footerHelper';
+import { getDefaultFooterSettings, extractFooterFromBlocks, addFooterBlock } from '~/utils/footerHelper';
 
 /**
  * Composable for accessing global footer settings
@@ -56,5 +56,6 @@ export const useFooterSettings = () => {
     clearFooterCache,
     updateFooterCache,
     extractFooterFromBlocks,
+    addFooterBlock,
   };
 };

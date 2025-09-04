@@ -38,21 +38,18 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-import { v4 as uuid } from 'uuid';
+
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
 
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocksServer(props.identifier, props.type);
-const { footerCache } = useFooterSettings();
-const { t } = useI18n();
 
+const { footerCache } = useFooterSettings();
 addFooterBlock({
   data,
   cachedFooter: footerCache,
-  t,
-  uuid,
   cleanData,
 });
 
