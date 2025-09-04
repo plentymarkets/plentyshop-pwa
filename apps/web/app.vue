@@ -1,5 +1,4 @@
 <template>
-  <ReloadPWA />
   <component :is="Toolbar" v-if="$isPreview" />
   <div
     class="w-100 relative md:flex"
@@ -45,6 +44,9 @@
   </div>
   <component :is="PageModal" v-if="$isPreview" />
   <component :is="UnlinkCategoryModal" v-if="$isPreview" />
+  <ClientOnly>
+    <LazyReloadPWA hydrate-on-idle />
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
