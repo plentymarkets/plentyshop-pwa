@@ -8,7 +8,7 @@
 
     <Multiselect
         v-model="customerClassOption"
-        data-testid="recommended-first-sorting-select"
+        data-testid="b2b-customer-class-select"
         :options="customerClassOptions"
         :placeholder="getEditorTranslation('placeholder')"
         label="label"
@@ -24,17 +24,20 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import type { CustomerClassOption } from '~/components/settings/general/customer-management/1.default-B2C-and-guest-customer-class/types';
-//create a getCustomerClassOptions here
-import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
+import {MultiselectOption} from "../1.default-B2C-and-guest-customer-class/types";
+
+
+const { fetchCustomerClasses, data: customerClassesData } = useCustomerClass();
+
+const customerClassOptions = computed(() => {
+  return [{label: 'Default Class', value: '0'}];
+});
 
 const { updateSetting, getSetting } = useSiteSettings('defaultB2BCustomerClass');
 
-const customerClassOptions = computed(() => getRecommendedSortingOptions('en', false));
-
 const customerClassOption = computed({
   get: () => {
-    return customerClassOptions.value.find((o: CustomerClassOption) => o.value === getSetting());
+    return customerClassOptions.value.find((o: MultiselectOption) => o.value === getSetting());
   },
   set: (option) => {
     updateSetting(option?.value ?? '');

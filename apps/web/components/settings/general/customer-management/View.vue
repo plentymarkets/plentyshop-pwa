@@ -12,7 +12,14 @@
   </SiteConfigurationView>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { fetchCustomerClasses } = useCustomerClass();
+
+onMounted(async () => {
+  await fetchCustomerClasses();
+});
+
+</script>
 
 <i18n lang="json">
 {

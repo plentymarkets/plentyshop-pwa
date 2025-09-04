@@ -1,1 +1,9 @@
-export type CustomerClassOption = { label: string; value: string };
+export type CustomerClassOption = {
+    id: string;
+    name: string
+};
+
+export type MultiselectOption = {
+    label: string;
+    value: string;
+};

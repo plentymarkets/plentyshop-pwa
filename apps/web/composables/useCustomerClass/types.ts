@@ -1,13 +1,13 @@
-import type { GetOrdersResponse, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
+import type { CustomerClassResponse } from '@plentymarkets/shop-api';
+
+export type CustomerClassOption = { id: string; name: string };
 
 export interface UseCustomerClassState {
-  // data: GetCustomerClassesResponse | null;
-  data:  object;
+  data: CustomerClassResponse | null;
   loading: boolean;
 }
 
-// export type FetchCustomerClasses = () => Promise<GetCustomerClassesResponse | null>;
-export type FetchCustomerClasses = () => Promise<null>;
+export type FetchCustomerClasses = () => Promise<CustomerClassResponse | null>;
 
 export interface UseCustomerClasses {
   data: Readonly<Ref<UseCustomerClassState['data']>>;
