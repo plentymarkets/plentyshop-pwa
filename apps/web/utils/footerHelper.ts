@@ -19,12 +19,12 @@ const createDefaultFooterSettings = (t: (key: string) => string): FooterSettings
       footnoteText: '#959795',
     },
   };
-}
+};
 
 export const getDefaultFooterSettings = (): FooterSettings => {
   const { $i18n } = useNuxtApp();
   return createDefaultFooterSettings($i18n.t);
-}
+};
 
 export const extractFooterFromBlocks = (content: string): FooterSettings | null => {
   try {
@@ -38,4 +38,4 @@ export const extractFooterFromBlocks = (content: string): FooterSettings | null 
     console.warn('Failed to extract footer from blocks:', error);
     return null;
   }
-}
+};

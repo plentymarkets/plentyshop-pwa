@@ -96,7 +96,7 @@ describe('useFooterSettings', () => {
     vi.clearAllMocks();
     // Reset state for each test
     mockStateRef = { value: null };
-    
+
     // Setup useState mock
     useState.mockReturnValue(mockStateRef);
 
@@ -157,14 +157,12 @@ describe('useFooterSettings', () => {
 
       expect(result).toBeNull();
       expect(consoleSpy).toHaveBeenCalledWith('Failed to extract footer from blocks:', expect.any(Error));
-      
+
       consoleSpy.mockRestore();
     });
 
     it('should return null if footer block has no content', () => {
-      const blocksJson = JSON.stringify([
-        { name: 'Footer' },
-      ]);
+      const blocksJson = JSON.stringify([{ name: 'Footer' }]);
 
       const result = extractFooterFromBlocks(blocksJson);
 
@@ -250,7 +248,7 @@ describe('useFooterSettings', () => {
 
       it('should handle API errors gracefully and return defaults', async () => {
         const consoleSpy = setupConsoleSpy();
-        
+
         setupApiError();
 
         const { fetchFooterSettings } = useFooterSettings();
@@ -261,7 +259,7 @@ describe('useFooterSettings', () => {
         expect(result.column2.title).toBe('Contact');
         expect(mockStateRef.value).toEqual(result);
         expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch footer settings, using defaults:', expect.any(Error));
-        
+
         consoleSpy.mockRestore();
       });
     });
