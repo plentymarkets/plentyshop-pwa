@@ -1129,7 +1129,8 @@
   },
   "reloadPWA": {
     "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
-    "refresh": "Aktualisieren"
+    "refresh": "Aktualisieren",
+    "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
   "double-tap-zoom": "Zum Zoomen doppeltippen",

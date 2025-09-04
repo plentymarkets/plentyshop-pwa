@@ -1130,7 +1130,8 @@
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
   "reloadPWA": {
     "newVersionAvailable": "A new version of the shop is available.",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "ariaLabel": "A new version of the shop is available. Press to refresh the page."
   },
   "double-tap-zoom": "Double-tap to zoom",
   "PreferredDelivery": {

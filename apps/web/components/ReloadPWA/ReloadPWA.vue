@@ -7,7 +7,8 @@
     <div>
       <span>{{ t('reloadPWA.newVersionAvailable') }}</span>
     </div>
-    <UiButton @click="updatePWA">
+    <UiButton 
+    :aria-label="t('reloadPWA.ariaLabel')" @click="updatePWA">
       {{ t('reloadPWA.refresh') }}
     </UiButton>
   </div>
