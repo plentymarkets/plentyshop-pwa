@@ -11,7 +11,6 @@ interface AddFooterBlockOptions {
 export function addFooterBlock({ data, cachedFooter, t, uuid, cleanData }: AddFooterBlockOptions) {
   const footerExists = data.value.some((block) => block.name === 'Footer');
   if (!footerExists) {
-    // Get default settings with proper i18n context
     const defaultSettings = {
       column1: { title: t('categories.legal.label') },
       column2: { title: t('categories.contact.label'), description: '', showContactLink: true },
