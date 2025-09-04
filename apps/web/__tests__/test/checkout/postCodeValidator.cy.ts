@@ -7,7 +7,6 @@ const countryList = selectedCountry ? postCodeMapper.filter((c) => c.name === se
 
 if (selectedCountry && countryList.length === 0) throw new Error(`Country "${selectedCountry}" not found.`);
 
-
 describe('Post Code Validator', () => {
   beforeEach(() => {
     cy.clearCookies().visitSmoke().addToCart();
@@ -39,4 +38,3 @@ describe('Post Code Validator', () => {
     });
   });
 });
-
