@@ -62,7 +62,6 @@ mockNuxtImport('useAsyncData', () => useAsyncData);
 mockNuxtImport('useState', () => useState);
 mockNuxtImport('useI18n', () => useI18n);
 
-// Helper functions to reduce nesting
 const setupApiResponse = (responseData: unknown) => {
   useAsyncData.mockImplementation((_key, _fetcher) => ({
     data: { value: responseData },
@@ -71,7 +70,6 @@ const setupApiResponse = (responseData: unknown) => {
 
 const setupApiCall = () => {
   useAsyncData.mockImplementation((_key, fetcher) => {
-    // Call the fetcher to test SDK call
     fetcher();
     return { data: { value: null } };
   });
@@ -94,13 +92,10 @@ describe('useFooterSettings', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    // Reset state for each test
     mockStateRef = { value: null };
 
-    // Setup useState mock
     useState.mockReturnValue(mockStateRef);
 
-    // Setup SDK mock
     mockGetBlocks = vi.fn();
     useSdk.mockReturnValue({
       plentysystems: {
@@ -108,7 +103,6 @@ describe('useFooterSettings', () => {
       },
     });
 
-    // Setup useAsyncData mock
     mockAsyncData = vi.fn();
     useAsyncData.mockImplementation((_key, _fetcher) => {
       const result = { data: { value: null } };
