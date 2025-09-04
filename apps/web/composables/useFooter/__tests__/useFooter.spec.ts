@@ -1,5 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { useFooterSettings } from '../useFooterSettings';
+import { useFooterSettings } from '../useFooter';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 
 const mockFooterData: FooterSettings = {
