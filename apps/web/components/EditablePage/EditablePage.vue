@@ -45,12 +45,12 @@ const props = defineProps<EditablePageProps>();
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocksServer(props.identifier, props.type);
-const { cachedFooter } = useFooterBlock();
+const { footerCache } = useFooterSettings();
 const { t } = useI18n();
 
 addFooterBlock({
   data,
-  cachedFooter,
+  cachedFooter: footerCache,
   t,
   uuid,
   cleanData,
