@@ -13,6 +13,8 @@ const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
 
+const cartChanged = computed(() => cart.value?.basketAmount ?? 0);
+
 const renderButton = async () => {
   if ((await initialize()) && config.value.isEligible) {
     await getTransactionInfo();
@@ -34,7 +36,7 @@ const renderButton = async () => {
 onNuxtReady(async () => {
   await renderButton();
 
-  watch(cart, async () => {
+  watch(cartChanged, async () => {
     console.log('Cart changed, re-rendering Apple Pay button');
     await renderButton();
   });
