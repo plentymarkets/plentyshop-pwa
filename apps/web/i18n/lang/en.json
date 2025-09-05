@@ -1101,6 +1101,9 @@
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
+    "security": {
+      "invalidCsrfToken": "Security check failed. Please reload the page and try again."
+    },
     "unknownError": "An unknown error has occurred."
   },
   "successInfoMessage": "Your order was completed successfully.",
