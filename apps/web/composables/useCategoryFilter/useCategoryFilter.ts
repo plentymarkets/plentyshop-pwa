@@ -63,7 +63,6 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
 
     const defaultOption =
       useNuxtApp().$router.currentRoute.value.path === '/search' ? defaultSortingSearch() : defaultSortingOption();
-    console.log('currentRoute: ', currentRoute);
 
     return {
       categoryUrlPath: getCategoryUrlFromRoute(currentRoute.fullPath),
