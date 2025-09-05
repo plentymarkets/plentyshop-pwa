@@ -27,32 +27,6 @@
         class="max-w-48"
       />
     </SfScrollable>
-
-    <template #fallback>
-      <!-- Fallback grid for SSR -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pb-4">
-        <UiProductCard
-          v-for="product in items"
-          :key="productGetters.getId(product)"
-          :product="product"
-          :name="productGetters.getName(product)"
-          :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-          :image-url="addModernImageExtension(productGetters.getSecondPreviewImage(product))"
-          :image-alt="
-            productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
-            productGetters.getName(product) ||
-            ''
-          "
-          :image-title="productImageGetters.getImageName(productImageGetters.getFirstImage(product)) || ''"
-          :image-height="productGetters.getImageHeight(product) || 600"
-          :image-width="productGetters.getImageWidth(product) || 600"
-          :rating-count="productGetters.getTotalReviews(product)"
-          :rating="productGetters.getAverageRating(product, 'half')"
-          is-from-slider
-          class="max-w-48"
-        />
-      </div>
-    </template>
   </ClientOnly>
 
   <div class="mt-4 typography-text-xs flex gap-1">
