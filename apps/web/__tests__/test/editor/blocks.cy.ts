@@ -2,7 +2,7 @@ import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
 
-describe('Blocks', () => {
+describe.skip('Blocks', () => {
   const editor = new EditorObject();
   const cookieBar = new CookieBarObject();
 

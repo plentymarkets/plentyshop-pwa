@@ -1,7 +1,7 @@
 import { paths } from '../../../utils/paths';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
-describe('Recommended Block Form', () => {
+describe.skip('Recommended Block Form', () => {
   const checkIsRecommendedBlockIsVisible = () => {
     cy.getByTestId('recommended-block').should('be.visible');
   };

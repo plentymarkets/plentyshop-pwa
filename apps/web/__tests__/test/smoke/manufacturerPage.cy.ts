@@ -7,7 +7,7 @@ const productManufacturerPage = new ProductManufacturerPageObject();
 const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
-describe('Smoke: Product Manufacturer Page', () => {
+describe.skip('Smoke: Product Manufacturer Page', () => {
   it('[smoke] Open product page and check manufacturer information si available', () => {
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);

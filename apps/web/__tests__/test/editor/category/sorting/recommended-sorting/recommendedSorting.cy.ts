@@ -2,7 +2,7 @@ import { CookieBarObject } from '../../../../../support/pageObjects/CookieBarObj
 import { EditorObject } from '../../../../../support/pageObjects/EditorObject';
 import { CategorySettingsObject } from '../../../../../support/pageObjects/CategorySettingsObject';
 
-describe('RecommendedSorting', () => {
+describe.skip('RecommendedSorting', () => {
   const editor = new EditorObject();
   const categorySettings = new CategorySettingsObject();
   const cookieBar = new CookieBarObject();

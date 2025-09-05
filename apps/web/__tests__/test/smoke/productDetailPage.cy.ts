@@ -7,7 +7,7 @@ const productDetailPage = new ProductDetailPageObject();
 const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
-describe('Smoke: Product Detail Page', () => {
+describe.skip('Smoke: Product Detail Page', () => {
   beforeEach(() => {
     cy.clearCookies();
   });

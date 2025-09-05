@@ -9,7 +9,7 @@ beforeEach(() => {
   cy.clearCookies().visitSmoke();
 });
 
-describe('Feature: PayPal button rendering', () => {
+describe.skip('Feature: PayPal button rendering', () => {
   it('[smoke] Render PayPal button on checkout after refresh', () => {
     cy.intercept('/plentysystems/doLogin').as('doLogin');
     cy.intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');

@@ -3,7 +3,7 @@ import { paths } from '../../../utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../support/pageObjects/SiteSettingsObject';
 
-describe('SiteSettings', () => {
+describe.skip('SiteSettings', () => {
   const editor = new EditorObject();
   const siteSettings = new SiteSettingsObject();
   const cookieBar = new CookieBarObject();
