@@ -95,6 +95,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('open-category-drawer');
   }
 
+  get generalSettingsButton() {
+    return cy.getByTestId('open-general-settings-drawer');
+  }
+
   blockIsBanner(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('banner-image');
   }
@@ -130,6 +134,11 @@ export class EditorObject extends PageObject {
 
   toggleCategorySettings() {
     this.categorySettingsButton.should('be.visible').click();
+    return this;
+  }
+
+  toggleGeneralSettings() {
+    this.generalSettingsButton.should('be.visible').click();
     return this;
   }
 

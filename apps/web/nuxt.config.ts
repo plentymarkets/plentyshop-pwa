@@ -137,6 +137,8 @@ export default defineNuxtConfig({
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       vatNumberValidation: process.env.NUXT_PUBLIC_VAT_NUMBER_VALIDATION || 'true',
+      defaultB2CCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2C_CUSTOMER_CLASS || '0',
+      defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
       fetchDynamicTranslations: false,
     },
   },
