@@ -7,6 +7,7 @@ export type ProductRecommendedProductsProps = {
   meta: {
     uuid: string;
   };
+  shouldLoad?: boolean;
 };
 
 export type ProductRecommendedProductsContent = {

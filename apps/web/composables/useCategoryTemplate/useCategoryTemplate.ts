@@ -15,7 +15,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) => {
-  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${blocks}`, () => ({
+  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate${blocks ? `-${blocks}` : ''}`, () => ({
     data: [],
     cleanData: [],
     categoryTemplateData: null,

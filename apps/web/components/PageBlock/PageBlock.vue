@@ -3,6 +3,11 @@
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
+      :ref="
+        shouldLazyLoad(props.block.name)
+          ? (el) => (lazyLoadRefs[getLazyLoadKey(props.block.name, props.block.meta.uuid)] = el as HTMLElement)
+          : undefined
+      "
       :class="[
         'relative block-wrapper',
         {
@@ -86,35 +91,32 @@
 </template>
 
 <script lang="ts" setup>
-import type { Block } from '@plentymarkets/shop-api';
 import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
 import type { BlockPosition } from '~/composables/useBlockManager/types';
+import type { PageBlockProps } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 
-const { locale, defaultLocale } = useI18n();
-const route = useRoute();
+const props = defineProps<PageBlockProps>();
 
 const { $isPreview } = useNuxtApp();
-
-interface Props {
-  index: number;
-  block: Block;
-  disableActions: boolean;
-  root: boolean;
-  isClicked: boolean;
-  clickedBlockIndex: number | null;
-  isTablet: boolean;
-  blockHasData?: (block: Block) => boolean;
-  changeBlockPosition: (index: number, position: number) => void;
-}
-
-const props = defineProps<Props>();
-
-const buttonLabel = 'Insert a new block at this position.';
-
+const { locale, defaultLocale } = useI18n();
+const route = useRoute();
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const { visiblePlaceholder, togglePlaceholder, isDragging, multigridColumnUuid } = useBlockManager();
 const attrs = useAttrs();
+const {
+  visiblePlaceholder,
+  togglePlaceholder,
+  isDragging,
+  multigridColumnUuid,
+  lazyLoadStates,
+  lazyLoadRefs,
+  shouldLazyLoad,
+  getLazyLoadKey,
+  getLazyLoadConfig,
+} = useBlockManager();
+
+const buttonLabel = 'Insert a new block at this position.';
 
 const blockSize = computed(() => getBlockSize());
 
@@ -127,7 +129,42 @@ const getBlockComponent = computed(() => {
 });
 
 const contentProps = computed(() => {
-  return props.root ? { ...props.block } : { ...props.block, ...attrs };
+  const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
+  const config = getLazyLoadConfig(props.block.name);
+
+  if (config) {
+    const uniqueKey = getLazyLoadKey(props.block.name, props.block.meta.uuid);
+    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false;
+
+    return { ...baseProps, [config.propName]: lazyLoadState };
+  }
+
+  return baseProps;
+});
+
+const observeLazyLoadSection = (blockName: string) => {
+  const config = getLazyLoadConfig(blockName);
+  const uniqueKey = getLazyLoadKey(blockName, props.block.meta.uuid);
+
+  if (import.meta.client && lazyLoadRefs.value[uniqueKey] && config) {
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          lazyLoadStates.value[uniqueKey] = true;
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: config.threshold || 0,
+        rootMargin: config.rootMargin || '0px 0px 250px 0px',
+      },
+    );
+    observer.observe(lazyLoadRefs.value[uniqueKey]!);
+  }
+};
+
+onNuxtReady(() => {
+  if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 
 const showOutline = computed(() => {
@@ -171,6 +208,7 @@ const isEditDisabled = computed(() => {
   const homePath = getHomePath(locale.value);
   return route.fullPath !== homePath;
 });
+
 const getBlockActions = (block: Block) => {
   if (block.name === 'Footer') {
     return {
