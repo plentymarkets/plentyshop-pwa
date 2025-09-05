@@ -339,6 +339,14 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  clearPostCodeBillingForm() {
+    this.billingAddressForm.within(() => {
+      this.postalCodeInput.clear();
+    });
+
+    return this;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillShippingForm(fixture: any) {
     cy.wait(1000);
