@@ -18,7 +18,6 @@ const { fetchCustomerClasses } = useCustomerClass();
 onMounted(async () => {
   await fetchCustomerClasses();
 });
-
 </script>
 
 <i18n lang="json">

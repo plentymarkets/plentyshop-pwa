@@ -1,5 +1,5 @@
-import {FetchCustomerClasses, UseCustomerClassesReturn, UseCustomerClassState} from "./types";
-import {ApiError} from "@plentymarkets/shop-api";
+import { FetchCustomerClasses, UseCustomerClassesReturn, UseCustomerClassState } from './types';
+import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing customer classes data

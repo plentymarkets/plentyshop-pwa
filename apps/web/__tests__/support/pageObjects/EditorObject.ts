@@ -96,7 +96,7 @@ export class EditorObject extends PageObject {
   }
 
   get generalSettingsButton() {
-    return cy.getByTestId('open-general-settings-drawer')
+    return cy.getByTestId('open-general-settings-drawer');
   }
 
   blockIsBanner(el: JQuery<HTMLElement>) {

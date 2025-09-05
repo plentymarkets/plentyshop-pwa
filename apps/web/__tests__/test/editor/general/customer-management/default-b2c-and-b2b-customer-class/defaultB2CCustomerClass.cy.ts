@@ -1,7 +1,7 @@
 import { CookieBarObject } from '../../../../../support/pageObjects/CookieBarObject';
 import { EditorObject } from '../../../../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../../../../support/pageObjects/SiteSettingsObject';
-import {GeneralSettingsObject} from "../../../../../support/pageObjects/GeneralSettingsObject";
+import { GeneralSettingsObject } from '../../../../../support/pageObjects/GeneralSettingsObject';
 
 describe('DefaultB2CCustomerClass', () => {
   const editor = new EditorObject();
@@ -31,13 +31,13 @@ describe('DefaultB2CCustomerClass', () => {
     editor.toggleGeneralSettings();
 
     generalSettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleCustomerManagement()
-        .toggleSection('b2c')
-        .checkDropdownExist('b2c-customer-class-select')
-        .goBackSection()
-        .closeDrawer();
+      .checkDrawerVisible()
+      .delay(500)
+      .toggleCustomerManagement()
+      .toggleSection('b2c')
+      .checkDropdownExist('b2c-customer-class-select')
+      .goBackSection()
+      .closeDrawer();
 
     generalSettings.checkDrawerNotVisible();
   });
@@ -47,13 +47,13 @@ describe('DefaultB2CCustomerClass', () => {
     editor.toggleGeneralSettings();
 
     generalSettings
-        .checkDrawerVisible()
-        .delay(500)
-        .toggleCustomerManagement()
-        .toggleSection('b2b')
-        .checkDropdownExist('b2b-customer-class-select')
-        .goBackSection()
-        .closeDrawer();
+      .checkDrawerVisible()
+      .delay(500)
+      .toggleCustomerManagement()
+      .toggleSection('b2b')
+      .checkDropdownExist('b2b-customer-class-select')
+      .goBackSection()
+      .closeDrawer();
 
     generalSettings.checkDrawerNotVisible();
   });
