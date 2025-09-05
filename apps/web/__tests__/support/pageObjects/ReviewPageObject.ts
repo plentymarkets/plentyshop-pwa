@@ -203,15 +203,4 @@ export class ReviewPageObject extends PageObject {
 
     return this;
   }
-
-  deleteAllReviews() {
-    cy.wait(1000);
-
-    cy.get('body').then(($body) => {
-      if ($body.find('[data-testid="remove-review-button"]').length > 0) {
-        this.removeReview();
-        this.deleteAllReviews();
-      }
-    });
-  }
 }
