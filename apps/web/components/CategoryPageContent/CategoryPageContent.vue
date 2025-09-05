@@ -100,7 +100,7 @@ const localePath = useLocalePath();
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
 
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();
