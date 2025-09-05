@@ -5,11 +5,11 @@
     :class="`lg:grid-cols-${configuration.columnWidths.length}`"
   >
     <div
-      v-for="(column, colIndex) in content"
+      v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
       :class="`col-${configuration.columnWidths[colIndex]}`"
     >
-      <component :is="getBlockComponent(alignedContent[colIndex].name)" v-bind="alignedContent[colIndex]" />
+      <slot name="content" :content-block="column" />
     </div>
   </div>
 </template>
@@ -19,18 +19,6 @@ import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structu
 import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
-
-const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
-const getBlockComponent = (blockName: string) => {
-  if (!blockName) return null;
-  const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
-  return matched ? defineAsyncComponent(modules[matched]) : null;
-};
 
 const alignBlock = computed<AlignableBlock | undefined>(
   () =>
