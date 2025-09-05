@@ -26,6 +26,7 @@ const { getRobots, setRobotForStaticPage } = useRobots();
 
 definePageMeta({
   layout: false,
+  type: 'search',
 });
 
 const route = useRoute();

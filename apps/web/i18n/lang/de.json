@@ -1032,7 +1032,8 @@
         "externalName_desc": "Hersteller Z-A"
       },
       "feedbackDecimal_asc": "Kundenbewertung ⬆",
-      "feedbackDecimal_desc": "Kundenbewertung ⬇"
+      "feedbackDecimal_desc": "Kundenbewertung ⬇",
+      "score": "Relevanz"
     }
   },
   "storefrontError": {

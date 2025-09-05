@@ -27,7 +27,7 @@ import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('recommendedSecondSortingOption');
 
-const sortingOptions = computed(() => getRecommendedSortingOptions('en', true));
+const sortingOptions = computed(() => getRecommendedSortingOptions(true));
 
 const recommendedSecondSortingOption = computed({
   get: () => {

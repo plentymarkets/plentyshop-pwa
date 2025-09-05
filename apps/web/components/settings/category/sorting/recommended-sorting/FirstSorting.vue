@@ -29,7 +29,7 @@ import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('recommendedFirstSortingOption');
 
-const sortingOptions = computed(() => getRecommendedSortingOptions('en', false));
+const sortingOptions = computed(() => getRecommendedSortingOptions(false));
 
 const recommendedFirstSortingOption = computed({
   get: () => {
