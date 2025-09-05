@@ -26,7 +26,6 @@
       class="max-w-48"
     />
   </SfScrollable>
-
   <div class="mt-4 typography-text-xs flex gap-1">
     <span>{{ t('asterisk') }}</span>
     <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
