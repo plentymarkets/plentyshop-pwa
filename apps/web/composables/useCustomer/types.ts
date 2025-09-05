@@ -40,7 +40,6 @@ export interface UseCustomer {
   emailValidationSchema: ReturnType<typeof toTypedSchema>;
   missingGuestCheckoutEmail: Ref<boolean>;
   backToContactInformation: () => boolean;
-  showNetPrices?: boolean;
 }
 
 export type UseCustomerReturn = () => UseCustomer;
