@@ -224,7 +224,7 @@
       />
     </div>
 
-    <div class="py-2" v-if="!textCardBlock.layout.keepTransparent">
+    <div v-if="!textCardBlock.layout.keepTransparent" class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
@@ -298,7 +298,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
 
 const { data } = useCategoryTemplate();
