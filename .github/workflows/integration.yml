@@ -126,6 +126,7 @@ jobs:
           name: build
           path: build.tar.gz
   smoke:
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
