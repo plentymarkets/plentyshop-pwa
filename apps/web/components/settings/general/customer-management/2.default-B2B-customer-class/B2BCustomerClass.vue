@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { CustomerClassOption } from "../1.default-B2C-and-guest-customer-class/types";
+import { CustomerClassOption } from '../1.default-B2C-and-guest-customer-class/types';
 
 const { updateSetting, getSetting } = useSiteSettings('defaultB2BCustomerClass');
 const { fetchCustomerClasses, data: customerClassesData } = useCustomerClass();
