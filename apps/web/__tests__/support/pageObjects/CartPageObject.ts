@@ -54,6 +54,14 @@ export class CartPageObject extends PageObject {
     return cy.getByTestId('navbar-top').find('[data-testid="shopping-cart"]');
   }
 
+  get cartButton() {
+    return cy.getByTestId('quick-checkout-cart-button');
+  }
+
+  get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
+  }
+
   compareItemAndFullPriceNyQuantity(quantity: number) {
     this.cartItemPrice.invoke('text').then((itemPriceText: string) => {
       const itemPrice = parseFloat(itemPriceText.replace(/[^\d.-]/g, ''));
@@ -88,6 +96,11 @@ export class CartPageObject extends PageObject {
 
   openCart() {
     this.cartIcon.click();
+    return this;
+  }
+
+  openCartViaQuickCheckout() {
+    this.cartButton.click();
     return this;
   }
 
@@ -143,9 +156,5 @@ export class CartPageObject extends PageObject {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('coupon-value').should('not.exist');
-  }
-
-  get payPalButton() {
-    return cy.get('.paypal-buttons-context-iframe').first();
   }
 }

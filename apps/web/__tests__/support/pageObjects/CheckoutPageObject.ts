@@ -180,7 +180,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.placeOrderButtons.click();
 
-    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
+    cy.wait(['@doAdditionalInformation', '@doPreparePayment'], { timeout: 20000 });
 
     return this;
   }
