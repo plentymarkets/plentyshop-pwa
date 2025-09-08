@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <component :is="Toolbar" v-if="$isPreview" />
+    <component :is="Toolbar" v-if="clientPreview" />
   </ClientOnly>
   <div
     class="w-100 relative md:flex"
@@ -13,7 +13,7 @@
     <ClientOnly>
       <component
         :is="SettingsToolbar"
-        v-if="$isPreview && disableActions"
+        v-if="clientPreview && disableActions"
         :class="{
           'order-first': placement === 'left',
           'order-last': placement === 'right',
@@ -47,8 +47,8 @@
     </div>
   </div>
   <ClientOnly>
-    <component :is="PageModal" v-if="$isPreview" />
-    <component :is="UnlinkCategoryModal" v-if="$isPreview" />
+    <component :is="PageModal" v-if="clientPreview" />
+    <component :is="UnlinkCategoryModal" v-if="clientPreview" />
   </ClientOnly>
   <ClientOnly>
     <LazyReloadPWA hydrate-on-idle />
