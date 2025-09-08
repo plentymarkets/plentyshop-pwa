@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -39,11 +41,11 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: E2E Production
+      - name: E2E Features
         uses: cypress-io/github-action@v6
         with:
           install: false
-          command: npm run test:cypress
+          command: npm run test:cypress-feature
         env:
           NUXT_PUBLIC_CONFIG_ID: 1
           MOLLIE_TEST_MODE: true

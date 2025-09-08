@@ -27,6 +27,7 @@
     "test:coverage": "npm run turbo:disable-telemetry && npx turbo run test:coverage",
     "test:cypress-checkout": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-checkout\" \"npm run start\"",
     "test:cypress-external": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-external\" \"npm run start\"",
+    "test:cypress-feature": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-feature\" \"npm run start\"",
     "test:cypress-paypal": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-paypal\" \"npm run start\"",
     "test:cypress-dhl": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dhl\" \"npm run start\"",
     "test:cypress-editor": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-editor\" \"npm run start\"",
