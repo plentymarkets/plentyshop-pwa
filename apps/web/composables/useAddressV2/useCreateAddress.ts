@@ -17,7 +17,7 @@ export const useCreateAddress = (type: AddressType) => {
       return Promise.resolve(true);
     } catch (error: unknown) {
       useHandleError(error as ApiError);
-      return Promise.resolve(false);
+      return Promise.reject();
     } finally {
       state.value.loading = false;
     }

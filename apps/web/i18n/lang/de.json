@@ -1102,10 +1102,11 @@
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "security": {
-      "invalidCsrfToken": "Sicherheitsüberprüfung fehlgeschlagen. Bitte laden Sie die Seite neu und versuchen Sie es erneut."
+      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
+  "reloadPage": "Neu laden",
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "successInfoOrderHeader": "Vielen Dank für Ihre Bestellung!",
   "successInfoReturnHeader": "Vielen Dank für Ihre Retoure!",
