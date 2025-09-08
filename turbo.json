@@ -38,6 +38,9 @@
     "test:cypress-checkout": {
       "cache": false
     },
+    "test:cypress-feature": {
+      "cache": false
+    },
     "test:cypress-paypal": {
       "cache": false
     },
