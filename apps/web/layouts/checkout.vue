@@ -32,21 +32,42 @@ import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
 const localePath = useLocalePath();
-const { t, locale } = useI18n();
+const i18n = useI18n();
+const { t } = i18n;
 const router = useRouter();
 const { isAuthorized } = useCustomer();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
+
+const currentLocale: string =
+  typeof i18n.locale === 'object' && 'value' in i18n.locale
+    ? i18n.locale.value
+    : (i18n.locale as string);
+
+const availableLocales: string[] = Array.isArray(i18n.availableLocales)
+  ? i18n.availableLocales
+  : [];
+
+const defaultLocale: string =
+  (i18n).defaultLocale || availableLocales[0] || currentLocale;
+
+const getLocaleFromPath = (path?: string): string | null => {
+  if (!path) return null;
+  const pathname = path.split('?')[0].split('#')[0];
+  const segments = pathname.split('/').filter(Boolean);
+  if (!segments.length) return null;
+
+  const first = segments[0];
+  if (availableLocales.length && availableLocales.includes(first)) {
+    return first;
+  }
+  return defaultLocale;
+};
+
 const goToPreviousRoute = () => {
   const backPath = router.options.history.state?.back;
-  const currentLocale = locale.value;
-  const getLocaleFromPath = (path: string) => {
-    const match = path.match(/^\/([a-zA-Z-]{2,5})(\/|$)/);
-    return match ? match[1] : null;
-  };
-
   if (isAuthorized.value && backPath === paths.guestLogin) {
     router.go(-2);
     return;
@@ -55,7 +76,7 @@ const goToPreviousRoute = () => {
   if (backPath) {
     const backLocale = getLocaleFromPath(String(backPath));
     if (backLocale && backLocale !== currentLocale) {
-      router.push(localePath(paths.home));
+      router.push('/');
       return;
     }
 
