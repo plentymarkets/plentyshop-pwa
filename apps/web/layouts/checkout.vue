@@ -42,16 +42,11 @@ const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
 
 const currentLocale: string =
-  typeof i18n.locale === 'object' && 'value' in i18n.locale
-    ? i18n.locale.value
-    : (i18n.locale as string);
+  typeof i18n.locale === 'object' && 'value' in i18n.locale ? i18n.locale.value : (i18n.locale as string);
 
-const availableLocales: string[] = Array.isArray(i18n.availableLocales)
-  ? i18n.availableLocales
-  : [];
+const availableLocales: string[] = Array.isArray(i18n.availableLocales) ? i18n.availableLocales : [];
 
-const defaultLocale: string =
-  (i18n).defaultLocale || availableLocales[0] || currentLocale;
+const defaultLocale: string = i18n.defaultLocale || availableLocales[0] || currentLocale;
 
 const getLocaleFromPath = (path?: string): string | null => {
   if (!path) return null;
