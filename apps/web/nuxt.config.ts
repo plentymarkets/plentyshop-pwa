@@ -88,7 +88,7 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       isDev: process.env.NODE_ENV === 'development',
       cookieGroups: cookieConfig,
-      turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
+      turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true' || process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
       useWebp: process.env?.IMAGEWEBP === 'true' || process.env?.NUXT_PUBLIC_USE_WEBP === 'true',
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
@@ -220,7 +220,7 @@ export default defineNuxtConfig({
     exposeConfig: true,
   },
   turnstile: {
-    siteKey: process.env?.TURNSTILESITEKEY,
+    siteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY,
   },
   viewport: {
     breakpoints: {
