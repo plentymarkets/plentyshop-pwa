@@ -3,7 +3,7 @@ import { EditorObject } from '../../../../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../../../../support/pageObjects/SiteSettingsObject';
 import { GeneralSettingsObject } from '../../../../../support/pageObjects/GeneralSettingsObject';
 
-describe('DefaultB2CCustomerClass', () => {
+describe('DefaultB2CandB2BCustomerClass', () => {
   const editor = new EditorObject();
   const siteSettings = new SiteSettingsObject();
   const generalSettings = new GeneralSettingsObject();

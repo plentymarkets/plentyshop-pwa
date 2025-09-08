@@ -8,7 +8,7 @@
 
     <Multiselect
       v-model="customerClassOption"
-      data-testid="b2c-customer-class-select"
+      data-testid="b2b-customer-class-select"
       :options="customerClassesData"
       :placeholder="getEditorTranslation('placeholder')"
       label="name"

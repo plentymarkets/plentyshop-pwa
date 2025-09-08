@@ -12,7 +12,7 @@ export class GeneralSettingsObject extends PageObject {
   }
 
   toggleSection(sectionName) {
-    this.customerClassSection(sectionName).should('be.visible').click();
+    this.customerClassSection(sectionName).should('be.visible').click({ force: true });
     return this;
   }
 
