@@ -1,22 +1,26 @@
 <template>
-  <component :is="Toolbar" v-if="$isPreview" />
+  <ClientOnly>
+    <component :is="Toolbar" v-if="clientPreview" />
+  </ClientOnly>
   <div
     class="w-100 relative md:flex"
     :class="{
       'lg:flex-row-reverse': placement !== 'left',
-      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen && $isPreview,
-      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen && $isPreview,
+      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen && clientPreview,
+      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen && clientPreview,
     }"
   >
-    <component
-      :is="SettingsToolbar"
-      v-if="$isPreview && disableActions"
-      :class="{
-        'order-first': placement === 'left',
-        'order-last': placement === 'right',
-        'mr-3': !drawerOpen || placement === 'right',
-      }"
-    />
+    <ClientOnly>
+      <component
+        :is="SettingsToolbar"
+        v-if="clientPreview && disableActions"
+        :class="{
+          'order-first': placement === 'left',
+          'order-last': placement === 'right',
+          'mr-3': !drawerOpen || placement === 'right',
+        }"
+      />
+    </ClientOnly>
 
     <component
       :is="SiteConfigurationDrawer"
@@ -30,7 +34,7 @@
       :class="{
         'lg:w-3/4': drawerOpen,
         'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
-        'lg:w-[calc(100%-66px)]': $isPreview && !drawerOpen && disableActions,
+        'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,
       }"
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
@@ -42,8 +46,10 @@
       </NuxtLayout>
     </div>
   </div>
-  <component :is="PageModal" v-if="$isPreview" />
-  <component :is="UnlinkCategoryModal" v-if="$isPreview" />
+  <ClientOnly>
+    <component :is="PageModal" v-if="clientPreview" />
+    <component :is="UnlinkCategoryModal" v-if="clientPreview" />
+  </ClientOnly>
   <ClientOnly>
     <LazyReloadPWA hydrate-on-idle />
   </ClientOnly>
@@ -57,6 +63,10 @@ const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { setStaticPageMeta } = useCanonical();
 const { setInitialDataSSR } = useInitialSetup();
+
+const clientPreview = ref(false);
+
+onNuxtReady(() => (clientPreview.value = !!$isPreview));
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
