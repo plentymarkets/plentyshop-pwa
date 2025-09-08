@@ -24,10 +24,10 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { CustomerClassOption } from './types';
+import type { CustomerClassOption } from './types';
 
 const { updateSetting, getSetting } = useSiteSettings('defaultCustomerClassId');
-const { fetchCustomerClasses, data: customerClassesData } = useCustomerClass();
+const { data: customerClassesData } = useCustomerClass();
 
 const customerClassOption = computed({
   get: () => {

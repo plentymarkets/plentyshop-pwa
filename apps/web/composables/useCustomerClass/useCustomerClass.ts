@@ -1,5 +1,5 @@
-import { FetchCustomerClasses, UseCustomerClassesReturn, UseCustomerClassState } from './types';
-import { ApiError } from '@plentymarkets/shop-api';
+import type { FetchCustomerClasses, UseCustomerClassesReturn, UseCustomerClassState } from './types';
+import type { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing customer classes data
@@ -26,7 +26,6 @@ export const useCustomerClass: UseCustomerClassesReturn = () => {
     try {
       state.value.loading = true;
       const data = await useSdk().plentysystems.getCustomerClasses();
-      console.log(data);
       state.value.data = data.data ?? [];
     } catch (error) {
       useHandleError(error as ApiError);
