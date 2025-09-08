@@ -27,32 +27,14 @@ import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
+import { isPageOfType } from '~/utils/pathHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('defaultSortingSearch');
 const { updateSorting } = useCategoryFilter();
 
-const sortingOptionValues = [
-  'item.score',
-  'default.recommended_sorting',
-  'variation.position_asc',
-  'variation.position_desc',
-  'texts.name1_asc',
-  'texts.name1_desc',
-  'sorting.price.avg_asc',
-  'sorting.price.avg_desc',
-  'variation.createdAt_desc',
-  'variation.createdAt_asc',
-  'variation.availability.averageDays_asc',
-  'variation.availability.averageDays_desc',
-  'variation.number_asc',
-  'variation.number_desc',
-  'variation.updatedAt_asc',
-  'variation.updatedAt_desc',
-  'item.manufacturer.externalName_asc',
-  'item.manufacturer.externalName_desc',
-];
+const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 
-const sortingOptions = computed(() => getMappedOptions(sortingOptionValues));
+const sortingOptions = computed(() => getMappedOptions(availableSortingOptions()));
 
 const defaultSortingSearch = computed({
   get: () => {
@@ -60,7 +42,7 @@ const defaultSortingSearch = computed({
   },
   set: (option) => {
     updateSetting(option?.value ?? '');
-    if (useNuxtApp().$router.currentRoute.value.meta.type === 'search') {
+    if (isPageOfType('search')) {
       updateSorting(option?.value ?? '');
     }
   },
@@ -71,13 +53,13 @@ const defaultSortingSearch = computed({
 {
   "en": {
     "label": "Default sorting for search results.",
-    "tooltip": "Select the sorting option by which search results are sorted by initially. Customers can change the sorting.",
+    "tooltip": "Select the sorting option by which search results are sorted by initially. Customers can change the sorting. The available options are defined via Category > Sorting > Category Sorting > Enable item sorting by.",
     "placeholder": "Select a sorting option",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Default sorting for search results.",
-    "tooltip": "Select the sorting option by which search results are sorted by initially. Customers can change the sorting.",
+    "tooltip": "Select the sorting option by which search results are sorted by initially. Customers can change the sorting. The available options are defined via Category > Sorting > Category Sorting > Enable item sorting by.",
     "placeholder": "Select a sorting option",
     "deselect-label": "Selected"
   }

@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
+import { isPageOfType } from '~/utils/pathHelper';
 
 const { updateSorting } = useCategoryFilter();
 const { t } = useI18n();
@@ -26,9 +27,7 @@ const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOpti
 
 const options = computed(() => availableSortingOptions());
 
-const defaultOption = computed(() =>
-  useNuxtApp().$router.currentRoute.value.path === '/search' ? defaultSortingSearch() : defaultSortingOption(),
-);
+const defaultOption = computed(() => (isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption()));
 
 const selected = computed({
   get: () => {

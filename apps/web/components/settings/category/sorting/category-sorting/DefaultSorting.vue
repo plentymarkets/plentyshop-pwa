@@ -47,7 +47,7 @@ const defaultSortingOption = computed({
   },
   set: (option) => {
     updateSetting(option?.value ?? '');
-    if (useNuxtApp().$router.currentRoute.value.meta.type === 'category') {
+    if (isPageOfType('category')) {
       updateSorting(option?.value ?? '');
     }
   },

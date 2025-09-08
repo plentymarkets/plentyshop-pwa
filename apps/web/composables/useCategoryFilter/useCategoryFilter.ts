@@ -1,5 +1,6 @@
 import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 import type { RouteLocationNormalizedGeneric } from 'vue-router';
+import { isPageOfType } from '~/utils/pathHelper';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 
 const reduceFilters =
@@ -61,8 +62,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
 
     const currentRoute = useNuxtApp().$router.currentRoute.value;
 
-    const defaultOption =
-      useNuxtApp().$router.currentRoute.value.path === '/search' ? defaultSortingSearch() : defaultSortingOption();
+    const defaultOption = isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption();
 
     return {
       categoryUrlPath: getCategoryUrlFromRoute(currentRoute.fullPath),
