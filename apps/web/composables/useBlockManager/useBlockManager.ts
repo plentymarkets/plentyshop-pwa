@@ -61,6 +61,8 @@ export const useBlockManager = () => {
     return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
   };
 
+  // Approach #1
+
   const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
@@ -113,6 +115,76 @@ export const useBlockManager = () => {
       }
     }, 100);
   };
+
+  // Approach #2
+
+  // const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
+  //   if (!data.value) return;
+  //   const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+  //   newBlock.meta.uuid = uuid();
+
+  //   const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
+  //   if (nonFooterBlocks.length === 0) {
+  //     updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
+  //     openDrawerWithView('blocksSettings', newBlock);
+  //     scrollToNewBlock(newBlock);
+  //     return;
+  //   }
+
+  //   const copiedData = JSON.parse(JSON.stringify(data.value));
+  //   const parentInfo = findBlockParent(copiedData, targetUuid);
+
+  //   if (!parentInfo) {
+  //     console.error('block not found');
+  //     return;
+  //   }
+
+  //   const { parent, index } = parentInfo;
+  //   const targetBlock = parent[index];
+
+  //   if (position === 'inside') {
+  //     insertIntoColumn(targetBlock, newBlock, parent);
+  //   } else {
+  //     insertNextToBlock(parent, index, newBlock, position);
+  //   }
+
+  //   if (Array.isArray(newBlock.content) && newBlock.content.length) {
+  //     setUuid(newBlock.content as Block[]);
+  //   }
+
+  //   updateBlocks(copiedData);
+  //   openDrawerWithView('blocksSettings', newBlock);
+  //   visiblePlaceholder.value = { uuid: '', position: 'top' };
+  //   isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+
+  //   scrollToNewBlock(newBlock);
+  // };
+
+  // Utility function for robust scroll
+  // function scrollToNewBlock(newBlock: Block) {
+  //   // Try MutationObserver first
+  //   const observer = new MutationObserver(() => {
+  //     const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
+  //     if (newIndex !== -1) {
+  //       const el = document.getElementById(`block-${newIndex}`);
+  //       if (el) {
+  //         el.scrollIntoView({ behavior: 'auto', block: 'center' });
+  //         observer.disconnect();
+  //       }
+  //     }
+  //   });
+  //   observer.observe(document.body, { childList: true, subtree: true });
+
+  //   // Fallback in case MutationObserver doesn't trigger
+  //   setTimeout(() => {
+  //     const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
+  //     if (newIndex !== -1) {
+  //       const el = document.getElementById(`block-${newIndex}`);
+  //       if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+  //     }
+  //     observer.disconnect();
+  //   }, 100);
+  // }
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
     const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
