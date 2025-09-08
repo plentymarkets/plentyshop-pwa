@@ -18,13 +18,29 @@ const productToSearch = 'headphones';
 describe('Smoke Tests', () => {
   it('should search for and purchase a product in English', () => {
     cy.visitAndHydrate(paths.home);
-    homePage.checkLanguage(text_en).topToolbarShouldNotExist().sideToolbarShouldNotExist().blockActionsShouldNotExist();
 
-    searchPage.searchFor(productToSearch).goToProduct();
+    // prettier-ignore
+    homePage
+      .checkLanguage(text_en)
+      .topToolbarShouldNotExist()
+      .sideToolbarShouldNotExist()
+      .blockActionsShouldNotExist();
 
-    productDetailPage.assertProductDetailPageElements().addToCart(2);
+    // prettier-ignore
+    searchPage
+      .searchFor(productToSearch)
+      .goToProduct();
 
-    cartPage.openCartViaQuickCheckout().decreaseCartItemQuantity().summaryItems('Items: 1');
+    // prettier-ignore
+    productDetailPage
+      .assertProductDetailPageElements()
+      .addToCart(2);
+
+    // prettier-ignore
+    cartPage
+      .openCartViaQuickCheckout()
+      .decreaseCartItemQuantity()
+      .summaryItems('Items: 1');
 
     checkoutPage
       .goToCheckout()
