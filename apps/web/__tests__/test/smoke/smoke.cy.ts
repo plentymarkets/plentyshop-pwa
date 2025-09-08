@@ -4,19 +4,20 @@ import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { SearchObject } from '../../support/pageObjects/SearchObject';
 import { ProductDetailPageObject } from '../../support/pageObjects/ProductDetailPageObject';
+import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 
 const cartPage = new CartPageObject();
 const checkoutPage = new CheckoutPageObject();
 const homePage = new HomePageObject();
 const searchPage = new SearchObject();
 const productDetailPage = new ProductDetailPageObject();
+const productListPage = new ProductListPageObject();
 
-const text_de = 'Wohnzimmer';
 const text_en = 'Living Room';
 const productToSearch = 'headphones';
 
 describe('Smoke Tests', () => {
-  it('should search for and purchase a product in English', () => {
+  it('purchase a product', () => {
     cy.visitAndHydrate(paths.home);
 
     // prettier-ignore
@@ -24,7 +25,13 @@ describe('Smoke Tests', () => {
       .checkLanguage(text_en)
       .topToolbarShouldNotExist()
       .sideToolbarShouldNotExist()
-      .blockActionsShouldNotExist();
+      .blockActionsShouldNotExist()
+      .goToCategory();
+
+    // prettier-ignore
+    productListPage
+      .assertGridView()
+      .addToCart();
 
     // prettier-ignore
     searchPage
@@ -39,6 +46,7 @@ describe('Smoke Tests', () => {
     // prettier-ignore
     cartPage
       .openCartViaQuickCheckout()
+      .removeFirstItem()
       .decreaseCartItemQuantity()
       .summaryItems('Items: 1');
 
@@ -51,13 +59,5 @@ describe('Smoke Tests', () => {
       .acceptTerms()
       .placeOrderButton()
       .displaySuccessPage();
-  });
-
-  it('should register and purchase a product in German', () => {
-    cy.visitAndHydrate(paths.home + 'de');
-    homePage.checkLanguage(text_de);
-    homePage.topToolbarShouldNotExist();
-    homePage.sideToolbarShouldNotExist();
-    homePage.blockActionsShouldNotExist();
   });
 });

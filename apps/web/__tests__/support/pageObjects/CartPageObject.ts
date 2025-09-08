@@ -46,6 +46,10 @@ export class CartPageObject extends PageObject {
     return cy.getByTestId('cart-action').getByTestId('cart-badge').getByTestId('badge-indicator');
   }
 
+  get cartItemRemoveButton() {
+    return cy.getByTestId('remove-item-from-basket');
+  }
+
   get cartItem() {
     return cy.getByTestId('link');
   }
@@ -137,6 +141,13 @@ export class CartPageObject extends PageObject {
 
   decreaseCartItemQuantity() {
     cy.getByTestId('quantity-selector-decrease-button').click();
+    return this;
+  }
+
+  removeFirstItem() {
+    cy.intercept('/plentysystems/deleteCartItem').as('removeItem');
+    this.cartItemRemoveButton.first().click();
+    cy.wait('@removeItem');
     return this;
   }
 
