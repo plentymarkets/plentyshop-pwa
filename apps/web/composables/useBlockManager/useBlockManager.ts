@@ -70,6 +70,13 @@ export const useBlockManager = () => {
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
+      setTimeout(() => {
+        const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
+        if (newIndex !== -1) {
+          const el = document.getElementById(`block-${newIndex}`);
+          if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+        }
+      }, 100);
       return;
     }
 
@@ -98,6 +105,13 @@ export const useBlockManager = () => {
     openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+    setTimeout(() => {
+      const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
+      if (newIndex !== -1) {
+        const el = document.getElementById(`block-${newIndex}`);
+        if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+    }, 100);
   };
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
