@@ -270,7 +270,7 @@ export default defineNuxtConfig({
       runtimeCaching: [
         {
           urlPattern: ({ request }) => request.mode === 'navigate',
-          handler: 'NetworkOnly',
+          handler: 'NetworkFirst',
           options: {
             precacheFallback: {
               fallbackURL: '/offline',
@@ -281,22 +281,22 @@ export default defineNuxtConfig({
       cleanupOutdatedCaches: true,
     },
     manifest: {
-      name: 'PlentyONE Shop',
-      short_name: 'PlentyONEShop',
-      theme_color: '#0C7992',
+      name: process.env.NUXT_PUBLIC_OG_TITLE || process.env.OG_TITLE || 'PlentyONE Shop',
+      short_name: process.env.NUXT_PUBLIC_OG_TITLE || process.env.OG_TITLE || 'PlentyONE Shop',
+      theme_color: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       icons: [
         {
-          src: 'icons/icon-192x192.png',
+          src: '/_nuxt-plenty/icons/icon-192x192.png',
           sizes: '192x192',
           type: 'image/png',
         },
         {
-          src: 'icons/icon-512x512.png',
+          src: '/_nuxt-plenty/icons/icon-512x512.png',
           sizes: '512x512',
           type: 'image/png',
         },
         {
-          src: 'icons/icon-512x512.maskable.png',
+          src: '/_nuxt-plenty/icons/icon-512x512.maskable.png',
           sizes: '512x512',
           type: 'image/png',
           purpose: 'maskable',

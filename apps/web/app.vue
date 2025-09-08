@@ -35,7 +35,7 @@
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
-      <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
+      <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <NuxtLayout>
         <NuxtPage />
