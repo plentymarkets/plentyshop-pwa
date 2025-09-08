@@ -12,7 +12,7 @@ import { ApiError } from '@plentymarkets/shop-api';
 export const useCustomerClass: UseCustomerClassesReturn = () => {
   const state = useState<UseCustomerClassState>(`useCustomerClass`, () => ({
     loading: false,
-    data: null,
+    data: [],
   }));
 
   /** Function for fetching customer classes
@@ -25,8 +25,9 @@ export const useCustomerClass: UseCustomerClassesReturn = () => {
   const fetchCustomerClasses: FetchCustomerClasses = async () => {
     try {
       state.value.loading = true;
-      const { data } = await useSdk().plentysystems.getCustomerClasses();
-      state.value.data = data ?? null;
+      const data = await useSdk().plentysystems.getCustomerClasses();
+      console.log(data);
+      state.value.data = data.data ?? [];
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

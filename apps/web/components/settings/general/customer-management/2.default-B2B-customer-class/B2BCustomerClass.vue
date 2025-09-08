@@ -8,11 +8,11 @@
 
     <Multiselect
       v-model="customerClassOption"
-      data-testid="b2b-customer-class-select"
-      :options="customerClassOptions"
+      data-testid="b2c-customer-class-select"
+      :options="customerClassesData"
       :placeholder="getEditorTranslation('placeholder')"
-      label="label"
-      track-by="value"
+      label="name"
+      track-by="id"
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
@@ -24,22 +24,17 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { MultiselectOption } from '../1.default-B2C-and-guest-customer-class/types';
-
-const { fetchCustomerClasses, data: customerClassesData } = useCustomerClass();
-
-const customerClassOptions = computed(() => {
-  return [{ label: 'Default Class', value: '0' }];
-});
+import { CustomerClassOption } from "../1.default-B2C-and-guest-customer-class/types";
 
 const { updateSetting, getSetting } = useSiteSettings('defaultB2BCustomerClass');
+const { fetchCustomerClasses, data: customerClassesData } = useCustomerClass();
 
 const customerClassOption = computed({
   get: () => {
-    return customerClassOptions.value.find((o: MultiselectOption) => o.value === getSetting());
+    return customerClassesData.value.find((o: CustomerClassOption) => o.id === getSetting());
   },
   set: (option) => {
-    updateSetting(option?.value ?? '');
+    updateSetting(option?.id ?? '');
   },
 });
 </script>
