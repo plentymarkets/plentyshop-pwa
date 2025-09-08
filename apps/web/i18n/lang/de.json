@@ -239,7 +239,7 @@
       "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten."
     },
     "setNewPassword": {
-      "resetSucceded": "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie können sich nun mit Ihrem neuen Passwort anmelden.",
+      "resetSucceded": "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie sind nun mit Ihrem neuen Passwort authentifiziert.",
       "passwordsNotMatching": "Passwörter stimmen nicht überein",
       "rememberPassword": "Erinnern Sie sich an Ihr Passwort?",
       "button": "Neues Passwort speichern",
@@ -1126,6 +1126,11 @@
   "wishlistInteraction": {
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
+  },
+  "reloadPWA": {
+    "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
+    "refresh": "Aktualisieren",
+    "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
   "double-tap-zoom": "Zum Zoomen doppeltippen",
