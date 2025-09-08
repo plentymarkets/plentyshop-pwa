@@ -141,7 +141,11 @@ const contentProps = computed(() => {
 
 const showOutline = computed(() => {
   return (
-    clientPreview.value && props.disableActions && props.isClicked && props.isTablet && props.clickedBlockIndex === props.index
+    clientPreview.value &&
+    props.disableActions &&
+    props.isClicked &&
+    props.isTablet &&
+    props.clickedBlockIndex === props.index
   );
 });
 
