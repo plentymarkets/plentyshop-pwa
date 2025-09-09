@@ -22,10 +22,13 @@ const {
   processPayment,
   getIsReadyToPayRequest,
 } = useGooglePay();
+const { getCurrentScript } = usePayPal();
 const { t } = useI18n();
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
+
+const payPalScript = computed(() => getCurrentScript());
 
 async function onGooglePaymentButtonClicked() {
   await emits('button-clicked', async (successfully) => {
@@ -80,6 +83,7 @@ const onGooglePayLoaded = async () => {
 };
 
 const createButton = async () => {
+  console.log('Render Google Pay Button');
   if (await initialize()) {
     await onGooglePayLoaded();
   }
@@ -87,5 +91,11 @@ const createButton = async () => {
 
 onNuxtReady(async () => {
   await createButton();
+});
+
+watch(payPalScript, async (newScript) => {
+  if (newScript) {
+    await createButton();
+  }
 });
 </script>
