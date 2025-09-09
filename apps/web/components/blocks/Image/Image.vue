@@ -17,7 +17,7 @@
     />
 
     <div
-      v-if="props.content?.textOverlay"
+      v-if="props.content?.textOverlay && runtimeConfig.public.isDev"
       class="absolute w-full h-full px-4 pointer-events-none flex"
       :class="overlayAlignClasses"
       data-testid="image-overlay-text"
@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import type { ImageTextProps, ImageDimensions } from './types';
+const runtimeConfig = useRuntimeConfig();
 
 const viewport = useViewport();
 
