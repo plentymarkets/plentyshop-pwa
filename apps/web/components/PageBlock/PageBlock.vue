@@ -136,7 +136,13 @@ const getBlockComponent = computed(() => {
 });
 
 const contentProps = computed(() => {
-  return props.root ? { ...props.block } : { ...props.block, ...attrs };
+  const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
+
+  return {
+    ...baseProps,
+    disableActions: props.disableActions,
+    root: props.root,
+  };
 });
 
 const showOutline = computed(() => {
@@ -190,7 +196,9 @@ const getBlockActions = (block: Block) => {
       isEditable: !isEditDisabled.value,
       isMovable: false,
       isDeletable: false,
-      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+      classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+      buttonClasses: [],
+      hoverBackground: ['hover:bg-gray-100'],
     };
   }
   return undefined;
