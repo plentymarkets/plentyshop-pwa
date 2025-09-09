@@ -17,6 +17,10 @@ export type ImageContent = {
   mobile?: string;
   alt: string;
   imageAlignment: 'left' | 'right';
+  textOverlay?: string;
+  textOverlayColor?: string;
+  textOverlayAlignX?: 'top' | 'center' | 'bottom';
+  textOverlayAlignY?: 'left' | 'center' | 'right';
 };
 
 export interface ImageDimensions {
