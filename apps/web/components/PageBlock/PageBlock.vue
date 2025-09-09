@@ -143,10 +143,19 @@ const contentProps = computed(() => {
     const uniqueKey = getLazyLoadKey(props.block.name, props.block.meta.uuid);
     const lazyLoadState = lazyLoadStates.value[uniqueKey] || false;
 
-    return { ...baseProps, [config.propName]: lazyLoadState };
+    return {
+      ...baseProps,
+      disableActions: props.disableActions,
+      root: props.root,
+      [config.propName]: lazyLoadState
+    };
   }
 
-  return baseProps;
+  return {
+    ...baseProps,
+    disableActions: props.disableActions,
+    root: props.root,
+  };
 });
 
 const observeLazyLoadSection = (blockName: string) => {
@@ -227,7 +236,9 @@ const getBlockActions = (block: Block) => {
       isEditable: !isEditDisabled.value,
       isMovable: false,
       isDeletable: false,
-      classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+      classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+      buttonClasses: [],
+      hoverBackground: ['hover:bg-gray-100'],
     };
   }
   return undefined;
