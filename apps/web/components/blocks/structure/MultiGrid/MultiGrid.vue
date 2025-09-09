@@ -1,6 +1,11 @@
 <template>
   <div data-testid="multi-grid-structure" :class="getGridClasses()">
-    <div v-for="(column, colIndex) in alignedContent" :key="column.meta.uuid" :class="getColumnClasses(colIndex)">
+    <div
+      v-for="(column, colIndex) in alignedContent"
+      :key="column.meta.uuid"
+      :class="getColumnClasses(colIndex)"
+      class="group/col relative overflow-hidden"
+    >
       <div
         v-if="showOverlay(column)"
         class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
