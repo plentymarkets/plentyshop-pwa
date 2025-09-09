@@ -144,7 +144,7 @@ export const useApplePay = () => {
           clearCartItems();
 
           emit('frontend:orderCreated', order);
-          navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+          return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
           await useCartStockReservation().unreserve();
           showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
