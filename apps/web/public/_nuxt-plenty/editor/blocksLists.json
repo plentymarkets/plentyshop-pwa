@@ -499,11 +499,7 @@
               "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
               "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
               "alt": "alt text",
-              "imageAlignment": "right",
-              "textOverlay": "Text Overlay",
-              "textOverlayColor": "#000000",
-              "textOverlayAlignX": "center",
-              "textOverlayAlignY": "center"
+              "imageAlignment": "right"
             }
           }
         }
