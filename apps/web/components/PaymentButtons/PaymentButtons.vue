@@ -228,7 +228,7 @@ const handleRegularOrder = async () => {
   if (data?.order?.id) {
     emit('frontend:orderCreated', data);
     clearCartItems();
-    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
+    return navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   } else {
     await useCartStockReservation().unreserve();
     processingOrder.value = false;

@@ -171,7 +171,7 @@ const createPayPalPayUponInvoiceOrder = async () => {
         plentyEmit('frontend:orderCreated', plentyOrder);
         plentyEmit('module:clearCart', null);
         processingOrder.value = true;
-        navigateTo(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey));
+        return navigateTo(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey));
       }
     }
 
