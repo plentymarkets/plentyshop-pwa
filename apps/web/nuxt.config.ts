@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         '@paypal/paypal-js',
+        '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
         '@vueuse/shared',
         'country-flag-icons/string/3x2',
