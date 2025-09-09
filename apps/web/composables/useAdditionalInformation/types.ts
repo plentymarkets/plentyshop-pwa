@@ -8,7 +8,7 @@ export interface UseAdditionalInformationState {
   showErrors: boolean;
 }
 
-export type DoAdditionalInformation = (params: AdditionalInformationParams) => Promise<null>;
+export type DoAdditionalInformation = (params: AdditionalInformationParams) => Promise<boolean>;
 
 export type SetShippingPrivacyAgreement = (shippingPrivacyAgreement: boolean) => void;
 
