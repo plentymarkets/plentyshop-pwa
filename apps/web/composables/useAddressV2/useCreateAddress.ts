@@ -16,13 +16,8 @@ export const useCreateAddress = (type: AddressType) => {
       state.value.loading = false;
       return Promise.resolve(true);
     } catch (error: unknown) {
-      const apiError = error as ApiError;
-      if (Number(apiError?.code) === 1400) {
-        return Promise.reject(new Error(getErrorCode(apiError.code)));
-      } else {
-        useHandleError(error as ApiError);
-        return Promise.reject(new Error('Failed to create address'));
-      }
+      useHandleError(error as ApiError);
+      return Promise.reject();
     } finally {
       state.value.loading = false;
     }
