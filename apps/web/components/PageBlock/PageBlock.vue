@@ -21,38 +21,42 @@
         },
         {
           'hover:outline hover:outline-4 hover:outline-[#538AEA]':
-            $isPreview && disableActions && !isTablet && root && !isDragging,
+            clientPreview && disableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
-      <button
-        v-if="disableActions && $isPreview && root && !isDragging"
-        class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
-        :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
-        data-testid="top-add-block"
-        aria-label="top add block"
-        @click.stop="addNewBlock(block, 'top')"
-      >
-        <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
-          <SfIconAdd class="cursor-pointer" />
-        </SfTooltip>
-      </button>
+      <ClientOnly>
+        <button
+          v-if="disableActions && clientPreview && root && !isDragging"
+          class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+          :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+          data-testid="top-add-block"
+          aria-label="top add block"
+          @click.stop="addNewBlock(block, 'top')"
+        >
+          <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
+            <SfIconAdd class="cursor-pointer" />
+          </SfTooltip>
+        </button>
+      </ClientOnly>
 
-      <UiBlockActions
-        v-if="disableActions && blockHasData && blockHasData(block) && $isPreview && root && !isDragging"
-        :key="`${block.meta.uuid}`"
-        :class="[
-          'opacity-0 block-actions',
-          {
-            'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
-            'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
-          },
-        ]"
-        :index="index"
-        :block="block"
-        :actions="getBlockActions(block)"
-        @change-position="changeBlockPosition"
-      />
+      <ClientOnly>
+        <UiBlockActions
+          v-if="disableActions && blockHasData && blockHasData(block) && clientPreview && root && !isDragging"
+          :key="`${block.meta.uuid}`"
+          :class="[
+            'opacity-0 block-actions',
+            {
+              'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
+              'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
+            },
+          ]"
+          :index="index"
+          :block="block"
+          :actions="getBlockActions(block)"
+          @change-position="changeBlockPosition"
+        />
+      </ClientOnly>
 
       <component :is="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
@@ -60,7 +64,7 @@
             :index="index"
             :block="slotProps.contentBlock"
             :root="false"
-            :is-preview="$isPreview"
+            :is-preview="clientPreview"
             :disable-actions="disableActions"
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
@@ -72,19 +76,21 @@
         </template>
       </component>
 
-      <button
-        v-if="disableActions && $isPreview && root && !isDragging && props.block.name !== 'Footer'"
-        :key="isDragging ? 'dragging' : 'not-dragging'"
-        class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
-        :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
-        data-testid="bottom-add-block"
-        aria-label="bottom add block"
-        @click.stop="addNewBlock(block, 'bottom')"
-      >
-        <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
-          <SfIconAdd class="cursor-pointer" />
-        </SfTooltip>
-      </button>
+      <ClientOnly>
+        <button
+          v-if="disableActions && clientPreview && root && !isDragging && props.block.name !== 'Footer'"
+          :key="isDragging ? 'dragging' : 'not-dragging'"
+          class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+          :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+          data-testid="bottom-add-block"
+          aria-label="bottom add block"
+          @click.stop="addNewBlock(block, 'bottom')"
+        >
+          <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
+            <SfIconAdd class="cursor-pointer" />
+          </SfTooltip>
+        </button>
+      </ClientOnly>
     </div>
     <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
   </div>
@@ -116,6 +122,7 @@ const {
   getLazyLoadConfig,
 } = useBlockManager();
 
+const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
 
 const blockSize = computed(() => getBlockSize());
@@ -164,12 +171,17 @@ const observeLazyLoadSection = (blockName: string) => {
 };
 
 onNuxtReady(() => {
+  clientPreview.value = !!$isPreview;
   if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 
 const showOutline = computed(() => {
   return (
-    $isPreview && props.disableActions && props.isClicked && props.isTablet && props.clickedBlockIndex === props.index
+    clientPreview.value &&
+    props.disableActions &&
+    props.isClicked &&
+    props.isTablet &&
+    props.clickedBlockIndex === props.index
   );
 });
 
