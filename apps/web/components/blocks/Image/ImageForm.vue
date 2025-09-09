@@ -66,6 +66,7 @@
     </fieldset>
   </UiAccordionItem>
   <UiAccordionItem
+    v-if="runtimeConfig.public.isDev"
     v-model="textGroupOpen"
     summary-active-class="bg-neutral-100 border-t-0"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -214,6 +215,7 @@ import { SfInput, SfIconCheck, SfTextarea } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const runtimeConfig = useRuntimeConfig();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
