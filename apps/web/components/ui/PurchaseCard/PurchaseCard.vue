@@ -83,7 +83,10 @@
           <OrderProperties :product="product" />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
-          <UnitContentSelect v-if="productGetters.getAttributeMapVariations(product).length > 1" :product="product" />
+          <UnitContentSelect
+            v-if="product && productGetters.possibleUnitCombination(product).length > 1"
+            :product="product"
+          />
 
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -159,7 +162,7 @@ const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });
 
-const { showNetPrices } = useCustomer();
+const { showNetPrices } = useCart();
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
@@ -186,6 +189,8 @@ onMounted(() => {
 
 onBeforeRouteLeave(() => {
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) clear();
+  resetInvalidFields();
+  resetAttributeFields();
 });
 
 const priceWithProperties = computed(

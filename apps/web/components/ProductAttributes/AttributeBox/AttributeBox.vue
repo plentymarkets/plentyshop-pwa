@@ -69,13 +69,14 @@ const setValue = (value: number | undefined) => {
   selectedValue.value = value;
 };
 
-setValue(value.value);
-
 watch(
-  () => value.value,
-  () => {
-    setValue(value.value);
+  value,
+  (newVal) => {
+    if (newVal) {
+      setValue(newVal);
+    }
   },
+  { immediate: true },
 );
 
 watch(
