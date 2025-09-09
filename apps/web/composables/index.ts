@@ -95,7 +95,7 @@ export * from './useAddPage';
 export * from './useTranslations';
 export * from './usePayUponInvoice';
 export * from './useSiteSettings';
-export * from './useFooterBlock';
+export * from './useFooter';
 export * from './usePickerHelper';
 export * from './useItemTable';
 export * from './useImageMetadata';
