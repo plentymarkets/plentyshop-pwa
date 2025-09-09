@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div class="mt-4" v-if="runtimeConfig.public.isDev">
     <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <p class="mb-4">{{ getEditorTranslation('note') }}</p>
     <div class="flex justify-between mb-2">
@@ -26,6 +26,7 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import type { CustomerClassOption } from '../1.default-B2C-and-guest-customer-class/types';
 
+const runtimeConfig = useRuntimeConfig();
 const { updateSetting, getSetting } = useSiteSettings('defaultB2BCustomerClass');
 const { data: customerClassesData } = useCustomerClass();
 
