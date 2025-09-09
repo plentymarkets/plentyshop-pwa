@@ -1,5 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { useFooterSettings } from '../useFooter';
+import { useFooter } from '../useFooter';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 
 const mockFooterData: FooterSettings = {
@@ -85,7 +85,7 @@ const setupConsoleSpy = () => {
   return vi.spyOn(console, 'warn').mockImplementation(() => {});
 };
 
-describe('useFooterSettings', () => {
+describe('useFooter', () => {
   let mockStateRef: { value: FooterSettings | null };
   let mockGetBlocks: ReturnType<typeof vi.fn>;
   let mockAsyncData: ReturnType<typeof vi.fn>;
@@ -164,11 +164,11 @@ describe('useFooterSettings', () => {
     });
   });
 
-  describe('useFooterSettings composable', () => {
+  describe('useFooter composable', () => {
     describe('fetchFooterSettings', () => {
       it('should return cached settings if available', async () => {
         mockStateRef.value = mockFooterData;
-        const { fetchFooterSettings } = useFooterSettings();
+        const { fetchFooterSettings } = useFooter();
 
         const result = await fetchFooterSettings();
 
@@ -186,7 +186,7 @@ describe('useFooterSettings', () => {
 
         setupApiResponse(apiResponse);
 
-        const { fetchFooterSettings } = useFooterSettings();
+        const { fetchFooterSettings } = useFooter();
 
         const result = await fetchFooterSettings();
 
@@ -198,7 +198,7 @@ describe('useFooterSettings', () => {
       it('should call SDK getBlocks with correct parameters', async () => {
         setupApiCall();
 
-        const { fetchFooterSettings } = useFooterSettings();
+        const { fetchFooterSettings } = useFooter();
 
         await fetchFooterSettings();
 
@@ -219,7 +219,7 @@ describe('useFooterSettings', () => {
 
         setupApiResponse(apiResponse);
 
-        const { fetchFooterSettings } = useFooterSettings();
+        const { fetchFooterSettings } = useFooter();
 
         const result = await fetchFooterSettings();
 
@@ -231,7 +231,7 @@ describe('useFooterSettings', () => {
       it('should return defaults if API response is null', async () => {
         setupApiResponse(null);
 
-        const { fetchFooterSettings } = useFooterSettings();
+        const { fetchFooterSettings } = useFooter();
 
         const result = await fetchFooterSettings();
 
@@ -245,7 +245,7 @@ describe('useFooterSettings', () => {
 
         setupApiError();
 
-        const { fetchFooterSettings } = useFooterSettings();
+        const { fetchFooterSettings } = useFooter();
 
         const result = await fetchFooterSettings();
 
@@ -261,7 +261,7 @@ describe('useFooterSettings', () => {
     describe('getFooterSettings', () => {
       it('should return cached settings if available', () => {
         mockStateRef.value = mockFooterData;
-        const { getFooterSettings } = useFooterSettings();
+        const { getFooterSettings } = useFooter();
 
         const result = getFooterSettings();
 
@@ -270,7 +270,7 @@ describe('useFooterSettings', () => {
 
       it('should return default settings if cache is empty', () => {
         mockStateRef.value = null;
-        const { getFooterSettings } = useFooterSettings();
+        const { getFooterSettings } = useFooter();
 
         const result = getFooterSettings();
 
@@ -282,7 +282,7 @@ describe('useFooterSettings', () => {
     describe('clearFooterCache', () => {
       it('should clear the cached footer settings', () => {
         mockStateRef.value = mockFooterData;
-        const { clearFooterCache } = useFooterSettings();
+        const { clearFooterCache } = useFooter();
 
         clearFooterCache();
 
@@ -297,7 +297,7 @@ describe('useFooterSettings', () => {
           footnote: '© Updated Company 2024',
         };
 
-        const { updateFooterCache } = useFooterSettings();
+        const { updateFooterCache } = useFooter();
 
         updateFooterCache(newSettings);
 
@@ -308,7 +308,7 @@ describe('useFooterSettings', () => {
     describe('footerCache readonly access', () => {
       it('should expose readonly cache', () => {
         mockStateRef.value = mockFooterData;
-        const { footerCache } = useFooterSettings();
+        const { footerCache } = useFooter();
 
         expect(footerCache.value).toEqual(mockFooterData);
       });

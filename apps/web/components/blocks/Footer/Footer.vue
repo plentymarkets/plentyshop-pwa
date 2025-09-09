@@ -99,7 +99,7 @@ const FOOTER_COLORS = {
   footnoteText: '#959795',
 };
 
-const { getFooterSettings } = useFooterSettings();
+const { getFooterSettings } = useFooter();
 const resolvedContent = computed(() => props.content ?? getFooterSettings());
 </script>
 

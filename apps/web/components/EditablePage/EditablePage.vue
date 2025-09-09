@@ -46,7 +46,7 @@ const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 await getBlocksServer(props.identifier, props.type);
 
-const { footerCache } = useFooterSettings();
+const { footerCache } = useFooter();
 addFooterBlock({
   data,
   cachedFooter: footerCache,

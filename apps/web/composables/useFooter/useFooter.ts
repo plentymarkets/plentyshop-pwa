@@ -5,7 +5,7 @@ import { getDefaultFooterSettings, extractFooterFromBlocks, addFooterBlock } fro
  * Composable for accessing global footer settings
  * Handles fetching and caching of footer configuration
  */
-export const useFooterSettings = () => {
+export const useFooter = () => {
   const footerCache = useState<FooterSettings | null>('footer-settings-cache', () => null);
 
   const clearFooterCache = () => {

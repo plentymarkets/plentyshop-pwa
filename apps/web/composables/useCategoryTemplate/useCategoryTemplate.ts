@@ -24,7 +24,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
   const { $i18n } = useNuxtApp();
 
   const ensureFooterBlock = async () => {
-    const { fetchFooterSettings } = useFooterSettings();
+    const { fetchFooterSettings } = useFooter();
 
     try {
       await fetchFooterSettings();
@@ -112,7 +112,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
         const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } =
-          useFooterSettings();
+          useFooter();
 
         const footerSettings = extractFooterFromBlocks(content);
         if (footerSettings) {

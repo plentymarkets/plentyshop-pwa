@@ -2,7 +2,7 @@
  * Plugin to initialize and cache footer settings on app startup
  */
 export default defineNuxtPlugin(async () => {
-  const { fetchFooterSettings } = useFooterSettings();
+  const { fetchFooterSettings } = useFooter();
 
   try {
     await fetchFooterSettings();
