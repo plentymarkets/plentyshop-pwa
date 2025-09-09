@@ -45,6 +45,7 @@ export default withNuxt(
      */
     rules: {
       'arrow-parens': ['error', 'always'],
+      'jsonc/no-useless-escape': 'off', // incompatible with ESLint 9, affects postCodeMapper.json
       'no-console': ['error'],
       'no-constant-binary-expression': 'off',
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],

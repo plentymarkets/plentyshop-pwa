@@ -1,7 +1,7 @@
 <template>
   <div class="grid isolate" :class="`lg:grid-cols-${configuration.columnWidths.length}`">
     <div
-      v-for="(column, colIndex) in content"
+      v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
       class="group/col relative overflow-hidden"
       :class="[`col-${configuration.columnWidths[colIndex]}`]"
@@ -27,11 +27,7 @@
       >
         <UiBlockActions v-if="showOverlay(column)" :block="column" :index="colIndex" :actions="getBlockActions()" />
       </div>
-      <component
-        :is="getBlockComponent(alignedContent[colIndex].name)"
-        v-bind="alignedContent[colIndex]"
-        class="relative z-0"
-      />
+      <slot name="content" :content-block="column" />
     </div>
   </div>
 </template>
@@ -45,10 +41,6 @@ const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 
-const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
 const getBlockActions = () => {
   return {
     isEditable: true,
@@ -65,12 +57,6 @@ const attrs = useAttrs() as {
 };
 const disableActions = computed(() => attrs.disableActions === true);
 const root = computed(() => attrs.root === true);
-const getBlockComponent = (blockName: string) => {
-  if (!blockName) return null;
-  const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
-  return matched ? defineAsyncComponent(modules[matched]) : null;
-};
 const blockHasData = (block: Block): boolean => {
   return !!block.content && Object.keys(block.content).length > 0;
 };
