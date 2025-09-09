@@ -61,10 +61,12 @@ export const useBlockManager = () => {
     return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
   };
 
-  // Approach #1
-
   const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
+
+    // const targetIndex = data.value.findIndex((b) => b.meta?.uuid === targetUuid);
+    // const offset = targetIndex !== -1 ? getBlockOffset(targetIndex) : window.scrollY;
+
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
@@ -72,13 +74,13 @@ export const useBlockManager = () => {
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
-      setTimeout(() => {
-        const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
-        if (newIndex !== -1) {
-          const el = document.getElementById(`block-${newIndex}`);
-          if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
-        }
-      }, 100);
+
+      const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
+      if (newIndex !== -1) {
+        const el = document.getElementById(`block-${newIndex}`);
+        if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+
       return;
     }
 
@@ -107,6 +109,14 @@ export const useBlockManager = () => {
     openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+
+    scrollIntoBlockView(newBlock);
+    // restoreScroll(offset);
+  };
+
+  //  scroll into view approach
+
+  const scrollIntoBlockView = (newBlock: Block) => {
     setTimeout(() => {
       const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
       if (newIndex !== -1) {
@@ -116,7 +126,24 @@ export const useBlockManager = () => {
     }, 100);
   };
 
-  // Approach #2
+  // Restore block position approach -- (I think it's the same as above )
+
+  // function getBlockOffset(index: number) {
+  //   const el = document.getElementById(`block-${index}`);
+  //   if (!el) return null;
+  //   const rect = el.getBoundingClientRect();
+  //   return rect.top + window.scrollY;
+  // }
+
+  // function restoreScroll(offset: number | null) {
+  //   if (offset !== null) {
+  //     setTimeout(() => {
+  //       window.scrollTo({ top: offset, behavior: 'auto' });
+  //     }, 100);
+  //   }
+  // }
+
+  // Mutation Observer approach
 
   // const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
   //   if (!data.value) return;
@@ -160,7 +187,8 @@ export const useBlockManager = () => {
   //   scrollToNewBlock(newBlock);
   // };
 
-  // Utility function for robust scroll
+  // Mutation Observer approach --- Function
+
   // function scrollToNewBlock(newBlock: Block) {
   //   // Try MutationObserver first
   //   const observer = new MutationObserver(() => {
@@ -174,17 +202,6 @@ export const useBlockManager = () => {
   //     }
   //   });
   //   observer.observe(document.body, { childList: true, subtree: true });
-
-  //   // Fallback in case MutationObserver doesn't trigger
-  //   setTimeout(() => {
-  //     const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
-  //     if (newIndex !== -1) {
-  //       const el = document.getElementById(`block-${newIndex}`);
-  //       if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
-  //     }
-  //     observer.disconnect();
-  //   }, 100);
-  // }
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
     const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
