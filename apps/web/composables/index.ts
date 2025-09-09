@@ -101,3 +101,4 @@ export * from './useItemTable';
 export * from './useImageMetadata';
 export * from './useImageAdd';
 export * from './useResetPassword';
+export * from './useCustomerClass';

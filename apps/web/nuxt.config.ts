@@ -139,6 +139,8 @@ export default defineNuxtConfig({
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       vatNumberValidation: process.env.NUXT_PUBLIC_VAT_NUMBER_VALIDATION || 'true',
       itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
+      defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
+      defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
       fetchDynamicTranslations: false,
     },
   },
