@@ -47,4 +47,13 @@ export class ProductDetailPageObject extends PageObject {
     this.productImage.should('have.attr', 'srcset').and('include', '.avif');
     return this;
   }
+
+  addToCart(quantity: number) {
+    cy.intercept('plentysystems/doAddCartItem').as('addToCart');
+
+    this.quantitySelector.clear().type(quantity.toString());
+    this.addToCartButton.click();
+
+    cy.wait('@addToCart').its('response.statusCode').should('eq', 200);
+  }
 }
