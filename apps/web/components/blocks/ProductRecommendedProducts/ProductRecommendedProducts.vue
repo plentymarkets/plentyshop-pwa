@@ -1,25 +1,32 @@
 <template>
   <div v-bind="$attrs">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
-    <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+    <ProductSlider v-if="recommendedProducts?.length && shouldRender" :items="recommendedProducts" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ProductRecommendedProductsProps } from './types';
+
+const props = withDefaults(defineProps<ProductRecommendedProductsProps>(), { shouldLoad: undefined });
+
 const { locale } = useI18n();
-const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
-  props.content.categoryId + props.content.cacheKey,
+  props.content.categoryId + (props.content.cacheKey || ''),
 );
 
-if (props.content.categoryId) {
-  fetchProductRecommended(props.content.categoryId);
-}
+const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
+const shouldFetch = computed(() => shouldRender.value && props.content.categoryId);
+
+watch(
+  shouldFetch,
+  (visible) => {
+    if (visible) fetchProductRecommended(props.content.categoryId);
+  },
+  { immediate: true },
+);
 
 watch([() => props.content.categoryId, () => locale], () => {
-  if (props.content.categoryId) {
-    fetchProductRecommended(props.content.categoryId);
-  }
+  if (shouldFetch.value) fetchProductRecommended(props.content.categoryId);
 });
 </script>
