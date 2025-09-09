@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4" v-if="runtimeConfig.public.isDev">
+  <div v-if="runtimeConfig.public.isDev" class="mt-4">
     <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <p class="mb-4">{{ getEditorTranslation('note') }}</p>
     <div class="flex justify-between mb-2">
