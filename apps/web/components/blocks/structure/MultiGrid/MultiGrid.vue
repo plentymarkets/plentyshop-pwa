@@ -99,4 +99,3 @@ const alignedContent = computed<AlignableBlock[]>(() => {
   return content as AlignableBlock[];
 });
 </script>
-<style scoped></style>
