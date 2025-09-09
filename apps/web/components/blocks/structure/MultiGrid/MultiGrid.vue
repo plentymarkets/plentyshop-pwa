@@ -51,12 +51,12 @@ const getBlockActions = () => {
     hoverBackground: ['hover:bg-purple-500'],
   };
 };
+
 const attrs = useAttrs() as {
   disableActions?: boolean;
   root?: boolean;
 };
 const disableActions = computed(() => attrs.disableActions === true);
-const root = computed(() => attrs.root === true);
 const blockHasData = (block: Block): boolean => {
   return !!block.content && Object.keys(block.content).length > 0;
 };
@@ -65,10 +65,10 @@ const showOverlay = computed(
     Boolean(runtimeConfig.public.isDev) &&
     disableActions.value &&
     $isPreview &&
-    root.value &&
     !isDragging.value &&
     blockHasData(block),
 );
+
 const alignBlock = computed<AlignableBlock | undefined>(
   () =>
     content.find(
