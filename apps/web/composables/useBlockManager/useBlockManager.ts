@@ -275,6 +275,20 @@ export const useBlockManager = () => {
     return LAZY_LOAD_BLOCKS[blockName] || null;
   };
 
+  const getLazyLoadRef = (
+    blockName: string,
+    blockUuid: string,
+  ): ((ref: Element | import('vue').ComponentPublicInstance | null) => void) | undefined => {
+    if (!shouldLazyLoad(blockName)) return undefined;
+
+    return (ref: Element | import('vue').ComponentPublicInstance | null) => {
+      if (ref instanceof Element) {
+        (lazyLoadRefs.value as Record<string, HTMLElement | null>)[getLazyLoadKey(blockName, blockUuid)] =
+          ref as HTMLElement;
+      }
+    };
+  };
+
   return {
     blocksLists,
     currentBlock,
@@ -305,5 +319,6 @@ export const useBlockManager = () => {
     shouldLazyLoad,
     getLazyLoadKey,
     getLazyLoadConfig,
+    getLazyLoadRef,
   };
 };

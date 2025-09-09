@@ -3,11 +3,7 @@
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
-      :ref="
-        shouldLazyLoad(props.block.name)
-          ? (el) => (lazyLoadRefs[getLazyLoadKey(props.block.name, props.block.meta.uuid)] = el as HTMLElement)
-          : undefined
-      "
+      :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
         'relative block-wrapper',
         {
@@ -120,6 +116,7 @@ const {
   shouldLazyLoad,
   getLazyLoadKey,
   getLazyLoadConfig,
+  getLazyLoadRef,
 } = useBlockManager();
 
 const clientPreview = ref(false);
@@ -147,7 +144,7 @@ const contentProps = computed(() => {
       ...baseProps,
       disableActions: props.disableActions,
       root: props.root,
-      [config.propName]: lazyLoadState
+      [config.propName]: lazyLoadState,
     };
   }
 
