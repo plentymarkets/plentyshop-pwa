@@ -9,7 +9,7 @@
 
     <Multiselect
       v-model="defaultSortingSearch"
-      data-testid="font-select"
+      data-testid="search-result-sorting"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
       label="label"
