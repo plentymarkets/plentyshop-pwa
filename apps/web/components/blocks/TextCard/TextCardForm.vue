@@ -252,7 +252,7 @@
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span>↑</span>
+          <span><SfIconArrowUpward /></span>
           <input
             v-model.number="textCardBlock.layout.paddingTop"
             type="number"
@@ -261,7 +261,7 @@
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span>↓</span>
+          <span><SfIconArrowDownward /></span>
           <input
             v-model.number="textCardBlock.layout.paddingBottom"
             type="number"
@@ -270,7 +270,7 @@
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span>←</span>
+          <span><SfIconArrowBack /></span>
           <input
             v-model.number="textCardBlock.layout.paddingLeft"
             type="number"
@@ -279,7 +279,7 @@
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-          <span>→</span>
+          <span><SfIconArrowForward /></span>
           <input
             v-model.number="textCardBlock.layout.paddingRight"
             type="number"
@@ -298,7 +298,16 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfTextarea,
+  SfSwitch,
+  SfIconCheck,
+  SfIconArrowUpward,
+  SfIconArrowDownward,
+  SfIconArrowBack,
+  SfIconArrowForward,
+} from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
 
 const { data } = useCategoryTemplate();
