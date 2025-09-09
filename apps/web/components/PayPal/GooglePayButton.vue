@@ -83,7 +83,6 @@ const onGooglePayLoaded = async () => {
 };
 
 const createButton = async () => {
-  console.log('Render Google Pay Button');
   if (await initialize()) {
     await onGooglePayLoaded();
   }

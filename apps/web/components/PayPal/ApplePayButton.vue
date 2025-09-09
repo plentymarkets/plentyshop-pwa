@@ -18,7 +18,6 @@ const basketAmount = computed(() => cart.value?.basketAmount ?? 0);
 const payPalScript = computed(() => getCurrentScript());
 
 const renderButton = async () => {
-  console.log('Render Apple Pay Button');
   if ((await initialize()) && config.value.isEligible) {
     await getTransactionInfo();
     const applePayButtonContainer = document.querySelector('#apple-pay-button');
