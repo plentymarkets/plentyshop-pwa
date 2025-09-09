@@ -39,12 +39,7 @@ describe('RecommendedSorting', () => {
     editor.isToolbarVisible();
     editor.toggleCategorySettings();
 
-    categorySettings
-      .checkDrawerVisible()
-      .delay(500)
-      .toggleVariationPositionSection()
-      .checkToggleExist()
-      .closeDrawer();
+    categorySettings.checkDrawerVisible().delay(500).toggleVariationPositionSection().checkToggleExist().closeDrawer();
 
     categorySettings.checkDrawerNotVisible();
   });
