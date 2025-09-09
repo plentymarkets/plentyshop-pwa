@@ -16,11 +16,21 @@ export class CategorySettingsObject extends PageObject {
     return this;
   }
 
+  toggleVariationPositionSection() {
+    this.variationPositionSection.should('be.visible').click();
+    return this;
+  }
+
   checkSelectsExist() {
     this.sortingSelect('recommended-first-sorting-select').should('exist').as('firstSorting');
     this.sortingSelect('recommended-second-sorting-select').should('exist').as('secondSorting');
     this.sortingSelect('recommended-third-sorting-select').should('exist').as('thirdSorting');
 
+    return this;
+  }
+
+  checkToggleExist() {
+    cy.getByTestId('variation-position-toggle').should('exist');
     return this;
   }
 
@@ -75,6 +85,10 @@ export class CategorySettingsObject extends PageObject {
 
   get categorySortingSection() {
     return cy.getByTestId('category-sorting-section');
+  }
+
+  get variationPositionSection() {
+    return cy.getByTestId('variation-position-based-on-sales-section');
   }
 
   sortingSelect(sortingSelect) {
