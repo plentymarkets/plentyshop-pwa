@@ -279,33 +279,6 @@ export default defineNuxtConfig({
           },
         },
         {
-          urlPattern:  /\/plentysystems\/(getFacet|getProduct|getReview)/,
-          handler: 'NetworkFirst',
-          options: {
-            cacheName: 'plenty-api-cache',
-            expiration: {
-              maxEntries: 100,
-              maxAgeSeconds: 60 * 60 * 24, // 1 day
-            },
-            cacheableResponse: {
-              statuses: [0, 200],
-            },
-            plugins: [
-              {
-                cacheKeyWillBeUsed: async ({ request }) => {
-                  if (request.method === 'POST') {
-                    const body = await request.clone().json();
-                    const url = new URL(request.url);
-                    url.searchParams.append('body', JSON.stringify(body));
-                    return url.toString();
-                  }
-                  return request.url;
-                },
-              },
-            ]
-          },
-        },
-        {
           urlPattern: ({ request }) => request.destination === 'image',
           handler: 'CacheFirst',
           options: {
@@ -318,7 +291,7 @@ export default defineNuxtConfig({
               statuses: [0, 200],
             },
           },
-        }
+        },
       ],
       cleanupOutdatedCaches: true,
     },

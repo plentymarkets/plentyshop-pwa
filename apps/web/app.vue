@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-const { $pwa, $isPreview } = useNuxtApp();
+const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
