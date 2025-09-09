@@ -1,4 +1,4 @@
-import { type FUNDING_SOURCE, loadScript as loadPayPalScript } from '@paypal/paypal-js';
+import { type PayPalNamespace, type FUNDING_SOURCE, loadScript as loadPayPalScript  } from '@paypal/paypal-js';
 import type {
   ApiError,
   PayPalConfigResponse,
@@ -29,7 +29,7 @@ export const usePayPal = () => {
     loadedConfig: false,
     isAvailable: false,
     isReady: false,
-    activatedAPMs: false,
+    activatedAPMs: '',
     fraudId: null as string | null,
   }));
 
@@ -42,12 +42,12 @@ export const usePayPal = () => {
    */
   const loadConfig = async () => {
     if (state.value.loadedConfig) return false;
+    state.value.loadedConfig = true;
     try {
       const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
       if (data) {
         state.value.config = data ?? null;
         state.value.isAvailable = !!state.value.config;
-        state.value.loadedConfig = true;
         return true;
       }
       return false;
@@ -56,10 +56,9 @@ export const usePayPal = () => {
     }
   };
 
-  const updateAvailableAPMs = async (currency: string, commit: boolean = true) => {
-    const script = await getScript(currency, commit);
-    if (script && script.getFundingSources && !state.value.activatedAPMs) {
-      state.value.activatedAPMs = true;
+  const updateAvailableAPMs = async (script: PayPalNamespace, currency: string) => {
+    if (script && script.getFundingSources && state.value.activatedAPMs !== currency) {
+      state.value.activatedAPMs = currency;
       const availableFoundingSources = new Map();
       const fundingSources = script.getFundingSources();
       fundingSources.forEach((fundingSource: string) => {
@@ -67,8 +66,12 @@ export const usePayPal = () => {
           availableFoundingSources.set(fundingSource, script.isFundingEligible(fundingSource as FUNDING_SOURCE));
         }
       });
-      await useSdk().plentysystems.doHandlePayPalPaymentFundingSources({
-        availableFoundingSources: Object.fromEntries(availableFoundingSources),
+
+      availableFoundingSources.set('googlepay', await useGooglePay().checkIsEligible());
+      availableFoundingSources.set('applepay', await useApplePay().checkIsEligible());
+
+      await useSdk().plentysystems.doHandlePayPalFundingSources({
+        availableFundingSources: Object.fromEntries(availableFoundingSources),
       });
     }
   };
@@ -106,6 +109,10 @@ export const usePayPal = () => {
     return null;
   };
 
+  const getCurrentScript = () => {
+    return state.value.paypalScript?.script ?? null;
+  };
+
   /**
    * @description Function to get the PayPal SDK script.
    * @param currency
@@ -134,9 +141,14 @@ export const usePayPal = () => {
     state.value.isReady = false;
     state.value.paypalScript = null;
     state.value.loadingScripts[scriptKey] = loadScript(currency, localePayPal, commit)
-      .then((paypalScript) => {
+      .then(async (paypalScript) => {
         state.value.paypalScript = { script: paypalScript, currency, locale: localePayPal, commit };
         state.value.isReady = true;
+
+        if (paypalScript) {
+          await updateAvailableAPMs(paypalScript, currency);
+        }
+
         return paypalScript;
       })
       .finally(() => {
@@ -318,6 +330,7 @@ export const usePayPal = () => {
     loadConfig,
     captureOrder,
     getScript,
+    getCurrentScript,
     getOrder,
     updateAvailableAPMs,
     getFraudId,

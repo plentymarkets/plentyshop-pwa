@@ -22,15 +22,18 @@ const {
   processPayment,
   getIsReadyToPayRequest,
 } = useGooglePay();
+const { getCurrentScript } = usePayPal();
 const { t } = useI18n();
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
 
+const payPalScript = computed(() => getCurrentScript());
+
 async function onGooglePaymentButtonClicked() {
   await emits('button-clicked', async (successfully) => {
     if (successfully) {
-      const paymentDataRequest = getGooglePaymentDataRequest();
+      const paymentDataRequest = await getGooglePaymentDataRequest();
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
@@ -85,7 +88,13 @@ const createButton = async () => {
   }
 };
 
-onMounted(async () => {
+onNuxtReady(async () => {
   await createButton();
+});
+
+watch(payPalScript, async (newScript) => {
+  if (newScript) {
+    await createButton();
+  }
 });
 </script>
