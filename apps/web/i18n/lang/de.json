@@ -1101,8 +1101,12 @@
       "invalid": "Verifizierung fehlgeschlagen. Bitte versuchen Sie es in ein paar Minuten erneut.",
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
+    "security": {
+      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut."
+    },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
+  "reloadPage": "Neu laden",
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "successInfoOrderHeader": "Vielen Dank für Ihre Bestellung!",
   "successInfoReturnHeader": "Vielen Dank für Ihre Retoure!",
@@ -1126,6 +1130,11 @@
   "wishlistInteraction": {
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
+  },
+  "reloadPWA": {
+    "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
+    "refresh": "Aktualisieren",
+    "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
   "double-tap-zoom": "Zum Zoomen doppeltippen",
