@@ -29,6 +29,7 @@ export interface UseCart {
   clearCartItems: ClearCartItems;
   lastUpdatedCartItem: Readonly<Ref<UseCartState['lastUpdatedCartItem']>>;
   cartIsEmpty: ComputedRef<boolean>;
+  showNetPrices: ComputedRef<boolean>;
   deleteCart: DeleteCart;
 }
 

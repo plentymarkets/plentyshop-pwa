@@ -16,9 +16,11 @@ export const usePrimaryAddress = (type: AddressType) => {
       });
       state.value.primaryAddressId = Number(userAddressGetters.getId(address));
       state.value.loading = false;
+      return Promise.resolve(true);
     } catch (error: unknown) {
       useHandleError(error as ApiError);
       state.value.loading = false;
+      return Promise.reject();
     }
   };
 
