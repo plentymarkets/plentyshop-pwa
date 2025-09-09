@@ -111,8 +111,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } =
-          useFooter();
+        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = useFooter();
 
         const footerSettings = extractFooterFromBlocks(content);
         if (footerSettings) {
