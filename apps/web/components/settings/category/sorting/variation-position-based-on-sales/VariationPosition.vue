@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div v-if="runtimeConfig.public.isDev" class="mt-4">
     <div class="flex justify-between mb-4">
       <p>{{ getEditorTranslation('description') }}</p>
       <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
+const runtimeConfig = useRuntimeConfig();
 const { updateSetting, getSetting } = useSiteSettings('itemSortByMonthlySales');
 
 const variationPosition = computed({
