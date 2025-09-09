@@ -19,7 +19,7 @@
     <div
       v-if="props.content?.textOverlay"
       class="absolute w-full h-full px-4 pointer-events-none flex"
-      :class="[getVerticalAlignClass(), getHorizontalAlignClass()]"
+      :class="overlayAlignClasses"
       data-testid="image-overlay-text"
       :style="{ color: props.content.textOverlayColor || '#000' }"
       v-html="props.content.textOverlay"
@@ -50,27 +50,23 @@ const getImageUrl = () => {
     }
   }
 };
-const getVerticalAlignClass = () => {
-  switch (props.content?.textOverlayAlignX) {
-    case 'top':
-      return 'items-start';
-    case 'bottom':
-      return 'items-end';
-    default:
-      return 'items-center';
-  }
-};
+const overlayAlignClasses = computed(() => {
+  const vertical =
+    props.content?.textOverlayAlignX === 'top'
+      ? 'items-start'
+      : props.content?.textOverlayAlignX === 'bottom'
+        ? 'items-end'
+        : 'items-center';
 
-const getHorizontalAlignClass = () => {
-  switch (props.content?.textOverlayAlignY) {
-    case 'left':
-      return 'justify-start text-left';
-    case 'right':
-      return 'justify-end text-right';
-    default:
-      return 'justify-center text-center';
-  }
-};
+  const horizontal =
+    props.content?.textOverlayAlignY === 'left'
+      ? 'justify-start text-left'
+      : props.content?.textOverlayAlignY === 'right'
+        ? 'justify-end text-right'
+        : 'justify-center text-center';
+
+  return [vertical, horizontal];
+});
 const getImageDimensions = (): ImageDimensions => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
