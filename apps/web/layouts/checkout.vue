@@ -31,37 +31,11 @@
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
-const localePath = useLocalePath();
-const { t, locale, defaultLocale, availableLocales } = useI18n();
-const router = useRouter();
-const { isAuthorized } = useCustomer();
+const { t } = useI18n();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
-
-const goToPreviousRoute = () => {
-  const backPath = router.options.history.state?.back;
-  if (isAuthorized.value && backPath === paths.guestLogin) {
-    router.go(-2);
-    return;
-  }
-  const backLocaleFromPath = String(backPath).split('/')[1];
-  const backLocale = (availableLocales as readonly string[]).includes(backLocaleFromPath)
-    ? backLocaleFromPath
-    : defaultLocale;
-  if (backPath) {
-    if (backLocale && backLocale !== String(locale.value)) {
-      router.push(localePath(paths.home));
-      return;
-    }
-
-    router.back();
-    return;
-  }
-
-  router.push(localePath(paths.home));
-};
 
 onNuxtReady(async () => await setInitialData());
 </script>
