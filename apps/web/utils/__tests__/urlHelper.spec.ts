@@ -1,6 +1,7 @@
 import { handlePreviousRouteNavigation } from '~/utils/urlHelper';
 import { paths } from '~/utils/paths';
 import { vi } from 'vitest';
+import type { Router } from 'vue-router';
 
 describe('handlePreviousRouteNavigation', () => {
   const mockRouterGo = vi.fn();
@@ -15,13 +16,13 @@ describe('handlePreviousRouteNavigation', () => {
       router: {
         options: { history: { state: { back: null } } },
         go: mockRouterGo,
-      } as any,
+      } as unknown as Router,
       isAuthorized: false,
       i18n: {
         locale: { value: 'en' },
         defaultLocale: 'en',
         availableLocales: ['en', 'de'],
-      } as any,
+      } as ReturnType<typeof useNuxtApp>['$i18n'],
       localePath: mockLocalePath,
       navigateTo: mockNavigateTo,
     };
