@@ -2,7 +2,14 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "types": ["vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs", "@types/googlepay", "@types/google.maps"],
+    "types": [
+      "vitest/globals",
+      "@vite-pwa/nuxt",
+      "@types/applepayjs",
+      "@types/googlepay",
+      "@types/google.maps",
+      "./utils/vue-tel-input"
+    ],
     "verbatimModuleSyntax": false,
     "noImplicitAny": true
   },
