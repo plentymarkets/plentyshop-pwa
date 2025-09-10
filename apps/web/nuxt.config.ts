@@ -122,9 +122,10 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       defaultSortingOption: process.env.NUXT_PUBLIC_DEFAULT_SORTING_OPTION ?? 'texts.name1_asc',
+      defaultSortingSearch: process.env.NUXT_PUBLIC_DEFAULT_SORTING_SEARCH ?? 'item.score',
       availableSortingOptions:
         process.env.NUXT_PUBLIC_AVAILABLE_SORTING_OPTIONS ||
-        '["texts.name1_asc","default.recommended_sorting","sorting.price.avg_asc","sorting.price.avg_desc","variation.availability.averageDays_asc","variation.availability.averageDays_desc"]',
+        '["item.score","texts.name1_asc","default.recommended_sorting","sorting.price.avg_asc","sorting.price.avg_desc","variation.availability.averageDays_asc","variation.availability.averageDays_desc"]',
       recommendedFirstSortingOption:
         process.env.NUXT_PUBLIC_RECOMMENDED_FIRST_SORTING_OPTION ?? 'variation.position_desc',
       recommendedSecondSortingOption:
