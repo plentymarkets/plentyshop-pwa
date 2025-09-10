@@ -32,8 +32,7 @@ import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
 const localePath = useLocalePath();
-const i18n = useI18n();
-const { t, locale, defaultLocale, availableLocales } = i18n;
+const { t, locale, defaultLocale, availableLocales } = useI18n();;
 const router = useRouter();
 const { isAuthorized } = useCustomer();
 const { data: cart, loading: isLoading } = useCart();
@@ -48,11 +47,10 @@ const goToPreviousRoute = () => {
     return;
   }
   const backLocaleFromPath = String(backPath).split('/')[1];
-  const backLocale = backLocaleFromPath in availableLocales ? backLocaleFromPath : defaultLocale;
-
+  const backLocale = (availableLocales as readonly string[]).includes(backLocaleFromPath) ? backLocaleFromPath : defaultLocale;
   if (backPath) {
     if (backLocale && backLocale !== String(locale.value)) {
-      router.push('/');
+      router.push(localePath(paths.home));
       return;
     }
 
