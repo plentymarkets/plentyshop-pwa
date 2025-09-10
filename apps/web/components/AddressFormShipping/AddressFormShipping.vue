@@ -223,10 +223,19 @@ if (!addAddress && address) {
     ? true
     : Boolean(userAddressGetters.getCompanyName(address as Address));
 
+  const addressSource = invalidVAT.value ? shippingAddressToSave.value : address;
+
   setValues({
     ...address,
-    companyName: shippingAddressToSave.value?.companyName || address?.companyName || '',
-    vatNumber: shippingAddressToSave.value?.vatNumber || address?.vatNumber || '',
+    firstName: addressSource?.firstName || '',
+    lastName: addressSource?.lastName || '',
+    country: addressSource?.country || '',
+    streetName: addressSource?.streetName || '',
+    apartment: addressSource?.apartment || '',
+    city: addressSource?.city || '',
+    zipCode: addressSource?.zipCode || '',
+    companyName: addressSource.companyName || '',
+    vatNumber: addressSource.vatNumber || '',
   } as unknown as Record<string, string>);
 
   if (!hasShippingCompany.value) {
