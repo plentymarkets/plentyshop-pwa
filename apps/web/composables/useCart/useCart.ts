@@ -311,7 +311,7 @@ export const useCart: UseCartReturn = () => {
   };
 
   const cartIsEmpty = computed(() => !state.value.data?.items?.length);
-
+  const showNetPrices = computed(() => state.value.data?.showNetPrices ?? false);
   return {
     setCart,
     clearCartItems,
@@ -322,6 +322,7 @@ export const useCart: UseCartReturn = () => {
     getCart,
     deleteCart,
     cartIsEmpty,
+    showNetPrices,
     ...toRefs(state.value),
   };
 };

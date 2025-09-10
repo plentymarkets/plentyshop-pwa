@@ -4,7 +4,7 @@
       {{ label }}
     </label>
 
-    <vue-tel-input
+    <VueTelInput
       v-model="localValue"
       :only-countries="onlyCountries"
       :default-country="defaultCountry"
@@ -25,11 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { VueTelInput } from 'vue-tel-input';
 import 'vue-tel-input/vue-tel-input.css';
 import { v4 as uuid } from 'uuid';
 import type { PhoneValidationResult } from '~/components/ui/TelephoneInput/types';
 import type { TelephoneInputProps } from './types';
+import { VueTelInput } from 'vue-tel-input';
 
 const props = withDefaults(defineProps<TelephoneInputProps>(), {
   id: () => `tel-input-${uuid()}`,

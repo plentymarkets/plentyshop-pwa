@@ -7,11 +7,13 @@ export interface UseRobotState {
 
 export type GetRobots = () => Promise<RobotsStaticPages>;
 export type SetRobotForStaticPage = (staticPageName: string) => void;
+export type SetRobots = (data: RobotsStaticPages) => void;
 
 export interface UseRobot {
   data: Readonly<Ref<UseRobotState['data']>>;
   loading: Readonly<Ref<boolean>>;
   getRobots: GetRobots;
+  setRobots: SetRobots;
   setRobotForStaticPage: SetRobotForStaticPage;
 }
 
