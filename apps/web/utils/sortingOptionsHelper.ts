@@ -13,19 +13,26 @@ export const getEditorTranslation = (key: string): string => {
 export const getMappedOptions = (options: string[]): SortingOption[] => {
   if (!options) return [];
 
+  const locale = 'en';
+  const { $i18n } = useNuxtApp();
+
   return options.map((key: string) => ({
-    label: getEditorTranslation(`sortType.${key}`),
+    label: $i18n.t(`sortType.${key}`, {}, { locale }) as string,
     value: key,
   }));
 };
 
-export const getRecommendedSortingOptions = (locale: string, notSelectedOption: boolean): SortingOption[] => {
+export const getRecommendedSortingOptions = (notSelectedOption: boolean): SortingOption[] => {
   const filteredOptions = structuredClone(sortingCategory);
   if (notSelectedOption) {
     filteredOptions.unshift({ label: 'sortingPriorityCategoryNotSelected', value: 'notSelected' });
   }
+
+  const { $i18n } = useNuxtApp();
+  const locale = 'en';
+
   return filteredOptions.map((item: SortingOption) => ({
-    label: getEditorTranslation(`sortingAndPagination.recommendedSorting.options.${item.label}`),
+    label: $i18n.t(`sortingAndPagination.recommendedSorting.options.${item.label}`, {}, { locale }) as string,
     value: item.value,
   }));
 };
