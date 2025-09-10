@@ -1,6 +1,6 @@
 import type { BlocksList } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition } from './types';
+import type { BlockPosition, RefCallback } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
@@ -289,17 +289,11 @@ export const useBlockManager = () => {
     return LAZY_LOAD_BLOCKS[blockName] || null;
   };
 
-  const getLazyLoadRef = (
-    blockName: string,
-    blockUuid: string,
-  ): ((ref: Element | import('vue').ComponentPublicInstance | null) => void) | undefined => {
-    if (!shouldLazyLoad(blockName)) return undefined;
+  const getLazyLoadRef = (blockName: string, blockUuid: string): RefCallback => {
+    if (!shouldLazyLoad(blockName)) return () => {};
 
-    return (ref: Element | import('vue').ComponentPublicInstance | null) => {
-      if (ref instanceof Element) {
-        (lazyLoadRefs.value as Record<string, HTMLElement | null>)[getLazyLoadKey(blockName, blockUuid)] =
-          ref as HTMLElement;
-      }
+    return (ref) => {
+      if (ref instanceof HTMLElement) lazyLoadRefs.value[getLazyLoadKey(blockName, blockUuid)] = ref;
     };
   };
 
