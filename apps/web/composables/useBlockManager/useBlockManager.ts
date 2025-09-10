@@ -83,12 +83,6 @@ export const useBlockManager = () => {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
 
-      const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
-      if (newIndex !== -1) {
-        const el = document.getElementById(`block-${newIndex}`);
-        if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
-      }
-
       return;
     }
 
