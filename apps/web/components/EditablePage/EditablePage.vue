@@ -1,7 +1,7 @@
 <template>
   <div>
-    <EmptyBlock v-if="showEmptyBlock" />
-    <EmptyContentPage v-else-if="showEmptyContentPage" />
+    <EmptyBlock v-if="isContentEmptyInEditor" />
+    <CategoryEmptyState v-else-if="isContentEmptyInLive" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -45,13 +45,15 @@ const props = defineProps<EditablePageProps>();
 
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
-const showEmptyBlock = computed(
+
+const isContentEmptyInEditor = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && data.value[0].name === 'Footer' && $isPreview),
 );
 
-const showEmptyContentPage = computed(
+const isContentEmptyInLive = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && data.value[0].name === 'Footer'),
 );
+
 await getBlocksServer(props.identifier, props.type);
 
 const { footerCache } = useFooter();
