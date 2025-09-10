@@ -1200,5 +1200,6 @@
         "Sunday": "Sunday"
       }
     }
-  }
+  },
+  "cancelOrder": "Cancel order"
 }
