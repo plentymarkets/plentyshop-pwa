@@ -1,5 +1,5 @@
 <template>
-  <SfTooltip :label="seoLabel" placement="right" class="inline-grid" :show-arrow="true">
+  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
     <button
       type="button"
       class="editor-button relative py-2 flex justify-center"
@@ -18,9 +18,18 @@ import { SfTooltip } from '@storefront-ui/vue';
 import whiteIcon from 'assets/icons/paths/seo-white.svg';
 import blackIcon from 'assets/icons/paths/seo-black.svg';
 
-const seoLabel = 'Search engine settings: control global and default SEO behavior and optimizations.';
-
 defineProps({
   active: Boolean,
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "tooltip": "SEO: Manage SEO-relevant settings, like controlling the behaviour of webcrawling robots or defining meta and schema data."
+  },
+  "de": {
+    "tooltip": "SEO: Manage SEO-relevant settings, like controlling the behaviour of webcrawling robots or defining meta and schema data."
+  }
+}
+</i18n>

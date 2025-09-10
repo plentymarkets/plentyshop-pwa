@@ -1,5 +1,5 @@
 <template>
-  <SfTooltip :label="checkoutLabel" placement="right" class="inline-grid" :show-arrow="true">
+  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
     <button
       v-if="runtimeConfig.public.isDev"
       type="button"
@@ -16,11 +16,20 @@
 <script setup lang="ts">
 import { SfIconShoppingCart, SfTooltip } from '@storefront-ui/vue';
 
-const checkoutLabel = 'Settings that affect the user experience and available options during the checkout process.';
-
 const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "tooltip": "Checkout: Manage settings that affect the user experience and available options during the checkout process."
+  },
+  "de": {
+    "tooltip": "Checkout: Manage settings that affect the user experience and available options during the checkout process."
+  }
+}
+</i18n>
