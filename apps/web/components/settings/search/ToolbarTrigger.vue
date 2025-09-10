@@ -8,14 +8,14 @@
       aria-label="Open general settings drawer"
       data-testid="open-item-settings-drawer"
     >
-      <SfIconSell v-if="active" class="text-white" />
-      <SfIconSell v-else class="text-black" />
+      <SfIconSearch v-if="active" class="text-white" />
+      <SfIconSearch v-else class="text-black" />
     </button>
   </SfTooltip>
 </template>
 
 <script setup lang="ts">
-import { SfIconSell, SfTooltip } from '@storefront-ui/vue';
+import { SfIconSearch, SfTooltip } from '@storefront-ui/vue';
 
 defineProps({
   active: Boolean,
@@ -27,10 +27,10 @@ const runtimeConfig = useRuntimeConfig();
 <i18n lang="json">
 {
   "en": {
-    "tooltip": "Item: Manage settings that affect the user experience on item pages."
+    "tooltip": "Search: Manage settings that control search and search results in the shop."
   },
   "de": {
-    "tooltip": "Item: Manage settings that affect the user experience on item pages."
+    "tooltip": "Search: Manage settings that control search and search results in the shop."
   }
 }
 </i18n>

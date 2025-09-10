@@ -173,12 +173,14 @@ Cypress.Commands.add('resetPopupStub', () => {
 
 Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
+  cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
 
   // Enable popup capture
   cy.capturePopup();
   // Click on the PayPal button inside PayPal's iframe
   cy.get('iframe').firstIFrame().find('div[data-funding-source="paypal"]').realClick();
   cy.wait('@doCreatePayPalOrder');
+  cy.wait('@doPreparePayment');
   cy.wait(4000);
   cy.popup().find('input#email').clear().type(email);
   cy.popup().find('button:visible').first().click().wait(1000);
