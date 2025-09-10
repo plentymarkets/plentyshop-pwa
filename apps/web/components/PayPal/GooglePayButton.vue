@@ -85,7 +85,7 @@ const createButton = async () => {
   }
 };
 
-onMounted(async () => {
+onNuxtReady(async () => {
   await createButton();
 });
 </script>
