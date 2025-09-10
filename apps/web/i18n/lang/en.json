@@ -239,7 +239,7 @@
       "thankYou": "Thank you, if there is an account registered with {0}, you should receive the password reset link in your inbox."
     },
     "setNewPassword": {
-      "resetSucceded": "Your password has been successfully reset. You can now log in with your new password.",
+      "resetSucceded": "Your password has been successfully reset. You are now authenticated using your new password.",
       "passwordsNotMatching": "Passwords do not match",
       "rememberPassword": "Remember your password?",
       "button": "Save new password",
@@ -1032,7 +1032,8 @@
         "externalName_desc": "Manufacturer Z-A"
       },
       "feedbackDecimal_asc": "Item reviews ⬆",
-      "feedbackDecimal_desc": "Item reviews ⬇"
+      "feedbackDecimal_desc": "Item reviews ⬇",
+      "score": "Relevance"
     }
   },
   "storefrontError": {
@@ -1101,8 +1102,12 @@
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
+    "security": {
+      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page."
+    },
     "unknownError": "An unknown error has occurred."
   },
+  "reloadPage": "Reload page",
   "successInfoMessage": "Your order was completed successfully.",
   "successInfoOrderHeader": "Thank you for your order!",
   "successInfoReturnHeader": "Thank you for your return!",
@@ -1128,6 +1133,11 @@
     "delete": "The item was removed from your wish list."
   },
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
+  "reloadPWA": {
+    "newVersionAvailable": "A new version of the shop is available.",
+    "refresh": "Refresh",
+    "ariaLabel": "A new version of the shop is available. Press to refresh the page."
+  },
   "double-tap-zoom": "Double-tap to zoom",
   "PreferredDelivery": {
     "general": {
@@ -1190,5 +1200,6 @@
         "Sunday": "Sunday"
       }
     }
-  }
+  },
+  "cancelOrder": "Cancel order"
 }

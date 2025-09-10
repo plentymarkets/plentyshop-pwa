@@ -1,5 +1,5 @@
 <template>
-  <SfTooltip :label="itemLabel" placement="right" class="inline-grid" :show-arrow="true">
+  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
     <button
       v-if="runtimeConfig.public.isDev"
       type="button"
@@ -17,11 +17,20 @@
 <script setup lang="ts">
 import { SfIconSell, SfTooltip } from '@storefront-ui/vue';
 
-const itemLabel = 'Product page settings: control which product information is displayed on product detail pages.';
-
 defineProps({
   active: Boolean,
 });
 
 const runtimeConfig = useRuntimeConfig();
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "tooltip": "Item: Manage settings that affect the user experience on item pages."
+  },
+  "de": {
+    "tooltip": "Item: Manage settings that affect the user experience on item pages."
+  }
+}
+</i18n>
