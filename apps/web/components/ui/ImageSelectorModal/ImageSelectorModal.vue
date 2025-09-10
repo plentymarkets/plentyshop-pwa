@@ -97,7 +97,7 @@
           </button>
 
           <button
-            :disabled="!canAdd"
+            :disabled="!canAdd || uploading"
             data-testid="image-uploader-add-button"
             class="bg-editor-button text-white py-1 px-4 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
             @click="addImage"
@@ -118,6 +118,7 @@ import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal
 const filePath = ref('');
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
 const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
+const uploading = ref(false);
 
 const props = defineProps<ImageSelectorModalProps>();
 const selectedRowKey = ref<string | null>(null);
@@ -178,6 +179,7 @@ const handleSelect = (image: { image: string; name: string }) => {
   };
 };
 const handleUpload = async (file: File) => {
+  uploading.value = true;
   const reader = new FileReader();
   reader.onload = (e) => {
     selectedImage.value = {
@@ -195,6 +197,7 @@ const handleUpload = async (file: File) => {
   );
   selectedRowKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
   selectedKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
+  uploading.value = false;
 };
 const addImage = () => {
   if (selectedImage.value) {
