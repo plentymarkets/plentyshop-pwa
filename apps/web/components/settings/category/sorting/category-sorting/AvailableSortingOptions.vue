@@ -47,6 +47,7 @@ const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption
 const { updateSorting } = useCategoryFilter();
 
 const sortingOptionValues = [
+  'item.score',
   'default.recommended_sorting',
   'texts.name1_asc',
   'texts.name1_desc',

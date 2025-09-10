@@ -47,7 +47,9 @@ const defaultSortingOption = computed({
   },
   set: (option) => {
     updateSetting(option?.value ?? '');
-    updateSorting(option?.value ?? '');
+    if (isPageOfType('category')) {
+      updateSorting(option?.value ?? '');
+    }
   },
 });
 </script>

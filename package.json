@@ -39,7 +39,7 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.9.3",
+    "@plentymarkets/shop-core": "^1.9.4",
     "@plentymarkets/shop-api": "^0.133.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.2.0",
@@ -66,7 +66,6 @@
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/turnstile": "^0.8.0",
     "@paypal/paypal-js": "8.3.0",
-    "@types/vue-tel-input": "^2.1.7",
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^1.0.4",

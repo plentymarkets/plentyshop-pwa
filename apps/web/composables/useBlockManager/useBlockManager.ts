@@ -1,7 +1,8 @@
-import type { BlocksList } from '../../components/BlocksNavigationList/types';
+import type { BlocksList } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition } from './types';
+import type { BlockPosition, RefCallback } from './types';
 import { v4 as uuid } from 'uuid';
+import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
 const blocksLists = ref<BlocksList>({});
 
@@ -22,6 +23,14 @@ const dragState = reactive({
   isDragging: false,
 });
 
+const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
+  ProductRecommendedProducts: {
+    propName: 'shouldLoad',
+    rootMargin: '0px 0px 250px 0px',
+    threshold: 0,
+  },
+};
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
@@ -33,6 +42,8 @@ export const useBlockManager = () => {
   const currentBlockUuid = ref<string | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
+  const lazyLoadStates = ref<Record<string, boolean>>({});
+  const lazyLoadRefs = ref<Record<string, HTMLElement | null>>({});
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
   const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
@@ -247,12 +258,39 @@ export const useBlockManager = () => {
     return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
   };
 
+  const shouldLazyLoad = (blockName: string): boolean => {
+    return blockName in LAZY_LOAD_BLOCKS;
+  };
+
+  const getLazyLoadKey = (blockName: string, blockUuid?: string): string => {
+    const baseKey = blockName.charAt(0).toLowerCase() + blockName.slice(1);
+    if (!blockUuid) {
+      console.error('getLazyLoadKey called without blockUuid for', blockName);
+      return `${baseKey}-missing-uuid`;
+    }
+    return `${baseKey}-${blockUuid}`;
+  };
+
+  const getLazyLoadConfig = (blockName: string): LazyLoadConfig | null => {
+    return LAZY_LOAD_BLOCKS[blockName] || null;
+  };
+
+  const getLazyLoadRef = (blockName: string, blockUuid: string): RefCallback => {
+    if (!shouldLazyLoad(blockName)) return () => {};
+
+    return (ref) => {
+      if (ref instanceof HTMLElement) lazyLoadRefs.value[getLazyLoadKey(blockName, blockUuid)] = ref;
+    };
+  };
+
   return {
     blocksLists,
     currentBlock,
     currentBlockUuid,
     isClicked,
     clickedBlockIndex,
+    lazyLoadStates,
+    lazyLoadRefs,
     isTablet,
     multigridColumnUuid,
     updateMultigridColumnUuid,
@@ -272,5 +310,9 @@ export const useBlockManager = () => {
     togglePlaceholder,
     findOrDeleteBlockByUuid,
     getBlockDepth,
+    shouldLazyLoad,
+    getLazyLoadKey,
+    getLazyLoadConfig,
+    getLazyLoadRef,
   };
 };

@@ -52,7 +52,7 @@
                 :disabled="interactionDisabled"
                 size="lg"
                 data-testid="place-paypal-order-button"
-                class="w-full mb-4 md:mb-0 cursor-pointer"
+                class="w-full cursor-pointer"
                 @click="buy"
               >
                 <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
@@ -72,6 +72,18 @@
                 <UiButton class="w-full">{{ t('goToCheckout') }}</UiButton>
               </NuxtLink>
             </div>
+            <UiButton
+              type="button"
+              variant="secondary"
+              size="lg"
+              :disabled="unreserveLoading || interactionDisabled || loading"
+              data-testid="cancel-paypal-order-button"
+              class="w-full mt-4 mb-4 md:mb-0 cursor-pointer"
+              @click="cancelOrder"
+            >
+              <SfLoaderCircular v-if="unreserveLoading" class="flex justify-center items-center" size="sm" />
+              <template v-else>{{ t('cancelOrder') }}</template>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -107,6 +119,7 @@ const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
+const { unreserve, loading: unreserveLoading } = useCartStockReservation();
 
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
@@ -147,7 +160,10 @@ const payPalAvailable = computed(() =>
 );
 
 const handle = async () => {
-  if (!paypalOrderId) return navigateTo(localePath(paths.cart));
+  if (!paypalOrderId) {
+    await unreserve();
+    return navigateTo(localePath(paths.cart));
+  }
 
   await setAddressesFromPayPal(paypalOrderId);
   await getCart();
@@ -176,6 +192,7 @@ const handle = async () => {
   }
 
   if (customer.value.user === null) {
+    await unreserve();
     return navigateTo(localePath(paths.checkout));
   }
 
@@ -258,6 +275,11 @@ const buy = async () => {
       navigateTo(localePath(paths.cart));
     }
   }
+};
+
+const cancelOrder = async () => {
+  await unreserve();
+  await navigateTo(localePath(paths.cart));
 };
 
 watch(payPalAvailable, async (newValue) => {
