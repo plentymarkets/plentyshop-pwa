@@ -113,53 +113,22 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-
 import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
-const filePath = ref('');
-const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
-const uploading = ref(false);
 
 const props = defineProps<ImageSelectorModalProps>();
-const selectedRowKey = ref<string | null>(null);
 const emit = defineEmits(['close', 'add']);
 
-const close = () => {
-  revokeAllBlobUrls();
-  emit('close');
-};
-const showUpload = computed(() => {
-  return !selectedImage.value || !selectedImage.value.image || selectedImage.value.image === placeholderImg;
-});
+const filePath = ref('');
+const uploading = ref(false);
 const selectedImage = ref<null | {
   image: string;
   name: string;
 }>(null);
+const selectedRowKey = ref<string | null>(null);
 const selectedKey = ref<string | null>(null);
 
-watch(
-  () => props.open,
-  (isOpen) => {
-    if (isOpen) {
-      getStorageItems();
-    }
-  },
-  { immediate: true },
-);
-
-watch(
-  () => props.open,
-  (isOpen) => {
-    if (isOpen && props.currentImage) {
-      selectedImage.value = {
-        image: props.currentImage,
-        name: '',
-      };
-    } else if (!isOpen) {
-      selectedImage.value = null;
-    }
-  },
-);
+const { placeholderImg, getImageTypeLabel } = usePickerHelper();
+const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
 
 const canAdd = computed(() => {
   const image = selectedImage.value?.image;
@@ -171,6 +140,15 @@ const isPlaceholder = computed(() => {
 });
 
 const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
+
+const showUpload = computed(() => {
+  return !selectedImage.value || !selectedImage.value.image || selectedImage.value.image === placeholderImg;
+});
+
+const close = () => {
+  revokeAllBlobUrls();
+  emit('close');
+};
 
 const handleSelect = (image: { image: string; name: string }) => {
   selectedImage.value = {
@@ -209,6 +187,30 @@ const addImage = () => {
     close();
   }
 };
+
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen) {
+      getStorageItems();
+    }
+  },
+  { immediate: true },
+);
+
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen && props.currentImage) {
+      selectedImage.value = {
+        image: props.currentImage,
+        name: '',
+      };
+    } else if (!isOpen) {
+      selectedImage.value = null;
+    }
+  },
+);
 
 onBeforeUnmount(() => {
   revokeAllBlobUrls();
