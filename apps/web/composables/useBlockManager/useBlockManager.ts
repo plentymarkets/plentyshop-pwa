@@ -75,9 +75,6 @@ export const useBlockManager = () => {
   const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
 
-    // const targetIndex = data.value.findIndex((b) => b.meta?.uuid === targetUuid);
-    // const offset = targetIndex !== -1 ? getBlockOffset(targetIndex) : window.scrollY;
-
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
@@ -122,10 +119,7 @@ export const useBlockManager = () => {
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
     scrollIntoBlockView(newBlock);
-    // restoreScroll(offset);
   };
-
-  //  scroll into view approach
 
   const scrollIntoBlockView = (newBlock: Block) => {
     setTimeout(() => {
@@ -136,83 +130,6 @@ export const useBlockManager = () => {
       }
     }, 100);
   };
-
-  // Restore block position approach -- (I think it's the same as above )
-
-  // function getBlockOffset(index: number) {
-  //   const el = document.getElementById(`block-${index}`);
-  //   if (!el) return null;
-  //   const rect = el.getBoundingClientRect();
-  //   return rect.top + window.scrollY;
-  // }
-
-  // function restoreScroll(offset: number | null) {
-  //   if (offset !== null) {
-  //     setTimeout(() => {
-  //       window.scrollTo({ top: offset, behavior: 'auto' });
-  //     }, 100);
-  //   }
-  // }
-
-  // Mutation Observer approach
-
-  // const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
-  //   if (!data.value) return;
-  //   const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
-  //   newBlock.meta.uuid = uuid();
-
-  //   const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
-  //   if (nonFooterBlocks.length === 0) {
-  //     updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
-  //     openDrawerWithView('blocksSettings', newBlock);
-  //     scrollToNewBlock(newBlock);
-  //     return;
-  //   }
-
-  //   const copiedData = JSON.parse(JSON.stringify(data.value));
-  //   const parentInfo = findBlockParent(copiedData, targetUuid);
-
-  //   if (!parentInfo) {
-  //     console.error('block not found');
-  //     return;
-  //   }
-
-  //   const { parent, index } = parentInfo;
-  //   const targetBlock = parent[index];
-
-  //   if (position === 'inside') {
-  //     insertIntoColumn(targetBlock, newBlock, parent);
-  //   } else {
-  //     insertNextToBlock(parent, index, newBlock, position);
-  //   }
-
-  //   if (Array.isArray(newBlock.content) && newBlock.content.length) {
-  //     setUuid(newBlock.content as Block[]);
-  //   }
-
-  //   updateBlocks(copiedData);
-  //   openDrawerWithView('blocksSettings', newBlock);
-  //   visiblePlaceholder.value = { uuid: '', position: 'top' };
-  //   isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
-
-  //   scrollToNewBlock(newBlock);
-  // };
-
-  // Mutation Observer approach --- Function
-
-  // function scrollToNewBlock(newBlock: Block) {
-  //   // Try MutationObserver first
-  //   const observer = new MutationObserver(() => {
-  //     const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
-  //     if (newIndex !== -1) {
-  //       const el = document.getElementById(`block-${newIndex}`);
-  //       if (el) {
-  //         el.scrollIntoView({ behavior: 'auto', block: 'center' });
-  //         observer.disconnect();
-  //       }
-  //     }
-  //   });
-  //   observer.observe(document.body, { childList: true, subtree: true });
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
     const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
