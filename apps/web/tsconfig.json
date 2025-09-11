@@ -13,13 +13,5 @@
     "verbatimModuleSyntax": false,
     "noImplicitAny": true
   },
-  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
-  "typedocOptions": {
-    "entryPoints": ["composables/index.ts"],
-    "out": "reference/composables",
-    "excludeExternals": true,
-    "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
-    "githubPages": false,
-    "readme": "none"
-  }
+  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"]
 }
