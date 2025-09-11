@@ -218,27 +218,27 @@
 
       <SfSwitch
         id="keep-transparent"
-        v-model="textCardBlock.layout.keepTransparent"
+        v-model="keepTransparent"
         data-testid="switch-keep-transparent"
         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
       />
     </div>
 
-    <div v-if="!textCardBlock.layout.keepTransparent" class="py-2">
+    <div v-if="!keepTransparent" class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
       <label>
-        <SfInput v-model="textCardBlock.layout.backgroundColor" type="text" data-testid="input-background-color">
+        <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
           <template #suffix>
             <label
               for="background-color"
-              :style="{ backgroundColor: textCardBlock.layout.backgroundColor }"
+              :style="{ backgroundColor: backgroundColor }"
               class="border border-[#a0a0a0] rounded-lg cursor-pointer"
             >
               <input
                 id="background-color"
-                v-model="textCardBlock.layout.backgroundColor"
+                v-model="backgroundColor"
                 data-testid="color-input-background"
                 type="color"
                 class="invisible w-8"
@@ -330,10 +330,7 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingBottom: '0',
       paddingLeft: '0',
       paddingRight: '0',
-      keepTransparent: true,
     };
-  } else if (content.layout.keepTransparent === undefined) {
-    content.layout.keepTransparent = true;
   }
 
   return content as TextCardContent;
@@ -342,6 +339,13 @@ const textCardBlock = computed<TextCardContent>(() => {
 const textSettings = ref(false);
 const buttonSettings = ref(false);
 const layoutSettings = ref(false);
+
+const keepTransparent = ref(true);
+const backgroundColor = ref(textCardBlock.value.layout.backgroundColor || '#ffffff');
+
+watch([keepTransparent, backgroundColor], () => {
+  textCardBlock.value.layout.backgroundColor = keepTransparent.value ? 'transparent' : backgroundColor.value;
+});
 </script>
 
 <i18n lang="json">

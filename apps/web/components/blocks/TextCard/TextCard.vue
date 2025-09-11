@@ -25,10 +25,9 @@ const textAlignmentClass = computed(() => {
 });
 const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
-  const keepTransparent = layout.keepTransparent ?? true;
 
   return {
-    backgroundColor: keepTransparent ? 'transparent' : layout.backgroundColor || 'transparent',
+    backgroundColor: layout.backgroundColor ?? 'transparent',
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,

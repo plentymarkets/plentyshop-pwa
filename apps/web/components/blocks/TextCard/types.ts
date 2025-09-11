@@ -29,7 +29,6 @@ export type TextCardContent = {
     paddingBottom?: string;
     paddingLeft?: string;
     paddingRight?: string;
-    keepTransparent?: boolean;
   };
 };
 
