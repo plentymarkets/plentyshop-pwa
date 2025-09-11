@@ -97,7 +97,7 @@
           </button>
 
           <button
-            :disabled="!canAdd"
+            :disabled="!canAdd || uploading"
             data-testid="image-uploader-add-button"
             class="bg-editor-button text-white py-1 px-4 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
             @click="addImage"
@@ -113,28 +113,80 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfTooltip, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-
 import type { ImageSelectorModalProps } from '~/components/ui/ImageSelectorModal/types';
+
+const props = defineProps<ImageSelectorModalProps>();
+const emit = defineEmits(['close', 'add']);
+
 const filePath = ref('');
+const uploading = ref(false);
+const selectedImage = ref<null | {
+  image: string;
+  name: string;
+}>(null);
+const selectedRowKey = ref<string | null>(null);
+const selectedKey = ref<string | null>(null);
+
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
 const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
 
-const props = defineProps<ImageSelectorModalProps>();
-const selectedRowKey = ref<string | null>(null);
-const emit = defineEmits(['close', 'add']);
+const canAdd = computed(() => {
+  const image = selectedImage.value?.image;
+  return !!image && image !== props.currentImage && image !== placeholderImg;
+});
+const isPlaceholder = computed(() => {
+  const img = selectedImage.value?.image;
+  return !img || img === placeholderImg;
+});
+
+const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
+
+const showUpload = computed(() => {
+  return !selectedImage.value || !selectedImage.value.image || selectedImage.value.image === placeholderImg;
+});
 
 const close = () => {
   revokeAllBlobUrls();
   emit('close');
 };
-const showUpload = computed(() => {
-  return !selectedImage.value || !selectedImage.value.image || selectedImage.value.image === placeholderImg;
-});
-const selectedImage = ref<null | {
-  image: string;
-  name: string;
-}>(null);
-const selectedKey = ref<string | null>(null);
+
+const handleSelect = (image: { image: string; name: string }) => {
+  selectedImage.value = {
+    image: image.image,
+    name: image.name,
+  };
+};
+const handleUpload = async (file: File) => {
+  uploading.value = true;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    selectedImage.value = {
+      image: e.target?.result as string,
+      name: file.name,
+    };
+  };
+  reader.readAsDataURL(file);
+
+  await uploadStorageItem(file, filePath.value);
+  await nextTick();
+
+  const uploadedItem = items.value.find(
+    (item) => item.key === file.name || item.key.endsWith(`/${file.name}`) || item.key === file.name,
+  );
+  selectedRowKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
+  selectedKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
+  uploading.value = false;
+};
+const addImage = () => {
+  if (selectedImage.value) {
+    emit('add', {
+      image: selectedImage.value.image,
+      name: selectedImage.value.name,
+      type: props.imageType,
+    });
+    close();
+  }
+};
 
 watch(
   () => props.open,
@@ -159,53 +211,6 @@ watch(
     }
   },
 );
-
-const canAdd = computed(() => {
-  const image = selectedImage.value?.image;
-  return !!image && image !== props.currentImage && image !== placeholderImg;
-});
-const isPlaceholder = computed(() => {
-  const img = selectedImage.value?.image;
-  return !img || img === placeholderImg;
-});
-
-const imageTypeLabel = computed(() => getImageTypeLabel(props.imageType, props.customLabel));
-
-const handleSelect = (image: { image: string; name: string }) => {
-  selectedImage.value = {
-    image: image.image,
-    name: image.name,
-  };
-};
-const handleUpload = async (file: File) => {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    selectedImage.value = {
-      image: e.target?.result as string,
-      name: file.name,
-    };
-  };
-  reader.readAsDataURL(file);
-
-  await uploadStorageItem(file, filePath.value);
-  await nextTick();
-
-  const uploadedItem = items.value.find(
-    (item) => item.key === file.name || item.key.endsWith(`/${file.name}`) || item.key === file.name,
-  );
-  selectedRowKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
-  selectedKey.value = uploadedItem?.key ?? items.value[0]?.key ?? null;
-};
-const addImage = () => {
-  if (selectedImage.value) {
-    emit('add', {
-      image: selectedImage.value.image,
-      name: selectedImage.value.name,
-      type: props.imageType,
-    });
-    close();
-  }
-};
 
 onBeforeUnmount(() => {
   revokeAllBlobUrls();

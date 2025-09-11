@@ -3,7 +3,7 @@ import { toTypedSchema } from '@vee-validate/yup';
 import { boolean, object, string } from 'yup';
 
 export const useAddressForm = (type: AddressType) => {
-  const { create } = useCreateAddress(type);
+  const { create, clearInvalidVAT } = useCreateAddress(type);
   const { $i18n } = useNuxtApp();
   const { selectedMethod, getShippingMethods } = useCartShippingMethods();
   const { fetchPaymentMethods } = usePaymentMethods();
@@ -20,6 +20,17 @@ export const useAddressForm = (type: AddressType) => {
     hasCompany: false,
     addressToSave: {} as Address,
     addressToEdit: {} as Address,
+    defaultFormValues: {
+      firstName: '',
+      lastName: '',
+      country: '',
+      streetName: '',
+      apartment: '',
+      city: '',
+      zipCode: '',
+      companyName: '',
+      vatNumber: '',
+    } as Partial<Address>,
   }));
 
   const setInitialState = () => {
@@ -37,6 +48,8 @@ export const useAddressForm = (type: AddressType) => {
     const response = await create(state.value.addressToSave as Address);
     state.value.open = false;
     state.value.isLoading = false;
+    clearInvalidVAT();
+
     return response;
   };
 
@@ -44,20 +57,29 @@ export const useAddressForm = (type: AddressType) => {
     object({
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
-        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
-        otherwise: () => string().optional().default(''),
+        then: () =>
+          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
+        otherwise: () => string().optional().default(state.value.defaultFormValues.firstName),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
-        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
-        otherwise: () => string().optional().default(''),
+        then: () =>
+          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
+        otherwise: () => string().optional().default(state.value.defaultFormValues.lastName),
       }),
       country: string()
         .required($i18n.t('errorMessages.requiredField'))
-        .default(cartGetters.getShippingCountryId(customerData.value?.basket).toString()),
-      streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
-      apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
-      city: string().required($i18n.t('errorMessages.requiredField')).default(''),
+        .default(
+          state.value.defaultFormValues.country ??
+            cartGetters.getShippingCountryId(customerData.value?.basket).toString(),
+        ),
+      streetName: string()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(state.value.defaultFormValues.streetName),
+      apartment: string()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(state.value.defaultFormValues.apartment),
+      city: string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.city),
       state: string().default('').optional(),
       zipCode: string()
         .required($i18n.t('errorMessages.requiredField'))
@@ -66,17 +88,19 @@ export const useAddressForm = (type: AddressType) => {
           return zipCodeRegex
             ? schema.matches(zipCodeRegex, $i18n.t('PreferredDelivery.packstation.zipcodeInvalid'))
             : schema;
-        }),
+        })
+        .default(state.value.defaultFormValues.zipCode),
       primary: boolean().default(false),
       companyName: string().when([], {
         is: () => state.value.hasCompany,
-        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
-        otherwise: () => string().optional().default(''),
+        then: () =>
+          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
+        otherwise: () => string().optional().default(state.value.defaultFormValues.companyName),
       }),
       vatNumber: string().when([], {
         is: () => state.value.hasCompany,
-        then: () => string().default(''),
-        otherwise: () => string().optional().default(''),
+        then: () => string().default(state.value.defaultFormValues.vatNumber),
+        otherwise: () => string().optional().default(state.value.defaultFormValues.vatNumber),
       }),
     }),
   );
