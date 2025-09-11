@@ -133,18 +133,6 @@ export default defineNuxtConfig({
       seoAvailability8: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY8 || '',
       seoAvailability9: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY9 || '',
       seoAvailability10: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY10 || '',
-
-      seoRichSnippetBrand: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BRAND || 'Do not display',
-      seoRichSnippetManufacturer: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_MANUFACTURER || 'Do not display',
-      seoRichSnippetBarcodeGtin: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_GTIN || 'Do not display',
-      seoRichSnippetBarcodeGtin8: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_GTIN8 || 'Do not display',
-      seoRichSnippetBarcodeGtin13: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_GTIN13 || 'Do not display',
-      seoRichSnippetBarcodeIsbn: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_ISBN || 'Do not display',
-      seoRichSnippetMpnBarcode: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_MPN_BARCODE || 'Do not display',
-      seoRichSnippetBarcodeIdFromVariation: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_BARCODE_ID_FROM_VARIATION || 'Do not display',
-      seoRichSnippetIdForPriceValidity: process.env.NUXT_PUBLIC_SEO_RICH_SNIPPET_PRICE_VALIDITY || 'Do not display',
-      seoRichSnippetSkuBarcode: process.env.NUXT_PUBLIC_SEO_RICH_SKU_BARCODE || 'Do not display',
-
       enableGoogleAnalytics: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_ANALITICS || 'false',
       googleAnalyticsTrakingId: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_TRACKING_ID || '',
       sendGrossPricesToGoogleAnalytics: process.env.NUXT_PUBLIC_SEND_GROSS_PRICES_TO_GOOGLE_ANALITICS || 'false',
