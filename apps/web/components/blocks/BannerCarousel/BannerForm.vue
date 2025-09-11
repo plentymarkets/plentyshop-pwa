@@ -37,6 +37,23 @@
         </template>
 
         <div>
+          <!-- TO DO: FIND A WAY TO MAKE THE COMPONENT WORK WITH MULTIPLE SLIDES-->
+          <!-- <EditorBlocksTextFieldsGroup
+            :model="banner.content.text"
+            :pretitle-label="getEditorTranslation('pretitle-label')"
+            :pretitle-placeholder="getEditorTranslation('pretitle-placeholder')"
+            pretitle-testid="banner-input-pre-title"
+            :title-label="getEditorTranslation('main-title-label')"
+            :title-placeholder="getEditorTranslation('main-title-placeholder')"
+            title-testid="banner-input-title"
+            :subtitle-label="getEditorTranslation('subtitle-label')"
+            :subtitle-placeholder="getEditorTranslation('subtitle-placeholder')"
+            subtitle-testid="banner-input-sub-title"
+            :description-label="getEditorTranslation('description-label')"
+            :description-placeholder="getEditorTranslation('description-placeholder')"
+            description-testid="banner-text-content"
+          /> -->
+
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
             <SfInput

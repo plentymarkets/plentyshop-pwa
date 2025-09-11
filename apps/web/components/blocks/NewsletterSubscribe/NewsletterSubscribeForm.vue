@@ -10,27 +10,15 @@
       </template>
 
       <div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-          <SfInput
-            v-model="newsletterBlock.text.title"
-            name="maintitle"
-            type="text"
-            :placeholder="getEditorTranslation('main-title-placeholder')"
-            data-testid="newsletter-form-title"
-          />
-        </div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
-          <SfTextarea
-            v-model="newsletterBlock.text.htmlDescription"
-            name="description"
-            type="text"
-            class="w-full min-h-[232px]"
-            :placeholder="getEditorTranslation('description-placeholder')"
-            data-testid="newsletter-form-description"
-          />
-        </div>
+        <EditorBlocksTextFieldsGroup
+          :model="newsletterBlock.text"
+          :title-label="getEditorTranslation('main-title-label')"
+          :title-placeholder="getEditorTranslation('main-title-placeholder')"
+          title-testid="newsletter-title"
+          :description-label="getEditorTranslation('html-description-label')"
+          :description-placeholder="getEditorTranslation('html-description-placeholder')"
+          description-testid="newsletter-description"
+        />
         <div class="mb-4">
           <UiFormLabel class="mb-1">{{ getEditorTranslation('ask-name-label') }}</UiFormLabel>
         </div>
@@ -119,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { NewsletterSubscribeContent } from './types';
 
 const textGroup = ref(true);
