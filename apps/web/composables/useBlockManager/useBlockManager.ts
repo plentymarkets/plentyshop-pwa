@@ -255,13 +255,13 @@ export const useBlockManager = () => {
       closeDrawer();
     }
   };
-  const replaceWithEmptyGridBlock = async (uuid: string) => {
-    const parentInfo = findBlockParent(data.value, uuid);
+  const replaceWithEmptyGridBlock = async (blockUuid: string) => {
+    const parentInfo = findBlockParent(data.value, blockUuid);
     if (parentInfo) {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
       const newBlock = { ...layoutTemplate.content[0] };
-      newBlock.meta.uuid = uuid;
+      newBlock.meta.uuid = uuid();
       parent.splice(index, 1, newBlock);
     }
   };
