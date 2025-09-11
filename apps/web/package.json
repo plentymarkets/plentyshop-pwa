@@ -12,7 +12,7 @@
     "docs:dev": "npm run publish-typedoc && vitepress dev docs",
     "docs:build": "npm run publish-typedoc && vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "publish-typedoc": "npx typedoc && mkdir -p docs/reference && mv reference/composables/ docs/reference",
+    "publish-typedoc": "npx typedoc --options typedoc.json && mkdir -p docs/reference && rm -rf docs/reference/composables && mv reference/composables/ docs/reference",
     "lint": "nuxi prepare && eslint . --max-warnings 0",
     "lint:fix": "nuxi prepare && eslint . --fix --max-warnings 0",
     "preview": "nuxt preview",
