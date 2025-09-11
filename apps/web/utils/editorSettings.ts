@@ -24,6 +24,8 @@ export const cookieGroupOptions = [
 
 export const conditionOptions = ['https://schema.org/NewCondition', 'https://schema.org/UsedCondition', 'https://schema.org/DamagedCondition', 'https://schema.org/RefurbishedCondition']
 
+export const robotsOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
+
 export const getSeoAvailabilityOptions = (): SettingOption[] => {
   const locale = 'en';
   const { $i18n } = useNuxtApp();
