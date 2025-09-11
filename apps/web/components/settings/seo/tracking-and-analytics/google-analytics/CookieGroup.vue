@@ -11,6 +11,10 @@
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
         :allow-empty="false"
+        label="label"
+        track-by="value"
+        select-label=""
+        deselect-label=""
         data-testid="google-analytics-cookie-group"
       />
     </label>
