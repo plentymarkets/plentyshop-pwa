@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('googleAnalyticsTrakingId');
 const runtimeConfig = useRuntimeConfig();
