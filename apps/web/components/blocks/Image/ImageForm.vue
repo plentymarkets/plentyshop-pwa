@@ -65,10 +65,153 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+  <UiAccordionItem
+    v-if="runtimeConfig.public.isDev"
+    v-model="textGroupOpen"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    data-testid="text-group"
+  >
+    <template #summary>
+      <h2>{{ getEditorTranslation('text-overlay-label') }}</h2>
+    </template>
+
+    <div class="py-2">
+      <UiFormLabel>{{ getEditorTranslation('text-overlay-label') }}</UiFormLabel>
+      <SfTextarea
+        id="text-overlay"
+        v-model="uiImageTextBlock.textOverlay"
+        data-testid="text-overlay"
+        name="text-overlay"
+        rows="3"
+        class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
+        :placeholder="getEditorTranslation('text-overlay-placeholder')"
+      />
+    </div>
+
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('text-overlay-color-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="uiImageTextBlock.textOverlayColor" type="text" data-testid="text-overlay-color-input">
+          <template #suffix>
+            <label
+              for="text-overlay-color"
+              :style="{ backgroundColor: uiImageTextBlock.textOverlayColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input
+                id="text-overlay-color"
+                v-model="uiImageTextBlock.textOverlayColor"
+                data-testid="text-overlay-color-picker"
+                type="color"
+                class="invisible w-8"
+              />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+
+    <fieldset class="py-2">
+      <legend class="text-sm font-medium text-black">
+        {{ getEditorTranslation('text-overlay-align-x-label') }}
+      </legend>
+
+      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
+        <div
+          data-testid="align-x-top"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'top' }"
+          @click="uiImageTextBlock.textOverlayAlignX = 'top'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'top' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('text-overlay-align-x-top') }}
+        </div>
+
+        <div
+          data-testid="align-x-center"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'center' }"
+          @click="uiImageTextBlock.textOverlayAlignX = 'center'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'center' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('text-overlay-align-x-center') }}
+        </div>
+
+        <div
+          data-testid="align-x-bottom"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'bottom' }"
+          @click="uiImageTextBlock.textOverlayAlignX = 'bottom'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'bottom' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('text-overlay-align-x-bottom') }}
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="py-2">
+      <legend class="text-sm font-medium text-black">
+        {{ getEditorTranslation('text-overlay-align-y-label') }}
+      </legend>
+
+      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
+        <div
+          data-testid="align-y-left"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'left' }"
+          @click="uiImageTextBlock.textOverlayAlignY = 'left'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'left' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('text-overlay-align-y-left') }}
+        </div>
+
+        <div
+          data-testid="align-y-center"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'center' }"
+          @click="uiImageTextBlock.textOverlayAlignY = 'center'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'center' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('text-overlay-align-y-center') }}
+        </div>
+
+        <div
+          data-testid="align-y-right"
+          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'right' }"
+          @click="uiImageTextBlock.textOverlayAlignY = 'right'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'right' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('text-overlay-align-y-right') }}
+        </div>
+      </div>
+    </fieldset>
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfIconCheck, SfTextarea } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
@@ -76,6 +219,7 @@ const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = use
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<ImageFormProps>();
 
@@ -84,6 +228,7 @@ const uiImageTextBlock = computed(
 );
 
 const imageGroupOpen = ref(false);
+const textGroupOpen = ref(false);
 
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
   const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
@@ -112,7 +257,21 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
 
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
-    "image-align-option-right-label": "Right"
+    "image-align-option-right-label": "Right",
+
+    "text-overlay-label": "Overlay text",
+    "text-overlay-placeholder": "Text that supports HTML formatting",
+    "text-overlay-color-label": "Text Color",
+
+    "text-overlay-align-x-label": "Vertical Alignment",
+    "text-overlay-align-x-top": "Top",
+    "text-overlay-align-x-center": "Center",
+    "text-overlay-align-x-bottom": "Bottom",
+
+    "text-overlay-align-y-label": "Horizontal Alignment",
+    "text-overlay-align-y-left": "Left",
+    "text-overlay-align-y-center": "Center",
+    "text-overlay-align-y-right": "Right"
   },
   "de": {
     "images-group-label": "Images",
@@ -133,7 +292,21 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
 
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
-    "image-align-option-right-label": "Right"
+    "image-align-option-right-label": "Right",
+
+    "text-overlay-label": "Overlay text",
+    "text-overlay-placeholder": "Enter text (HTML allowed)",
+    "text-overlay-color-label": "Text Color",
+
+    "text-overlay-align-x-label": "Vertical Alignment",
+    "text-overlay-align-x-top": "Top",
+    "text-overlay-align-x-center": "Center",
+    "text-overlay-align-x-bottom": "Bottom",
+
+    "text-overlay-align-y-label": "Horizontal Alignment",
+    "text-overlay-align-y-left": "Left",
+    "text-overlay-align-y-center": "Center",
+    "text-overlay-align-y-right": "Right"
   }
 }
 </i18n>

@@ -1032,7 +1032,8 @@
         "externalName_desc": "Hersteller Z-A"
       },
       "feedbackDecimal_asc": "Kundenbewertung ⬆",
-      "feedbackDecimal_desc": "Kundenbewertung ⬇"
+      "feedbackDecimal_desc": "Kundenbewertung ⬇",
+      "score": "Relevanz"
     }
   },
   "availabilitiesOptions": {
@@ -1120,8 +1121,12 @@
       "invalid": "Verifizierung fehlgeschlagen. Bitte versuchen Sie es in ein paar Minuten erneut.",
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
+    "security": {
+      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut."
+    },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
+  "reloadPage": "Neu laden",
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "successInfoOrderHeader": "Vielen Dank für Ihre Bestellung!",
   "successInfoReturnHeader": "Vielen Dank für Ihre Retoure!",
@@ -1214,5 +1219,6 @@
         "Sunday": "Sonntag"
       }
     }
-  }
+  },
+  "cancelOrder": "Kauf abbrechen"
 }

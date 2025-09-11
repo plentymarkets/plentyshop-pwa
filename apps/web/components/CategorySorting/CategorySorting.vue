@@ -17,17 +17,21 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
+import { isPageOfType } from '~/utils/pathHelper';
 
 const { updateSorting } = useCategoryFilter();
 const { t } = useI18n();
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
+const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSearch');
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
 const options = computed(() => availableSortingOptions());
 
+const defaultOption = computed(() => (isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption()));
+
 const selected = computed({
   get: () => {
-    return (useNuxtApp().$router.currentRoute.value.query.sort || defaultSortingOption() || options.value[0]) as string;
+    return (useNuxtApp().$router.currentRoute.value.query.sort || defaultOption.value || options.value[0]) as string;
   },
   set: (selectedOption) => {
     updateSorting(selectedOption);
