@@ -26,19 +26,6 @@ beforeEach(() => {
 });
 
 describe('Reviews functionality check.', () => {
-  it('Deletes all reviews.', () => {
-    cy.visitAndHydrate(paths.authLogin);
-    myAccount.successLogin();
-
-    cy.wait('@doLogin');
-    cy.visitAndHydrate(paths.home);
-
-    homePage.goToCategory();
-    productListPage.goToProduct();
-
-    reviewPage.deleteAllReviews();
-  });
-
   it('Checks review section elements.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();

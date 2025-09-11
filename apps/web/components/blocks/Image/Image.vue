@@ -1,12 +1,11 @@
 <template>
-  <div class="flex justify-center">
+  <div class="relative flex justify-center">
     <NuxtImg
       :src="getImageUrl()"
       :alt="props.content?.alt"
       :class="[
         'object-cover',
         'md:px-4',
-
         {
           'lg:pr-4': props.content?.imageAlignment === 'left',
           'lg:pl-4': props.content?.imageAlignment === 'right',
@@ -16,11 +15,21 @@
       :height="getImageDimensions().height"
       data-testid="image-block"
     />
+
+    <div
+      v-if="props.content?.textOverlay && runtimeConfig.public.isDev"
+      class="absolute w-full h-full px-4 pointer-events-none flex"
+      :class="overlayAlignClasses"
+      data-testid="image-overlay-text"
+      :style="{ color: props.content.textOverlayColor || '#000' }"
+      v-html="props.content.textOverlay"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ImageTextProps, ImageDimensions } from './types';
+const runtimeConfig = useRuntimeConfig();
 
 const viewport = useViewport();
 
@@ -42,7 +51,23 @@ const getImageUrl = () => {
     }
   }
 };
+const overlayAlignClasses = computed(() => {
+  const vertical =
+    props.content?.textOverlayAlignX === 'top'
+      ? 'items-start'
+      : props.content?.textOverlayAlignX === 'bottom'
+        ? 'items-end'
+        : 'items-center';
 
+  const horizontal =
+    props.content?.textOverlayAlignY === 'left'
+      ? 'justify-start text-left'
+      : props.content?.textOverlayAlignY === 'right'
+        ? 'justify-end text-right'
+        : 'justify-center text-center';
+
+  return [vertical, horizontal];
+});
 const getImageDimensions = (): ImageDimensions => {
   switch (viewport.breakpoint.value) {
     case '4xl': {

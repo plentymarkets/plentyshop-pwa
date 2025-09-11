@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         '@paypal/paypal-js',
+        '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
         '@vueuse/shared',
         'country-flag-icons/string/3x2',
@@ -155,9 +156,10 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       defaultSortingOption: process.env.NUXT_PUBLIC_DEFAULT_SORTING_OPTION ?? 'texts.name1_asc',
+      defaultSortingSearch: process.env.NUXT_PUBLIC_DEFAULT_SORTING_SEARCH ?? 'item.score',
       availableSortingOptions:
         process.env.NUXT_PUBLIC_AVAILABLE_SORTING_OPTIONS ||
-        '["texts.name1_asc","default.recommended_sorting","sorting.price.avg_asc","sorting.price.avg_desc","variation.availability.averageDays_asc","variation.availability.averageDays_desc"]',
+        '["item.score","texts.name1_asc","default.recommended_sorting","sorting.price.avg_asc","sorting.price.avg_desc","variation.availability.averageDays_asc","variation.availability.averageDays_desc"]',
       recommendedFirstSortingOption:
         process.env.NUXT_PUBLIC_RECOMMENDED_FIRST_SORTING_OPTION ?? 'variation.position_desc',
       recommendedSecondSortingOption:
@@ -171,6 +173,9 @@ export default defineNuxtConfig({
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       vatNumberValidation: process.env.NUXT_PUBLIC_VAT_NUMBER_VALIDATION || 'true',
+      itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
+      defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
+      defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
       fetchDynamicTranslations: false,
     },
   },
@@ -304,10 +309,52 @@ export default defineNuxtConfig({
       runtimeCaching: [
         {
           urlPattern: ({ request }) => request.mode === 'navigate',
-          handler: 'NetworkOnly',
+          handler: 'NetworkFirst',
           options: {
             precacheFallback: {
               fallbackURL: '/offline',
+            },
+          },
+        },
+        {
+          urlPattern: ({ request }) => request.destination === 'image',
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'plenty-image-cache',
+            expiration: {
+              maxEntries: 300,
+              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'google-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'gstatic-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
             },
           },
         },
@@ -315,22 +362,27 @@ export default defineNuxtConfig({
       cleanupOutdatedCaches: true,
     },
     manifest: {
-      name: 'PlentyONE Shop',
-      short_name: 'PlentyONEShop',
-      theme_color: '#0C7992',
+      name: process.env.NUXT_PUBLIC_OG_TITLE || process.env.OG_TITLE || 'PlentyONE Shop',
+      short_name: process.env.NUXT_PUBLIC_OG_TITLE || process.env.OG_TITLE || 'PlentyONE Shop',
+      description: process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'PlentyONE Shop',
+      theme_color: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
+      background_color: '#ffffff',
+      display: 'standalone',
+      start_url: '/',
+      scope: '/',
       icons: [
         {
-          src: 'icons/icon-192x192.png',
+          src: '/_nuxt-plenty/icons/icon-192x192.png',
           sizes: '192x192',
           type: 'image/png',
         },
         {
-          src: 'icons/icon-512x512.png',
+          src: '/_nuxt-plenty/icons/icon-512x512.png',
           sizes: '512x512',
           type: 'image/png',
         },
         {
-          src: 'icons/icon-512x512.maskable.png',
+          src: '/_nuxt-plenty/icons/icon-512x512.maskable.png',
           sizes: '512x512',
           type: 'image/png',
           purpose: 'maskable',

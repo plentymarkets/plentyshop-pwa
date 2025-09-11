@@ -99,10 +99,16 @@ export const useApplePay = () => {
 
       paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
         try {
+          if (!(await useCartStockReservation().reserve())) {
+            paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+            return;
+          }
+
           const transaction = await createTransaction({
             type: 'basket',
           });
           if (!transaction || !transaction.id) {
+            await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));
             return;
@@ -110,6 +116,7 @@ export const useApplePay = () => {
 
           const order = await createPlentyOrder();
           if (!order || !order.order || !order.order.id) {
+            await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));
             return;
@@ -122,6 +129,7 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
+            await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
             return;
@@ -136,14 +144,16 @@ export const useApplePay = () => {
           clearCartItems();
 
           emit('frontend:orderCreated', order);
-          navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+          return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
+          await useCartStockReservation().unreserve();
           showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
       };
 
-      paymentSession.addEventListener('cancel', () => {
+      paymentSession.addEventListener('cancel', async () => {
+        await useCartStockReservation().unreserve();
         paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
       });
 
