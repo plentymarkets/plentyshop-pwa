@@ -26,10 +26,10 @@ const registerCookieAsOptOut = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Register Cookie as opt-out",
+    "label": "Register Cookie as opt-out"
   },
   "de": {
-    "label": "Register Cookie as opt-out",
+    "label": "Register Cookie as opt-out"
   }
 }
 </i18n>

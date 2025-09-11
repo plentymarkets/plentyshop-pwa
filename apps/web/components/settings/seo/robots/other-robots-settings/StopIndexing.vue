@@ -4,7 +4,12 @@
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
     <label>
-      <SfInput v-model="robots" :placeholder="getEditorTranslation('placeholder')" type="text" data-testid="seo-robots-stop-indexing" />
+      <SfInput
+        v-model="robots"
+        :placeholder="getEditorTranslation('placeholder')"
+        type="text"
+        data-testid="seo-robots-stop-indexing"
+      />
     </label>
   </div>
 </template>
@@ -23,10 +28,10 @@ const robots = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "At which page should robots stop indexing your category pages?",
+    "label": "At which page should robots stop indexing your category pages?"
   },
   "de": {
-    "label": "At which page should robots stop indexing your category pages?",
+    "label": "At which page should robots stop indexing your category pages?"
   }
 }
 </i18n>

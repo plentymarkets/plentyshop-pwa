@@ -26,10 +26,10 @@ const enableGoogleAnalytics = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Enable Google Analitics",
+    "label": "Enable Google Analitics"
   },
   "de": {
-    "label": "Enable Google Analitics",
+    "label": "Enable Google Analitics"
   }
 }
 </i18n>
