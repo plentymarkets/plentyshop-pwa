@@ -1,6 +1,6 @@
 import type { BlocksList } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition } from './types';
+import type { BlockPosition, RefCallback } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
@@ -74,6 +74,7 @@ export const useBlockManager = () => {
 
   const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
+
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
@@ -81,6 +82,7 @@ export const useBlockManager = () => {
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
+
       return;
     }
 
@@ -109,6 +111,18 @@ export const useBlockManager = () => {
     openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+
+    scrollIntoBlockView(newBlock);
+  };
+
+  const scrollIntoBlockView = (newBlock: Block) => {
+    setTimeout(() => {
+      const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
+      if (newIndex !== -1) {
+        const el = document.getElementById(`block-${newIndex}`);
+        if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+    }, 100);
   };
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
@@ -275,17 +289,11 @@ export const useBlockManager = () => {
     return LAZY_LOAD_BLOCKS[blockName] || null;
   };
 
-  const getLazyLoadRef = (
-    blockName: string,
-    blockUuid: string,
-  ): ((ref: Element | import('vue').ComponentPublicInstance | null) => void) | undefined => {
-    if (!shouldLazyLoad(blockName)) return undefined;
+  const getLazyLoadRef = (blockName: string, blockUuid: string): RefCallback => {
+    if (!shouldLazyLoad(blockName)) return () => {};
 
-    return (ref: Element | import('vue').ComponentPublicInstance | null) => {
-      if (ref instanceof Element) {
-        (lazyLoadRefs.value as Record<string, HTMLElement | null>)[getLazyLoadKey(blockName, blockUuid)] =
-          ref as HTMLElement;
-      }
+    return (ref) => {
+      if (ref instanceof HTMLElement) lazyLoadRefs.value[getLazyLoadKey(blockName, blockUuid)] = ref;
     };
   };
 

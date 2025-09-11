@@ -1,5 +1,5 @@
 <template>
-  <SfTooltip :label="categoryLabel" placement="right" class="inline-grid" :show-arrow="true">
+  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
     <button
       type="button"
       class="editor-button relative py-2 flex justify-center"
@@ -19,9 +19,18 @@ import { SfTooltip } from '@storefront-ui/vue';
 import whiteIcon from 'assets/icons/paths/category-white.svg';
 import blackIcon from 'assets/icons/paths/category-black.svg';
 
-const categoryLabel = 'Category display settings: Define sorting options for product lists.';
-
 defineProps({
   active: Boolean,
 });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "tooltip": "Category: Manage settings that affect the user experience on category pages."
+  },
+  "de": {
+    "tooltip": "Category: Manage settings that affect the user experience on category pages."
+  }
+}
+</i18n>

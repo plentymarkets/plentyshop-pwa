@@ -1032,7 +1032,8 @@
         "externalName_desc": "Manufacturer Z-A"
       },
       "feedbackDecimal_asc": "Item reviews ⬆",
-      "feedbackDecimal_desc": "Item reviews ⬇"
+      "feedbackDecimal_desc": "Item reviews ⬇",
+      "score": "Relevance"
     }
   },
   "storefrontError": {
@@ -1199,5 +1200,6 @@
         "Sunday": "Sunday"
       }
     }
-  }
+  },
+  "cancelOrder": "Cancel order"
 }
