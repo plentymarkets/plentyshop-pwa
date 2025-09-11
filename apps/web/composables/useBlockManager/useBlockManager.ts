@@ -64,7 +64,10 @@ export const useBlockManager = () => {
     }
   };
 
-  const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
+  const getTemplateByLanguage = async (category: string, variationIndex: number, lang: string) => {
+    if (!blocksLists.value[category]) {
+      await getBlocksLists();
+    }
     const variationsInCategory = blocksLists.value[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
     const variationTemplate = variationToAdd.template;
@@ -72,10 +75,10 @@ export const useBlockManager = () => {
     return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
   };
 
-  const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
+  const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
 
-    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    const newBlock = await getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
     const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
@@ -247,16 +250,16 @@ export const useBlockManager = () => {
       closeDrawer();
     }
   };
-
-  const replaceWithEmptyGridBlock = (uuid: string) => {
+  const replaceWithEmptyGridBlock = async (uuid: string) => {
     const parentInfo = findBlockParent(data.value, uuid);
     if (parentInfo) {
       const { parent, index } = parentInfo;
-      const newBlock = getTemplateByLanguage('layout', 0, $i18n.locale.value).content[0];
+      const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
+      const newBlock = { ...layoutTemplate.content[0] };
+      newBlock.meta.uuid = uuid;
       parent.splice(index, 1, newBlock);
     }
   };
-
   const updateBlock = (index: number, updatedBlock: Block) => {
     if (data.value && index !== null && index < data.value.length) {
       data.value[index] = updatedBlock;
