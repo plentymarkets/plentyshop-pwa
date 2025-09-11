@@ -284,7 +284,7 @@ export default defineNuxtConfig({
         },
         {
           urlPattern: ({ request }) => request.destination === 'image',
-          handler: 'CacheFirst',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'plenty-image-cache',
             expiration: {
@@ -298,7 +298,7 @@ export default defineNuxtConfig({
         },
         {
           urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-          handler: 'CacheFirst',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'google-fonts-cache',
             expiration: {
@@ -312,7 +312,7 @@ export default defineNuxtConfig({
         },
         {
           urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-          handler: 'CacheFirst',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'gstatic-fonts-cache',
             expiration: {
