@@ -1,6 +1,7 @@
 {
   "layout": {
     "category": "layout",
+    "accessControl": [],
     "title": "Layout",
     "blockName": "MultiGrid",
     "variations": [
@@ -70,7 +71,7 @@
       },
       {
         "title": "MultiGrid 4-4-4",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/three-column-grid.png",
         "template": {
           "en": {
             "name": "MultiGrid",
