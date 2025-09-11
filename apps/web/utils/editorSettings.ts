@@ -30,13 +30,20 @@ export const conditionOptions = [
 
 export const robotsOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 
+export const sessionLifetimeOptions = [
+  { key: 'sessionLifetime.untilBrowserClosed', value: '0' },
+  { key: 'sessionLifetime.oneHour', value: '3600' },
+  { key: 'sessionLifetime.oneDay', value: '86400' },
+  { key: 'sessionLifetime.oneHundredDays', value: '8640000' },
+];
+
 export const getSeoAvailabilityOptions = (): SettingOption[] => {
   const locale = 'en';
   const { $i18n } = useNuxtApp();
 
-  return seoAvailabilities.map((availability) => ({
-    label: $i18n.t(availability.key, {}, { locale }) as string,
-    value: availability.value,
+  return seoAvailabilities.map((option) => ({
+    label: $i18n.t(option.key, {}, { locale }) as string,
+    value: option.value,
   }));
 };
 
@@ -44,8 +51,18 @@ export const getCookieGroupOptions = (): SettingOption[] => {
   const locale = 'en';
   const { $i18n } = useNuxtApp();
 
-  return cookieGroupOptions.map((groupOption) => ({
-    label: $i18n.t(groupOption.key, {}, { locale }) as string,
-    value: groupOption.value,
+  return cookieGroupOptions.map((option) => ({
+    label: $i18n.t(option.key, {}, { locale }) as string,
+    value: option.value,
+  }));
+};
+
+export const getSessionLifetimeOptions = (): SettingOption[] => {
+  const locale = 'en';
+  const { $i18n } = useNuxtApp();
+
+  return sessionLifetimeOptions.map((option) => ({
+    label: $i18n.t(option.key, {}, { locale }) as string,
+    value: option.value,
   }));
 };

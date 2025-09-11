@@ -1055,6 +1055,12 @@
     "necessary": "Essenziell",
     "marketing": "Marketing (empfohlen)"
   },
+  "sessionLifetime": {
+    "untilBrowserClosed": "Bis der Browser geschlossen wird",
+    "oneHour": "Eine Stunde, auch wenn der Browser geschlossen wird",
+    "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
+    "oneHundredDays": "Einhundert Tage, auch wenn der Browser geschlossen wird"
+  },
   "storefrontError": {
     "offer": {
       "expired": "Dieses Angebot ist abgelaufen.",
