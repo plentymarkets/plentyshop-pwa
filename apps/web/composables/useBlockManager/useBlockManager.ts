@@ -1,10 +1,11 @@
-import type { BlocksList } from '~/components/BlocksNavigationList/types';
+import type { BlocksList, BlocksListContext } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
 const blocksLists = ref<BlocksList>({});
+const blocksListContext = ref<BlocksListContext>('');
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.content;
@@ -50,6 +51,10 @@ export const useBlockManager = () => {
 
   const updateMultigridColumnUuid = (uuid: string) => {
     multigridColumnUuid.value = uuid;
+  };
+
+  const setBlocksListContext = (context: BlocksListContext) => {
+    blocksListContext.value = context;
   };
 
   const getBlocksLists = async () => {
@@ -299,6 +304,7 @@ export const useBlockManager = () => {
 
   return {
     blocksLists,
+    blocksListContext,
     currentBlock,
     currentBlockUuid,
     isClicked,
@@ -328,5 +334,6 @@ export const useBlockManager = () => {
     getLazyLoadKey,
     getLazyLoadConfig,
     getLazyLoadRef,
+    setBlocksListContext,
   };
 };
