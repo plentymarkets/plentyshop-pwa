@@ -106,7 +106,6 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
       metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
       robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
-
       robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
       robotsContactPage: process.env.NUXT_PUBLIC_ROBOTS_CONTACT_PAGE || 'all',
       robotsCancellationRights: process.env.NUXT_PUBLIC_ROBOTS_CANCELLATION_RIGHTS || 'all',
@@ -119,7 +118,6 @@ export default defineNuxtConfig({
       robotsStopIndexing: process.env.NUXT_PUBLIC_ROBOTS_STOP_INDEXING || '0',
       robotsItemPage: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || 'ALL',
       robotsUrlWithParameters: process.env.NUXT_PUBLIC_ROBOTS_URL_WITH_PARAMETERS || 'false',
-
       itemConditionNew: process.env.NUXT_PUBLIC_ITEM_CONDITION_NEW || '',
       itemConditionUsed: process.env.NUXT_PUBLIC_ITEM_CONDITION_USED || '',
       itemConditionNewBox: process.env.NUXT_PUBLIC_ITEM_CONDITION_NEW_BOX || '',
@@ -152,7 +150,6 @@ export default defineNuxtConfig({
       sendGrossPricesToGoogleAnalytics: process.env.NUXT_PUBLIC_SEND_GROSS_PRICES_TO_GOOGLE_ANALITICS || 'false',
       googleAnalyticsCookieGroup: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_COOKIE_GROUP || 'CookieBar.marketing.label',
       registerCookieAsOptOut: process.env.NUXT_PUBLIC_REGISTER_COOKIE_AS_OPT_OUT || 'false',
-
       manufacturerExternalName: process.env.NUXT_PUBLIC_MANUFACTURER_EXTERNAL_NAME || '0',
       manufacturerName: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || '0',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
