@@ -1048,6 +1048,12 @@
     "availabilitySoldOut": "Sold out",
     "availabilityBackOrder": "Back order"
   },
+  "cookieGroup": {
+    "functional": "Functional",
+    "externalMedia": "External Media",
+    "necessary": "Necessary",
+    "marketing": "Marketing (recommended)"
+  },
   "storefrontError": {
     "offer": {
       "expired": "This offer has expired",

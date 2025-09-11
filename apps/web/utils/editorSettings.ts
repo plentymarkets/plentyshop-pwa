@@ -1,5 +1,5 @@
 
-export type AvailabilityOption = { label: string; value: string };
+export type SettingOption = { label: string; value: string };
 
 export const seoAvailabilities = [
   { "key": "availabilitiesOptions.availabilityNotSet", "value": "" },
@@ -15,14 +15,31 @@ export const seoAvailabilities = [
   { "key": "availabilitiesOptions.availabilityBackOrder", "value": "https://schema.org/BackOrder" }
 ];
 
+export const cookieGroupOptions = [
+  { "key": "cookieGroup.functional", "value": "CookieBar.functional.label" },
+  { "key": "cookieGroup.externalMedia", "value": "CookieBar.externalMedia.label" },
+  { "key": "cookieGroup.necessary", "value": "CookieBar.essentials.label" },
+  { "key": "cookieGroup.marketing", "value": "CookieBar.marketing.label" },
+];
+
 export const conditionOptions = ['https://schema.org/NewCondition', 'https://schema.org/UsedCondition', 'https://schema.org/DamagedCondition', 'https://schema.org/RefurbishedCondition']
 
-export const getSeoAvailabilityOptions = (): AvailabilityOption[] => {
+export const getSeoAvailabilityOptions = (): SettingOption[] => {
   const locale = 'en';
   const { $i18n } = useNuxtApp();
 
   return seoAvailabilities.map((availability  ) => ({
     label: $i18n.t(availability.key, {}, { locale }) as string,
     value: availability.value,
+  }));
+};
+
+export const getCookieGroupOptions = (): SettingOption[] => {
+  const locale = 'en';
+  const { $i18n } = useNuxtApp();
+
+  return cookieGroupOptions.map((groupOption  ) => ({
+    label: $i18n.t(groupOption.key, {}, { locale }) as string,
+    value: groupOption.value,
   }));
 };

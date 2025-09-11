@@ -20,7 +20,7 @@
 </template>
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
-import type { AvailabilityOption} from '~/utils/editorSettings';
+import type { SettingOption } from '~/utils/editorSettings';
 import { getSeoAvailabilityOptions } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('seoAvailability1');
@@ -30,7 +30,7 @@ const availabilityOptions = computed(() => getSeoAvailabilityOptions());
 
 const availability = computed({
   get: () => {
-    return availabilityOptions.value.find((o: AvailabilityOption) => o.value === getSetting());
+    return availabilityOptions.value.find((o: SettingOption) => o.value === getSetting());
   },
   set: (option) => updateSetting(option?.value ?? ''),
 });
