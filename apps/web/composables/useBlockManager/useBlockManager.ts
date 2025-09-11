@@ -227,6 +227,20 @@ export const useBlockManager = () => {
     return null;
   };
 
+  const deleteBlock = (uuid: string) => {
+    if (data.value && uuid !== null) {
+      if (getBlockDepth(uuid) > 0) {
+        replaceWithEmptyGridBlock(uuid);
+      } else {
+        findOrDeleteBlockByUuid(data.value, uuid, true);
+      }
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+
+      const { closeDrawer } = useSiteConfiguration();
+      closeDrawer();
+    }
+  };
+
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
       isClicked.value = !isClicked.value;
@@ -242,19 +256,6 @@ export const useBlockManager = () => {
     }
   };
 
-  const deleteBlock = (uuid: string) => {
-    if (data.value && uuid !== null) {
-      if (getBlockDepth(uuid) > 0) {
-        replaceWithEmptyGridBlock(uuid);
-      } else {
-        findOrDeleteBlockByUuid(data.value, uuid, true);
-      }
-      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-
-      const { closeDrawer } = useSiteConfiguration();
-      closeDrawer();
-    }
-  };
   const replaceWithEmptyGridBlock = async (blockUuid: string) => {
     const parentInfo = findBlockParent(data.value, blockUuid);
     if (parentInfo) {
