@@ -46,12 +46,24 @@ export class CartPageObject extends PageObject {
     return cy.getByTestId('cart-action').getByTestId('cart-badge').getByTestId('badge-indicator');
   }
 
+  get cartItemRemoveButton() {
+    return cy.getByTestId('remove-item-from-basket');
+  }
+
   get cartItem() {
     return cy.getByTestId('link');
   }
 
   get cartIcon() {
     return cy.getByTestId('navbar-top').find('[data-testid="shopping-cart"]');
+  }
+
+  get cartButton() {
+    return cy.getByTestId('quick-checkout-cart-button');
+  }
+
+  get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
   }
 
   compareItemAndFullPriceNyQuantity(quantity: number) {
@@ -91,6 +103,11 @@ export class CartPageObject extends PageObject {
     return this;
   }
 
+  openCartViaQuickCheckout() {
+    this.cartButton.click();
+    return this;
+  }
+
   openCouponAccordion() {
     cy.getByTestId('couponZone').click();
     return this;
@@ -127,6 +144,13 @@ export class CartPageObject extends PageObject {
     return this;
   }
 
+  removeFirstItem() {
+    cy.intercept('/plentysystems/deleteCartItem').as('removeItem');
+    this.cartItemRemoveButton.first().click();
+    cy.wait('@removeItem');
+    return this;
+  }
+
   summaryItems(expectedItems = 'Items: 2') {
     cy.getByTestId('total-in-cart').invoke('text').should('include', expectedItems);
     return this;
@@ -143,9 +167,5 @@ export class CartPageObject extends PageObject {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('coupon-value').should('not.exist');
-  }
-
-  get payPalButton() {
-    return cy.get('.paypal-buttons-context-iframe').first();
   }
 }

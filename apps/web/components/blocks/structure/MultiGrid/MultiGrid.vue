@@ -1,15 +1,33 @@
 <template>
-  <div
-    data-testid="multi-grid-structure"
-    class="grid grid-cols-1 gap-4 items-center"
-    :class="`lg:grid-cols-${configuration.columnWidths.length}`"
-  >
+  <div data-testid="multi-grid-structure" :class="getGridClasses()">
     <div
-      v-for="(column, colIndex) in content"
+      v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
-      :class="`col-${configuration.columnWidths[colIndex]}`"
+      :class="getColumnClasses(colIndex)"
+      class="group/col relative overflow-hidden"
     >
-      <component :is="getBlockComponent(alignedContent[colIndex].name)" v-bind="alignedContent[colIndex]" />
+      <div
+        v-if="showOverlay(column)"
+        class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
+        style="box-shadow: inset 0 0 0 2px #7c3aed"
+      />
+
+      <div
+        v-if="showOverlay(column)"
+        class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
+      />
+
+      <div
+        class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
+        :class="
+          showOverlay(column)
+            ? 'group-hover/col:opacity-100 group-hover/col:visible group-hover/col:pointer-events-auto'
+            : ''
+        "
+      >
+        <UiBlockActions v-if="showOverlay(column)" :block="column" :index="colIndex" :actions="getBlockActions()" />
+      </div>
+      <slot name="content" :content-block="column" />
     </div>
   </div>
 </template>
@@ -19,17 +37,56 @@ import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structu
 import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
+const runtimeConfig = useRuntimeConfig();
+const { $isPreview } = useNuxtApp();
+const { isDragging } = useBlockManager();
 
-const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
+const getBlockActions = () => {
+  return {
+    isEditable: true,
+    isMovable: false,
+    isDeletable: false,
+    classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+    buttonClasses: ['border-2', 'border-purple-600'],
+    hoverBackground: ['hover:bg-purple-500'],
+  };
+};
 
-const getBlockComponent = (blockName: string) => {
-  if (!blockName) return null;
-  const regex = new RegExp(`/${blockName}\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path) && !/Form\.vue$/.test(path));
-  return matched ? defineAsyncComponent(modules[matched]) : null;
+const attrs = useAttrs() as {
+  disableActions?: boolean;
+  root?: boolean;
+};
+const disableActions = computed(() => attrs.disableActions === true);
+const blockHasData = (block: Block): boolean => {
+  return !!block.content && Object.keys(block.content).length > 0;
+};
+const showOverlay = computed(
+  () => (block: Block) =>
+    Boolean(runtimeConfig.public.isDev) &&
+    disableActions.value &&
+    $isPreview &&
+    !isDragging.value &&
+    blockHasData(block),
+);
+
+const getGridClasses = () => {
+  const columnCount = configuration.columnWidths.length;
+
+  return ['grid', 'gap-4', 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+};
+
+const getColumnClasses = (colIndex: number) => {
+  const columnCount = configuration.columnWidths.length;
+  const isLastColumn = colIndex === columnCount - 1;
+  const isThreeColumnLayout = columnCount === 3;
+
+  const classes = [];
+
+  if (isThreeColumnLayout && isLastColumn) {
+    classes.push('md:col-span-2', 'lg:col-span-1');
+  }
+
+  return classes;
 };
 
 const alignBlock = computed<AlignableBlock | undefined>(

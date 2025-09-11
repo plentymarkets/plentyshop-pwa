@@ -19,6 +19,7 @@ const { useCreateAddress } = vi.hoisted(() => {
   return {
     useCreateAddress: vi.fn().mockReturnValue({
       create: vi.fn(),
+      clearInvalidVAT: vi.fn(),
     }),
   };
 });
@@ -32,19 +33,22 @@ describe('useAddressForm', () => {
     clearNuxtState();
   });
 
-  it('should create address', () => {
-    const createSpy = vi.fn();
+  it('should create address', async () => {
+    const createSpy = vi.fn().mockResolvedValue(true);
+    const clearInvalidVATSpy = vi.fn();
     useCreateAddress.mockImplementation(() => {
       return {
         create: createSpy,
+        clearInvalidVAT: clearInvalidVATSpy,
       };
     });
 
     const { save, addressToSave } = useAddressForm(AddressType.Billing);
     addressToSave.value = addressFixture;
 
-    save();
+    await save();
     expect(createSpy).toHaveBeenCalledWith(addressFixture);
+    expect(clearInvalidVATSpy).toHaveBeenCalled();
   });
 
   it('should return if the address to save is empty', () => {

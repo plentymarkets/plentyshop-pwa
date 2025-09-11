@@ -1032,8 +1032,28 @@
         "externalName_desc": "Manufacturer Z-A"
       },
       "feedbackDecimal_asc": "Item reviews ⬆",
-      "feedbackDecimal_desc": "Item reviews ⬇"
+      "feedbackDecimal_desc": "Item reviews ⬇",
+      "score": "Relevance"
     }
+  },
+  "availabilitiesOptions": {
+    "availabilityNotSet": "Select availability",
+    "availabilityInStock": "In stock",
+    "availabilityOutOfStock": "Out of stock",
+    "availabilityPreOrder": "Pre-order",
+    "availabilityDiscontinued": "Discontinued",
+    "availabilityInStoreOnly": "In store only",
+    "availabilityLimitedAvailability": "Limited availability",
+    "availabilityOnlineOnly": "Online only",
+    "availabilityPreSale": "Pre-sale",
+    "availabilitySoldOut": "Sold out",
+    "availabilityBackOrder": "Back order"
+  },
+  "cookieGroup": {
+    "functional": "Functional",
+    "externalMedia": "External Media",
+    "necessary": "Necessary",
+    "marketing": "Marketing (recommended)"
   },
   "storefrontError": {
     "offer": {
@@ -1101,8 +1121,12 @@
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
+    "security": {
+      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page."
+    },
     "unknownError": "An unknown error has occurred."
   },
+  "reloadPage": "Reload page",
   "successInfoMessage": "Your order was completed successfully.",
   "successInfoOrderHeader": "Thank you for your order!",
   "successInfoReturnHeader": "Thank you for your return!",
@@ -1195,5 +1219,6 @@
         "Sunday": "Sunday"
       }
     }
-  }
+  },
+  "cancelOrder": "Cancel order"
 }

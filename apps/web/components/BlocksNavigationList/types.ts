@@ -1,23 +1,14 @@
 import type { Block } from '@plentymarkets/shop-api';
 
 export type BlocksList = {
-  [key: string]: {
-    category: string;
-    title: string;
-    blockName: string;
-    variations: {
-      title: string;
-      image: string;
-      template: {
-        en: Block;
-        de: Block;
-      };
-    }[];
-  };
+  [key: string]: Category;
 };
+
+export type BlocksListContext = 'content' | 'productCategory' | 'product' | '';
 
 export interface Category {
   title: string;
+  accessControl?: BlocksListContext;
   blockName: string;
   category: string;
   variations: Variation[];
@@ -26,4 +17,8 @@ export interface Category {
 interface Variation {
   image: string;
   title: string;
+  template: {
+    en: Block;
+    de: Block;
+  };
 }

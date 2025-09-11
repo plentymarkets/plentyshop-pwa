@@ -1032,8 +1032,28 @@
         "externalName_desc": "Hersteller Z-A"
       },
       "feedbackDecimal_asc": "Kundenbewertung ⬆",
-      "feedbackDecimal_desc": "Kundenbewertung ⬇"
+      "feedbackDecimal_desc": "Kundenbewertung ⬇",
+      "score": "Relevanz"
     }
+  },
+  "availabilitiesOptions": {
+    "availabilityNotSet": "Verfügbarkeit wählen",
+    "availabilityInStock": "Auf Lager (InStock)",
+    "availabilityOutOfStock": "Nicht auf Lager (OutOfStock)",
+    "availabilityPreOrder": "Vorbestellbar (PreOrder)",
+    "availabilityDiscontinued": "Abgekündigt (Discontinued)",
+    "availabilityInStoreOnly": "Nur im Ladengeschäft verfügbar (InStoreOnly)",
+    "availabilityLimitedAvailability": "Begrenzt verfügbar (LimitedAvailability)",
+    "availabilityOnlineOnly": "Nur online verfügbar (OnlineOnly)",
+    "availabilityPreSale": "Vorverkauf (PreSale)",
+    "availabilitySoldOut": "Ausverkauft (SoldOut)",
+    "availabilityBackOrder": "Lieferrückstand (BackOrder)"
+  },
+  "cookieGroup": {
+    "functional": "Funktional",
+    "externalMedia": "Externe Medien",
+    "necessary": "Essenziell",
+    "marketing": "Marketing (empfohlen)"
   },
   "storefrontError": {
     "offer": {
@@ -1101,8 +1121,12 @@
       "invalid": "Verifizierung fehlgeschlagen. Bitte versuchen Sie es in ein paar Minuten erneut.",
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
+    "security": {
+      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut."
+    },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
+  "reloadPage": "Neu laden",
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "successInfoOrderHeader": "Vielen Dank für Ihre Bestellung!",
   "successInfoReturnHeader": "Vielen Dank für Ihre Retoure!",
@@ -1195,5 +1219,6 @@
         "Sunday": "Sonntag"
       }
     }
-  }
+  },
+  "cancelOrder": "Kauf abbrechen"
 }
