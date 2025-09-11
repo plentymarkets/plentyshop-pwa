@@ -77,12 +77,21 @@ import { getSettingsTranslations } from '~/utils/settings-translations-imports';
 const { t } = useI18n();
 
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
+const runtimeConfig = useRuntimeConfig();
 
-const subCategories = computed(() => getSubCategories(activeSetting.value));
+const subCategories = computed(() => {
+  return getSubCategories(activeSetting.value).filter(
+    (subCategory) => !(runtimeConfig.public.editorSettingsDevFlag as string[]).includes(subCategory),
+  );
+});
 
 setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : activeSubCategory.value);
 
-const groups = computed(() => getSettingsGroups(activeSetting.value, activeSubCategory.value));
+const groups = computed(() => {
+  return getSettingsGroups(activeSetting.value, activeSubCategory.value).filter(
+    (group) => !(runtimeConfig.public.editorSettingsDevFlag as string[]).includes(group.slug),
+  );
+});
 
 const messages: Messages = {};
 
