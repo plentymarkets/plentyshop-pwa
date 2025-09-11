@@ -1036,6 +1036,25 @@
       "score": "Relevanz"
     }
   },
+  "availabilitiesOptions": {
+    "availabilityNotSet": "Verfügbarkeit wählen",
+    "availabilityInStock": "Auf Lager (InStock)",
+    "availabilityOutOfStock": "Nicht auf Lager (OutOfStock)",
+    "availabilityPreOrder": "Vorbestellbar (PreOrder)",
+    "availabilityDiscontinued": "Abgekündigt (Discontinued)",
+    "availabilityInStoreOnly": "Nur im Ladengeschäft verfügbar (InStoreOnly)",
+    "availabilityLimitedAvailability": "Begrenzt verfügbar (LimitedAvailability)",
+    "availabilityOnlineOnly": "Nur online verfügbar (OnlineOnly)",
+    "availabilityPreSale": "Vorverkauf (PreSale)",
+    "availabilitySoldOut": "Ausverkauft (SoldOut)",
+    "availabilityBackOrder": "Lieferrückstand (BackOrder)"
+  },
+  "cookieGroup": {
+    "functional": "Funktional",
+    "externalMedia": "Externe Medien",
+    "necessary": "Essenziell",
+    "marketing": "Marketing (empfohlen)"
+  },
   "storefrontError": {
     "offer": {
       "expired": "Dieses Angebot ist abgelaufen.",
