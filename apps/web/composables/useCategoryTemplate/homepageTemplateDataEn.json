@@ -136,6 +136,7 @@
         "meta": {
           "uuid": "1c2d3e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f"
         },
+        "parent_slot": 0,
         "content": {
           "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
@@ -152,6 +153,7 @@
           "uuid": "6f5e4d3c-2b1a-4f8e-9d7c-0b1a2c3d4e5f",
           "isGlobalTemplate": false
         },
+        "parent_slot": 1,
         "content": {
           "text": {
             "htmlDescription": "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
