@@ -95,10 +95,12 @@ const getColumnClasses = (colIndex: number) => {
 const columns = ref([] as Block[][]);
 
 content.forEach((block) => {
-  if (!columns.value[block.parent_slot]) {
-    columns.value[block.parent_slot] = [];
-  }
+  if (block.parent_slot ) {
+    if (!columns.value[block.parent_slot]) {
+      columns.value[block.parent_slot] = [];
+    }
 
-  columns.value[block.parent_slot].push(block);
+    columns.value[block.parent_slot].push(block);
+  }
 });
 </script>
