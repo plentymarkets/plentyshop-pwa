@@ -80,17 +80,27 @@ const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = 
 const runtimeConfig = useRuntimeConfig();
 
 const subCategories = computed(() => {
-  return getSubCategories(activeSetting.value).filter(
-    (subCategory) => !(runtimeConfig.public.editorSettingsDevFlag as string[]).includes(subCategory),
-  );
+  const categories = getSubCategories(activeSetting.value);
+
+  if (!runtimeConfig.public.isDev) {
+    const excludedSubCategories = runtimeConfig.public.editorSettingsDevFlag as string[];
+    return categories.filter((subCategory) => !excludedSubCategories.includes(subCategory));
+  }
+
+  return categories;
 });
 
 setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : activeSubCategory.value);
 
 const groups = computed(() => {
-  return getSettingsGroups(activeSetting.value, activeSubCategory.value).filter(
-    (group) => !(runtimeConfig.public.editorSettingsDevFlag as string[]).includes(group.slug),
-  );
+  const allGroups = getSettingsGroups(activeSetting.value, activeSubCategory.value);
+
+  if (!runtimeConfig.public.isDev) {
+    const excludedGroups = runtimeConfig.public.editorSettingsDevFlag as string[];
+    return allGroups.filter((group) => !excludedGroups.includes(group.slug));
+  }
+
+  return allGroups;
 });
 
 const messages: Messages = {};
