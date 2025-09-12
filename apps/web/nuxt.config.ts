@@ -186,6 +186,7 @@ export default defineNuxtConfig({
       defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
       defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
       fetchDynamicTranslations: false,
+      sessionLifetime: process.env.NUXT_PUBLIC_SESSION_LIFETIME || '3600',
     },
   },
   modules: [
