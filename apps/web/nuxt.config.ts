@@ -96,6 +96,7 @@ export default defineNuxtConfig({
         'tracking-and-analytics',
         'customer-management',
         'variation-position-based-on-sales',
+        'security',
       ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
