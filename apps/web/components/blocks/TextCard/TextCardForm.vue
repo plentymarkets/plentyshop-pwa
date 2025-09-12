@@ -219,13 +219,13 @@
 
       <SfSwitch
         id="keep-transparent"
-        v-model="keepTransparent"
+        v-model="isTransparent"
         data-testid="switch-keep-transparent"
         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
       />
     </div>
 
-    <div v-if="!keepTransparent" class="py-2">
+    <div v-if="!isTransparent" class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
@@ -342,11 +342,12 @@ const textSettings = ref(false);
 const buttonSettings = ref(false);
 const layoutSettings = ref(false);
 
-const keepTransparent = ref(true);
-const backgroundColor = ref(textCardBlock.value.layout.backgroundColor || '#ffffff');
+const backgroundColorInit = textCardBlock.value.layout.backgroundColor;
+const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
+const backgroundColor = ref(isTransparent.value ? '' : backgroundColorInit);
 
-watch([keepTransparent, backgroundColor], () => {
-  textCardBlock.value.layout.backgroundColor = keepTransparent.value ? 'transparent' : backgroundColor.value;
+watch([isTransparent, backgroundColor], () => {
+  textCardBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
 });
 </script>
 
