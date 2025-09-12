@@ -136,6 +136,8 @@ export const useBlockManager = () => {
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
     const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
 
+    newBlock.parent_slot = targetBlock.parent_slot;
+
     if (colIndex === -1) {
       send({ type: 'negative', message: `Couldn't insert block.` });
       return;

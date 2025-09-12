@@ -4,7 +4,7 @@
       'absolute',
       'z-[0]',
       'md:z-[1]',
-      'lg:z-[9]',
+      'lg:z-[11]',
       'space-x-3',
       'p-2',
       'shadow-md',
@@ -20,7 +20,7 @@
       class="flex"
     >
       <button
-        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+        class="text-black hover:bg-gray-100 rounded no-drag p-1"
         data-testid="open-editor-button"
         aria-label="editor button"
         :disabled="!props.actions.isEditable"
