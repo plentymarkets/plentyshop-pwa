@@ -11,14 +11,6 @@
       </template>
 
       <div data-testid="image-text-form">
-        <!-- <div v-for="column in multiGridStructure.content" :key="column.meta.uuid">
-        <component
-          :is="getComponent(column.name)"
-          v-if="column.name !== 'EmptyGridBlock'"
-          :uuid="column.meta?.uuid || ''"
-        />
-      </div> -->
-
         <div v-if="multiGridStructure.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -156,19 +148,6 @@ const gapOptions = ['None', 'M', 'L', 'XL'];
 const gapBtnClasses =
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 uppercase inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
 const gapValue = ref('None');
-
-// const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-//   string,
-//   () => Promise<{ default: unknown }>
-// >;
-
-// const getComponent = (blockName: string) => {
-//   if (!blockName) return null;
-//   console.log('blockName', blockName);
-//   const regex = new RegExp(`${blockName}Form\\.vue$`, 'i');
-//   const matched = Object.keys(modules).find((path) => regex.test(path));
-//   return matched ? defineAsyncComponent(modules[matched]) : null;
-// };
 
 const textSettings = ref(false);
 const layoutBackground = ref(false);

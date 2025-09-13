@@ -1,5 +1,6 @@
 <template>
   <div class="relative flex justify-center">
+    <!-- To do right at the end remove the padding classes from the image -->
     <NuxtImg
       :src="getImageUrl()"
       :alt="props.content?.alt"
