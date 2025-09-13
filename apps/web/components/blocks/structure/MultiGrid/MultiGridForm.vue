@@ -7,7 +7,7 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
       <template #summary>
-        <h2>{{ getEditorTranslation('text-group-label') }}</h2>
+        <h2>{{ getEditorTranslation('layout-settings') }}</h2>
       </template>
 
       <div data-testid="image-text-form">
@@ -71,8 +71,6 @@
             Spacing between Blocks: {{ getGapPx(multiGridStructure.layout.gap) }}px
           </div>
         </div>
-
-  
       </div>
     </UiAccordionItem>
 
@@ -156,10 +154,11 @@ const gapPxMap: Record<GapSize, number> = {
   L: 12,
   XL: 20,
 };
-function getGapPx(gap: string | undefined): number {
+
+const getGapPx = (gap: string | undefined): number => {
   const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
   return gapPxMap[validGap as GapSize];
-}
+};
 
 const textSettings = ref(false);
 const layoutBackground = ref(false);
@@ -168,8 +167,10 @@ const layoutBackground = ref(false);
 <i18n lang="json">
 {
   "en": {
-    "margin-label": "Margin",
-    "gap-label": "Gap between columns",
+    "layout-settings": "Layout Settings",
+    "margin-label": "Margin (px)",
+    "background-color-label": "Background Color",
+    "gap-label": "Gap",
     "gap-size-none": "None",
     "gap-size-m": "M",
     "gap-size-l": "L",
@@ -177,8 +178,10 @@ const layoutBackground = ref(false);
     "spacing-around": "Spacing around"
   },
   "de": {
-    "margin-label": "Margin",
-    "gap-label": "Abstand zwischen Spalten",
+    "layout-settings": "Layout Einstellungen",
+    "margin-label": "Margin (px)",
+    "background-color-label": "Hintergrundfarbe",
+    "gap-label": "Abstand",
     "gap-size-none": "Keiner",
     "gap-size-m": "M",
     "gap-size-l": "L",
