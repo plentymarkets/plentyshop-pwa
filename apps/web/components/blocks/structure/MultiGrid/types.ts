@@ -37,5 +37,6 @@ export type ColumnBlock = Block & {
     marginBottom?: number;
     marginLeft?: number;
     marginRight?: number;
+    backgroundColor?: string;
   };
 };
