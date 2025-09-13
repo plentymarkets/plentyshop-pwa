@@ -30,4 +30,12 @@ export type AlignableBlock = Block & {
   };
 };
 
-export type ColumnBlock = Block & { content?: Block[] };
+export type ColumnBlock = Block & {
+  content?: Block[];
+  layout?: {
+    marginTop?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    marginRight?: number;
+  };
+};
