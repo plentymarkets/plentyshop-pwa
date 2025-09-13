@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()">
+  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
     <div
       v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
@@ -36,10 +36,18 @@
 import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { content, configuration } = defineProps<MultiGridProps>();
+const {layout, content, configuration } = defineProps<MultiGridProps>();
 const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
+
+const gridInlineStyle = computed(() => ({
+  backgroundColor: layout?.backgroundColor ?? 'transparent',
+  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
+  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
+  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+}));
 
 const getBlockActions = () => {
   return {

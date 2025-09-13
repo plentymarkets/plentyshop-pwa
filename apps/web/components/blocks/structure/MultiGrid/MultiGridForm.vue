@@ -19,13 +19,13 @@
         />
       </div> -->
 
-        <div class="py-2">
+        <div v-if="multiGridStructure.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
               <input
-                v-model.number="layout.marginTop"
+                v-model.number="multiGridStructure.layout.marginTop"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-top"
@@ -34,7 +34,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowDownward /></span>
               <input
-                v-model.number="layout.marginBottom"
+                v-model.number="multiGridStructure.layout.marginBottom"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-bottom"
@@ -43,7 +43,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowBack /></span>
               <input
-                v-model.number="layout.marginLeft"
+                v-model.number="multiGridStructure.layout.marginLeft"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-left"
@@ -52,7 +52,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
               <span><SfIconArrowForward /></span>
               <input
-                v-model.number="layout.marginRight"
+                v-model.number="multiGridStructure.layout.marginRight"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-right"
@@ -95,21 +95,21 @@
         <h2>Layout Background</h2>
       </template>
 
-      <div class="py-2">
+      <div v-if="multiGridStructure.layout" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="layout.backgroundColor" type="text" data-testid="input-background-color">
+          <SfInput v-model="multiGridStructure.layout.backgroundColor" type="text" data-testid="input-background-color">
             <template #suffix>
               <label
                 for="background-color"
-                :style="{ backgroundColor: layout.backgroundColor }"
+                :style="{ backgroundColor: multiGridStructure.layout.backgroundColor || '#ffffff' }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
                 <input
                   id="background-color"
-                  v-model="layout.backgroundColor"
+                  v-model="multiGridStructure.layout.backgroundColor"
                   data-testid="color-input-background"
                   type="color"
                   class="invisible w-8"
@@ -138,20 +138,19 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
-
-  return block;
-});
-
-const layout = computed(
-  () =>
-    multiGridStructure.value.layout ?? {
+  if (!block.layout) {
+    block.layout = {
       marginTop: 0,
       marginBottom: 0,
       marginLeft: 0,
       marginRight: 0,
       backgroundColor: '#ffffff',
-    },
-);
+    };
+  } else if (!block.layout.backgroundColor) {
+    block.layout.backgroundColor = '#ffffff';
+  }
+  return block;
+});
 
 const gapOptions = ['None', 'M', 'L', 'XL'];
 const gapBtnClasses =
