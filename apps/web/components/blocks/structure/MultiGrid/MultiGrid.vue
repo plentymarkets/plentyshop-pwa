@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()">
+  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
     <div
       v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
@@ -36,10 +36,28 @@
 import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { content, configuration } = defineProps<MultiGridProps>();
+const { layout, content, configuration } = defineProps<MultiGridProps>();
 const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
+
+const gridInlineStyle = computed(() => ({
+  backgroundColor: layout?.backgroundColor ?? 'transparent',
+  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
+  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
+  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+}));
+
+const gapClassMap: Record<string, string> = {
+  None: 'gap-x-0',
+  S: 'gap-x-1',
+  M: 'gap-x-2',
+  L: 'gap-x-3',
+  XL: 'gap-x-5',
+};
+
+const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
 const getBlockActions = () => {
   return {
@@ -71,10 +89,8 @@ const showOverlay = computed(
 
 const getGridClasses = () => {
   const columnCount = configuration.columnWidths.length;
-
-  return ['grid', 'gap-4', 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
 };
-
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
   const isLastColumn = colIndex === columnCount - 1;
