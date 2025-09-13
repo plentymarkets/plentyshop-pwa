@@ -49,6 +49,16 @@ const gridInlineStyle = computed(() => ({
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
 }));
 
+const gapClassMap: Record<string, string> = {
+  None: 'gap-x-0',
+  S: 'gap-x-1',
+  M: 'gap-x-2',
+  L: 'gap-x-3',
+  XL: 'gap-x-5',
+};
+
+const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
+
 const getBlockActions = () => {
   return {
     isEditable: true,
@@ -79,10 +89,8 @@ const showOverlay = computed(
 
 const getGridClasses = () => {
   const columnCount = configuration.columnWidths.length;
-
-  return ['grid', 'gap-4', 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
 };
-
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
   const isLastColumn = colIndex === columnCount - 1;
