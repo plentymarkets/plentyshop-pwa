@@ -28,6 +28,7 @@ const { $isPreview } = useNuxtApp();
 const props = defineProps<EmptyGridBlockProps>();
 const { multigridColumnUuid, updateMultigridColumnUuid, visiblePlaceholder } = useBlockManager();
 const { openDrawerWithView, drawerOpen } = useSiteConfiguration();
+
 const isActiveColumn = computed(() => multigridColumnUuid.value === props.meta.uuid);
 
 const addBlockToColumn = () => {
