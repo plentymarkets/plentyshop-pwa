@@ -143,9 +143,9 @@ const multiGridStructure = computed(() => {
   return block;
 });
 
-const gapOptions = ['None', 'M', 'L', 'XL'];
+const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
-  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 uppercase inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
+  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
 type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
 const gapPxMap: Record<GapSize, number> = {
   None: 0,
@@ -172,6 +172,7 @@ const layoutBackground = ref(false);
     "background-color-label": "Background Color",
     "gap-label": "Gap",
     "gap-size-none": "None",
+    "gap-size-s": "S",
     "gap-size-m": "M",
     "gap-size-l": "L",
     "gap-size-xl": "XL",
@@ -183,6 +184,7 @@ const layoutBackground = ref(false);
     "background-color-label": "Hintergrundfarbe",
     "gap-label": "Abstand",
     "gap-size-none": "Keiner",
+    "gap-size-s": "S",
     "gap-size-m": "M",
     "gap-size-l": "L",
     "gap-size-xl": "XL",
