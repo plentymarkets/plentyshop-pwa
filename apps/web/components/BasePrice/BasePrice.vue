@@ -1,6 +1,8 @@
-<template v-if="basePrice">
-  <div class="text-sm">{{ t('content') }}: {{ unitContent }} {{ unitName }}</div>
-  <div class="text-sm">{{ t('basePrice') }}: {{ basePrice }}</div>
+<template>
+  <div v-if="basePrice">
+    <div class="text-sm">{{ t('content') }}: {{ unitContent }} {{ unitName }}</div>
+    <div class="text-sm">{{ t('basePrice') }}: {{ basePrice }}</div>
+  </div>
 </template>
 
 <script setup lang="ts">
