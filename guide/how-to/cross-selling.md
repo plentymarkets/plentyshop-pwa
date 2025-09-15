@@ -11,6 +11,9 @@ The required `getFacet` parameters for a cross-selling item are `itemId`, `type:
 
 You can get the `itemId` by using `useProduct()`; if you are on the product page `product.value` is already available.
 
+> [!NOTE]
+> The cross-selling fetch needs to be called only after the product has been fetched.
+
 Example
 ```ts
 const { data: product, fetchProduct } = useProduct(productId);
