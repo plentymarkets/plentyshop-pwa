@@ -68,15 +68,7 @@ import type { ContactInformationProps } from './types';
 const { disabled = false } = defineProps<ContactInformationProps>();
 
 const { t } = useI18n();
-const {
-  data: sessionData,
-  loginAsGuest,
-  getSession,
-  isAuthorized,
-  isGuest,
-  validGuestEmail,
-  emailValidationSchema,
-} = useCustomer();
+const { user, loginAsGuest, isAuthorized, isGuest, validGuestEmail, emailValidationSchema } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
 
@@ -84,14 +76,12 @@ const { errors, defineField, validate } = useForm({ validationSchema: emailValid
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
 
 watch(isAuthorized, (updatedStatus) => {
-  customerEmail.value = updatedStatus
-    ? (sessionData.value.user?.email ?? '')
-    : (sessionData.value.user?.guestMail ?? '');
+  customerEmail.value = updatedStatus ? (user.value?.email ?? '') : (user.value?.guestMail ?? '');
 });
 
 watch(isGuest, (isGuestStatus) => {
   if (isGuestStatus) {
-    customerEmail.value = sessionData.value.user?.guestMail ?? '';
+    customerEmail.value = user.value?.guestMail ?? '';
   }
 });
 
@@ -104,8 +94,7 @@ const validateAndSubmitEmail = async () => {
   const guestEmail = customerEmail.value as string;
 
   const shouldUpdateEmail =
-    sessionData.value.user?.guestMail &&
-    sessionData.value.user.guestMail.trim().toLowerCase() !== guestEmail.trim().toLowerCase();
+    user.value?.guestMail && user.value.guestMail.trim().toLowerCase() !== guestEmail.trim().toLowerCase();
 
   shouldUpdateEmail ? await handleGuestEmailChange(guestEmail) : await saveContactInformation(guestEmail);
 };
@@ -130,7 +119,6 @@ const handleGuestEmailChange = async (updatedEmail: string) => {
 
 const saveContactInformation = async (email: string) => {
   await loginAsGuest(email);
-  await getSession();
 };
 
 const checkPayPalPaymentsEligible = async () => {

@@ -19,7 +19,8 @@ const getFallbackPaymentMethod = (
 export const useCheckoutPagePaymentAndShipping = () => {
   const { $i18n } = useNuxtApp();
   const { send } = useNotification();
-  const { getCart, data: cart } = useCart();
+  const { data: cart } = useCart();
+  const { getSession } = useCustomer();
   const {
     loading: paymentLoading,
     data: paymentMethodData,
@@ -51,7 +52,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
     await saveShippingMethod(Number(shippingMethodId));
     usePreferredDelivery().disableAllOptions();
     await fetchPaymentMethods();
-    await getCart();
+    await getSession();
 
     const isPaymentMethodExcluded = paymentProviderGetters.isPaymentMethodExcluded(
       selectedShippingMethod.value,
@@ -77,7 +78,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
     if (cart.value.methodOfPaymentId === paymentMethodId) return;
     await savePaymentMethod(paymentMethodId);
     await getShippingMethods();
-    await getCart();
+    await getSession();
   };
 
   const validateShippingTerms = () => {

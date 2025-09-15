@@ -1,8 +1,9 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const { getCart, cartIsEmpty } = useCart();
+  const { cartIsEmpty } = useCart();
+  const { getSession } = useCustomer();
   const localePath = useLocalePath();
 
-  await getCart();
+  await getSession();
   if (!cartIsEmpty.value) return;
   return navigateTo(localePath(paths.cart));
 });

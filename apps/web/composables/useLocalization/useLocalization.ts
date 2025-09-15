@@ -112,7 +112,7 @@ export const useLocalization = createSharedComposable(() => {
    * @example switchLocale('en')
    */
   const switchLocale = async (language: Locale, hideMenu = true) => {
-    const { getCart } = useCart();
+    const { getSession } = useCustomer();
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 
@@ -123,7 +123,7 @@ export const useLocalization = createSharedComposable(() => {
       path: switchLocalePath(language),
       query: route.query,
     });
-    await getCart();
+    await getSession();
   };
 
   return {

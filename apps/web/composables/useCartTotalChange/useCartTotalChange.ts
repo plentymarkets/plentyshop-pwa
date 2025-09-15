@@ -2,8 +2,8 @@ import { cartGetters } from '@plentymarkets/shop-api';
 
 export const useCartTotalChange = () => {
   const route = useRoute();
-  const { data: customerData, isGuest, isAuthorized } = useCustomer();
-  const { getCart } = useCart();
+  const { getSession, isGuest, isAuthorized } = useCustomer();
+  const { data: cartData } = useCart();
   const { getOrder } = usePayPal();
   const { restrictedAddresses } = useRestrictedAddress();
 
@@ -28,8 +28,8 @@ export const useCartTotalChange = () => {
       state.value.initialTotal = Number.parseFloat(paypalOrder.result.purchase_units[0].amount.value);
       state.value.initialCurrency = paypalOrder.result.purchase_units[0].amount.currency_code;
       state.value.changedTotal =
-        cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal ||
-        cartGetters.getCurrency(customerData.value.basket) !== state.value.initialCurrency;
+        cartGetters.getTotals(cartData.value).total !== state.value.initialTotal ||
+        cartGetters.getCurrency(cartData.value) !== state.value.initialCurrency;
     } else {
       send({
         message: $i18n.t('paypal.invalidOrder'),
@@ -40,12 +40,12 @@ export const useCartTotalChange = () => {
   };
 
   const handleCartTotalChanges = async () => {
-    if (restrictedAddresses.value || isGuest.value || isAuthorized.value) await getCart();
+    if (restrictedAddresses.value || isGuest.value || isAuthorized.value) await getSession();
 
     if (restrictedAddresses.value) {
       state.value.changedTotal =
-        cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal ||
-        cartGetters.getCurrency(customerData.value.basket) !== state.value.initialCurrency;
+        cartGetters.getTotals(cartData.value).total !== state.value.initialTotal ||
+        cartGetters.getCurrency(cartData.value) !== state.value.initialCurrency;
     }
   };
 
