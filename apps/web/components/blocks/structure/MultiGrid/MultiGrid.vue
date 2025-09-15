@@ -95,7 +95,7 @@ const getColumnClasses = (colIndex: number) => {
 const columns = ref([] as Block[][]);
 
 content.forEach((block) => {
-  if (block.parent_slot ) {
+  if (block.parent_slot !== undefined) {
     if (!columns.value[block.parent_slot]) {
       columns.value[block.parent_slot] = [];
     }
