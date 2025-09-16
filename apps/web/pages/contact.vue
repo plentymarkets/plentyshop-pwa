@@ -41,7 +41,7 @@
         </label>
 
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput
             v-bind="subjectAttributes"
             v-model="subject"
@@ -195,9 +195,9 @@ const validationSchema = toTypedSchema(
       }),
     subject: string()
       .trim()
-      .notRequired()
+      .required(t('errorMessages.contact.subjectRequired'))
       .default('')
-      .test('min-if-not-empty', t('storefrontError.contactMail.subjectInvalid'), (val) => !val || val.length >= 3),
+      .test('min-length', t('storefrontError.contactMail.subjectInvalid'), (val) => !!(val && val.length >= 3)),
     orderId: string()
       .trim()
       .notRequired()
@@ -243,13 +243,13 @@ const submitForm = async () => {
   if (!meta.value.valid || !turnstile.value) return;
 
   const params: CustomerContactEmailParams = {
+    subject: subject.value || '',
     email: email.value || '',
     message: message.value || '',
     'cf-turnstile-response': turnstile.value,
   };
 
   if (name.value) params.name = name.value;
-  if (subject.value) params.subject = subject.value;
   if (orderId.value) params.orderId = Number(orderId.value);
 
   if (await doCustomerContactMail(params)) {
