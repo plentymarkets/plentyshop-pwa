@@ -15,25 +15,26 @@
       :height="getImageDimensions().height"
       data-testid="image-block"
     />
-    <UiButton
-      v-if="props.content?.label"
-      class="flex flex-col md:flex-row gap-4 mt-6"
-      :tag="NuxtLink"
-      :to="localePath(props.content.link ?? '')"
-      :variant="props.content.variant ?? 'primary'"
-      size="lg"
-      :data-testid="'banner-button-' + (meta?.uuid ?? '')"
-    >
-      {{ props.content.label }}
-    </UiButton>
     <div
       v-if="props.content?.textOverlay && runtimeConfig.public.isDev"
-      class="absolute w-full h-full px-4 pointer-events-none flex"
+      class="absolute w-full h-full px-4 pointer-events-none flex flex-col"
       :class="overlayAlignClasses"
       data-testid="image-overlay-text"
       :style="{ color: props.content.textOverlayColor || '#000' }"
-      v-html="props.content.textOverlay"
-    />
+    >
+      <div v-html="props.content.textOverlay" />
+      <UiButton
+        v-if="props.content?.label"
+        class="mt-4"
+        :tag="NuxtLink"
+        :to="localePath(props.content.link ?? '')"
+        :variant="props.content.variant ?? 'primary'"
+        size="lg"
+        :data-testid="'banner-button-' + (meta?.uuid ?? '')"
+      >
+        {{ props.content.label }}
+      </UiButton>
+    </div>
   </div>
 </template>
 
