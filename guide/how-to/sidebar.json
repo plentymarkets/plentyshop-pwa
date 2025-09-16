@@ -8,10 +8,6 @@
         "collapsed": true,
         "items": [
             {
-                "text": "Product Cross-Selling",
-                "link": "/guide/how-to/cross-selling.md"
-            },
-            {
                 "text": "Middleware",
                 "link": "/guide/how-to/middleware.md"
             },
@@ -45,6 +41,10 @@
         "text": "Cookbook",
         "collapsed": true,
         "items": [
+            {
+                "text": "Product Cross-Selling",
+                "link": "/guide/how-to/cross-selling.md"
+            },
             {
                 "text": "Variation properties",
                 "link": "/guide/how-to/variation-property.md"

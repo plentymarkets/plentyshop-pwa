@@ -1,14 +1,14 @@
 [
     {
-        "text": "PlentyONE",
-        "link": "/guide/setup/system.md"
+        "text": "Quickstart",
+        "link": "/guide/setup/quickstart.md"
     },
     {
-        "text": "Local",
-        "link": "/guide/setup/local.md"
+        "text": "FAQ",
+        "link": "/guide/setup/faq.md"
     },
     {
-        "text": "Deployment",
-        "link": "/guide/setup/deployment.md"
+        "text": "Troubleshooting",
+        "link": "/guide/setup/troubleshooting.md"
     }
 ]

@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /guide/setup/system
+      link: /guide/setup/quickstart
     - theme: alt
       text: Composables
       link: /reference/composables/
