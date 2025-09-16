@@ -30,7 +30,7 @@
         :to="localePath(props.content.link ?? '')"
         :variant="props.content.variant ?? 'primary'"
         size="lg"
-        :data-testid="'banner-button-' + (meta?.uuid ?? '')"
+        :data-testid="'image-button-' + (meta?.uuid ?? '')"
       >
         {{ props.content.label }}
       </UiButton>
