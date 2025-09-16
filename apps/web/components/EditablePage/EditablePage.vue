@@ -139,14 +139,15 @@ const getBlockClass = (block: Block) => {
   return computed(() => [
     {
       'max-w-screen-3xl mx-auto lg:px-10 mt-3':
-        block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
+        block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer' && block.name !== 'MultiGrid',
     },
     {
       'px-4 md:px-6':
         block.name !== 'Carousel' &&
         block.name !== 'Banner' &&
         block.name !== 'NewsletterSubscribe' &&
-        block.name !== 'Footer',
+        block.name !== 'Footer' &&
+        block.name !== 'MultiGrid',
     },
   ]);
 };

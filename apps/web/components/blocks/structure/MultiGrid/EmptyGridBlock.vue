@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$isPreview" class="flex w-full max-w-4xl mx-auto">
+  <div v-if="$isPreview" class="flex w-full">
     <div
       v-if="drawerOpen && isActiveColumn"
       data-testid="active-empty-multicolumn"
