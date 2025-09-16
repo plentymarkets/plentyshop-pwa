@@ -10,7 +10,7 @@
             :aria-label="t('prevAriaLabel')"
             data-testid="checkout-back-button"
             variant="tertiary"
-            @click="goToPreviousRoute"
+            @click="goToPreviousRoute()"
           >
             <template #prefix>
               <SfIconArrowBack />
@@ -34,6 +34,7 @@ import type { CheckoutLayoutProps } from './types';
 const { t } = useI18n();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
+const { goToPreviousRoute } = useBrowserNavigation();
 const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
 
