@@ -38,7 +38,6 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
-const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
