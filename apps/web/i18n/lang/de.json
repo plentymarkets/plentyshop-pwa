@@ -1032,8 +1032,34 @@
         "externalName_desc": "Hersteller Z-A"
       },
       "feedbackDecimal_asc": "Kundenbewertung ⬆",
-      "feedbackDecimal_desc": "Kundenbewertung ⬇"
+      "feedbackDecimal_desc": "Kundenbewertung ⬇",
+      "score": "Relevanz"
     }
+  },
+  "availabilitiesOptions": {
+    "availabilityNotSet": "Verfügbarkeit wählen",
+    "availabilityInStock": "Auf Lager (InStock)",
+    "availabilityOutOfStock": "Nicht auf Lager (OutOfStock)",
+    "availabilityPreOrder": "Vorbestellbar (PreOrder)",
+    "availabilityDiscontinued": "Abgekündigt (Discontinued)",
+    "availabilityInStoreOnly": "Nur im Ladengeschäft verfügbar (InStoreOnly)",
+    "availabilityLimitedAvailability": "Begrenzt verfügbar (LimitedAvailability)",
+    "availabilityOnlineOnly": "Nur online verfügbar (OnlineOnly)",
+    "availabilityPreSale": "Vorverkauf (PreSale)",
+    "availabilitySoldOut": "Ausverkauft (SoldOut)",
+    "availabilityBackOrder": "Lieferrückstand (BackOrder)"
+  },
+  "cookieGroup": {
+    "functional": "Funktional",
+    "externalMedia": "Externe Medien",
+    "necessary": "Essenziell",
+    "marketing": "Marketing (empfohlen)"
+  },
+  "sessionLifetime": {
+    "untilBrowserClosed": "Bis der Browser geschlossen wird",
+    "oneHour": "Eine Stunde, auch wenn der Browser geschlossen wird",
+    "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
+    "oneHundredDays": "Einhundert Tage, auch wenn der Browser geschlossen wird"
   },
   "storefrontError": {
     "offer": {
@@ -1199,5 +1225,6 @@
         "Sunday": "Sonntag"
       }
     }
-  }
+  },
+  "cancelOrder": "Kauf abbrechen"
 }
