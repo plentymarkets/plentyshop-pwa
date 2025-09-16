@@ -8,6 +8,7 @@ The Shop Core module provides a flexible and robust cookie consent system for Nu
 
 ## Features
 
+- Dynamically add cookies
 - Group cookies by purpose (e.g., analytics, marketing, essentials)
 - Register cookies and scripts that depend on user consent
 - Accept or reject all cookies, or manage them individually
@@ -23,29 +24,46 @@ The Shop Core module provides a flexible and robust cookie consent system for Nu
 - `setAllCookiesState(accepted: boolean)`: Accept or reject all cookies
 - `initializeCookies()`: Initialize consent state from configuration
 
+### useRegisterCookie
+
+Register a cookie in the cookiebar.
+
+``` ts
+  const { add } = useRegisterCookie()
+
+  add({
+        name: 'CookieBar.moduleGoogleAnalytics.googleAnalytics',
+        Provider: 'CookieBar.moduleGoogleAnalytics.provider',
+        Status: 'CookieBar.moduleGoogleAnalytics.status',
+        PrivacyPolicy: 'https://policies.google.com/privacy',
+        Lifespan: 'Session',
+        cookieNames: ['/^_ga/', '_ga', '_gid', '_gat'],
+        accepted: false,
+      })
+```
+
+
 ### useCookieConsent
 
-To read and react to the state of the a specific cookie you can use the [useCookieConsent](/reference/composables/functions/useCookieConsent) composable.
+To read and react to the state of the a specific cookie you can use the `useCookieConsent` composable.
 
-This composable uses the cookie name that you defined in the `cookie.config.ts` to get the reactive state of cookie
-
-## Example
+This composable uses the cookie name that you defined in the `cookie.config.ts` or via `useRegisterCookie` to get the reactive state of the cookie.
 
 ``` vue
 // MyComponent.vue
 <template>
-  <ScriptDemoButton v-if="ScriptDemoCookie"></ScriptDemoButton>
+  <ScriptDemoButton v-if="scriptDemoCookie"></ScriptDemoButton>
   <div v-else>
     <div>Script demo cookies not accepted</div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { consent: ScriptDemoCookie } = useCookieConsent('CookieBar.functional.cookies.scriptDemo.name');
+const { consent: scriptDemoCookie } = useCookieConsent('CookieBar.moduleGoogleAnalytics.googleAnalytics');
 
-watch(ScriptDemoCookie, () => {
+watch(scriptDemoCookie, () => {
   reloadScript();
-  console.log('ScriptDemo value', ScriptDemoCookie.value)
+  console.log('ScriptDemo value', scriptDemoCookie.value)
   // do something when the cookie changes.
 });
 

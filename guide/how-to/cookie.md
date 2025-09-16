@@ -31,6 +31,10 @@ Edit `cookie.config.ts` to configure cookies and cookie groups. Refer to the int
 
 You can add both external scripts, such as Google Tag Manager, and internal scripts that you implement yourself. In both cases, use the `script` property of a cookie in `cookie.config.ts`. Note that the same cookie can govern external and internal scripts at the same time.
 
+::: info
+To add cookies dynamically, check [our advanced guide](/guide/modules/shop-core/cookie-consent)
+:::
+
 ### External scripts
 
 In `cookie.config.ts`, add the `script` property to the cookie. The property accepts an array of strings. The strings describe the URLs of the scripts to load. The scripts are loaded when the user accepts the cookie.
