@@ -130,7 +130,7 @@
             :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'top' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
-          {{ getEditorTranslation('text-overlay-align-x-top') }}
+          {{ getEditorTranslation('text-overlay-align-x-left') }}
         </div>
 
         <div
@@ -156,7 +156,7 @@
             :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'bottom' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
-          {{ getEditorTranslation('text-overlay-align-x-bottom') }}
+          {{ getEditorTranslation('text-overlay-align-x-right') }}
         </div>
       </div>
     </fieldset>
@@ -177,7 +177,7 @@
             :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'left' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
-          {{ getEditorTranslation('text-overlay-align-y-left') }}
+          {{ getEditorTranslation('text-overlay-align-y-top') }}
         </div>
 
         <div
@@ -203,7 +203,7 @@
             :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'right' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
-          {{ getEditorTranslation('text-overlay-align-y-right') }}
+          {{ getEditorTranslation('text-overlay-align-y-bottom') }}
         </div>
       </div>
     </fieldset>
@@ -327,15 +327,15 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
     "text-overlay-placeholder": "Text that supports HTML formatting",
     "text-overlay-color-label": "Text Color",
 
-    "text-overlay-align-x-label": "Vertical Alignment",
-    "text-overlay-align-x-top": "Top",
+    "text-overlay-align-x-label": "Horizontal Alignment (x)",
+    "text-overlay-align-x-left": "Left",
     "text-overlay-align-x-center": "Center",
-    "text-overlay-align-x-bottom": "Bottom",
+    "text-overlay-align-x-right": "Right",
 
-    "text-overlay-align-y-label": "Horizontal Alignment",
-    "text-overlay-align-y-left": "Left",
+    "text-overlay-align-y-label": "Vertical Alignment (y)",
+    "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
-    "text-overlay-align-y-right": "Right",
+    "text-overlay-align-y-bottom": "Bottom",
     "button-group-label": "Button",
     "button-text-label": "Label",
     "button-text-placeholder": "Button",
@@ -369,17 +369,14 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
     "text-overlay-label": "Overlay text",
     "text-overlay-placeholder": "Enter text (HTML allowed)",
     "text-overlay-color-label": "Text Color",
-
-    "text-overlay-align-x-label": "Vertical Alignment",
-    "text-overlay-align-x-top": "Top",
+    "text-overlay-align-x-label": "Horizontal Alignment (x)",
+    "text-overlay-align-x-left": "Left",
     "text-overlay-align-x-center": "Center",
-    "text-overlay-align-x-bottom": "Bottom",
+    "text-overlay-align-x-right": "Right",
 
-    "text-overlay-align-y-label": "Horizontal Alignment",
-    "text-overlay-align-y-left": "Left",
+    "text-overlay-align-y-label": "Vertical Alignment (y)",
+    "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
-    "text-overlay-align-y-right": "Right",
-
     "button-group-label": "Button",
     "button-text-label": "Label",
     "button-text-placeholder": "Button",
