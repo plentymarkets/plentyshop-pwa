@@ -25,7 +25,7 @@
       <div v-html="props.content.textOverlay" />
       <UiButton
         v-if="props.content?.label"
-        class="mt-4"
+        class="mt-4 cursor-pointer pointer-events-auto"
         :tag="NuxtLink"
         :to="localePath(props.content.link ?? '')"
         :variant="props.content.variant ?? 'primary'"
