@@ -1,5 +1,5 @@
-import {
-  type ApiError,
+import type {
+  ApiError,
 } from '@plentymarkets/shop-api';
 
 /**
