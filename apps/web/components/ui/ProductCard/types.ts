@@ -1,4 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
+import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 
 export type ProductCardProps = {
   product: Product;
@@ -20,4 +21,6 @@ export type ProductCardProps = {
   showBasePrice?: boolean;
   isFromWishlist?: boolean;
   isFromSlider?: boolean;
+  configuration?: ItemGridContent;
+  hoverImageUrl?: string | null;
 };
