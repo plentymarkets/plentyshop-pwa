@@ -514,6 +514,7 @@
     "contact": {
       "messageRequired": "Message is required.",
       "nameRequired": "Name is required.",
+      "subjectRequired": "Subject is required.",
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human."
     },
