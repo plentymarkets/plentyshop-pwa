@@ -121,7 +121,7 @@
 
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
         <div
-          data-testid="align-x-top"
+          data-testid="align-x-left"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
           :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'top' }"
           @click="uiImageTextBlock.textOverlayAlignY = 'top'"
@@ -147,7 +147,7 @@
         </div>
 
         <div
-          data-testid="align-x-bottom"
+          data-testid="align-x-right"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
           :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'bottom' }"
           @click="uiImageTextBlock.textOverlayAlignY = 'bottom'"
@@ -168,7 +168,7 @@
 
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
         <div
-          data-testid="align-y-left"
+          data-testid="align-y-top"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
           :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'left' }"
           @click="uiImageTextBlock.textOverlayAlignX = 'left'"
@@ -194,7 +194,7 @@
         </div>
 
         <div
-          data-testid="align-y-right"
+          data-testid="align-y-bottom"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
           :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'right' }"
           @click="uiImageTextBlock.textOverlayAlignX = 'right'"
