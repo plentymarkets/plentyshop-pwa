@@ -54,24 +54,14 @@ export const useCustomer = () => {
   };
 
   /** Function for getting current user/cart data from session
+   * @deprecated This method will be removed in future versions. Use `useFetchSession().getSession()` instead.
    * @example
    * ``` ts
    * getSession();
    * ```
    */
   const getSession = async () => {
-    state.value.loading = true;
-    try {
-      const { data } = await useSdk().plentysystems.getSession();
-      const { setCart } = useCart();
-      state.value.user = data.user;
-      setCart(data.basket);
-      checkUserState();
-    } catch (error) {
-      useHandleError(error as ApiError);
-    } finally {
-      state.value.loading = false;
-    }
+    await useFetchSession().getSession();
   };
 
   /** Function for setting user data
@@ -104,7 +94,7 @@ export const useCustomer = () => {
         setUser(data.user ?? null);
         setCart(data.basket);
       } else {
-        await getSession();
+        await useFetchSession().getSession();
       }
     } catch (error) {
       useHandleError(error as ApiError);
@@ -127,7 +117,7 @@ export const useCustomer = () => {
 
     try {
       await useSdk().plentysystems.doLogin({ email: email, password: password });
-      await getSession();
+      await useFetchSession().getSession();
 
       if (state.value.user) {
         emit('frontend:login', { user: state.value.user });
@@ -178,7 +168,7 @@ export const useCustomer = () => {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.doRegisterUser(params);
       if (data) {
-        await getSession();
+        await useFetchSession().getSession();
 
         if (state.value.user) {
           emit('frontend:signUp', { user: state.value.user });

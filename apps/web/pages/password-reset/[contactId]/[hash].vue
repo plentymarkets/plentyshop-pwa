@@ -66,7 +66,7 @@ const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();
 const { send } = useNotification();
-const { getSession } = useCustomer();
+const { getSession } = useFetchSession();
 
 const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');

@@ -112,7 +112,7 @@ export const useLocalization = createSharedComposable(() => {
    * @example switchLocale('en')
    */
   const switchLocale = async (language: Locale, hideMenu = true) => {
-    const { getSession } = useCustomer();
+    const { getSession } = useFetchSession();
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 

@@ -28,7 +28,7 @@ export const useCoupon: UseCouponReturn = () => {
   const addCoupon: AddCoupon = async (params: DoAddCouponParams) => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
-    const { getSession } = useCustomer();
+    const { getSession } = useFetchSession();
     state.value.loading = true;
     if (params.couponCode.trim() === '') {
       send({ message: $i18n.t('coupon.pleaseProvideCoupon'), type: 'warning' });
@@ -51,7 +51,7 @@ export const useCoupon: UseCouponReturn = () => {
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
-    const { getSession } = useCustomer();
+    const { getSession } = useFetchSession();
 
     try {
       state.value.loading = true;

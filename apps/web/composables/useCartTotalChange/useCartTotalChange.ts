@@ -2,7 +2,8 @@ import { cartGetters } from '@plentymarkets/shop-api';
 
 export const useCartTotalChange = () => {
   const route = useRoute();
-  const { getSession, isGuest, isAuthorized } = useCustomer();
+  const { isGuest, isAuthorized } = useCustomer();
+  const { getSession } = useFetchSession();
   const { data: cartData } = useCart();
   const { getOrder } = usePayPal();
   const { restrictedAddresses } = useRestrictedAddress();

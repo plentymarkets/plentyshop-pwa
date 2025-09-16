@@ -7,7 +7,7 @@ export const useAddressForm = (type: AddressType) => {
   const { $i18n } = useNuxtApp();
   const { selectedMethod, getShippingMethods } = useCartShippingMethods();
   const { fetchPaymentMethods } = usePaymentMethods();
-  const { getSession } = useCustomer();
+  const { getSession } = useFetchSession();
   const { data: cartData } = useCart();
   const { send } = useNotification();
   const { restrictedAddresses } = useRestrictedAddress();

@@ -70,10 +70,10 @@ export const useCart = () => {
   };
 
   /**
-   * @deprecated Use useCustomer.getSession() instead
+   * @deprecated Use useFetchSession.getSession() instead
    */
   const getCart = async () => {
-    await useCustomer().getSession();
+    await useFetchSession().getSession();
   };
 
   /**

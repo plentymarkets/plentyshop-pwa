@@ -20,7 +20,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const { $i18n } = useNuxtApp();
   const { send } = useNotification();
   const { data: cart } = useCart();
-  const { getSession } = useCustomer();
+  const { getSession } = useFetchSession();
   const {
     loading: paymentLoading,
     data: paymentMethodData,

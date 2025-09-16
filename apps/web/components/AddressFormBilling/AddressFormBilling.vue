@@ -174,7 +174,8 @@ import type { AddressFormBillingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormBillingProps>();
 
-const { isGuest, missingGuestCheckoutEmail, backToContactInformation, getSession } = useCustomer();
+const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
+const { getSession } = useFetchSession();
 const { shippingAsBilling } = useShippingAsBilling();
 const {
   isLoading: formIsLoading,

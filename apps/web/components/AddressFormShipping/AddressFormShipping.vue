@@ -179,7 +179,8 @@ import type { AddressFormShippingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormShippingProps>();
 
-const { isGuest, missingGuestCheckoutEmail, backToContactInformation, getSession } = useCustomer();
+const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
+const { getSession } = useFetchSession();
 const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
