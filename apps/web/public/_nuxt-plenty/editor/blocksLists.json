@@ -1,7 +1,7 @@
 {
   "layout": {
     "category": "layout",
-    "accessControl": [],
+    "accessControl": ["homepage"],
     "title": "Layout",
     "blockName": "MultiGrid",
     "variations": [
