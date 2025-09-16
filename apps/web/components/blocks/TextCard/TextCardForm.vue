@@ -202,7 +202,7 @@
     </fieldset>
   </UiAccordionItem>
   <UiAccordionItem
-    v-if="runtimeConfig.public.isDev"
+
     v-model="layoutSettings"
     data-testid="layout-settings"
     summary-active-class="bg-neutral-100 border-t-0"
@@ -314,7 +314,7 @@ import type { TextCardFormProps, TextCardContent } from './types';
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const runtimeConfig = useRuntimeConfig();
+
 
 const props = defineProps<TextCardFormProps>();
 
