@@ -11,6 +11,9 @@
           'lg:pl-4': props.content?.imageAlignment === 'right',
         },
       ]"
+      :style="{
+        filter: props.content.brightness ? 'brightness(' + (props.content.brightness ?? 1) + ')' : '',
+      }"
       :width="getImageDimensions().width"
       :height="getImageDimensions().height"
       data-testid="image-block"

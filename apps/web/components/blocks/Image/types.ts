@@ -17,6 +17,7 @@ export type ImageContent = {
   mobile?: string;
   alt: string;
   imageAlignment: 'left' | 'right';
+  brightness?: number;
   textOverlay?: string;
   textOverlayColor?: string;
   textOverlayAlignY?: 'top' | 'center' | 'bottom';

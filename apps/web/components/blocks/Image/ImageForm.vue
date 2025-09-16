@@ -37,6 +37,30 @@
       </label>
     </div>
 
+    <div class="py-2">
+      <label class="block text-sm font-medium mb-4">Brightness</label>
+      <div class="flex items-center gap-4">
+        <div class="flex-1 space-y-1">
+          <div class="flex justify-between text-xs text-gray-500">
+            <span>0%</span>
+            <span>100%</span>
+          </div>
+          <input v-model.number="uiImageTextBlock.brightness" type="range" min="0" max="1" step="0.01" class="w-full" />
+        </div>
+
+        <div class="relative">
+          <input
+            v-model.number="uiImageTextBlock.brightness"
+            type="number"
+            min="0"
+            max="1"
+            class="w-20 px-2 py-1 border rounded text-color-red-500"
+            @input="clampBrightness($event, 'image')"
+          />
+        </div>
+      </div>
+    </div>
+
     <fieldset class="py-2">
       <UiFormLabel>{{ getEditorTranslation('image-align-label') }}</UiFormLabel>
 
@@ -276,6 +300,7 @@
 <script setup lang="ts">
 import { SfInput, SfIconCheck, SfTextarea } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
+import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
@@ -297,6 +322,15 @@ const buttonOpen = ref(false);
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
   const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
   handleImageAdd({ image, type });
+};
+
+const clampBrightness = (event: Event, type: string) => {
+  const currentValue = (event.target as HTMLInputElement)?.value;
+  const nextValue = Number.parseFloat(currentValue);
+
+  if (type === 'image') {
+    uiImageTextBlock.value.brightness = clamp(nextValue, 0, 1);
+  }
 };
 </script>
 
