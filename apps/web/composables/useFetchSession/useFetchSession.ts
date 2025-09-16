@@ -1,17 +1,6 @@
 import {
-  AddressType,
   type ApiError,
-  type RegisterParams,
-  type User,
-  type UserChangeResponse,
-  type UserChangePasswordParams,
-  userGetters,
 } from '@plentymarkets/shop-api';
-import { toTypedSchema } from '@vee-validate/yup';
-import { object, string } from 'yup';
-import { scrollToHTMLObject } from '~/utils/scollHelper';
-
-const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable to fetch current session data including user and cart information.
