@@ -1,6 +1,4 @@
-import type {
-  ApiError,
-} from '@plentymarkets/shop-api';
+import type { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable to fetch current session data including user and cart information.
