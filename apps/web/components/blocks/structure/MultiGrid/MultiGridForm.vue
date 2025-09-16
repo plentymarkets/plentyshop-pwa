@@ -68,7 +68,7 @@
             </button>
           </div>
           <div class="mt-2 text-xs text-neutral-700">
-            Spacing between Blocks: {{ getGapPx(multiGridStructure.layout.gap) }}px
+            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.layout.gap) }}px
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
       <template #summary>
-        <h2>Layout Background</h2>
+        <h2>{{ getEditorTranslation('layout-background') }}</h2>
       </template>
 
       <div v-if="multiGridStructure.layout" class="py-2">
@@ -176,7 +176,9 @@ const layoutBackground = ref(false);
     "gap-size-m": "M",
     "gap-size-l": "L",
     "gap-size-xl": "XL",
-    "spacing-around": "Spacing around"
+    "spacing-around": "Spacing around",
+    "spacing-between": "Spacing between Blocks:",
+    "layout-background": "Layout Background"
   },
   "de": {
     "layout-settings": "Layout Einstellungen",
@@ -188,7 +190,9 @@ const layoutBackground = ref(false);
     "gap-size-m": "M",
     "gap-size-l": "L",
     "gap-size-xl": "XL",
-    "spacing-around": "Abstand um"
+    "spacing-around": "Abstand um",
+    "spacing-between": "Abstand zwischen Blöcken:",
+    "layout-background": "Layout Hintergrund"
   }
 }
 </i18n>
