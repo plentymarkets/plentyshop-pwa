@@ -15,7 +15,17 @@
       :height="getImageDimensions().height"
       data-testid="image-block"
     />
-
+    <UiButton
+      v-if="props.content?.label"
+      class="flex flex-col md:flex-row gap-4 mt-6"
+      :tag="NuxtLink"
+      :to="localePath(props.content.link ?? '')"
+      :variant="props.content.variant ?? 'primary'"
+      size="lg"
+      :data-testid="'banner-button-' + (meta?.uuid ?? '')"
+    >
+      {{ props.content.label }}
+    </UiButton>
     <div
       v-if="props.content?.textOverlay && runtimeConfig.public.isDev"
       class="absolute w-full h-full px-4 pointer-events-none flex"
@@ -32,6 +42,8 @@ import type { ImageTextProps, ImageDimensions } from './types';
 const runtimeConfig = useRuntimeConfig();
 
 const viewport = useViewport();
+const NuxtLink = resolveComponent('NuxtLink');
+const localePath = useLocalePath();
 
 const props = defineProps<ImageTextProps>();
 

@@ -208,6 +208,69 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+
+  <UiAccordionItem
+    v-model="buttonOpen"
+    summary-active-class="bg-neutral-100"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('button-group-label') }}</h2>
+    </template>
+
+    <div class="images">
+      <div class="mb-6 mt-4">
+        <label>
+          <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+          <SfInput
+            v-model="uiImageTextBlock.label"
+            data-testid="slider-button-label"
+            name="label"
+            type="text"
+            :placeholder="getEditorTranslation('button-text-placeholder')"
+          />
+        </label>
+      </div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+        <SfInput
+          v-model="uiImageTextBlock.link"
+          name="link"
+          data-testid="slider-button-link"
+          type="text"
+          :placeholder="getEditorTranslation('button-link-placeholder')"
+        />
+      </div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('button-variant-label') }}</UiFormLabel>
+        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+          <div
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{
+              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.variant === 'primary',
+            }"
+            data-testid="slider-button-primary"
+            @click="uiImageTextBlock.variant = 'primary'"
+          >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.variant !== 'primary' }" />
+            {{ getEditorTranslation('button-variant-primary-label') }}
+          </div>
+
+          <div
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{
+              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.variant === 'secondary',
+            }"
+            data-testid="slider-button-secondary"
+            @click="uiImageTextBlock.variant = 'secondary'"
+          >
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.variant !== 'secondary' }" />
+            {{ getEditorTranslation('button-variant-secondary-label') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
@@ -229,6 +292,7 @@ const uiImageTextBlock = computed(
 
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
+const buttonOpen = ref(false);
 
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
   const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
@@ -271,7 +335,15 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
     "text-overlay-align-y-label": "Horizontal Alignment",
     "text-overlay-align-y-left": "Left",
     "text-overlay-align-y-center": "Center",
-    "text-overlay-align-y-right": "Right"
+    "text-overlay-align-y-right": "Right",
+    "button-group-label": "Button",
+    "button-text-label": "Label",
+    "button-text-placeholder": "Button",
+    "button-link-label": "Link Target",
+    "button-link-placeholder": "Enter URL here",
+    "button-variant-label": "Variant",
+    "button-variant-primary-label": "Primary",
+    "button-variant-secondary-label": "Secondary"
   },
   "de": {
     "images-group-label": "Images",
@@ -306,7 +378,16 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
     "text-overlay-align-y-label": "Horizontal Alignment",
     "text-overlay-align-y-left": "Left",
     "text-overlay-align-y-center": "Center",
-    "text-overlay-align-y-right": "Right"
+    "text-overlay-align-y-right": "Right",
+
+    "button-group-label": "Button",
+    "button-text-label": "Label",
+    "button-text-placeholder": "Button",
+    "button-link-label": "Link Target",
+    "button-link-placeholder": "Enter URL here",
+    "button-variant-label": "Variant",
+    "button-variant-primary-label": "Primary",
+    "button-variant-secondary-label": "Secondary"
   }
 }
 </i18n>

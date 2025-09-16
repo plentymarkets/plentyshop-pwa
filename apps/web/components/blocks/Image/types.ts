@@ -21,6 +21,9 @@ export type ImageContent = {
   textOverlayColor?: string;
   textOverlayAlignX?: 'top' | 'center' | 'bottom';
   textOverlayAlignY?: 'left' | 'center' | 'right';
+  label?: string;
+  link?: string;
+  variant?: 'primary' | 'secondary';
 };
 
 export interface ImageDimensions {
