@@ -131,8 +131,8 @@ const multiGridStructure = computed(() => {
     block.layout = {
       marginTop: 0,
       marginBottom: 0,
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: 40,
+      marginRight: 40,
       backgroundColor: '#ffffff',
       gap: 'M',
     };
