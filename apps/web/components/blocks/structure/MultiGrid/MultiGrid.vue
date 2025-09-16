@@ -91,7 +91,6 @@ const blockHasData = (block: Block): boolean => !!block.content && Object.keys(b
 
 const showOverlay = computed(
   () => (block: Block) =>
-    Boolean(runtimeConfig.public.isDev) &&
     disableActions.value &&
     $isPreview &&
     !isDragging.value &&
