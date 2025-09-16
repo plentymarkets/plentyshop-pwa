@@ -1,4 +1,4 @@
-export type ImageTextProps = {
+export type ImageProps = {
   name: string;
   type: string;
   content: ImageContent;

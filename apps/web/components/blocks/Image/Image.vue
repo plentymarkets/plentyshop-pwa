@@ -39,14 +39,14 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageTextProps, ImageDimensions } from './types';
+import type { ImageProps, ImageDimensions } from './types';
 const runtimeConfig = useRuntimeConfig();
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 
-const props = defineProps<ImageTextProps>();
+const props = defineProps<ImageProps>();
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
