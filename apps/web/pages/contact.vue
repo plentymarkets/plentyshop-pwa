@@ -197,7 +197,7 @@ const validationSchema = toTypedSchema(
       .trim()
       .required(t('errorMessages.contact.subjectRequired'))
       .default('')
-      .test('min-length', t('storefrontError.contactMail.subjectInvalid'), (val) => (val && val.length >= 3) || false),
+      .test('min-length', t('storefrontError.contactMail.subjectInvalid'), (val) => Boolean(val && val.length >= 3)),
     orderId: string()
       .trim()
       .notRequired()
