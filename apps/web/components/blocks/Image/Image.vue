@@ -66,16 +66,16 @@ const getImageUrl = () => {
 };
 const overlayAlignClasses = computed(() => {
   const vertical =
-    props.content?.textOverlayAlignX === 'top'
+    props.content?.textOverlayAlignY === 'top'
       ? 'items-start'
-      : props.content?.textOverlayAlignX === 'bottom'
+      : props.content?.textOverlayAlignY === 'bottom'
         ? 'items-end'
         : 'items-center';
 
   const horizontal =
-    props.content?.textOverlayAlignY === 'left'
+    props.content?.textOverlayAlignX === 'left'
       ? 'justify-start text-left'
-      : props.content?.textOverlayAlignY === 'right'
+      : props.content?.textOverlayAlignX === 'right'
         ? 'justify-end text-right'
         : 'justify-center text-center';
 

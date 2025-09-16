@@ -123,11 +123,11 @@
         <div
           data-testid="align-x-top"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'top' }"
-          @click="uiImageTextBlock.textOverlayAlignX = 'top'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'top' }"
+          @click="uiImageTextBlock.textOverlayAlignY = 'top'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'top' }"
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'top' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-left') }}
@@ -136,11 +136,11 @@
         <div
           data-testid="align-x-center"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'center' }"
-          @click="uiImageTextBlock.textOverlayAlignX = 'center'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'center' }"
+          @click="uiImageTextBlock.textOverlayAlignY = 'center'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'center' }"
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'center' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-center') }}
@@ -149,11 +149,11 @@
         <div
           data-testid="align-x-bottom"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'bottom' }"
-          @click="uiImageTextBlock.textOverlayAlignX = 'bottom'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'bottom' }"
+          @click="uiImageTextBlock.textOverlayAlignY = 'bottom'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'bottom' }"
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'bottom' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-right') }}
@@ -170,11 +170,11 @@
         <div
           data-testid="align-y-left"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'left' }"
-          @click="uiImageTextBlock.textOverlayAlignY = 'left'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'left' }"
+          @click="uiImageTextBlock.textOverlayAlignX = 'left'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'left' }"
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'left' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-y-top') }}
@@ -183,24 +183,24 @@
         <div
           data-testid="align-y-center"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'center' }"
-          @click="uiImageTextBlock.textOverlayAlignY = 'center'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'center' }"
+          @click="uiImageTextBlock.textOverlayAlignX = 'center'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'center' }"
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'center' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
-          {{ getEditorTranslation('text-overlay-align-y-center') }}
+          {{ getEditorTranslation('text-overlay-align-x-center') }}
         </div>
 
         <div
           data-testid="align-y-right"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'right' }"
-          @click="uiImageTextBlock.textOverlayAlignY = 'right'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'right' }"
+          @click="uiImageTextBlock.textOverlayAlignX = 'right'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'right' }"
+            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'right' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-y-bottom') }}

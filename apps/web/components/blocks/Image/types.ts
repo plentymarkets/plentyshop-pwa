@@ -19,8 +19,8 @@ export type ImageContent = {
   imageAlignment: 'left' | 'right';
   textOverlay?: string;
   textOverlayColor?: string;
-  textOverlayAlignX?: 'top' | 'center' | 'bottom';
-  textOverlayAlignY?: 'left' | 'center' | 'right';
+  textOverlayAlignY?: 'top' | 'center' | 'bottom';
+  textOverlayAlignX?: 'left' | 'center' | 'right';
   label?: string;
   link?: string;
   variant?: 'primary' | 'secondary';
