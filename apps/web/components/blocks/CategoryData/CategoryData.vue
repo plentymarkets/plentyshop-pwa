@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <h1
-      class="my-10 font-bold typography-headline-3 md:typography-headline-2"
-      data-testid="category-name"
-      :index="props.index"
-    >
-      {{ title }}
-    </h1>
-  </div>
+  <h1
+    class="my-10 font-bold typography-headline-3 md:typography-headline-2"
+    data-testid="category-name"
+    :index="props.index"
+  >
+    {{ title }}
+  </h1>
 </template>
 
 <script setup lang="ts">
