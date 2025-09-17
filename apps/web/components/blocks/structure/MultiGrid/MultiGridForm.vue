@@ -124,13 +124,30 @@ import {
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const blockSize = computed(() => getBlockSize());
+
+const defaultMarginBottom = computed(() => {
+  switch (blockSize.value) {
+    case 's':
+      return 30;
+    case 'm':
+      return 40;
+    case 'l':
+      return 50;
+    case 'xl':
+      return 60;
+    default:
+      return 0;
+  }
+});
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
   if (!block.layout) {
     block.layout = {
       marginTop: 0,
-      marginBottom: 0,
+      marginBottom: defaultMarginBottom.value,
       marginLeft: 40,
       marginRight: 40,
       backgroundColor: '#ffffff',
@@ -139,6 +156,8 @@ const multiGridStructure = computed(() => {
   } else {
     if (!block.layout.backgroundColor) block.layout.backgroundColor = '#ffffff';
     if (!block.layout.gap) block.layout.gap = 'M';
+    // Always update marginBottom based on blockSize
+    block.layout.marginBottom = defaultMarginBottom.value;
   }
   return block;
 });
