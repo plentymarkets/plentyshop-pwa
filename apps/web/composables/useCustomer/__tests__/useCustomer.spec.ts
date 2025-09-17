@@ -1,11 +1,11 @@
 import { useCustomer } from '~/composables/useCustomer/useCustomer';
 
 describe('useCustomer', () => {
-  it('should return account data', async () => {
-    const { getSession, data } = useCustomer();
+  it('should return account data after guest login', async () => {
+    const { loginAsGuest, user } = useCustomer();
 
-    await getSession();
+    await loginAsGuest('max.mustermann@plentyone.com');
 
-    expect(data.value).not.toBeUndefined();
+    expect(user.value).not.toBeUndefined();
   });
 });

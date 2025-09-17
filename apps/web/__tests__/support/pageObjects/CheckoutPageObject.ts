@@ -226,11 +226,16 @@ export class CheckoutPageObject extends PageObject {
       .intercept('/plentysystems/getShippingProvider')
       .as('getShippingProvider')
       .intercept('/plentysystems/getPaymentProviders')
-      .as('getPaymentProviders');
+      .as('getPaymentProviders')
+      .intercept('/plentysystems/getSession')
+      .as('getSession');
 
     this.fillAddressForm('shipping', fixtureOverride);
 
-    cy.wait(['@doSaveAddress', '@getShippingProvider', '@getPaymentProviders'], { timeout: 20000 });
+    cy.wait('@doSaveAddress', { timeout: 20000 });
+    cy.wait(['@getShippingProvider', '@getPaymentProviders', '@getSession'], { timeout: 20000 });
+
+    cy.wait(1000);
 
     return this;
   }
