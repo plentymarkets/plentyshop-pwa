@@ -36,13 +36,3 @@ export const handlePreviousRouteNavigation = (dependencies: NavigationDependenci
 
   return navTo(localePath(paths.home));
 };
-
-export const goToPreviousRoute = () => {
-  handlePreviousRouteNavigation({
-    router: useRouter(),
-    isAuthorized: useCustomer().isAuthorized.value,
-    i18n: useNuxtApp().$i18n,
-    localePath: useLocalePath(),
-    navigateTo: navigateTo,
-  });
-};

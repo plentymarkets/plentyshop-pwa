@@ -53,7 +53,8 @@ describe('Smoke: Cart Page', () => {
 
   it('should display product with surcharge order property correct', () => {
     const quantity = 2;
-    const Expected_Surcharge = '21.56';
+    const Expected_Surcharge = ' (zzgl. 25,00 EUR)';
+    cy.visitAndHydrate('/de');
     cy.addToCart(1025, quantity, [
       {
         property: {

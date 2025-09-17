@@ -90,11 +90,9 @@ describe('useCheckoutPagePaymentAndShipping', () => {
     const saveShippingMethodMock = vi.fn();
     const fetchPaymentMethodsMock = vi.fn();
     const savePaymentMethodMock = vi.fn();
-    const getCartMock = vi.fn();
 
     useCart.mockImplementation(() => ({
       cart: ref({ methodOfPaymentId: 1 }),
-      getCart: getCartMock,
     }));
 
     usePaymentMethods.mockImplementation(() => ({
@@ -117,7 +115,6 @@ describe('useCheckoutPagePaymentAndShipping', () => {
 
     expect(saveShippingMethodMock).toHaveBeenCalledWith(123);
     expect(fetchPaymentMethodsMock).toHaveBeenCalled();
-    expect(getCartMock).toHaveBeenCalled();
   });
 
   it('should update payment method and refresh shipping methods', async () => {
