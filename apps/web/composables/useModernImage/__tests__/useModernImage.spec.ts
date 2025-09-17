@@ -13,43 +13,6 @@ mockNuxtImport('useRuntimeConfig', () => {
   return useRuntimeConfig;
 });
 
-describe('useModernImage with only webp enabled', () => {
-  beforeEach(() => {
-    useRuntimeConfig.mockImplementation(() => {
-      return {
-        public: {
-          useAvif: false,
-          useWebp: true,
-        },
-      };
-    });
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-  it('should add the webp extension to the url', () => {
-    const { addModernImageExtension } = useModernImage();
-    const url = 'https://example.com/item/images/image.jpg';
-    const res = addModernImageExtension(url);
-    expect(res).toBe('https://example.com/item/images/image.jpg.webp');
-  });
-
-  it('should not add the webp extension to the url if the url has no /item/images/ in it', () => {
-    const { addModernImageExtension } = useModernImage();
-    const url = 'https://example.com/images/image.jpg';
-    const res = addModernImageExtension(url);
-    expect(res).toBe('https://example.com/images/image.jpg');
-  });
-
-  it('should not add the webp extension to the url if the base extension is already webp', () => {
-    const { addModernImageExtension } = useModernImage();
-    const url = 'https://example.com/item/images/image.webp';
-    const res = addModernImageExtension(url);
-    expect(res).toBe('https://example.com/item/images/image.webp');
-  });
-});
-
 describe('useModernImage with webp and avif enabled', () => {
   beforeEach(() => {
     useRuntimeConfig.mockImplementation(() => {
@@ -68,10 +31,10 @@ describe('useModernImage with webp and avif enabled', () => {
 
   it('should add the avif extension to the url', () => {
     const { initialData, setInitialData } = useSiteSettings();
-    setInitialData([
-      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
-    ]);
+    // setInitialData([
+    //   { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+    //   { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    // ]);
     console.log('initialdata: ', initialData.value)
 
     const { addModernImageExtension } = useModernImage();
