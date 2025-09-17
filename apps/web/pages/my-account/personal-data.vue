@@ -14,7 +14,7 @@
     data-testid="account-name"
     @on-click="openModal('yourName')"
   >
-    {{ userData?.user?.firstName }} {{ userData?.user?.lastName }}
+    {{ user?.firstName }} {{ user?.lastName }}
   </AccountData>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
@@ -24,7 +24,7 @@
     data-testid="account-email"
     @on-click="openModal('contactInformation')"
   >
-    {{ userData?.user?.email }}
+    {{ user?.email }}
   </AccountData>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
@@ -93,5 +93,5 @@ const closeModal = () => {
   lastActiveElement.value.focus();
 };
 
-const { data: userData } = useCustomer();
+const { user } = useCustomer();
 </script>

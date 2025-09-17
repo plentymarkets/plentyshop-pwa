@@ -89,7 +89,7 @@
               <template #prefix>
                 <SfIconPerson />
               </template>
-              {{ user.user?.firstName }}
+              {{ user?.firstName }}
             </UiButton>
           </template>
           <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -239,7 +239,7 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
-const { data: user, isAuthorized, logout } = useCustomer();
+const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
