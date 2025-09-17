@@ -51,10 +51,10 @@ describe('Smoke: Cart Page', () => {
     cart.increaseCartItemQuantity().increaseCartItemQuantity().summaryItems('Items: 4');
   });
 
-  it.only('should display product with surcharge order property correct', () => {
+  it('should display product with surcharge order property correct', () => {
     const quantity = 2;
     const Expected_Surcharge = ' (zzgl. 25,00 EUR)';
-    cy.visitAndHydrate('/de')
+    cy.visitAndHydrate('/de');
     cy.addToCart(1025, quantity, [
       {
         property: {
