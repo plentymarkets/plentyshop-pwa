@@ -253,9 +253,9 @@ const uiItemGridBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ItemGridContent,
 );
 
-const desktopOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const tabletOptions = [1, 2, 3, 4, 5];
-const mobileOptions = [1, 2, 3, 4];
+const desktopOptions = [2, 3, 4, 5, 6, 7];
+const tabletOptions = [2, 3, 4, 5, 6];
+const mobileOptions = [1, 2];
 
 const fieldLabels: Record<string, string> = {
   manufacturer: getEditorTranslation('field-manufacturer'),
