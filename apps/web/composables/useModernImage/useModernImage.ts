@@ -28,7 +28,6 @@ export const useModernImage: UseModernImageReturn = () => {
 
     const baseExtension = String(matches[1].split('.').pop());
 
-    console.log('tess:', useAvif(), useWebp());
     if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(url)) return url;
     if (useAvif() && baseExtension !== avifExtension) return `${url}.${avifExtension}`;
     if (useWebp() && baseExtension !== webpExtension) return `${url}.${webpExtension}`;
