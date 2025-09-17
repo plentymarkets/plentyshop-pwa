@@ -1,6 +1,6 @@
-import type { Setting } from '../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { Setting } from '@plentymarkets/shop-api';
 
-export type SettingValue = string | number | boolean | any[] | object | null;
+export type SettingValue = string | number | boolean | unknown[] | object | null;
 
 export interface UseSiteSettingsState {
   data: {

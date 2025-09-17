@@ -7,7 +7,7 @@ import type {
   SetSettingsInitialData,
   SettingValue,
 } from '~/composables/useSiteSettings/types';
-import type { Setting } from '../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { Setting } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing site settings.
