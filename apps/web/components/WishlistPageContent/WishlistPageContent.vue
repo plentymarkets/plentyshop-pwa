@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfLink } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 import { paths } from '~/utils/paths';
@@ -63,7 +63,6 @@ const localePath = useLocalePath();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 const { t } = useI18n();
-const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { fetchWishlist, data: products, loading } = useWishlist();
 
 fetchWishlist();

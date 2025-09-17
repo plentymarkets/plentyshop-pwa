@@ -72,33 +72,20 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
 import { SfIconTune, SfLink, useDisclosure } from '@storefront-ui/vue';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 
 const { t } = useI18n();
-const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { addModernImageExtension } = useModernImage();
+const { getFacetsFromURL } = useCategoryFilter();
 const { open } = useDisclosure();
-const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
+const { data: productsCatalog, productsPerPage } = useProducts();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { showNetPrices } = useCart();
 
 const props = defineProps<ItemGridProps>();
-
-await fetchProducts({
-  categoryUrlPath: '/livingroom',
-  facets: undefined,
-  itemsPerPage: 50,
-  page: 1,
-  priceMax: undefined,
-  priceMin: undefined,
-  sort: 'texts.name1_desc',
-}).then(() => checkFiltersInURL());
-
-console.log('pops: ', props.content);
 
 const products = computed(() => productsCatalog.value?.products ?? []);
 const totalProducts = computed(() => productsCatalog.value?.pagination?.totals ?? []);
