@@ -243,14 +243,14 @@ export class EditorObject extends PageObject {
   }
 
   switchLanguage() {
-    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getBlocks').as('getBlocks');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
-    cy.intercept('/plentysystems/getFacet').as('getFacet');
+    cy.intercept('/plentysystems/getSession').as('getSession');
 
     this.editPreviewButton.click();
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
-    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
     this.title.first().should('have.text', 'Ihr Sound');
   }
 
