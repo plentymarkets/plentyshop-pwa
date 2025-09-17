@@ -156,12 +156,12 @@ const multiGridStructure = computed(() => {
   } else {
     if (!block.layout.backgroundColor) block.layout.backgroundColor = '#ffffff';
     if (!block.layout.gap) block.layout.gap = 'M';
-    // Always update marginBottom based on blockSize
-    block.layout.marginBottom = defaultMarginBottom.value;
+    if (block.layout.marginBottom === undefined || block.layout.marginBottom === null) {
+      block.layout.marginBottom = defaultMarginBottom.value;
+    }
   }
   return block;
 });
-
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
