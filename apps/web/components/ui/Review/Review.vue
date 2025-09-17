@@ -133,7 +133,7 @@ const { reviewItem } = toRefs(props);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 
-const { data: sessionData, isAuthorized } = useCustomer();
+const { user, isAuthorized } = useCustomer();
 const { currentProduct } = useProducts();
 const { openReviewModal } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
 
@@ -147,9 +147,9 @@ const tooltipReplyLabel = (reply: ReviewItem) =>
   reviewGetters.getReviewVisibility(reply) ? t('review.tooltipVisibilityOn') : t('review.tooltipVisibilityOff');
 
 const isAnswerEditable = (replyItem: ReviewItem) =>
-  replyItem.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString();
+  replyItem.sourceRelation[0].feedbackRelationSourceId === user.value?.id?.toString();
 
 const isEditable = computed(
-  () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString(),
+  () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === user.value?.id?.toString(),
 );
 </script>

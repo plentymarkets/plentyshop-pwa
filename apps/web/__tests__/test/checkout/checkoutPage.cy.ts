@@ -41,6 +41,7 @@ describe('Smoke: Checkout Page', () => {
         country: '7',
         zipCode: '1234',
       })
+      .waitForUiToRender()
       .shouldNotShowShippingMethods();
   });
 

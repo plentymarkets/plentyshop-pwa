@@ -514,6 +514,7 @@
     "contact": {
       "messageRequired": "Nachricht ist erforderlich.",
       "nameRequired": "Name ist erforderlich.",
+      "subjectRequired": "Betreff ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     },
@@ -1054,6 +1055,12 @@
     "externalMedia": "Externe Medien",
     "necessary": "Essenziell",
     "marketing": "Marketing (empfohlen)"
+  },
+  "sessionLifetime": {
+    "untilBrowserClosed": "Bis der Browser geschlossen wird",
+    "oneHour": "Eine Stunde, auch wenn der Browser geschlossen wird",
+    "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
+    "oneHundredDays": "Einhundert Tage, auch wenn der Browser geschlossen wird"
   },
   "storefrontError": {
     "offer": {
