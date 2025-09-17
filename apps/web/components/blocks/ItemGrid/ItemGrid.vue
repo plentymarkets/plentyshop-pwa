@@ -89,7 +89,7 @@ const { showNetPrices } = useCart();
 const props = defineProps<ItemGridProps>();
 
 await fetchProducts({
-  categoryUrlPath: '/living-room',
+  categoryUrlPath: '/livingroom',
   facets: undefined,
   itemsPerPage: 50,
   page: 1,
