@@ -2,29 +2,19 @@ import {
   AddressType,
   type ApiError,
   type RegisterParams,
-  type SessionResult,
+  type User,
+  type UserChangeResponse,
   type UserChangePasswordParams,
   userGetters,
 } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import type {
-  ChangePassword,
-  GetSession,
-  Login,
-  LoginAsGuest,
-  Logout,
-  Register,
-  UseCustomerReturn,
-  UseCustomerState,
-} from '~/composables/useCustomer/types';
 import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
- * @returns UseCustomerReturn
  * @example
  * ``` ts
  * const {
@@ -32,11 +22,11 @@ const CONTACT_INFORMATION = '#contact-information';
  * setPrivacyPolicy, changePassword } = useCustomer();
  * ```
  */
-export const useCustomer: UseCustomerReturn = () => {
+export const useCustomer = () => {
   const { emit } = usePlentyEvent();
   const { $i18n } = useNuxtApp();
-  const state = useState<UseCustomerState>(`useCustomer`, () => ({
-    data: {} as SessionResult,
+  const state = useState(`useCustomer`, () => ({
+    user: null as User | null,
     loading: false,
     isAuthorized: false,
     isGuest: false,
@@ -50,7 +40,7 @@ export const useCustomer: UseCustomerReturn = () => {
    * ```
    */
   const checkUserState = () => {
-    if (state.value.data?.user?.guestMail) {
+    if (state.value.user?.guestMail) {
       state.value.isGuest = true;
       state.value.validGuestEmail = true;
       state.value.isAuthorized = false;
@@ -59,85 +49,85 @@ export const useCustomer: UseCustomerReturn = () => {
 
     state.value.isGuest = false;
     state.value.validGuestEmail = false;
-    state.value.isAuthorized = !!state.value.data?.user?.email;
+    state.value.isAuthorized = !!state.value.user?.email;
   };
 
-  /** Function for getting current user/cart data from session
+  /**
+   * Gets the current user/cart session data.
+   *
+   * @deprecated This method will be removed in future versions.
+   * Use `useFetchSession().fetchSession()` instead.
+   *
+   * @returns { Promise<void> }
+   *
    * @example
-   * ``` ts
+   * ```ts
    * getSession();
    * ```
    */
-  const getSession: GetSession = async () => {
-    state.value.loading = true;
-    try {
-      const { data } = await useSdk().plentysystems.getSession();
-      state.value.data = data ?? null;
-      checkUserState();
-      useWishlist().setWishlistItemIds(Object.values(state.value.data?.basket?.itemWishListIds || []));
-    } catch (error) {
-      useHandleError(error as ApiError);
-    } finally {
-      state.value.loading = false;
-    }
-
-    return state.value.data;
+  const getSession = async () => {
+    await useFetchSession().fetchSession();
   };
 
   /** Function for setting user data
-   * @param data { SessionResult }
+   * @param { User | null } user
+   * @returns { void }
    * @example
    * ``` ts
-   * setUser(data: SessionResult);
+   * setUser(user);
    * ```
    */
-  const setUser = (data: SessionResult) => {
-    state.value.data = data;
+  const setUser = (user: User | null) => {
+    state.value.user = user;
     checkUserState();
   };
 
   /** Function for login a user as guest
-   * @param email
-   * @return LoginAsGuest
+   * @param { string } email
+   * @returns { Promise<void> }
    * @example
    * ``` ts
    * loginAsGuest('user@example.com');
    * ```
    */
-  const loginAsGuest: LoginAsGuest = async (email: string) => {
+  const loginAsGuest = async (email: string) => {
     try {
       state.value.loading = true;
-      await useSdk().plentysystems.doLoginAsGuest({ email: email });
+      const { data } = await useSdk().plentysystems.doLoginAsGuest({ email: email });
+
+      if (data && data.basket) {
+        const { setCart } = useCart();
+        setUser(data.user ?? null);
+        setCart(data.basket);
+      } else {
+        await useFetchSession().fetchSession();
+      }
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
       state.value.loading = false;
     }
-    checkUserState();
   };
 
   /** Function for user login.
-   * @param email
-   * @param password
-   * @return Login
+   * @param { string } email
+   * @param { string } password
+   * @return { Promise<boolean> }
    * @example
    * ``` ts
    * login('user@example.com', 'password');
    * ```
    */
-  const login: Login = async (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     state.value.loading = true;
 
     try {
-      await useSdk()
-        .plentysystems.doLogin({ email: email, password: password })
-        .then(async () => {
-          await getSession();
+      await useSdk().plentysystems.doLogin({ email: email, password: password });
+      await useFetchSession().fetchSession();
 
-          if (state.value.data?.user) {
-            emit('frontend:login', { user: state.value.data.user });
-          }
-        });
+      if (state.value.user) {
+        emit('frontend:login', { user: state.value.user });
+      }
 
       return state.value.isAuthorized;
     } catch (error) {
@@ -148,17 +138,17 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for user logout.
-   * @return Logout
+   * @returns { Promise<void> }
    * @example
    * ``` ts
    * logout();
    * ```
    */
-  const logout: Logout = async () => {
+  const logout = async () => {
     try {
       state.value.loading = true;
       await useSdk().plentysystems.doLogoutUser();
-      state.value.data.user = null;
+      state.value.user = null;
       useCheckoutAddress(AddressType.Shipping).clear();
       useCheckoutAddress(AddressType.Billing).clear();
     } catch (error) {
@@ -172,22 +162,22 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for registering a user.
-   * @param params { RegisterParams }
-   * @return Register
+   * @param { RegisterParams } params
+   * @returns { Promise<UserChangeResponse | null> }
    * @example
    * ``` ts
    * register({ email: 'example', password: 'example', 'cf-turnstile-response': '' });
    * ```
    */
-  const register: Register = async (params: RegisterParams) => {
+  const register = async (params: RegisterParams): Promise<UserChangeResponse | null> => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.doRegisterUser(params);
       if (data) {
-        await getSession();
+        await useFetchSession().fetchSession();
 
-        if (state.value.data?.user) {
-          emit('frontend:signUp', { user: state.value.data.user });
+        if (state.value.user) {
+          emit('frontend:signUp', { user: state.value.user });
         }
       }
       return data;
@@ -201,7 +191,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
   /** Function for changing the user password
    * @param params { UserChangePasswordParams }
-   * @return ChangePassword
+   * @returns { Promise<boolean> }
    * @example
    * ``` ts
    * changePassword({
@@ -211,7 +201,7 @@ export const useCustomer: UseCustomerReturn = () => {
    * });
    * ```
    */
-  const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
+  const changePassword = async (params: UserChangePasswordParams): Promise<boolean> => {
     state.value.loading = true;
 
     try {
@@ -232,7 +222,7 @@ export const useCustomer: UseCustomerReturn = () => {
         .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) =>
           userGetters.isValidEmailAddress(email),
         )
-        .default(state.value.data?.user?.email ?? state.value.data?.user?.guestMail ?? ''),
+        .default(state.value.user?.email ?? state.value.user?.guestMail ?? ''),
     }),
   );
 
@@ -240,6 +230,10 @@ export const useCustomer: UseCustomerReturn = () => {
     () => (state.value.isGuest || (!state.value.isGuest && !state.value.isAuthorized)) && !state.value.validGuestEmail,
   );
 
+  /**
+   * Function to scroll back to contact information section in checkout and highlight it
+   * @return { boolean } always false to prevent default form submission
+   */
   const backToContactInformation = (): boolean => {
     const classList = ['bg-primary-50', 'rounded-md'];
     const opacityClass = 'opacity-0';
