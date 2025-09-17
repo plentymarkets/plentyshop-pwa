@@ -67,7 +67,11 @@ describe('useModernImage with webp and avif enabled', () => {
   });
 
   it('should add the avif extension to the url', () => {
-    const { initialData } = useSiteSettings();
+    const { initialData, setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    ]);
     console.log('initialdata: ', initialData.value)
 
     const { addModernImageExtension } = useModernImage();
