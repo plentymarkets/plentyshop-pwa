@@ -104,7 +104,9 @@
 
         <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
           <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-            <span v-if="!canAddFromCategory" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
+            <span v-if="!canAddFromCategory" class="mr-1">{{
+              t('account.ordersAndReturns.orderDetails.priceFrom')
+            }}</span>
             <span>{{ format(price) }}</span>
             <span>{{ t('asterisk') }}</span>
           </span>
@@ -159,9 +161,8 @@ import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 
 const props = defineProps<ProductCardProps>();
 
-
 const product = computed(() => props.product);
-const configuration = computed(() => props.configuration || {} as ItemGridContent);
+const configuration = computed(() => props.configuration || ({} as ItemGridContent));
 
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
