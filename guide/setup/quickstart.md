@@ -10,7 +10,7 @@ By the end of this guide, you will have:
 * A running local application
 * Deployed your first shop inside PlentyONE
 
-Before you begin, you need a you need a PlentyONE system.
+Before you begin, you need a PlentyONE system.
 If you don't have one yet, you can book a 30-day trial [on our website](https://www.plentyone.com/).
 
 ## GitHub setup
@@ -75,7 +75,7 @@ This information, including your API endpoint and security token, allows your lo
 1. Open your project.
 1. In the `apps/web` directory, create a `.env` file.
 1. Paste the environment information into your `.env` file.
-1. Add the default language of your shop, for example `de` or `en`.
+1. Add the default language of your shop, for example `DEFAULTLANGUAGE='de'` or `DEFAULTLANGUAGE='en'`.
 
 Your environment file should look like this:
 
