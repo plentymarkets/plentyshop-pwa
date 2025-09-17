@@ -7,7 +7,7 @@ export const useAddressForm = (type: AddressType) => {
   const { $i18n } = useNuxtApp();
   const { selectedMethod, getShippingMethods } = useCartShippingMethods();
   const { fetchPaymentMethods } = usePaymentMethods();
-  const { getSession } = useFetchSession();
+  const { fetchSession } = useFetchSession();
   const { data: cartData } = useCart();
   const { send } = useNotification();
   const { restrictedAddresses } = useRestrictedAddress();
@@ -120,7 +120,7 @@ export const useAddressForm = (type: AddressType) => {
   };
 
   const refreshAddressDependencies = async () => {
-    await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
+    await Promise.all([fetchSession(), getShippingMethods(), fetchPaymentMethods()]);
     notifyIfShippingChanged();
     notifyIfBillingChanged();
 

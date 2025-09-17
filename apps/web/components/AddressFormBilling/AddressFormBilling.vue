@@ -175,7 +175,7 @@ import type { AddressFormBillingProps } from './types';
 const { disabled, address, addAddress = false } = defineProps<AddressFormBillingProps>();
 
 const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
-const { getSession } = useFetchSession();
+const { fetchSession } = useFetchSession();
 const { shippingAsBilling } = useShippingAsBilling();
 const {
   isLoading: formIsLoading,
@@ -277,7 +277,7 @@ const validateAndSubmitForm = async () => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === getErrorCode('1400')) {
-          await getSession();
+          await fetchSession();
           await submitForm();
         }
       } else if (error instanceof ApiError) {

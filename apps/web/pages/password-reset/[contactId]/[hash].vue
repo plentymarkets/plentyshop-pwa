@@ -66,7 +66,7 @@ const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();
 const { send } = useNotification();
-const { getSession } = useFetchSession();
+const { fetchSession } = useFetchSession();
 
 const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');
@@ -95,7 +95,7 @@ const executeResetPassword = async () => {
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
-      await getSession();
+      await fetchSession();
       send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
       await navigateTo(localePath(paths.home));
     }

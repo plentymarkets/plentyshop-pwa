@@ -4,7 +4,7 @@ import type { ApiError } from '@plentymarkets/shop-api';
  * @description Composable to fetch current session data including user and cart information.
  * @example
  * ``` ts
- * const { loading, getSession } = useFetchSession();
+ * const { loading, fetchSession } = useFetchSession();
  * ```
  */
 export const useFetchSession = () => {
@@ -15,10 +15,10 @@ export const useFetchSession = () => {
   /** Function for getting current user/cart data from session
    * @example
    * ``` ts
-   * getSession();
+   * fetchSession();
    * ```
    */
-  const getSession = async () => {
+  const fetchSession = async () => {
     state.value.loading = true;
     try {
       const { data } = await useSdk().plentysystems.getSession();
@@ -34,7 +34,7 @@ export const useFetchSession = () => {
   };
 
   return {
-    getSession,
+    fetchSession,
     ...toRefs(state.value),
   };
 };

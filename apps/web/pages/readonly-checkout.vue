@@ -103,7 +103,7 @@ const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
 const { loginAsGuest, user } = useCustomer();
-const { getSession } = useFetchSession();
+const { fetchSession } = useFetchSession();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { data: cart, cartIsEmpty, loading: cartLoading } = useCart();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
@@ -167,7 +167,7 @@ const handle = async () => {
   }
 
   await setAddressesFromPayPal(paypalOrderId);
-  await getSession();
+  await fetchSession();
 
   await useFetchAddress(AddressType.Shipping)
     .fetch()

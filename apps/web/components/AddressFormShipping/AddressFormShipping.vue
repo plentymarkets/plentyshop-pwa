@@ -180,7 +180,7 @@ import type { AddressFormShippingProps } from './types';
 const { disabled, address, addAddress = false } = defineProps<AddressFormShippingProps>();
 
 const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
-const { getSession } = useFetchSession();
+const { fetchSession } = useFetchSession();
 const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
@@ -318,7 +318,7 @@ const validateAndSubmitForm = async () => {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === getErrorCode('1400')) {
-          await getSession();
+          await fetchSession();
           await submitForm();
         }
       } else if (error instanceof ApiError) {

@@ -3,7 +3,7 @@ import { cartGetters } from '@plentymarkets/shop-api';
 export const useCartTotalChange = () => {
   const route = useRoute();
   const { isGuest, isAuthorized } = useCustomer();
-  const { getSession } = useFetchSession();
+  const { fetchSession } = useFetchSession();
   const { data: cartData } = useCart();
   const { getOrder } = usePayPal();
   const { restrictedAddresses } = useRestrictedAddress();
@@ -41,7 +41,7 @@ export const useCartTotalChange = () => {
   };
 
   const handleCartTotalChanges = async () => {
-    if (restrictedAddresses.value || isGuest.value || isAuthorized.value) await getSession();
+    if (restrictedAddresses.value || isGuest.value || isAuthorized.value) await fetchSession();
 
     if (restrictedAddresses.value) {
       state.value.changedTotal =

@@ -20,7 +20,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
   const { $i18n } = useNuxtApp();
   const { send } = useNotification();
   const { data: cart } = useCart();
-  const { getSession } = useFetchSession();
+  const { fetchSession } = useFetchSession();
   const {
     loading: paymentLoading,
     data: paymentMethodData,
@@ -52,7 +52,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
     await saveShippingMethod(Number(shippingMethodId));
     usePreferredDelivery().disableAllOptions();
     await fetchPaymentMethods();
-    await getSession();
+    await fetchSession();
 
     const isPaymentMethodExcluded = paymentProviderGetters.isPaymentMethodExcluded(
       selectedShippingMethod.value,
@@ -78,7 +78,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
     if (cart.value.methodOfPaymentId === paymentMethodId) return;
     await savePaymentMethod(paymentMethodId);
     await getShippingMethods();
-    await getSession();
+    await fetchSession();
   };
 
   const validateShippingTerms = () => {
