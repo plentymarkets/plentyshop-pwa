@@ -118,6 +118,7 @@ const {
   getLazyLoadConfig,
   getLazyLoadRef,
 } = useBlockManager();
+const { blockUuid } = useSiteConfiguration();
 
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
@@ -132,13 +133,15 @@ const getBlockComponent = computed(() => {
   });
 });
 
+const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid)
+
 const contentProps = computed(() => {
   const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
   const config = getLazyLoadConfig(props.block.name);
 
   if (config) {
     const uniqueKey = getLazyLoadKey(props.block.name, props.block.meta.uuid);
-    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false;
+    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false || blockIsCurrentlyOpen
 
     return {
       ...baseProps,
