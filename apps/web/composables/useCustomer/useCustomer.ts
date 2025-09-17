@@ -15,7 +15,6 @@ const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
- * @returns UseCustomerReturn
  * @example
  * ``` ts
  * const {
