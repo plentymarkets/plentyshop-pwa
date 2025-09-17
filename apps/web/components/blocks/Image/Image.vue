@@ -2,40 +2,40 @@
   <div class="relative flex justify-center">
     <NuxtImg
       :src="getImageUrl()"
-      :alt="props.content?.alt"
+      :alt="props.content?.image?.alt"
       :class="[
         'object-cover',
         'md:px-4',
         {
-          'lg:pr-4': props.content?.imageAlignment === 'left',
-          'lg:pl-4': props.content?.imageAlignment === 'right',
+          'lg:pr-4': props.content?.image?.imageAlignment === 'left',
+          'lg:pl-4': props.content?.image?.imageAlignment === 'right',
         },
       ]"
       :style="{
-        filter: props.content.brightness ? 'brightness(' + (props.content.brightness ?? 1) + ')' : '',
+        filter: props.content?.image?.brightness ? 'brightness(' + (props.content?.image?.brightness ?? 1) + ')' : '',
       }"
       :width="getImageDimensions().width"
       :height="getImageDimensions().height"
       data-testid="image-block"
     />
     <div
-      v-if="props.content?.textOverlay && runtimeConfig.public.isDev"
+      v-if="props.content?.text?.textOverlay && runtimeConfig.public.isDev"
       class="absolute w-full h-full px-4 pointer-events-none flex flex-col"
       :class="overlayAlignClasses"
       data-testid="image-overlay-text"
-      :style="{ color: props.content.textOverlayColor || '#000' }"
+      :style="{ color: props.content.text?.textOverlayColor || '#000' }"
     >
-      <div v-html="props.content.textOverlay" />
+      <div v-html="props.content.text.textOverlay" />
       <UiButton
-        v-if="props.content?.label"
+        v-if="props.content?.button.label"
         class="mt-4 cursor-pointer pointer-events-auto"
         :tag="NuxtLink"
-        :to="localePath(props.content.link ?? '')"
-        :variant="props.content.variant ?? 'primary'"
+        :to="localePath(props.content.button.link ?? '')"
+        :variant="props.content.button.variant ?? 'primary'"
         size="lg"
         :data-testid="'image-button-' + (meta?.uuid ?? '')"
       >
-        {{ props.content.label }}
+        {{ props.content.button.label }}
       </UiButton>
     </div>
   </div>
@@ -54,31 +54,31 @@ const props = defineProps<ImageProps>();
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
-      return props.content?.wideScreen;
+      return props.content?.image?.wideScreen;
     }
     case 'lg': {
-      return props.content?.desktop;
+      return props.content?.image?.desktop;
     }
     case 'md': {
-      return props.content?.tablet;
+      return props.content?.image?.tablet;
     }
     default: {
-      return props.content?.mobile;
+      return props.content?.image?.mobile;
     }
   }
 };
 const overlayAlignClasses = computed(() => {
   const vertical =
-    props.content?.textOverlayAlignY === 'top'
+    props.content?.text.textOverlayAlignY === 'top'
       ? 'items-start'
-      : props.content?.textOverlayAlignY === 'bottom'
+      : props.content?.text.textOverlayAlignY === 'bottom'
         ? 'items-end'
         : 'items-center';
 
   const horizontal =
-    props.content?.textOverlayAlignX === 'left'
+    props.content?.text.textOverlayAlignX === 'left'
       ? 'justify-start text-left'
-      : props.content?.textOverlayAlignX === 'right'
+      : props.content?.text.textOverlayAlignX === 'right'
         ? 'justify-end text-right'
         : 'justify-center text-center';
 

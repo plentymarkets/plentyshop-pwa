@@ -14,12 +14,12 @@
         v-for="type in imageTypes"
         :key="type"
         :label="labels[type]"
-        :image="uiImageTextBlock[type]"
+        :image="uiImageTextBlock.image[type]"
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :selected-image-type="type"
         @add="(payload) => handleImageAddWrapper(payload)"
-        @delete="deleteImage(uiImageTextBlock, type)"
+        @delete="deleteImage2(uiImageTextBlock, type)"
       />
     </div>
     <div class="py-2">
@@ -27,10 +27,10 @@
         <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
       </div>
       <label>
-        <SfInput v-model="uiImageTextBlock.alt" type="text" data-testid="alt-input">
+        <SfInput v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input">
           <template #suffix>
             <label for="alt" class="rounded-lg cursor-pointer">
-              <input id="alt" v-model="uiImageTextBlock.alt" type="text" class="invisible w-8" />
+              <input id="alt" v-model="uiImageTextBlock.image.alt" type="text" class="invisible w-8" />
             </label>
           </template>
         </SfInput>
@@ -45,12 +45,12 @@
             <span>0%</span>
             <span>100%</span>
           </div>
-          <input v-model.number="uiImageTextBlock.brightness" type="range" min="0" max="1" step="0.01" class="w-full" />
+          <input v-model.number="uiImageTextBlock.image.brightness" type="range" min="0" max="1" step="0.01" class="w-full" />
         </div>
 
         <div class="relative">
           <input
-            v-model.number="uiImageTextBlock.brightness"
+            v-model.number="uiImageTextBlock.image.brightness"
             type="number"
             min="0"
             max="1"
@@ -68,22 +68,22 @@
         <div
           for="align-left"
           class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.imageAlignment === 'left' }"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'left' }"
           data-testid="image-align-left"
-          @click="uiImageTextBlock.imageAlignment = 'left'"
+          @click="uiImageTextBlock.image.imageAlignment = 'left'"
         >
-          <SfIconCheck :class="{ invisible: uiImageTextBlock.imageAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
           {{ getEditorTranslation('image-align-option-left-label') }}
         </div>
 
         <div
           for="align-right"
           class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.imageAlignment === 'right' }"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'right' }"
           data-testid="image-align-right"
-          @click="uiImageTextBlock.imageAlignment = 'right'"
+          @click="uiImageTextBlock.image.imageAlignment = 'right'"
         >
-          <SfIconCheck :class="{ invisible: uiImageTextBlock.imageAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
           {{ getEditorTranslation('image-align-option-right-label') }}
         </div>
       </div>
@@ -104,7 +104,7 @@
       <UiFormLabel>{{ getEditorTranslation('text-overlay-label') }}</UiFormLabel>
       <SfTextarea
         id="text-overlay"
-        v-model="uiImageTextBlock.textOverlay"
+        v-model="uiImageTextBlock.text.textOverlay"
         data-testid="text-overlay"
         name="text-overlay"
         rows="3"
@@ -118,16 +118,16 @@
         <UiFormLabel>{{ getEditorTranslation('text-overlay-color-label') }}</UiFormLabel>
       </div>
       <label>
-        <SfInput v-model="uiImageTextBlock.textOverlayColor" type="text" data-testid="text-overlay-color-input">
+        <SfInput v-model="uiImageTextBlock.text.textOverlayColor" type="text" data-testid="text-overlay-color-input">
           <template #suffix>
             <label
               for="text-overlay-color"
-              :style="{ backgroundColor: uiImageTextBlock.textOverlayColor }"
+              :style="{ backgroundColor: uiImageTextBlock.text.textOverlayColor }"
               class="border border-[#a0a0a0] rounded-lg cursor-pointer"
             >
               <input
                 id="text-overlay-color"
-                v-model="uiImageTextBlock.textOverlayColor"
+                v-model="uiImageTextBlock.text.textOverlayColor"
                 data-testid="text-overlay-color-picker"
                 type="color"
                 class="invisible w-8"
@@ -147,11 +147,11 @@
         <div
           data-testid="align-x-left"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'top' }"
-          @click="uiImageTextBlock.textOverlayAlignY = 'top'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignY === 'top' }"
+          @click="uiImageTextBlock.text.textOverlayAlignY = 'top'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'top' }"
+            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'top' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-left') }}
@@ -160,11 +160,11 @@
         <div
           data-testid="align-x-center"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'center' }"
-          @click="uiImageTextBlock.textOverlayAlignY = 'center'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignY === 'center' }"
+          @click="uiImageTextBlock.text.textOverlayAlignY = 'center'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'center' }"
+            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'center' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-center') }}
@@ -173,11 +173,11 @@
         <div
           data-testid="align-x-right"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignY === 'bottom' }"
-          @click="uiImageTextBlock.textOverlayAlignY = 'bottom'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignY === 'bottom' }"
+          @click="uiImageTextBlock.text.textOverlayAlignY = 'bottom'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignY !== 'bottom' }"
+            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'bottom' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-right') }}
@@ -194,11 +194,11 @@
         <div
           data-testid="align-y-top"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'left' }"
-          @click="uiImageTextBlock.textOverlayAlignX = 'left'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignX === 'left' }"
+          @click="uiImageTextBlock.text.textOverlayAlignX = 'left'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'left' }"
+            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignX !== 'left' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-y-top') }}
@@ -207,11 +207,11 @@
         <div
           data-testid="align-y-center"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'center' }"
-          @click="uiImageTextBlock.textOverlayAlignX = 'center'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignX === 'center' }"
+          @click="uiImageTextBlock.text.textOverlayAlignX = 'center'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'center' }"
+            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignX !== 'center' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-x-center') }}
@@ -220,11 +220,11 @@
         <div
           data-testid="align-y-bottom"
           class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.textOverlayAlignX === 'right' }"
-          @click="uiImageTextBlock.textOverlayAlignX = 'right'"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignX === 'right' }"
+          @click="uiImageTextBlock.text.textOverlayAlignX = 'right'"
         >
           <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.textOverlayAlignX !== 'right' }"
+            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignX !== 'right' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
           {{ getEditorTranslation('text-overlay-align-y-bottom') }}
@@ -247,7 +247,7 @@
         <label>
           <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
           <SfInput
-            v-model="uiImageTextBlock.label"
+            v-model="uiImageTextBlock.button.label"
             data-testid="slider-button-label"
             name="label"
             type="text"
@@ -258,7 +258,7 @@
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
         <SfInput
-          v-model="uiImageTextBlock.link"
+          v-model="uiImageTextBlock.button.link"
           name="link"
           data-testid="slider-button-link"
           type="text"
@@ -271,24 +271,24 @@
           <div
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
             :class="{
-              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.variant === 'primary',
+              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'primary',
             }"
             data-testid="slider-button-primary"
-            @click="uiImageTextBlock.variant = 'primary'"
+            @click="uiImageTextBlock.button.variant = 'primary'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.variant !== 'primary' }" />
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.button.variant !== 'primary' }" />
             {{ getEditorTranslation('button-variant-primary-label') }}
           </div>
 
           <div
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
             :class="{
-              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.variant === 'secondary',
+              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'secondary',
             }"
             data-testid="slider-button-secondary"
-            @click="uiImageTextBlock.variant = 'secondary'"
+            @click="uiImageTextBlock.button.variant = 'secondary'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.variant !== 'secondary' }" />
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.button.variant !== 'secondary' }" />
             {{ getEditorTranslation('button-variant-secondary-label') }}
           </div>
         </div>
@@ -319,9 +319,24 @@ const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
 
+
+type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
+
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
-  const { handleImageAdd } = useImageAdd(uiImageTextBlock.value);
-  handleImageAdd({ image, type });
+  if (
+    uiImageTextBlock.value.image &&
+    ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)
+  ) {
+    uiImageTextBlock.value.image[type as ImageTypeKey] = image;
+  }
+};
+const deleteImage2 = (block: ImageContent, type: string) => {
+  if (
+    block.image &&
+    ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)
+  ) {
+    block.image[type as ImageTypeKey] = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
+  }
 };
 
 const clampBrightness = (event: Event, type: string) => {
@@ -329,7 +344,7 @@ const clampBrightness = (event: Event, type: string) => {
   const nextValue = Number.parseFloat(currentValue);
 
   if (type === 'image') {
-    uiImageTextBlock.value.brightness = clamp(nextValue, 0, 1);
+    uiImageTextBlock.value.image.brightness = clamp(nextValue, 0, 1);
   }
 };
 </script>

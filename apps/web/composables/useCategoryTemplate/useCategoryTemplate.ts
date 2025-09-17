@@ -9,6 +9,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
+import { migrateImageContent } from '~/utils/migrate-image-content'; 
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
@@ -33,6 +34,17 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     }
   };
 
+  const migrateAllImageBlocks = (blocks: Block[]) => {
+    for (const block of blocks) {
+      if (block.name === 'Image' && block.content) {
+        block.content = migrateImageContent(block.content);
+      }
+      if (Array.isArray(block.content)) {
+        migrateAllImageBlocks(block.content);
+      }
+    }
+  };
+
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -52,6 +64,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
     if (!fetchedBlocks.length && type === 'immutable') {
       fetchedBlocks = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+    }
+
+    if (Array.isArray(fetchedBlocks)) {
+      migrateAllImageBlocks(fetchedBlocks);
     }
 
     state.value.data = fetchedBlocks;
@@ -74,9 +90,12 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
       state.value.data = data ?? state.value.data;
     }
 
+    if (Array.isArray(state.value.data)) {
+      migrateAllImageBlocks(state.value.data);
+    }
+
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
   };
-
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
   };
