@@ -141,7 +141,7 @@ const contentProps = computed(() => {
 
   if (config) {
     const uniqueKey = getLazyLoadKey(props.block.name, props.block.meta.uuid);
-    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false || blockIsCurrentlyOpen
+    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false || blockIsCurrentlyOpen.value
 
     return {
       ...baseProps,
