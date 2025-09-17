@@ -81,6 +81,7 @@ export * from './useProducts';
 export * from './useQuickCheckout';
 export * from './useReturnOrder';
 export * from './useRestrictedAddress';
+export * from './useBrowserNavigation';
 export * from './useSearch';
 export * from './useShippingAsBilling';
 export * from './useSiteConfiguration';
