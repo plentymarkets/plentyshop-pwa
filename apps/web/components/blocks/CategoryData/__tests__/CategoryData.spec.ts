@@ -8,8 +8,6 @@ const mockProps: CategoryDataProps = {
   content: {
     categoryId: '11',
     name: 'Category name',
-    description1: 'description one',
-    description2: 'description two',
   },
   meta: {
     uuid: 'test-uuid',

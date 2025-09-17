@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs">
+  <div>
     <h1
         class="my-10 font-bold typography-headline-3 md:typography-headline-2"
         data-testid="category-name"
@@ -15,9 +15,19 @@
 import { categoryGetters } from '@plentymarkets/shop-api';
 import type { CategoryDataProps } from './types';
 
-const props = withDefaults(defineProps<CategoryDataProps>(), { shouldLoad: undefined });
+const props = withDefaults(defineProps<CategoryDataProps>(), {
+  name: undefined,
+  type: undefined,
+  content: undefined,
+  configuration: undefined,
+  index: 0,
+  meta: () => ({
+    uuid: '',
+  }),
+  shouldLoad: undefined,
+});
+
 const { data: productsCatalog } = useProducts();
 
-const title = categoryGetters.getCategoryName(productsCatalog.category);
-
+const title = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
 </script>
