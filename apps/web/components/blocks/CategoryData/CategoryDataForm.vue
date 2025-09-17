@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import type { CategoryDataContent } from './types';
-import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();

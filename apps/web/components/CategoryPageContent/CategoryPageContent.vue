@@ -96,7 +96,7 @@ import type { CategoryPageContentProps } from '~/components/CategoryPageContent/
 import { paths } from '~/utils/paths';
 import CategoryData from '~/components/blocks/CategoryData/CategoryData.vue';
 
-const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
+const { totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
 
 const { t } = useI18n();
 const localePath = useLocalePath();
