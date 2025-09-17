@@ -7,10 +7,11 @@
  */
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { isAuthorized, getSession } = useCustomer();
+  const { isAuthorized } = useCustomer();
+  const { fetchSession } = useFetchSession();
   const localePath = useLocalePath();
 
-  await getSession();
+  await fetchSession();
 
   if (!isAuthorized.value) {
     const targetUrl = to.fullPath;
