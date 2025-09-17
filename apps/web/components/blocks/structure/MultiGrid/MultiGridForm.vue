@@ -11,6 +11,53 @@
       </template>
 
       <div data-testid="image-text-form">
+        <div v-if="isTwoColumnMultigrid" class="py-2">
+          <UiFormLabel>Column Size</UiFormLabel>
+          <div class="relative w-full flex flex-col items-center">
+            <input
+              v-model.number="columnCount"
+              type="range"
+              min="1"
+              max="11"
+              step="1"
+            />
+
+            <!-- Hidden native range for accessibility and keyboard support -->
+            <input
+              v-model.number="columnCount"
+              type="range"
+              min="1"
+              max="11"
+              step="1"
+              class="sr-only"
+              @input="onInput"
+            />
+
+            <!-- Merged blank squares for each step -->
+            <div
+              ref="squaresContainer"
+              class="flex w-full mt-2 mb-4 rounded overflow-hidden border border-gray-300 relative"
+              style="height: 24px;"
+              @mousedown="handlePointerDown"
+            >
+              <div
+                v-for="step in steps"
+                :key="step"
+                class="flex-1 h-full cursor-pointer border-r last:border-r-0 border-gray-300 bg-white"
+                @click="setColumnCount(step)"
+              />
+            </div>
+            <!-- Arrow marker under squares -->
+            <div
+              class="absolute"
+              :style="arrowStyle"
+              style="top: 40px; transition: left 0.2s;"
+            >
+              <span class="text-editor-button text-lg cursor-pointer select-none" @mousedown="handlePointerDown">&#9650;</span>
+            </div>
+          </div>
+        </div>
+
         <div v-if="multiGridStructure.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -142,6 +189,64 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
+const steps = Array.from({ length: 11 }, (_, i) => i + 1);
+const squaresContainer = ref<HTMLElement | null>(null);
+const isDragging = ref(false);
+
+const setColumnCount = (step: number) => {
+  columnCount.value = step;
+};
+
+const onInput = (e: Event) => {
+  columnCount.value = Number((e.target as HTMLInputElement).value);
+};
+
+const handlePointerDown = (e: MouseEvent) => {
+  isDragging.value = true;
+  updateColumnCountFromEvent(e);
+  window.addEventListener('mousemove', handlePointerMove);
+  window.addEventListener('mouseup', handlePointerUp);
+};
+
+const handlePointerMove = (e: MouseEvent) => {
+  if (isDragging.value) {
+    updateColumnCountFromEvent(e);
+  }
+};
+
+const handlePointerUp = () => {
+  isDragging.value = false;
+  window.removeEventListener('mousemove', handlePointerMove);
+  window.removeEventListener('mouseup', handlePointerUp);
+};
+
+const updateColumnCountFromEvent = (e: MouseEvent) => {
+  const container = squaresContainer.value;
+  if (!container) return;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const stepWidth = rect.width / steps.length;
+  let step = Math.ceil(x / stepWidth);
+  step = Math.max(1, Math.min(step, steps.length));
+  columnCount.value = step;
+};
+
+// Calculate arrow position under the squares
+const arrowStyle = computed(() => {
+  const container = squaresContainer.value;
+  if (!container) return { left: '0px' };
+  const width = container.offsetWidth;
+  const stepWidth = width / steps.length;
+  // Center arrow under the selected square
+  const left = stepWidth * (columnCount.value - 0.5) - 10; // 10px offset for arrow width
+  return { left: `${left}px` };
+});
+
+onMounted(() => {
+  // Force update arrow position after mount
+  setTimeout(() => {}, 0);
+});
+
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
   if (!block.layout) {
@@ -162,6 +267,22 @@ const multiGridStructure = computed(() => {
   }
   return block;
 });
+
+const isTwoColumnMultigrid = computed(() => {
+  return multiGridStructure.value.configuration?.columnWidths?.length === 2;
+});
+
+const columnCount = computed({
+  get: () => multiGridStructure.value.configuration?.columnWidths?.[0] || 6,
+  set: (val: number) => {
+    const columns = multiGridStructure.value.configuration.columnWidths.length;
+    const firstColWidth = Math.max(1, Math.min(val, 11));
+    if (columns === 2) {
+      multiGridStructure.value.configuration.columnWidths = [firstColWidth, 12 - firstColWidth];
+    }
+  }
+});
+
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
@@ -182,6 +303,19 @@ const getGapPx = (gap: string | undefined): number => {
 const textSettings = ref(false);
 const layoutBackground = ref(false);
 </script>
+
+<style scoped>
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+</style>
 
 <i18n lang="json">
 {
