@@ -626,6 +626,17 @@
                 "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "alt": "alt text",
                 "imageAlignment": "right"
+              },
+              "text": {
+                "textOverlay": "Beispiel Overlay Text",
+                "textOverlayColor": "#00ff00",
+                "textOverlayAlignY": "top",
+                "textOverlayAlignX": "left"
+              },
+              "button": {
+                "label": "Klick mich",
+                "link": "/beispiel-link",
+                "variant": "secondary"
               }
             }
           },
@@ -641,6 +652,17 @@
                 "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "alt": "alt text",
                 "imageAlignment": "right"
+              },
+              "text": {
+                "textOverlay": "Beispiel Overlay Text",
+                "textOverlayColor": "#00ff00",
+                "textOverlayAlignY": "top",
+                "textOverlayAlignX": "left"
+              },
+              "button": {
+                "label": "Klick mich",
+                "link": "/beispiel-link",
+                "variant": "secondary"
               }
             }
           }
