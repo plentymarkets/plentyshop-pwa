@@ -38,33 +38,7 @@
     </template>
     <section v-if="products?.length" :class="gridClasses" data-testid="category-grid">
       <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getVariationId(product)" when-visible>
-        <UiProductCard
-          :product="product"
-          :name="productGetters.getName(product) ?? ''"
-          :rating-count="productGetters.getTotalReviews(product)"
-          :rating="productGetters.getAverageRating(product, 'half')"
-          :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
-          :hover-image-url="
-            content?.showSecondImageOnHover
-              ? addModernImageExtension(productGetters.getSecondCoverImage(product))
-              : null
-          "
-          :image-alt="
-            productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
-            productGetters.getName(product) ||
-            ''
-          "
-          :image-title="productImageGetters.getImageName(productImageGetters.getFirstImage(product)) || ''"
-          :image-height="productGetters.getImageHeight(product) || 600"
-          :image-width="productGetters.getImageWidth(product) || 600"
-          :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-          :priority="index < 5"
-          :base-price="productGetters.getDefaultBasePrice(product)"
-          :unit-content="productGetters.getUnitContent(product)"
-          :unit-name="productGetters.getUnitName(product)"
-          :show-base-price="productGetters.showPricePerUnit(product)"
-          :configuration="content"
-        />
+        <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
     </section>
     <LazyCategoryEmptyState v-else />

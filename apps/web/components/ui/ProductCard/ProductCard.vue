@@ -30,13 +30,13 @@
           :height="getHeight()"
           :class="[
             'object-contain rounded-md aspect-square w-full transition-opacity duration-300',
-            hoverImageUrl ? 'group-hover/image:opacity-0' : '',
+            effectiveHoverImageUrl ? 'group-hover/image:opacity-0' : '',
           ]"
           data-testid="image-slot"
         />
         <NuxtImg
-          v-if="hoverImageUrl"
-          :src="hoverImageUrl"
+          v-if="effectiveHoverImageUrl"
+          :src="effectiveHoverImageUrl"
           :alt="imageAlt"
           :title="imageTitle ? imageTitle : null"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
@@ -59,6 +59,7 @@
         </slot>
       </template>
     </div>
+
     <div
       class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto"
       :class="{
@@ -78,32 +79,34 @@
           {{ name }}
         </SfLink>
       </template>
+
       <template v-if="configuration?.fields?.rating">
-        <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
+        <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
           <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </div>
       </template>
+
       <template v-if="configuration?.fields?.previewText">
         <div
-          v-if="productGetters.getShortDescription(product)"
+          v-if="shortDescription"
           class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
         >
-          <div class="line-clamp-3" v-html="productGetters.getShortDescription(product)" />
+          <div class="line-clamp-3" v-html="shortDescription" />
         </div>
       </template>
+
       <template v-if="configuration?.fields?.price">
         <LowestPrice :product="product" />
         <div v-if="showBasePrice" class="mb-2">
           <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
         </div>
+
         <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
           <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-            <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
-              {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
-            </span>
+            <span v-if="!canAddFromCategory" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
             <span>{{ format(price) }}</span>
-            <span>{{ t('asterisk') }} </span>
+            <span>{{ t('asterisk') }}</span>
           </span>
           <span
             v-if="crossedPrice && differentPrices(price, crossedPrice)"
@@ -113,9 +116,10 @@
           </span>
         </div>
       </template>
+
       <template v-if="configuration?.fields?.addToCart">
         <UiButton
-          v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
+          v-if="canAddFromCategory"
           size="sm"
           class="min-w-[80px] w-fit"
           data-testid="add-to-basket-short"
@@ -127,10 +131,9 @@
             <SfIconShoppingCart size="sm" />
           </template>
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-          <span v-else>
-            {{ t('addToCartShort') }}
-          </span>
+          <span v-else>{{ t('addToCartShort') }}</span>
         </UiButton>
+
         <UiButton
           v-else
           :variant="configuration?.addToCartStyle || 'primary'"
@@ -148,76 +151,91 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
+import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 
+const props = defineProps<ProductCardProps>();
+
+
+const product = computed(() => props.product);
+const configuration = computed(() => props.configuration || {} as ItemGridContent);
+
+const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const { format } = usePriceFormatter();
 const { t } = useI18n();
-const {
-  product,
-  name,
-  imageUrl,
-  imageAlt = '',
-  imageTitle,
-  imageWidth,
-  imageHeight,
-  rating,
-  ratingCount,
-  priority,
-  lazy = true,
-  unitContent,
-  unitName,
-  basePrice,
-  showBasePrice,
-  configuration,
-  hoverImageUrl,
-  isFromWishlist = false,
-  isFromSlider = false,
-} = defineProps<ProductCardProps>();
-
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
-const { price, crossedPrice } = useProductPrice(product);
+const { price, crossedPrice } = useProductPrice(product.value);
 const { send } = useNotification();
 const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
-const variationId = computed(() => productGetters.getVariationId(product));
+const name = computed(() => productGetters.getName(product.value) ?? '');
+const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
+const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
+const shortDescription = computed(() => productGetters.getShortDescription(product.value) || '');
+const canAddFromCategory = computed(() => productGetters.canBeAddedToCartFromCategoryPage(product.value));
+
+const cover = computed(() => productGetters.getCoverImage(product.value));
+const secondCover = computed(() => productGetters.getSecondCoverImage(product.value));
+const firstImage = computed(() => productImageGetters.getFirstImage(product.value));
+
+const imageUrl = computed(() => addModernImageExtension(cover.value));
+const effectiveHoverImageUrl = computed(() => {
+  if (!configuration.value?.showSecondImageOnHover) return '';
+  const src = addModernImageExtension(secondCover.value);
+  return src || '';
+});
+
+const imageAlt = computed(() => productImageGetters.getImageAlternate(firstImage.value) || name.value || '');
+const imageTitle = computed(() => productImageGetters.getImageName(firstImage.value) || '');
+
+const imageWidth = computed(() => productGetters.getImageWidth(product.value) || 600);
+const imageHeight = computed(() => productGetters.getImageHeight(product.value) || 600);
+
+const basePrice = computed(() => productGetters.getDefaultBasePrice(product.value));
+const unitContent = computed(() => productGetters.getUnitContent(product.value));
+const unitName = computed(() => productGetters.getUnitName(product.value));
+const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
+
+const variationId = computed(() => productGetters.getVariationId(product.value));
 
 const productPath = computed(() => {
-  const basePath = `/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`;
-  const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product) === 1;
-
+  const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
+  const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product.value) === 1;
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
 });
 
+const priority = ref((props.index || 0) < 5);
+const lazy = ref(props.lazy || false);
+const isFromWishlist = ref(props.isFromWishlist || false);
+const isFromSlider = ref(props.isFromSlider || false);
+
 const getWidth = () => {
-  if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
-    return imageWidth;
+  if (imageWidth.value && imageWidth.value > 0 && imageUrl.value.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageWidth.value;
   }
   return '';
 };
+
 const getHeight = () => {
-  if (imageHeight && imageHeight > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
-    return imageHeight;
+  if (imageHeight.value && imageHeight.value > 0 && imageUrl.value.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageHeight.value;
   }
   return '';
 };
 
 const addWithLoader = async (productId: number, quickCheckout = true) => {
   loading.value = true;
-
   try {
-    await addToCart({
-      productId: productId,
-      quantity: 1,
-    });
+    await addToCart({ productId, quantity: 1 });
     if (quickCheckout) {
-      openQuickCheckout(product, 1);
+      openQuickCheckout(product.value, 1);
     } else {
       send({ message: t('addedToCart'), type: 'positive' });
     }
