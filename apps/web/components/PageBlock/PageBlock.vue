@@ -133,7 +133,7 @@ const getBlockComponent = computed(() => {
   });
 });
 
-const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid)
+const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid);
 
 const contentProps = computed(() => {
   const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
@@ -141,7 +141,7 @@ const contentProps = computed(() => {
 
   if (config) {
     const uniqueKey = getLazyLoadKey(props.block.name, props.block.meta.uuid);
-    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false || blockIsCurrentlyOpen.value
+    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false || blockIsCurrentlyOpen.value;
 
     return {
       ...baseProps,
