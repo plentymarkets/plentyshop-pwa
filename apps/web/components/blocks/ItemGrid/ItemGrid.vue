@@ -36,9 +36,7 @@
         :max-visible-pages="maxVisiblePages"
       />
     </template>
-    {{ gridClass }}
-
-    <section v-if="products?.length" :class="gridClass" data-testid="category-grid">
+    <section v-if="products?.length" :class="gridClasses" data-testid="category-grid">
       <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getVariationId(product)" when-visible>
         <UiProductCard
           :product="product"
@@ -133,29 +131,14 @@ const totalProducts = computed(() => productsCatalog.value?.pagination?.totals ?
 const itemsPerPage = computed(() => Number(productsPerPage.value) ?? 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
-const colMap: Record<number, string> = {
-  1: 'grid-cols-1',
-  2: 'grid-cols-2',
-  3: 'grid-cols-3',
-  4: 'grid-cols-4',
-  5: 'grid-cols-5',
-  6: 'grid-cols-6',
-  7: 'grid-cols-7',
-  8: 'grid-cols-8',
-  9: 'grid-cols-9',
-  10: 'grid-cols-10',
-  11: 'grid-cols-11',
-  12: 'grid-cols-12',
-};
-
-const gridClass = computed(() =>
-  [
-    'grid',
-    'gap-4 md:gap-6',
-    'mb-10 md:mb-5',
-    colMap[props.content?.itemsPerRowMobile],
-    `md:${colMap[props.content?.itemsPerRowTablet]}`,
-    `lg:${colMap[props.content?.itemsPerRowDesktop]}`,
-  ].join(' '),
-);
+const gridClasses = computed(() =>
+  gridClassFor(
+    {
+      mobile: props.content?.itemsPerRowMobile,
+      tablet: props.content?.itemsPerRowTablet,
+      desktop: props.content?.itemsPerRowDesktop,
+    },
+    ['gap-4','md:gap-6','mb-10','md:mb-5']
+  )
+)
 </script>
