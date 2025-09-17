@@ -68,85 +68,87 @@
         'items-start': configuration?.contentAlignment === 'left',
       }"
     >
-      <template v-if="configuration?.fields?.title">
-        <SfLink
-          :tag="NuxtLink"
-          :to="productPath"
-          class="no-underline"
-          variant="secondary"
-          data-testid="productcard-name"
-        >
-          {{ name }}
-        </SfLink>
-      </template>
-
-      <template v-if="configuration?.fields?.rating">
-        <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
-          <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
-          <SfCounter size="xs">{{ ratingCount }}</SfCounter>
-        </div>
-      </template>
-
-      <template v-if="configuration?.fields?.previewText">
-        <div
-          v-if="shortDescription"
-          class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
-        >
-          <div class="line-clamp-3" v-html="shortDescription" />
-        </div>
-      </template>
-
-      <template v-if="configuration?.fields?.price">
-        <LowestPrice :product="product" />
-        <div v-if="showBasePrice" class="mb-2">
-          <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
-        </div>
-
-        <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
-          <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-            <span v-if="!canAddFromCategory" class="mr-1">{{
-              t('account.ordersAndReturns.orderDetails.priceFrom')
-            }}</span>
-            <span>{{ format(price) }}</span>
-            <span>{{ t('asterisk') }}</span>
-          </span>
-          <span
-            v-if="crossedPrice && differentPrices(price, crossedPrice)"
-            class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
+      <template v-for="key in configuration?.fieldsOrder" :key="key">
+        <template v-if="key === 'title' && configuration?.fields?.title">
+          <SfLink
+            :tag="NuxtLink"
+            :to="productPath"
+            class="no-underline"
+            variant="secondary"
+            data-testid="productcard-name"
           >
-            {{ format(crossedPrice) }}
-          </span>
-        </div>
-      </template>
+            {{ name }}
+          </SfLink>
+        </template>
 
-      <template v-if="configuration?.fields?.addToCart">
-        <UiButton
-          v-if="canAddFromCategory"
-          size="sm"
-          class="min-w-[80px] w-fit"
-          data-testid="add-to-basket-short"
-          :disabled="loading"
-          :variant="configuration?.addToCartStyle || 'primary'"
-          @click="addWithLoader(Number(productGetters.getId(product)))"
-        >
-          <template v-if="!loading" #prefix>
-            <SfIconShoppingCart size="sm" />
-          </template>
-          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-          <span v-else>{{ t('addToCartShort') }}</span>
-        </UiButton>
+        <template v-if="key === 'rating' && configuration?.fields?.rating">
+          <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
+            <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
+            <SfCounter size="xs">{{ ratingCount }}</SfCounter>
+          </div>
+        </template>
 
-        <UiButton
-          v-else
-          :variant="configuration?.addToCartStyle || 'primary'"
-          type="button"
-          :tag="NuxtLink"
-          :to="productPath"
-          size="sm"
-          class="w-fit"
-        >
-          <span>{{ t('showOptions') }}</span>
-        </UiButton>
+        <template v-if="key === 'previewText' && configuration?.fields?.previewText">
+          <div
+            v-if="shortDescription"
+            class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
+          >
+            <div class="line-clamp-3" v-html="shortDescription" />
+          </div>
+        </template>
+
+        <template v-if="key === 'price' && configuration?.fields?.price">
+          <LowestPrice :product="product" />
+          <div v-if="showBasePrice" class="mb-2">
+            <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
+          </div>
+
+          <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
+            <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
+              <span v-if="!canAddFromCategory" class="mr-1">{{
+                t('account.ordersAndReturns.orderDetails.priceFrom')
+              }}</span>
+              <span>{{ format(price) }}</span>
+              <span>{{ t('asterisk') }}</span>
+            </span>
+            <span
+              v-if="crossedPrice && differentPrices(price, crossedPrice)"
+              class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
+            >
+              {{ format(crossedPrice) }}
+            </span>
+          </div>
+        </template>
+
+        <template v-if="key === 'addToCart' && configuration?.fields?.addToCart">
+          <UiButton
+            v-if="canAddFromCategory"
+            size="sm"
+            class="min-w-[80px] w-fit"
+            data-testid="add-to-basket-short"
+            :disabled="loading"
+            :variant="configuration?.addToCartStyle || 'primary'"
+            @click="addWithLoader(Number(productGetters.getId(product)))"
+          >
+            <template v-if="!loading" #prefix>
+              <SfIconShoppingCart size="sm" />
+            </template>
+            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+            <span v-else>{{ t('addToCartShort') }}</span>
+          </UiButton>
+
+          <UiButton
+            v-else
+            :variant="configuration?.addToCartStyle || 'primary'"
+            type="button"
+            :tag="NuxtLink"
+            :to="productPath"
+            size="sm"
+            class="w-fit"
+          >
+            <span>{{ t('showOptions') }}</span>
+          </UiButton>
+        </template>
       </template>
     </div>
   </div>
