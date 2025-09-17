@@ -23,12 +23,6 @@ describe('useModernImage with only webp enabled', () => {
         },
       };
     });
-
-    const {  setInitialData } = useSiteSettings();
-    setInitialData([
-      { key:'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
-    ]);
   });
 
   afterEach(() => {
@@ -66,12 +60,6 @@ describe('useModernImage with webp and avif enabled', () => {
         },
       };
     });
-
-    const {  setInitialData } = useSiteSettings();
-    setInitialData([
-      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
-    ]);
   });
 
   afterEach(() => {
@@ -79,6 +67,12 @@ describe('useModernImage with webp and avif enabled', () => {
   });
 
   it('should add the avif extension to the url', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/item/images/image.jpg';
     const res = addModernImageExtension(url);
@@ -86,6 +80,12 @@ describe('useModernImage with webp and avif enabled', () => {
   });
 
   it('should not add the avif extension to the url if the base extension is already avif', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/item/images/image.avif';
     const res = addModernImageExtension(url);
@@ -93,6 +93,12 @@ describe('useModernImage with webp and avif enabled', () => {
   });
 
   it('should not add the avif extension to the url if the url has no /item/images/ in it', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/images/image.jpg';
     const res = addModernImageExtension(url);
@@ -100,6 +106,12 @@ describe('useModernImage with webp and avif enabled', () => {
   });
 
   it('should not add the avif extension to the url if the base extension is not supported', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/item/images/image.svg';
     const res = addModernImageExtension(url);
@@ -107,6 +119,12 @@ describe('useModernImage with webp and avif enabled', () => {
   });
 
   it('should add the avif extension to the url if both avif and webp are enabled', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'true' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'true' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/item/images/image.jpg';
     const res = addModernImageExtension(url);
@@ -124,12 +142,6 @@ describe('useModernImage with webp and avif disabled', () => {
         },
       };
     });
-
-    const {  setInitialData } = useSiteSettings();
-    setInitialData([
-      { key:'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key:'useWebp', originalKey: 'useAvif', value: 'false' }
-    ]);
   });
 
   afterEach(() => {
@@ -137,6 +149,12 @@ describe('useModernImage with webp and avif disabled', () => {
   });
 
   it('should not add any extension to the url', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'false' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'false' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/item/images/image.png';
     const res = addModernImageExtension(url);
@@ -144,6 +162,12 @@ describe('useModernImage with webp and avif disabled', () => {
   });
 
   it('should not add any extension to the url if the url has no /item/images/ in it', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'false' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'false' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/images/image.jpg';
     const res = addModernImageExtension(url);
@@ -151,6 +175,12 @@ describe('useModernImage with webp and avif disabled', () => {
   });
 
   it('should not add any extension to the url if the base extension is not supported', () => {
+    const {  setInitialData } = useSiteSettings();
+    setInitialData([
+      { key:'useAvif', originalKey: 'useAvif', value: 'false' },
+      { key:'useWebp', originalKey: 'useAvif', value: 'false' }
+    ]);
+
     const { addModernImageExtension } = useModernImage();
     const url = 'https://example.com/item/images/image.svg';
     const res = addModernImageExtension(url);
