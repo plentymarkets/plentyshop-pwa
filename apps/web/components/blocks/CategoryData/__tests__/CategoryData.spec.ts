@@ -30,5 +30,4 @@ describe('CategoryData', () => {
 
     expect(wrapper.find('[data-testid="category-name"]').exists()).toBe(true);
   });
-
 });

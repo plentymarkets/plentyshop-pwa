@@ -3,11 +3,11 @@
     <div v-if="categoryBlock.name" class="p-2">
       <UiFormLabel>{{ getEditorTranslation('category-label') }}</UiFormLabel>
       <SfInput
-          v-model="categoryBlock.name"
-          data-testid="category-form-name"
-          name="categoryName"
-          type="text"
-          :placeholder="getEditorTranslation('category-placeholder')"
+        v-model="categoryBlock.name"
+        data-testid="category-form-name"
+        name="categoryName"
+        type="text"
+        :placeholder="getEditorTranslation('category-placeholder')"
       />
     </div>
   </div>
@@ -22,13 +22,11 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const categoryBlock = computed(
-    () =>
-        (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
-          categoryId: '16',
-          name: 'Category name',
-          description1: '',
-          description2: '',
-        }) as CategoryDataContent,
+  () =>
+    (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
+      categoryId: '16',
+      name: 'Category name',
+    }) as CategoryDataContent,
 );
 </script>
 

@@ -14,4 +14,3 @@ export type CategoryDataContent = {
   categoryId: string;
   name: string;
 };
-
