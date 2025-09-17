@@ -1,10 +1,10 @@
 export type CategoryDataProps = {
-  name?: string;
-  type?: string;
-  content?: CategoryDataContent;
+  name: string;
+  type: string;
+  content: CategoryDataContent;
   configuration?: object;
   index?: number;
-  meta?: {
+  meta: {
     uuid: string;
   };
   shouldLoad?: boolean;
