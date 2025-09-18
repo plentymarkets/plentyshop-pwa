@@ -67,7 +67,6 @@ definePageMeta({
     return validateProductParams(route.params);
   },
 });
-
 const RecommendedProductsAsync = defineAsyncComponent(
   async () => await import('@/components/RecommendedProducts/RecommendedProducts.vue'),
 );
@@ -171,4 +170,6 @@ const observeRecommendedSection = () => {
 };
 
 onNuxtReady(() => observeRecommendedSection());
+
+console.log(productGetters.getCategoryIds(product.value)[0]);
 </script>
