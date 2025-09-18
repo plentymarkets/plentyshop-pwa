@@ -18,7 +18,7 @@
             @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
           />
         </div>
-
+        
         <div v-if="multiGridStructure.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -130,6 +130,7 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import ColumnSizeInput from '~/components/editor/ColumnSizeInput.vue';
+
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -176,6 +177,60 @@ const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
 });
 
+const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
+const gapBtnClasses =
+  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
+type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
+const gapPxMap: Record<GapSize, number> = {
+  None: 0,
+  S: 4,
+  M: 8,
+  L: 12,
+  XL: 20,
+};
+
+const getGapPx = (gap: string | undefined): number => {
+  const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
+  return gapPxMap[validGap as GapSize];
+};
+
+=======
+
+const defaultMarginBottom = computed(() => {
+  switch (blockSize.value) {
+    case 's':
+      return 30;
+    case 'm':
+      return 40;
+    case 'l':
+      return 50;
+    case 'xl':
+      return 60;
+    default:
+      return 0;
+  }
+});
+
+const multiGridStructure = computed(() => {
+  const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
+  if (!block.layout) {
+    block.layout = {
+      marginTop: 0,
+      marginBottom: defaultMarginBottom.value,
+      marginLeft: 40,
+      marginRight: 40,
+      backgroundColor: '#ffffff',
+      gap: 'M',
+    };
+  } else {
+    if (!block.layout.backgroundColor) block.layout.backgroundColor = '#ffffff';
+    if (!block.layout.gap) block.layout.gap = 'M';
+    if (block.layout.marginBottom === undefined || block.layout.marginBottom === null) {
+      block.layout.marginBottom = defaultMarginBottom.value;
+    }
+  }
+  return block;
+});
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
