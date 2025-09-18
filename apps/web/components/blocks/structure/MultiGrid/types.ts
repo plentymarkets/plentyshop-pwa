@@ -1,5 +1,14 @@
 import type { Block } from '@plentymarkets/shop-api';
 
+interface MultiGridLayout {
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
+  backgroundColor?: string;
+  gap?: string;
+}
+
 export type MultiGridProps = {
   name: string;
   type: string;
@@ -7,6 +16,7 @@ export type MultiGridProps = {
   configuration: {
     columnWidths: number[];
   };
+  layout?: MultiGridLayout;
   meta: {
     uuid: string;
   };
@@ -22,4 +32,14 @@ export type EmptyGridBlockProps = {
   };
 };
 
-export type ColumnBlock = Block & { content?: Block[] };
+export type ColumnBlock = Block & {
+  content?: Block[];
+  layout?: {
+    gap: string;
+    marginTop?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    marginRight?: number;
+    backgroundColor?: string;
+  };
+};
