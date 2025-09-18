@@ -36,7 +36,7 @@ const runtimeConfig = useRuntimeConfig();
 
 const robotsItemPage = computed({
   get: () => getSetting(),
-  set: (option) => updateSetting(option),
+  set: (value) => updateSetting(value),
 });
 
 const robotsItemPageId = computed({
