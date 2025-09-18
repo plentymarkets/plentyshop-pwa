@@ -52,13 +52,10 @@ const gapClassMap: Record<string, string> = {
 };
 const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
-const gridInlineStyle = computed(() => ({
-  backgroundColor: layout?.backgroundColor ?? 'transparent',
-  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
-  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
-  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
-}));
+const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+
+
+const { gridInlineStyle } = useMultiGridHelper(layout, getBlockSize);
 
 const getGridClasses = () => {
   const columnCount = configuration.columnWidths.length;
