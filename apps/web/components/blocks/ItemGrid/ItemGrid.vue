@@ -73,16 +73,15 @@ import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 const { t } = useI18n();
 const { getFacetsFromURL } = useCategoryFilter();
 
-const { data: productsCatalog, productsPerPage } = useProducts();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { showNetPrices } = useCart();
 
 const props = defineProps<ItemGridProps>();
 
-const products = computed(() => productsCatalog.value?.products ?? []);
-const totalProducts = computed(() => productsCatalog.value?.pagination?.totals ?? []);
-const itemsPerPage = computed(() => Number(productsPerPage.value) ?? 0);
+const products = computed(() => props.products ?? []);
+const totalProducts = computed(() => Number(props.totalProducts) || 0);
+const itemsPerPage = computed(() => Number(props.productsPerPage) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 const gridClasses = computed(() =>

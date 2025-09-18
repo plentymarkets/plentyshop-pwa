@@ -7,7 +7,7 @@
           <slot name="sidebar" />
         </NuxtLazyHydrate>
       </CategorySidebar>
-      <BlocksItemGrid v-bind="itemGrid" />
+      <BlocksItemGrid v-bind="itemGrid" :total-products="totalProducts" :products-per-page="itemsPerPage" :products="products" />
     </div>
   </NarrowContainer>
 </template>
@@ -15,6 +15,9 @@
 <script setup lang="ts">
 import { useDisclosure } from '@storefront-ui/vue';
 import CategoryData from '~/components/blocks/CategoryData/CategoryData.vue';
+import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+
+const { totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
 
 const { isOpen, close } = useDisclosure();
 const { getCategoryTemplateBlock } = useCategoryTemplate();

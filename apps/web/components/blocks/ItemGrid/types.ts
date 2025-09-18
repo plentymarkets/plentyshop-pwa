@@ -1,3 +1,5 @@
+import type { Product } from '@plentymarkets/shop-api';
+
 export type ItemCountPosition = 'left' | 'center' | 'right';
 export type ContentAlignment = 'left' | 'center' | 'right';
 export type PaginationPosition = 'top' | 'bottom' | 'both';
@@ -23,6 +25,9 @@ export type ItemGridProps = {
   meta: {
     uuid: string;
   };
+  products?: Product[]
+  productsPerPage?: number
+  totalProducts?: number
 };
 
 export interface ItemGridContent {
