@@ -18,7 +18,7 @@
             @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
           />
         </div>
-        
+
         <div v-if="multiGridStructure.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">

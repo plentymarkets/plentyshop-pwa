@@ -1,18 +1,10 @@
 <template>
   <div class="relative w-full flex flex-col items-center">
-    <input
-      v-model.number="splitIndex"
-      type="range"
-      min="1"
-      max="11"
-      step="1"
-      class="sr-only"
-      @input="onInput"
-    />
+    <input v-model.number="splitIndex" type="range" min="1" max="11" step="1" class="sr-only" @input="onInput" />
     <div
       ref="squaresContainer"
       class="flex w-full mt-2 mb-4 rounded overflow-hidden border border-gray-300 relative"
-      style="height: 24px;"
+      style="height: 24px"
       @mousedown="handlePointerDown"
     >
       <div
@@ -20,17 +12,13 @@
         :key="step"
         class="flex-1 h-full cursor-pointer border-r last:border-r-0 border-gray-300 bg-white"
         :class="{
-                  'border-r-[1.5px] border-r-primary-500': step === splitIndex,
-                  'border-l-[1.5px] border-l-primary-500': step === splitIndex + 1
-                }"
+          'border-r-[1.5px] border-r-primary-500': step === splitIndex,
+          'border-l-[1.5px] border-l-primary-500': step === splitIndex + 1,
+        }"
         @click="updateSplitFromEvent"
       />
     </div>
-    <div
-      class="absolute"
-      :style="arrowStyle"
-      style="top: 32px;"
-    >
+    <div class="absolute" :style="arrowStyle" style="top: 32px">
       <span class="text-editor-button text-lg cursor-pointer select-none" @mousedown="handlePointerDown">&#9650;</span>
     </div>
   </div>
@@ -41,7 +29,7 @@ import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types'
 
 const { multiGridStructure } = defineProps<{ multiGridStructure: ColumnBlock }>();
 const emit = defineEmits<{
-  (e: 'update:columnWidths', value: number[]): void
+  (e: 'update:columnWidths', value: number[]): void;
 }>();
 
 const steps = Array.from({ length: 12 }, (_, i) => i + 1); // 12 squares
@@ -51,14 +39,14 @@ const squaresContainer = ref<HTMLElement | null>(null);
 const isDragging = ref(false);
 
 const splitIndex = computed({
-  get: () => (multiGridStructure.configuration?.columnWidths?.[0] || 6),
+  get: () => multiGridStructure.configuration?.columnWidths?.[0] || 6,
   set: (val: number) => {
     const columns = multiGridStructure.configuration.columnWidths.length;
     const firstColWidth = Math.max(1, Math.min(val, 11));
     if (columns === 2) {
       emit('update:columnWidths', [firstColWidth, 12 - firstColWidth]);
     }
-  }
+  },
 });
 
 const onInput = (e: Event) => {
@@ -121,7 +109,7 @@ const arrowStyle = computed(() => {
   const width = containerWidth.value;
   const stepWidth = width / steps.length;
   const arrowWidth = 16;
-  const left = stepWidth * splitIndex.value - (arrowWidth / 2);
+  const left = stepWidth * splitIndex.value - arrowWidth / 2;
   return { left: `${left}px` };
 });
 
@@ -133,7 +121,7 @@ const columnCount = computed({
     if (columns === 2) {
       emit('update:columnWidths', [firstColWidth, 12 - firstColWidth]);
     }
-  }
+  },
 });
 </script>
 
@@ -145,7 +133,7 @@ const columnCount = computed({
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 </style>
