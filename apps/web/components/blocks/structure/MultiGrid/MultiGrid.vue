@@ -54,7 +54,6 @@ const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 
-
 const { gridInlineStyle } = useMultiGridHelper(layout, getBlockSize);
 
 const getGridClasses = () => {

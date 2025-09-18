@@ -13,11 +13,16 @@ export function useMultiGridHelper(layout?: Partial<MultiGridLayout>, getBlockSi
   const blockSize = computed(() => (getBlockSize ? getBlockSize() : 'm'));
   const defaultMarginBottom = computed(() => {
     switch (blockSize.value) {
-      case 's': return 30;
-      case 'm': return 40;
-      case 'l': return 50;
-      case 'xl': return 60;
-      default: return 0;
+      case 's':
+        return 30;
+      case 'm':
+        return 40;
+      case 'l':
+        return 50;
+      case 'xl':
+        return 60;
+      default:
+        return 0;
     }
   });
 
@@ -33,7 +38,7 @@ export function useMultiGridHelper(layout?: Partial<MultiGridLayout>, getBlockSi
   const safeLayout = computed<MultiGridLayout>(() => ({
     ...DEFAULT_LAYOUT,
     ...(layout ?? {}),
-    marginBottom: (layout?.marginBottom ?? DEFAULT_LAYOUT.marginBottom),
+    marginBottom: layout?.marginBottom ?? DEFAULT_LAYOUT.marginBottom,
   }));
 
   const gridInlineStyle = computed(() => ({
