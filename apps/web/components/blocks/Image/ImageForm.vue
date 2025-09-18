@@ -22,6 +22,37 @@
         @delete="deleteImage2(uiImageTextBlock, type)"
       />
     </div>
+        <div class="py-2">
+      <label class="block text-sm font-medium mb-4">Brightness</label>
+      <div class="flex items-center gap-4">
+        <div class="flex-1 space-y-1">
+          <div class="flex justify-between text-xs text-gray-500">
+            <span>0%</span>
+            <span>100%</span>
+          </div>
+          <input
+            v-model.number="uiImageTextBlock.image.brightness"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            class="w-full"
+          />
+        </div>
+
+        <div class="relative">
+          <input
+            v-model.number="uiImageTextBlock.image.brightness"
+            type="number"
+            min="0"
+            max="1"
+            class="w-20 px-2 py-1 border rounded text-color-red-500"
+            @input="clampBrightness($event, 'image')"
+          />
+        </div>
+      </div>
+    </div>
+    
     <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
@@ -52,36 +83,7 @@
       </label>
     </div>
 
-    <div class="py-2">
-      <label class="block text-sm font-medium mb-4">Brightness</label>
-      <div class="flex items-center gap-4">
-        <div class="flex-1 space-y-1">
-          <div class="flex justify-between text-xs text-gray-500">
-            <span>0%</span>
-            <span>100%</span>
-          </div>
-          <input
-            v-model.number="uiImageTextBlock.image.brightness"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            class="w-full"
-          />
-        </div>
 
-        <div class="relative">
-          <input
-            v-model.number="uiImageTextBlock.image.brightness"
-            type="number"
-            min="0"
-            max="1"
-            class="w-20 px-2 py-1 border rounded text-color-red-500"
-            @input="clampBrightness($event, 'image')"
-          />
-        </div>
-      </div>
-    </div>
 
     <fieldset class="py-2">
       <UiFormLabel>{{ getEditorTranslation('image-align-label') }}</UiFormLabel>
