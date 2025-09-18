@@ -338,7 +338,7 @@ import { migrateImageContent } from '~/utils/migrate-image-content';
 
 import { clamp } from '@storefront-ui/shared';
 
-const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
