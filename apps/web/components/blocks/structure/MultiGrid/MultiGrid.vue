@@ -101,33 +101,32 @@ const showOverlay = computed(
     blockHasData(block),
 );
 
-
 const isAlignable = (b: Block): b is AlignableBlock =>
-  typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content)
+  typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
 
 const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
   const a = block.content?.imageAlignment ?? block.content?.alignment;
-  return a === 'left' || a === 'right' ? a : undefined
-}
+  return a === 'left' || a === 'right' ? a : undefined;
+};
 
 const pairWithSlots = computed<Block[]>(() => {
-  const list = content.map((block) => ({ ...block }))
+  const list = content.map((block) => ({ ...block }));
 
-  const alignableIndex = list.findIndex(isAlignable)
+  const alignableIndex = list.findIndex(isAlignable);
 
-  if (alignableIndex === -1) return list
+  if (alignableIndex === -1) return list;
 
-  const alignment = readAlignment(list[alignableIndex] as AlignableBlock)
-  if (!alignment) return list
+  const alignment = readAlignment(list[alignableIndex] as AlignableBlock);
+  if (!alignment) return list;
 
-  const selfSlot = alignment === 'right' ? 1 : 0
-  const sibling = alignableIndex === 0 ? 1 : 0
+  const selfSlot = alignment === 'right' ? 1 : 0;
+  const sibling = alignableIndex === 0 ? 1 : 0;
 
-  list[alignableIndex] = { ...list[alignableIndex], parent_slot: selfSlot }
-  list[sibling] = { ...list[sibling], parent_slot: 1 - selfSlot }
+  list[alignableIndex] = { ...list[alignableIndex], parent_slot: selfSlot };
+  list[sibling] = { ...list[sibling], parent_slot: 1 - selfSlot };
 
-  return list
-})
+  return list;
+});
 
 const columns = computed<Block[][]>(() => {
   const blocks = ref([] as Block[][]);
@@ -137,9 +136,9 @@ const columns = computed<Block[][]>(() => {
         blocks.value[block.parent_slot] = [];
       }
 
-      blocks.value[block.parent_slot].push(block)
+      blocks.value[block.parent_slot].push(block);
     }
-  })
+  });
   return blocks.value;
-})
+});
 </script>
