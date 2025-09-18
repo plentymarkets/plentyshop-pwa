@@ -4,8 +4,8 @@
     <CategorySorting />
     <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination?.totals ?? 0" />
     <CategoryFilters
-        v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
-        :facets="productsCatalog.facets"
+      v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+      :facets="productsCatalog.facets"
     />
   </div>
 </template>

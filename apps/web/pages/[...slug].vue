@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import SortFilter from "~/components/blocks/SortFilter/SortFilter.vue";
+import SortFilter from '~/components/blocks/SortFilter/SortFilter.vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });
 
