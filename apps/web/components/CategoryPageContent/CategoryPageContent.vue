@@ -7,7 +7,7 @@
           <slot name="sidebar" />
         </NuxtLazyHydrate>
       </CategorySidebar>
-      <BlocksItemGrid v-bind="itemGrid"  />
+      <BlocksItemGrid v-bind="itemGrid" />
     </div>
   </NarrowContainer>
 </template>

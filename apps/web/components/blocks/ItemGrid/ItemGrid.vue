@@ -17,7 +17,6 @@
             })
           }}
         </span>
-
       </div>
     </template>
 
