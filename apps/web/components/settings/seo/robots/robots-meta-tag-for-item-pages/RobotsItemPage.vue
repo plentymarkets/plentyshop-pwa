@@ -8,33 +8,46 @@
       </SfTooltip>
     </div>
     <label>
-      <Multiselect
-        v-model="robotsItemPage"
-        :options="robotsOptions"
-        :placeholder="getEditorTranslation('placeholder')"
-        :searchable="false"
-        :allow-empty="false"
-        data-testid="seo-robots-item-page"
-      />
+      <Multiselect v-model="robotsItemPage" :options="Object.keys(robotsItemOptions)"
+        :placeholder="getEditorTranslation('placeholder')" :searchable="false" data-testid="seo-robots-item-page">
+        <template v-slot:singleLabel="{ option }">
+          {{ getLabel(option) }}
+        </template>
+        <template #option="props"> {{ robotsItemOptions[props.option] }}
+        </template>
+      </Multiselect>
     </label>
+    <div v-if="robotsItemPage === 'varProp'" class="mt-2">
+      <label for="robotsItemPageId">ID from property of type 'Text'</label>
+      <SfInput id="robotsItemPageId" v-model="robotsItemPageId" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
+import { SfInput } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { robotsOptions } from '~/utils/editorSettings';
+import { robotsItemOptions } from '~/utils/editorSettings';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import type { SettingOption } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
+const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('robotsItemPageId');
 const runtimeConfig = useRuntimeConfig();
 
 const robotsItemPage = computed({
   get: () => getSetting(),
-  set: (value) => updateSetting(value),
+  set: (option) => updateSetting(option),
+});
+const getLabel = (val: keyof typeof robotsItemOptions): string => {
+  return robotsItemOptions[val];
+};
+const robotsItemPageId = computed({
+  get: () => getSettingForId(),
+  set: (value) => updateSettingForId(value),
 });
 </script>
 
-<i18n lang="json">
-{
+<i18n lang="json">{
   "en": {
     "label": "Robots for item pages",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
@@ -45,5 +58,4 @@ const robotsItemPage = computed({
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
     "placeholder": "Select robots"
   }
-}
-</i18n>
+}</i18n>

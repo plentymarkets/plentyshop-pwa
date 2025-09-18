@@ -30,6 +30,14 @@ export const conditionOptions = [
 
 export const robotsOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 
+export const robotsItemOptions: Record<string, string> = {
+  'all': 'all',
+  'noindex': 'noindex',
+  'nofollow': 'nofollow',
+  'noindex, nofollow':'noindex, nofollow2',
+  'varProp': "Selection via variation property of the type 'Text'. Default value = 'all'", 
+};
+
 export const sessionLifetimeOptions = [
   { key: 'sessionLifetime.untilBrowserClosed', value: '0' },
   { key: 'sessionLifetime.oneHour', value: '3600' },
