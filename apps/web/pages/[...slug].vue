@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import SortFilter from '~/components/blocks/SortFilter/SortFilter.vue';
 
