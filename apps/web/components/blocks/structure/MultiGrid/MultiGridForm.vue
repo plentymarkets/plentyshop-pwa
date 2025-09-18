@@ -117,6 +117,14 @@
         </label>
       </div>
     </UiAccordionItem>
+
+    <div v-for="column in multiGridStructure.content" :key="column.meta.uuid">
+      <component
+        :is="getComponent(column.name)"
+        v-if="column.name !== 'EmptyGridBlock'"
+        :uuid="column.meta?.uuid || ''"
+      />
+    </div>
   </div>
 </template>
 
@@ -195,6 +203,18 @@ const getGapPx = (gap: string | undefined): number => {
 
 const textSettings = ref(false);
 const layoutBackground = ref(false);
+
+const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
+
+const getComponent = (blockName: string) => {
+  if (!blockName) return null;
+  const regex = new RegExp(`${blockName}Form\\.vue$`, 'i');
+  const matched = Object.keys(modules).find((path) => regex.test(path));
+  return matched ? defineAsyncComponent(modules[matched]) : null;
+};
 </script>
 
 <i18n lang="json">
