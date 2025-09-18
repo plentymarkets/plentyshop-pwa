@@ -969,7 +969,6 @@
   "item-category": {
     "category": "item-category",
     "accessControl": [
-      "content",
       "productCategory"
     ],
     "title": "Item Category",
