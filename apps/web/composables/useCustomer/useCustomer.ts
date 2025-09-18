@@ -15,7 +15,6 @@ const CONTACT_INFORMATION = '#contact-information';
 
 /**
  * @description Composable managing Customer data
- * @returns UseCustomerReturn
  * @example
  * ``` ts
  * const {
@@ -53,10 +52,16 @@ export const useCustomer = () => {
     state.value.isAuthorized = !!state.value.user?.email;
   };
 
-  /** Function for getting current user/cart data from session
-   * @deprecated This method will be removed in future versions. Use `useFetchSession().fetchSession()` instead.
+  /**
+   * Gets the current user/cart session data.
+   *
+   * @deprecated This method will be removed in future versions.
+   * Use `useFetchSession().fetchSession()` instead.
+   *
+   * @returns { Promise<void> }
+   *
    * @example
-   * ``` ts
+   * ```ts
    * getSession();
    * ```
    */
@@ -65,10 +70,11 @@ export const useCustomer = () => {
   };
 
   /** Function for setting user data
-   * @param user { User | null }
+   * @param { User | null } user
+   * @returns { void }
    * @example
    * ``` ts
-   * setUser(data: SessionResult);
+   * setUser(user);
    * ```
    */
   const setUser = (user: User | null) => {
@@ -77,8 +83,8 @@ export const useCustomer = () => {
   };
 
   /** Function for login a user as guest
-   * @param email
-   * @return Promise<void>
+   * @param { string } email
+   * @returns { Promise<void> }
    * @example
    * ``` ts
    * loginAsGuest('user@example.com');
@@ -104,9 +110,9 @@ export const useCustomer = () => {
   };
 
   /** Function for user login.
-   * @param email
-   * @param password
-   * @return Promise<boolean>
+   * @param { string } email
+   * @param { string } password
+   * @return { Promise<boolean> }
    * @example
    * ``` ts
    * login('user@example.com', 'password');
@@ -132,7 +138,7 @@ export const useCustomer = () => {
   };
 
   /** Function for user logout.
-   * @return Promise<void>
+   * @returns { Promise<void> }
    * @example
    * ``` ts
    * logout();
@@ -156,8 +162,8 @@ export const useCustomer = () => {
   };
 
   /** Function for registering a user.
-   * @param params { RegisterParams }
-   * @return Promise<UserChangeResponse | null>
+   * @param { RegisterParams } params
+   * @returns { Promise<UserChangeResponse | null> }
    * @example
    * ``` ts
    * register({ email: 'example', password: 'example', 'cf-turnstile-response': '' });
@@ -185,7 +191,7 @@ export const useCustomer = () => {
 
   /** Function for changing the user password
    * @param params { UserChangePasswordParams }
-   * @return Promise<boolean>
+   * @returns { Promise<boolean> }
    * @example
    * ``` ts
    * changePassword({
@@ -195,7 +201,7 @@ export const useCustomer = () => {
    * });
    * ```
    */
-  const changePassword = async (params: UserChangePasswordParams) => {
+  const changePassword = async (params: UserChangePasswordParams): Promise<boolean> => {
     state.value.loading = true;
 
     try {
@@ -224,6 +230,10 @@ export const useCustomer = () => {
     () => (state.value.isGuest || (!state.value.isGuest && !state.value.isAuthorized)) && !state.value.validGuestEmail,
   );
 
+  /**
+   * Function to scroll back to contact information section in checkout and highlight it
+   * @return { boolean } always false to prevent default form submission
+   */
   const backToContactInformation = (): boolean => {
     const classList = ['bg-primary-50', 'rounded-md'];
     const opacityClass = 'opacity-0';
