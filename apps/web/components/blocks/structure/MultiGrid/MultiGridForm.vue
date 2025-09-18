@@ -11,7 +11,7 @@
       </template>
 
       <div data-testid="image-text-form">
-        <div v-if="isTwoColumnMultigrid" class="py-2">
+        <div v-if="isTwoColumnMultigrid" class="py-4">
           <UiFormLabel>Column Size</UiFormLabel>
           <ColumnSizeInput
             :multi-grid-structure="multiGridStructure"

@@ -15,8 +15,8 @@
         @click="updateSplitFromEvent"
       />
     </div>
-    <div class="absolute" :style="arrowStyle" style="top: 32px">
-      <span class="text-editor-button text-lg cursor-pointer select-none" @mousedown="handlePointerDown">&#9650;</span>
+    <div class="relative w-full flex justify-start -mt-4" :style="arrowStyle">
+      <span class="absolute text-editor-button text-lg cursor-pointer select-none" @mousedown="handlePointerDown">&#9650;</span>
     </div>
   </div>
 </template>
