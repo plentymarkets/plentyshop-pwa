@@ -17,12 +17,7 @@
             })
           }}
         </span>
-        <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
-          <template #prefix>
-            <SfIconTune />
-          </template>
-          {{ t('listSettings') }}
-        </UiButton>
+
       </div>
     </template>
 
@@ -73,13 +68,12 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import { paths } from '~/utils/paths';
-import { SfIconTune, SfLink, useDisclosure } from '@storefront-ui/vue';
+import { SfLink } from '@storefront-ui/vue';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 
 const { t } = useI18n();
 const { getFacetsFromURL } = useCategoryFilter();
-const { open } = useDisclosure();
+
 const { data: productsCatalog, productsPerPage } = useProducts();
 const viewport = useViewport();
 const localePath = useLocalePath();
