@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import type { MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
+import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
@@ -101,15 +101,45 @@ const showOverlay = computed(
     blockHasData(block),
 );
 
-const columns = ref([] as Block[][]);
 
-content.forEach((block) => {
-  if (block.parent_slot !== undefined) {
-    if (!columns.value[block.parent_slot]) {
-      columns.value[block.parent_slot] = [];
+const isAlignable = (b: Block): b is AlignableBlock =>
+  typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content)
+
+const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
+  const a = block.content?.imageAlignment ?? block.content?.alignment;
+  return a === 'left' || a === 'right' ? a : undefined
+}
+
+const pairWithSlots = computed<Block[]>(() => {
+  const list = content.map((block) => ({ ...block }))
+
+  const alignableIndex = list.findIndex(isAlignable)
+
+  if (alignableIndex === -1) return list
+
+  const alignment = readAlignment(list[alignableIndex] as AlignableBlock)
+  if (!alignment) return list
+
+  const selfSlot = alignment === 'right' ? 1 : 0
+  const sibling = alignableIndex === 0 ? 1 : 0
+
+  list[alignableIndex] = { ...list[alignableIndex], parent_slot: selfSlot }
+  list[sibling] = { ...list[sibling], parent_slot: 1 - selfSlot }
+
+  return list
+})
+
+const columns = computed<Block[][]>(() => {
+  const blocks = ref([] as Block[][]);
+  pairWithSlots.value.forEach((block) => {
+    if (block.parent_slot !== undefined) {
+      if (!blocks.value[block.parent_slot]) {
+        blocks.value[block.parent_slot] = [];
+      }
+
+      blocks.value[block.parent_slot].push(block)
     }
-
-    columns.value[block.parent_slot].push(block);
-  }
-});
+  })
+  return blocks.value;
+})
 </script>
