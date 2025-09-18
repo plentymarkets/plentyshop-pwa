@@ -20,6 +20,7 @@ export type ImageContent = {
     linktarget?: string;
     imageAlignment: 'left' | 'right';
     brightness?: number;
+    fillMode?: 'fit' | 'fill';
   };
   text: {
     textOverlay?: string;

@@ -35,6 +35,7 @@ export function migrateImageContent(content: OldContent | ImageContent): ImageCo
       alt: old.alt ?? '',
       imageAlignment: old.imageAlignment ?? 'left',
       brightness: old.brightness ?? 1,
+      fillMode: 'fill',
     },
     text: {
       textOverlay: old.textOverlay,
@@ -52,6 +53,6 @@ export function migrateImageContent(content: OldContent | ImageContent): ImageCo
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
-    }
+    },
   };
 }

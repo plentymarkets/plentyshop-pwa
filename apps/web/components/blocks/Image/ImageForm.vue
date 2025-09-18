@@ -53,7 +53,45 @@
       </div>
     </div>
 
-    <div class="py-2">
+    <fieldset class="py-2">
+      <legend class="text-sm font-medium text-black">
+        {{ getEditorTranslation('image-scalling-label') }}
+      </legend>
+
+      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
+        <div
+          data-testid="align-y-center"
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.fillMode === 'fill' }"
+          @click="uiImageTextBlock.image.fillMode = 'fill'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.image.fillMode !== 'fill' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('image-scalling-fill-label') }}
+        </div>
+
+        <div
+          data-testid="align-y-top"
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
+          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.fillMode === 'fit' }"
+          @click="uiImageTextBlock.image.fillMode = 'fit'"
+        >
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.image.fillMode !== 'fit' }"
+            class="w-[1.1rem] shrink-0 mr-1"
+          />
+          {{ getEditorTranslation('image-scalling-fit-label') }}
+        </div>
+      </div>
+    </fieldset>
+
+    <div
+      id="padding-form"
+      class="py-2"
+      :class="{ 'opacity-50 pointer-events-none': uiImageTextBlock.image.fillMode === 'fill' }"
+    >
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -63,6 +101,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-top"
+            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -72,6 +111,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-bottom"
+            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -81,6 +121,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-left"
+            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
@@ -90,6 +131,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-right"
+            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
           />
         </div>
       </div>
@@ -469,6 +511,10 @@ const clampBrightness = (event: Event, type: string) => {
     "image-s-label": "Image S (Mobile)",
     "image-s-hint": "Recommended dimensions: 320 × 320 px",
 
+    "image-scalling-label": "Image Scaling",
+    "image-scalling-fit-label": "Fit",
+    "image-scalling-fill-label": "Fill",
+
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
@@ -512,6 +558,10 @@ const clampBrightness = (event: Event, type: string) => {
 
     "image-s-label": "Image S (Mobile)",
     "image-s-hint": "Recommended dimensions: 320 × 320 px",
+
+    "image-scaling-label": "Image Scaling",
+    "image-scalling-fit-label": "Fit",
+    "image-scalling-fill-label": "Fill",
 
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
