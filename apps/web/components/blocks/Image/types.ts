@@ -32,6 +32,12 @@ export type ImageContent = {
     link?: string;
     variant?: 'primary' | 'secondary';
   };
+  layout: {
+    paddingTop: number;
+    paddingBottom: number;
+    paddingLeft: number;
+    paddingRight: number;
+  };
 };
 
 export interface ImageDimensions {

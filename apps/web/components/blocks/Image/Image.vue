@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex justify-center">
+  <div class="relative flex justify-center" :style="gridInlineStyle" id="testpbi">
     <template v-if="props.content?.image">
       <template v-if="props.content.image.linktarget && props.content.image.linktarget.trim()">
         <NuxtLink
@@ -20,10 +20,12 @@
             ]"
             :style="{
               filter: props.content.image.brightness ? 'brightness(' + (props.content.image.brightness ?? 1) + ')' : '',
+          
             }"
             :width="getImageDimensions().width"
             :height="getImageDimensions().height"
             data-testid="image-block"
+       
           />
         </NuxtLink>
       </template>
@@ -130,4 +132,15 @@ const getImageDimensions = (): ImageDimensions => {
     }
   }
 };
+
+const gridInlineStyle = computed(() => {
+  const layout = props.content.layout ?? {};
+  return {
+    paddingTop: `${layout.paddingTop ?? 0}px`,
+    paddingBottom: `${layout.paddingBottom ?? 0}px`,
+    paddingLeft: `${layout.paddingLeft ?? 0}px`,
+    paddingRight: `${layout.paddingRight ?? 0}px`,
+  };
+});
+
 </script>

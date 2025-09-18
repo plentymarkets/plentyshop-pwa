@@ -54,6 +54,53 @@
     </div>
 
     <div class="py-2">
+      <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+      <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowUpward /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingTop"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-top"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowDownward /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingBottom"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-bottom"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowBack /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingLeft"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-left"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+          <span><SfIconArrowForward /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingRight"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-right"
+          />
+        </div>
+      </div>
+      <div class="px-4 py-3">
+        <span class="typography-text-xs text-neutral-700">
+          {{ getEditorTranslation('spacing-around') }}
+        </span>
+      </div>
+    </div>
+
+    <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
       </div>
@@ -332,7 +379,15 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconCheck, SfTextarea } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfIconCheck,
+  SfTextarea,
+  SfIconArrowBack,
+  SfIconArrowUpward,
+  SfIconArrowDownward,
+  SfIconArrowForward,
+} from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 
@@ -347,9 +402,27 @@ const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<ImageFormProps>();
 
+const DEFAULT_LAYOUT = {
+  paddingTop: 0,
+  paddingBottom: 0,
+  paddingLeft: 0,
+  paddingRight: 0,
+};
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
-  return migrateImageContent(rawContent);
+  const migrated = migrateImageContent(rawContent);
+
+  if (!migrated.layout) {
+    migrated.layout = { ...DEFAULT_LAYOUT };
+  } else {
+    (Object.keys(DEFAULT_LAYOUT) as Array<keyof typeof DEFAULT_LAYOUT>).forEach((key) => {
+      if (typeof migrated.layout[key] !== 'number') {
+        migrated.layout[key] = DEFAULT_LAYOUT[key];
+      }
+    });
+  }
+
+  return migrated;
 });
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
@@ -398,7 +471,7 @@ const clampBrightness = (event: Event, type: string) => {
 
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
-
+    "padding-label": "Padding",
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
     "image-align-option-right-label": "Right",
@@ -442,7 +515,7 @@ const clampBrightness = (event: Event, type: string) => {
 
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
-
+    "padding-label": "Padding",
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
     "image-align-option-right-label": "Right",

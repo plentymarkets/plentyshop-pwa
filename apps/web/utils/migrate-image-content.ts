@@ -47,5 +47,11 @@ export function migrateImageContent(content: OldContent | ImageContent): ImageCo
       link: old.link,
       variant: old.variant,
     },
+    layout: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+    }
   };
 }
