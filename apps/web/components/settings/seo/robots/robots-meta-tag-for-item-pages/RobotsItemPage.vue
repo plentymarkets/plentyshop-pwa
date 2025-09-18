@@ -11,7 +11,7 @@
       <Multiselect v-model="robotsItemPage" :options="Object.keys(robotsItemOptions)"
         :placeholder="getEditorTranslation('placeholder')" :searchable="false" data-testid="seo-robots-item-page">
         <template v-slot:singleLabel="{ option }">
-          {{ getLabel(option) }}
+          {{ robotsItemOptions[option] }}
         </template>
         <template #option="props"> {{ robotsItemOptions[props.option] }}
         </template>
@@ -38,9 +38,7 @@ const robotsItemPage = computed({
   get: () => getSetting(),
   set: (option) => updateSetting(option),
 });
-const getLabel = (val: keyof typeof robotsItemOptions): string => {
-  return robotsItemOptions[val];
-};
+
 const robotsItemPageId = computed({
   get: () => getSettingForId(),
   set: (value) => updateSettingForId(value),
