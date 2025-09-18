@@ -7,7 +7,12 @@
           <slot name="sidebar" />
         </NuxtLazyHydrate>
       </CategorySidebar>
-      <BlocksItemGrid v-bind="itemGrid" :total-products="totalProducts" :products-per-page="itemsPerPage" :products="products" />
+      <BlocksItemGrid
+        v-bind="itemGrid"
+        :total-products="totalProducts"
+        :products-per-page="itemsPerPage"
+        :products="products"
+      />
     </div>
   </NarrowContainer>
 </template>

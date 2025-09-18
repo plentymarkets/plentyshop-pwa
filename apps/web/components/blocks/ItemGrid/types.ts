@@ -25,9 +25,9 @@ export type ItemGridProps = {
   meta: {
     uuid: string;
   };
-  products?: Product[]
-  productsPerPage?: number
-  totalProducts?: number
+  products?: Product[];
+  productsPerPage?: number;
+  totalProducts?: number;
 };
 
 export interface ItemGridContent {
