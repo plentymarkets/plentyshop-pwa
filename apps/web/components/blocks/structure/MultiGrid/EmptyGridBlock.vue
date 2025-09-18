@@ -15,7 +15,7 @@
       @click.stop="addBlockToColumn()"
     >
       <span class="text-xl font-bold text-gray-700"><SfIconAdd class="text-xl" /></span>
-      <p class="font-semibold text-gray-800 text-sm">Add block</p>
+      <p class="font-semibold text-gray-800">Add block</p>
     </div>
   </div>
 </template>
