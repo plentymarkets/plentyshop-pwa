@@ -630,13 +630,13 @@
               "text": {
                 "textOverlay": "Beispiel Overlay Text",
                 "textOverlayColor": "#00ff00",
-                "textOverlayAlignY": "top",
-                "textOverlayAlignX": "left"
+                "textOverlayAlignY": "center",
+                "textOverlayAlignX": "center"
               },
               "button": {
                 "label": "Klick mich",
                 "link": "/beispiel-link",
-                "variant": "secondary"
+                "variant": "primary"
               }
             }
           },
@@ -656,13 +656,13 @@
               "text": {
                 "textOverlay": "Beispiel Overlay Text",
                 "textOverlayColor": "#00ff00",
-                "textOverlayAlignY": "top",
-                "textOverlayAlignX": "left"
+                "textOverlayAlignY": "center",
+                "textOverlayAlignX": "center"
               },
               "button": {
                 "label": "Klick mich",
                 "link": "/beispiel-link",
-                "variant": "secondary"
+                "variant": "primary"
               }
             }
           }

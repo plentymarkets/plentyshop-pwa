@@ -22,7 +22,7 @@
         @delete="deleteImage2(uiImageTextBlock, type)"
       />
     </div>
-        <div class="py-2">
+    <div class="py-2">
       <label class="block text-sm font-medium mb-4">Brightness</label>
       <div class="flex items-center gap-4">
         <div class="flex-1 space-y-1">
@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
@@ -82,8 +82,6 @@
         </SfInput>
       </label>
     </div>
-
-
 
     <fieldset class="py-2">
       <UiFormLabel>{{ getEditorTranslation('image-align-label') }}</UiFormLabel>
@@ -336,6 +334,8 @@
 <script setup lang="ts">
 import { SfInput, SfIconCheck, SfTextarea } from '@storefront-ui/vue';
 import type { ImageFormProps, ImageContent } from './types';
+import { migrateImageContent } from '~/utils/migrate-image-content';
+
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
@@ -347,10 +347,10 @@ const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<ImageFormProps>();
 
-const uiImageTextBlock = computed(
-  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as ImageContent,
-);
-
+const uiImageTextBlock = computed(() => {
+  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
+  return migrateImageContent(rawContent);
+});
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
@@ -454,7 +454,7 @@ const clampBrightness = (event: Event, type: string) => {
     "text-overlay-align-x-left": "Left",
     "text-overlay-align-x-center": "Center",
     "text-overlay-align-x-right": "Right",
-    
+
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
