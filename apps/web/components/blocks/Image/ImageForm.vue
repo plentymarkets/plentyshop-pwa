@@ -38,6 +38,21 @@
     </div>
 
     <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="uiImageTextBlock.image.linktarget" type="text" data-testid="linktarget-input">
+          <template #suffix>
+            <label for="linktarget" class="rounded-lg cursor-pointer">
+              <input id="linktarget" v-model="uiImageTextBlock.image.linktarget" type="text" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+
+    <div class="py-2">
       <label class="block text-sm font-medium mb-4">Brightness</label>
       <div class="flex items-center gap-4">
         <div class="flex-1 space-y-1">
@@ -45,7 +60,14 @@
             <span>0%</span>
             <span>100%</span>
           </div>
-          <input v-model.number="uiImageTextBlock.image.brightness" type="range" min="0" max="1" step="0.01" class="w-full" />
+          <input
+            v-model.number="uiImageTextBlock.image.brightness"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            class="w-full"
+          />
         </div>
 
         <div class="relative">
@@ -72,7 +94,10 @@
           data-testid="image-align-left"
           @click="uiImageTextBlock.image.imageAlignment = 'left'"
         >
-          <SfIconCheck :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'left' }"
+            class="mr-1 w-[1.1rem]"
+          />
           {{ getEditorTranslation('image-align-option-left-label') }}
         </div>
 
@@ -83,7 +108,10 @@
           data-testid="image-align-right"
           @click="uiImageTextBlock.image.imageAlignment = 'right'"
         >
-          <SfIconCheck :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
+          <SfIconCheck
+            :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'right' }"
+            class="mr-1 w-[1.1rem]"
+          />
           {{ getEditorTranslation('image-align-option-right-label') }}
         </div>
       </div>
@@ -276,7 +304,10 @@
             data-testid="slider-button-primary"
             @click="uiImageTextBlock.button.variant = 'primary'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.button.variant !== 'primary' }" />
+            <SfIconCheck
+              class="mr-1 w-[1.1rem]"
+              :class="{ invisible: uiImageTextBlock.button.variant !== 'primary' }"
+            />
             {{ getEditorTranslation('button-variant-primary-label') }}
           </div>
 
@@ -288,7 +319,10 @@
             data-testid="slider-button-secondary"
             @click="uiImageTextBlock.button.variant = 'secondary'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: uiImageTextBlock.button.variant !== 'secondary' }" />
+            <SfIconCheck
+              class="mr-1 w-[1.1rem]"
+              :class="{ invisible: uiImageTextBlock.button.variant !== 'secondary' }"
+            />
             {{ getEditorTranslation('button-variant-secondary-label') }}
           </div>
         </div>
@@ -319,23 +353,17 @@ const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
 
-
 type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
-  if (
-    uiImageTextBlock.value.image &&
-    ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)
-  ) {
+  if (uiImageTextBlock.value.image && ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)) {
     uiImageTextBlock.value.image[type as ImageTypeKey] = image;
   }
 };
 const deleteImage2 = (block: ImageContent, type: string) => {
-  if (
-    block.image &&
-    ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)
-  ) {
-    block.image[type as ImageTypeKey] = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
+  if (block.image && ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)) {
+    block.image[type as ImageTypeKey] =
+      'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
   }
 };
 
@@ -367,6 +395,7 @@ const clampBrightness = (event: Event, type: string) => {
     "image-s-hint": "Recommended dimensions: 320 × 320 px",
 
     "alt-label": "Alt",
+    "linktarget-label": "Link-Target",
 
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
@@ -410,6 +439,7 @@ const clampBrightness = (event: Event, type: string) => {
     "image-s-hint": "Recommended dimensions: 320 × 320 px",
 
     "alt-label": "Alt",
+    "linktarget-label": "Link-Target",
 
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
@@ -422,7 +452,7 @@ const clampBrightness = (event: Event, type: string) => {
     "text-overlay-align-x-left": "Left",
     "text-overlay-align-x-center": "Center",
     "text-overlay-align-x-right": "Right",
-
+    
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",

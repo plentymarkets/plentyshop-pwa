@@ -1,23 +1,53 @@
 <template>
   <div class="relative flex justify-center">
-    <NuxtImg
-      :src="getImageUrl()"
-      :alt="props.content?.image?.alt"
-      :class="[
-        'object-cover',
-        'md:px-4',
-        {
-          'lg:pr-4': props.content?.image?.imageAlignment === 'left',
-          'lg:pl-4': props.content?.image?.imageAlignment === 'right',
-        },
-      ]"
-      :style="{
-        filter: props.content?.image?.brightness ? 'brightness(' + (props.content?.image?.brightness ?? 1) + ')' : '',
-      }"
-      :width="getImageDimensions().width"
-      :height="getImageDimensions().height"
-      data-testid="image-block"
-    />
+    <template v-if="props.content?.image">
+      <template v-if="props.content.image.linktarget && props.content.image.linktarget.trim()">
+        <NuxtLink
+          :to="localePath(props.content.image.linktarget)"
+          :aria-label="props.content.image.alt || 'Image link'"
+          data-testid="image-link"
+        >
+          <NuxtImg
+            :src="getImageUrl()"
+            :alt="props.content.image.alt"
+            :class="[
+              'object-cover',
+              'md:px-4',
+              {
+                'lg:pr-4': props.content.image.imageAlignment === 'left',
+                'lg:pl-4': props.content.image.imageAlignment === 'right',
+              },
+            ]"
+            :style="{
+              filter: props.content.image.brightness ? 'brightness(' + (props.content.image.brightness ?? 1) + ')' : '',
+            }"
+            :width="getImageDimensions().width"
+            :height="getImageDimensions().height"
+            data-testid="image-block"
+          />
+        </NuxtLink>
+      </template>
+      <template v-else>
+        <NuxtImg
+          :src="getImageUrl()"
+          :alt="props.content.image.alt"
+          :class="[
+            'object-cover',
+            'md:px-4',
+            {
+              'lg:pr-4': props.content.image.imageAlignment === 'left',
+              'lg:pl-4': props.content.image.imageAlignment === 'right',
+            },
+          ]"
+          :style="{
+            filter: props.content.image.brightness ? 'brightness(' + (props.content.image.brightness ?? 1) + ')' : '',
+          }"
+          :width="getImageDimensions().width"
+          :height="getImageDimensions().height"
+          data-testid="image-block"
+        />
+      </template>
+    </template>
     <div
       v-if="props.content?.text?.textOverlay && runtimeConfig.public.isDev"
       class="absolute w-full h-full px-4 pointer-events-none flex flex-col"

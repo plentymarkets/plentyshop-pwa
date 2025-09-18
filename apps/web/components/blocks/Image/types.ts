@@ -17,6 +17,7 @@ export type ImageContent = {
     tablet?: string;
     mobile?: string;
     alt: string;
+    linktarget?: string;
     imageAlignment: 'left' | 'right';
     brightness?: number;
   };
