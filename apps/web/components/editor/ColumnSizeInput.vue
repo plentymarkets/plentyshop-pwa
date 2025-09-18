@@ -32,8 +32,8 @@ const emit = defineEmits<{
   (e: 'update:columnWidths', value: number[]): void;
 }>();
 
-const steps = Array.from({ length: 12 }, (_, i) => i + 1); // 12 squares
-const splits = Array.from({ length: 11 }, (_, i) => i + 1); // 11 splits between squares
+const steps = Array.from({ length: 12 }, (_, i) => i + 1);
+const splits = Array.from({ length: 11 }, (_, i) => i + 1);
 
 const squaresContainer = ref<HTMLElement | null>(null);
 const isDragging = ref(false);
@@ -95,7 +95,7 @@ onMounted(() => {
       });
       resizeObserver.observe(squaresContainer.value);
     }
-  }, 50); // Delay to ensure DOM is ready
+  }, 50);
 });
 
 onBeforeUnmount(() => {
