@@ -128,6 +128,7 @@ export default defineNuxtConfig({
       robotsAccessibilityDeclaration: process.env.NUXT_PUBLIC_ROBOTS_ACCESSIBILITY_DECLARATION || 'all',
       robotsStopIndexing: process.env.NUXT_PUBLIC_ROBOTS_STOP_INDEXING || '0',
       robotsItemPage: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || 'ALL',
+      robotsItemPageId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
       robotsUrlWithParameters: process.env.NUXT_PUBLIC_ROBOTS_URL_WITH_PARAMETERS || 'false',
       itemConditionNew: process.env.NUXT_PUBLIC_ITEM_CONDITION_NEW || '',
       itemConditionUsed: process.env.NUXT_PUBLIC_ITEM_CONDITION_USED || '',
