@@ -15,16 +15,7 @@
           <UiFormLabel>Column Size</UiFormLabel>
           <div class="relative w-full flex flex-col items-center">
             <input
-              v-model.number="columnCount"
-              type="range"
-              min="1"
-              max="11"
-              step="1"
-            />
-
-            <!-- Hidden native range for accessibility and keyboard support -->
-            <input
-              v-model.number="columnCount"
+              v-model.number="splitIndex"
               type="range"
               min="1"
               max="11"
@@ -32,8 +23,6 @@
               class="sr-only"
               @input="onInput"
             />
-
-            <!-- Merged blank squares for each step -->
             <div
               ref="squaresContainer"
               class="flex w-full mt-2 mb-4 rounded overflow-hidden border border-gray-300 relative"
@@ -44,14 +33,17 @@
                 v-for="step in steps"
                 :key="step"
                 class="flex-1 h-full cursor-pointer border-r last:border-r-0 border-gray-300 bg-white"
-                @click="setColumnCount(step)"
+                :class="{
+                  'border-r-[1.5px] border-r-primary-500': step === splitIndex,
+                  'border-l-[1.5px] border-l-primary-500': step === splitIndex + 1
+                }"
+                @click="updateSplitFromEvent"
               />
             </div>
-            <!-- Arrow marker under squares -->
             <div
               class="absolute"
               :style="arrowStyle"
-              style="top: 40px; transition: left 0.2s;"
+              style="top: 32px;"
             >
               <span class="text-editor-button text-lg cursor-pointer select-none" @mousedown="handlePointerDown">&#9650;</span>
             </div>
@@ -189,28 +181,48 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
-const steps = Array.from({ length: 11 }, (_, i) => i + 1);
+const steps = Array.from({ length: 12 }, (_, i) => i + 1); // 12 squares
+const splits = Array.from({ length: 11 }, (_, i) => i + 1); // 11 splits between squares
+
 const squaresContainer = ref<HTMLElement | null>(null);
 const isDragging = ref(false);
 
-const setColumnCount = (step: number) => {
-  columnCount.value = step;
-};
+const splitIndex = computed({
+  get: () => (multiGridStructure.value.configuration?.columnWidths?.[0] || 6),
+  set: (val: number) => {
+    const columns = multiGridStructure.value.configuration.columnWidths.length;
+    const firstColWidth = Math.max(1, Math.min(val, 11));
+    if (columns === 2) {
+      multiGridStructure.value.configuration.columnWidths = [firstColWidth, 12 - firstColWidth];
+    }
+  }
+});
 
 const onInput = (e: Event) => {
   columnCount.value = Number((e.target as HTMLInputElement).value);
 };
 
+const updateSplitFromEvent = (e: MouseEvent) => {
+  const container = squaresContainer.value;
+  if (!container) return;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const stepWidth = rect.width / steps.length;
+  let split = Math.round(x / stepWidth);
+  split = Math.max(1, Math.min(split, splits.length));
+  splitIndex.value = split;
+};
+
 const handlePointerDown = (e: MouseEvent) => {
   isDragging.value = true;
-  updateColumnCountFromEvent(e);
+  updateSplitFromEvent(e);
   window.addEventListener('mousemove', handlePointerMove);
   window.addEventListener('mouseup', handlePointerUp);
 };
 
 const handlePointerMove = (e: MouseEvent) => {
   if (isDragging.value) {
-    updateColumnCountFromEvent(e);
+    updateSplitFromEvent(e);
   }
 };
 
@@ -220,31 +232,34 @@ const handlePointerUp = () => {
   window.removeEventListener('mouseup', handlePointerUp);
 };
 
-const updateColumnCountFromEvent = (e: MouseEvent) => {
-  const container = squaresContainer.value;
-  if (!container) return;
-  const rect = container.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const stepWidth = rect.width / steps.length;
-  let step = Math.ceil(x / stepWidth);
-  step = Math.max(1, Math.min(step, steps.length));
-  columnCount.value = step;
-};
-
-// Calculate arrow position under the squares
-const arrowStyle = computed(() => {
-  const container = squaresContainer.value;
-  if (!container) return { left: '0px' };
-  const width = container.offsetWidth;
-  const stepWidth = width / steps.length;
-  // Center arrow under the selected square
-  const left = stepWidth * (columnCount.value - 0.5) - 10; // 10px offset for arrow width
-  return { left: `${left}px` };
-});
+const containerWidth = ref(0);
+let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
-  // Force update arrow position after mount
-  setTimeout(() => {}, 0);
+  setTimeout(() => {
+    if (squaresContainer.value) {
+      containerWidth.value = squaresContainer.value.offsetWidth;
+      resizeObserver = new ResizeObserver(() => {
+        containerWidth.value = squaresContainer.value?.offsetWidth || 0;
+      });
+      resizeObserver.observe(squaresContainer.value);
+    }
+  }, 50); // Delay to allow DOM to settle
+});
+
+onBeforeUnmount(() => {
+  if (resizeObserver && squaresContainer.value) {
+    resizeObserver.unobserve(squaresContainer.value);
+    resizeObserver.disconnect();
+  }
+});
+
+const arrowStyle = computed(() => {
+  const width = containerWidth.value;
+  const stepWidth = width / steps.length;
+  const arrowWidth = 16;
+  const left = stepWidth * splitIndex.value - (arrowWidth / 2);
+  return { left: `${left}px` };
 });
 
 const multiGridStructure = computed(() => {
