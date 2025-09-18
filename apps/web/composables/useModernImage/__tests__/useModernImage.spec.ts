@@ -32,7 +32,7 @@ describe('useModernImage with only webp enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -45,7 +45,7 @@ describe('useModernImage with only webp enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -58,7 +58,7 @@ describe('useModernImage with only webp enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -88,7 +88,7 @@ describe('useModernImage with webp and avif enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -101,7 +101,7 @@ describe('useModernImage with webp and avif enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -114,7 +114,7 @@ describe('useModernImage with webp and avif enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -127,7 +127,7 @@ describe('useModernImage with webp and avif enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -140,7 +140,7 @@ describe('useModernImage with webp and avif enabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'true' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'true' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'true' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -170,7 +170,7 @@ describe('useModernImage with webp and avif disabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'false' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'false' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -183,7 +183,7 @@ describe('useModernImage with webp and avif disabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'false' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'false' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
@@ -196,7 +196,7 @@ describe('useModernImage with webp and avif disabled', () => {
     const { setInitialData } = useSiteSettings();
     setInitialData([
       { key: 'useAvif', originalKey: 'useAvif', value: 'false' },
-      { key: 'useWebp', originalKey: 'useAvif', value: 'false' },
+      { key: 'useWebp', originalKey: 'useWebp', value: 'false' },
     ]);
 
     const { addModernImageExtension } = useModernImage();
