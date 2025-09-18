@@ -11,10 +11,7 @@
         v-for="step in steps"
         :key="step"
         class="flex-1 h-full cursor-pointer border-r last:border-r-0 border-gray-300 bg-white"
-        :class="{
-          'border-r-[1.5px] border-r-primary-500': step === splitIndex,
-          'border-l-[1.5px] border-l-primary-500': step === splitIndex + 1,
-        }"
+        :class="getStepBorderClass(step)"
         @click="updateSplitFromEvent"
       />
     </div>
@@ -123,6 +120,11 @@ const columnCount = computed({
     }
   },
 });
+
+const getStepBorderClass = (step: number) => {
+  if (step === splitIndex.value) return 'border-r-[1.5px] border-r-primary-500';
+  if (step === splitIndex.value + 1) return 'border-l-[1.5px] border-l-primary-500';
+};
 </script>
 
 <style scoped>
