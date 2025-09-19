@@ -22,6 +22,22 @@
         @delete="deleteImage(uiImageTextBlock.image, type)"
       />
     </div>
+
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input">
+          <template #suffix>
+            <label for="alt" class="rounded-lg cursor-pointer">
+              <input id="alt" v-model="uiImageTextBlock.image.alt" type="text" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+
     <div class="py-2">
       <label class="block text-sm font-medium mb-4">Brightness</label>
       <div class="flex items-center gap-4">
@@ -86,86 +102,6 @@
         </div>
       </div>
     </fieldset>
-
-    <div
-      id="padding-form"
-      class="py-2"
-      :class="{ 'opacity-50 pointer-events-none': uiImageTextBlock.image.fillMode === 'fill' }"
-    >
-      <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
-      <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span><SfIconArrowUpward /></span>
-          <input
-            v-model.number="uiImageTextBlock.layout.paddingTop"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="padding-top"
-            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
-          />
-        </div>
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span><SfIconArrowDownward /></span>
-          <input
-            v-model.number="uiImageTextBlock.layout.paddingBottom"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="padding-bottom"
-            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
-          />
-        </div>
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span><SfIconArrowBack /></span>
-          <input
-            v-model.number="uiImageTextBlock.layout.paddingLeft"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="padding-left"
-            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
-          />
-        </div>
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-          <span><SfIconArrowForward /></span>
-          <input
-            v-model.number="uiImageTextBlock.layout.paddingRight"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="padding-right"
-            :disabled="uiImageTextBlock.image.fillMode === 'fill'"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
-      </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input">
-          <template #suffix>
-            <label for="alt" class="rounded-lg cursor-pointer">
-              <input id="alt" v-model="uiImageTextBlock.image.alt" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
-      </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.image.linktarget" type="text" data-testid="linktarget-input">
-          <template #suffix>
-            <label for="linktarget" class="rounded-lg cursor-pointer">
-              <input id="linktarget" v-model="uiImageTextBlock.image.linktarget" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
     <fieldset class="py-2">
       <UiFormLabel>{{ getEditorTranslation('image-align-label') }}</UiFormLabel>
@@ -413,6 +349,110 @@
       </div>
     </div>
   </UiAccordionItem>
+  <UiAccordionItem
+    v-model="layoutOpen"
+    summary-active-class="bg-neutral-100"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+    </template>
+
+    <div class="py-2 flex items-center justify-between gap-3">
+      <UiFormLabel for="keep-transparent" class="m-0">
+        {{ getEditorTranslation('keep-transparent-label') }}
+      </UiFormLabel>
+
+      <SfSwitch
+        id="keep-transparent"
+        v-model="isTransparent"
+        data-testid="switch-keep-transparent"
+        class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+      />
+    </div>
+
+    <div v-if="!isTransparent" class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+          <template #suffix>
+            <label
+              for="background-color"
+              :style="{ backgroundColor: backgroundColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input
+                id="background-color"
+                v-model="backgroundColor"
+                data-testid="color-input-background"
+                type="color"
+                class="invisible w-8"
+              />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+
+    <div id="padding-form" class="py-2">
+      <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+      <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowUpward /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingTop"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-top"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowDownward /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingBottom"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-bottom"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowBack /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingLeft"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-left"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+          <span><SfIconArrowForward /></span>
+          <input
+            v-model.number="uiImageTextBlock.layout.paddingRight"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="padding-right"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="uiImageTextBlock.image.linktarget" type="text" data-testid="linktarget-input">
+          <template #suffix>
+            <label for="linktarget" class="rounded-lg cursor-pointer">
+              <input id="linktarget" v-model="uiImageTextBlock.image.linktarget" type="text" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
@@ -424,14 +464,14 @@ import {
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfIconArrowForward,
+  SfSwitch,
 } from '@storefront-ui/vue';
+
 import type { ImageFormProps } from './types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
-
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
-
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -445,6 +485,7 @@ const DEFAULT_LAYOUT = {
   paddingLeft: 0,
   paddingRight: 0,
 };
+
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
   const migrated = migrateImageContent(rawContent);
@@ -458,12 +499,21 @@ const uiImageTextBlock = computed(() => {
       }
     });
   }
-
   return migrated;
 });
+
+const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
+const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
+const backgroundColor = ref(isTransparent.value ? '' : backgroundColorInit);
+
+watch([isTransparent, backgroundColor], () => {
+  uiImageTextBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
+});
+
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
+const layoutOpen = ref(false);
 
 type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
@@ -472,26 +522,17 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
     uiImageTextBlock.value.image[type as ImageTypeKey] = image;
   }
 };
+
+/**
+ * Clamp brightness value for image
+ */
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
-
   if (type === 'image') {
     uiImageTextBlock.value.image.brightness = clamp(nextValue, 0, 1);
   }
 };
-
-watch(
-  () => uiImageTextBlock.value.image.fillMode,
-  (newMode, _oldMode) => {
-    if (newMode === 'fill') {
-      uiImageTextBlock.value.layout.paddingTop = 0;
-      uiImageTextBlock.value.layout.paddingBottom = 0;
-      uiImageTextBlock.value.layout.paddingLeft = 0;
-      uiImageTextBlock.value.layout.paddingRight = 0;
-    }
-  },
-);
 </script>
 
 <i18n lang="json">
@@ -515,6 +556,8 @@ watch(
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
 
+    "layout-label": "Layout",
+
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
@@ -530,6 +573,9 @@ watch(
     "text-overlay-align-x-left": "Left",
     "text-overlay-align-x-center": "Center",
     "text-overlay-align-x-right": "Right",
+    "background-color-label": "Background Color",
+
+    "keep-transparent-label": "Keep background transparent",
 
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
@@ -562,6 +608,9 @@ watch(
     "image-scaling-label": "Image Scaling",
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
+    "background-color-label": "Background Color",
+
+    "layout-label": "Layout",
 
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
@@ -569,6 +618,7 @@ watch(
     "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
     "image-align-option-right-label": "Right",
+    "keep-transparent-label": "Keep background transparent",
 
     "text-overlay-label": "Overlay text",
     "text-overlay-placeholder": "Enter text (HTML allowed)",

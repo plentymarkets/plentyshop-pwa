@@ -38,6 +38,7 @@ export type ImageContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
+    backgroundColor?: string;
   };
 };
 
