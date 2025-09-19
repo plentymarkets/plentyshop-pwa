@@ -28,10 +28,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip  } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import { robotsItemOptions } from '~/utils/editorSettings';
-import type { SettingOption } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('robotsItemPageId');

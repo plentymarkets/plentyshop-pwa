@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip  } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import { seoRichSnippetBarcodeGtin13s } from '~/utils/editorSettings';
 
