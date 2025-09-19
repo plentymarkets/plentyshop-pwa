@@ -7,11 +7,6 @@ describe('<ProductCard />', () => {
     const { getByTestId } = mount(UiProductCard, {
       props: {
         product: ProductMock,
-        name: 'test',
-        price: 100,
-        imageUrl: '/images/product.webp',
-        imageWidth: 600,
-        imageHeight: 600,
       },
     });
 

@@ -1,4 +1,5 @@
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
+import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 
 export interface UseCategoryTemplateState {
   data: Block[];
@@ -11,6 +12,7 @@ export type FetchCategoryTemplate = (categoryId: number) => Promise<void>;
 export type SaveBlocks = (identifier: string | number, type: string, content: string) => Promise<void>;
 export type GetBlocks = (identifier: number | string, type: string, block?: string) => Promise<void>;
 export type UpdateBlocks = (blocks: Block[]) => void;
+export type GetCategoryTemplateBlock = (blockName: string) => ItemGridProps;
 
 export interface UseCategoryTemplate {
   data: Readonly<Ref<UseCategoryTemplateState['data']>>;
@@ -22,6 +24,7 @@ export interface UseCategoryTemplate {
   getBlocks: GetBlocks;
   getBlocksServer: GetBlocks;
   updateBlocks: UpdateBlocks;
+  getCategoryTemplateBlock: GetCategoryTemplateBlock;
 }
 
 export type UseCategoryTemplateReturn = (blocks?: string) => UseCategoryTemplate;
