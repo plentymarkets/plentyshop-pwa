@@ -35,18 +35,19 @@ const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const NuxtLink = resolveComponent('NuxtLink');
 
+// TODO: Replace the hardcoded logic below with a dynamic fetch of recommended products
 const recommendedProductsDisplay = ref<Product[]>([]);
-
 const fetchAllRecommended = async () => {
   if (!categoryTree.value) return;
 
-  const promises = (categoryTree.value as CategoryTreeItem[]).map((category) => {
+  const limitedCategories = (categoryTree.value as CategoryTreeItem[]).slice(0, 2);
+
+  const promises = limitedCategories.map((category) => {
     const { fetchProductRecommended } = useProductRecommended(String(category.id));
     return fetchProductRecommended(String(category.id));
   });
   const results = await Promise.all(promises);
   recommendedProductsDisplay.value = results.flat();
 };
-
 await fetchAllRecommended();
 </script>
