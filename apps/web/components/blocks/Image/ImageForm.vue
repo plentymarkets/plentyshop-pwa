@@ -19,7 +19,7 @@
         :dimensions="imageDimensions[type]"
         :selected-image-type="type"
         @add="(payload) => handleImageAddWrapper(payload)"
-        @delete="deleteImage2(uiImageTextBlock, type)"
+        @delete="deleteImage(uiImageTextBlock.image, type)"
       />
     </div>
     <div class="py-2">
@@ -134,11 +134,6 @@
             :disabled="uiImageTextBlock.image.fillMode === 'fill'"
           />
         </div>
-      </div>
-      <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">
-          {{ getEditorTranslation('spacing-around') }}
-        </span>
       </div>
     </div>
 
@@ -430,12 +425,12 @@ import {
   SfIconArrowDownward,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import type { ImageFormProps, ImageContent } from './types';
+import type { ImageFormProps } from './types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 
 import { clamp } from '@storefront-ui/shared';
 
-const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
+const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
@@ -477,13 +472,6 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
     uiImageTextBlock.value.image[type as ImageTypeKey] = image;
   }
 };
-const deleteImage2 = (block: ImageContent, type: string) => {
-  if (block.image && ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)) {
-    block.image[type as ImageTypeKey] =
-      'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
-  }
-};
-
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
@@ -492,6 +480,18 @@ const clampBrightness = (event: Event, type: string) => {
     uiImageTextBlock.value.image.brightness = clamp(nextValue, 0, 1);
   }
 };
+
+watch(
+  () => uiImageTextBlock.value.image.fillMode,
+  (newMode, _oldMode) => {
+    if (newMode === 'fill') {
+      uiImageTextBlock.value.layout.paddingTop = 0;
+      uiImageTextBlock.value.layout.paddingBottom = 0;
+      uiImageTextBlock.value.layout.paddingLeft = 0;
+      uiImageTextBlock.value.layout.paddingRight = 0;
+    }
+  },
+);
 </script>
 
 <i18n lang="json">
