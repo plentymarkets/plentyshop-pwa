@@ -9,7 +9,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
-import { migrateImageContent } from '~/utils/migrate-image-content'; 
+import { migrateImageContent } from '~/utils/migrate-image-content';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
