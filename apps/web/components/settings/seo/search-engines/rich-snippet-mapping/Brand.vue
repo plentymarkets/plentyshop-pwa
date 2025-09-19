@@ -1,46 +1,64 @@
 <template>
   <div v-if="runtimeConfig.public.isDev" class="py-2">
-    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+        <SfIconInfo :size="'sm'" />
+      </SfTooltip>
     </div>
     <label>
       <Multiselect
-        v-model="condition"
-        :options="conditionOptions"
+        v-model="seoRichSnippetBrand"
+        :options="Object.keys(seoRichSnippetBrands)"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
-        :allow-empty="false"
-        data-testid="seo-b-stock"
-        :show-labels="false"
-      />
+        data-testid="seo-robots-item-page"
+      >
+        <template #singleLabel="{ option }">
+          {{ seoRichSnippetBrands[option] }}
+        </template>
+        <template #option="props"> {{ seoRichSnippetBrands[props.option] }} </template>
+      </Multiselect>
     </label>
+    <div v-if="seoRichSnippetBrand === '3'" class="mt-2">
+      <label for="seoRichSnippetBrandId">Enter the ID of the variation property</label>
+      <SfInput id="seoRichSnippetBrandId" v-model="seoRichSnippetBrandId" />
+    </div>
   </div>
 </template>
-<script setup lang="ts">
-import Multiselect from 'vue-multiselect';
-import { conditionOptions } from '~/utils/editorSettings';
 
-const { updateSetting, getSetting } = useSiteSettings('itemConditionBStock');
+<script setup lang="ts">
+import { SfInput, SfIconInfo, SfTooltip  } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
+import { robotsItemOptions } from '~/utils/editorSettings';
+
+const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
+const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('seoRichSnippetBrandId');
 const runtimeConfig = useRuntimeConfig();
 
-const condition = computed({
+const seoRichSnippetBrand = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
+});
+
+const seoRichSnippetBrandId = computed({
+  get: () => getSettingForId(),
+  set: (value) => updateSettingForId(value),
 });
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "label": "Item condition: B-Stock",
-    "description": "Map the conditions you defined in your backend to the conditions defined by Schema.org. That way, webcrawlers are able to better evaluate your condition information.",
-    "placeholder": "Item condition: B-Stock"
+    "label": "Select source for the brand in Rich Snippets of the item page",
+    "tooltip": "Select source for the brand in Rich Snippets of the item page",
+    "placeholder": "Select robots"
   },
   "de": {
-    "label": "Item condition: B-Stock",
-    "description": "Map the conditions you defined in your backend to the conditions defined by Schema.org. That way, webcrawlers are able to better evaluate your condition information.",
-    "placeholder": "Item condition: B-Stock"
+    "label": "Select source for the brand in Rich Snippets of the item page",
+    "tooltip": "Select source for the brand in Rich Snippets of the item page",
+    "placeholder": "Select robots"
   }
 }
 </i18n>

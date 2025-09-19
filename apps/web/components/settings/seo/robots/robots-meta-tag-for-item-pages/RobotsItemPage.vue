@@ -8,13 +8,17 @@
       </SfTooltip>
     </div>
     <label>
-      <Multiselect v-model="robotsItemPage" :options="Object.keys(robotsItemOptions)"
-        :placeholder="getEditorTranslation('placeholder')" :searchable="false" data-testid="seo-robots-item-page">
-        <template v-slot:singleLabel="{ option }">
+      <Multiselect
+        v-model="robotsItemPage"
+        :options="Object.keys(robotsItemOptions)"
+        :placeholder="getEditorTranslation('placeholder')"
+        :searchable="false"
+        data-testid="seo-robots-item-page"
+      >
+        <template #singleLabel="{ option }">
           {{ robotsItemOptions[option] }}
         </template>
-        <template #option="props"> {{ robotsItemOptions[props.option] }}
-        </template>
+        <template #option="props"> {{ robotsItemOptions[props.option] }} </template>
       </Multiselect>
     </label>
     <div v-if="robotsItemPage === 'varProp'" class="mt-2">
@@ -24,10 +28,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfInput } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip  } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import { robotsItemOptions } from '~/utils/editorSettings';
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SettingOption } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
@@ -45,7 +48,8 @@ const robotsItemPageId = computed({
 });
 </script>
 
-<i18n lang="json">{
+<i18n lang="json">
+{
   "en": {
     "label": "Robots for item pages",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
@@ -56,4 +60,5 @@ const robotsItemPageId = computed({
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
     "placeholder": "Select robots"
   }
-}</i18n>
+}
+</i18n>
