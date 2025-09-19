@@ -42,6 +42,9 @@ export type AlignableBlock = Block & {
 
 export type ColumnBlock = Block & {
   content?: Block[];
+  configuration: {
+    columnWidths: number[];
+  };
   layout?: {
     gap: string;
     marginTop?: number;
