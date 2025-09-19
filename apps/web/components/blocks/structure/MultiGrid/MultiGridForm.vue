@@ -13,7 +13,7 @@
       <div data-testid="image-text-form">
         <div v-if="isTwoColumnMultigrid" class="py-4">
           <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
-          <ColumnSizeInput
+          <ColumnWidthInput
             :multi-grid-structure="multiGridStructure"
             @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
           />
@@ -137,7 +137,7 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import ColumnSizeInput from '~/components/editor/ColumnSizeInput.vue';
+import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
