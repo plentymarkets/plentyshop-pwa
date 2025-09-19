@@ -12,10 +12,13 @@ export default defineNuxtPlugin(async () => {
   };
 
   try {
-    const publicRuntimeConfig = useRuntimeConfig().public;
-    const primaryColor = publicRuntimeConfig.primaryColor || '#062633';
-    const secondaryColor = publicRuntimeConfig.secondaryColor || '#31687d';
-    const headerColor = publicRuntimeConfig.headerBackgroundColor || primaryColor || '#062633';
+    const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
+    const { getSetting: getSecondaryColor } = useSiteSettings('secondaryColor');
+    const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+
+    const primaryColor = getPrimaryColor() || '#062633';
+    const secondaryColor = getSecondaryColor() || '#31687d';
+    const headerColor = getHeaderBackgroundColor() || primaryColor || '#062633';
     const primaryPalette = buildPalette('primary', primaryColor);
     const secondaryPalette = buildPalette('secondary', secondaryColor);
     const headerPalette = buildPalette('header', headerColor);
