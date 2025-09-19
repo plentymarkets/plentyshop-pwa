@@ -103,6 +103,10 @@ export class EditorObject extends PageObject {
     return el[0].innerHTML.includes('banner-image');
   }
 
+  isMultiGrid(el: JQuery<HTMLElement>): boolean {
+    return el[0].innerHTML.includes('multi-grid-structure');
+  }
+
   blockIsNewsletter(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('newsletter-block');
   }
@@ -326,7 +330,12 @@ export class EditorObject extends PageObject {
 
   checkWrapperSpacings() {
     this.blockWrappers.each((el) => {
-      if (this.blockIsBanner(el) || this.blockIsNewsletter(el) || this.blockIsFooter(el.get(0))) {
+      if (
+        this.blockIsBanner(el) ||
+        this.isMultiGrid(el) ||
+        this.blockIsNewsletter(el) ||
+        this.blockIsFooter(el.get(0))
+      ) {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
       } else {
