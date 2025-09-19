@@ -2,7 +2,7 @@
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <UiAccordionItem
       v-model="textSettings"
-      data-testid="open-text-settings"
+      data-testid="open-layout-settings"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -76,7 +76,7 @@
 
     <UiAccordionItem
       v-model="layoutBackground"
-      data-testid="open-text-settings"
+      data-testid="open-layout-background-settings"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -109,6 +109,14 @@
         </label>
       </div>
     </UiAccordionItem>
+
+    <div v-for="column in multiGridStructure.content" :key="column.meta.uuid">
+      <component
+        :is="getComponent(column.name)"
+        v-if="column.name !== 'EmptyGridBlock'"
+        :uuid="column.meta?.uuid || ''"
+      />
+    </div>
   </div>
 </template>
 
@@ -181,6 +189,18 @@ const getGapPx = (gap: string | undefined): number => {
 
 const textSettings = ref(false);
 const layoutBackground = ref(false);
+
+const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
+
+const getComponent = (blockName: string) => {
+  if (!blockName) return null;
+  const regex = new RegExp(`${blockName}Form\\.vue$`, 'i');
+  const matched = Object.keys(modules).find((path) => regex.test(path));
+  return matched ? defineAsyncComponent(modules[matched]) : null;
+};
 </script>
 
 <i18n lang="json">
