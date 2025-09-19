@@ -18,7 +18,7 @@
         :items-per-page="Number(productsPerPage)"
       >
         <template #sidebar>
-          <SortFilter />
+          <BlocksSortFilter />
         </template>
       </CategoryPageContent>
     </template>
@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import SortFilter from '~/components/blocks/SortFilter/SortFilter.vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });
 
