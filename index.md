@@ -26,4 +26,8 @@ features:
     details: Built with VueJS 3, NuxtJS 3, TailwindCSS, and Storefront UI 2
   - title: Lightning-Fast Online Shop
     details: Provide the best online shopping experience with optimised web vitals and server-side rendering
+  - title: Legal Compliance
+    details: The standard shop has been pre-certified by IT-Recht Kanzlei
+    link: https://www.it-recht-kanzlei.de/agb-starterpaket.php?partner_id=37
+    linkText: Certify your own shop
 ---
