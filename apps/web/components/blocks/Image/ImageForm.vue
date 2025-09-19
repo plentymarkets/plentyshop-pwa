@@ -202,7 +202,6 @@
     </fieldset>
   </UiAccordionItem>
   <UiAccordionItem
-    v-if="runtimeConfig.public.isDev"
     v-model="textGroupOpen"
     summary-active-class="bg-neutral-100 border-t-0"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -435,7 +434,7 @@ const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = use
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const runtimeConfig = useRuntimeConfig();
+
 
 const props = defineProps<ImageFormProps>();
 

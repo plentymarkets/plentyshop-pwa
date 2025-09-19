@@ -49,7 +49,7 @@
       </template>
     </template>
     <div
-      v-if="props.content?.text?.textOverlay && runtimeConfig.public.isDev"
+      v-if="props.content?.text?.textOverlay"
       class="absolute w-full h-full px-4 pointer-events-none flex flex-col"
       :class="overlayAlignClasses"
       data-testid="image-overlay-text"
@@ -73,7 +73,6 @@
 
 <script setup lang="ts">
 import type { ImageProps, ImageDimensions } from './types';
-const runtimeConfig = useRuntimeConfig();
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
