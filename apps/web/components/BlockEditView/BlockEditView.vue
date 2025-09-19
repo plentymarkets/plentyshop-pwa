@@ -16,7 +16,7 @@
         </button>
       </div>
     </header>
-    <div class="h-[calc(100vh-150px)] overflow-y-auto mb-10">
+    <div class="h-[calc(100vh-150px)] overflow-y-auto">
       <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
     </div>
   </div>
