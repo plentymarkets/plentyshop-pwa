@@ -2,7 +2,7 @@
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <UiAccordionItem
       v-model="textSettings"
-      data-testid="open-text-settings"
+      data-testid="open-layout-settings"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -76,7 +76,7 @@
 
     <UiAccordionItem
       v-model="layoutBackground"
-      data-testid="open-text-settings"
+      data-testid="open-layout-background-settings"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
