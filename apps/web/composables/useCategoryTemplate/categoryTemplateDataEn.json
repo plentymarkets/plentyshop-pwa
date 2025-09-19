@@ -13,15 +13,13 @@
       "showItemCount": true,
       "itemCountPosition": "left",
       "fields": {
-        "manufacturer": true,
         "title": true,
         "rating": true,
         "previewText": true,
-        "shippingBadge": true,
         "price": true,
         "addToCart": true
       },
-      "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+      "fieldsOrder": ["title", "rating", "previewText", "price", "addToCart"],
       "fieldsDisabled": ["title"],
       "contentAlignment": "left",
       "cardBorders": true,
