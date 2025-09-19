@@ -505,7 +505,7 @@
     "notificationsNoEmailEntered": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
     "notificationsNotEnoughStockItem": "Die gewählte Menge konnte nicht in den Warenkorb gelegt werden, da sie den verfügbaren Warenbestand übersteigt. :stock sind zur Zeit auf Lager.",
     "notificationsWarningOverselling": "Die gewählte Menge übersteigt den verfügbaren Warenbestand. :stock sind zur Zeit auf Lager; :oversellingAmount werden nachgeliefert.",
-    "errorOccured": "Oops! Ein Fehler ist aufgetaucht!",
+    "errorOccured": "Ups! Ein Fehler ist aufgetaucht!",
     "pageNotFound": "Seite nicht gefunden",
     "pageNotFoundTitle": "Wir konnten diese Seite nicht finden.",
     "pageNotFoundSubtitle": "Es tut uns leid! Benutze die Suche oder die Kategorieauswahl um zu finden, wonach du suchst.",
@@ -957,6 +957,7 @@
   "showMore": "Mehr anzeigen",
   "showOptions": "Optionen anzeigen",
   "showProducts": "Artikel anzeigen",
+  "mostPopular": "Am beliebtesten",
   "socialLabel": "Gehe zu {label}",
   "softLogin": {
     "check": "Prüfen",
