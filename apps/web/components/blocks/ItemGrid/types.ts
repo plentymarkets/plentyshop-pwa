@@ -6,11 +6,9 @@ export type PaginationPosition = 'top' | 'bottom' | 'both';
 export type AddToCartStyle = 'primary' | 'secondary';
 
 export type ItemGridFieldKey =
-  | 'manufacturer'
   | 'title'
   | 'rating'
   | 'previewText'
-  | 'shippingBadge'
   | 'price'
   | 'addToCart';
 
