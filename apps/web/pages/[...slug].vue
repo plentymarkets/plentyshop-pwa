@@ -18,10 +18,7 @@
         :items-per-page="Number(productsPerPage)"
       >
         <template #sidebar>
-          <CategoryTree :category="productsCatalog.category" />
-          <CategorySorting />
-          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
+          <BlocksSortFilter />
         </template>
       </CategoryPageContent>
     </template>
@@ -29,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });
