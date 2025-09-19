@@ -1,7 +1,7 @@
 {
   "layout": {
     "category": "layout",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Layout",
     "blockName": "MultiGrid",
     "variations": [
@@ -606,7 +606,7 @@
   },
   "image": {
     "category": "image",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Image",
     "blockName": "Image",
     "variations": [
