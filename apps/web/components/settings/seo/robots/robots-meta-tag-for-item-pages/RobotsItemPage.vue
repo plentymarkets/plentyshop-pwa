@@ -10,26 +10,40 @@
     <label>
       <Multiselect
         v-model="robotsItemPage"
-        :options="robotsOptions"
+        :options="Object.keys(robotsItemOptions)"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
-        :allow-empty="false"
         data-testid="seo-robots-item-page"
-      />
+      >
+        <template #singleLabel="{ option }">
+          {{ robotsItemOptions[option] }}
+        </template>
+        <template #option="props"> {{ robotsItemOptions[props.option] }} </template>
+      </Multiselect>
     </label>
+    <div v-if="robotsItemPage === 'varProp'" class="mt-2">
+      <label for="robotsItemPageId">ID from property of type 'Text'</label>
+      <SfInput id="robotsItemPageId" v-model="robotsItemPageId" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { robotsOptions } from '~/utils/editorSettings';
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import { robotsItemOptions } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
+const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('robotsItemPageId');
 const runtimeConfig = useRuntimeConfig();
 
 const robotsItemPage = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
+});
+
+const robotsItemPageId = computed({
+  get: () => getSettingForId(),
+  set: (value) => updateSettingForId(value),
 });
 </script>
 
