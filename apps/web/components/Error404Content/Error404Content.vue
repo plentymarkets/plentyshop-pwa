@@ -9,18 +9,22 @@
         {{ t('error.pageNotFoundSubtitle') }}
       </p>
 
-      <div class="flex justify-center mb-6">
-        <UiSearch class="w-96"/>
+      <div class="flex justify-center mb-6 px-6">
+        <UiSearch class="w-96" />
       </div>
-      <div class="flex justify-center gap-4 overflow-x-auto pb-4 mb-12 scrollbar-hide">
-        <UiButton v-for="category in categoryTree" :key="category.id" :tag="NuxtLink" :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary" class="mt-4">
-          {{ categoryTreeGetters.getName(category)}}
-        </UiButton>
-      </div>
+
+      <SfScrollable class="flex items-center gap-4 px-6 pb-4 mb-12 scrollbar-hide">
+        <div v-for="category in categoryTree" :key="category.id">
+          <UiButton :tag="NuxtLink" :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary"
+            class="flex items-center justify-center h-12 w-32 shrink-0 mt-4">
+            {{ categoryTreeGetters.getName(category) }}
+          </UiButton>
+        </div>
+      </SfScrollable>
 
       <div class="bg-gray-50 rounded-lg p-6 text-left">
         <p class="mb-4 text-xl font-semibold">{{ t('mostPopular') }}</p>
-        <ProductSlider :items="recommendedProductsDisplay"/>
+        <ProductSlider :items="recommendedProductsDisplay" />
       </div>
     </div>
   </div>
@@ -29,6 +33,7 @@
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { SfScrollable } from '@storefront-ui/vue';
 
 const localePath = useLocalePath();
 const { t } = useI18n();
