@@ -36,6 +36,7 @@ export function migrateImageContent(content: OldContent | ImageContent): ImageCo
       imageAlignment: old.imageAlignment ?? 'left',
       brightness: old.brightness ?? 1,
       fillMode: 'fill',
+      aspectRatio: '16 / 9',
     },
     text: {
       textOverlay: old.textOverlay,

@@ -4,11 +4,14 @@ import type {
   UseCategoryTemplateState,
   GetBlocks,
   SaveBlocks,
+  GetCategoryTemplateBlock,
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
+import categoryTemplateDataEn from './categoryTemplateDataEn.json';
+import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
@@ -117,6 +120,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
+  const getCategoryTemplateBlock: GetCategoryTemplateBlock = (blockName: string) => {
+    try {
+      return categoryTemplateDataEn.find((obj) => obj.name === blockName) as ItemGridProps;
+    } catch (error) {
+      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  };
+
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
       state.value.loading = true;
@@ -156,6 +167,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     getBlocks,
     getBlocksServer,
     updateBlocks,
+    getCategoryTemplateBlock,
     ...toRefs(state.value),
   };
 };

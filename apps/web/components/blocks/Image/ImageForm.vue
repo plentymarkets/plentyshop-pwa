@@ -106,40 +106,6 @@
         </div>
       </div>
     </fieldset>
-
-    <fieldset class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('image-align-label') }}</UiFormLabel>
-
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          for="align-left"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'left' }"
-          data-testid="image-align-left"
-          @click="uiImageTextBlock.image.imageAlignment = 'left'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'left' }"
-            class="mr-1 w-[1.1rem]"
-          />
-          {{ getEditorTranslation('image-align-option-left-label') }}
-        </div>
-
-        <div
-          for="align-right"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'right' }"
-          data-testid="image-align-right"
-          @click="uiImageTextBlock.image.imageAlignment = 'right'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'right' }"
-            class="mr-1 w-[1.1rem]"
-          />
-          {{ getEditorTranslation('image-align-option-right-label') }}
-        </div>
-      </div>
-    </fieldset>
   </UiAccordionItem>
   <UiAccordionItem
     v-model="textGroupOpen"
@@ -566,11 +532,10 @@ const clampBrightness = (event: Event, type: string) => {
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
-    "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
     "image-align-option-right-label": "Right",
 
-    "text-overlay-label": "Overlay text",
+    "text-overlay-label": "Text",
     "text-overlay-placeholder": "Text that supports HTML formatting",
     "text-overlay-color-label": "Text Color",
 
@@ -620,12 +585,11 @@ const clampBrightness = (event: Event, type: string) => {
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
-    "image-align-label": "Image Alignment",
     "image-align-option-left-label": "Left",
     "image-align-option-right-label": "Right",
     "keep-transparent-label": "Keep background transparent",
 
-    "text-overlay-label": "Overlay text",
+    "text-overlay-label": "Text",
     "text-overlay-placeholder": "Enter text (HTML allowed)",
     "text-overlay-color-label": "Text Color",
     "text-overlay-align-x-label": "Horizontal Alignment (x)",

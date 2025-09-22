@@ -142,6 +142,7 @@ const gridInlineStyle = computed(() => {
     paddingBottom: `${layout.paddingBottom ?? 0}px`,
     paddingLeft: `${layout.paddingLeft ?? 0}px`,
     paddingRight: `${layout.paddingRight ?? 0}px`,
+    backgroundColor: layout.backgroundColor ?? 'transparent',
   };
 });
 </script>
