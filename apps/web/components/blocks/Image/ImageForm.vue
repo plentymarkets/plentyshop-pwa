@@ -532,9 +532,6 @@ const handleImageAddWrapper = ({ image, type }: { image: string; type: string })
   }
 };
 
-/**
- * Clamp brightness value for image
- */
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
