@@ -1016,6 +1016,106 @@
       }
     ]
   },
+  "item-category": {
+    "category": "item-category",
+    "accessControl": [
+      "productCategory"
+    ],
+    "title": "Item Category",
+    "blockName": "ItemGrid",
+    "variations": [
+      {
+        "title": "Item Category",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_grid.png",
+        "template": {
+          "en": {
+            "name": "ItemGrid",
+            "type": "content",
+            "meta": {
+              "uuid": "99b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "itemsPerRowDesktop": 4,
+              "itemsPerRowTablet": 3,
+              "itemsPerRowMobile": 1,
+              "showItemCount": true,
+              "itemCountPosition": "left",
+              "fields": {
+                "manufacturer": true,
+                "title": true,
+                "rating": true,
+                "previewText": true,
+                "shippingBadge": true,
+                "price": true,
+                "addToCart": true
+              },
+              "fieldsOrder": [
+                "manufacturer",
+                "title",
+                "rating",
+                "previewText",
+                "shippingBadge",
+                "price",
+                "addToCart"
+              ],
+              "fieldsDisabled": [
+                "title"
+              ],
+              "contentAlignment": "left",
+              "cardBorders": true,
+              "showSecondImageOnHover": false,
+              "showWishlistButton": true,
+              "addToCartStyle": "primary",
+              "paginationPosition": "bottom"
+            }
+          },
+          "de": {
+            "name": "ItemGrid",
+            "type": "content",
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "itemsPerRowDesktop": 4,
+              "itemsPerRowTablet": 3,
+              "itemsPerRowMobile": 1,
+              "showItemCount": true,
+              "itemCountPosition": "left",
+              "fields": {
+                "manufacturer": true,
+                "title": true,
+                "rating": true,
+                "previewText": true,
+                "shippingBadge": true,
+                "price": true,
+                "addToCart": true
+              },
+              "fieldsOrder": [
+                "manufacturer",
+                "title",
+                "rating",
+                "previewText",
+                "shippingBadge",
+                "price",
+                "addToCart"
+              ],
+              "fieldsDisabled": [
+                "title"
+              ],
+              "contentAlignment": "left",
+              "cardBorders": true,
+              "showSecondImageOnHover": false,
+              "showWishlistButton": true,
+              "addToCartStyle": "primary",
+              "paginationPosition": "bottom"
+            }
+          }
+        }
+      }
+    ]
+  },
   "forms": {
     "category": "forms",
     "accessControl": ["content", "productCategory", "product"],
