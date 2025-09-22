@@ -61,11 +61,11 @@ const gridInlineStyle = computed(() => ({
   marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+  gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '),
 }));
 
 const getGridClasses = () => {
-  const columnCount = configuration.columnWidths.length;
-  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return ['grid', gridGapClass.value, 'items-center'];
 };
 
 const getColumnClasses = (colIndex: number) => {
