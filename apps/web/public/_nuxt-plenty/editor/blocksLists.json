@@ -667,15 +667,7 @@
             }
           }
         }
-      }
-    ]
-  },
-  "image-with-text": {
-    "category": "image-with-text",
-    "accessControl": ["content", "productCategory", "product"],
-    "title": "Image with Text",
-    "blockName": "ImageText",
-    "variations": [
+      },
       {
         "title": "Image Right Text",
         "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
