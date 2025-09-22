@@ -5,7 +5,7 @@
       v-if="hasImage"
       :to="linkTarget"
       :aria-label="ariaLabel"
-      v-bind="linkTarget ? { target: '_blank', rel: 'noopener' } : {}"
+      v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
     >
       <NuxtImg
         :src="getImageUrl()"
@@ -38,8 +38,7 @@
         :variant="props.content.button.variant ?? 'primary'"
         size="lg"
         :data-testid="'image-button-' + (meta?.uuid ?? '')"
-        target="_blank"
-        rel="noopener"
+        v-bind="isExternalLink(props.content.button.link) ? { target: '_blank', rel: 'noopener' } : {}"
       >
         {{ props.content.button.label }}
       </UiButton>
@@ -59,10 +58,12 @@ const props = defineProps<ImageProps>();
 
 const hasImage = computed(() => !!props.content?.image);
 const linkTarget = computed(() =>
-  props.content?.image?.linktarget?.trim() ? localePath(props.content.image.linktarget) : null,
+  props.content?.image?.linktarget?.trim() ? localePath(props.content.image.linktarget) : undefined,
 );
 const linkTag = computed(() => (linkTarget.value ? NuxtLink : 'div'));
 const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
+
+const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
 
 const getAspectRatio = () => {
   switch (viewport.breakpoint.value) {
