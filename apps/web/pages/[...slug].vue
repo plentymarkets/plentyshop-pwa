@@ -10,6 +10,13 @@
       <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
     </template>
     <template v-else>
+      <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+        <template #prefix>
+          <SfIconTune />
+        </template>
+        {{ t('listSettings') }}
+      </UiButton>
+
       <CategoryPageContent
         v-if="productsCatalog?.products"
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -26,8 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });
 
@@ -39,6 +46,7 @@ const { setBlocksListContext } = useBlockManager();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
+const { open } = useDisclosure();
 
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
