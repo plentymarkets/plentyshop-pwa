@@ -536,7 +536,7 @@ const clampBrightness = (event: Event, type: string) => {
     "image-align-option-left-label": "Left",
     "image-align-option-right-label": "Right",
 
-    "text-overlay-label": "Overlay text",
+    "text-overlay-label": "Text",
     "text-overlay-placeholder": "Text that supports HTML formatting",
     "text-overlay-color-label": "Text Color",
 
@@ -590,7 +590,7 @@ const clampBrightness = (event: Event, type: string) => {
     "image-align-option-right-label": "Right",
     "keep-transparent-label": "Keep background transparent",
 
-    "text-overlay-label": "Overlay text",
+    "text-overlay-label": "Text",
     "text-overlay-placeholder": "Enter text (HTML allowed)",
     "text-overlay-color-label": "Text Color",
     "text-overlay-align-x-label": "Horizontal Alignment (x)",
