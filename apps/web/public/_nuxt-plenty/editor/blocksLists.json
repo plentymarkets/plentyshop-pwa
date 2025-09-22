@@ -693,12 +693,25 @@
                 "type": "content",
                 "meta": { "uuid": "45454545-4545-4455-8455-454545454545" },
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "alt text",
-                  "imageAlignment": "right"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "alt text",
+                    "imageAlignment": "right"
+                  },
+                  "text": {
+                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "Klick mich",
+                    "link": "/beispiel-link",
+                    "variant": "primary"
+                  }
                 }
               },
               {
@@ -810,12 +823,25 @@
                 "type": "content",
                 "meta": { "uuid": "cbcbcbcb-cbcb-4bcb-8bcb-cbcbcbcbcbcb" },
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "Headphones",
-                  "imageAlignment": "left"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "Headphones",
+                    "imageAlignment": "left"
+                  },
+                  "text": {
+                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "Klick mich",
+                    "link": "/beispiel-link",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -852,12 +878,25 @@
                 "type": "content",
                 "meta": { "uuid": "fefefefe-fefe-4fef-8fef-fefefefefefe" },
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "Headphones",
-                  "imageAlignment": "left"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "Headphones",
+                    "imageAlignment": "left"
+                  },
+                  "text": {
+                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "Klick mich",
+                    "link": "/beispiel-link",
+                    "variant": "primary"
+                  }
                 }
               }
             ]

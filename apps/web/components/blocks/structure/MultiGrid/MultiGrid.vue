@@ -44,10 +44,10 @@ const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
-  S: 'gap-x-1',
-  M: 'gap-x-2',
-  L: 'gap-x-3',
-  XL: 'gap-x-5',
+  S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
+  M: 'gap-y-2 md:gap-x-2 md:gap-y-0',
+  L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
+  XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
 const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
@@ -57,11 +57,11 @@ const gridInlineStyle = computed(() => ({
   marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+  gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '),
 }));
 
 const getGridClasses = () => {
-  const columnCount = configuration.columnWidths.length;
-  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return ['grid', gridGapClass.value, 'items-center'];
 };
 
 const getColumnClasses = (colIndex: number) => {

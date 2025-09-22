@@ -21,6 +21,7 @@ export type ImageContent = {
     imageAlignment: 'left' | 'right';
     brightness?: number;
     fillMode?: 'fit' | 'fill';
+    aspectRatio?: string;
   };
   text: {
     textOverlay?: string;
@@ -38,6 +39,7 @@ export type ImageContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
+    backgroundColor?: string;
   };
 };
 
