@@ -3,8 +3,7 @@
     <input v-model.number="splitIndex" type="range" min="1" max="11" step="1" class="sr-only" @input="onInput" />
     <div
       ref="squaresContainer"
-      class="flex w-full mt-2 mb-4 rounded overflow-hidden border border-gray-300 relative"
-      style="height: 24px"
+      class="flex w-full mt-2 mb-4 rounded overflow-hidden border border-gray-300 relative h-[24px]"
       @mousedown="handlePointerDown"
     >
       <div
