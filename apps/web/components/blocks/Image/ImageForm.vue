@@ -70,10 +70,14 @@
     </div>
 
     <fieldset class="py-2">
-      <legend class="text-sm font-medium text-black">
-        {{ getEditorTranslation('image-scalling-label') }}
-      </legend>
-
+      <div class="flex items-center gap-2">
+        <legend class="text-sm font-medium text-black m-0">
+          {{ getEditorTranslation('image-scalling-label') }}
+        </legend>
+        <SfTooltip :label="fillTooltip" placement="top">
+          <SfIconInfo :size="'sm'" />
+        </SfTooltip>
+      </div>
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
         <div
           data-testid="align-y-center"
@@ -465,6 +469,8 @@ import {
   SfIconArrowDownward,
   SfIconArrowForward,
   SfSwitch,
+  SfTooltip,
+  SfIconInfo,
 } from '@storefront-ui/vue';
 
 import type { ImageFormProps } from './types';
@@ -514,6 +520,9 @@ const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
 const layoutOpen = ref(false);
+
+const fillTooltip =
+  'Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.';
 
 type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
