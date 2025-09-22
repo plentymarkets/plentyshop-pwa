@@ -1,84 +1,12 @@
-<!-- <template>
-  <div ref="imageRow" :class="['relative flex justify-center', 'h-[450px]' ,'w-[450px]']" :style="gridInlineStyle">
-    <template v-if="props.content?.image">
-      <template v-if="props.content.image.linktarget && props.content.image.linktarget.trim()">
-        <NuxtLink
-          :to="localePath(props.content.image.linktarget)"
-          :aria-label="props.content.image.alt || 'Image link'"
-          data-testid="image-link"
-        >
-          <NuxtImg
-            :src="getImageUrl()"
-            :alt="props.content.image.alt"
-            :class="[
-              props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover',
-             
-              'md:px-4',
-              {
-                'lg:pr-4': props.content.image.imageAlignment === 'left',
-                'lg:pl-4': props.content.image.imageAlignment === 'right',
-              },
-            ]"
-            :style="{
-              filter: props.content.image.brightness ? 'brightness(' + (props.content.image.brightness ?? 1) + ')' : '',
-            }"
-            :width="getImageDimensions().width"
-            :height="getImageDimensions().height"
-            data-testid="image-block"
-          />
-        </NuxtLink>
-      </template>
-      <template v-else>
-        <NuxtImg
-          :src="getImageUrl()"
-          :alt="props.content.image.alt"
-          :class="[
-            props.content.image.fillMode === 'fit'
-              ? 'object-contain'
-              : props.content.image.fillMode === 'fill'
-                ? 'object-cover'
-                : 'object-cover',
-            'md:px-4',
-            {
-              'lg:pr-4': props.content.image.imageAlignment === 'left',
-              'lg:pl-4': props.content.image.imageAlignment === 'right',
-            },
-          ]"
-          :style="{
-            filter: props.content.image.brightness ? 'brightness(' + (props.content.image.brightness ?? 1) + ')' : '',
-          }"
-          :width="getImageDimensions().width"
-          :height="getImageDimensions().height"
-          data-testid="image-block"
-        />
-      </template>
-    </template>
-    <div
-      v-if="props.content?.text?.textOverlay && runtimeConfig.public.isDev"
-      class="absolute w-full h-full px-4 pointer-events-none flex flex-col"
-      :class="overlayAlignClasses"
-      data-testid="image-overlay-text"
-      :style="{ color: props.content.text?.textOverlayColor || '#000' }"
-    >
-      <div v-html="props.content.text.textOverlay" />
-      <UiButton
-        v-if="props.content?.button.label"
-        class="mt-4 cursor-pointer pointer-events-auto"
-        :tag="NuxtLink"
-        :to="localePath(props.content.button.link ?? '')"
-        :variant="props.content.button.variant ?? 'primary'"
-        size="lg"
-        :data-testid="'image-button-' + (meta?.uuid ?? '')"
-      >
-        {{ props.content.button.label }}
-      </UiButton>
-    </div>
-  </div>
-</template> -->
-
 <template>
   <div class="relative w-full" :class="['flex justify-center']" :style="[wrapperStyle, gridInlineStyle]">
-    <component :is="linkTag" v-if="hasImage" :to="linkTarget" :aria-label="ariaLabel">
+    <component
+      :is="linkTag"
+      v-if="hasImage"
+      :to="linkTarget"
+      :aria-label="ariaLabel"
+      v-bind="linkTarget ? { target: '_blank', rel: 'noopener' } : {}"
+    >
       <NuxtImg
         :src="getImageUrl()"
         :alt="props.content.image.alt"
@@ -110,6 +38,8 @@
         :variant="props.content.button.variant ?? 'primary'"
         size="lg"
         :data-testid="'image-button-' + (meta?.uuid ?? '')"
+        target="_blank"
+        rel="noopener"
       >
         {{ props.content.button.label }}
       </UiButton>
@@ -134,17 +64,27 @@ const linkTarget = computed(() =>
 const linkTag = computed(() => (linkTarget.value ? NuxtLink : 'div'));
 const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
 
-const wrapperStyle = computed(() => {
-  const img = props.content?.image;
-  // '16 / 9'
-  const ratio = img?.aspectRatio || '4 / 3';
+const getAspectRatio = () => {
+  switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return props.content?.image?.aspectRatio || '16 / 9';
+    }
+    case 'lg': {
+      return props.content?.image?.aspectRatio || '16 / 9';
+    }
+    case 'md': {
+      return props.content?.image?.aspectRatio || '4 / 3';
+    }
+    default: {
+      return props.content?.image?.aspectRatio || '1 / 1';
+    }
+  }
+};
 
-  return {
-    aspectRatio: ratio,
-    position: 'relative' as const,
-  };
-});
-
+const wrapperStyle = computed(() => ({
+  aspectRatio: getAspectRatio(),
+  position: 'relative' as const,
+}));
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
