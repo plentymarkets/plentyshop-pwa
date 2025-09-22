@@ -18,7 +18,7 @@
         :placeholder="placeholderImg"
         :dimensions="imageDimensions[type]"
         :selected-image-type="type"
-        @add="(payload) => handleImageAddWrapper(payload)"
+        @add="(payload: { image: string; type: string }) => handleImageAddWrapper(payload)"
         @delete="deleteImage(uiImageTextBlock.image, type)"
       />
     </div>

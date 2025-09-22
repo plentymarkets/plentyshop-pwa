@@ -670,7 +670,7 @@
       },
       {
         "title": "Image Right Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -781,7 +781,7 @@
       },
       {
         "title": "Image Left Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
         "template": {
           "en": {
             "name": "MultiGrid",
