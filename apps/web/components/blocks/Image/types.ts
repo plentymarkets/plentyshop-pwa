@@ -20,7 +20,7 @@ export type ImageContent = {
     linktarget?: string;
     imageAlignment: 'left' | 'right';
     brightness?: number;
-    fillMode?: 'fit' | 'fill';
+    fillMode?: 'fill' | 'fit';
     aspectRatio?: string;
   };
   text: {
