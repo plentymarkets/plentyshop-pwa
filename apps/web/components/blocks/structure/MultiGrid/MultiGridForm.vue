@@ -11,6 +11,14 @@
       </template>
 
       <div data-testid="image-text-form">
+        <div v-if="isTwoColumnMultigrid" class="py-4">
+          <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
+          <ColumnWidthInput
+            :multi-grid-structure="multiGridStructure"
+            @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
+          />
+        </div>
+
         <div v-if="multiGridStructure.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -129,11 +137,17 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
+import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
+
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+
+const isTwoColumnMultigrid = computed(() => {
+  return multiGridStructure.value.configuration?.columnWidths?.length === 2;
+});
 
 const defaultMarginBottom = computed(() => {
   switch (blockSize.value) {
@@ -217,7 +231,8 @@ const getComponent = (blockName: string) => {
     "gap-size-xl": "XL",
     "spacing-around": "Spacing around",
     "spacing-between": "Spacing between Blocks:",
-    "layout-background": "Layout Background"
+    "layout-background": "Layout Background",
+    "column-size": "Column Size"
   },
   "de": {
     "layout-settings": "Layout Einstellungen",
@@ -231,7 +246,8 @@ const getComponent = (blockName: string) => {
     "gap-size-xl": "XL",
     "spacing-around": "Abstand um",
     "spacing-between": "Abstand zwischen Blöcken:",
-    "layout-background": "Layout Hintergrund"
+    "layout-background": "Layout Hintergrund",
+    "column-size": "Spaltengröße"
   }
 }
 </i18n>
