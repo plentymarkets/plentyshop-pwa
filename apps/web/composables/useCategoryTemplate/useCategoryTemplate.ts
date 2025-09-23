@@ -14,7 +14,7 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import categoryTemplateDataEn from './categoryTemplateDataEn.json';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
-import {SortFilterProps} from "../../components/blocks/SortFilter/types";
+import { SortFilterProps } from '../../components/blocks/SortFilter/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);

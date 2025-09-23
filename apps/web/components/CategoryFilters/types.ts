@@ -1,12 +1,12 @@
 import type { FilterGroup } from '@plentymarkets/shop-api';
-import { SortFilterContent } from "~/components/blocks/SortFilter/types";
+import { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 export type CategoryFiltersProps = {
   facets: FilterGroup[];
-  configuration?: SortFilterContent
+  configuration?: SortFilterContent;
 };
 
 export type FilterProps = {
   facet?: FilterGroup;
-  configuration?: SortFilterContent
+  configuration?: SortFilterContent;
 };

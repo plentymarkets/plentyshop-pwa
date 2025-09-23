@@ -1,15 +1,14 @@
 <template>
   <UiAccordionItem
-      data-testid="open-sorting-and-filters-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    data-testid="open-sorting-and-filters-settings"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
     <template #summary>
       <h2>{{ getEditorTranslation('display-and-order-label') }}</h2>
     </template>
 
     <div data-testid="text-card-form">
-
       <!-- Enable filters toggle -->
       <div class="py-2">
         <div class="flex items-center justify-between gap-3">
@@ -18,9 +17,10 @@
           </UiFormLabel>
 
           <SfSwitch
-              id="keep-transparent" v-model="sortFilterBlock.enableFilters"
-              data-testid="switch-keep-transparent"
-              class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+            id="keep-transparent"
+            v-model="sortFilterBlock.enableFilters"
+            data-testid="switch-keep-transparent"
+            class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
           />
         </div>
       </div>
@@ -28,20 +28,20 @@
       <!-- Filters list -->
       <div class="py-4">
         <draggable
-            v-if="sortFilterBlock.filtersOrder.length"
-            v-model="sortFilterBlock.filtersOrder"
-            item-key="meta.uuid"
-            handle=".drag-slides-handle"
-            class="rounded"
-            :filter="'.no-drag'"
+          v-if="sortFilterBlock.filtersOrder.length"
+          v-model="sortFilterBlock.filtersOrder"
+          item-key="meta.uuid"
+          handle=".drag-slides-handle"
+          class="rounded"
+          :filter="'.no-drag'"
         >
           <template #item="{ element: elem, index }: { element: SortFilterFieldKey; index: number }">
             <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
               <div class="flex items-center gap-3">
                 <button
-                    class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
-                    :aria-label="getEditorTranslation('drag-reorder-aria')"
-                    :data-testid="`actions-drag-slide-handle-${index}`"
+                  class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                  :aria-label="getEditorTranslation('drag-reorder-aria')"
+                  :data-testid="`actions-drag-slide-handle-${index}`"
                 >
                   <NuxtImg width="18" height="18" :src="dragIcon" />
                 </button>
@@ -49,9 +49,9 @@
                 <span>{{ fieldLabels[elem] }}</span>
               </div>
               <SfSwitch
-                  v-model="sortFilterBlock.fields[elem]"
-                  :disabled="sortFilterBlock.filtersDisabled?.includes(elem)"
-                  :data-testid="`sort-filters-field-${elem}`"
+                v-model="sortFilterBlock.fields[elem]"
+                :disabled="sortFilterBlock.filtersDisabled?.includes(elem)"
+                :data-testid="`sort-filters-field-${elem}`"
               />
             </div>
           </template>
@@ -66,10 +66,10 @@
           </UiFormLabel>
 
           <SfSwitch
-              id="keep-transparent"
-              v-model="sortFilterBlock.showAllFiltersImmediately"
-              data-testid="switch-keep-transparent"
-              class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+            id="keep-transparent"
+            v-model="sortFilterBlock.showAllFiltersImmediately"
+            data-testid="switch-keep-transparent"
+            class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
           />
         </div>
       </div>
@@ -80,10 +80,19 @@
           <UiFormLabel>{{ getEditorTranslation('number-of-filters-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="sortFilterBlock.numberOfFiltersToShowInitially" type="number" data-testid="input-number-of-filters">
+          <SfInput
+            v-model="sortFilterBlock.numberOfFiltersToShowInitially"
+            type="number"
+            data-testid="input-number-of-filters"
+          >
             <template #suffix>
               <label for="sorting-and-filters-number-of-filters" class="rounded-lg cursor-pointer">
-                <input id="sorting-and-filters-number-of-filters" v-model="sortFilterBlock.numberOfFiltersToShowInitially" type="number" class="invisible w-8" />
+                <input
+                  id="sorting-and-filters-number-of-filters"
+                  v-model="sortFilterBlock.numberOfFiltersToShowInitially"
+                  type="number"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -95,42 +104,42 @@
         <UiFormLabel>{{ getEditorTranslation('items-per-page-label') }}</UiFormLabel>
         <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
-              for="items-per-page-10"
-              class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm border-r"
-              :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('10') }"
-              data-testid="sort-filter-form-items-per-page-10"
-              @click="sortFilterBlock.itemsPerPage = '10'"
+            for="items-per-page-10"
+            class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('10') }"
+            data-testid="sort-filter-form-items-per-page-10"
+            @click="sortFilterBlock.itemsPerPage = '10'"
           >
             <SfIconCheck :class="{ invisible: !itemsPerPageSelected('10') }" class="mr-1 w-[1.1rem]" />
             10
           </div>
           <div
-              for="items-per-page-20"
-              class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm border-r"
-              :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('20') }"
-              data-testid="sort-filter-form-items-per-page-20"
-              @click="sortFilterBlock.itemsPerPage = '20'"
+            for="items-per-page-20"
+            class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('20') }"
+            data-testid="sort-filter-form-items-per-page-20"
+            @click="sortFilterBlock.itemsPerPage = '20'"
           >
             <SfIconCheck :class="{ invisible: !itemsPerPageSelected('20') }" class="mr-1 w-[1.1rem]" />
             20
           </div>
           <div
-              for="items-per-page-50"
-              class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm border-r"
-              :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('50') }"
-              data-testid="sort-filter-form-items-per-page-50"
-              @click="sortFilterBlock.itemsPerPage = '50'"
+            for="items-per-page-50"
+            class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('50') }"
+            data-testid="sort-filter-form-items-per-page-50"
+            @click="sortFilterBlock.itemsPerPage = '50'"
           >
             <SfIconCheck :class="{ invisible: !itemsPerPageSelected('50') }" class="mr-1 w-[1.1rem]" />
             50
           </div>
 
           <div
-              for="items-per-page-100"
-              class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm"
-              :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('100') }"
-              data-testid="sort-filter-form-items-per-page-100"
-              @click="sortFilterBlock.itemsPerPage = '100'"
+            for="items-per-page-100"
+            class="flex items-center justify-center w-1/4 px-4 py-2 cursor-pointer text-sm"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': itemsPerPageSelected('100') }"
+            data-testid="sort-filter-form-items-per-page-100"
+            @click="sortFilterBlock.itemsPerPage = '100'"
           >
             <SfIconCheck :class="{ invisible: !itemsPerPageSelected('100') }" class="mr-1 w-[1.1rem]" />
             100
@@ -139,15 +148,10 @@
       </div>
     </div>
   </UiAccordionItem>
-
 </template>
 
 <script setup lang="ts">
-import {
-  SfInput,
-  SfSwitch,
-  SfIconCheck,
-} from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey, SortFilterFieldsVisibility } from './types';
 import dragIcon from 'assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -155,7 +159,6 @@ import draggable from 'vuedraggable/src/vuedraggable';
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
 
 const props = defineProps<SortFilterFormProps>();
 
@@ -183,17 +186,13 @@ const fieldLabels: Record<string, string> = {
   customizedFilters: getEditorTranslation('customizedFilters'),
 };
 
-
 const enableFilters = ref(false);
 
 const itemsPerPageSelected = (value: '10' | '20' | '50' | '100') => {
   return (sortFilterBlock.value.itemsPerPage || '10') === value;
 };
 
-
-watch([enableFilters], () => {
-
-});
+watch([enableFilters], () => {});
 </script>
 
 <i18n lang="json">

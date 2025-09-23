@@ -1,8 +1,10 @@
 <template>
-  <div v-if="
-    (facet && facetGetters.getType(facet) === 'feedback' && configuration?.fields.itemRating) ||
-    (facet && facetGetters.getType(facet) === 'price' && configuration?.fields.price)
-  ">
+  <div
+    v-if="
+      (facet && facetGetters.getType(facet) === 'feedback' && configuration?.fields.itemRating) ||
+      (facet && facetGetters.getType(facet) === 'price' && configuration?.fields.price)
+    "
+  >
     <SfAccordionItem v-if="facet" v-model="open">
       <template #summary>
         <div class="flex justify-between p-2 mb-2 select-none">
@@ -13,28 +15,28 @@
       <div v-if="facetGetters.getType(facet) === 'feedback'">
         <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
           <div class="flex items-center space-x-2">
-          <span class="pt-1 flex items-center">
-            <SfCheckbox :id="filter.id" v-model="models[filter.id]" :value="filter" @change="facetChange" />
-          </span>
+            <span class="pt-1 flex items-center">
+              <SfCheckbox :id="filter.id" v-model="models[filter.id]" :value="filter" @change="facetChange" />
+            </span>
             <span class="flex items-center pt-[2px]">
-            <SfRating :value="feedbackNumber(filter)" :max="5" />
-          </span>
+              <SfRating :value="feedbackNumber(filter)" :max="5" />
+            </span>
             <span
-                :class="[
-              'ml-2 pt-1 min-w-[10px] text-base text-center flex items-center justify-center',
-              { 'font-medium': feedbackNumber(filter) === 5 },
-            ]"
+              :class="[
+                'ml-2 pt-1 min-w-[10px] text-base text-center flex items-center justify-center',
+                { 'font-medium': feedbackNumber(filter) === 5 },
+              ]"
             >
-            {{ feedbackNumber(filter) }}
-          </span>
+              {{ feedbackNumber(filter) }}
+            </span>
             <span v-if="feedbackNumber(filter) != 5" class="ml-1 pt-1 flex items-center">
-            <SfIconArrowUpward size="sm" />
-          </span>
+              <SfIconArrowUpward size="sm" />
+            </span>
             <span>
-            <SfCounter :class="['ml-1 pt-1 flex items-center text-base', { 'ml-3': feedbackNumber(filter) === 5 }]">
-              {{ filter.count }}
-            </SfCounter>
-          </span>
+              <SfCounter :class="['ml-1 pt-1 flex items-center text-base', { 'ml-3': feedbackNumber(filter) === 5 }]">
+                {{ filter.count }}
+              </SfCounter>
+            </span>
           </div>
         </SfListItem>
       </div>
@@ -54,10 +56,10 @@
         </div>
         <div class="flex">
           <UiButton
-              type="submit"
-              class="w-full mr-3 h-10"
-              :disabled="minPrice.length === 0 && maxPrice.length === 0"
-              variant="secondary"
+            type="submit"
+            class="w-full mr-3 h-10"
+            :disabled="minPrice.length === 0 && maxPrice.length === 0"
+            variant="secondary"
           >
             <template #prefix>
               <SfIconCheck />
@@ -72,20 +74,20 @@
 
       <div v-else class="mb-4">
         <SfListItem
-            v-for="(filter, index) in facetGetters.getFilters(facet)"
-            :key="index"
-            tag="label"
-            size="sm"
-            :data-testid="'category-filter-' + index"
-            class="px-1.5 bg-transparent hover:bg-transparent"
+          v-for="(filter, index) in facetGetters.getFilters(facet)"
+          :key="index"
+          tag="label"
+          size="sm"
+          :data-testid="'category-filter-' + index"
+          class="px-1.5 bg-transparent hover:bg-transparent"
         >
           <template #prefix>
             <SfCheckbox
-                :id="filter.id"
-                v-model="models[filter.id]"
-                :value="filter"
-                class="flex items-center"
-                @change="facetChange"
+              :id="filter.id"
+              v-model="models[filter.id]"
+              :value="filter"
+              class="flex items-center"
+              @change="facetChange"
             />
           </template>
           <p class="select-none">
@@ -96,7 +98,6 @@
       </div>
     </SfAccordionItem>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -115,7 +116,7 @@ import {
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
-import { SortFilterContent } from "~/components/blocks/SortFilter/types";
+import { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const { t } = useI18n();

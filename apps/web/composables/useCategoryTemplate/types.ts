@@ -1,6 +1,6 @@
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
-import {SortFilterProps} from '~/components/blocks/SortFilter/types';
+import { SortFilterProps } from '~/components/blocks/SortFilter/types';
 
 export interface UseCategoryTemplateState {
   data: Block[];

@@ -1,12 +1,12 @@
 export type SortFilterFieldKey =
-    'category' |
-    'sortBy' |
-    'perPage' |
-    'itemRating' |
-    'manufacturer' |
-    'price' |
-    'availability' |
-    'customizedFilters';
+  | 'category'
+  | 'sortBy'
+  | 'perPage'
+  | 'itemRating'
+  | 'manufacturer'
+  | 'price'
+  | 'availability'
+  | 'customizedFilters';
 
 export type SortFilterFieldsVisibility = Record<SortFilterFieldKey, boolean>;
 
@@ -14,7 +14,7 @@ export type SortFilterProps = {
   name: string;
   type: string;
   configuration?: object;
-  content: SortFilterContent,
+  content: SortFilterContent;
   index?: number;
   meta: {
     uuid: string;
@@ -23,12 +23,12 @@ export type SortFilterProps = {
 };
 
 export type SortFilterContent = {
-  enableFilters: boolean,
+  enableFilters: boolean;
   fields: SortFilterFieldsVisibility;
   filtersOrder: SortFilterFieldKey[];
   filtersDisabled: SortFilterFieldKey[];
-  showAllFiltersImmediately: boolean,
-  numberOfFiltersToShowInitially?: number,
+  showAllFiltersImmediately: boolean;
+  numberOfFiltersToShowInitially?: number;
   itemsPerPage: '10' | '20' | '50' | '100';
 };
 

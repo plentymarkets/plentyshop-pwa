@@ -25,7 +25,7 @@
 import { SfSelect } from '@storefront-ui/vue';
 import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
 import { defaults } from '~/composables';
-import type { SortFilterContent } from "~/components/blocks/SortFilter/types";
+import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const props = defineProps<CategoryItemsPerPageProps>();
 const configuration = computed(() => props.configuration || ({} as SortFilterContent));
