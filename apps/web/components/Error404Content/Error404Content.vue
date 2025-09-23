@@ -5,24 +5,21 @@
         {{ t('error.pageNotFoundTitle') }}
       </h1>
 
-      <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+      <p class="text-xl text-gray-600 leading-relaxed">
         {{ t('error.pageNotFoundSubtitle') }}
       </p>
 
-      <div class="flex justify-center mb-6 px-6">
+      <div class="flex justify-center my-8">
         <UiSearch class="w-96" />
       </div>
 
-      <SfScrollable class="flex items-center gap-4 px-6 pb-4 mb-12 scrollbar-hide">
-        <div v-for="category in categoryTree" :key="category.id">
-          <UiButton :tag="NuxtLink" :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary"
-            class="flex items-center justify-center h-12 w-32 shrink-0 mt-4">
-            {{ categoryTreeGetters.getName(category) }}
-          </UiButton>
-        </div>
-      </SfScrollable>
+      <div class="flex justify-center gap-2 overflow-x-auto scrollbar-hide flex-wrap">
+        <UiButton v-for="category in categoryTree" :key="category.id" :tag="NuxtLink" :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary">
+          {{ categoryTreeGetters.getName(category)}}
+        </UiButton>
+      </div>
 
-      <div class="bg-gray-50 rounded-lg p-6 text-left">
+      <div class="rounded-lg mt-8 sm:p-6 text-left">
         <p class="mb-4 text-xl font-semibold">{{ t('mostPopular') }}</p>
         <ProductSlider :items="recommendedProductsDisplay" />
       </div>
