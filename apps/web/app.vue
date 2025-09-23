@@ -62,7 +62,6 @@ const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { setStaticPageMeta } = useCanonical();
-const { setInitialDataSSR } = useInitialSetup();
 
 const clientPreview = ref(false);
 
@@ -113,10 +112,6 @@ useHead({
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
   ],
-});
-
-await callOnce(async () => {
-  await setInitialDataSSR();
 });
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
