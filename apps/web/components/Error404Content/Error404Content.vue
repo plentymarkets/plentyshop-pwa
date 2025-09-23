@@ -14,8 +14,14 @@
       </div>
 
       <div class="flex justify-center gap-2 overflow-x-auto scrollbar-hide flex-wrap">
-        <UiButton v-for="category in categoryTree" :key="category.id" :tag="NuxtLink" :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary">
-          {{ categoryTreeGetters.getName(category)}}
+        <UiButton
+          v-for="category in categoryTree"
+          :key="category.id"
+          :tag="NuxtLink"
+          :to="localePath('/' + categoryTreeGetters.getSlug(category))"
+          variant="secondary"
+        >
+          {{ categoryTreeGetters.getName(category) }}
         </UiButton>
       </div>
 
