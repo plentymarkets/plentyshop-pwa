@@ -117,7 +117,6 @@
         </label>
       </div>
     </UiAccordionItem>
-
   </div>
 </template>
 
@@ -197,8 +196,6 @@ const getGapPx = (gap: string | undefined): number => {
 
 const textSettings = ref(false);
 const layoutBackground = ref(false);
-
-
 </script>
 
 <i18n lang="json">
