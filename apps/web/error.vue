@@ -9,8 +9,13 @@
   </NuxtLayout>
 </template>
 
-<script setup>
-const props = defineProps(['error']);
+<script setup lang="ts">
+interface ErrorProp {
+  statusCode: number;
+  statusMessage: string;
+  [key: string]: unknown;
+}
+const props = defineProps<{ error: ErrorProp }>();
 const { t } = useI18n();
 const { setInitialDataSSR } = useInitialSetup();
 

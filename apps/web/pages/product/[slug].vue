@@ -170,6 +170,4 @@ const observeRecommendedSection = () => {
 };
 
 onNuxtReady(() => observeRecommendedSection());
-
-console.log(productGetters.getCategoryIds(product.value)[0]);
 </script>

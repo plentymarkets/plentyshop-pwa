@@ -36,7 +36,6 @@
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
-import { SfScrollable } from '@storefront-ui/vue';
 
 const localePath = useLocalePath();
 const { t } = useI18n();
