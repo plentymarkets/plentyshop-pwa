@@ -167,7 +167,7 @@ const product = computed(() => props.product);
 
 const { getCategoryTemplateBlock } = useCategoryTemplate();
 
-const itemGrid = getCategoryTemplateBlock('ItemGrid');
+const itemGrid = getCategoryTemplateBlock();
 
 const configuration = computed(() => props.configuration || itemGrid.content || ({} as ItemGridContent));
 

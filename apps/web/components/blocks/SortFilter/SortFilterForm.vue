@@ -80,10 +80,10 @@
           <UiFormLabel>{{ getEditorTranslation('number-of-filters-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="sortFilterBlock.numberOfFiltersToShowInitially" type="text" data-testid="input-number-of-filters">
+          <SfInput v-model="sortFilterBlock.numberOfFiltersToShowInitially" type="number" data-testid="input-number-of-filters">
             <template #suffix>
               <label for="sorting-and-filters-number-of-filters" class="rounded-lg cursor-pointer">
-                <input id="sorting-and-filters-number-of-filters" v-model="sortFilterBlock.numberOfFiltersToShowInitially" type="text" class="invisible w-8" />
+                <input id="sorting-and-filters-number-of-filters" v-model="sortFilterBlock.numberOfFiltersToShowInitially" type="number" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -163,10 +163,10 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
   const content = rawContent as Partial<SortFilterContent>;
-  console.log(content);
+
   if (!content.enableFilters) content.enableFilters = false;
   if (!content.showAllFiltersImmediately) content.showAllFiltersImmediately = false;
-  if (!content.numberOfFiltersToShowInitially) content.numberOfFiltersToShowInitially = '0';
+  if (!content.numberOfFiltersToShowInitially) content.numberOfFiltersToShowInitially = 0;
   if (!content.itemsPerPage) content.itemsPerPage = '10';
 
   return content as SortFilterContent;

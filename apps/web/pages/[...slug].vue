@@ -25,7 +25,7 @@
         :items-per-page="Number(productsPerPage)"
       >
         <template #sidebar>
-          <BlocksSortFilter />
+          <BlocksSortFilter v-bind="sortFilter" />
         </template>
       </CategoryPageContent>
     </template>
@@ -47,6 +47,9 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { open } = useDisclosure();
+const { getSortFilterCategoryTemplateBlock } = useCategoryTemplate();
+
+const sortFilter = getSortFilterCategoryTemplateBlock();
 
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();

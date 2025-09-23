@@ -28,7 +28,7 @@ export type SortFilterContent = {
   filtersOrder: SortFilterFieldKey[];
   filtersDisabled: SortFilterFieldKey[];
   showAllFiltersImmediately: boolean,
-  numberOfFiltersToShowInitially?: string,
+  numberOfFiltersToShowInitially?: number,
   itemsPerPage: '10' | '20' | '50' | '100';
 };
 
