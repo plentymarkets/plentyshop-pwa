@@ -504,7 +504,12 @@
     "notificationsItemOutOfStock": "Insufficient stock",
     "notificationsNoEmailEntered": "Please enter a valid email address.",
     "notificationsNotEnoughStockItem": "There is not enough stock available for the selected item quantity.",
-    "notificationsWarningOverselling": "The selected quantity exceeds the available stock. :stock are currently in stock; :oversellingAmount will be supplied later."
+    "notificationsWarningOverselling": "The selected quantity exceeds the available stock. :stock are currently in stock; :oversellingAmount will be supplied later.",
+    "errorOccured": "Oops! An error occured!",
+    "pageNotFound": "Page not found",
+    "pageNotFoundTitle": "We couldn't find that page.",
+    "pageNotFoundSubtitle": "We are sorry! Use search or categories to find what you are looking for.",
+    "errorPlain": "Error"
   },
   "errorMessages": {
     "checkout": {
@@ -952,6 +957,7 @@
   "showMore": "Show more",
   "showOptions": "Show options",
   "showProducts": "Show items",
+  "mostPopular": "Most popular",
   "socialLabel": "Go to {label} page",
   "softLogin": {
     "check": "Check",
