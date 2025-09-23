@@ -8,7 +8,6 @@
       (facet && facetGetters.getType(facet) === 'dynamic' && configuration?.fields.customizedFilters)
     "
   >
-    {{ facetGetters.getType(facet) }}
     <SfAccordionItem v-if="facet" v-model="open">
       <template #summary>
         <div class="flex justify-between p-2 mb-2 select-none">
