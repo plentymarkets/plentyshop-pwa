@@ -311,16 +311,13 @@ import {
   SfSelect,
 } from '@storefront-ui/vue';
 
-definePageMeta({ layout: false, middleware: ['guest-guard'] });
-
 const { default: shippingCountries, fetchAggregatedCountries } = useAggregatedCountries();
 const localePath = useLocalePath();
 const { loading } = useCustomer();
 const { t } = useI18n();
 const { send: _send } = useNotification();
-const { setPageMeta } = usePageMeta();
-const icon = 'page';
-setPageMeta(t('auth.signup.submitLabel'), icon);
+definePageMeta({ layout: false, middleware: ['guest-guard'] });
+usePageMeta().setPageMeta(t('auth.signup.submitLabel'), 'page');
 const {
   hasCompany,
   invalidVAT,
