@@ -4,28 +4,6 @@
       <div class="text-center mb-8">
         <div class="text-2xl font-semibold mb-2">{{ t('auth.signup.heading') }}</div>
         <div class="text-lg text-gray-600 mb-6">{{ t('auth.signup.subheading') }}</div>
-
-        <div class="select-none bg-gray-50 p-4 md:p-4 rounded-lg max-w-2xl mx-auto flex flex-col gap-1 font-normal">
-          <div class="flex items-center gap-2">
-            <SfIconPerson class="text-primary-500 flex-shrink-0" />
-            <div class="text-sm">{{ t('auth.signup.benefits.saveAddresses') }}</div>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <SfIconLocalShipping class="text-primary-500 flex-shrink-0" />
-            <div class="text-sm">{{ t('auth.signup.benefits.orderTracking') }}</div>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <SfIconFavorite class="text-primary-500 flex-shrink-0" />
-            <div class="text-sm">{{ t('auth.signup.benefits.wishlist') }}</div>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <SfIconSchedule class="text-primary-500 flex-shrink-0" />
-            <div class="text-sm">{{ t('auth.signup.benefits.orderHistory') }}</div>
-          </div>
-        </div>
       </div>
 
       <form
@@ -297,19 +275,7 @@
 import { ErrorMessage } from 'vee-validate';
 import { paths } from '~/utils/paths';
 import { useRegisterForm } from '~/composables/useRegisterForm';
-import {
-  SfLink,
-  SfInput,
-  SfLoaderCircular,
-  SfCheckbox,
-  SfIconPerson,
-  SfIconLocalShipping,
-  SfIconFavorite,
-  SfIconSchedule,
-  SfIconCheck,
-  SfIconClose,
-  SfSelect,
-} from '@storefront-ui/vue';
+import { SfLink, SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
 
 const { default: shippingCountries, fetchAggregatedCountries } = useAggregatedCountries();
 const localePath = useLocalePath();
