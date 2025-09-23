@@ -123,13 +123,10 @@ export const useBlockManager = () => {
     scrollIntoBlockView(newBlock);
   };
 
-  const scrollIntoBlockView = (newBlock: Block) => {
+  const scrollIntoBlockView = (block: Block) => {
     setTimeout(() => {
-      const newIndex = data.value.findIndex((b) => b.meta?.uuid === newBlock.meta.uuid);
-      if (newIndex !== -1) {
-        const el = document.getElementById(`block-${newIndex}`);
-        if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
-      }
+      const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
     }, 100);
   };
 

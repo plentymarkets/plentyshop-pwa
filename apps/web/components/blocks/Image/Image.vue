@@ -1,68 +1,118 @@
 <template>
-  <div class="relative flex justify-center">
-    <NuxtImg
-      :src="getImageUrl()"
-      :alt="props.content?.alt"
-      :class="[
-        'object-cover',
-        'md:px-4',
-        {
-          'lg:pr-4': props.content?.imageAlignment === 'left',
-          'lg:pl-4': props.content?.imageAlignment === 'right',
-        },
-      ]"
-      :width="getImageDimensions().width"
-      :height="getImageDimensions().height"
-      data-testid="image-block"
-    />
+  <div class="relative w-full" :class="['flex justify-center']" :style="[wrapperStyle, gridInlineStyle]">
+    <component
+      :is="linkTag"
+      v-if="hasImage"
+      :to="linkTarget"
+      :aria-label="ariaLabel"
+      v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
+    >
+      <NuxtImg
+        :src="getImageUrl()"
+        :alt="props.content.image.alt"
+        class="absolute inset-0 w-full h-full"
+        :class="props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover'"
+        :style="{
+          display: 'block',
+          filter: props.content.image.brightness ? `brightness(${props.content.image.brightness ?? 1})` : '',
+        }"
+        :width="getImageDimensions().width"
+        :height="getImageDimensions().height"
+        data-testid="image-block"
+      />
+    </component>
 
     <div
-      v-if="props.content?.textOverlay && runtimeConfig.public.isDev"
-      class="absolute w-full h-full px-4 pointer-events-none flex"
+      v-if="props.content?.text?.textOverlay"
+      class="absolute inset-0 px-4 pointer-events-none flex flex-col"
       :class="overlayAlignClasses"
+      :style="{ color: props.content.text?.textOverlayColor || '#000' }"
       data-testid="image-overlay-text"
-      :style="{ color: props.content.textOverlayColor || '#000' }"
-      v-html="props.content.textOverlay"
-    />
+    >
+      <div v-html="props.content.text.textOverlay" />
+      <UiButton
+        v-if="props.content?.button.label"
+        class="mt-4 cursor-pointer pointer-events-auto"
+        :tag="NuxtLink"
+        :to="localePath(props.content.button.link ?? '')"
+        :variant="props.content.button.variant ?? 'primary'"
+        size="lg"
+        :data-testid="'image-button-' + (meta?.uuid ?? '')"
+        v-bind="isExternalLink(props.content.button.link) ? { target: '_blank', rel: 'noopener' } : {}"
+      >
+        {{ props.content.button.label }}
+      </UiButton>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ImageTextProps, ImageDimensions } from './types';
-const runtimeConfig = useRuntimeConfig();
+import type { ImageProps, ImageDimensions } from './types';
 
 const viewport = useViewport();
+const NuxtLink = resolveComponent('NuxtLink');
+const localePath = useLocalePath();
 
-const props = defineProps<ImageTextProps>();
+const props = defineProps<ImageProps>();
 
+const hasImage = computed(() => !!props.content?.image);
+const linkTarget = computed(() =>
+  props.content?.image?.linktarget?.trim() ? localePath(props.content.image.linktarget) : undefined,
+);
+const linkTag = computed(() => (linkTarget.value ? NuxtLink : 'div'));
+const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
+
+const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
+
+const getAspectRatio = () => {
+  switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return props.content?.image?.aspectRatio || '16 / 9';
+    }
+    case 'lg': {
+      return props.content?.image?.aspectRatio || '16 / 9';
+    }
+    case 'md': {
+      return props.content?.image?.aspectRatio || '4 / 3';
+    }
+    default: {
+      return props.content?.image?.aspectRatio || '1 / 1';
+    }
+  }
+};
+
+const wrapperStyle = computed(() => ({
+  aspectRatio: getAspectRatio(),
+  position: 'relative' as const,
+}));
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
-      return props.content?.wideScreen;
+      return props.content?.image?.wideScreen;
     }
     case 'lg': {
-      return props.content?.desktop;
+      return props.content?.image?.desktop;
     }
     case 'md': {
-      return props.content?.tablet;
+      return props.content?.image?.tablet;
     }
     default: {
-      return props.content?.mobile;
+      return props.content?.image?.mobile;
     }
   }
 };
 const overlayAlignClasses = computed(() => {
   const vertical =
-    props.content?.textOverlayAlignX === 'top'
+    props.content?.text.textOverlayAlignY === 'top'
       ? 'items-start'
-      : props.content?.textOverlayAlignX === 'bottom'
+      : props.content?.text.textOverlayAlignY === 'bottom'
         ? 'items-end'
         : 'items-center';
 
   const horizontal =
-    props.content?.textOverlayAlignY === 'left'
+    props.content?.text.textOverlayAlignX === 'left'
       ? 'justify-start text-left'
-      : props.content?.textOverlayAlignY === 'right'
+      : props.content?.text.textOverlayAlignX === 'right'
         ? 'justify-end text-right'
         : 'justify-center text-center';
 
@@ -84,4 +134,15 @@ const getImageDimensions = (): ImageDimensions => {
     }
   }
 };
+
+const gridInlineStyle = computed(() => {
+  const layout = props.content.layout ?? {};
+  return {
+    paddingTop: `${layout.paddingTop ?? 0}px`,
+    paddingBottom: `${layout.paddingBottom ?? 0}px`,
+    paddingLeft: `${layout.paddingLeft ?? 0}px`,
+    paddingRight: `${layout.paddingRight ?? 0}px`,
+    backgroundColor: layout.backgroundColor ?? 'transparent',
+  };
+});
 </script>
