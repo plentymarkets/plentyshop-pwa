@@ -11,7 +11,7 @@
       </template>
 
       <div data-testid="image-text-form">
-        <div v-if="isTwoColumnMultigrid" class="py-4">
+        <div v-if="runtimeConfig.public.isDev && isTwoColumnMultigrid" class="py-4">
           <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
           <ColumnWidthInput
             :multi-grid-structure="multiGridStructure"
@@ -144,6 +144,7 @@ const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+const runtimeConfig = useRuntimeConfig();
 
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
