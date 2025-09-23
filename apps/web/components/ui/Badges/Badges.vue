@@ -1,5 +1,5 @@
 <template>
-  <div v-if="haveBadges" data-testid="badges">
+  <div v-if="haveBadges" data-testid="badges" class="z-[2]">
     <ul>
       <template v-if="tagsEnabled && productTags.length > 0">
         <SfListItem
