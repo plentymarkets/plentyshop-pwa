@@ -38,7 +38,6 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
-const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
@@ -90,12 +89,7 @@ const disableActions = computed(() => attrs.disableActions === true);
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) =>
-    Boolean(runtimeConfig.public.isDev) &&
-    disableActions.value &&
-    $isPreview &&
-    !isDragging.value &&
-    blockHasData(block),
+  () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
 );
 
 const alignBlock = computed<AlignableBlock | undefined>(

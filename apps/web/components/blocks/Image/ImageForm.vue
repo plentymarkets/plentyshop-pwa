@@ -106,9 +106,22 @@
         </div>
       </div>
     </fieldset>
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput v-model="uiImageTextBlock.image.linktarget" type="text" data-testid="linktarget-input">
+          <template #suffix>
+            <label for="linktarget" class="rounded-lg cursor-pointer">
+              <input id="linktarget" v-model="uiImageTextBlock.image.linktarget" type="text" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
   </UiAccordionItem>
   <UiAccordionItem
-    v-if="runtimeConfig.public.isDev"
     v-model="textGroupOpen"
     summary-active-class="bg-neutral-100 border-t-0"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -407,21 +420,6 @@
         </div>
       </div>
     </div>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
-      </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.image.linktarget" type="text" data-testid="linktarget-input">
-          <template #suffix>
-            <label for="linktarget" class="rounded-lg cursor-pointer">
-              <input id="linktarget" v-model="uiImageTextBlock.image.linktarget" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
   </UiAccordionItem>
 </template>
 
@@ -447,7 +445,6 @@ const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = use
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<ImageFormProps>();
 
