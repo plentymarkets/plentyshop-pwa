@@ -38,17 +38,16 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
-const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
-  S: 'gap-x-1',
-  M: 'gap-x-2',
-  L: 'gap-x-3',
-  XL: 'gap-x-5',
+  S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
+  M: 'gap-y-2 md:gap-x-2 md:gap-y-0',
+  L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
+  XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
 const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
@@ -90,12 +89,7 @@ const disableActions = computed(() => attrs.disableActions === true);
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) =>
-    Boolean(runtimeConfig.public.isDev) &&
-    disableActions.value &&
-    $isPreview &&
-    !isDragging.value &&
-    blockHasData(block),
+  () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
 );
 
 const alignBlock = computed<AlignableBlock | undefined>(

@@ -190,53 +190,6 @@
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
             >
               <div
-                for="align-top"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'top',
-                }"
-                data-testid="slider-textbox-align-top"
-                @click="banner.content.text.justify = 'top'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'top' }" />
-                {{ getEditorTranslation('textbox-align-x-top-label') }}
-              </div>
-
-              <div
-                for="align-center"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'center',
-                }"
-                data-testid="slider-textbox-align-center"
-                @click="banner.content.text.justify = 'center'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'center' }" />
-                {{ getEditorTranslation('textbox-align-x-center-label') }}
-              </div>
-
-              <div
-                for="align-bottom"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'bottom',
-                }"
-                data-testid="slider-textbox-align-bottom"
-                @click="banner.content.text.justify = 'bottom'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'bottom' }" />
-                {{ getEditorTranslation('textbox-align-x-bottom-label') }}
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
-
-            <div
-              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-            >
-              <div
                 for="textbox-align-left"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
@@ -246,7 +199,7 @@
                 @click="banner.content.text.align = 'left'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'left' }" />
-                {{ getEditorTranslation('textbox-align-y-left-label') }}
+                {{ getEditorTranslation('textbox-align-x-left-label') }}
               </div>
 
               <div
@@ -259,7 +212,7 @@
                 @click="banner.content.text.align = 'center'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'center' }" />
-                {{ getEditorTranslation('textbox-align-y-center-label') }}
+                {{ getEditorTranslation('textbox-align-x-center-label') }}
               </div>
 
               <div
@@ -272,7 +225,54 @@
                 @click="banner.content.text.align = 'right'"
               >
                 <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'right' }" />
-                {{ getEditorTranslation('textbox-align-y-right-label') }}
+                {{ getEditorTranslation('textbox-align-x-right-label') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
+
+            <div
+              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+            >
+              <div
+                for="align-top"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'top',
+                }"
+                data-testid="slider-textbox-align-top"
+                @click="banner.content.text.justify = 'top'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'top' }" />
+                {{ getEditorTranslation('textbox-align-y-top-label') }}
+              </div>
+
+              <div
+                for="align-center"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'center',
+                }"
+                data-testid="slider-textbox-align-center"
+                @click="banner.content.text.justify = 'center'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'center' }" />
+                {{ getEditorTranslation('textbox-align-y-center-label') }}
+              </div>
+
+              <div
+                for="align-bottom"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'bottom',
+                }"
+                data-testid="slider-textbox-align-bottom"
+                @click="banner.content.text.justify = 'bottom'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'bottom' }" />
+                {{ getEditorTranslation('textbox-align-y-bottom-label') }}
               </div>
             </div>
           </div>
@@ -495,16 +495,16 @@ input[type='number'] {
     "textbox-opacity-label": "Textbox Opacity",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-top-label": "Top",
+    "textbox-align-x-left-label": "Left",
     "textbox-align-x-center-label": "Center",
-    "textbox-align-x-bottom-label": "Bottom",
+    "textbox-align-x-right-label": "Right",
 
     "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-left-label": "Left",
+    "textbox-align-y-top-label": "Top",
     "textbox-align-y-center-label": "Center",
-    "textbox-align-y-right-label": "Right",
+    "textbox-align-y-bottom-label": "Bottom",
 
-    "text-align-label": "Text Alignment (y)",
+    "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
@@ -550,16 +550,16 @@ input[type='number'] {
     "textbox-opacity-label": "Textbox Opacity",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-top-label": "Top",
+    "textbox-align-x-left-label": "Left",
     "textbox-align-x-center-label": "Center",
-    "textbox-align-x-bottom-label": "Bottom",
+    "textbox-align-x-right-label": "Right",
 
     "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-left-label": "Left",
+    "textbox-align-y-top-label": "Top",
     "textbox-align-y-center-label": "Center",
-    "textbox-align-y-right-label": "Right",
+    "textbox-align-y-bottom-label": "Bottom",
 
-    "text-align-label": "Text Alignment (y)",
+    "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
