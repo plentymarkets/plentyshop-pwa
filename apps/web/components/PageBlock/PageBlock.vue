@@ -6,12 +6,7 @@
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
         'relative block-wrapper',
-        {
-          'mb-s': blockSize === 's' && isRootNonFooter,
-          'mb-m': blockSize === 'm' && isRootNonFooter,
-          'mb-l': blockSize === 'l' && isRootNonFooter,
-          'mb-xl': blockSize === 'xl' && isRootNonFooter,
-        },
+        marginBottomClasses,
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
@@ -118,9 +113,27 @@ const {
   getLazyLoadConfig,
   getLazyLoadRef,
 } = useBlockManager();
+const { blockUuid } = useSiteConfiguration();
 
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
+
+const marginBottomClasses = computed(() => {
+  if (props.block.name === 'MultiGrid') return '';
+  if (!isRootNonFooter.value) return '';
+  switch (blockSize.value) {
+    case 's':
+      return 'mb-s';
+    case 'm':
+      return 'mb-m';
+    case 'l':
+      return 'mb-l';
+    case 'xl':
+      return 'mb-xl';
+    default:
+      return '';
+  }
+});
 
 const blockSize = computed(() => getBlockSize());
 
@@ -132,13 +145,15 @@ const getBlockComponent = computed(() => {
   });
 });
 
+const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid);
+
 const contentProps = computed(() => {
   const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
   const config = getLazyLoadConfig(props.block.name);
 
   if (config) {
     const uniqueKey = getLazyLoadKey(props.block.name, props.block.meta.uuid);
-    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false;
+    const lazyLoadState = lazyLoadStates.value[uniqueKey] || false || blockIsCurrentlyOpen.value;
 
     return {
       ...baseProps,
