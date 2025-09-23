@@ -38,7 +38,7 @@
           <SfInput
             v-model="formFields.email.value"
             v-bind="formFieldsAttributes.email"
-            :invalid="Boolean(errors['email'])"
+            :invalid="!!errors['email']"
             name="customerEmail"
             type="email"
             autocomplete="email"
@@ -55,7 +55,7 @@
               name="password"
               autocomplete="current-password"
               v-bind="formFieldsAttributes.password"
-              :invalid="Boolean(errors['password'])"
+              :invalid="!!errors['password']"
             />
           </label>
 
@@ -67,7 +67,7 @@
               name="password"
               autocomplete="current-password"
               v-bind="formFieldsAttributes.repeatPassword"
-              :invalid="Boolean(errors['repeatPassword'])"
+              :invalid="!!errors['repeatPassword']"
             />
             <ErrorMessage as="span" name="repeatPassword" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -113,7 +113,7 @@
               name="firstName"
               autocomplete="given-name"
               v-bind="formFieldsAttributes.firstName"
-              :invalid="Boolean(errors['firstName'])"
+              :invalid="!!errors['firstName']"
             />
             <ErrorMessage as="span" name="firstName" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -127,7 +127,7 @@
               name="lastName"
               autocomplete="family-name"
               v-bind="formFieldsAttributes.lastName"
-              :invalid="Boolean(errors['lastName'])"
+              :invalid="!!errors['lastName']"
             />
             <ErrorMessage as="span" name="lastName" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -147,7 +147,7 @@
               name="companyName"
               autocomplete="company"
               v-bind="formFieldsAttributes.companyName"
-              :invalid="Boolean(errors['companyName'])"
+              :invalid="!!errors['companyName']"
             />
             <ErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -175,7 +175,7 @@
               name="streetName"
               autocomplete="address-line1"
               v-bind="formFieldsAttributes.streetName"
-              :invalid="Boolean(errors['streetName'])"
+              :invalid="!!errors['streetName']"
             />
             <ErrorMessage as="span" name="streetName" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -187,7 +187,7 @@
               name="streetNumber"
               autocomplete="address-line2"
               v-bind="formFieldsAttributes.apartment"
-              :invalid="Boolean(errors['apartment'])"
+              :invalid="!!errors['apartment']"
             />
             <ErrorMessage as="span" name="apartment" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -201,7 +201,7 @@
               name="city"
               autocomplete="address-level2"
               v-bind="formFieldsAttributes.city"
-              :invalid="Boolean(errors['city'])"
+              :invalid="!!errors['city']"
             />
             <ErrorMessage as="span" name="city" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -213,7 +213,7 @@
               name="zipCode"
               autocomplete="postal-code"
               v-bind="formFieldsAttributes.zipCode"
-              :invalid="Boolean(errors['zipCode'])"
+              :invalid="!!errors['zipCode']"
             />
             <ErrorMessage as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -227,7 +227,7 @@
               name="country"
               v-bind="formFieldsAttributes.country"
               :placeholder="t('form.selectPlaceholder')"
-              :invalid="Boolean(errors['country'])"
+              :invalid="!!errors['country']"
               wrapper-class-name="bg-white"
               class="!ring-1 !ring-neutral-200"
               autocomplete="country-name"
