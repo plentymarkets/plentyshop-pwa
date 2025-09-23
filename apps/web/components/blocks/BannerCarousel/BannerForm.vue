@@ -504,7 +504,7 @@ input[type='number'] {
     "textbox-align-y-center-label": "Center",
     "textbox-align-y-bottom-label": "Bottom",
 
-    "text-align-label": "Text Alignment (y)",
+    "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
@@ -559,7 +559,7 @@ input[type='number'] {
     "textbox-align-y-center-label": "Center",
     "textbox-align-y-bottom-label": "Bottom",
 
-    "text-align-label": "Text Alignment (y)",
+    "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
