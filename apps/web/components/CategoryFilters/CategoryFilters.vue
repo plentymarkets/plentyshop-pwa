@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import type { CategoryFiltersProps } from '~/components/CategoryFilters/types';
-import { SortFilterContent } from '~/components/blocks/SortFilter/types';
+import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const props = defineProps<CategoryFiltersProps>();
 const content = computed(() => props.configuration || ({} as SortFilterContent));

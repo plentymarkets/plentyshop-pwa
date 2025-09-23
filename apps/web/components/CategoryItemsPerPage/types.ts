@@ -1,4 +1,4 @@
-import { SortFilterContent } from '~/components/blocks/SortFilter/types';
+import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 export type CategoryItemsPerPageProps = {
   totalProducts: number;

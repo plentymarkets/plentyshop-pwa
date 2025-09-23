@@ -14,7 +14,7 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import categoryTemplateDataEn from './categoryTemplateDataEn.json';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
-import { SortFilterProps } from '../../components/blocks/SortFilter/types';
+import type { SortFilterProps } from '~/components/blocks/SortFilter/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
@@ -67,7 +67,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
     let fetchedBlocks: Block[] = data?.value?.data ?? [];
 
-    if (true) {
+    if (!fetchedBlocks.length && type === 'immutable') {
       fetchedBlocks = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     }
 

@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });

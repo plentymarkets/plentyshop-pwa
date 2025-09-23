@@ -2,9 +2,13 @@
   <div
     v-if="
       (facet && facetGetters.getType(facet) === 'feedback' && configuration?.fields.itemRating) ||
-      (facet && facetGetters.getType(facet) === 'price' && configuration?.fields.price)
+      (facet && facetGetters.getType(facet) === 'price' && configuration?.fields.price) ||
+      (facet && facetGetters.getType(facet) === 'availability' && configuration?.fields.availability) ||
+      (facet && facetGetters.getType(facet) === 'producer' && configuration?.fields.manufacturer) ||
+      (facet && facetGetters.getType(facet) === 'dynamic' && configuration?.fields.customizedFilters)
     "
   >
+    {{ facetGetters.getType(facet) }}
     <SfAccordionItem v-if="facet" v-model="open">
       <template #summary>
         <div class="flex justify-between p-2 mb-2 select-none">
@@ -72,7 +76,7 @@
         </div>
       </form>
 
-      <div v-else class="mb-4">
+      <div v-else class="mb-4 testing here">
         <SfListItem
           v-for="(filter, index) in facetGetters.getFilters(facet)"
           :key="index"
@@ -116,7 +120,7 @@ import {
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
-import { SortFilterContent } from '~/components/blocks/SortFilter/types';
+import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const { t } = useI18n();

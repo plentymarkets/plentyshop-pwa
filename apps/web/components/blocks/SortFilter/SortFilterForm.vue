@@ -152,7 +152,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
-import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey, SortFilterFieldsVisibility } from './types';
+import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey } from './types';
 import dragIcon from 'assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 

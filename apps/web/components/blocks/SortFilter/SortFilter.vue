@@ -18,7 +18,8 @@
 
 <script setup lang="ts">
 import { facetGetters } from '@plentymarkets/shop-api';
-import { SortFilterProps } from './types';
+import type { SortFilterProps } from './types';
+
 const { data: productsCatalog } = useProducts();
 
 const props = defineProps<SortFilterProps>();

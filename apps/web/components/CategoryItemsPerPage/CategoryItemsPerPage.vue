@@ -28,7 +28,11 @@ import { defaults } from '~/composables';
 import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const props = defineProps<CategoryItemsPerPageProps>();
-const configuration = computed(() => props.configuration || ({} as SortFilterContent));
+
+const { getSortFilterCategoryTemplateBlock } = useCategoryTemplate();
+const sortFilter = getSortFilterCategoryTemplateBlock();
+
+const configuration = computed(() => props.configuration || sortFilter.content || ({} as SortFilterContent));
 
 const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
 const { t } = useI18n();
@@ -54,10 +58,13 @@ const lastDisabledValue =
   options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
 
 const facetsFromURL = getFacetsFromURL();
-const selectedValue =
-  facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
-    ? lastDisabledValue
-    : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
+const selectedValue = computed(() => {
+  return facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
+      ? lastDisabledValue
+      : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
+})
 
-const selected = ref(configuration?.itemsPerPage);
+
+const selected = ref(selectedValue);
+// const selected = ref(configuration?.itemsPerPage);
 </script>
