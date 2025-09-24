@@ -217,9 +217,20 @@ const registerUser = async () => {
   }
 
   const response = await register({
-    email: email.value ?? '',
-    password: password.value ?? '',
     'cf-turnstile-response': turnstile.value,
+    contact: {
+      password: password.value ?? '',
+      typeId: 1,
+      referrerId: 1,
+      options: {
+        typeId: {
+          value: email.value ?? '',
+          subTypeId: 4,
+          priority: 0,
+          typeId: 2,
+        },
+      },
+    },
   });
 
   if (response?.data.code === 1) {
