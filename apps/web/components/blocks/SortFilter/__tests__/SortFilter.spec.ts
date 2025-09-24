@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import SortFilter from '../SortFilter.vue';
-import {SortFilterProps} from "../types";
+import { SortFilterProps } from '../types';
 
 const mockProps: SortFilterProps = {
   name: 'SortFilter',
@@ -15,13 +15,22 @@ const mockProps: SortFilterProps = {
       manufacturer: true,
       price: true,
       availability: true,
-      customizedFilters: true
+      customizedFilters: true,
     },
-    filtersOrder: ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+    filtersOrder: [
+      'category',
+      'sortBy',
+      'perPage',
+      'itemRating',
+      'manufacturer',
+      'price',
+      'availability',
+      'customizedFilters',
+    ],
     filtersDisabled: [],
     showAllFiltersImmediately: true,
     numberOfFiltersToShowInitially: 0,
-    itemsPerPage: "10"
+    itemsPerPage: '10',
   },
   meta: {
     uuid: 'test-uuid',
