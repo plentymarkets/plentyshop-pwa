@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import SortFilter from '../SortFilter.vue';
-import { SortFilterProps } from '../types';
+import type { SortFilterProps } from '../types';
 
 const mockProps: SortFilterProps = {
   name: 'SortFilter',
