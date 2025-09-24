@@ -1,11 +1,11 @@
 <template>
   <div
     v-if="
-      (facet && facetGetters.getType(facet) === 'feedback' && configuration?.fields.itemRating) ||
-      (facet && facetGetters.getType(facet) === 'price' && configuration?.fields.price) ||
-      (facet && facetGetters.getType(facet) === 'availability' && configuration?.fields.availability) ||
-      (facet && facetGetters.getType(facet) === 'producer' && configuration?.fields.manufacturer) ||
-      (facet && facetGetters.getType(facet) === 'dynamic' && configuration?.fields.customizedFilters)
+      (facet && facetGetters.getType(facet) === 'feedback' && configuration?.fields.itemRating && props.renderKey === 'itemRating') ||
+      (facet && facetGetters.getType(facet) === 'price' && configuration?.fields.price && props.renderKey === 'price') ||
+      (facet && facetGetters.getType(facet) === 'availability' && configuration?.fields.availability && props.renderKey === 'availability') ||
+      (facet && facetGetters.getType(facet) === 'producer' && configuration?.fields.manufacturer && props.renderKey === 'manufacturer') ||
+      (facet && facetGetters.getType(facet) === 'dynamic' && configuration?.fields.customizedFilters  && props.renderKey === 'customizedFilters')
     "
   >
     <SfAccordionItem v-if="facet" v-model="open">

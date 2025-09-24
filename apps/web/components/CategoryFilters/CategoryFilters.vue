@@ -6,7 +6,7 @@
     {{ t('filters') }}
   </h6>
   <div class="flex flex-col gap-2 px-4">
-    <CategoryFiltersFilter v-for="facet in facets" :key="facet.id" :facet="facet" :configuration="content" />
+    <CategoryFiltersFilter v-for="facet in facets" :key="facet.id" :facet="facet" :configuration="content" :renderKey="renderKey"/>
   </div>
 </template>
 
@@ -20,4 +20,5 @@ const content = computed(() => props.configuration || ({} as SortFilterContent))
 const { t } = useI18n();
 
 const { facets } = toRefs(props);
+const { renderKey } = toRefs(props);
 </script>
