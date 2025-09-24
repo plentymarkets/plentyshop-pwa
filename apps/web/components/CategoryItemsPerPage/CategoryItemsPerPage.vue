@@ -60,11 +60,9 @@ const lastDisabledValue =
 const facetsFromURL = getFacetsFromURL();
 const selectedValue = computed(() => {
   return facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
-      ? lastDisabledValue
-      : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
-})
-
+    ? lastDisabledValue
+    : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
+});
 
 const selected = ref(selectedValue);
-// const selected = ref(configuration?.itemsPerPage);
 </script>

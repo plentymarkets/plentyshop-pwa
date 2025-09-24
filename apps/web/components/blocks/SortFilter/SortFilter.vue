@@ -1,6 +1,5 @@
 <template>
   <div v-if="content?.enableFilters" data-testid="category-sort-filter">
-
     <template v-for="key in content?.filtersOrder" :key="key">
       <template v-if="key === 'category' && content?.fields.category">
         <CategoryTree v-if="productsCatalog.category" :category="productsCatalog.category" />
@@ -12,60 +11,57 @@
 
       <template v-if="key === 'perPage' && content?.fields.perPage">
         <CategoryItemsPerPage
-            class="mt-6"
-            :total-products="productsCatalog.pagination?.totals ?? 0"
-            :configuration="content"
+          class="mt-6"
+          :total-products="productsCatalog.pagination?.totals ?? 0"
+          :configuration="content"
         />
       </template>
 
       <template v-if="key === 'itemRating' && content?.fields.itemRating">
         <CategoryFilters
-            v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
-            :facets="productsCatalog.facets"
-            :configuration="content" :renderKey="key"
+          v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+          :facets="productsCatalog.facets"
+          :configuration="content"
+          :renderKey="key"
         />
       </template>
 
       <template v-if="key === 'manufacturer' && content?.fields.manufacturer">
         <CategoryFilters
-            v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
-            :facets="productsCatalog.facets"
-            :configuration="content" :renderKey="key"
+          v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+          :facets="productsCatalog.facets"
+          :configuration="content"
+          :renderKey="key"
         />
       </template>
 
       <template v-if="key === 'price' && content?.fields.price">
         <CategoryFilters
-            v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
-            :facets="productsCatalog.facets"
-            :configuration="content" :renderKey="key"
+          v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+          :facets="productsCatalog.facets"
+          :configuration="content"
+          :renderKey="key"
         />
       </template>
 
       <template v-if="key === 'availability' && content?.fields.availability">
         <CategoryFilters
-            v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
-            :facets="productsCatalog.facets"
-            :configuration="content" :renderKey="key"
+          v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+          :facets="productsCatalog.facets"
+          :configuration="content"
+          :renderKey="key"
         />
       </template>
 
       <template v-if="key === 'customizedFilters' && content?.fields.customizedFilters">
         <CategoryFilters
-            v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
-            :facets="productsCatalog.facets"
-            :configuration="content" :renderKey="key"
+          v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+          :facets="productsCatalog.facets"
+          :configuration="content"
+          :renderKey="key"
         />
       </template>
-
-
     </template>
-
-
-
-
-
-
   </div>
 </template>
 
@@ -76,19 +72,4 @@ import type { SortFilterProps } from './types';
 const { data: productsCatalog } = useProducts();
 
 const props = defineProps<SortFilterProps>();
-
-
-
-
-
-
-import type { CategoryFiltersProps } from '~/components/CategoryFilters/types';
-import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
-
-// const props = defineProps<CategoryFiltersProps>();
-// const content = computed(() => props.configuration || ({} as SortFilterContent));
-
-// const { t } = useI18n();
-//
-// const { facets } = toRefs(productsCatalog.facets);
 </script>
