@@ -58,20 +58,20 @@ const lastDisabledValue =
   options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
 
 const facetsFromURL = getFacetsFromURL();
-const selectedValue = facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
+const selectedValue =
+  facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
     ? lastDisabledValue
     : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
 console.log(configuration?.value.itemsPerPage);
 const selected = ref(configuration?.value.itemsPerPage);
 
 watch(
-    () => configuration.value?.itemsPerPage,
-    (newItemsPerPage) => {
-      if (newItemsPerPage) {
-        selected.value = newItemsPerPage;
-      }
-    },
-    { immediate: true },
+  () => configuration.value?.itemsPerPage,
+  (newItemsPerPage) => {
+    if (newItemsPerPage) {
+      selected.value = newItemsPerPage;
+    }
+  },
+  { immediate: true },
 );
-
 </script>
