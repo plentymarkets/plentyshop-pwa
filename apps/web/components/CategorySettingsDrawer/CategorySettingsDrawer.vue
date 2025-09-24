@@ -94,7 +94,7 @@
       </div>
 
       <div
-        v-if="getPageType === 'item'"
+        v-if="getPageType === 'content'"
         class="bg-[#EFF4F1] border border-[#BBC6BE] text-[#151A16] px-4 py-3 rounded-md mx-5 mt-5 mb-0"
       >
         <span> Page editing will affect all product category pages equally (deleting is not affected). </span>
