@@ -132,11 +132,11 @@ const updatePriceFilter = () => {
   const maxValue = Number.isNaN(max) ? '' : max.toString();
 
   updatePrices(minValue, maxValue);
-}
+};
 
 const resetPriceFilter = () => {
   updatePrices('', '');
-}
+};
 
 const updateFilter = () => {
   const currentFacets = getFacetsFromURL().facets?.split(',') ?? [];
@@ -170,11 +170,11 @@ const shouldRenderFacet = computed(() => {
   if (!props.facet) return false;
   const type = facetGetters.getType(props.facet);
   return (
-      (type === 'feedback' && configuration?.value.fields.itemRating && props.renderKey === 'itemRating') ||
-      (type === 'price' && configuration?.value.fields.price && props.renderKey === 'price') ||
-      (type === 'availability' && configuration?.value.fields.availability && props.renderKey === 'availability') ||
-      (type === 'producer' && configuration?.value.fields.manufacturer && props.renderKey === 'manufacturer') ||
-      (type === 'dynamic' && configuration?.value.fields.customizedFilters && props.renderKey === 'customizedFilters')
+    (type === 'feedback' && configuration?.value.fields.itemRating && props.renderKey === 'itemRating') ||
+    (type === 'price' && configuration?.value.fields.price && props.renderKey === 'price') ||
+    (type === 'availability' && configuration?.value.fields.availability && props.renderKey === 'availability') ||
+    (type === 'producer' && configuration?.value.fields.manufacturer && props.renderKey === 'manufacturer') ||
+    (type === 'dynamic' && configuration?.value.fields.customizedFilters && props.renderKey === 'customizedFilters')
   );
 });
 </script>

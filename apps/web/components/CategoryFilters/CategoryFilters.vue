@@ -1,7 +1,7 @@
 <template>
   <h6
-      class="py-2 px-4 mt-6 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
-      data-testid="category-filters"
+    class="py-2 px-4 mt-6 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
+    data-testid="category-filters"
   >
     {{ t('filters') }}
   </h6>
