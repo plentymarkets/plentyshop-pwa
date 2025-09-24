@@ -75,7 +75,7 @@
           {{ getEditorTranslation('image-scalling-label') }}
         </legend>
         <SfTooltip :label="fillTooltip" placement="top">
-          <SfIconInfo :size="'sm'" />
+          <SfIconInfo size="sm" />
         </SfTooltip>
       </div>
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
@@ -387,7 +387,7 @@
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <SfTooltip :label="paddingTooltip" placement="right">
           <span class="flex items-center">
-            <SfIconInfo :size="'sm'" />
+            <SfIconInfo size="sm" />
           </span>
         </SfTooltip>
       </div>
