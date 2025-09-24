@@ -105,3 +105,4 @@ export * from './useResetPassword';
 export * from './useCustomerClass';
 export * from './useFetchSession';
 export * from './useGridSplits';
+export * from './useRegisterForm';
