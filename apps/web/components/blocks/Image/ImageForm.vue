@@ -384,9 +384,11 @@
       :class="uiImageTextBlock.image.fillMode !== 'fit' ? 'opacity-60  cursor-not-allowed' : ''"
     >
       <div class="flex items-center gap-2 mb-2">
-        <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+        <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <SfTooltip :label="paddingTooltip" placement="right">
-          <SfIconInfo :size="'sm'" />
+          <span class="flex items-center">
+            <SfIconInfo :size="'sm'" />
+          </span>
         </SfTooltip>
       </div>
 
