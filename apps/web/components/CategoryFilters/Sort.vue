@@ -5,7 +5,7 @@
       :key="facet.id"
       :facet="facet"
       :configuration="content"
-      :renderKey="renderKey"
+      :render-key="renderKey"
     />
   </div>
 </template>

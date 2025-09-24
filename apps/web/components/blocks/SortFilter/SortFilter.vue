@@ -1,5 +1,5 @@
 <template>
-  <div v-if="content?.enableFilters" data-testid="category-sort-filter">
+  <div v-if="props.content?.enableFilters" data-testid="category-sort-filter">
     <template v-for="key in content?.filtersOrder" :key="key">
       <template v-if="key === 'category' && content?.fields.category">
         <CategoryTree v-if="productsCatalog.category" :category="productsCatalog.category" />
@@ -22,7 +22,7 @@
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
-          :renderKey="key"
+          :render-key="key"
         />
       </template>
 
@@ -31,7 +31,7 @@
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
-          :renderKey="key"
+          :render-key="key"
         />
       </template>
 
@@ -40,7 +40,7 @@
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
-          :renderKey="key"
+          :render-key="key"
         />
       </template>
 
@@ -49,7 +49,7 @@
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
-          :renderKey="key"
+          :render-key="key"
         />
       </template>
 
@@ -58,7 +58,7 @@
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
-          :renderKey="key"
+          :render-key="key"
         />
       </template>
     </template>
