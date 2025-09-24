@@ -1,22 +1,5 @@
 <template>
-  <div
-    v-if="
-      facet &&
-      ((facetGetters.getType(facet) === 'feedback' &&
-        configuration?.fields.itemRating &&
-        props.renderKey === 'itemRating') ||
-        (facetGetters.getType(facet) === 'price' && configuration?.fields.price && props.renderKey === 'price') ||
-        (facetGetters.getType(facet) === 'availability' &&
-          configuration?.fields.availability &&
-          props.renderKey === 'availability') ||
-        (facetGetters.getType(facet) === 'producer' &&
-          configuration?.fields.manufacturer &&
-          props.renderKey === 'manufacturer') ||
-        (facetGetters.getType(facet) === 'dynamic' &&
-          configuration?.fields.customizedFilters &&
-          props.renderKey === 'customizedFilters'))
-    "
-  >
+  <div v-if="shouldRenderFacet">
     <SfAccordionItem v-if="facet" v-model="open">
       <template #summary>
         <div class="flex justify-between p-2 mb-2 select-none">
@@ -139,11 +122,10 @@ const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as F
 const models = ref({} as Filters);
 const configuration = computed(() => props.configuration || ({} as SortFilterContent));
 
-// Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
 const maxPrice = ref(getFacetsFromURL().priceMax ?? '');
 
-function updatePriceFilter() {
+const updatePriceFilter = () => {
   const min = minPrice.value.length > 0 ? Number(minPrice.value) : Number.NaN;
   const max = maxPrice.value.length > 0 ? Number(maxPrice.value) : Number.NaN;
   const minValue = Number.isNaN(min) ? '' : min.toString();
@@ -152,7 +134,7 @@ function updatePriceFilter() {
   updatePrices(minValue, maxValue);
 }
 
-function resetPriceFilter() {
+const resetPriceFilter = () => {
   updatePrices('', '');
 }
 
@@ -183,4 +165,16 @@ const feedbackNumber = (filter: Filter) => {
 };
 const sortedReviews = (facet: FilterGroup): Filter[] =>
   facetGetters.getFilters(facet).sort((a, b) => feedbackNumber(b) - feedbackNumber(a));
+
+const shouldRenderFacet = computed(() => {
+  if (!props.facet) return false;
+  const type = facetGetters.getType(props.facet);
+  return (
+      (type === 'feedback' && configuration?.value.fields.itemRating && props.renderKey === 'itemRating') ||
+      (type === 'price' && configuration?.value.fields.price && props.renderKey === 'price') ||
+      (type === 'availability' && configuration?.value.fields.availability && props.renderKey === 'availability') ||
+      (type === 'producer' && configuration?.value.fields.manufacturer && props.renderKey === 'manufacturer') ||
+      (type === 'dynamic' && configuration?.value.fields.customizedFilters && props.renderKey === 'customizedFilters')
+  );
+});
 </script>

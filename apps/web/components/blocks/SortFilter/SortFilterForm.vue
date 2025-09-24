@@ -9,7 +9,6 @@
     </template>
 
     <div data-testid="text-card-form">
-      <!-- Enable filters toggle -->
       <div class="py-2">
         <div class="flex items-center justify-between gap-3">
           <UiFormLabel for="keep-transparent" class="m-0">
@@ -25,7 +24,6 @@
         </div>
       </div>
 
-      <!-- Filters list -->
       <div class="py-4">
         <draggable
           v-if="sortFilterBlock.filtersOrder.length"
@@ -58,7 +56,6 @@
         </draggable>
       </div>
 
-      <!-- Show all filters immediately toggle -->
       <div class="py-2">
         <div class="flex items-center justify-between gap-3">
           <UiFormLabel for="keep-transparent" class="m-0">
@@ -74,7 +71,6 @@
         </div>
       </div>
 
-      <!-- Number of filters to show initially -->
       <div v-if="!sortFilterBlock.showAllFiltersImmediately" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('number-of-filters-label') }}</UiFormLabel>
@@ -99,7 +95,6 @@
         </label>
       </div>
 
-      <!-- Items per page -->
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('items-per-page-label') }}</UiFormLabel>
         <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
