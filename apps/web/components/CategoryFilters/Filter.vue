@@ -66,7 +66,7 @@
       </div>
     </form>
 
-    <div v-else class="mb-4 testing here">
+    <div v-else class="mb-4">
       <SfListItem
         v-for="(filter, index) in facetGetters.getFilters(facet)"
         :key="index"
@@ -109,7 +109,6 @@ import {
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
-import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const { t } = useI18n();
@@ -118,7 +117,6 @@ const open = ref(true);
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
 const models = ref({} as Filters);
-const configuration = computed(() => props.configuration || ({} as SortFilterContent));
 
 // Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
