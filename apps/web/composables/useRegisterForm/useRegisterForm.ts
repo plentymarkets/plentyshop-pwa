@@ -58,37 +58,51 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .required($i18n.t('errorMessages.password.required'))
         .oneOf([yupReference('password'), ''], $i18n.t('errorMessages.password.match'))
         .default(state.value.defaultFormValues.repeatPassword),
-      firstName: string().when([], {
-        is: () => !state.value.hasCompany,
-        then: () =>
-          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
-        otherwise: () => string().optional().default(state.value.defaultFormValues.firstName),
-      }),
-      lastName: string().when([], {
-        is: () => !state.value.hasCompany,
-        then: () =>
-          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
-        otherwise: () => string().optional().default(state.value.defaultFormValues.lastName),
-      }),
-      companyName: string().when([], {
-        is: () => state.value.hasCompany,
-        then: () =>
-          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
-        otherwise: () => string().optional().default(state.value.defaultFormValues.companyName),
-      }),
-      vatNumber: string().when([], {
-        is: () => state.value.hasCompany,
-        then: () => string().default(state.value.defaultFormValues.vatNumber),
-        otherwise: () => string().optional().default(state.value.defaultFormValues.vatNumber),
-      }),
+      firstName: string()
+        .trim()
+        .when([], {
+          is: () => !state.value.hasCompany,
+          then: (schema) =>
+            schema.required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
+          otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.firstName),
+        }),
+      lastName: string()
+        .trim()
+        .when([], {
+          is: () => !state.value.hasCompany,
+          then: (schema) =>
+            schema.required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
+          otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.lastName),
+        }),
+      companyName: string()
+        .trim()
+        .when([], {
+          is: () => state.value.hasCompany,
+          then: (schema) =>
+            schema.required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
+          otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.companyName),
+        }),
+      vatNumber: string()
+        .trim()
+        .when([], {
+          is: () => state.value.hasCompany,
+          then: (schema) => schema.default(state.value.defaultFormValues.vatNumber),
+          otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.vatNumber),
+        }),
       streetName: string()
+        .trim()
         .required($i18n.t('errorMessages.requiredField'))
         .default(state.value.defaultFormValues.streetName),
       apartment: string()
+        .trim()
         .required($i18n.t('errorMessages.requiredField'))
         .default(state.value.defaultFormValues.apartment),
-      city: string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.city),
+      city: string()
+        .trim()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(state.value.defaultFormValues.city),
       zipCode: string()
+        .trim()
         .required($i18n.t('errorMessages.requiredField'))
         .when('country', ([countryId], schema) => {
           const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), AddressType.Shipping);
@@ -98,6 +112,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         })
         .default(state.value.defaultFormValues.zipCode),
       country: string()
+        .trim()
         .required($i18n.t('errorMessages.requiredField'))
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
       privacyPolicy: boolean().isTrue($i18n.t('privacyPolicyRequired')).required($i18n.t('privacyPolicyRequired')),
@@ -206,7 +221,11 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     if (isAuthorized) await navigateAfterRegistration();
   });
 
-  const passwordValidationLength = computed(() => (password?.value?.length || 0) >= 8);
+  const passwordValidationLength = computed(() => {
+    const val = password?.value || '';
+    return val.length >= 8 && !val.includes(' ');
+  });
+
   const passwordValidationOneDigit = computed(() => /\d/.test(password?.value || ''));
   const passwordValidationOneLetter = computed(() => /[A-Za-z]/.test(password?.value || ''));
 
