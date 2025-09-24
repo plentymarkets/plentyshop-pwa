@@ -18,7 +18,7 @@
       </template>
 
       <template v-if="key === 'itemRating' && content?.fields.itemRating">
-        <CategoryFilters
+        <CategoryFiltersSort
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
@@ -27,7 +27,7 @@
       </template>
 
       <template v-if="key === 'manufacturer' && content?.fields.manufacturer">
-        <CategoryFilters
+        <CategoryFiltersSort
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
@@ -36,7 +36,7 @@
       </template>
 
       <template v-if="key === 'price' && content?.fields.price">
-        <CategoryFilters
+        <CategoryFiltersSort
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
@@ -45,7 +45,7 @@
       </template>
 
       <template v-if="key === 'availability' && content?.fields.availability">
-        <CategoryFilters
+        <CategoryFiltersSort
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
@@ -54,7 +54,7 @@
       </template>
 
       <template v-if="key === 'customizedFilters' && content?.fields.customizedFilters">
-        <CategoryFilters
+        <CategoryFiltersSort
           v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
           :facets="productsCatalog.facets"
           :configuration="content"
