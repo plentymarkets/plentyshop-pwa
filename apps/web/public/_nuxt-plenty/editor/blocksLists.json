@@ -1,7 +1,7 @@
 {
   "layout": {
     "category": "layout",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Layout",
     "blockName": "MultiGrid",
     "variations": [
@@ -14,10 +14,7 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [
-                6,
-                6
-              ]
+              "columnWidths": [6, 6]
             },
             "content": [
               {
@@ -43,10 +40,7 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [
-                6,
-                6
-              ]
+              "columnWidths": [6, 6]
             },
             "content": [
               {
@@ -78,11 +72,7 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [
-                4,
-                4,
-                4
-              ]
+              "columnWidths": [4, 4, 4]
             },
             "content": [
               {
@@ -116,11 +106,7 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [
-                4,
-                4,
-                4
-              ]
+              "columnWidths": [4, 4, 4]
             },
             "content": [
               {
@@ -155,11 +141,7 @@
   },
   "image-banner": {
     "category": "image-banner",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Image Banner",
     "blockName": "BannerCarousel",
     "variations": [
@@ -624,7 +606,7 @@
   },
   "image": {
     "category": "image",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Image",
     "blockName": "Image",
     "variations": [
@@ -637,12 +619,27 @@
             "type": "content",
             "meta": { "uuid": "45454545-4545-4455-8455-454545454545" },
             "content": {
-              "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "alt": "alt text",
-              "imageAlignment": "right"
+              "image": {
+                "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "alt": "alt text",
+                "imageAlignment": "right",
+                "fillMode": "fill",
+                "aspectRatio": "16 / 9"
+              },
+              "text": {
+                "textOverlay": "",
+                "textOverlayColor": "#333333",
+                "textOverlayAlignY": "center",
+                "textOverlayAlignX": "center"
+              },
+              "button": {
+                "label": "",
+                "link": "",
+                "variant": "primary"
+              }
             }
           },
           "de": {
@@ -650,31 +647,34 @@
             "type": "content",
             "meta": { "uuid": "45454545-4545-4455-8455-454545454545" },
             "content": {
-              "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-              "alt": "alt text",
-              "imageAlignment": "right"
+              "image": {
+                "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "alt": "alt text",
+                "imageAlignment": "right",
+                "fillMode": "fill",
+                "aspectRatio": "16 / 9"
+              },
+              "text": {
+                "textOverlay": "",
+                "textOverlayColor": "#333333",
+                "textOverlayAlignY": "center",
+                "textOverlayAlignX": "center"
+              },
+              "button": {
+                "label": "",
+                "link": "",
+                "variant": "primary"
+              }
             }
           }
         }
-      }
-    ]
-  },
-  "image-with-text": {
-    "category": "image-with-text",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
-    "title": "Image with Text",
-    "blockName": "ImageText",
-    "variations": [
+      },
       {
         "title": "Image Right Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -689,12 +689,27 @@
                 "type": "content",
                 "meta": { "uuid": "45454545-4545-4455-8455-454545454545" },
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "alt text",
-                  "imageAlignment": "right"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "alt text",
+                    "imageAlignment": "right",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
+                  },
+                  "text": {
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "",
+                    "link": "",
+                    "variant": "primary"
+                  }
                 }
               },
               {
@@ -744,7 +759,20 @@
                   "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                   "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                   "alt": "Headphones",
-                  "imageAlignment": "right"
+                  "imageAlignment": "right",
+                  "fillMode": "fill",
+                  "aspectRatio": "16 / 9"
+                },
+                "text": {
+                  "textOverlay": "",
+                  "textOverlayColor": "#333333",
+                  "textOverlayAlignY": "center",
+                  "textOverlayAlignX": "center"
+                },
+                "button": {
+                  "label": "",
+                  "link": "",
+                  "variant": "primary"
                 }
               },
               {
@@ -772,7 +800,7 @@
       },
       {
         "title": "Image Left Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -806,12 +834,27 @@
                 "type": "content",
                 "meta": { "uuid": "cbcbcbcb-cbcb-4bcb-8bcb-cbcbcbcbcbcb" },
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "Headphones",
-                  "imageAlignment": "left"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "Headphones",
+                    "imageAlignment": "left",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
+                  },
+                  "text": {
+                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "",
+                    "link": "",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -848,12 +891,27 @@
                 "type": "content",
                 "meta": { "uuid": "fefefefe-fefe-4fef-8fef-fefefefefefe" },
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "Headphones",
-                  "imageAlignment": "left"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "Headphones",
+                    "imageAlignment": "left",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
+                  },
+                  "text": {
+                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "",
+                    "link": "",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -864,11 +922,7 @@
   },
   "rich-text": {
     "category": "rich-text",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Rich Text",
     "blockName": "TextCard",
     "variations": [
@@ -922,11 +976,7 @@
   },
   "product-galleries": {
     "category": "product-galleries",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Products",
     "blockName": "ProductRecommendedProducts",
     "variations": [
@@ -966,13 +1016,109 @@
       }
     ]
   },
+  "item-category": {
+    "category": "item-category",
+    "accessControl": [
+      "productCategory"
+    ],
+    "title": "Item Category",
+    "blockName": "ItemGrid",
+    "variations": [
+      {
+        "title": "Item Category",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_grid.png",
+        "template": {
+          "en": {
+            "name": "ItemGrid",
+            "type": "content",
+            "meta": {
+              "uuid": "99b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "itemsPerRowDesktop": 4,
+              "itemsPerRowTablet": 3,
+              "itemsPerRowMobile": 1,
+              "showItemCount": true,
+              "itemCountPosition": "left",
+              "fields": {
+                "manufacturer": true,
+                "title": true,
+                "rating": true,
+                "previewText": true,
+                "shippingBadge": true,
+                "price": true,
+                "addToCart": true
+              },
+              "fieldsOrder": [
+                "manufacturer",
+                "title",
+                "rating",
+                "previewText",
+                "shippingBadge",
+                "price",
+                "addToCart"
+              ],
+              "fieldsDisabled": [
+                "title"
+              ],
+              "contentAlignment": "left",
+              "cardBorders": true,
+              "showSecondImageOnHover": false,
+              "showWishlistButton": true,
+              "addToCartStyle": "primary",
+              "paginationPosition": "bottom"
+            }
+          },
+          "de": {
+            "name": "ItemGrid",
+            "type": "content",
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "itemsPerRowDesktop": 4,
+              "itemsPerRowTablet": 3,
+              "itemsPerRowMobile": 1,
+              "showItemCount": true,
+              "itemCountPosition": "left",
+              "fields": {
+                "manufacturer": true,
+                "title": true,
+                "rating": true,
+                "previewText": true,
+                "shippingBadge": true,
+                "price": true,
+                "addToCart": true
+              },
+              "fieldsOrder": [
+                "manufacturer",
+                "title",
+                "rating",
+                "previewText",
+                "shippingBadge",
+                "price",
+                "addToCart"
+              ],
+              "fieldsDisabled": [
+                "title"
+              ],
+              "contentAlignment": "left",
+              "cardBorders": true,
+              "showSecondImageOnHover": false,
+              "showWishlistButton": true,
+              "addToCartStyle": "primary",
+              "paginationPosition": "bottom"
+            }
+          }
+        }
+      }
+    ]
+  },
   "forms": {
     "category": "forms",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Forms",
     "blockName": "NewsletterSubscribe",
     "variations": [

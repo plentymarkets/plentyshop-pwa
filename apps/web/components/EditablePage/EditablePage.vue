@@ -135,19 +135,16 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
-const getBlockClass = (block: Block) => {
-  return computed(() => [
-    {
-      'max-w-screen-3xl mx-auto lg:px-10 mt-3':
-        block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
-    },
-    {
-      'px-4 md:px-6':
-        block.name !== 'Carousel' &&
-        block.name !== 'Banner' &&
-        block.name !== 'NewsletterSubscribe' &&
-        block.name !== 'Footer',
-    },
-  ]);
+const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid']);
+const paddingExcludedBlockSet = new Set(['Banner', 'Carousel', 'NewsletterSubscribe', 'Footer', 'MultiGrid']);
+
+const isExcluded = (blockName: string, excludedSet: Set<string>) => {
+  return excludedSet.has(blockName);
 };
+
+const getBlockClass = (block: Block) =>
+  computed(() => ({
+    'max-w-screen-3xl mx-auto lg:px-10 mt-3': !isExcluded(block.name, containerExcludedBlockSet),
+    'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
+  }));
 </script>

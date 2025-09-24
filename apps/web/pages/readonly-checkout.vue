@@ -102,9 +102,10 @@ const localePath = useLocalePath();
 const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
-const { loginAsGuest, data: customer, getSession } = useCustomer();
+const { loginAsGuest, user } = useCustomer();
+const { fetchSession } = useFetchSession();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { data: cart, cartIsEmpty, getCart, loading: cartLoading } = useCart();
+const { data: cart, cartIsEmpty, loading: cartLoading } = useCart();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { emit } = usePlentyEvent();
 const loading = ref(true);
@@ -166,7 +167,7 @@ const handle = async () => {
   }
 
   await setAddressesFromPayPal(paypalOrderId);
-  await getCart();
+  await fetchSession();
 
   await useFetchAddress(AddressType.Shipping)
     .fetch()
@@ -180,9 +181,8 @@ const handle = async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  if (customer.value.user === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
+  if (user.value === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
     await loginAsGuest(billingAddress.value?.email || shippingAddress.value?.email || '');
-    await getSession();
 
     if (!billingAddress.value) {
       await setBillingAddress(shippingAddress.value);
@@ -191,7 +191,7 @@ const handle = async () => {
     }
   }
 
-  if (customer.value.user === null) {
+  if (user.value === null) {
     await unreserve();
     return navigateTo(localePath(paths.checkout));
   }

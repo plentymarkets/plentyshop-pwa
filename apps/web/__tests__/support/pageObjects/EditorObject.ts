@@ -103,6 +103,10 @@ export class EditorObject extends PageObject {
     return el[0].innerHTML.includes('banner-image');
   }
 
+  isMultiGrid(el: JQuery<HTMLElement>): boolean {
+    return el[0].innerHTML.includes('multi-grid-structure');
+  }
+
   blockIsNewsletter(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('newsletter-block');
   }
@@ -243,14 +247,14 @@ export class EditorObject extends PageObject {
   }
 
   switchLanguage() {
-    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getBlocks').as('getBlocks');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
-    cy.intercept('/plentysystems/getFacet').as('getFacet');
+    cy.intercept('/plentysystems/getSession').as('getSession');
 
     this.editPreviewButton.click();
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
-    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
     this.title.first().should('have.text', 'Ihr Sound');
   }
 
@@ -326,7 +330,12 @@ export class EditorObject extends PageObject {
 
   checkWrapperSpacings() {
     this.blockWrappers.each((el) => {
-      if (this.blockIsBanner(el) || this.blockIsNewsletter(el) || this.blockIsFooter(el.get(0))) {
+      if (
+        this.blockIsBanner(el) ||
+        this.isMultiGrid(el) ||
+        this.blockIsNewsletter(el) ||
+        this.blockIsFooter(el.get(0))
+      ) {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
       } else {

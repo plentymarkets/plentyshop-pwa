@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()">
+  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
     <div
       v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
@@ -36,58 +36,61 @@
 import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { content, configuration } = defineProps<MultiGridProps>();
-const runtimeConfig = useRuntimeConfig();
+const { layout, content, configuration } = defineProps<MultiGridProps>();
+
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
+const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
 
-const getBlockActions = () => {
-  return {
-    isEditable: true,
-    isMovable: false,
-    isDeletable: false,
-    classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-    buttonClasses: ['border-2', 'border-purple-600'],
-    hoverBackground: ['hover:bg-purple-500'],
-  };
+const gapClassMap: Record<string, string> = {
+  None: 'gap-x-0',
+  S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
+  M: 'gap-y-2 md:gap-x-2 md:gap-y-0',
+  L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
+  XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
+const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
-const attrs = useAttrs() as {
-  disableActions?: boolean;
-  root?: boolean;
-};
-const disableActions = computed(() => attrs.disableActions === true);
-const blockHasData = (block: Block): boolean => {
-  return !!block.content && Object.keys(block.content).length > 0;
-};
-const showOverlay = computed(
-  () => (block: Block) =>
-    Boolean(runtimeConfig.public.isDev) &&
-    disableActions.value &&
-    $isPreview &&
-    !isDragging.value &&
-    blockHasData(block),
-);
+const gridInlineStyle = computed(() => ({
+  backgroundColor: layout?.backgroundColor ?? 'transparent',
+  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
+  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
+  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+  gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '),
+}));
 
 const getGridClasses = () => {
-  const columnCount = configuration.columnWidths.length;
-
-  return ['grid', 'gap-4', 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return ['grid', gridGapClass.value, 'items-center'];
 };
 
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
   const isLastColumn = colIndex === columnCount - 1;
   const isThreeColumnLayout = columnCount === 3;
-
   const classes = [];
-
   if (isThreeColumnLayout && isLastColumn) {
     classes.push('md:col-span-2', 'lg:col-span-1');
   }
-
   return classes;
 };
+
+const getBlockActions = () => ({
+  isEditable: true,
+  isMovable: false,
+  isDeletable: false,
+  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+  buttonClasses: ['border-2', 'border-purple-600'],
+  hoverBackground: ['hover:bg-purple-500'],
+});
+
+const disableActions = computed(() => attrs.disableActions === true);
+
+const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
+
+const showOverlay = computed(
+  () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
+);
 
 const alignBlock = computed<AlignableBlock | undefined>(
   () =>
