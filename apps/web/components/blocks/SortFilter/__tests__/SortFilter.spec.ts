@@ -1,5 +1,33 @@
 import { mount } from '@vue/test-utils';
 import SortFilter from '../SortFilter.vue';
+import {SortFilterProps} from "../types";
+
+const mockProps: SortFilterProps = {
+  name: 'SortFilter',
+  type: 'content',
+  content: {
+    enableFilters: true,
+    fields: {
+      category: true,
+      sortBy: true,
+      perPage: true,
+      itemRating: true,
+      manufacturer: true,
+      price: true,
+      availability: true,
+      customizedFilters: true
+    },
+    filtersOrder: ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+    filtersDisabled: [],
+    showAllFiltersImmediately: true,
+    numberOfFiltersToShowInitially: 0,
+    itemsPerPage: "10"
+  },
+  meta: {
+    uuid: 'test-uuid',
+  },
+  index: 0,
+};
 
 describe('SortFilter', () => {
   beforeEach(() => {
@@ -19,7 +47,9 @@ describe('SortFilter', () => {
   });
 
   it('should render category sort and filter', () => {
-    const wrapper = mount(SortFilter);
+    const wrapper = mount(SortFilter, {
+      props: mockProps,
+    });
 
     expect(wrapper.find('[data-testid="category-sort-filter"]').exists()).toBe(true);
   });

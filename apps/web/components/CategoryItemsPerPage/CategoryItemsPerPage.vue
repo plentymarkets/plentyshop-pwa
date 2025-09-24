@@ -62,8 +62,8 @@ const selectedValue =
   facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
     ? lastDisabledValue
     : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
-console.log(configuration?.value.itemsPerPage);
-const selected = ref(configuration?.value.itemsPerPage);
+
+const selected = ref(selectedValue);
 
 watch(
   () => configuration.value?.itemsPerPage,
