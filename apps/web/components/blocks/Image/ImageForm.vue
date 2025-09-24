@@ -493,6 +493,18 @@ watch([isTransparent, backgroundColor], () => {
   uiImageTextBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
 });
 
+watch(
+  () => uiImageTextBlock.value.image.fillMode,
+  (newMode) => {
+    if (newMode === 'fill') {
+      uiImageTextBlock.value.layout.paddingTop = 0;
+      uiImageTextBlock.value.layout.paddingBottom = 0;
+      uiImageTextBlock.value.layout.paddingLeft = 0;
+      uiImageTextBlock.value.layout.paddingRight = 0;
+    }
+  },
+);
+
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
