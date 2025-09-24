@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full" :class="['flex justify-center']" :style="[wrapperStyle, gridInlineStyle]">
+  <div class="relative w-full" :class="['flex justify-center']" :style="[wrapperStyle]">
     <component
       :is="linkTag"
       v-if="hasImage"
@@ -15,6 +15,7 @@
         :style="{
           display: 'block',
           filter: props.content.image.brightness ? `brightness(${props.content.image.brightness ?? 1})` : '',
+          ...imageInlineStyle,
         }"
         :width="getImageDimensions().width"
         :height="getImageDimensions().height"
@@ -135,7 +136,7 @@ const getImageDimensions = (): ImageDimensions => {
   }
 };
 
-const gridInlineStyle = computed(() => {
+const imageInlineStyle = computed(() => {
   const layout = props.content.layout ?? {};
   return {
     paddingTop: `${layout.paddingTop ?? 0}px`,

@@ -75,7 +75,7 @@
           {{ getEditorTranslation('image-scalling-label') }}
         </legend>
         <SfTooltip :label="fillTooltip" placement="top">
-          <SfIconInfo :size="'sm'" />
+          <SfIconInfo size="sm" />
         </SfTooltip>
       </div>
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
@@ -378,9 +378,20 @@
         </SfInput>
       </label>
     </div>
+    <div
+      id="padding-form"
+      class="py-2"
+      :class="uiImageTextBlock.image.fillMode !== 'fit' ? 'opacity-60  cursor-not-allowed' : ''"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+        <SfTooltip :label="paddingTooltip" placement="right">
+          <span class="flex items-center">
+            <SfIconInfo size="sm" />
+          </span>
+        </SfTooltip>
+      </div>
 
-    <div id="padding-form" class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowUpward /></span>
@@ -389,8 +400,10 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-top"
+            :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
           />
         </div>
+
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowDownward /></span>
           <input
@@ -398,6 +411,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-bottom"
+            :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -407,6 +421,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-left"
+            :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
@@ -416,6 +431,7 @@
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-right"
+            :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
           />
         </div>
       </div>
@@ -479,6 +495,18 @@ watch([isTransparent, backgroundColor], () => {
   uiImageTextBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
 });
 
+watch(
+  () => uiImageTextBlock.value.image.fillMode,
+  (newMode) => {
+    if (newMode === 'fill') {
+      uiImageTextBlock.value.layout.paddingTop = 0;
+      uiImageTextBlock.value.layout.paddingBottom = 0;
+      uiImageTextBlock.value.layout.paddingLeft = 0;
+      uiImageTextBlock.value.layout.paddingRight = 0;
+    }
+  },
+);
+
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
@@ -487,6 +515,7 @@ const layoutOpen = ref(false);
 const fillTooltip =
   'Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.';
 
+const paddingTooltip = 'Padding is only available in Fit mode.';
 type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
