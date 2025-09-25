@@ -6,7 +6,7 @@ const mockProps: CategoryDataProps = {
   name: 'CategoryData',
   type: 'content',
   content: {
-    categoryId: '11',
+    categoryId: '16',
     name: 'Category name',
     fields: {
       name: true,
