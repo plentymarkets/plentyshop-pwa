@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.content?.enableFilters" data-testid="category-sort-filter">
+  <div data-testid="category-sort-filter">
     <template v-for="key in content?.filtersOrder" :key="key">
       <template v-if="key === 'category' && content?.fields.category">
         <CategoryTree v-if="productsCatalog.category" :category="productsCatalog.category" />

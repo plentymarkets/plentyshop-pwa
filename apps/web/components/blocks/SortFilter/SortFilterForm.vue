@@ -147,7 +147,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
-import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey } from './types';
+import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey, SortFilterFieldsVisibility } from './types';
 import dragIcon from 'assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
@@ -187,7 +187,18 @@ const itemsPerPageSelected = (value: '10' | '20' | '50' | '100') => {
   return (sortFilterBlock.value.itemsPerPage || '10') === value;
 };
 
-watch([enableFilters], () => {});
+const setFieldsValue = (newValue: boolean) => {
+  Object.keys(sortFilterBlock.value.fields as SortFilterFieldsVisibility).forEach((key) => {
+    sortFilterBlock.value.fields[key as SortFilterFieldKey] = newValue;
+  });
+};
+
+watch(
+  () => sortFilterBlock.value.enableFilters,
+  (newValue) => {
+    setFieldsValue(newValue);
+  },
+);
 </script>
 
 <i18n lang="json">
