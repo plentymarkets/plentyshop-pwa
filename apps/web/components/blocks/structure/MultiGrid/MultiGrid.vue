@@ -70,7 +70,7 @@ const defaultMarginBottom = computed(() => {
 const gridInlineStyle = computed(() => ({
   backgroundColor: layout?.backgroundColor ?? 'transparent',
   marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : '0px',
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : defaultMarginBottom.value + 'px',
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
