@@ -8,6 +8,20 @@ const mockProps: CategoryDataProps = {
   content: {
     categoryId: '11',
     name: 'Category name',
+    fields: {
+      name: true,
+      description1: false,
+      description2: false,
+      shortDescription: false,
+    },
+    fieldsOrder: ['name', 'description1', 'description2', 'shortDescription'],
+    fieldsDisabled: [],
+    layout: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
   },
   meta: {
     uuid: 'test-uuid',
