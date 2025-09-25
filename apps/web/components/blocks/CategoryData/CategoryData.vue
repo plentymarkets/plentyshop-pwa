@@ -37,19 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters } from '@plentymarkets/shop-api';
+import { type Category, categoryGetters } from '@plentymarkets/shop-api';
 import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
-
-const { data: productsCatalog } = useProducts();
 
 const props = defineProps<CategoryDataProps>();
 
-const name = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category) || '');
-const description1 = computed(() => categoryGetters.getCategoryDescription1(productsCatalog.value.category) || '');
-const description2 = computed(() => categoryGetters.getCategoryDescription2(productsCatalog.value.category) || '');
-const shortDescription = computed(
-  () => categoryGetters.getCategoryShortDescription(productsCatalog.value.category) || '',
-);
+const category = computed(() => props.category || ({} as Category));
+
+const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
+const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');
+const description2 = computed(() => categoryGetters.getCategoryDescription2(category.value) || '');
+const shortDescription = computed(() => categoryGetters.getCategoryShortDescription(category.value) || '');
 
 const inlineStyle = computed(() => {
   const layout = props.content.layout || {};

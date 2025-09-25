@@ -1,3 +1,4 @@
+import type { Category } from '@plentymarkets/shop-api';
 export type CategoryDataFieldKey = 'name' | 'description1' | 'description2' | 'shortDescription';
 
 export type CategoryDataFieldsVisibility = Record<CategoryDataFieldKey, boolean>;
@@ -12,6 +13,7 @@ export type CategoryDataProps = {
     uuid: string;
   };
   shouldLoad?: boolean;
+  category?: Category;
 };
 
 export type CategoryDataContent = {

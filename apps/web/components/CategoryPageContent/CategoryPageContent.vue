@@ -1,6 +1,6 @@
 <template>
   <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
-    <BlocksCategoryData v-bind="categoryData" />
+    <BlocksCategoryData v-bind="categoryData" :category="productsCatalog.category" />
     <div class="md:flex gap-6" data-testid="category-page-content">
       <CategorySidebar :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
@@ -25,6 +25,8 @@ const { totalProducts, itemsPerPage = 24, products = [] } = defineProps<Category
 
 const { isOpen, close } = useDisclosure();
 const { getCategoryTemplateBlock, getCategoryDataTemplateBlock } = useCategoryTemplate();
+const { data: productsCatalog } = useProducts();
+
 const viewport = useViewport();
 
 const itemGrid = getCategoryTemplateBlock();

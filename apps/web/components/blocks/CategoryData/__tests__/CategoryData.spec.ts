@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import CategoryData from '../CategoryData.vue';
 import type { CategoryDataProps } from '../types';
+import { CategoryMock } from '~/__tests__/__mocks__/category.mock';
 
 const mockProps: CategoryDataProps = {
   name: 'CategoryData',
@@ -23,6 +24,7 @@ const mockProps: CategoryDataProps = {
       paddingRight: 0,
     },
   },
+  category: CategoryMock,
   meta: {
     uuid: 'test-uuid',
   },
