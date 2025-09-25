@@ -28,5 +28,31 @@
       "addToCartStyle": "primary",
       "paginationPosition": "bottom"
     }
+  },
+  {
+    "name": "SortFilter",
+    "type": "content",
+    "meta": {
+      "uuid": "07b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+      "isGlobalTemplate": false
+    },
+    "content": {
+      "enableFilters": true,
+      "fields": {
+        "category": true,
+        "sortBy": true,
+        "perPage": true,
+        "itemRating": true,
+        "manufacturer": true,
+        "price": true,
+        "availability": true,
+        "customizedFilters": true
+      },
+      "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+      "filtersDisabled": [],
+      "showAllFiltersImmediately": true,
+      "numberOfFiltersToShowInitially": 0,
+      "itemsPerPage": "10"
+    }
   }
 ]

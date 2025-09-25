@@ -28,7 +28,7 @@ const { isOpen, close } = useDisclosure();
 const { getCategoryTemplateBlock } = useCategoryTemplate();
 const viewport = useViewport();
 
-const itemGrid = getCategoryTemplateBlock('ItemGrid');
+const itemGrid = getCategoryTemplateBlock();
 
 if (viewport.isLessThan('md')) close();
 </script>
