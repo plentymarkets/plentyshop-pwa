@@ -11,7 +11,7 @@
       </template>
 
       <div data-testid="image-text-form">
-        <div v-if="isTwoColumnMultigrid" class="py-4">
+        <div v-if="runtimeConfig.public.isDev && isTwoColumnMultigrid" class="py-4">
           <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
           <ColumnWidthInput
             :multi-grid-structure="multiGridStructure"
@@ -117,14 +117,6 @@
         </label>
       </div>
     </UiAccordionItem>
-
-    <div v-for="column in multiGridStructure.content" :key="column.meta.uuid">
-      <component
-        :is="getComponent(column.name)"
-        v-if="column.name !== 'EmptyGridBlock'"
-        :uuid="column.meta?.uuid || ''"
-      />
-    </div>
   </div>
 </template>
 
@@ -144,6 +136,7 @@ const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+const runtimeConfig = useRuntimeConfig();
 
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
@@ -184,6 +177,7 @@ const multiGridStructure = computed(() => {
   }
   return block;
 });
+
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
@@ -203,18 +197,6 @@ const getGapPx = (gap: string | undefined): number => {
 
 const textSettings = ref(false);
 const layoutBackground = ref(false);
-
-const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
-const getComponent = (blockName: string) => {
-  if (!blockName) return null;
-  const regex = new RegExp(`${blockName}Form\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path));
-  return matched ? defineAsyncComponent(modules[matched]) : null;
-};
 </script>
 
 <i18n lang="json">

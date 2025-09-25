@@ -164,7 +164,12 @@ import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 const props = defineProps<ProductCardProps>();
 
 const product = computed(() => props.product);
-const configuration = computed(() => props.configuration || ({} as ItemGridContent));
+
+const { getCategoryTemplateBlock } = useCategoryTemplate();
+
+const itemGrid = getCategoryTemplateBlock();
+
+const configuration = computed(() => props.configuration || itemGrid.content || ({} as ItemGridContent));
 
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();

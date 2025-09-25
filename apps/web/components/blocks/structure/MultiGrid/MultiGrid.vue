@@ -41,31 +41,46 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
-const runtimeConfig = useRuntimeConfig();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
-
+const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
-  S: 'gap-x-1',
-  M: 'gap-x-2',
-  L: 'gap-x-3',
-  XL: 'gap-x-5',
+  S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
+  M: 'gap-y-2 md:gap-x-2 md:gap-y-0',
+  L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
+  XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
 const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
+const defaultMarginBottom = computed(() => {
+  switch (blockSize.value) {
+    case 's':
+      return 30;
+    case 'm':
+      return 40;
+    case 'l':
+      return 50;
+    case 'xl':
+      return 60;
+    default:
+      return 0;
+  }
+});
+
 const gridInlineStyle = computed(() => ({
   backgroundColor: layout?.backgroundColor ?? 'transparent',
-  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
-  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
-  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : '0px',
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
+  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
+  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
   gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '),
 }));
 
 const getGridClasses = () => {
-  return ['grid', gridGapClass.value, 'items-center'];
+  return ['grid', gridGapClass.value, 'items-center', 'overflow-hidden'];
 };
 
 const getColumnClasses = (colIndex: number) => {
@@ -93,12 +108,7 @@ const disableActions = computed(() => attrs.disableActions === true);
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) =>
-    Boolean(runtimeConfig.public.isDev) &&
-    disableActions.value &&
-    $isPreview &&
-    !isDragging.value &&
-    blockHasData(block),
+  () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
 );
 
 const isAlignable = (b: Block): b is AlignableBlock =>
