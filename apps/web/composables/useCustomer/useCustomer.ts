@@ -269,3 +269,4 @@ export const useCustomer = () => {
     backToContactInformation,
     ...toRefs(state.value),
   };
+};
