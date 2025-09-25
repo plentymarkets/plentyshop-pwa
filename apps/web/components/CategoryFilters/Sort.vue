@@ -16,5 +16,4 @@ import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const props = defineProps<CategoryFiltersProps>();
 const content = computed(() => props.configuration || ({} as SortFilterContent));
-
 </script>
