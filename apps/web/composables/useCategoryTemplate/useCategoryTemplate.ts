@@ -5,6 +5,8 @@ import type {
   GetBlocks,
   SaveBlocks,
   GetCategoryTemplateBlock,
+  GetSortFilterCategoryTemplateBlock,
+  GetCategoryDataTemplateBlock,
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
 
@@ -13,6 +15,8 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import categoryTemplateDataEn from './categoryTemplateDataEn.json';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
+import type { SortFilterProps } from '~/components/blocks/SortFilter/types';
+import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
@@ -120,9 +124,25 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
-  const getCategoryTemplateBlock: GetCategoryTemplateBlock = (blockName: string) => {
+  const getCategoryTemplateBlock: GetCategoryTemplateBlock = () => {
     try {
-      return categoryTemplateDataEn.find((obj) => obj.name === blockName) as ItemGridProps;
+      return categoryTemplateDataEn.find((obj) => obj.name === 'ItemGrid') as ItemGridProps;
+    } catch (error) {
+      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  };
+
+  const getSortFilterCategoryTemplateBlock: GetSortFilterCategoryTemplateBlock = () => {
+    try {
+      return categoryTemplateDataEn.find((obj) => obj.name === 'SortFilter') as SortFilterProps;
+    } catch (error) {
+      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  };
+
+  const getCategoryDataTemplateBlock: GetCategoryDataTemplateBlock = () => {
+    try {
+      return categoryTemplateDataEn.find((obj) => obj.name === 'CategoryData') as CategoryDataProps;
     } catch (error) {
       throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -168,6 +188,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     getBlocksServer,
     updateBlocks,
     getCategoryTemplateBlock,
+    getSortFilterCategoryTemplateBlock,
+    getCategoryDataTemplateBlock,
     ...toRefs(state.value),
   };
 };
