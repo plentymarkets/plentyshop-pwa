@@ -6,7 +6,7 @@
       </template>
 
       <template v-if="key === 'sortBy' && props.content?.fields.sortBy">
-        <CategorySorting class="mb-4"/>
+        <CategorySorting class="mb-4" />
       </template>
 
       <template v-if="key === 'perPage' && props.content?.fields.perPage">
