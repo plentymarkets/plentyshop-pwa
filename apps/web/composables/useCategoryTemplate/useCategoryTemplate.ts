@@ -6,6 +6,7 @@ import type {
   SaveBlocks,
   GetCategoryTemplateBlock,
   GetSortFilterCategoryTemplateBlock,
+  GetCategoryDataTemplateBlock,
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
 
@@ -15,6 +16,7 @@ import categoryTemplateDataEn from './categoryTemplateDataEn.json';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { SortFilterProps } from '~/components/blocks/SortFilter/types';
+import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
@@ -138,6 +140,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     }
   };
 
+  const getCategoryDataTemplateBlock: GetCategoryDataTemplateBlock = () => {
+    try {
+      return categoryTemplateDataEn.find((obj) => obj.name === 'CategoryData') as CategoryDataProps;
+    } catch (error) {
+      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  };
+
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
       state.value.loading = true;
@@ -179,6 +189,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     updateBlocks,
     getCategoryTemplateBlock,
     getSortFilterCategoryTemplateBlock,
+    getCategoryDataTemplateBlock,
     ...toRefs(state.value),
   };
 };
