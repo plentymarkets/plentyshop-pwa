@@ -1,39 +1,42 @@
 <template>
   <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
     <div
-      v-for="(column, colIndex) in alignedContent"
-      :key="column.meta.uuid"
+      v-for="(column, colIndex) in columns"
+      :key="colIndex"
       :class="getColumnClasses(colIndex)"
       class="group/col relative overflow-hidden"
     >
-      <div
-        v-if="showOverlay(column)"
-        class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
-        style="box-shadow: inset 0 0 0 2px #7c3aed"
-      />
+      <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
+        <div
+          v-if="showOverlay(row)"
+          class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+          style="box-shadow: inset 0 0 0 2px #7c3aed"
+        />
 
-      <div
-        v-if="showOverlay(column)"
-        class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
-      />
+        <div
+          v-if="showOverlay(row)"
+          class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+        />
 
-      <div
-        class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
-        :class="
-          showOverlay(column)
-            ? 'group-hover/col:opacity-100 group-hover/col:visible group-hover/col:pointer-events-auto'
-            : ''
-        "
-      >
-        <UiBlockActions v-if="showOverlay(column)" :block="column" :index="colIndex" :actions="getBlockActions()" />
+        <div
+          class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
+          :class="
+            showOverlay(row)
+              ? 'group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto'
+              : ''
+          "
+        >
+          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
+        </div>
+
+        <slot name="content" :content-block="row" />
       </div>
-      <slot name="content" :content-block="column" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
@@ -108,33 +111,44 @@ const showOverlay = computed(
   () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
 );
 
-const alignBlock = computed<AlignableBlock | undefined>(
-  () =>
-    content.find(
-      (block: Block) =>
-        typeof block.content === 'object' &&
-        block.content !== null &&
-        ('imageAlignment' in block.content || 'alignment' in block.content),
-    ) as AlignableBlock | undefined,
-);
+const isAlignable = (b: Block): b is AlignableBlock =>
+  typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
 
-const alignment = computed<string>(
-  () => alignBlock.value?.content?.imageAlignment ?? alignBlock.value?.content?.alignment ?? 'left',
-);
+const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
+  const a = block.content?.imageAlignment ?? block.content?.alignment;
+  return a === 'left' || a === 'right' ? a : undefined;
+};
 
-const alignedContent = computed<AlignableBlock[]>(() => {
-  if (!alignBlock.value || content.length < 2) return content as AlignableBlock[];
-  if (alignment.value === 'right' && content[0] === alignBlock.value) {
-    const swapped = [...content] as AlignableBlock[];
-    [swapped[0], swapped[1]] = [swapped[1], swapped[0]];
-    return swapped;
-  }
-  if (alignment.value === 'left' && content[0] !== alignBlock.value) {
-    const swapped = [...content] as AlignableBlock[];
-    const idx = swapped.indexOf(alignBlock.value);
-    [swapped[0], swapped[idx]] = [swapped[idx], swapped[0]];
-    return swapped;
-  }
-  return content as AlignableBlock[];
+const pairWithSlots = computed<Block[]>(() => {
+  const list = content.map((block) => ({ ...block }));
+
+  const alignableIndex = list.findIndex(isAlignable);
+
+  if (alignableIndex === -1) return list;
+
+  const alignment = readAlignment(list[alignableIndex] as AlignableBlock);
+  if (!alignment) return list;
+
+  const selfSlot = alignment === 'right' ? 1 : 0;
+  const sibling = alignableIndex === 0 ? 1 : 0;
+
+  list[alignableIndex] = { ...list[alignableIndex], parent_slot: selfSlot };
+  list[sibling] = { ...list[sibling], parent_slot: 1 - selfSlot };
+
+  return list;
+});
+
+const columns = computed<Block[][]>(() => {
+  const blocks = ref([] as Block[][]);
+  pairWithSlots.value.forEach((block) => {
+    if (block.parent_slot !== undefined) {
+      if (!blocks.value[block.parent_slot]) {
+        blocks.value[block.parent_slot] = [];
+      }
+
+      blocks.value[block.parent_slot].push(block);
+    }
+  });
+  return blocks.value;
 });
 </script>
