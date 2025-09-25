@@ -40,9 +40,23 @@
 import { type Category, categoryGetters } from '@plentymarkets/shop-api';
 import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 
+const { data: productsCatalog, fetchProducts } = useProducts();
+
+const { checkFiltersInURL } = useCategoryFilter();
+
+await fetchProducts({
+  categoryUrlPath: '/livingroom',
+  facets: undefined,
+  itemsPerPage: 50,
+  page: 1,
+  priceMax: undefined,
+  priceMin: undefined,
+  sort: 'texts.name1_desc',
+}).then(() => checkFiltersInURL());
+
 const props = defineProps<CategoryDataProps>();
 
-const category = computed(() => props.category || ({} as Category));
+const category = computed(() => props.category || productsCatalog.value.category || ({} as Category));
 
 const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
 const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');

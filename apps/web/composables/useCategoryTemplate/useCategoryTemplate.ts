@@ -19,7 +19,7 @@ import type { SortFilterProps } from '~/components/blocks/SortFilter/types';
 import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
+  locale === 'de' ? (categoryTemplateDataEn as Block[]) : (categoryTemplateDataEn as Block[]);
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) => {
   const state = useState<UseCategoryTemplateState>(`useCategoryTemplate${blocks ? `-${blocks}` : ''}`, () => ({

@@ -78,8 +78,9 @@ const localePath = useLocalePath();
 const { showNetPrices } = useCart();
 
 const props = defineProps<ItemGridProps>();
+const { data: productsCatalog } = useProducts();
 
-const products = computed(() => props.products ?? []);
+const products = computed(() => props.products ?? productsCatalog.value.products ?? []);
 const totalProducts = computed(() => Number(props.totalProducts) || 0);
 const itemsPerPage = computed(() => Number(props.productsPerPage) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
