@@ -1,5 +1,31 @@
 [
   {
+    "name": "CategoryData",
+    "type": "content",
+    "meta": {
+      "uuid": "2a8b7e34-3d1a-4b6f-9c9d-5e7a1f2b3c4d",
+      "isGlobalTemplate": false
+    },
+    "content": {
+      "categoryId": "16",
+      "name": "Category name",
+      "fields": {
+        "name": true,
+        "description1": false,
+        "description2": false,
+        "shortDescription": false
+      },
+      "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
+      "fieldsDisabled": [],
+      "layout": {
+        "paddingTop": 40,
+        "paddingBottom": 40,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      }
+    }
+  },
+  {
     "name": "ItemGrid",
     "type": "content",
     "meta": {
