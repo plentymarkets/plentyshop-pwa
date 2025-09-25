@@ -41,7 +41,8 @@ const { layout, content, configuration } = defineProps<MultiGridProps>();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
-
+const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
@@ -51,12 +52,27 @@ const gapClassMap: Record<string, string> = {
 };
 const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
+const defaultMarginBottom = computed(() => {
+  switch (blockSize.value) {
+    case 's':
+      return 30;
+    case 'm':
+      return 40;
+    case 'l':
+      return 50;
+    case 'xl':
+      return 60;
+    default:
+      return 0;
+  }
+});
+
 const gridInlineStyle = computed(() => ({
   backgroundColor: layout?.backgroundColor ?? 'transparent',
-  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
-  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
-  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : '0px',
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : defaultMarginBottom.value + 'px',
+  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
+  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
 
 const getGridClasses = () => {
