@@ -18,8 +18,8 @@
       "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
       "fieldsDisabled": [],
       "layout": {
-        "paddingTop": 0,
-        "paddingBottom": 0,
+        "paddingTop": 40,
+        "paddingBottom": 40,
         "paddingLeft": 0,
         "paddingRight": 0
       }

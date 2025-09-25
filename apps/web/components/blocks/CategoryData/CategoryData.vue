@@ -5,7 +5,7 @@
         <h1
           v-if="key === 'name' && name"
           :key="key"
-          class="my-10 font-bold typography-headline-3 md:typography-headline-2"
+          class="font-bold typography-headline-3 md:typography-headline-2"
           data-testid="category-name"
         >
           {{ name }}
@@ -53,10 +53,10 @@ const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
 
   return {
-    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
-    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
-    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
-    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+    marginTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
+    marginBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
+    marginLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
+    marginRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
 </script>
