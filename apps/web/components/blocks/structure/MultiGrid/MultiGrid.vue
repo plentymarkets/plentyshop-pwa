@@ -4,6 +4,7 @@
       v-for="(column, colIndex) in alignedContent"
       :key="column.meta.uuid"
       :class="getColumnClasses(colIndex)"
+      data-testid="multi-grid-column"
       class="group/col relative overflow-hidden"
     >
       <div
