@@ -42,6 +42,43 @@ export const mockImageBlock: ImageProps = {
   },
 };
 
+const mockImageBlockWithLinkTarget: ImageProps = {
+  name: 'Image',
+  type: 'content',
+  meta: { uuid: imageBlockUuid },
+  content: {
+    image: {
+      wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      alt: 'alt text',
+      imageAlignment: 'right',
+      fillMode: 'fill',
+      aspectRatio: '16 / 9',
+      linktarget: '/test-link',
+    },
+    text: {
+      textOverlay: '',
+      textOverlayColor: '',
+      textOverlayAlignY: 'center',
+      textOverlayAlignX: 'center',
+    },
+    button: {
+      label: '',
+      link: '',
+      variant: 'primary',
+    },
+    layout: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      backgroundColor: '#fff',
+    },
+  },
+};
+
 describe('Image block', () => {
   it('renders all image sources and attributes correctly', () => {
     const wrapper = mount(Image, {
@@ -51,7 +88,6 @@ describe('Image block', () => {
     expect(wrapper.html()).toContain(mockImageBlock.content.image.desktop);
     expect(wrapper.html()).toContain(mockImageBlock.content.image.tablet);
     expect(wrapper.html()).toContain(mockImageBlock.content.image.mobile);
-
 
     const img = wrapper.find('img, [data-testid="image-block"]');
     expect(img.attributes('alt')).toBe(mockImageBlock.content.image.alt);
@@ -69,14 +105,28 @@ describe('Image block', () => {
     expect(overlay.attributes('style')).toContain(`color: ${mockImageBlock.content.text.textOverlayColor}`);
 
     const classes = overlay.classes();
-    expect(classes).toContain('items-center'); 
+    expect(classes).toContain('items-center');
     expect(classes).toContain('justify-center');
-    expect(classes).toContain('text-center'); 
+    expect(classes).toContain('text-center');
   });
 
+  it('renders the image overlay link with correct linktarget and href', () => {
+    const wrapper = mount(Image, { props: mockImageBlockWithLinkTarget });
 
+    const overlayLink = wrapper.find('[data-testid="image-link"]');
+    expect(overlayLink.exists()).toBe(true);
 
+    expect(overlayLink.attributes('to')).toBe(mockImageBlockWithLinkTarget.content.image.linktarget);
 
+    const anchor = overlayLink.find('a');
+    if (anchor.exists()) {
+      expect(anchor.attributes('href')).toBe(mockImageBlockWithLinkTarget.content.image.linktarget);
+    }
+  });
 
-
+  it('renders the correct aria-label for the overlay link', () => {
+    const wrapper = mount(Image, { props: mockImageBlockWithLinkTarget });
+    const overlayLink = wrapper.find('[data-testid="image-link"]');
+    expect(overlayLink.attributes('aria-label')).toBe(mockImageBlockWithLinkTarget.content.image.alt);
+  });
 });

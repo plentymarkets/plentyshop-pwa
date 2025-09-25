@@ -6,6 +6,7 @@
       :to="linkTarget"
       :aria-label="ariaLabel"
       v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
+      data-testid="image-link"
     >
       <NuxtImg
         :src="getImageUrl()"
