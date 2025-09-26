@@ -26,7 +26,6 @@
       </div>
 
       <div class="rounded-lg mt-8 sm:p-6 text-left">
-        <p class="mb-4 text-xl font-semibold">{{ t('mostPopular') }}</p>
         <ProductSlider :items="products" />
       </div>
     </div>
