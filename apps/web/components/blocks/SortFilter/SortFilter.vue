@@ -6,12 +6,12 @@
       </template>
 
       <template v-if="key === 'sortBy' && props.content?.fields.sortBy">
-        <CategorySorting />
+        <CategorySorting class="mb-4" />
       </template>
 
       <template v-if="key === 'perPage' && props.content?.fields.perPage">
         <CategoryItemsPerPage
-          class="mt-6"
+          class="mt-6 mb-4"
           :total-products="productsCatalog.pagination?.totals ?? 0"
           :configuration="content"
         />
