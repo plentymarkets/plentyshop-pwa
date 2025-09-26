@@ -27,34 +27,24 @@
 
       <div class="rounded-lg mt-8 sm:p-6 text-left">
         <p class="mb-4 text-xl font-semibold">{{ t('mostPopular') }}</p>
-        <ProductSlider :items="recommendedProductsDisplay" />
+        <ProductSlider :items="products" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
+const { data: categoryTree } = useCategoryTree();
 const localePath = useLocalePath();
 const { t } = useI18n();
-const { data: categoryTree } = useCategoryTree();
 const NuxtLink = resolveComponent('NuxtLink');
 
-// TODO: Replace the hardcoded logic below with a dynamic fetch of recommended products
-const recommendedProductsDisplay = ref<Product[]>([]);
-const fetchAllRecommended = async () => {
-  if (!categoryTree.value) return;
+const { data } = await useAsyncData('404-products', () => useSdk().plentysystems.getFacet({
+  type: 'all',
+  itemsPerPage: 20,
+})); 
 
-  const limitedCategories = (categoryTree.value as CategoryTreeItem[]).slice(0, 2);
-
-  const promises = limitedCategories.map((category) => {
-    const { fetchProductRecommended } = useProductRecommended(String(category.id));
-    return fetchProductRecommended(String(category.id));
-  });
-  const results = await Promise.all(promises);
-  recommendedProductsDisplay.value = results.flat();
-};
-await fetchAllRecommended();
+const products = computed(() => data?.value?.data.products || []);
 </script>
