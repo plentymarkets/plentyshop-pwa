@@ -1,5 +1,6 @@
 <template>
   <UiAccordionItem
+    v-model="sortFilterOpen"
     data-testid="open-sorting-and-filters-settings"
     summary-active-class="bg-neutral-100 border-t-0"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -154,6 +155,8 @@ import draggable from 'vuedraggable/src/vuedraggable';
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+
+const sortFilterOpen = ref(true);
 
 const props = defineProps<SortFilterFormProps>();
 
