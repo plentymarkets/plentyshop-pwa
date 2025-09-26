@@ -80,7 +80,8 @@ const gridInlineStyle = computed(() => ({
 }));
 
 const getGridClasses = () => {
-  return ['grid', gridGapClass.value, 'items-center', 'overflow-hidden'];
+  const columnCount = configuration.columnWidths.length;
+  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
 };
 
 const getColumnClasses = (colIndex: number) => {
