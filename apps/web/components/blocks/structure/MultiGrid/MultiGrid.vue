@@ -4,6 +4,7 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
+      data-testid="multi-grid-column"
       class="group/col relative overflow-hidden"
     >
       <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
