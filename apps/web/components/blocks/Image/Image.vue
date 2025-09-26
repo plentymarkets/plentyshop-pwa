@@ -14,7 +14,9 @@
         :class="props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover'"
         :style="{
           display: 'block',
-          filter: props.content.image.brightness ? `brightness(${props.content.image.brightness ?? 1})` : '',
+          filter: props.content.image.brightness !== null && props.content.image.brightness !== undefined
+              ? `brightness(${props.content.image.brightness})` // Apply the brightness value, including 0.00
+              : '',          
           ...imageInlineStyle,
         }"
         :width="getImageDimensions().width"
