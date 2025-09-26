@@ -40,10 +40,12 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 const NuxtLink = resolveComponent('NuxtLink');
 
-const { data } = await useAsyncData('404-products', () => useSdk().plentysystems.getFacet({
-  type: 'all',
-  itemsPerPage: 20,
-})); 
+const { data } = await useAsyncData('404-products', () =>
+  useSdk().plentysystems.getFacet({
+    type: 'all',
+    itemsPerPage: 20,
+  }),
+);
 
 const products = computed(() => data?.value?.data.products || []);
 </script>
