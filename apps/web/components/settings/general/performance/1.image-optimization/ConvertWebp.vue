@@ -20,7 +20,7 @@ import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('useWebp');
 
 const useWebp = computed({
-  get: () => getSetting(),
+  get: () => Boolean(getSetting()),
   set: (value) => updateSetting(value.toString()),
 });
 </script>
