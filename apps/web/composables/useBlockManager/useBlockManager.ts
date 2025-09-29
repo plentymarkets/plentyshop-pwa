@@ -261,6 +261,8 @@ export const useBlockManager = () => {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
       const newBlock = { ...layoutTemplate.content[0] };
+
+      newBlock.parent_slot = index;
       newBlock.meta.uuid = uuid();
       parent.splice(index, 1, newBlock);
     }
