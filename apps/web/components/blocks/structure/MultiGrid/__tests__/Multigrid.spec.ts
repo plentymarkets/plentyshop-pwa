@@ -115,12 +115,15 @@ describe('MultiGrid block', () => {
             type: 'text',
             content: { text: 'Test text' },
             meta: { uuid: '33333333-3333-4333-8333-333333333333' },
+            parent_slot: 0,
           },
           {
             name: 'Image',
             type: 'image',
+
             content: { src: '/test.jpg', alt: 'Test image' },
             meta: { uuid: '44444444-4444-4444-8444-444444444444' },
+            parent_slot: 1,
           },
         ],
         configuration: {
@@ -139,7 +142,6 @@ describe('MultiGrid block', () => {
         },
       },
     });
-
     const cols = wrapper.findAll('[data-testid="multi-grid-column"]');
     expect(cols.length).toBe(2);
   });
@@ -155,16 +157,25 @@ describe('MultiGrid block', () => {
             type: 'text',
             content: { text: 'Test text' },
             meta: { uuid: '33333333-3333-4333-8333-333333333333' },
+            parent_slot: 0,
           },
           {
             name: 'Image',
             type: 'image',
             content: { src: '/test.jpg', alt: 'Test image' },
             meta: { uuid: '44444444-4444-4444-8444-444444444444' },
+            parent_slot: 1,
+          },
+          {
+            name: 'TextCard',
+            type: 'text',
+            content: { text: 'Another text' },
+            meta: { uuid: '55555555-5555-4555-8555-555555555555' },
+            parent_slot: 2,
           },
         ],
         configuration: {
-          columnWidths: [6, 6, 6],
+          columnWidths: [4, 4, 4],
         },
         layout: {
           marginTop: 10,
@@ -179,9 +190,8 @@ describe('MultiGrid block', () => {
         },
       },
     });
-
     const cols = wrapper.findAll('[data-testid="multi-grid-column"]');
-    expect(cols.length).toBe(2);
+    expect(cols.length).toBe(3);
   });
 
   it('renders no columns when content is empty', () => {
@@ -206,9 +216,26 @@ describe('MultiGrid block', () => {
 
   it('renders dynamic block types (Image, TextCard) with realistic PlentyONE content', () => {
     const wrapper = mount(MultiGrid, {
-      props: mockMultiGridBlockWithContent,
+      props: {
+        ...mockMultiGridBlockWithContent,
+        content: [
+          {
+            name: 'Image',
+            type: 'content',
+            meta: { uuid: '45454545-4545-4455-8455-454545454545' },
+            parent_slot: 0,
+            content: mockMultiGridBlockWithContent.content[0].content,
+          },
+          {
+            name: 'TextCard',
+            type: 'content',
+            meta: { uuid: '56565656-5656-4565-8565-565656565656' },
+            parent_slot: 1,
+            content: mockMultiGridBlockWithContent.content[1].content,
+          },
+        ],
+      },
     });
-
     const cols = wrapper.findAll('[data-testid="multi-grid-column"]');
     expect(cols.length).toBe(2);
   });

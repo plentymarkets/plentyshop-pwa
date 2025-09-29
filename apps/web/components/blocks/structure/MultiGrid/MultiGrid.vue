@@ -4,14 +4,15 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      data-testid="multi-grid-column"
       class="group/col relative overflow-hidden"
+        data-testid="multi-grid-column"
     >
       <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
         <div
           v-if="showOverlay(row)"
           class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
           style="box-shadow: inset 0 0 0 2px #7c3aed"
+        
         />
 
         <div
@@ -77,13 +78,11 @@ const gridInlineStyle = computed(() => ({
   marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
-  gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '),
 }));
-
 const getGridClasses = () => {
-  return ['grid', gridGapClass.value, 'items-center', 'overflow-hidden'];
+  const columnCount = configuration.columnWidths.length;
+  return gridClassFor({ mobile: 1, tablet: 2, desktop: columnCount }, [gridGapClass.value, 'items-center']);
 };
-
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
   const isLastColumn = colIndex === columnCount - 1;
