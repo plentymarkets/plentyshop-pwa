@@ -62,15 +62,15 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   };
 
   const settingsIsDirty = computed(() => {
-    const config = state.value?.initialData ?? {}
-    const currentData = state.value?.data ?? {}
+    const config = state.value?.initialData ?? {};
+    const currentData = state.value?.data ?? {};
 
     if (!currentData || Object.keys(currentData).length === 0) {
-      return false
+      return false;
     }
 
-    return Object.entries(currentData).some(([key, value]) => !(key in config) || config[key] !== value)
-  })
+    return Object.entries(currentData).some(([key, value]) => !(key in config) || config[key] !== value);
+  });
 
   const saveSiteSettings: SaveSiteSettings = async () => {
     try {
