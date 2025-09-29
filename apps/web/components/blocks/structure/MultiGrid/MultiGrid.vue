@@ -76,13 +76,13 @@ const gridInlineStyle = computed(() => ({
   marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
-  gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '),
+  // gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '), // Breaks the responsive behaviour! We have to find another way!
 }));
 
 const getGridClasses = () => {
-  return ['grid', gridGapClass.value, 'items-center', 'overflow-hidden'];
+  const columnCount = configuration.columnWidths.length;
+  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
 };
-
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
   const isLastColumn = colIndex === columnCount - 1;
