@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
+import { gridClassFor } from '~/utils/grid';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
@@ -78,10 +79,9 @@ const gridInlineStyle = computed(() => ({
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
   // gridTemplateColumns: configuration.columnWidths.map((w) => `${(w / 12) * 100}%`).join(' '), // Breaks the responsive behaviour! We have to find another way!
 }));
-
 const getGridClasses = () => {
   const columnCount = configuration.columnWidths.length;
-  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return gridClassFor({ mobile: 1, tablet: 2, desktop: columnCount }, [gridGapClass.value, 'items-center']);
 };
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
