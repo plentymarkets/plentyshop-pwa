@@ -15,7 +15,7 @@
         :style="{
           display: 'block',
           filter: props.content.image.brightness !== null && props.content.image.brightness !== undefined
-              ? `brightness(${props.content.image.brightness})` // Apply the brightness value, including 0.00
+              ? `brightness(${props.content.image.brightness})`
               : '',          
           ...imageInlineStyle,
         }"
