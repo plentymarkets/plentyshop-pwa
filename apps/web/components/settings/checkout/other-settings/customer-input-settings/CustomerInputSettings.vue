@@ -32,7 +32,7 @@ const showCustomerWishComponent = computed({
   },
   "de": {
     "label": "Customer Wish Input",
-    "description": "Schaltet das Kundenwunsch-Feld im Checkout ein oder aus."
+    "description": "Toggle to show or hide the Customer Wish field during checkout."
   }
 }
 </i18n>
