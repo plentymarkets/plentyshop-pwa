@@ -5,14 +5,13 @@
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
       class="group/col relative overflow-hidden"
-        data-testid="multi-grid-column"
+      data-testid="multi-grid-column"
     >
       <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
         <div
           v-if="showOverlay(row)"
           class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
           style="box-shadow: inset 0 0 0 2px #7c3aed"
-        
         />
 
         <div
