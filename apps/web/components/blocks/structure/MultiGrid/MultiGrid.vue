@@ -5,6 +5,7 @@
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
       class="group/col relative overflow-hidden"
+      data-testid="multi-grid-column"
     >
       <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
         <div
