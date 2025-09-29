@@ -133,6 +133,8 @@ export const useBlockManager = () => {
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
     const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
 
+    newBlock.parent_slot = targetBlock.parent_slot;
+
     if (colIndex === -1) {
       send({ type: 'negative', message: `Couldn't insert block.` });
       return;
@@ -259,6 +261,8 @@ export const useBlockManager = () => {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
       const newBlock = { ...layoutTemplate.content[0] };
+
+      newBlock.parent_slot = index;
       newBlock.meta.uuid = uuid();
       parent.splice(index, 1, newBlock);
     }

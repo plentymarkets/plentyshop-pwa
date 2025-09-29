@@ -1,39 +1,42 @@
 <template>
   <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
     <div
-      v-for="(column, colIndex) in alignedContent"
-      :key="column.meta.uuid"
+      v-for="(column, colIndex) in columns"
+      :key="colIndex"
       :class="getColumnClasses(colIndex)"
       class="group/col relative overflow-hidden"
     >
-      <div
-        v-if="showOverlay(column)"
-        class="pointer-events-none absolute inset-0 opacity-0 group-hover/col:opacity-100"
-        style="box-shadow: inset 0 0 0 2px #7c3aed"
-      />
+      <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
+        <div
+          v-if="showOverlay(row)"
+          class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+          style="box-shadow: inset 0 0 0 2px #7c3aed"
+        />
 
-      <div
-        v-if="showOverlay(column)"
-        class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/col:opacity-100 bg-purple-600/15"
-      />
+        <div
+          v-if="showOverlay(row)"
+          class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+        />
 
-      <div
-        class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
-        :class="
-          showOverlay(column)
-            ? 'group-hover/col:opacity-100 group-hover/col:visible group-hover/col:pointer-events-auto'
-            : ''
-        "
-      >
-        <UiBlockActions v-if="showOverlay(column)" :block="column" :index="colIndex" :actions="getBlockActions()" />
+        <div
+          class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
+          :class="
+            showOverlay(row)
+              ? 'group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto'
+              : ''
+          "
+        >
+          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
+        </div>
+
+        <slot name="content" :content-block="row" />
       </div>
-      <slot name="content" :content-block="column" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MultiGridProps, AlignableBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
@@ -41,7 +44,8 @@ const { layout, content, configuration } = defineProps<MultiGridProps>();
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
-
+const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
@@ -51,19 +55,32 @@ const gapClassMap: Record<string, string> = {
 };
 const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
 
+const defaultMarginBottom = computed(() => {
+  switch (blockSize.value) {
+    case 's':
+      return 30;
+    case 'm':
+      return 40;
+    case 'l':
+      return 50;
+    case 'xl':
+      return 60;
+    default:
+      return 0;
+  }
+});
+
 const gridInlineStyle = computed(() => ({
   backgroundColor: layout?.backgroundColor ?? 'transparent',
-  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : undefined,
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : undefined,
-  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : undefined,
-  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : undefined,
+  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : '0px',
+  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
+  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
+  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
-
 const getGridClasses = () => {
   const columnCount = configuration.columnWidths.length;
-  return ['grid', gridGapClass.value, 'items-center', 'grid-cols-1', 'md:grid-cols-2', `lg:grid-cols-${columnCount}`];
+  return gridClassFor({ mobile: 1, tablet: 2, desktop: columnCount }, [gridGapClass.value, 'items-center']);
 };
-
 const getColumnClasses = (colIndex: number) => {
   const columnCount = configuration.columnWidths.length;
   const isLastColumn = colIndex === columnCount - 1;
@@ -92,33 +109,44 @@ const showOverlay = computed(
   () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
 );
 
-const alignBlock = computed<AlignableBlock | undefined>(
-  () =>
-    content.find(
-      (block: Block) =>
-        typeof block.content === 'object' &&
-        block.content !== null &&
-        ('imageAlignment' in block.content || 'alignment' in block.content),
-    ) as AlignableBlock | undefined,
-);
+const isAlignable = (b: Block): b is AlignableBlock =>
+  typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
 
-const alignment = computed<string>(
-  () => alignBlock.value?.content?.imageAlignment ?? alignBlock.value?.content?.alignment ?? 'left',
-);
+const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
+  const a = block.content?.imageAlignment ?? block.content?.alignment;
+  return a === 'left' || a === 'right' ? a : undefined;
+};
 
-const alignedContent = computed<AlignableBlock[]>(() => {
-  if (!alignBlock.value || content.length < 2) return content as AlignableBlock[];
-  if (alignment.value === 'right' && content[0] === alignBlock.value) {
-    const swapped = [...content] as AlignableBlock[];
-    [swapped[0], swapped[1]] = [swapped[1], swapped[0]];
-    return swapped;
-  }
-  if (alignment.value === 'left' && content[0] !== alignBlock.value) {
-    const swapped = [...content] as AlignableBlock[];
-    const idx = swapped.indexOf(alignBlock.value);
-    [swapped[0], swapped[idx]] = [swapped[idx], swapped[0]];
-    return swapped;
-  }
-  return content as AlignableBlock[];
+const pairWithSlots = computed<Block[]>(() => {
+  const list = content.map((block) => ({ ...block }));
+
+  const alignableIndex = list.findIndex(isAlignable);
+
+  if (alignableIndex === -1) return list;
+
+  const alignment = readAlignment(list[alignableIndex] as AlignableBlock);
+  if (!alignment) return list;
+
+  const selfSlot = alignment === 'right' ? 1 : 0;
+  const sibling = alignableIndex === 0 ? 1 : 0;
+
+  list[alignableIndex] = { ...list[alignableIndex], parent_slot: selfSlot };
+  list[sibling] = { ...list[sibling], parent_slot: 1 - selfSlot };
+
+  return list;
+});
+
+const columns = computed<Block[][]>(() => {
+  const blocks = ref([] as Block[][]);
+  pairWithSlots.value.forEach((block) => {
+    if (block.parent_slot !== undefined) {
+      if (!blocks.value[block.parent_slot]) {
+        blocks.value[block.parent_slot] = [];
+      }
+
+      blocks.value[block.parent_slot].push(block);
+    }
+  });
+  return blocks.value;
 });
 </script>
