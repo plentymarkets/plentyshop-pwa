@@ -7,7 +7,7 @@ export const mockMultiGridProps = {
     {
       name: 'TextCard',
       type: 'text',
-          content: {
+      content: {
         text: {
           htmlDescription: 'Text that supports HTML formatting',
           title: 'h2 heading',
@@ -35,7 +35,7 @@ export const mockMultiGridProps = {
     {
       name: 'Image',
       type: 'image',
-           content: {
+      content: {
         image: {
           wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
           desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -77,4 +77,3 @@ export const mockMultiGridProps = {
     uuid: multiGridBlockUuid,
   },
 };
-
