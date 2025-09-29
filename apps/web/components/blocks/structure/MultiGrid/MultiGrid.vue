@@ -80,7 +80,7 @@ const gridInlineStyle = computed(() => ({
 }));
 
 const getGridClasses = () => {
-  return ['grid', gridGapClass.value, 'items-center', 'overflow-hidden'];
+  return ['grid', gridGapClass.value, 'items-start', 'overflow-hidden'];
 };
 
 const getColumnClasses = (colIndex: number) => {

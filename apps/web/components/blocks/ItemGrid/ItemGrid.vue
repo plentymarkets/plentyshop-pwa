@@ -76,12 +76,13 @@ const { getFacetsFromURL } = useCategoryFilter();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { showNetPrices } = useCart();
+const { data: productsCatalog, productsPerPage } = useProducts();
 
 const props = defineProps<ItemGridProps>();
 
-const products = computed(() => props.products ?? []);
-const totalProducts = computed(() => Number(props.totalProducts) || 0);
-const itemsPerPage = computed(() => Number(props.productsPerPage) || 0);
+const products = computed(() => productsCatalog.value.products || props.products || []);
+const totalProducts = computed(() => Number(productsCatalog.value.pagination.totals || props.totalProducts) || 0);
+const itemsPerPage = computed(() => Number(productsPerPage.value || props.productsPerPage) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 const gridClasses = computed(() =>

@@ -1,0 +1,99 @@
+[
+  {
+    "name": "CategoryData",
+    "type": "content",
+    "meta": {
+      "uuid": "2a8b7e34-3d1a-4b6f-9c9d-5e7a1f2b3c4d",
+      "isGlobalTemplate": false
+    },
+    "content": {
+      "categoryId": "16",
+      "name": "Category name",
+      "fields": {
+        "name": true,
+        "description1": false,
+        "description2": false,
+        "shortDescription": false
+      },
+      "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
+      "fieldsDisabled": [],
+      "layout": {
+        "paddingTop": 40,
+        "paddingBottom": 40,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      }
+    }
+  },
+  {
+    "name": "MultiGrid",
+    "type": "structure",
+    "meta": {
+      "uuid": "7b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a",
+      "isGlobalTemplate": false
+    },
+    "configuration": {
+      "columnWidths": [4, 8]
+    },
+    "content": [
+      {
+        "name": "SortFilter",
+        "type": "content",
+        "meta": {
+          "uuid": "07b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 0,
+        "content": {
+          "enableFilters": true,
+          "fields": {
+            "category": true,
+            "sortBy": true,
+            "perPage": true,
+            "itemRating": true,
+            "manufacturer": true,
+            "price": true,
+            "availability": true,
+            "customizedFilters": true
+          },
+          "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+          "filtersDisabled": [],
+          "showAllFiltersImmediately": true,
+          "numberOfFiltersToShowInitially": 0,
+          "itemsPerPage": "10"
+        }
+      },
+      {
+        "name": "ItemGrid",
+        "type": "content",
+        "meta": {
+          "uuid": "07b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 1,
+        "content": {
+          "itemsPerRowDesktop": 4,
+          "itemsPerRowTablet": 3,
+          "itemsPerRowMobile": 1,
+          "showItemCount": true,
+          "itemCountPosition": "left",
+          "fields": {
+            "title": true,
+            "rating": true,
+            "previewText": true,
+            "price": true,
+            "addToCart": true
+          },
+          "fieldsOrder": ["title", "rating", "previewText", "price", "addToCart"],
+          "fieldsDisabled": ["title"],
+          "contentAlignment": "left",
+          "cardBorders": true,
+          "showSecondImageOnHover": false,
+          "showWishlistButton": true,
+          "addToCartStyle": "primary",
+          "paginationPosition": "bottom"
+        }
+      }
+    ]
+  }
+]
