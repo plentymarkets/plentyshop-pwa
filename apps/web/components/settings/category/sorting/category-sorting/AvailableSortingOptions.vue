@@ -43,6 +43,7 @@ const { updateSetting, getJsonSetting } = useSiteSettings('availableSortingOptio
 const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption } =
   useSiteSettings('defaultSortingOption');
 const { updateSorting } = useCategoryFilter();
+const { $dynamicEditorTranslation } = useNuxtApp();
 
 const sortingOptionValues = [
   'item.score',
