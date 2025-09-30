@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px] relative overflow-hidden" data-testid="site-settings-drawer">
+  <div class="site-settings-view sticky top-[52px] relative" data-testid="site-settings-drawer">
     <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
       <header class="border-b">
         <div class="flex items-center justify-between px-4 py-5">

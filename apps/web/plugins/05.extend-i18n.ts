@@ -8,6 +8,13 @@ export default defineNuxtPlugin(() => {
           $i18n.mergeLocaleMessage(locale, dict);
         });
       },
+      dynamicEditorTranslation: (key: string) => {
+        const locale = 'en';
+
+        const { $i18n } = useNuxtApp();
+
+        return $i18n.t(key, {}, { locale }) as string;
+      },
     },
   };
 });
