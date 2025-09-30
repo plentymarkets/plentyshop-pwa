@@ -33,6 +33,7 @@ const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
+  if (view === 'tableOfContents') return resolveComponent('TableOfContents');
 };
 
 const viewComponent = computed(() => getViewComponent(activeSetting.value, activeSubCategory.value));

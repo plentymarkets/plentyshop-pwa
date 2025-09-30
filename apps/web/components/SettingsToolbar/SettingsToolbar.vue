@@ -17,6 +17,29 @@
           <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
         </button>
       </SfTooltip>
+      <SfTooltip :label="tableOfContentsLabel" placement="right" :show-arrow="true" class="inline-grid">
+        <button
+          type="button"
+          class="editor-button relative py-2 flex justify-center"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'tableOfContents' }"
+          aria-label="Open table of contents drawer"
+          data-testid="open-table-of-contents-drawer"
+          @click="toggleDrawerView('tableOfContents')"
+        >
+          <SfIconMenu 
+            v-if="drawerView === 'tableOfContents'" 
+            class="text-white" 
+            width="24" 
+            height="24"
+          />
+          <SfIconMenu 
+            v-else 
+            class="text-black" 
+            width="24" 
+            height="24"
+          />
+        </button>
+      </SfTooltip>
       <component
         :is="trigger.component"
         v-for="trigger in triggersModules"
@@ -29,13 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import { SfTooltip } from '@storefront-ui/vue';
+import { SfTooltip, SfIconMenu } from '@storefront-ui/vue';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
 
 const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
+const tableOfContentsLabel = 'Table of Contents: View the structure and order of all blocks on the current page.';
 
 function toggleDrawerView(view: DrawerView) {
   if (drawerView.value === view) {
