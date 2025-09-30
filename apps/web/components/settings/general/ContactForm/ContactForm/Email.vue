@@ -7,7 +7,7 @@
       </SfTooltip>
     </div>
     <label>
-      <SfInput v-model="contactEmail" type="text" data-testid="background-icon-color">
+      <SfInput v-model="contactEmail" type="text" data-testid="contact-email">
       </SfInput>
     </label>
   </div>
