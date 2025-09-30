@@ -343,32 +343,7 @@ const textCardBlock = computed<TextCardContent>(() => {
   return content as TextCardContent;
 });
 
-const marginModel = reactive({
-  get marginTop() {
-    return textCardBlock.value.layout.marginTop ?? '0';
-  },
-  set marginTop(val: string) {
-    textCardBlock.value.layout.marginTop = val;
-  },
-  get marginBottom() {
-    return textCardBlock.value.layout.marginBottom ?? '0';
-  },
-  set marginBottom(val: string) {
-    textCardBlock.value.layout.marginBottom = val;
-  },
-  get marginLeft() {
-    return textCardBlock.value.layout.marginLeft ?? '0';
-  },
-  set marginLeft(val: string) {
-    textCardBlock.value.layout.marginLeft = val;
-  },
-  get marginRight() {
-    return textCardBlock.value.layout.marginRight ?? '0';
-  },
-  set marginRight(val: string) {
-    textCardBlock.value.layout.marginRight = val;
-  },
-});
+const marginModel = useMarginModel(textCardBlock.value.layout);
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);

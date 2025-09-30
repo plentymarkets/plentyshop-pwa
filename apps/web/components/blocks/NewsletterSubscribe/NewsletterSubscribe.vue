@@ -1,8 +1,9 @@
 <template>
   <div
     class="relative mt-5 p-4 sm:p-10 text-center"
-    :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
+    :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5', ...inlineStyles }"
     data-testid="newsletter-block"
+    
   >
     <h1
       v-if="props.index === 0"
@@ -154,6 +155,17 @@ const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
+
+const inlineStyles = computed(() => {
+  const layout = props.content.layout || {};
+
+  return {
+    marginTop: layout.marginTop ? `${layout.marginTop}px` : 0,
+    marginBottom: layout.marginBottom ? `${layout.marginBottom}px` : 0,
+    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : 0,
+    marginRight: layout.marginRight ? `${layout.marginRight}px` : 0,
+  };
+});
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();

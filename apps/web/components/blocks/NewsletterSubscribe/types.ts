@@ -4,6 +4,9 @@ export type NewsletterSubscribeProps = {
   content: NewsletterSubscribeContent;
   configuration?: object;
   index?: number;
+  meta: {
+    uuid: string;
+  };
 };
 export type NewsletterSubscribeContent = {
   index?: number;
@@ -19,4 +22,14 @@ export type NewsletterSubscribeContent = {
   button: {
     label?: string;
   };
+  layout: {
+    marginTop?: string;
+    marginBottom?: string;
+    marginLeft?: string;
+    marginRight?: string;
+  };
+};
+
+export type NewsletterFormProps = {
+  uuid?: string;
 };

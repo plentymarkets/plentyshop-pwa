@@ -49,7 +49,7 @@ import type { MarginInputProps } from './types';
 const props = defineProps<MarginInputProps>();
 const modelValue = defineModel<{ marginTop: string; marginBottom: string; marginLeft: string; marginRight: string }>(
   'modelValue',
-  { default: () => ({ marginTop: '', marginBottom: '', marginLeft: '', marginRight: '' }) }
+  { default: () => ({ marginTop: '', marginBottom: '', marginLeft: '', marginRight: '' }) },
 );
 const label = props.label ?? 'Margin';
 </script>
