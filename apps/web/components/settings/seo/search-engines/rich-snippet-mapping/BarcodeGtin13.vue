@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -37,7 +37,6 @@ const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeGtin
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings(
   'seoRichSnippetBarcodeGtin13Id',
 );
-const runtimeConfig = useRuntimeConfig();
 
 const seoRichSnippetBarcodeGtin13 = computed({
   get: () => getSetting(),

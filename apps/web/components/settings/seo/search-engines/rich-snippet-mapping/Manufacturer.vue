@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -30,7 +30,6 @@ import { seoRichSnippetManufacturers } from '~/utils/editorSettings';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetManufacturer');
-const runtimeConfig = useRuntimeConfig();
 
 const seoRichSnippetManufacturer = computed({
   get: () => getSetting(),

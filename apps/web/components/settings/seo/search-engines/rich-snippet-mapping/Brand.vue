@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -35,7 +35,6 @@ import { seoRichSnippetBrands } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('seoRichSnippetBrandId');
-const runtimeConfig = useRuntimeConfig();
 
 const seoRichSnippetBrand = computed({
   get: () => getSetting(),
