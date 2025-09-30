@@ -97,6 +97,7 @@ export default defineNuxtConfig({
         'customer-management',
         'variation-position-based-on-sales',
         'security',
+        'vat-number-validation',
       ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
