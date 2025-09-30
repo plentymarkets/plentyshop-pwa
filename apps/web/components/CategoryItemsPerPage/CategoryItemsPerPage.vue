@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md:max-w-[376px]" data-testid="category-items-per-page">
+  <div class="w-full" data-testid="category-items-per-page">
     <h6
       class="bg-neutral-100 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
@@ -25,8 +25,14 @@
 import { SfSelect } from '@storefront-ui/vue';
 import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
 import { defaults } from '~/composables';
+import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const props = defineProps<CategoryItemsPerPageProps>();
+
+const { getSortFilterCategoryTemplateBlock } = useCategoryTemplate();
+const sortFilter = getSortFilterCategoryTemplateBlock();
+
+const configuration = computed(() => props.configuration || sortFilter.content || ({} as SortFilterContent));
 
 const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
 const { t } = useI18n();
@@ -58,4 +64,14 @@ const selectedValue =
     : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
 
 const selected = ref(selectedValue);
+
+watch(
+  () => configuration.value?.itemsPerPage,
+  (newItemsPerPage) => {
+    if (newItemsPerPage) {
+      selected.value = newItemsPerPage;
+    }
+  },
+  { immediate: true },
+);
 </script>
