@@ -1,7 +1,7 @@
 <template>
   <div
     data-testid="text-card"
-    :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]"
+    :class="[ 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]"
     :style="inlineStyle"
   >
     <TextContent :text="props.content.text" :button="props.content.button" :index="props.index" />
