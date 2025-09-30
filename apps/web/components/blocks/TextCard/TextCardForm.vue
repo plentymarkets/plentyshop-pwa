@@ -249,47 +249,7 @@
       </label>
     </div>
 
-    <div class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
-      <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span><SfIconArrowUpward /></span>
-          <input
-            v-model.number="textCardBlock.layout.marginTop"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="margin-top"
-          />
-        </div>
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span><SfIconArrowDownward /></span>
-          <input
-            v-model.number="textCardBlock.layout.marginBottom"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="margin-bottom"
-          />
-        </div>
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-          <span><SfIconArrowBack /></span>
-          <input
-            v-model.number="textCardBlock.layout.marginLeft"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="margin-left"
-          />
-        </div>
-        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-          <span><SfIconArrowForward /></span>
-          <input
-            v-model.number="textCardBlock.layout.marginRight"
-            type="number"
-            class="w-12 text-center outline-none"
-            data-testid="margin-right"
-          />
-        </div>
-      </div>
-    </div>
+    <MarginInput v-model="marginModel" :label="getEditorTranslation('margin-label')" />
 
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
@@ -368,10 +328,46 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingBottom: '0',
       paddingLeft: '0',
       paddingRight: '0',
+      marginTop: '0',
+      marginBottom: '0',
+      marginLeft: '0',
+      marginRight: '0',
     };
+  } else {
+    content.layout.marginTop = content.layout.marginTop ?? '0';
+    content.layout.marginBottom = content.layout.marginBottom ?? '0';
+    content.layout.marginLeft = content.layout.marginLeft ?? '0';
+    content.layout.marginRight = content.layout.marginRight ?? '0';
   }
 
   return content as TextCardContent;
+});
+
+const marginModel = reactive({
+  get marginTop() {
+    return textCardBlock.value.layout.marginTop ?? '0';
+  },
+  set marginTop(val: string) {
+    textCardBlock.value.layout.marginTop = val;
+  },
+  get marginBottom() {
+    return textCardBlock.value.layout.marginBottom ?? '0';
+  },
+  set marginBottom(val: string) {
+    textCardBlock.value.layout.marginBottom = val;
+  },
+  get marginLeft() {
+    return textCardBlock.value.layout.marginLeft ?? '0';
+  },
+  set marginLeft(val: string) {
+    textCardBlock.value.layout.marginLeft = val;
+  },
+  get marginRight() {
+    return textCardBlock.value.layout.marginRight ?? '0';
+  },
+  set marginRight(val: string) {
+    textCardBlock.value.layout.marginRight = val;
+  },
 });
 
 const textSettings = ref(false);

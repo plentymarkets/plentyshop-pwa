@@ -32,6 +32,10 @@ const inlineStyle = computed(() => {
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+    marginTop: layout.marginTop ? `${layout.marginTop}px` : 0,
+    marginBottom: layout.marginBottom ? `${layout.marginBottom}px` : 0,
+    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : 0,
+    marginRight: layout.marginRight ? `${layout.marginRight}px` : 0,
   };
 });
 </script>

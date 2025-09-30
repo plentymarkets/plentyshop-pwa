@@ -144,9 +144,7 @@ const isExcluded = (blockName: string, excludedSet: Set<string>) => {
 
 const getBlockClass = (block: Block) =>
   computed(() => ({
-    'lg:px-10': !isExcluded(block.name, containerExcludedBlockSet),
+    'max-w-screen mx-auto lg:px-10 mt-3': !isExcluded(block.name, containerExcludedBlockSet),
     'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
   }));
-
-// mt-3 was for padding top margin for all blocks except multigrid and footer. Removed as per PR comments.
 </script>
