@@ -14,7 +14,7 @@
         name="firstName"
         autocomplete="given-name"
         v-bind="firstNameAttributes"
-        :invalid="Boolean(errors['firstName'])"
+        :invalid="!!errors['firstName']"
       />
       <ErrorMessage as="span" name="firstName" class="flex text-negative-700 text-sm mt-2" />
     </label>
@@ -28,36 +28,49 @@
         name="lastName"
         autocomplete="family-name"
         v-bind="lastNameAttributes"
-        :invalid="Boolean(errors['lastName'])"
+        :invalid="!!errors['lastName']"
       />
       <ErrorMessage as="span" name="lastName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <div class="md:col-span-3">
-      <SfLink class="select-none hover:cursor-pointer" @click="hasCompany = !hasCompany">
+      <SfLink
+        class="select-none hover:cursor-pointer"
+        role="button"
+        tabindex="0"
+        :aria-pressed="hasCompany"
+        :aria-label="!hasCompany ? t('form.addCompany') : t('form.removeCompany')"
+        @click="hasCompany = !hasCompany"
+        @keydown.enter.space="hasCompany = !hasCompany"
+      >
         {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
       </SfLink>
     </div>
 
-    <label v-if="hasCompany">
-      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
+    <label v-if="hasCompany" for="billingCompanyName">
+      <UiFormLabel for="billingCompanyName">{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        id="billingCompanyName"
         v-model="companyName"
         name="companyName"
-        autocomplete="company"
+        autocomplete="organization"
         v-bind="companyNameAttributes"
-        :invalid="Boolean(errors['companyName'])"
+        :invalid="!!errors['companyName']"
+        :aria-invalid="!!errors['companyName']"
       />
       <ErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
-    <label v-if="hasCompany" class="md:col-span-2">
-      <UiFormLabel>{{ t('form.vatIdLabel') }}</UiFormLabel>
+    <label v-if="hasCompany" class="md:col-span-2" for="billingVatNumber">
+      <UiFormLabel for="billingVatNumber">{{ t('form.vatIdLabel') }}</UiFormLabel>
       <SfInput
+        id="billingVatNumber"
         v-model="vatNumber"
-        autocomplete="vatNumber"
+        name="vatNumber"
+        autocomplete="vat-number"
         v-bind="vatNumberAttributes"
         :invalid="invalidVAT"
+        :aria-invalid="invalidVAT"
         @input="clearInvalidVAT"
       />
       <span v-if="invalidVAT" class="flex text-negative-700 text-sm mt-2">
@@ -72,7 +85,7 @@
         name="streetName"
         autocomplete="address-line1"
         v-bind="streetNameAttributes"
-        :invalid="Boolean(errors['streetName'])"
+        :invalid="!!errors['streetName']"
       />
       <ErrorMessage as="span" name="streetName" class="flex text-negative-700 text-sm mt-2" />
     </label>
@@ -84,7 +97,7 @@
         name="streetNumber"
         autocomplete="address-line2"
         v-bind="apartmentAttributes"
-        :invalid="Boolean(errors['apartment'])"
+        :invalid="!!errors['apartment']"
       />
       <ErrorMessage as="span" name="apartment" class="flex text-negative-700 text-sm mt-2" />
     </label>
@@ -96,7 +109,7 @@
         name="zipCode"
         autocomplete="postal-code"
         v-bind="zipCodeAttributes"
-        :invalid="Boolean(errors['zipCode'])"
+        :invalid="!!errors['zipCode']"
       />
       <ErrorMessage id="billingZipCodeError" as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
     </label>
@@ -108,7 +121,7 @@
         name="city"
         autocomplete="address-level2"
         v-bind="cityAttributes"
-        :invalid="Boolean(errors['city'])"
+        :invalid="!!errors['city']"
       />
       <ErrorMessage as="span" name="city" class="flex text-negative-700 text-sm mt-2" />
     </label>
@@ -120,7 +133,7 @@
         name="country"
         v-bind="countryAttributes"
         :placeholder="t('form.selectPlaceholder')"
-        :invalid="Boolean(errors['country'])"
+        :invalid="!!errors['country']"
         wrapper-class-name="bg-white"
         class="!ring-1 !ring-neutral-200"
         autocomplete="country-name"
@@ -212,9 +225,7 @@ const showAddressSaveButton = computed(() => editing.value || showNewForm.value)
 const guestHasShippingAsBilling = computed(() => isGuest.value && shippingAsBilling.value);
 
 if (!addAddress && address) {
-  hasCompany.value = addressToSave.value?.companyName
-    ? true
-    : Boolean(userAddressGetters.getCompanyName(address as Address));
+  hasCompany.value = addressToSave.value?.companyName ? true : !!userAddressGetters.getCompanyName(address as Address);
 
   const addressSource = invalidVAT.value ? addressToSave.value : address;
 
