@@ -9,10 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Contact Form"
+    "label": "General Settings"
   },
   "de": {
-    "label": "Contact Form"
+    "label": "General Settings"
   }
 }
 </i18n>
