@@ -20,8 +20,7 @@
       data-testid="available-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
-      label="label"
-      track-by="value"
+      :custom-label="(option) => $dynamicEditorTranslation(option)"
       :allow-empty="false"
       class="cursor-pointer"
       select-label=""
@@ -39,12 +38,12 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
-import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getJsonSetting } = useSiteSettings('availableSortingOptions');
 const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption } =
   useSiteSettings('defaultSortingOption');
 const { updateSorting } = useCategoryFilter();
+const { $dynamicEditorTranslation } = useNuxtApp();
 
 const sortingOptionValues = [
   'item.score',
@@ -69,16 +68,15 @@ const sortingOptionValues = [
   'item.feedbackDecimal_desc',
 ];
 
-const sortingOptions = computed(() => getMappedOptions(sortingOptionValues));
+const sortingOptions = computed(() => sortingOptionValues);
 
 const availableSortingOptions = computed({
   get: () => {
     const values: string[] = getJsonSetting() || [];
-    return sortingOptions.value.filter((sortingOption: SortingOption) => values.includes(sortingOption.value));
+    return sortingOptions.value.filter((option) => values.includes(option));
   },
-  set: (selectedOptions: SortingOption[]) => {
-    const values = selectedOptions.map((sortingOption: SortingOption) => sortingOption.value);
-    updateSetting(JSON.stringify(values));
+  set: (selectedOptions: string[]) => {
+    updateSetting(JSON.stringify(selectedOptions));
   },
 });
 

@@ -18,8 +18,7 @@
       data-testid="default-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
-      label="label"
-      track-by="value"
+      :custom-label="(option) => $dynamicEditorTranslation(option)"
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
@@ -32,23 +31,22 @@
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
-import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('defaultSortingOption');
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 const { updateSorting } = useCategoryFilter();
+const { $dynamicEditorTranslation } = useNuxtApp();
 
-const sortingOptions = computed(() => getMappedOptions(availableSortingOptions()));
+const sortingOptions = computed(() => availableSortingOptions());
 
 const defaultSortingOption = computed({
   get: () => {
-    return sortingOptions.value.find((o: SortingOption) => o.value === getSetting());
+    return sortingOptions.value.find((option) => option === getSetting());
   },
   set: (option) => {
-    updateSetting(option?.value ?? '');
+    updateSetting(option ?? '');
     if (isPageOfType('category')) {
-      updateSorting(option?.value ?? '');
+      updateSorting(option ?? '');
     }
   },
 });
