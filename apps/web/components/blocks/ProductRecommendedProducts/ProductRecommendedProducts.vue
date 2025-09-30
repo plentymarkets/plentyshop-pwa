@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs">
+  <div v-bind="$attrs" :style="inlineStyle">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
     <ProductSlider v-if="recommendedProducts?.length && shouldRender" :items="recommendedProducts" />
   </div>
@@ -28,5 +28,16 @@ watch(
 
 watch([() => props.content.categoryId, () => locale], () => {
   if (shouldFetch.value) fetchProductRecommended(props.content.categoryId);
+});
+
+const inlineStyle = computed(() => {
+  const layout = props.content.layout || {};
+
+  return {
+    marginTop: layout.marginTop ? `${layout.marginTop}px` : 0,
+    marginBottom: layout.marginBottom ? `${layout.marginBottom}px` : 0,
+    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : 0,
+    marginRight: layout.marginRight ? `${layout.marginRight}px` : 0,
+  };
 });
 </script>

@@ -39,6 +39,12 @@ const mockProps: ProductRecommendedProductsProps = {
       title: 'Recommended Products',
       subtitle: 'You might also like',
     },
+    layout: {
+      marginTop: '',
+      marginBottom: '',
+      marginLeft: '',
+      marginRight: '',
+    },
   },
   meta: {
     uuid: 'test-uuid',

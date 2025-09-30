@@ -22,4 +22,10 @@ export type ProductRecommendedProductsContent = {
     color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
+  layout: {
+    marginTop: string;
+    marginBottom: string;
+    marginLeft: string;
+    marginRight: string;
+  }
 };
