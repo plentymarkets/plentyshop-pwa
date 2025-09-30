@@ -28,11 +28,11 @@ const contactEmail = computed({
 {
   "en": {
     "label": "Contact Form Email",
-    "tooltip": "Email"
+    "tooltip": "Enter the email address to which messages from the contact form should be sent."
   },
   "de": {
     "label": "Contact Form Email",
-    "tooltip": "Email"
+    "tooltip": "Geben Sie die E-Mail-Adresse ein, an die Nachrichten aus dem Kontaktformular gesendet werden sollen."
   }
 }
 </i18n>
