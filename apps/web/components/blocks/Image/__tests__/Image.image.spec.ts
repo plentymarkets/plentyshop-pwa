@@ -1,46 +1,7 @@
-import type { ImageProps } from '../types';
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Image from '../Image.vue';
-
-const imageBlockUuid = '45454545-4545-4455-8455-454545454545';
-
-export const mockImageBlock: ImageProps = {
-  name: 'Image',
-  type: 'content',
-  meta: { uuid: imageBlockUuid },
-  content: {
-    image: {
-      wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      alt: 'alt text',
-      imageAlignment: 'right',
-      fillMode: 'fill',
-      aspectRatio: '16 / 9',
-      linktarget: '',
-    },
-    text: {
-      textOverlay: 'New test overlay',
-      textOverlayColor: '#333333',
-      textOverlayAlignY: 'center',
-      textOverlayAlignX: 'center',
-    },
-    button: {
-      label: 'New button',
-      link: '/test-link',
-      variant: 'primary',
-    },
-    layout: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      paddingLeft: 0,
-      paddingRight: 0,
-      backgroundColor: '#fff',
-    },
-  },
-};
+import { mockImageBlock } from './Image.mock';
 
 describe('Image block', () => {
   it('should render all image sources and attributes correctly', () => {
@@ -68,8 +29,6 @@ describe('Image block', () => {
         ...mockImageBlock.content,
         image: {
           ...mockImageBlock.content.image,
-          src: '/img.jpg',
-          alt: 'Test alt',
           linktarget: '/test-link',
         },
       },
@@ -79,21 +38,13 @@ describe('Image block', () => {
       props: blockWithLink,
       global: {
         stubs: {
-          NuxtLink: defineComponent({
-            name: 'NuxtLink',
-            inheritAttrs: false,
-            props: { to: { type: [String, Object], required: false } },
-            setup(props, { slots, attrs }) {
-              return () => h('a', { 'data-testid': 'image-link', to: props.to, ...attrs }, slots.default?.());
-            },
-          }),
-          NuxtImg: defineComponent({
-            name: 'NuxtImg',
-            inheritAttrs: false,
-            setup(_, { attrs }) {
-              return () => h('img', { 'data-testid': 'image-block', ...attrs });
-            },
-          }),
+          NuxtLink: {
+            template: '<a data-testid="image-link" :to="to" :aria-label="ariaLabel"><slot /></a>',
+            props: ['to', 'ariaLabel'],
+          },
+          NuxtImg: {
+            template: '<img data-testid="image-block" v-bind="$attrs" />',
+          },
         },
       },
     });
