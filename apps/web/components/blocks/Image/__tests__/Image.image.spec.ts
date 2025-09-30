@@ -58,4 +58,37 @@ describe('Image block', () => {
     expect(img.exists()).toBe(true);
     expect(img.attributes('alt')).toBe(blockWithLink.content.image.alt);
   });
+
+  it('should wrap image in a div (not NuxtLink) when linktarget is missing or empty', () => {
+    const blockWithoutLink = {
+      ...mockImageBlock,
+      content: {
+        ...mockImageBlock.content,
+        image: {
+          ...mockImageBlock.content.image,
+          linktarget: '',
+        },
+      },
+    };
+    const wrapper = mount(Image, {
+      props: blockWithoutLink,
+      global: {
+        stubs: {
+          NuxtLink: {
+            template: '<a data-testid="image-link" :to="to" :aria-label="ariaLabel"><slot /></a>',
+            props: ['to', 'ariaLabel'],
+          },
+          NuxtImg: {
+            template: '<img data-testid="image-block" v-bind="$attrs" />',
+          },
+        },
+      },
+    });
+    const wrapperEl = wrapper.find('[data-testid="image-link"]');
+    expect(wrapperEl.exists()).toBe(true);
+    expect(wrapperEl.element.tagName.toLowerCase()).toBe('div');
+    expect(wrapperEl.attributes('to')).toBeUndefined();
+    const img = wrapper.find('[data-testid="image-block"]');
+    expect(img.exists()).toBe(true);
+  });
 });
