@@ -117,6 +117,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
       metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
       robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
+      contactShopEmail: process.env.NUXT_PUBLIC_CONTACT_SHOP_EMAIL || 'your@email.com',
       robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
       robotsContactPage: process.env.NUXT_PUBLIC_ROBOTS_CONTACT_PAGE || 'all',
       robotsCancellationRights: process.env.NUXT_PUBLIC_ROBOTS_CANCELLATION_RIGHTS || 'all',
