@@ -248,6 +248,49 @@
         </SfInput>
       </label>
     </div>
+
+    <div class="py-2">
+      <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
+      <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowUpward /></span>
+          <input
+            v-model.number="textCardBlock.layout.marginTop"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="margin-top"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowDownward /></span>
+          <input
+            v-model.number="textCardBlock.layout.marginBottom"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="margin-bottom"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+          <span><SfIconArrowBack /></span>
+          <input
+            v-model.number="textCardBlock.layout.marginLeft"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="margin-left"
+          />
+        </div>
+        <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+          <span><SfIconArrowForward /></span>
+          <input
+            v-model.number="textCardBlock.layout.marginRight"
+            type="number"
+            class="w-12 text-center outline-none"
+            data-testid="margin-right"
+          />
+        </div>
+      </div>
+    </div>
+
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -287,11 +330,6 @@
             data-testid="padding-right"
           />
         </div>
-      </div>
-      <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">
-          {{ getEditorTranslation('spacing-around') }}
-        </span>
       </div>
     </div>
   </UiAccordionItem>
@@ -373,6 +411,7 @@ watch([isTransparent, backgroundColor], () => {
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
+    "margin-label": "Margin",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "Keep background transparent"
   },
@@ -398,6 +437,7 @@ watch([isTransparent, backgroundColor], () => {
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
+    "margin-label": "Margin",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "or keep transparent"
   }

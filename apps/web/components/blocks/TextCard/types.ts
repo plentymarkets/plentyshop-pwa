@@ -29,6 +29,10 @@ export type TextCardContent = {
     paddingBottom?: string;
     paddingLeft?: string;
     paddingRight?: string;
+    marginTop?: string;
+    marginBottom?: string;
+    marginLeft?: string;
+    marginRight?: string;
   };
 };
 
