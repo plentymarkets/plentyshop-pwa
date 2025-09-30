@@ -11,8 +11,7 @@
       data-testid="recommended-first-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
-      label="label"
-      track-by="value"
+      :custom-label="(option) => $dynamicEditorTranslation(option)"
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
@@ -24,19 +23,19 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
-import { getRecommendedSortingOptions } from '~/utils/sortingOptionsHelper';
+import { getEditorTranslation, sortingCategory } from '~/utils/sortingOptionsHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('recommendedFirstSortingOption');
 
-const sortingOptions = computed(() => getRecommendedSortingOptions(false));
+const sortingOptions = computed(() => sortingCategory);
+const { $dynamicEditorTranslation } = useNuxtApp();
 
 const recommendedFirstSortingOption = computed({
   get: () => {
-    return sortingOptions.value.find((o: SortingOption) => o.value === getSetting());
+    return sortingOptions.value.find((option) => option === getSetting());
   },
   set: (option) => {
-    updateSetting(option?.value ?? '');
+    updateSetting(option ?? '');
   },
 });
 </script>
