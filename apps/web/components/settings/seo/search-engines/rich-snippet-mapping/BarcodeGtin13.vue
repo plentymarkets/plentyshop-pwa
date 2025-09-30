@@ -22,7 +22,7 @@
       </Multiselect>
     </label>
     <div v-if="seoRichSnippetBarcodeGtin13 === '3'" class="mt-2">
-      <label for="seoRichSnippetBarcodeGtin13Id">Enter barcode ID from variation</label>
+      <label for="seoRichSnippetBarcodeGtin13Id">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeGtin13Id" v-model="seoRichSnippetBarcodeGtin13Id" />
     </div>
   </div>
@@ -55,12 +55,14 @@ const seoRichSnippetBarcodeGtin13Id = computed({
   "en": {
     "label": "Select source for Gtin13 barcode in Rich Snippets of the item page",
     "tooltip": "Select source for Gtin13 barcode in Rich Snippets of the item page",
-    "placeholder": "Select robots"
+    "placeholder": "Select robots",
+    "conditionalLabel": "Enter the barcode ID variation"
   },
   "de": {
     "label": "Select source for Gtin13 barcode in Rich Snippets of the item page",
     "tooltip": "Select source for Gtin13 barcode in Rich Snippets of the item page",
-    "placeholder": "Select robots"
+    "placeholder": "Select robots",
+    "conditionalLabel": "Enter the barcode ID variation"
   }
 }
 </i18n>
