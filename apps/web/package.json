@@ -51,7 +51,7 @@
     "@savvywombat/tailwindcss-grid-areas": "^3.1.0",
     "@storefront-ui/typography": "^2.6.1",
     "@storefront-ui/vue": "^2.6.3",
-    "@types/node": "^20.14.9",
+    "@types/node": "^24.6.0",
     "@vite-pwa/nuxt": "^1.0.4",
     "@vitest/coverage-v8": "^3.0.5",
     "@vue-storefront/eslint-config": "^5.1.1",
