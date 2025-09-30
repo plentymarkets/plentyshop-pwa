@@ -97,6 +97,7 @@ export default defineNuxtConfig({
         'customer-management',
         'variation-position-based-on-sales',
         'security',
+        'vat-number-validation',
       ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
@@ -181,7 +182,7 @@ export default defineNuxtConfig({
       headerBackgroundColor:
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
-      showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
+      showCustomerWishComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_WISH_COMPONENT === 'true',
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       vatNumberValidation: process.env.NUXT_PUBLIC_VAT_NUMBER_VALIDATION || 'true',
       itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
