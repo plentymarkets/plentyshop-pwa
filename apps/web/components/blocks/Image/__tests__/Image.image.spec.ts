@@ -14,7 +14,7 @@ describe('Image block', () => {
     expect(wrapper.html()).toContain(mockImageBlock.content.image.tablet);
     expect(wrapper.html()).toContain(mockImageBlock.content.image.mobile);
 
-    const img = wrapper.find('img, [data-testid="image-block"]');
+    const img = wrapper.find('img, [data-testid="image-block-image"]');
     expect(img.attributes('alt')).toBe(mockImageBlock.content.image.alt);
 
     expect(wrapper.props().content.image.imageAlignment).toBe('right');
@@ -43,7 +43,7 @@ describe('Image block', () => {
             props: ['to', 'ariaLabel'],
           },
           NuxtImg: {
-            template: '<img data-testid="image-block" v-bind="$attrs" />',
+            template: '<img data-testid="image-block-image" v-bind="$attrs" />',
           },
         },
       },
@@ -54,7 +54,7 @@ describe('Image block', () => {
     expect(link.attributes('to')).toBe('/test-link');
     expect(link.attributes('aria-label')).toBe(blockWithLink.content.image.alt);
 
-    const img = wrapper.find('[data-testid="image-block"]');
+    const img = wrapper.find('[data-testid="image-block-image"]');
     expect(img.exists()).toBe(true);
     expect(img.attributes('alt')).toBe(blockWithLink.content.image.alt);
   });
@@ -79,7 +79,7 @@ describe('Image block', () => {
             props: ['to', 'ariaLabel'],
           },
           NuxtImg: {
-            template: '<img data-testid="image-block" v-bind="$attrs" />',
+            template: '<img data-testid="image-block-image" v-bind="$attrs" />',
           },
         },
       },
@@ -88,7 +88,7 @@ describe('Image block', () => {
     expect(wrapperEl.exists()).toBe(true);
     expect(wrapperEl.element.tagName.toLowerCase()).toBe('div');
     expect(wrapperEl.attributes('to')).toBeUndefined();
-    const img = wrapper.find('[data-testid="image-block"]');
+    const img = wrapper.find('[data-testid="image-block-image"]');
     expect(img.exists()).toBe(true);
   });
 });
