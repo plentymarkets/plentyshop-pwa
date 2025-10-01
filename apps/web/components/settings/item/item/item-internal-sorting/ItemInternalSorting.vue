@@ -7,8 +7,12 @@
       </div>
       <label>
         <SfSelect v-model="paginationSortingDynamicInherit" data-testid="editor-internal-item-sorting" class="w-full">
-          <option v-for="sortingOption in fromItemSortingOptions" :key="sortingOption" :value="sortingOption"
-            class="font-medium text-sm md:text-base">
+          <option
+            v-for="sortingOption in fromItemSortingOptions"
+            :key="sortingOption"
+            :value="sortingOption"
+            class="font-medium text-sm md:text-base"
+          >
             {{ getEditorTranslation(sortingOption) }}
           </option>
         </SfSelect>
@@ -19,8 +23,12 @@
       <p class="mb-4">{{ getEditorTranslation('sortingLabel1') }}</p>
       <label>
         <SfSelect v-model="paginationSortingDynamicPrio1" data-testid="editor-internal-item-sorting" class="w-full">
-          <option v-for="optionForSorting1 in paginationSortingDynamicInheritExtra" :key="optionForSorting1" :value="optionForSorting1"
-            class="font-medium text-sm md:text-base">
+          <option
+            v-for="optionForSorting1 in paginationSortingDynamicInheritExtra"
+            :key="optionForSorting1"
+            :value="optionForSorting1"
+            class="font-medium text-sm md:text-base"
+          >
             {{ getEditorTranslation(optionForSorting1) }}
           </option>
         </SfSelect>
@@ -31,8 +39,12 @@
       <p class="mb-4">{{ getEditorTranslation('sortingLabel2') }}</p>
       <label>
         <SfSelect v-model="paginationSortingDynamicPrio2" data-testid="editor-internal-item-sorting" class="w-full">
-          <option v-for="optionForSorting2 in paginationSortingDynamicInheritExtra" :key="optionForSorting2" :value="optionForSorting2"
-            class="font-medium text-sm md:text-base">
+          <option
+            v-for="optionForSorting2 in paginationSortingDynamicInheritExtra"
+            :key="optionForSorting2"
+            :value="optionForSorting2"
+            class="font-medium text-sm md:text-base"
+          >
             {{ getEditorTranslation(optionForSorting2) }}
           </option>
         </SfSelect>
@@ -44,9 +56,12 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('paginationSortingDynamicInherit');
-const { updateSetting: updateSettingProp1, getSetting: getSettingProp1 } = useSiteSettings('paginationSortingDynamicPrio1');
-const { updateSetting: updateSettingProp2, getSetting: getSettingProp2 } = useSiteSettings('paginationSortingDynamicPrio2');
-
+const { updateSetting: updateSettingProp1, getSetting: getSettingProp1 } = useSiteSettings(
+  'paginationSortingDynamicPrio1',
+);
+const { updateSetting: updateSettingProp2, getSetting: getSettingProp2 } = useSiteSettings(
+  'paginationSortingDynamicPrio2',
+);
 
 const fromItemSortingOptions = ref([
   'filter.prices.price_asc',
@@ -63,14 +78,14 @@ const paginationSortingDynamicInherit = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
-const paginationSortingDynamicPrio1  = computed({
+const paginationSortingDynamicPrio1 = computed({
   get: () => getSettingProp1(),
   set: (value) => updateSettingProp1(value),
 });
 
 const paginationSortingDynamicInheritExtra = computed({
-  get: () => ["filter.isMain_desc", ...fromItemSortingOptions.value, "variationId_asc", "variationId_desc"],
-  set: () => {}
+  get: () => ['filter.isMain_desc', ...fromItemSortingOptions.value, 'variationId_asc', 'variationId_desc'],
+  set: () => {},
 });
 const paginationSortingDynamicPrio2 = computed({
   get: () => getSettingProp2(),
@@ -78,7 +93,8 @@ const paginationSortingDynamicPrio2 = computed({
 });
 </script>
 
-<i18n lang="json">{
+<i18n lang="json">
+{
   "en": {
     "label": "Internal Item Sorting",
     "sortingLabel1": "Sorting option 1",
@@ -112,5 +128,6 @@ const paginationSortingDynamicPrio2 = computed({
     "filter.isMain_desc": "Main Variation First",
     "variationId_asc": "Variation ID ⬆",
     "variationId_desc": "Variation ID ⬇"
-  },
-}</i18n>
+  }
+}
+</i18n>
