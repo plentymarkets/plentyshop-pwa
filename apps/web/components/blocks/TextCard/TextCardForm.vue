@@ -310,7 +310,15 @@ import type { TextCardFormProps, TextCardContent } from './types';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.uuid || blockUuid.value);
+});
+const DEFAULT_MARGIN = 40;
+
+const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
+const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
 
 const props = defineProps<TextCardFormProps>();
 
@@ -330,14 +338,14 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingRight: 0,
       marginTop: 0,
       marginBottom: 0,
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: defaultMarginLeft.value,
+      marginRight: defaultMarginRight.value,
     };
   } else {
     content.layout.marginTop = content.layout.marginTop ?? 0;
     content.layout.marginBottom = content.layout.marginBottom ?? 0;
-    content.layout.marginLeft = content.layout.marginLeft ?? 0;
-    content.layout.marginRight = content.layout.marginRight ?? 0;
+    content.layout.marginLeft = content.layout.marginLeft ?? defaultMarginLeft.value;
+    content.layout.marginRight = content.layout.marginRight ?? defaultMarginRight.value;
   }
 
   return content as TextCardContent;
