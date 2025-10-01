@@ -83,7 +83,7 @@ watch(
   () => props.content?.fields,
   (newValue) => {
     checkSortAndFiltersEnabled.value =
-        !!newValue && Object.values(newValue as SortFilterFieldsVisibility).some(Boolean);
+      !!newValue && Object.values(newValue as SortFilterFieldsVisibility).some(Boolean);
   },
   { deep: true, immediate: true },
 );
