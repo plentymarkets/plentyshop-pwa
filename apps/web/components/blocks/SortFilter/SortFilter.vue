@@ -82,8 +82,7 @@ const showSortAndFilter = ref(false);
 watch(
   () => props.content?.fields,
   (newValue) => {
-    showSortAndFilter.value =
-      !!newValue && Object.values(newValue as SortFilterFieldsVisibility).some(Boolean);
+    showSortAndFilter.value = !!newValue && Object.values(newValue as SortFilterFieldsVisibility).some(Boolean);
   },
   { deep: true, immediate: true },
 );
