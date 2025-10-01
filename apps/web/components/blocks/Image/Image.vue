@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full flex justify-center" :style="wrapperStyle" data-testid="image-block-wrapper">
+  <div class="relative w-full flex justify-center" :style="wrapperStyle" data-testid="image-block">
     <component
       :is="linkTag"
       v-if="hasImage"
