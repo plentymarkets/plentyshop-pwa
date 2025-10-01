@@ -8,18 +8,26 @@
       </SfTooltip>
     </div>
 
-    <SfSelect v-model="seoRichSnippetManufacturer" data-testid="seo-manufacturer" class="w-full" :placeholder="getEditorTranslation('placeholder')">
-      <option v-for="sortingOption in seoRichSnippetManufacturers" :key="sortingOption" :value="sortingOption"
-        class="font-medium text-sm md:text-base">
+    <SfSelect
+      v-model="seoRichSnippetManufacturer"
+      data-testid="seo-manufacturer"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in seoRichSnippetManufacturers"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
+      >
         {{ getEditorTranslation('seoRichSnippetManufacturer-' + sortingOption) }}
       </option>
     </SfSelect>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
 const seoRichSnippetManufacturers = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetManufacturer');

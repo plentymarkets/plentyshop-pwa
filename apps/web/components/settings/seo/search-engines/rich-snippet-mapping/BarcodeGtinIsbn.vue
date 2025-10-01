@@ -8,9 +8,18 @@
       </SfTooltip>
     </div>
 
-    <SfSelect v-model="seoRichSnippetBarcodeIsbn" data-testid="seo-barcode-gtin-isbn" class="w-full" :placeholder="getEditorTranslation('placeholder')">
-      <option v-for="sortingOption in seoRichSnippetBarcodeIsbns" :key="sortingOption" :value="sortingOption"
-        class="font-medium text-sm md:text-base">
+    <SfSelect
+      v-model="seoRichSnippetBarcodeIsbn"
+      data-testid="seo-barcode-gtin-isbn"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in seoRichSnippetBarcodeIsbns"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
+      >
         {{ getEditorTranslation('seoRichSnippetBarcodeIsbn-' + sortingOption) }}
       </option>
     </SfSelect>

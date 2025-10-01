@@ -7,21 +7,21 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <Multiselect
-        v-model="robotsItemPage"
-        :options="Object.keys(robotsItemOptions)"
-        :placeholder="getEditorTranslation('placeholder')"
-        :searchable="false"
-        data-testid="seo-robots-item-page"
+    <SfSelect
+      v-model="robotsItemPage"
+      data-testid="seo-robots-item-page"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in robotsItemOptions"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
       >
-        <template #singleLabel="{ option }">
-          {{ robotsItemOptions[option] }}
-        </template>
-        <template #option="props"> {{ robotsItemOptions[props.option] }} </template>
-      </Multiselect>
-    </label>
-    
+        {{ getEditorTranslation('robotsItemPage-' + sortingOption) }}
+      </option>
+    </SfSelect>
     <div v-if="robotsItemPage === 'varProp'" class="mt-2">
       <label for="robotsItemPageId">ID from property of type 'Text'</label>
       <SfInput id="robotsItemPageId" v-model="robotsItemPageId" />
@@ -29,9 +29,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import Multiselect from 'vue-multiselect';
-import { robotsItemOptions } from '~/utils/editorSettings';
+import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+const robotsItemOptions = ref(['all', 'noindex', 'nofollow', 'noindex nofollow', 'varProp']);
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('robotsItemPageId');
@@ -53,12 +52,21 @@ const robotsItemPageId = computed({
   "en": {
     "label": "Select Robots for single item views",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
-    "placeholder": "Select robots"
+    "placeholder": "Select robots",
+    "robotsItemPage-all": "all",
+    "robotsItemPage-noindex": "noindex",
+    "robotsItemPage-nofollow": "nofollow",
+    "robotsItemPage-noindex nofollow": "noindex nofollow",
+    "robotsItemPage-varProp": "Selection via variation property of the type 'Text'. Default value = 'all'"
   },
   "de": {
     "label": "Select Robots for single item views",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
-    "placeholder": "Select robots"
+    "placeholder": "Select robots",
+    "robotsItemPage-all": "all",
+    "robotsItemPage-noindex": "noindex",
+    "robotsItemPage-noindex nofollow": "noindex nofollow",
+    "robotsItemPage-varProp": "Selection via variation property of the type 'Text'. Default value = 'all'"
   }
 }
 </i18n>

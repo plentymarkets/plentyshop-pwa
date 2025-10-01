@@ -7,9 +7,18 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect v-model="seoRichSnippetBrand" data-testid="seo-brand" class="w-full" :placeholder="getEditorTranslation('placeholder')">
-      <option v-for="sortingOption in seoRichSnippetBrands" :key="sortingOption" :value="sortingOption"
-        class="font-medium text-sm md:text-base">
+    <SfSelect
+      v-model="seoRichSnippetBrand"
+      data-testid="seo-brand"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in seoRichSnippetBrands"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
+      >
         {{ getEditorTranslation('seoRichSnippetBrandOption-' + sortingOption) }}
       </option>
     </SfSelect>
@@ -36,10 +45,11 @@ const seoRichSnippetBrandId = computed({
   get: () => getSettingForId(),
   set: (value) => updateSettingForId(value),
 });
-const seoRichSnippetBrands = ref(['1','2', '3']);
+const seoRichSnippetBrands = ref(['1', '2', '3']);
 </script>
 
-<i18n lang="json">{
+<i18n lang="json">
+{
   "en": {
     "label": "Select source for the brand in Rich Snippets of the item page",
     "tooltip": "Select source for the brand in Rich Snippets of the item page",
@@ -47,7 +57,7 @@ const seoRichSnippetBrands = ref(['1','2', '3']);
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "Do not display",
     "seoRichSnippetBrandOption-2": "External name of the brand",
-    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text",
+    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
   },
   "de": {
     "label": "Select source for the brand in Rich Snippets of the item page",
@@ -58,4 +68,5 @@ const seoRichSnippetBrands = ref(['1','2', '3']);
     "seoRichSnippetBrandOption-2": "External name of the brand",
     "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
   }
-}</i18n>
+}
+</i18n>

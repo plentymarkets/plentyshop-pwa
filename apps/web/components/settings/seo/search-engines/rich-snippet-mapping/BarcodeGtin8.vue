@@ -7,9 +7,18 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect v-model="seoRichSnippetBarcodeGtin8" data-testid="seo-barcode-gtin8" class="w-full" :placeholder="getEditorTranslation('placeholder')">
-      <option v-for="sortingOption in seoRichSnippetBarcodeGtin8s" :key="sortingOption" :value="sortingOption"
-        class="font-medium text-sm md:text-base">
+    <SfSelect
+      v-model="seoRichSnippetBarcodeGtin8"
+      data-testid="seo-barcode-gtin8"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in seoRichSnippetBarcodeGtin8s"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
+      >
         {{ getEditorTranslation('seoRichSnippetBarcodeGtin8-' + sortingOption) }}
       </option>
     </SfSelect>
@@ -61,4 +70,3 @@ const seoRichSnippetBarcodeGtin8Id = computed({
   }
 }
 </i18n>
-  

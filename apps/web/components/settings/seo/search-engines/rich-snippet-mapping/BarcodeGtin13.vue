@@ -7,9 +7,18 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect v-model="seoRichSnippetBarcodeGtin13" data-testid="seo-barcode-gtin13" class="w-full" :placeholder="getEditorTranslation('placeholder')">
-      <option v-for="sortingOption in seoRichSnippetBarcodeGtin13s" :key="sortingOption" :value="sortingOption"
-        class="font-medium text-sm md:text-base">
+    <SfSelect
+      v-model="seoRichSnippetBarcodeGtin13"
+      data-testid="seo-barcode-gtin13"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in seoRichSnippetBarcodeGtin13s"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
+      >
         {{ getEditorTranslation('seoRichSnippetBarcodeGtin13-' + sortingOption) }}
       </option>
     </SfSelect>
@@ -25,8 +34,9 @@ import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
 const seoRichSnippetBarcodeGtin13s = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeGtin13');
-const { updateSetting: updateSettingForId, getSetting: getSettingForId } =
-  useSiteSettings('seoRichSnippetBarcodeGtin13Id');
+const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings(
+  'seoRichSnippetBarcodeGtin13Id',
+);
 
 const seoRichSnippetBarcodeGtin13 = computed({
   get: () => getSetting(),
@@ -61,4 +71,3 @@ const seoRichSnippetBarcodeGtin13Id = computed({
   }
 }
 </i18n>
-  

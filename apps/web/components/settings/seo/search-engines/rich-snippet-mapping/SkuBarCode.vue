@@ -8,9 +8,18 @@
       </SfTooltip>
     </div>
 
-    <SfSelect v-model="seoRichSnippetSkuBarcode" data-testid="seo-sku-barcode" class="w-full" :placeholder="getEditorTranslation('placeholder')">
-      <option v-for="sortingOption in seoRichSnippetSkuBarcodes" :key="sortingOption" :value="sortingOption"
-        class="font-medium text-sm md:text-base">
+    <SfSelect
+      v-model="seoRichSnippetSkuBarcode"
+      data-testid="seo-sku-barcode"
+      class="w-full"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
+      <option
+        v-for="sortingOption in seoRichSnippetSkuBarcodes"
+        :key="sortingOption"
+        :value="sortingOption"
+        class="font-medium text-sm md:text-base"
+      >
         {{ getEditorTranslation('seoRichSnippetSkuBarcode-' + sortingOption) }}
       </option>
     </SfSelect>
