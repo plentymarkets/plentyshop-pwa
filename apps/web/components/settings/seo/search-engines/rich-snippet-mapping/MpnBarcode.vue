@@ -13,7 +13,7 @@
         :options="Object.keys(seoRichSnippetMpnBarcodes)"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
-        data-testid="seo-robots-item-page"
+        data-testid="seo-mpn-barcode"
       >
         <template #singleLabel="{ option }">
           {{ seoRichSnippetMpnBarcodes[option] }}

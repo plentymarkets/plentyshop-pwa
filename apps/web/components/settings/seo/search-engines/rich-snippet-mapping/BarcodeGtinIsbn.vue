@@ -13,7 +13,7 @@
         :options="Object.keys(seoRichSnippetBarcodeIsbns)"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
-        data-testid="seo-robots-item-page"
+        data-testid="seo-barcode-gtin-isbn"
       >
         <template #singleLabel="{ option }">
           {{ seoRichSnippetBarcodeIsbns[option] }}

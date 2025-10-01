@@ -13,7 +13,7 @@
         :options="Object.keys(seoRichSnippetSkuBarcodes)"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
-        data-testid="seo-robots-item-page"
+        data-testid="seo-sku-barcode"
       >
         <template #singleLabel="{ option }">
           {{ seoRichSnippetSkuBarcodes[option] }}

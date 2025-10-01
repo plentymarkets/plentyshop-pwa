@@ -13,7 +13,7 @@
         :options="Object.keys(seoRichSnippetBrands)"
         :placeholder="getEditorTranslation('placeholder')"
         :searchable="false"
-        data-testid="seo-robots-item-page"
+        data-testid="seo-brand"
       >
         <template #singleLabel="{ option }">
           {{ seoRichSnippetBrands[option] }}

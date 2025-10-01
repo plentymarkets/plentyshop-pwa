@@ -8,6 +8,7 @@
         v-model="seoRichSnippetIdForPriceValidity"
         :placeholder="getEditorTranslation('placeholder')"
         type="text"
+        data-testid="seo-id-for-price-validity"
       />
     </label>
   </div>
