@@ -61,7 +61,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     state.value.initialData = { ...useRuntimeConfig().public, ...result };
   };
 
-  const dirty = computed(() => {
+  const changedFields = computed(() => {
     const config = state.value?.initialData ?? {};
     const currentData = state.value?.data ?? {};
 
@@ -77,8 +77,8 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     };
   });
 
-  const dirtyKeys = computed(() => dirty.value.keys);
-  const settingsIsDirty = computed(() => dirty.value.keys.length > 0);
+  const dirtyKeys = computed(() => changedFields.value.keys);
+  const settingsIsDirty = computed(() => changedFields.value.keys.length > 0);
 
   const saveSiteSettings: SaveSiteSettings = async () => {
     try {
