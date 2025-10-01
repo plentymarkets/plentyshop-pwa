@@ -7,7 +7,12 @@
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <EditablePage v-else :disabled-actions="!!config.enableCategoryEditing" :identifier="identifier" :type="'category'" />
+    <EditablePage
+      v-else
+      :disabled-actions="!!config.enableCategoryEditing"
+      :identifier="identifier"
+      :type="'category'"
+    />
   </NuxtLayout>
 </template>
 
