@@ -23,7 +23,7 @@
         }"
         :width="getImageDimensions().width"
         :height="getImageDimensions().height"
-        data-testid="image-block"
+        data-testid="image-block-image"
       />
     </component>
 
