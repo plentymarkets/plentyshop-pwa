@@ -40,10 +40,10 @@ const mockProps: ProductRecommendedProductsProps = {
       subtitle: 'You might also like',
     },
     layout: {
-      marginTop: '',
-      marginBottom: '',
-      marginLeft: '',
-      marginRight: '',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
     },
   },
   meta: {

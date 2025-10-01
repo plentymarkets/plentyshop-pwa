@@ -23,9 +23,9 @@ export type ProductRecommendedProductsContent = {
     textAlignment?: 'left' | 'center' | 'right';
   };
   layout: {
-    marginTop: string;
-    marginBottom: string;
-    marginLeft: string;
-    marginRight: string;
-  }
+    marginTop: number;
+    marginBottom: number;
+    marginLeft: number;
+    marginRight: number;
+  };
 };

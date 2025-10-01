@@ -3,7 +3,6 @@
     class="relative mt-5 p-4 sm:p-10 text-center"
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5', ...inlineStyles }"
     data-testid="newsletter-block"
-    
   >
     <h1
       v-if="props.index === 0"

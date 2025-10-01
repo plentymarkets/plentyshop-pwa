@@ -378,6 +378,7 @@
         </SfInput>
       </label>
     </div>
+    <MarginInput v-model="marginModel" :label="getEditorTranslation('margin-label')" />
     <div
       id="padding-form"
       class="py-2"
@@ -469,6 +470,10 @@ const DEFAULT_LAYOUT = {
   paddingBottom: 0,
   paddingLeft: 0,
   paddingRight: 0,
+  marginTop: 0,
+  marginBottom: 0,
+  marginLeft: 0,
+  marginRight: 0,
 };
 
 const uiImageTextBlock = computed(() => {
@@ -486,6 +491,8 @@ const uiImageTextBlock = computed(() => {
   }
   return migrated;
 });
+
+const marginModel = useMarginModel(uiImageTextBlock.value.layout);
 
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');

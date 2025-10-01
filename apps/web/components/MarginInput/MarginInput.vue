@@ -47,9 +47,9 @@ import { SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowFor
 import type { MarginInputProps } from './types';
 
 const props = defineProps<MarginInputProps>();
-const modelValue = defineModel<{ marginTop: string; marginBottom: string; marginLeft: string; marginRight: string }>(
+const modelValue = defineModel<{ marginTop: number; marginBottom: number; marginLeft: number; marginRight: number }>(
   'modelValue',
-  { default: () => ({ marginTop: '', marginBottom: '', marginLeft: '', marginRight: '' }) },
+  { default: () => ({ marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0 }) },
 );
 const label = props.label ?? 'Margin';
 </script>

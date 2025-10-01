@@ -147,6 +147,10 @@ const imageInlineStyle = computed(() => {
     paddingBottom: `${layout.paddingBottom ?? 0}px`,
     paddingLeft: `${layout.paddingLeft ?? 0}px`,
     paddingRight: `${layout.paddingRight ?? 0}px`,
+    marginTop: `${layout.marginTop ?? 0}px`,
+    marginBottom: `${layout.marginBottom ?? 0}px`,
+    marginLeft: `${layout.marginLeft ?? 0}px`,
+    marginRight: `${layout.marginRight ?? 0}px`,
     backgroundColor: layout.backgroundColor ?? 'transparent',
   };
 });

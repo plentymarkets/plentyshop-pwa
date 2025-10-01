@@ -152,16 +152,16 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
   if (!content.button) content.button = {};
   if (!content.layout) {
     content.layout = {
-      marginTop: '0',
-      marginBottom: '0',
-      marginLeft: '0',
-      marginRight: '0',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
     };
   } else {
-    content.layout.marginTop = content.layout.marginTop ?? '0';
-    content.layout.marginBottom = content.layout.marginBottom ?? '0';
-    content.layout.marginLeft = content.layout.marginLeft ?? '0';
-    content.layout.marginRight = content.layout.marginRight ?? '0';
+    content.layout.marginTop = content.layout.marginTop ?? 0;
+    content.layout.marginBottom = content.layout.marginBottom ?? 0;
+    content.layout.marginLeft = content.layout.marginLeft ?? 0;
+    content.layout.marginRight = content.layout.marginRight ?? 0;
   }
 
   return content as NewsletterSubscribeContent;
