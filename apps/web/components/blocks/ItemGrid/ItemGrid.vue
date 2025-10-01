@@ -96,12 +96,9 @@ const gridClasses = computed(() =>
   ),
 );
 
-watch(
-    [currentPage, categoryId],
-    ([newPage, newCategory], [oldPage, oldCategory]) => {
-      if (newPage !== oldPage && newCategory === oldCategory) {
-        scrollToHTMLObject('#category-headline', false);
-      }
-    }
-);
+watch([currentPage, categoryId], ([newPage, newCategory], [oldPage, oldCategory]) => {
+  if (newPage !== oldPage && newCategory === oldCategory) {
+    scrollToHTMLObject('#category-headline', false);
+  }
+});
 </script>
