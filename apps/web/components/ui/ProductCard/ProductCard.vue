@@ -161,15 +161,34 @@ import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 
-const props = defineProps<ProductCardProps>();
+const props = withDefaults(defineProps<ProductCardProps>(), {
+  configuration: () => ({
+    cardBorders: true,
+    contentAlignment: 'left',
+    fields: {
+      title: true,
+      rating: true,
+      previewText: false,
+      price: true,
+      addToCart: true,
+    },
+    fieldsOrder: ['title', 'rating', 'previewText', 'price', 'addToCart'],
+    showWishlistButton: false,
+    showSecondImageOnHover: false,
+    addToCartStyle: 'primary',
+    itemsPerRowDesktop: 4,
+    itemsPerRowTablet: 3,
+    itemsPerRowMobile: 1,
+    showItemCount: true,
+    itemCountPosition: 'center',
+    fieldsDisabled: [],
+    paginationPosition: 'bottom',
+  }),
+});
 
 const product = computed(() => props.product);
 
-const { getCategoryTemplateBlock } = useCategoryTemplate();
-
-const itemGrid = getCategoryTemplateBlock();
-
-const configuration = computed(() => props.configuration || itemGrid.content || ({} as ItemGridContent));
+const configuration = computed(() => props.configuration || ({} as ItemGridContent));
 
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();

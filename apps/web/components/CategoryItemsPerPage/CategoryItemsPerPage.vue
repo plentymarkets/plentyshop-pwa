@@ -25,14 +25,8 @@
 import { SfSelect } from '@storefront-ui/vue';
 import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
 import { defaults } from '~/composables';
-import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 
 const props = defineProps<CategoryItemsPerPageProps>();
-
-const { getSortFilterCategoryTemplateBlock } = useCategoryTemplate();
-const sortFilter = getSortFilterCategoryTemplateBlock();
-
-const configuration = computed(() => props.configuration || sortFilter.content || ({} as SortFilterContent));
 
 const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
 const { t } = useI18n();
@@ -64,14 +58,4 @@ const selectedValue =
     : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
 
 const selected = ref(selectedValue);
-
-watch(
-  () => configuration.value?.itemsPerPage,
-  (newItemsPerPage) => {
-    if (newItemsPerPage) {
-      selected.value = newItemsPerPage;
-    }
-  },
-  { immediate: true },
-);
 </script>

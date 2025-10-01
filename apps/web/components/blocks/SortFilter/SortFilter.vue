@@ -10,11 +10,7 @@
       </template>
 
       <template v-if="key === 'perPage' && props.content?.fields.perPage">
-        <CategoryItemsPerPage
-          class="mt-6 mb-4"
-          :total-products="productsCatalog.pagination?.totals ?? 0"
-          :configuration="content"
-        />
+        <CategoryItemsPerPage class="mt-6 mb-4" :total-products="productsCatalog.pagination?.totals ?? 0" />
       </template>
 
       <template v-if="key === 'itemRating' && props.content?.fields.itemRating">

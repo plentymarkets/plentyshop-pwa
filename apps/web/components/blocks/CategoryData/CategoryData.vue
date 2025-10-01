@@ -45,7 +45,6 @@ const { data: productsCatalog } = useProducts();
 
 const category = computed(() => productsCatalog.value.category || props.category || ({} as Category));
 
-
 const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
 const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');
 const description2 = computed(() => categoryGetters.getCategoryDescription2(category.value) || '');

@@ -15,21 +15,23 @@
       @end="handleDragEnd"
     >
       <template #item="{ element: block, index }">
-        <PageBlock
-          :index="index"
-          :block="block"
-          :disable-actions="disableActions"
-          :is-clicked="isClicked"
-          :clicked-block-index="clickedBlockIndex"
-          :is-tablet="isTablet"
-          :block-has-data="blockHasData"
-          :change-block-position="changeBlockPosition"
-          :root="getBlockDepth(block.meta.uuid) === 0"
-          class="group"
-          :class="getBlockClass(block).value"
-          data-testid="block-wrapper"
-          @click="tabletEdit(index)"
-        />
+        <component :is="block?.meta?.narrowContainer ? NarrowContainer : 'div'">
+          <PageBlock
+            :index="index"
+            :block="block"
+            :disable-actions="enabledActions"
+            :is-clicked="isClicked"
+            :clicked-block-index="clickedBlockIndex"
+            :is-tablet="isTablet"
+            :block-has-data="blockHasData"
+            :change-block-position="changeBlockPosition"
+            :root="getBlockDepth(block.meta.uuid) === 0"
+            class="group"
+            :class="getBlockClass(block).value"
+            data-testid="block-wrapper"
+            @click="tabletEdit(index)"
+          />
+        </component>
       </template>
     </draggable>
   </div>
@@ -39,9 +41,14 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
+import NarrowContainer from '~/components/NarrowContainer/NarrowContainer.vue';
 
 const { $isPreview } = useNuxtApp();
 const props = defineProps<EditablePageProps>();
+
+definePageMeta({
+  identifier: props.identifier,
+});
 
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
@@ -97,6 +104,9 @@ const scrollToBlock = (evt: DragEvent) => {
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
+
+const enabledActions = computed(() => !props.disabledActions && disableActions.value);
+
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
@@ -144,7 +154,7 @@ const isExcluded = (blockName: string, excludedSet: Set<string>) => {
 
 const getBlockClass = (block: Block) =>
   computed(() => ({
-    'max-w-screen-3xl mx-auto lg:px-10 mt-3': !isExcluded(block.name, containerExcludedBlockSet),
+    'max-w-screen-3xl mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
     'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
   }));
 </script>
