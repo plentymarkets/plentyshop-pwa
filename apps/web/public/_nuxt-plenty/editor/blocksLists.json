@@ -5,51 +5,6 @@
     "title": "Layout",
     "blockName": "MultiGrid",
     "variations": [
-            {
-        "title": "MultiGrid 12",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png",
-        "template": {
-          "en": {
-            "name": "MultiGrid",
-            "type": "structure",
-            "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
-            "configuration": {
-              "columnWidths": [12]
-            },
-            "content": [
-              {
-                "name": "EmptyGridBlock",
-                "type": "content",
-                "meta": {
-                  "uuid": "12345678-1234-4123-8123-123456789012"
-                },
-                "parent_slot": 0,
-                "content": []
-              }
- 
-            ]
-          },
-          "de": {
-            "name": "MultiGrid",
-            "type": "structure",
-            "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
-            "configuration": {
-              "columnWidths": [12]
-            },
-            "content": [
-              {
-                "name": "EmptyGridBlock",
-                "type": "content",
-                "meta": {
-                  "uuid": "12345678-1234-4123-8123-123456789012"
-                },
-                "parent_slot": 0,
-                "content": []
-              }
-            ]
-          }
-        }
-      },
       {
         "title": "MultiGrid 6-6",
         "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png",
@@ -1081,9 +1036,7 @@
   },
   "item-category": {
     "category": "item-category",
-    "accessControl": [
-      "productCategory"
-    ],
+    "accessControl": ["productCategory"],
     "title": "Item Category",
     "blockName": "ItemGrid",
     "variations": [
@@ -1113,18 +1066,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
@@ -1155,18 +1098,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
