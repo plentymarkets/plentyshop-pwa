@@ -11,7 +11,7 @@
     <div
       v-else
       data-testid="inactive-empty-multicolumn"
-      class="h-[196px] flex-1 border-2 border-dashed border-gray-400 bg-gray-50 p-6 flex flex-col items-center justify-center text-center cursor-pointer"
+      class="h-[196px] flex-1 border-2 border-dashed border-gray-400 bg-gray-50 flex flex-col items-center justify-center text-center cursor-pointer"
       @click.stop="addBlockToColumn()"
     >
       <span class="text-xl font-bold text-gray-700"><SfIconAdd class="text-xl" /></span>
