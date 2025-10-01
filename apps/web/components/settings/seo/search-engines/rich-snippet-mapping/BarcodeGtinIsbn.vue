@@ -7,20 +7,14 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <Multiselect
-        v-model="seoRichSnippetBarcodeIsbn"
-        :options="Object.keys(seoRichSnippetBarcodeIsbns)"
-        :placeholder="getEditorTranslation('placeholder')"
-        :searchable="false"
-        data-testid="seo-barcode-gtin-isbn"
-      >
-        <template #singleLabel="{ option }">
-          {{ seoRichSnippetBarcodeIsbns[option] }}
-        </template>
-        <template #option="props"> {{ seoRichSnippetBarcodeIsbns[props.option] }} </template>
-      </Multiselect>
-    </label>
+
+    <SfSelect v-model="seoRichSnippetBarcodeIsbn" data-testid="seo-barcode-gtin-isbn" class="w-full" :placeholder="getEditorTranslation('placeholder')">
+      <option v-for="sortingOption in seoRichSnippetBarcodeIsbns" :key="sortingOption" :value="sortingOption"
+        class="font-medium text-sm md:text-base">
+        {{ getEditorTranslation('seoRichSnippetBarcodeIsbn-' + sortingOption) }}
+      </option>
+    </SfSelect>
+
     <div v-if="seoRichSnippetBarcodeIsbn === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeIsbnId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeIsbnId" v-model="seoRichSnippetBarcodeIsbnId" />
@@ -29,9 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import Multiselect from 'vue-multiselect';
-import { seoRichSnippetBarcodeIsbns } from '~/utils/editorSettings';
+import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+const seoRichSnippetBarcodeIsbns = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeIsbn');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } =
@@ -54,13 +47,19 @@ const seoRichSnippetBarcodeIsbnId = computed({
     "label": "Select source for ISBN barcode in Rich Snippets of the item page",
     "tooltip": "Select source for ISBN barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the barcode ID variation"
+    "conditionalLabel": "Enter the barcode ID variation",
+    "seoRichSnippetBarcodeIsbn-1": "Do not display",
+    "seoRichSnippetBarcodeIsbn-2": "Use first ISBN barcode from variation",
+    "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
   },
   "de": {
     "label": "Select source for ISBN barcode in Rich Snippets of the item page",
     "tooltip": "Select source for ISBN barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the barcode ID variation"
+    "conditionalLabel": "Enter the barcode ID variation",
+    "seoRichSnippetBarcodeIsbn-1": "Do not display",
+    "seoRichSnippetBarcodeIsbn-2": "Use first ISBN barcode from variation",
+    "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
   }
 }
 </i18n>

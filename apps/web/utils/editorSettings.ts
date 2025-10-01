@@ -38,55 +38,6 @@ export const robotsItemOptions: Record<string, string> = {
   varProp: "Selection via variation property of the type 'Text'. Default value = 'all'",
 };
 
-export const seoRichSnippetBrands: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'External name of the brand',
-  '3': 'Use brand name from variation property of the type text',
-};
-
-export const seoRichSnippetManufacturers: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'External name of the manufacturer',
-  '3': 'Use brand name from variation property of the type text',
-};
-
-export const seoRichSnippetBarcodeGtins: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'Use first GTIN barcode from variation',
-  '3': 'Use specific GTIN barcode by ID',
-};
-
-export const seoRichSnippetBarcodeGtin8s: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'Use first GTIN-8 barcode from variation',
-  '3': 'Use specific GTIN-8 barcode by ID',
-};
-
-export const seoRichSnippetBarcodeGtin13s: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'Use first GTIN-13 barcode from variation',
-  '3': 'Use specific GTIN-13 barcode by ID',
-};
-
-export const seoRichSnippetBarcodeIsbns: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'Use first ISBN barcode from variation',
-  '3': 'Use specific ISBN barcode by ID',
-};
-
-export const seoRichSnippetMpnBarcodes: Record<string, string> = {
-  '1': 'Do not display',
-  '2': 'Show external variation ID',
-  '3': 'Use MPN from variation property of the type text',
-};
-
-export const seoRichSnippetSkuBarcodes: Record<string, string> = {
-  '1': 'Use variation ID',
-  '2': 'Use variation number',
-  '3': 'Use SKU from variation property',
-  '4': 'Item ID',
-};
-
 export const sessionLifetimeOptions = [
   { key: 'sessionLifetime.untilBrowserClosed', value: '0' },
   { key: 'sessionLifetime.oneHour', value: '3600' },

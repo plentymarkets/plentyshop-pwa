@@ -21,6 +21,7 @@
         <template #option="props"> {{ robotsItemOptions[props.option] }} </template>
       </Multiselect>
     </label>
+    
     <div v-if="robotsItemPage === 'varProp'" class="mt-2">
       <label for="robotsItemPageId">ID from property of type 'Text'</label>
       <SfInput id="robotsItemPageId" v-model="robotsItemPageId" />
@@ -50,12 +51,12 @@ const robotsItemPageId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Robots for item pages",
+    "label": "Select Robots for single item views",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
     "placeholder": "Select robots"
   },
   "de": {
-    "label": "Robots for item pages",
+    "label": "Select Robots for single item views",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
     "placeholder": "Select robots"
   }

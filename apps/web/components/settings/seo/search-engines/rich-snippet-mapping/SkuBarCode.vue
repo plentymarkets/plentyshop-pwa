@@ -7,20 +7,14 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <Multiselect
-        v-model="seoRichSnippetSkuBarcode"
-        :options="Object.keys(seoRichSnippetSkuBarcodes)"
-        :placeholder="getEditorTranslation('placeholder')"
-        :searchable="false"
-        data-testid="seo-sku-barcode"
-      >
-        <template #singleLabel="{ option }">
-          {{ seoRichSnippetSkuBarcodes[option] }}
-        </template>
-        <template #option="props"> {{ seoRichSnippetSkuBarcodes[props.option] }} </template>
-      </Multiselect>
-    </label>
+
+    <SfSelect v-model="seoRichSnippetSkuBarcode" data-testid="seo-sku-barcode" class="w-full" :placeholder="getEditorTranslation('placeholder')">
+      <option v-for="sortingOption in seoRichSnippetSkuBarcodes" :key="sortingOption" :value="sortingOption"
+        class="font-medium text-sm md:text-base">
+        {{ getEditorTranslation('seoRichSnippetSkuBarcode-' + sortingOption) }}
+      </option>
+    </SfSelect>
+
     <div v-if="seoRichSnippetSkuBarcode === '3'" class="mt-2">
       <label for="seoRichSnippetSkuBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetSkuBarcodeId" v-model="seoRichSnippetSkuBarcodeId" />
@@ -29,9 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import Multiselect from 'vue-multiselect';
-import { seoRichSnippetSkuBarcodes } from '~/utils/editorSettings';
+import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+const seoRichSnippetSkuBarcodes = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetSkuBarcode');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } =
@@ -54,13 +47,21 @@ const seoRichSnippetSkuBarcodeId = computed({
     "label": "Select source for SKU barcode in Rich Snippets of the item page",
     "tooltip": "Select source for SKU barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the ID of the variation property"
+    "conditionalLabel": "Enter the ID of the variation property",
+    "seoRichSnippetSkuBarcode-1": "Use variation ID",
+    "seoRichSnippetSkuBarcode-2": "Use variation number",
+    "seoRichSnippetSkuBarcode-3": "Use SKU from variation property",
+    "seoRichSnippetSkuBarcode-4": "Item ID"
   },
   "de": {
     "label": "Select source for SKU barcode in Rich Snippets of the item page",
     "tooltip": "Select source for SKU barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the ID of the variation property"
+    "conditionalLabel": "Enter the ID of the variation property",
+    "seoRichSnippetSkuBarcode-1": "Use variation ID",
+    "seoRichSnippetSkuBarcode-2": "Use variation number",
+    "seoRichSnippetSkuBarcode-3": "Use SKU from variation property",
+    "seoRichSnippetSkuBarcode-4": "Item ID"
   }
 }
 </i18n>

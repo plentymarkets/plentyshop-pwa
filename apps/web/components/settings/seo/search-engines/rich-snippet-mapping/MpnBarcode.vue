@@ -7,20 +7,14 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <Multiselect
-        v-model="seoRichSnippetMpnBarcode"
-        :options="Object.keys(seoRichSnippetMpnBarcodes)"
-        :placeholder="getEditorTranslation('placeholder')"
-        :searchable="false"
-        data-testid="seo-mpn-barcode"
-      >
-        <template #singleLabel="{ option }">
-          {{ seoRichSnippetMpnBarcodes[option] }}
-        </template>
-        <template #option="props"> {{ seoRichSnippetMpnBarcodes[props.option] }} </template>
-      </Multiselect>
-    </label>
+
+    <SfSelect v-model="seoRichSnippetMpnBarcode" data-testid="seo-mpn-barcode" class="w-full" :placeholder="getEditorTranslation('placeholder')">
+      <option v-for="sortingOption in seoRichSnippetMpnBarcodes" :key="sortingOption" :value="sortingOption"
+        class="font-medium text-sm md:text-base">
+        {{ getEditorTranslation('seoRichSnippetMpnBarcode-' + sortingOption) }}
+      </option>
+    </SfSelect>
+
     <div v-if="seoRichSnippetMpnBarcode === '3'" class="mt-2">
       <label for="seoRichSnippetMpnBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetMpnBarcodeId" v-model="seoRichSnippetMpnBarcodeId" />
@@ -29,9 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import Multiselect from 'vue-multiselect';
-import { seoRichSnippetMpnBarcodes } from '~/utils/editorSettings';
+import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+const seoRichSnippetMpnBarcodes = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetMpnBarcode');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } =
@@ -54,13 +47,19 @@ const seoRichSnippetMpnBarcodeId = computed({
     "label": "Select source for the MPN barcode in Rich Snippets of the item page",
     "tooltip": "Select source for the MPN barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the ID of the variation property"
+    "conditionalLabel": "Enter the ID of the variation property",
+    "seoRichSnippetMpnBarcode-1": "Do not display",
+    "seoRichSnippetMpnBarcode-2": "Show external variation ID",
+    "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"
   },
   "de": {
     "label": "Select source for the MPN barcode in Rich Snippets of the item page",
     "tooltip": "Select source for the MPN barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "ID aus Varianteneigenschaft vom Typ Text"
+    "conditionalLabel": "ID aus Varianteneigenschaft vom Typ Text",
+    "seoRichSnippetMpnBarcode-1": "Do not display",
+    "seoRichSnippetMpnBarcode-2": "Show external variation ID",
+    "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"
   }
 }
 </i18n>

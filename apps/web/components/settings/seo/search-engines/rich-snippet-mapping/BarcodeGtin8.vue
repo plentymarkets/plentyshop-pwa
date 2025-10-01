@@ -7,20 +7,12 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <Multiselect
-        v-model="seoRichSnippetBarcodeGtin8"
-        :options="Object.keys(seoRichSnippetBarcodeGtin8s)"
-        :placeholder="getEditorTranslation('placeholder')"
-        :searchable="false"
-        data-testid="seo-barcode-gtin8"
-      >
-        <template #singleLabel="{ option }">
-          {{ seoRichSnippetBarcodeGtin8s[option] }}
-        </template>
-        <template #option="props"> {{ seoRichSnippetBarcodeGtin8s[props.option] }} </template>
-      </Multiselect>
-    </label>
+    <SfSelect v-model="seoRichSnippetBarcodeGtin8" data-testid="seo-barcode-gtin8" class="w-full" :placeholder="getEditorTranslation('placeholder')">
+      <option v-for="sortingOption in seoRichSnippetBarcodeGtin8s" :key="sortingOption" :value="sortingOption"
+        class="font-medium text-sm md:text-base">
+        {{ getEditorTranslation('seoRichSnippetBarcodeGtin8-' + sortingOption) }}
+      </option>
+    </SfSelect>
     <div v-if="seoRichSnippetBarcodeGtin8 === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeGtin8Id">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeGtin8Id" v-model="seoRichSnippetBarcodeGtin8Id" />
@@ -29,9 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import Multiselect from 'vue-multiselect';
-import { seoRichSnippetBarcodeGtin8s } from '~/utils/editorSettings';
+import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+const seoRichSnippetBarcodeGtin8s = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeGtin8');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } =
@@ -54,13 +45,20 @@ const seoRichSnippetBarcodeGtin8Id = computed({
     "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
     "tooltip": "Select source for Gtin8 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the barcode ID variation"
+    "conditionalLabel": "Enter the barcode ID variation",
+    "seoRichSnippetBarcodeGtin8-1": "Do not display",
+    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN barcode from variation",
+    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN barcode by ID"
   },
   "de": {
     "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
     "tooltip": "Select source for Gtin8 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the barcode ID variation"
+    "conditionalLabel": "Enter the barcode ID variation",
+    "seoRichSnippetBarcodeGtin8-1": "Do not display",
+    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN barcode from variation",
+    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN barcode by ID"
   }
 }
 </i18n>
+  
