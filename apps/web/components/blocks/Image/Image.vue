@@ -1,11 +1,12 @@
 <template>
-  <div class="relative w-full" :class="['flex justify-center']" :style="[wrapperStyle]">
+  <div class="relative w-full flex justify-center" :style="[wrapperStyle]" data-testid="image-block">
     <component
       :is="linkTag"
       v-if="hasImage"
       :to="linkTarget"
       :aria-label="ariaLabel"
       v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
+      data-testid="image-link"
     >
       <NuxtImg
         :src="getImageUrl()"
@@ -22,7 +23,7 @@
         }"
         :width="getImageDimensions().width"
         :height="getImageDimensions().height"
-        data-testid="image-block"
+        data-testid="image-block-image"
       />
     </component>
 

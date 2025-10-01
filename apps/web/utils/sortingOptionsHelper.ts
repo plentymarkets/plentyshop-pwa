@@ -22,45 +22,30 @@ export const getMappedOptions = (options: string[]): SortingOption[] => {
   }));
 };
 
-export const getRecommendedSortingOptions = (notSelectedOption: boolean): SortingOption[] => {
-  const filteredOptions = structuredClone(sortingCategory);
-  if (notSelectedOption) {
-    filteredOptions.unshift({ label: 'sortingPriorityCategoryNotSelected', value: 'notSelected' });
-  }
-
-  const { $i18n } = useNuxtApp();
-  const locale = 'en';
-
-  return filteredOptions.map((item: SortingOption) => ({
-    label: $i18n.t(`sortingAndPagination.recommendedSorting.options.${item.label}`, {}, { locale }) as string,
-    value: item.value,
-  }));
-};
-
 export const sortingCategory = [
-  { label: 'sortingPriorityCategoryItemIdAsc', value: 'item.id_asc' },
-  { label: 'sortingPriorityCategoryItemIdDesc', value: 'item.id_desc' },
-  { label: 'sortingPriorityCategoryNameAsc', value: 'texts.name_asc' },
-  { label: 'sortingPriorityCategoryNameDesc', value: 'texts.name_desc' },
-  { label: 'sortingPriorityCategoryPriceAsc', value: 'sorting.price.avg_asc' },
-  { label: 'sortingPriorityCategoryPriceDesc', value: 'sorting.price.avg_desc' },
-  { label: 'sortingPriorityCategoryVariationCreatedAtDesc', value: 'variation.createdAt_desc' },
-  { label: 'sortingPriorityCategoryVariationCreatedAtAsc', value: 'variation.createdAt_asc' },
-  { label: 'sortingPriorityCategoryVariationIdAsc', value: 'variation.id_asc' },
-  { label: 'sortingPriorityCategoryVariationIdDesc', value: 'variation.id_desc' },
-  { label: 'sortingPriorityCategoryVariationNumberAsc', value: 'variation.number_asc' },
-  { label: 'sortingPriorityCategoryVariationNumberDesc', value: 'variation.number_desc' },
-  { label: 'sortingPriorityCategoryAvailabilityAsc', value: 'variation.availability.averageDays_asc' },
-  { label: 'sortingPriorityCategoryAvailabilityDesc', value: 'variation.availability.averageDays_desc' },
-  { label: 'sortingPriorityCategoryVariationUpdatedAtAsc', value: 'variation.updatedAt_asc' },
-  { label: 'sortingPriorityCategoryVariationUpdatedAtDesc', value: 'variation.updatedAt_desc' },
-  { label: 'sortingPriorityCategoryVariationPositionAsc', value: 'variation.position_asc' },
-  { label: 'sortingPriorityCategoryVariationPositionDesc', value: 'variation.position_desc' },
-  { label: 'sortingPriorityCategoryManufacturerAsc', value: 'item.manufacturer.externalName_asc' },
-  { label: 'sortingPriorityCategoryManufacturerDesc', value: 'item.manufacturer.externalName_desc' },
-  { label: 'sortingPriorityCategoryManufacturerPositionAsc', value: 'item.manufacturer.position_asc' },
-  { label: 'sortingPriorityCategoryManufacturerPositionDesc', value: 'item.manufacturer.position_desc' },
-  { label: 'sortingPriorityCategoryStockAsc', value: 'stock.net_asc' },
-  { label: 'sortingPriorityCategoryStockDesc', value: 'stock.net_desc' },
-  { label: 'sortDataRandom', value: 'item.random' },
+  'item.id_asc',
+  'item.id_desc',
+  'texts.name1_asc',
+  'texts.name1_desc',
+  'sorting.price.avg_asc',
+  'sorting.price.avg_desc',
+  'variation.createdAt_desc',
+  'variation.createdAt_asc',
+  'variation.id_asc',
+  'variation.id_desc',
+  'variation.number_asc',
+  'variation.number_desc',
+  'variation.availability.averageDays_asc',
+  'variation.availability.averageDays_desc',
+  'variation.updatedAt_asc',
+  'variation.updatedAt_desc',
+  'variation.position_asc',
+  'variation.position_desc',
+  'item.manufacturer.externalName_asc',
+  'item.manufacturer.externalName_desc',
+  'item.manufacturer.position_asc',
+  'item.manufacturer.position_desc',
+  'stock.net_asc',
+  'stock.net_desc',
+  'item.random',
 ];

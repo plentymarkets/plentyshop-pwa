@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="category-sort-filter">
+  <div v-if="showSortAndFilter" data-testid="category-sort-filter">
     <template v-for="key in props.content?.filtersOrder" :key="key">
       <template v-if="key === 'category' && props.content?.fields.category">
         <CategoryTree v-if="productsCatalog.category" :category="productsCatalog.category" />
@@ -59,13 +59,38 @@
       </template>
     </template>
   </div>
+
+  <template v-else>
+    <h2 class="text-center">{{ getEditorTranslation('no-sorting-or-filter-text') }}</h2>
+  </template>
 </template>
 
 <script setup lang="ts">
 import { facetGetters } from '@plentymarkets/shop-api';
-import type { SortFilterProps } from './types';
+import type { SortFilterProps, SortFilterFieldsVisibility } from './types';
 
 const { data: productsCatalog } = useProducts();
 
 const props = defineProps<SortFilterProps>();
+
+const showSortAndFilter = ref(false);
+
+watch(
+  () => props.content?.fields,
+  (newValue) => {
+    showSortAndFilter.value = !!newValue && Object.values(newValue as SortFilterFieldsVisibility).some(Boolean);
+  },
+  { deep: true, immediate: true },
+);
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "no-sorting-or-filter-text": "You do not have any sorting or filter options enabled"
+  },
+  "de": {
+    "no-sorting-or-filter-text": "You do not have any sorting or filter options enabled"
+  }
+}
+</i18n>
