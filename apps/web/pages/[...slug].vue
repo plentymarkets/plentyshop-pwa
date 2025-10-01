@@ -35,6 +35,7 @@ definePageMeta({
   layout: false,
   middleware: ['category-guard'],
   type: 'category',
+  isBlockified: true,
   identifier: 0,
 });
 

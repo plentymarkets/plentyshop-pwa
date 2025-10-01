@@ -87,6 +87,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
+    const { data: productsCatalog } = useProducts();
 
     const response = await useSdk().plentysystems.getBlocks({ identifier, type, blocks });
     const data = response?.data;
@@ -98,7 +99,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
         state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
       }
 
-      if (type === 'category') {
+      if (type === 'category' && productsCatalog.value.category?.type === 'item') {
         state.value.data = useCategoryTemplateData();
       }
     } else {
