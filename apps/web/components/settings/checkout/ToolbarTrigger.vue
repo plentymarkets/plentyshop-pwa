@@ -1,7 +1,6 @@
 <template>
   <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
     <button
-      v-if="runtimeConfig.public.isDev"
       type="button"
       class="editor-button relative py-2 flex justify-center"
       :class="{ 'bg-editor-button text-white rounded-md': active }"
@@ -15,8 +14,6 @@
 
 <script setup lang="ts">
 import { SfIconShoppingCart, SfTooltip } from '@storefront-ui/vue';
-
-const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,
