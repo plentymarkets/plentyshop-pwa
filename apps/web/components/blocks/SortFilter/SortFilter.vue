@@ -1,5 +1,5 @@
 <template>
-  <div v-if="checkSortAndFiltersEnabled" data-testid="category-sort-filter">
+  <div v-if="showSortAndFilter" data-testid="category-sort-filter">
     <template v-for="key in props.content?.filtersOrder" :key="key">
       <template v-if="key === 'category' && props.content?.fields.category">
         <CategoryTree v-if="productsCatalog.category" :category="productsCatalog.category" />
@@ -77,12 +77,12 @@ const { data: productsCatalog } = useProducts();
 
 const props = defineProps<SortFilterProps>();
 
-const checkSortAndFiltersEnabled = ref(false);
+const showSortAndFilter = ref(false);
 
 watch(
   () => props.content?.fields,
   (newValue) => {
-    checkSortAndFiltersEnabled.value =
+    showSortAndFilter.value =
       !!newValue && Object.values(newValue as SortFilterFieldsVisibility).some(Boolean);
   },
   { deep: true, immediate: true },
