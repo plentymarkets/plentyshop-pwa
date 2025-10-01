@@ -1,142 +1,144 @@
 <template>
-  <div
-    class="relative mt-5 p-4 sm:p-10 text-center"
-    :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5', ...inlineStyles }"
-    data-testid="newsletter-block"
-  >
-    <h1
-      v-if="props.index === 0"
-      class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-      data-testid="newsletter-title"
-      v-html="props.content.text?.title ?? t('newsletter.heading')"
-    />
-    <h2
-      v-if="props.index !== 0"
-      class="typography-headline-4 sm:typography-headline-3 font-bold mb-2"
-      data-testid="newsletter-title"
-      v-html="props.content.text?.title ?? t('newsletter.heading')"
-    />
-    <p
-      class="typography-text-sm sm:typography-text-base my-2 mb-4"
-      data-testid="newsletter-description"
-      v-html="props.content.text?.htmlDescription ?? t('newsletter.info')"
-    />
+  <div :class="shouldHideOverflow ? 'overflow-x-hidden' : ''">
+    <div
+      class="relative mt-5 p-4 sm:p-10 text-center"
+      :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5', ...inlineStyles }"
+      data-testid="newsletter-block"
+    >
+      <h1
+        v-if="props.index === 0"
+        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+        data-testid="newsletter-title"
+        v-html="props.content.text?.title ?? t('newsletter.heading')"
+      />
+      <h2
+        v-if="props.index !== 0"
+        class="typography-headline-4 sm:typography-headline-3 font-bold mb-2"
+        data-testid="newsletter-title"
+        v-html="props.content.text?.title ?? t('newsletter.heading')"
+      />
+      <p
+        class="typography-text-sm sm:typography-text-base my-2 mb-4"
+        data-testid="newsletter-description"
+        v-html="props.content.text?.htmlDescription ?? t('newsletter.info')"
+      />
 
-    <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
-      <div
-        v-if="props.content.input?.displayNameInput"
-        class="grid grid-cols-1 sm:grid-cols-2"
-        data-testid="newsletter-display-name"
-      >
-        <div class="sm:mr-[1rem]">
-          <label for="newsletter-first-name">
-            <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
-            <SfInput
-              v-bind="firstNameAttributes"
-              id="newsletter-first-name"
-              v-model="firstName"
-              :invalid="Boolean(errors['firstName'])"
-              :placeholder="`${t('newsletter.firstName')} ${props.content.input?.nameIsRequired ? '**' : ''}`"
-              :wrapper-class="wrapperClass"
-              type="text"
-              name="firstName"
-            />
-          </label>
-          <div class="h-[2rem]">
-            <ErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+      <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
+        <div
+          v-if="props.content.input?.displayNameInput"
+          class="grid grid-cols-1 sm:grid-cols-2"
+          data-testid="newsletter-display-name"
+        >
+          <div class="sm:mr-[1rem]">
+            <label for="newsletter-first-name">
+              <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
+              <SfInput
+                v-bind="firstNameAttributes"
+                id="newsletter-first-name"
+                v-model="firstName"
+                :invalid="Boolean(errors['firstName'])"
+                :placeholder="`${t('newsletter.firstName')} ${props.content.input?.nameIsRequired ? '**' : ''}`"
+                :wrapper-class="wrapperClass"
+                type="text"
+                name="firstName"
+              />
+            </label>
+            <div class="h-[2rem]">
+              <ErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+            </div>
+          </div>
+
+          <div class="sm:ml-[1rem]">
+            <label for="newsletter-last-name">
+              <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
+              <SfInput
+                v-bind="lastNameAttributes"
+                id="newsletter-last-name"
+                v-model="lastName"
+                :invalid="Boolean(errors['lastName'])"
+                :placeholder="`${t('newsletter.lastName')} ${props.content.input?.nameIsRequired ? '**' : ''}`"
+                :wrapper-class="wrapperClass"
+                type="text"
+                name="lastName"
+              />
+            </label>
+            <div class="h-[2rem]">
+              <ErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+            </div>
           </div>
         </div>
 
-        <div class="sm:ml-[1rem]">
-          <label for="newsletter-last-name">
-            <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
+        <div class="grid grid-cols-1">
+          <label for="newsletter-email">
+            <UiFormLabel class="text-start">{{ t('newsletter.email') }}</UiFormLabel>
             <SfInput
-              v-bind="lastNameAttributes"
-              id="newsletter-last-name"
-              v-model="lastName"
-              :invalid="Boolean(errors['lastName'])"
-              :placeholder="`${t('newsletter.lastName')} ${props.content.input?.nameIsRequired ? '**' : ''}`"
+              v-bind="emailAttributes"
+              id="newsletter-email"
+              v-model="email"
+              :invalid="Boolean(errors['email'])"
+              :placeholder="`${t('newsletter.email')} **`"
               :wrapper-class="wrapperClass"
-              type="text"
-              name="lastName"
+              type="email"
+              name="email"
+              autocomplete="email"
             />
           </label>
           <div class="h-[2rem]">
-            <ErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+            <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
         </div>
-      </div>
 
-      <div class="grid grid-cols-1">
-        <label for="newsletter-email">
-          <UiFormLabel class="text-start">{{ t('newsletter.email') }}</UiFormLabel>
-          <SfInput
-            v-bind="emailAttributes"
-            id="newsletter-email"
-            v-model="email"
-            :invalid="Boolean(errors['email'])"
-            :placeholder="`${t('newsletter.email')} **`"
-            :wrapper-class="wrapperClass"
-            type="email"
-            name="email"
-            autocomplete="email"
+        <div class="text-base text-neutral-900">
+          <div class="flex justify-center items-center">
+            <SfCheckbox
+              v-bind="privacyPolicyAttributes"
+              id="terms-checkbox"
+              v-model="privacyPolicy"
+              :invalid="Boolean(errors['privacyPolicy'])"
+              class="inline-block mr-2"
+              data-testid="checkout-terms-checkbox"
+            />
+            <label for="terms-checkbox" class="text-left leading-5 select-none">
+              <i18n-t keypath="newsletter.policy" scope="global">
+                <template #privacyPolicy>
+                  <SfLink
+                    :href="localePath(paths.privacyPolicy)"
+                    target="_blank"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ t('privacyPolicy') }}
+                  </SfLink>
+                </template>
+              </i18n-t>
+              **
+            </label>
+          </div>
+          <div class="h-[2rem]">
+            <ErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <UiButton type="submit" size="lg" :disabled="loading" data-testid="newsletter-button">
+            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
+            <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
+          </UiButton>
+
+          <NuxtTurnstile
+            v-if="turnstileSiteKey"
+            v-bind="turnstileAttributes"
+            ref="turnstileElement"
+            v-model="turnstile"
+            :options="{ theme: 'light' }"
+            class="mt-4"
           />
-        </label>
-        <div class="h-[2rem]">
-          <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+
+          <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
-      </div>
+      </form>
 
-      <div class="text-base text-neutral-900">
-        <div class="flex justify-center items-center">
-          <SfCheckbox
-            v-bind="privacyPolicyAttributes"
-            id="terms-checkbox"
-            v-model="privacyPolicy"
-            :invalid="Boolean(errors['privacyPolicy'])"
-            class="inline-block mr-2"
-            data-testid="checkout-terms-checkbox"
-          />
-          <label for="terms-checkbox" class="text-left leading-5 select-none">
-            <i18n-t keypath="newsletter.policy" scope="global">
-              <template #privacyPolicy>
-                <SfLink
-                  :href="localePath(paths.privacyPolicy)"
-                  target="_blank"
-                  class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                >
-                  {{ t('privacyPolicy') }}
-                </SfLink>
-              </template>
-            </i18n-t>
-            **
-          </label>
-        </div>
-        <div class="h-[2rem]">
-          <ErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-        </div>
-      </div>
-
-      <div class="flex flex-col items-center">
-        <UiButton type="submit" size="lg" :disabled="loading" data-testid="newsletter-button">
-          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-          <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
-        </UiButton>
-
-        <NuxtTurnstile
-          v-if="turnstileSiteKey"
-          v-bind="turnstileAttributes"
-          ref="turnstileElement"
-          v-model="turnstile"
-          :options="{ theme: 'light' }"
-          class="mt-4"
-        />
-
-        <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-      </div>
-    </form>
-
-    <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
+      <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
+    </div>
   </div>
 </template>
 
@@ -154,6 +156,13 @@ const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
+
+const MAX_SAFE_MARGIN = 1000;
+
+const shouldHideOverflow = computed(() => {
+  const layout = props.content.layout || {};
+  return Math.abs(layout.marginLeft || 0) > MAX_SAFE_MARGIN || Math.abs(layout.marginRight || 0) > MAX_SAFE_MARGIN;
+});
 
 const inlineStyles = computed(() => {
   const layout = props.content.layout || {};

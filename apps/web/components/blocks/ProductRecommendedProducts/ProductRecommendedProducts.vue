@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs" :style="inlineStyle">
+  <div :class="shouldHideOverflow ? 'overflow-x-hidden' : ''" v-bind="$attrs" :style="inlineStyle">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
     <ProductSlider v-if="recommendedProducts?.length && shouldRender" :items="recommendedProducts" />
   </div>
@@ -17,6 +17,11 @@ const { data: recommendedProducts, fetchProductRecommended } = useProductRecomme
 
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
 const shouldFetch = computed(() => shouldRender.value && props.content.categoryId);
+const MAX_SAFE_MARGIN = 1000;
+const shouldHideOverflow = computed(() => {
+  const layout = props.content.layout || {};
+  return Math.abs(layout.marginLeft || 0) > MAX_SAFE_MARGIN || Math.abs(layout.marginRight || 0) > MAX_SAFE_MARGIN;
+});
 
 watch(
   shouldFetch,
