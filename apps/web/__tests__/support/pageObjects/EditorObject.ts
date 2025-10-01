@@ -107,6 +107,10 @@ export class EditorObject extends PageObject {
     return el[0].innerHTML.includes('multi-grid-structure');
   }
 
+  isInnerBlock(el: JQuery<HTMLElement>): boolean {
+    return el[0].innerHTML.includes('multi-grid-structure') || false;
+  }
+
   blockIsNewsletter(el: JQuery<HTMLElement>) {
     return el[0].innerHTML.includes('newsletter-block');
   }
@@ -333,6 +337,7 @@ export class EditorObject extends PageObject {
       if (
         this.blockIsBanner(el) ||
         this.isMultiGrid(el) ||
+        this.isInnerBlock(el) ||
         this.blockIsNewsletter(el) ||
         this.blockIsFooter(el.get(0))
       ) {
