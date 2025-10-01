@@ -3,7 +3,7 @@ export const useToolbar = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const { settingsIsDirty, saveSiteSettings } = useSiteSettings();
+  const { settingsIsDirty, dirtyKeys, saveSiteSettings } = useSiteSettings();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
   const route = useRoute();
@@ -30,7 +30,13 @@ export const useToolbar = () => {
     }
 
     if (settingsIsDirty.value) {
-      await handleSave(saveSiteSettings, $i18n.t('errorMessages.editor.save.settings'));
+      const touchedFont = dirtyKeys.value.includes('font');
+
+      if (touchedFont) {
+        await handleSave(saveSiteSettings, $i18n.t('errorMessages.editor.save.settings'));
+      } else {
+        await handleSave(saveSiteSettings);
+      }
     }
 
     if (saved && !hasError) {

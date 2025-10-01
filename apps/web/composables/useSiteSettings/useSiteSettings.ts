@@ -61,16 +61,24 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     state.value.initialData = { ...useRuntimeConfig().public, ...result };
   };
 
-  const settingsIsDirty = computed(() => {
+  const dirty = computed(() => {
     const config = state.value?.initialData ?? {};
     const currentData = state.value?.data ?? {};
 
     if (!currentData || Object.keys(currentData).length === 0) {
-      return false;
+      return { entries: [] as Array<[string, unknown]>, keys: [] as string[] };
     }
 
-    return Object.entries(currentData).some(([key, value]) => !(key in config) || config[key] !== value);
+    const entries = Object.entries(currentData).filter(([key, value]) => !(key in config) || config[key] !== value);
+
+    return {
+      entries,
+      keys: entries.map(([key]) => key),
+    };
   });
+
+  const dirtyKeys = computed(() => dirty.value.keys);
+  const settingsIsDirty = computed(() => dirty.value.keys.length > 0);
 
   const saveSiteSettings: SaveSiteSettings = async () => {
     try {
@@ -82,7 +90,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
           value: String(val || ''),
         })),
       ];
-
       await useSdk().plentysystems.setConfiguration({ settings });
 
       state.value.initialData = { ...state.value.initialData, ...state.value.data };
@@ -100,6 +107,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     getSetting,
     getJsonSetting,
     settingsIsDirty,
+    dirtyKeys,
     saveSiteSettings,
     setInitialData,
   };
