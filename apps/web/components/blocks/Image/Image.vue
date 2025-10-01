@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full flex justify-center" :style="[wrapperStyle]" data-testid="image-block">
+  <div class="relative flex justify-center" :style="[wrapperStyle]" data-testid="image-block">
     <component
       :is="linkTag"
       v-if="hasImage"
@@ -89,6 +89,10 @@ const getAspectRatio = () => {
 const wrapperStyle = computed(() => ({
   aspectRatio: getAspectRatio(),
   position: 'relative' as const,
+  marginTop: `${props.content.layout.marginTop ?? 0}px`,
+  marginBottom: `${props.content.layout.marginBottom ?? 0}px`,
+  marginLeft: `${props.content.layout.marginLeft ?? 0}px`,
+  marginRight: `${props.content.layout.marginRight ?? 0}px`,
 }));
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
@@ -147,10 +151,6 @@ const imageInlineStyle = computed(() => {
     paddingBottom: `${layout.paddingBottom ?? 0}px`,
     paddingLeft: `${layout.paddingLeft ?? 0}px`,
     paddingRight: `${layout.paddingRight ?? 0}px`,
-    marginTop: `${layout.marginTop ?? 0}px`,
-    marginBottom: `${layout.marginBottom ?? 0}px`,
-    marginLeft: `${layout.marginLeft ?? 0}px`,
-    marginRight: `${layout.marginRight ?? 0}px`,
     backgroundColor: layout.backgroundColor ?? 'transparent',
   };
 });

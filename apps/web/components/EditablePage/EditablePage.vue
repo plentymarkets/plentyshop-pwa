@@ -144,6 +144,6 @@ const isExcluded = (blockName: string, excludedSet: Set<string>) => {
 
 const getBlockClass = (block: Block) =>
   computed(() => ({
-    'max-w-screen': !isExcluded(block.name, containerExcludedBlockSet),
+    'max-w-screen mx-auto lg:px-10 mt-3': !isExcluded(block.name, containerExcludedBlockSet),
   }));
 </script>
