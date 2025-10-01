@@ -32,11 +32,10 @@ export const useToolbar = () => {
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 
-      if (touchedFont) {
-        await handleSave(saveSiteSettings, $i18n.t('errorMessages.editor.save.settings'));
-      } else {
-        await handleSave(saveSiteSettings);
-      }
+      await handleSave(
+        saveSiteSettings,
+        touchedFont ? $i18n.t('errorMessages.editor.save.settings') : undefined
+      );
     }
 
     if (saved && !hasError) {
