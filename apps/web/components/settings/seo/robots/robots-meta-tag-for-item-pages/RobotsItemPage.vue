@@ -7,21 +7,24 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect
+
+    <Multiselect
       v-model="robotsItemPage"
-      data-testid="seo-robots-item-page"
-      class="w-full"
+      data-testid="seo-brand"
+      :options="robotsItemOptions"
       :placeholder="getEditorTranslation('placeholder')"
+      :allow-empty="false"
+      class="cursor-pointer"
+      deselect-label="Selected"
     >
-      <option
-        v-for="sortingOption in robotsItemOptions"
-        :key="sortingOption"
-        :value="sortingOption"
-        class="font-medium text-sm md:text-base"
-      >
-        {{ getEditorTranslation('robotsItemPage-' + sortingOption) }}
-      </option>
-    </SfSelect>
+      <template #singleLabel="{ option }">
+        {{ getEditorTranslation('robotsItemPage-' + option) }}
+      </template>
+      <template #option="props">
+        {{ getEditorTranslation('robotsItemPage-' + props.option) }}
+      </template>
+    </Multiselect>
+
     <div v-if="robotsItemPage === 'varProp'" class="mt-2">
       <label for="robotsItemPageId">ID from property of type 'Text'</label>
       <SfInput id="robotsItemPageId" v-model="robotsItemPageId" />
@@ -29,7 +32,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
 const robotsItemOptions = ref(['all', 'noindex', 'nofollow', 'noindex nofollow', 'varProp']);
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
