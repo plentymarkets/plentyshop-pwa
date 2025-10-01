@@ -7,21 +7,23 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect
+
+    <Multiselect
       v-model="seoRichSnippetBrand"
       data-testid="seo-brand"
-      class="w-full"
+      :options="seoRichSnippetBrands"
       :placeholder="getEditorTranslation('placeholder')"
+      :allow-empty="false"
+      class="cursor-pointer"
+      deselect-label="Selected"
     >
-      <option
-        v-for="sortingOption in seoRichSnippetBrands"
-        :key="sortingOption"
-        :value="sortingOption"
-        class="font-medium text-sm md:text-base"
-      >
-        {{ getEditorTranslation('seoRichSnippetBrandOption-' + sortingOption) }}
-      </option>
-    </SfSelect>
+      <template #singleLabel="{ option }">
+        {{ getEditorTranslation('seoRichSnippetBrandOption-' + option) }}
+      </template>
+      <template #option="props">
+        {{ getEditorTranslation('seoRichSnippetBrandOption-' + props.option) }}
+      </template>
+    </Multiselect>
 
     <div v-if="seoRichSnippetBrand === '3'" class="mt-2">
       <label for="seoRichSnippetBrandId">{{ getEditorTranslation('conditionalLabel') }}</label>
@@ -31,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('seoRichSnippetBrandId');

@@ -7,21 +7,24 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect
+
+    <Multiselect
       v-model="seoRichSnippetBarcodeGtin8"
       data-testid="seo-barcode-gtin8"
-      class="w-full"
+      :options="seoRichSnippetBarcodeGtin8s"
       :placeholder="getEditorTranslation('placeholder')"
+      :allow-empty="false"
+      class="cursor-pointer"
+      deselect-label="Selected"
     >
-      <option
-        v-for="sortingOption in seoRichSnippetBarcodeGtin8s"
-        :key="sortingOption"
-        :value="sortingOption"
-        class="font-medium text-sm md:text-base"
-      >
-        {{ getEditorTranslation('seoRichSnippetBarcodeGtin8-' + sortingOption) }}
-      </option>
-    </SfSelect>
+      <template #singleLabel="{ option }">
+        {{ getEditorTranslation('seoRichSnippetBarcodeGtin8-' + option) }}
+      </template>
+      <template #option="props">
+        {{ getEditorTranslation('seoRichSnippetBarcodeGtin8-' + props.option) }}
+      </template>
+    </Multiselect>
+
     <div v-if="seoRichSnippetBarcodeGtin8 === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeGtin8Id">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeGtin8Id" v-model="seoRichSnippetBarcodeGtin8Id" />
@@ -30,7 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
+
 const seoRichSnippetBarcodeGtin8s = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeGtin8');
@@ -56,8 +61,8 @@ const seoRichSnippetBarcodeGtin8Id = computed({
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin8-1": "Do not display",
-    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN barcode by ID"
+    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN8 barcode from variation",
+    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN8 barcode by ID"
   },
   "de": {
     "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
@@ -65,8 +70,8 @@ const seoRichSnippetBarcodeGtin8Id = computed({
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin8-1": "Do not display",
-    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN barcode by ID"
+    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN8 barcode from variation",
+    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN8 barcode by ID"
   }
 }
 </i18n>

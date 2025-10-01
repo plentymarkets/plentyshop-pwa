@@ -7,21 +7,24 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfSelect
+
+    <Multiselect
       v-model="seoRichSnippetBarcodeGtin13"
       data-testid="seo-barcode-gtin13"
-      class="w-full"
+      :options="seoRichSnippetBarcodeGtin13s"
       :placeholder="getEditorTranslation('placeholder')"
+      :allow-empty="false"
+      class="cursor-pointer"
+      deselect-label="Selected"
     >
-      <option
-        v-for="sortingOption in seoRichSnippetBarcodeGtin13s"
-        :key="sortingOption"
-        :value="sortingOption"
-        class="font-medium text-sm md:text-base"
-      >
-        {{ getEditorTranslation('seoRichSnippetBarcodeGtin13-' + sortingOption) }}
-      </option>
-    </SfSelect>
+      <template #singleLabel="{ option }">
+        {{ getEditorTranslation('seoRichSnippetBarcodeGtin13-' + option) }}
+      </template>
+      <template #option="props">
+        {{ getEditorTranslation('seoRichSnippetBarcodeGtin13-' + props.option) }}
+      </template>
+    </Multiselect>
+
     <div v-if="seoRichSnippetBarcodeGtin13 === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeGtin13Id">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeGtin13Id" v-model="seoRichSnippetBarcodeGtin13Id" />
@@ -30,7 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
+
 const seoRichSnippetBarcodeGtin13s = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeGtin13');
@@ -52,22 +57,22 @@ const seoRichSnippetBarcodeGtin13Id = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for Gtin8 barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN13 barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN13 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
-    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN barcode by ID"
+    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN13 barcode from variation",
+    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN13 barcode by ID"
   },
   "de": {
-    "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for Gtin8 barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN13 barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN13 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
-    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN barcode by ID"
+    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN13 barcode from variation",
+    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN13 barcode by ID"
   }
 }
 </i18n>

@@ -8,21 +8,22 @@
       </SfTooltip>
     </div>
 
-    <SfSelect
+    <Multiselect
       v-model="seoRichSnippetBarcodeIsbn"
       data-testid="seo-barcode-gtin-isbn"
-      class="w-full"
+      :options="seoRichSnippetBarcodeIsbns"
       :placeholder="getEditorTranslation('placeholder')"
+      :allow-empty="false"
+      class="cursor-pointer"
+      deselect-label="Selected"
     >
-      <option
-        v-for="sortingOption in seoRichSnippetBarcodeIsbns"
-        :key="sortingOption"
-        :value="sortingOption"
-        class="font-medium text-sm md:text-base"
-      >
-        {{ getEditorTranslation('seoRichSnippetBarcodeIsbn-' + sortingOption) }}
-      </option>
-    </SfSelect>
+      <template #singleLabel="{ option }">
+        {{ getEditorTranslation('seoRichSnippetBarcodeIsbn-' + option) }}
+      </template>
+      <template #option="props">
+        {{ getEditorTranslation('seoRichSnippetBarcodeIsbn-' + props.option) }}
+      </template>
+    </Multiselect>
 
     <div v-if="seoRichSnippetBarcodeIsbn === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeIsbnId">{{ getEditorTranslation('conditionalLabel') }}</label>
@@ -32,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
 const seoRichSnippetBarcodeIsbns = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBarcodeIsbn');

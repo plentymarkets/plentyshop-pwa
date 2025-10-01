@@ -8,21 +8,22 @@
       </SfTooltip>
     </div>
 
-    <SfSelect
+    <Multiselect
       v-model="seoRichSnippetSkuBarcode"
       data-testid="seo-sku-barcode"
-      class="w-full"
+      :options="seoRichSnippetSkuBarcodes"
       :placeholder="getEditorTranslation('placeholder')"
+      :allow-empty="false"
+      class="cursor-pointer"
+      deselect-label="Selected"
     >
-      <option
-        v-for="sortingOption in seoRichSnippetSkuBarcodes"
-        :key="sortingOption"
-        :value="sortingOption"
-        class="font-medium text-sm md:text-base"
-      >
-        {{ getEditorTranslation('seoRichSnippetSkuBarcode-' + sortingOption) }}
-      </option>
-    </SfSelect>
+      <template #singleLabel="{ option }">
+        {{ getEditorTranslation('seoRichSnippetSkuBarcode-' + option) }}
+      </template>
+      <template #option="props">
+        {{ getEditorTranslation('seoRichSnippetSkuBarcode-' + props.option) }}
+      </template>
+    </Multiselect>
 
     <div v-if="seoRichSnippetSkuBarcode === '3'" class="mt-2">
       <label for="seoRichSnippetSkuBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</label>
@@ -32,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconInfo, SfTooltip, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
 const seoRichSnippetSkuBarcodes = ref(['1', '2', '3']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetSkuBarcode');
