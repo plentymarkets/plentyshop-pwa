@@ -46,7 +46,7 @@ describe('Image block layout', () => {
     const wrapper = mount(Image, {
       props: mockImageBlock,
     });
-    const img = wrapper.find('[data-testid="image-block"]');
+    const img = wrapper.find('[data-testid="image-block-image"]');
     const style = img.attributes('style');
     expect(style).toContain('padding: 10px 40px 20px 30px;');
     expect(style).toContain('background-color: #abc123;');

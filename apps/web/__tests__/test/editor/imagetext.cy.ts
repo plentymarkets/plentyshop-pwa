@@ -15,7 +15,7 @@ describe('Image Text Block Form', () => {
 
   const changeAltText = () => {
     cy.get('[data-testid="alt-input"]').should('exist').clear().type('New Alt Text', { delay: 0 });
-    cy.get('[data-testid="image-block"]').should('have.attr', 'alt', 'New Alt Text');
+    cy.get('[data-testid="image-block-image"]').should('have.attr', 'alt', 'New Alt Text');
   };
 
   const openTextInGrid = () => {
