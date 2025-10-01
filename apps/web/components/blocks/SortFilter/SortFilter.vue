@@ -1,6 +1,7 @@
 <template>
   <div v-if="showSortAndFilter" data-testid="category-sort-filter">
-    <template v-for="key in props.content?.filtersOrder" :key="key">
+    <CategorySidebar class="sidebar" :is-open="isOpen" @close="close">
+      <template v-for="key in props.content?.filtersOrder" :key="key">
       <template v-if="key === 'category' && props.content?.fields.category">
         <CategoryTree v-if="productsCatalog.category" :category="productsCatalog.category" />
       </template>
@@ -58,6 +59,14 @@
         />
       </template>
     </template>
+    </CategorySidebar>
+
+    <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+      <template #prefix>
+        <SfIconTune />
+      </template>
+      {{ t('listSettings') }}
+    </UiButton>
   </div>
 
   <template v-else>
@@ -68,12 +77,15 @@
 <script setup lang="ts">
 import { facetGetters } from '@plentymarkets/shop-api';
 import type { SortFilterProps, SortFilterFieldsVisibility } from './types';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 
 const { data: productsCatalog } = useProducts();
 
 const props = defineProps<SortFilterProps>();
 
 const showSortAndFilter = ref(false);
+const { isOpen, open, close } = useDisclosure();
+const { t } = useI18n();
 
 watch(
   () => props.content?.fields,
