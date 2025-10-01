@@ -49,7 +49,7 @@
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/yup": "^4.15.1",
     "blaze-slider": "^1.9.3",
-    "country-flag-icons": "^1.5.19",
+    "country-flag-icons": "^1.5.21",
     "dotenv": "^16.6.1",
     "drift-zoom": "^1.5.1",
     "vue-tel-input": "^9.5.0",
@@ -57,7 +57,7 @@
     "vue-multiselect": "^3.3.1",
     "vue-tsc": "^3.0.6",
     "vuedraggable": "^4.1.0",
-    "yup": "^1.7.0"
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
@@ -65,7 +65,7 @@
     "@lhci/cli": "^0.15.1",
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/turnstile": "^0.8.0",
-    "@paypal/paypal-js": "8.3.0",
+    "@paypal/paypal-js": "8.4.2",
     "@types/google.maps": "^3.58.1",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^1.0.4",
@@ -81,14 +81,14 @@
     "nuxt": "3.18.1",
     "nuxt-security": "2.4.0",
     "nuxt-viewport": "^2.3.1",
-    "playwright-core": "^1.55.0",
+    "playwright-core": "^1.55.1",
     "prettier": "^3.6.2",
     "rimraf": "^5.0.7",
-    "rollup": "^4.50.0",
-    "turbo": "^2.5.6",
+    "rollup": "^4.52.1",
+    "turbo": "^2.5.8",
     "typescript": "5.9.2",
     "vitest": "^3.2.4",
-    "wait-on": "^8.0.4"
+    "wait-on": "^8.0.5"
   },
   "overrides": {
     "@vue-storefront/eslint-config": {

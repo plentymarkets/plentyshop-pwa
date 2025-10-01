@@ -5,30 +5,24 @@ import { paths } from '../../../utils/paths';
 describe('Image Text Block Form', () => {
   const imageText = new ImageTextObject();
 
-  const openSettingsForImageTextBlock = () => {
-    cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4);
-
-    cy.get('[data-testid="open-editor-button"]').eq(3).should('exist').click({ force: true });
-    cy.wait(1000);
-
-    cy.get('[data-testid="image-text-form"]').should('exist');
-  };
-
-  const openImageGroup = () => {
+  const openImageInGrid = () => {
+    cy.get('[data-testid="multi-grid-structure"]').children().should('have.length', 2);
+    cy.get('[data-testid="multi-grid-structure"]').within(() => {
+      cy.get('[data-testid="open-editor-button"]').first().should('exist').click({ force: true });
+    });
     cy.get('[data-testid="image-group"]').should('exist').click();
   };
 
   const changeAltText = () => {
     cy.get('[data-testid="alt-input"]').should('exist').clear().type('New Alt Text', { delay: 0 });
-    cy.get('[data-testid="image-block"]').should('have.attr', 'alt', 'New Alt Text');
+    cy.get('[data-testid="image-block-image"]').should('have.attr', 'alt', 'New Alt Text');
   };
 
-  const changeImageGridLayout = () => {
-    cy.get('[data-testid="image-align-right"]').should('exist').click();
-    cy.get('[data-testid="image-align-left"]').should('exist').click();
-  };
-
-  const openTextGroup = () => {
+  const openTextInGrid = () => {
+    cy.get('[data-testid="multi-grid-structure"]').children().should('have.length', 2);
+    cy.get('[data-testid="multi-grid-structure"]').within(() => {
+      cy.get('[data-testid="open-editor-button"]').last().should('exist').click({ force: true });
+    });
     cy.get('[data-testid="open-text-settings"]').should('exist').click();
   };
 
@@ -128,27 +122,21 @@ describe('Image Text Block Form', () => {
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
-    openSettingsForImageTextBlock();
   });
 
   it('should change image settings', () => {
-    openImageGroup();
+    openImageInGrid();
     imageText.openImageSelector('wideScreen');
     imageText.selectImage();
     imageText.checkNewImage();
     changeAltText();
-    changeImageGridLayout();
-    openImageGroup();
   });
 
   it('should test the text settings', () => {
-    openTextGroup();
+    openTextInGrid();
     changeText();
     changeTextColor();
     changeTextAlignment();
-  });
-
-  it('should change button settings', () => {
     openButtonGroup();
     changeButtonLabel();
     changeButtonLink();
