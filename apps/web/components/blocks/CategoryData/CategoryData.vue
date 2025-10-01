@@ -3,6 +3,7 @@
     <template v-for="key in content.fieldsOrder" :key="key">
       <template v-if="content.fields[key]">
         <h1
+          id="category-headline"
           v-if="key === 'name' && name"
           :key="key"
           class="font-bold typography-headline-3 md:typography-headline-2"
