@@ -127,10 +127,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  ProductRecommendedProductsContent,
-  ProductRecommendedProps,
-} from '../ProductRecommendedProducts/types';
+import type { ProductRecommendedProductsContent, ProductRecommendedProps } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 
@@ -141,14 +138,14 @@ const textSettings = ref(false);
 const layoutSettings = ref(false);
 const props = defineProps<ProductRecommendedProps>();
 
-const DEFAULT_MARGIN = 40;
-
 const blockDepth = computed(() => {
   return getBlockDepth(props.uuid || blockUuid.value);
 });
 
-const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
-const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
 
 const recommendedBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {};

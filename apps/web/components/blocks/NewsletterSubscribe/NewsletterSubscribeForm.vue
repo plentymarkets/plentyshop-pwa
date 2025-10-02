@@ -143,14 +143,14 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
 const props = defineProps<NewsletterFormProps>();
 
-const DEFAULT_MARGIN = 40;
-
 const blockDepth = computed(() => {
   return getBlockDepth(props.uuid || blockUuid.value);
 });
 
-const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
-const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
 
 const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};

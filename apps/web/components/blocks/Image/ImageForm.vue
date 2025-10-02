@@ -468,10 +468,11 @@ const props = defineProps<ImageFormProps>();
 const blockDepth = computed(() => {
   return getBlockDepth(props.uuid || blockUuid.value);
 });
-const DEFAULT_MARGIN = 40;
 
-const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
-const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
 
 const DEFAULT_LAYOUT = {
   paddingTop: 0,

@@ -315,12 +315,13 @@ const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
 const blockDepth = computed(() => {
   return getBlockDepth(props.uuid || blockUuid.value);
 });
-const DEFAULT_MARGIN = 40;
-
-const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
-const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
 
 const props = defineProps<TextCardFormProps>();
+
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
 
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
