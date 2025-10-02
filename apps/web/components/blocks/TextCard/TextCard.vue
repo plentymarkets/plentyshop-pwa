@@ -58,8 +58,8 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
     marginTop: layout.marginTop ? `${layout.marginTop}px` : 0,
     marginBottom: layout.marginBottom ? `${layout.marginBottom}px` : 0,
-    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : defaultMarginLeft.value,
-    marginRight: layout.marginRight ? `${layout.marginRight}px` : defaultMarginRight.value,
+    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : `${defaultMarginLeft.value}px`,
+    marginRight: layout.marginRight ? `${layout.marginRight}px` : `${defaultMarginRight.value}px`,
   };
 });
 </script>
