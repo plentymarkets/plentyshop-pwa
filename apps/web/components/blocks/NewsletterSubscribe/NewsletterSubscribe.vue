@@ -124,15 +124,15 @@
             <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
           </UiButton>
 
-        <NuxtTurnstile
-          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
-          v-bind="turnstileAttributes"
-          ref="turnstileElement"
-          v-model="turnstile"
-          :site-key="turnstileSiteKey"
-          :options="{ theme: 'light' }"
-          class="mt-4"
-        />
+          <NuxtTurnstile
+            v-if="turnstileSiteKey.length > 0 && turnstileLoad"
+            v-bind="turnstileAttributes"
+            ref="turnstileElement"
+            v-model="turnstile"
+            :site-key="turnstileSiteKey"
+            :options="{ theme: 'light' }"
+            class="mt-4"
+          />
 
           <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
