@@ -61,7 +61,6 @@ const { getBlockDepth } = useBlockManager();
 
 const props = defineProps<ImageProps>();
 
-
 const { blockUuid } = useSiteConfiguration();
 
 const blockDepth = computed(() => {
@@ -98,25 +97,23 @@ const getAspectRatio = () => {
   }
 };
 
-const wrapperStyle = computed(() => ({
-  aspectRatio: getAspectRatio(),
-  position: 'relative' as const,
-  marginTop: `${props.content.layout.marginTop ?? 0}px`,
-  marginBottom: `${props.content.layout.marginBottom ?? 0}px`,
-  marginLeft: `${props.content.layout.marginLeft ?? defaultMarginLeft.value}px`,
-  marginRight: `${props.content.layout.marginRight ?? defaultMarginRight.value}px`,
-}));
-const depth = getBlockDepth(props.meta.uuid);
 const wrapperStyle = computed(() => {
+  const depth = getBlockDepth(props.meta.uuid);
+
   if (depth > 0) {
     return {
       position: 'relative' as const,
       height: '24rem',
     };
   }
+
   return {
     aspectRatio: getAspectRatio(),
     position: 'relative' as const,
+    marginTop: `${props.content.layout.marginTop ?? 0}px`,
+    marginBottom: `${props.content.layout.marginBottom ?? 0}px`,
+    marginLeft: `${props.content.layout.marginLeft ?? defaultMarginLeft.value}px`,
+    marginRight: `${props.content.layout.marginRight ?? defaultMarginRight.value}px`,
   };
 });
 
