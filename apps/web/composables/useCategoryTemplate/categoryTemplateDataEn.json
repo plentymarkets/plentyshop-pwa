@@ -78,7 +78,7 @@
       "filtersDisabled": [],
       "showAllFiltersImmediately": true,
       "numberOfFiltersToShowInitially": 0,
-      "itemsPerPage": "50"
+      "itemsPerPage": "10"
     }
   }
 ]

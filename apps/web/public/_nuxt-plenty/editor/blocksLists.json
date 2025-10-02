@@ -1144,7 +1144,6 @@
               "isGlobalTemplate": false
             },
             "content": {
-              "categoryId": "16",
               "name": "Category name",
               "fields": {
                 "name": true,
@@ -1170,7 +1169,6 @@
               "isGlobalTemplate": false
             },
             "content": {
-              "categoryId": "16",
               "name": "Category name",
               "fields": {
                 "name": true,
@@ -1216,8 +1214,7 @@
               "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
-              "numberOfFiltersToShowInitially": 0,
-              "itemsPerPage": "50"
+              "numberOfFiltersToShowInitially": 0
             }
           },
           "de": {
@@ -1242,8 +1239,7 @@
               "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
-              "numberOfFiltersToShowInitially": 0,
-              "itemsPerPage": "50"
+              "numberOfFiltersToShowInitially": 0
             }
           }
         }
