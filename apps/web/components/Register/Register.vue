@@ -109,10 +109,11 @@
       <ErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
-        v-if="turnstileSiteKey"
+        v-if="turnstileSiteKey.length > 0 && turnstileLoad"
         v-bind="turnstileAttributes"
         ref="turnstileElement"
         v-model="turnstile"
+        :site-key="turnstileSiteKey"
         :options="{ theme: 'light' }"
         class="mt-4 flex justify-center"
       />
@@ -170,6 +171,7 @@ const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const turnstileSiteKey = getSetting() ?? '';
 
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 
 const validationSchema = toTypedSchema(
   object({
@@ -277,4 +279,13 @@ const passwordValidationOneDigit = computed(() => {
 const passwordValidationOneLetter = computed(() => {
   return /[A-Za-z]/.test(password?.value || '');
 });
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([email, password, repeatPassword], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>
