@@ -153,12 +153,11 @@ definePageMeta({
   pageType: 'static',
 });
 
-const runtimeConfig = useRuntimeConfig();
-
 const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const { send } = useNotification();
