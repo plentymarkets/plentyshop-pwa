@@ -163,12 +163,12 @@ const { t } = useI18n();
 const { send } = useNotification();
 const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();
-const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
 const { emailAddress, order, isModal = false, changeableView = true } = defineProps<RegisterFormParams>();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const turnstileSiteKey = getSetting() ?? '';
 
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 
 const validationSchema = toTypedSchema(
