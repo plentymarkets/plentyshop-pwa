@@ -15,7 +15,9 @@
       @end="handleDragEnd"
     >
       <template #item="{ element: block, index }">
-        <component :is="block?.meta?.narrowContainer ? NarrowContainer : 'div'">
+        <component
+          :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+        >
           <PageBlock
             :index="index"
             :block="block"
@@ -107,7 +109,7 @@ const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 
-console.log('props.hasEnabledActions: ', props.hasEnabledActions)
+console.log('props.hasEnabledActions: ', props.hasEnabledActions);
 
 const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
 

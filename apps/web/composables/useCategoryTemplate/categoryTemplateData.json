@@ -4,8 +4,7 @@
     "type": "content",
     "meta": {
       "uuid": "2a8b7e34-3d1a-4b6f-9c9d-5e7a1f2b3c4d",
-      "isGlobalTemplate": false,
-      "narrowContainer": true
+      "isGlobalTemplate": false
     },
     "content": {
       "name": "Category name",
@@ -21,7 +20,8 @@
         "paddingTop": 40,
         "paddingBottom": 40,
         "paddingLeft": 0,
-        "paddingRight": 0
+        "paddingRight": 0,
+        "narrowContainer": true
       }
     }
   },
@@ -30,14 +30,14 @@
     "type": "structure",
     "meta": {
       "uuid": "7b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a",
-      "isGlobalTemplate": false,
-      "narrowContainer": true
+      "isGlobalTemplate": false
     },
     "configuration": {
       "columnWidths": [3, 9]
     },
     "layout": {
-      "gap": "XL"
+      "gap": "XL",
+      "narrowContainer": true
     },
     "content": [
       {
