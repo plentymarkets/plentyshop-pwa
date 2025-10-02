@@ -16,5 +16,7 @@ import type { CategoryFiltersProps } from '~/components/CategoryFilters/types';
 const props = defineProps<CategoryFiltersProps>();
 const { t } = useI18n();
 
-const { facets } = toRefs(props);
+const { data: productsCatalog } = useProducts();
+
+const facets = computed(() => productsCatalog.value.facets || props.facets || []);
 </script>
