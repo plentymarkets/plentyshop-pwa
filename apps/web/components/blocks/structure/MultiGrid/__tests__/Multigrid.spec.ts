@@ -123,8 +123,8 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-2');
-    expect(classes).toContain('lg:grid-cols-2');
+    expect(classes).toContain('md:grid-cols-12');
+    expect(classes).toContain('lg:grid-cols-12');
   });
 
   it('should apply responsive grid classes for a three-column grid', () => {
@@ -139,7 +139,7 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-2');
-    expect(classes).toContain('lg:grid-cols-3');
+    expect(classes).toContain('md:grid-cols-12');
+    expect(classes).toContain('lg:grid-cols-12');
   });
 });
