@@ -30,7 +30,6 @@ const mockProps: SortFilterProps = {
     filtersDisabled: [],
     showAllFiltersImmediately: true,
     numberOfFiltersToShowInitially: 0,
-    itemsPerPage: '10',
   },
   meta: {
     uuid: 'test-uuid',

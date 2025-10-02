@@ -3,7 +3,7 @@ import type { Block } from '@plentymarkets/shop-api';
 export interface PageBlockProps {
   index: number;
   block: Block;
-  disableActions: boolean;
+  enableActions: boolean;
   root: boolean;
   isClicked: boolean;
   clickedBlockIndex: number | null;

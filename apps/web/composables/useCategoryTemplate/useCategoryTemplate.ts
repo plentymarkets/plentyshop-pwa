@@ -4,22 +4,18 @@ import type {
   UseCategoryTemplateState,
   GetBlocks,
   SaveBlocks,
-  GetCategoryTemplateBlock,
-  GetSortFilterCategoryTemplateBlock,
-  GetCategoryDataTemplateBlock,
 } from '~/composables/useCategoryTemplate/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
-import categoryTemplateDataEn from './categoryTemplateDataEn.json';
-import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
+import categoryTemplateData from './categoryTemplateData.json';
 import { migrateImageContent } from '~/utils/migrate-image-content';
-import type { SortFilterProps } from '~/components/blocks/SortFilter/types';
-import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
+
+const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) => {
   const state = useState<UseCategoryTemplateState>(`useCategoryTemplate${blocks ? `-${blocks}` : ''}`, () => ({
@@ -55,6 +51,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
+    const { data: productsCatalog } = useProducts();
+
     const { data, error } = await useAsyncData(`${type}-${identifier}-${blocks}`, () =>
       useSdk().plentysystems.getBlocks({ identifier, type, blocks }),
     );
@@ -73,6 +71,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
       fetchedBlocks = useLocaleSpecificHomepageTemplate($i18n.locale.value);
     }
 
+    if (!fetchedBlocks.length && type === 'category' && productsCatalog.value.category?.type === 'item') {
+      fetchedBlocks = useCategoryTemplateData();
+    }
+
     if (Array.isArray(fetchedBlocks)) {
       migrateAllImageBlocks(fetchedBlocks);
     }
@@ -85,14 +87,21 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
+    const { data: productsCatalog } = useProducts();
 
     const response = await useSdk().plentysystems.getBlocks({ identifier, type, blocks });
     const data = response?.data;
 
     state.value.loading = false;
 
-    if (!data?.length && type === 'immutable') {
-      state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+    if (!data?.length) {
+      if (type === 'immutable') {
+        state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
+      }
+
+      if (type === 'category' && productsCatalog.value.category?.type === 'item') {
+        state.value.data = useCategoryTemplateData();
+      }
     } else {
       state.value.data = data ?? state.value.data;
     }
@@ -122,30 +131,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
 
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
-  };
-
-  const getCategoryTemplateBlock: GetCategoryTemplateBlock = () => {
-    try {
-      return categoryTemplateDataEn.find((obj) => obj.name === 'ItemGrid') as ItemGridProps;
-    } catch (error) {
-      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  };
-
-  const getSortFilterCategoryTemplateBlock: GetSortFilterCategoryTemplateBlock = () => {
-    try {
-      return categoryTemplateDataEn.find((obj) => obj.name === 'SortFilter') as SortFilterProps;
-    } catch (error) {
-      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  };
-
-  const getCategoryDataTemplateBlock: GetCategoryDataTemplateBlock = () => {
-    try {
-      return categoryTemplateDataEn.find((obj) => obj.name === 'CategoryData') as CategoryDataProps;
-    } catch (error) {
-      throw new Error(`Failed to fetch block: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
   };
 
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
@@ -187,9 +172,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     getBlocks,
     getBlocksServer,
     updateBlocks,
-    getCategoryTemplateBlock,
-    getSortFilterCategoryTemplateBlock,
-    getCategoryDataTemplateBlock,
     ...toRefs(state.value),
   };
 };

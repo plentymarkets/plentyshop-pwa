@@ -8,6 +8,8 @@
 definePageMeta({
   pageType: 'static',
   isBlockified: true,
+  type: 'immutable',
+  identifier: 'index',
 });
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
