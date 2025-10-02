@@ -136,7 +136,6 @@ onBeforeRouteLeave((to, from, next) => {
 });
 
 const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid']);
-// const paddingExcludedBlockSet = new Set(['Banner', 'Carousel', 'NewsletterSubscribe', 'Footer', 'MultiGrid']);
 
 const isExcluded = (blockName: string, excludedSet: Set<string>) => {
   return excludedSet.has(blockName);
@@ -146,9 +145,4 @@ const getBlockClass = (block: Block) =>
   computed(() => ({
     'max-w-screen mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
   }));
-
-  // const getBlockClass = (block: Block) =>
-  // computed(() => ({
-  //   'max-w-screen mx-auto lg:px-10 mt-3': !isExcluded(block.name, containerExcludedBlockSet),
-  // }));
 </script>
