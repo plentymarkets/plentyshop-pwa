@@ -273,9 +273,6 @@ export default defineNuxtConfig({
     configPath: '~/configuration/tailwind.config.ts',
     exposeConfig: true,
   },
-  turnstile: {
-    siteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY,
-  },
   viewport: {
     breakpoints: {
       xs: 380,

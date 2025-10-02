@@ -124,10 +124,11 @@
         </UiButton>
 
         <NuxtTurnstile
-          v-if="turnstileSiteKey"
+          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
           v-bind="turnstileAttributes"
           ref="turnstileElement"
           v-model="turnstile"
+          :site-key="turnstileSiteKey"
           :options="{ theme: 'light' }"
           class="mt-4"
         />
@@ -148,15 +149,16 @@ import { object, string, boolean } from 'yup';
 import { paths } from '~/utils/paths';
 import type { NewsletterSubscribeProps } from './types';
 
-const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const turnstileSiteKey = getSetting() ?? '';
 
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
@@ -212,4 +214,13 @@ const subscribeNewsletter = async () => {
 };
 
 const onSubmit = handleSubmit(() => subscribeNewsletter());
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([firstName, lastName, email], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>
