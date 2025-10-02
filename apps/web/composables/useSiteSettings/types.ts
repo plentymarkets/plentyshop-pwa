@@ -17,6 +17,7 @@ export type SetSettingsInitialData = (settings: Setting[]) => void;
 export type GetSetting = () => string;
 export type GetJsonSetting = () => string[];
 export type IsDirty = ComputedRef<boolean>;
+export type DirtyKeys = ComputedRef<string[]>;
 export type SaveSiteSettings = () => Promise<boolean>;
 
 export interface UseSiteSettings {
@@ -27,6 +28,7 @@ export interface UseSiteSettings {
   getSetting: GetSetting;
   getJsonSetting: GetJsonSetting;
   settingsIsDirty: IsDirty;
+  dirtyKeys: DirtyKeys;
   saveSiteSettings: SaveSiteSettings;
   setInitialData: SetSettingsInitialData;
 }
