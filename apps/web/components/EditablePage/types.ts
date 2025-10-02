@@ -19,5 +19,5 @@ export interface DragEvent<T = Block> {
 export type EditablePageProps = {
   identifier: string | number;
   type: string;
-  disabledActions?: boolean;
+  hasEnabledActions?: boolean;
 };

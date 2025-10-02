@@ -19,7 +19,7 @@
           <PageBlock
             :index="index"
             :block="block"
-            :disable-actions="enabledActions"
+            :enable-actions="enabledActions"
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
@@ -44,7 +44,9 @@ import type { Block } from '@plentymarkets/shop-api';
 import NarrowContainer from '~/components/NarrowContainer/NarrowContainer.vue';
 
 const { $isPreview } = useNuxtApp();
-const props = defineProps<EditablePageProps>();
+const props = withDefaults(defineProps<EditablePageProps>(), {
+  hasEnabledActions: true,
+});
 
 definePageMeta({
   identifier: props.identifier,
@@ -105,7 +107,9 @@ const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 
-const enabledActions = computed(() => !props.disabledActions && disableActions.value);
+console.log('props.hasEnabledActions: ', props.hasEnabledActions)
+
+const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
 
 onMounted(() => {
   isEditingEnabled.value = false;
