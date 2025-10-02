@@ -5,56 +5,73 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfSelect v-model="sortingDynamicInherit" data-testid="editor-internal-item-sorting" class="w-full">
-          <option
-            v-for="sortingOption in fromItemSortingOptions"
-            :key="sortingOption"
-            :value="sortingOption"
-            class="font-medium text-sm md:text-base"
-          >
-            {{ getEditorTranslation(sortingOption) }}
-          </option>
-        </SfSelect>
-      </label>
+      <Multiselect
+        v-model="sortingDynamicInherit"
+        data-testid="editor-internal-item-sorting"
+        :options="fromItemSortingOptions"
+        :placeholder="getEditorTranslation('placeholder')"
+        :allow-empty="false"
+        class="cursor-pointer"
+        deselect-label="Selected"
+      >
+        <template #singleLabel="{ option }">
+          {{ getEditorTranslation(option) }}
+        </template>
+        <template #option="props">
+          {{ getEditorTranslation(props.option) }}
+        </template>
+      </Multiselect>
     </div>
 
     <div class="py-2">
-      <p class="mb-4">{{ getEditorTranslation('sortingLabel1') }}</p>
-      <label>
-        <SfSelect v-model="sortingDynamicPrio1" data-testid="editor-internal-item-sorting" class="w-full">
-          <option
-            v-for="optionForSorting1 in sortingDynamicInheritExtra"
-            :key="optionForSorting1"
-            :value="optionForSorting1"
-            class="font-medium text-sm md:text-base"
-          >
-            {{ getEditorTranslation(optionForSorting1) }}
-          </option>
-        </SfSelect>
-      </label>
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('sortingLabel1') }}</UiFormLabel>
+      </div>
+      <Multiselect
+        v-model="sortingDynamicPrio1"
+        data-testid="editor-internal-sortingDynamicPrio1"
+        :options="sortingDynamicInheritExtra"
+        :placeholder="getEditorTranslation('placeholder')"
+        :allow-empty="false"
+        class="cursor-pointer"
+        deselect-label="Selected"
+      >
+        <template #singleLabel="{ option }">
+          {{ getEditorTranslation(option) }}
+        </template>
+        <template #option="props">
+          {{ getEditorTranslation(props.option) }}
+        </template>
+      </Multiselect>
     </div>
 
     <div class="py-2">
-      <p class="mb-4">{{ getEditorTranslation('sortingLabel2') }}</p>
-      <label>
-        <SfSelect v-model="sortingDynamicPrio2" data-testid="editor-internal-item-sorting" class="w-full">
-          <option
-            v-for="optionForSorting2 in sortingDynamicInheritExtra"
-            :key="optionForSorting2"
-            :value="optionForSorting2"
-            class="font-medium text-sm md:text-base"
-          >
-            {{ getEditorTranslation(optionForSorting2) }}
-          </option>
-        </SfSelect>
-      </label>
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('sortingLabel2') }}</UiFormLabel>
+      </div>
+
+      <Multiselect
+        v-model="sortingDynamicPrio2"
+        data-testid="editor-internal-sortingDynamicPrio2"
+        :options="sortingDynamicInheritExtra"
+        :placeholder="getEditorTranslation('placeholder')"
+        :allow-empty="false"
+        class="cursor-pointer"
+        deselect-label="Selected"
+      >
+        <template #singleLabel="{ option }">
+          {{ getEditorTranslation(option) }}
+        </template>
+        <template #option="props">
+          {{ getEditorTranslation(props.option) }}
+        </template>
+      </Multiselect>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfSelect } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
 const { updateSetting, getSetting } = useSiteSettings('sortingDynamicInherit');
 const { updateSetting: updateSettingProp1, getSetting: getSettingProp1 } = useSiteSettings('sortingDynamicPrio1');
 const { updateSetting: updateSettingProp2, getSetting: getSettingProp2 } = useSiteSettings('sortingDynamicPrio2');
