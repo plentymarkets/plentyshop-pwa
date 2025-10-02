@@ -109,8 +109,6 @@ const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 
-console.log('props.hasEnabledActions: ', props.hasEnabledActions);
-
 const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
 
 onMounted(() => {
