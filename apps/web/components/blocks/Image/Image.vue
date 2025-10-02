@@ -60,6 +60,17 @@ const localePath = useLocalePath();
 
 const props = defineProps<ImageProps>();
 
+const { getBlockDepth } = useBlockManager();
+const { blockUuid } = useSiteConfiguration();
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.meta.uuid || blockUuid.value);
+});
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
+
 const hasImage = computed(() => !!props.content?.image);
 const linkTarget = computed(() =>
   props.content?.image?.linktarget?.trim() ? localePath(props.content.image.linktarget) : undefined,
@@ -91,8 +102,8 @@ const wrapperStyle = computed(() => ({
   position: 'relative' as const,
   marginTop: `${props.content.layout.marginTop ?? 0}px`,
   marginBottom: `${props.content.layout.marginBottom ?? 0}px`,
-  marginLeft: `${props.content.layout.marginLeft ?? 0}px`,
-  marginRight: `${props.content.layout.marginRight ?? 0}px`,
+  marginLeft: `${props.content.layout.marginLeft ?? defaultMarginLeft.value}px`,
+  marginRight: `${props.content.layout.marginRight ?? defaultMarginRight.value}px`,
 }));
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {

@@ -156,6 +156,16 @@ const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
+const { getBlockDepth } = useBlockManager();
+const { blockUuid } = useSiteConfiguration();
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.meta.uuid || blockUuid.value);
+});
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
 
 const MAX_SAFE_MARGIN = 1000;
 
@@ -170,8 +180,8 @@ const inlineStyles = computed(() => {
   return {
     marginTop: layout.marginTop ? `${layout.marginTop}px` : 0,
     marginBottom: layout.marginBottom ? `${layout.marginBottom}px` : 0,
-    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : 0,
-    marginRight: layout.marginRight ? `${layout.marginRight}px` : 0,
+    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : defaultMarginLeft.value,
+    marginRight: layout.marginRight ? `${layout.marginRight}px` : defaultMarginRight.value,
   };
 });
 

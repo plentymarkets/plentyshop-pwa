@@ -10,6 +10,17 @@ import type { ProductRecommendedProductsProps } from './types';
 
 const props = withDefaults(defineProps<ProductRecommendedProductsProps>(), { shouldLoad: undefined });
 
+const { getBlockDepth } = useBlockManager();
+const { blockUuid } = useSiteConfiguration();
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.meta.uuid || blockUuid.value);
+});
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
+
 const { locale } = useI18n();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
   props.content.categoryId + (props.content.cacheKey || ''),
@@ -41,8 +52,8 @@ const inlineStyle = computed(() => {
   return {
     marginTop: layout.marginTop ? `${layout.marginTop}px` : 0,
     marginBottom: layout.marginBottom ? `${layout.marginBottom}px` : 0,
-    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : 0,
-    marginRight: layout.marginRight ? `${layout.marginRight}px` : 0,
+    marginLeft: layout.marginLeft ? `${layout.marginLeft}px` : defaultMarginLeft.value,
+    marginRight: layout.marginRight ? `${layout.marginRight}px` : defaultMarginRight.value,
   };
 });
 </script>
