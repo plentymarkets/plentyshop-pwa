@@ -1,9 +1,6 @@
-interface UseDefaultMarginsOptions {
-  blockDepth: number;
-  defaultMargin?: number;
-}
+import type { UseDefaultMarginsOptions } from '~/composables/useDefaultMargins/types';
 
-export function useDefaultMargins(options: UseDefaultMarginsOptions) {
+export const useDefaultMargins = (options: UseDefaultMarginsOptions) => {
   const DEFAULT_MARGIN = options.defaultMargin ?? 40;
 
   const defaultMarginLeft = computed(() => (options.blockDepth > 0 ? 0 : DEFAULT_MARGIN));
@@ -13,4 +10,4 @@ export function useDefaultMargins(options: UseDefaultMarginsOptions) {
     defaultMarginLeft,
     defaultMarginRight,
   };
-}
+};
