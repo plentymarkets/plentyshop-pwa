@@ -167,7 +167,7 @@ const viewport = useViewport();
 const emits = defineEmits(['registered', 'change-view']);
 const { emailAddress, order, isModal = false, changeableView = true } = defineProps<RegisterFormParams>();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-const turnstileSiteKey = getSetting() ?? '';
+const turnstileSiteKey = computed(() => getSetting() ?? '');
 
 const turnstileElement = ref();
 
@@ -185,7 +185,7 @@ const validationSchema = toTypedSchema(
         .default(''),
       privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
       turnstile:
-        turnstileSiteKey.length > 0
+        turnstileSiteKey.value.length > 0
           ? string().required(t('errorMessages.turnstileRequired')).default('')
           : string().optional().default(''),
     }),
@@ -212,7 +212,7 @@ const clearTurnstile = () => {
 };
 
 const registerUser = async () => {
-  if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
+  if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.value.length > 0)) {
     return;
   }
 

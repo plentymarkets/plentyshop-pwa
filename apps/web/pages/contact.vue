@@ -157,7 +157,7 @@ const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-const turnstileSiteKey = getSetting() ?? '';
+const turnstileSiteKey = computed(() => getSetting() ?? '');
 const turnstileElement = ref();
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
@@ -208,7 +208,7 @@ const validationSchema = toTypedSchema(
       ),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile:
-      turnstileSiteKey.length > 0
+      turnstileSiteKey.value.length > 0
         ? string().required(t('errorMessages.contact.turnstileRequired')).default('')
         : string().optional().default(''),
   }),

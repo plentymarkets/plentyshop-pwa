@@ -13,7 +13,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
   const router = useRouter();
   const localePath = useLocalePath();
   const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-  const turnstileSiteKey = getSetting() ?? '';
+  const turnstileSiteKey = computed(() => getSetting() ?? '');
 
   const state = useState('useRegisterForm', () => ({
     isLoading: false,
@@ -116,7 +116,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
       privacyPolicy: boolean().isTrue($i18n.t('privacyPolicyRequired')).required($i18n.t('privacyPolicyRequired')),
       turnstile:
-        turnstileSiteKey.length > 0
+        turnstileSiteKey.value.length > 0
           ? string()
               .trim()
               .required($i18n.t('errorMessages.turnstileRequired'))
@@ -191,7 +191,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
   };
 
   const registerUser = async () => {
-    if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0) || isAuthorized.value) {
+    if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.value.length > 0) || isAuthorized.value) {
       return;
     }
 
@@ -237,7 +237,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     passwordValidationLength,
     passwordValidationOneDigit,
     passwordValidationOneLetter,
-    turnstileSiteKey,
+    turnstileSiteKey.value,
     formFields: {
       email,
       password,

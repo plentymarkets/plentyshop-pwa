@@ -154,7 +154,7 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-const turnstileSiteKey = getSetting() ?? '';
+const turnstileSiteKey = computed(() => getSetting() ?? '');
 
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
@@ -170,7 +170,7 @@ const validationSchema = toTypedSchema(
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.newsletter.termsRequired')).default(false),
     turnstile:
-      turnstileSiteKey.length > 0
+      turnstileSiteKey.value.length > 0
         ? string().required(t('errorMessages.newsletter.turnstileRequired')).default('')
         : string().optional().default(''),
   }),
