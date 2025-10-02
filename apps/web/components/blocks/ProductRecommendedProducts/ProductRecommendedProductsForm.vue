@@ -9,7 +9,7 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
+    <div class="sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
       <div v-if="recommendedBlock.text" class="p-2">
         <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
         <SfInput
