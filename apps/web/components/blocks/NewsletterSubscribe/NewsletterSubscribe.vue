@@ -217,7 +217,7 @@ const onSubmit = handleSubmit(() => subscribeNewsletter());
 
 if (turnstileSiteKey.length > 0) {
   const turnstileWatcher = watch([firstName, lastName, email], (data) => {
-    if (!turnstileLoad.value && data.some((field) => field && field.length > 0)) {
+    if (data.some((field) => field && field.length > 0)) {
       turnstileLoad.value = true;
       turnstileWatcher();
     }
