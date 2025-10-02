@@ -115,24 +115,68 @@
         </div>
       </div>
     </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="layoutGroup"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
+      </template>
+      <MarginInput v-model="marginModel" :label="getEditorTranslation('margin-label')" />
+    </UiAccordionItem>
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { NewsletterSubscribeContent } from './types';
+import type { NewsletterSubscribeContent, NewsletterFormProps } from './types';
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);
 const settingsGroup = ref(true);
+const layoutGroup = ref(false);
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
+const props = defineProps<NewsletterFormProps>();
 
-const newsletterBlock = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent,
-);
+const blockDepth = computed(() => {
+  return getBlockDepth(props.uuid || blockUuid.value);
+});
+
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
+
+const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
+  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
+
+  const content = rawContent as Partial<NewsletterSubscribeContent>;
+
+  if (!content.text) content.text = {};
+  if (!content.button) content.button = {};
+  if (!content.layout) {
+    content.layout = {
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: defaultMarginLeft.value,
+      marginRight: defaultMarginRight.value,
+    };
+  } else {
+    content.layout.marginTop = content.layout.marginTop ?? 0;
+    content.layout.marginBottom = content.layout.marginBottom ?? 0;
+    content.layout.marginLeft = content.layout.marginLeft ?? defaultMarginLeft.value;
+    content.layout.marginRight = content.layout.marginRight ?? defaultMarginRight.value;
+  }
+
+  return content as NewsletterSubscribeContent;
+});
+
+const marginModel = useMarginModel(newsletterBlock.value.layout);
 </script>
 
 <i18n lang="json">
@@ -152,7 +196,9 @@ const newsletterBlock = computed(
     "button-text-placeholder": "label",
 
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "layout-group-label": "Layout",
+    "margin-label": "Margin"
   },
   "de": {
     "text-group-label": "Text",
@@ -169,7 +215,9 @@ const newsletterBlock = computed(
     "button-text-placeholder": "label",
 
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "layout-group-label": "Layout",
+    "margin-label": "Margin"
   }
 }
 </i18n>

@@ -248,6 +248,9 @@
         </SfInput>
       </label>
     </div>
+
+    <MarginInput v-model="marginModel" :label="getEditorTranslation('margin-label')" />
+
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -288,11 +291,6 @@
           />
         </div>
       </div>
-      <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">
-          {{ getEditorTranslation('spacing-around') }}
-        </span>
-      </div>
     </div>
   </UiAccordionItem>
 </template>
@@ -312,9 +310,18 @@ import type { TextCardFormProps, TextCardContent } from './types';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.uuid || blockUuid.value);
+});
 
 const props = defineProps<TextCardFormProps>();
+
+const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+  blockDepth: blockDepth.value,
+  defaultMargin: 40,
+});
 
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
@@ -326,15 +333,26 @@ const textCardBlock = computed<TextCardContent>(() => {
   if (!content.layout) {
     content.layout = {
       backgroundColor: '',
-      paddingTop: '0',
-      paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0',
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: defaultMarginLeft.value,
+      marginRight: defaultMarginRight.value,
     };
+  } else {
+    content.layout.marginTop = content.layout.marginTop ?? 0;
+    content.layout.marginBottom = content.layout.marginBottom ?? 0;
+    content.layout.marginLeft = content.layout.marginLeft ?? defaultMarginLeft.value;
+    content.layout.marginRight = content.layout.marginRight ?? defaultMarginRight.value;
   }
 
   return content as TextCardContent;
 });
+
+const marginModel = useMarginModel(textCardBlock.value.layout);
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);
@@ -373,6 +391,7 @@ watch([isTransparent, backgroundColor], () => {
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
+    "margin-label": "Margin",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "Keep background transparent"
   },
@@ -398,6 +417,7 @@ watch([isTransparent, backgroundColor], () => {
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
+    "margin-label": "Margin",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "or keep transparent"
   }
