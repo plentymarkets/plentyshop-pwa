@@ -41,7 +41,7 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Set up environment
 
-Create an environment file under `apps/web/.env`. The minimum required configuration includes your PAT, the [API endpoint](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-endpoint) of your PlentyONE system and the corresponding [API security token](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token):
+Create an environment file under `apps/web/.env`. The minimum required configuration includes your PAT, the [API endpoint](https://pwa-docs.plentyone.com/guide/how-to/middleware#api-endpoint) of your PlentyONE system and the corresponding [API security token](https://pwa-docs.plentyone.com/guide/how-to/middleware#api-security-token):
 
 ```properties
 # apps/web/.env
@@ -117,7 +117,7 @@ The generators will create all necessary files with proper TypeScript types, tes
 
 ### Documentation
 
-- [Developers Documentation](https://pwa-docs.plentymarkets.com/)
+- [Developers Documentation](https://pwa-docs.plentyone.com/)
 - [Technical Overview](GUIDE.md)
 
 ### Changelog
