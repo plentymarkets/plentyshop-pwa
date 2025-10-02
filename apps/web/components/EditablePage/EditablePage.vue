@@ -43,7 +43,6 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-import { resolveComponent } from 'vue'
 
 const NarrowContainer = resolveComponent('NarrowContainer')
 
