@@ -109,8 +109,9 @@
       <ErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
-        v-if="turnstileSiteKey && turnstileLoad"
+        v-if="turnstileSiteKey.length > 0 && turnstileLoad"
         v-bind="turnstileAttributes"
+        :site-key="turnstileSiteKey"
         ref="turnstileElement"
         v-model="turnstile"
         :options="{ theme: 'light' }"

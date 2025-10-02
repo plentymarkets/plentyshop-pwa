@@ -124,8 +124,9 @@
         </UiButton>
 
         <NuxtTurnstile
-          v-if="turnstileSiteKey && turnstileLoad"
+          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
           v-bind="turnstileAttributes"
+          :site-key="turnstileSiteKey"
           ref="turnstileElement"
           v-model="turnstile"
           :options="{ theme: 'light' }"
