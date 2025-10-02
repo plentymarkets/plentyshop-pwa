@@ -140,8 +140,17 @@ const layoutGroup = ref(false);
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
 const props = defineProps<NewsletterFormProps>();
+
+const DEFAULT_MARGIN = 40;
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.uuid || blockUuid.value);
+});
+
+const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
+const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
 
 const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
@@ -154,14 +163,14 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     content.layout = {
       marginTop: 0,
       marginBottom: 0,
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: defaultMarginLeft.value,
+      marginRight: defaultMarginRight.value,
     };
   } else {
     content.layout.marginTop = content.layout.marginTop ?? 0;
     content.layout.marginBottom = content.layout.marginBottom ?? 0;
-    content.layout.marginLeft = content.layout.marginLeft ?? 0;
-    content.layout.marginRight = content.layout.marginRight ?? 0;
+    content.layout.marginLeft = content.layout.marginLeft ?? defaultMarginLeft.value;
+    content.layout.marginRight = content.layout.marginRight ?? defaultMarginRight.value;
   }
 
   return content as NewsletterSubscribeContent;

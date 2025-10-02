@@ -29,3 +29,8 @@ export type ProductRecommendedProductsContent = {
     marginRight: number;
   };
 };
+
+
+export type ProductRecommendedProps = {
+  uuid?: string;
+};

@@ -461,9 +461,17 @@ import { clamp } from '@storefront-ui/shared';
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
 
 const props = defineProps<ImageFormProps>();
+
+const blockDepth = computed(() => {
+  return getBlockDepth(props.uuid || blockUuid.value);
+});
+const DEFAULT_MARGIN = 40;
+
+const defaultMarginLeft = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
+const defaultMarginRight = computed(() => (blockDepth.value > 0 ? 0 : DEFAULT_MARGIN));
 
 const DEFAULT_LAYOUT = {
   paddingTop: 0,
@@ -472,8 +480,8 @@ const DEFAULT_LAYOUT = {
   paddingRight: 0,
   marginTop: 0,
   marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
+  marginLeft: defaultMarginLeft.value,
+  marginRight: defaultMarginRight.value,
 };
 
 const uiImageTextBlock = computed(() => {
@@ -578,6 +586,7 @@ const clampBrightness = (event: Event, type: string) => {
     "text-overlay-align-x-center": "Center",
     "text-overlay-align-x-right": "Right",
     "background-color-label": "Background Color",
+    "margin-label": "Margin",
 
     "keep-transparent-label": "Keep background transparent",
 
@@ -613,6 +622,7 @@ const clampBrightness = (event: Event, type: string) => {
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
     "background-color-label": "Background Color",
+    "margin-label": "Margin",
 
     "layout-label": "Layout",
 
