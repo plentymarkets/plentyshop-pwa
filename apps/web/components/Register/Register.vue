@@ -109,7 +109,7 @@
       <ErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
-        v-if="turnstileSiteKey"
+        v-if="turnstileSiteKey && turnstileLoad"
         v-bind="turnstileAttributes"
         ref="turnstileElement"
         v-model="turnstile"
@@ -170,6 +170,7 @@ const { emailAddress, order, isModal = false, changeableView = true } = definePr
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 
 const validationSchema = toTypedSchema(
   object({
@@ -277,4 +278,13 @@ const passwordValidationOneDigit = computed(() => {
 const passwordValidationOneLetter = computed(() => {
   return /[A-Za-z]/.test(password?.value || '');
 });
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([email, password, repeatPassword], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>

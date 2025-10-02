@@ -124,7 +124,7 @@
         </UiButton>
 
         <NuxtTurnstile
-          v-if="turnstileSiteKey"
+          v-if="turnstileSiteKey && turnstileLoad"
           v-bind="turnstileAttributes"
           ref="turnstileElement"
           v-model="turnstile"
@@ -157,6 +157,7 @@ const props = defineProps<NewsletterSubscribeProps>();
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
@@ -212,4 +213,13 @@ const subscribeNewsletter = async () => {
 };
 
 const onSubmit = handleSubmit(() => subscribeNewsletter());
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([firstName, lastName, email], (data) => {
+    if (!turnstileLoad.value && data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>

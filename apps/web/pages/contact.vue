@@ -125,7 +125,7 @@
 
         <div>
           <NuxtTurnstile
-            v-if="turnstileSiteKey"
+            v-if="turnstileSiteKey && turnstileLoad"
             v-bind="turnstileAttributes"
             ref="turnstileElement"
             v-model="turnstile"
@@ -160,9 +160,9 @@ const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact(
 const localePath = useLocalePath();
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
-
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
@@ -265,4 +265,13 @@ const onSubmit = handleSubmit(() => submitForm());
 
 await getRobots();
 setRobotForStaticPage('ContactPage');
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([name, email, subject, orderId, message], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>
