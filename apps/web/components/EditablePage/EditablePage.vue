@@ -44,7 +44,7 @@ import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const NarrowContainer = resolveComponent('NarrowContainer')
+const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { $isPreview } = useNuxtApp();
 const props = withDefaults(defineProps<EditablePageProps>(), {
