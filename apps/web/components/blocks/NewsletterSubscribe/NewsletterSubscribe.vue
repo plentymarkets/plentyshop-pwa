@@ -124,14 +124,15 @@
             <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
           </UiButton>
 
-          <NuxtTurnstile
-            v-if="turnstileSiteKey"
-            v-bind="turnstileAttributes"
-            ref="turnstileElement"
-            v-model="turnstile"
-            :options="{ theme: 'light' }"
-            class="mt-4"
-          />
+        <NuxtTurnstile
+          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
+          v-bind="turnstileAttributes"
+          ref="turnstileElement"
+          v-model="turnstile"
+          :site-key="turnstileSiteKey"
+          :options="{ theme: 'light' }"
+          class="mt-4"
+        />
 
           <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
@@ -187,6 +188,7 @@ const inlineStyles = computed(() => {
 });
 
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
@@ -242,4 +244,13 @@ const subscribeNewsletter = async () => {
 };
 
 const onSubmit = handleSubmit(() => subscribeNewsletter());
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([firstName, lastName, email], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>
