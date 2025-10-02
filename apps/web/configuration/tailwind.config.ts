@@ -8,6 +8,11 @@ const fontFamilyText = process.env.NUXT_PUBLIC_FONT || 'Red Hat Text';
 export default {
   presets: [tailwindConfig],
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
+  safelist: [
+    {
+      pattern: /^col-span-(1[0-2]|[1-9])$/,
+    },
+  ],
   theme: {
     extend: {
       sfTypography: () => ({

@@ -79,18 +79,11 @@ const gridInlineStyle = computed(() => ({
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
 const getGridClasses = () => {
-  const columnCount = configuration.columnWidths.length;
-  return gridClassFor({ mobile: 1, tablet: 2, desktop: columnCount }, [gridGapClass.value, 'items-center']);
+  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value, 'items-center']);
 };
 const getColumnClasses = (colIndex: number) => {
-  const columnCount = configuration.columnWidths.length;
-  const isLastColumn = colIndex === columnCount - 1;
-  const isThreeColumnLayout = columnCount === 3;
-  const classes = [];
-  if (isThreeColumnLayout && isLastColumn) {
-    classes.push('md:col-span-2', 'lg:col-span-1');
-  }
-  return classes;
+  const columnWidth = configuration.columnWidths[colIndex];
+  return [`col-span-${columnWidth}`];
 };
 
 const getBlockActions = () => ({
