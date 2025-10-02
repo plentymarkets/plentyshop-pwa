@@ -11,11 +11,10 @@ vi.mock('@plentymarkets/shop-api', () => {
       getCategoryName: (category: CategoryDetails) => category?.name ?? 'Category name',
       getCategoryDescription1: (category: CategoryDetails) => category?.description ?? '',
       getCategoryDescription2: (category: CategoryDetails) => category?.description2 ?? '',
-      getCategoryShortDescription: (category: CategoryDetails) => category?.shortDescription ?? ''
-    }
-  }
-})
-
+      getCategoryShortDescription: (category: CategoryDetails) => category?.shortDescription ?? '',
+    },
+  };
+});
 
 const mockProps: CategoryDataProps = {
   name: 'CategoryData',
@@ -51,9 +50,9 @@ describe('CategoryData', () => {
 
   mockNuxtImport('useProducts', () => {
     return () => {
-      return { data: computed(() => ({ category: CategoryMock.details })) }
-    }
-  })
+      return { data: computed(() => ({ category: CategoryMock.details })) };
+    };
+  });
 
   it('should render category name', () => {
     const wrapper = mount(CategoryData, {
