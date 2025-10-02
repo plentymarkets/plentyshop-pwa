@@ -152,9 +152,9 @@ export default defineNuxtConfig({
       registerCookieAsOptOut: process.env.NUXT_PUBLIC_REGISTER_COOKIE_AS_OPT_OUT || 'false',
       manufacturerExternalName: process.env.NUXT_PUBLIC_MANUFACTURER_EXTERNAL_NAME || '0',
       manufacturerName: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || '0',
-      paginationSortingDynamicInherit: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || '',
-      paginationSortingDynamicPrio1: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || 'filter.prices.price_asc',
-      paginationSortingDynamicPrio2: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || 'filter.prices.price_asc',
+      sortingDynamicInherit: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || '',
+      sortingDynamicPrio1: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || 'filter.prices.price_asc',
+      sortingDynamicPrio2: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || 'filter.prices.price_asc',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||

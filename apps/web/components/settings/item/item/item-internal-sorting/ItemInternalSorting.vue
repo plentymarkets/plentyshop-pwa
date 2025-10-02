@@ -6,7 +6,7 @@
         <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       </div>
       <label>
-        <SfSelect v-model="paginationSortingDynamicInherit" data-testid="editor-internal-item-sorting" class="w-full">
+        <SfSelect v-model="sortingDynamicInherit" data-testid="editor-internal-item-sorting" class="w-full">
           <option
             v-for="sortingOption in fromItemSortingOptions"
             :key="sortingOption"
@@ -22,9 +22,9 @@
     <div class="py-2">
       <p class="mb-4">{{ getEditorTranslation('sortingLabel1') }}</p>
       <label>
-        <SfSelect v-model="paginationSortingDynamicPrio1" data-testid="editor-internal-item-sorting" class="w-full">
+        <SfSelect v-model="sortingDynamicPrio1" data-testid="editor-internal-item-sorting" class="w-full">
           <option
-            v-for="optionForSorting1 in paginationSortingDynamicInheritExtra"
+            v-for="optionForSorting1 in sortingDynamicInheritExtra"
             :key="optionForSorting1"
             :value="optionForSorting1"
             class="font-medium text-sm md:text-base"
@@ -38,9 +38,9 @@
     <div class="py-2">
       <p class="mb-4">{{ getEditorTranslation('sortingLabel2') }}</p>
       <label>
-        <SfSelect v-model="paginationSortingDynamicPrio2" data-testid="editor-internal-item-sorting" class="w-full">
+        <SfSelect v-model="sortingDynamicPrio2" data-testid="editor-internal-item-sorting" class="w-full">
           <option
-            v-for="optionForSorting2 in paginationSortingDynamicInheritExtra"
+            v-for="optionForSorting2 in sortingDynamicInheritExtra"
             :key="optionForSorting2"
             :value="optionForSorting2"
             class="font-medium text-sm md:text-base"
@@ -55,12 +55,12 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-const { updateSetting, getSetting } = useSiteSettings('paginationSortingDynamicInherit');
+const { updateSetting, getSetting } = useSiteSettings('sortingDynamicInherit');
 const { updateSetting: updateSettingProp1, getSetting: getSettingProp1 } = useSiteSettings(
-  'paginationSortingDynamicPrio1',
+  'sortingDynamicPrio1',
 );
 const { updateSetting: updateSettingProp2, getSetting: getSettingProp2 } = useSiteSettings(
-  'paginationSortingDynamicPrio2',
+  'sortingDynamicPrio2',
 );
 
 const fromItemSortingOptions = ref([
@@ -74,20 +74,20 @@ const fromItemSortingOptions = ref([
   'analyzed.number.sorting_desc',
 ]);
 
-const paginationSortingDynamicInherit = computed({
+const sortingDynamicInherit = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
-const paginationSortingDynamicPrio1 = computed({
+const sortingDynamicPrio1 = computed({
   get: () => getSettingProp1(),
   set: (value) => updateSettingProp1(value),
 });
 
-const paginationSortingDynamicInheritExtra = computed({
+const sortingDynamicInheritExtra = computed({
   get: () => ['filter.isMain_desc', ...fromItemSortingOptions.value, 'variationId_asc', 'variationId_desc'],
   set: () => {},
 });
-const paginationSortingDynamicPrio2 = computed({
+const sortingDynamicPrio2 = computed({
   get: () => getSettingProp2(),
   set: (value) => updateSettingProp2(value),
 });
