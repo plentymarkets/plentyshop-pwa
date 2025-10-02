@@ -253,9 +253,9 @@
         <NuxtTurnstile
           v-if="turnstileSiteKey.length > 0 && turnstileLoad"
           v-bind="formFieldsAttributes.turnstile"
-          :site-key="turnstileSiteKey"
           ref="turnstileElement"
           v-model="formFields.turnstile.value"
+          :site-key="turnstileSiteKey"
           :options="{ theme: 'light' }"
           class="flex justify-center"
         />
@@ -308,7 +308,7 @@ const clearInvalidVAT = () => (invalidVAT.value = false);
 
 if (turnstileSiteKey.length > 0) {
   const turnstileWatcher = watch(Object.values(formFields), (data) => {
-    if (data.some((field) => field && typeof (field) === "string" && field.length > 0)) {
+    if (data.some((field) => field && typeof field === 'string' && field.length > 0)) {
       turnstileLoad.value = true;
       turnstileWatcher();
     }
