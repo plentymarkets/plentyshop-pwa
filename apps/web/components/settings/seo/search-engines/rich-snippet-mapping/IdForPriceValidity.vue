@@ -3,14 +3,12 @@
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
-    <label>
-      <SfInput
-        v-model="seoRichSnippetIdForPriceValidity"
-        :placeholder="getEditorTranslation('placeholder')"
-        type="text"
-        data-testid="seo-id-for-price-validity"
-      />
-    </label>
+    <SfInput
+      v-model="seoRichSnippetIdForPriceValidity"
+      :placeholder="getEditorTranslation('placeholder')"
+      type="text"
+      data-testid="seo-id-for-price-validity"
+    />
   </div>
 </template>
 <script setup lang="ts">
