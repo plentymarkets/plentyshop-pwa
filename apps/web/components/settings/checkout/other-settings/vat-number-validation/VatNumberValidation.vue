@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2 flex flex-col">
+  <div class="py-2 flex flex-col">
     <span class="mb-2">
       {{ getEditorTranslation('description') }}
     </span>
@@ -16,12 +16,11 @@
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
 
-const runtimeConfig = useRuntimeConfig();
-const { updateSetting, getSetting } = useSiteSettings('vatNumberValidation');
+const { updateSetting, getSetting } = useSiteSettings('externalVatCheckInactive');
 
 const useVatNumberValidation = computed({
-  get: () => getSetting() === 'true',
-  set: (value) => updateSetting(value.toString()),
+  get: () => !getSetting(),
+  set: (value) => updateSetting((!value).toString()),
 });
 </script>
 
