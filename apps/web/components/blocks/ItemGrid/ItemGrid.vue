@@ -80,9 +80,9 @@ const { data: productsCatalog, productsPerPage } = useProducts();
 
 const props = defineProps<ItemGridProps>();
 
-const products = computed(() => productsCatalog.value.products || props.products || []);
-const totalProducts = computed(() => Number(productsCatalog.value.pagination.totals || props.totalProducts) || 0);
-const itemsPerPage = computed(() => Number(productsPerPage.value || props.productsPerPage) || 0);
+const products = computed(() => productsCatalog.value.products || []);
+const totalProducts = computed(() => Number(productsCatalog.value.pagination.totals) || 0);
+const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 const gridClasses = computed(() =>

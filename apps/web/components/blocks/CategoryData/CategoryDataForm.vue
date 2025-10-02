@@ -111,11 +111,7 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 const textOpen = ref(true);
 
 const categoryDataBlock = computed(
-  () =>
-    (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
-      categoryId: '16',
-      name: 'Category name',
-    }) as CategoryDataContent,
+  () => findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent,
 );
 
 const fieldLabels: Record<CategoryDataFieldKey, string> = {

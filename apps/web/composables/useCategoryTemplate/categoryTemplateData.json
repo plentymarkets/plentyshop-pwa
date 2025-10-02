@@ -8,7 +8,6 @@
       "narrowContainer": true
     },
     "content": {
-      "categoryId": "16",
       "name": "Category name",
       "fields": {
         "name": true,
@@ -64,8 +63,7 @@
           "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
           "filtersDisabled": [],
           "showAllFiltersImmediately": true,
-          "numberOfFiltersToShowInitially": 0,
-          "itemsPerPage": "10"
+          "numberOfFiltersToShowInitially": 0
         }
       },
       {

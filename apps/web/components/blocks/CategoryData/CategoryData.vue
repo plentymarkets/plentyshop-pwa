@@ -43,7 +43,7 @@ import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 const props = defineProps<CategoryDataProps>();
 const { data: productsCatalog } = useProducts();
 
-const category = computed(() => productsCatalog.value.category || props.category || ({} as Category));
+const category = computed(() => productsCatalog.value.category || ({} as Category));
 
 const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
 const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');
