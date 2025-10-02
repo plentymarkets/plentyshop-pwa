@@ -251,10 +251,11 @@
         <ErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm -mt-2" />
 
         <NuxtTurnstile
-          v-if="turnstileSiteKey"
+          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
           v-bind="formFieldsAttributes.turnstile"
           ref="turnstileElement"
           v-model="formFields.turnstile.value"
+          :site-key="turnstileSiteKey"
           :options="{ theme: 'light' }"
           class="flex justify-center"
         />
@@ -284,6 +285,7 @@ const { t } = useI18n();
 const { send: _send } = useNotification();
 definePageMeta({ layout: false, middleware: ['guest-guard'] });
 usePageMeta().setPageMeta(t('auth.signup.submitLabel'), 'page');
+const turnstileLoad = ref(false);
 const {
   hasCompany,
   invalidVAT,
@@ -303,4 +305,13 @@ onNuxtReady(async () => {
 });
 
 const clearInvalidVAT = () => (invalidVAT.value = false);
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch(Object.values(formFields), (data) => {
+    if (data.some((field) => field && typeof field === 'string' && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>
