@@ -30,7 +30,6 @@ export type ProductRecommendedProductsContent = {
   };
 };
 
-
 export type ProductRecommendedProps = {
   uuid?: string;
 };
