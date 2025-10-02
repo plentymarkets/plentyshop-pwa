@@ -148,14 +148,14 @@ import { object, string, boolean } from 'yup';
 import { paths } from '~/utils/paths';
 import type { NewsletterSubscribeProps } from './types';
 
-const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const turnstileSiteKey = getSetting() ?? '';
 
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 

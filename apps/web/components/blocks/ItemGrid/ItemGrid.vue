@@ -56,7 +56,7 @@
       <UiPagination
         v-if="totalProducts > 0"
         :key="`${totalProducts}-${itemsPerPage}`"
-        :current-page="getFacetsFromURL().page ?? 1"
+        :current-page="currentPage"
         :total-items="totalProducts"
         :page-size="itemsPerPage"
         :max-visible-pages="maxVisiblePages"
@@ -79,11 +79,12 @@ const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
 
 const props = defineProps<ItemGridProps>();
-
 const products = computed(() => productsCatalog.value.products || []);
 const totalProducts = computed(() => Number(productsCatalog.value.pagination.totals) || 0);
 const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
+const currentPage = computed(() => getFacetsFromURL().page ?? 1);
+const categoryId = computed(() => getFacetsFromURL().categoryUrlPath ?? null);
 
 const gridClasses = computed(() =>
   gridClassFor(
@@ -95,4 +96,10 @@ const gridClasses = computed(() =>
     ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'],
   ),
 );
+
+watch([currentPage, categoryId], ([newPage, newCategory], [oldPage, oldCategory]) => {
+  if (newPage !== oldPage && newCategory === oldCategory) {
+    scrollToHTMLObject('#category-headline', false);
+  }
+});
 </script>

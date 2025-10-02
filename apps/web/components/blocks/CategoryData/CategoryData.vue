@@ -4,6 +4,7 @@
       <template v-if="content.fields[key]">
         <h1
           v-if="key === 'name' && name"
+          id="category-headline"
           :key="key"
           class="font-bold typography-headline-3 md:typography-headline-2"
           data-testid="category-name"
