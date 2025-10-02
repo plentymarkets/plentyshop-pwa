@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex justify-center" :style="[wrapperStyle]" data-testid="image-block">
+  <div class="relative w-full flex justify-center" :style="wrapperStyle" data-testid="image-block">
     <component
       :is="linkTag"
       v-if="hasImage"
@@ -57,10 +57,11 @@ import type { ImageProps, ImageDimensions } from './types';
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
+const { getBlockDepth } = useBlockManager();
 
 const props = defineProps<ImageProps>();
 
-const { getBlockDepth } = useBlockManager();
+
 const { blockUuid } = useSiteConfiguration();
 
 const blockDepth = computed(() => {
@@ -105,6 +106,20 @@ const wrapperStyle = computed(() => ({
   marginLeft: `${props.content.layout.marginLeft ?? defaultMarginLeft.value}px`,
   marginRight: `${props.content.layout.marginRight ?? defaultMarginRight.value}px`,
 }));
+const depth = getBlockDepth(props.meta.uuid);
+const wrapperStyle = computed(() => {
+  if (depth > 0) {
+    return {
+      position: 'relative' as const,
+      height: '24rem',
+    };
+  }
+  return {
+    aspectRatio: getAspectRatio(),
+    position: 'relative' as const,
+  };
+});
+
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
