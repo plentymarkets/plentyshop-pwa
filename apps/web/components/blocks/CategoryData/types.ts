@@ -17,7 +17,6 @@ export type CategoryDataProps = {
 };
 
 export type CategoryDataContent = {
-  categoryId: string;
   name: string;
   fields: CategoryDataFieldsVisibility;
   fieldsOrder: CategoryDataFieldKey[];
