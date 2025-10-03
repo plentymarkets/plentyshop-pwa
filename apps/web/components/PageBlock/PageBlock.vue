@@ -12,13 +12,13 @@
         },
         {
           'hover:outline hover:outline-4 hover:outline-[#538AEA]':
-            clientPreview && disableActions && !isTablet && root && !isDragging,
+            clientPreview && enableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
       <ClientOnly>
         <button
-          v-if="disableActions && clientPreview && root && !isDragging"
+          v-if="enableActions && clientPreview && root && !isDragging"
           class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
           :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
           data-testid="top-add-block"
@@ -33,7 +33,7 @@
 
       <ClientOnly>
         <UiBlockActions
-          v-if="disableActions && blockHasData && blockHasData(block) && clientPreview && root && !isDragging"
+          v-if="enableActions && blockHasData && blockHasData(block) && clientPreview && root && !isDragging"
           :key="`${block.meta.uuid}`"
           :class="[
             'opacity-0 block-actions',
@@ -56,7 +56,7 @@
             :block="slotProps.contentBlock"
             :root="false"
             :is-preview="clientPreview"
-            :disable-actions="disableActions"
+            :enable-actions="enableActions"
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
@@ -69,7 +69,7 @@
 
       <ClientOnly>
         <button
-          v-if="disableActions && clientPreview && root && !isDragging && props.block.name !== 'Footer'"
+          v-if="enableActions && clientPreview && root && !isDragging && props.block.name !== 'Footer'"
           :key="isDragging ? 'dragging' : 'not-dragging'"
           class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
@@ -157,7 +157,7 @@ const contentProps = computed(() => {
 
     return {
       ...baseProps,
-      disableActions: props.disableActions,
+      enableActions: props.enableActions,
       root: props.root,
       [config.propName]: lazyLoadState,
     };
@@ -165,7 +165,7 @@ const contentProps = computed(() => {
 
   return {
     ...baseProps,
-    disableActions: props.disableActions,
+    enableActions: props.enableActions,
     root: props.root,
   };
 });
@@ -199,7 +199,7 @@ onNuxtReady(() => {
 const showOutline = computed(() => {
   return (
     clientPreview.value &&
-    props.disableActions &&
+    props.enableActions &&
     props.isClicked &&
     props.isTablet &&
     props.clickedBlockIndex === props.index

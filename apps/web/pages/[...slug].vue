@@ -6,37 +6,20 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-    <template v-if="isEditablePage">
-      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
-    </template>
-    <template v-else>
-      <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
-        <template #prefix>
-          <SfIconTune />
-        </template>
-        {{ t('listSettings') }}
-      </UiButton>
 
-      <CategoryPageContent
-        v-if="productsCatalog?.products"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals"
-        :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)"
-      >
-        <template #sidebar>
-          <BlocksSortFilter v-bind="sortFilter" />
-        </template>
-      </CategoryPageContent>
-    </template>
+    <EditablePage
+      v-else
+      :has-enabled-actions="!!config.enableCategoryEditing"
+      :identifier="identifier"
+      :type="'category'"
+      data-testid="category-page-content"
+    />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-
-definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
@@ -44,15 +27,23 @@ const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
 const { setBlocksListContext } = useBlockManager();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
+const { fetchProducts, data: productsCatalog, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
-const { open } = useDisclosure();
-const { getSortFilterCategoryTemplateBlock } = useCategoryTemplate();
-
-const sortFilter = getSortFilterCategoryTemplateBlock();
-
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
+const config = useRuntimeConfig().public;
+
+const identifier = computed(() =>
+  productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
+);
+
+definePageMeta({
+  layout: false,
+  middleware: ['category-guard'],
+  type: 'category',
+  isBlockified: true,
+  identifier: 0,
+});
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
