@@ -1,14 +1,6 @@
 <template>
   <SiteConfigurationView>
     <template #setting-title>{{ getEditorTranslation('groups-title') }}</template>
-
-    <template #setting-description>
-      <div class="flex flex-col px-4 text-sm">
-        <p class="pb-2">
-          <span class="align-middle font-bold">{{ getEditorTranslation('description') }}</span>
-        </p>
-      </div>
-    </template>
   </SiteConfigurationView>
 </template>
 
@@ -18,11 +10,9 @@
 {
   "en": {
     "groups-title": "Contact Form",
-    "description": ""
   },
   "de": {
     "groups-title": "Contact Form",
-    "description": ""
   }
 }
 </i18n>
