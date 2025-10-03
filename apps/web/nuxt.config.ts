@@ -99,6 +99,7 @@ export default defineNuxtConfig({
         'variation-position-based-on-sales',
         'security',
         'vat-number-validation',
+        'item-internal-sorting'
       ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
@@ -153,6 +154,9 @@ export default defineNuxtConfig({
       registerCookieAsOptOut: process.env.NUXT_PUBLIC_REGISTER_COOKIE_AS_OPT_OUT || 'false',
       manufacturerExternalName: process.env.NUXT_PUBLIC_MANUFACTURER_EXTERNAL_NAME || '0',
       manufacturerName: process.env.NUXT_PUBLIC_MANUFACTURER_NAME || '0',
+      sortingDynamicInherit: process.env.NUXT_PUBLIC_SORTING_DINAMIC_INHERIT || '',
+      sortingDynamicPrio1: process.env.NUXT_PUBLIC_SORTING_DYNAMIC_PRIO1 || 'filter.prices.price_asc',
+      sortingDynamicPrio2: process.env.NUXT_PUBLIC_SORTING_DYNAMIC_PRIO2 || 'filter.prices.price_asc',
       themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       headerLogo:
         process.env.NUXT_PUBLIC_HEADER_LOGO ||
