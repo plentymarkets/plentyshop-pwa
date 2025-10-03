@@ -1,6 +1,5 @@
 <template>
   <div :style="inlineStyle" data-testid="category-data">
-    {{ imageUrl }}
     <template v-if="props.content.displayCategoryImage === 'off'">
       <div
         data-testid="text-card"
@@ -12,7 +11,6 @@
     </template>
     <template v-else>
       <div>
-        {{ details.imagePath }}
         <NuxtImg
           :src="imageUrl"
           :alt="props.content.image?.alt ?? ''"
@@ -136,18 +134,12 @@ const description2 = computed(() => categoryGetters.getCategoryDescription2(cate
 const shortDescription = computed(() => categoryGetters.getCategoryShortDescription(category.value) || '');
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
-console.log(details.value.imagePath);
-console.log(details.value.image2Path);
-
-const categoryImage = computed(() => props.content);
 
 const imageUrl = computed(() => {
   return props.content.displayCategoryImage === 'image-1'
-    ? runtimeConfig.public.domain + '/' + details.value.imagePath
-    : runtimeConfig.public.domain + '/' + details.value.image2Path;
+    ? runtimeConfig.public.domain + '/documents/' + details.value.imagePath
+    : runtimeConfig.public.domain + '/documents/' + details.value.image2Path;
 });
-
-console.log(props.content.displayCategoryImage);
 
 const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
