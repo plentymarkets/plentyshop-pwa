@@ -9,10 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "groups-title": "Contact Form",
+    "groups-title": "Contact Form"
   },
   "de": {
-    "groups-title": "Contact Form",
+    "groups-title": "Contact Form"
   }
 }
 </i18n>
