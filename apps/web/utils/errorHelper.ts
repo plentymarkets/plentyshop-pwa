@@ -57,3 +57,9 @@ const errorMapping: Record<string, string> = {
 export const getErrorCode = (code: string): string | undefined => {
   return errorMapping[code];
 };
+
+export const errorHasKeyValue = (error: unknown, key: string, value: unknown): boolean =>
+  typeof error === 'object' && error !== null && (error as Record<string, unknown>)[key] === value;
+
+export const errorHasKeyAnyValue = (error: unknown, key: string, values: unknown[]): boolean =>
+  typeof error === 'object' && error !== null && values.includes((error as Record<string, unknown>)[key]);
