@@ -7,14 +7,13 @@ import type { UseRegisterFormReturn } from './types';
 export const useRegisterForm = (): UseRegisterFormReturn => {
   const { $i18n } = useNuxtApp();
   const { send } = useNotification();
-  const runtimeConfig = useRuntimeConfig();
   const { data: cartData } = useCart();
   const { getCountryZipCodeRegex } = useAggregatedCountries();
   const { register, isAuthorized } = useCustomer();
   const router = useRouter();
   const localePath = useLocalePath();
-
-  const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+  const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+  const turnstileSiteKey = getSetting() ?? '';
 
   const state = useState('useRegisterForm', () => ({
     isLoading: false,

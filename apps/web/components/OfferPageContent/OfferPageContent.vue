@@ -193,7 +193,6 @@ import { offerGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import type { OfferPageContentProps } from './types';
-import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const { loading: offerLoading } = useOffer();
 const { send } = useNotification();

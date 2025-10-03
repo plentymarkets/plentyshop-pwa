@@ -480,11 +480,7 @@ const textOpen = ref(true);
 const imageOpen = ref(true);
 
 const categoryDataBlock = computed(
-  () =>
-    (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
-      categoryId: '16',
-      name: 'Category name',
-    }) as CategoryDataContent,
+  () => findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent,
 );
 
 const clampBrightness = (event: Event, type: string) => {

@@ -1,5 +1,4 @@
 export const useUpdatePageTemplate = () => {
-  const { locale } = useI18n();
   const updatePageTemplate = async (): Promise<boolean> => {
     const { isEditingEnabled } = useEditor();
     const { send } = useNotification();
@@ -9,11 +8,13 @@ export const useUpdatePageTemplate = () => {
     const route = useRoute();
     try {
       const cleanedData = JSON.stringify(data.value);
-      if (route.path === '/' || route.path === `/${locale.value}`) {
-        await saveBlocks('index', 'immutable', cleanedData);
-      } else {
-        await saveBlocks(dataProducts.value.category.id, 'category', cleanedData);
+      const identifier = ref(route.meta.identifier as string | number);
+
+      if (dataProducts.value.category?.type === 'content') {
+        identifier.value = dataProducts.value.category?.id;
       }
+
+      await saveBlocks(identifier.value, route.meta.type as string, cleanedData);
 
       return true;
     } catch (error) {
