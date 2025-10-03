@@ -1,12 +1,11 @@
 <template>
   <div :style="inlineStyle" data-testid="category-data">
-
     {{ imageUrl }}
     <template v-if="props.content.displayCategoryImage === 'off'">
       <div
-          data-testid="text-card"
-          :class="['w-full', 'flex', 'flex-col', 'items-center', 'space-y-4']"
-          :style="textBlockInlineStyle"
+        data-testid="text-card"
+        :class="['w-full', 'flex', 'flex-col', 'items-center', 'space-y-4']"
+        :style="textBlockInlineStyle"
       >
         <TextContent :text="props.content.text" :index="props.index" />
       </div>
@@ -15,62 +14,64 @@
       <div>
         {{ details.imagePath }}
         <NuxtImg
-            :src="imageUrl"
-            :alt="props.content.image?.alt ?? ''"
-            class="w-full object-cover"
-            :style="{
+          :src="imageUrl"
+          :alt="props.content.image?.alt ?? ''"
+          class="w-full object-cover"
+          :style="{
             filter: props.content.image?.brightness ? 'brightness(' + (props.content.image?.brightness ?? 1) + ')' : '',
             height: getImageHeight(),
-      }"
-            :loading="'lazy'"
-            :data-testid="'category-data-image-' + meta.uuid"
+          }"
+          :loading="'lazy'"
+          :data-testid="'category-data-image-' + meta.uuid"
         />
 
         <div
-            v-if="props.content.text"
-            :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': props.content.text.bgColor }]"
-            :style="{
-        color: props.content.text.color,
-        textAlign: getTextAlignment(),
-        alignItems: getContentPosition(props.content.text.align ?? ''),
-        justifyContent: getContentPosition(props.content.text.justify ?? ''),
-      }"
-            :data-testid="'banner-overlay-' + meta.uuid"
+          v-if="props.content.text"
+          :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': props.content.text.bgColor }]"
+          :style="{
+            color: props.content.text.color,
+            textAlign: getTextAlignment(),
+            alignItems: getContentPosition(props.content.text.align ?? ''),
+            justifyContent: getContentPosition(props.content.text.justify ?? ''),
+          }"
+          :data-testid="'banner-overlay-' + meta.uuid"
         >
           <div
-              :class="categoryDataContentClass"
-              :style="{
-          backgroundColor: props.content.text.background ? hexToRgba(props.content.text.bgColor, props.content.text.bgOpacity) : '',
-        }"
-              :data-testid="'category-data-content-' + meta.uuid"
+            :class="categoryDataContentClass"
+            :style="{
+              backgroundColor: props.content.text.background
+                ? hexToRgba(props.content.text.bgColor, props.content.text.bgOpacity)
+                : '',
+            }"
+            :data-testid="'category-data-content-' + meta.uuid"
           >
             <div
-                v-if="props.content.text.pretitle"
-                class="typography-headline-6 font-bold tracking-widest"
-                :data-testid="'category-data-pretitle-' + meta.uuid"
-                v-html="props.content.text.pretitle"
+              v-if="props.content.text.pretitle"
+              class="typography-headline-6 font-bold tracking-widest"
+              :data-testid="'category-data-pretitle-' + meta.uuid"
+              v-html="props.content.text.pretitle"
             />
 
             <h1
-                v-if="props.content.text.title"
-                :id="`category-data_heading`"
-                class="text-2xl font-semibold mb-4"
-                :data-testid="'category-data-title-' + meta.uuid"
-                v-html="props.content.text.title"
+              v-if="props.content.text.title"
+              :id="`category-data_heading`"
+              class="text-2xl font-semibold mb-4"
+              :data-testid="'category-data-title-' + meta.uuid"
+              v-html="props.content.text.title"
             />
 
             <div
-                v-if="props.content.text.subtitle"
-                class="typography-headline-6 font-bold tracking-widest mb-4"
-                :data-testid="'category-data-subtitle-' + meta.uuid"
-                v-html="props.content.text.subtitle"
+              v-if="props.content.text.subtitle"
+              class="typography-headline-6 font-bold tracking-widest mb-4"
+              :data-testid="'category-data-subtitle-' + meta.uuid"
+              v-html="props.content.text.subtitle"
             />
 
             <div
-                v-if="props.content.text.htmlDescription"
-                class="typography-text-sm md:typography-text-lg font-normal"
-                :data-testid="'category-data-description-' + meta.uuid"
-                v-html="props.content.text.htmlDescription"
+              v-if="props.content.text.htmlDescription"
+              class="typography-text-sm md:typography-text-lg font-normal"
+              :data-testid="'category-data-description-' + meta.uuid"
+              v-html="props.content.text.htmlDescription"
             />
           </div>
         </div>
@@ -116,7 +117,7 @@
 <script setup lang="ts">
 import { type Category, categoryGetters } from '@plentymarkets/shop-api';
 import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
-import type { CategoryDetails } from "@plentymarkets/shop-api/server/types";
+import type { CategoryDetails } from '@plentymarkets/shop-api/server/types';
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -140,8 +141,8 @@ const categoryImage = computed(() => props.content);
 
 const imageUrl = computed(() => {
   return props.content.displayCategoryImage === 'image-1'
-      ? runtimeConfig.public.domain + '/' + details.value.imagePath
-      : runtimeConfig.public.domain + '/' + details.value.image2Path
+    ? runtimeConfig.public.domain + '/' + details.value.imagePath
+    : runtimeConfig.public.domain + '/' + details.value.image2Path;
 });
 
 console.log(props.content.displayCategoryImage);
@@ -163,17 +164,16 @@ const textBlockInlineStyle = computed(() => {
   };
 });
 
-
 const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
   const cleanHex = hex.replace('#', '');
 
   const fullHex =
-      cleanHex.length === 3
-          ? cleanHex
-              .split('')
-              .map((c) => c + c)
-              .join('')
-          : cleanHex;
+    cleanHex.length === 3
+      ? cleanHex
+          .split('')
+          .map((c) => c + c)
+          .join('')
+      : cleanHex;
 
   const red = parseInt(fullHex.substring(0, 2), 16);
   const green = parseInt(fullHex.substring(2, 4), 16);
@@ -240,5 +240,4 @@ const getContentPosition = (axis: string) => {
 const categoryDataContentClass = computed(() => {
   return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%] mx-5';
 });
-
 </script>

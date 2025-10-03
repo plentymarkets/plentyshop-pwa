@@ -29,7 +29,7 @@ const mockProps: CategoryDataProps = {
       title: 'Test title',
       subtitle: 'Test subtitle',
       htmlDescription: '<p>Test description</p>',
-      bgColor: "#fff",
+      bgColor: '#fff',
       bgOpacity: 1,
       background: true,
     },
