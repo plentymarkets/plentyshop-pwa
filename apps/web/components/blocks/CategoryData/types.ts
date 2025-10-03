@@ -28,4 +28,26 @@ export type CategoryDataContent = {
     paddingLeft: number;
     paddingRight: number;
   };
+  displayCategoryImage: string;
+  image: {
+    wideScreen?: string;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
+    alt?: string;
+    brightness?: number;
+  };
+  text: {
+    pretitle?: string;
+    title?: string;
+    subtitle?: string;
+    htmlDescription?: string;
+    color?: string;
+    bgColor?: string;
+    bgOpacity?: number;
+    textAlignment?: 'left' | 'center' | 'right';
+    justify?: 'top' | 'center' | 'bottom';
+    align?: 'left' | 'center' | 'right';
+    background?: boolean;
+  };
 };
