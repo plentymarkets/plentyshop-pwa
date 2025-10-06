@@ -1,6 +1,6 @@
 import type { AddressFixtureOverride } from '~/__tests__/types';
 import { PageObject } from './PageObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {

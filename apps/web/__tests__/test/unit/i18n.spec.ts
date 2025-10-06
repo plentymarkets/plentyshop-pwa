@@ -1,6 +1,6 @@
 import type { Mock } from 'vitest';
 import { describe, expect, it, vi } from 'vitest';
-import { getLocales } from '../../../configuration/i18n.config';
+import { getLocales } from '../../../app/configuration/i18n.config';
 import { readdirSync } from 'node:fs';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
