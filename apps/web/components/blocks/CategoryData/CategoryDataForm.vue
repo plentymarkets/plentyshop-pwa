@@ -142,7 +142,7 @@
         </div>
       </div>
 
-      <div class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <div class="flex items-center gap-2">
           <legend class="text-sm font-medium text-black m-0">
             {{ getEditorTranslation('image-scalling-label') }}
@@ -180,7 +180,7 @@
         </div>
       </div>
 
-      <div class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('image-brightness-label') }}</label>
         <div class="flex items-center gap-4">
           <div class="flex-1 space-y-1">
@@ -211,7 +211,7 @@
         </div>
       </div>
 
-      <div class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('image-alt-label') }}</UiFormLabel>
         <SfInput v-model="categoryDataBlock.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
         <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
