@@ -14,7 +14,7 @@
         <NuxtImg
           :src="imageUrl"
           :alt="props.content.image?.alt ?? ''"
-          class="w-full object-cover"
+          :class="[props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover', 'w-full']"
           :style="{
             filter: props.content.image?.brightness ? 'brightness(' + (props.content.image?.brightness ?? 1) + ')' : '',
             height: getImageHeight(),
@@ -32,7 +32,7 @@
             alignItems: getContentPosition(props.content.text.align ?? ''),
             justifyContent: getContentPosition(props.content.text.justify ?? ''),
           }"
-          :data-testid="'banner-overlay-' + meta.uuid"
+          :data-testid="'category-data-overlay-' + meta.uuid"
         >
           <div
             :class="categoryDataContentClass"

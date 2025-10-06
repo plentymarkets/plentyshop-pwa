@@ -100,7 +100,6 @@
         <h2>{{ getEditorTranslation('image-label') }}</h2>
       </template>
 
-      <!--   DISPLAY CATEGORY IMAGE   -->
       <div class="mb-6">
         <UiFormLabel>{{ getEditorTranslation('display-category-image-label') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -143,7 +142,44 @@
         </div>
       </div>
 
-      <!--    Brightness  -->
+      <div class="mb-6">
+        <div class="flex items-center gap-2">
+          <legend class="text-sm font-medium text-black m-0">
+            {{ getEditorTranslation('image-scalling-label') }}
+          </legend>
+          <SfTooltip :label="getEditorTranslation('image-scalling-tooltip')" placement="top">
+            <SfIconInfo size="sm" />
+          </SfTooltip>
+        </div>
+        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
+          <div
+            data-testid="align-y-center"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.image.fillMode === 'fill' }"
+            @click="categoryDataBlock.image.fillMode = 'fill'"
+          >
+            <SfIconCheck
+              :class="{ invisible: categoryDataBlock.image.fillMode !== 'fill' }"
+              class="w-[1.1rem] shrink-0 mr-1"
+            />
+            {{ getEditorTranslation('image-scalling-fill-label') }}
+          </div>
+
+          <div
+            data-testid="align-y-top"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.image.fillMode === 'fit' }"
+            @click="categoryDataBlock.image.fillMode = 'fit'"
+          >
+            <SfIconCheck
+              :class="{ invisible: categoryDataBlock.image.fillMode !== 'fit' }"
+              class="w-[1.1rem] shrink-0 mr-1"
+            />
+            {{ getEditorTranslation('image-scalling-fit-label') }}
+          </div>
+        </div>
+      </div>
+
       <div class="mb-6">
         <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('image-brightness-label') }}</label>
         <div class="flex items-center gap-4">
@@ -175,7 +211,6 @@
         </div>
       </div>
 
-      <!--    Alt  -->
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('image-alt-label') }}</UiFormLabel>
         <SfInput v-model="categoryDataBlock.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
@@ -184,7 +219,6 @@
         </div>
       </div>
 
-      <!--   CATEGORY TEXT   -->
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
         <SfInput
@@ -195,6 +229,7 @@
           data-testid="category-data-input-pre-title"
         />
       </div>
+
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
         <SfInput
@@ -205,6 +240,7 @@
           data-testid="category-data-input-title"
         />
       </div>
+
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
         <SfInput
@@ -215,6 +251,7 @@
           data-testid="category-data-input-sub-title"
         />
       </div>
+
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
         <SfTextarea
@@ -227,7 +264,6 @@
         />
       </div>
 
-      <!--      TEXT COLOUR     -->
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
 
@@ -249,7 +285,6 @@
         </SfInput>
       </div>
 
-      <!--      TEXT BACKGROUND  -->
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>
         <SfSwitch
@@ -258,7 +293,6 @@
         />
       </div>
 
-      <!--      TEXTBOX COLOR  -->
       <div v-if="categoryDataBlock.text.background" class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
 
@@ -275,7 +309,6 @@
         </SfInput>
       </div>
 
-      <!--      TEXT OPACITY  -->
       <div v-if="categoryDataBlock.text.background && categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('textbox-opacity-label') }}</label>
         <div class="flex items-center gap-4">
@@ -307,7 +340,6 @@
         </div>
       </div>
 
-      <!--   ALIGNMENT OPTIONS ENABLED ON IMAGE SELECT   -->
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-x-label') }}</UiFormLabel>
 
@@ -353,7 +385,6 @@
         </div>
       </div>
 
-      <!--   ALIGNMENT OPTIONS ENABLED ON IMAGE SELECT   -->
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
 
@@ -399,7 +430,6 @@
         </div>
       </div>
 
-      <!--   ALIGNMENT OPTIONS ENABLED ON IMAGE SELECT   -->
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -467,6 +497,8 @@ import {
   SfIconCheck,
   SfInput,
   SfTextarea,
+  SfTooltip,
+  SfIconInfo,
 } from '@storefront-ui/vue';
 import dragIcon from 'assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -501,6 +533,18 @@ const fieldLabels: Record<CategoryDataFieldKey, string> = {
   description2: getEditorTranslation('category-description-2'),
   shortDescription: getEditorTranslation('short-description'),
 };
+
+watch(
+  () => categoryDataBlock.value.image.fillMode,
+  (newMode) => {
+    if (newMode === 'fill') {
+      categoryDataBlock.value.layout.paddingTop = 0;
+      categoryDataBlock.value.layout.paddingBottom = 0;
+      categoryDataBlock.value.layout.paddingLeft = 0;
+      categoryDataBlock.value.layout.paddingRight = 0;
+    }
+  },
+);
 </script>
 
 <i18n lang="json">
@@ -521,6 +565,11 @@ const fieldLabels: Record<CategoryDataFieldKey, string> = {
     "off": "Off",
     "image-1": "Image 1",
     "image-2": "Image 2",
+
+    "image-scalling-label": "Image Scaling",
+    "image-scalling-tooltip": "Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.",
+    "image-scalling-fit-label": "Fit",
+    "image-scalling-fill-label": "Fill",
 
     "image-brightness-label": "Brightness",
     "image-alt-label": "Alt",
@@ -571,6 +620,11 @@ const fieldLabels: Record<CategoryDataFieldKey, string> = {
     "off": "Off",
     "image-1": "Image 1",
     "image-2": "Image 2",
+
+    "image-scalling-label": "Image Scaling",
+    "image-scalling-tooltip": "Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.",
+    "image-scalling-fit-label": "Fit",
+    "image-scalling-fill-label": "Fill",
 
     "image-brightness-label": "Brightness",
     "image-alt-label": "Alt",

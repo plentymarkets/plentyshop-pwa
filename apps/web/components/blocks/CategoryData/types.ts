@@ -35,6 +35,7 @@ export type CategoryDataContent = {
     mobile?: string;
     alt?: string;
     brightness?: number;
+    fillMode?: 'fill' | 'fit';
   };
   text: {
     pretitle?: string;
