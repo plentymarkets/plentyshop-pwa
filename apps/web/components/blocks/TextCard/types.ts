@@ -25,10 +25,14 @@ export type TextCardContent = {
   };
   layout: {
     backgroundColor?: string;
-    paddingTop?: string;
-    paddingBottom?: string;
-    paddingLeft?: string;
-    paddingRight?: string;
+    paddingTop?: number;
+    paddingBottom?: number;
+    paddingLeft?: number;
+    paddingRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    marginRight?: number;
   };
 };
 

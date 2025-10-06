@@ -1036,9 +1036,7 @@
   },
   "item-category": {
     "category": "item-category",
-    "accessControl": [
-      "productCategory"
-    ],
+    "accessControl": ["productCategory"],
     "title": "Item Category",
     "blockName": "ItemGrid",
     "variations": [
@@ -1068,18 +1066,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
@@ -1110,18 +1098,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,

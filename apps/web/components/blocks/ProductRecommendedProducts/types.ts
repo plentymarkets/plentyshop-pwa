@@ -22,4 +22,14 @@ export type ProductRecommendedProductsContent = {
     color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
+  layout: {
+    marginTop: number;
+    marginBottom: number;
+    marginLeft: number;
+    marginRight: number;
+  };
+};
+
+export type ProductRecommendedProps = {
+  uuid?: string;
 };
