@@ -3,7 +3,7 @@
     v-if="runtimeConfig.public.isDev"
     :label="getEditorTranslation('tooltip')"
     placement="right"
-    class="inline-grid"
+    class="inline-grid font-editor"
     :show-arrow="true"
   >
     <button

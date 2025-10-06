@@ -1,5 +1,5 @@
 <template>
-  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
+  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid font-editor" :show-arrow="true">
     <button
       type="button"
       class="editor-button relative py-2 flex justify-center"
