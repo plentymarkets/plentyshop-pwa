@@ -16,7 +16,7 @@
         <SfIconClose />
       </button>
     </header>
-    <div class="h-[calc(100vh-150px)] overflow-y-auto">
+    <div class="h-[80vh] overflow-y-auto">
       <div v-if="isDefaultLocale" class="mx-4 mb-4 mt-4">
         <button
           type="button"
