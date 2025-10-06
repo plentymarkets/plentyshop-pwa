@@ -1,5 +1,5 @@
 <template>
-  <div :class="shouldHideOverflow ? 'overflow-x-hidden' : ''">
+  <div :class="hideOverflow ? 'overflow-x-hidden' : ''">
     <div
       class="relative mt-5 p-4 sm:p-10 text-center"
       :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5', ...inlineStyles }"
@@ -164,17 +164,12 @@ const { blockUuid } = useSiteConfiguration();
 const blockDepth = computed(() => {
   return getBlockDepth(props.meta.uuid || blockUuid.value);
 });
-const { defaultMarginLeft, defaultMarginRight } = useDefaultMargins({
+const { defaultMarginLeft, defaultMarginRight, shouldHideOverflow } = useDefaultMargins({
   blockDepth: blockDepth.value,
   defaultMargin: 40,
 });
 
-const MAX_SAFE_MARGIN = 1000;
-
-const shouldHideOverflow = computed(() => {
-  const layout = props.content.layout || {};
-  return Math.abs(layout.marginLeft || 0) > MAX_SAFE_MARGIN || Math.abs(layout.marginRight || 0) > MAX_SAFE_MARGIN;
-});
+const hideOverflow = computed(() => shouldHideOverflow(props.content.layout || {}));
 
 const inlineStyles = computed(() => {
   const layout = props.content.layout || {};
