@@ -28,7 +28,7 @@
     </component>
 
     <div
-      v-if="props.content?.text?.textOverlay"
+      v-if="props.content?.text?.textOverlay || props.content?.button.label"
       class="absolute inset-0 px-4 pointer-events-none flex flex-col"
       :class="overlayAlignClasses"
       :style="{ color: props.content.text?.textOverlayColor || '#000' }"
@@ -37,7 +37,7 @@
       <div v-html="props.content.text.textOverlay" />
       <UiButton
         v-if="props.content?.button.label"
-        class="mt-4 cursor-pointer pointer-events-auto"
+        class="cursor-pointer pointer-events-auto"
         :tag="NuxtLink"
         :to="localePath(props.content.button.link ?? '')"
         :variant="props.content.button.variant ?? 'primary'"
