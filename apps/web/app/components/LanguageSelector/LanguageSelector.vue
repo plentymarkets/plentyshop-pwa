@@ -6,7 +6,7 @@
   >
     <UiModal v-model="isOpen" tag="section" class="w-full bg-white !max-h-fit relative !rounded-none">
       <div class="flex justify-center">
-        <div v-for="locale in localeCodes" :key="locale">
+        <div v-for="locale in filteredLocaleCodes" :key="locale">
           <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'">
             <div class="w-6 lg:w-8" v-html="flagList[locale]" />
             <div>{{ t(`lang.${locale}`) }}</div>
@@ -18,7 +18,7 @@
 
   <div v-else data-testid="languageSelectList">
     <UiModal v-model="isOpen" tag="section" class="!p-0 !pt-2.5 flex flex-col !w-11/12" aria-labelledby="login-modal">
-      <template v-for="locale in localeCodes" :key="locale">
+      <template v-for="locale in filteredLocaleCodes" :key="locale">
         <LanguageButton
           :locale="locale"
           variant="tertiary"
@@ -43,9 +43,15 @@ const { isOpen } = useLocalization();
 const viewport = useViewport();
 const { getCategoryTree } = useCategoryTree();
 const { localeCodes, locale: currentLocale, t } = useI18n();
+const config = useRuntimeConfig();
 const flagList: { [key: string]: string } = {};
 
-localeCodes.value.forEach((localeCode) => {
+const activeLanguages = (config.public.activeLanguages as string).split(',').map((lang: string) => lang.trim());
+const filteredLocaleCodes = computed(() =>
+  localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode)),
+);
+
+filteredLocaleCodes.value.forEach((localeCode) => {
   if (flagImports[localeCode]) flagList[localeCode] = flagImports[localeCode];
 });
 
