@@ -4,90 +4,90 @@ import { ItemGridMock } from './ItemGrid.mock';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
 // Hardcoded products for test
-// const products = [
-//   {
-//     variation: {
-//       id: 1,
-//       name: 'Var 1',
-//       availabilityId: 1,
-//       minimumOrderQuantity: 1,
-//       mayShowUnitPrice: false,
-//       vatId: 1,
-//       availability: {
-//         id: 1,
-//         icon: '',
-//         averageDays: 0,
-//         createdAt: '',
-//         updatedAt: '',
-//         names: { id: 1, availabilityId: 1, lang: 'en', name: 'Available', createdAt: '', updatedAt: '' },
-//       },
-//       availabilityUpdatedAt: '',
-//     },
-//     texts: { name1: 'Product 1', name2: '', name3: '', urlPath: '', lang: 'en' },
-//     unit: { unitOfMeasurement: 'pcs', names: { unitId: 1, lang: 'en', name: 'Piece' }, content: 1 },
-//     item: {
-//       id: 1,
-//       condition: { names: { name: 'New', lang: 'en' } },
-//       manufacturerId: 1,
-//       itemType: 'default',
-//       manufacturer: { externalName: 'Brand', name: 'Brand' },
-//     },
-//     images: { all: [], variation: [] },
-//     filter: { isSalable: true, isSalableAndActive: true },
-//     properties: [],
-//     facets: [],
-//   },
-//   {
-//     variation: {
-//       id: 2,
-//       name: 'Var 2',
-//       availabilityId: 1,
-//       minimumOrderQuantity: 1,
-//       mayShowUnitPrice: false,
-//       vatId: 1,
-//       availability: {
-//         id: 1,
-//         icon: '',
-//         averageDays: 0,
-//         createdAt: '',
-//         updatedAt: '',
-//         names: { id: 1, availabilityId: 1, lang: 'en', name: 'Available', createdAt: '', updatedAt: '' },
-//       },
-//       availabilityUpdatedAt: '',
-//     },
-//     texts: { name1: 'Product 2', name2: '', name3: '', urlPath: '', lang: 'en' },
-//     unit: { unitOfMeasurement: 'pcs', names: { unitId: 1, lang: 'en', name: 'Piece' }, content: 1 },
-//     item: {
-//       id: 2,
-//       condition: { names: { name: 'New', lang: 'en' } },
-//       manufacturerId: 1,
-//       itemType: 'default',
-//       manufacturer: { externalName: 'Brand', name: 'Brand' },
-//     },
-//     images: { all: [], variation: [] },
-//     filter: { isSalable: true, isSalableAndActive: true },
-//     properties: [],
-//     facets: [],
-//   },
-// ];
+const products = [
+  {
+    variation: {
+      id: 1,
+      name: 'Var 1',
+      availabilityId: 1,
+      minimumOrderQuantity: 1,
+      mayShowUnitPrice: false,
+      vatId: 1,
+      availability: {
+        id: 1,
+        icon: '',
+        averageDays: 0,
+        createdAt: '',
+        updatedAt: '',
+        names: { id: 1, availabilityId: 1, lang: 'en', name: 'Available', createdAt: '', updatedAt: '' },
+      },
+      availabilityUpdatedAt: '',
+    },
+    texts: { name1: 'Product 1', name2: '', name3: '', urlPath: '', lang: 'en' },
+    unit: { unitOfMeasurement: 'pcs', names: { unitId: 1, lang: 'en', name: 'Piece' }, content: 1 },
+    item: {
+      id: 1,
+      condition: { names: { name: 'New', lang: 'en' } },
+      manufacturerId: 1,
+      itemType: 'default',
+      manufacturer: { externalName: 'Brand', name: 'Brand' },
+    },
+    images: { all: [], variation: [] },
+    filter: { isSalable: true, isSalableAndActive: true },
+    properties: [],
+    facets: [],
+  },
+  {
+    variation: {
+      id: 2,
+      name: 'Var 2',
+      availabilityId: 1,
+      minimumOrderQuantity: 1,
+      mayShowUnitPrice: false,
+      vatId: 1,
+      availability: {
+        id: 1,
+        icon: '',
+        averageDays: 0,
+        createdAt: '',
+        updatedAt: '',
+        names: { id: 1, availabilityId: 1, lang: 'en', name: 'Available', createdAt: '', updatedAt: '' },
+      },
+      availabilityUpdatedAt: '',
+    },
+    texts: { name1: 'Product 2', name2: '', name3: '', urlPath: '', lang: 'en' },
+    unit: { unitOfMeasurement: 'pcs', names: { unitId: 1, lang: 'en', name: 'Piece' }, content: 1 },
+    item: {
+      id: 2,
+      condition: { names: { name: 'New', lang: 'en' } },
+      manufacturerId: 1,
+      itemType: 'default',
+      manufacturer: { externalName: 'Brand', name: 'Brand' },
+    },
+    images: { all: [], variation: [] },
+    filter: { isSalable: true, isSalableAndActive: true },
+    properties: [],
+    facets: [],
+  },
+];
 
 describe('ItemGrid.vue', () => {
   beforeEach(() => {
-    // mockNuxtImport('useProducts', () => {
-    //   return () => ({
-    //     data: { value: { products, pagination: { totals: products.length } } },
-    //     productsPerPage: { value: 2 },
-    //   });
-    // });
-
-    mockNuxtImport('useWishlist', () => {
-      return () => {
-        return { data: computed(() => []), fetchProducts: () => {} };
-      };
+    mockNuxtImport('useProducts', () => {
+      return () => ({
+        data: { value: { products, pagination: { totals: products.length } } },
+        productsPerPage: { value: 2 },
+      });
     });
+
+    // mockNuxtImport('useWishlist', () => {
+    //   return () => {
+    //     return { data: computed(() => []), fetchProducts: () => {} };
+    //   };
+    // });
   });
 
-  it('renders correct number of products per row for each breakpoint', async () => {
+  it('renders the product grid with correct responsive classes', async () => {
     const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
@@ -106,70 +106,18 @@ describe('ItemGrid.vue', () => {
     expect(grid.classes()).toContain('md:gap-6');
     expect(grid.classes()).toContain('md:mb-5');
   });
+
+  it('positions product count correctly (left, center, right)', async () => {
+    const { default: ItemGrid } = await import('../ItemGrid.vue');
+    const wrapper = mount(ItemGrid, { props: { ...ItemGridMock } });
+    const countDiv = wrapper.find('.flex.items-center');
+    expect(countDiv.classes()).toContain('justify-start');
+    await wrapper.setProps({ content: { ...ItemGridMock.content, itemCountPosition: 'center' } });
+    expect(wrapper.find('.flex.items-center').classes()).toContain('justify-center');
+    await wrapper.setProps({ content: { ...ItemGridMock.content, itemCountPosition: 'right' } });
+    expect(wrapper.find('.flex.items-center').classes()).toContain('justify-end');
+  });
 });
-// import { describe, it, expect, vi, beforeEach } from 'vitest'
-// import { mount } from '@vue/test-utils'
-// import { ItemGridMock } from './ItemGrid.mock'
-
-// // Hoist-safe data used by mocks
-// const h = vi.hoisted(() => ({
-//   products: [
-//     { variation: { id: 1 } },
-//     { variation: { id: 2 } },
-//   ],
-// }))
-
-// vi.mock('#app', () => ({
-//   useNuxtApp: () => ({ $config: {}, vueApp: {} }),
-// }))
-
-// // Everything ItemGrid touches should be stubbed
-// vi.mock('~/composables/useProducts', () => {
-//   // keep it simple; you can also import ref from 'vue' and use ref(...)
-//   return {
-//     useProducts: () => ({
-//       data: { value: { products: h.products, pagination: { totals: h.products.length } } },
-//       productsPerPage: { value: 2 },
-//     }),
-//   }
-// })
-
-// vi.mock('~/composables/useCategoryFilter', () => ({
-//   useCategoryFilter: () => ({
-//     getFacetsFromURL: () => ({ page: 1, categoryUrlPath: 'cat' }),
-//   }),
-// }))
-
-// vi.mock('~/composables/useViewport', () => ({
-//   useViewport: () => ({ isGreaterOrEquals: (bp: string) => bp === 'lg' }),
-// }))
-
-// vi.mock('~/composables/useCart', () => ({
-//   useCart: () => ({ showNetPrices: false }),
-// }))
-
-// vi.mock('~/composables/useLocalePath', () => ({
-//   useLocalePath: () => (path: string) => path,
-// }))
-
-// vi.mock('vue-i18n', () => ({
-//   useI18n: () => ({ t: (k: string) => k }),
-// }))
-
-// vi.mock('~/utils/scroll', () => ({
-//   scrollToHTMLObject: vi.fn(),
-// }))
-
-// vi.mock('@plentymarkets/shop-api', () => ({
-//   productGetters: {
-//     getVariationId: (p: any) => p?.variation?.id ?? null,
-//   },
-// }))
-
-// describe('ItemGrid.vue', () => {
-//   beforeEach(() => {
-//     vi.clearAllMocks()
-//   })
 
 //   it('renders correct number of products per row for each breakpoint', async () => {
 
