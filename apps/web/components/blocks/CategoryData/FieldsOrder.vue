@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { type Category, categoryGetters } from '@plentymarkets/shop-api';
-import { CategoryDataContent } from './types';
+import type { CategoryDataContent } from './types';
 
 const content = defineProps<CategoryDataContent>();
 const { data: productsCatalog } = useProducts();

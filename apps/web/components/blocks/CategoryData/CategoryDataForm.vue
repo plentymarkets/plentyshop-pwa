@@ -451,7 +451,6 @@ import {
   SfSwitch,
   SfIconCheck,
   SfInput,
-  SfTextarea,
   SfTooltip,
   SfIconInfo,
 } from '@storefront-ui/vue';

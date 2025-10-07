@@ -67,10 +67,6 @@ const { hexToRgba, getTextAlignment, getContentPosition, isMobile } = useBlockCo
 const { data: productsCatalog } = useProducts();
 
 const category = computed(() => productsCatalog.value.category || ({} as Category));
-const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
-const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');
-const description2 = computed(() => categoryGetters.getCategoryDescription2(category.value) || '');
-const shortDescription = computed(() => categoryGetters.getCategoryShortDescription(category.value) || '');
 
 const enabledText = computed(
   () =>
@@ -96,12 +92,6 @@ const inlineStyle = computed(() => {
     marginBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
     marginLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
     marginRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
-  };
-});
-
-const textBlockInlineStyle = computed(() => {
-  return {
-    backgroundColor: props.content.text.bgColor ?? 'transparent',
   };
 });
 
