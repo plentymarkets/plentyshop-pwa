@@ -176,12 +176,14 @@ export const useApplePay = () => {
 
   const checkIsEligible = async () => {
     try {
-      return (await initialize()) &&
+      return (
+        (await initialize()) &&
         typeof ApplePaySession !== 'undefined' &&
         state.value.script &&
         ApplePaySession &&
         ApplePaySession.canMakePayments() &&
-        state.value.config.isEligible;
+        state.value.config.isEligible
+      );
     } catch {
       return false;
     }

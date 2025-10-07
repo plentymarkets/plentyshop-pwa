@@ -1,4 +1,4 @@
-import { type PayPalNamespace, type FUNDING_SOURCE, loadScript as loadPayPalScript  } from '@paypal/paypal-js';
+import { type PayPalNamespace, type FUNDING_SOURCE, loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import type {
   ApiError,
   PayPalConfigResponse,
