@@ -8,7 +8,7 @@ export const metaDefaults = {
 
 export const openGraph = {
   title: process.env.NUXT_PUBLIC_OG_TITLE || process.env.OG_TITLE || 'PlentyONE Shop',
-  image: process.env.NUXT_PUBLIC_OG_IMG || process.env.OG_IMG || '/_nuxt-plenty/images/logo.svg',
+  image: process.env.NUXT_PUBLIC_OG_IMG || process.env.OG_IMG || 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.png',
   type: process.env.NUXT_PUBLIC_OG_TYPE || process.env.OG_TYPE || 'website',
 };
 
@@ -24,6 +24,8 @@ export const appConfiguration = {
     },
     meta: [
       { property: 'og:type', content: openGraph.type },
+      { property: 'og:image', content: openGraph.image },
+      { property: 'og:title', content: openGraph.title },
       { property: 'og:url', content: process.env.API_ENDPOINT },
     ],
   },
