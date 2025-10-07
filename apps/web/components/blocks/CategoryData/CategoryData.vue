@@ -28,7 +28,10 @@
 
         <div
           v-if="enabledText"
-          :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': props.content.text.bgColor }]"
+          :class="[
+            'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
+            { 'md:p-10': props.content.text.bgColor },
+          ]"
           :style="{
             color: props.content.text.color,
             textAlign: getTextAlignment(props.content.text.textAlignment ?? ''),
@@ -88,10 +91,10 @@ const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
 
   return {
-    marginTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
-    marginBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
-    marginLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
-    marginRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
+    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
+    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
+    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
 

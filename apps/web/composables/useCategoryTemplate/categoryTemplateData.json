@@ -17,11 +17,11 @@
       "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
       "fieldsDisabled": [],
       "layout": {
-        "paddingTop": 40,
-        "paddingBottom": 40,
+        "paddingTop": 0,
+        "paddingBottom": 0,
         "paddingLeft": 0,
         "paddingRight": 0,
-        "narrowContainer": false
+        "narrowContainer": true
       },
       "displayCategoryImage": "off",
       "image": {
