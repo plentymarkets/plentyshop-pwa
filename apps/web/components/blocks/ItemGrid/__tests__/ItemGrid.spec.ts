@@ -1,84 +1,91 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import ItemGrid from '../ItemGrid.vue';
 import { ItemGridMock } from './ItemGrid.mock';
-import type { Product } from '@plentymarkets/shop-api';
 import { mockProduct } from '../Products.mock';
 
-// Mocks for composables and utils
-vi.mock('@plentymarkets/shop-api', () => ({
-  productGetters: {
-    getVariationId: (product: Product) => product.variation?.id || null,
-  },
-}));
-
-vi.mock('~/composables/useCategoryFilter', () => ({
-  useCategoryFilter: () => ({
-    getFacetsFromURL: () => ({ page: 1, categoryUrlPath: 'cat' }),
+vi.mock('#app', () => ({
+  useNuxtApp: () => ({
+    $config: {},
+    vueApp: {},
   }),
 }));
-
-
-// const getProductsMock = (products?: Product[]) => {
-//   const safeProducts = products ?? mockProduct ?? [];
-//   return {
-//     data: { value: { products: safeProducts, pagination: { totals: safeProducts.length } } },
-//     productsPerPage: { value: 2 },
-//   };
-// };
 
 vi.mock('~/composables/useProducts', () => ({
   useProducts: () => ({
-    data: { value: { products: [mockProduct, mockProduct], pagination: { totals: 2 } } },
+    data: { value: { products: mockProduct, pagination: { totals: mockProduct.length } } },
     productsPerPage: { value: 2 },
   }),
 }));
-
-vi.mock('~/composables/useCart', () => ({
-  useCart: () => ({
-    showNetPrices: false,
-  }),
-}));
-
-vi.mock('~/composables/useViewport', () => ({
-  useViewport: () => ({
-    isGreaterOrEquals: (bp: string) => bp === 'lg',
-  }),
-}));
-
-vi.mock('~/composables/useLocalePath', () => ({
-  useLocalePath: () => (path: string) => path,
-}));
-
-vi.mock('~/utils/scroll', () => ({
-  scrollToHTMLObject: vi.fn(),
-}));
-
-
 
 describe('ItemGrid.vue', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-//   it('renders empty state if no products', () => {
-//   vi.doMock('~/composables/useProducts', () => ({
-//     useProducts: () => getProductsMock([]),
-//   }));
-//   const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//   expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
-// });
-
-  it('renders correct number of products per row for each breakpoint', () => {
-    const wrapper = mount(ItemGrid, { props: ItemGridMock });
+  it('renders correct number of products per row for each breakpoint', async () => {
+    const { default: ItemGrid } = await import('../ItemGrid.vue');
+    const wrapper = mount(ItemGrid, {
+      props: { ...ItemGridMock },
+      global: {
+        stubs: {
+          NuxtLazyHydrate: { template: '<div><slot /></div>' },
+          UiProductCard: { template: '<div data-testid="card" />' },
+        },
+      },
+    });
     const grid = wrapper.find('[data-testid="category-grid"]');
     expect(grid.exists()).toBe(true);
-    // Check for grid classes (gap, mb, etc.)
+    expect(grid.classes()).toContain('mb-10');
+    expect(grid.classes()).toContain('gap-4');
+    expect(grid.classes()).toContain('md:gap-6');
+    expect(grid.classes()).toContain('md:mb-5');
+  });
+
+//   it('renders empty state if no products', async () => {
+//     vi.mock('~/composables/useProducts', () => ({
+//       useProducts: () => ({
+//         data: { value: { products: [], pagination: { totals: 0 } } },
+//         productsPerPage: { value: 2 },
+//       }),
+//     }));
+//     const { default: ItemGrid } = await import('../ItemGrid.vue');
+//     const wrapper = mount(ItemGrid, {
+//       props: { ...ItemGridMock },
+//       global: {
+//         stubs: {
+//           NuxtLazyHydrate: { template: '<div><slot /></div>' },
+//           UiProductCard: { template: '<div data-testid="card" />' },
+//         },
+//       },
+//     });
+//     expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
+//   });
+});
+  
+
+//   it('renders empty state if no products', async () => {
+//     vi.doMock('~/composables/useProducts', () => ({
+//       useProducts: () => ({
+//         data: { value: { products: [], pagination: { totals: 0 } } },
+//         productsPerPage: { value: 2 },
+//       }),
+//     }));
+//     const { default: ItemGrid } = await import('../ItemGrid.vue');
+//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
+//     expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
+//   });
+
+//   it('renders correct number of products per row for each breakpoint', () => {
+//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
+//     const grid = wrapper.find('[data-testid="category-grid"]');
+//     console.log(grid.html());
+//     expect(grid.exists()).toBe(true);
+
     // expect(grid.classes()).toContain('mb-10');
     // expect(grid.classes()).toContain('gap-4');
     // expect(grid.classes()).toContain('md:gap-6');
     // expect(grid.classes()).toContain('md:mb-5');
-  });
+//   });
 
   //   it('shows product count when showItemCount is true', () => {
   //     const wrapper = mount(ItemGrid, { props: ItemGridMock });
@@ -156,7 +163,4 @@ describe('ItemGrid.vue', () => {
   //     wrapper.vm.currentPage = 2;
   //     await wrapper.vm.$nextTick();
   //     expect(scrollToHTMLObject).toHaveBeenCalledWith('#category-headline', false);
-  //   });
-});
-
-
+    //  });

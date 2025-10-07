@@ -31,6 +31,6 @@ export const ItemGridMock: ItemGridProps = {
     uuid: 'mock-item-grid-uuid',
   },
   products: mockProduct,
-  productsPerPage: 2,
-  totalProducts: 2,
+  productsPerPage: 4,
+  totalProducts: 4,
 };
