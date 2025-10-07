@@ -103,7 +103,7 @@ export const useApplePay = () => {
             });
             paymentSession.completeMerchantValidation(validationData.merchantSession);
           });
-        } catch (error) {
+        } catch {
           paymentSession.abort();
         }
       };
@@ -169,7 +169,7 @@ export const useApplePay = () => {
       });
 
       paymentSession.begin();
-    } catch (error) {
+    } catch {
       showErrorNotification($i18n.t('storefrontError.unknownError'));
     }
   };
