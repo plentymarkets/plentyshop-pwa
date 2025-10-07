@@ -83,10 +83,16 @@ export const useGooglePay = () => {
 
     state.value.paymentLoading = true;
 
+    if (!(await useCartStockReservation().reserve())) {
+      state.value.paymentLoading = false;
+      return;
+    }
+
     const transaction = await createTransaction({
       type: 'basket',
     });
     if (!transaction || !transaction.id) {
+      await useCartStockReservation().unreserve();
       showErrorNotification($i18n.t('storefrontError.order.createFailed'));
       return;
     }
@@ -122,6 +128,7 @@ export const useGooglePay = () => {
 
       return { transactionState: 'SUCCESS' };
     } else {
+      await useCartStockReservation().unreserve();
       showErrorNotification($i18n.t('errorMessages.paymentFailed'));
       return { transactionState: 'ERROR' };
     }

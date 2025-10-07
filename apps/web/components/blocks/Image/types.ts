@@ -1,4 +1,4 @@
-export type ImageTextProps = {
+export type ImageProps = {
   name: string;
   type: string;
   content: ImageContent;
@@ -11,12 +11,36 @@ export type ImageTextProps = {
 
 export type ImageContent = {
   index?: number;
-  wideScreen?: string;
-  desktop?: string;
-  tablet?: string;
-  mobile?: string;
-  alt: string;
-  imageAlignment: 'left' | 'right';
+  image: {
+    wideScreen?: string;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
+    alt: string;
+    linktarget?: string;
+    imageAlignment: 'left' | 'right';
+    brightness?: number;
+    fillMode?: 'fill' | 'fit';
+    aspectRatio?: string;
+  };
+  text: {
+    textOverlay?: string;
+    textOverlayColor?: string;
+    textOverlayAlignY?: 'top' | 'center' | 'bottom';
+    textOverlayAlignX?: 'left' | 'center' | 'right';
+  };
+  button: {
+    label?: string;
+    link?: string;
+    variant?: 'primary' | 'secondary';
+  };
+  layout: {
+    paddingTop: number;
+    paddingBottom: number;
+    paddingLeft: number;
+    paddingRight: number;
+    backgroundColor?: string;
+  };
 };
 
 export interface ImageDimensions {

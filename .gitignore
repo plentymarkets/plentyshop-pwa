@@ -53,8 +53,8 @@ apps/web/cypress.env.json
 lib/
 
 # docs build
-apps/web/docs/reference/composables/typedoc-sidebar.json
-apps/web/docs/reference/**/*.md
+apps/web/docs/reference/
+apps/web/reference/
 
 .vscode
 *.code-workspace

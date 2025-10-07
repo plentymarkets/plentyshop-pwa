@@ -92,6 +92,13 @@
           Delete page
         </button>
       </div>
+
+      <div
+        v-if="getPageType === 'item' && runtimeConfig.public.isDev"
+        class="bg-[#EFF4F1] border border-[#BBC6BE] text-[#151A16] px-4 py-3 rounded-md mx-5 mt-5 mb-0"
+      >
+        <span> Page editing will affect all product category pages equally (deleting is not affected). </span>
+      </div>
     </div>
   </SfDrawer>
 </template>
@@ -111,7 +118,9 @@ const { toggleDeleteModal } = useCategorySettings();
 const { setSettingsCategory } = useSiteConfiguration();
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
-const { getCategoryName, getCategoryPreviewPath, getCategoryDetails, setParentName, setCategoryId } =
+const runtimeConfig = useRuntimeConfig();
+
+const { getCategoryName, getPageType, getCategoryPreviewPath, getCategoryDetails, setParentName, setCategoryId } =
   useCategoryIdHelper();
 const { locale } = useI18n();
 

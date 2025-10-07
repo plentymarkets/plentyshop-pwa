@@ -4,9 +4,17 @@
       <div class="flex items-center text-xl font-bold">
         {{ getBlockTypeName(blockType) }}
       </div>
-      <button class="!p-0" @click="drawerOpen = false">
-        <SfIconClose />
-      </button>
+      <div class="flex items-center space-x-2">
+        <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
+          <button @click="deleteBlock(blockUuid)">
+            <SfIconDelete />
+          </button>
+          <div class="w-px h-4 bg-gray-300" />
+        </div>
+        <button @click="drawerOpen = false">
+          <SfIconClose />
+        </button>
+      </div>
     </header>
     <div class="h-[calc(100vh-150px)] overflow-y-auto">
       <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
@@ -15,9 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconClose } from '@storefront-ui/vue';
 
-const { drawerOpen, blockType } = useSiteConfiguration();
+const { drawerOpen, blockType, blockUuid } = useSiteConfiguration();
+const { deleteBlock } = useBlockManager();
 
 const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
   string,
@@ -42,7 +51,7 @@ const blockTypeNames: Record<string, string> = {
   NewsletterSubscribe: 'Newsletter',
   ProductRecommendedProducts: 'Product Gallery',
   TextCard: 'Rich Text',
-  MultiGrid: 'Image + Text',
+  MultiGrid: 'Layout',
   Footer: 'Footer',
 };
 

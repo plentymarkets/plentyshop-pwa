@@ -122,6 +122,7 @@
     <UiButton
       v-else-if="!disabled"
       square
+      data-testid="remove-item-from-basket"
       :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
@@ -156,6 +157,7 @@ const deleteLoading = ref(false);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
+const itemQuantity = computed(() => cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
@@ -245,5 +247,16 @@ const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem
 const imageAlt = computed(() => {
   const image = cartItem?.variation?.images?.all[0];
   return image ? productImageGetters.getImageAlternate(image) : '';
+});
+
+watch(itemQuantity, async (newValue) => {
+  if (quantitySelectorReference.value) {
+    const event = new Event('input');
+    Object.defineProperty(event, 'target', {
+      value: { value: newValue },
+      writable: true,
+    });
+    quantitySelectorReference.value.handleOnChange(event);
+  }
 });
 </script>

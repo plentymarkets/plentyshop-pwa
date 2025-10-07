@@ -4,7 +4,10 @@ import type {
   UseSiteSettingsState,
   GetSetting,
   SaveSiteSettings,
+  SetSettingsInitialData,
+  SettingValue,
 } from '~/composables/useSiteSettings/types';
+import type { Setting } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing site settings.
@@ -27,24 +30,55 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
 
   const getSetting: GetSetting = () => {
     return (
-      (state.value.data?.[setting as string] as string) ?? (useRuntimeConfig().public?.[setting as string] as string)
+      (state.value.data?.[setting as string] as string) ?? (state.value.initialData?.[setting as string] as string)
     );
   };
 
   const getJsonSetting: () => string[] = () => {
-    const runtimeSetting = useRuntimeConfig().public?.[setting as string];
+    const runtimeSetting = state.value.initialData?.[setting as string];
 
     const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);
 
     return JSON.parse((state.value.data?.[setting as string] as string) || defaultSetting);
   };
 
-  const settingsIsDirty = computed(() => {
-    const config = state.value.initialData;
-    const currentData = state.value.data;
+  const setInitialData: SetSettingsInitialData = (settings: Setting[]) => {
+    const result = settings.reduce((acc: Record<string, SettingValue>, { originalKey, value }) => {
+      let parsedValue = value;
+      if (typeof value === 'string') {
+        try {
+          parsedValue = JSON.parse(value);
+        } catch {
+          parsedValue = value;
+        }
+      }
 
-    return Object.keys(currentData).some((key) => key in config && currentData[key] !== config[key]);
+      acc[originalKey] = parsedValue;
+
+      return acc;
+    }, {});
+
+    state.value.initialData = { ...useRuntimeConfig().public, ...result };
+  };
+
+  const changedFields = computed(() => {
+    const config = state.value?.initialData ?? {};
+    const currentData = state.value?.data ?? {};
+
+    if (!currentData || Object.keys(currentData).length === 0) {
+      return { entries: [] as Array<[string, unknown]>, keys: [] as string[] };
+    }
+
+    const entries = Object.entries(currentData).filter(([key, value]) => !(key in config) || config[key] !== value);
+
+    return {
+      entries,
+      keys: entries.map(([key]) => key),
+    };
   });
+
+  const dirtyKeys = computed(() => changedFields.value.keys);
+  const settingsIsDirty = computed(() => changedFields.value.keys.length > 0);
 
   const saveSiteSettings: SaveSiteSettings = async () => {
     try {
@@ -56,7 +90,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
           value: String(val || ''),
         })),
       ];
-
       await useSdk().plentysystems.setConfiguration({ settings });
 
       state.value.initialData = { ...state.value.initialData, ...state.value.data };
@@ -74,6 +107,8 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     getSetting,
     getJsonSetting,
     settingsIsDirty,
+    dirtyKeys,
     saveSiteSettings,
+    setInitialData,
   };
 };

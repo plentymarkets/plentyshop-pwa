@@ -109,10 +109,11 @@
       <ErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
-        v-if="turnstileSiteKey"
+        v-if="turnstileSiteKey.length > 0 && turnstileLoad"
         v-bind="turnstileAttributes"
         ref="turnstileElement"
         v-model="turnstile"
+        :site-key="turnstileSiteKey"
         :options="{ theme: 'light' }"
         class="mt-4 flex justify-center"
       />
@@ -163,13 +164,14 @@ const { t } = useI18n();
 const { send } = useNotification();
 const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();
-const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
 const { emailAddress, order, isModal = false, changeableView = true } = defineProps<RegisterFormParams>();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const turnstileSiteKey = getSetting() ?? '';
 
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 
 const validationSchema = toTypedSchema(
   object({
@@ -217,9 +219,20 @@ const registerUser = async () => {
   }
 
   const response = await register({
-    email: email.value ?? '',
-    password: password.value ?? '',
     'cf-turnstile-response': turnstile.value,
+    contact: {
+      password: password.value ?? '',
+      typeId: 1,
+      referrerId: 1,
+      options: {
+        typeId: {
+          value: email.value ?? '',
+          subTypeId: 4,
+          priority: 0,
+          typeId: 2,
+        },
+      },
+    },
   });
 
   if (response?.data.code === 1) {
@@ -266,4 +279,13 @@ const passwordValidationOneDigit = computed(() => {
 const passwordValidationOneLetter = computed(() => {
   return /[A-Za-z]/.test(password?.value || '');
 });
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([email, password, repeatPassword], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>

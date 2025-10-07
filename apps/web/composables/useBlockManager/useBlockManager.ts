@@ -1,9 +1,11 @@
-import type { BlocksList } from '../../components/BlocksNavigationList/types';
+import type { BlocksList, BlocksListContext } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition } from './types';
+import type { BlockPosition, RefCallback } from './types';
 import { v4 as uuid } from 'uuid';
+import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
 const blocksLists = ref<BlocksList>({});
+const blocksListContext = ref<BlocksListContext>('');
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.content;
@@ -22,6 +24,14 @@ const dragState = reactive({
   isDragging: false,
 });
 
+const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
+  ProductRecommendedProducts: {
+    propName: 'shouldLoad',
+    rootMargin: '0px 0px 250px 0px',
+    threshold: 0,
+  },
+};
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
@@ -33,12 +43,18 @@ export const useBlockManager = () => {
   const currentBlockUuid = ref<string | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
+  const lazyLoadStates = ref<Record<string, boolean>>({});
+  const lazyLoadRefs = ref<Record<string, HTMLElement | null>>({});
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
   const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
 
   const updateMultigridColumnUuid = (uuid: string) => {
     multigridColumnUuid.value = uuid;
+  };
+
+  const setBlocksListContext = (context: BlocksListContext) => {
+    blocksListContext.value = context;
   };
 
   const getBlocksLists = async () => {
@@ -53,7 +69,10 @@ export const useBlockManager = () => {
     }
   };
 
-  const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
+  const getTemplateByLanguage = async (category: string, variationIndex: number, lang: string) => {
+    if (!blocksLists.value[category]) {
+      await getBlocksLists();
+    }
     const variationsInCategory = blocksLists.value[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
     const variationTemplate = variationToAdd.template;
@@ -61,15 +80,17 @@ export const useBlockManager = () => {
     return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
   };
 
-  const addNewBlock = (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
+  const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
-    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+
+    const newBlock = await getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
     const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
+
       return;
     }
 
@@ -98,10 +119,21 @@ export const useBlockManager = () => {
     openDrawerWithView('blocksSettings', newBlock);
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+
+    scrollIntoBlockView(newBlock);
+  };
+
+  const scrollIntoBlockView = (block: Block) => {
+    setTimeout(() => {
+      const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+    }, 100);
   };
 
   const insertIntoColumn = (targetBlock: Block, newBlock: Block, parent: Block[]) => {
     const colIndex = parent.findIndex((block) => block.meta?.uuid === targetBlock.meta?.uuid);
+
+    newBlock.parent_slot = targetBlock.parent_slot;
 
     if (colIndex === -1) {
       send({ type: 'negative', message: `Couldn't insert block.` });
@@ -194,6 +226,20 @@ export const useBlockManager = () => {
     return null;
   };
 
+  const deleteBlock = (uuid: string) => {
+    if (data.value && uuid !== null) {
+      if (getBlockDepth(uuid) > 0) {
+        replaceWithEmptyGridBlock(uuid);
+      } else {
+        findOrDeleteBlockByUuid(data.value, uuid, true);
+      }
+      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+
+      const { closeDrawer } = useSiteConfiguration();
+      closeDrawer();
+    }
+  };
+
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
       isClicked.value = !isClicked.value;
@@ -209,16 +255,18 @@ export const useBlockManager = () => {
     }
   };
 
-  const deleteBlock = (uuid: string) => {
-    if (data.value && uuid !== null) {
-      findOrDeleteBlockByUuid(data.value, uuid, true);
-      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+  const replaceWithEmptyGridBlock = async (blockUuid: string) => {
+    const parentInfo = findBlockParent(data.value, blockUuid);
+    if (parentInfo) {
+      const { parent, index } = parentInfo;
+      const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
+      const newBlock = { ...layoutTemplate.content[0] };
 
-      const { closeDrawer } = useSiteConfiguration();
-      closeDrawer();
+      newBlock.parent_slot = index;
+      newBlock.meta.uuid = uuid();
+      parent.splice(index, 1, newBlock);
     }
   };
-
   const updateBlock = (index: number, updatedBlock: Block) => {
     if (data.value && index !== null && index < data.value.length) {
       data.value[index] = updatedBlock;
@@ -247,12 +295,40 @@ export const useBlockManager = () => {
     return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
   };
 
+  const shouldLazyLoad = (blockName: string): boolean => {
+    return blockName in LAZY_LOAD_BLOCKS;
+  };
+
+  const getLazyLoadKey = (blockName: string, blockUuid?: string): string => {
+    const baseKey = blockName.charAt(0).toLowerCase() + blockName.slice(1);
+    if (!blockUuid) {
+      console.error('getLazyLoadKey called without blockUuid for', blockName);
+      return `${baseKey}-missing-uuid`;
+    }
+    return `${baseKey}-${blockUuid}`;
+  };
+
+  const getLazyLoadConfig = (blockName: string): LazyLoadConfig | null => {
+    return LAZY_LOAD_BLOCKS[blockName] || null;
+  };
+
+  const getLazyLoadRef = (blockName: string, blockUuid: string): RefCallback => {
+    if (!shouldLazyLoad(blockName)) return () => {};
+
+    return (ref) => {
+      if (ref instanceof HTMLElement) lazyLoadRefs.value[getLazyLoadKey(blockName, blockUuid)] = ref;
+    };
+  };
+
   return {
     blocksLists,
+    blocksListContext,
     currentBlock,
     currentBlockUuid,
     isClicked,
     clickedBlockIndex,
+    lazyLoadStates,
+    lazyLoadRefs,
     isTablet,
     multigridColumnUuid,
     updateMultigridColumnUuid,
@@ -272,5 +348,10 @@ export const useBlockManager = () => {
     togglePlaceholder,
     findOrDeleteBlockByUuid,
     getBlockDepth,
+    shouldLazyLoad,
+    getLazyLoadKey,
+    getLazyLoadConfig,
+    getLazyLoadRef,
+    setBlocksListContext,
   };
 };

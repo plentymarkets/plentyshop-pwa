@@ -1,6 +1,7 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty || (data.length === 1 && data[0].name === 'Footer')" />
+    <EmptyBlock v-if="isContentEmptyInEditor" />
+    <CategoryEmptyState v-else-if="isContentEmptyInLive" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -14,21 +15,25 @@
       @end="handleDragEnd"
     >
       <template #item="{ element: block, index }">
-        <PageBlock
-          :index="index"
-          :block="block"
-          :disable-actions="disableActions"
-          :is-clicked="isClicked"
-          :clicked-block-index="clickedBlockIndex"
-          :is-tablet="isTablet"
-          :block-has-data="blockHasData"
-          :change-block-position="changeBlockPosition"
-          :root="getBlockDepth(block.meta.uuid) === 0"
-          class="group"
-          :class="getBlockClass(block).value"
-          data-testid="block-wrapper"
-          @click="tabletEdit(index)"
-        />
+        <component
+          :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+        >
+          <PageBlock
+            :index="index"
+            :block="block"
+            :enable-actions="enabledActions"
+            :is-clicked="isClicked"
+            :clicked-block-index="clickedBlockIndex"
+            :is-tablet="isTablet"
+            :block-has-data="blockHasData"
+            :change-block-position="changeBlockPosition"
+            :root="getBlockDepth(block.meta.uuid) === 0"
+            class="group"
+            :class="getBlockClass(block).value"
+            data-testid="block-wrapper"
+            @click="tabletEdit(index)"
+          />
+        </component>
       </template>
     </draggable>
   </div>
@@ -38,21 +43,35 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-import { v4 as uuid } from 'uuid';
+
+const NarrowContainer = resolveComponent('NarrowContainer');
+
 const { $isPreview } = useNuxtApp();
-const props = defineProps<EditablePageProps>();
+const props = withDefaults(defineProps<EditablePageProps>(), {
+  hasEnabledActions: true,
+});
+
+definePageMeta({
+  identifier: props.identifier,
+});
 
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
-await getBlocksServer(props.identifier, props.type);
-const { cachedFooter } = useFooterBlock();
-const { t } = useI18n();
 
+const isContentEmptyInEditor = computed(
+  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0].name === 'Footer' && $isPreview),
+);
+
+const isContentEmptyInLive = computed(
+  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0].name === 'Footer'),
+);
+
+await getBlocksServer(props.identifier, props.type);
+
+const { footerCache } = useFooter();
 addFooterBlock({
   data,
-  cachedFooter,
-  t,
-  uuid,
+  cachedFooter: footerCache,
   cleanData,
 });
 
@@ -90,6 +109,9 @@ const scrollToBlock = (evt: DragEvent) => {
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
+
+const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
+
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
@@ -128,19 +150,16 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
-const getBlockClass = (block: Block) => {
-  return computed(() => [
-    {
-      'max-w-screen-3xl mx-auto lg:px-10 mt-3':
-        block.name !== 'Banner' && block.name !== 'Carousel' && block.name !== 'Footer',
-    },
-    {
-      'px-4 md:px-6':
-        block.name !== 'Carousel' &&
-        block.name !== 'Banner' &&
-        block.name !== 'NewsletterSubscribe' &&
-        block.name !== 'Footer',
-    },
-  ]);
+const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid']);
+const paddingExcludedBlockSet = new Set(['Banner', 'Carousel', 'NewsletterSubscribe', 'Footer', 'MultiGrid']);
+
+const isExcluded = (blockName: string, excludedSet: Set<string>) => {
+  return excludedSet.has(blockName);
 };
+
+const getBlockClass = (block: Block) =>
+  computed(() => ({
+    'max-w-screen-3xl mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
+    'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
+  }));
 </script>

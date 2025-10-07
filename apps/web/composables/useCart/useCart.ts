@@ -7,16 +7,6 @@ import type {
   Cart,
   PlentyEvents,
 } from '@plentymarkets/shop-api';
-import type {
-  UseCartState,
-  UseCartReturn,
-  GetCart,
-  AddToCart,
-  AddItemsToCart,
-  DeleteCartItem,
-  SetCartItemQuantity,
-  DeleteCart,
-} from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
   if (!oldCart || !oldCart.items || !nextCart || !nextCart.items) {
@@ -55,38 +45,14 @@ const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
  * } = useCart();
  * ```
  */
-export const useCart: UseCartReturn = () => {
+export const useCart = () => {
   const { emit } = usePlentyEvent();
-  const state = useState<UseCartState>('useCart', () => ({
+  const state = useState('useCart', () => ({
     data: {} as Cart,
     useAsShippingAddress: true,
     loading: false,
     lastUpdatedCartItem: {} as CartItem,
   }));
-
-  /**
-   * @description Function for fetching the cart.
-   * @return GetCart
-   * @example
-   * ``` ts
-   * getCart();
-   * ```
-   */
-  const getCart: GetCart = async () => {
-    state.value.loading = true;
-    try {
-      const { data } = await useSdk().plentysystems.getCart();
-
-      setCart(data);
-
-      return state.value.data;
-    } catch (error) {
-      useHandleError(error as ApiError);
-      return state.value.data;
-    } finally {
-      state.value.loading = false;
-    }
-  };
 
   /**
    * @description Function for setting the cart state.
@@ -100,6 +66,14 @@ export const useCart: UseCartReturn = () => {
     const { setPattern } = usePriceFormatter();
     state.value.data = data;
     setPattern(data.currencyPattern);
+    useWishlist().setWishlistItemIds(Object.values(data?.itemWishListIds || []));
+  };
+
+  /**
+   * @deprecated Use useFetchSession.fetchSession() instead
+   */
+  const getCart = async () => {
+    await useFetchSession().fetchSession();
   };
 
   /**
@@ -120,7 +94,7 @@ export const useCart: UseCartReturn = () => {
    * await deleteCart()
    * ```
    */
-  const deleteCart: DeleteCart = async () => {
+  const deleteCart = async () => {
     try {
       await useSdk().plentysystems.deleteCart();
     } finally {
@@ -139,7 +113,7 @@ export const useCart: UseCartReturn = () => {
    * });
    * ```
    */
-  const addToCart: AddToCart = async (params: DoAddItemParams) => {
+  const addToCart = async (params: DoAddItemParams) => {
     state.value.loading = true;
 
     try {
@@ -189,7 +163,7 @@ export const useCart: UseCartReturn = () => {
    * }]);
    * ```
    */
-  const addItemsToCart: AddItemsToCart = async (params: DoAddItemParams[]) => {
+  const addItemsToCart = async (params: DoAddItemParams[]) => {
     state.value.loading = true;
 
     try {
@@ -240,7 +214,7 @@ export const useCart: UseCartReturn = () => {
    * });
    * ```
    */
-  const setCartItemQuantity: SetCartItemQuantity = async (params: SetCartItemQuantityParams) => {
+  const setCartItemQuantity = async (params: SetCartItemQuantityParams) => {
     state.value.loading = true;
     try {
       const { data } = await useSdk().plentysystems.setCartItemQuantity({
@@ -288,7 +262,7 @@ export const useCart: UseCartReturn = () => {
    * });
    * ```
    */
-  const deleteCartItem: DeleteCartItem = async (cartItem: CartItem) => {
+  const deleteCartItem = async (cartItem: CartItem) => {
     state.value.loading = true;
     try {
       const { data } = await useSdk().plentysystems.deleteCartItem({
@@ -311,7 +285,7 @@ export const useCart: UseCartReturn = () => {
   };
 
   const cartIsEmpty = computed(() => !state.value.data?.items?.length);
-
+  const showNetPrices = computed(() => state.value.data?.showNetPrices ?? false);
   return {
     setCart,
     clearCartItems,
@@ -319,9 +293,10 @@ export const useCart: UseCartReturn = () => {
     addToCart,
     addItemsToCart,
     deleteCartItem,
-    getCart,
     deleteCart,
+    getCart,
     cartIsEmpty,
+    showNetPrices,
     ...toRefs(state.value),
   };
 };

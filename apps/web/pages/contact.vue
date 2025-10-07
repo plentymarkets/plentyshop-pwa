@@ -41,7 +41,7 @@
         </label>
 
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput
             v-bind="subjectAttributes"
             v-model="subject"
@@ -125,10 +125,11 @@
 
         <div>
           <NuxtTurnstile
-            v-if="turnstileSiteKey"
+            v-if="turnstileSiteKey.length > 0 && turnstileLoad"
             v-bind="turnstileAttributes"
             ref="turnstileElement"
             v-model="turnstile"
+            :site-key="turnstileSiteKey"
             :options="{ theme: 'light' }"
             class="mt-4"
           />
@@ -153,16 +154,15 @@ definePageMeta({
   pageType: 'static',
 });
 
-const runtimeConfig = useRuntimeConfig();
-
 const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
+const turnstileLoad = ref(false);
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
-
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
@@ -195,9 +195,9 @@ const validationSchema = toTypedSchema(
       }),
     subject: string()
       .trim()
-      .notRequired()
+      .required(t('errorMessages.contact.subjectRequired'))
       .default('')
-      .test('min-if-not-empty', t('storefrontError.contactMail.subjectInvalid'), (val) => !val || val.length >= 3),
+      .test('min-length', t('storefrontError.contactMail.subjectInvalid'), (val) => !!(val && val.length >= 3)),
     orderId: string()
       .trim()
       .notRequired()
@@ -243,13 +243,13 @@ const submitForm = async () => {
   if (!meta.value.valid || !turnstile.value) return;
 
   const params: CustomerContactEmailParams = {
+    subject: subject.value || '',
     email: email.value || '',
     message: message.value || '',
     'cf-turnstile-response': turnstile.value,
   };
 
   if (name.value) params.name = name.value;
-  if (subject.value) params.subject = subject.value;
   if (orderId.value) params.orderId = Number(orderId.value);
 
   if (await doCustomerContactMail(params)) {
@@ -265,4 +265,13 @@ const onSubmit = handleSubmit(() => submitForm());
 
 await getRobots();
 setRobotForStaticPage('ContactPage');
+
+if (turnstileSiteKey.length > 0) {
+  const turnstileWatcher = watch([name, email, subject, orderId, message], (data) => {
+    if (data.some((field) => field && field.length > 0)) {
+      turnstileLoad.value = true;
+      turnstileWatcher();
+    }
+  });
+}
 </script>

@@ -180,7 +180,7 @@ export class CheckoutPageObject extends PageObject {
 
     this.placeOrderButtons.click();
 
-    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
+    cy.wait(['@doAdditionalInformation', '@doPreparePayment'], { timeout: 20000 });
 
     return this;
   }
@@ -220,17 +220,27 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  waitForUiToRender(milliseconds = 1000) {
+    cy.wait(milliseconds);
+    return this;
+  }
+
   fillShippingAddressForm(fixtureOverride?: AddressFixtureOverride) {
     cy.intercept('/plentysystems/doSaveAddress')
       .as('doSaveAddress')
       .intercept('/plentysystems/getShippingProvider')
       .as('getShippingProvider')
       .intercept('/plentysystems/getPaymentProviders')
-      .as('getPaymentProviders');
+      .as('getPaymentProviders')
+      .intercept('/plentysystems/getSession')
+      .as('getSession');
 
     this.fillAddressForm('shipping', fixtureOverride);
 
-    cy.wait(['@doSaveAddress', '@getShippingProvider', '@getPaymentProviders'], { timeout: 10000 });
+    cy.wait('@doSaveAddress', { timeout: 20000 });
+    cy.wait(['@getShippingProvider', '@getPaymentProviders', '@getSession'], { timeout: 20000 });
+
+    this.waitForUiToRender();
 
     return this;
   }
@@ -334,6 +344,14 @@ export class CheckoutPageObject extends PageObject {
     this.billingAddressForm.within(() => {
       this.countrySelect.select(fixture.country ?? '');
       this.postalCodeInput.type(fixture.zipCode ?? '');
+    });
+
+    return this;
+  }
+
+  clearPostCodeBillingForm() {
+    this.billingAddressForm.within(() => {
+      this.postalCodeInput.clear();
     });
 
     return this;

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$isPreview" class="flex w-full max-w-4xl mx-auto">
+  <div v-if="$isPreview" class="flex w-full">
     <div
       v-if="drawerOpen && isActiveColumn"
       data-testid="active-empty-multicolumn"
@@ -11,7 +11,7 @@
     <div
       v-else
       data-testid="inactive-empty-multicolumn"
-      class="h-[196px] flex-1 border-2 border-dashed border-gray-400 bg-gray-50 p-6 flex flex-col items-center justify-center text-center cursor-pointer"
+      class="h-[196px] flex-1 border-2 border-dashed border-gray-400 bg-gray-50 flex flex-col items-center justify-center text-center cursor-pointer"
       @click.stop="addBlockToColumn()"
     >
       <span class="text-xl font-bold text-gray-700"><SfIconAdd class="text-xl" /></span>
@@ -28,6 +28,7 @@ const { $isPreview } = useNuxtApp();
 const props = defineProps<EmptyGridBlockProps>();
 const { multigridColumnUuid, updateMultigridColumnUuid, visiblePlaceholder } = useBlockManager();
 const { openDrawerWithView, drawerOpen } = useSiteConfiguration();
+
 const isActiveColumn = computed(() => multigridColumnUuid.value === props.meta.uuid);
 
 const addBlockToColumn = () => {

@@ -52,7 +52,7 @@
                 :disabled="interactionDisabled"
                 size="lg"
                 data-testid="place-paypal-order-button"
-                class="w-full mb-4 md:mb-0 cursor-pointer"
+                class="w-full cursor-pointer"
                 @click="buy"
               >
                 <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
@@ -72,6 +72,18 @@
                 <UiButton class="w-full">{{ t('goToCheckout') }}</UiButton>
               </NuxtLink>
             </div>
+            <UiButton
+              type="button"
+              variant="secondary"
+              size="lg"
+              :disabled="unreserveLoading || interactionDisabled || loading"
+              data-testid="cancel-paypal-order-button"
+              class="w-full mt-4 mb-4 md:mb-0 cursor-pointer"
+              @click="cancelOrder"
+            >
+              <SfLoaderCircular v-if="unreserveLoading" class="flex justify-center items-center" size="sm" />
+              <template v-else>{{ t('cancelOrder') }}</template>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -90,9 +102,10 @@ const localePath = useLocalePath();
 const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
-const { loginAsGuest, data: customer, getSession } = useCustomer();
+const { loginAsGuest, user } = useCustomer();
+const { fetchSession } = useFetchSession();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { data: cart, cartIsEmpty, getCart, loading: cartLoading } = useCart();
+const { data: cart, cartIsEmpty, loading: cartLoading } = useCart();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { emit } = usePlentyEvent();
 const loading = ref(true);
@@ -107,6 +120,7 @@ const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
+const { unreserve, loading: unreserveLoading } = useCartStockReservation();
 
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
@@ -147,10 +161,13 @@ const payPalAvailable = computed(() =>
 );
 
 const handle = async () => {
-  if (!paypalOrderId) return navigateTo(localePath(paths.cart));
+  if (!paypalOrderId) {
+    await unreserve();
+    return navigateTo(localePath(paths.cart));
+  }
 
   await setAddressesFromPayPal(paypalOrderId);
-  await getCart();
+  await fetchSession();
 
   await useFetchAddress(AddressType.Shipping)
     .fetch()
@@ -164,9 +181,8 @@ const handle = async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  if (customer.value.user === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
+  if (user.value === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
     await loginAsGuest(billingAddress.value?.email || shippingAddress.value?.email || '');
-    await getSession();
 
     if (!billingAddress.value) {
       await setBillingAddress(shippingAddress.value);
@@ -175,7 +191,8 @@ const handle = async () => {
     }
   }
 
-  if (customer.value.user === null) {
+  if (user.value === null) {
+    await unreserve();
     return navigateTo(localePath(paths.checkout));
   }
 
@@ -258,6 +275,11 @@ const buy = async () => {
       navigateTo(localePath(paths.cart));
     }
   }
+};
+
+const cancelOrder = async () => {
+  await unreserve();
+  await navigateTo(localePath(paths.cart));
 };
 
 watch(payPalAvailable, async (newValue) => {

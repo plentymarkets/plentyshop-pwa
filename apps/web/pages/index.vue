@@ -8,6 +8,8 @@
 definePageMeta({
   pageType: 'static',
   isBlockified: true,
+  type: 'immutable',
+  identifier: 'index',
 });
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
@@ -17,4 +19,7 @@ setPageMeta(t('homepage.title'), icon);
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
 setRobotForStaticPage('Homepage');
+
+const { setBlocksListContext } = useBlockManager();
+setBlocksListContext('content');
 </script>

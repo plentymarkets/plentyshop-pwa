@@ -4,13 +4,12 @@
       'absolute',
       'z-[0]',
       'md:z-[1]',
-      'lg:z-[9]',
-      'flex',
-      'items-center',
+      'lg:z-[40]',
       'space-x-3',
       'p-2',
       'shadow-md',
       ...(props.actions?.classes || []),
+      ...(props.actions?.buttonClasses || []),
     ]"
     data-testid="edit-block-actions"
   >
@@ -21,7 +20,7 @@
       class="flex"
     >
       <button
-        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+        class="text-black hover:bg-gray-100 rounded no-drag p-1"
         data-testid="open-editor-button"
         aria-label="editor button"
         :disabled="!props.actions.isEditable"
@@ -37,7 +36,7 @@
     </SfTooltip>
     <SfTooltip v-else :label="editLabel" placement="left" :show-arrow="true">
       <button
-        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+        :class="['text-black', 'p-1', 'rounded', 'no-drag', ...(props.actions?.hoverBackground || [])]"
         data-testid="open-editor-button"
         aria-label="editor button"
         @click.stop="triggerEdit"
@@ -119,7 +118,9 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
     isEditable: true,
     isMovable: true,
     isDeletable: true,
-    classes: ['right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    buttonClasses: [],
+    hoverBackground: ['hover:bg-gray-100'],
   }),
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);

@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px] relative overflow-hidden" data-testid="site-settings-drawer">
+  <div class="site-settings-view sticky top-[52px] relative" data-testid="site-settings-drawer">
     <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
       <header class="border-b">
         <div class="flex items-center justify-between px-4 py-5">
@@ -77,12 +77,31 @@ import { getSettingsTranslations } from '~/utils/settings-translations-imports';
 const { t } = useI18n();
 
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
+const runtimeConfig = useRuntimeConfig();
 
-const subCategories = computed(() => getSubCategories(activeSetting.value));
+const subCategories = computed(() => {
+  const categories = getSubCategories(activeSetting.value);
+
+  if (!runtimeConfig.public.isDev) {
+    const excludedSubCategories = runtimeConfig.public.editorSettingsDevFlag as string[];
+    return categories.filter((subCategory) => !excludedSubCategories.includes(subCategory));
+  }
+
+  return categories;
+});
 
 setActiveSubCategory(subCategories.value.length === 1 ? subCategories.value[0] : activeSubCategory.value);
 
-const groups = computed(() => getSettingsGroups(activeSetting.value, activeSubCategory.value));
+const groups = computed(() => {
+  const allGroups = getSettingsGroups(activeSetting.value, activeSubCategory.value);
+
+  if (!runtimeConfig.public.isDev) {
+    const excludedGroups = runtimeConfig.public.editorSettingsDevFlag as string[];
+    return allGroups.filter((group) => !excludedGroups.includes(group.slug));
+  }
+
+  return allGroups;
+});
 
 const messages: Messages = {};
 

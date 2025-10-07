@@ -10,7 +10,7 @@
             :aria-label="t('prevAriaLabel')"
             data-testid="checkout-back-button"
             variant="tertiary"
-            @click="goToPreviousRoute"
+            @click="goToPreviousRoute()"
           >
             <template #prefix>
               <SfIconArrowBack />
@@ -31,29 +31,12 @@
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
-const localePath = useLocalePath();
 const { t } = useI18n();
-const router = useRouter();
-const { isAuthorized } = useCustomer();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
+const { goToPreviousRoute } = useBrowserNavigation();
 const viewport = useViewport();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
-const goToPreviousRoute = () => {
-  const backPath = router.options.history.state?.back;
-
-  if (isAuthorized.value && backPath === paths.guestLogin) {
-    router.go(-2);
-    return;
-  }
-
-  if (backPath) {
-    router.back();
-    return;
-  }
-
-  router.push(localePath(paths.home));
-};
 
 onNuxtReady(async () => await setInitialData());
 </script>

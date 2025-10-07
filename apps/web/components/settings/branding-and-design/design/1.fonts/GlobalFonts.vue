@@ -1,5 +1,6 @@
 <template>
-  <div class="">
+  <div class="py-2">
+    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
@@ -55,12 +56,14 @@ const font = computed({
 {
   "en": {
     "label": "Global fonts",
+    "description": "⚠️ This setting will require a shop redeploy to take effect.",
     "tooltip": "Choose one Google Font for all texts. Fonts are served locally to ensure privacy compliance, with no live requests to Google.",
     "placeholder": "Select a font",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Global fonts",
+    "description": "⚠️ This setting will require a shop redeploy to take effect.",
     "tooltip": "Choose one Google Font for all texts. Fonts are served locally to ensure privacy compliance, with no live requests to Google.",
     "placeholder": "Select a font",
     "deselect-label": "Selected"
