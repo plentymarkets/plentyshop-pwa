@@ -64,7 +64,7 @@ const addGooglePayButton = () => {
     });
     const theContainer = document.querySelector('#google-pay-button');
     if (theContainer) {
-      theContainer.append(button);
+      theContainer.innerHTML = button.getHTML();
     }
   } catch {
     /* empty */
