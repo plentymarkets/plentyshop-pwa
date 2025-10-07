@@ -21,7 +21,7 @@
         "paddingBottom": 40,
         "paddingLeft": 0,
         "paddingRight": 0,
-        "narrowContainer": true
+        "narrowContainer": false
       },
       "displayCategoryImage": "off",
       "image": {
@@ -33,10 +33,6 @@
         "brightness": 0.75
       },
       "text": {
-        "pretitle": "Category pretitle",
-        "title": "Category title",
-        "subtitle": "Category subtitle",
-        "htmlDescription": "<p>Test description</p>",
         "color": "#000",
         "bgColor": "#fff",
         "bgOpacity": 1,

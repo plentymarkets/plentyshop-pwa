@@ -220,51 +220,6 @@
       </div>
 
       <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
-        <SfInput
-          v-model="categoryDataBlock.text.pretitle"
-          name="preTitle"
-          type="text"
-          :placeholder="getEditorTranslation('pretitle-placeholder')"
-          data-testid="category-data-input-pre-title"
-        />
-      </div>
-
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-        <SfInput
-          v-model="categoryDataBlock.text.title"
-          name="mainTitle"
-          type="text"
-          :placeholder="getEditorTranslation('main-title-placeholder')"
-          data-testid="category-data-input-title"
-        />
-      </div>
-
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
-        <SfInput
-          v-model="categoryDataBlock.text.subtitle"
-          name="subtitle"
-          type="text"
-          :placeholder="getEditorTranslation('subtitle-placeholder')"
-          data-testid="category-data-input-sub-title"
-        />
-      </div>
-
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="categoryDataBlock.text.htmlDescription"
-          name="description"
-          data-testid="category-data-text-content"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('description-placeholder')"
-        />
-      </div>
-
-      <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
 
         <SfInput v-model="categoryDataBlock.text.color" type="text">
@@ -542,9 +497,26 @@ watch(
       categoryDataBlock.value.layout.paddingBottom = 0;
       categoryDataBlock.value.layout.paddingLeft = 0;
       categoryDataBlock.value.layout.paddingRight = 0;
+
+      changeCategoryImageWidth(true);
+    }
+
+    if (newMode === 'fit') {
+      changeCategoryImageWidth(false);
     }
   },
 );
+
+const changeCategoryImageWidth = (fullWidth: boolean) => {
+  categoryDataBlock.value.layout.narrowContainer = !fullWidth;
+
+  setTimeout(() => {
+    const el = document.querySelector(`[data-uuid="${blockUuid.value}"]`);
+    if (el) {
+      fullWidth ? el.classList.remove('max-w-screen-3xl', 'px-4', 'md:px-6') : el.classList.add('max-w-screen-3xl');
+    }
+  }, 100);
+};
 </script>
 
 <i18n lang="json">

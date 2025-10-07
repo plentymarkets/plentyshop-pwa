@@ -26,6 +26,7 @@ export type CategoryDataContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
+    narrowContainer: boolean;
   };
   displayCategoryImage: string;
   image: {
