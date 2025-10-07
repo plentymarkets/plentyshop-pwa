@@ -24,6 +24,7 @@ const CONTACT_INFORMATION = '#contact-information';
 export const useCustomer = () => {
   const { emit } = usePlentyEvent();
   const { $i18n } = useNuxtApp();
+  const { invalidVAT } = useCreateAddress(AddressType.Shipping);
   const state = useState(`useCustomer`, () => ({
     user: null as User | null,
     loading: false,
@@ -180,8 +181,9 @@ export const useCustomer = () => {
         }
       }
       return data;
-    } catch (error) {
-      useHandleError(error as ApiError);
+    } catch (error: unknown) {
+      invalidVAT.value = errorHasKeyValue(error, 'key', 'address.vatInvalid');
+      if (!invalidVAT.value) useHandleError(error as ApiError);
     } finally {
       state.value.loading = false;
     }
