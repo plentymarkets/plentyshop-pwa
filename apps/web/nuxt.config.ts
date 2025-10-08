@@ -89,7 +89,8 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       isDev: process.env.NODE_ENV === 'development',
       enableCategoryEditing: process.env.NODE_ENV === 'development' || process.env?.ENABLE_CATEGORY_EDITING === '1',
-      enableAllEditorSettings: process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS,
+      enableAllEditorSettings:
+        process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1',
       editorSettingsDevFlag:
         process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1'
           ? []
