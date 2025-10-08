@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -40,7 +40,6 @@ const robotsItemOptions = ref(['all', 'noindex', 'nofollow', 'noindex nofollow',
 
 const { updateSetting, getSetting } = useSiteSettings('robotsItemPage');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('robotsItemPageId');
-const runtimeConfig = useRuntimeConfig();
 
 const robotsItemPage = computed({
   get: () => getSetting(),
