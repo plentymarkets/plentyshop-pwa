@@ -10,6 +10,7 @@ export const useFetchAddress = (type: AddressType) => {
   const fetch = async () => {
     try {
       state.value.loading = true;
+      //TODO: check for type and return value after sdk release
       const data = await useSdk().plentysystems.getAddressesData({ types: [type] });
       setAddressStore(data.data);
       state.value.loading = false;
@@ -22,6 +23,7 @@ export const useFetchAddress = (type: AddressType) => {
   const fetchServer = async () => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(type.toString(), () =>
+      //TODO: check for type and return value after sdk release
       useSdk().plentysystems.getAddressesData({ types: [type] }),
     );
 
