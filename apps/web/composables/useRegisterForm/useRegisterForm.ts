@@ -225,7 +225,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
 
   const onSubmit = handleSubmit(async () => {
     await registerUser();
-    if (isAuthorized) await navigateAfterRegistration();
+    if (isAuthorized.value) await navigateAfterRegistration();
   });
 
   const passwordValidationLength = computed(() => {
