@@ -4,6 +4,7 @@
       <template v-if="content.fields[key]">
         <h1
           v-if="key === 'name' && name"
+          id="category-headline"
           :key="key"
           class="font-bold typography-headline-3 md:typography-headline-2"
           data-testid="category-name"
@@ -41,8 +42,9 @@ import { type Category, categoryGetters } from '@plentymarkets/shop-api';
 import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
 
 const props = defineProps<CategoryDataProps>();
+const { data: productsCatalog } = useProducts();
 
-const category = computed(() => props.category || ({} as Category));
+const category = computed(() => productsCatalog.value.category || ({} as Category));
 
 const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
 const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');

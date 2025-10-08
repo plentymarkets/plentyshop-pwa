@@ -44,7 +44,7 @@ const { layout, content, configuration } = defineProps<MultiGridProps>();
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
-const attrs = useAttrs() as { disableActions?: boolean; root?: boolean };
+const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
@@ -79,18 +79,11 @@ const gridInlineStyle = computed(() => ({
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
 const getGridClasses = () => {
-  const columnCount = configuration.columnWidths.length;
-  return gridClassFor({ mobile: 1, tablet: 2, desktop: columnCount }, [gridGapClass.value, 'items-center']);
+  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value, 'items-start']);
 };
 const getColumnClasses = (colIndex: number) => {
-  const columnCount = configuration.columnWidths.length;
-  const isLastColumn = colIndex === columnCount - 1;
-  const isThreeColumnLayout = columnCount === 3;
-  const classes = [];
-  if (isThreeColumnLayout && isLastColumn) {
-    classes.push('md:col-span-2', 'lg:col-span-1');
-  }
-  return classes;
+  const columnWidth = configuration.columnWidths[colIndex];
+  return [`col-span-${columnWidth}`];
 };
 
 const getBlockActions = () => ({
@@ -102,12 +95,12 @@ const getBlockActions = () => ({
   hoverBackground: ['hover:bg-purple-500'],
 });
 
-const disableActions = computed(() => attrs.disableActions === true);
+const enableActions = computed(() => attrs.enableActions === true);
 
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) => disableActions.value && $isPreview && !isDragging.value && blockHasData(block),
+  () => (block: Block) => enableActions.value && $isPreview && !isDragging.value && blockHasData(block),
 );
 
 const isAlignable = (b: Block): b is AlignableBlock =>

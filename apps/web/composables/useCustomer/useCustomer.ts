@@ -9,7 +9,6 @@ import {
 } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const CONTACT_INFORMATION = '#contact-information';
 

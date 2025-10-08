@@ -1,6 +1,5 @@
 import type { PaymentMethod, ShippingMethod } from '@plentymarkets/shop-api';
 import { paymentProviderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
-import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const ID_SHIPPING_CHECKBOX = '#shipping-agreement-checkbox';
 
