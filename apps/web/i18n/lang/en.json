@@ -261,7 +261,7 @@
       "heading": "Create an account",
       "logInLinkLabel": "Log in instead",
       "passwordValidation": {
-        "characters": "The password must contain at least 8 characters.",
+        "characters": "The password must contain between {min} and {max} characters.",
         "letters": "The password must contain at least one letter.",
         "numbers": "The password must contain at least one digit."
       },
@@ -542,7 +542,9 @@
     "password": {
       "match": "Passwords do not match.",
       "required": "Password is required.",
-      "valid": "Password must be at least 8 characters long and include at least one letter and one number."
+      "minLength": "Password must be at least {min} characters long.",
+      "maxLength": "Password must not exceed {max} characters.",
+      "valid": "Password must include at least one letter and one number."
     },
     "editor": {
       "add": {

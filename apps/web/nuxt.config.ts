@@ -118,6 +118,8 @@ export default defineNuxtConfig({
       metaDescription:
         process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
       metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
+      passwordMinLength: Number(process.env.PASSWORD_MIN_LENGTH ?? 8),
+      passwordMaxLength: Number(process.env.PASSWORD_MAX_LENGTH ?? 64),
       robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
       robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
       robotsContactPage: process.env.NUXT_PUBLIC_ROBOTS_CONTACT_PAGE || 'all',
