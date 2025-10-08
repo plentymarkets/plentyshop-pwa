@@ -36,7 +36,7 @@
         <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
     </section>
-    <LazyCategoryEmptyState v-else data-testid="empty-state" />
+    <LazyCategoryEmptyState v-else />
     <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
       <span>{{ t('asterisk') }}</span>
       <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
@@ -88,7 +88,6 @@ const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 const currentPage = computed(() => getFacetsFromURL().page ?? 1);
 const categoryId = computed(() => getFacetsFromURL().categoryUrlPath ?? null);
-
 
 const gridClasses = computed(() =>
   gridClassFor(
