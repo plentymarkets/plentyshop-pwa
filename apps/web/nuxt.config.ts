@@ -35,9 +35,17 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: [
+        '@intlify/core-base',
+        '@intlify/shared',
         '@paypal/paypal-js',
+        '@plentymarkets/shop-api',
         '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
+        '@storefront-ui/vue',
+        '@vee-validate/yup',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        '@vueuse/core',
         '@vueuse/shared',
         'country-flag-icons/string/3x2',
         'dotenv',
@@ -51,6 +59,7 @@ export default defineNuxtConfig({
         'vue3-lazy-hydration',
         'vue-tel-input',
         'vuedraggable/src/vuedraggable',
+        'yup',
       ],
     },
     build: {
