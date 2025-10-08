@@ -1,9 +1,14 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { ItemGridMock } from './ItemGrid.mock';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
-// Hardcoded products for test
+const { useProductsMock } = vi.hoisted(() => ({
+  useProductsMock: vi.fn(),
+}));
+
+mockNuxtImport('useProducts', () => useProductsMock);
+
 const products = [
   {
     variation: {
@@ -73,15 +78,14 @@ const products = [
 
 describe('ItemGrid.vue', () => {
   beforeEach(() => {
-    mockNuxtImport('useProducts', () => {
-      return () => ({
-        data: { value: { products, pagination: { totals: products.length } } },
-        productsPerPage: { value: 2 },
-      });
-    });
+    useProductsMock.mockReset();
+    useProductsMock.mockImplementation(() => ({
+      data: { value: { products, pagination: { totals: products.length } } },
+      productsPerPage: { value: 2 },
+    }));
   });
 
-  it('renders the product grid with correct responsive classes', async () => {
+  it('should render the product grid with correct responsive classes', async () => {
     const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
@@ -95,183 +99,70 @@ describe('ItemGrid.vue', () => {
     expect(grid.classes()).toContain('md:mb-5');
   });
 
-  it('positions product count correctly (left, center, right)', async () => {
+  it('should position product count correctly (left, center, right)', async () => {
     const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, { props: { ...ItemGridMock } });
+
     const countDiv = wrapper.find('.flex.items-center');
     expect(countDiv.classes()).toContain('justify-start');
+
     await wrapper.setProps({ content: { ...ItemGridMock.content, itemCountPosition: 'center' } });
     expect(wrapper.find('.flex.items-center').classes()).toContain('justify-center');
+
     await wrapper.setProps({ content: { ...ItemGridMock.content, itemCountPosition: 'right' } });
     expect(wrapper.find('.flex.items-center').classes()).toContain('justify-end');
   });
 
-  it('renders the correct number of product cards', async () => {
-    
+  it('should render the correct number of product cards (2)', async () => {
+    const { default: ItemGrid } = await import('../ItemGrid.vue');
+    const wrapper = mount(ItemGrid, {
+      props: { ...ItemGridMock },
+    });
+    expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(2);
+  });
+
+  it('should render a single product card when only one product is returned', async () => {
+    useProductsMock.mockImplementation(() => ({
+      data: { value: { products: [products[0]], pagination: { totals: 1 } } },
+      productsPerPage: { value: 1 },
+    }));
+
+    const { default: ItemGrid } = await import('../ItemGrid.vue');
+    const wrapper = mount(ItemGrid, {
+      props: { ...ItemGridMock },
+    });
+    expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(1);
+  });
+
+  //   it('renders empty state if no products', async () => {
+  //  useProductsMock.mockImplementation(() => ({
+  //     data: { value: { products: [0], pagination: { totals: 0 } } },
+  //     productsPerPage: { value: 0 },
+  //   }));
+  //   const { default: ItemGrid } = await import('../ItemGrid.vue');
+  //   const wrapper = mount(ItemGrid, {
+  //     props: { ...ItemGridMock },
+  //   });
+  //  // expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
+  //      expect(wrapper.findAll('[data-testid="empty-state"]').length).exists().toBe(true);
+
+  // });
+it('renders empty state if no products', async () => {
+  useProductsMock.mockImplementation(() => ({
+    data: { value: { products: [], pagination: { totals: 0 } } }, // Use an empty array for products
+    productsPerPage: { value: 0 },
+  }));
+
   const { default: ItemGrid } = await import('../ItemGrid.vue');
   const wrapper = mount(ItemGrid, {
     props: { ...ItemGridMock },
   });
-  expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(2);
+
+  // Debugging logs
+  console.log(wrapper.vm.products);
+  console.log(wrapper.html());
+
+  // Check for the empty state component
+  expect(wrapper.find('[data-testid="empty-state"]').exists()).toBe(true);
 });
-
-// it('renders a single product card when only one product is returned', async () => {
-//   // 🔑 bust cache from earlier tests that imported ItemGrid under the 2-products mock
-//   vi.resetModules();
-
-//   // Override the mock for THIS test
-//   mockNuxtImport('useProducts', () => {
-//     return () => ({
-//       data: { value: { products: [products[0]], pagination: { totals: 1 } } },
-//       productsPerPage: { value: 1 },
-//     });
-//   });
-
-//   // Import AFTER resetting + overriding
-//   const { default: ItemGrid } = await import('../ItemGrid.vue');
-
-//   const wrapper = mount(ItemGrid, { props: { ...ItemGridMock } });
-//   expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(1);
-// });
-
-// it('renders a single product card when only one product is returned', async () => {
-//   // Override the mock for this test only
-//   mockNuxtImport('useProducts', () => {
-//     return () => ({
-//       data: { value: { products: [products[0]], pagination: { totals: 1 } } },
-//       productsPerPage: { value: 1 },
-//     });
-//   });
-
-//   const { default: ItemGrid } = await import('../ItemGrid.vue');
-//   const wrapper = mount(ItemGrid, {
-//     props: { ...ItemGridMock },
-//   });
-//   expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(1);
-// });
-
 });
-
-
-//   it('renders empty state if no products', async () => {
-//     vi.mock('~/composables/useProducts', () => ({
-//       useProducts: () => ({
-//         data: { value: { products: [], pagination: { totals: 0 } } },
-//         productsPerPage: { value: 2 },
-//       }),
-//     }));
-//     const { default: ItemGrid } = await import('../ItemGrid.vue');
-//     const wrapper = mount(ItemGrid, {
-//       props: { ...ItemGridMock },
-//       global: {
-//         stubs: {
-//           NuxtLazyHydrate: { template: '<div><slot /></div>' },
-//           UiProductCard: { template: '<div data-testid="card" />' },
-//         },
-//       },
-//     });
-//     expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
-//   });
-// });
-
-//   it('renders empty state if no products', async () => {
-//     vi.doMock('~/composables/useProducts', () => ({
-//       useProducts: () => ({
-//         data: { value: { products: [], pagination: { totals: 0 } } },
-//         productsPerPage: { value: 2 },
-//       }),
-//     }));
-//     const { default: ItemGrid } = await import('../ItemGrid.vue');
-//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//     expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
-//   });
-
-//   it('renders correct number of products per row for each breakpoint', () => {
-//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//     const grid = wrapper.find('[data-testid="category-grid"]');
-//     console.log(grid.html());
-//     expect(grid.exists()).toBe(true);
-
-// expect(grid.classes()).toContain('mb-10');
-// expect(grid.classes()).toContain('gap-4');
-// expect(grid.classes()).toContain('md:gap-6');
-// expect(grid.classes()).toContain('md:mb-5');
-//   });
-
-//   it('shows product count when showItemCount is true', () => {
-//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//     expect(wrapper.text()).toContain('numberOfProducts');
-//   });
-
-//   it('hides product count when showItemCount is false', () => {
-//     const wrapper = mount(ItemGrid, {
-//       props: {
-//         ...ItemGridMock,
-
-//         content: { ...ItemGridMock.content, showItemCount: false },
-//       },
-//     });
-//     expect(wrapper.text()).not.toContain('numberOfProducts');
-//   });
-
-//   it('positions product count correctly (left, center, right)', async () => {
-//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//     const countDiv = wrapper.find('.flex.items-center');
-//     expect(countDiv.classes()).toContain('justify-start');
-//     await wrapper.setProps({ content: { ...ItemGridMock.content, itemCountPosition: 'center' } });
-//     expect(wrapper.find('.flex.items-center').classes()).toContain('justify-center');
-//     await wrapper.setProps({ content: { ...ItemGridMock.content, itemCountPosition: 'right' } });
-//     expect(wrapper.find('.flex.items-center').classes()).toContain('justify-end');
-//   });
-
-//   it('renders pagination in correct position(s)', () => {
-//     // bottom
-//     let wrapper = mount(ItemGrid, {
-//       props: {
-//         ...ItemGridMock,
-//         content: { ...ItemGridMock.content, paginationPosition: 'bottom' },
-//       },
-//     });
-//     expect(wrapper.findAllComponents({ name: 'UiPagination' }).length).toBe(1);
-
-//     // top
-//     wrapper = mount(ItemGrid, {
-//       props: {
-//         ...ItemGridMock,
-//         content: { ...ItemGridMock.content, paginationPosition: 'top' },
-//       },
-//     });
-//     expect(wrapper.findAllComponents({ name: 'UiPagination' }).length).toBe(1);
-
-//     // both
-//     wrapper = mount(ItemGrid, {
-//       props: {
-//         ...ItemGridMock,
-//         content: { ...ItemGridMock.content, paginationPosition: 'both' },
-//       },
-//     });
-//     expect(wrapper.findAllComponents({ name: 'UiPagination' }).length).toBe(2);
-//   });
-
-//   it('renders empty state if no products', () => {
-//     const wrapper = mount(ItemGrid, {
-//       props: { ...ItemGridMock, products: [], totalProducts: 0 },
-//     });
-//     expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
-//   });
-
-//   it('shows VAT/shipping info with correct i18n', () => {
-//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//     expect(wrapper.text()).toContain('itemInclVAT');
-//     expect(wrapper.text()).toContain('excludedShipping');
-//   });
-
-//   it('scrolls to headline on page change', async () => {
-//     const { scrollToHTMLObject } = await import('~/utils/scroll');
-//     const wrapper = mount(ItemGrid, { props: ItemGridMock });
-//     // Simulate page change
-//     await wrapper.vm.$nextTick();
-//     wrapper.vm.currentPage = 2;
-//     await wrapper.vm.$nextTick();
-//     expect(scrollToHTMLObject).toHaveBeenCalledWith('#category-headline', false);
-//  });

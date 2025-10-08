@@ -35,7 +35,7 @@
         <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
     </section>
-    <LazyCategoryEmptyState v-else />
+    <LazyCategoryEmptyState v-else data-testid="empty-state" />
     <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
       <span>{{ t('asterisk') }}</span>
       <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
