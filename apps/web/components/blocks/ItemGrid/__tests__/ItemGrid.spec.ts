@@ -71,6 +71,7 @@ const products = [
   },
 ];
 
+
 describe('ItemGrid.vue', () => {
   beforeEach(() => {
     mockNuxtImport('useProducts', () => {
@@ -79,24 +80,12 @@ describe('ItemGrid.vue', () => {
         productsPerPage: { value: 2 },
       });
     });
-
-    // mockNuxtImport('useWishlist', () => {
-    //   return () => {
-    //     return { data: computed(() => []), fetchProducts: () => {} };
-    //   };
-    // });
   });
 
   it('renders the product grid with correct responsive classes', async () => {
     const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
-      global: {
-        stubs: {
-          NuxtLazyHydrate: { template: '<div><slot /></div>' },
-          UiProductCard: { template: '<div data-testid="card" />' },
-        },
-      },
     });
     const grid = wrapper.find('[data-testid="category-grid"]');
 
@@ -119,31 +108,32 @@ describe('ItemGrid.vue', () => {
   });
 });
 
-//   it('renders correct number of products per row for each breakpoint', async () => {
+it('renders the correct number of product cards', async () => {
+  const { default: ItemGrid } = await import('../ItemGrid.vue');
+  const wrapper = mount(ItemGrid, {
+    props: { ...ItemGridMock },
+  });
+  expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(2);
+});
 
-//     const { default: ItemGrid } = await import('../ItemGrid.vue')
+// it('renders a single product card when only one product is returned', async () => {
+//   // Override the mock for this test only
+//   mockNuxtImport('useProducts', () => {
+//     return () => ({
+//       data: { value: { products: [products[0]], pagination: { totals: 1 } } },
+//       productsPerPage: { value: 1 },
+//     });
+//   });
 
-//     const wrapper = mount(ItemGrid, {
-//       props: { ...ItemGridMock },
-//       global: {
-//         stubs: {
-//           NuxtLazyHydrate: { template: '<div><slot /></div>' },
-//           UiProductCard: { template: '<div data-testid="card" />' },
-//         },
-//       },
-//     })
+//   const { default: ItemGrid } = await import('../ItemGrid.vue');
+//   const wrapper = mount(ItemGrid, {
+//     props: { ...ItemGridMock },
+//   });
+//   expect(wrapper.findAll('[data-testid="product-card"]').length).toBe(1);
+// });
 
-//     const grid = wrapper.find('[data-testid="category-grid"]')
-//     expect(grid.exists()).toBe(true)
-//     expect(grid.classes()).toContain('mb-10')
-//     expect(grid.classes()).toContain('gap-4')
-//     expect(grid.classes()).toContain('md:gap-6')
-//     expect(grid.classes()).toContain('md:mb-5')
 
-//     // sanity: 2 cards rendered
-//     expect(wrapper.findAll('[data-testid="card"]').length).toBe(2)
-//   })
-// })
+
 
 //   it('renders empty state if no products', async () => {
 //     vi.mock('~/composables/useProducts', () => ({
