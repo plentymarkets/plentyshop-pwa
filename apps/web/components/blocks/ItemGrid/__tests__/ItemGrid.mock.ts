@@ -1,6 +1,5 @@
 import type { ItemGridProps } from '../types';
-import { mockProduct } from '../Products.mock';
-
+import { mockProduct } from './Products.mock';
 
 export const ItemGridMock: ItemGridProps = {
   name: 'ItemGrid',

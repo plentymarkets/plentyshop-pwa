@@ -2,78 +2,12 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { ItemGridMock } from './ItemGrid.mock';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { products } from './mockProducts';
 const { useProductsMock } = vi.hoisted(() => ({
   useProductsMock: vi.fn(),
 }));
 
 mockNuxtImport('useProducts', () => useProductsMock);
-
-const products = [
-  {
-    variation: {
-      id: 1,
-      name: 'Var 1',
-      availabilityId: 1,
-      minimumOrderQuantity: 1,
-      mayShowUnitPrice: false,
-      vatId: 1,
-      availability: {
-        id: 1,
-        icon: '',
-        averageDays: 0,
-        createdAt: '',
-        updatedAt: '',
-        names: { id: 1, availabilityId: 1, lang: 'en', name: 'Available', createdAt: '', updatedAt: '' },
-      },
-      availabilityUpdatedAt: '',
-    },
-    texts: { name1: 'Product 1', name2: '', name3: '', urlPath: '', lang: 'en' },
-    unit: { unitOfMeasurement: 'pcs', names: { unitId: 1, lang: 'en', name: 'Piece' }, content: 1 },
-    item: {
-      id: 1,
-      condition: { names: { name: 'New', lang: 'en' } },
-      manufacturerId: 1,
-      itemType: 'default',
-      manufacturer: { externalName: 'Brand', name: 'Brand' },
-    },
-    images: { all: [], variation: [] },
-    filter: { isSalable: true, isSalableAndActive: true },
-    properties: [],
-    facets: [],
-  },
-  {
-    variation: {
-      id: 2,
-      name: 'Var 2',
-      availabilityId: 1,
-      minimumOrderQuantity: 1,
-      mayShowUnitPrice: false,
-      vatId: 1,
-      availability: {
-        id: 1,
-        icon: '',
-        averageDays: 0,
-        createdAt: '',
-        updatedAt: '',
-        names: { id: 1, availabilityId: 1, lang: 'en', name: 'Available', createdAt: '', updatedAt: '' },
-      },
-      availabilityUpdatedAt: '',
-    },
-    texts: { name1: 'Product 2', name2: '', name3: '', urlPath: '', lang: 'en' },
-    unit: { unitOfMeasurement: 'pcs', names: { unitId: 1, lang: 'en', name: 'Piece' }, content: 1 },
-    item: {
-      id: 2,
-      condition: { names: { name: 'New', lang: 'en' } },
-      manufacturerId: 1,
-      itemType: 'default',
-      manufacturer: { externalName: 'Brand', name: 'Brand' },
-    },
-    images: { all: [], variation: [] },
-    filter: { isSalable: true, isSalableAndActive: true },
-    properties: [],
-    facets: [],
-  },
-];
 
 describe('ItemGrid.vue', () => {
   beforeEach(() => {
@@ -329,87 +263,4 @@ describe('ItemGrid.vue', () => {
     expect(itemCount.exists()).toBe(true);
     expect(itemCount.text()).toContain(`numberOfProducts`);
   });
-
-  //   it('does not render item count when showItemCount is false', async () => {
-  //   useProductsMock.mockImplementation(() => ({
-  //     data: { value: { products, pagination: { totals: products.length } } },
-  //     productsPerPage: { value: 2 },
-  //   }));
-
-  //   const { default: ItemGrid } = await import('../ItemGrid.vue');
-  //   const wrapper = mount(ItemGrid, {
-  //     props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: false } },
-  //   });
-
-  //   expect(wrapper.find('.flex.items-center').exists()).toBe(false);
-  // });
-
-  //   it('renders LazyCategoryEmptyState when no products are available', async () => {
-  //   useProductsMock.mockImplementation(() => ({
-  //     data: { value: { products: [], pagination: { totals: 0 } } },
-  //     productsPerPage: { value: 0 },
-  //   }));
-
-  //   const { default: ItemGrid } = await import('../ItemGrid.vue');
-  //   const wrapper = mount(ItemGrid, {
-  //     props: { ...ItemGridMock },
-  //     global: {
-  //       stubs: {
-  //         LazyCategoryEmptyState: { template: '<div data-testid="empty-state"></div>' },
-  //       },
-  //     },
-  //   });
-
-  //   expect(wrapper.find('[data-testid="empty-state"]').exists()).toBe(true);
-  // });
-
-  // it('renders empty state if no products', async () => {
-  //   useProductsMock.mockReset();
-  //   useProductsMock.mockImplementation(() => ({
-  //     data: { value: { products: [], pagination: { totals: 0 } } },
-  //     productsPerPage: { value: 0 },
-  //   }));
-
-  //   const { default: ItemGrid } = await import('../ItemGrid.vue');
-
-  //   const wrapper = mount(ItemGrid, {
-  //     props: { ...ItemGridMock },
-  //     global: {
-  //       stubs: {
-  //         LazyCategoryEmptyState: { template: '<div data-testid="empty-state"></div>' },
-  //         NuxtLazyHydrate: { template: '<div><slot /></div>' },
-  //       },
-  //     },
-  //   });
-
-  //   await nextTick(); // Let the template react to the mock
-
-  //   // Debugging logs
-  //   console.log('Products:', wrapper.vm.products);
-  //   console.log('HTML:', wrapper.html());
-
-  //   // Check for the empty state component
-  //   expect(wrapper.find('[data-testid="empty-state"]').exists()).toBe(true);
-  // });
-
-  // it('renders empty state if no products', async () => {
-  //   useProductsMock.mockReset();
-  //   useProductsMock.mockImplementation(() => ({
-  //     data: { value: { products: [], pagination: { totals: 0 } } },
-  //     productsPerPage: { value: 0 },
-  //   }));
-
-  //   const { default: ItemGrid } = await import('../ItemGrid.vue');
-  //   const wrapper = mount(ItemGrid, {
-  //     props: { ...ItemGridMock },
-  //   });
-
-  //   // Debugging logs
-  //   console.log('Products:', wrapper.vm.products);
-  //   console.log('HTML:', wrapper.html());
-
-  //   // Check for the empty state component
-  //   expect(wrapper.find('[data-testid="empty-state"]').exists()).toBe(true);
-  //   expect(wrapper.findComponent({ name: 'LazyCategoryEmptyState' }).exists()).toBe(true);
-  // });
 });
