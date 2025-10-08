@@ -28,6 +28,7 @@
         :total-items="totalProducts"
         :page-size="itemsPerPage"
         :max-visible-pages="maxVisiblePages"
+        data-testid="pagination-top"
       />
     </template>
     <section v-if="products?.length" :class="gridClasses" data-testid="category-grid">
@@ -46,6 +47,7 @@
             :href="localePath(paths.shipping)"
             target="_blank"
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            data-testid="shipping-link"
           >
             {{ t('delivery') }}
           </SfLink>
@@ -60,6 +62,7 @@
         :total-items="totalProducts"
         :page-size="itemsPerPage"
         :max-visible-pages="maxVisiblePages"
+        data-testid="pagination-bottom"
       />
     </template>
   </div>
@@ -85,6 +88,7 @@ const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 const currentPage = computed(() => getFacetsFromURL().page ?? 1);
 const categoryId = computed(() => getFacetsFromURL().categoryUrlPath ?? null);
+
 
 const gridClasses = computed(() =>
   gridClassFor(
