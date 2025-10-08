@@ -107,7 +107,7 @@ describe('ItemGrid.vue', () => {
     expect(wrapper.find('[data-testid="pagination-bottom"]').exists()).toBe(true);
   });
 
-  it('does not render pagination when totalProducts is 0', async () => {
+  it('should not render pagination when totalProducts is 0', async () => {
     useProductsMock.mockImplementation(() => ({
       data: { value: { products: [], pagination: { totals: 0 } } },
       productsPerPage: { value: 0 },
@@ -221,7 +221,7 @@ describe('ItemGrid.vue', () => {
     expect(grid.classes()).toContain('lg:grid-cols-3');
   });
 
-  it('renders shipping information with a link', async () => {
+  it('should render shipping information with a link', async () => {
     const paths = { shipping: '/shipping' };
 
     const { default: ItemGrid } = await import('../ItemGrid.vue');
@@ -248,7 +248,7 @@ describe('ItemGrid.vue', () => {
     expect(shippingInfo.attributes('href')).toBe('/shipping');
   });
 
-  it('renders correct item count when showItemCount is true', async () => {
+  it('should render correct item count when showItemCount is true', async () => {
     useProductsMock.mockImplementation(() => ({
       data: { value: { products, pagination: { totals: products.length } } },
       productsPerPage: { value: 2 },
