@@ -8,10 +8,10 @@
       "@types/applepayjs",
       "@types/googlepay",
       "@types/google.maps",
-      "./utils/vue-tel-input"
+      "./app/utils/vue-tel-input"
     ],
     "verbatimModuleSyntax": false,
     "noImplicitAny": true
   },
-  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"]
+  "exclude": ["node_modules", "app/mocks", "__tests__", "cypress.config.ts"]
 }
