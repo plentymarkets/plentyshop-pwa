@@ -15,8 +15,7 @@
         class="cursor-pointer"
         deselect-label="Selected"
         :multiple="true"
-      >
-      </Multiselect>
+      />
     </div>
 
     <div class="py-2">
