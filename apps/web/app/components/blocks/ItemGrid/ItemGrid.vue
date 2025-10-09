@@ -8,6 +8,7 @@
           'justify-center': content?.itemCountPosition === 'center',
           'justify-start': content?.itemCountPosition === 'left',
         }"
+        data-testid="item-count"
       >
         <span class="font-bold md:text-lg">
           {{

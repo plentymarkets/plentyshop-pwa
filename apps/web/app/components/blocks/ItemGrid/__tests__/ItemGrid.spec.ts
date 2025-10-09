@@ -79,7 +79,7 @@ describe('ItemGrid.vue', () => {
     expect(wrapper.find('[data-testid="category-grid"]').exists()).toBe(false);
   });
 
-  it('should render top pagination when paginationPosition is top', async () => {
+  it('should render top pagination when paginationPosition is top and totalProducts is greater than 0', async () => {
     const wrapper = mount(ItemGrid, {
       props: {
         ...ItemGridMock,
@@ -88,9 +88,10 @@ describe('ItemGrid.vue', () => {
     });
 
     expect(wrapper.find('[data-testid="pagination-top"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="pagination-bottom"]').exists()).toBe(false);
   });
 
-  it('should render bottom pagination when paginationPosition is bottom', async () => {
+  it('should render bottom pagination when paginationPosition is bottom and totalProducts is greater than 0', async () => {
     const wrapper = mount(ItemGrid, {
       props: {
         ...ItemGridMock,
@@ -99,6 +100,7 @@ describe('ItemGrid.vue', () => {
     });
 
     expect(wrapper.find('[data-testid="pagination-bottom"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="pagination-top"]').exists()).toBe(false);
   });
 
   it('should not render pagination when totalProducts is 0', async () => {
@@ -115,22 +117,6 @@ describe('ItemGrid.vue', () => {
     expect(wrapper.find('[data-testid="pagination-bottom"]').exists()).toBe(false);
   });
 
-  it('should render pagination when totalProducts is greater than 0', async () => {
-    useProductsMock.mockImplementation(() => ({
-      data: { value: { products: [products[0]], pagination: { totals: 1 } } },
-      productsPerPage: { value: 1 },
-    }));
-
-    const wrapper = mount(ItemGrid, {
-      props: {
-        ...ItemGridMock,
-        content: { ...ItemGridMock.content, paginationPosition: 'bottom' },
-      },
-    });
-
-    expect(wrapper.find('[data-testid="pagination-bottom"]').exists()).toBe(true);
-  });
-
   it('should render item count when content.showItemCount is true', async () => {
     useProductsMock.mockImplementation(() => ({
       data: { value: { products, pagination: { totals: products.length } } },
@@ -141,7 +127,7 @@ describe('ItemGrid.vue', () => {
       props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: true } },
     });
 
-    expect(wrapper.find('.flex.items-center').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="item-count"]').exists()).toBe(true);
   });
 
   it('should not render item count when content.showItemCount is false', async () => {
@@ -154,7 +140,7 @@ describe('ItemGrid.vue', () => {
       props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: false } },
     });
 
-    expect(wrapper.find('.flex.items-center').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="item-count"]').exists()).toBe(false);
   });
 
   it('should apply correct grid classes based on props', async () => {
