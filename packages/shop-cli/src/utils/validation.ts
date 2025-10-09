@@ -148,10 +148,10 @@ export function createPathValidator(basePath: string, componentType: string) {
     let relativePath;
     switch (componentType) {
       case 'component':
-        relativePath = `apps/web/components/${name}`;
+        relativePath = `apps/web/app/components/${name}`;
         break;
       case 'composable':
-        relativePath = `apps/web/composables/${name}`;
+        relativePath = `apps/web/app/composables/${name}`;
         break;
       default:
         return true;

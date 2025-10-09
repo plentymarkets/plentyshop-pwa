@@ -1,12 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { validateApiUrl } from './utils/pathHelper';
-import cookieConfig from './configuration/cookie.config';
-import { nuxtI18nOptions } from './configuration/i18n.config';
-import { appConfiguration } from './configuration/app.config';
-import { paths } from './utils/paths';
+import { validateApiUrl } from './app/utils/pathHelper';
+import cookieConfig from './app/configuration/cookie.config';
+import { nuxtI18nOptions } from './app/configuration/i18n.config';
+import { appConfiguration } from './app/configuration/app.config';
+import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 
 export default defineNuxtConfig({
+  srcDir: 'app/',
   telemetry: false,
   devtools: { enabled: true },
   typescript: {
@@ -21,7 +22,7 @@ export default defineNuxtConfig({
     fallbackCurrency: 'GBP',
   },
   imports: {
-    dirs: ['composables', 'composables/**', 'utils/**'],
+    dirs: ['~/composables', '~/composables/**', '~/utils/**'],
   },
   vite: {
     server: {
@@ -29,14 +30,22 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
       watch: {
-        usePolling: process.env.NODE_ENV === 'development', // see apps/web/plugins/02.pwa-cookie.ts
+        usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
     optimizeDeps: {
       include: [
+        '@intlify/core-base',
+        '@intlify/shared',
         '@paypal/paypal-js',
+        '@plentymarkets/shop-api',
         '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
+        '@storefront-ui/vue',
+        '@vee-validate/yup',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        '@vueuse/core',
         '@vueuse/shared',
         'country-flag-icons/string/3x2',
         'dotenv',
@@ -50,6 +59,7 @@ export default defineNuxtConfig({
         'vue3-lazy-hydration',
         'vue-tel-input',
         'vuedraggable/src/vuedraggable',
+        'yup',
       ],
     },
     build: {
@@ -88,6 +98,7 @@ export default defineNuxtConfig({
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
       isDev: process.env.NODE_ENV === 'development',
+      activeLanguages: process.env.LANGUAGELIST || 'en,de',
       enableCategoryEditing: process.env.NODE_ENV === 'development' || process.env?.ENABLE_CATEGORY_EDITING === '1',
       enableAllEditorSettings:
         process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1',
