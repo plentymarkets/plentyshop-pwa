@@ -1,6 +1,5 @@
 import type { GooglePayConfig, GooglePayPayPal } from '~/composables/useGooglePay/types';
-import type { PayPalGooglePayAllowedPaymentMethod } from '@plentymarkets/shop-api';
-import { cartGetters, paypalGetters } from '@plentymarkets/shop-api';
+import { paypalGetters } from '@plentymarkets/shop-api';
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
@@ -31,10 +30,8 @@ export const useGooglePay = () => {
   }));
 
   const initialize = async () => {
-    const { data: cart } = useCart();
-    const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-    const { getScript } = usePayPal();
-    const script = await getScript(currency.value, true);
+    const { getCurrentScript } = usePayPal();
+    const script = getCurrentScript();
 
     if (!script) return false;
 
@@ -51,23 +48,17 @@ export const useGooglePay = () => {
     return true;
   };
 
-  const getGoogleTransactionInfo = () => {
-    const { data: cart } = useCart();
-    const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-    return {
-      countryCode: state.value.googleConfig.countryCode,
-      currencyCode: currency.value,
-      totalPriceStatus: 'FINAL',
-      totalPrice: cartGetters.getTotals(cart.value).total.toString(),
-    } as google.payments.api.TransactionInfo;
+  const getGoogleTransactionInfo = async () => {
+    const { data: transaction } = await useSdk().plentysystems.getPayPalGooglePayTransactionInfo({});
+    return transaction as google.payments.api.TransactionInfo;
   };
 
-  const getGooglePaymentDataRequest = () => {
+  const getGooglePaymentDataRequest = async () => {
     return {
       apiVersion: 2,
       apiVersionMinor: 0,
       allowedPaymentMethods: JSON.parse(JSON.stringify(state.value.googleConfig.allowedPaymentMethods)),
-      transactionInfo: getGoogleTransactionInfo(),
+      transactionInfo: await getGoogleTransactionInfo(),
       merchantInfo: JSON.parse(JSON.stringify(state.value.googleConfig.merchantInfo)),
     } as google.payments.api.PaymentDataRequest;
   };
@@ -158,11 +149,6 @@ export const useGooglePay = () => {
         const response = await toRaw(state.value.paymentsClient).isReadyToPay(request);
 
         if (response.result) {
-          await useSdk().plentysystems.doHandleAllowPaymentGooglePay({
-            allowedPaymentMethods: toRaw(
-              state.value.googleConfig.allowedPaymentMethods,
-            ) as PayPalGooglePayAllowedPaymentMethod[],
-          });
           return true;
         }
       }

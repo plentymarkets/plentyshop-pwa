@@ -76,6 +76,7 @@ const {
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
+const { getScript } = usePayPal();
 const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
@@ -86,11 +87,7 @@ const checkPayPalPaymentsEligible = async () => {
     const { data: cart } = useCart();
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    await Promise.all([
-      useGooglePay().checkIsEligible(),
-      useApplePay().checkIsEligible(),
-      usePayPal().updateAvailableAPMs(currency.value, true),
-    ]);
+    await getScript(currency.value, true);
     await fetchPaymentMethods();
   }
 };

@@ -13,13 +13,12 @@
 <script setup lang="ts">
 import { cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalAPMPropsType } from '~/components/PayPal/types';
 import { PayPalAlternativeFundingSourceMapper } from '~/composables';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const paypalUuid = ref(uuid());
+const paypalUuid = ref(useId());
 const paypalScript = ref<PayPalNamespace | null>(null);
 const { t } = useI18n();
 
