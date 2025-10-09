@@ -11,15 +11,11 @@
         :options="fromItemSortingOptions"
         :placeholder="getEditorTranslation('placeholder')"
         :allow-empty="false"
+        :custom-label="(option) => $dynamicEditorTranslation(option)"
         class="cursor-pointer"
         deselect-label="Selected"
+        :multiple="true"
       >
-        <template #singleLabel="{ option }">
-          {{ getEditorTranslation(option) }}
-        </template>
-        <template #option="props">
-          {{ getEditorTranslation(props.option) }}
-        </template>
       </Multiselect>
     </div>
 
@@ -72,9 +68,10 @@
 
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
-const { updateSetting, getSetting } = useSiteSettings('sortingDynamicInherit');
+const { updateSetting, getJsonSetting } = useSiteSettings('sortingDynamicInherit');
 const { updateSetting: updateSettingProp1, getSetting: getSettingProp1 } = useSiteSettings('sortingDynamicPrio1');
 const { updateSetting: updateSettingProp2, getSetting: getSettingProp2 } = useSiteSettings('sortingDynamicPrio2');
+const { $dynamicEditorTranslation } = useNuxtApp();
 
 const fromItemSortingOptions = ref([
   'filter.prices.price_asc',
@@ -88,9 +85,15 @@ const fromItemSortingOptions = ref([
 ]);
 
 const sortingDynamicInherit = computed({
-  get: () => getSetting(),
-  set: (value) => updateSetting(value),
+  get: () => {
+    const values: string[] = getJsonSetting() || [];
+    return fromItemSortingOptions.value.filter((option) => values.includes(option));
+  },
+  set: (selectedOptions: string[]) => {
+    updateSetting(JSON.stringify(selectedOptions));
+  },
 });
+
 const sortingDynamicPrio1 = computed({
   get: () => getSettingProp1(),
   set: (value) => updateSettingProp1(value),
