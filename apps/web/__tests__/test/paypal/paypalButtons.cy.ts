@@ -1,5 +1,5 @@
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 
 const checkout = new CheckoutPageObject();

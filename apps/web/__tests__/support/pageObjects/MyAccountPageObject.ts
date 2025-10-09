@@ -1,4 +1,4 @@
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { PageObject } from './PageObject';
 
 export class MyAccountPageObject extends PageObject {

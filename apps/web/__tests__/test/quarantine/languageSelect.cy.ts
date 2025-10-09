@@ -1,6 +1,6 @@
 import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 
 const languageSelect = new LanguageSelectObject();
 const cookieBar = new CookieBarObject();
