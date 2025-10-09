@@ -122,7 +122,7 @@ Expected file/folder structure:
 ### Composables
 
 Composables are useful when stateful logic has to be reused across components - e.g. handling product data or controlling component state.
-Project composables are located in the `/apps/web/composables/` directory and each have the following structure:
+Project composables are located in the `/apps/web/app/composables/` directory and each have the following structure:
 
 ```shell
 hooks/
