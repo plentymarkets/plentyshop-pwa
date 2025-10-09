@@ -1081,8 +1081,9 @@
       "createFailed": "Saving the address has failed.",
       "deleteFailed": "The deletion of the address failed.",
       "validationFailed": "The address is invalid.",
-      "vatInvalid": "The VAT code is invalid.",
-      "vatValidationClientBusy": "The VAT validation service is currently unavailable, please try again later."
+      "vatInvalid": "The VAT number is invalid.",
+      "vatServerBusy": "Your VAT number could not be validated. Please contact the online store operator.",
+      "vatServerFallback": "Your VAT number could not be validated. The order will be reviewed again."
     },
     "cart": {
       "addToBasket": {

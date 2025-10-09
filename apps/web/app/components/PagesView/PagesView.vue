@@ -1,23 +1,22 @@
 <template>
-  <div class="relative">
-    <div class="pages-view sticky top-[52px] h-[calc(100vh-50px)] z-[2]" data-testid="pages-management-drawer">
-      <header class="flex items-center justify-between px-4 py-5 border-b">
-        <div class="flex items-center text-xl font-bold">
-          {{ getEditorTranslation('label') }}
-          <SfTooltip
-            :label="getEditorTranslation('open-manual-tooltip')"
-            placement="right"
-            :show-arrow="true"
-            class="flex"
-          >
-            <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
-          </SfTooltip>
-        </div>
-        <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
-          <SfIconClose />
-        </button>
-      </header>
-
+  <div class="pages-view sticky top-[52px] z-[2]" data-testid="pages-management-drawer">
+    <header class="flex items-center justify-between px-4 py-5 border-b">
+      <div class="flex items-center text-xl font-bold">
+        {{ getEditorTranslation('label') }}
+        <SfTooltip
+          :label="getEditorTranslation('open-manual-tooltip')"
+          placement="right"
+          :show-arrow="true"
+          class="flex"
+        >
+          <SfIconHelp class="ml-2 cursor-pointer" @click="openHelpPage" />
+        </SfTooltip>
+      </div>
+      <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
+        <SfIconClose />
+      </button>
+    </header>
+    <div class="h-[80vh] overflow-y-auto">
       <div v-if="isDefaultLocale" class="mx-4 mb-4 mt-4">
         <button
           type="button"
@@ -122,9 +121,8 @@
         </div>
       </UiAccordionItem>
     </div>
-
-    <CategorySettingsDrawer v-if="settingsCategory" />
   </div>
+  <CategorySettingsDrawer v-if="settingsCategory" />
 </template>
 
 <script setup lang="ts">
