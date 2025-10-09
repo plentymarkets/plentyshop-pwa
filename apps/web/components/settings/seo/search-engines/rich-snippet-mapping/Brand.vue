@@ -28,6 +28,7 @@
     <div v-if="seoRichSnippetBrand === '3'" class="mt-2">
       <label for="seoRichSnippetBrandId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBrandId" v-model="seoRichSnippetBrandId" />
+      <div v-if="seoRichSnippetBrandId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
   </div>
 </template>
@@ -60,7 +61,8 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "Do not display",
     "seoRichSnippetBrandOption-2": "External name of the brand",
-    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
+    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text",
+    "mustNotBeEmpty": "seoRichSnippetBrandId id must not be empty"
   },
   "de": {
     "label": "Select source for the brand in Rich Snippets of the item page",
@@ -69,7 +71,8 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "De-Do not display",
     "seoRichSnippetBrandOption-2": "External name of the brand",
-    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
+    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text",
+    "mustNotBeEmpty": "seoRichSnippetBrandId id must not be empty"
   }
 }
 </i18n>

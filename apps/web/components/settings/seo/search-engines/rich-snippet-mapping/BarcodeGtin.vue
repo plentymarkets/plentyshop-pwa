@@ -8,15 +8,9 @@
       </SfTooltip>
     </div>
 
-    <Multiselect
-      v-model="seoRichSnippetBarcodeGtin"
-      data-testid="seo-barcode-gtin"
-      :options="seoRichSnippetBarcodeGtins"
-      :placeholder="getEditorTranslation('placeholder')"
-      :allow-empty="false"
-      class="cursor-pointer"
-      deselect-label="Selected"
-    >
+    <Multiselect v-model="seoRichSnippetBarcodeGtin" data-testid="seo-barcode-gtin"
+      :options="seoRichSnippetBarcodeGtins" :placeholder="getEditorTranslation('placeholder')" :allow-empty="false"
+      class="cursor-pointer" deselect-label="Selected">
       <template #singleLabel="{ option }">
         {{ getEditorTranslation('seoRichSnippetBarcodeGtin-' + option) }}
       </template>
@@ -28,6 +22,7 @@
     <div v-if="seoRichSnippetBarcodeGtin === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeGtinId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeGtinId" v-model="seoRichSnippetBarcodeGtinId" />
+      <div v-if="seoRichSnippetBarcodeGtinId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
   </div>
 </template>
@@ -52,8 +47,7 @@ const seoRichSnippetBarcodeGtinId = computed({
 });
 </script>
 
-<i18n lang="json">
-{
+<i18n lang="json">{
   "en": {
     "label": "Select source for Gtin barcode in Rich Snippets of the item page",
     "tooltip": "Select source for Gtin barcode in Rich Snippets of the item page",
@@ -61,7 +55,8 @@ const seoRichSnippetBarcodeGtinId = computed({
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeGtin-1": "Do not display",
     "seoRichSnippetBarcodeGtin-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID"
+    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID",
+    "mustNotBeEmpty": "GTIN id must not be empty"
   },
   "de": {
     "label": "Select source for Gtin barcode in Rich Snippets of the item page",
@@ -70,7 +65,7 @@ const seoRichSnippetBarcodeGtinId = computed({
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeGtin-1": "Do not display",
     "seoRichSnippetBarcodeGtin-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID"
+    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID",
+    "mustNotBeEmpty": "GTIN id must not be empty"
   }
-}
-</i18n>
+}</i18n>

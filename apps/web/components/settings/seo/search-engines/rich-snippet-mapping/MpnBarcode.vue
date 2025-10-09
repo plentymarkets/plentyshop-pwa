@@ -28,6 +28,7 @@
     <div v-if="seoRichSnippetMpnBarcode === '3'" class="mt-2">
       <label for="seoRichSnippetMpnBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetMpnBarcodeId" v-model="seoRichSnippetMpnBarcodeId" />
+      <div v-if="seoRichSnippetMpnBarcodeId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
   </div>
 </template>
@@ -61,7 +62,8 @@ const seoRichSnippetMpnBarcodeId = computed({
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetMpnBarcode-1": "Do not display",
     "seoRichSnippetMpnBarcode-2": "Show external variation ID",
-    "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"
+    "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text",
+    "mustNotBeEmpty": "seoRichSnippetMpnBarcodeId id must not be empty"
   },
   "de": {
     "label": "Select source for the MPN barcode in Rich Snippets of the item page",
@@ -70,7 +72,8 @@ const seoRichSnippetMpnBarcodeId = computed({
     "conditionalLabel": "ID aus Varianteneigenschaft vom Typ Text",
     "seoRichSnippetMpnBarcode-1": "Do not display",
     "seoRichSnippetMpnBarcode-2": "Show external variation ID",
-    "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"
+    "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text",
+    "mustNotBeEmpty": "seoRichSnippetMpnBarcodeId id must not be empty"
   }
 }
 </i18n>

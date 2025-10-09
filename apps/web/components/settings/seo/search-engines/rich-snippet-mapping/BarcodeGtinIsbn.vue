@@ -28,6 +28,7 @@
     <div v-if="seoRichSnippetBarcodeIsbn === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeIsbnId">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeIsbnId" v-model="seoRichSnippetBarcodeIsbnId" />
+      <div v-if="seoRichSnippetBarcodeIsbnId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
   </div>
 </template>
@@ -61,7 +62,8 @@ const seoRichSnippetBarcodeIsbnId = computed({
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeIsbn-1": "Do not display",
     "seoRichSnippetBarcodeIsbn-2": "Use first ISBN barcode from variation",
-    "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
+    "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID",
+    "mustNotBeEmpty": "ISBN id must not be empty"
   },
   "de": {
     "label": "Select source for ISBN barcode in Rich Snippets of the item page",
@@ -70,7 +72,8 @@ const seoRichSnippetBarcodeIsbnId = computed({
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeIsbn-1": "Do not display",
     "seoRichSnippetBarcodeIsbn-2": "Use first ISBN barcode from variation",
-    "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
+    "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID",
+    "mustNotBeEmpty": "ISBN id must not be empty"
   }
 }
 </i18n>
