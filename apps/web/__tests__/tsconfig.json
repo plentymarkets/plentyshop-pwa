@@ -1,6 +1,7 @@
 {
   "extends": ".././.nuxt/tsconfig.json",
   "compilerOptions": {
+    "module": "esnext",
     "isolatedModules": false,
     "types": ["cypress", "node", "cypress-real-events"]
   },
