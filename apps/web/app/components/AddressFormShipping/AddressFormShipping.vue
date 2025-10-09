@@ -23,7 +23,7 @@
     </label>
 
     <label class="md:col-span-2">
-     <UiFormLabel class="flex">
+      <UiFormLabel class="flex">
         <span class="mr-1">
           {{ lastNameLabel }}
         </span>
@@ -231,8 +231,14 @@ const {
 const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Shipping);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
 
-const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(t('form.firstNameLabel'), hasShippingCompany);
-const { labelText: lastNameLabel, helperText: lastNameHelperText } = useFormLabel(t('form.lastNameLabel'), hasShippingCompany);
+const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(
+  t('form.firstNameLabel'),
+  hasShippingCompany,
+);
+const { labelText: lastNameLabel, helperText: lastNameHelperText } = useFormLabel(
+  t('form.lastNameLabel'),
+  hasShippingCompany,
+);
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');

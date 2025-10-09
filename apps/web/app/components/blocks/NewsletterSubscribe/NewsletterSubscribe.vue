@@ -188,8 +188,14 @@ const [email, emailAttributes] = defineField('email');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 
-const lastNameLabel = useFormLabel(t('newsletter.lastName'), computed(() => !props.content.input?.nameIsRequired));
-const firstNameLabel = useFormLabel(t('newsletter.firstName'), computed(() => !props.content.input?.nameIsRequired));
+const lastNameLabel = useFormLabel(
+  t('newsletter.lastName'),
+  computed(() => !props.content.input?.nameIsRequired),
+);
+const firstNameLabel = useFormLabel(
+  t('newsletter.firstName'),
+  computed(() => !props.content.input?.nameIsRequired),
+);
 
 const subscribeNewsletter = async () => {
   if (!meta.value.valid || !turnstile.value) {

@@ -222,7 +222,10 @@ const { billingCountries } = useAggregatedCountries();
 const { restrictedAddresses } = useRestrictedAddress();
 const { setBillingSkeleton } = useCheckout();
 
-const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(t('form.firstNameLabel'), hasCompany);
+const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(
+  t('form.firstNameLabel'),
+  hasCompany,
+);
 const { labelText: lastNameLabel, helperText: lastNameHelperText } = useFormLabel(t('form.lastNameLabel'), hasCompany);
 
 const [firstName, firstNameAttributes] = defineField('firstName');
