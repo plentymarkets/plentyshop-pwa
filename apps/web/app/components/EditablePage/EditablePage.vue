@@ -152,8 +152,15 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
-const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid']);
-const paddingExcludedBlockSet = new Set(['Banner', 'Carousel', 'NewsletterSubscribe', 'Footer', 'MultiGrid']);
+const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid', 'CategoryData']);
+const paddingExcludedBlockSet = new Set([
+  'Banner',
+  'Carousel',
+  'NewsletterSubscribe',
+  'Footer',
+  'MultiGrid',
+  'CategoryData',
+]);
 
 const isExcluded = (blockName: string, excludedSet: Set<string>) => {
   return excludedSet.has(blockName);

@@ -34,7 +34,15 @@ const mockProps: CategoryDataProps = {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      narrowContainer: false,
     },
+    displayCategoryImage: 'off',
+    text: {
+      bgColor: '#fff',
+      bgOpacity: 1,
+      background: true,
+    },
+    image: {},
   },
   category: CategoryMock,
   meta: {

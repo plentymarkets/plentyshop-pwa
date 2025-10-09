@@ -26,5 +26,29 @@ export type CategoryDataContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
+    narrowContainer: boolean;
+  };
+  displayCategoryImage: string;
+  image: {
+    wideScreen?: string;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
+    alt?: string;
+    brightness?: number;
+    fillMode?: 'fill' | 'fit';
+  };
+  text: {
+    pretitle?: string;
+    title?: string;
+    subtitle?: string;
+    htmlDescription?: string;
+    color?: string;
+    bgColor?: string;
+    bgOpacity?: number;
+    textAlignment?: 'left' | 'center' | 'right';
+    justify?: 'top' | 'center' | 'bottom';
+    align?: 'left' | 'center' | 'right';
+    background?: boolean;
   };
 };
