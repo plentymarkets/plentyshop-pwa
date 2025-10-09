@@ -16,11 +16,11 @@
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('vatNumberValidation');
+const { updateSetting, getSetting } = useSiteSettings('externalVatCheckInactive');
 
 const useVatNumberValidation = computed({
-  get: () => getSetting() === 'true',
-  set: (value) => updateSetting(value.toString()),
+  get: () => !getSetting(),
+  set: (value) => updateSetting((!value).toString()),
 });
 </script>
 
