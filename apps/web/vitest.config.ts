@@ -8,6 +8,7 @@ const silenceLogsFromSuspenseComponent = (log: string): boolean => {
 export default defineVitestConfig({
   test: {
     coverage: {
+      provider: 'v8',
       reporter: ['text', 'html', 'json-summary', 'json'],
       exclude: [...coverageConfigDefaults.exclude, 'assets/**', 'build/**'],
       reportOnFailure: true,

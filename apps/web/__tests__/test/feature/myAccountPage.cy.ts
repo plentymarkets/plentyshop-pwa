@@ -1,4 +1,4 @@
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 
 const myAccount: MyAccountPageObject = new MyAccountPageObject();

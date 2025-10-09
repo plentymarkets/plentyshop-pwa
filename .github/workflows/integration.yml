@@ -93,7 +93,7 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
-          working-directory: './apps/web/'
+          working-directory: './apps/web/app'
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5

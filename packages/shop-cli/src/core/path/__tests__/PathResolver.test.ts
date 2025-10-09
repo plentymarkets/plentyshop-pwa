@@ -10,7 +10,7 @@ describe('PathResolver', () => {
   describe('Default Configuration', () => {
     it('should provide correct default paths', () => {
       expect(pathResolver.getProjectRoot()).toMatch(/.*plentyshop-pwa$/);
-      expect(pathResolver.getWebAppPath()).toMatch(/.*plentyshop-pwa\/apps\/web$/);
+      expect(pathResolver.getWebAppPath()).toMatch(/.*plentyshop-pwa\/apps\/web\/app$/);
       expect(pathResolver.getTemplatePath('component')).toMatch(/.*templates\/component$/);
     });
 
@@ -25,10 +25,10 @@ describe('PathResolver', () => {
     it('should resolve component paths correctly', () => {
       const result = pathResolver.resolve('component', 'TestComponent');
 
-      expect(result.basePath).toBe('../../apps/web/components/TestComponent');
-      expect(result.mainFile).toBe('../../apps/web/components/TestComponent/{{pascalCase name}}.vue');
-      expect(result.typesFile).toBe('../../apps/web/components/TestComponent/types.ts');
-      expect(result.testFile).toBe('../../apps/web/components/TestComponent/__tests__/{{pascalCase name}}.spec.ts');
+      expect(result.basePath).toBe('../../apps/web/app/components/TestComponent');
+      expect(result.mainFile).toBe('../../apps/web/app/components/TestComponent/{{pascalCase name}}.vue');
+      expect(result.typesFile).toBe('../../apps/web/app/components/TestComponent/types.ts');
+      expect(result.testFile).toBe('../../apps/web/app/components/TestComponent/__tests__/{{pascalCase name}}.spec.ts');
       expect(result.indexFile).toBeUndefined();
       expect(result.files).toHaveLength(3);
     });
@@ -41,7 +41,7 @@ describe('PathResolver', () => {
 
       const result = pathResolver.resolve('component', 'TestComponent', options);
 
-      expect(result.mainFile).toBe('../../apps/web/components/TestComponent/CustomName.jsx');
+      expect(result.mainFile).toBe('../../apps/web/app/components/TestComponent/CustomName.jsx');
     });
   });
 
@@ -49,11 +49,11 @@ describe('PathResolver', () => {
     it('should resolve composable paths correctly', () => {
       const result = pathResolver.resolve('composable', 'useTestData');
 
-      expect(result.basePath).toBe('../../apps/web/composables/useTestData');
-      expect(result.mainFile).toBe('../../apps/web/composables/useTestData/{{name}}.ts');
-      expect(result.typesFile).toBe('../../apps/web/composables/useTestData/types.ts');
-      expect(result.indexFile).toBe('../../apps/web/composables/useTestData/index.ts');
-      expect(result.testFile).toBe('../../apps/web/composables/useTestData/__tests__/{{name}}.spec.ts');
+      expect(result.basePath).toBe('../../apps/web/app/composables/useTestData');
+      expect(result.mainFile).toBe('../../apps/web/app/composables/useTestData/{{name}}.ts');
+      expect(result.typesFile).toBe('../../apps/web/app/composables/useTestData/types.ts');
+      expect(result.indexFile).toBe('../../apps/web/app/composables/useTestData/index.ts');
+      expect(result.testFile).toBe('../../apps/web/app/composables/useTestData/__tests__/{{name}}.spec.ts');
       expect(result.files).toHaveLength(4);
     });
   });
@@ -77,7 +77,7 @@ describe('PathResolver', () => {
     it('should resolve paths with custom config', () => {
       const result = customResolver.resolve('component', 'TestComponent');
 
-      expect(result.basePath).toBe('../../apps/web/components/TestComponent');
+      expect(result.basePath).toBe('../../apps/web/app/components/TestComponent');
     });
   });
 

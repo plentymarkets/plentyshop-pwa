@@ -30,7 +30,7 @@
       "outputs": []
     },
     "test:coverage": {
-      "outputs": []
+      "outputs": ["coverage/**"]
     },
     "test:watch": {
       "cache": false
