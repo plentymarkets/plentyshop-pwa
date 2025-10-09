@@ -1,4 +1,4 @@
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 

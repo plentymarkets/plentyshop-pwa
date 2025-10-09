@@ -1,6 +1,6 @@
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { ImageTextObject } from '../../support/pageObjects/ImageTextObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 
 describe('Image Text Block Form', () => {
   const imageText = new ImageTextObject();
