@@ -1,5 +1,5 @@
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
 // import newContent from '../../fixtures/newContent.json';
 

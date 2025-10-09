@@ -1,7 +1,7 @@
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { ReadonlyCheckoutPageObject } from '../../support/pageObjects/ReadonlyCheckoutPageObject';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
 const readonlyCheckout = new ReadonlyCheckoutPageObject();
