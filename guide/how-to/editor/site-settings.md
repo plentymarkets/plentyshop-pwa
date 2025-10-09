@@ -70,7 +70,7 @@ export default defineNuxtConfig({
 In this step, you update the type definitions to include your new setting. Extend the existing types by adding the new property to both the configuration and state interfaces, aligning them with your updated runtime configuration.
 
 ```ts
-// apps/web/composables/useSiteConfiguration/types.ts
+// apps/web/app/composables/useSiteConfiguration/types.ts
 
 export type ConfigurationSettings = {
   primaryColor: string;
@@ -95,7 +95,7 @@ For every setting you want to add, you have to update the following parts in `us
 - save map
 
 ```ts
-// apps/web/composables/useSiteConfiguration/useSiteConfiguration.ts
+// apps/web/app/composables/useSiteConfiguration/useSiteConfiguration.ts
 
 export const useSiteConfiguration = () => {
   const state = useState('siteConfiguration', () => ({
@@ -138,7 +138,7 @@ When the user changes the primary colour, the app has to generate an updated col
 To react to changes the user makes in the editor, use a watcher and a corresponding update function.
 
 ```ts
-// apps/web/composables/useSiteConfiguration/useSiteConfiguration.ts
+// apps/web/app/composables/useSiteConfiguration/useSiteConfiguration.ts
 
 export const useSiteConfiguration = () => {
   const updatePrimaryColor: SetColorPalette = (hexColor: string) => {
@@ -161,7 +161,7 @@ export const useSiteConfiguration = () => {
 As with the properties, you have to add your function in `types`.
 
 ```ts
-// apps/web/composables/useSiteConfiguration/types.ts
+// apps/web/app/composables/useSiteConfiguration/types.ts
 
 export type SetColorPalette = (hexColor: string) => void;
 
@@ -177,7 +177,7 @@ The editor keeps all app settings in various drawer view components.
 Each view is a form with inputs that are tied to the state property from `useSiteConfiguration.ts`.
 
 ```vue
-<!-- apps/web/components/DesignView/DesignView.vue -->
+<!-- apps/web/app/components/DesignView/DesignView.vue -->
 
 <template>
   <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
@@ -236,7 +236,7 @@ For your setting, you can either extend an existing view or create your own.
 If you create your own `MyNewView.vue` component, you have to register it in `SiteConfigurationDrawer.vue` and `SettingsToolbar.vue`.
 
 ```vue
-<!-- apps/web/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue -->
+<!-- apps/web/app/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue -->
 
 <script setup lang="ts">
 const getDrawerView = (view: string) => {
@@ -247,7 +247,7 @@ const getDrawerView = (view: string) => {
 ```
 
 ```vue
-<!-- apps/web/components/SettingsToolbar/SettingsToolbar.vue -->
+<!-- apps/web/app/components/SettingsToolbar/SettingsToolbar.vue -->
 
 <button
   type="button"
@@ -271,7 +271,7 @@ Alternatively, you can integrate other icon components like [Nuxt Icon](https://
 Finally, extend the `DrawerView` in `types.ts`.
 
 ```ts
-// apps/web/composables/useSiteConfiguration/types.ts
+// apps/web/app/composables/useSiteConfiguration/types.ts
 
 export type DrawerView =
   | 'MyNewView'

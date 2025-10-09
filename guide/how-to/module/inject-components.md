@@ -25,10 +25,10 @@ await addComponent({
 ## Areas
 
 ### Available predefined areas
-All existing predefined areas are listed in the [`apps/web/composables/useModuleRendering/areas.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/composables/useModuleRendering/areas.ts) file within your shop repository.
+All existing predefined areas are listed in the [`apps/web/app/composables/useModuleRendering/areas.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/composables/useModuleRendering/areas.ts) file within your shop repository.
 
 ### Adding a new custom area
-1. In your shop repository, open the file `apps/web/composables/useModuleRendering/areas.ts` and add a new entry to the areas array. If you try to inject your component into a non-existing entry, your shop will throw an error.
+1. In your shop repository, open the file `apps/web/app/composables/useModuleRendering/areas.ts` and add a new entry to the areas array. If you try to inject your component into a non-existing entry, your shop will throw an error.
 2. In the location of the template in which you want to display this new area, add the following:
 ```html
 <ModuleComponentRendering area="NameOfTheArea" />

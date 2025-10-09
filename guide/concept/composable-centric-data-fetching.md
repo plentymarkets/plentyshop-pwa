@@ -9,7 +9,7 @@ In this guide, you'll learn the benefits of this pattern and how to interact wit
 `useAsyncData` is Nuxt’s built‑in helper that performs server‑side data fetching on the first request and caches the result for subsequent client hydration. The shop composables (e.g. useProducts) already call useAsyncData whenever they talk to the SDK.
 
 ```vue
-// apps/web/pages/[...slug].vue
+// apps/web/app/pages/[...slug].vue
 
 <script setup lang="ts">
   const { fetchProducts, data: products } = useProducts('1');
