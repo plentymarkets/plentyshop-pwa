@@ -36,7 +36,7 @@
               id="newsletter-first-name"
               v-model="firstName"
               :invalid="Boolean(errors['firstName'])"
-              :placeholder="`${t('newsletter.firstName')} ${props.content.input?.nameIsRequired ? '**' : `(${t('form.optional')})`}`"
+              :placeholder="firstNameLabel.getPlaceholder('**').value"
               :wrapper-class="wrapperClass"
               type="text"
               name="firstName"
@@ -55,7 +55,7 @@
               id="newsletter-last-name"
               v-model="lastName"
               :invalid="Boolean(errors['lastName'])"
-              :placeholder="`${t('newsletter.lastName')} ${props.content.input?.nameIsRequired ? '**' : `(${t('form.optional')})`}`"
+              :placeholder="lastNameLabel.getPlaceholder('**').value"
               :wrapper-class="wrapperClass"
               type="text"
               name="lastName"
@@ -187,6 +187,9 @@ const [lastName, lastNameAttributes] = defineField('lastName');
 const [email, emailAttributes] = defineField('email');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
+
+const lastNameLabel = useFormLabel(t('newsletter.lastName'), computed(() => !props.content.input?.nameIsRequired));
+const firstNameLabel = useFormLabel(t('newsletter.firstName'), computed(() => !props.content.input?.nameIsRequired));
 
 const subscribeNewsletter = async () => {
   if (!meta.value.valid || !turnstile.value) {

@@ -8,13 +8,9 @@
     <label>
       <UiFormLabel class="flex">
         <span class="mr-1">
-          {{
-            hasCompany
-              ? `${t('form.firstNameLabel')}`
-              : `${t('form.firstNameLabel')} ${t('form.required')}`
-          }}
+          {{ firstNameLabelText }}
         </span>
-        <UiFormHelperText v-if="hasCompany">({{ t('form.optional') }})</UiFormHelperText>
+        <UiFormHelperText v-if="firstNameHelperText">({{ firstNameHelperText }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -29,13 +25,9 @@
     <label class="md:col-span-2">
       <UiFormLabel class="flex">
         <span class="mr-1">
-          {{
-            hasCompany
-              ? `${t('form.lastNameLabel')}`
-              : `${t('form.lastNameLabel')} ${t('form.required')}`
-          }}
+          {{ lastNameLabel }}
         </span>
-        <UiFormHelperText v-if="hasCompany">({{ t('form.optional') }})</UiFormHelperText>
+        <UiFormHelperText v-if="lastNameHelperText">({{ lastNameHelperText }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="lastName"
@@ -229,6 +221,9 @@ const { defineField, errors, setValues, validate, handleSubmit } = useForm({ val
 const { billingCountries } = useAggregatedCountries();
 const { restrictedAddresses } = useRestrictedAddress();
 const { setBillingSkeleton } = useCheckout();
+
+const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(t('form.firstNameLabel'), hasCompany);
+const { labelText: lastNameLabel, helperText: lastNameHelperText } = useFormLabel(t('form.lastNameLabel'), hasCompany);
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
