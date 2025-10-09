@@ -29,8 +29,17 @@ export const useToolbar = () => {
       await handleSave(updatePageTemplate);
     }
 
-    const conditionalInputList = ['seoRichSnippetBrand', 'seoRichSnippetBarcodeGtin', 'seoRichSnippetBarcodeGtin8', 'seoRichSnippetBarcodeGtin13', 'seoRichSnippetBarcodeIsbn', 'seoRichSnippetMpnBarcode', 'seoRichSnippetSkuBarcode', 'seoRichSnippetSkuBarcode'];
-    const requiredConditionalInputsWithError = Object.entries(settingsData.value).filter(obj => {
+    const conditionalInputList = [
+      'seoRichSnippetBrand',
+      'seoRichSnippetBarcodeGtin',
+      'seoRichSnippetBarcodeGtin8',
+      'seoRichSnippetBarcodeGtin13',
+      'seoRichSnippetBarcodeIsbn',
+      'seoRichSnippetMpnBarcode',
+      'seoRichSnippetSkuBarcode',
+      'seoRichSnippetSkuBarcode',
+    ];
+    const requiredConditionalInputsWithError = Object.entries(settingsData.value).filter((obj) => {
       if (conditionalInputList.includes(obj[0]) && obj[1] === '3') {
         if (!settingsData.value[obj[0] + 'Id'] || settingsData.value[obj[0] + 'Id'] === '') {
           return true;

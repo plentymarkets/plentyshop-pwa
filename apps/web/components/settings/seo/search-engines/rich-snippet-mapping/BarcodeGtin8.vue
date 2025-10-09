@@ -28,7 +28,9 @@
     <div v-if="seoRichSnippetBarcodeGtin8 === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeGtin8Id">{{ getEditorTranslation('conditionalLabel') }}</label>
       <SfInput id="seoRichSnippetBarcodeGtin8Id" v-model="seoRichSnippetBarcodeGtin8Id" />
-      <div v-if="seoRichSnippetBarcodeGtin8Id === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
+      <div v-if="seoRichSnippetBarcodeGtin8Id === ''" class="text-red-600">
+        {{ getEditorTranslation('mustNotBeEmpty') }}
+      </div>
     </div>
   </div>
 </template>
