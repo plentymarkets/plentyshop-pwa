@@ -9,6 +9,7 @@ import { paypalGetters } from '@plentymarkets/shop-api';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
+const configPromise: Ref<Promise<boolean> | null> = ref(null);
 
 /**
  * @description Composable for managing PayPal interaction.
@@ -42,18 +43,29 @@ export const usePayPal = () => {
    */
   const loadConfig = async () => {
     if (state.value.loadedConfig) return false;
-    state.value.loadedConfig = true;
-    try {
-      const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
-      if (data) {
-        state.value.config = data ?? null;
-        state.value.isAvailable = !!state.value.config;
-        return true;
-      }
-      return false;
-    } catch {
-      return false;
+
+    if (configPromise.value) {
+      return configPromise.value;
     }
+
+    configPromise.value = (async () => {
+      try {
+        const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
+        state.value.loadedConfig = true;
+        if (data) {
+          state.value.config = data ?? null;
+          state.value.isAvailable = !!state.value.config;
+          return true;
+        }
+        return false;
+      } catch {
+        return false;
+      } finally {
+        configPromise.value = null;
+      }
+    })();
+
+    return configPromise.value;
   };
 
   const updateAvailableAPMs = async (script: PayPalNamespace, currency: string) => {
@@ -130,6 +142,7 @@ export const usePayPal = () => {
 
     if (
       state.value.paypalScript &&
+      state.value.paypalScript.script &&
       state.value.paypalScript.currency === currency &&
       state.value.paypalScript.locale === localePayPal &&
       state.value.paypalScript.commit === commit
