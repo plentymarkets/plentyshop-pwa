@@ -17,7 +17,7 @@ abstract class BasePathStrategy implements PathStrategy {
    * Get relative path from packages/shop-cli to target location
    */
   protected getRelativePath(absolutePath: string): string {
-    return join('../../apps/web', absolutePath.replace(this.config.webAppRoot, ''));
+    return join('../../apps/web/app', absolutePath.replace(this.config.webAppRoot, ''));
   }
 
   /**

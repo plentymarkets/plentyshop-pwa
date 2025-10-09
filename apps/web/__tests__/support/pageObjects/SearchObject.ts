@@ -1,5 +1,5 @@
 import { PageObject } from './PageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
+import { ProductListPageObject } from './ProductListPageObject';
 
 export class SearchObject extends PageObject {
   productListPage = new ProductListPageObject();
