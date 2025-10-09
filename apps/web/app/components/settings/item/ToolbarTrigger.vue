@@ -1,5 +1,10 @@
 <template>
-  <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" class="inline-grid" :show-arrow="true">
+  <SfTooltip
+    :label="getEditorTranslation('tooltip')"
+    placement="right"
+    class="inline-grid font-editor"
+    :show-arrow="true"
+  >
     <button
       v-if="runtimeConfig.public.isDev"
       type="button"

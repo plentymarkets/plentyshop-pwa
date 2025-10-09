@@ -4,7 +4,7 @@
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
-      <SfTooltip :label="pagesLabel" placement="right" :show-arrow="true" class="inline-grid">
+      <SfTooltip :label="pagesLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
