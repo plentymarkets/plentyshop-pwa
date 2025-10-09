@@ -286,7 +286,7 @@ cd packages/shop-cli
 npm run generate my-generator
 
 # Test in the actual web app
-cd ../../apps/web
+cd ../../apps/web/app
 npx plentyshop generate my-generator
 ```
 

@@ -1,4 +1,4 @@
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 import { PaymentStatusScreen } from '../../support/pageObjects/PaymentStatusScreen';
