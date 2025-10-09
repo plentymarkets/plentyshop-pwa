@@ -31,7 +31,9 @@ export const useSearch: UseSearchReturn = () => {
   const getSearch: GetSearch = async (params: ItemSearchParams) => {
     try {
       state.value.loading = true;
-      params.type = 'search';
+      if (!params.type) {
+        params.type = 'search';
+      }
       const { data } = await useSdk().plentysystems.getSearch(params);
       state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
       if (data) data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
