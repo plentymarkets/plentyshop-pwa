@@ -1,20 +1,111 @@
 <template>
   <NuxtLayout name="auth" :heading="t('auth.setNewPassword.heading')">
     <form class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md" @submit.prevent="executeResetPassword">
-      <p class="mb-6">
-        {{ t('auth.setNewPassword.description') }}
-      </p>
+      <p class="mb-6">{{ t('auth.setNewPassword.description') }}</p>
+
       <label class="block mb-4">
         <UiFormLabel>{{ t('auth.setNewPassword.password') }} {{ t('form.required') }}</UiFormLabel>
-        <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
-        <UiFormHelperText>{{ t('auth.setNewPassword.help') }}</UiFormHelperText>
+        <UiFormPasswordInput
+          v-model="password"
+          name="password"
+          autocomplete="current-password"
+          :invalid="passwordTouched && !isPasswordFormatValid"
+          @input="stripSpaces('password')"
+          @blur="passwordTouched = true"
+        />
+        <span v-if="passwordTouched && !password" class="flex text-negative-700 text-sm mt-2">
+          {{ t('errorMessages.password.required') }}
+        </span>
+        <span
+          v-else-if="passwordTouched && password && password.length < passwordMinLength"
+          class="flex text-negative-700 text-sm mt-2"
+        >
+          {{ t('errorMessages.password.minLength', { min: passwordMinLength }) }}
+        </span>
+        <span
+          v-else-if="passwordTouched && password && password.length > passwordMaxLength"
+          class="flex text-negative-700 text-sm mt-2"
+        >
+          {{ t('errorMessages.password.maxLength', { max: passwordMaxLength }) }}
+        </span>
+        <span v-else-if="passwordTouched && !passwordValidationOneDigit" class="flex text-negative-700 text-sm mt-2">
+          {{ t('errorMessages.password.valid') }}
+        </span>
+        <span v-else-if="passwordTouched && !passwordValidationOneLetter" class="flex text-negative-700 text-sm mt-2">
+          {{ t('errorMessages.password.valid') }}
+        </span>
       </label>
+
+      <div class="select-none bg-gray-50 p-4 rounded-lg mt-4 mb-3 space-y-1 text-xs">
+        <div
+          class="flex items-center"
+          :class="{ 'text-green-600': passwordValidationLength, 'text-gray-500': !passwordValidationLength }"
+        >
+          <SfIconCheck v-if="passwordValidationLength" size="sm" class="mr-2" />
+          <SfIconClose v-else size="sm" class="mr-2" />
+          {{ t('auth.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
+        </div>
+        <div
+          class="flex items-center"
+          :class="{ 'text-green-600': passwordValidationOneDigit, 'text-gray-500': !passwordValidationOneDigit }"
+        >
+          <SfIconCheck v-if="passwordValidationOneDigit" size="sm" class="mr-2" />
+          <SfIconClose v-else size="sm" class="mr-2" />
+          {{ t('auth.signup.passwordValidation.numbers') }}
+        </div>
+        <div
+          class="flex items-center"
+          :class="{
+            'text-green-600': passwordValidationOneLetter,
+            'text-gray-500': !passwordValidationOneLetter,
+          }"
+        >
+          <SfIconCheck v-if="passwordValidationOneLetter" size="sm" class="mr-2" />
+          <SfIconClose v-else size="sm" class="mr-2" />
+          {{ t('auth.signup.passwordValidation.letters') }}
+        </div>
+      </div>
+
       <label>
         <UiFormLabel>{{ t('auth.setNewPassword.repeatPassword') }} {{ t('form.required') }}</UiFormLabel>
-        <UiFormPasswordInput v-model="password2" name="repeatedPassword" autocomplete="current-password" required />
-        <p v-if="password2 && !passwordsMatch" class="text-red-500 text-sm">
-          {{ t('auth.setNewPassword.passwordsNotMatching') }}
-        </p>
+        <UiFormPasswordInput
+          v-model="repeatPassword"
+          name="repeatedPassword"
+          autocomplete="current-password"
+          :invalid="repeatPasswordTouched && !isRepeatPasswordValid"
+          @input="stripSpaces('repeatPassword')"
+          @blur="repeatPasswordTouched = true"
+        />
+        <span v-if="repeatPasswordTouched && !repeatPassword" class="flex text-negative-700 text-sm mt-2">
+          {{ t('errorMessages.password.required') }}
+        </span>
+        <span
+          v-else-if="repeatPasswordTouched && repeatPassword && repeatPassword.length < passwordMinLength"
+          class="flex text-negative-700 text-sm mt-2"
+        >
+          {{ t('errorMessages.password.minLength', { min: passwordMinLength }) }}
+        </span>
+        <span
+          v-else-if="repeatPasswordTouched && repeatPassword && repeatPassword.length > passwordMaxLength"
+          class="flex text-negative-700 text-sm mt-2"
+        >
+          {{ t('errorMessages.password.maxLength', { max: passwordMaxLength }) }}
+        </span>
+        <span
+          v-else-if="repeatPasswordTouched && repeatPassword && !/\d/.test(repeatPassword)"
+          class="flex text-negative-700 text-sm mt-2"
+        >
+          {{ t('errorMessages.password.valid') }}
+        </span>
+        <span
+          v-else-if="repeatPasswordTouched && repeatPassword && !/[A-Za-z]/.test(repeatPassword)"
+          class="flex text-negative-700 text-sm mt-2"
+        >
+          {{ t('errorMessages.password.valid') }}
+        </span>
+        <span v-else-if="repeatPasswordTouched && !passwordsMatch" class="flex text-negative-700 text-sm mt-2">
+          {{ t('errorMessages.password.match') }}
+        </span>
       </label>
 
       <div class="text-center mt-6">
@@ -58,7 +149,7 @@
 
 <script lang="ts" setup>
 import type { ApiError } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose } from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
 
 const { resetPassword, loading } = useResetPassword();
 const { t } = useI18n();
@@ -67,16 +158,62 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const localePath = useLocalePath();
 const { send } = useNotification();
 const { fetchSession } = useFetchSession();
+const runtimeConfig = useRuntimeConfig();
 
-const passwordsMatch = computed(() => password.value === password2.value);
 const password = ref('');
-const password2 = ref('');
+const repeatPassword = ref('');
+const passwordTouched = ref(false);
+const repeatPasswordTouched = ref(false);
+
 const hash = route.params.hash as string;
 const contactId = Number(route.params.contactId);
+const passwordMinLength = runtimeConfig.public.passwordMinLength;
+const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 
-definePageMeta({
-  layout: false,
+definePageMeta({ layout: false, middleware: ['guest-guard'] });
+
+const passwordsMatch = computed(() => password.value === repeatPassword.value);
+
+const passwordValidationLength = computed(() => {
+  const val = password?.value || '';
+  return val.length >= passwordMinLength && val.length <= passwordMaxLength;
 });
+
+const passwordValidationOneDigit = computed(() => /\d/.test(password?.value || ''));
+const passwordValidationOneLetter = computed(() => /[A-Za-z]/.test(password?.value || ''));
+
+const isPasswordFormatValid = computed(() => {
+  return passwordValidationLength.value && passwordValidationOneDigit.value && passwordValidationOneLetter.value;
+});
+
+const repeatPasswordValidationLength = computed(() => {
+  const val = repeatPassword?.value || '';
+  return val.length >= passwordMinLength && val.length <= passwordMaxLength;
+});
+
+const repeatPasswordValidationOneDigit = computed(() => /\d/.test(repeatPassword?.value || ''));
+const repeatPasswordValidationOneLetter = computed(() => /[A-Za-z]/.test(repeatPassword?.value || ''));
+
+const isRepeatPasswordFormatValid = computed(() => {
+  return (
+    repeatPasswordValidationLength.value &&
+    repeatPasswordValidationOneDigit.value &&
+    repeatPasswordValidationOneLetter.value
+  );
+});
+
+const isRepeatPasswordValid = computed(() => {
+  return isRepeatPasswordFormatValid.value && passwordsMatch.value;
+});
+
+const isPasswordValid = computed(() => {
+  return password.value !== '' && repeatPassword.value !== '' && isPasswordFormatValid.value && passwordsMatch.value;
+});
+
+const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {
+  const field = fieldName === 'password' ? password : repeatPassword;
+  field.value = field.value.replace(/\s/g, '');
+};
 
 const navigateAfterAuth = () => {
   closeAuthentication();
@@ -84,21 +221,25 @@ const navigateAfterAuth = () => {
 };
 
 const executeResetPassword = async () => {
-  if (passwordsMatch.value) {
-    try {
-      await resetPassword({
-        password: password.value,
-        password2: password2.value,
-        hash: hash,
-        contactId: contactId,
-      });
-    } catch (error) {
-      useHandleError(error as ApiError);
-    } finally {
-      await fetchSession();
-      send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
-      await navigateTo(localePath(paths.home));
-    }
+  if (!isPasswordValid.value) {
+    passwordTouched.value = true;
+    repeatPasswordTouched.value = true;
+    return;
+  }
+
+  try {
+    await resetPassword({
+      password: password.value,
+      password2: repeatPassword.value,
+      hash: hash,
+      contactId: contactId,
+    });
+
+    await fetchSession();
+    send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
+    await navigateTo(localePath(paths.home));
+  } catch (error) {
+    useHandleError(error as ApiError);
   }
 };
 </script>

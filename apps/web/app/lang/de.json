@@ -245,7 +245,7 @@
       "button": "Neues Passwort speichern",
       "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten.",
       "heading": "Passwort zurücksetzen",
-      "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
+      "help": "Zwischen {min} und {max} Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen.",
       "password": "Neues Passwort",
       "repeatPassword": "Neues Passwort wiederholen"
     },
