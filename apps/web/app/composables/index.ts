@@ -106,4 +106,5 @@ export * from './useCustomerClass';
 export * from './useFetchSession';
 export * from './useGridSplits';
 export * from './useRegisterForm';
+export * from './useFormLabel';
 export * from './useBlockContentHelper';
