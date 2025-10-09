@@ -30,7 +30,6 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
 
 const identifier = computed(() =>
@@ -125,10 +124,6 @@ watch(
     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
   },
 );
-
-watchEffect(() => {
-  route.meta.isBlockified = isEditablePage;
-});
 
 useHead({
   title: headTitle,
