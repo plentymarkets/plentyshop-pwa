@@ -1,4 +1,4 @@
-import { PageObject } from '../../support/pageObjects/PageObject';
+import { PageObject } from './PageObject';
 
 export class ImageTextObject extends PageObject {
   openImageSelector(imageType: string) {

@@ -1,12 +1,9 @@
-import type { Mock } from 'vitest';
-import { describe, expect, it, vi } from 'vitest';
-import { getLocales } from '../../../configuration/i18n.config';
-import { readdirSync } from 'node:fs';
+import { describe, expect, it } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const en = require('../../../i18n/lang/en.json');
+const en = require('../../../app/lang/en.json');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const de = require('../../../i18n/lang/de.json');
+const de = require('../../../app/lang/de.json');
 
 describe('i18n', () => {
   it('has the same keys in English and German', () => {
@@ -27,25 +24,6 @@ describe('i18n', () => {
     valuesDe.forEach((value) => {
       hasText(value);
     });
-  });
-});
-
-describe('locale configuration', () => {
-  vi.mock('node:fs');
-
-  it('should create a locale configuration for each language', () => {
-    const languages = ['en.ts', 'de.ts', 'fr.ts'];
-    const EXPECTED = [
-      { code: 'en', file: 'en.ts' },
-      { code: 'de', file: 'de.ts' },
-      { code: 'fr', file: 'fr.ts' },
-    ];
-
-    (readdirSync as Mock).mockReturnValue(languages);
-
-    const localeObject = getLocales();
-
-    expect(localeObject).toEqual(EXPECTED);
   });
 });
 
