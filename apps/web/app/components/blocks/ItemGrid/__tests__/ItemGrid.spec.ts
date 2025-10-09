@@ -3,6 +3,8 @@ import { mount } from '@vue/test-utils';
 import { ItemGridMock } from './ItemGrid.mock';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { products } from './mockProducts';
+import ItemGrid from '../ItemGrid.vue';
+
 const { useProductsMock } = vi.hoisted(() => ({
   useProductsMock: vi.fn(),
 }));
@@ -19,7 +21,6 @@ describe('ItemGrid.vue', () => {
   });
 
   it('should render the product grid with correct responsive classes', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
     });
@@ -33,8 +34,9 @@ describe('ItemGrid.vue', () => {
   });
 
   it('should position product count correctly (left, center, right)', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
-    const wrapper = mount(ItemGrid, { props: { ...ItemGridMock } });
+    const wrapper = mount(ItemGrid, {
+      props: { ...ItemGridMock },
+    });
 
     const countDiv = wrapper.find('.flex.items-center');
     expect(countDiv.classes()).toContain('justify-start');
@@ -47,7 +49,6 @@ describe('ItemGrid.vue', () => {
   });
 
   it('should render the correct number of product cards (2)', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
     });
@@ -60,7 +61,6 @@ describe('ItemGrid.vue', () => {
       productsPerPage: { value: 1 },
     }));
 
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
     });
@@ -72,8 +72,6 @@ describe('ItemGrid.vue', () => {
       data: { value: { products: [], pagination: { totals: 0 } } },
       productsPerPage: { value: 0 },
     }));
-
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
     });
@@ -82,8 +80,6 @@ describe('ItemGrid.vue', () => {
   });
 
   it('should render top pagination when paginationPosition is top', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
-
     const wrapper = mount(ItemGrid, {
       props: {
         ...ItemGridMock,
@@ -95,8 +91,6 @@ describe('ItemGrid.vue', () => {
   });
 
   it('should render bottom pagination when paginationPosition is bottom', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
-
     const wrapper = mount(ItemGrid, {
       props: {
         ...ItemGridMock,
@@ -113,7 +107,6 @@ describe('ItemGrid.vue', () => {
       productsPerPage: { value: 0 },
     }));
 
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
     });
@@ -127,8 +120,6 @@ describe('ItemGrid.vue', () => {
       data: { value: { products: [products[0]], pagination: { totals: 1 } } },
       productsPerPage: { value: 1 },
     }));
-
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
 
     const wrapper = mount(ItemGrid, {
       props: {
@@ -146,7 +137,6 @@ describe('ItemGrid.vue', () => {
       productsPerPage: { value: 2 },
     }));
 
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: true } },
     });
@@ -160,7 +150,6 @@ describe('ItemGrid.vue', () => {
       productsPerPage: { value: 0 },
     }));
 
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: false } },
     });
@@ -174,7 +163,6 @@ describe('ItemGrid.vue', () => {
       productsPerPage: { value: 2 },
     }));
 
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: {
         ...ItemGridMock,
@@ -192,7 +180,6 @@ describe('ItemGrid.vue', () => {
     expect(wrapper.find('[data-testid="category-grid"]').classes()).toContain('lg:grid-cols-4');
   });
   it('should show VAT ', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
     });
@@ -201,8 +188,6 @@ describe('ItemGrid.vue', () => {
   });
 
   it('should render the correct number of products per row based on viewport', async () => {
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
-
     const wrapper = mount(ItemGrid, {
       props: {
         ...ItemGridMock,
@@ -223,8 +208,6 @@ describe('ItemGrid.vue', () => {
 
   it('should render shipping information with a link', async () => {
     const paths = { shipping: '/shipping' };
-
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
 
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock },
@@ -254,7 +237,6 @@ describe('ItemGrid.vue', () => {
       productsPerPage: { value: 2 },
     }));
 
-    const { default: ItemGrid } = await import('../ItemGrid.vue');
     const wrapper = mount(ItemGrid, {
       props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: true } },
     });
