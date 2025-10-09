@@ -1,5 +1,5 @@
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { paths } from '../../../utils/paths';
+import { paths } from '../../../app/utils/paths';
 
 const homePage = new HomePageObject();
 const text_de = 'Wohnzimmer';

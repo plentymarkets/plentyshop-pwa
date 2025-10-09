@@ -33,7 +33,7 @@ const GENERATOR_PATHS = {
  * @todo Implement special case for settings which need a category
  */
 export function getDestinationPath(generatorType: string, name: string, options: DestinationOptions = {}): string {
-  const { webAppPath = '../../apps/web' } = options;
+  const { webAppPath = '../../apps/web/app' } = options;
 
   const pathGenerator = GENERATOR_PATHS[generatorType as keyof typeof GENERATOR_PATHS];
   if (pathGenerator) {

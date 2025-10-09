@@ -29,8 +29,8 @@ To keep the code base of plentymarkets/plentyshop-pwa neat and tidy, the followi
 ### Presentation
 
 - If possible, use existing [Storefront UI 2 components](https://docs.storefrontui.io/v2/vue/components.html) instead of creating new components.
-- If no Storefront UI component fits the requirements, create new components in `apps/web/components`.
-- Use [Tailwind classes](https://v2.tailwindcss.com/docs) instead of SCSS. For additional variables, refer to the [Tailwind configuration](/apps/web/tailwind.config.ts).
+- If no Storefront UI component fits the requirements, create new components in `apps/web/app/components`.
+- Use [Tailwind classes](https://v2.tailwindcss.com/docs) instead of SCSS. For additional variables, refer to the [Tailwind configuration](/apps/web/app/configuration/tailwind.config.ts).
 
 ### Logic
 
