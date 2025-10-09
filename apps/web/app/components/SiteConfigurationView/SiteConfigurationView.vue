@@ -19,7 +19,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="h-[calc(100vh-150px)] overflow-y-auto">
+      <div class="h-[80vh] overflow-y-auto">
         <SfListItem
           v-for="subCategory in subCategories"
           :key="subCategory"
@@ -58,7 +58,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="h-[calc(100vh-150px)] overflow-y-auto">
+      <div class="h-[80vh] overflow-y-auto">
         <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.slug}-section`">
           <template #settings-group-title>{{ group.title }}</template>
 

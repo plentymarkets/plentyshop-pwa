@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
+  <div class="p-2 sticky top-[52px] h-[80vh] overflow-y-auto">
     <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
       <SfInput

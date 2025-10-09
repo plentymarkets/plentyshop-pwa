@@ -1080,7 +1080,8 @@
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
       "validationFailed": "Die Adresse ist ungültig.",
       "vatInvalid": "Die USt-IdNr. ist ungültig.",
-      "vatValidationClientBusy": "Der USt-Validierungsdienst ist derzeit nicht verfügbar, bitte versuchen Sie es später erneut."
+      "vatServerBusy": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Bitte wenden Sie sich an den Shop-Betreiber.",
+      "vatServerFallback": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Der Auftrag wird erneut geprüft."
     },
     "cart": {
       "addToBasket": {

@@ -6,8 +6,11 @@
     @submit.prevent="validateAndSubmitForm"
   >
     <label>
-      <UiFormLabel>
-        {{ hasCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ firstNameLabelText }}
+        </span>
+        <UiFormHelperText v-if="firstNameHelperText">({{ firstNameHelperText }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -20,8 +23,11 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>
-        {{ hasCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ lastNameLabel }}
+        </span>
+        <UiFormHelperText v-if="lastNameHelperText">({{ lastNameHelperText }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="lastName"
@@ -62,7 +68,12 @@
     </label>
 
     <label v-if="hasCompany" class="md:col-span-2" for="billingVatNumber">
-      <UiFormLabel for="billingVatNumber">{{ t('form.vatIdLabel') }}</UiFormLabel>
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ t('form.vatIdLabel') }}
+        </span>
+        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
       <SfInput
         id="billingVatNumber"
         v-model="vatNumber"
@@ -202,7 +213,7 @@ const {
   validationSchema: billingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Billing);
-const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Billing);
+const { invalidVAT, clearInvalidVAT, vatServerError } = useCreateAddress(AddressType.Billing);
 const { t } = useI18n();
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
@@ -210,6 +221,12 @@ const { defineField, errors, setValues, validate, handleSubmit } = useForm({ val
 const { billingCountries } = useAggregatedCountries();
 const { restrictedAddresses } = useRestrictedAddress();
 const { setBillingSkeleton } = useCheckout();
+
+const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(
+  t('form.firstNameLabel'),
+  hasCompany,
+);
+const { labelText: lastNameLabel, helperText: lastNameHelperText } = useFormLabel(t('form.lastNameLabel'), hasCompany);
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -227,7 +244,7 @@ const guestHasShippingAsBilling = computed(() => isGuest.value && shippingAsBill
 if (!addAddress && address) {
   hasCompany.value = addressToSave.value?.companyName ? true : !!userAddressGetters.getCompanyName(address as Address);
 
-  const addressSource = invalidVAT.value ? addressToSave.value : address;
+  const addressSource = invalidVAT.value || vatServerError.value ? addressToSave.value : address;
 
   setValues({
     ...address,
@@ -298,7 +315,7 @@ const validateAndSubmitForm = async () => {
       setBillingSkeleton(false);
       formIsLoading.value = false;
     }
-    if (showNewForm.value && !invalidVAT.value) showNewForm.value = false;
+    if (showNewForm.value && !invalidVAT.value && !vatServerError.value) showNewForm.value = false;
   }
 };
 

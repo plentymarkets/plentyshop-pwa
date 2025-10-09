@@ -25,12 +25,12 @@
           <h2 class="font-bold text-lg">{{ t('loginFastCheckout') }}</h2>
 
           <label>
-            <UiFormLabel class="w-full mt-4">{{ t('form.emailLabel') }}</UiFormLabel>
+            <UiFormLabel class="w-full mt-4">{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput v-model="email" class="w-full" name="email" type="email" autocomplete="email" required />
           </label>
 
           <label>
-            <UiFormLabel class="mt-6">{{ t('form.passwordLabel') }}</UiFormLabel>
+            <UiFormLabel class="mt-6">{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
             <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
           </label>
 
