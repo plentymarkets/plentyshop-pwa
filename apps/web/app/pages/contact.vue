@@ -22,7 +22,12 @@
         @submit.prevent="onSubmit"
       >
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }}</UiFormLabel>
+          <UiFormLabel class="mb-1 flex">
+            <span class="mr-1">
+              {{ t('contact.form.nameLabel') }}
+            </span>
+            <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+          </UiFormLabel>
           <SfInput v-bind="nameAttributes" v-model="name" name="name" type="text" :invalid="Boolean(errors['name'])" />
           <ErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
@@ -53,7 +58,12 @@
         </label>
 
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }}</UiFormLabel>
+          <UiFormLabel class="mb-1 flex">
+            <span class="mr-1">
+              {{ t('contact.form.order-id') }}
+            </span>
+            <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+          </UiFormLabel>
           <SfInput
             v-bind="orderIdAttributes"
             v-model="orderId"

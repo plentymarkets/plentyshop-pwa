@@ -6,8 +6,11 @@
     @submit.prevent="validateAndSubmitForm"
   >
     <label>
-      <UiFormLabel>
-        {{ hasShippingCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ firstNameLabelText }}
+        </span>
+        <UiFormHelperText v-if="firstNameHelperText">({{ firstNameHelperText }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -20,8 +23,11 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>
-        {{ hasShippingCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ lastNameLabel }}
+        </span>
+        <UiFormHelperText v-if="lastNameHelperText">({{ lastNameHelperText }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="lastName"
@@ -62,7 +68,12 @@
     </label>
 
     <label v-if="hasShippingCompany" class="md:col-span-2" for="shippingVatNumber">
-      <UiFormLabel for="shippingVatNumber">{{ t('form.vatIdLabel') }}</UiFormLabel>
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ t('form.vatIdLabel') }}
+        </span>
+        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
       <SfInput
         id="shippingVatNumber"
         v-model="vatNumber"
@@ -219,6 +230,15 @@ const {
 } = useAddressForm(AddressType.Shipping);
 const { invalidVAT, clearInvalidVAT, vatServerError } = useCreateAddress(AddressType.Shipping);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
+
+const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(
+  t('form.firstNameLabel'),
+  hasShippingCompany,
+);
+const { labelText: lastNameLabel, helperText: lastNameHelperText } = useFormLabel(
+  t('form.lastNameLabel'),
+  hasShippingCompany,
+);
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
