@@ -6,12 +6,15 @@
     @submit.prevent="validateAndSubmitForm"
   >
     <label>
-      <UiFormLabel>
-        {{
-          hasCompany
-            ? `${t('form.firstNameLabel')} (${t('form.optional')})`
-            : `${t('form.firstNameLabel')} ${t('form.required')}`
-        }}
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{
+            hasCompany
+              ? `${t('form.firstNameLabel')}`
+              : `${t('form.firstNameLabel')} ${t('form.required')}`
+          }}
+        </span>
+        <UiFormHelperText v-if="hasCompany">({{ t('form.optional') }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -24,12 +27,15 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>
-        {{
-          hasCompany
-            ? `${t('form.lastNameLabel')} (${t('form.optional')})`
-            : `${t('form.lastNameLabel')} ${t('form.required')}`
-        }}
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{
+            hasCompany
+              ? `${t('form.lastNameLabel')}`
+              : `${t('form.lastNameLabel')} ${t('form.required')}`
+          }}
+        </span>
+        <UiFormHelperText v-if="hasCompany">({{ t('form.optional') }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
         v-model="lastName"
@@ -70,7 +76,12 @@
     </label>
 
     <label v-if="hasCompany" class="md:col-span-2" for="billingVatNumber">
-      <UiFormLabel for="billingVatNumber">{{ t('form.vatIdLabel') }} ({{ t('form.optional') }})</UiFormLabel>
+      <UiFormLabel class="flex">
+        <span class="mr-1">
+          {{ t('form.vatIdLabel') }}
+        </span>
+        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
       <SfInput
         id="billingVatNumber"
         v-model="vatNumber"
