@@ -118,6 +118,7 @@ export default defineNuxtConfig({
               'item-internal-sorting',
               'contact-form',
               'default-B2B-customer-class',
+              'default-B2C-and-guest-customer-class',
               'session-and-url-lifetime',
               'availability',
               'item-condition',
