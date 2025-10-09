@@ -27,7 +27,7 @@
 
     <div v-if="seoRichSnippetBarcodeIsbn === '3'" class="mt-2">
       <label for="seoRichSnippetBarcodeIsbnId">{{ getEditorTranslation('conditionalLabel') }}</label>
-      <SfInput id="seoRichSnippetBarcodeIsbnId" v-model="seoRichSnippetBarcodeIsbnId" />
+      <SfInput id="seoRichSnippetBarcodeIsbnId" v-model="seoRichSnippetBarcodeIsbnId" type="number" />
       <div v-if="seoRichSnippetBarcodeIsbnId === ''" class="text-red-600">
         {{ getEditorTranslation('mustNotBeEmpty') }}
       </div>

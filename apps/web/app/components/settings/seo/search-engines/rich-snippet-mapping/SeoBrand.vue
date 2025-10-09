@@ -27,7 +27,7 @@
 
     <div v-if="seoRichSnippetBrand === '3'" class="mt-2">
       <label for="seoRichSnippetBrandId">{{ getEditorTranslation('conditionalLabel') }}</label>
-      <SfInput id="seoRichSnippetBrandId" v-model="seoRichSnippetBrandId" />
+      <SfInput id="seoRichSnippetBrandId" v-model="seoRichSnippetBrandId" type="number" />
       <div v-if="seoRichSnippetBrandId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
   </div>
