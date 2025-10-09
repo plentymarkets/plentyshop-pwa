@@ -7,7 +7,11 @@
   >
     <label>
       <UiFormLabel>
-        {{ hasShippingCompany ? `${t('form.firstNameLabel')} (${t('form.optional')})` : `${t('form.firstNameLabel')} ${t('form.required')}` }}
+        {{
+          hasShippingCompany
+            ? `${t('form.firstNameLabel')} (${t('form.optional')})`
+            : `${t('form.firstNameLabel')} ${t('form.required')}`
+        }}
       </UiFormLabel>
       <SfInput
         v-model="firstName"
@@ -21,7 +25,11 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasShippingCompany ? `${t('form.lastNameLabel')} (${t('form.optional')})` : `${t('form.lastNameLabel')} ${t('form.required')}` }}
+        {{
+          hasShippingCompany
+            ? `${t('form.lastNameLabel')} (${t('form.optional')})`
+            : `${t('form.lastNameLabel')} ${t('form.required')}`
+        }}
       </UiFormLabel>
       <SfInput
         v-model="lastName"
