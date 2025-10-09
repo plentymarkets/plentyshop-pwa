@@ -26,18 +26,12 @@
         v-model="sortingDynamicPrio1"
         data-testid="editor-internal-sortingDynamicPrio1"
         :options="sortingDynamicInheritExtra"
+        :custom-label="(option) => $dynamicEditorTranslation(option)"
         :placeholder="getEditorTranslation('placeholder')"
         :allow-empty="false"
         class="cursor-pointer"
         deselect-label="Selected"
-      >
-        <template #singleLabel="{ option }">
-          {{ getEditorTranslation(option) }}
-        </template>
-        <template #option="props">
-          {{ getEditorTranslation(props.option) }}
-        </template>
-      </Multiselect>
+      />
     </div>
 
     <div class="py-2">
@@ -47,20 +41,14 @@
 
       <Multiselect
         v-model="sortingDynamicPrio2"
+        :custom-label="(option) => $dynamicEditorTranslation(option)"
         data-testid="editor-internal-sortingDynamicPrio2"
         :options="sortingDynamicInheritExtra"
         :placeholder="getEditorTranslation('placeholder')"
         :allow-empty="false"
         class="cursor-pointer"
         deselect-label="Selected"
-      >
-        <template #singleLabel="{ option }">
-          {{ getEditorTranslation(option) }}
-        </template>
-        <template #option="props">
-          {{ getEditorTranslation(props.option) }}
-        </template>
-      </Multiselect>
+      />
     </div>
   </div>
 </template>
@@ -114,35 +102,13 @@ const sortingDynamicPrio2 = computed({
     "label": "Internal Item Sorting",
     "sortingLabel1": "Sorting option 1",
     "sortingLabel2": "Sorting option 2",
-    "description": "Use the following sorting options to determine which variation is shown on an item tile, for instance in the category page. Use the first selection to determine whether the item sorting option that the customer selects in the shop should also apply to the sorting of variations on the item tile. In this case, the selected sorting value serves as the first sorting value for the item tile. The first and second sorting options below only become effective if no clear order can be derived from the adopted item sorting, or if the adopted item sorting is not used. Sorting options that contradict each other (e.g. Manufacturer A-Z and Manufacturer Z-A) are neglected in the sorting.",
-    "filter.prices.price_asc": "Price ⬆",
-    "filter.prices.price_desc": "Price ⬇",
-    "filter.position_asc": "Availability ⬆",
-    "filter.position_desc": "Availability ⬇",
-    "analyzed.number.sorting_asc": "Variation number ⬆",
-    "analyzed.number.sorting_desc": "Variation number ⬇",
-    "filter.availabilityAverageDays_asc": "Variation ID ⬆",
-    "filter.availabilityAverageDays_desc": "Variation ID ⬇",
-    "filter.isMain_desc": "Main Variation First",
-    "variationId_asc": "Variation ID ⬆",
-    "variationId_desc": "Variation ID ⬇"
+    "description": "Use the following sorting options to determine which variation is shown on an item tile, for instance in the category page. Use the first selection to determine whether the item sorting option that the customer selects in the shop should also apply to the sorting of variations on the item tile. In this case, the selected sorting value serves as the first sorting value for the item tile. The first and second sorting options below only become effective if no clear order can be derived from the adopted item sorting, or if the adopted item sorting is not used. Sorting options that contradict each other (e.g. Manufacturer A-Z and Manufacturer Z-A) are neglected in the sorting."
   },
   "de": {
     "label": "Internal Item Sorting",
     "sortingLabel1": "Sorting option 1",
     "sortingLabel2": "Sorting option 2",
-    "description": "Use the following sorting options to determine which variation is shown on an item tile, for instance in the category page. Use the first selection to determine whether the item sorting option that the customer selects in the shop should also apply to the sorting of variations on the item tile. In this case, the selected sorting value serves as the first sorting value for the item tile. The first and second sorting options below only become effective if no clear order can be derived from the adopted item sorting, or if the adopted item sorting is not used. Sorting options that contradict each other (e.g. Manufacturer A-Z and Manufacturer Z-A) are neglected in the sorting.",
-    "filter.prices.price_asc": "Price ⬆",
-    "filter.prices.price_desc": "Price ⬇",
-    "filter.position_asc": "Availability ⬆",
-    "filter.position_desc": "Availability ⬇",
-    "analyzed.number.sorting_asc": "Variation number ⬆",
-    "analyzed.number.sorting_desc": "Variation number ⬇",
-    "filter.availabilityAverageDays_asc": "Variation ID ⬆",
-    "filter.availabilityAverageDays_desc": "Variation ID ⬇",
-    "filter.isMain_desc": "Main Variation First",
-    "variationId_asc": "Variation ID ⬆",
-    "variationId_desc": "Variation ID ⬇"
+    "description": "Use the following sorting options to determine which variation is shown on an item tile, for instance in the category page. Use the first selection to determine whether the item sorting option that the customer selects in the shop should also apply to the sorting of variations on the item tile. In this case, the selected sorting value serves as the first sorting value for the item tile. The first and second sorting options below only become effective if no clear order can be derived from the adopted item sorting, or if the adopted item sorting is not used. Sorting options that contradict each other (e.g. Manufacturer A-Z and Manufacturer Z-A) are neglected in the sorting."
   }
 }
 </i18n>
