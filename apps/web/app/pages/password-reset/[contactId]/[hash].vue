@@ -1,6 +1,10 @@
 <template>
   <NuxtLayout name="auth" :heading="t('auth.setNewPassword.heading')">
-    <form class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md" @submit.prevent="executeResetPassword">
+    <form
+      novalidate
+      class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md"
+      @submit.prevent="executeResetPassword"
+    >
       <p class="mb-6">{{ t('auth.setNewPassword.description') }}</p>
 
       <label class="block mb-4">
@@ -13,26 +17,8 @@
           @input="stripSpaces('password')"
           @blur="passwordTouched = true"
         />
-        <span v-if="passwordTouched && !password" class="flex text-negative-700 text-sm mt-2">
-          {{ t('errorMessages.password.required') }}
-        </span>
-        <span
-          v-else-if="passwordTouched && password && password.length < passwordMinLength"
-          class="flex text-negative-700 text-sm mt-2"
-        >
-          {{ t('errorMessages.password.minLength', { min: passwordMinLength }) }}
-        </span>
-        <span
-          v-else-if="passwordTouched && password && password.length > passwordMaxLength"
-          class="flex text-negative-700 text-sm mt-2"
-        >
-          {{ t('errorMessages.password.maxLength', { max: passwordMaxLength }) }}
-        </span>
-        <span v-else-if="passwordTouched && !passwordValidationOneDigit" class="flex text-negative-700 text-sm mt-2">
-          {{ t('errorMessages.password.valid') }}
-        </span>
-        <span v-else-if="passwordTouched && !passwordValidationOneLetter" class="flex text-negative-700 text-sm mt-2">
-          {{ t('errorMessages.password.valid') }}
+        <span v-if="passwordTouched && passwordErrorMessage" class="flex text-negative-700 text-sm mt-2">
+          {{ passwordErrorMessage }}
         </span>
       </label>
 
@@ -76,35 +62,8 @@
           @input="stripSpaces('repeatPassword')"
           @blur="repeatPasswordTouched = true"
         />
-        <span v-if="repeatPasswordTouched && !repeatPassword" class="flex text-negative-700 text-sm mt-2">
-          {{ t('errorMessages.password.required') }}
-        </span>
-        <span
-          v-else-if="repeatPasswordTouched && repeatPassword && repeatPassword.length < passwordMinLength"
-          class="flex text-negative-700 text-sm mt-2"
-        >
-          {{ t('errorMessages.password.minLength', { min: passwordMinLength }) }}
-        </span>
-        <span
-          v-else-if="repeatPasswordTouched && repeatPassword && repeatPassword.length > passwordMaxLength"
-          class="flex text-negative-700 text-sm mt-2"
-        >
-          {{ t('errorMessages.password.maxLength', { max: passwordMaxLength }) }}
-        </span>
-        <span
-          v-else-if="repeatPasswordTouched && repeatPassword && !/\d/.test(repeatPassword)"
-          class="flex text-negative-700 text-sm mt-2"
-        >
-          {{ t('errorMessages.password.valid') }}
-        </span>
-        <span
-          v-else-if="repeatPasswordTouched && repeatPassword && !/[A-Za-z]/.test(repeatPassword)"
-          class="flex text-negative-700 text-sm mt-2"
-        >
-          {{ t('errorMessages.password.valid') }}
-        </span>
-        <span v-else-if="repeatPasswordTouched && !passwordsMatch" class="flex text-negative-700 text-sm mt-2">
-          {{ t('errorMessages.password.match') }}
+        <span v-if="repeatPasswordTouched && repeatPasswordErrorMessage" class="flex text-negative-700 text-sm mt-2">
+          {{ repeatPasswordErrorMessage }}
         </span>
       </label>
 
@@ -208,6 +167,50 @@ const isRepeatPasswordValid = computed(() => {
 
 const isPasswordValid = computed(() => {
   return password.value !== '' && repeatPassword.value !== '' && isPasswordFormatValid.value && passwordsMatch.value;
+});
+
+const passwordErrorMessage = computed(() => {
+  if (!password.value) {
+    return t('errorMessages.password.required');
+  }
+
+  if (password.value.length < passwordMinLength) {
+    return t('errorMessages.password.minLength', { min: passwordMinLength });
+  }
+
+  if (password.value.length > passwordMaxLength) {
+    return t('errorMessages.password.maxLength', { max: passwordMaxLength });
+  }
+
+  if (!passwordValidationOneDigit.value || !passwordValidationOneLetter.value) {
+    return t('errorMessages.password.valid');
+  }
+
+  return '';
+});
+
+const repeatPasswordErrorMessage = computed(() => {
+  if (!repeatPassword.value) {
+    return t('errorMessages.password.required');
+  }
+
+  if (repeatPassword.value.length < passwordMinLength) {
+    return t('errorMessages.password.minLength', { min: passwordMinLength });
+  }
+
+  if (repeatPassword.value.length > passwordMaxLength) {
+    return t('errorMessages.password.maxLength', { max: passwordMaxLength });
+  }
+
+  if (!/\d/.test(repeatPassword.value) || !/[A-Za-z]/.test(repeatPassword.value)) {
+    return t('errorMessages.password.valid');
+  }
+
+  if (!passwordsMatch.value) {
+    return t('errorMessages.password.match');
+  }
+
+  return '';
 });
 
 const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {
