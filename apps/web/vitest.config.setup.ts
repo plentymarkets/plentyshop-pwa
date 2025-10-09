@@ -1,5 +1,6 @@
 import { createI18n } from 'vue-i18n';
 import { config } from '@vue/test-utils';
+import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FindTestIdPlugin = (wrapper: any) => {
