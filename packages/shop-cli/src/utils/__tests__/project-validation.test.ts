@@ -27,10 +27,11 @@ describe('Project Validation Utilities', () => {
     it('should validate a complete project structure', () => {
       const mockProjectPaths = [
         'apps/web',
+        'apps/web/app',
         'apps/server',
-        'apps/web/components',
-        'apps/web/composables',
-        'apps/web/pages',
+        'apps/web/app/components',
+        'apps/web/app/composables',
+        'apps/web/app/pages',
       ];
 
       mockProjectPaths.forEach((path) => {
@@ -88,7 +89,7 @@ describe('Project Validation Utilities', () => {
 
   describe('validateWebAppStructure', () => {
     it('should validate complete web app structure', () => {
-      const webAppPath = join(testDir, 'apps/web');
+      const webAppPath = join(testDir, 'apps/web/app');
 
       const requiredDirs = ['components', 'composables', 'pages', 'utils', 'types'];
       requiredDirs.forEach((dir) => {
@@ -100,7 +101,7 @@ describe('Project Validation Utilities', () => {
     });
 
     it('should detect missing directories', () => {
-      const webAppPath = join(testDir, 'apps/web');
+      const webAppPath = join(testDir, 'apps/web/app');
       mkdirSync(webAppPath, { recursive: true });
 
       const result = validateWebAppStructure(webAppPath);
