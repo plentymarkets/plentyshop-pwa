@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { ItemGridMock } from './ItemGrid.mock';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { products } from './mockProducts';
+import { products } from './sampleProducts';
 import ItemGrid from '../ItemGrid.vue';
 
 const { useProductsMock } = vi.hoisted(() => ({
@@ -227,7 +227,7 @@ describe('ItemGrid.vue', () => {
       props: { ...ItemGridMock, content: { ...ItemGridMock.content, showItemCount: true } },
     });
 
-    const itemCount = wrapper.find('.flex.items-center span');
+    const itemCount = wrapper.find('[data-testid="item-count"]');
     expect(itemCount.exists()).toBe(true);
     expect(itemCount.text()).toContain(`numberOfProducts`);
   });
