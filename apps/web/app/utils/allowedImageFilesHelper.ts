@@ -1,7 +1,18 @@
-export const ALLOWED_MIME = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/avif']);
-export const ALLOWED_EXT = new Set(['png', 'jpg', 'jpeg', 'webp', 'avif']);
+export const ALLOWED_MIME = new Set([
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/avif',
+  'image/svg+xml',
+  'image/svg',
+  'image/x-icon',
+  'image/vnd.microsoft.icon',
+  'image/ico',
+]);
+export const ALLOWED_EXT = new Set(['svg', 'png', 'jpg', 'jpeg', 'webp', 'avif', 'ico']);
 
-export const ALLOWED_ACCEPT = 'image/avif,image/webp,image/png,image/jpeg';
+export const ALLOWED_ACCEPT =
+  'image/avif,image/webp,image/png,image/jpeg,image/svg+xml,.svg, image/x-icon,image/vnd.microsoft.icon,.ico';
 
 export const MAX_BYTES = 512 * 1024 * 1024;
 
@@ -12,7 +23,15 @@ export const validateImageFile = (file: File): { ok: true } | { ok: false; reaso
   if (!ALLOWED_EXT.has(ext)) {
     return { ok: false, reason: `Only ${Array.from(ALLOWED_EXT).join(', ').toUpperCase()} files are allowed.` };
   }
-  if (!ALLOWED_MIME.has(file.type)) {
+  const mime = (file.type || '').toLowerCase();
+
+  const isSvg = ext === 'svg';
+  const svgOK = isSvg && (!mime || /^image\/svg(\+xml)?$/.test(mime));
+
+  const isIco = ext === 'ico';
+  const icoOK = isIco && (!mime || /^(image\/x-icon|image\/vnd\.microsoft\.icon|image\/ico)$/.test(mime));
+
+  if (!ALLOWED_MIME.has(mime) && !svgOK && !icoOK) {
     return { ok: false, reason: `Invalid file type: ${file.type || 'unknown'}.` };
   }
   if (file.size > MAX_BYTES) {

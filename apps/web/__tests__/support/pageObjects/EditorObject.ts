@@ -100,19 +100,19 @@ export class EditorObject extends PageObject {
   }
 
   blockIsBanner(el: JQuery<HTMLElement>) {
-    return el[0].innerHTML.includes('banner-image');
+    return el[0]?.innerHTML.includes('banner-image');
   }
 
-  isMultiGrid(el: JQuery<HTMLElement>): boolean {
-    return el[0].innerHTML.includes('multi-grid-structure');
+  isMultiGrid(el: JQuery<HTMLElement>) {
+    return el[0]?.innerHTML.includes('multi-grid-structure');
   }
 
-  isInnerBlock(el: JQuery<HTMLElement>): boolean {
-    return el[0].innerHTML.includes('multi-grid-structure') || false;
+  isInnerBlock(el: JQuery<HTMLElement>) {
+    return el[0]?.innerHTML.includes('multi-grid-structure');
   }
 
   blockIsNewsletter(el: JQuery<HTMLElement>) {
-    return el[0].innerHTML.includes('newsletter-block');
+    return el[0]?.innerHTML.includes('newsletter-block');
   }
 
   blockIsFooter(el: HTMLElement) {
@@ -319,7 +319,10 @@ export class EditorObject extends PageObject {
   }
 
   assertDefaultBlockOrder() {
-    this.blockWrappers.first().should('contain.text', 'Feel the music').next().should('contain.text', 'Discover Tech');
+    this.blockWrappers.then(($blocks) => {
+      cy.wrap($blocks.eq(0)).should('contain.text', 'Feel the music');
+      cy.wrap($blocks.eq(1)).should('contain.text', 'Discover Tech');
+    });
   }
 
   moveBlock() {
@@ -329,7 +332,10 @@ export class EditorObject extends PageObject {
   }
 
   assertChangedBlockOrder() {
-    this.blockWrappers.first().should('contain.text', 'Discover Tech').next().should('contain.text', 'Feel the music');
+    this.blockWrappers.then(($blocks) => {
+      cy.wrap($blocks.eq(0)).should('contain.text', 'Discover Tech');
+      cy.wrap($blocks.eq(1)).should('contain.text', 'Feel the music');
+    });
   }
 
   checkWrapperSpacings() {

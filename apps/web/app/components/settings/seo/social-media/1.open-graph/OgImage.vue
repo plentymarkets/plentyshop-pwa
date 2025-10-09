@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('ogImg');
+const { updateSetting, getSetting } = useSiteSettings('ogImage');
 
 const ogImg = computed({
   get: () => getSetting(),
