@@ -110,6 +110,7 @@ export default defineNuxtConfig({
         'variation-position-based-on-sales',
         'security',
         'vat-number-validation',
+        'contact-form'
       ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
