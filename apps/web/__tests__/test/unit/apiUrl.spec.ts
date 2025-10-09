@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateApiUrl } from '../../../utils/pathHelper';
+import { validateApiUrl } from '../../../app/utils/pathHelper';
 
 describe('validateApiUrl function', () => {
   const expectedApiUrl = 'http://localhost:8181';

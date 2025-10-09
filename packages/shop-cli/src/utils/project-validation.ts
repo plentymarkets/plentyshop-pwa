@@ -17,9 +17,9 @@ export function validateProjectStructure(basePath = process.cwd()): ValidationRe
     'apps/server/middleware.config.ts',
     'turbo.json',
     'package.json',
-    'apps/web/components',
-    'apps/web/composables',
-    'apps/web/pages',
+    'apps/web/app/components',
+    'apps/web/app/composables',
+    'apps/web/app/pages',
   ];
 
   for (const path of requiredPaths) {
