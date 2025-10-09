@@ -213,7 +213,7 @@ const {
   validationSchema: billingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Billing);
-const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Billing);
+const { invalidVAT, clearInvalidVAT, vatServerError } = useCreateAddress(AddressType.Billing);
 const { t } = useI18n();
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
@@ -244,7 +244,7 @@ const guestHasShippingAsBilling = computed(() => isGuest.value && shippingAsBill
 if (!addAddress && address) {
   hasCompany.value = addressToSave.value?.companyName ? true : !!userAddressGetters.getCompanyName(address as Address);
 
-  const addressSource = invalidVAT.value ? addressToSave.value : address;
+  const addressSource = invalidVAT.value || vatServerError.value ? addressToSave.value : address;
 
   setValues({
     ...address,
@@ -315,7 +315,7 @@ const validateAndSubmitForm = async () => {
       setBillingSkeleton(false);
       formIsLoading.value = false;
     }
-    if (showNewForm.value && !invalidVAT.value) showNewForm.value = false;
+    if (showNewForm.value && !invalidVAT.value && !vatServerError.value) showNewForm.value = false;
   }
 };
 

@@ -228,7 +228,7 @@ const {
   validationSchema: shippingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Shipping);
-const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Shipping);
+const { invalidVAT, clearInvalidVAT, vatServerError } = useCreateAddress(AddressType.Shipping);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
 
 const { labelText: firstNameLabelText, helperText: firstNameHelperText } = useFormLabel(
@@ -257,7 +257,7 @@ if (!addAddress && address) {
     ? true
     : !!userAddressGetters.getCompanyName(address as Address);
 
-  const addressSource = invalidVAT.value ? shippingAddressToSave.value : address;
+  const addressSource = invalidVAT.value || vatServerError.value ? shippingAddressToSave.value : address;
 
   setValues({
     ...address,
@@ -362,7 +362,7 @@ const validateAndSubmitForm = async () => {
       formIsLoading.value = false;
     }
 
-    if (showNewForm.value && !invalidVAT.value) showNewForm.value = false;
+    if (showNewForm.value && !invalidVAT.value && !vatServerError.value) showNewForm.value = false;
   }
 };
 
