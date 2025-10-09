@@ -64,6 +64,7 @@ import { AddressType } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLink, useDisclosure } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { ContactInformationProps } from './types';
+import {useFetchAddressesData} from '~/composables/useAddressV2/useFetchAddressesData';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
 
@@ -105,11 +106,11 @@ const handleGuestEmailChange = async (updatedEmail: string) => {
   useCheckoutAddress(AddressType.Shipping).clear();
   useCheckoutAddress(AddressType.Billing).clear();
 
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
     .then(() => persistShippingAddress());
 
-  await useFetchAddress(AddressType.Billing)
+  await useFetchAddressesData()
     .fetchServer()
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
@@ -133,11 +134,11 @@ const checkPayPalPaymentsEligible = async () => {
 };
 
 const handleSuccessfulLogin = async () => {
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
     .then(() => persistShippingAddress());
 
-  await useFetchAddress(AddressType.Billing)
+  await useFetchAddressesData()
     .fetchServer()
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));

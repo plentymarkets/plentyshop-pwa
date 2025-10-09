@@ -1,17 +1,19 @@
 import type { AddressType, ApiError } from '@plentymarkets/shop-api';
 
 export const useFetchAddress = (type: AddressType) => {
-  const state = useState('useFetchAddress' + type, () => ({
+  const state = useState('useAddress' + type, () => ({
     loading: false,
   }));
 
   const { set: setAddressStore } = useAddressStore(type);
 
+  /**
+   * @deprecated Use useFetchAddressesData().fetch() instead to fetch both address types in one call
+   */
   const fetch = async () => {
     try {
       state.value.loading = true;
-      //TODO: check for type and return value after sdk release
-      const data = await useSdk().plentysystems.getAddressesData({ types: [type] });
+      const data = await useSdk().plentysystems.getAddresses({ typeId: type });
       setAddressStore(data.data);
       state.value.loading = false;
     } catch (error: unknown) {
@@ -20,11 +22,13 @@ export const useFetchAddress = (type: AddressType) => {
     }
   };
 
+  /**
+   * @deprecated Use useFetchAddressesData().fetchServer() instead to fetch both address types in one call
+   */
   const fetchServer = async () => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(type.toString(), () =>
-      //TODO: check for type and return value after sdk release
-      useSdk().plentysystems.getAddressesData({ types: [type] }),
+      useSdk().plentysystems.getAddresses({ typeId: type }),
     );
 
     useHandleError(error.value ?? null);

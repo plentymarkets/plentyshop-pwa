@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { AddressType, cartGetters } from '@plentymarkets/shop-api';
+import {useFetchAddressesData} from '~/composables/useAddressV2/useFetchAddressesData';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -99,13 +100,13 @@ await callOnce(async () => {
 });
 
 onNuxtReady(async () => {
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
     .then(() => persistShippingAddress())
     .then(() => setShippingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  await useFetchAddress(AddressType.Billing)
+  await useFetchAddressesData()
     .fetchServer()
     .then(() => persistBillingAddress())
     .then(() => setBillingSkeleton(false))
