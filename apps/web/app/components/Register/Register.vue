@@ -50,7 +50,7 @@
         <!-- <ErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
       </label>
       <label>
-        <UiFormLabel>{{ t('form.repeatPasswordLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.repeatPasswordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="repeatPassword"
           :title="t('invalidPassword')"
