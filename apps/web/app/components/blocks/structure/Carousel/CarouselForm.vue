@@ -1,8 +1,5 @@
 <template>
-  <div
-    data-testid="banner-carousel-form"
-    class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
-  >
+  <div data-testid="banner-carousel-form" class="block-slider-edit sticky top-[52px] h-[80vh] overflow-y-auto">
     <div class="mb-6">
       <div class="flex item-center justify-between mb-4 p-4 pr-2">
         <h2>{{ getEditorTranslation('slides-group-label') }}</h2>
