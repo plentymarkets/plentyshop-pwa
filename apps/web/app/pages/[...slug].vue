@@ -9,7 +9,7 @@
 
     <EditablePage
       v-else
-      :has-enabled-actions="!!config.enableCategoryEditing"
+      :has-enabled-actions="!!config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
       :identifier="identifier"
       :type="'category'"
       data-testid="category-page-content"
