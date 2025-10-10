@@ -27,7 +27,6 @@
         data-testid="editor-internal-sortingDynamicPrio1"
         :options="sortingDynamicInheritExtra"
         :custom-label="(option) => $dynamicEditorTranslation(option)"
-        :placeholder="getEditorTranslation('placeholderForSortingLabel1')"
         :allow-empty="false"
         class="cursor-pointer"
         deselect-label="Selected"
@@ -44,7 +43,6 @@
         :custom-label="(option) => $dynamicEditorTranslation(option)"
         data-testid="editor-internal-sortingDynamicPrio2"
         :options="sortingDynamicInheritExtra"
-        :placeholder="getEditorTranslation('placeholderForSortingLabel2')"
         :allow-empty="false"
         class="cursor-pointer"
         deselect-label="Selected"
@@ -99,19 +97,15 @@ const sortingDynamicPrio2 = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Internal Item Sorting",
+    "label": "Variation on item title",
     "placeholderForSortingInherit": "Adopt title sorting from item sorting",
-    "placeholderForSortingLabel1": "Sorting option 1",
-    "placeholderForSortingLabel2": "Sorting option 2",
     "sortingLabel1": "Sorting option 1",
     "sortingLabel2": "Sorting option 2",
     "description": "Use the following sorting options to determine which variation is shown on an item tile, for instance in the category page. Use the first selection to determine whether the item sorting option that the customer selects in the shop should also apply to the sorting of variations on the item tile. In this case, the selected sorting value serves as the first sorting value for the item tile. The first and second sorting options below only become effective if no clear order can be derived from the adopted item sorting, or if the adopted item sorting is not used. Sorting options that contradict each other (e.g. Manufacturer A-Z and Manufacturer Z-A) are neglected in the sorting."
   },
   "de": {
-    "label": "Internal Item Sorting",
+    "label": "Variation on item title",
     "placeholderForSortingInherit": "Adopt title sorting from item sorting",
-    "placeholderForSortingLabel1": "Sorting option 1",
-    "placeholderForSortingLabel2": "Sorting option 2",
     "sortingLabel1": "Sorting option 1",
     "sortingLabel2": "Sorting option 2",
     "description": "Use the following sorting options to determine which variation is shown on an item tile, for instance in the category page. Use the first selection to determine whether the item sorting option that the customer selects in the shop should also apply to the sorting of variations on the item tile. In this case, the selected sorting value serves as the first sorting value for the item tile. The first and second sorting options below only become effective if no clear order can be derived from the adopted item sorting, or if the adopted item sorting is not used. Sorting options that contradict each other (e.g. Manufacturer A-Z and Manufacturer Z-A) are neglected in the sorting."
