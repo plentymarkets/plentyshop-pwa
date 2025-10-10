@@ -123,7 +123,7 @@ export default defineNuxtConfig({
               'availability',
               'item-condition',
               'rich-snippet',
-              'google-analytics'
+              'google-analytics',
             ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
