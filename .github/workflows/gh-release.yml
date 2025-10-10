@@ -1,7 +1,14 @@
-name: Generate Release Draft
+name: Generate Release
 
 on:
   workflow_dispatch:
+    inputs:
+      release-branch:
+        description: 'Base branch for the release'
+        required: true
+        default: 'main'
+  schedule:
+    - cron: '0 9 * * 4' # Every Thursday at 09:00 UTC
 
 permissions:
   contents: write
@@ -9,11 +16,13 @@ permissions:
 
 jobs:
   create-release:
+    if: github.repository == 'plentymarkets/plentyshop/pwa' && (github.event_name == 'workflow_dispatch' || vars.SCHEDULED == 'true')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
+          ref: ${{ github.event.inputs.release-branch || 'main' }}
           fetch-depth: 0
           
       - name: Fetch Git history
@@ -175,7 +184,7 @@ jobs:
           echo "Final release notes:"
           cat release_notes.md
 
-      - name: Create draft release
+      - name: Create release
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NEW_VERSION: v${{ steps.version.outputs.new }}
@@ -195,8 +204,7 @@ jobs:
           # Create the release with the generated notes
           if ! gh release create "$NEW_VERSION" \
             --title "Release $NEW_VERSION" \
-            --notes-file release_notes.md \
-            --draft; then
+            --notes-file release_notes.md; then
             echo "Error: Failed to create release"
             git push --delete origin "$NEW_VERSION"
             git tag -d "$NEW_VERSION"
