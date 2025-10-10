@@ -45,7 +45,7 @@ const { updateSetting: updateSettingForId, getSetting: getSettingForId } =
   useSiteSettings('seoRichSnippetMpnBarcodeId');
 
 const seoRichSnippetMpnBarcode = computed({
-  get: () => getSetting(),
+  get: () => String(getSetting()),
   set: (value) => updateSetting(value),
 });
 

@@ -35,7 +35,7 @@ const seoRichSnippetManufacturers = ref(['1', '2', '3']);
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetManufacturer');
 
 const seoRichSnippetManufacturer = computed({
-  get: () => getSetting(),
+  get: () => String(getSetting()),
   set: (value) => updateSetting(value),
 });
 </script>

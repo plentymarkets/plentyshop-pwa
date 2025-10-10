@@ -37,7 +37,6 @@ export const useToolbar = () => {
       'seoRichSnippetBarcodeIsbn',
       'seoRichSnippetMpnBarcode',
       'seoRichSnippetSkuBarcode',
-      'seoRichSnippetSkuBarcode',
     ];
     const possibleInputFieldsEmpty = Object.entries(settingsData.value).filter((input) => {
       if (inputListWithConditionalPossibilities.includes(input[0]) && input[1] === '3') {

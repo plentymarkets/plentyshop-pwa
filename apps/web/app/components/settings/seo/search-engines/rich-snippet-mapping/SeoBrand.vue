@@ -41,7 +41,7 @@ const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetBrand');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSiteSettings('seoRichSnippetBrandId');
 
 const seoRichSnippetBrand = computed({
-  get: () => getSetting(),
+  get: () => String(getSetting()),
   set: (value) => updateSetting(value),
 });
 
