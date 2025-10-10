@@ -2,7 +2,7 @@
   <NuxtLayout name="auth" :heading="t('auth.setNewPassword.heading')">
     <form
       novalidate
-      class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md"
+      class="pb-4 md:p-6 my-10 md:border md:border-neutral-200 rounded-md"
       @submit.prevent="executeResetPassword"
     >
       <p class="mb-6">{{ t('auth.setNewPassword.description') }}</p>
@@ -124,93 +124,51 @@ const repeatPassword = ref('');
 const passwordTouched = ref(false);
 const repeatPasswordTouched = ref(false);
 
-const hash = route.params.hash as string;
 const contactId = Number(route.params.contactId);
 const passwordMinLength = runtimeConfig.public.passwordMinLength;
 const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 
 definePageMeta({ layout: false, middleware: ['guest-guard'] });
 
+const validateHasDigit = (value: string) => /\d/.test(value);
+const validateHasLetter = (value: string) => /[A-Za-z]/.test(value);
+const validatePasswordLength = (value: string) =>
+  value.length >= passwordMinLength && value.length <= passwordMaxLength;
+
+const getPasswordError = (value: string) => {
+  if (!value) return t('errorMessages.password.required');
+  if (!validatePasswordLength(value)) {
+    return value.length < passwordMinLength
+      ? t('errorMessages.password.minLength', { min: passwordMinLength })
+      : t('errorMessages.password.maxLength', { max: passwordMaxLength });
+  }
+  if (!validateHasDigit(value) || !validateHasLetter(value)) {
+    return t('errorMessages.password.valid');
+  }
+  return '';
+};
+
 const passwordsMatch = computed(() => password.value === repeatPassword.value);
-
-const passwordValidationLength = computed(() => {
-  const val = password?.value || '';
-  return val.length >= passwordMinLength && val.length <= passwordMaxLength;
-});
-
-const passwordValidationOneDigit = computed(() => /\d/.test(password?.value || ''));
-const passwordValidationOneLetter = computed(() => /[A-Za-z]/.test(password?.value || ''));
-
-const isPasswordFormatValid = computed(() => {
-  return passwordValidationLength.value && passwordValidationOneDigit.value && passwordValidationOneLetter.value;
-});
-
-const repeatPasswordValidationLength = computed(() => {
-  const val = repeatPassword?.value || '';
-  return val.length >= passwordMinLength && val.length <= passwordMaxLength;
-});
-
-const repeatPasswordValidationOneDigit = computed(() => /\d/.test(repeatPassword?.value || ''));
-const repeatPasswordValidationOneLetter = computed(() => /[A-Za-z]/.test(repeatPassword?.value || ''));
-
-const isRepeatPasswordFormatValid = computed(() => {
-  return (
-    repeatPasswordValidationLength.value &&
-    repeatPasswordValidationOneDigit.value &&
-    repeatPasswordValidationOneLetter.value
-  );
-});
-
-const isRepeatPasswordValid = computed(() => {
-  return isRepeatPasswordFormatValid.value && passwordsMatch.value;
-});
-
-const isPasswordValid = computed(() => {
-  return password.value !== '' && repeatPassword.value !== '' && isPasswordFormatValid.value && passwordsMatch.value;
-});
-
-const passwordErrorMessage = computed(() => {
-  if (!password.value) {
-    return t('errorMessages.password.required');
-  }
-
-  if (password.value.length < passwordMinLength) {
-    return t('errorMessages.password.minLength', { min: passwordMinLength });
-  }
-
-  if (password.value.length > passwordMaxLength) {
-    return t('errorMessages.password.maxLength', { max: passwordMaxLength });
-  }
-
-  if (!passwordValidationOneDigit.value || !passwordValidationOneLetter.value) {
-    return t('errorMessages.password.valid');
-  }
-
-  return '';
-});
-
+const passwordValidationLength = computed(() => validatePasswordLength(password.value));
+const passwordValidationOneDigit = computed(() => validateHasDigit(password.value));
+const passwordValidationOneLetter = computed(() => validateHasLetter(password.value));
+const isPasswordFormatValid = computed(
+  () => passwordValidationLength.value && passwordValidationOneDigit.value && passwordValidationOneLetter.value,
+);
+const isRepeatPasswordFormatValid = computed(
+  () =>
+    validatePasswordLength(repeatPassword.value) &&
+    validateHasDigit(repeatPassword.value) &&
+    validateHasLetter(repeatPassword.value),
+);
+const isRepeatPasswordValid = computed(() => isRepeatPasswordFormatValid.value && passwordsMatch.value);
+const isPasswordValid = computed(
+  () => password.value && repeatPassword.value && isPasswordFormatValid.value && passwordsMatch.value,
+);
+const passwordErrorMessage = computed(() => getPasswordError(password.value));
 const repeatPasswordErrorMessage = computed(() => {
-  if (!repeatPassword.value) {
-    return t('errorMessages.password.required');
-  }
-
-  if (repeatPassword.value.length < passwordMinLength) {
-    return t('errorMessages.password.minLength', { min: passwordMinLength });
-  }
-
-  if (repeatPassword.value.length > passwordMaxLength) {
-    return t('errorMessages.password.maxLength', { max: passwordMaxLength });
-  }
-
-  if (!/\d/.test(repeatPassword.value) || !/[A-Za-z]/.test(repeatPassword.value)) {
-    return t('errorMessages.password.valid');
-  }
-
-  if (!passwordsMatch.value) {
-    return t('errorMessages.password.match');
-  }
-
-  return '';
+  const error = getPasswordError(repeatPassword.value);
+  return error || (!passwordsMatch.value ? t('errorMessages.password.match') : '');
 });
 
 const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {
@@ -234,7 +192,7 @@ const executeResetPassword = async () => {
     await resetPassword({
       password: password.value,
       password2: repeatPassword.value,
-      hash: hash,
+      hash: route.params.hash?.toString() || '',
       contactId: contactId,
     });
 
