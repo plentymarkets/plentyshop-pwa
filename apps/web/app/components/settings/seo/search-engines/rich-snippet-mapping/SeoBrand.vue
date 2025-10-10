@@ -60,7 +60,7 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "Do not display",
-    "seoRichSnippetBrandOption-2": "External name of the brand",
+    "seoRichSnippetBrandOption-2": "External name of the manufacturer",
     "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text",
     "mustNotBeEmpty": "seoRichSnippetBrandId id must not be empty"
   },

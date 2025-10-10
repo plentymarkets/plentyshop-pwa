@@ -122,7 +122,7 @@ export default defineNuxtConfig({
               'session-and-url-lifetime',
               'availability',
               'item-condition',
-              'rich-snippet',
+              'rich-snippet-mapping',
               'google-analytics',
             ],
       cookieGroups: cookieConfig,
