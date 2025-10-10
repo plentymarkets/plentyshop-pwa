@@ -50,7 +50,8 @@ export const useToolbar = () => {
 
     if (possibleInputFieldsEmpty.length) {
       send({
-        message: 'Required fields: ' + possibleInputFieldsEmpty.map((field) => field[0]),
+        message:
+          'Additional fields for these options must not be empty: ' + possibleInputFieldsEmpty.map((field) => field[0]),
         type: 'negative',
       });
       return;
