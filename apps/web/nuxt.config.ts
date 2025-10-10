@@ -122,8 +122,8 @@ export default defineNuxtConfig({
               'session-and-url-lifetime',
               'availability',
               'item-condition',
-              'rich-snippet',
-              'google-analytics'
+              'rich-snippet-mapping',
+              'google-analytics',
             ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',

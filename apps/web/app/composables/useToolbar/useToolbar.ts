@@ -29,7 +29,7 @@ export const useToolbar = () => {
       await handleSave(updatePageTemplate);
     }
 
-    const conditionalInputList = [
+    const inputListWithConditionalPossibilities = [
       'seoRichSnippetBrand',
       'seoRichSnippetBarcodeGtin',
       'seoRichSnippetBarcodeGtin8',
@@ -37,20 +37,20 @@ export const useToolbar = () => {
       'seoRichSnippetBarcodeIsbn',
       'seoRichSnippetMpnBarcode',
       'seoRichSnippetSkuBarcode',
-      'seoRichSnippetSkuBarcode',
     ];
-    const requiredConditionalInputsWithError = Object.entries(settingsData.value).filter((obj) => {
-      if (conditionalInputList.includes(obj[0]) && obj[1] === '3') {
-        if (!settingsData.value[obj[0] + 'Id'] || settingsData.value[obj[0] + 'Id'] === '') {
+    const possibleInputFieldsEmpty = Object.entries(settingsData.value).filter((input) => {
+      if (inputListWithConditionalPossibilities.includes(input[0]) && input[1] === '3') {
+        if (!settingsData.value[input[0] + 'Id'] || settingsData.value[input[0] + 'Id'] === '') {
           return true;
         }
       }
       return false;
     });
 
-    if (requiredConditionalInputsWithError.length) {
+    if (possibleInputFieldsEmpty.length) {
       send({
-        message: 'Required fields',
+        message:
+          'Additional fields for these options must not be empty: ' + possibleInputFieldsEmpty.map((field) => field[0]),
         type: 'negative',
       });
       return;

@@ -47,7 +47,7 @@ const { updateSetting: updateSettingForId, getSetting: getSettingForId } = useSi
 );
 
 const seoRichSnippetBarcodeGtin13 = computed({
-  get: () => getSetting(),
+  get: () => String(getSetting()),
   set: (value) => updateSetting(value),
 });
 
