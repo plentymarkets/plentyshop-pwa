@@ -24,11 +24,11 @@ const seoRichSnippetIdForPriceValidity = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Enter ID from variation property of the type text or date for price validity",
+    "label": "Enter ID from variation property of the type text for price validity",
     "placeholder": ""
   },
   "de": {
-    "label": "Enter ID from variation property of the type text or date for price validity",
+    "label": "Enter ID from variation property of the type text for price validity",
     "placeholder": ""
   }
 }
