@@ -1101,7 +1101,8 @@
     "contact": {
       "emailAlreadyExists": "The email address already exists.",
       "missingContactOrUnexpectedFormat": "Missing contact data or unexpected format.",
-      "unexpectedAddressFormat": "Unexpected address format"
+      "unexpectedAddressFormat": "Unexpected address format.",
+      "passwordInvalid": "The password does not meet the required security standards."
     },
     "contactMail": {
       "failed": "Message could not be sent.",
