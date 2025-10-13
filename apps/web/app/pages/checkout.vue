@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { AddressType, cartGetters } from '@plentymarkets/shop-api';
-import {useFetchAddressesData} from '~/composables/useAddressV2/useFetchAddressesData';
+import { useFetchAddressesData } from '~/composables/useAddressV2/useFetchAddressesData';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
