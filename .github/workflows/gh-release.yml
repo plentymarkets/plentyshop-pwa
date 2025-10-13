@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   create-release:
-    if: github.repository == 'plentymarkets/plentyshop/pwa' && (github.event_name == 'workflow_dispatch' || vars.SCHEDULED == 'true')
+    if: github.repository == 'plentymarkets/plentyshop-pwa' && (github.event_name == 'workflow_dispatch' || vars.SCHEDULED == 'true')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
