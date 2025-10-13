@@ -1,9 +1,11 @@
-import { type AddressType, type Address, ApiError } from '@plentymarkets/shop-api';
+import type { ApiError, AddressType, Address } from '@plentymarkets/shop-api';
 
 export const useCreateAddress = (type: AddressType) => {
   const state = useState('useCreateAddress' + type, () => ({
     loading: false,
     invalidVAT: false,
+    vatServerError: false,
+    vatServerErrors: ['address.vatServerBusy', 'address.vatServerFallback'],
   }));
 
   const create = async (address: Address) => {
@@ -15,12 +17,12 @@ export const useCreateAddress = (type: AddressType) => {
       state.value.loading = false;
       return Promise.resolve(true);
     } catch (error: unknown) {
-      if (error instanceof ApiError) {
-        state.value.invalidVAT = error.key === 'address.vatInvalid';
-        if (!state.value.invalidVAT) useHandleError(error);
-      } else {
-        console.error('Unknown error creating an Address: ', error);
+      state.value.invalidVAT = errorHasKeyValue(error, 'key', 'address.vatInvalid');
+      if (!state.value.invalidVAT) {
+        state.value.vatServerError = errorHasKeyAnyValue(error, 'key', state.value.vatServerErrors);
+        useHandleError(error as ApiError);
       }
+
       return Promise.reject();
     } finally {
       state.value.loading = false;
