@@ -1,4 +1,3 @@
-// composables/useFetchAddressesData.ts
 import type { ApiError, Address } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 
@@ -7,8 +6,10 @@ export const useFetchAddressesData = () => {
     loading: false,
   }));
 
+  const { locale } = useNuxtApp().$i18n;
   const { set: setShippingAddressStore } = useAddressStore(AddressType.Shipping);
   const { set: setBillingAddressStore } = useAddressStore(AddressType.Billing);
+  const { setCountries } = useAggregatedCountries();
 
   const setAddresses = (billingAddresses: Address[], shippingAddresses: Address[]) => {
     setBillingAddressStore(billingAddresses);
@@ -28,12 +29,20 @@ export const useFetchAddressesData = () => {
     try {
       state.value.loading = true;
 
-      const data = await useSdk().plentysystems.getAddressesData({ types: [] });
+      const data = await useSdk().plentysystems.getAddressesData({
+        types: [],
+        lang: locale.value,
+      });
 
       const billingAddresses = data.data.addresses.filter((addr) => addr.typeId === AddressType.Billing);
       const shippingAddresses = data.data.addresses.filter((addr) => addr.typeId === AddressType.Shipping);
 
       setAddresses(billingAddresses, shippingAddresses);
+
+      if (data.data.countries) {
+        setCountries(data.data.countries.default, data.data.countries.geoRegulated);
+      }
+
       state.value.loading = false;
     } catch (error: unknown) {
       useHandleError(error as ApiError);
@@ -45,7 +54,10 @@ export const useFetchAddressesData = () => {
     state.value.loading = true;
 
     const { data, error } = await useAsyncData('addresses-data', () =>
-      useSdk().plentysystems.getAddressesData({ types: [] }),
+      useSdk().plentysystems.getAddressesData({
+        types: [],
+        lang: locale.value,
+      }),
     );
 
     useHandleError(error.value ?? null);
@@ -55,6 +67,10 @@ export const useFetchAddressesData = () => {
       const shippingAddresses = data.value.data.addresses.filter((addr) => addr.typeId === AddressType.Shipping);
 
       setAddresses(billingAddresses, shippingAddresses);
+    }
+
+    if (data.value?.data.countries) {
+      setCountries(data.value.data.countries.default, data.value.data.countries.geoRegulated);
     }
 
     state.value.loading = false;
