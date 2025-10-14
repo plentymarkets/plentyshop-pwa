@@ -52,10 +52,6 @@ const props = withDefaults(defineProps<EditablePageProps>(), {
   preventBlocksRequest: false,
 });
 
-definePageMeta({
-  identifier: props.identifier,
-});
-
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 
