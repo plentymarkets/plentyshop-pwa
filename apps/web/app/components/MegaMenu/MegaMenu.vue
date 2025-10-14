@@ -11,7 +11,7 @@
           variant="tertiary"
           square
           :aria-label="t('closeMenu')"
-          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          class="mr-5 hover:!bg-header-400"
           :style="{ color: iconColor }"
           @click="openMenu([])"
         >
