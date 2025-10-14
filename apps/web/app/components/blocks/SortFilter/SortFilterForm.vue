@@ -10,21 +10,6 @@
     </template>
 
     <div data-testid="text-card-form">
-      <div class="py-2">
-        <div class="flex items-center justify-between gap-3">
-          <UiFormLabel for="keep-transparent" class="m-0">
-            {{ getEditorTranslation('enable-filters-label') }}
-          </UiFormLabel>
-
-          <SfSwitch
-            id="keep-transparent"
-            v-model="sortFilterBlock.enableFilters"
-            data-testid="switch-keep-transparent"
-            class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-          />
-        </div>
-      </div>
-
       <div class="py-4">
         <draggable
           v-if="sortFilterBlock.filtersOrder.length"
@@ -101,7 +86,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
-import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey, SortFilterFieldsVisibility } from './types';
+import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
@@ -118,7 +103,6 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
 
   const content = rawContent as Partial<SortFilterContent>;
 
-  if (!content.enableFilters) content.enableFilters = false;
   if (!content.showAllFiltersImmediately) content.showAllFiltersImmediately = false;
   if (!content.numberOfFiltersToShowInitially) content.numberOfFiltersToShowInitially = 0;
 
@@ -135,19 +119,6 @@ const fieldLabels: Record<string, string> = {
   availability: getEditorTranslation('availability'),
   customizedFilters: getEditorTranslation('customizedFilters'),
 };
-
-const setFieldsValue = (newValue: boolean) => {
-  Object.keys(sortFilterBlock.value.fields as SortFilterFieldsVisibility).forEach((key) => {
-    sortFilterBlock.value.fields[key as SortFilterFieldKey] = newValue;
-  });
-};
-
-watch(
-  () => sortFilterBlock.value.enableFilters,
-  (newValue) => {
-    setFieldsValue(newValue);
-  },
-);
 </script>
 
 <i18n lang="json">
