@@ -54,8 +54,6 @@ import type { ImagesData } from '@plentymarkets/shop-api';
 import type { ZoomableImageProps } from '~/components/ZoomableImage/types';
 import Drift from '~/components/Drift/Drift.vue';
 
-
-
 const props = defineProps<ZoomableImageProps>();
 const { t } = useI18n();
 

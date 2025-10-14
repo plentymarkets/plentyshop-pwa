@@ -3,5 +3,5 @@ import type { ImagesData } from '@plentymarkets/shop-api';
 
 export type GalleryProps = {
   configuration?: ImageGalleryContent;
-  images: ImagesData[]
+  images: ImagesData[];
 };

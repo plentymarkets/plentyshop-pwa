@@ -62,7 +62,6 @@ const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 
-
 const config = useRuntimeConfig().public;
 
 definePageMeta({

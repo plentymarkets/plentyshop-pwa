@@ -24,7 +24,11 @@
             :key="type"
             type="button"
             class="relative w-full rounded-lg border p-2 transition"
-            :class="uiItemImageBlock.thumbnails.thumbnailType === type ? 'border-neutral-900 ring-2 ring-neutral-900' : 'border-neutral-300 hover:border-neutral-400'"
+            :class="
+              uiItemImageBlock.thumbnails.thumbnailType === type
+                ? 'border-neutral-900 ring-2 ring-neutral-900'
+                : 'border-neutral-300 hover:border-neutral-400'
+            "
             :aria-pressed="uiItemImageBlock.thumbnails.thumbnailType === type"
             :aria-label="typeLabels[type]"
             data-testid="thumbnail-type-card"
@@ -34,7 +38,8 @@
             <span
               v-if="uiItemImageBlock.thumbnails.thumbnailType === type"
               class="absolute -top-2 -right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-neutral-900 text-white text-xs"
-            ><SfIconCheck size="xs" /></span>
+              ><SfIconCheck size="xs"
+            /></span>
           </button>
         </div>
       </div>
@@ -50,7 +55,7 @@
 <script setup lang="ts">
 import { SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import { THUMBNAIL_TYPES } from '~/components/blocks/ImageGallery/types';
-import type { ThumbnailType , ImageGalleryContent} from '~/components/blocks/ImageGallery/types';
+import type { ThumbnailType, ImageGalleryContent } from '~/components/blocks/ImageGallery/types';
 
 type ItemImageFormProps = {
   uuid?: string;
@@ -63,13 +68,13 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const uiItemImageBlock = computed(
-  () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ImageGalleryContent
+  () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ImageGalleryContent,
 );
 
 const typeLabels: Record<ThumbnailType, string> = {
   'left-vertical': getEditorTranslation('thumb-left-vertical'),
   'right-vertical': getEditorTranslation('thumb-right-vertical'),
-  'bottom': getEditorTranslation('thumb-bottom'),
+  bottom: getEditorTranslation('thumb-bottom'),
 };
 
 const thumbsOpen = ref(true);
@@ -77,7 +82,7 @@ const thumbsOpen = ref(true);
 const thumbnailsCdn = {
   'left-vertical': 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
   'right-vertical': 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
-  'bottom': 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
+  bottom: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
 };
 </script>
 

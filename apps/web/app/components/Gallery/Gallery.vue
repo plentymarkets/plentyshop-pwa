@@ -1,12 +1,5 @@
 <template>
-  <div
-    :class="[
-      'h-full flex scroll-smooth relative',
-      galleryDirClass,
-      galleryGapClass
-    ]"
-    data-testid="gallery"
-  >
+  <div :class="['h-full flex scroll-smooth relative', galleryDirClass, galleryGapClass]" data-testid="gallery">
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
@@ -33,10 +26,7 @@
       </SfScrollable>
     </div>
 
-    <div
-      v-if="configuration.thumbnails.showThumbnails"
-      :class="thumbContainerClass"
-    >
+    <div v-if="configuration.thumbnails.showThumbnails" :class="thumbContainerClass">
       <SfScrollable
         ref="thumbsReference"
         :wrapper-class="thumbsWrapperClass"
@@ -128,9 +118,9 @@ const props = withDefaults(defineProps<GalleryProps>(), {
     thumbnails: {
       showThumbnails: true,
       thumbnailType: 'left-vertical',
-      enableHoverZoom: false
-    }
-  })
+      enableHoverZoom: false,
+    },
+  }),
 });
 
 const configuration = computed(() => props.configuration as ImageGalleryContent);
@@ -152,9 +142,7 @@ const isLeft = computed(() => type.value === 'left-vertical');
 const galleryDirClass = computed(() => (isSide.value ? 'flex-col md:flex-row' : 'flex-col md:flex-col'));
 const galleryGapClass = computed(() => (isSide.value ? 'md:gap-4' : 'md:gap-2'));
 
-const thumbContainerClass = computed(() => [
-  isLeft.value ? 'md:order-first' : 'md:order-last'
-]);
+const thumbContainerClass = computed(() => [isLeft.value ? 'md:order-first' : 'md:order-last']);
 
 const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
 
@@ -163,27 +151,27 @@ const thumbsWrapperClass = computed(() => (isSide.value ? 'hidden md:inline-flex
 const thumbsScrollableClass = computed(() =>
   isSide.value
     ? 'flex-row w-full items-center md:flex-col md:h-full md:px-0 md:scroll-pl-4 snap-y snap-mandatory flex gap-0.5 md:gap-0.5 overflow-auto scrollbar-hidden'
-    : 'flex-row w-full items-center md:flex-row md:w-full md:h-auto md:px-0 md:scroll-pl-0 snap-x snap-mandatory flex gap-0.5 md:gap-0.5 overflow-auto scrollbar-hidden'
+    : 'flex-row w-full items-center md:flex-row md:w-full md:h-auto md:px-0 md:scroll-pl-0 snap-x snap-mandatory flex gap-0.5 md:gap-0.5 overflow-auto scrollbar-hidden',
 );
 
 const thumbButtonClass = computed(() =>
   isSide.value
     ? 'w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors flex-grow-0'
-    : 'w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors'
+    : 'w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors',
 );
 
 const prevBtnClass = computed(() =>
   [
     'absolute !rounded-full bg-white z-10 disabled:!hidden !ring-neutral-500 !text-neutral-500',
-    isSide.value ? 'top-4 rotate-90' : 'left-4'
-  ].join(' ')
+    isSide.value ? 'top-4 rotate-90' : 'left-4',
+  ].join(' '),
 );
 
 const nextBtnClass = computed(() =>
   [
     'absolute !rounded-full bg-white z-10 disabled:!hidden !ring-neutral-500 !text-neutral-500',
-    isSide.value ? 'bottom-4 rotate-90' : 'right-4'
-  ].join(' ')
+    isSide.value ? 'bottom-4 rotate-90' : 'right-4',
+  ].join(' '),
 );
 
 const registerThumbsWatch = (
