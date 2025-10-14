@@ -11,6 +11,7 @@ export type FetchCategoryTemplate = (categoryId: number) => Promise<void>;
 export type SaveBlocks = (identifier: string | number, type: string, content: string) => Promise<void>;
 export type GetBlocks = (identifier: number | string, type: string, block?: string) => Promise<void>;
 export type UpdateBlocks = (blocks: Block[]) => void;
+export type SetupBlocks = (blocks: Block[], type: string) => void;
 
 export interface UseCategoryTemplate {
   data: Readonly<Ref<UseCategoryTemplateState['data']>>;
@@ -22,6 +23,7 @@ export interface UseCategoryTemplate {
   getBlocks: GetBlocks;
   getBlocksServer: GetBlocks;
   updateBlocks: UpdateBlocks;
+  setupBlocks: SetupBlocks;
 }
 
 export type UseCategoryTemplateReturn = (blocks?: string) => UseCategoryTemplate;

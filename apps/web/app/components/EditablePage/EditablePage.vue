@@ -49,6 +49,7 @@ const NarrowContainer = resolveComponent('NarrowContainer');
 const { $isPreview } = useNuxtApp();
 const props = withDefaults(defineProps<EditablePageProps>(), {
   hasEnabledActions: true,
+  preventBlocksRequest: false,
 });
 
 definePageMeta({
@@ -66,7 +67,9 @@ const isContentEmptyInLive = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer'),
 );
 
-await getBlocksServer(props.identifier, props.type);
+if (!props.preventBlocksRequest) {
+  await getBlocksServer(props.identifier, props.type);
+}
 
 const { footerCache } = useFooter();
 addFooterBlock({

@@ -13,6 +13,7 @@
       :identifier="identifier"
       :type="'category'"
       data-testid="category-page-content"
+      prevent-blocks-request
     />
   </NuxtLayout>
 </template>
