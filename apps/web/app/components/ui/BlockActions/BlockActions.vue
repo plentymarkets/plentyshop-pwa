@@ -12,7 +12,7 @@
       ...(props.actions?.buttonClasses || []),
     ]"
     data-testid="edit-block-actions"
-      :style="{ top: props.actions.position }"
+    :style="{ top: props.actions.position }"
   >
     <SfTooltip
       v-if="!props.actions.isEditable"
@@ -40,7 +40,6 @@
         :class="['text-black', 'p-1', 'rounded', 'no-drag', ...(props.actions?.hoverBackground || [])]"
         data-testid="open-editor-button"
         aria-label="editor button"
-      
         @click.stop="triggerEdit"
       >
         <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
@@ -115,7 +114,6 @@ const editLabel = 'Click to edit this block.';
 const positionLabel = 'Change block position.';
 const deleteLabel = 'Delete this block.';
 
-// Define props with dynamic classes
 const props = withDefaults(defineProps<BlockActionsProps>(), {
   actions: () => ({
     isEditable: true,
