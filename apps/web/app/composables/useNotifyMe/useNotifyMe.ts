@@ -1,5 +1,15 @@
 import type { ApiError } from '@plentymarkets/shop-api';
 
+export interface NotifyMeSubscribeParams {
+  email: string;
+  variationId: number;
+  turnstileToken?: string;
+}
+
+export interface UseNotifyMeState {
+  loading: boolean;
+}
+
 /**
  * @description Composable for subscribing to the back in stock notifications.
  * @example
@@ -8,7 +18,7 @@ import type { ApiError } from '@plentymarkets/shop-api';
  * ```
  */
 export const useNotifyMe = () => {
-  const state = useState<UseNewsletterState>('useNotifyMe', () => ({
+  const state = useState<UseNotifyMeState>('useNotifyMe', () => ({
     loading: false,
   }));
 
@@ -25,19 +35,23 @@ export const useNotifyMe = () => {
    * })
    * ```
    */
-  const subscribe = async () => {
+  const subscribe = async (params: NotifyMeSubscribeParams): Promise<boolean> => {
     try {
       state.value.loading = true;
 
-      //TODO: implement call once its build
+      // TODO: implement call once its built
       // const { data } = await useSdk().plentysystems.doSubscribeNotifyMe(params);
       // return !!data;
+
+      // Mock call for development TODO: remove later
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return true;
     } catch (error) {
       useHandleError(error as ApiError);
+      return false;
     } finally {
       state.value.loading = false;
     }
-    return false;
   };
 
   return {

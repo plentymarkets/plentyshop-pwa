@@ -52,6 +52,7 @@
             :placeholder="t('notifyMe.form.emailPlaceholder')"
             required
             class="w-full"
+            :disabled="loading"
             @focus="formInteraction"
           />
         </div>
@@ -60,6 +61,7 @@
           <SfCheckbox
             id="privacy-policy"
             v-model="agreedToPolicy"
+            :disabled="loading"
             @change="formInteraction"
           />
           <label for="privacy-policy" class="text-sm text-neutral-700">
@@ -86,8 +88,14 @@
           type="submit"
           size="lg"
           class="w-full"
-          :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken)"
+          :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken) || loading"
         >
+          <template v-if="loading" #prefix>
+            <SfLoaderCircular size="sm" />
+          </template>
+          <template v-else #prefix>
+            <SfIconEmail size="sm" />
+          </template>
           {{ t('notifyMe.notifyButton') }}
         </UiButton>
       </form>
@@ -96,15 +104,19 @@
 </template>
 
 <script lang="ts" setup>
-  import { SfIconEmail, SfIconClose, SfTooltip, SfInput, SfCheckbox, useDisclosure } from '@storefront-ui/vue';
+  import { SfIconEmail, SfIconClose, SfTooltip, SfInput, SfCheckbox, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
   import { offset } from '@floating-ui/vue';
   import { ref } from 'vue';
+  import type { NotifyMeComponentProps } from './types';
+
+  const props = defineProps<NotifyMeComponentProps>();
 
   const { isOpen, open, close } = useDisclosure();
   const { user } = useCustomer();
   const { t } = useI18n();
   const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
   const { send } = useNotification();
+  const { loading, subscribe } = useNotifyMe();
   const localePath = useLocalePath();
 
   const turnstileSiteKey = getSetting() ?? '';
@@ -120,7 +132,7 @@
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (turnstileSiteKey && !turnstileToken.value) {
       send({
         type: 'negative',
@@ -129,9 +141,18 @@
       return;
     }
 
-    console.log('Email:', email.value);
-    console.log('Turnstile Token:', turnstileToken.value);
+    const success = await subscribe({
+      email: email.value,
+      variationId: props.variationId,
+      turnstileToken: turnstileToken.value,
+    });
 
-    close();
+    if (success) {
+      send({
+        type: 'positive',
+        message: t('notifyMe.form.success'),
+      });
+      close();
+    }
   };
 </script>

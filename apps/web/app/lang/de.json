@@ -1,12 +1,13 @@
 {
   "notifyMe": {
-    "notifyButtonTooltip": "Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist",
+    "notifyButtonTooltip": "Wir benachrichtigen Sie, sobald das Produkt wieder verfügbar ist",
     "notifyButton": "Benachrichtige mich",
     "form": {
-      "subTitle": "Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist",
+      "subTitle": "Geben Sie Ihre E-Mail-Adresse ein und wir benachrichtigen Sie, sobald dieser Artikel wieder vorrätig ist.",
       "emailLabel": "E-Mail-Adresse",
-      "emailPlaceholder": "Deine E-Mail",
-      "turnstileFailed": "Turnstile Validierung Fehlgeschlagen"
+      "emailPlaceholder": "Ihre E-Mail",
+      "turnstileFailed": "Turnstile Validierung Fehlgeschlagen",
+      "success": "Prüfe dein Postfach! Wir haben dir eine Bestätigungs E-Mail gesendet"
     }
   },
   "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert",
