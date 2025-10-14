@@ -97,13 +97,13 @@
                 @change-quantity="changeQuantity"
               />
               <SfTooltip
+                v-if="productGetters.isSalable(product) || showNotifyMe"
                 show-arrow
                 placement="top"
                 :label="isNotValidVariation || isSalableText"
                 class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
               >
                 <UiButton
-                  v-if="productGetters.isSalable(product) || !showNotifyMe"
                   type="submit"
                   data-testid="add-to-cart"
                   size="lg"
@@ -120,8 +120,10 @@
                     </div>
                   </template>
                 </UiButton>
-                <NotifyMe v-else />
               </SfTooltip>
+              <div v-else class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
+                <NotifyMe />
+              </div>
             </div>
 
             <div class="mt-4 typography-text-xs flex gap-1">

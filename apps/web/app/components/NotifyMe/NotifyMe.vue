@@ -2,7 +2,7 @@
   <SfTooltip
     show-arrow
     placement="top"
-    label="Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist"
+    :label="t('notifyMe.notifyButtonTooltip')"
     :middleware="[offset(24)]"
   >
     <UiButton
@@ -74,7 +74,7 @@
         </div>
 
         <NuxtTurnstile
-          v-if="turnstileSiteKey && turnstileLoad"
+          v-if="turnstileSiteKey && (email.length > 0 || turnstileLoad)"
           ref="turnstileElement"
           v-model="turnstileToken"
           :site-key="turnstileSiteKey"
@@ -104,6 +104,7 @@
   const { user } = useCustomer();
   const { t } = useI18n();
   const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+  const { send } = useNotification();
   const localePath = useLocalePath();
 
   const turnstileSiteKey = getSetting() ?? '';
@@ -121,6 +122,10 @@
 
   const handleSubmit = () => {
     if (turnstileSiteKey && !turnstileToken.value) {
+      send({
+        type: 'negative',
+        message: t('notifyMe.form.turnstileFailed'),
+      });
       return;
     }
 

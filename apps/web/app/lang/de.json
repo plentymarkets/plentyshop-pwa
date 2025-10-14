@@ -1,10 +1,12 @@
 {
   "notifyMe": {
+    "notifyButtonTooltip": "Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist",
     "notifyButton": "Benachrichtige mich",
     "form": {
       "subTitle": "Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist",
       "emailLabel": "E-Mail-Adresse",
-      "emailPlaceholder": "Deine E-Mail"
+      "emailPlaceholder": "Deine E-Mail",
+      "turnstileFailed": "Turnstile Validierung Fehlgeschlagen"
     }
   },
   "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert",
