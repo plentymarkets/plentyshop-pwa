@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -26,7 +26,7 @@
     </Multiselect>
 
     <div v-if="seoRichSnippetSkuBarcode === '3'" class="mt-2">
-      <label for="seoRichSnippetSkuBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</label>
+      <UiFormLabel for="seoRichSnippetSkuBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetSkuBarcodeId" v-model="seoRichSnippetSkuBarcodeId" type="number" />
       <div v-if="seoRichSnippetSkuBarcodeId === ''" class="text-red-600">
         {{ getEditorTranslation('mustNotBeEmpty') }}
@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-const seoRichSnippetSkuBarcodes = ref(['1', '2', '3']);
+const seoRichSnippetSkuBarcodes = ref(['1', '2', '3', '4']);
 
 const { updateSetting, getSetting } = useSiteSettings('seoRichSnippetSkuBarcode');
 const { updateSetting: updateSettingForId, getSetting: getSettingForId } =

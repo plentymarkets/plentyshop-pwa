@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -48,7 +48,7 @@ const seoRichSnippetManufacturer = computed({
     "placeholder": "Select robots",
     "seoRichSnippetManufacturer-1": "Do not display",
     "seoRichSnippetManufacturer-2": "External name of the manufacturer",
-    "seoRichSnippetManufacturer-3": "Use brand name from variation property of the type text"
+    "seoRichSnippetManufacturer-3": "Name of the manufacturer"
   },
   "de": {
     "label": "Select source for the manufacturer in Rich Snippets of the item page",
@@ -56,7 +56,7 @@ const seoRichSnippetManufacturer = computed({
     "placeholder": "Select robots",
     "seoRichSnippetManufacturer-1": "Do not display",
     "seoRichSnippetManufacturer-2": "External name of the manufacturer",
-    "seoRichSnippetManufacturer-3": "Use brand name from variation property of the type text"
+    "seoRichSnippetManufacturer-3": "Name of the manufacturer"
   }
 }
 </i18n>

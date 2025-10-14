@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -26,7 +26,7 @@
     </Multiselect>
 
     <div v-if="seoRichSnippetBarcodeGtin13 === '3'" class="mt-2">
-      <label for="seoRichSnippetBarcodeGtin13Id">{{ getEditorTranslation('conditionalLabel') }}</label>
+      <UiFormLabel for="seoRichSnippetBarcodeGtin13Id">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBarcodeGtin13Id" v-model="seoRichSnippetBarcodeGtin13Id" type="number" />
       <div v-if="seoRichSnippetBarcodeGtin13Id === ''" class="text-red-600">
         {{ getEditorTranslation('mustNotBeEmpty') }}
@@ -60,24 +60,24 @@ const seoRichSnippetBarcodeGtin13Id = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for GTIN13 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for GTIN13 barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
-    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN13 barcode from variation",
-    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN13 barcode by ID",
-    "mustNotBeEmpty": "GTIN13 id must not be empty"
+    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN-13 barcode from variation",
+    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID",
+    "mustNotBeEmpty": "GTIN-13 id must not be empty"
   },
   "de": {
-    "label": "Select source for GTIN13 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for GTIN13 barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
-    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN13 barcode from variation",
-    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN13 barcode by ID",
-    "mustNotBeEmpty": "GTIN13 id must not be empty"
+    "seoRichSnippetBarcodeGtin13-2": "Use first GTIN-13 barcode from variation",
+    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID",
+    "mustNotBeEmpty": "GTIN-13 id must not be empty"
   }
 }
 </i18n>

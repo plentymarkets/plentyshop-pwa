@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -26,7 +26,7 @@
     </Multiselect>
 
     <div v-if="seoRichSnippetMpnBarcode === '3'" class="mt-2">
-      <label for="seoRichSnippetMpnBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</label>
+      <UiFormLabel for="seoRichSnippetMpnBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetMpnBarcodeId" v-model="seoRichSnippetMpnBarcodeId" type="number" />
       <div v-if="seoRichSnippetMpnBarcodeId === ''" class="text-red-600">
         {{ getEditorTranslation('mustNotBeEmpty') }}

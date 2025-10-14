@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -26,7 +26,7 @@
     </Multiselect>
 
     <div v-if="seoRichSnippetBarcodeGtin === '3'" class="mt-2">
-      <label for="seoRichSnippetBarcodeGtinId">{{ getEditorTranslation('conditionalLabel') }}</label>
+      <UiFormLabel for="seoRichSnippetBarcodeGtinId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBarcodeGtinId" v-model="seoRichSnippetBarcodeGtinId" type="number" />
       <div v-if="seoRichSnippetBarcodeGtinId === ''" class="text-red-600">
         {{ getEditorTranslation('mustNotBeEmpty') }}
@@ -58,8 +58,8 @@ const seoRichSnippetBarcodeGtinId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for Gtin barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for Gtin barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN barcode in Rich Snippets of the item page",
     "placeholder": "Select barcode",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeGtin-1": "Do not display",
@@ -68,8 +68,8 @@ const seoRichSnippetBarcodeGtinId = computed({
     "mustNotBeEmpty": "GTIN id must not be empty"
   },
   "de": {
-    "label": "Select source for Gtin barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for Gtin barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN barcode in Rich Snippets of the item page",
     "placeholder": "Select barcode",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeGtin-1": "Do not display",

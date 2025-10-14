@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -26,7 +26,7 @@
     </Multiselect>
 
     <div v-if="seoRichSnippetBarcodeGtin8 === '3'" class="mt-2">
-      <label for="seoRichSnippetBarcodeGtin8Id">{{ getEditorTranslation('conditionalLabel') }}</label>
+      <UiFormLabel for="seoRichSnippetBarcodeGtin8Id">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBarcodeGtin8Id" v-model="seoRichSnippetBarcodeGtin8Id" type="number" />
       <div v-if="seoRichSnippetBarcodeGtin8Id === ''" class="text-red-600">
         {{ getEditorTranslation('mustNotBeEmpty') }}
@@ -59,24 +59,24 @@ const seoRichSnippetBarcodeGtin8Id = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for Gtin8 barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN-8 barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN-8 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin8-1": "Do not display",
-    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN8 barcode from variation",
-    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN8 barcode by ID",
-    "mustNotBeEmpty": "GTIN8 id must not be empty"
+    "seoRichSnippetBarcodeGtin8-2": "Use first GTIN-8 barcode from variation",
+    "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN-8 barcode by ID",
+    "mustNotBeEmpty": "GTIN-8 id must not be empty"
   },
   "de": {
-    "label": "Select source for Gtin8 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for Gtin8 barcode in Rich Snippets of the item page",
+    "label": "Select source for GTIN-8 barcode in Rich Snippets of the item page",
+    "tooltip": "Select source for GTIN-8 barcode in Rich Snippets of the item page",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin8-1": "Do not display",
     "seoRichSnippetBarcodeGtin8-2": "Use first GTIN8 barcode from variation",
     "seoRichSnippetBarcodeGtin8-3": "Use specific GTIN8 barcode by ID",
-    "mustNotBeEmpty": "GTIN8 id must not be empty"
+    "mustNotBeEmpty": "GTIN-8 id must not be empty"
   }
 }
 </i18n>

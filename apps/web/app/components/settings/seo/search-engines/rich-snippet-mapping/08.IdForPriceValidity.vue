@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
@@ -24,12 +24,12 @@ const seoRichSnippetIdForPriceValidity = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Enter ID from variation property of the type text for price validity",
-    "placeholder": ""
+    "label": "Select source for price validity in Rich Snippets of the item page",
+    "placeholder": "Enter ID from variation property of the type text for price validity",
   },
   "de": {
-    "label": "Enter ID from variation property of the type text for price validity",
-    "placeholder": ""
+    "label": "Select source for price validity in Rich Snippets of the item page",
+    "placeholder": "Enter ID from variation property of the type text for price validity",
   }
 }
 </i18n>

@@ -1,5 +1,6 @@
 <template>
-  <div class="py-2">
+  <div class="py-2 mb-2">
+    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -26,7 +27,7 @@
     </Multiselect>
 
     <div v-if="seoRichSnippetBrand === '3'" class="mt-2">
-      <label for="seoRichSnippetBrandId">{{ getEditorTranslation('conditionalLabel') }}</label>
+      <UiFormLabel for="seoRichSnippetBrandId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBrandId" v-model="seoRichSnippetBrandId" type="number" />
       <div v-if="seoRichSnippetBrandId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
@@ -55,6 +56,7 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
 <i18n lang="json">
 {
   "en": {
+    "description": "Map item data fields from your backend to Schema.org fields for Rich Snippets. This improves how search engines interpret your products and can enhance their presentation in search results.",
     "label": "Select source for the brand in Rich Snippets of the item page",
     "tooltip": "Select source for the brand in Rich Snippets of the item page",
     "placeholder": "Select robots",
@@ -65,6 +67,7 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "mustNotBeEmpty": "seoRichSnippetBrandId id must not be empty"
   },
   "de": {
+    "description": "Map item data fields from your backend to Schema.org fields for Rich Snippets. This improves how search engines interpret your products and can enhance their presentation in search results.",
     "label": "Select source for the brand in Rich Snippets of the item page",
     "tooltip": "Select source for the brand in Rich Snippets of the item page",
     "placeholder": "Select robots",
