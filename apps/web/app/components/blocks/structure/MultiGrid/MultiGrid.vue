@@ -27,7 +27,7 @@
               : ''
           "
         >
-          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
+          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions(row)" />
         </div>
 
         <slot name="content" :content-block="row" />
@@ -104,7 +104,7 @@ const isAlignable = (b: Block): b is AlignableBlock =>
   typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
 
 const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
-  const a = (block as any).content?.imageAlignment ?? (block as any).content?.alignment;
+  const a = block.content?.imageAlignment ?? block.content?.alignment;
   return a === 'left' || a === 'right' ? a : undefined;
 };
 
@@ -198,15 +198,27 @@ const detachScroll = () => {
   applyTop();
 };
 
-const getBlockActions = () => ({
-  isEditable: true,
-  isMovable: false,
-  isDeletable: false,
-  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-  buttonClasses: ['border-2', 'border-purple-600', buttonPositionClass.value],
-  hoverBackground: ['hover:bg-purple-500'],
-});
+const getBlockActions = (block: Block) => {
+  if (block.name === 'ItemGrid') {
+    return {
+      isEditable: true,
+      isMovable: false,
+      isDeletable: false,
+      classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+      buttonClasses: ['border-2', 'border-purple-600', buttonPositionClass.value],
+      hoverBackground: ['hover:bg-purple-500'],
+    };
+  }
 
+  return {
+    isEditable: true,
+    isMovable: false,
+    isDeletable: false,
+    classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+    buttonClasses: ['border-2', 'border-purple-600'],
+    hoverBackground: ['hover:bg-purple-500'],
+  };
+};
 watch(
   () => itemGridHeight.value,
   (newHeight) => {
