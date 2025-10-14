@@ -99,7 +99,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
     state.value.data = fetchedBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(fetchedBlocks)));
-  }
+  };
 
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
