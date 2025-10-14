@@ -205,8 +205,9 @@ const getBlockActions = (block: Block) => {
       isMovable: false,
       isDeletable: false,
       classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-      buttonClasses: ['border-2', 'border-purple-600', buttonPositionClass.value],
+      buttonClasses: ['border-2', 'border-purple-600'],
       hoverBackground: ['hover:bg-purple-500'],
+      position: `${currentTop.value}px`,
     };
   }
 
@@ -217,6 +218,7 @@ const getBlockActions = (block: Block) => {
     classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
     buttonClasses: ['border-2', 'border-purple-600'],
     hoverBackground: ['hover:bg-purple-500'],
+    position: '',
   };
 };
 watch(
