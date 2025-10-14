@@ -52,7 +52,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     state.value.loading = true;
 
     const { locale } = useI18n();
-    const { data: productsCatalog } = useProducts();
 
     const { data, error } = await useAsyncData(`${locale.value}-${type}-${identifier}-${blocks}`, () =>
       useSdk().plentysystems.getBlocks({ identifier, type, blocks }),
@@ -66,7 +65,24 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
       return;
     }
 
-    let fetchedBlocks: Block[] = data?.value?.data ?? [];
+    setupBlocks(data?.value?.data ?? [], type);
+
+    await ensureFooterBlock();
+  };
+
+  const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
+    state.value.loading = true;
+
+    const response = await useSdk().plentysystems.getBlocks({ identifier, type, blocks });
+    const data = response?.data;
+
+    state.value.loading = false;
+
+    setupBlocks(data ?? [], type);
+  };
+
+  const setupBlocks = (fetchedBlocks: Block[], type: string) => {
+    const { data: productsCatalog } = useProducts();
 
     if (!fetchedBlocks.length && type === 'immutable') {
       fetchedBlocks = useLocaleSpecificHomepageTemplate($i18n.locale.value);
@@ -82,38 +98,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
     state.value.data = fetchedBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(fetchedBlocks)));
-
-    await ensureFooterBlock();
   };
 
-  const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
-    state.value.loading = true;
-
-    const { data: productsCatalog } = useProducts();
-
-    const response = await useSdk().plentysystems.getBlocks({ identifier, type, blocks });
-    const data = response?.data;
-
-    state.value.loading = false;
-
-    if (!data?.length) {
-      if (type === 'immutable') {
-        state.value.data = useLocaleSpecificHomepageTemplate($i18n.locale.value);
-      }
-
-      if (type === 'category' && productsCatalog.value.category?.type === 'item') {
-        state.value.data = useCategoryTemplateData();
-      }
-    } else {
-      state.value.data = data ?? state.value.data;
-    }
-
-    if (Array.isArray(state.value.data)) {
-      migrateAllImageBlocks(state.value.data);
-    }
-
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
-  };
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
   };
@@ -174,6 +160,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     getBlocks,
     getBlocksServer,
     updateBlocks,
+    setupBlocks,
     ...toRefs(state.value),
   };
 };
