@@ -11,7 +11,12 @@
 
     <div class="space-y-4">
       <div>
-        <UiFormLabel>{{ getEditorTranslation('items-per-row-desktop') }}</UiFormLabel>
+        <UiFormLabel class="flex justify-between">
+          {{ getEditorTranslation('items-per-row-desktop') }}
+          <SfTooltip :label="getEditorTranslation('items-per-row-desktop-tooltip')">
+            <SfIconInfo :size="'sm'" />
+          </SfTooltip>
+        </UiFormLabel>
         <select
           v-model.number="uiItemGridBlock.itemsPerRowDesktop"
           class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
@@ -234,7 +239,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch, SfIconCheck } from '@storefront-ui/vue';
+import { SfSwitch, SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { ItemGridFormProps, ItemGridContent, ItemGridFieldKey } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -273,12 +278,11 @@ const fieldLabels: Record<string, string> = {
   "en": {
     "layout-settings-label": "Layout settings",
     "items-per-row-desktop": "Items per row (Desktop)",
+    "items-per-row-desktop-tooltip": "Set the number of products displayed per row. Recommended default values: Desktop 4, Tablet 3, Mobile 1 ",
     "items-per-row-tablet": "Items per row (Tablet)",
     "items-per-row-mobile": "Items per row (Mobile)",
-
     "show-item-count": "Show item count",
     "item-count-position": "Item count position",
-
     "position-left": "Left",
     "position-center": "Center",
     "position-right": "Right",
@@ -286,7 +290,6 @@ const fieldLabels: Record<string, string> = {
     "position-bottom": "Bottom",
     "position-both": "Both",
     "position-none": "None",
-
     "item-card-label": "Item card",
     "field-manufacturer": "Manufacturer",
     "field-item-title": "Item title",
@@ -295,16 +298,13 @@ const fieldLabels: Record<string, string> = {
     "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
-
     "content-alignment": "Content alignment",
     "card-borders": "Card borders",
     "show-second-image": "Show second image on hover",
     "show-wishlist-button": "Show wishlist button",
-
     "add-to-cart-button-style": "“Add to cart” button",
     "button-primary": "Primary",
     "button-secondary": "Secondary",
-
     "pagination-label": "Pagination",
     "pagination-position": "Pagination position"
   },
@@ -313,10 +313,8 @@ const fieldLabels: Record<string, string> = {
     "items-per-row-desktop": "Items per row (Desktop)",
     "items-per-row-tablet": "Items per row (Tablet)",
     "items-per-row-mobile": "Items per row (Mobile)",
-
     "show-item-count": "Show item count",
     "item-count-position": "Item count position",
-
     "position-left": "Left",
     "position-center": "Center",
     "position-right": "Right",
@@ -324,7 +322,6 @@ const fieldLabels: Record<string, string> = {
     "position-bottom": "Bottom",
     "position-both": "Both",
     "position-none": "None",
-
     "item-card-label": "Item card",
     "field-manufacturer": "Manufacturer",
     "field-item-title": "Item title",
@@ -333,12 +330,10 @@ const fieldLabels: Record<string, string> = {
     "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
-
     "content-alignment": "Content alignment",
     "card-borders": "Card borders",
     "show-second-image": "Show second image on hover",
     "show-wishlist-button": "Show wishlist button",
-
     "add-to-cart-button-style": "“Add to cart” button",
     "button-primary": "Primary",
     "button-secondary": "Secondary",
