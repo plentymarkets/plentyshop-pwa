@@ -1,49 +1,57 @@
-export const useScrollHandler = () => {
-  const baselineTop = ref(0);
-  const baselineScrollY = ref(0);
-  const currentTop = ref(0);
-  const bottomValue = ref(0);
+import type { UseScrollHandlerReturn, UseScrollHandlerState } from './types';
+
+export const useScrollHandler: UseScrollHandlerReturn = () => {
+  const state = useState<UseScrollHandlerState>('useScrollHandler', () => ({
+    baselineTop: 0,
+    baselineScrollY: 0,
+    currentTop: 0,
+    bottomValue: 0,
+  }));
 
   let ticking = false;
 
   const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
-  const handleScroll = () => {
+  const handleScroll: HandleScroll = () => {
     if (!ticking) {
       ticking = true;
       requestAnimationFrame(() => {
         const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
-        const delta = scrollY - baselineScrollY.value;
-        const next = clamp(baselineTop.value + delta, baselineTop.value, baselineTop.value + bottomValue.value);
+        const delta = scrollY - state.value.baselineScrollY;
+        const next = clamp(
+          state.value.baselineTop + delta,
+          state.value.baselineTop,
+          state.value.baselineTop + state.value.bottomValue,
+        );
         const rounded = Math.round(next);
-        if (rounded !== currentTop.value) {
-          currentTop.value = rounded;
+        if (rounded !== state.value.currentTop) {
+          state.value.currentTop = rounded;
         }
         ticking = false;
       });
     }
   };
 
-  const attachScroll = () => {
-    baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
-    currentTop.value = baselineTop.value;
+  const attachScroll: AttachScroll = () => {
+    state.value.baselineScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    state.value.currentTop = state.value.baselineTop;
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', handleScroll, { passive: true });
     }
   };
 
-  const detachScroll = () => {
+  const detachScroll: DetachScroll = () => {
     if (typeof window !== 'undefined') {
       window.removeEventListener('scroll', handleScroll);
     }
-    currentTop.value = baselineTop.value;
+    state.value.currentTop = state.value.baselineTop;
   };
 
   return {
-    baselineTop,
-    baselineScrollY,
-    currentTop,
-    bottomValue,
+    baselineTop: toRef(state.value, 'baselineTop'),
+    baselineScrollY: toRef(state.value, 'baselineScrollY'),
+    currentTop: toRef(state.value, 'currentTop'),
+    bottomValue: toRef(state.value, 'bottomValue'),
     handleScroll,
     attachScroll,
     detachScroll,
