@@ -9,7 +9,7 @@
 
     <EditablePage
       v-else
-      :has-enabled-actions="!!config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
+
       :identifier="identifier"
       :type="'category'"
       data-testid="category-page-content"
@@ -30,7 +30,6 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const config = useRuntimeConfig().public;
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
