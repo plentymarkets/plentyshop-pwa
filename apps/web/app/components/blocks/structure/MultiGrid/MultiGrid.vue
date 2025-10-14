@@ -37,8 +37,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, watch, onMounted, onUnmounted, useAttrs } from 'vue';
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
+
 const { itemGridHeight } = useItemGridHeight();
 const { hasItemGridInColumns } = useBlockManager();
 const { layout, content, configuration } = defineProps<MultiGridProps>();
@@ -48,6 +50,7 @@ const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
@@ -79,22 +82,15 @@ const gridInlineStyle = computed(() => ({
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
+
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
+
 const getColumnClasses = (colIndex: number) => {
   const columnWidth = configuration.columnWidths[colIndex];
   return [`col-span-${columnWidth}`];
 };
-
-const getBlockActions = () => ({
-  isEditable: true,
-  isMovable: false,
-  isDeletable: false,
-  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-  buttonClasses: ['border-2', 'border-purple-600', buttonPositionClass.value],
-  hoverBackground: ['hover:bg-purple-500'],
-});
 
 const enableActions = computed(() => attrs.enableActions === true);
 
@@ -108,7 +104,7 @@ const isAlignable = (b: Block): b is AlignableBlock =>
   typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
 
 const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
-  const a = block.content?.imageAlignment ?? block.content?.alignment;
+  const a = (block as any).content?.imageAlignment ?? (block as any).content?.alignment;
   return a === 'left' || a === 'right' ? a : undefined;
 };
 
@@ -154,13 +150,90 @@ const containsItemGrid = computed(() => {
 
 const buttonPositionClass = ref('top-[0px]');
 
+const baselineTop = ref(0);
+const baselineScrollY = ref(0);
+const currentTop = ref(0);
+let ticking = false;
+
+const MAX_DELTA = Number.POSITIVE_INFINITY;
+
+const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
+
+const applyTop = () => {
+  buttonPositionClass.value = `top-[${currentTop.value}px]`;
+};
+
+const handleScroll = () => {
+  if (!containsItemGrid.value) return;
+  if (!ticking) {
+    ticking = true;
+    requestAnimationFrame(() => {
+      const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+      const delta = scrollY - baselineScrollY.value;
+      const next = clamp(baselineTop.value + delta, baselineTop.value, baselineTop.value + MAX_DELTA);
+      const rounded = Math.round(next);
+      if (rounded !== currentTop.value) {
+        currentTop.value = rounded;
+        applyTop();
+      }
+      ticking = false;
+    });
+  }
+};
+
+const attachScroll = () => {
+  baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
+  currentTop.value = baselineTop.value;
+  applyTop();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
+};
+
+const detachScroll = () => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', handleScroll);
+  }
+  currentTop.value = baselineTop.value;
+  applyTop();
+};
+
+const getBlockActions = () => ({
+  isEditable: true,
+  isMovable: false,
+  isDeletable: false,
+  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+  buttonClasses: ['border-2', 'border-purple-600', buttonPositionClass.value],
+  hoverBackground: ['hover:bg-purple-500'],
+});
+
 watch(
   () => itemGridHeight.value,
   (newHeight) => {
     if (containsItemGrid.value && newHeight > 0) {
       const topValue = Math.min(newHeight * 0.05, 200);
-      buttonPositionClass.value = `top-[${Math.round(topValue)}px]`;
+      baselineTop.value = Math.round(topValue);
+      baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
+      currentTop.value = baselineTop.value;
+      applyTop();
     }
+  },
+  { immediate: true },
+);
+
+onMounted(() => {
+  if (containsItemGrid.value) attachScroll();
+});
+
+onUnmounted(() => {
+  detachScroll();
+});
+
+watch(
+  () => containsItemGrid.value,
+  (has) => {
+    if (has) attachScroll();
+    else detachScroll();
   },
   { immediate: true },
 );

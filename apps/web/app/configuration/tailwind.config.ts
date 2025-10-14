@@ -15,7 +15,7 @@ export default {
     {
       pattern: /^top-\[\d+px\]$/,
     },
-    ...Array.from({ length: 500 }, (_, i) => `top-[${i + 1}px]`), // Safelist `top-[1px]` to `top-[500px]`
+    ...Array.from({ length: 10000 }, (_, i) => `top-[${i + 1}px]`), // Safelist `top-[1px]` to `top-[500px]`
   ],
   theme: {
     extend: {
