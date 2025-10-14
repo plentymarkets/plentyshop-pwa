@@ -1,5 +1,12 @@
 <template>
-  <div class="flex-col md:flex-row h-full flex scroll-smooth md:gap-4 relative" data-testid="gallery">
+  <div
+    :class="[
+      'h-full flex scroll-smooth relative',
+      galleryDirClass,
+      galleryGapClass
+    ]"
+    data-testid="gallery"
+  >
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
@@ -21,16 +28,20 @@
           :index="index"
           :active-index="activeIndex"
           :is-first-image="index === 0"
+          :disable-zoom="configuration.thumbnails.enableHoverZoom === false"
         />
       </SfScrollable>
     </div>
 
-    <div class="md:-order-1 overflow-hidden flex-shrink-0 basis-auto">
+    <div
+      v-if="configuration.thumbnails.showThumbnails"
+      :class="thumbContainerClass"
+    >
       <SfScrollable
         ref="thumbsReference"
-        wrapper-class="hidden md:inline-flex"
-        direction="vertical"
-        class="flex-row w-full items-center md:flex-col md:h-full md:px-0 md:scroll-pl-4 snap-y snap-mandatory flex gap-0.5 md:gap-0.5 overflow-auto scrollbar-hidden"
+        :wrapper-class="thumbsWrapperClass"
+        :direction="thumbsDirection"
+        :class="thumbsScrollableClass"
         :active-index="activeIndex"
         :prev-disabled="activeIndex === 0"
         :next-disabled="activeIndex === images.length - 1"
@@ -41,8 +52,7 @@
             variant="secondary"
             size="sm"
             square
-            class="absolute !rounded-full bg-white z-10 top-4 rotate-90 disabled:!hidden !ring-neutral-500 !text-neutral-500"
-            :class="{ hidden: firstVisibleThumbnailIntersected }"
+            :class="[prevBtnClass, { hidden: firstVisibleThumbnailIntersected }]"
             :aria-label="t('gallery.prev')"
           >
             <template #prefix>
@@ -58,7 +68,7 @@
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="t('gallery.thumb', { index: index + 1 })"
-          class="w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors flex-grow-0"
+          :class="thumbButtonClass"
           @click="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
@@ -80,8 +90,7 @@
             variant="secondary"
             size="sm"
             square
-            class="absolute !rounded-full bg-white z-10 bottom-4 rotate-90 disabled:!hidden !ring-neutral-500 !text-neutral-500"
-            :class="{ hidden: lastVisibleThumbnailIntersected }"
+            :class="[nextBtnClass, { hidden: lastVisibleThumbnailIntersected }]"
             :aria-label="t('gallery.next')"
           >
             <template #prefix>
@@ -111,9 +120,20 @@ import { SfScrollable, SfIconChevronLeft, SfIconChevronRight } from '@storefront
 import { productImageGetters } from '@plentymarkets/shop-api';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { useTimeoutFn, useIntersectionObserver, unrefElement } from '@vueuse/core';
-import type { ImagesData } from '@plentymarkets/shop-api';
+import type { GalleryProps } from '~/components/Gallery/types';
+import type { ImageGalleryContent } from '~/components/blocks/ImageGallery/types';
 
-const props = defineProps<{ images: ImagesData[] }>();
+const props = withDefaults(defineProps<GalleryProps>(), {
+  configuration: () => ({
+    thumbnails: {
+      showThumbnails: true,
+      thumbnailType: 'left-vertical',
+      enableHoverZoom: false
+    }
+  })
+});
+
+const configuration = computed(() => props.configuration as ImageGalleryContent);
 
 const { t } = useI18n();
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
@@ -124,6 +144,47 @@ const lastThumbReference = ref<HTMLButtonElement>();
 const firstVisibleThumbnailIntersected = ref(true);
 const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
+
+const type = computed(() => configuration.value.thumbnails.thumbnailType);
+const isSide = computed(() => type.value === 'left-vertical' || type.value === 'right-vertical');
+const isLeft = computed(() => type.value === 'left-vertical');
+
+const galleryDirClass = computed(() => (isSide.value ? 'flex-col md:flex-row' : 'flex-col md:flex-col'));
+const galleryGapClass = computed(() => (isSide.value ? 'md:gap-4' : 'md:gap-2'));
+
+const thumbContainerClass = computed(() => [
+  isLeft.value ? 'md:order-first' : 'md:order-last'
+]);
+
+const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
+
+const thumbsWrapperClass = computed(() => (isSide.value ? 'hidden md:inline-flex' : 'hidden md:inline-flex'));
+
+const thumbsScrollableClass = computed(() =>
+  isSide.value
+    ? 'flex-row w-full items-center md:flex-col md:h-full md:px-0 md:scroll-pl-4 snap-y snap-mandatory flex gap-0.5 md:gap-0.5 overflow-auto scrollbar-hidden'
+    : 'flex-row w-full items-center md:flex-row md:w-full md:h-auto md:px-0 md:scroll-pl-0 snap-x snap-mandatory flex gap-0.5 md:gap-0.5 overflow-auto scrollbar-hidden'
+);
+
+const thumbButtonClass = computed(() =>
+  isSide.value
+    ? 'w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors flex-grow-0'
+    : 'w-20 relative shrink-0 pb-1 snap-start cursor-pointer transition-colors'
+);
+
+const prevBtnClass = computed(() =>
+  [
+    'absolute !rounded-full bg-white z-10 disabled:!hidden !ring-neutral-500 !text-neutral-500',
+    isSide.value ? 'top-4 rotate-90' : 'left-4'
+  ].join(' ')
+);
+
+const nextBtnClass = computed(() =>
+  [
+    'absolute !rounded-full bg-white z-10 disabled:!hidden !ring-neutral-500 !text-neutral-500',
+    isSide.value ? 'bottom-4 rotate-90' : 'right-4'
+  ].join(' ')
+);
 
 const registerThumbsWatch = (
   singleThumbReference: Ref<HTMLButtonElement | undefined>,

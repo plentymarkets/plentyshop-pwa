@@ -10,8 +10,9 @@
       {{ t('double-tap-zoom') }}
     </div>
 
-    <Drift v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]" :key="route.fullPath" :index="index">
+    <template v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]">
       <NuxtImg
+        v-if="disableZoom"
         v-bind="nuxtImgProps"
         :data-testid="`product-image-${index}`"
         @touchstart="onTouchStart"
@@ -19,7 +20,18 @@
         @touchend="onTouchEnd"
         @load="updateImageStatusFor(`gallery-img-${index}`)"
       />
-    </Drift>
+
+      <Drift v-else :key="route.fullPath" :index="index">
+        <NuxtImg
+          v-bind="nuxtImgProps"
+          :data-testid="`product-image-${index}`"
+          @touchstart="onTouchStart"
+          @touchmove="onTouchMove"
+          @touchend="onTouchEnd"
+          @load="updateImageStatusFor(`gallery-img-${index}`)"
+        />
+      </Drift>
+    </template>
 
     <NuxtImg
       v-else
@@ -40,6 +52,9 @@ import { productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { ImagesData } from '@plentymarkets/shop-api';
 import type { ZoomableImageProps } from '~/components/ZoomableImage/types';
+import Drift from '~/components/Drift/Drift.vue';
+
+
 
 const props = defineProps<ZoomableImageProps>();
 const { t } = useI18n();

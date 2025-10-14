@@ -6,4 +6,5 @@ export type ZoomableImageProps = {
   index: number;
   activeIndex: number;
   isFirstImage: boolean;
+  disableZoom?: boolean;
 };
