@@ -15,7 +15,7 @@
           :style="{ color: iconColor }"
           @click="openMenu([])"
         >
-          <SfIconMenu class="relative" />
+          <SfIconMenu />
         </UiButton>
 
         <NuxtLink
