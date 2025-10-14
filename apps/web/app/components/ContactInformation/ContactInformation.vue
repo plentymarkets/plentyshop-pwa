@@ -6,21 +6,32 @@
 
     <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contactInfo.email') }}: {{ customerEmail }}</div>
 
-    <form v-if="(!isAuthorized && !isGuest) || isGuest" data-testid="contact-information-form" novalidate>
+    <form
+      v-if="(!isAuthorized && !isGuest) || isGuest"
+      data-testid="contact-information-form"
+      novalidate
+      @submit.prevent="validateAndSubmitEmail"
+    >
       <label>
         <UiFormLabel>{{ t('contactInfo.email') }} {{ t('form.required') }}</UiFormLabel>
-        <SfInput
-          v-model="customerEmail"
-          wrapper-class="focus:outline focus:outline-offset-1 focus:outline-1 focus-within:outline focus-within:outline-offset-1 focus-within:outline-1"
-          :autofocus="!customerEmail"
-          v-bind="customerEmailAttributes"
-          :invalid="Boolean(errors['customerEmail'])"
-          :disabled="disabled"
-          name="customerEmail"
-          type="email"
-          autocomplete="email"
-          @blur="validateAndSubmitEmail"
-        />
+        <span class="relative">
+          <SfInput
+            v-model="customerEmail"
+            wrapper-class="focus:outline focus:outline-offset-1 focus:outline-1 focus-within:outline focus-within:outline-offset-1 focus-within:outline-1"
+            :autofocus="!customerEmail"
+            v-bind="customerEmailAttributes"
+            :invalid="Boolean(errors['customerEmail'])"
+            :disabled="disabled"
+            name="customerEmail"
+            type="email"
+            autocomplete="email"
+            @blur="validateAndSubmitEmail"
+          />
+          <span v-if="!disabled" class="absolute inset-y-0 right-0 flex items-center mr-2">
+            <SfLoaderCircular v-if="customerLoading" size="sm" />
+            <SfIconCheck v-else-if="emailIsSaved" class="text-positive-700" size="sm" />
+          </span>
+        </span>
         <ErrorMessage
           id="customerEmailError"
           as="span"
@@ -61,19 +72,33 @@
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfIconClose, SfInput, SfLink, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLink, useDisclosure, SfLoaderCircular, SfIconCheck } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { ContactInformationProps } from './types';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
 
 const { t } = useI18n();
-const { user, loginAsGuest, isAuthorized, isGuest, validGuestEmail, emailValidationSchema } = useCustomer();
+const {
+  user,
+  loginAsGuest,
+  isAuthorized,
+  isGuest,
+  loading: customerLoading,
+  emailValidationSchema,
+  validGuestEmail,
+} = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
 
 const { errors, defineField, validate } = useForm({ validationSchema: emailValidationSchema });
 const [customerEmail, customerEmailAttributes] = defineField('customerEmail');
+const emailIsSaved = computed(
+  () =>
+    validGuestEmail.value &&
+    customerEmail.value?.trim()?.toLowerCase() === user.value?.guestMail?.trim().toLowerCase() &&
+    customerEmail.value?.length,
+);
 
 watch(isAuthorized, (updatedStatus) => {
   customerEmail.value = updatedStatus ? (user.value?.email ?? '') : (user.value?.guestMail ?? '');
@@ -88,15 +113,15 @@ watch(isGuest, (isGuestStatus) => {
 const validateAndSubmitEmail = async () => {
   const formData = await validate();
 
-  validGuestEmail.value = formData.valid;
-  if (!validGuestEmail.value) return;
+  if (!formData.valid) return;
 
   const guestEmail = customerEmail.value as string;
 
-  const shouldUpdateEmail =
-    user.value?.guestMail && user.value.guestMail.trim().toLowerCase() !== guestEmail.trim().toLowerCase();
-
-  shouldUpdateEmail ? await handleGuestEmailChange(guestEmail) : await saveContactInformation(guestEmail);
+  if (!user.value?.guestMail) {
+    await saveContactInformation(guestEmail);
+  } else if (!emailIsSaved.value) {
+    await handleGuestEmailChange(guestEmail);
+  }
 };
 
 const handleGuestEmailChange = async (updatedEmail: string) => {
