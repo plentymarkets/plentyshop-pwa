@@ -7,7 +7,6 @@ import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 
 export default defineNuxtConfig({
-  debug: true,
   srcDir: 'app/',
   telemetry: false,
   devtools: { enabled: true },
