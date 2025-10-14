@@ -1,4 +1,13 @@
 {
+  "notifyMe": {
+    "notifyButton": "Benachrichtige mich",
+    "form": {
+      "subTitle": "Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "Deine E-Mail"
+    }
+  },
+  "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert",
   "customerWish": "Hinweise und Wünsche",
   "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein.",
   "CookieBar": {

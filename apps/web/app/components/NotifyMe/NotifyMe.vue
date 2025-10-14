@@ -1,0 +1,132 @@
+<template>
+  <SfTooltip
+    show-arrow
+    placement="top"
+    label="Wir benachrichtigen dich, sobald das Produkt wieder verfügbar ist"
+    :middleware="[offset(24)]"
+  >
+    <UiButton
+      data-testid="notify-me-button"
+      size="lg"
+      class="w-full h-full"
+      @click="open"
+    >
+      <template #prefix>
+        <SfIconEmail size="sm" />
+      </template>
+      {{ t('notifyMe.notifyButton') }}
+    </UiButton>
+  </SfTooltip>
+
+  <Teleport to="body">
+    <UiModal
+      v-if="isOpen"
+      v-model="isOpen"
+      tag="section"
+      role="dialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      style="z-index: 9999;"
+      aria-labelledby="notify-modal-title"
+    >
+      <header>
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+          <SfIconClose />
+        </UiButton>
+        <h3 id="notify-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
+          {{ t('outOfStock') }}
+        </h3>
+        <p class="text-neutral-700 mb-6">
+          {{ t('notifyMe.form.subTitle') }}
+        </p>
+      </header>
+
+      <form class="space-y-4" @submit.prevent="handleSubmit">
+        <div>
+          <label for="email" class="block text-sm font-medium text-neutral-900 mb-2">
+            {{ t('notifyMe.form.emailLabel') }}
+          </label>
+          <SfInput
+            id="email"
+            v-model="email"
+            type="email"
+            :placeholder="t('notifyMe.form.emailPlaceholder')"
+            required
+            class="w-full"
+            @focus="formInteraction"
+          />
+        </div>
+
+        <div class="flex items-start gap-2">
+          <SfCheckbox
+            id="privacy-policy"
+            v-model="agreedToPolicy"
+            @change="formInteraction"
+          />
+          <label for="privacy-policy" class="text-sm text-neutral-700">
+            <i18n-t keypath="readAndAccepted" tag="span">
+              <template #insertText>
+                <NuxtLink :to="localePath(paths.privacyPolicy)" class="text-primary-700 underline" target="_blank">
+                  {{ t('privacyPolicy') }}
+                </NuxtLink>
+              </template>
+            </i18n-t>
+          </label>
+        </div>
+
+        <NuxtTurnstile
+          v-if="turnstileSiteKey && turnstileLoad"
+          ref="turnstileElement"
+          v-model="turnstileToken"
+          :site-key="turnstileSiteKey"
+          :options="{ theme: 'light' }"
+          class="flex justify-center"
+        />
+
+        <UiButton
+          type="submit"
+          size="lg"
+          class="w-full"
+          :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken)"
+        >
+          {{ t('notifyMe.notifyButton') }}
+        </UiButton>
+      </form>
+    </UiModal>
+  </Teleport>
+</template>
+
+<script lang="ts" setup>
+  import { SfIconEmail, SfIconClose, SfTooltip, SfInput, SfCheckbox, useDisclosure } from '@storefront-ui/vue';
+  import { offset } from '@floating-ui/vue';
+  import { ref } from 'vue';
+
+  const { isOpen, open, close } = useDisclosure();
+  const { user } = useCustomer();
+  const { t } = useI18n();
+  const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+  const localePath = useLocalePath();
+
+  const turnstileSiteKey = getSetting() ?? '';
+
+  const email = ref(user.value?.email || user.value?.guestMail || '');
+  const agreedToPolicy = ref(false);
+  const turnstileLoad = ref(false);
+  const turnstileToken = ref('');
+
+  const formInteraction = () => {
+    if (!turnstileLoad.value) {
+      turnstileLoad.value = true;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (turnstileSiteKey && !turnstileToken.value) {
+      return;
+    }
+
+    console.log('Email:', email.value);
+    console.log('Turnstile Token:', turnstileToken.value);
+
+    close();
+  };
+</script>

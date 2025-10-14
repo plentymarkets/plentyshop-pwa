@@ -103,6 +103,7 @@
                 class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
               >
                 <UiButton
+                  v-if="productGetters.isSalable(product)"
                   type="submit"
                   data-testid="add-to-cart"
                   size="lg"
@@ -119,6 +120,7 @@
                     </div>
                   </template>
                 </UiButton>
+                <NotifyMe v-else />
               </SfTooltip>
             </div>
 
@@ -137,7 +139,7 @@
                 </template>
               </i18n-t>
             </div>
-            <template v-if="showPayPalButtons">
+            <template v-if="showPayPalButtons && productGetters.isSalable(product)">
               <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
               <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
             </template>

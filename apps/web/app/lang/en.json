@@ -1,4 +1,13 @@
 {
+  "notifyMe": {
+    "notifyButton": "Notify me",
+    "form": {
+      "subTitle": "We'll notify you when item is back in stock",
+      "emailLabel": "E-mail address",
+      "emailPlaceholder": "Your E-mail"
+    }
+  },
+  "readAndAccepted": "I have read and accepted the {insertText}",
   "customerWish": "Notes and requests",
   "customerWishMessage": "Enter your message to us here.",
   "CookieBar": {
