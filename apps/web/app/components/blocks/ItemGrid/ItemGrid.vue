@@ -102,6 +102,7 @@ const gridClasses = computed(() =>
     ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'],
   ),
 );
+
 onMounted(() => {
   if (gridRef.value) {
     const height = gridRef.value.offsetHeight;

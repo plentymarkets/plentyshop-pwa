@@ -12,6 +12,10 @@ export default {
     {
       pattern: /^col-span-(1[0-2]|[1-9])$/,
     },
+    {
+      pattern: /^top-\[\d+px\]$/,
+    },
+    ...Array.from({ length: 500 }, (_, i) => `top-[${i + 1}px]`), // Safelist `top-[1px]` to `top-[500px]`
   ],
   theme: {
     extend: {

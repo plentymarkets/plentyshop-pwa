@@ -39,35 +39,9 @@
 <script setup lang="ts">
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-
-const { layout, content, configuration } = defineProps<MultiGridProps>();
-
 const { itemGridHeight } = useItemGridHeight();
-const buttonPositionClass = computed(() => {
-  const height = itemGridHeight.value;
-  const topValue = Math.min(height * 0.2, 200); // Calculate the top value
-  return `top-[${topValue}]`; // Generate a Tailwind-compatible class
-});
-
-console.log('MultiGrid:', buttonPositionClass.value);
-
-// const test = computed(() => {
-//   return 'top-20';
-// });
-
-// const buttonPositionClass = computed(() => {
-//   const height = itemGridHeight.value;
-//   const topValue = Math.min(height * 0.2, 200);
-//   return topValue;
-//  // return `top-[${topValue}px]`;
-// });
-
-// const buttonPositionStyle = computed(() => {
-//   const height = itemGridHeight.value;
-//   return {
-//     top: `calc(${Math.min(height * 0.2, 200)}px)`,
-//   };
-// });
+const { hasItemGridInColumns } = useBlockManager();
+const { layout, content, configuration } = defineProps<MultiGridProps>();
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
@@ -117,13 +91,8 @@ const getBlockActions = () => ({
   isEditable: true,
   isMovable: false,
   isDeletable: false,
-  classes: [
-    'bg-purple-400',
-    'hover:bg-purple-500',
-    'transition',
-    buttonPositionClass.value, // Add the dynamic class here
-  ],
-  buttonClasses: ['border-2', 'border-purple-600'],
+  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+  buttonClasses: ['border-2', 'border-purple-600', buttonPositionClass.value],
   hoverBackground: ['hover:bg-purple-500'],
 });
 
@@ -178,4 +147,21 @@ const columns = computed<Block[][]>(() => {
   });
   return blocks.value;
 });
+
+const containsItemGrid = computed(() => {
+  return hasItemGridInColumns(columns.value);
+});
+
+const buttonPositionClass = ref('top-[0px]');
+
+watch(
+  () => itemGridHeight.value,
+  (newHeight) => {
+    if (containsItemGrid.value && newHeight > 0) {
+      const topValue = Math.min(newHeight * 0.05, 200);
+      buttonPositionClass.value = `top-[${Math.round(topValue)}px]`;
+    }
+  },
+  { immediate: true },
+);
 </script>
