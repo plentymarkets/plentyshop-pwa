@@ -91,6 +91,7 @@ export const useCustomer = () => {
    */
   const loginAsGuest = async (email: string) => {
     try {
+      state.value.validGuestEmail = false;
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.doLoginAsGuest({ email: email });
 

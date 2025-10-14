@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { cartGetters } from '@plentymarkets/shop-api';
 
