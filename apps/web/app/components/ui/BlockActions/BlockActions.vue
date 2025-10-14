@@ -12,6 +12,7 @@
       ...(props.actions?.buttonClasses || []),
     ]"
     data-testid="edit-block-actions"
+  
   >
     <SfTooltip
       v-if="!props.actions.isEditable"
@@ -107,18 +108,56 @@
 <script lang="ts" setup>
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { SfIconDelete, SfIconExpandLess, SfIconExpandMore, SfIconBase, SfTooltip } from '@storefront-ui/vue';
+ import type { CSSProperties } from 'vue';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { BlockActionsProps } from '~/components/ui/BlockActions/types';
 const editLabel = 'Click to edit this block.';
 const positionLabel = 'Change block position.';
 const deleteLabel = 'Delete this block.';
 
+const { itemGridHeight } = useItemGridHeight();
+
+
+
+
+// const buttonPositionStyle = computed<CSSProperties>(() => {
+//   const height = itemGridHeight.value;
+//   return {
+//     top: `calc(${Math.min(height * 0.2, 200)}px)`,
+//   };
+// });
+
+
+// const buttonPositionStyle = computed<CSSProperties>(() => {
+//   const height = itemGridHeight.value;
+//   return {
+//     top: `calc(${Math.min(height * 0.2, 200)}px)`,
+//   };
+// });
+const buttonPositionClass = computed(() => {
+  const height = itemGridHeight.value;
+  const topValue = Math.min(height * 0.2, 200); // Calculate the top value
+  return `top-[${topValue}px]`; // Generate the Tailwind class
+});
+
+console.log('buttonPositionClass actions:', buttonPositionClass.value);
+
+
+// Define props with dynamic classes
 const props = withDefaults(defineProps<BlockActionsProps>(), {
   actions: () => ({
     isEditable: true,
     isMovable: true,
     isDeletable: true,
-    classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    classes: [
+      'flex',
+      'items-center',
+      'right-0',
+      'top-0',
+      'border',
+      'border-[#538AEA]',
+      'bg-white',
+    ],
     buttonClasses: [],
     hoverBackground: ['hover:bg-gray-100'],
   }),

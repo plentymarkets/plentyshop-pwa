@@ -32,7 +32,7 @@
         data-testid="pagination-top"
       />
     </template>
-    <section v-if="products?.length" :class="gridClasses" data-testid="category-grid">
+    <section  v-if="products?.length" ref="gridRef" :class="gridClasses" data-testid="category-grid">
       <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getVariationId(product)" when-visible>
         <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
@@ -81,6 +81,8 @@ const viewport = useViewport();
 const localePath = useLocalePath();
 const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
+const { setItemGridHeight } = useItemGridHeight();
+const gridRef = ref<HTMLElement | null>(null);
 
 const props = defineProps<ItemGridProps>();
 const products = computed(() => productsCatalog.value.products || []);
@@ -100,6 +102,12 @@ const gridClasses = computed(() =>
     ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'],
   ),
 );
+onMounted(() => {
+  if (gridRef.value) {
+    const height = gridRef.value.offsetHeight;
+    setItemGridHeight(height);
+  }
+});
 
 watch([currentPage, categoryId], ([newPage, newCategory], [oldPage, oldCategory]) => {
   if (newPage !== oldPage && newCategory === oldCategory) {
