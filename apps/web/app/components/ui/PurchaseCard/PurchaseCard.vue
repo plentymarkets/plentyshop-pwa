@@ -103,7 +103,7 @@
                 class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
               >
                 <UiButton
-                  v-if="productGetters.isSalable(product)"
+                  v-if="productGetters.isSalable(product) || !showNotifyMe"
                   type="submit"
                   data-testid="add-to-cart"
                   size="lg"
@@ -182,6 +182,8 @@ const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
+const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
+const showNotifyMe = getNotifyMeSetting();
 const localePath = useLocalePath();
 
 onMounted(() => {
