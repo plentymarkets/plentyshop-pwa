@@ -1,4 +1,4 @@
-import { PageObject } from '../../support/pageObjects/PageObject';
+import { PageObject } from './PageObject';
 
 export class ImageTextObject extends PageObject {
   openImageSelector(imageType: string) {
@@ -15,7 +15,7 @@ export class ImageTextObject extends PageObject {
   }
 
   checkNewImage() {
-    cy.get('[data-testid="image-block"]').should(
+    cy.get('[data-testid="image-block-image"]').should(
       'have.attr',
       'src',
       'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg',
