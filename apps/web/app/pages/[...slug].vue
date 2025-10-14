@@ -9,11 +9,11 @@
 
     <template v-if="config.enableCategoryEditing || productsCatalog.category?.type === 'content'">
       <EditablePage
-      :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
-      :identifier="identifier"
-      :type="'category'"
-      data-testid="category-page-content"
-    />
+        :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
+        :identifier="identifier"
+        :type="'category'"
+        data-testid="category-page-content"
+      />
     </template>
 
     <template v-else>
