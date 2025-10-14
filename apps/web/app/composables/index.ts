@@ -109,3 +109,4 @@ export * from './useRegisterForm';
 export * from './useFormLabel';
 export * from './useBlockContentHelper';
 export * from './useItemGridHeight';
+export * from './useScrollHandler';
