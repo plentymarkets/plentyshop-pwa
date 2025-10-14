@@ -25,11 +25,11 @@ const seoRichSnippetIdForPriceValidity = computed({
 {
   "en": {
     "label": "Select source for price validity in Rich Snippets of the item page",
-    "placeholder": "Enter ID from variation property of the type text for price validity",
+    "placeholder": "Enter ID from variation property of the type text for price validity"
   },
   "de": {
     "label": "Select source for price validity in Rich Snippets of the item page",
-    "placeholder": "Enter ID from variation property of the type text for price validity",
+    "placeholder": "Enter ID from variation property of the type text for price validity"
   }
 }
 </i18n>
