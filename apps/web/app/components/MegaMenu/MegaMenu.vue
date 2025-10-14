@@ -11,10 +11,11 @@
           variant="tertiary"
           square
           :aria-label="t('closeMenu')"
-          class="mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-700 active:text-white"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          :style="{ color: iconColor }"
           @click="openMenu([])"
         >
-          <SfIconMenu class="text-white" />
+          <SfIconMenu class="relative" />
         </UiButton>
 
         <NuxtLink
@@ -223,12 +224,14 @@ const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const { setDrawerOpen } = useDrawerState();
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+const { getSetting: getIconColor } = useSiteSettings('iconColor');
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
   onClose: close,
   placement: 'bottom-start',
   middleware: [],
 });
+const iconColor = computed(() => getIconColor());
 
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
