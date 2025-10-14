@@ -67,7 +67,6 @@
         },
         "parent_slot": 0,
         "content": {
-          "enableFilters": true,
           "fields": {
             "category": true,
             "sortBy": true,
