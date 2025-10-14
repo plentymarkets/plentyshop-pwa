@@ -6,7 +6,6 @@ const mockProps: SortFilterProps = {
   name: 'SortFilter',
   type: 'content',
   content: {
-    enableFilters: true,
     fields: {
       category: true,
       sortBy: true,
