@@ -32,7 +32,7 @@
         data-testid="pagination-top"
       />
     </template>
-    <section  v-if="products?.length" ref="gridRef" :class="gridClasses" data-testid="category-grid">
+    <section v-if="products?.length" ref="gridRef" :class="gridClasses" data-testid="category-grid">
       <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getVariationId(product)" when-visible>
         <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
