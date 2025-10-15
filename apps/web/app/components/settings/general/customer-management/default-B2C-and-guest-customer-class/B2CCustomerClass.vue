@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="mt-4">
+  <div class="mt-4">
     <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <p class="mb-4">{{ getEditorTranslation('note') }}</p>
     <div class="flex justify-between mb-2">
@@ -8,7 +8,7 @@
 
     <Multiselect
       v-model="customerClassOption"
-      data-testid="b2b-customer-class-select"
+      data-testid="b2c-customer-class-select"
       :options="customerClassesData"
       :placeholder="getEditorTranslation('placeholder')"
       label="name"
@@ -24,10 +24,9 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import type { CustomerClassOption } from '../1.default-B2C-and-guest-customer-class/types';
+import type { CustomerClassOption } from './types';
 
-const runtimeConfig = useRuntimeConfig();
-const { updateSetting, getSetting } = useSiteSettings('defaultB2BCustomerClass');
+const { updateSetting, getSetting } = useSiteSettings('defaultCustomerClassId');
 const { data: customerClassesData } = useCustomerClass();
 
 const customerClassOption = computed({
@@ -43,16 +42,16 @@ const customerClassOption = computed({
 <i18n lang="json">
 {
   "en": {
-    "description": "Which customer class should be assigned by default for B2B customers of the shop?",
+    "description": "Which customer class should be assigned by default for B2C customers of the shop? This customer class is also used as the default customer class for guest orders.",
     "note": "Note: These settings are only applied after saving the changes and reloading the page",
-    "label": "Default B2B customer class",
+    "label": "Default B2C and guest customer class",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
   "de": {
-    "description": "Which customer class should be assigned by default for B2B customers of the shop?",
+    "description": "Which customer class should be assigned by default for B2C customers of the shop? This customer class is also used as the default customer class for guest orders.",
     "note": "Note: These settings are only applied after saving the changes and reloading the page",
-    "label": "Default B2B customer class",
+    "label": "Default B2C and guest customer class",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   }
