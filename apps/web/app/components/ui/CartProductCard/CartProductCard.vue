@@ -3,6 +3,7 @@
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
+          v-if="cartItem.variation?.images?.all?.length"
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
           :alt="imageAlt"
@@ -178,6 +179,8 @@ onMounted(() => {
     nextTick(() => {
       if (!imgElement.complete) emit('load');
     });
+  } else {
+    imageLoaded.value = true;
   }
 });
 
