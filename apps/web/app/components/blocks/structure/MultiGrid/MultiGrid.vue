@@ -4,10 +4,12 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      class="group/col relative overflow-hidden"
+      class="group/col relative"
       data-testid="multi-grid-column"
     >
-      <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
+      <div v-for="row in column" :key="row.meta.uuid" class="group/row relative"
+           @mouseenter="onRowEnter(row)"
+           @mouseleave="onRowLeave">
         <div
           v-if="showOverlay(row)"
           class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
@@ -30,7 +32,7 @@
           <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
         </div>
 
-        <slot name="content" :content-block="row" />
+        <slot name="content" :content-block="row" :column-length="column.length" :is-row-hovered="showOverlay(row) && isRowHovered(row)" />
       </div>
     </div>
   </div>
@@ -41,6 +43,15 @@ import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structu
 import type { Block } from '@plentymarkets/shop-api';
 
 const { layout, content, configuration } = defineProps<MultiGridProps>();
+
+const hoveredRowUuid = ref<string | null>(null);
+const onRowEnter = (row: Block) => {
+  hoveredRowUuid.value = row.meta.uuid;
+};
+const onRowLeave = () => {
+  hoveredRowUuid.value = null;
+};
+const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
