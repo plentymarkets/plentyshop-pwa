@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import * as path from 'path';
 import * as https from 'https';
+import consola from "consola";
 dotenv.config({
   path: path.resolve(__dirname, '../web/.env'),
 });
@@ -32,6 +33,8 @@ const config = {
       errorHandler: (error: any, req: any, res: any) => {
         // override the default error handler to preserve the original error response
         // https://docs.alokai.com/middleware/guides/custom-error-handler#customize-the-error-handler
+        consola.log('error calling API');
+        consola.log(error);
         if (error?.response?.status) {
           res.status(error.response.status).send(error.response?.data);
         } else {
