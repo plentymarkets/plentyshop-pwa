@@ -1,23 +1,20 @@
-import type { ApiError } from '@plentymarkets/shop-api';
-
-export interface NotifyMeSubscribeParams {
-  email: string;
-  variationId: number;
-  turnstileToken?: string;
-}
-
-export interface UseNotifyMeState {
-  loading: boolean;
-}
+import type { ApiError } from '@plentymarkets/shop-api'; //TODO: load params type from here later as well
+import type {
+  UseNotifyMeState,
+  UseNotifyMeReturn,
+  Subscribe,
+  NotifyMeSubscribeParams,
+} from '~/composables/useNotifyMe/types';
 
 /**
  * @description Composable for subscribing to the back in stock notifications.
+ * @return UseNotifyMeReturn
  * @example
  * ``` ts
  * const { loading, subscribe } = useNotifyMe();
  * ```
  */
-export const useNotifyMe = () => {
+export const useNotifyMe: UseNotifyMeReturn = () => {
   const state = useState<UseNotifyMeState>('useNotifyMe', () => ({
     loading: false,
   }));
@@ -35,7 +32,7 @@ export const useNotifyMe = () => {
    * })
    * ```
    */
-  const subscribe = async (params: NotifyMeSubscribeParams): Promise<boolean> => {
+  const subscribe: Subscribe = async (params: NotifyMeSubscribeParams) => {
     try {
       state.value.loading = true;
 

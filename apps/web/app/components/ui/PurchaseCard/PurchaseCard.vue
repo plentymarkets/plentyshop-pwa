@@ -122,7 +122,7 @@
                 </UiButton>
               </SfTooltip>
               <div v-else class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
-                <NotifyMe :variation-id="Number(productGetters.getId(product))" />
+                <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
               </div>
             </div>
 
