@@ -10,10 +10,10 @@
 
     <label>
       <SfInput
-          v-model="itemCanonicalId"
-          :placeholder="getEditorTranslation('placeholder')"
-          type="text"
-          data-testid="seo-custom-canonical-url-for-single-item"
+        v-model="itemCanonicalId"
+        :placeholder="getEditorTranslation('placeholder')"
+        type="text"
+        data-testid="seo-custom-canonical-url-for-single-item"
       />
     </label>
   </div>
@@ -28,7 +28,6 @@ const itemCanonicalId = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
-
 </script>
 
 <i18n lang="json">
