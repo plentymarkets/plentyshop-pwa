@@ -15,11 +15,7 @@
         @swiper="onMainInit"
         @slide-change="onMainSlideChange"
       >
-        <SwiperSlide
-          v-for="(image, index) in images"
-          :key="`main-${index}`"
-          class="flex items-center justify-center"
-        >
+        <SwiperSlide v-for="(image, index) in images" :key="`main-${index}`" class="flex items-center justify-center">
           <ZoomableImage
             :images="images"
             :image="image"
@@ -58,7 +54,7 @@
             <NuxtImg
               :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
               :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"
-              class=" rounded h-full w-full"
+              class="rounded h-full w-full"
               :class="activeIndex === index ? 'border-primary-500' : ''"
               :width="productImageGetters.getImageWidth(image) ?? 80"
               :height="productImageGetters.getImageHeight(image) ?? 80"
@@ -154,19 +150,19 @@ const thumbsModules = [FreeMode, Thumbs];
 const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
 const thumbsSlidesPerView = computed(() => (isSide.value ? 'auto' : Math.min(images.value.length, 6)));
 const thumbsSwiperClass = computed(() =>
-  isSide.value ? 'hidden md:block md:h-full md:w-[5.5rem]' : 'hidden md:block md:w-full md:min-h-[5.5rem]'
+  isSide.value ? 'hidden md:block md:h-full md:w-[5.5rem]' : 'hidden md:block md:w-full md:min-h-[5.5rem]',
 );
 
 const thumbSlideClass = (index: number) =>
   isSide.value
     ? [
-      '!w-[5rem] !h-[5rem] flex items-center justify-center cursor-pointer snap-start',
-      activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
-    ]
+        '!w-[5rem] !h-[5rem] flex items-center justify-center cursor-pointer snap-start',
+        activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
+      ]
     : [
-      '!w-[5rem] !h-[5rem] inline-flex items-center justify-center cursor-pointer snap-start',
-      activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
-    ];
+        '!w-[5rem] !h-[5rem] inline-flex items-center justify-center cursor-pointer snap-start',
+        activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
+      ];
 
 const onMainInit = (swiper: SwiperType) => {
   mainSwiperRef.value = swiper;
@@ -194,14 +190,14 @@ const prevThumbBtnClass = computed(() =>
   [
     'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
-  ].join(' ')
+  ].join(' '),
 );
 
 const nextThumbBtnClass = computed(() =>
   [
     'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
-  ].join(' ')
+  ].join(' '),
 );
 
 onMounted(() => {
