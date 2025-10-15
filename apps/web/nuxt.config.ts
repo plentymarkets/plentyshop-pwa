@@ -157,6 +157,7 @@ export default defineNuxtConfig({
       robotsStopIndexing: process.env.NUXT_PUBLIC_ROBOTS_STOP_INDEXING || '0',
       robotsItemPage: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || 'ALL',
       robotsItemPageId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
+      itemCanonicalID: process.env.NUXT_PUBLIC_ITEM_CANONICAL_ID || '',
       seoRichSnippetBrand: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
       seoRichSnippetBrandId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '',
       seoRichSnippetManufacturer: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
