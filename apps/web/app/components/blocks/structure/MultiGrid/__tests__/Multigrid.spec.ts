@@ -142,4 +142,43 @@ describe('MultiGrid block', () => {
     expect(classes).toContain('md:grid-cols-12');
     expect(classes).toContain('lg:grid-cols-12');
   });
+
+  it('should render a 2 columns multigrid with 4 blocks (2 per column)', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        name: 'MultiGrid',
+        type: 'structure',
+        content: [
+          { name: 'TextCard', type: 'text', content: { text: 'Test' }, meta: { uuid: 'a' }, parent_slot: 0 },
+          {
+            name: 'Image',
+            type: 'Image',
+            content: { src: '/test.jpg', alt: 'Test image' },
+            meta: { uuid: 'b' },
+            parent_slot: 0,
+          },
+          {
+            name: 'Image',
+            type: 'image',
+            content: { src: '/test.jpg', alt: 'Test image' },
+            meta: { uuid: 'c' },
+            parent_slot: 1,
+          },
+          { name: 'TextCard', type: 'text', content: {}, meta: { uuid: 'd' }, parent_slot: 1 },
+        ],
+        configuration: { columnWidths: [6, 6] },
+        layout: { marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, backgroundColor: '#fff', gap: 'M' },
+        meta: { uuid: multiGridBlockUuid },
+      },
+    });
+
+    const columns = wrapper.findAll('[data-testid="multi-grid-column"]');
+    expect(columns.length).toBe(2);
+
+    columns.forEach((col) => {
+      expect(col.findAll('.group\\/row').length).toBe(2);
+    });
+
+    expect(wrapper.findAll('.group\\/row').length).toBe(4);
+  });
 });
