@@ -61,7 +61,7 @@ const seoRichSnippetBarcodeGtinId = computed({
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeGtin-1": "Do not display",
     "seoRichSnippetBarcodeGtin-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID",
+    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID"
   },
   "de": {
     "label": "Select source for GTIN barcode in Rich Snippets of the item page",
@@ -70,7 +70,7 @@ const seoRichSnippetBarcodeGtinId = computed({
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeGtin-1": "Do not display",
     "seoRichSnippetBarcodeGtin-2": "Use first GTIN barcode from variation",
-    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID",
+    "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID"
   }
 }
 </i18n>
