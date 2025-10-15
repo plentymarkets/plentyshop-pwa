@@ -75,7 +75,7 @@
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
     "eslint-module-utils": "^2.12.1",
-    "happy-dom": "^15.11.7",
+    "happy-dom": "^20.0.2",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "nuxt": "4.1.2",
