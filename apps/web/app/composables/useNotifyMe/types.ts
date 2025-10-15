@@ -1,8 +1,4 @@
-export interface NotifyMeSubscribeParams {
-  email: string;
-  variationId: number;
-  turnstileToken?: string;
-}
+import type { NotifyMeSubscribeParams } from '@plentymarkets/shop-api';
 
 export interface UseNotifyMeState {
   loading: boolean;

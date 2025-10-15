@@ -129,7 +129,7 @@
 
   const { isOpen, open, close } = useDisclosure();
   const { user } = useCustomer();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
   const { send } = useNotification();
   const { loading, subscribe } = useNotifyMe();
@@ -158,6 +158,7 @@
     }
 
     const success = await subscribe({
+      lang: locale.value,
       email: email.value,
       variationId: props.variationId,
       turnstileToken: turnstileToken.value,
