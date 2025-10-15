@@ -36,7 +36,7 @@ export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, cleanData, updateBlocks } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
-  const { openDrawerWithView } = useSiteConfiguration();
+  const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
 
   const currentBlock = ref<Block | null>(null);
@@ -236,16 +236,14 @@ export const useBlockManager = () => {
     return null;
   };
 
-  const deleteBlock = (uuid: string) => {
+  const deleteBlock = async (uuid: string) => {
     if (data.value && uuid !== null) {
       if (getBlockDepth(uuid) > 0) {
-        replaceWithEmptyGridBlock(uuid);
+        await deleteBlockFromColumn(uuid);
       } else {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-
-      const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
     }
   };
@@ -265,16 +263,25 @@ export const useBlockManager = () => {
     }
   };
 
-  const replaceWithEmptyGridBlock = async (blockUuid: string) => {
+  const deleteBlockFromColumn = async (blockUuid: string) => {
     const parentInfo = findBlockParent(data.value, blockUuid);
     if (parentInfo) {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
       const newBlock = { ...layoutTemplate.content[0] };
 
-      newBlock.parent_slot = index;
-      newBlock.meta.uuid = uuid();
-      parent.splice(index, 1, newBlock);
+      const blockToDelete = parent[index];
+      if (!blockToDelete) return;
+      const targetSlot = blockToDelete.parent_slot;
+
+      parent.splice(index, 1);
+
+      const columnBlocks = parent.filter((block) => block.parent_slot === targetSlot);
+      if (columnBlocks.length === 0) {
+        newBlock.parent_slot = targetSlot;
+        newBlock.meta.uuid = uuid();
+        parent.splice(index, 0, newBlock);
+      }
     }
   };
   const updateBlock = (index: number, updatedBlock: Block) => {
