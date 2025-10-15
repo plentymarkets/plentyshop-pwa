@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { SfInput, SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('itemCanonicalID');
+const { updateSetting, getSetting } = useSiteSettings('itemCanonicalId');
 
 const itemCanonicalId = computed({
   get: () => getSetting(),
