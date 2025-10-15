@@ -108,10 +108,7 @@ export const useBlockManager = () => {
     const targetBlock = parent[index];
     if (!targetBlock) return;
 
-    // Set parent_slot if targetBlock has it (for MultiGrid columns)
-    if (typeof targetBlock.parent_slot !== 'undefined') {
-      newBlock.parent_slot = targetBlock.parent_slot;
-    }
+    newBlock.parent_slot = targetBlock.parent_slot;
 
     if (position === 'inside') {
       insertIntoColumn(targetBlock, newBlock, parent);
