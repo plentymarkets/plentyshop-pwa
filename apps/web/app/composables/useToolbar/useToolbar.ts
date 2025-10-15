@@ -3,7 +3,7 @@ export const useToolbar = () => {
   const { send } = useNotification();
   const { $i18n } = useNuxtApp();
 
-  const { settingsIsDirty, dirtyKeys, saveSiteSettings, data: settingsData } = useSiteSettings();
+  const { settingsIsDirty, dirtyKeys, saveSiteSettings } = useSiteSettings();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
   const route = useRoute();
