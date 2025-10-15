@@ -71,7 +71,7 @@ definePageMeta({
     return validateProductParams(route.params);
   },
   type: 'product',
-  isBlockified: true,
+  isBlockified: false,
   identifier: 0,
 });
 const RecommendedProductsAsync = defineAsyncComponent(
