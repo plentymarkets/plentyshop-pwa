@@ -9,10 +9,11 @@
       data-testid="notify-me-button"
       size="lg"
       class="w-full h-full"
+      :aria-label="t('notifyMe.notifyButtonTooltip')"
       @click="open"
     >
       <template #prefix>
-        <SfIconEmail size="sm" />
+        <SfIconEmail size="sm" aria-hidden="true" />
       </template>
       {{ t('notifyMe.notifyButton') }}
     </UiButton>
@@ -27,15 +28,22 @@
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       style="z-index: 9999;"
       aria-labelledby="notify-modal-title"
+      aria-describedby="notify-modal-description"
     >
       <header>
-        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
-          <SfIconClose />
+        <UiButton
+          square
+          variant="tertiary"
+          class="absolute right-2 top-2"
+          aria-label="Close modal"
+          @click="close"
+        >
+          <SfIconClose aria-hidden="true" />
         </UiButton>
         <h3 id="notify-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
           {{ t('outOfStock') }}
         </h3>
-        <p class="text-neutral-700 mb-6">
+        <p id="notify-modal-description" class="text-neutral-700 mb-6">
           {{ t('notifyMe.form.subTitle') }}
         </p>
       </header>
@@ -62,12 +70,17 @@
             id="privacy-policy"
             v-model="agreedToPolicy"
             :disabled="loading"
+            required
             @change="formInteraction"
           />
           <label for="privacy-policy" class="text-sm text-neutral-700">
             <i18n-t keypath="readAndAccepted" tag="span">
               <template #insertText>
-                <NuxtLink :to="localePath(paths.privacyPolicy)" class="text-primary-700 underline" target="_blank">
+                <NuxtLink
+                  :to="localePath(paths.privacyPolicy)"
+                  class="text-primary-700 underline"
+                  target="_blank"
+                >
                   {{ t('privacyPolicy') }}
                 </NuxtLink>
               </template>
@@ -89,12 +102,13 @@
           size="lg"
           class="w-full"
           :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken) || loading"
+          :aria-busy="loading"
         >
           <template v-if="loading" #prefix>
-            <SfLoaderCircular size="sm" />
+            <SfLoaderCircular size="sm" aria-hidden="true" />
           </template>
           <template v-else #prefix>
-            <SfIconEmail size="sm" />
+            <SfIconEmail size="sm" aria-hidden="true" />
           </template>
           {{ t('notifyMe.notifyButton') }}
         </UiButton>
