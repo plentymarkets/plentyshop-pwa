@@ -161,7 +161,7 @@
       lang: locale.value,
       email: email.value,
       variationId: props.variationId,
-      turnstileToken: turnstileToken.value,
+      'cf-turnstile-response': turnstileToken.value,
     });
 
     if (success) {
