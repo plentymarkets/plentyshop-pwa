@@ -71,7 +71,13 @@
 
       <ClientOnly>
         <button
-          v-if="enableActions && clientPreview && !isDragging && props.block.name !== 'Footer' && (root || showBottomAddInGrid)"
+          v-if="
+            enableActions &&
+            clientPreview &&
+            !isDragging &&
+            props.block.name !== 'Footer' &&
+            (root || showBottomAddInGrid)
+          "
           :key="isDragging ? 'dragging' : 'not-dragging'"
           class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index, 'bg-purple-600': showBottomAddInGrid }]"
@@ -119,8 +125,9 @@ const { blockUuid } = useSiteConfiguration();
 
 const { getBlockDepth } = useBlockManager();
 const isInsideMultiGrid = computed(() => getBlockDepth(props.block.meta.uuid) > 0);
-const showBottomAddInGrid = computed(() =>
-  isInsideMultiGrid.value && props.columnLength === 1 && props.block.name !== 'EmptyGridBlock' && props.isRowHovered,
+const showBottomAddInGrid = computed(
+  () =>
+    isInsideMultiGrid.value && props.columnLength === 1 && props.block.name !== 'EmptyGridBlock' && props.isRowHovered,
 );
 
 const clientPreview = ref(false);

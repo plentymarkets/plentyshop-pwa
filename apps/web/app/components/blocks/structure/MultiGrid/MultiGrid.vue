@@ -7,9 +7,13 @@
       class="group/col relative"
       data-testid="multi-grid-column"
     >
-      <div v-for="row in column" :key="row.meta.uuid" class="group/row relative"
-           @mouseenter="onRowEnter(row)"
-           @mouseleave="onRowLeave">
+      <div
+        v-for="row in column"
+        :key="row.meta.uuid"
+        class="group/row relative"
+        @mouseenter="onRowEnter(row)"
+        @mouseleave="onRowLeave"
+      >
         <div
           v-if="showOverlay(row)"
           class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
@@ -32,7 +36,12 @@
           <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
         </div>
 
-        <slot name="content" :content-block="row" :column-length="column.length" :is-row-hovered="showOverlay(row) && isRowHovered(row)" />
+        <slot
+          name="content"
+          :content-block="row"
+          :column-length="column.length"
+          :is-row-hovered="showOverlay(row) && isRowHovered(row)"
+        />
       </div>
     </div>
   </div>
