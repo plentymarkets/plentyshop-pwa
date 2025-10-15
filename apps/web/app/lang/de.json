@@ -298,10 +298,11 @@
         "suppliers": "Lieferanten"
       }
     },
-    "contact": {
-      "label": "Kontakt",
+    "services": {
+      "label": "Services",
       "subcategories": {
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "register": "Registrieren"
       }
     },
     "help": {
@@ -322,18 +323,6 @@
         "privacyPolicy": "Datenschutzerklärung",
         "termsAndConditions": "AGB",
         "declarationOfAccessibility": "Barrierefreiheitserklärung"
-      }
-    },
-    "services": {
-      "label": "Services",
-      "subcategories": {
-        "clickCollect": "Click & Collect",
-        "couponsDiscounts": "Gutscheine & Rabatte",
-        "giftCards": "Geschenkkarten",
-        "newsletter": "Newsletter",
-        "sameDayDelivery": "Lieferung am selben Tag",
-        "shippingDelivery": "Versand & Lieferung",
-        "storeLocator": "Filialfinder"
       }
     }
   },
