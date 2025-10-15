@@ -28,9 +28,6 @@
     <div v-if="seoRichSnippetBarcodeGtin === '3'" class="mt-2">
       <UiFormLabel for="seoRichSnippetBarcodeGtinId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBarcodeGtinId" v-model="seoRichSnippetBarcodeGtinId" type="number" />
-      <div v-if="seoRichSnippetBarcodeGtinId === ''" class="text-red-600">
-        {{ getEditorTranslation('mustNotBeEmpty') }}
-      </div>
     </div>
   </div>
 </template>
@@ -65,7 +62,6 @@ const seoRichSnippetBarcodeGtinId = computed({
     "seoRichSnippetBarcodeGtin-1": "Do not display",
     "seoRichSnippetBarcodeGtin-2": "Use first GTIN barcode from variation",
     "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID",
-    "mustNotBeEmpty": "GTIN id must not be empty"
   },
   "de": {
     "label": "Select source for GTIN barcode in Rich Snippets of the item page",
@@ -75,7 +71,6 @@ const seoRichSnippetBarcodeGtinId = computed({
     "seoRichSnippetBarcodeGtin-1": "Do not display",
     "seoRichSnippetBarcodeGtin-2": "Use first GTIN barcode from variation",
     "seoRichSnippetBarcodeGtin-3": "Use specific GTIN barcode by ID",
-    "mustNotBeEmpty": "GTIN id must not be empty"
   }
 }
 </i18n>

@@ -28,9 +28,6 @@
     <div v-if="seoRichSnippetBarcodeGtin13 === '3'" class="mt-2">
       <UiFormLabel for="seoRichSnippetBarcodeGtin13Id">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBarcodeGtin13Id" v-model="seoRichSnippetBarcodeGtin13Id" type="number" />
-      <div v-if="seoRichSnippetBarcodeGtin13Id === ''" class="text-red-600">
-        {{ getEditorTranslation('mustNotBeEmpty') }}
-      </div>
     </div>
   </div>
 </template>
@@ -66,8 +63,7 @@ const seoRichSnippetBarcodeGtin13Id = computed({
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
     "seoRichSnippetBarcodeGtin13-2": "Use first GTIN-13 barcode from variation",
-    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID",
-    "mustNotBeEmpty": "GTIN-13 id must not be empty"
+    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID"
   },
   "de": {
     "label": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
@@ -76,8 +72,7 @@ const seoRichSnippetBarcodeGtin13Id = computed({
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
     "seoRichSnippetBarcodeGtin13-2": "Use first GTIN-13 barcode from variation",
-    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID",
-    "mustNotBeEmpty": "GTIN-13 id must not be empty"
+    "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID"
   }
 }
 </i18n>

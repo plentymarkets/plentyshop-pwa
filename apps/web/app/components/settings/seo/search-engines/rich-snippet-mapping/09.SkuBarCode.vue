@@ -28,9 +28,6 @@
     <div v-if="seoRichSnippetSkuBarcode === '3'" class="mt-2">
       <UiFormLabel for="seoRichSnippetSkuBarcodeId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetSkuBarcodeId" v-model="seoRichSnippetSkuBarcodeId" type="number" />
-      <div v-if="seoRichSnippetSkuBarcodeId === ''" class="text-red-600">
-        {{ getEditorTranslation('mustNotBeEmpty') }}
-      </div>
     </div>
   </div>
 </template>
@@ -65,8 +62,7 @@ const seoRichSnippetSkuBarcodeId = computed({
     "seoRichSnippetSkuBarcode-1": "Use variation ID",
     "seoRichSnippetSkuBarcode-2": "Use variation number",
     "seoRichSnippetSkuBarcode-3": "Use SKU from variation property",
-    "seoRichSnippetSkuBarcode-4": "Item ID",
-    "mustNotBeEmpty": "seoRichSnippetSkuBarcodeId id must not be empty"
+    "seoRichSnippetSkuBarcode-4": "Item ID"
   },
   "de": {
     "label": "Select source for SKU barcode in Rich Snippets of the item page",
@@ -76,8 +72,7 @@ const seoRichSnippetSkuBarcodeId = computed({
     "seoRichSnippetSkuBarcode-1": "Use variation ID",
     "seoRichSnippetSkuBarcode-2": "Use variation number",
     "seoRichSnippetSkuBarcode-3": "Use SKU from variation property",
-    "seoRichSnippetSkuBarcode-4": "Item ID",
-    "mustNotBeEmpty": "seoRichSnippetSkuBarcodeId id must not be empty"
+    "seoRichSnippetSkuBarcode-4": "Item ID"
   }
 }
 </i18n>

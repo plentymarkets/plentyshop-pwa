@@ -29,33 +29,6 @@ export const useToolbar = () => {
       await handleSave(updatePageTemplate);
     }
 
-    const inputListWithConditionalPossibilities = [
-      'seoRichSnippetBrand',
-      'seoRichSnippetBarcodeGtin',
-      'seoRichSnippetBarcodeGtin8',
-      'seoRichSnippetBarcodeGtin13',
-      'seoRichSnippetBarcodeIsbn',
-      'seoRichSnippetMpnBarcode',
-      'seoRichSnippetSkuBarcode',
-    ];
-    const possibleInputFieldsEmpty = Object.entries(settingsData.value).filter((input) => {
-      if (inputListWithConditionalPossibilities.includes(input[0]) && input[1] === '3') {
-        if (!settingsData.value[input[0] + 'Id'] || settingsData.value[input[0] + 'Id'] === '') {
-          return true;
-        }
-      }
-      return false;
-    });
-
-    if (possibleInputFieldsEmpty.length) {
-      send({
-        message:
-          'Additional fields for these options must not be empty: ' + possibleInputFieldsEmpty.map((field) => field[0]),
-        type: 'negative',
-      });
-      return;
-    }
-
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 

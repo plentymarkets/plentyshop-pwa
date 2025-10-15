@@ -29,7 +29,6 @@
     <div v-if="seoRichSnippetBrand === '3'" class="mt-2">
       <UiFormLabel for="seoRichSnippetBrandId">{{ getEditorTranslation('conditionalLabel') }}</UiFormLabel>
       <SfInput id="seoRichSnippetBrandId" v-model="seoRichSnippetBrandId" type="number" />
-      <div v-if="seoRichSnippetBrandId === ''" class="text-red-600">{{ getEditorTranslation('mustNotBeEmpty') }}</div>
     </div>
   </div>
 </template>
@@ -63,8 +62,7 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "Do not display",
     "seoRichSnippetBrandOption-2": "External name of the manufacturer",
-    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text",
-    "mustNotBeEmpty": "seoRichSnippetBrandId id must not be empty"
+    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
   },
   "de": {
     "description": "Map item data fields from your backend to Schema.org fields for Rich Snippets. This improves how search engines interpret your products and can enhance their presentation in search results.",
@@ -74,8 +72,7 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "De-Do not display",
     "seoRichSnippetBrandOption-2": "External name of the brand",
-    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text",
-    "mustNotBeEmpty": "seoRichSnippetBrandId id must not be empty"
+    "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
   }
 }
 </i18n>
