@@ -6,6 +6,7 @@
     :show-arrow="true"
   >
     <button
+      v-if="runtimeConfig.public.isDev"
       type="button"
       class="editor-button relative py-2 flex justify-center"
       :class="{ 'bg-editor-button text-white rounded-md': active }"
@@ -22,6 +23,7 @@
 import { SfTooltip } from '@storefront-ui/vue';
 import whiteIcon from '~/assets/icons/paths/seo-white.svg';
 import blackIcon from '~/assets/icons/paths/seo-black.svg';
+const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,

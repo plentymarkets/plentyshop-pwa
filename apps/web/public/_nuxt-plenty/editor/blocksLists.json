@@ -1200,7 +1200,6 @@
               "isGlobalTemplate": false
             },
             "content": {
-              "enableFilters": true,
               "fields": {
                 "category": true,
                 "sortBy": true,
@@ -1225,7 +1224,6 @@
               "isGlobalTemplate": false
             },
             "content": {
-              "enableFilters": true,
               "fields": {
                 "category": true,
                 "sortBy": true,

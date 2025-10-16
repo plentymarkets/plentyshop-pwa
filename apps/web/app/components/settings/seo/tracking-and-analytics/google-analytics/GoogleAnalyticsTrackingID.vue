@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
@@ -17,7 +17,6 @@
 import { SfInput } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('googleAnalyticsTrakingId');
-const runtimeConfig = useRuntimeConfig();
 
 const googleAnalyticsTrakingId = computed({
   get: () => getSetting(),
