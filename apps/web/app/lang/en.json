@@ -300,10 +300,11 @@
         "suppliers": "Suppliers"
       }
     },
-    "contact": {
-      "label": "Contact",
+    "services": {
+      "label": "Services",
       "subcategories": {
-        "contact": "Contact"
+        "contact": "Contact",
+        "register": "Register"
       }
     },
     "help": {
@@ -324,18 +325,6 @@
         "privacyPolicy": "Privacy policy",
         "termsAndConditions": "Terms and conditions",
         "declarationOfAccessibility": "Declaration of accessibility"
-      }
-    },
-    "services": {
-      "label": "Services",
-      "subcategories": {
-        "clickCollect": "Click & Collect",
-        "couponsDiscounts": "Coupons & Discounts",
-        "giftCards": "Gift cards",
-        "newsletter": "Newsletter",
-        "sameDayDelivery": "Same Day Delivery",
-        "shippingDelivery": "Shipping & Delivery",
-        "storeLocator": "Store Locator"
       }
     }
   },
