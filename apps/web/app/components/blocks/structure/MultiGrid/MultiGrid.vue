@@ -40,16 +40,19 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { itemGridHeight } = useItemGridHeight();
+// const { itemGridHeight } = useItemGridHeight();
+
+// const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler();
 const { hasItemGridInColumns } = useBlockManager();
-const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler();
-const { layout, content, configuration } = defineProps<MultiGridProps>();
+const { layout, content, configuration, meta } = defineProps<MultiGridProps>();
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+
+  const { attachScroll } = useScrollHandler(meta.uuid, ref(4000), ref(true));
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
@@ -127,6 +130,10 @@ const pairWithSlots = computed<Block[]>(() => {
   return list;
 });
 
+const containsItemGrid = computed(() => {
+  return hasItemGridInColumns(columns.value);
+});
+
 const columns = computed<Block[][]>(() => {
   const blocks = ref([] as Block[][]);
   pairWithSlots.value.forEach((block) => {
@@ -136,6 +143,7 @@ const columns = computed<Block[][]>(() => {
       }
 
       const slot = blocks.value[block.parent_slot];
+
       if (slot) {
         slot.push(block);
       }
@@ -144,23 +152,11 @@ const columns = computed<Block[][]>(() => {
   return blocks.value;
 });
 
-const containsItemGrid = computed(() => {
-  return hasItemGridInColumns(columns.value);
-});
-
 const getBlockActions = (block: Block) => {
-  if (block.name === 'ItemGrid') {
-    return {
-      isEditable: true,
-      isMovable: false,
-      isDeletable: false,
-      classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-      buttonClasses: ['border-2', 'border-purple-600'],
-      hoverBackground: ['hover:bg-purple-500'],
-      position: `${currentTop.value}px`,
-    };
-  }
+  const { itemGridHeight } = useItemGridHeight(block.meta.uuid);
 
+  const { currentTop } = useScrollHandler(block.meta.uuid, itemGridHeight, containsItemGrid);
+  console.log(currentTop.value);
   return {
     isEditable: true,
     isMovable: false,
@@ -168,38 +164,28 @@ const getBlockActions = (block: Block) => {
     classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
     buttonClasses: ['border-2', 'border-purple-600'],
     hoverBackground: ['hover:bg-purple-500'],
-    position: '',
+    position: `${currentTop.value}px`,
   };
+
 };
-watch(
-  () => itemGridHeight.value,
-  (newHeight) => {
-    if (containsItemGrid.value && newHeight > 0) {
-      const topValue = Math.min(newHeight * 0.05, 200);
-      baselineTop.value = Math.round(topValue);
-      const calculatedBottomValue = newHeight * 0.95;
-      bottomValue.value = Math.round(calculatedBottomValue);
-      baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
-      currentTop.value = baselineTop.value;
-    }
-  },
-  { immediate: true },
-);
 
 onMounted(() => {
-  if (containsItemGrid.value) attachScroll();
+  attachScroll();
 });
 
-onUnmounted(() => {
-  detachScroll();
-});
 
-watch(
-  () => containsItemGrid.value,
-  (has) => {
-    if (has) attachScroll();
-    else detachScroll();
-  },
-  { immediate: true },
-);
+// watch(
+//   () => itemGridHeight.value,
+//   (newHeight) => {
+//     if (containsItemGrid.value && newHeight > 0) {
+//       const topValue = Math.min(newHeight * 0.05, 200);
+//       baselineTop.value = Math.round(topValue);
+//       const calculatedBottomValue = newHeight * 0.95;
+//       bottomValue.value = Math.round(calculatedBottomValue);
+//       baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
+//       currentTop.value = baselineTop.value;
+//     }
+//   },
+//   { immediate: true },
+// );
 </script>

@@ -1,7 +1,11 @@
 import type { UseScrollHandlerReturn, UseScrollHandlerState } from './types';
 
-export const useScrollHandler: UseScrollHandlerReturn = () => {
-  const state = useState<UseScrollHandlerState>('useScrollHandler', () => ({
+export const useScrollHandler: UseScrollHandlerReturn = (
+  uuid: string,
+  itemGridHeight: Ref<number>,
+  containsItemGrid: Ref<boolean>,
+) => {
+  const state = useState<UseScrollHandlerState>(`useScrollHandler-${uuid}`, () => ({
     baselineTop: 0,
     baselineScrollY: 0,
     currentTop: 0,
@@ -46,6 +50,42 @@ export const useScrollHandler: UseScrollHandlerReturn = () => {
     }
     state.value.currentTop = state.value.baselineTop;
   };
+
+  watch(
+    () => itemGridHeight.value,
+    (newHeight) => {
+      if (containsItemGrid.value && newHeight > 0) {
+        const topValue = Math.min(newHeight * 0.05, 200);
+        state.value.baselineTop = Math.round(topValue);
+        const calculatedBottomValue = newHeight * 0.95;
+        state.value.bottomValue = Math.round(calculatedBottomValue);
+        state.value.baselineScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+        state.value.currentTop = state.value.baselineTop;
+      }
+    },
+    { immediate: true },
+  );
+
+  onMounted(() => {
+    console.log('Mounted useScrollHandler for', uuid);
+    if (containsItemGrid.value) attachScroll();
+    
+  });
+  
+
+  onUnmounted(() => {
+    detachScroll();
+  });
+
+  watch(
+    () => containsItemGrid.value,
+    (has) => {
+      console.log('containsItemGrid changed for', uuid, 'to', has);
+      if (has) attachScroll();
+      else detachScroll();
+    },
+    { immediate: true },
+  );
 
   return {
     baselineTop: toRef(state.value, 'baselineTop'),

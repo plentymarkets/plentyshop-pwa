@@ -19,4 +19,8 @@ export interface UseScrollHandler {
   detachScroll: DetachScroll;
 }
 
-export type UseScrollHandlerReturn = () => UseScrollHandler;
+export type UseScrollHandlerReturn = (
+  uuid: string,
+  itemGridHeight: Ref<number>,
+  containsItemGrid: Ref<boolean>,
+) => UseScrollHandler;
