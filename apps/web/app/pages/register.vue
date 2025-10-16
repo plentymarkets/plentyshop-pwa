@@ -112,31 +112,44 @@
         </div>
 
         <div class="grid grid-cols-1">
-          <SfLink class="select-none hover:cursor-pointer" @click="hasCompany = !hasCompany">
+          <SfLink
+            class="select-none hover:cursor-pointer"
+            role="button"
+            tabindex="0"
+            :aria-pressed="hasCompany"
+            :aria-label="!hasCompany ? t('form.addCompany') : t('form.removeCompany')"
+            @click="hasCompany = !hasCompany"
+            @keydown.enter.space="hasCompany = !hasCompany"
+          >
             {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
           </SfLink>
         </div>
 
         <div v-if="hasCompany" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label>
-            <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <label for="companyName">
+            <UiFormLabel for="companyName">{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput
+              id="companyName"
               v-model="formFields.companyName.value"
               name="companyName"
-              autocomplete="company"
+              autocomplete="organization"
               v-bind="formFieldsAttributes.companyName"
               :invalid="!!errors['companyName']"
+              :aria-invalid="!!errors['companyName']"
             />
             <ErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
           </label>
 
-          <label>
-            <UiFormLabel>{{ t('form.vatIdLabel') }}</UiFormLabel>
+          <label for="vatNumber">
+            <UiFormLabel for="vatNumber">{{ t('form.vatIdLabel') }}</UiFormLabel>
             <SfInput
+              id="vatNumber"
               v-model="formFields.vatNumber.value"
-              autocomplete="vatNumber"
+              name="vatNumber"
+              autocomplete="vat-number"
               v-bind="formFieldsAttributes.vatNumber"
               :invalid="invalidVAT"
+              :aria-invalid="invalidVAT"
               @input="clearInvalidVAT"
             />
             <span v-if="invalidVAT" class="flex text-negative-700 text-sm mt-2">
@@ -277,6 +290,7 @@ import { ErrorMessage } from 'vee-validate';
 import { paths } from '~/utils/paths';
 import { useRegisterForm } from '~/composables/useRegisterForm';
 import { SfLink, SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
+import { AddressType } from '@plentymarkets/shop-api';
 
 const { default: shippingCountries, fetchAggregatedCountries } = useAggregatedCountries();
 const localePath = useLocalePath();
@@ -286,9 +300,9 @@ const { send: _send } = useNotification();
 definePageMeta({ layout: false, middleware: ['guest-guard'] });
 usePageMeta().setPageMeta(t('auth.signup.submitLabel'), 'page');
 const turnstileLoad = ref(false);
+const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Shipping);
 const {
   hasCompany,
-  invalidVAT,
   turnstileElement,
   errors,
   onSubmit,
@@ -303,8 +317,6 @@ const {
 onNuxtReady(async () => {
   if (!shippingCountries.value?.length) await fetchAggregatedCountries();
 });
-
-const clearInvalidVAT = () => (invalidVAT.value = false);
 
 if (turnstileSiteKey.length > 0) {
   const turnstileWatcher = watch(Object.values(formFields), (data) => {
