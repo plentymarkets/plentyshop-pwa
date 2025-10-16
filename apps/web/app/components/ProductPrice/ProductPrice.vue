@@ -32,6 +32,7 @@ const priceWithProperties = computed(
     (productGetters.getSpecialOffer(props.product) ||
       productGetters.getGraduatedPriceByQuantity(props.product, cartGetters.getItemQty(lastUpdatedCartItem.value))
         ?.unitPrice.value ||
+      productGetters.getPrice(props.product) ||
       0) + getPropertiesPrice(props.product),
 );
 
