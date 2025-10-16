@@ -28,11 +28,11 @@ const useVatNumberValidation = computed({
 {
   "en": {
     "label": "Validate VAT number",
-    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES. You can also determine which status an order should have if its VAT number cannot be validated if the service cannot be reached."
+    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES."
   },
   "de": {
     "label": "Validate VAT number",
-    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES. You can also determine which status an order should have if its VAT number cannot be validated if the service cannot be reached."
+    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES."
   }
 }
 </i18n>
