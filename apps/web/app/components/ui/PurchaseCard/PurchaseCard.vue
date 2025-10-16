@@ -97,6 +97,7 @@
                 @change-quantity="changeQuantity"
               />
               <SfTooltip
+                v-if="productGetters.isSalable(product) || showNotifyMe"
                 show-arrow
                 placement="top"
                 :label="isNotValidVariation || isSalableText"
@@ -120,6 +121,9 @@
                   </template>
                 </UiButton>
               </SfTooltip>
+              <div v-else class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
+                <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
+              </div>
             </div>
 
             <div class="mt-4 typography-text-xs flex gap-1">
@@ -137,7 +141,7 @@
                 </template>
               </i18n-t>
             </div>
-            <template v-if="showPayPalButtons">
+            <template v-if="showPayPalButtons && productGetters.isSalable(product)">
               <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
               <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
             </template>
@@ -180,6 +184,8 @@ const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
+const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
+const showNotifyMe = getNotifyMeSetting();
 const localePath = useLocalePath();
 
 onMounted(() => {

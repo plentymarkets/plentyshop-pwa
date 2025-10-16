@@ -1,4 +1,16 @@
 {
+  "notifyMe": {
+    "notifyButtonTooltip": "We will notify you as soon as the product is available again.",
+    "notifyButton": "Notify me",
+    "form": {
+      "subTitle": "Enter your email address and we’ll let you know as soon as this item is back in stock.",
+      "emailLabel": "E-mail address",
+      "emailPlaceholder": "Your E-mail",
+      "turnstileFailed": "Turnstile validation failed",
+      "success": "Check your inbox! We've sent you a confirmation email"
+    }
+  },
+  "readAndAccepted": "I have read and accepted the {insertText}",
   "customerWish": "Notes and requests",
   "customerWishMessage": "Enter your message to us here.",
   "customerReference": "Your reference",
