@@ -114,7 +114,6 @@ export default defineNuxtConfig({
               'customer-management',
               'variation-position-based-on-sales',
               'security',
-              'vat-number-validation',
               'item-internal-sorting',
               'contact-form',
               'default-B2B-customer-class',
