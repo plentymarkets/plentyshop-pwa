@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
@@ -26,7 +26,6 @@ import type { SettingOption } from '~/utils/editorSettings';
 import { getCookieGroupOptions } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('googleAnalyticsCookieGroup');
-const runtimeConfig = useRuntimeConfig();
 
 const options = computed(() => getCookieGroupOptions());
 
