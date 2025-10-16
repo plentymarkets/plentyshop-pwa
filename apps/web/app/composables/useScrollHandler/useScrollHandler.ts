@@ -1,7 +1,7 @@
 import type { UseScrollHandlerReturn, UseScrollHandlerState } from './types';
 
-export const useScrollHandler: UseScrollHandlerReturn = () => {
-  const state = useState<UseScrollHandlerState>('useScrollHandler', () => ({
+export const useScrollHandler: UseScrollHandlerReturn = (uuid: string) => {
+  const state = useState<UseScrollHandlerState>(`useScrollHandler-${uuid}`, () => ({
     baselineTop: 0,
     baselineScrollY: 0,
     currentTop: 0,

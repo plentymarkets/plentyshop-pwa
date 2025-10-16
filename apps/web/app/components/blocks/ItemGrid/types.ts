@@ -21,6 +21,7 @@ export type ItemGridProps = {
   products?: Product[];
   productsPerPage?: number;
   totalProducts?: number;
+  parentUuid?: string;
 };
 
 export interface ItemGridContent {

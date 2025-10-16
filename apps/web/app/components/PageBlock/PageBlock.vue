@@ -51,6 +51,7 @@
 
       <component :is="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
+          <h2>PageBlock UUID: {{ slotProps.parentUuid ?? 'Nope' }}</h2>
           <PageBlock
             :index="index"
             :block="slotProps.contentBlock"
@@ -62,6 +63,7 @@
             :is-tablet="isTablet"
             :block-has-data="blockHasData"
             :change-block-position="changeBlockPosition"
+            :parent-uuid="slotProps.parentUuid"
             v-bind="slotProps"
           />
         </template>

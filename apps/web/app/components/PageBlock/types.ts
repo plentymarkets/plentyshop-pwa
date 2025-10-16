@@ -10,6 +10,7 @@ export interface PageBlockProps {
   isTablet: boolean;
   blockHasData?: (block: Block) => boolean;
   changeBlockPosition: (index: number, position: number) => void;
+  parentUuid?: string;
 }
 
 export interface LazyLoadConfig {

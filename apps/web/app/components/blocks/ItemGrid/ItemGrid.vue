@@ -81,10 +81,11 @@ const viewport = useViewport();
 const localePath = useLocalePath();
 const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
-const { setItemGridHeight } = useItemGridHeight();
+const props = defineProps<ItemGridProps>();
+const { setItemGridHeight } = useItemGridHeight('7b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a');
+console.log('ItemGrid props', props, props.parentUuid);
 const gridRef = ref<HTMLElement | null>(null);
 
-const props = defineProps<ItemGridProps>();
 const products = computed(() => productsCatalog.value.products || []);
 const totalProducts = computed(() => Number(productsCatalog.value.pagination.totals) || 0);
 const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);

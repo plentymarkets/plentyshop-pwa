@@ -29,8 +29,8 @@
         >
           <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions(row)" />
         </div>
-
-        <slot name="content" :content-block="row" />
+        <h2>Multigrid UUID: {{ meta.uuid }}</h2>
+        <slot name="content" :content-block="row" :parent-uuid="meta.uuid" />
       </div>
     </div>
   </div>
@@ -40,10 +40,11 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { itemGridHeight } = useItemGridHeight();
+const { layout, content, configuration, meta } = defineProps<MultiGridProps>();
+const { itemGridHeight } = useItemGridHeight(meta.uuid);
+console.log('MultiGrid uuid', meta.uuid);
 const { hasItemGridInColumns } = useBlockManager();
-const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler();
-const { layout, content, configuration } = defineProps<MultiGridProps>();
+const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler(meta.uuid);
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
@@ -174,6 +175,7 @@ const getBlockActions = (block: Block) => {
 watch(
   () => itemGridHeight.value,
   (newHeight) => {
+    console.log('newHeight', newHeight);
     if (containsItemGrid.value && newHeight > 0) {
       const topValue = Math.min(newHeight * 0.05, 200);
       baselineTop.value = Math.round(topValue);
