@@ -28,11 +28,11 @@ const showCustomerWishComponent = computed({
 {
   "en": {
     "label": "Customer Wish Input Field",
-    "description": "Toggle to show or hide the \"Customer Wish\" field during checkout."
+    "description": "Toggle to show or hide the \"Customer Wish\" input field during checkout."
   },
   "de": {
     "label": "Customer Wish Input Field",
-    "description": "Toggle to show or hide the \"Customer Wish\" field during checkout."
+    "description": "Toggle to show or hide the \"Customer Wish\" input field during checkout."
   }
 }
 </i18n>
