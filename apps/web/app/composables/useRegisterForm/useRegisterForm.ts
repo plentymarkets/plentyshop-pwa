@@ -21,7 +21,6 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
   const state = useState('useRegisterForm', () => ({
     isLoading: false,
     hasCompany: false,
-    invalidVAT: false,
     turnstileElement: null as { reset?: () => void } | null,
     defaultFormValues: {
       email: '',
@@ -238,7 +237,6 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
 
   return {
     hasCompany: toRef(state.value, 'hasCompany'),
-    invalidVAT: toRef(state.value, 'invalidVAT'),
     turnstileElement: toRef(state.value, 'turnstileElement'),
     errors,
     onSubmit,

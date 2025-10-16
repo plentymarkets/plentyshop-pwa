@@ -7,6 +7,11 @@ on:
         description: 'Base branch for the release'
         required: true
         default: 'main'
+      dryRun:
+        description: 'Dry run (no release created)'
+        type: boolean
+        required: true
+        default: false
   schedule:
     - cron: '0 9 * * 4' # Every Thursday at 09:00 UTC
 
@@ -16,7 +21,7 @@ permissions:
 
 jobs:
   create-release:
-    if: github.repository == 'plentymarkets/plentyshop/pwa' && (github.event_name == 'workflow_dispatch' || vars.SCHEDULED == 'true')
+    if: github.repository == 'plentymarkets/plentyshop-pwa' && (github.event_name == 'workflow_dispatch' || vars.SCHEDULED == 'true')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,6 +29,7 @@ jobs:
         with:
           ref: ${{ github.event.inputs.release-branch || 'main' }}
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
           
       - name: Fetch Git history
         run: |
@@ -185,6 +191,7 @@ jobs:
           cat release_notes.md
 
       - name: Create release
+        if: github.event.inputs.dryRun != 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NEW_VERSION: v${{ steps.version.outputs.new }}
@@ -210,3 +217,10 @@ jobs:
             git tag -d "$NEW_VERSION"
             exit 1
           fi
+
+      - name: Write release notes to GH Summary (Dry Run)
+        if: ${{ github.event.inputs.dryRun == 'true' }}
+        run: |
+          echo "## Release Notes (Dry Run)" >> $GITHUB_STEP_SUMMARY
+          cat release_notes.md >> $GITHUB_STEP_SUMMARY
+          echo "Release notes written to GitHub Summary for review."
