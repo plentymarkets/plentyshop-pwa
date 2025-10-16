@@ -27,12 +27,12 @@ const showCustomerWishComponent = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Customer Wish Input",
-    "description": "Toggle to show or hide the Customer Wish field during checkout."
+    "label": "Customer Wish Input Field",
+    "description": "Toggle to show or hide the \"Customer Wish\" field during checkout."
   },
   "de": {
-    "label": "Customer Wish Input",
-    "description": "Toggle to show or hide the Customer Wish field during checkout."
+    "label": "Customer Wish Input Field",
+    "description": "Toggle to show or hide the \"Customer Wish\" field during checkout."
   }
 }
 </i18n>

@@ -230,6 +230,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_WISH_COMPONENT === 'true',
+      showCustomerReferenceComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_REFERENCE_COMPONENT === 'true',
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       externalVatCheckInactive: process.env.NUXT_PUBLIC_EXTERNAL_VAT_CHECK_INACTIVE === 'true',
       itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
