@@ -4,7 +4,11 @@
       {{ t('customerReference') }}
     </h2>
 
-    <SfInput :placeholder="t('customerReferencePlaceholder')" />
+    <SfInput
+      v-model="customerSign"
+      :placeholder="t('customerReferencePlaceholder')"
+      @blur="setCustomerSign(customerSign)"
+    />
   </div>
 </template>
 
@@ -12,5 +16,7 @@
 import { SfInput } from '@storefront-ui/vue';
 const { t } = useI18n();
 const { getSetting } = useSiteSettings('showCustomerReferenceComponent');
+const { setCustomerSign } = useAdditionalInformation();
 const showCustomerReferenceComponent = getSetting();
+const customerSign = ref('');
 </script>
