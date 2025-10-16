@@ -10,10 +10,15 @@ import type { Block } from '@plentymarkets/shop-api';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import categoryTemplateData from './categoryTemplateData.json';
+import productTemplateDataEn from './productTemplateDataEn.json';
+import productTemplateDataDe from './productTemplateDataDe.json';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
+
+const useLocaleSpecificProductTemplate = (locale: string) =>
+  locale === 'de' ? (productTemplateDataDe as Block[]) : (productTemplateDataEn as Block[]);
 
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
@@ -74,6 +79,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
     if (!fetchedBlocks.length && type === 'category' && productsCatalog.value.category?.type === 'item') {
       fetchedBlocks = useCategoryTemplateData();
+    }
+
+    if (!fetchedBlocks.length && type === 'product') {
+      fetchedBlocks = useLocaleSpecificProductTemplate($i18n.locale.value);
     }
 
     if (Array.isArray(fetchedBlocks)) {

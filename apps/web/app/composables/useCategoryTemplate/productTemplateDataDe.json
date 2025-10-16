@@ -1,0 +1,70 @@
+[
+  {
+    "name": "MultiGrid",
+    "type": "structure",
+    "meta": {
+      "uuid": "993a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a",
+      "isGlobalTemplate": false
+    },
+    "configuration": {
+      "columnWidths": [6, 6]
+    },
+    "layout": {
+      "gap": "XL",
+      "narrowContainer": true
+    },
+    "content": [
+      {
+        "name": "ImageGallery",
+        "type": "content",
+        "meta": {
+          "uuid": "c1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 0,
+        "content": {
+          "thumbnails": {
+            "showThumbnails": true,
+            "thumbnailType": "left-vertical",
+            "enableHoverZoom": true
+          }
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Footer",
+    "type": "content",
+    "meta": {
+      "uuid": "4f7e2b1a-9c8d-4e6f-b3a2-1d0c5b4a3e2f",
+      "isGlobalTemplate": true
+    },
+    "content": {
+      "column1": {
+        "title": "Legal"
+      },
+      "column2": {
+        "title": "Contact",
+        "showContactLink": true,
+        "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
+      },
+      "column3": {
+        "title": "",
+        "htmlDescription": ""
+      },
+      "column4": {
+        "title": "",
+        "htmlDescription": ""
+      },
+      "footnote": "© PlentyONE GmbH 2025",
+      "footnoteAlign": "right",
+      "colors": {
+        "background": "#cfe4ec",
+        "text": "#151a16",
+        "footnoteBackground": "#151a16",
+        "footnoteText": "#8b8d8b"
+      }
+    }
+  }
+]
