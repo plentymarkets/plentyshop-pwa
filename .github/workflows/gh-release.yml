@@ -191,7 +191,7 @@ jobs:
           cat release_notes.md
 
       - name: Create release
-        if: ${{ github.event.inputs.dryRun == 'false' }}
+        if: github.event.inputs.dryRun != 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NEW_VERSION: v${{ steps.version.outputs.new }}
