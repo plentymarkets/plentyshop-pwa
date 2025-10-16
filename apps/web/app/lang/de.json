@@ -1,6 +1,8 @@
 {
   "customerWish": "Hinweise und Wünsche",
   "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein.",
+  "customerReference": "Ihr Zeichen",
+  "customerReferencePlaceholder": "Geben Sie hier Ihr Zeichen ein.",
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
