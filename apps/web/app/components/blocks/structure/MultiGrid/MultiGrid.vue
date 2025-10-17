@@ -52,7 +52,6 @@ const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
 
-  const { attachScroll } = useScrollHandler(meta.uuid, ref(4000), ref(true));
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
@@ -130,9 +129,8 @@ const pairWithSlots = computed<Block[]>(() => {
   return list;
 });
 
-const containsItemGrid = computed(() => {
-  return hasItemGridInColumns(columns.value);
-});
+
+
 
 const columns = computed<Block[][]>(() => {
   const blocks = ref([] as Block[][]);
@@ -152,11 +150,32 @@ const columns = computed<Block[][]>(() => {
   return blocks.value;
 });
 
-const getBlockActions = (block: Block) => {
-  const { itemGridHeight } = useItemGridHeight(block.meta.uuid);
 
-  const { currentTop } = useScrollHandler(block.meta.uuid, itemGridHeight, containsItemGrid);
-  console.log(currentTop.value);
+const containsItemGrid = computed(() => {
+  return hasItemGridInColumns(columns.value);
+});
+
+
+const { attachScroll, detachScroll, currentTop } = useScrollHandler(meta.uuid, ref(2000), containsItemGrid);
+
+const getBlockActions = (block: Block) => {
+  // const { itemGridHeight } = useItemGridHeight(block.meta.uuid);
+  // const containsItemGrid = computed(() => block.name === 'ItemGrid');
+
+  // const { currentTop } = useScrollHandler(block.meta.uuid, itemGridHeight, containsItemGrid);
+
+  if (block.name === 'ItemGrid') {
+    return {
+      isEditable: true,
+      isMovable: false,
+      isDeletable: false,
+      classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+      buttonClasses: ['border-2', 'border-purple-600'],
+      hoverBackground: ['hover:bg-purple-500'],
+      position: `${currentTop.value}px`,
+    };
+  }
+
   return {
     isEditable: true,
     isMovable: false,
@@ -164,15 +183,17 @@ const getBlockActions = (block: Block) => {
     classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
     buttonClasses: ['border-2', 'border-purple-600'],
     hoverBackground: ['hover:bg-purple-500'],
-    position: `${currentTop.value}px`,
+    position: '',
   };
-
 };
 
 onMounted(() => {
-  attachScroll();
+  if (containsItemGrid.value) attachScroll();
 });
 
+onUnmounted(() => {
+  detachScroll();
+});
 
 // watch(
 //   () => itemGridHeight.value,

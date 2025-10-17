@@ -66,21 +66,11 @@ export const useScrollHandler: UseScrollHandlerReturn = (
     { immediate: true },
   );
 
-  onMounted(() => {
-    console.log('Mounted useScrollHandler for', uuid);
-    if (containsItemGrid.value) attachScroll();
-    
-  });
-  
 
-  onUnmounted(() => {
-    detachScroll();
-  });
 
   watch(
     () => containsItemGrid.value,
     (has) => {
-      console.log('containsItemGrid changed for', uuid, 'to', has);
       if (has) attachScroll();
       else detachScroll();
     },
