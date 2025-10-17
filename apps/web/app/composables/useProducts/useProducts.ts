@@ -1,5 +1,6 @@
 import type { FacetSearchCriteria, Product, Facet } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
+import { facetMock } from './fakeFacetCall';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 
 /**
@@ -17,6 +18,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
     currentProduct: {} as Product,
   }));
+  const { $isPreview } = useNuxtApp();
 
   /**
    * @description Function for fetching products.
@@ -48,6 +50,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
+      if ($isPreview && state.value.data.products.length === 0) {
+        state.value.data = facetMock.data;
+      }
     }
 
     state.value.loading = false;
