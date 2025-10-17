@@ -4,7 +4,11 @@
       <template #summary>
         <div class="flex justify-between p-2 mb-2 select-none">
           <p class="mb-2 font-medium typography-headline-5">{{ facetGetters.getName(facet) }}</p>
+          <SfTooltip v-if="showTooltipInPreview(facet)" :label="placeholderText">
+            <SfIconInfo size="sm" />
+          </SfTooltip>
           <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
+          {{ firstProductIsDummyData }}
         </div>
       </template>
       <div v-if="facetGetters.getType(facet) === 'feedback'">
@@ -108,11 +112,14 @@ import {
   SfCheckbox,
   SfCounter,
   SfIconArrowUpward,
+  SfTooltip,
+  SfIconInfo,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
-
+const { $isPreview } = useNuxtApp();
+const { data: productsCatalog } = useProducts();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const { t } = useI18n();
 
@@ -124,7 +131,14 @@ const configuration = computed(() => props.configuration || ({} as SortFilterCon
 
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
 const maxPrice = ref(getFacetsFromURL().priceMax ?? '');
-
+const placeholderText =
+  'Please note that this is only sample data. In preview and live mode, you will see the facets for the actual products in this category. The number and type of customized filters may therefore vary.';
+const firstProductIsDummyData = computed(
+  () => productsCatalog.value.products.length && productsCatalog.value.products[0]?.texts.name1 === 'Example Product 1',
+);
+const showTooltipInPreview = (facet: FilterGroup) => {
+  return facetGetters.getType(facet) === 'dynamic' && $isPreview && firstProductIsDummyData.value;
+};
 const updatePriceFilter = () => {
   const min = minPrice.value.length > 0 ? Number(minPrice.value) : Number.NaN;
   const max = maxPrice.value.length > 0 ? Number(maxPrice.value) : Number.NaN;

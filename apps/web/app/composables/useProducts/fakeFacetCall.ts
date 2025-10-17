@@ -281,7 +281,7 @@ export const facetMock = {
         },
         facets: [],
         attributes: [],
-      }
+      },
     ],
     facets: [
       {
