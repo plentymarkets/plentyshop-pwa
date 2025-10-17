@@ -11,6 +11,7 @@
         v-for="row in column"
         :key="row.meta.uuid"
         class="group/row relative"
+        :data-uuid="row.meta.uuid"
         @mouseenter="onRowEnter(row)"
         @mouseleave="onRowLeave"
       >
