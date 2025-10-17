@@ -3,6 +3,8 @@ export interface UseScrollHandlerState {
   baselineScrollY: number;
   currentTop: number;
   bottomValue: number;
+  attachScroll: () => void;
+  detachScroll: () => void;
 }
 
 export type HandleScroll = () => void;
@@ -19,4 +21,4 @@ export interface UseScrollHandler {
   detachScroll: DetachScroll;
 }
 
-export type UseScrollHandlerReturn = () => UseScrollHandler;
+export type UseScrollHandlerReturn = (uuid: string) => UseScrollHandler;

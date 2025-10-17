@@ -40,9 +40,13 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { itemGridHeight } = useItemGridHeight();
+// declare global {
+//   interface Window {
+//     myGlobalConst?: number;
+//   }
+// }
+
 const { hasItemGridInColumns } = useBlockManager();
-const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler();
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
 const { $isPreview } = useNuxtApp();
@@ -50,6 +54,9 @@ const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+
+const itemGridHeights = useState<Record<string, number>>('itemGridHeights', () => ({}));
+const scrollStates = useState<Record<string, UseScrollHandlerState>>('scrollStates', () => ({}));
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
@@ -149,6 +156,21 @@ const containsItemGrid = computed(() => {
 });
 
 const getBlockActions = (block: Block) => {
+    console.log('getBlockActions called for block:', block.meta.uuid); // Debugging
+
+  const { itemGridHeight } = useItemGridHeight(block.meta.uuid);
+  const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler(block.meta.uuid);
+
+  itemGridHeights.value[block.meta.uuid] = itemGridHeight.value;
+
+  scrollStates.value[block.meta.uuid] = {
+    baselineTop: baselineTop.value,
+    bottomValue: bottomValue.value,
+    baselineScrollY: baselineScrollY.value,
+    currentTop: currentTop.value,
+    attachScroll,
+    detachScroll,
+  };
   if (block.name === 'ItemGrid') {
     return {
       isEditable: true,
@@ -171,34 +193,76 @@ const getBlockActions = (block: Block) => {
     position: '',
   };
 };
+// watch(
+//   () => itemGridHeights.value,
+//   (newHeights) => {
+//     console.log('itemGridHeights updated:', newHeights); // Debugging
+//     const totalHeight = Object.values(newHeights).reduce((sum, height) => sum + height, 0);
+
+//     if (containsItemGrid.value && totalHeight > 0) {
+//       const topValue = Math.min(totalHeight * 0.05, 200);
+
+//       Object.keys(scrollStates.value).forEach((uuid) => {
+//         const state = scrollStates.value[uuid];
+//         if (state) {
+//           state.baselineTop = Math.round(topValue);
+//           state.bottomValue = Math.round(totalHeight * 0.95);
+//           state.baselineScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+//           state.currentTop = state.baselineTop;
+//           console.log(`Updated scrollStates for UUID ${uuid}:`, state); // Debugging
+//         }
+//       });
+//     }
+//   },
+//   { deep: true, immediate: true },
+// );
 watch(
-  () => itemGridHeight.value,
-  (newHeight) => {
-    if (containsItemGrid.value && newHeight > 0) {
-      const topValue = Math.min(newHeight * 0.05, 200);
-      baselineTop.value = Math.round(topValue);
-      const calculatedBottomValue = newHeight * 0.95;
-      bottomValue.value = Math.round(calculatedBottomValue);
-      baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
-      currentTop.value = baselineTop.value;
+  () => itemGridHeights.value,
+  (newHeights) => {
+    const totalHeight = Object.values(newHeights).reduce((sum, height) => sum + height, 0);
+
+    if (containsItemGrid.value && totalHeight > 0) {
+      const topValue = Math.min(totalHeight * 0.05, 200);
+
+      Object.keys(scrollStates.value).forEach((uuid) => {
+        const state = scrollStates.value[uuid];
+        if (state) {
+          state.baselineTop = Math.round(topValue);
+          state.bottomValue = Math.round(totalHeight * 0.95);
+          state.baselineScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+          state.currentTop = state.baselineTop;
+          console.log(`Updated scrollStates for UUID ${uuid}:`, state); // Debugging
+        }
+      });
     }
   },
-  { immediate: true },
+  { deep: true, immediate: true },
 );
-
 onMounted(() => {
-  if (containsItemGrid.value) attachScroll();
+  Object.keys(scrollStates.value).forEach((uuid) => {
+    const { attachScroll } = useScrollHandler(uuid);
+    console.log('Attaching scroll for block UUID:', scrollStates.value);
+    attachScroll();
+  });
 });
 
 onUnmounted(() => {
-  detachScroll();
+  Object.keys(scrollStates.value).forEach((uuid) => {
+    const { detachScroll } = useScrollHandler(uuid);
+    detachScroll();
+  });
 });
-
 watch(
   () => containsItemGrid.value,
   (has) => {
-    if (has) attachScroll();
-    else detachScroll();
+    Object.keys(scrollStates.value).forEach((uuid) => {
+      const { attachScroll, detachScroll } = useScrollHandler(uuid);
+      if (has) {
+        attachScroll();
+      } else {
+        detachScroll();
+      }
+    });
   },
   { immediate: true },
 );
