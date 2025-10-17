@@ -325,6 +325,21 @@ export const useBlockManager = () => {
     };
   };
 
+  const hasItemGridInColumns = (columns: Block[][]): boolean => {
+    for (const column of columns) {
+      for (const block of column) {
+        if (block.name === 'ItemGrid') {
+          return true;
+        }
+
+        if (Array.isArray(block.content) && hasItemGridInColumns([block.content])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   return {
     blocksLists,
     blocksListContext,
@@ -358,5 +373,6 @@ export const useBlockManager = () => {
     getLazyLoadConfig,
     getLazyLoadRef,
     setBlocksListContext,
+    hasItemGridInColumns,
   };
 };

@@ -27,7 +27,7 @@
               : ''
           "
         >
-          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
+          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions(row)" />
         </div>
 
         <slot name="content" :content-block="row" />
@@ -40,6 +40,9 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
+const { itemGridHeight } = useItemGridHeight();
+const { hasItemGridInColumns } = useBlockManager();
+const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler();
 const { layout, content, configuration } = defineProps<MultiGridProps>();
 
 const { $isPreview } = useNuxtApp();
@@ -47,6 +50,7 @@ const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
+
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
@@ -78,22 +82,15 @@ const gridInlineStyle = computed(() => ({
   marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
   marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
 }));
+
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
+
 const getColumnClasses = (colIndex: number) => {
   const columnWidth = configuration.columnWidths[colIndex];
   return [`col-span-${columnWidth}`];
 };
-
-const getBlockActions = () => ({
-  isEditable: true,
-  isMovable: false,
-  isDeletable: false,
-  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-  buttonClasses: ['border-2', 'border-purple-600'],
-  hoverBackground: ['hover:bg-purple-500'],
-});
 
 const enableActions = computed(() => attrs.enableActions === true);
 
@@ -146,4 +143,63 @@ const columns = computed<Block[][]>(() => {
   });
   return blocks.value;
 });
+
+const containsItemGrid = computed(() => {
+  return hasItemGridInColumns(columns.value);
+});
+
+const getBlockActions = (block: Block) => {
+  if (block.name === 'ItemGrid') {
+    return {
+      isEditable: true,
+      isMovable: false,
+      isDeletable: false,
+      classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+      buttonClasses: ['border-2', 'border-purple-600'],
+      hoverBackground: ['hover:bg-purple-500'],
+      position: `${currentTop.value}px`,
+    };
+  }
+
+  return {
+    isEditable: true,
+    isMovable: false,
+    isDeletable: false,
+    classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
+    buttonClasses: ['border-2', 'border-purple-600'],
+    hoverBackground: ['hover:bg-purple-500'],
+    position: '',
+  };
+};
+watch(
+  () => itemGridHeight.value,
+  (newHeight) => {
+    if (containsItemGrid.value && newHeight > 0) {
+      const topValue = Math.min(newHeight * 0.05, 200);
+      baselineTop.value = Math.round(topValue);
+      const calculatedBottomValue = newHeight * 0.95;
+      bottomValue.value = Math.round(calculatedBottomValue);
+      baselineScrollY.value = typeof window !== 'undefined' ? window.scrollY : 0;
+      currentTop.value = baselineTop.value;
+    }
+  },
+  { immediate: true },
+);
+
+onMounted(() => {
+  if (containsItemGrid.value) attachScroll();
+});
+
+onUnmounted(() => {
+  detachScroll();
+});
+
+watch(
+  () => containsItemGrid.value,
+  (has) => {
+    if (has) attachScroll();
+    else detachScroll();
+  },
+  { immediate: true },
+);
 </script>

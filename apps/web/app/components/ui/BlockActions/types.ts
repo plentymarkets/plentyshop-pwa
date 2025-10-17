@@ -7,6 +7,7 @@ type BlockActionOptions = {
   classes?: string[];
   buttonClasses: string[];
   hoverBackground: string[];
+  position?: string;
 };
 
 export interface BlockActionsProps {

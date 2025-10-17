@@ -12,6 +12,7 @@
       ...(props.actions?.buttonClasses || []),
     ]"
     data-testid="edit-block-actions"
+    :style="{ top: props.actions.position }"
   >
     <SfTooltip
       v-if="!props.actions.isEditable"
@@ -121,6 +122,7 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
     classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
     buttonClasses: [],
     hoverBackground: ['hover:bg-gray-100'],
+    position: '',
   }),
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);
