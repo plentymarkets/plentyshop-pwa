@@ -142,4 +142,49 @@ describe('MultiGrid block', () => {
     expect(classes).toContain('md:grid-cols-12');
     expect(classes).toContain('lg:grid-cols-12');
   });
+
+  it('should render a 2 columns multigrid with 2 blocks in the first column and 1 block in the second column', () => {
+    const blocks = [
+      { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'a' }, parent_slot: 0 },
+      {
+        name: 'Image',
+        type: 'image',
+        content: { src: '/test.jpg', alt: 'Test image' },
+        meta: { uuid: 'b' },
+        parent_slot: 0,
+      },
+      { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'c' }, parent_slot: 1 },
+    ];
+
+    const wrapper = mount(MultiGrid, {
+      props: {
+        name: 'MultiGrid',
+        type: 'structure',
+        content: blocks,
+        configuration: { columnWidths: [6, 6] },
+        layout: { marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, backgroundColor: '#fff', gap: 'M' },
+        meta: { uuid: 'test-multigrid' },
+      },
+    });
+
+    const columns = wrapper.findAll('[data-testid="multi-grid-column"]');
+    expect(columns.length).toBe(2);
+    if (!columns[0] || !columns[1]) {
+      throw new Error('Expected two columns to be rendered');
+    }
+
+    expect(columns[0].findAll('.group\\/row').length).toBe(2);
+    expect(columns[1].findAll('.group\\/row').length).toBe(1);
+
+    const firstColBlocks = columns[0].findAll('.group\\/row');
+    if (!firstColBlocks[0] || !firstColBlocks[1]) {
+      throw new Error('Expected two blocks in the first column');
+    }
+
+    expect(firstColBlocks[0].attributes('data-uuid')).toBe('a');
+    expect(firstColBlocks[1].attributes('data-uuid')).toBe('b');
+
+    const secondColBlock = columns[1].find('.group\\/row');
+    expect(secondColBlock.attributes('data-uuid')).toBe('c');
+  });
 });
