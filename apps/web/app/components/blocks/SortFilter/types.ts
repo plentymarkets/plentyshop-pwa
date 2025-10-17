@@ -23,7 +23,6 @@ export type SortFilterProps = {
 };
 
 export type SortFilterContent = {
-  enableFilters: boolean;
   fields: SortFilterFieldsVisibility;
   filtersOrder: SortFilterFieldKey[];
   filtersDisabled: SortFilterFieldKey[];

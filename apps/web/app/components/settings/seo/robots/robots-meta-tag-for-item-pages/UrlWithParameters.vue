@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel class="mb-1">
         {{ getEditorTranslation('label') }}
@@ -18,7 +18,6 @@
 import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('robotsUrlWithParameters');
-const runtimeConfig = useRuntimeConfig();
 
 const robotsUrlWithParameters = computed({
   get: () => getSetting() === 'true',

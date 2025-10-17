@@ -8,6 +8,7 @@
           'justify-center': content?.itemCountPosition === 'center',
           'justify-start': content?.itemCountPosition === 'left',
         }"
+        data-testid="item-count"
       >
         <span class="font-bold md:text-lg">
           {{
@@ -28,6 +29,7 @@
         :total-items="totalProducts"
         :page-size="itemsPerPage"
         :max-visible-pages="maxVisiblePages"
+        data-testid="pagination-top"
       />
     </template>
     <section v-if="products?.length" :class="gridClasses" data-testid="category-grid">
@@ -46,6 +48,7 @@
             :href="localePath(paths.shipping)"
             target="_blank"
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            data-testid="shipping-link"
           >
             {{ t('delivery') }}
           </SfLink>
@@ -60,6 +63,7 @@
         :total-items="totalProducts"
         :page-size="itemsPerPage"
         :max-visible-pages="maxVisiblePages"
+        data-testid="pagination-bottom"
       />
     </template>
   </div>

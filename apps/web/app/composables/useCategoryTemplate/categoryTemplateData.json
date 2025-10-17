@@ -17,11 +17,29 @@
       "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
       "fieldsDisabled": [],
       "layout": {
-        "paddingTop": 40,
-        "paddingBottom": 40,
+        "paddingTop": 0,
+        "paddingBottom": 0,
         "paddingLeft": 0,
         "paddingRight": 0,
         "narrowContainer": true
+      },
+      "displayCategoryImage": "off",
+      "image": {
+        "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+        "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+        "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
+        "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
+        "alt": "",
+        "brightness": 0.75
+      },
+      "text": {
+        "color": "#000",
+        "bgColor": "#fff",
+        "bgOpacity": 1,
+        "textAlignment": "left",
+        "justify": "top",
+        "align": "left",
+        "background": true
       }
     }
   },
@@ -49,7 +67,6 @@
         },
         "parent_slot": 0,
         "content": {
-          "enableFilters": true,
           "fields": {
             "category": true,
             "sortBy": true,
