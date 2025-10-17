@@ -27,5 +27,6 @@ export const paths = {
   shipping: '/shipping',
   cancellationForm: '/cancellation-form',
   declarationOfAccessibility: '/declaration-of-accessibility',
+  contact: '/contact',
   register: '/register',
 };
