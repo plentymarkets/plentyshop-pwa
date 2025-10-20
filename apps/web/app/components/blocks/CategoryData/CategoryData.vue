@@ -9,7 +9,16 @@
           backgroundColor: content.text.bgColor,
         }"
       >
-        <FieldsOrder v-bind="props.content" />
+        <div
+          v-if="showNoTextMessage"
+          class="text-center"
+          role="alert"
+          aria-live="polite"
+          data-testid="no-text-selected"
+        >
+          {{ getEditorTranslation('no-text-fields-selected') }}
+        </div>
+        <FieldsOrder v-else v-bind="props.content" />
       </div>
     </template>
     <template v-else>
@@ -27,7 +36,7 @@
         />
 
         <div
-          v-if="enabledText"
+          v-if="showNoTextMessage"
           :class="[
             'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
             { 'md:p-10': props.content.text.bgColor },
@@ -68,16 +77,22 @@ const runtimeConfig = useRuntimeConfig();
 const props = defineProps<CategoryDataProps>();
 const { hexToRgba, getTextAlignment, getContentPosition, isMobile } = useBlockContentHelper();
 const { data: productsCatalog } = useProducts();
+const clientPreview = ref(false);
 
 const category = computed(() => productsCatalog.value.category || ({} as Category));
+const { $isPreview } = useNuxtApp();
+onNuxtReady(() => {
+  clientPreview.value = !!$isPreview;
+});
 
 const enabledText = computed(
   () =>
-    props.content.fields.name ||
-    props.content.fields.description1 ||
-    props.content.fields.description2 ||
-    props.content.fields.shortDescription,
+    props.content?.fields?.name ||
+    props.content?.fields?.description1 ||
+    props.content?.fields?.description2 ||
+    props.content?.fields?.shortDescription,
 );
+const showNoTextMessage = computed(() => clientPreview.value && !enabledText.value);
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
 
@@ -102,3 +117,18 @@ const categoryDataContentClass = computed(() => {
   return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%] mx-5';
 });
 </script>
+<i18n lang="json">
+{
+  "en": {
+    "no-text-fields-selected": "No text fields are selected."
+
+
+  },
+  "de": {
+    "no-text-fields-selected": "No text fields are selected."
+
+
+
+  }
+}
+</i18n>

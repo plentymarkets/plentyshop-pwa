@@ -40,6 +40,22 @@
             </div>
           </template>
         </draggable>
+        <div
+          v-if="showTextHint"
+          class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+          role="alert"
+          aria-live="polite"
+          data-testid="fields-empty-hint"
+        >
+          <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500"  aria-hidden="true" />
+          <span class="italic">
+            {{ fieldsEmptyHintText }}
+  (
+  <a :href="learnMoreTextUrl" target="_blank" rel="noopener noreferrer" class="underline">
+  {{ t('learn-more') }}  </a>
+  ).
+</span>
+        </div>
       </div>
 
       <div class="py-2">
@@ -141,7 +157,26 @@
           </div>
         </div>
       </div>
-
+      <div
+        v-if="showImageSlotHint"
+        class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+        role="alert"
+        aria-live="polite"
+        data-testid="image-slot-empty-hint"
+      >
+        <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500"  aria-hidden="true" />
+        <span class="italic">
+    {{ t('image-slot-empty-hint-prefix') }}
+    <a
+      :href="learnMoreUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="underline"
+    >
+        {{ t('learn-more') }}
+    </a>.
+  </span>
+      </div>
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <div class="flex items-center gap-2">
           <legend class="text-sm font-medium text-black m-0">
@@ -452,18 +487,71 @@ import {
   SfIconCheck,
   SfInput,
   SfTooltip,
-  SfIconInfo,
+  SfIconInfo, SfIconWarning,
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { clamp } from '@storefront-ui/shared';
+import { type Category, categoryGetters } from '@plentymarkets/shop-api';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
+const { data: productsCatalog } = useProducts();
+const { t } = useI18n();
 const textOpen = ref(true);
 const imageOpen = ref(true);
+const learnMoreUrl = computed(() => 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#900');
+const learnMoreTextUrl = computed(() => 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#800');
+const isBlank = (v: unknown) => v == null || String(v).trim() === '';
+
+const hasAnyLinkedImage = computed(() => {
+  const img = categoryDataBlock.value?.image;
+  if (!img) return false;
+  return ['wideScreen', 'desktop', 'tablet', 'mobile']
+    .some((k) => !isBlank((img as Record<string, unknown>)[k]));
+});
+
+const showImageSlotHint = computed(() =>
+  categoryDataBlock.value.displayCategoryImage !== 'off' && !hasAnyLinkedImage.value
+);
+const category = computed(() => productsCatalog.value?.category || ({} as Category));
+
+const getFieldText = (key: CategoryDataFieldKey): string => {
+  switch (key) {
+    case 'name':             return categoryGetters.getCategoryName(category.value) ?? '';
+    case 'description1':     return categoryGetters.getCategoryDescription1(category.value) ?? '';
+    case 'description2':     return categoryGetters.getCategoryDescription2(category.value) ?? '';
+    case 'shortDescription': return categoryGetters.getCategoryShortDescription(category.value) ?? '';
+  }
+};
+
+const missingTextFieldKeys = computed<CategoryDataFieldKey[]>(() => {
+  const order = categoryDataBlock.value.fieldsOrder as CategoryDataFieldKey[];
+  return order.filter((key) => {
+    const isEnabled = categoryDataBlock.value.fields[key];
+    const isDisabled = categoryDataBlock.value.fieldsDisabled?.includes(key);
+    if (!isEnabled || isDisabled) return false;
+    return isBlank(getFieldText(key));
+  });
+});
+
+const missingTextLabels = computed(() =>
+  missingTextFieldKeys.value.map((k) => fieldLabels[k]).join(', ')
+);
+const showTextHint = computed(() => missingTextFieldKeys.value.length > 0);
+const fieldsEmptyHintText = computed(() => {
+  const count = missingTextFieldKeys.value.length;
+
+  if (count === 1) {
+    const onlyKey = missingTextFieldKeys.value[0]! as CategoryDataFieldKey;
+    const onlyLabel =
+      (fieldLabels as Record<CategoryDataFieldKey, string>)[onlyKey];
+    return t('field-empty-hint-prefix', { field: onlyLabel });
+  }
+
+  return t('fields-empty-hint-prefix', { fields: missingTextLabels.value });
+});
 
 const categoryDataBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent,
@@ -516,6 +604,7 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     }
   }, 100);
 };
+
 </script>
 
 <i18n lang="json">
@@ -573,7 +662,13 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "field-empty-hint-prefix": "The field {field} has no content",
+    "fields-empty-hint-prefix": "The fields {fields} have no content",
+    "image-slot-empty-hint-prefix": "The selected image slot doesn't have a linked image",
+    "learn-more": "learn more"
+
   },
   "de": {
     "item-card-label": "Category text",
@@ -628,7 +723,13 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "field-empty-hint-prefix": "The field {field} has no content",
+    "fields-empty-hint-prefix": "The fields {fields} have no content",
+    "image-slot-empty-hint-prefix": "The selected image slot doesn't have a linked image",
+    "learn-more": "learn more"
   }
 }
 </i18n>
+

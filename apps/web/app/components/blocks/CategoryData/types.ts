@@ -52,3 +52,10 @@ export type CategoryDataContent = {
     background?: boolean;
   };
 };
+export interface CategoryData {
+  name?: string;
+  description1?: string;
+  description2?: string;
+  shortDescription?: string;
+}
+
