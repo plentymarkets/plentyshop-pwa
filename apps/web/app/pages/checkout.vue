@@ -89,7 +89,6 @@ const checkPayPalPaymentsEligible = async () => {
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
     await getScript(currency.value, true);
-    await fetchPaymentMethods();
   }
 };
 await callOnce(async () => {

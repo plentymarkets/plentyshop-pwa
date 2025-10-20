@@ -159,7 +159,10 @@ export const usePayPal = () => {
         state.value.isReady = true;
 
         if (paypalScript) {
-          await updateAvailableAPMs(paypalScript, currency);
+          updateAvailableAPMs(paypalScript, currency).then(() => {
+            const { emit } = usePlentyEvent();
+            emit('frontend:paypalAPMsLoaded', null);
+          });
         }
 
         return paypalScript;
