@@ -168,8 +168,7 @@
         <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
         <span class="italic">
           {{ t('image-slot-empty-hint-prefix') }}
-          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline">
-            {{ t('learn-more') }} </a
+          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline"> {{ t('learn-more') }} </a
           >.
         </span>
       </div>
