@@ -79,11 +79,23 @@ const typeLabels: Record<ThumbnailType, string> = {
 
 const thumbsOpen = ref(true);
 
-const thumbnailsCdn = {
-  'left-vertical': 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
-  'right-vertical': 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
-  bottom: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
-};
+const thumbnails: Thumbnails = [
+  {
+    type: 'left-vertical',
+    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
+    label: getEditorTranslation('thumb-left-vertical'),
+  },
+  {
+    type: 'right-vertical',
+    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
+    label: getEditorTranslation('thumb-right-vertical'),
+  },
+  {
+    type: 'bottom-horizontal',
+    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
+    label: getEditorTranslation('thumb-bottom-horizontal'),
+  },
+];
 </script>
 
 <i18n lang="json">
