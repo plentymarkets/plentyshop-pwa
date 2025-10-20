@@ -110,3 +110,4 @@ export * from './useFormLabel';
 export * from './useBlockContentHelper';
 export * from './useItemGridHeight';
 export * from './useScrollHandler';
+export * from './useItemGridCollection';

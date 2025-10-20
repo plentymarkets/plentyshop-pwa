@@ -8,6 +8,9 @@
       data-testid="multi-grid-column"
     >
       <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
+        <ul>
+          <li v-for="item in itemGridCollection" :key="item.uuid">UUID: {{ item.uuid }}, Height: {{ item.height }}</li>
+        </ul>
         <div
           v-if="showOverlay(row)"
           class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
@@ -41,17 +44,28 @@ import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structu
 import type { Block } from '@plentymarkets/shop-api';
 
 // const { itemGridHeight } = useItemGridHeight();
+const { getItemGridCollection } = useItemGridCollection();
 
 // const { baselineTop, bottomValue, baselineScrollY, currentTop, attachScroll, detachScroll } = useScrollHandler();
-const { hasItemGridInColumns } = useBlockManager();
-const { layout, content, configuration, meta } = defineProps<MultiGridProps>();
+const itemGridCollection = computed(() => getItemGridCollection());
+
+const scrollHandlers = computed(() =>
+  itemGridCollection.value.map((item) => {
+    const { attachScroll, detachScroll, currentTop } = useScrollHandler(item.uuid);
+    return { uuid: item.uuid, attachScroll, detachScroll, currentTop };
+  }),
+);
+
+
+const top = scrollHandlers.value.forEach((handler) => handler.currentTop);
+// const { hasItemGridInColumns } = useBlockManager();
+const { layout, content, configuration } = defineProps<MultiGridProps>();
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
-
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
@@ -129,9 +143,6 @@ const pairWithSlots = computed<Block[]>(() => {
   return list;
 });
 
-
-
-
 const columns = computed<Block[][]>(() => {
   const blocks = ref([] as Block[][]);
   pairWithSlots.value.forEach((block) => {
@@ -150,13 +161,11 @@ const columns = computed<Block[][]>(() => {
   return blocks.value;
 });
 
+// const containsItemGrid = computed(() => {
+//   return hasItemGridInColumns(columns.value);
+// });
 
-const containsItemGrid = computed(() => {
-  return hasItemGridInColumns(columns.value);
-});
-
-
-const { attachScroll, detachScroll, currentTop } = useScrollHandler(meta.uuid, ref(2000), containsItemGrid);
+// const { attachScroll, detachScroll, currentTop } = useScrollHandler(meta.uuid, ref(2000), containsItemGrid);
 
 const getBlockActions = (block: Block) => {
   // const { itemGridHeight } = useItemGridHeight(block.meta.uuid);
@@ -172,7 +181,7 @@ const getBlockActions = (block: Block) => {
       classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
       buttonClasses: ['border-2', 'border-purple-600'],
       hoverBackground: ['hover:bg-purple-500'],
-      position: `${currentTop.value}px`,
+      position: `${top}px`,
     };
   }
 
@@ -187,13 +196,13 @@ const getBlockActions = (block: Block) => {
   };
 };
 
-onMounted(() => {
-  if (containsItemGrid.value) attachScroll();
-});
+// onMounted(() => {
+//   if (containsItemGrid.value) attachScroll();
+// });
 
-onUnmounted(() => {
-  detachScroll();
-});
+// onUnmounted(() => {
+//   detachScroll();
+// });
 
 // watch(
 //   () => itemGridHeight.value,

@@ -81,11 +81,12 @@ const viewport = useViewport();
 const localePath = useLocalePath();
 const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
+const { setItemGrid, removeItemGrid } = useItemGridCollection();
 
 const gridRef = ref<HTMLElement | null>(null);
 
 const props = defineProps<ItemGridProps>();
-const { setItemGridHeight } = useItemGridHeight(props.meta.uuid);
+// const { setItemGridHeight } = useItemGridHeight(props.meta.uuid);
 const products = computed(() => productsCatalog.value.products || []);
 const totalProducts = computed(() => Number(productsCatalog.value.pagination.totals) || 0);
 const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
@@ -104,13 +105,17 @@ const gridClasses = computed(() =>
   ),
 );
 
+
 onMounted(() => {
   if (gridRef.value) {
     const height = gridRef.value.offsetHeight;
-    setItemGridHeight(height);
+    setItemGrid(props.meta.uuid, height); // Register UUID and height
   }
 });
 
+onUnmounted(() => {
+  removeItemGrid(props.meta.uuid); // Remove UUID from collection
+});
 watch([currentPage, categoryId], ([newPage, newCategory], [oldPage, oldCategory]) => {
   if (newPage !== oldPage && newCategory === oldCategory) {
     scrollToHTMLObject('#category-headline', false);
