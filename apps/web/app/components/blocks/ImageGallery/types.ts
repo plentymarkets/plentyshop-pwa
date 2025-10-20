@@ -3,7 +3,8 @@ import type { ImageGalleryContent } from '~/components/Gallery/types';
 
 export type ThumbnailType = 'left-vertical' | 'right-vertical' | 'bottom';
 
-export const THUMBNAILS: ThumbnailType[] = ['left-vertical', 'right-vertical', 'bottom'];
+type ThumbnailCard = { type: ThumbnailType; cdn: string; label: string };
+export type Thumbnails = ThumbnailCard[];
 
 export type ImageGalleryProps = {
   name: string;
@@ -17,6 +18,6 @@ export type ImageGalleryProps = {
   product?: Product;
 };
 
-export interface ImageFormProps {
+export interface ImageGalleryFormProps {
   uuid?: string;
 }

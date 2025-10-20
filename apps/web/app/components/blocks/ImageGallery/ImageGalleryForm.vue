@@ -20,26 +20,25 @@
 
         <div class="grid grid-cols-2 gap-3">
           <button
-            v-for="type in THUMBNAILS"
-            :key="type"
+            v-for="thumb in thumbnails"
+            :key="thumb.type"
             type="button"
             class="relative w-full rounded-lg border p-2 transition"
             :class="
-              uiItemImageBlock.thumbnails.thumbnailType === type
+              uiItemImageBlock.thumbnails.thumbnailType === thumb.type
                 ? 'border-neutral-900 ring-2 ring-neutral-900'
                 : 'border-neutral-300 hover:border-neutral-400'
             "
-            :aria-pressed="uiItemImageBlock.thumbnails.thumbnailType === type"
-            :aria-label="thumbnails[type].label"
+            :aria-pressed="uiItemImageBlock.thumbnails.thumbnailType === thumb.type"
+            :aria-label="thumb.label"
             data-testid="thumbnail-type-card"
-            @click="uiItemImageBlock.thumbnails.thumbnailType = type"
+            @click="uiItemImageBlock.thumbnails.thumbnailType = thumb.type"
           >
-            <NuxtImg :src="thumbnails[type].cdn" :alt="thumbnails[type].label" class="w-full h-auto rounded" />
+            <NuxtImg :src="thumb.cdn" :alt="thumb.label" class="w-full h-auto rounded" />
             <span
-              v-if="uiItemImageBlock.thumbnails.thumbnailType === type"
+              v-if="uiItemImageBlock.thumbnails.thumbnailType === thumb.type"
               class="absolute -top-2 -right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-neutral-900 text-white text-xs"
-              ><SfIconCheck size="xs"
-            /></span>
+            ><SfIconCheck size="xs" /></span>
           </button>
         </div>
       </div>
@@ -54,14 +53,10 @@
 
 <script setup lang="ts">
 import { SfSwitch, SfIconCheck } from '@storefront-ui/vue';
-import { THUMBNAILS } from '~/components/blocks/ImageGallery/types';
 import type { ImageGalleryContent } from '~/components/Gallery/types';
+import type { Thumbnails, ImageGalleryFormProps  } from '~/components/blocks/ImageGallery/types';
 
-type ItemImageFormProps = {
-  uuid?: string;
-};
-
-const props = defineProps<ItemImageFormProps>();
+const props = defineProps<ImageGalleryFormProps>();
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
@@ -73,20 +68,23 @@ const uiItemImageBlock = computed(
 
 const thumbsOpen = ref(true);
 
-const thumbnails = {
-  'left-vertical': {
+const thumbnails: Thumbnails = [
+  {
+    type: 'left-vertical',
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
     label: getEditorTranslation('thumb-left-vertical'),
   },
-  'right-vertical': {
+  {
+    type: 'right-vertical',
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
     label: getEditorTranslation('thumb-right-vertical'),
   },
-  bottom: {
+  {
+    type: 'bottom',
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
     label: getEditorTranslation('thumb-bottom'),
   },
-};
+];
 </script>
 
 <i18n lang="json">
