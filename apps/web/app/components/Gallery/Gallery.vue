@@ -101,7 +101,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, toRefs } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Thumbs, FreeMode, Keyboard, A11y } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';

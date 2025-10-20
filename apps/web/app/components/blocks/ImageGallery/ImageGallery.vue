@@ -16,5 +16,3 @@ const { addModernImageExtensionForGallery } = useModernImage();
 defineProps<ImageGalleryProps>();
 const { currentProduct } = useProducts();
 </script>
-
-<style scoped></style>
