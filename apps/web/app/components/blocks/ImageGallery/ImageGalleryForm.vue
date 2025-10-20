@@ -38,7 +38,8 @@
             <span
               v-if="uiItemImageBlock.thumbnails.thumbnailType === thumb.type"
               class="absolute -top-2 -right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-neutral-900 text-white text-xs"
-            ><SfIconCheck size="xs" /></span>
+              ><SfIconCheck size="xs"
+            /></span>
           </button>
         </div>
       </div>
@@ -54,7 +55,7 @@
 <script setup lang="ts">
 import { SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { ImageGalleryContent } from '~/components/Gallery/types';
-import type { Thumbnails, ImageGalleryFormProps  } from '~/components/blocks/ImageGallery/types';
+import type { Thumbnails, ImageGalleryFormProps } from '~/components/blocks/ImageGallery/types';
 
 const props = defineProps<ImageGalleryFormProps>();
 
