@@ -224,6 +224,8 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
 
   const onSubmit = handleSubmit(async () => {
     await registerUser();
+    state.value.turnstileElement?.reset?.();
+    turnstile.value = '';
     if (isAuthorized.value) await navigateAfterRegistration();
   });
 
