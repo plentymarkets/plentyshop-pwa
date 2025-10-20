@@ -121,14 +121,9 @@ const categoryDataContentClass = computed(() => {
 {
   "en": {
     "no-text-fields-selected": "No text fields are selected."
-
-
   },
   "de": {
     "no-text-fields-selected": "No text fields are selected."
-
-
-
   }
 }
 </i18n>

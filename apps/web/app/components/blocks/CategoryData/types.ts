@@ -58,4 +58,3 @@ export interface CategoryData {
   description2?: string;
   shortDescription?: string;
 }
-
