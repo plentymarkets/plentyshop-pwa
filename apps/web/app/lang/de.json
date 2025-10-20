@@ -1093,7 +1093,8 @@
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
       "missingContactOrUnexpectedFormat": "Fehlende Kontaktangaben oder unerwartetes Format.",
       "unexpectedAddressFormat": "Unerwartetes Adressformat.",
-      "passwordInvalid": "Das Passwort entspricht nicht den erforderlichen Sicherheitsstandards."
+      "passwordInvalid": "Das Passwort entspricht nicht den erforderlichen Sicherheitsstandards.",
+      "unauthorized": "Das Passwort kann nicht zurückgesetzt werden. Der Link ist möglicherweise abgelaufen oder wurde bereits verwendet."
     },
     "contactMail": {
       "failed": "Nachricht konnte nicht gesendet werden.",

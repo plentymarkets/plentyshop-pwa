@@ -189,18 +189,19 @@ const executeResetPassword = async () => {
   }
 
   try {
-    await resetPassword({
+    const resetSucceded = await resetPassword({
       password: password.value,
       password2: repeatPassword.value,
       hash: route.params.hash?.toString() || '',
       contactId: contactId,
     });
 
-    await fetchSession();
-    send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
-    await navigateTo(localePath(paths.home));
+    if (resetSucceded) send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
   } catch (error) {
     useHandleError(error as ApiError);
+  } finally {
+    await fetchSession();
+    await navigateTo(localePath(paths.home));
   }
 };
 </script>
