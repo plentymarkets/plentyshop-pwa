@@ -1,6 +1,8 @@
 {
   "customerWish": "Notes and requests",
   "customerWishMessage": "Enter your message to us here.",
+  "customerReference": "Your reference",
+  "customerReferencePlaceholder": "Enter your reference here.",
   "CookieBar": {
     "Accept All": "Accept All",
     "Accept Selection": "Accept Selection",
@@ -298,10 +300,11 @@
         "suppliers": "Suppliers"
       }
     },
-    "contact": {
-      "label": "Contact",
+    "services": {
+      "label": "Services",
       "subcategories": {
-        "contact": "Contact"
+        "contact": "Contact",
+        "register": "Register"
       }
     },
     "help": {
@@ -322,18 +325,6 @@
         "privacyPolicy": "Privacy policy",
         "termsAndConditions": "Terms and conditions",
         "declarationOfAccessibility": "Declaration of accessibility"
-      }
-    },
-    "services": {
-      "label": "Services",
-      "subcategories": {
-        "clickCollect": "Click & Collect",
-        "couponsDiscounts": "Coupons & Discounts",
-        "giftCards": "Gift cards",
-        "newsletter": "Newsletter",
-        "sameDayDelivery": "Same Day Delivery",
-        "shippingDelivery": "Shipping & Delivery",
-        "storeLocator": "Store Locator"
       }
     }
   },
@@ -1234,5 +1225,6 @@
       }
     }
   },
-  "cancelOrder": "Cancel order"
+  "cancelOrder": "Cancel order",
+  "tooltipForDummyPlaceholder": "Please note that this is only sample data. In preview and live mode, you will see the facets for the actual products in this category. The number and type of customized filters may therefore vary."
 }

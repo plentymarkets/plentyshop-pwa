@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="mt-4">
+  <div class="mt-4">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip
@@ -36,7 +36,6 @@ import type { SettingOption } from '~/utils/editorSettings';
 import { getSessionLifetimeOptions } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('sessionLifetime');
-const runtimeConfig = useRuntimeConfig();
 
 const options = computed(() => getSessionLifetimeOptions());
 
