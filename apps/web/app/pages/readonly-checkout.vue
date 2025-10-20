@@ -19,6 +19,7 @@
           <ShippingMethod :loading="loading" disabled />
         </div>
         <UiDivider :class="dividerClass" />
+        <CustomerReference />
         <CustomerWish />
         <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
@@ -127,6 +128,7 @@ const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckou
 const {
   shippingPrivacyAgreement,
   customerWish,
+  customerSign,
   doAdditionalInformation,
   loading: additionalInformationLoading,
 } = useAdditionalInformation();
@@ -246,6 +248,7 @@ const validateFields = async () => {
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
+    orderCustomerSign: customerSign.value,
   });
 
   return true;

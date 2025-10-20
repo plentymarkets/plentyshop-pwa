@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2 flex flex-col">
+  <div class="py-2 flex flex-col">
     <span class="mb-2">
       {{ getEditorTranslation('description') }}
     </span>
@@ -16,12 +16,11 @@
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
 
-const runtimeConfig = useRuntimeConfig();
-const { updateSetting, getSetting } = useSiteSettings('vatNumberValidation');
+const { updateSetting, getSetting } = useSiteSettings('externalVatCheckInactive');
 
 const useVatNumberValidation = computed({
-  get: () => getSetting() === 'true',
-  set: (value) => updateSetting(value.toString()),
+  get: () => !getSetting(),
+  set: (value) => updateSetting((!value).toString()),
 });
 </script>
 
@@ -29,11 +28,11 @@ const useVatNumberValidation = computed({
 {
   "en": {
     "label": "Validate VAT number",
-    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES. You can also determine which status an order should have if its VAT number cannot be validated if the service cannot be reached."
+    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES."
   },
   "de": {
     "label": "Validate VAT number",
-    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES. You can also determine which status an order should have if its VAT number cannot be validated if the service cannot be reached."
+    "description": "Do you want to check the validity of your customers’ VAT number? The VAT number is checked whenever an address is changed and upon completion of an order. The validation is carried out via the external service VIES."
   }
 }
 </i18n>

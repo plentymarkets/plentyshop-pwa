@@ -1,5 +1,5 @@
 <template>
-  <div :class="['flex items-center justify-center', classes]">
+  <div :class="['flex items-center justify-center font-editor', classes]">
     <slot />
   </div>
 </template>

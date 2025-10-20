@@ -7,10 +7,10 @@
   >
     <SfIconUpload size="2xl" class="mb-2" />
     <p>
-      Drag file here or
-      <span class="text-green-600 underline"> click to select file</span>
+      {{ getEditorTranslation('imageUpload.dragFile') }}
+      <span class="text-green-600 underline"> {{ getEditorTranslation('imageUpload.selectFile') }}</span>
     </p>
-    <p class="text-sm text-gray-400 mt-1">Maximum upload file size 512MB</p>
+    <p class="text-sm text-gray-400 mt-1">{{ getEditorTranslation('imageUpload.maxFileSize') }}</p>
     <input ref="fileInput" type="file" class="hidden" :accept="accept" @change="handleFileChange" />
   </div>
 </template>
@@ -36,3 +36,22 @@ const handleFileChange = makeHandleFileChange((file) => emit('file-selected', fi
 
 const handleDrop = makeHandleDrop((file) => emit('file-selected', file), notifyInvalid);
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "imageUpload": {
+      "dragFile": "Drag file here or",
+      "selectFile": "click to select file",
+      "maxFileSize": "Maximum upload file size is 100 MB"
+    }
+  },
+  "de": {
+    "imageUpload": {
+      "invalidFileType": "Drag file here or",
+      "selectFile": "click to select file",
+      "maxFileSize": "Maximum upload file size is 100 MB"
+    }
+  }
+}
+</i18n>
