@@ -150,6 +150,20 @@ const thumbSlideClass = (index: number) =>
         activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
       ];
 
+const prevThumbBtnClass = computed(() =>
+  [
+    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
+  ].join(' '),
+);
+
+const nextThumbBtnClass = computed(() =>
+  [
+    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
+  ].join(' '),
+);
+
 const mainBox = ref<HTMLElement | null>(null);
 const thumbsHeight = ref(0);
 const mainSwiperRef = ref<SwiperType | null>(null);
@@ -182,20 +196,6 @@ const slideTo = (index: number) => {
 
 const atStart = computed(() => activeIndex.value === 0);
 const atEnd = computed(() => activeIndex.value === images.value.length - 1);
-
-const prevThumbBtnClass = computed(() =>
-  [
-    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
-    isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
-  ].join(' '),
-);
-
-const nextThumbBtnClass = computed(() =>
-  [
-    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
-    isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
-  ].join(' '),
-);
 
 onMounted(() => {
   if (!mainBox.value) return;
