@@ -54,7 +54,7 @@ export const useApplePay = () => {
     state.value.transactionData = transaction;
   };
 
-  const createPaymentRequest = async () => {
+  const createPaymentRequest = () => {
     const lineItems: ApplePayJS.ApplePayLineItem[] =
       state.value.transactionData?.lineItems.map((item) => ({
         label: item.label,
@@ -87,7 +87,7 @@ export const useApplePay = () => {
     const { emit } = usePlentyEvent();
 
     try {
-      const paymentRequest = await createPaymentRequest();
+      const paymentRequest = createPaymentRequest();
       const paymentSession = new ApplePaySession(14, paymentRequest);
 
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
