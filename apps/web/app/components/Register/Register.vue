@@ -282,6 +282,7 @@ const registerUser = async () => {
 
     if (!order) viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
   }
+  clearTurnstile();
 };
 
 const onSubmit = handleSubmit(() => registerUser());
