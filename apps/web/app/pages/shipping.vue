@@ -8,10 +8,10 @@ definePageMeta({
   pageType: 'static',
 });
 const { setPageMeta } = usePageMeta();
-
+const { getSetting } = useSiteSettings('shippingTextCategoryId');
 const { categoryTemplateData, fetchCategoryTemplate } = useCategoryTemplate();
-const runtimeConfig = useRuntimeConfig();
-await fetchCategoryTemplate(Number(runtimeConfig.public.shippingTextCategoryId));
+
+await fetchCategoryTemplate(Number(getSetting()));
 const { t } = useI18n();
 
 const icon = 'page';
