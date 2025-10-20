@@ -82,7 +82,7 @@ const thumbnails = {
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
     label: getEditorTranslation('thumb-right-vertical'),
   },
-  'bottom': {
+  bottom: {
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
     label: getEditorTranslation('thumb-bottom'),
   },
