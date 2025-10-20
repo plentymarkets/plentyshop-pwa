@@ -1,8 +1,9 @@
 import type { Product } from '@plentymarkets/shop-api';
+import type { ImageGalleryContent } from '~/components/Gallery/types';
 
 export type ThumbnailType = 'left-vertical' | 'right-vertical' | 'bottom';
 
-export const THUMBNAIL_TYPES: ThumbnailType[] = ['left-vertical', 'right-vertical', 'bottom'];
+export const THUMBNAILS: ThumbnailType[] = ['left-vertical', 'right-vertical', 'bottom'];
 
 export type ImageGalleryProps = {
   name: string;
@@ -15,20 +16,6 @@ export type ImageGalleryProps = {
   };
   product?: Product;
 };
-
-export type ImageGalleryContent = {
-  index?: number;
-  thumbnails: {
-    showThumbnails?: boolean;
-    thumbnailType?: string;
-    enableHoverZoom?: boolean;
-  };
-};
-
-export interface ImageDimensions {
-  width: number;
-  height: number;
-}
 
 export interface ImageFormProps {
   uuid?: string;

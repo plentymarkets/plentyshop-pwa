@@ -107,7 +107,6 @@ import type { Swiper as SwiperType } from 'swiper';
 import { SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import { productImageGetters } from '@plentymarkets/shop-api';
 import type { GalleryProps } from '~/components/Gallery/types';
-import type { ImageGalleryContent } from '~/components/blocks/ImageGallery/types';
 
 const props = withDefaults(defineProps<GalleryProps>(), {
   configuration: () => ({
@@ -119,18 +118,9 @@ const props = withDefaults(defineProps<GalleryProps>(), {
   }),
 });
 
-const configuration = computed(() => props.configuration as ImageGalleryContent);
+const configuration = computed(() => props.configuration);
 const { images } = toRefs(props);
-
-const mainBox = ref<HTMLElement | null>(null);
-const thumbsHeight = ref(0);
-
 const activeIndex = ref(0);
-const mainSwiperRef = ref<SwiperType | null>(null);
-const thumbsSwiperRef = ref<SwiperType | null>(null);
-
-const mainSwiper = computed(() => mainSwiperRef.value);
-const thumbsSwiper = computed(() => thumbsSwiperRef.value as SwiperType | null);
 
 const viewport = useViewport();
 const showNav = computed(() => !viewport.isLessThan('md'));
@@ -142,9 +132,6 @@ const isLeft = computed(() => type.value === 'left-vertical');
 const galleryDirClass = computed(() => (isSide.value ? 'flex-col md:flex-row' : 'flex-col md:flex-col'));
 const galleryGapClass = computed(() => (isSide.value ? 'md:gap-4' : 'md:gap-2'));
 const thumbContainerClass = computed(() => [isLeft.value ? 'md:order-first' : 'md:order-last']);
-
-const mainModules = [Thumbs, Keyboard, A11y];
-const thumbsModules = [FreeMode, Thumbs];
 
 const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
 const thumbsSlidesPerView = computed(() => (isSide.value ? 'auto' : Math.min(images.value.length, 6)));
@@ -162,6 +149,17 @@ const thumbSlideClass = (index: number) =>
         '!w-[5rem] !h-[5rem] inline-flex items-center justify-center cursor-pointer snap-start',
         activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
       ];
+
+const mainBox = ref<HTMLElement | null>(null);
+const thumbsHeight = ref(0);
+const mainSwiperRef = ref<SwiperType | null>(null);
+const thumbsSwiperRef = ref<SwiperType | null>(null);
+
+const mainSwiper = computed(() => mainSwiperRef.value);
+const thumbsSwiper = computed(() => thumbsSwiperRef.value as SwiperType | null);
+
+const mainModules = [Thumbs, Keyboard, A11y];
+const thumbsModules = [FreeMode, Thumbs];
 
 const onMainInit = (swiper: SwiperType) => {
   mainSwiperRef.value = swiper;

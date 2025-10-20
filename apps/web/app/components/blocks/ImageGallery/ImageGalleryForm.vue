@@ -20,7 +20,7 @@
 
         <div class="grid grid-cols-2 gap-3">
           <button
-            v-for="type in THUMBNAIL_TYPES"
+            v-for="type in THUMBNAILS"
             :key="type"
             type="button"
             class="relative w-full rounded-lg border p-2 transition"
@@ -30,11 +30,11 @@
                 : 'border-neutral-300 hover:border-neutral-400'
             "
             :aria-pressed="uiItemImageBlock.thumbnails.thumbnailType === type"
-            :aria-label="typeLabels[type]"
+            :aria-label="thumbnails[type].label"
             data-testid="thumbnail-type-card"
             @click="uiItemImageBlock.thumbnails.thumbnailType = type"
           >
-            <NuxtImg :src="thumbnailsCdn[type]" :alt="typeLabels[type]" class="w-full h-auto rounded" />
+            <NuxtImg :src="thumbnails[type].cdn" :alt="thumbnails[type].label" class="w-full h-auto rounded" />
             <span
               v-if="uiItemImageBlock.thumbnails.thumbnailType === type"
               class="absolute -top-2 -right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-neutral-900 text-white text-xs"
@@ -54,8 +54,8 @@
 
 <script setup lang="ts">
 import { SfSwitch, SfIconCheck } from '@storefront-ui/vue';
-import { THUMBNAIL_TYPES } from '~/components/blocks/ImageGallery/types';
-import type { ThumbnailType, ImageGalleryContent } from '~/components/blocks/ImageGallery/types';
+import { THUMBNAILS } from '~/components/blocks/ImageGallery/types';
+import type { ImageGalleryContent } from '~/components/Gallery/types';
 
 type ItemImageFormProps = {
   uuid?: string;
@@ -71,31 +71,22 @@ const uiItemImageBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ImageGalleryContent,
 );
 
-const typeLabels: Record<ThumbnailType, string> = {
-  'left-vertical': getEditorTranslation('thumb-left-vertical'),
-  'right-vertical': getEditorTranslation('thumb-right-vertical'),
-  bottom: getEditorTranslation('thumb-bottom'),
-};
-
 const thumbsOpen = ref(true);
 
-const thumbnails: Thumbnails = [
-  {
-    type: 'left-vertical',
+const thumbnails = {
+  'left-vertical': {
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
     label: getEditorTranslation('thumb-left-vertical'),
   },
-  {
-    type: 'right-vertical',
+  'right-vertical': {
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
     label: getEditorTranslation('thumb-right-vertical'),
   },
-  {
-    type: 'bottom-horizontal',
+  'bottom': {
     cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
-    label: getEditorTranslation('thumb-bottom-horizontal'),
+    label: getEditorTranslation('thumb-bottom'),
   },
-];
+};
 </script>
 
 <i18n lang="json">
