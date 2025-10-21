@@ -125,4 +125,4 @@ export const useCategoryData = () => {
     fieldsEmptyHintText,
     clampBrightness,
   };
-}
+};
