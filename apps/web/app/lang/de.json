@@ -931,7 +931,8 @@
     "description": "Fügen Sie eine Lieferadresse hinzu, um Versandinformationen anzuzeigen.",
     "heading": "Lieferadresse",
     "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar.",
-    "noShippingMessage": "Keine Versandinformationen verfügbar"
+    "noShippingMessage": "Keine Versandinformationen verfügbar",
+    "noShippingMethodsNoAddress": "Tragen Sie Ihre Lieferadresse ein, um die passenden Versandarten zu sehen."
   },
   "shippingAddress": "Lieferadresse",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
