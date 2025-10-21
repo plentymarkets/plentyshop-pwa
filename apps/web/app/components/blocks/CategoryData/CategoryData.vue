@@ -87,10 +87,10 @@ onNuxtReady(() => {
 
 const enabledText = computed(
   () =>
-    props.content?.fields?.name ||
-    props.content?.fields?.description1 ||
-    props.content?.fields?.description2 ||
-    props.content?.fields?.shortDescription,
+    props.content.fields.name ||
+    props.content.fields.description1 ||
+    props.content.fields.description2 ||
+    props.content.fields.shortDescription,
 );
 const showNoTextMessage = computed(() => clientPreview.value && !enabledText.value);
 

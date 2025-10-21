@@ -472,7 +472,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CategoryDataContent, CategoryDataFieldKey } from './types';
+import type { CategoryDataFieldKey } from './types';
 import {
   SfIconArrowBack,
   SfIconArrowDownward,
@@ -487,121 +487,22 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
-import { clamp } from '@storefront-ui/shared';
-import { type Category, categoryGetters } from '@plentymarkets/shop-api';
+import { useCategoryData } from '~/composables/useCategoryData';
 
-const { data } = useCategoryTemplate();
-const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
-const { data: productsCatalog } = useProducts();
-const { t } = useI18n();
 const textOpen = ref(true);
 const imageOpen = ref(true);
-const learnMoreUrl = computed(() => 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#900');
-const learnMoreTextUrl = computed(
-  () => 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#800',
-);
-const isBlank = (v: unknown) => v == null || String(v).trim() === '';
+const { t } = useI18n();
 
-const hasAnyLinkedImage = computed(() => {
-  const img = categoryDataBlock.value?.image;
-  if (!img) return false;
-  return ['wideScreen', 'desktop', 'tablet', 'mobile'].some((k) => !isBlank((img as Record<string, unknown>)[k]));
-});
-
-const showImageSlotHint = computed(
-  () => categoryDataBlock.value.displayCategoryImage !== 'off' && !hasAnyLinkedImage.value,
-);
-const category = computed(() => productsCatalog.value?.category || ({} as Category));
-
-const getFieldText = (key: CategoryDataFieldKey): string => {
-  switch (key) {
-    case 'name':
-      return categoryGetters.getCategoryName(category.value) ?? '';
-    case 'description1':
-      return categoryGetters.getCategoryDescription1(category.value) ?? '';
-    case 'description2':
-      return categoryGetters.getCategoryDescription2(category.value) ?? '';
-    case 'shortDescription':
-      return categoryGetters.getCategoryShortDescription(category.value) ?? '';
-  }
-};
-
-const missingTextFieldKeys = computed<CategoryDataFieldKey[]>(() => {
-  const order = categoryDataBlock.value.fieldsOrder as CategoryDataFieldKey[];
-  return order.filter((key) => {
-    const isEnabled = categoryDataBlock.value.fields[key];
-    const isDisabled = categoryDataBlock.value.fieldsDisabled?.includes(key);
-    if (!isEnabled || isDisabled) return false;
-    return isBlank(getFieldText(key));
-  });
-});
-
-const missingTextLabels = computed(() => missingTextFieldKeys.value.map((k) => fieldLabels[k]).join(', '));
-const showTextHint = computed(() => missingTextFieldKeys.value.length > 0);
-const fieldsEmptyHintText = computed(() => {
-  const count = missingTextFieldKeys.value.length;
-
-  if (count === 1) {
-    const onlyKey = missingTextFieldKeys.value[0]! as CategoryDataFieldKey;
-    const onlyLabel = (fieldLabels as Record<CategoryDataFieldKey, string>)[onlyKey];
-    return t('field-empty-hint-prefix', { field: onlyLabel });
-  }
-
-  return t('fields-empty-hint-prefix', { fields: missingTextLabels.value });
-});
-
-const categoryDataBlock = computed(
-  () => findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent,
-);
-
-const clampBrightness = (event: Event, type: string) => {
-  const currentValue = (event.target as HTMLInputElement)?.value;
-  const nextValue = Number.parseFloat(currentValue);
-
-  if (type === 'image') {
-    categoryDataBlock.value.image.brightness = clamp(nextValue, 0, 1);
-  }
-  if (type === 'text') {
-    categoryDataBlock.value.text.bgOpacity = clamp(nextValue, 0, 1);
-  }
-};
-
-const fieldLabels: Record<CategoryDataFieldKey, string> = {
-  name: getEditorTranslation('category-name'),
-  description1: getEditorTranslation('category-description-1'),
-  description2: getEditorTranslation('category-description-2'),
-  shortDescription: getEditorTranslation('short-description'),
-};
-
-watch(
-  () => categoryDataBlock.value.image.fillMode,
-  (newMode) => {
-    if (newMode === 'fill') {
-      categoryDataBlock.value.layout.paddingTop = 0;
-      categoryDataBlock.value.layout.paddingBottom = 0;
-      categoryDataBlock.value.layout.paddingLeft = 0;
-      categoryDataBlock.value.layout.paddingRight = 0;
-
-      changeCategoryImageWidth(true);
-    }
-
-    if (newMode === 'fit') {
-      changeCategoryImageWidth(false);
-    }
-  },
-);
-
-const changeCategoryImageWidth = (fullWidth: boolean) => {
-  categoryDataBlock.value.layout.narrowContainer = !fullWidth;
-
-  setTimeout(() => {
-    const el = document.querySelector(`[data-uuid="${blockUuid.value}"]`);
-    if (el) {
-      fullWidth ? el.classList.remove('max-w-screen-3xl', 'px-4', 'md:px-6') : el.classList.add('max-w-screen-3xl');
-    }
-  }, 100);
-};
+const {
+  learnMoreUrl,
+  learnMoreTextUrl,
+  categoryDataBlock,
+  fieldLabels,
+  showImageSlotHint,
+  showTextHint,
+  fieldsEmptyHintText,
+  clampBrightness,
+} = useCategoryData();
 </script>
 
 <i18n lang="json">

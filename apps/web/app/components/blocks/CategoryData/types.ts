@@ -53,8 +53,8 @@ export type CategoryDataContent = {
   };
 };
 export interface CategoryData {
-  name?: string;
-  description1?: string;
-  description2?: string;
-  shortDescription?: string;
+  name: string;
+  description1: string;
+  description2: string;
+  shortDescription: string;
 }
