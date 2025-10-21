@@ -100,6 +100,7 @@ export default defineNuxtConfig({
       isDev: process.env.NODE_ENV === 'development',
       activeLanguages: process.env.LANGUAGELIST || 'en,de',
       enableCategoryEditing: process.env.NODE_ENV === 'development' || process.env?.ENABLE_CATEGORY_EDITING === '1',
+      enableProductEditing: process.env?.ENABLE_PRODUCT_EDITING === '1',
       enableAllEditorSettings:
         process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1',
       editorSettingsDevFlag:

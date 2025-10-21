@@ -213,9 +213,10 @@ const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
+const { hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
 const { restrictedAddresses } = useRestrictedAddress();
-const { setShippingSkeleton } = useCheckout();
+const { setShippingSkeleton, showBillingAddressSection } = useCheckout();
 const {
   isLoading: formIsLoading,
   add: showNewForm,
@@ -388,4 +389,8 @@ const edit = (address: Address) => {
   editing.value = !(editing.value || showNewForm.value);
   showNewForm.value = false;
 };
+
+watch(shippingAsBilling, () => {
+  showBillingAddressSection.value = !shippingAsBilling.value || hasBillingAddress.value;
+});
 </script>
