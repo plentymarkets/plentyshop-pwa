@@ -19,7 +19,7 @@
       <ClientOnly>
         <button
           v-if="enableActions && clientPreview && root && !isDragging"
-          class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+          class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[40] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
           :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
           data-testid="top-add-block"
           aria-label="top add block"
@@ -62,6 +62,8 @@
             :is-tablet="isTablet"
             :block-has-data="blockHasData"
             :change-block-position="changeBlockPosition"
+            :column-length="slotProps.columnLength"
+            :is-row-hovered="slotProps.isRowHovered"
             v-bind="slotProps"
           />
         </template>
@@ -69,10 +71,22 @@
 
       <ClientOnly>
         <button
-          v-if="enableActions && clientPreview && root && !isDragging && props.block.name !== 'Footer'"
+          v-if="
+            enableActions &&
+            clientPreview &&
+            !isDragging &&
+            props.block.name !== 'Footer' &&
+            (root || shouldShowBottomAddInGrid)
+          "
           :key="isDragging ? 'dragging' : 'not-dragging'"
-          class="add-block-button no-drag z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
-          :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+          class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+          :class="[
+            {
+              'opacity-100': isClicked && clickedBlockIndex === index,
+              'bg-purple-600 rounded-none': shouldShowBottomAddInGrid,
+              'rounded-[18px]': !shouldShowBottomAddInGrid,
+            },
+          ]"
           data-testid="bottom-add-block"
           aria-label="bottom add block"
           @click.stop="addNewBlock(block, 'bottom')"
@@ -112,9 +126,19 @@ const {
   getLazyLoadKey,
   getLazyLoadConfig,
   getLazyLoadRef,
+  getBlockDepth,
+  showBottomAddInGrid,
 } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-
+const shouldShowBottomAddInGrid = computed(() =>
+  showBottomAddInGrid({
+    blockMetaUuid: props.block.meta.uuid,
+    columnLength: props.columnLength,
+    blockName: props.block.name,
+    isRowHovered: props.isRowHovered,
+    getBlockDepth,
+  }),
+);
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
 
