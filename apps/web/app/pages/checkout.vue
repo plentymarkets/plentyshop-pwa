@@ -25,7 +25,7 @@
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
           <PreferredDeliveryPackstationFinder v-if="countryHasDelivery && hasCheckoutAddress" />
           <PreferredDelivery v-if="countryHasDelivery && hasCheckoutAddress" />
-          <UiDivider v-if="preferredDeliveryAvailable" class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <UiDivider v-if="preferredDeliveryAvailable && hasCheckoutAddress" class="w-screen md:w-auto -mx-4 md:mx-0" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
