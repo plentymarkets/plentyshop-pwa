@@ -76,11 +76,17 @@
             clientPreview &&
             !isDragging &&
             props.block.name !== 'Footer' &&
-            (root || showBottomAddInGrid)
+            (root || shouldShowBottomAddInGrid)
           "
           :key="isDragging ? 'dragging' : 'not-dragging'"
-          class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
-          :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index, 'bg-purple-600': showBottomAddInGrid }]"
+          class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+          :class="[
+            {
+              'opacity-100': isClicked && clickedBlockIndex === index,
+              'bg-purple-600 rounded-none': shouldShowBottomAddInGrid,
+              'rounded-[18px]': !shouldShowBottomAddInGrid,
+            },
+          ]"
           data-testid="bottom-add-block"
           aria-label="bottom add block"
           @click.stop="addNewBlock(block, 'bottom')"
@@ -120,16 +126,19 @@ const {
   getLazyLoadKey,
   getLazyLoadConfig,
   getLazyLoadRef,
+  getBlockDepth,
+  showBottomAddInGrid,
 } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-
-const { getBlockDepth } = useBlockManager();
-const isInsideMultiGrid = computed(() => getBlockDepth(props.block.meta.uuid) > 0);
-const showBottomAddInGrid = computed(
-  () =>
-    isInsideMultiGrid.value && props.columnLength === 1 && props.block.name !== 'EmptyGridBlock' && props.isRowHovered,
+const shouldShowBottomAddInGrid = computed(() =>
+  showBottomAddInGrid({
+    blockMetaUuid: props.block.meta.uuid,
+    columnLength: props.columnLength,
+    blockName: props.block.name,
+    isRowHovered: props.isRowHovered,
+    getBlockDepth,
+  }),
 );
-
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
 

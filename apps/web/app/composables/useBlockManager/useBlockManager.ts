@@ -1,6 +1,6 @@
 import type { BlocksList, BlocksListContext } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition, RefCallback } from './types';
+import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
@@ -334,6 +334,17 @@ export const useBlockManager = () => {
     };
   };
 
+  const showBottomAddInGrid = ({
+    blockMetaUuid,
+    columnLength = 0,
+    blockName,
+    isRowHovered,
+    getBlockDepth,
+  }: ShowBottomAddInGridOptions) => {
+    const isInsideMultiGrid = getBlockDepth(blockMetaUuid) > 0;
+    return isInsideMultiGrid && columnLength === 1 && blockName !== 'EmptyGridBlock' && isRowHovered;
+  };
+
   return {
     blocksLists,
     blocksListContext,
@@ -367,5 +378,6 @@ export const useBlockManager = () => {
     getLazyLoadConfig,
     getLazyLoadRef,
     setBlocksListContext,
+    showBottomAddInGrid,
   };
 };
