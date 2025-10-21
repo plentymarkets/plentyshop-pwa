@@ -119,6 +119,8 @@ export const useCheckout = (cacheKey = '') => {
     if (cartAddress.value || primaryAddress) {
       await setBillingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
       state.value.showBillingAddressSection = true;
+    } else if (!cartAddress.value && hasShippingAddress.value) {
+      state.value.showBillingAddressSection = true;
     }
   };
 
