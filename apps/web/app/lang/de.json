@@ -1127,7 +1127,8 @@
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "security": {
-      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut."
+      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut.",
+      "tooManyRequests": "Aus Sicherheitsgründen wurde diese Aktion beschränkt. Bitte versuchen Sie es später erneut."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
