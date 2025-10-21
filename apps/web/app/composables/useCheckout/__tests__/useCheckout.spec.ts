@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { AddressType } from '@plentymarkets/shop-api';
 
 const addressFixture = {
   id: 1,
@@ -105,10 +106,10 @@ describe('useCheckout', () => {
     });
   });
 
-  it('should check if any form is open', () => {
-    const { anyAddressFormIsOpen } = useCheckout();
+  it('should check if only the shipping address form is open', () => {
+    const { add: shipping } = useAddressForm(AddressType.Shipping);
 
-    expect(anyAddressFormIsOpen.value).toBeTruthy();
+    expect(shipping.value).toBeTruthy();
   });
 
   it.todo('should go back backToFormEditing');
@@ -121,9 +122,9 @@ describe('useCheckout', () => {
       };
     });
 
-    const { anyAddressFormIsOpen } = useCheckout();
+    const { add } = useAddressForm(AddressType.Shipping);
 
-    expect(anyAddressFormIsOpen.value).toBeTruthy();
+    expect(add.value).toBeTruthy();
   });
 
   it('should test if terms are accepted', () => {
