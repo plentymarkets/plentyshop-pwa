@@ -1,4 +1,3 @@
-import { computed, watch } from 'vue';
 import { clamp } from '@storefront-ui/shared';
 import { categoryGetters, type Category } from '@plentymarkets/shop-api';
 import type { CategoryDataContent, CategoryDataFieldKey } from '~/components/blocks/CategoryData/types';
