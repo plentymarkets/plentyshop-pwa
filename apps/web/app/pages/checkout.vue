@@ -23,8 +23,8 @@
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <PreferredDeliveryPackstationFinder v-if="countryHasDelivery" />
-          <PreferredDelivery v-if="countryHasDelivery" />
+          <PreferredDeliveryPackstationFinder v-if="countryHasDelivery && hasCheckoutAddress" />
+          <PreferredDelivery v-if="countryHasDelivery && hasCheckoutAddress" />
           <UiDivider v-if="preferredDeliveryAvailable" class="w-screen md:w-auto -mx-4 md:mx-0" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
@@ -66,7 +66,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
-const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
+const { countryHasDelivery, hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const checkoutReady = ref(false);
 const {
   cart,
