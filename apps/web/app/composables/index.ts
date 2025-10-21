@@ -108,3 +108,4 @@ export * from './useGridSplits';
 export * from './useRegisterForm';
 export * from './useFormLabel';
 export * from './useBlockContentHelper';
+export * from './useCategoryData';

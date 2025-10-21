@@ -50,6 +50,10 @@ export const useAddressForm = (type: AddressType) => {
     state.value.isLoading = false;
     clearInvalidVAT();
 
+    if (response) {
+      state.value.add = false;
+    }
+
     return response;
   };
 
@@ -125,6 +129,7 @@ export const useAddressForm = (type: AddressType) => {
     notifyIfBillingChanged();
 
     const { hasCheckoutAddress: hasBillingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
+    const { showBillingAddressSection } = useCheckout();
 
     if (
       type === AddressType.Shipping &&
@@ -133,6 +138,10 @@ export const useAddressForm = (type: AddressType) => {
     ) {
       const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
       await setBillingAddress(shippingAddress.value, true);
+    }
+
+    if (cartData.value.customerInvoiceAddressId) {
+      showBillingAddressSection.value = true;
     }
   };
 
