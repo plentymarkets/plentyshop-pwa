@@ -1127,7 +1127,8 @@
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "security": {
-      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page."
+      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page.",
+      "tooManyRequests": "This action has been restricted for security reasons. Please try again later."
     },
     "unknownError": "An unknown error has occurred."
   },
