@@ -1,6 +1,8 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <NarrowContainer>
+    <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" />
+
+    <NarrowContainer v-else>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
@@ -60,12 +62,17 @@ const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 
+const config = useRuntimeConfig().public;
+
 definePageMeta({
   layout: false,
   path: '/:slug*_:itemId',
   validate: async (route) => {
     return validateProductParams(route.params);
   },
+  type: 'product',
+  isBlockified: false,
+  identifier: 0,
 });
 const RecommendedProductsAsync = defineAsyncComponent(
   async () => await import('~/components/RecommendedProducts/RecommendedProducts.vue'),
