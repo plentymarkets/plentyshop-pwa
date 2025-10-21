@@ -487,7 +487,6 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
-import { useCategoryData } from '~/composables/useCategoryData';
 
 const textOpen = ref(true);
 const imageOpen = ref(true);
