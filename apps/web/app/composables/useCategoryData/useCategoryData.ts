@@ -4,7 +4,7 @@ import type { CategoryDataContent, CategoryDataFieldKey } from '~/components/blo
 
 declare const getEditorTranslation: (key: string) => string;
 
-export function useCategoryData() {
+export const useCategoryData = () => {
   const { data } = useCategoryTemplate();
   const { blockUuid } = useSiteConfiguration();
   const { findOrDeleteBlockByUuid } = useBlockManager();
