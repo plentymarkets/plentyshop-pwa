@@ -70,7 +70,7 @@
   </div>
 
   <template v-else>
-    <h2 class="text-center">{{ getEditorTranslation('no-sorting-or-filter-text') }}</h2>
+    <h2 v-if="clientPreview" class="text-center">{{ getEditorTranslation('no-sorting-or-filter-text') }}</h2>
   </template>
 </template>
 
@@ -86,7 +86,12 @@ const props = defineProps<SortFilterProps>();
 const showSortAndFilter = ref(false);
 const { isOpen, open, close } = useDisclosure();
 const { t } = useI18n();
+const clientPreview = ref(false);
 
+const { $isPreview } = useNuxtApp();
+onNuxtReady(() => {
+  clientPreview.value = !!$isPreview;
+});
 watch(
   () => props.content?.fields,
   (newValue) => {
