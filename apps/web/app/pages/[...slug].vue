@@ -5,7 +5,6 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
-    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
     <template v-if="config.enableCategoryEditing || productsCatalog.category?.type === 'content'">
       <EditablePage
@@ -44,7 +43,7 @@
 
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
