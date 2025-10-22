@@ -35,36 +35,6 @@ describe('ImageGallery', () => {
     expect(gallery.exists()).toBe(true);
   });
 
-  it.skip('should pass the correct images to the Gallery component', () => {
-    const wrapper = mount(ImageGallery, {
-      props: mockImageGalleryBlock,
-    });
-
-    const gallery = wrapper.findComponent({ name: 'Gallery' });
-    const images = productGetters.getGallery(mockImageGalleryBlock.product);
-    expect(gallery.props('images')).toEqual(images);
-  });
-
-  it.skip('should call addModernImageExtensionForGallery when rendering images', () => {
-    const addModernImageExtensionForGallery = vi.fn((images) => images);
-    vi.mocked(addModernImageExtensionForGallery);
-
-    const wrapper = mount(ImageGallery, {
-      props: mockImageGalleryBlock,
-      global: {
-        mocks: {
-          useModernImage: () => ({
-            addModernImageExtensionForGallery,
-          }),
-        },
-      },
-    });
-
-    expect(addModernImageExtensionForGallery).toHaveBeenCalledWith(
-      productGetters.getGallery(mockImageGalleryBlock.product),
-    );
-  });
-
   it('should pass the correct configuration to the Gallery component', () => {
     const wrapper = mount(ImageGallery, {
       props: mockImageGalleryBlock,
