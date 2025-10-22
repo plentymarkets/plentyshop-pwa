@@ -2,8 +2,8 @@ import type {
   UseProductRecommendedReturn,
   UseProductRecommendedState,
   FetchProductRecommended,
-  FetchParams,
 } from '~/composables/useProductRecommended/types';
+import type { FacetSearchCriteria } from '../../../../../../plentymarkets-sdk/packages/api-client/src';
 
 /**
  * Composable for managing recommended products data
@@ -28,7 +28,7 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
    * ```
    * @param params
    */
-  const fetchProductRecommended: FetchProductRecommended = async (params: FetchParams) => {
+  const fetchProductRecommended: FetchProductRecommended = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
 
     const common = {

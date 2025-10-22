@@ -1,18 +1,11 @@
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, FacetSearchCriteria  } from '@plentymarkets/shop-api';
 
 export interface UseProductRecommendedState {
   data: Product[];
   loading: boolean;
 }
 
-export type FetchParams = {
-  type: 'category' | 'cross_selling';
-  itemId?: string;
-  crossSellingRelation?: 'Accessory' | 'ReplacementPart' | 'Similar' | 'Bundle' | 'Configurator';
-  categoryId?: string;
-};
-
-export type FetchProductRecommended = (params: FetchParams) => Promise<Product[]>;
+export type FetchProductRecommended = (params: FacetSearchCriteria) => Promise<Product[]>;
 
 export interface useProductRecommended {
   data: Readonly<Ref<UseProductRecommendedState['data']>>;
