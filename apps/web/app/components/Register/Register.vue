@@ -22,6 +22,7 @@
       </div>
     </div>
   </div>
+
   <div class="flex items-center justify-center my-1">
     <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="onSubmit">
       <label>
@@ -29,7 +30,7 @@
         <SfInput
           v-model="email"
           v-bind="emailAttributes"
-          :invalid="Boolean(errors['register.email'])"
+          :invalid="!!errors['register.email']"
           name="customerEmail"
           type="email"
           autocomplete="email"
@@ -45,10 +46,12 @@
           name="password"
           autocomplete="current-password"
           v-bind="passwordAttributes"
-          :invalid="Boolean(errors['register.password'])"
+          :invalid="!!errors['register.password']"
+          @input="stripSpaces('password')"
         />
-        <!-- <ErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
+        <ErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" />
       </label>
+
       <label>
         <UiFormLabel>{{ t('form.repeatPasswordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
@@ -57,7 +60,8 @@
           name="password"
           autocomplete="current-password"
           v-bind="repeatPasswordAttributes"
-          :invalid="Boolean(errors['register.repeatPassword'])"
+          :invalid="!!errors['register.repeatPassword']"
+          @input="stripSpaces('repeatPassword')"
         />
         <ErrorMessage as="span" name="register.repeatPassword" class="flex text-negative-700 text-sm mt-2" />
       </label>
@@ -66,7 +70,9 @@
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationLength }">
           <SfIconCheck v-if="passwordValidationLength" size="sm" />
           <SfIconClose v-else size="sm" />
-          <span class="ml-1">{{ t('auth.signup.passwordValidation.characters') }}</span>
+          <span class="ml-1">
+            {{ t('auth.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
+          </span>
         </div>
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneDigit }">
           <SfIconCheck v-if="passwordValidationOneDigit" size="sm" />
@@ -117,7 +123,6 @@
         :options="{ theme: 'light' }"
         class="mt-4 flex justify-center"
       />
-
       <ErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
       <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
@@ -152,23 +157,27 @@ import {
 } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
-import { object, string, boolean, ref as yupReference } from 'yup';
+import { object, string, boolean } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
 import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';
-import { paths } from '~/utils/paths';
+import { userGetters } from '@plentymarkets/shop-api';
 
 const localePath = useLocalePath();
 const router = useRouter();
-const { register, loading } = useCustomer();
+const { register, loading, isAuthorized } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
 const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
 const { emailAddress, order, isModal = false, changeableView = true } = defineProps<RegisterFormParams>();
-const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+
 const turnstileSiteKey = getSetting() ?? '';
+const passwordMinLength = runtimeConfig.public.passwordMinLength;
+const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
@@ -176,14 +185,25 @@ const turnstileLoad = ref(false);
 const validationSchema = toTypedSchema(
   object({
     register: object({
-      email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
+      email: string()
+        .trim()
+        .required(t('errorMessages.email.required'))
+        .test('is-valid-email', t('errorMessages.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
+        .default(''),
       password: string()
         .required(t('errorMessages.password.required'))
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
+        .transform((value) => (value ? value.replace(/\s/g, '') : value))
+        .min(passwordMinLength, t('errorMessages.password.minLength', { min: passwordMinLength }))
+        .max(passwordMaxLength, t('errorMessages.password.maxLength', { max: passwordMaxLength }))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('errorMessages.password.valid'))
         .default(''),
       repeatPassword: string()
         .required(t('errorMessages.password.required'))
-        .oneOf([yupReference('password'), ''], t('errorMessages.password.match'))
+        .transform((value) => (value ? value.replace(/\s/g, '') : value))
+        .test('passwords-match', t('errorMessages.password.match'), function (value) {
+          const passwordValue = this.parent.password?.replace(/\s/g, '');
+          return value === passwordValue;
+        })
         .default(''),
       privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
       turnstile:
@@ -194,19 +214,23 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { errors, meta, defineField, handleSubmit } = useForm({
-  validationSchema: validationSchema,
-});
-
+const { errors, meta, defineField, handleSubmit } = useForm({ validationSchema: validationSchema });
 const [email, emailAttributes] = defineField('register.email');
 const [password, passwordAttributes] = defineField('register.password');
 const [repeatPassword, repeatPasswordAttributes] = defineField('register.repeatPassword');
 const [turnstile, turnstileAttributes] = defineField('register.turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
-if (emailAddress) {
-  email.value = emailAddress;
-}
+if (emailAddress) email.value = emailAddress;
+
+const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {
+  const fieldRef = fieldName === 'password' ? password : repeatPassword;
+  const currentValue = fieldRef.value;
+
+  if (currentValue && typeof currentValue === 'string') {
+    fieldRef.value = currentValue.replace(/\s/g, '');
+  }
+};
 
 const clearTurnstile = () => {
   turnstile.value = '';
@@ -214,7 +238,7 @@ const clearTurnstile = () => {
 };
 
 const registerUser = async () => {
-  if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
+  if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0) || isAuthorized.value) {
     return;
   }
 
@@ -236,19 +260,13 @@ const registerUser = async () => {
   });
 
   if (response?.data.code === 1) {
-    send({
-      message: t('auth.signup.emailAlreadyExists'),
-      type: 'negative',
-    });
+    send({ message: t('auth.signup.emailAlreadyExists'), type: 'negative' });
     clearTurnstile();
     return;
   }
 
   if (response?.data.id) {
-    send({
-      message: t('auth.signup.success'),
-      type: 'positive',
-    });
+    send({ message: t('auth.signup.success'), type: 'positive' });
 
     if (order) {
       await migrateGuestOrder({
@@ -262,23 +280,20 @@ const registerUser = async () => {
     emits('registered');
     clearTurnstile();
 
-    if (!order) {
-      viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
-    }
+    if (!order) viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
   }
+  clearTurnstile();
 };
 
 const onSubmit = handleSubmit(() => registerUser());
 
 const passwordValidationLength = computed(() => {
-  return (password?.value?.length || 0) >= 8;
+  const val = password?.value || '';
+  return val.length >= passwordMinLength && val.length <= passwordMaxLength;
 });
-const passwordValidationOneDigit = computed(() => {
-  return /\d/.test(password?.value || '');
-});
-const passwordValidationOneLetter = computed(() => {
-  return /[A-Za-z]/.test(password?.value || '');
-});
+
+const passwordValidationOneDigit = computed(() => /\d/.test(password?.value || ''));
+const passwordValidationOneLetter = computed(() => /[A-Za-z]/.test(password?.value || ''));
 
 if (turnstileSiteKey.length > 0) {
   const turnstileWatcher = watch([email, password, repeatPassword], (data) => {
