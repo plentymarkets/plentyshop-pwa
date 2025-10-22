@@ -24,7 +24,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
+import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 import type { CategoryOption } from '~/components/settings/general/shipping-information-page/shipping-information-page/types';
