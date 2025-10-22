@@ -5,7 +5,6 @@
 <script setup lang="ts">
 import type { PayPalPayLaterBannerType } from '~/components/PayPal/types';
 import { cartGetters } from '@plentymarkets/shop-api';
-import { v4 as uuid } from 'uuid';
 import type { PayPalNamespace } from '@paypal/paypal-js';
 
 const { data: cart } = useCart();
@@ -13,7 +12,7 @@ const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppCo
 const { isReady, getScript } = usePayPal();
 const { placement, amount, commit = false } = defineProps<PayPalPayLaterBannerType>();
 const textStylePlacements = ['product', 'cart', 'payment'];
-const paypalUuid = uuid();
+const paypalUuid = useId();
 const isTextStyle = ref(textStylePlacements.includes(placement));
 
 const renderPayPalMessage = async (script: PayPalNamespace | null) => {
