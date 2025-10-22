@@ -1,7 +1,7 @@
 import type { FooterSettings, FooterSwitchDefinition, AddFooterBlock } from '~/components/blocks/Footer/types';
 import { v4 as uuid } from 'uuid';
 
-export const FOOTER_SWITCH_DEFINITIONS: readonly FooterSwitchDefinition[] = [
+export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   {
     columnGroup: 'legal',
     key: 'showTermsAndConditions',
