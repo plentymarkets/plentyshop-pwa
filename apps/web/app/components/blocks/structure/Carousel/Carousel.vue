@@ -4,7 +4,7 @@
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
-      role="group"
+      v-bind="carouselProps"
       :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
       :loop="true"
       :pagination="paginationConfig"
@@ -16,8 +16,8 @@
       <SwiperSlide
         v-for="(banner, slideIndex) in content"
         :key="slideIndex"
-        :aria-labelledby="`carousel_item-${slideIndex}_heading`"
-        role="group"
+        :aria-labelledby="content.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
+        v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
       >
         <slot
@@ -93,6 +93,10 @@ const navigationConfig = computed(() => {
         prevEl: `.swiper-button-prev-${index}`,
       }
     : false;
+});
+
+const carouselProps = computed(() => {
+  return content.length > 1 ? { role: 'group' } : {};
 });
 
 const onSwiperInit = async (swiper: SwiperType) => {
