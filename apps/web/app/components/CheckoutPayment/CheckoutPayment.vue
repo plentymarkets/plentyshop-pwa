@@ -56,7 +56,9 @@ const { t } = useI18n();
 const { send } = useNotification();
 const { data: cart } = useCart();
 const { selectedMethod: selectedShippingMethod } = useCartShippingMethods();
+const { fetchPaymentMethods } = usePaymentMethods();
 const { paymentMethods } = useCheckoutPagePaymentAndShipping();
+const { on } = usePlentyEvent();
 
 const isPaymentMethodChecked = (paymentMethod: PaymentMethod): boolean =>
   !paymentProviderGetters.isPaymentMethodExcluded(selectedShippingMethod.value, paymentMethod.id) &&
@@ -77,4 +79,8 @@ const handlePaymentMethodChange = (paymentMethod: PaymentMethod) => {
     ? send({ message: t('billing.methodChanged'), type: 'warning' })
     : emitActivePaymentUpdate(paymentMethod);
 };
+
+on('frontend:paypalAPMsLoaded', async () => {
+  await fetchPaymentMethods();
+});
 </script>

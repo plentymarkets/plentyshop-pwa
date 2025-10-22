@@ -931,7 +931,8 @@
     "description": "Add a shipping address to view shipping details.",
     "heading": "Shipping address",
     "methodChanged": "The selected shipping method is not available anymore.",
-    "noShippingMessage": "No shipping information available"
+    "noShippingMessage": "No shipping information available",
+    "noShippingMethodsNoAddress": "Enter your shipping address to see the available shipping methods."
   },
   "shippingAddress": "Shipping address",
   "shippingAddressRequired": "Please select a shipping address.",
