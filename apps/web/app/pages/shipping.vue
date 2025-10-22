@@ -18,4 +18,13 @@ const icon = 'page';
 setPageMeta(t('orderConfirmation.shipping'), icon);
 
 const text = computed(() => categoryTemplateData?.value?.data);
+const categoryId = computed(() => getSetting());
+
+watch(
+  () => categoryId.value,
+  async (changedCategoryId) => {
+    await fetchCategoryTemplate(Number(changedCategoryId));
+  },
+  { immediate: true },
+);
 </script>
