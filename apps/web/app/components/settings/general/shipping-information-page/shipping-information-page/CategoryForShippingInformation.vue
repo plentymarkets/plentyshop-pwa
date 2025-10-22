@@ -8,8 +8,6 @@
       </SfTooltip>
     </div>
 
-    {{ data.entries }}
-    <SfInput v-model="shippingTextCategoryId" type="text" data-testid="" />
     <Multiselect
       v-model="shippingTextCategoryId"
       data-testid="shipping-text-category-id"
@@ -29,31 +27,33 @@
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
+import type { CategoryOption } from '~/components/settings/general/shipping-information-page/shipping-information-page/types';
 const { data, getCategories } = useCategoriesSearch();
 
-const categories = ref([]);
+const categories = ref<CategoryOption[]>([]);
 
 onMounted(async () => {
   await getCategories({
     type: 'in:item,content',
     sortBy: 'position_asc,name_asc',
-    with: 'details,clients',
   });
 
-  data.value.entries.forEach((category: CategoryEntry) => {
-    const categoryId = category.details[0]?.categoryId;
-    const categoryName = category.details[0]?.name;
-
-    console.log(categoryId, categoryName);
+  categories.value = data.value.entries.map((category: CategoryEntry) => {
+    return {
+      id: category.details[0]?.categoryId ?? '0',
+      name: category.details[0]?.name ?? '',
+    };
   });
 });
 
 const { updateSetting, getSetting } = useSiteSettings('shippingTextCategoryId');
 
 const shippingTextCategoryId = computed({
-  get: () => getSetting(),
-  set: (value) => {
-    updateSetting(value);
+  get: () => {
+    return categories.value.find((c: CategoryOption) => c.id === getSetting()) ?? {};
+  },
+  set: (value: CategoryOption) => {
+    updateSetting(value.id);
   },
 });
 </script>
