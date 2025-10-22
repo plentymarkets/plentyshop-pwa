@@ -28,7 +28,7 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
    * ```
    * @param params
    */
-  const fetchProductRecommended: FetchProductRecommended = async (params: FetchParams ) => {
+  const fetchProductRecommended: FetchProductRecommended = async (params: FetchParams) => {
     state.value.loading = true;
 
     const common = {
@@ -37,12 +37,18 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       type: params.type,
     };
 
-    const payload = { ...common, itemId: params.itemId, crossSellingRelation: params.crossSellingRelation, categoryId: params.categoryId };
+    const payload = {
+      ...common,
+      itemId: params.itemId,
+      crossSellingRelation: params.crossSellingRelation,
+      categoryId: params.categoryId,
+    };
 
     const idForKey = params.type === 'cross_selling' ? params.itemId : params.categoryId;
 
-    const { data, error } = await useAsyncData(`useProductRecommended-${params.type}-${idForKey}-${params.crossSellingRelation}`, () =>
-      useSdk().plentysystems.getFacet(payload),
+    const { data, error } = await useAsyncData(
+      `useProductRecommended-${params.type}-${idForKey}-${params.crossSellingRelation}`,
+      () => useSdk().plentysystems.getFacet(payload),
     );
 
     useHandleError(error.value ?? null);

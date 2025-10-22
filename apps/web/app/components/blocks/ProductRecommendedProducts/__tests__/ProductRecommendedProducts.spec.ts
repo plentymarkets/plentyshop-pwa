@@ -43,7 +43,7 @@ const mockProps: ProductRecommendedProductsProps = {
       categoryId: '123',
       itemId: '',
       crossSellingRelation: 'Similar',
-    }
+    },
   },
   meta: {
     uuid: 'test-uuid',

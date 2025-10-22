@@ -5,7 +5,12 @@ export interface UseProductRecommendedState {
   loading: boolean;
 }
 
-export type FetchParams = { type: 'category' | 'cross_selling'; itemId?: string; crossSellingRelation?: 'Accessory' | 'ReplacementPart' | 'Similar' |'Bundle' | 'Configurator', categoryId?: string };
+export type FetchParams = {
+  type: 'category' | 'cross_selling';
+  itemId?: string;
+  crossSellingRelation?: 'Accessory' | 'ReplacementPart' | 'Similar' | 'Bundle' | 'Configurator';
+  categoryId?: string;
+};
 
 export type FetchProductRecommended = (params: FetchParams) => Promise<Product[]>;
 

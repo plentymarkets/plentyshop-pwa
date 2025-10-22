@@ -113,7 +113,10 @@
             data-testid="recommended-form-source-product"
             @click="recommendedBlock.source.type = 'cross_selling'"
           >
-            <SfIconCheck :class="{ invisible: recommendedBlock.source.type !== 'cross_selling' }" class="mr-1 w-[1.1rem]" />
+            <SfIconCheck
+              :class="{ invisible: recommendedBlock.source.type !== 'cross_selling' }"
+              class="mr-1 w-[1.1rem]"
+            />
             {{ getEditorTranslation('source-type-product') }}
           </div>
 
@@ -172,19 +175,17 @@
         >
           <template #option="{ option }">
             <div class="flex items-center px-2 w-auto">
-          <span class="flex items-center">
-            {{ option.name }}
-          </span>
+              <span class="flex items-center">
+                {{ option.name }}
+              </span>
               <span v-if="option.path" class="text-xs ml-2 truncate max-w-[260px]">
-            {{ option.path }}
-          </span>
+                {{ option.path }}
+              </span>
             </div>
           </template>
-
         </Multiselect>
       </div>
     </UiAccordionItem>
-
   </div>
 </template>
 
@@ -224,9 +225,8 @@ const recommendedBlock = computed(
 );
 
 if (Object.keys(currentProduct.value).length) {
-  recommendedBlock.value.source.itemId = productGetters.getItemId(currentProduct.value)
+  recommendedBlock.value.source.itemId = productGetters.getItemId(currentProduct.value);
 }
-
 
 const debouncedFn = useDebounceFn((event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -266,7 +266,12 @@ const categoryIdModel = computed({
   },
   set(option: { id: number; name: string; path?: string } | null) {
     if (!recommendedBlock.value.source) {
-      recommendedBlock.value.source = { type: 'cross_selling', itemId: '', categoryId: firstCategoryId, crossSellingRelation: 'Similar' };
+      recommendedBlock.value.source = {
+        type: 'cross_selling',
+        itemId: '',
+        categoryId: firstCategoryId,
+        crossSellingRelation: 'Similar',
+      };
     }
     recommendedBlock.value.source.categoryId = option?.id.toString() || '';
   },

@@ -1,7 +1,10 @@
 <template>
   <div v-bind="$attrs">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
-    <ProductSlider v-if="recommendedProducts?.length && (shouldRender || shouldRenderAfterUpdate)" :items="recommendedProducts" />
+    <ProductSlider
+      v-if="recommendedProducts?.length && (shouldRender || shouldRenderAfterUpdate)"
+      :items="recommendedProducts"
+    />
   </div>
 </template>
 
@@ -25,18 +28,31 @@ const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling');
 
 const getContentSource = () => {
-  return {...props.content.source, ...{categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString()}}
-}
+  return {
+    ...props.content.source,
+    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString() },
+  };
+};
 
 const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
 
-watch(shouldFetch, (ok) => {
-  if (ok) fetchProductRecommended(getContentSource());
-  shouldRenderAfterUpdate.value = true;
-}, { immediate: true });
+watch(
+  shouldFetch,
+  (ok) => {
+    if (ok) fetchProductRecommended(getContentSource());
+    shouldRenderAfterUpdate.value = true;
+  },
+  { immediate: true },
+);
 
 watch(
-  [() => props.content.source?.categoryId, () => props.content.source?.itemId, () => props.content.source?.type, () => props.content.source?.crossSellingRelation, () => locale.value],
+  [
+    () => props.content.source?.categoryId,
+    () => props.content.source?.itemId,
+    () => props.content.source?.type,
+    () => props.content.source?.crossSellingRelation,
+    () => locale.value,
+  ],
   () => {
     if (shouldFetch.value) fetchProductRecommended(getContentSource());
     shouldRenderAfterUpdate.value = true;
