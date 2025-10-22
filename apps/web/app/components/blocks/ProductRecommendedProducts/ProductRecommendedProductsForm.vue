@@ -242,8 +242,7 @@ const crossSellingOptions = [
   { value: 'Accessory', label: getEditorTranslation('cross-selling-relation-accessory') },
   { value: 'ReplacementPart', label: getEditorTranslation('cross-selling-relation-replacement') },
   { value: 'Similar', label: getEditorTranslation('cross-selling-relation-similar') },
-  { value: 'Bundle', label: getEditorTranslation('cross-selling-relation-bundle') },
-  { value: 'Configurator', label: getEditorTranslation('cross-selling-relation-configurator') },
+  { value: 'Bundle', label: getEditorTranslation('cross-selling-relation-bundle') }
 ];
 
 const crossSellingModel = computed({
@@ -319,8 +318,7 @@ const selectCategoryTab = async () => {
     "cross-selling-relation-accessory": "Accessory",
     "cross-selling-relation-replacement": "Replacement part",
     "cross-selling-relation-similar": "Similar",
-    "cross-selling-relation-bundle": "Item bundle",
-    "cross-selling-relation-configurator": "Configurator"
+    "cross-selling-relation-bundle": "Item bundle"
   },
   "de": {
     "pretitle-label": "Pre-title",
@@ -357,8 +355,7 @@ const selectCategoryTab = async () => {
     "cross-selling-relation-accessory": "Accessory",
     "cross-selling-relation-replacement": "Replacement part",
     "cross-selling-relation-similar": "Similar",
-    "cross-selling-relation-bundle": "Item bundle",
-    "cross-selling-relation-configurator": "Configurator"
+    "cross-selling-relation-bundle": "Item bundle"
   }
 }
 </i18n>

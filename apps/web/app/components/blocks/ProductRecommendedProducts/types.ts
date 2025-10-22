@@ -1,4 +1,4 @@
-export type CrossSellingRelationType = 'Accessory' | 'ReplacementPart' | 'Similar' | 'Bundle' | 'Configurator';
+export type CrossSellingRelationType = 'Accessory' | 'ReplacementPart' | 'Similar' | 'Bundle';
 
 export type ProductRecommendedProductsProps = {
   name: string;
