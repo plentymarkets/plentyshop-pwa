@@ -16,14 +16,14 @@
 
         <div class="flex mt-4 sm:justify-center sm:mt-0">
           <AddressSelect
-            v-if="showAdressSelection"
+            v-if="showAddressSelection"
             :type="type"
             :disabled="disabled"
             @new="showNewForm = true"
             @edit="edit"
           />
 
-          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAdressSelection }" :label="t('editAddress')">
+          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('editAddress')">
             <UiButton
               :disabled="!hasCheckoutAddress || saveAddressLoading || disabled"
               variant="secondary"
@@ -85,7 +85,7 @@ const { billingSkeleton, shippingSkeleton } = useCheckout();
 
 const isLoading = computed(() => (billingSkeleton.value && isBilling) || (shippingSkeleton.value && isShipping));
 
-const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
+const showAddressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
 
 const sameAsShippingAddress = computed(() =>
   isBilling
@@ -118,6 +118,7 @@ const edit = (address: Address) => {
   showNewForm.value = false;
 };
 
+if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;
 watch(shippingAsBilling, () => {
   if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;
 });

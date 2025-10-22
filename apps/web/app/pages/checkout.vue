@@ -7,8 +7,10 @@
         <UiDivider id="top-shipping-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer id="shipping-address" :key="0" :type="AddressType.Shipping" />
         <UiDivider id="top-billing-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
-        <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <div v-if="showBillingAddressSection">
+          <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
+          <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        </div>
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :disabled="disableShippingPayment"
@@ -27,6 +29,7 @@
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <CustomerReference />
         <CustomerWish />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
@@ -73,6 +76,7 @@ const {
   persistBillingAddress,
   setBillingSkeleton,
   setShippingSkeleton,
+  showBillingAddressSection,
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();

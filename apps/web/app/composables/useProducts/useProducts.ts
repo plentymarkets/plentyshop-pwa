@@ -48,6 +48,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
+      handlePreviewProducts(state);
     }
 
     state.value.loading = false;
