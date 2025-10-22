@@ -25,8 +25,10 @@ export const useFooter = () => {
       return footerCache.value;
     }
 
+    const { $i18n } = useNuxtApp();
+
     try {
-      const { data } = await useAsyncData('footer-settings', () =>
+      const { data } = await useAsyncData(`footer-settings-${$i18n.locale}`, () =>
         useSdk().plentysystems.getBlocks({
           identifier: 'index',
           type: 'immutable',
