@@ -158,18 +158,25 @@
       return;
     }
 
-    const success = await subscribe({
+    const result = await subscribe({
       lang: locale.value,
       email: email.value,
       variationId: props.variationId,
       'cf-turnstile-response': turnstileToken.value,
     });
 
-    if (success) {
-      send({
-        type: 'positive',
-        message: t('notifyMe.form.success'),
-      });
+    if (result?.success) {
+      if (result.autoConfirmed) {
+        send({
+          type: 'positive',
+          message: t('notifyMe.form.successAutoConfirmed'),
+        });
+      } else {
+        send({
+          type: 'positive',
+          message: t('notifyMe.form.successCheckEmail'),
+        });
+      }
       close();
     }
   };

@@ -17,14 +17,15 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
   /**
    * @description Function for subscribing to the back in stock notifications.
    * @param params { NotifyMeSubscribeParams }
-   * @return Promise<boolean>
+   * @return Subscribe
    * @example
    * ``` ts
-   * subscribe({
+   * const result = await subscribe({
    *   email: 'test@test.de',
    *   variationId: 1,
-   *   turnstileToken: '[token]'
-   * })
+   *   lang: 'de',
+   *   'cf-turnstile-response': '[token]'
+   * });
    * ```
    */
   const subscribe: Subscribe = async (params: NotifyMeSubscribeParams) => {
@@ -32,10 +33,9 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
       state.value.loading = true;
 
       const { data } = await useSdk().plentysystems.doSubscribeNotifyMe(params);
-      return !!data;
+      return data;
     } catch (error) {
       useHandleError(error as ApiError);
-      return false;
     } finally {
       state.value.loading = false;
     }

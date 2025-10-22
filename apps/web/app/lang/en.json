@@ -7,7 +7,8 @@
       "emailLabel": "E-mail address",
       "emailPlaceholder": "Your E-mail",
       "turnstileFailed": "Turnstile validation failed",
-      "success": "Check your inbox! We've sent you a confirmation email"
+      "successAutoConfirmed": "You will be notified as soon as the product is back in stock.",
+      "successCheckEmail": "Check your inbox! We've sent you a confirmation email."
     }
   },
   "readAndAccepted": "I have read and accepted the {insertText}",
