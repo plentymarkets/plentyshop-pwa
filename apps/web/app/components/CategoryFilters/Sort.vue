@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-2 px-4">
+  <div class="flex flex-col gap-2">
     <CategoryFiltersSortSections
       v-for="facet in facets"
       :key="facet.id"
