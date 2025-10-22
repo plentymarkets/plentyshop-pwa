@@ -35,15 +35,35 @@ describe('ImageGallery', () => {
     expect(gallery.exists()).toBe(true);
   });
 
-  // it('should pass the correct images to the Gallery component', () => {
-  //   const wrapper = mount(ImageGallery, {
-  //     props: mockImageGalleryBlock,
-  //   });
+  it.skip('should pass the correct images to the Gallery component', () => {
+    const wrapper = mount(ImageGallery, {
+      props: mockImageGalleryBlock,
+    });
 
-  //   const gallery = wrapper.findComponent({ name: 'Gallery' });
-  //   const images = productGetters.getGallery(mockImageGalleryBlock.product);
-  //   expect(gallery.props('images')).toEqual(images);
-  // });
+    const gallery = wrapper.findComponent({ name: 'Gallery' });
+    const images = productGetters.getGallery(mockImageGalleryBlock.product);
+    expect(gallery.props('images')).toEqual(images);
+  });
+
+  it.skip('should call addModernImageExtensionForGallery when rendering images', () => {
+    const addModernImageExtensionForGallery = vi.fn((images) => images);
+    vi.mocked(addModernImageExtensionForGallery);
+
+    const wrapper = mount(ImageGallery, {
+      props: mockImageGalleryBlock,
+      global: {
+        mocks: {
+          useModernImage: () => ({
+            addModernImageExtensionForGallery,
+          }),
+        },
+      },
+    });
+
+    expect(addModernImageExtensionForGallery).toHaveBeenCalledWith(
+      productGetters.getGallery(mockImageGalleryBlock.product),
+    );
+  });
 
   it('should pass the correct configuration to the Gallery component', () => {
     const wrapper = mount(ImageGallery, {
@@ -54,27 +74,7 @@ describe('ImageGallery', () => {
     expect(gallery.props('configuration')).toEqual(mockImageGalleryBlock.content);
   });
 
-  //   it('should call addModernImageExtensionForGallery when rendering images', () => {
-  //     const addModernImageExtensionForGallery = vi.fn((images) => images);
-  //     vi.mocked(addModernImageExtensionForGallery);
-
-  //     const wrapper = mount(ImageGallery, {
-  //       props: mockImageGalleryBlock,
-  //       global: {
-  //         mocks: {
-  //           useModernImage: () => ({
-  //             addModernImageExtensionForGallery,
-  //           }),
-  //         },
-  //       },
-  //     });
-
-  //     expect(addModernImageExtensionForGallery).toHaveBeenCalledWith(
-  //       productGetters.getGallery(mockImageGalleryBlock.product),
-  //     );
-  //   });
-
-  it('should handle empty product gallery gracefully', () => {
+  it('should handle empty product gallery correctly', () => {
     vi.mocked(productGetters.getGallery).mockReturnValueOnce([]);
 
     const wrapper = mount(ImageGallery, {
@@ -85,25 +85,28 @@ describe('ImageGallery', () => {
     expect(gallery.props('images')).toEqual([]);
   });
 
-  it('should render the correct thumbnail type', () => {
-    const mockWithThumbnails = {
-      ...mockImageGalleryBlock,
-      content: {
-        ...mockImageGalleryBlock.content,
-        thumbnails: {
-          showThumbnails: true,
-          thumbnailType: 'left-vertical',
+  it.each(['left-vertical', 'right-vertical', 'bottom'] as const)(
+    'should render the correct thumbnail type',
+    (thumbnailType) => {
+      const mockWithThumbnails = {
+        ...mockImageGalleryBlock,
+        content: {
+          ...mockImageGalleryBlock.content,
+          thumbnails: {
+            showThumbnails: true,
+            thumbnailType,
+          },
         },
-      },
-    };
+      };
 
-    const wrapper = mount(ImageGallery, {
-      props: mockWithThumbnails,
-    });
+      const wrapper = mount(ImageGallery, {
+        props: mockWithThumbnails,
+      });
 
-    const gallery = wrapper.findComponent({ name: 'Gallery' });
-    expect(gallery.props('configuration').thumbnails.thumbnailType).toBe('left-vertical');
-  });
+      const gallery = wrapper.findComponent({ name: 'Gallery' });
+      expect(gallery.props('configuration').thumbnails.thumbnailType).toBe(thumbnailType);
+    },
+  );
 
   it('should not render thumbnails if showThumbnails is false', () => {
     const mockWithoutThumbnails = {

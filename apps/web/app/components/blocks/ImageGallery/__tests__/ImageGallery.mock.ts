@@ -87,7 +87,7 @@ export const mockImageGalleryContent: ImageGalleryContent = {
   index: 1,
   thumbnails: {
     showThumbnails: true,
-    thumbnailType: 'bottom', // Example: 'left-vertical', 'right-vertical', or 'bottom'
+    thumbnailType: 'bottom',
     enableHoverZoom: true,
   },
 };
