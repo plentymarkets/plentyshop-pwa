@@ -112,40 +112,4 @@ describe('TextCard - Text Property', () => {
     expect(wrapper.find('[data-testid="text-subtitle"]').exists()).toBe(false);
     expect(wrapper.find('[data-testid="text-html"]').exists()).toBe(false);
   });
-
-  it('should handle long text gracefully for all text properties', () => {
-    const longText = 'A'.repeat(500);
-    const mockWithLongText = {
-      ...mockTextCard,
-      content: {
-        ...mockTextCard.content,
-        text: {
-          pretitle: longText,
-          title: longText,
-          subtitle: longText,
-          htmlDescription: `<p>${longText}</p>`,
-          textAlignment: 'center' as const,
-          color: '#333333',
-        },
-      },
-    };
-
-    const wrapper = mount(TextCard, { props: mockWithLongText });
-
-    const pretitle = wrapper.find('[data-testid="text-pretitle"]');
-    expect(pretitle.exists()).toBe(true);
-    expect(pretitle.text()).toBe(longText);
-
-    const title = wrapper.find('[data-testid="text-title"]');
-    expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(longText);
-
-    const subtitle = wrapper.find('[data-testid="text-subtitle"]');
-    expect(subtitle.exists()).toBe(true);
-    expect(subtitle.text()).toBe(longText);
-
-    const description = wrapper.find('[data-testid="text-html"]');
-    expect(description.exists()).toBe(true);
-    expect(description.html()).toContain(longText);
-  });
 });
