@@ -1,3 +1,5 @@
+export type CrossSellingRelationType = 'Accessory' | 'ReplacementPart' | 'Similar' | 'Bundle' | 'Configurator';
+
 export type ProductRecommendedProductsProps = {
   name: string;
   type: string;
@@ -12,8 +14,13 @@ export type ProductRecommendedProductsProps = {
 
 export type ProductRecommendedProductsContent = {
   index?: number;
-  categoryId: string;
   cacheKey?: string;
+  source: {
+    type: 'category' | 'cross_selling';
+    categoryId: string;
+    itemId: string;
+    crossSellingRelation: CrossSellingRelationType;
+  };
   text: {
     pretitle?: string;
     title?: string;

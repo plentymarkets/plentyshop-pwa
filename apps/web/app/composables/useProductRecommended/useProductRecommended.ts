@@ -2,6 +2,7 @@ import type {
   UseProductRecommendedReturn,
   UseProductRecommendedState,
   FetchProductRecommended,
+  FetchParams,
 } from '~/composables/useProductRecommended/types';
 
 /**
@@ -20,24 +21,30 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
   }));
 
   /** Function for fetching product recommended data
-   * @param categoryId
    * @return FetchProductRecommended
    * @example
    * ``` ts
    * fetchProductRecommended('1');
    * ```
+   * @param params
    */
-  const fetchProductRecommended: FetchProductRecommended = async (categoryId: string) => {
+  const fetchProductRecommended: FetchProductRecommended = async (params: FetchParams ) => {
     state.value.loading = true;
-    const payload = {
-      categoryId: categoryId,
+
+    const common = {
       itemsPerPage: 20,
       sort: 'sorting.price.avg_asc',
+      type: params.type,
     };
 
-    const { data, error } = await useAsyncData(`useProductRecommended-${categoryId}`, () =>
+    const payload = { ...common, itemId: params.itemId, crossSellingRelation: params.crossSellingRelation, categoryId: params.categoryId };
+
+    const idForKey = params.type === 'cross_selling' ? params.itemId : params.categoryId;
+
+    const { data, error } = await useAsyncData(`useProductRecommended-${params.type}-${idForKey}-${params.crossSellingRelation}`, () =>
       useSdk().plentysystems.getFacet(payload),
     );
+
     useHandleError(error.value ?? null);
     state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;

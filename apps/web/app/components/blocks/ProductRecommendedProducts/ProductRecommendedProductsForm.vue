@@ -41,17 +41,6 @@
         data-testid="recommended-form-html"
       />
     </div>
-    <div class="p-2">
-      <UiFormLabel>{{ getEditorTranslation('category-id-label') }}</UiFormLabel>
-      <SfInput
-        :model-value="recommendedBlock.categoryId"
-        data-testid="recommended-form-categoryid"
-        name="category Id"
-        type="text"
-        :placeholder="getEditorTranslation('category-id-placeholder')"
-        @input="debouncedFn($event)"
-      />
-    </div>
     <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
       <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
@@ -101,17 +90,119 @@
         </div>
       </div>
     </div>
+
+    <UiAccordionItem
+      v-model="sourceOpen"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      data-testid="recommended-form-source"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('source-label') }}</h2>
+      </template>
+
+      <fieldset class="py-2">
+        <legend class="text-sm font-medium text-black">
+          {{ getEditorTranslation('source-type-label') }}
+        </legend>
+
+        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+          <div
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.source.type === 'cross_selling' }"
+            data-testid="recommended-form-source-product"
+            @click="recommendedBlock.source.type = 'cross_selling'"
+          >
+            <SfIconCheck :class="{ invisible: recommendedBlock.source.type !== 'cross_selling' }" class="mr-1 w-[1.1rem]" />
+            {{ getEditorTranslation('source-type-product') }}
+          </div>
+
+          <div
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.source.type === 'category' }"
+            data-testid="recommended-form-source-category"
+            @click="selectCategoryTab()"
+          >
+            <SfIconCheck :class="{ invisible: recommendedBlock.source.type !== 'category' }" class="mr-1 w-[1.1rem]" />
+            {{ getEditorTranslation('source-type-category') }}
+          </div>
+        </div>
+      </fieldset>
+
+      <div v-if="recommendedBlock.source.type === 'cross_selling'" class="py-4">
+        <UiFormLabel>{{ getEditorTranslation('product-id-label') }}</UiFormLabel>
+        <SfInput
+          :model-value="recommendedBlock.source.itemId"
+          data-testid="recommended-form-itemId"
+          name="itemId"
+          type="text"
+          :placeholder="getEditorTranslation('product-id-placeholder')"
+          @input="debouncedFn($event)"
+        />
+
+        <div class="py-4">
+          <UiFormLabel>{{ getEditorTranslation('cross-selling-relation-label') }}</UiFormLabel>
+          <Multiselect
+            v-model="crossSellingModel"
+            :options="crossSellingOptions"
+            :allow-empty="false"
+            :multiple="false"
+            label="label"
+            track-by="value"
+            placeholder="Select relation"
+            data-testid="recommended-form-cross-selling-relation"
+            class="w-full"
+          />
+        </div>
+      </div>
+
+      <div v-else class="py-4">
+        <UiFormLabel>{{ getEditorTranslation('categories-label') }}</UiFormLabel>
+
+        <Multiselect
+          v-model="categoryIdModel"
+          data-testid="recommended-form-categories"
+          :options="categoryOptions"
+          :preserve-search="true"
+          label="name"
+          track-by="id"
+          placeholder="Search categories"
+          :allow-empty="true"
+          class="w-full"
+        >
+          <template #option="{ option }">
+            <div class="flex items-center px-2 w-auto">
+          <span class="flex items-center">
+            {{ option.name }}
+          </span>
+              <span v-if="option.path" class="text-xs ml-2 truncate max-w-[260px]">
+            {{ option.path }}
+          </span>
+            </div>
+          </template>
+
+        </Multiselect>
+      </div>
+    </UiAccordionItem>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
+import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
+import { productGetters } from '@plentymarkets/shop-api';
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
+import { flattenPages } from '~/utils/pages';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { currentProduct } = useProducts();
+const { pages } = await usePages();
+const { data: categoryTree } = useCategoryTree();
 
 const recommendedBlock = computed(
   () =>
@@ -124,17 +215,65 @@ const recommendedBlock = computed(
         color: '#000000',
         textAlignment: 'left',
       },
-      categoryId: '',
+      source: {
+        type: 'category',
+        categoryId: '',
+        crossSellingRelation: 'Similar' as CrossSellingRelationType,
+      },
     }) as ProductRecommendedProductsContent,
 );
 
+if (Object.keys(currentProduct.value).length) {
+  recommendedBlock.value.source.itemId = productGetters.getItemId(currentProduct.value)
+}
+
+
 const debouncedFn = useDebounceFn((event: Event) => {
   const target = event.target as HTMLInputElement;
-  recommendedBlock.value.categoryId = target.value.toString();
+  recommendedBlock.value.source.itemId = target.value.toString();
 }, 1000);
 
 const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
   return (recommendedBlock.value.text.textAlignment || 'left') === align;
+};
+
+const sourceOpen = ref(true);
+const crossSellingOptions = [
+  { value: 'Accessory', label: getEditorTranslation('cross-selling-relation-accessory') },
+  { value: 'ReplacementPart', label: getEditorTranslation('cross-selling-relation-replacement') },
+  { value: 'Similar', label: getEditorTranslation('cross-selling-relation-similar') },
+  { value: 'Bundle', label: getEditorTranslation('cross-selling-relation-bundle') },
+  { value: 'Configurator', label: getEditorTranslation('cross-selling-relation-configurator') },
+];
+
+const crossSellingModel = computed({
+  get() {
+    return crossSellingOptions.find((o) => o.value === recommendedBlock.value.source.crossSellingRelation) ?? null;
+  },
+  set(option) {
+    recommendedBlock.value.source.crossSellingRelation = (option?.value || 'Similar') as CrossSellingRelationType;
+  },
+});
+
+const categoryOptions = ref(flattenPages(pages.value));
+
+const firstCategoryId = (categoryTree.value?.[0]?.id || '').toString();
+
+const categoryIdModel = computed({
+  get() {
+    const id = recommendedBlock.value.source?.categoryId || firstCategoryId;
+    return categoryOptions.value.find((o) => o.id === id) ?? null;
+  },
+  set(option: { id: number; name: string; path?: string } | null) {
+    if (!recommendedBlock.value.source) {
+      recommendedBlock.value.source = { type: 'cross_selling', itemId: '', categoryId: firstCategoryId, crossSellingRelation: 'Similar' };
+    }
+    recommendedBlock.value.source.categoryId = option?.id.toString() || '';
+  },
+});
+
+const selectCategoryTab = async () => {
+  recommendedBlock.value.source.type = 'category';
 };
 </script>
 
@@ -161,7 +300,22 @@ const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "source-label": "Source",
+    "source-type-label": "Choose source",
+    "source-type-product": "Product",
+    "source-type-category": "Category",
+    "product-id-label": "Product ID",
+    "product-id-placeholder": "Enter Product ID",
+    "categories-label": "Categories",
+
+    "cross-selling-relation-label": "Cross-selling relation",
+    "cross-selling-relation-accessory": "Accessory",
+    "cross-selling-relation-replacement": "Replacement part",
+    "cross-selling-relation-similar": "Similar",
+    "cross-selling-relation-bundle": "Item bundle",
+    "cross-selling-relation-configurator": "Configurator"
   },
   "de": {
     "pretitle-label": "Pre-title",
@@ -184,7 +338,22 @@ const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "source-label": "Source",
+    "source-type-label": "Choose source",
+    "source-type-product": "Product",
+    "source-type-category": "Category",
+    "product-id-label": "Product ID",
+    "product-id-placeholder": "Enter Product ID",
+    "categories-label": "Categories",
+
+    "cross-selling-relation-label": "Cross-selling relation",
+    "cross-selling-relation-accessory": "Accessory",
+    "cross-selling-relation-replacement": "Replacement part",
+    "cross-selling-relation-similar": "Similar",
+    "cross-selling-relation-bundle": "Item bundle",
+    "cross-selling-relation-configurator": "Configurator"
   }
 }
 </i18n>

@@ -33,12 +33,17 @@ const mockProps: ProductRecommendedProductsProps = {
   name: 'ProductRecommendedProducts',
   type: 'content',
   content: {
-    categoryId: '123',
     cacheKey: 'test-cache',
     text: {
       title: 'Recommended Products',
       subtitle: 'You might also like',
     },
+    source: {
+      type: 'category',
+      categoryId: '123',
+      itemId: '',
+      crossSellingRelation: 'Similar',
+    }
   },
   meta: {
     uuid: 'test-uuid',
