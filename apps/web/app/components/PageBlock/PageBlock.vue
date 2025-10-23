@@ -133,7 +133,6 @@ const { blockUuid } = useSiteConfiguration();
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
     blockMetaUuid: props.block.meta.uuid,
-    columnLength: props.columnLength,
     blockName: props.block.name,
     isRowHovered: props.isRowHovered,
     getBlockDepth,
