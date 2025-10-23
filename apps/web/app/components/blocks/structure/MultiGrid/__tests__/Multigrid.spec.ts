@@ -84,7 +84,10 @@ describe('MultiGrid block', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,
-        configuration: {...mockMultiGridProps.configuration, layout: {...mockMultiGridProps.configuration.layout, gap: 'XL' }},
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, gap: 'XL' },
+        },
       },
     });
     expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-x-5');
@@ -95,7 +98,7 @@ describe('MultiGrid block', () => {
       props: {
         ...mockMultiGridProps,
         configuration: {
-          ...mockMultiGridProps.configuration, 
+          ...mockMultiGridProps.configuration,
           layout: {
             marginTop: 20,
             marginBottom: 10,
@@ -103,7 +106,7 @@ describe('MultiGrid block', () => {
             marginRight: 15,
             backgroundColor: '#ABCDEF',
             gap: 'M',
-          }
+          },
         },
       },
     });
