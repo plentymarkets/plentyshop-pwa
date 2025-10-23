@@ -65,27 +65,29 @@
           </SwiperSlide>
         </Swiper>
 
-        <button
-          v-if="showNav && mainSwiper"
-          :disabled="atStart"
-          :class="prevThumbBtnClass"
-          aria-label="Previous"
-          @click="mainSwiper?.slidePrev()"
-        >
-          <SfIconChevronLeft />
-        </button>
-        <button
-          v-if="showNav && mainSwiper"
-          :disabled="atEnd"
-          :class="nextThumbBtnClass"
-          aria-label="Next"
-          @click="mainSwiper?.slideNext()"
-        >
-          <SfIconChevronRight />
-        </button>
+        <template v-if="images.length > 1">
+          <button
+            v-if="showNav && mainSwiper"
+            :disabled="atStart"
+            :class="prevThumbBtnClass"
+            aria-label="Previous"
+            @click="mainSwiper?.slidePrev()"
+          >
+            <SfIconChevronLeft />
+          </button>
+          <button
+            v-if="showNav && mainSwiper"
+            :disabled="atEnd"
+            :class="nextThumbBtnClass"
+            aria-label="Next"
+            @click="mainSwiper?.slideNext()"
+          >
+            <SfIconChevronRight />
+          </button>
+        </template>
       </div>
 
-      <div class="flex md:hidden gap-0.5" v-bind="carouselProps">
+      <div v-if="images.length > 1" class="flex md:hidden gap-0.5" v-bind="carouselProps">
         <button
           v-for="(image, index) in images"
           :key="productImageGetters.getImageUrl(image)"
@@ -152,14 +154,14 @@ const thumbSlideClass = (index: number) =>
 
 const prevThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
 
 const nextThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
