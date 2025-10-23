@@ -209,17 +209,13 @@ const { currentProduct } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { data: categoriesData, getCategories } = useCategoriesSearch();
 
-await getCategories({
-  type: 'in:item',
-  sortBy: 'position_asc,name_asc',
-  with: 'details,clients',
-});
-
 const baseCategoryParams = {
   type: 'in:item',
   sortBy: 'position_asc,name_asc',
   with: 'details,clients',
 };
+
+await getCategories(baseCategoryParams);
 
 const handleSearch = debounce(async (query: string) => {
   const q = query?.trim();
