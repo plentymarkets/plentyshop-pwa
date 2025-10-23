@@ -1,4 +1,4 @@
-import type { AddressFixtureOverride } from '~/__tests__/types';
+import type { AddressFixtureOverride } from '../../types';
 import { PageObject } from './PageObject';
 import { paths } from '../../../app/utils/paths';
 
@@ -29,6 +29,10 @@ export class CheckoutPageObject extends PageObject {
 
   get billingAddressForm() {
     return cy.getByTestId('billing-address-form');
+  }
+
+  get billingAddressSection() {
+    return cy.get('#billing-address');
   }
 
   get contactInformationForm() {
@@ -220,6 +224,18 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  checkSameAsBilling() {
+    this.useShippingAsBilling.check();
+    return this;
+  }
+
+  uncheckSameAsBilling() {
+    this.useShippingAsBilling.uncheck({
+      waitForAnimations: true,
+    });
+    return this;
+  }
+
   waitForUiToRender(milliseconds = 1000) {
     cy.wait(milliseconds);
     return this;
@@ -288,10 +304,19 @@ export class CheckoutPageObject extends PageObject {
       .intercept('/plentysystems/doCapturePayPalOrderV2')
       .as('doCapturePayPalOrderV2')
       .intercept('/plentysystems/doCreatePlentyPaymentFromPayPalOrder')
-      .as('doCreatePlentyPaymentFromPayPalOrder');
+      .as('doCreatePlentyPaymentFromPayPalOrder')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment')
+      .intercept('/plentysystems/doCreatePayPalOrder')
+      .as('doCreatePayPalOrder')
 
     cy.getByTestId('pay-creditcard-button').click();
-    cy.wait('@doPlaceOrder').wait('@doCapturePayPalOrderV2').wait('@doCreatePlentyPaymentFromPayPalOrder');
+    cy
+      .wait('@doPreparePayment')
+      .wait('@doCreatePayPalOrder')
+      .wait('@doPlaceOrder')
+      .wait('@doCapturePayPalOrderV2')
+      .wait('@doCreatePlentyPaymentFromPayPalOrder');
     return this;
   }
 
