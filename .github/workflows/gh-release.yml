@@ -29,7 +29,6 @@ jobs:
         with:
           ref: ${{ github.event.inputs.release-branch || 'main' }}
           fetch-depth: 0
-          token: ${{ secrets.RELEASE_TOKEN }}
           
       - name: Fetch Git history
         run: |
@@ -190,8 +189,8 @@ jobs:
           echo "Final release notes:"
           cat release_notes.md
 
-      - name: Create release
-        if: ${{ github.event.inputs.dryRun == 'false' }}
+      - name: Create release draft
+        if: github.event.inputs.dryRun != 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NEW_VERSION: v${{ steps.version.outputs.new }}
@@ -211,7 +210,8 @@ jobs:
           # Create the release with the generated notes
           if ! gh release create "$NEW_VERSION" \
             --title "Release $NEW_VERSION" \
-            --notes-file release_notes.md; then
+            --notes-file release_notes.md \
+            --draft; then
             echo "Error: Failed to create release"
             git push --delete origin "$NEW_VERSION"
             git tag -d "$NEW_VERSION"
