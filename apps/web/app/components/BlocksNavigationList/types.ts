@@ -14,7 +14,7 @@ export interface Category {
   variations: Variation[];
 }
 
-interface Variation {
+export interface Variation {
   image: string;
   title: string;
   template: {

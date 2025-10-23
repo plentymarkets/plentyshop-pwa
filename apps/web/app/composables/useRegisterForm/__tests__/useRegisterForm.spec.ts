@@ -22,6 +22,8 @@ const { useRuntimeConfig } = vi.hoisted(() => {
     useRuntimeConfig: vi.fn().mockReturnValue({
       public: {
         turnstileSiteKey: 'test-turnstile-key',
+        passwordMinLength: 8,
+        passwordMaxLength: 64,
       },
     }),
   };
@@ -82,6 +84,14 @@ const { useState } = vi.hoisted(() => {
   };
 });
 
+const { useSiteSettings } = vi.hoisted(() => {
+  return {
+    useSiteSettings: vi.fn().mockReturnValue({
+      getSetting: vi.fn(() => 'test-turnstile-key'),
+    }),
+  };
+});
+
 mockNuxtImport('useCustomer', () => useCustomer);
 mockNuxtImport('useNotification', () => useNotification);
 mockNuxtImport('useRuntimeConfig', () => useRuntimeConfig);
@@ -92,6 +102,7 @@ mockNuxtImport('useLocalePath', () => useLocalePath);
 mockNuxtImport('navigateTo', () => navigateTo);
 mockNuxtImport('useNuxtApp', () => useNuxtApp);
 mockNuxtImport('useState', () => useState);
+mockNuxtImport('useSiteSettings', () => useSiteSettings);
 
 describe('useRegisterForm', () => {
   beforeEach(() => {
@@ -102,7 +113,11 @@ describe('useRegisterForm', () => {
     });
 
     useRuntimeConfig.mockReturnValue({
-      public: { turnstileSiteKey: 'test-key' },
+      public: {
+        turnstileSiteKey: 'test-key',
+        passwordMinLength: 8,
+        passwordMaxLength: 64,
+      },
     });
 
     useNotification.mockReturnValue({
@@ -133,6 +148,10 @@ describe('useRegisterForm', () => {
     useState.mockImplementation((key: string, init?: () => unknown) => {
       const state = init ? init() : {};
       return { value: state };
+    });
+
+    useSiteSettings.mockReturnValue({
+      getSetting: vi.fn(() => 'test-turnstile-key'),
     });
   });
 

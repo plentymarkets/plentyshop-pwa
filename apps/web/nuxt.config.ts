@@ -143,6 +143,8 @@ export default defineNuxtConfig({
       metaDescription:
         process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
       metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
+      passwordMinLength: Number(process.env.PASSWORD_MIN_LENGTH ?? 8),
+      passwordMaxLength: Number(process.env.PASSWORD_MAX_LENGTH ?? 64),
       robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
       contactShopEmail: process.env.NUXT_PUBLIC_CONTACT_SHOP_EMAIL || 'your@email.com',
       robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
@@ -206,7 +208,6 @@ export default defineNuxtConfig({
         process.env.LOGO ||
         'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
-      shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PlentyONE GmbH',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
@@ -238,6 +239,7 @@ export default defineNuxtConfig({
       defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
       fetchDynamicTranslations: false,
       sessionLifetime: process.env.NUXT_PUBLIC_SESSION_LIFETIME || '3600',
+      shippingTextCategoryId: process.env.NUXT_PUBLIC_SHIPPING_TEXT_CATEGORY_ID || '',
     },
   },
   modules: [
