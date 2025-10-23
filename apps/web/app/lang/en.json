@@ -247,7 +247,7 @@
       "button": "Save new password",
       "description": "Create the new password you want to use to log in to your account.",
       "heading": "Reset password",
-      "help": "8 or more characters with a mix of letters, numbers and symbols.",
+      "help": "Between {min} and {max} characters with a mix of letters, numbers and symbols.",
       "password": "New password",
       "repeatPassword": "Repeat new password"
     },
@@ -263,7 +263,7 @@
       "heading": "Create an account",
       "logInLinkLabel": "Log in instead",
       "passwordValidation": {
-        "characters": "The password must contain at least 8 characters.",
+        "characters": "The password must contain between {min} and {max} characters.",
         "letters": "The password must contain at least one letter.",
         "numbers": "The password must contain at least one digit."
       },
@@ -533,7 +533,9 @@
     "password": {
       "match": "Passwords do not match.",
       "required": "Password is required.",
-      "valid": "Password must be at least 8 characters long and include at least one letter and one number."
+      "minLength": "Password must be at least {min} characters long.",
+      "maxLength": "Password must not exceed {max} characters.",
+      "valid": "Password must include at least one letter and one number."
     },
     "editor": {
       "add": {
@@ -1091,7 +1093,9 @@
     "contact": {
       "emailAlreadyExists": "The email address already exists.",
       "missingContactOrUnexpectedFormat": "Missing contact data or unexpected format.",
-      "unexpectedAddressFormat": "Unexpected address format"
+      "unexpectedAddressFormat": "Unexpected address format.",
+      "passwordInvalid": "The password does not meet the required security standards.",
+      "unauthorizedPasswordReset": "Unable to reset password. The link may have expired or already been used."
     },
     "contactMail": {
       "failed": "Message could not be sent.",
