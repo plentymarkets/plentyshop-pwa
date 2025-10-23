@@ -25,6 +25,5 @@ watch(
   async (changedCategoryId) => {
     await fetchCategoryTemplate(Number(changedCategoryId));
   },
-  { immediate: true },
 );
 </script>
