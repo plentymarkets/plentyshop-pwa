@@ -345,6 +345,19 @@ export const useBlockManager = () => {
     return isInsideMultiGrid && columnLength === 1 && blockName !== 'EmptyGridBlock' && isRowHovered;
   };
 
+  const blockExistsOnPage = (blockName: string): boolean => {
+    const search = (blocks: Block[]): boolean => {
+      for (const block of blocks) {
+        if (block.name === blockName && blockHasData(block)) return true;
+        if (Array.isArray(block.content) && block.content.length) {
+          if (search(block.content)) return true;
+        }
+      }
+      return false;
+    };
+    return data.value ? search(data.value) : false;
+  };
+
   return {
     blocksLists,
     blocksListContext,
@@ -379,5 +392,6 @@ export const useBlockManager = () => {
     getLazyLoadRef,
     setBlocksListContext,
     showBottomAddInGrid,
+    blockExistsOnPage,
   };
 };

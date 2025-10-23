@@ -16,17 +16,24 @@
             <button
               class="absolute right-[-5px] top-[100%] -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md"
               :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
-              :disabled="isNestedMultigrid(category, targetUuid) || isForbiddenBlock(category, targetUuid)"
+              :disabled="isAddDisabled(category, variation, targetUuid)"
               :class="{
-                'cursor-not-allowed opacity-50':
-                  isNestedMultigrid(category, targetUuid) || isForbiddenBlock(category, targetUuid),
+                'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
               }"
               @click="
                 drawerOpen = false;
                 addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
               "
             >
-              <SfIconAdd />
+              <SfTooltip
+                v-if="isSingleInstanceOnPage(variation.template.en.name)"
+                :label="t('errorMessages.editor.add.disabledOneInstancePerPage')"
+                placement="top"
+                :show-arrow="true"
+              >
+                <SfIconAdd />
+              </SfTooltip>
+              <SfIconAdd v-else />
             </button>
           </div>
         </div>
@@ -50,13 +57,13 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconAdd, SfIconWarning } from '@storefront-ui/vue';
-import type { Category } from '~/components/BlocksNavigationList/types';
+import { SfIconAdd, SfIconWarning, SfTooltip } from '@storefront-ui/vue';
+import type { Category, Variation } from '~/components/BlocksNavigationList/types';
 const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
   useBlockManager();
 getBlocksLists();
 const { drawerOpen } = useSiteConfiguration();
-const { multigridColumnUuid } = useBlockManager();
+const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 
@@ -67,6 +74,20 @@ const isNestedMultigrid = (category: Category, uuid: string) => {
 const isForbiddenBlock = (category: Category, uuid: string) => {
   return ['BannerCarousel', 'ImageText'].includes(category.blockName) && getBlockDepth(uuid) > 0;
 };
+const isSingleInstanceBlock = (blockName: string) => {
+  return ['SortFilter', 'ItemGrid'].includes(blockName);
+};
+const isSingleInstanceOnPage = (blockName: string) => {
+  return isSingleInstanceBlock(blockName) && blockExistsOnPage(blockName);
+};
+const isAddDisabled = (category: Category, variation: Variation, uuid: string): boolean => {
+  const blockName = variation.template.en.name;
+  const isNested = isNestedMultigrid(category, uuid);
+  const isForbidden = isForbiddenBlock(category, uuid);
+  const isSingleInstance = isSingleInstanceOnPage(blockName);
+  return isNested || isForbidden || isSingleInstance;
+};
+
 const blockPosition = computed(() => {
   if (multigridColumnUuid.value) return 'inside';
   return visiblePlaceholder.value.position;
@@ -83,3 +104,13 @@ const pageHasAccessToCategory = (category: Category) => {
   }
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "disabledTooDeeplyNested": "You cannot add this block type inside a MultiGrid that is already nested.",
+    "disabledNotCompatibleWithLayouts": "This block type is not compatible with layout blocks."
+  },
+  "de": {}
+}
+</i18n>
