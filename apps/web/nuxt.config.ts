@@ -208,7 +208,6 @@ export default defineNuxtConfig({
         process.env.LOGO ||
         'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
-      shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PlentyONE GmbH',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
@@ -240,6 +239,7 @@ export default defineNuxtConfig({
       defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
       fetchDynamicTranslations: false,
       sessionLifetime: process.env.NUXT_PUBLIC_SESSION_LIFETIME || '3600',
+      shippingTextCategoryId: process.env.NUXT_PUBLIC_SHIPPING_TEXT_CATEGORY_ID || '',
     },
   },
   modules: [
