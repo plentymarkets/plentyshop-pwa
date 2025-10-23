@@ -54,7 +54,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
-    const { $i18n } = useNuxtApp();
     const { data: productsCatalog } = useProducts();
 
     const { data, error } = await useAsyncData(`${$i18n.locale.value}-${type}-${identifier}-${blocks}`, () =>
