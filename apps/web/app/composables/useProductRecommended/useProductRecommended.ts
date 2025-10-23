@@ -3,7 +3,7 @@ import type {
   UseProductRecommendedState,
   FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
-import type { FacetSearchCriteria } from '../../../../../../plentymarkets-sdk/packages/api-client/src';
+import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
 
 /**
  * Composable for managing recommended products data

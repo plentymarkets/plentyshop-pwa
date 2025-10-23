@@ -38,8 +38,8 @@ const shouldFetch = computed(() => shouldRender.value && (isCategory.value || is
 
 watch(
   shouldFetch,
-  (ok) => {
-    if (ok) fetchProductRecommended(getContentSource());
+  (visible) => {
+    if (visible) fetchProductRecommended(getContentSource());
     shouldRenderAfterUpdate.value = true;
   },
   { immediate: true },

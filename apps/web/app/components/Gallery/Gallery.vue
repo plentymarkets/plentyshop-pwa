@@ -65,7 +65,7 @@
           </SwiperSlide>
         </Swiper>
 
-        <template v-if="images.length > 1">
+        <template v-if="hasMoreImages">
           <button
             v-if="showNav && mainSwiper"
             :disabled="atStart"
@@ -87,7 +87,7 @@
         </template>
       </div>
 
-      <div v-if="images.length > 1" class="flex md:hidden gap-0.5" v-bind="carouselProps">
+      <div v-if="hasMoreImages" class="flex md:hidden gap-0.5" v-bind="carouselProps">
         <button
           v-for="(image, index) in images"
           :key="productImageGetters.getImageUrl(image)"
@@ -134,6 +134,7 @@ const isLeft = computed(() => type.value === 'left-vertical');
 const galleryDirClass = computed(() => (isSide.value ? 'flex-col md:flex-row' : 'flex-col md:flex-col'));
 const galleryGapClass = computed(() => (isSide.value ? 'md:gap-4' : 'md:gap-2'));
 const thumbContainerClass = computed(() => [isLeft.value ? 'md:order-first' : 'md:order-last']);
+const hasMoreImages = computed(() => images.value.length > 1);
 
 const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
 const thumbsSlidesPerView = computed(() => (isSide.value ? 'auto' : Math.min(images.value.length, 6)));
@@ -200,7 +201,7 @@ const atStart = computed(() => activeIndex.value === 0);
 const atEnd = computed(() => activeIndex.value === images.value.length - 1);
 
 const carouselProps = computed(() => {
-  return images.value.length > 1 ? { role: 'group' } : {};
+  return hasMoreImages.value ? { role: 'group' } : {};
 });
 
 onMounted(() => {
