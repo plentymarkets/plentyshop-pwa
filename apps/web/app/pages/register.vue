@@ -34,7 +34,9 @@
               autocomplete="current-password"
               v-bind="formFieldsAttributes.password"
               :invalid="!!errors['password']"
+              @input="stripSpaces('password')"
             />
+            <ErrorMessage as="span" name="password" class="flex text-negative-700 text-sm mt-2" />
           </label>
 
           <label>
@@ -46,6 +48,7 @@
               autocomplete="current-password"
               v-bind="formFieldsAttributes.repeatPassword"
               :invalid="!!errors['repeatPassword']"
+              @input="stripSpaces('repeatPassword')"
             />
             <ErrorMessage as="span" name="repeatPassword" class="flex text-negative-700 text-sm mt-2" />
           </label>
@@ -58,7 +61,7 @@
           >
             <SfIconCheck v-if="passwordValidationLength" size="sm" class="mr-2" />
             <SfIconClose v-else size="sm" class="mr-2" />
-            {{ t('auth.signup.passwordValidation.characters') }}
+            {{ t('auth.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
           </div>
           <div
             class="flex items-center"
@@ -297,6 +300,9 @@ const localePath = useLocalePath();
 const { loading } = useCustomer();
 const { t } = useI18n();
 const { send: _send } = useNotification();
+const runtimeConfig = useRuntimeConfig();
+const passwordMinLength = runtimeConfig.public.passwordMinLength;
+const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 definePageMeta({ layout: false, middleware: ['guest-guard'] });
 usePageMeta().setPageMeta(t('auth.signup.submitLabel'), 'page');
 const turnstileLoad = ref(false);
@@ -317,6 +323,14 @@ const {
 onNuxtReady(async () => {
   if (!shippingCountries.value?.length) await fetchAggregatedCountries();
 });
+
+const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {
+  const currentValue = formFields[fieldName].value;
+
+  if (currentValue && typeof currentValue === 'string') {
+    formFields[fieldName].value = currentValue.replace(/\s/g, '');
+  }
+};
 
 if (turnstileSiteKey.length > 0) {
   const turnstileWatcher = watch(Object.values(formFields), (data) => {
