@@ -20,6 +20,7 @@ export const flattenPages = (
             right?: string;
             type?: string;
           }[],
+          skipsFilters
         ),
       );
     }
