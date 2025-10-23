@@ -15,8 +15,8 @@ export type MultiGridProps = {
   content: Block[];
   configuration: {
     columnWidths: number[];
+    layout?: MultiGridLayout;
   };
-  layout?: MultiGridLayout;
   meta: {
     uuid: string;
   };
@@ -44,13 +44,13 @@ export type ColumnBlock = Block & {
   content?: Block[];
   configuration: {
     columnWidths: number[];
-  };
-  layout?: {
-    gap: string;
-    marginTop?: number;
-    marginBottom?: number;
-    marginLeft?: number;
-    marginRight?: number;
-    backgroundColor?: string;
+    layout?: {
+      gap: string;
+      marginTop?: number;
+      marginBottom?: number;
+      marginLeft?: number;
+      marginRight?: number;
+      backgroundColor?: string;
+    };
   };
 };
