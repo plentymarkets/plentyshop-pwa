@@ -185,10 +185,9 @@
           select-label=""
           deselect-label="Selected"
           :internal-search="false"
-          @search-change="handleSearch"
           :custom-label="categoryCustomLabel"
-        >
-        </Multiselect>
+          @search-change="handleSearch"
+        />
       </div>
     </UiAccordionItem>
   </div>
@@ -198,7 +197,8 @@
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
-import { productGetters, Category } from '@plentymarkets/shop-api';
+import type { Category } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
