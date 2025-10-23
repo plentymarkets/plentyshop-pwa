@@ -143,7 +143,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
    * ```
    */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
+    const { data } = await useAsyncData(`fetchCategoryTemplate-${categoryId}`, () =>
+      useSdk().plentysystems.getCategoryTemplate({ id: categoryId }),
+    );
 
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
