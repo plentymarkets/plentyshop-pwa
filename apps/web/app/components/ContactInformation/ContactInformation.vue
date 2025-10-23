@@ -12,33 +12,34 @@
       novalidate
       @submit.prevent="validateAndSubmitEmail"
     >
-      <label>
+      <label for="customerEmail">
         <UiFormLabel>{{ t('contactInfo.email') }} {{ t('form.required') }}</UiFormLabel>
-        <span class="relative">
-          <SfInput
-            v-model="customerEmail"
-            wrapper-class="focus:outline focus:outline-offset-1 focus:outline-1 focus-within:outline focus-within:outline-offset-1 focus-within:outline-1"
-            :autofocus="!customerEmail"
-            v-bind="customerEmailAttributes"
-            :invalid="Boolean(errors['customerEmail'])"
-            :disabled="disabled"
-            name="customerEmail"
-            type="email"
-            autocomplete="email"
-            @blur="validateAndSubmitEmail"
-          />
-          <span v-if="!disabled" class="absolute inset-y-0 right-0 flex items-center mr-2">
-            <SfLoaderCircular v-if="customerLoading" size="sm" />
-            <SfIconCheck v-else-if="emailIsSaved" class="text-positive-700" size="sm" />
-          </span>
-        </span>
-        <ErrorMessage
-          id="customerEmailError"
-          as="span"
-          name="customerEmail"
-          class="flex text-negative-700 text-sm mt-2"
-        />
       </label>
+      <div class="relative">
+        <SfInput
+          id="customerEmail"
+          v-model="customerEmail"
+          wrapper-class="focus:outline focus:outline-offset-1 focus:outline-1 focus-within:outline focus-within:outline-offset-1 focus-within:outline-1"
+          :autofocus="!customerEmail"
+          v-bind="customerEmailAttributes"
+          :invalid="Boolean(errors['customerEmail'])"
+          :disabled="disabled"
+          name="customerEmail"
+          type="email"
+          autocomplete="email"
+          @blur="validateAndSubmitEmail"
+        />
+        <div v-if="!disabled" class="absolute inset-y-0 right-0 flex items-center mr-2">
+          <SfLoaderCircular v-if="customerLoading" size="sm" />
+          <SfIconCheck v-else-if="emailIsSaved" class="text-positive-700" size="sm" />
+        </div>
+      </div>
+      <ErrorMessage
+        id="customerEmailError"
+        as="span"
+        name="customerEmail"
+        class="flex text-negative-700 text-sm mt-2"
+      />
     </form>
 
     <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mt-4">
