@@ -66,7 +66,6 @@ const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBloc
 getBlocksLists();
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
-const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
