@@ -242,7 +242,7 @@ const crossSellingOptions = [
   { value: 'Accessory', label: getEditorTranslation('cross-selling-relation-accessory') },
   { value: 'ReplacementPart', label: getEditorTranslation('cross-selling-relation-replacement') },
   { value: 'Similar', label: getEditorTranslation('cross-selling-relation-similar') },
-  { value: 'Bundle', label: getEditorTranslation('cross-selling-relation-bundle') }
+  { value: 'Bundle', label: getEditorTranslation('cross-selling-relation-bundle') },
 ];
 
 const crossSellingModel = computed({

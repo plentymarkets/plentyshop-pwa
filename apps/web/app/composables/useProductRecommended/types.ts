@@ -1,4 +1,4 @@
-import type { Product, FacetSearchCriteria  } from '@plentymarkets/shop-api';
+import type { Product, FacetSearchCriteria } from '@plentymarkets/shop-api';
 
 export interface UseProductRecommendedState {
   data: Product[];
