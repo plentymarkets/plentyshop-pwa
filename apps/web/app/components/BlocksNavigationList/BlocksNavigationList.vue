@@ -27,7 +27,7 @@
             >
               <SfTooltip
                 v-if="isSingleInstanceOnPage(variation.template.en.name)"
-                :label="t('errorMessages.editor.add.disabledOneInstancePerPage')"
+                :label="getEditorTranslation('errorMessages.editor.add.disabledOneInstancePerPage')"
                 placement="top"
                 :show-arrow="true"
               >
@@ -42,14 +42,16 @@
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{ t('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
+          <span class="italic">{{ getEditorTranslation('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
         </div>
         <div
           v-if="isForbiddenBlock(category, targetUuid)"
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{ t('errorMessages.editor.add.disabledNotCompatibleWithLayouts') }}</span>
+          <span class="italic">{{
+            getEditorTranslation('errorMessages.editor.add.disabledNotCompatibleWithLayouts')
+          }}</span>
         </div>
       </div>
     </UiAccordionItem>
@@ -104,13 +106,3 @@ const pageHasAccessToCategory = (category: Category) => {
   }
 };
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "disabledTooDeeplyNested": "You cannot add this block type inside a MultiGrid that is already nested.",
-    "disabledNotCompatibleWithLayouts": "This block type is not compatible with layout blocks."
-  },
-  "de": {}
-}
-</i18n>
