@@ -336,13 +336,12 @@ export const useBlockManager = () => {
 
   const showBottomAddInGrid = ({
     blockMetaUuid,
-    columnLength = 0,
     blockName,
     isRowHovered,
     getBlockDepth,
   }: ShowBottomAddInGridOptions) => {
     const isInsideMultiGrid = getBlockDepth(blockMetaUuid) > 0;
-    return isInsideMultiGrid && columnLength === 1 && blockName !== 'EmptyGridBlock' && isRowHovered;
+    return isInsideMultiGrid && blockName !== 'EmptyGridBlock' && isRowHovered;
   };
 
   const blockExistsOnPage = (blockName: string): boolean => {
