@@ -85,7 +85,7 @@
         </button>
       </div>
 
-      <div class="flex md:hidden gap-0.5" role="group">
+      <div class="flex md:hidden gap-0.5" v-bind="carouselProps">
         <button
           v-for="(image, index) in images"
           :key="productImageGetters.getImageUrl(image)"
@@ -196,6 +196,10 @@ const slideTo = (index: number) => {
 
 const atStart = computed(() => activeIndex.value === 0);
 const atEnd = computed(() => activeIndex.value === images.value.length - 1);
+
+const carouselProps = computed(() => {
+  return images.value.length > 1 ? { role: 'group' } : {};
+});
 
 onMounted(() => {
   if (!mainBox.value) return;
