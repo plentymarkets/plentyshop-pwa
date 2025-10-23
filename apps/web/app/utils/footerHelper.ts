@@ -81,7 +81,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       title: $i18n.t('categories.services.label'),
       description: '',
       showContactLink: true,
-      showRegisterLink: false,
+      showRegisterLink: true,
     },
     column3: { title: '', description: '' },
     column4: { title: '', description: '' },
