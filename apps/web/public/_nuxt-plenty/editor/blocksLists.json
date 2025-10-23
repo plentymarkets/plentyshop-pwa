@@ -1013,7 +1013,11 @@
                 "subtitle": "Subtitle.",
                 "htmlDescription": "Text that supports HTML formatting"
               },
-              "categoryId": "49"
+              "source": {
+                "type": "category",
+                "itemId": "",
+                "categoryId": ""
+              }
             }
           },
           "de": {

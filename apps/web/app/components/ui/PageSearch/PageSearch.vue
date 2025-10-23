@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts" setup>
+import { flattenPages } from '~/utils/pages';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
@@ -57,18 +58,6 @@ const { pages } = await usePages();
 const { t, locale } = useI18n();
 const isOpen = ref(true);
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
-
-const flattenPages = (
-  pages: { name: string; path: string; children?: unknown[] }[],
-): { name: string; path: string }[] => {
-  return pages.reduce<{ name: string; path: string }[]>((acc, page) => {
-    acc.push({ name: page.name, path: page.path });
-    if (page.children) {
-      acc.push(...flattenPages(page.children as { name: string; path: string; children?: unknown[] }[]));
-    }
-    return acc;
-  }, []);
-};
 
 const options = ref(flattenPages(pages.value));
 
