@@ -346,16 +346,9 @@ export const useBlockManager = () => {
   };
 
   const blockExistsOnPage = (blockName: string): boolean => {
-    const search = (blocks: Block[]): boolean => {
-      for (const block of blocks) {
-        if (block.name === blockName && blockHasData(block)) return true;
-        if (Array.isArray(block.content) && block.content.length) {
-          if (search(block.content)) return true;
-        }
-      }
-      return false;
-    };
-    return data.value ? search(data.value) : false;
+    const checkBlocks = (blocks: Block[]): boolean =>
+      blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
+    return checkBlocks(data.value);
   };
 
   return {
