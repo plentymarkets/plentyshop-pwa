@@ -266,7 +266,7 @@ const crossSellingModel = computed({
   },
 });
 
-const categoryOptions = ref(flattenPages(pages.value));
+const categoryOptions = ref(flattenPages(pages.value, false));
 
 const firstCategoryId = (categoryTree.value?.[0]?.id || '').toString();
 

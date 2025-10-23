@@ -10,11 +10,15 @@
 
 <script setup lang="ts">
 import type { ProductRecommendedProductsProps } from './types';
+import { productGetters } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<ProductRecommendedProductsProps>(), { shouldLoad: undefined });
 
 const { locale } = useI18n();
 const { data: categoryTree } = useCategoryTree();
+const { currentProduct } = useProducts();
+
+const itemId = Object.keys(currentProduct.value).length ? productGetters.getItemId(currentProduct.value) : '';
 
 const firstCategoryId = categoryTree.value?.[0]?.id;
 
@@ -30,7 +34,7 @@ const isProduct = computed(() => props.content.source?.type === 'cross_selling')
 const getContentSource = () => {
   return {
     ...props.content.source,
-    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString() },
+    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString(), itemId },
   };
 };
 
