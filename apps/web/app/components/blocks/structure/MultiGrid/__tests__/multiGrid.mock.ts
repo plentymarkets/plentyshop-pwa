@@ -64,14 +64,14 @@ export const mockMultiGridProps = {
   ],
   configuration: {
     columnWidths: [6, 6],
-  },
-  layout: {
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: '#fff',
-    gap: 'M',
+    layout: {
+      marginTop: 20,
+      marginBottom: 20,
+      marginLeft: 10,
+      marginRight: 10,
+      backgroundColor: '#fff',
+      gap: 'M',
+    },
   },
   meta: {
     uuid: multiGridBlockUuid,
