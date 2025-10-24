@@ -124,6 +124,7 @@ export default defineNuxtConfig({
               'item-condition',
               'rich-snippet-mapping',
               'google-analytics',
+              'custom-canonical-URL-for-item-pages'
             ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
