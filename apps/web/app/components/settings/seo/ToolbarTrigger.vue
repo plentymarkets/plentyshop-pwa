@@ -22,7 +22,6 @@
 import { SfTooltip } from '@storefront-ui/vue';
 import whiteIcon from '~/assets/icons/paths/seo-white.svg';
 import blackIcon from '~/assets/icons/paths/seo-black.svg';
-const runtimeConfig = useRuntimeConfig();
 
 defineProps({
   active: Boolean,
