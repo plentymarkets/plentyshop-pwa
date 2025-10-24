@@ -9,6 +9,9 @@
         <template v-if="key === 'sortBy' && props.content?.fields.sortBy">
           <CategorySorting class="mb-4" />
         </template>
+      <template v-if="key === 'sortBy' && props.content?.fields.sortBy">
+        <Sort/>
+      </template>
 
         <template v-if="key === 'perPage' && props.content?.fields.perPage">
           <CategoryItemsPerPage class="mt-6 mb-4" :total-products="productsCatalog.pagination?.totals ?? 0" />
@@ -78,6 +81,7 @@
 import { facetGetters } from '@plentymarkets/shop-api';
 import type { SortFilterProps, SortFilterFieldsVisibility } from './types';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
+import Sort from '~/components/blocks/Sort/Sort.vue';
 
 const { data: productsCatalog } = useProducts();
 

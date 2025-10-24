@@ -138,6 +138,7 @@ const marginBottomClasses = computed(() => {
 const blockSize = computed(() => getBlockSize());
 
 const getBlockComponent = computed(() => {
+  console.log('props', props.block.name)
   if (!props.block.name) return null;
 
   const loader = getBlockLoader(props.block.name);

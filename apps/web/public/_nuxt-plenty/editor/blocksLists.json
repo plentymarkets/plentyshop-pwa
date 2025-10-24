@@ -1243,6 +1243,40 @@
             }
           }
         }
+      },
+      {
+        "title": "Category Sort",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Sort_by.png",
+        "template": {
+          "en": {
+            "name": "Sort",
+            "type": "content",
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "sortBy": true
+              },
+              "filtersOrder": ["sortBy"]
+            }
+          },
+          "de": {
+            "name": "Sort",
+            "type": "content",
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "sortBy": true
+              },
+              "filtersOrder": [ "sortBy"]
+            }
+          }
+        }
       }
     ]
   },
