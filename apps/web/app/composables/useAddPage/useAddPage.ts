@@ -199,13 +199,17 @@ export const useAddPageModal = () => {
     togglePageModal(false);
   };
 
+  const baseCategoryParams = {
+    type: 'in:item,content',
+    sortBy: 'position_asc,name_asc',
+    with: 'details,clients',
+  };
+
   const debouncedSearch = debounce(async (query: string) => {
-    if (!query || query.length < 2) return;
+    const q = query?.trim();
     await getCategories({
-      type: 'in:item,content',
-      sortBy: 'position_asc,name_asc',
-      with: 'details,clients',
-      name: `like:${query}`,
+      ...baseCategoryParams,
+      ...(q ? { name: `like:${q}` } : {}),
     });
   }, 500);
 
