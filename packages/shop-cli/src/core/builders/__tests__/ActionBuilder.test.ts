@@ -19,21 +19,21 @@ describe('ActionBuilder', () => {
 
       expect(actions[0]).toEqual({
         type: 'add',
-        path: '../../apps/web/components/TestComponent/{{pascalCase name}}.vue',
+        path: '../../apps/web/app/components/TestComponent/{{pascalCase name}}.vue',
         templateFile: 'templates/component/component.vue.hbs',
         data: { name: 'TestComponent' },
       });
 
       expect(actions[1]).toEqual({
         type: 'add',
-        path: '../../apps/web/components/TestComponent/types.ts',
+        path: '../../apps/web/app/components/TestComponent/types.ts',
         templateFile: 'templates/component/types.ts.hbs',
         data: { name: 'TestComponent' },
       });
 
       expect(actions[2]).toEqual({
         type: 'add',
-        path: '../../apps/web/components/TestComponent/__tests__/{{pascalCase name}}.spec.ts',
+        path: '../../apps/web/app/components/TestComponent/__tests__/{{pascalCase name}}.spec.ts',
         templateFile: 'templates/component/component.spec.ts.hbs',
         data: { name: 'TestComponent' },
       });
@@ -52,28 +52,28 @@ describe('ActionBuilder', () => {
 
       expect(actions[0]).toEqual({
         type: 'add',
-        path: '../../apps/web/composables/useTestData/{{name}}.ts',
+        path: '../../apps/web/app/composables/useTestData/{{name}}.ts',
         templateFile: 'templates/composable/composable.ts.hbs',
         data: { name: 'useTestData' },
       });
 
       expect(actions[1]).toEqual({
         type: 'add',
-        path: '../../apps/web/composables/useTestData/types.ts',
+        path: '../../apps/web/app/composables/useTestData/types.ts',
         templateFile: 'templates/composable/types.ts.hbs',
         data: { name: 'useTestData' },
       });
 
       expect(actions[2]).toEqual({
         type: 'add',
-        path: '../../apps/web/composables/useTestData/index.ts',
+        path: '../../apps/web/app/composables/useTestData/index.ts',
         templateFile: 'templates/composable/index.ts.hbs',
         data: { name: 'useTestData' },
       });
 
       expect(actions[3]).toEqual({
         type: 'add',
-        path: '../../apps/web/composables/useTestData/__tests__/{{name}}.spec.ts',
+        path: '../../apps/web/app/composables/useTestData/__tests__/{{name}}.spec.ts',
         templateFile: 'templates/composable/composable.spec.ts.hbs',
         data: { name: 'useTestData' },
       });
@@ -101,7 +101,7 @@ describe('ActionBuilder', () => {
 
       expect(actions[0]).toEqual({
         type: 'add',
-        path: '../../apps/web/components/CustomComponent/README.md',
+        path: '../../apps/web/app/components/CustomComponent/README.md',
         templateFile: 'templates/component/readme.md.hbs',
         data: undefined,
       });
@@ -119,7 +119,7 @@ describe('ActionBuilder', () => {
         .addMainFile({ extension: 'jsx' })
         .build();
 
-      expect(actions[0].path).toBe('../../apps/web/components/TestComponent/{{pascalCase name}}.jsx');
+      expect(actions[0].path).toBe('../../apps/web/app/components/TestComponent/{{pascalCase name}}.jsx');
     });
   });
 
@@ -133,7 +133,7 @@ describe('ActionBuilder', () => {
     it('should resolve composable paths correctly', () => {
       const actions = ActionBuilder.forGenerator('composable', 'useTestData').addMainFile().build();
 
-      expect(actions[0].path).toBe('../../apps/web/composables/useTestData/{{name}}.ts');
+      expect(actions[0].path).toBe('../../apps/web/app/composables/useTestData/{{name}}.ts');
     });
   });
 });

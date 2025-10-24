@@ -214,7 +214,7 @@ Validates that the CLI is being run in a valid PlentyONE Shop PWA project:
 export function validateProjectStructure(): ValidationResult {
   // Checks for:
   // - turbo.json (Turborepo)
-  // - apps/web/ directory
+  // - apps/web/app/ directory
   // - Nuxt.js configuration
   // - Component directories
 }

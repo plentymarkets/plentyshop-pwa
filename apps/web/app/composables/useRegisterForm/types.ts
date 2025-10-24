@@ -1,0 +1,42 @@
+export type UseRegisterFormReturn = {
+  hasCompany: Ref<boolean>;
+  turnstileElement: Ref<{ reset?: () => void } | null>;
+  errors: Ref<Record<string, string | undefined>>;
+  onSubmit: (e?: Event) => void;
+  passwordValidationLength: Ref<boolean>;
+  passwordValidationOneDigit: Ref<boolean>;
+  passwordValidationOneLetter: Ref<boolean>;
+  turnstileSiteKey: string;
+  formFields: {
+    email: Ref<string | undefined>;
+    password: Ref<string | undefined>;
+    repeatPassword: Ref<string | undefined>;
+    privacyPolicy: Ref<boolean | undefined>;
+    turnstile: Ref<string | undefined>;
+    firstName: Ref<string | undefined>;
+    lastName: Ref<string | undefined>;
+    country: Ref<string | undefined>;
+    streetName: Ref<string | undefined>;
+    apartment: Ref<string | undefined>;
+    city: Ref<string | undefined>;
+    zipCode: Ref<string | undefined>;
+    companyName: Ref<string | undefined>;
+    vatNumber: Ref<string | undefined>;
+  };
+  formFieldsAttributes: {
+    email: object;
+    password: object;
+    repeatPassword: object;
+    privacyPolicy: object;
+    turnstile: object;
+    firstName: object;
+    lastName: object;
+    country: object;
+    streetName: object;
+    apartment: object;
+    city: object;
+    zipCode: object;
+    companyName: object;
+    vatNumber: object;
+  };
+};
