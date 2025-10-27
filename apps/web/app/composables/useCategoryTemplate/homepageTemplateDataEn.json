@@ -180,12 +180,16 @@
       "isGlobalTemplate": false
     },
     "content": {
-      "categoryId": "49",
       "text": {
         "pretitle": "More than just technology",
         "title": "Discover our fashion collection",
         "subtitle": "Sporty fashion and accessories for everyone.",
         "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
+      },
+      "source": {
+        "type": "category",
+        "itemId": "",
+        "categoryId": ""
       }
     }
   },
@@ -223,7 +227,7 @@
         "title": "Legal"
       },
       "column2": {
-        "title": "Contact",
+        "title": "Services",
         "showContactLink": true,
         "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
       },

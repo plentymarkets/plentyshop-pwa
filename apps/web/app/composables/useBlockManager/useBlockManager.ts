@@ -336,13 +336,18 @@ export const useBlockManager = () => {
 
   const showBottomAddInGrid = ({
     blockMetaUuid,
-    columnLength = 0,
     blockName,
     isRowHovered,
     getBlockDepth,
   }: ShowBottomAddInGridOptions) => {
     const isInsideMultiGrid = getBlockDepth(blockMetaUuid) > 0;
-    return isInsideMultiGrid && columnLength === 1 && blockName !== 'EmptyGridBlock' && isRowHovered;
+    return isInsideMultiGrid && blockName !== 'EmptyGridBlock' && isRowHovered;
+  };
+
+  const blockExistsOnPage = (blockName: string): boolean => {
+    const checkBlocks = (blocks: Block[]): boolean =>
+      blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
+    return checkBlocks(data.value);
   };
 
   return {
@@ -379,5 +384,6 @@ export const useBlockManager = () => {
     getLazyLoadRef,
     setBlocksListContext,
     showBottomAddInGrid,
+    blockExistsOnPage,
   };
 };

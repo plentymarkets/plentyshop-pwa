@@ -12,6 +12,9 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import categoryTemplateData from './categoryTemplateData.json';
 import productTemplateData from './productTemplateData.json';
 import { migrateImageContent } from '~/utils/migrate-image-content';
+import type { OldContent } from '~/utils/migrate-recommended-content';
+import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
+import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
@@ -44,6 +47,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
     for (const block of blocks) {
       if (block.name === 'Image' && block.content) {
         block.content = migrateImageContent(block.content);
+      }
+      if (block.name === 'ProductRecommendedProducts' && block.content) {
+        block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
       }
       if (Array.isArray(block.content)) {
         migrateAllImageBlocks(block.content);
@@ -137,7 +143,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
    * ```
    */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
+    const { data } = await useAsyncData(`fetchCategoryTemplate-${categoryId}`, () =>
+      useSdk().plentysystems.getCategoryTemplate({ id: categoryId }),
+    );
 
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };

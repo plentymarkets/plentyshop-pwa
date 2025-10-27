@@ -340,9 +340,6 @@ const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const props = defineProps<{ uuid?: string }>();
-const footerBlock = computed(
-  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {}) as FooterSettings,
-);
 
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
@@ -350,6 +347,13 @@ const thirdColumnOpen = ref(false);
 const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
+
+const getSourceBlock = () => {
+  return findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
+};
+
+const sourceContent = getSourceBlock()?.content || {};
+const footerBlock = ref(mapFooterData(sourceContent as FooterSettings));
 
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
   (switchConfig) => ({
@@ -375,6 +379,17 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
       },
     }),
   }),
+);
+
+watch(
+  footerBlock,
+  (updatedFooterBlock) => {
+    const block = getSourceBlock();
+    if (block) {
+      block.content = updatedFooterBlock;
+    }
+  },
+  { deep: true },
 );
 </script>
 
