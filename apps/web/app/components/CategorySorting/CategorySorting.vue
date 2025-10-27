@@ -7,7 +7,7 @@
     </h6>
     <div class="px-4">
       <SfSelect id="sortBy" v-model="selected" :aria-label="t('sortBy')" data-testid="select-sort-by">
-        <option v-for="option in options" :key="option" :value="option">
+        <option v-for="option in filteredOptions" :key="option" :value="option">
           {{ t(`sortType.${option}`) }}
         </option>
       </SfSelect>
@@ -26,12 +26,24 @@ const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSear
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
 const options = computed(() => availableSortingOptions());
+const isSearchPage = computed(() => isPageOfType('search'));
 
-const defaultOption = computed(() => (isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption()));
+const filteredOptions = computed(() => {
+  const availableOptions = options.value || [];
+
+  if (!isSearchPage.value) {
+    return availableOptions.filter((option: string) => option !== 'item.score');
+  }
+  return availableOptions;
+});
+
+const defaultOption = computed(() => (isSearchPage.value ? defaultSortingSearch() : defaultSortingOption()));
 
 const selected = computed({
   get: () => {
-    return (useNuxtApp().$router.currentRoute.value.query.sort || defaultOption.value || options.value[0]) as string;
+    return (useNuxtApp().$router.currentRoute.value.query.sort ||
+      defaultOption.value ||
+      filteredOptions.value[0]) as string;
   },
   set: (selectedOption) => {
     updateSorting(selectedOption);

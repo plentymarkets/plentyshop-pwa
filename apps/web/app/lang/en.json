@@ -1035,7 +1035,7 @@
       },
       "feedbackDecimal_asc": "Item reviews ⬆",
       "feedbackDecimal_desc": "Item reviews ⬇",
-      "score": "Relevance"
+      "score": "Relevance (Search result only)"
     }
   },
   "availabilitiesOptions": {
