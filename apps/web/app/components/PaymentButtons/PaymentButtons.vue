@@ -93,6 +93,7 @@ const { send } = useNotification();
 const {
   shippingPrivacyAgreement,
   customerWish,
+  customerSign,
   doAdditionalInformation,
   loading: additionalInformationLoading,
 } = useAdditionalInformation();
@@ -175,6 +176,7 @@ const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
+    orderCustomerSign: customerSign.value,
   });
 
   typeof callback === 'function' && callback ? callback(true) : await order();
@@ -215,6 +217,7 @@ const openPayPalCardDialog = async () => {
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
+    orderCustomerSign: customerSign.value,
   });
 
   paypalCardDialog.value = true;
@@ -260,6 +263,7 @@ const validateOnClickComponents = async (event: MouseEvent, component: PaymentBu
   await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
+    orderCustomerSign: customerSign.value,
   });
   if (readyToBuy() && event.target) {
     event.target.dispatchEvent(new CustomEvent('validated-click'));

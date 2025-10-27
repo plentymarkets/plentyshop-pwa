@@ -1013,7 +1013,11 @@
                 "subtitle": "Subtitle.",
                 "htmlDescription": "Text that supports HTML formatting"
               },
-              "categoryId": "49"
+              "source": {
+                "type": "category",
+                "itemId": "",
+                "categoryId": ""
+              }
             }
           },
           "de": {
@@ -1200,7 +1204,6 @@
               "isGlobalTemplate": false
             },
             "content": {
-              "enableFilters": true,
               "fields": {
                 "category": true,
                 "sortBy": true,
@@ -1225,7 +1228,6 @@
               "isGlobalTemplate": false
             },
             "content": {
-              "enableFilters": true,
               "fields": {
                 "category": true,
                 "sortBy": true,

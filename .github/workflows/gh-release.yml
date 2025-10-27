@@ -7,6 +7,11 @@ on:
         description: 'Base branch for the release'
         required: true
         default: 'main'
+      dryRun:
+        description: 'Dry run (no release created)'
+        type: boolean
+        required: true
+        default: false
   schedule:
     - cron: '0 9 * * 4' # Every Thursday at 09:00 UTC
 
@@ -184,7 +189,8 @@ jobs:
           echo "Final release notes:"
           cat release_notes.md
 
-      - name: Create release
+      - name: Create release draft
+        if: github.event.inputs.dryRun != 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NEW_VERSION: v${{ steps.version.outputs.new }}
@@ -204,9 +210,17 @@ jobs:
           # Create the release with the generated notes
           if ! gh release create "$NEW_VERSION" \
             --title "Release $NEW_VERSION" \
-            --notes-file release_notes.md; then
+            --notes-file release_notes.md \
+            --draft; then
             echo "Error: Failed to create release"
             git push --delete origin "$NEW_VERSION"
             git tag -d "$NEW_VERSION"
             exit 1
           fi
+
+      - name: Write release notes to GH Summary (Dry Run)
+        if: ${{ github.event.inputs.dryRun == 'true' }}
+        run: |
+          echo "## Release Notes (Dry Run)" >> $GITHUB_STEP_SUMMARY
+          cat release_notes.md >> $GITHUB_STEP_SUMMARY
+          echo "Release notes written to GitHub Summary for review."

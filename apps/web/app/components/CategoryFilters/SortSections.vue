@@ -2,8 +2,14 @@
   <div v-if="shouldRenderFacet">
     <SfAccordionItem v-if="facet" v-model="open">
       <template #summary>
-        <div class="flex justify-between p-2 mb-2 select-none">
-          <p class="mb-2 font-medium typography-headline-5">{{ facetGetters.getName(facet) }}</p>
+        <div class="flex justify-between py-1 px-4 mb-2 select-none bg-primary-50/50">
+          <h6 class="py-1 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none">
+            {{ facetGetters.getName(facet) }}
+          </h6>
+
+          <SfTooltip v-if="showTooltipInPreview(facet)" :label="t('tooltipForDummyPlaceholder')">
+            <SfIconInfo size="sm" />
+          </SfTooltip>
           <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
         </div>
       </template>
@@ -36,7 +42,7 @@
         </SfListItem>
       </div>
 
-      <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
+      <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4 px-4" @submit.prevent="updatePriceFilter">
         <div class="mb-3">
           <label for="min">
             <UiFormLabel class="text-start">{{ t('min') }}</UiFormLabel>
@@ -67,7 +73,7 @@
         </div>
       </form>
 
-      <div v-else class="mb-4 testing here">
+      <div v-else class="mb-3">
         <SfListItem
           v-for="(filter, index) in facetGetters.getFilters(facet)"
           :key="index"
@@ -108,11 +114,14 @@ import {
   SfCheckbox,
   SfCounter,
   SfIconArrowUpward,
+  SfTooltip,
+  SfIconInfo,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
-
+const { $isPreview } = useNuxtApp();
+const { data: productsCatalog } = useProducts();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const { t } = useI18n();
 
@@ -125,6 +134,12 @@ const configuration = computed(() => props.configuration || ({} as SortFilterCon
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
 const maxPrice = ref(getFacetsFromURL().priceMax ?? '');
 
+const firstProductIsDummyData = computed(
+  () => productsCatalog.value.products.length && productsCatalog.value.products[0]?.texts.name1 === 'Example Product 1',
+);
+const showTooltipInPreview = (facet: FilterGroup) => {
+  return facetGetters.getType(facet) === 'dynamic' && $isPreview && firstProductIsDummyData.value;
+};
 const updatePriceFilter = () => {
   const min = minPrice.value.length > 0 ? Number(minPrice.value) : Number.NaN;
   const max = maxPrice.value.length > 0 ? Number(maxPrice.value) : Number.NaN;

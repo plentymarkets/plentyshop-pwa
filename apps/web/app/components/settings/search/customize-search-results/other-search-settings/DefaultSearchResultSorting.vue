@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
       <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
@@ -31,7 +31,6 @@ import { isPageOfType } from '~/utils/pathHelper';
 
 const { updateSetting, getSetting } = useSiteSettings('defaultSortingSearch');
 const { updateSorting } = useCategoryFilter();
-const runtimeConfig = useRuntimeConfig();
 
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 

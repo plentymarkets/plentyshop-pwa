@@ -1,0 +1,52 @@
+[
+  {
+    "name": "MultiGrid",
+    "type": "structure",
+    "meta": {
+      "uuid": "993a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a",
+      "isGlobalTemplate": false
+    },
+    "configuration": {
+      "columnWidths": [6, 6]
+    },
+    "layout": {
+      "gap": "XL",
+      "narrowContainer": true
+    },
+    "content": [
+      {
+        "name": "ImageGallery",
+        "type": "content",
+        "meta": {
+          "uuid": "c1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 0,
+        "content": {
+          "thumbnails": {
+            "showThumbnails": true,
+            "thumbnailType": "left-vertical",
+            "enableHoverZoom": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "ProductRecommendedProducts",
+    "type": "content",
+    "meta": {
+      "uuid": "g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c",
+      "isGlobalTemplate": false
+    },
+    "content": {
+      "text": {},
+      "source": {
+        "type": "cross_selling",
+        "itemId": "",
+        "categoryId": "",
+        "crossSellingRelation": "Similar"
+      }
+    }
+  }
+]
