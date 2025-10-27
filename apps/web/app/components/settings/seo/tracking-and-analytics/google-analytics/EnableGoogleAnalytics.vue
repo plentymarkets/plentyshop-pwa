@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel class="mb-1">
         {{ getEditorTranslation('label') }}
@@ -15,7 +15,6 @@
 import { SfSwitch } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('enableGoogleAnalytics');
-const runtimeConfig = useRuntimeConfig();
 
 const enableGoogleAnalytics = computed({
   get: () => getSetting() === 'true',

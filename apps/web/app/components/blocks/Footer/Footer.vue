@@ -3,21 +3,21 @@
     v-if="resolvedContent"
     class="pt-10"
     :style="{
-      backgroundColor: resolvedContent.colors?.background || FOOTER_COLORS.background,
-      color: resolvedContent.colors?.text || FOOTER_COLORS.text,
+      backgroundColor: resolvedContent.colors?.background,
+      color: resolvedContent.colors?.text,
     }"
     data-testid="footer"
   >
     <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="max-w-[280px] break-words">
+        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
             {{ resolvedContent.column1?.title }}
           </div>
           <ul>
             <SfListItem
-              v-for="({ key: subcategoryKey, link }, idx) in categories[0]?.subcategories || []"
-              :key="subcategoryKey || idx"
+              v-for="switchConfig in getColumnSwitches(resolvedContent.column1)"
+              :key="switchConfig.id"
               class="py-2 !bg-transparent typography-text-sm"
             >
               <SfLink
@@ -25,9 +25,9 @@
                 :style="{ color: resolvedContent.colors?.text || undefined }"
                 class="no-underline text-neutral-600 hover:underline active:underline"
                 variant="secondary"
-                :to="localePath(link)"
+                :to="localePath(switchConfig.link)"
               >
-                {{ t(`categories.${categories[0]?.key}.subcategories.${subcategoryKey}`) }}
+                {{ switchConfig.translationKey }}
               </SfLink>
             </SfListItem>
           </ul>
@@ -41,21 +41,23 @@
           <div class="ml-4 text-lg font-medium leading-7">
             {{ column?.title }}
           </div>
-          <div v-if="column?.showContactLink" class="text-sm">
+          <div v-if="getColumnSwitches(column).length" class="text-sm">
             <ul>
-              <li
+              <SfListItem
+                v-for="switchConfig in getColumnSwitches(column)"
+                :key="switchConfig.id"
                 class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
               >
                 <SfLink
-                  :style="{ color: resolvedContent.colors?.text || '#1c1c1c' }"
                   :tag="NuxtLink"
-                  class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
                   variant="secondary"
-                  :to="localePath('/contact')"
+                  class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
+                  :style="{ color: resolvedContent.colors?.text }"
+                  :to="localePath(switchConfig.link)"
                 >
-                  {{ t('categories.contact.label') }}
+                  {{ switchConfig.translationKey }}
                 </SfLink>
-              </li>
+              </SfListItem>
             </ul>
           </div>
           <div
@@ -76,8 +78,8 @@
           'text-right': resolvedContent.footnoteAlign === 'right',
         }"
         :style="{
-          color: resolvedContent.colors?.footnoteText || FOOTER_COLORS.footnoteText,
-          backgroundColor: resolvedContent.colors?.footnoteBackground || FOOTER_COLORS.footnoteBackground,
+          color: resolvedContent.colors?.footnoteText,
+          backgroundColor: resolvedContent.colors?.footnoteBackground,
         }"
         v-html="resolvedContent.footnote"
       />
@@ -87,22 +89,23 @@
 
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
-import type { FooterProps } from './types';
-import { categories } from '~/mocks';
+import type { FooterProps, FooterSettingsColumn } from './types';
 const { t } = useI18n();
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 
-const FOOTER_COLORS = {
-  background: '#cfe4ec',
-  text: '#1c1c1c',
-  footnoteBackground: '#161a16',
-  footnoteText: '#959795',
-};
-
 const { getFooterSettings } = useFooter();
-const resolvedContent = computed(() => props.content ?? getFooterSettings());
+const resolvedContent = computed(() => mapFooterData(props.content ?? getFooterSettings()));
+
+const getColumnSwitches = (column: FooterSettingsColumn) => {
+  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
+    id: `${switchConfig.key}-switch`,
+    translationKey: t(switchConfig.shopTranslationKey),
+    link: switchConfig.link,
+    state: true,
+  }));
+};
 </script>
 
 <style scoped>

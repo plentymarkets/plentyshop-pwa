@@ -1,6 +1,6 @@
 import { userGetters, cartGetters, type Address, AddressType } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
-import { boolean, object, string, ref as yupReference } from 'yup';
+import { boolean, object, string } from 'yup';
 import { useForm } from 'vee-validate';
 import type { UseRegisterFormReturn } from './types';
 
@@ -14,11 +14,13 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
   const localePath = useLocalePath();
   const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
   const turnstileSiteKey = getSetting() ?? '';
+  const runtimeConfig = useRuntimeConfig();
+  const passwordMinLength = runtimeConfig.public.passwordMinLength;
+  const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 
   const state = useState('useRegisterForm', () => ({
     isLoading: false,
     hasCompany: false,
-    invalidVAT: false,
     turnstileElement: null as { reset?: () => void } | null,
     defaultFormValues: {
       email: '',
@@ -48,14 +50,19 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         )
         .default(state.value.defaultFormValues.email),
       password: string()
-        .trim()
         .required($i18n.t('errorMessages.password.required'))
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, $i18n.t('errorMessages.password.valid'))
+        .transform((value) => (value ? value.replace(/\s/g, '') : value))
+        .min(passwordMinLength, $i18n.t('errorMessages.password.minLength', { min: passwordMinLength }))
+        .max(passwordMaxLength, $i18n.t('errorMessages.password.maxLength', { max: passwordMaxLength }))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, $i18n.t('errorMessages.password.valid'))
         .default(state.value.defaultFormValues.password),
       repeatPassword: string()
-        .trim()
         .required($i18n.t('errorMessages.password.required'))
-        .oneOf([yupReference('password'), ''], $i18n.t('errorMessages.password.match'))
+        .transform((value) => (value ? value.replace(/\s/g, '') : value))
+        .test('passwords-match', $i18n.t('errorMessages.password.match'), function (value) {
+          const passwordValue = this.parent.password?.replace(/\s/g, '');
+          return value === passwordValue;
+        })
         .default(state.value.defaultFormValues.repeatPassword),
       firstName: string()
         .trim()
@@ -217,12 +224,14 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
 
   const onSubmit = handleSubmit(async () => {
     await registerUser();
-    if (isAuthorized) await navigateAfterRegistration();
+    state.value.turnstileElement?.reset?.();
+    turnstile.value = '';
+    if (isAuthorized.value) await navigateAfterRegistration();
   });
 
   const passwordValidationLength = computed(() => {
     const val = password?.value || '';
-    return val.length >= 8 && !val.includes(' ');
+    return val.length >= passwordMinLength && val.length <= passwordMaxLength;
   });
 
   const passwordValidationOneDigit = computed(() => /\d/.test(password?.value || ''));
@@ -230,7 +239,6 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
 
   return {
     hasCompany: toRef(state.value, 'hasCompany'),
-    invalidVAT: toRef(state.value, 'invalidVAT'),
     turnstileElement: toRef(state.value, 'turnstileElement'),
     errors,
     onSubmit,

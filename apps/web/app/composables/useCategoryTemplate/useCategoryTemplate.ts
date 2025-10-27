@@ -10,10 +10,16 @@ import type { Block } from '@plentymarkets/shop-api';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import categoryTemplateData from './categoryTemplateData.json';
+import productTemplateData from './productTemplateData.json';
 import { migrateImageContent } from '~/utils/migrate-image-content';
+import type { OldContent } from '~/utils/migrate-recommended-content';
+import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
+import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
+
+const useProductTemplateData = () => productTemplateData as Block[];
 
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
@@ -42,6 +48,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
       if (block.name === 'Image' && block.content) {
         block.content = migrateImageContent(block.content);
       }
+      if (block.name === 'ProductRecommendedProducts' && block.content) {
+        block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
+      }
       if (Array.isArray(block.content)) {
         migrateAllImageBlocks(block.content);
       }
@@ -51,10 +60,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
-    const { locale } = useI18n();
+    const { $i18n } = useNuxtApp();
     const { data: productsCatalog } = useProducts();
 
-    const { data, error } = await useAsyncData(`${locale.value}-${type}-${identifier}-${blocks}`, () =>
+    const { data, error } = await useAsyncData(`${$i18n.locale.value}-${type}-${identifier}-${blocks}`, () =>
       useSdk().plentysystems.getBlocks({ identifier, type, blocks }),
     );
 
@@ -74,6 +83,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
 
     if (!fetchedBlocks.length && type === 'category' && productsCatalog.value.category?.type === 'item') {
       fetchedBlocks = useCategoryTemplateData();
+    }
+
+    if (!fetchedBlocks.length && type === 'product') {
+      fetchedBlocks = useProductTemplateData();
     }
 
     if (Array.isArray(fetchedBlocks)) {
@@ -130,7 +143,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) 
    * ```
    */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
+    const { data } = await useAsyncData(`fetchCategoryTemplate-${categoryId}`, () =>
+      useSdk().plentysystems.getCategoryTemplate({ id: categoryId }),
+    );
 
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
