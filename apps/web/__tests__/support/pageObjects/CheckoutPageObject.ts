@@ -308,11 +308,10 @@ export class CheckoutPageObject extends PageObject {
       .intercept('/plentysystems/doPreparePayment')
       .as('doPreparePayment')
       .intercept('/plentysystems/doCreatePayPalOrder')
-      .as('doCreatePayPalOrder')
+      .as('doCreatePayPalOrder');
 
     cy.getByTestId('pay-creditcard-button').click();
-    cy
-      .wait('@doPreparePayment')
+    cy.wait('@doPreparePayment')
       .wait('@doCreatePayPalOrder')
       .wait('@doPlaceOrder')
       .wait('@doCapturePayPalOrderV2')

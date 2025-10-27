@@ -1,5 +1,5 @@
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import {MyAccountPageObject} from "../../support/pageObjects/MyAccountPageObject";
+import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 import { paths } from '../../../app/utils/paths';
 
 const checkout = new CheckoutPageObject();
@@ -62,10 +62,8 @@ describe('Checkout Addresses', () => {
       .goToCheckoutPath()
       .fillContactInformationForm()
       .checkSameAsBilling()
-      .billingAddressSection.should('not.exist')
-    checkout
-      .uncheckSameAsBilling()
-      .billingAddressSection.should('exist')
+      .billingAddressSection.should('not.exist');
+    checkout.uncheckSameAsBilling().billingAddressSection.should('exist');
     checkout.billingAddressForm.should('exist');
   });
 
@@ -76,15 +74,12 @@ describe('Checkout Addresses', () => {
     cy.visitAndHydrate(paths.authLogin);
     myAccount.successLogin();
     cy.wait('@doLogin');
-    checkout
-      .goToCheckoutPath();
+    checkout.goToCheckoutPath();
 
     cy.wait('@getAddresses');
     cy.wait('@getAddresses');
 
-    checkout
-      .billingAddressForm.should('not.exist')
-    checkout
-      .shippingAddressForm.should('not.exist')
+    checkout.billingAddressForm.should('not.exist');
+    checkout.shippingAddressForm.should('not.exist');
   });
 });
