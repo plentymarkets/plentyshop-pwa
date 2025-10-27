@@ -1157,6 +1157,15 @@
               },
               "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
               "fieldsDisabled": [],
+              "displayCategoryImage": "off",
+              "image": {
+                "fillMode": "fill",
+                "alt": "",
+                "brightness": 0.75
+              },
+              "text": {
+                "color": "#000"
+              },
               "layout": {
                 "paddingTop": 40,
                 "paddingBottom": 40,
