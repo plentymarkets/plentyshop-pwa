@@ -1232,5 +1232,4 @@
     }
   },
   "cancelOrder": "Cancel order",
-  "tooltipForDummyPlaceholder": "Please note that this is only sample data. In preview and live mode, you will see the facets for the actual products in this category. The number and type of customized filters may therefore vary."
 }
