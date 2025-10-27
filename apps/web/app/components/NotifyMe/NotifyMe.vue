@@ -166,17 +166,10 @@
     });
 
     if (result?.success) {
-      if (result.autoConfirmed) {
-        send({
-          type: 'positive',
-          message: t('notifyMe.form.successAutoConfirmed'),
-        });
-      } else {
-        send({
-          type: 'positive',
-          message: t('notifyMe.form.successCheckEmail'),
-        });
-      }
+      send({
+        type: 'positive',
+        message: t('notifyMe.form.successCheckEmail'),
+      });
       close();
     }
   };

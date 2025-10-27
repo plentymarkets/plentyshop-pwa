@@ -7,8 +7,7 @@
       "emailLabel": "E-Mail-Adresse",
       "emailPlaceholder": "Ihre E-Mail",
       "turnstileFailed": "Turnstile Validierung Fehlgeschlagen",
-      "successAutoConfirmed": "Du wirst benachrichtigt, sobald das Produkt wieder verfügbar ist.",
-      "successCheckEmail": "Prüfe dein Postfach! Wir haben dir eine Bestätigungs E-Mail gesendet."
+      "successCheckEmail": "Prüfe dein Postfach! Wir haben Ihnen eine Bestätigungs E-Mail gesendet."
     }
   },
   "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert",
