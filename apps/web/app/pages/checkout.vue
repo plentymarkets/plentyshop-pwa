@@ -96,18 +96,14 @@ const checkPayPalPaymentsEligible = async () => {
   }
 };
 await callOnce(async () => {
-  await Promise.all([fetchPaymentMethods(), useAggregatedCountries().fetchAggregatedCountries()]);
+  await fetchPaymentMethods();
 });
 
 onNuxtReady(async () => {
   await useFetchAddressesData()
-    .fetchServer()
+    .fetch()
     .then(() => persistShippingAddress())
     .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddressesData()
-    .fetchServer()
     .then(() => persistBillingAddress())
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));

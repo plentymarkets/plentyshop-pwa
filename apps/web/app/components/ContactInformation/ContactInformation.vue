@@ -134,10 +134,7 @@ const handleGuestEmailChange = async (updatedEmail: string) => {
 
   await useFetchAddressesData()
     .fetchServer()
-    .then(() => persistShippingAddress());
-
-  await useFetchAddressesData()
-    .fetchServer()
+    .then(() => persistShippingAddress())
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
 

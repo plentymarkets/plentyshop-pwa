@@ -171,14 +171,10 @@ const handle = async () => {
   await setAddressesFromPayPal(paypalOrderId);
   await fetchSession();
 
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetch()
     .then(() => persistShippingAddress())
     .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddress(AddressType.Billing)
-    .fetch()
     .then(() => persistBillingAddress())
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
