@@ -1,7 +1,7 @@
 <template>
   <div class="w-full" data-testid="category-items-per-page">
     <h6
-      class="bg-primary-200 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
+      class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('perPage') }}
     </h6>
