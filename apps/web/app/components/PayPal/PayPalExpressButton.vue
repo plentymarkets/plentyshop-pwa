@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/shop-api';
+import { cartGetters, type PayPalCreateOrder } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
@@ -23,12 +23,14 @@ const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
 const { t } = useI18n();
 
-const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const currency = computed(
+  () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
+);
 const localePath = useLocalePath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
-  (event: 'on-approved'): void;
+  (event: 'on-approved' | 'on-payed'): void;
 }>();
 
 const props = defineProps<PaypalButtonPropsType>();
@@ -37,8 +39,9 @@ const currentInstance = getCurrentInstance();
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
+const TypeOrderAlreadyExisting = 'OrderAlreadyExisting';
 
-const isCommit = props.type === TypeCheckout;
+const isCommit = props.type === TypeCheckout || props.type === TypeOrderAlreadyExisting;
 
 const checkonValidationCallbackEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
@@ -96,6 +99,24 @@ const onApprove = async (data: OnApproveData) => {
       emit('frontend:orderCreated', order);
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
     }
+  } else if (props.type === TypeOrderAlreadyExisting && props.plentyOrderId) {
+    if (!paypalOrder.value?.isAutocaptured) {
+      await captureOrder(data.orderID);
+    }
+    await createPlentyPaymentFromPayPalOrder(data.orderID, props.plentyOrderId);
+    emits('on-payed');
+  }
+};
+
+const getLabel = (type: string) => {
+  switch (type) {
+    case TypeCartPreview:
+    case TypeSingleItem:
+      return 'checkout';
+    case TypeOrderAlreadyExisting:
+      return 'pay';
+    default:
+      return 'buynow';
   }
 };
 
@@ -104,7 +125,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
     const button = paypalScript.value?.Buttons({
       style: {
         layout: 'vertical',
-        label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
+        label: getLabel(props.type),
         color: 'gold',
       },
       fundingSource: fundingSource,
@@ -126,11 +147,26 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
-        const order = await createTransaction({
-          type: isCommit ? 'basket' : 'express',
-        });
+        let order: PayPalCreateOrder | null = null;
 
-        if (order?.id && (await useCartStockReservation().reserve())) {
+        if (props.type === TypeOrderAlreadyExisting) {
+          order = await createTransaction({
+            type: 'order',
+            plentyOrderId: props.plentyOrderId,
+          });
+        } else {
+          order = await createTransaction({
+            type: isCommit ? 'basket' : 'express',
+          });
+        }
+
+        if (order?.id && props.type !== TypeOrderAlreadyExisting) {
+          if (!(await useCartStockReservation().reserve())) {
+            return '';
+          }
+        }
+
+        if (order?.id) {
           return order.id;
         }
         return '';
@@ -149,7 +185,10 @@ const createButton = () => {
     if (paypalButton.value) {
       paypalButton.value.innerHTML = '';
     }
-    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL, paypalScript.value.FUNDING?.PAYLATER];
+    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL];
+    if (props.type !== TypeOrderAlreadyExisting) {
+      FUNDING_SOURCES.push(paypalScript.value.FUNDING?.PAYLATER);
+    }
     FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
   }
 };
