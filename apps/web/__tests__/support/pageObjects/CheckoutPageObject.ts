@@ -230,9 +230,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   uncheckSameAsBilling() {
-    this.useShippingAsBilling.uncheck({
-      waitForAnimations: true,
-    });
+    this.useShippingAsBilling.uncheck();
     return this;
   }
 
