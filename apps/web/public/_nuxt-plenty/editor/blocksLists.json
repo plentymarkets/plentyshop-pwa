@@ -1273,6 +1273,38 @@
             }
           }
         }
+      },
+      {
+        "title": "Category Per Page",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/perpage.png",
+        "template": {
+          "en": {
+            "name": "PerPageFilter",
+            "type": "content",
+            "meta": {
+              "uuid": "57fa6e83-3c5d-437c-b0f0-f97c81010fe3",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "perPage": true
+              }
+            }
+          },
+          "de": {
+            "name": "PerPageFilter",
+            "type": "content",
+            "meta": {
+              "uuid": "57fa6e83-3c5d-437c-b0f0-f97c81010fe3",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "perPage": true
+              }
+            }
+          }
+        }
       }
     ]
   },
