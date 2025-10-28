@@ -1040,9 +1040,7 @@
   },
   "item-category": {
     "category": "item-category",
-    "accessControl": [
-      "productCategory"
-    ],
+    "accessControl": ["productCategory"],
     "title": "Item Category",
     "blockName": "ItemGrid",
     "variations": [
@@ -1072,18 +1070,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
@@ -1114,18 +1102,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
@@ -1214,7 +1192,16 @@
                 "availability": true,
                 "customizedFilters": true
               },
-              "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+              "filtersOrder": [
+                "category",
+                "sortBy",
+                "perPage",
+                "itemRating",
+                "manufacturer",
+                "price",
+                "availability",
+                "customizedFilters"
+              ],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
               "numberOfFiltersToShowInitially": 0
@@ -1238,7 +1225,16 @@
                 "availability": true,
                 "customizedFilters": true
               },
-              "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+              "filtersOrder": [
+                "category",
+                "sortBy",
+                "perPage",
+                "itemRating",
+                "manufacturer",
+                "price",
+                "availability",
+                "customizedFilters"
+              ],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
               "numberOfFiltersToShowInitially": 0
@@ -1254,28 +1250,26 @@
             "name": "Sort",
             "type": "content",
             "meta": {
-              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb948",
               "isGlobalTemplate": false
             },
             "content": {
               "fields": {
                 "sortBy": true
-              },
-              "filtersOrder": ["sortBy"]
+              }
             }
           },
           "de": {
             "name": "Sort",
             "type": "content",
             "meta": {
-              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb948",
               "isGlobalTemplate": false
             },
             "content": {
               "fields": {
                 "sortBy": true
-              },
-              "filtersOrder": [ "sortBy"]
+              }
             }
           }
         }
