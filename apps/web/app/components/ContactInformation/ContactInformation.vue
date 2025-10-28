@@ -131,12 +131,9 @@ const handleGuestEmailChange = async (updatedEmail: string) => {
   useCheckoutAddress(AddressType.Shipping).clear();
   useCheckoutAddress(AddressType.Billing).clear();
 
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
-    .then(() => persistShippingAddress());
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
+    .then(() => persistShippingAddress())
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
 
@@ -159,12 +156,9 @@ const checkPayPalPaymentsEligible = async () => {
 };
 
 const handleSuccessfulLogin = async () => {
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
-    .then(() => persistShippingAddress());
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
+    .then(() => persistShippingAddress())
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
 
