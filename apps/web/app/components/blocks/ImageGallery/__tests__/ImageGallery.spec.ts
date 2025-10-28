@@ -11,8 +11,18 @@ vi.mock('@plentymarkets/shop-api', async () => {
     productGetters: {
       ...actual.productGetters,
       getGallery: vi.fn(() => [
-        { url: 'image1.jpg', alt: 'Image 1' },
-        { url: 'image2.jpg', alt: 'Image 2' },
+        {
+          url: 'image1.jpg',
+          urlPreview: '',
+          urlMiddle: '',
+          urlSecondPreview: '',
+        },
+        {
+          url: 'image2.jpg',
+          urlPreview: '',
+          urlMiddle: '',
+          urlSecondPreview: '',
+        },
       ]),
     },
     productImageGetters: {
@@ -53,6 +63,24 @@ describe('ImageGallery', () => {
 
     const gallery = wrapper.findComponent({ name: 'Gallery' });
     expect(gallery.props('images')).toEqual([]);
+  });
+
+  it('should pass the correct images to the Gallery component', () => {
+    const wrapper = mount(ImageGallery, {
+      props: mockImageGalleryBlock,
+    });
+
+    const gallery = wrapper.findComponent({ name: 'Gallery' });
+
+    expect(mockImageGalleryBlock.product).toBeDefined();
+
+    const images = productGetters.getGallery(mockImageGalleryBlock.product!).map((image) => ({
+      url: image.url,
+      urlPreview: image.urlPreview || '',
+      urlMiddle: image.urlMiddle || '',
+      urlSecondPreview: image.urlSecondPreview || '',
+    }));
+    expect(gallery.props('images')).toEqual(images);
   });
 
   it.each(['left-vertical', 'right-vertical', 'bottom'] as const)(
