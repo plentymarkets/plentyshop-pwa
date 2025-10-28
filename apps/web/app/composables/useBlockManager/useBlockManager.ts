@@ -92,7 +92,6 @@ export const useBlockManager = () => {
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
-
       return;
     }
 
