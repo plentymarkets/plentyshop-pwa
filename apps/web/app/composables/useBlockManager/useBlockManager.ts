@@ -91,9 +91,7 @@ export const useBlockManager = () => {
     const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
-      if (newBlock.name !== 'Sort') {
-        openDrawerWithView('blocksSettings', newBlock);
-      }
+      openDrawerWithView('blocksSettings', newBlock);
 
       return;
     }
@@ -123,9 +121,8 @@ export const useBlockManager = () => {
     }
 
     updateBlocks(copiedData);
-    if (newBlock.name !== 'Sort') {
-      openDrawerWithView('blocksSettings', newBlock);
-    }
+    openDrawerWithView('blocksSettings', newBlock);
+
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
