@@ -44,7 +44,7 @@ const refetchOrder = async () => {
     orderId: orderGetters.getId(props.order),
     accessKey: orderGetters.getAccessKey(props.order),
     postcode: shippingAddress?.postalCode,
-    name: shippingAddress?.name1 || shippingAddress?.name3 || undefined,
+    name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
   });
 };
 </script>
