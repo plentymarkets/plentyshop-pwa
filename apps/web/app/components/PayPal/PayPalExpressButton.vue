@@ -147,29 +147,18 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
-        let order: PayPalCreateOrder | null = null;
-
-        if (props.type === TypeOrderAlreadyExisting) {
-          order = await createTransaction({
-            type: 'order',
-            plentyOrderId: props.plentyOrderId,
-          });
-        } else {
-          order = await createTransaction({
-            type: isCommit ? 'basket' : 'express',
-          });
-        }
+        const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
+        const order = await createTransaction({
+          type: transactionType,
+          ...(props.type === TypeOrderAlreadyExisting && { plentyOrderId: props.plentyOrderId }),
+        });
 
         if (order?.id && props.type !== TypeOrderAlreadyExisting) {
-          if (!(await useCartStockReservation().reserve())) {
-            return '';
-          }
+          const reserved = await useCartStockReservation().reserve();
+          if (!reserved) return '';
         }
 
-        if (order?.id) {
-          return order.id;
-        }
-        return '';
+        return order?.id ?? '';
       },
       async onApprove(data) {
         await onApprove(data);
