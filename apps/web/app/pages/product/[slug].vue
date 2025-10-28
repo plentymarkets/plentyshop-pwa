@@ -15,7 +15,7 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
-          <ReviewsAccordion
+          <BlocksCustomerReview
             v-if="product"
             :product="product"
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
