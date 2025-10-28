@@ -6,7 +6,6 @@
 </template>
 <script setup lang="ts">
 import { SfIconWarning } from '@storefront-ui/vue';
-
 </script>
 
 <i18n lang="json">
