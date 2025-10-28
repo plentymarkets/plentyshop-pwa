@@ -3,6 +3,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const REQUIRED_API_ENDPOINT = 'https://mevofvd5omld.c01-14.plentymarkets.com';
+const currentApiEndpoint = process.env.API_ENDPOINT;
+
+if (currentApiEndpoint !== REQUIRED_API_ENDPOINT) {
+  console.error(`Skipping Cypress tests. API_ENDPOINT is "${currentApiEndpoint}" but tests require "${REQUIRED_API_ENDPOINT}"`);
+  process.exit(0);
+}
+
 export default defineConfig({
   fixturesFolder: '__tests__/fixtures',
   viewportHeight: 1080,
