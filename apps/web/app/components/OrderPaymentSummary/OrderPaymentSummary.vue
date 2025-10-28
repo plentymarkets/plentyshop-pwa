@@ -39,11 +39,12 @@ const paymentKey = props.order.paymentMethodKey;
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
 
 const refetchOrder = async () => {
+  const shippingAddress = orderGetters.getShippingAddress(props.order);
   await fetchOrderClient({
     orderId: orderGetters.getId(props.order),
     accessKey: orderGetters.getAccessKey(props.order),
-    postcode: orderGetters.getBillingAddress(props.order)?.postalCode ?? undefined,
-    name: orderGetters.getBillingAddress(props.order)?.name2 ?? undefined,
+    postcode: shippingAddress?.postalCode,
+    name: shippingAddress?.name1 || shippingAddress?.name3 || undefined,
   });
 };
 </script>
