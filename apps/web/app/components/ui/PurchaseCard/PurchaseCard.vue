@@ -138,8 +138,17 @@
               </i18n-t>
             </div>
             <template v-if="showPayPalButtons">
-              <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
-              <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+              <PayPalExpressButton
+                type="SingleItem"
+                location="itemPage"
+                class="mt-4"
+                @validation-callback="paypalHandleAddToCart"
+              />
+              <PayPalPayLaterBanner
+                placement="product"
+                location="itemPage"
+                :amount="priceWithProperties * quantitySelectorValue"
+              />
             </template>
           </div>
         </section>
