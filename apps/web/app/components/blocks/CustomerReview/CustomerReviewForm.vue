@@ -32,13 +32,17 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       data-testid="customer-review-layout"
     >
+      <template #summary>
+        <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
+      </template>
       <div class="py-2 flex items-center justify-between gap-3">
         <UiFormLabel for="display-collapsible" class="m-0">
           {{ getEditorTranslation('display-collapsible-label') }}
         </UiFormLabel>
 
         <SfSwitch
-          id="idisplay-collapsible"
+          id="display-collapsible"
+          v-model="isCollapsible"
           data-testid="display-collapsible"
           class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
         />
@@ -113,15 +117,29 @@ import {
 } from '@storefront-ui/vue';
 const reviewsOpen = ref(true);
 const layoutOpen = ref(true);
+const props = defineProps<CustomerReviewProps>();
+
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 
-const props = defineProps<CustomerReviewProps>();
+// const customerReview = computed<CustomerReviewContent>(() => {
+//   const rawContent = findOrDeleteBlockByUuid(data.value, props.meta.uuid || blockUuid.value)?.content ?? {};
+//   return rawContent as CustomerReviewContent;
+// });
 
 const customerReview = computed<CustomerReviewContent>(() => {
-  const rawContent = findOrDeleteBlockByUuid(data.value, props.meta.uuid || blockUuid.value)?.content ?? {};
+  const uuid = props.meta?.uuid || blockUuid.value;
+
+  const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   return rawContent as CustomerReviewContent;
+});
+
+const isCollapsibleInit = customerReview.value.layout.collapsible;
+const isCollapsible = ref(isCollapsibleInit);
+
+watch(isCollapsible, () => {
+  customerReview.value.layout.collapsible = isCollapsible.value;
 });
 </script>
 <i18n lang="json">
@@ -131,14 +149,16 @@ const customerReview = computed<CustomerReviewContent>(() => {
     "title-label": "Customer reviews",
     "padding-label": "Padding",
     "display-collapsible-label": "Display as collapsible",
-    "initially-collapsed-label": "Initially collapsed"
+    "initially-collapsed-label": "Initially collapsed",
+    "layout-group-label": "Layout Settings"
   },
   "de": {
     "customer-reviews-label": "Kundenbewertungen",
     "title-label": "Kundenbewertungen",
     "padding-label": "Padding",
     "display-collapsible-label": "Als zusammenklappbar anzeigen",
-    "initially-collapsed-label": "Ursprünglich kollabiert"
+    "initially-collapsed-label": "Ursprünglich kollabiert",
+    "layout-group-label": "Layout Settings"
   }
 }
 </i18n>
