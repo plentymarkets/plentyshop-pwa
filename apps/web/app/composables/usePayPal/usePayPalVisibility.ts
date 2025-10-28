@@ -7,6 +7,7 @@ export const usePayPalVisibility = (type: string) => {
     showOnQuickCheckout: false,
     showOnCartPage: false,
     showOnGuestLoginPage: false,
+    showOnCheckoutPage: false,
   }));
 
   const setState = (settings: PayPalButtonSettings | null) => {
@@ -14,6 +15,7 @@ export const usePayPalVisibility = (type: string) => {
     state.value.showOnQuickCheckout = settings?.positions?.includes('Basket.ExtendOverlayButtons') ?? false;
     state.value.showOnCartPage = settings?.positions?.includes('Basket.AfterCheckoutButton') ?? false;
     state.value.showOnGuestLoginPage = settings?.positions?.includes('Login.AdditionalContentLoginPage') ?? false;
+    state.value.showOnCheckoutPage = !!settings;
   };
 
   const getVisibility = (key: PayPalVisibilityLocations | undefined) => {
@@ -27,7 +29,7 @@ export const usePayPalVisibility = (type: string) => {
       case 'guestLoginPage':
         return state.value.showOnGuestLoginPage;
       case 'checkoutPage':
-        return true;
+        return state.value.showOnCheckoutPage;
       default:
         return false;
     }
