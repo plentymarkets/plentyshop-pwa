@@ -55,6 +55,7 @@
 
         <SfSwitch
           id="initially-collapsed"
+          v-model="isInitiallyCollapsed"
           data-testid="initially-collapsed"
           class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
         />
@@ -140,6 +141,13 @@ const isCollapsible = ref(isCollapsibleInit);
 
 watch(isCollapsible, () => {
   customerReview.value.layout.collapsible = isCollapsible.value;
+});
+
+const isInitiallyCollapsedInit = customerReview.value.layout.initiallyCollapsed;
+const isInitiallyCollapsed = ref(isInitiallyCollapsedInit);
+
+watch(isInitiallyCollapsed, () => {
+  customerReview.value.layout.initiallyCollapsed = isInitiallyCollapsed.value;
 });
 </script>
 <i18n lang="json">

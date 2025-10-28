@@ -74,7 +74,7 @@ const props = defineProps<CustomerReviewProps & ProductAccordionPropsType>();
 const { t } = useI18n();
 
 const viewport = useViewport();
-const reviewsOpen = ref(true);
+const reviewsOpen = ref(!props.content.layout.initiallyCollapsed);
 const route = useRoute();
 
 const config = useRuntimeConfig().public;
@@ -112,5 +112,12 @@ watch(
 watch(
   () => route.query,
   () => fetchReviews(),
+);
+
+watch(
+  () => props.content.layout.initiallyCollapsed,
+  (newValue) => {
+    reviewsOpen.value = !newValue;
+  },
 );
 </script>
