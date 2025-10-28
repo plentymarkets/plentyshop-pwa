@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters, type PayPalCreateOrder } from '@plentymarkets/shop-api';
+import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
