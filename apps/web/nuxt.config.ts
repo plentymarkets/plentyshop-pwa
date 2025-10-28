@@ -100,6 +100,7 @@ export default defineNuxtConfig({
       isDev: process.env.NODE_ENV === 'development',
       activeLanguages: process.env.LANGUAGELIST || 'en,de',
       enableCategoryEditing: process.env.NODE_ENV === 'development' || process.env?.ENABLE_CATEGORY_EDITING === '1',
+      enableProductEditing: process.env?.ENABLE_PRODUCT_EDITING === '1',
       enableAllEditorSettings:
         process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1',
       editorSettingsDevFlag:
@@ -114,7 +115,6 @@ export default defineNuxtConfig({
               'customer-management',
               'variation-position-based-on-sales',
               'security',
-              'vat-number-validation',
               'item-internal-sorting',
               'contact-form',
               'default-B2B-customer-class',
@@ -124,6 +124,7 @@ export default defineNuxtConfig({
               'item-condition',
               'rich-snippet-mapping',
               'google-analytics',
+              'custom-canonical-URL-for-item-pages',
             ],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
@@ -143,6 +144,8 @@ export default defineNuxtConfig({
       metaDescription:
         process.env.NUXT_PUBLIC_META_DESCRIPTION || process.env.METADESC || 'Demo shop for PlentyONE Shop',
       metaKeywords: process.env.NUXT_PUBLIC_META_KEYWORDS || process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa',
+      passwordMinLength: Number(process.env.PASSWORD_MIN_LENGTH ?? 8),
+      passwordMaxLength: Number(process.env.PASSWORD_MAX_LENGTH ?? 64),
       robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
       contactShopEmail: process.env.NUXT_PUBLIC_CONTACT_SHOP_EMAIL || 'your@email.com',
       robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
@@ -230,6 +233,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_WISH_COMPONENT === 'true',
+      showCustomerReferenceComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_REFERENCE_COMPONENT === 'true',
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       externalVatCheckInactive: process.env.NUXT_PUBLIC_EXTERNAL_VAT_CHECK_INACTIVE === 'true',
       itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',

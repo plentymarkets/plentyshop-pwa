@@ -1,6 +1,8 @@
 {
   "customerWish": "Hinweise und Wünsche",
   "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein.",
+  "customerReference": "Ihr Zeichen",
+  "customerReferencePlaceholder": "Geben Sie hier Ihr Zeichen ein.",
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
@@ -245,7 +247,7 @@
       "button": "Neues Passwort speichern",
       "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten.",
       "heading": "Passwort zurücksetzen",
-      "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
+      "help": "Zwischen {min} und {max} Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen.",
       "password": "Neues Passwort",
       "repeatPassword": "Neues Passwort wiederholen"
     },
@@ -261,7 +263,7 @@
       "heading": "Account erstellen",
       "logInLinkLabel": "Stattdessen einloggen",
       "passwordValidation": {
-        "characters": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "characters": "Das Passwort muss zwischen {min} und {max} Zeichen lang sein.",
         "letters": "Das Passwort muss mindestens einen Buchstaben enthalten.",
         "numbers": "Das Passwort muss mindestens eine Zahl enthalten."
       },
@@ -298,10 +300,11 @@
         "suppliers": "Lieferanten"
       }
     },
-    "contact": {
-      "label": "Kontakt",
+    "services": {
+      "label": "Services",
       "subcategories": {
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "register": "Registrieren"
       }
     },
     "help": {
@@ -322,18 +325,6 @@
         "privacyPolicy": "Datenschutzerklärung",
         "termsAndConditions": "AGB",
         "declarationOfAccessibility": "Barrierefreiheitserklärung"
-      }
-    },
-    "services": {
-      "label": "Services",
-      "subcategories": {
-        "clickCollect": "Click & Collect",
-        "couponsDiscounts": "Gutscheine & Rabatte",
-        "giftCards": "Geschenkkarten",
-        "newsletter": "Newsletter",
-        "sameDayDelivery": "Lieferung am selben Tag",
-        "shippingDelivery": "Versand & Lieferung",
-        "storeLocator": "Filialfinder"
       }
     }
   },
@@ -542,7 +533,9 @@
     "password": {
       "match": "Passwörter stimmen nicht überein.",
       "required": "Passwort ist erforderlich.",
-      "valid": "Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Buchstaben und eine Zahl enthalten."
+      "minLength": "Passwort muss mindestens {min} Zeichen lang sein.",
+      "maxLength": "Passwort darf maximal {max} Zeichen lang sein.",
+      "valid": "Passwort muss mindestens einen Buchstaben und eine Zahl enthalten."
     },
     "editor": {
       "add": {
@@ -940,7 +933,8 @@
     "description": "Fügen Sie eine Lieferadresse hinzu, um Versandinformationen anzuzeigen.",
     "heading": "Lieferadresse",
     "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar.",
-    "noShippingMessage": "Keine Versandinformationen verfügbar"
+    "noShippingMessage": "Keine Versandinformationen verfügbar",
+    "noShippingMethodsNoAddress": "Tragen Sie Ihre Lieferadresse ein, um die passenden Versandarten zu sehen."
   },
   "shippingAddress": "Lieferadresse",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
@@ -1099,7 +1093,9 @@
     "contact": {
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
       "missingContactOrUnexpectedFormat": "Fehlende Kontaktangaben oder unerwartetes Format.",
-      "unexpectedAddressFormat": "Unerwartetes Adressformat"
+      "unexpectedAddressFormat": "Unerwartetes Adressformat.",
+      "passwordInvalid": "Das Passwort entspricht nicht den erforderlichen Sicherheitsstandards.",
+      "unauthorizedPasswordReset": "Das Passwort kann nicht zurückgesetzt werden. Der Link ist möglicherweise abgelaufen oder wurde bereits verwendet."
     },
     "contactMail": {
       "failed": "Nachricht konnte nicht gesendet werden.",
@@ -1234,5 +1230,6 @@
       }
     }
   },
-  "cancelOrder": "Kauf abbrechen"
+  "cancelOrder": "Kauf abbrechen",
+  "tooltipForDummyPlaceholder": "Please note that this is only sample data. In preview and live mode, you will see the facets for the actual products in this category. The number and type of customized filters may therefore vary."
 }

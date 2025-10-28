@@ -1,4 +1,4 @@
-import { cartGetters } from '@plentymarkets/shop-api';
+import type { PayPalApplePayTransactionInfo } from '@plentymarkets/shop-api';
 import type { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 type ButtonClickedEmits = {
@@ -28,13 +28,12 @@ export const useApplePay = () => {
     scriptLoaded: false,
     script: {} as ApplepayType,
     config: {} as ConfigResponse,
+    transactionData: null as PayPalApplePayTransactionInfo | null,
   }));
 
   const initialize = async () => {
-    const { data: cart } = useCart();
-    const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-    const { getScript } = usePayPal();
-    const script = await getScript(currency.value, true);
+    const { getCurrentScript } = usePayPal();
+    const script = getCurrentScript();
 
     if (!script) return false;
 
@@ -50,8 +49,23 @@ export const useApplePay = () => {
     return true;
   };
 
+  const getTransactionInfo = async () => {
+    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
+    state.value.transactionData = transaction;
+  };
+
   const createPaymentRequest = () => {
-    const { data: cart } = useCart();
+    const lineItems: ApplePayJS.ApplePayLineItem[] =
+      state.value.transactionData?.lineItems.map((item) => ({
+        label: item.label,
+        amount: item.amount.toString(),
+      })) ?? [];
+    const total = {
+      amount: state.value.transactionData?.total.amount.toString() ?? '0',
+      label: state.value.transactionData?.total.label ?? 'Total',
+      type: state.value.transactionData?.total.type ?? 'final',
+    };
+
     return {
       countryCode: state.value.config.countryCode,
       merchantCapabilities: state.value.config.merchantCapabilities,
@@ -59,15 +73,12 @@ export const useApplePay = () => {
       currencyCode: state.value.config.currencyCode,
       requiredShippingContactFields: [],
       requiredBillingContactFields: ['postalAddress'],
-      total: {
-        type: 'final',
-        label: useRuntimeConfig().public.storename ?? 'PlentyONE Shop',
-        amount: cartGetters.getTotals(cart.value).total.toString(),
-      },
+      lineItems: lineItems,
+      total: total,
     } as ApplePayJS.ApplePayPaymentRequest;
   };
 
-  const processPayment = (emits: ButtonClickedEmits) => {
+  const processPayment = async (emits: ButtonClickedEmits) => {
     const { processingOrder } = useProcessingOrder();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
@@ -165,20 +176,14 @@ export const useApplePay = () => {
 
   const checkIsEligible = async () => {
     try {
-      if (
+      return (
         (await initialize()) &&
         typeof ApplePaySession !== 'undefined' &&
         state.value.script &&
         ApplePaySession &&
         ApplePaySession.canMakePayments() &&
         state.value.config.isEligible
-      ) {
-        await useSdk().plentysystems.doHandleAllowPaymentApplePay({
-          canMakePayments: true,
-        });
-        return true;
-      }
-      return false;
+      );
     } catch {
       return false;
     }
@@ -188,6 +193,7 @@ export const useApplePay = () => {
     initialize,
     checkIsEligible,
     processPayment,
+    getTransactionInfo,
     ...toRefs(state.value),
   };
 };
