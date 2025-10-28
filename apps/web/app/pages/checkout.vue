@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType, cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
@@ -95,21 +96,19 @@ const checkPayPalPaymentsEligible = async () => {
   }
 };
 await callOnce(async () => {
-  await Promise.all([fetchPaymentMethods(), useAggregatedCountries().fetchAggregatedCountries()]);
+  await fetchPaymentMethods();
 });
 
 onNuxtReady(async () => {
-  await useFetchAddress(AddressType.Shipping)
-    .fetchServer()
+  await useFetchAddressesData()
+    .fetch()
     .then(() => persistShippingAddress())
-    .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
     .then(() => persistBillingAddress())
-    .then(() => setBillingSkeleton(false))
-    .catch((error) => useHandleError(error));
+    .catch((error: ApiError) => useHandleError(error))
+    .finally(() => {
+      setBillingSkeleton(false);
+      setShippingSkeleton(false);
+    });
 
   await Promise.all([
     checkPayPalPaymentsEligible(),
