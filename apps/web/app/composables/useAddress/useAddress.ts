@@ -135,7 +135,6 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     state.value.loading = true;
 
     try {
-      //TODO: check for type and return value after sdk release
       const { data } = await useSdk().plentysystems.getAddresses({
         typeId: type,
       });
