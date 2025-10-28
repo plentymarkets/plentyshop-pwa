@@ -111,12 +111,10 @@ onNuxtReady(async () => {
     .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
-  await Promise.all(
-    [
-      checkPayPalPaymentsEligible(),
-      hasCheckoutAddress.value ? useCartShippingMethods().getShippingMethods() : null,
-    ].filter(Boolean) as Promise<unknown>[],
-  );
+  await Promise.all([
+    checkPayPalPaymentsEligible(),
+    ...(hasCheckoutAddress.value ? [useCartShippingMethods().getShippingMethods()] : []),
+  ]);
 
   checkoutReady.value = true;
 });
