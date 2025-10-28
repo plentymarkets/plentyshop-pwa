@@ -44,7 +44,7 @@
           },
           "layout": {
             "colapsable": true,
-            "initiallyCollapsed": false
+            "initiallyCollapsed": true
           }
         }
       }

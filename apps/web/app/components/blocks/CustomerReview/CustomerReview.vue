@@ -74,7 +74,7 @@ const props = defineProps<CustomerReviewProps & ProductAccordionPropsType>();
 const { t } = useI18n();
 
 const viewport = useViewport();
-const reviewsOpen = ref(!props.content.layout.initiallyCollapsed);
+const reviewsOpen = ref(props.content.layout.initiallyCollapsed);
 const route = useRoute();
 
 const config = useRuntimeConfig().public;
