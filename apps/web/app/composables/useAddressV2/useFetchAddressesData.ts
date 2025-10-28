@@ -75,31 +75,25 @@ export const useFetchAddressesData = () => {
   };
 
   const fetchServer = async () => {
-    try {
-      state.value.loading = true;
+    state.value.loading = true;
 
-      const { data, error } = await useAsyncData('addresses-data', () =>
-        useSdk().plentysystems.getAddressesData({
-          types: [],
-          lang: locale.value,
-        }),
-      );
-      useHandleError(error.value ?? null);
+    const { data, error } = await useAsyncData('addresses-data', () =>
+      useSdk().plentysystems.getAddressesData({
+        types: [],
+        lang: locale.value,
+      }),
+    );
+    useHandleError(error.value ?? null);
 
-      if (data.value?.data.addresses) {
-        processAddresses(data.value.data.addresses);
-      }
-
-      if (data.value?.data.countries) {
-        setCountries(data.value.data.countries.default, data.value.data.countries.geoRegulated);
-      }
-
-      state.value.loading = false;
-    } catch (error: unknown) {
-      useHandleError(error as ApiError);
-      setAddresses([], []);
-      state.value.loading = false;
+    if (data.value?.data.addresses) {
+      processAddresses(data.value.data.addresses);
     }
+
+    if (data.value?.data.countries) {
+      setCountries(data.value.data.countries.default, data.value.data.countries.geoRegulated);
+    }
+
+    state.value.loading = false;
   };
 
   return {
