@@ -67,7 +67,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
-const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
+const { countryHasDelivery, hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const checkoutReady = ref(false);
 const {
   cart,
@@ -110,7 +110,11 @@ onNuxtReady(async () => {
       setShippingSkeleton(false);
     });
 
-  await Promise.all([useCartShippingMethods().getShippingMethods(), checkPayPalPaymentsEligible()]);
+  await Promise.all([
+    checkPayPalPaymentsEligible(),
+    ...(hasCheckoutAddress.value ? [useCartShippingMethods().getShippingMethods()] : []),
+  ]);
+
   checkoutReady.value = true;
 });
 
