@@ -29,8 +29,7 @@ const props = defineProps<ItemTextProps>();
 const title = computed(() => props.content?.title);
 const initiallyCollapsed = computed(() => props.content?.initiallyCollapsed);
 const displayAsCollapsable = computed(() => props.content?.displayAsCollapsable);
-const { productId } = createProductParams(route.params);
-const { data: product } = useProduct(productId);
+const { currentProduct: product } = useProducts();
 const text = computed(() => { return productGetters.getDescription(product.value) ?? getEditorTranslation('dummyData') });
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
