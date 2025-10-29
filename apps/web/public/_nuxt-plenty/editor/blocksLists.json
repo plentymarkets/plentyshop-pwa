@@ -1164,13 +1164,20 @@
                 "brightness": 0.75
               },
               "text": {
-                "color": "#000"
+                "color": "#000",
+                "bgColor": "#fff",
+                "bgOpacity": 1,
+                "textAlignment": "left",
+                "justify": "top",
+                "align": "left",
+                "background": true
               },
               "layout": {
                 "paddingTop": 40,
                 "paddingBottom": 40,
                 "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingRight": 0,
+                "narrowContainer": true
               }
             }
           },
@@ -1191,11 +1198,27 @@
               },
               "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
               "fieldsDisabled": [],
+              "displayCategoryImage": "off",
+              "image": {
+                "fillMode": "fill",
+                "alt": "",
+                "brightness": 0.75
+              },
+              "text": {
+                "color": "#000",
+                "bgColor": "#fff",
+                "bgOpacity": 1,
+                "textAlignment": "left",
+                "justify": "top",
+                "align": "left",
+                "background": true
+              },
               "layout": {
                 "paddingTop": 40,
                 "paddingBottom": 40,
                 "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingRight": 0,
+                "narrowContainer": true
               }
             }
           }
