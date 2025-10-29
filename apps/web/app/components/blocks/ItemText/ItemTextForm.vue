@@ -142,7 +142,7 @@
       "text-settings-label": "Text",
       "main-title-label": "Title",
       "layout-settings-label": "Layout Settings",
-      "display-as-collapsable": "Disaply as Collapsable",
+      "display-as-collapsable": "Display as Collapsable",
       "initially-collapsed": "Initially Collpsed",
       "padding": "Padding",
       "items-per-row-desktop": "Items per row (Desktop)",
@@ -179,6 +179,7 @@
     "de": {
       "text-settings-label": "Text",
       "main-title-label": "Title",
+      "display-as-collapsable": "Display as Collapsable",
       "layout-settings-label": "Layout Settings",
       "initially-collapsed": "Initially Collpsed",
       "padding": "Padding",

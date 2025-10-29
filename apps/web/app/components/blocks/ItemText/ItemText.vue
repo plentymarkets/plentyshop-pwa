@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="inlineStyle">
     <UiAccordionItem v-if="displayAsCollapsable" v-model="initiallyCollapsed"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
       <template #summary>
@@ -26,12 +26,21 @@ import type { ItemTextContent } from '~/components/blocks/ItemText/types';
 const { t } = useI18n();
 const route = useRoute();
 const props = defineProps<ItemTextProps>();
-const title = props.content?.title
-const initiallyCollapsed = props.content?.initiallyCollapsed
-const displayAsCollapsable = props.content?.displayAsCollapsable
+const title = computed(() => props.content?.title);
+const initiallyCollapsed = computed(() => props.content?.initiallyCollapsed);
+const displayAsCollapsable = computed(() => props.content?.displayAsCollapsable);
 const { productId } = createProductParams(route.params);
 const { data: product } = useProduct(productId);
 const text = computed(() => { return productGetters.getDescription(product.value) ?? getEditorTranslation('dummyData') });
+const inlineStyle = computed(() => {
+  const layout = props.content?.layout || {};
+  return {
+    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
+    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
+    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
+    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+  };
+});
 </script>
 
 <i18n lang="json">{
