@@ -11,6 +11,12 @@
       </template>
 
       <div class="py-4">
+        <div class="flex items-center justify-between px-2 pb-2 text-sm font-medium text-gray-700">
+          <span>{{ getEditorTranslation('item-card-text') }}</span>
+          <SfTooltip :label="getEditorTranslation('item-card-tooltip')" placement="top">
+            <SfIconInfo size="base" class="ml-2 text-gray-500" />
+          </SfTooltip>
+        </div>
         <draggable
           v-if="categoryDataBlock.fieldsOrder.length"
           v-model="categoryDataBlock.fieldsOrder"
@@ -508,6 +514,8 @@ const {
 {
   "en": {
     "item-card-label": "Category text",
+    "item-card-text": "Text display and order",
+    "item-card-tooltip": "You can manage the description texts in the backend under Images/Categories.",
     "category-placeholder": "Category name",
     "category-name": "Category name",
     "category-description-1": "Category description 1",
