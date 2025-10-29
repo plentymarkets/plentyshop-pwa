@@ -12,9 +12,6 @@
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
-
-          <!-- <BlocksItemText :item-text-props="localItemProps" /> -->
-
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
