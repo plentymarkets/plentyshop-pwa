@@ -92,11 +92,11 @@ const localItemProps = computed(() => {
     title: 'test',
     type: '',
     content: {
-      title: 'title luat din getBlocks call'
+      title: 'doto-fetch'
     },
     product: product.value,
     meta: {
-        uuid: 'meta uid luat din baza de data din fetch - din getBlocks'
+        uuid: 'todo - use from getBlocks'
     }
   };
 })
