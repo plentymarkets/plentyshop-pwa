@@ -1,6 +1,7 @@
 <template>
   <div class="py-2">
-    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
+    <p>{{ getEditorTranslation('description') }}</p>
+    <p class="mb-4">{{ getEditorTranslation('description2') }}</p>
 
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
@@ -93,14 +94,16 @@ const removeOption = (option: SortingOption) => {
   "en": {
     "label": "Enable item sorting by",
     "description": "Control how the items on category pages are sorted and sortable by users.",
-    "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view?",
+    "description2": "⚠️ The \"Enable item sorting by\" Setting also affect the search result page.",
+    "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view and search result page?",
     "placeholder": "Mark some options as available",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Enable item sorting by",
     "description": "Control how the items on category pages are sorted and sortable by users.",
-    "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view?",
+    "description2": "⚠️ The \"Enable item sorting by\" Setting also affect the search result page.",
+    "tooltip": "Which of the following sorting options do you want to make available to your customers in the category view and search result page?",
     "placeholder": "Mark some options as available",
     "deselect-label": "Selected"
   }
