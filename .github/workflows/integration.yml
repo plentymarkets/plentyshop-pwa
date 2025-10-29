@@ -121,7 +121,7 @@ jobs:
         run: tar -czf build.tar.gz -C ${{ github.workspace }} apps/server/dist apps/web/.output apps/web/.nuxt
 
       - name: Upload build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build
           path: build.tar.gz
