@@ -194,7 +194,7 @@ export default defineNuxtConfig({
       seoAvailability9: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY9 || '',
       seoAvailability10: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY10 || '',
       enableGoogleAnalytics: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_ANALITICS || 'false',
-      googleAnalyticsTrakingId: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_TRACKING_ID || '',
+      googleAnalyticsTrackingId: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_TRACKING_ID || '',
       sendGrossPricesToGoogleAnalytics: process.env.NUXT_PUBLIC_SEND_GROSS_PRICES_TO_GOOGLE_ANALITICS || 'false',
       googleAnalyticsCookieGroup: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_COOKIE_GROUP || 'CookieBar.marketing.label',
       registerCookieAsOptOut: process.env.NUXT_PUBLIC_REGISTER_COOKIE_AS_OPT_OUT || 'false',
