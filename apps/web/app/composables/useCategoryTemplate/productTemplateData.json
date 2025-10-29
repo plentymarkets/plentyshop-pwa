@@ -43,8 +43,8 @@
             "title": "Customer Reviews"
           },
           "layout": {
-            "colapsable": true,
-            "initiallyCollapsed": true
+            "collapsible": true,
+            "initiallyCollapsed": false
           }
         }
       }

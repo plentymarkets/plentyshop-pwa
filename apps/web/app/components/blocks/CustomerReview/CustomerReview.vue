@@ -6,7 +6,12 @@
     :style="customerReviewInlineStyle"
     data-testid="review-area"
   >
-    <SfLoaderCircular v-if="loadingReviews" data-testid="loader" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+    <SfLoaderCircular
+      v-if="loadingReviews"
+      data-testid="loader"
+      class="absolute top-[130px] right-0 left-0 m-auto z-[999]"
+      size="2xl"
+    />
 
     <div
       v-if="hasTitle && props.content.layout.collapsible"

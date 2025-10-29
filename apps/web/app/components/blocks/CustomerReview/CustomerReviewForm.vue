@@ -128,9 +128,9 @@ const { data } = useCategoryTemplate();
 
 const customerReview = computed<CustomerReviewContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
-
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   const content = rawContent as Partial<CustomerReviewContent>;
+
   if (!content.layout) {
     content.layout = {
       paddingTop: 0,
@@ -140,7 +140,15 @@ const customerReview = computed<CustomerReviewContent>(() => {
       collapsible: true,
       initiallyCollapsed: true,
     };
+  } else {
+    if (content.layout.paddingTop === undefined) content.layout.paddingTop = 0;
+    if (content.layout.paddingBottom === undefined) content.layout.paddingBottom = 0;
+    if (content.layout.paddingLeft === undefined) content.layout.paddingLeft = 0;
+    if (content.layout.paddingRight === undefined) content.layout.paddingRight = 0;
+    if (content.layout.collapsible === undefined) content.layout.collapsible = true;
+    if (content.layout.initiallyCollapsed === undefined) content.layout.initiallyCollapsed = true;
   }
+
   return content as CustomerReviewContent;
 });
 
