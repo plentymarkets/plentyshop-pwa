@@ -12,11 +12,9 @@
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
-          
-          <!-- <NuxtLazyHydrate when-visible>
-            <BlocksItemText v-if="product && productGetters.getDescription(product).length" :ItemTextProps="localItemProps" />
-          </NuxtLazyHydrate> -->
-          
+
+          <!-- <BlocksItemText :item-text-props="localItemProps" /> -->
+
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
@@ -53,6 +51,7 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { ItemTextProps } from '~/components/blocks/ItemText/types';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -66,7 +65,6 @@ const { data: productReviews, fetchProductReviews } = useProductReviews(Number(p
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
-import type { ItemTextContent } from '~/components/blocks/ItemText/types';
 
 const config = useRuntimeConfig().public;
 
@@ -87,19 +85,27 @@ const RecommendedProductsAsync = defineAsyncComponent(
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);
 const productName = computed(() => productGetters.getName(product.value));
-const localItemProps = computed(() => {
-  return { 
-    title: 'test',
+// aici faci un mapping ca in product categories
+const localItemProps = computed((): ItemTextProps => {
+  return {
+    name: 'test',
     type: '',
     content: {
-      title: 'doto-fetch'
+      "title":"Item details",
+      "displayAsCollapsable": true,
+      "initiallyCollapsed": true,
+      "layout": {
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      }
     },
-    product: product.value,
     meta: {
-        uuid: 'todo - use from getBlocks'
-    }
+      uuid: 'todo - use from getBlocks',
+    },
   };
-})
+});
 const icon = 'sell';
 setPageMeta(productName.value, icon);
 

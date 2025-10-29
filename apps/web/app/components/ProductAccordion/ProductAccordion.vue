@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { BlocksItemText } from '#components';
 import { productGetters } from '@plentymarkets/shop-api';
 
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
