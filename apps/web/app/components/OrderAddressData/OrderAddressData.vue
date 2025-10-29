@@ -10,6 +10,7 @@ const props = defineProps<OrderAddressDataPropsType>();
 
 const transformAddress = (address: AddressData): Address => {
   return {
+    companyName: address.name1 || undefined,
     firstName: address.name2 || '',
     lastName: address.name3 || '',
     zipCode: address.postalCode,
