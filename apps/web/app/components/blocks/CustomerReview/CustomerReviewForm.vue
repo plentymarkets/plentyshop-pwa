@@ -133,7 +133,18 @@ const customerReview = computed<CustomerReviewContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
 
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
-  return rawContent as CustomerReviewContent;
+  const content = rawContent as Partial<CustomerReviewContent>;
+  if (!content.layout) {
+    content.layout = {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      collapsible: true,
+      initiallyCollapsed: true,
+    };
+  }
+  return content as CustomerReviewContent;
 });
 
 const isCollapsibleInit = customerReview.value.layout.collapsible;

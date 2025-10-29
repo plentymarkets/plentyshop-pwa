@@ -1,5 +1,10 @@
 <template>
-  <div ref="reviewArea" class="relative col-span-5 h-fit" :class="{ 'pointer-events-none opacity-50': loadingReviews }">
+  <div
+    ref="reviewArea"
+    class="relative col-span-5 h-fit"
+    :class="{ 'pointer-events-none opacity-50': loadingReviews }"
+    :style="customerReviewInlineStyle"
+  >
     <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
 
     <div v-if="props.content.layout.collapsible" id="customerReviewsAccordion" data-testid="reviews-accordion">
@@ -74,7 +79,7 @@ const props = defineProps<CustomerReviewProps & ProductAccordionPropsType>();
 const { t } = useI18n();
 
 const viewport = useViewport();
-const reviewsOpen = ref(props.content.layout.initiallyCollapsed);
+const reviewsOpen = ref(!props.content.layout.initiallyCollapsed);
 const route = useRoute();
 
 const config = useRuntimeConfig().public;
@@ -120,4 +125,14 @@ watch(
     reviewsOpen.value = !newValue;
   },
 );
+
+const customerReviewInlineStyle = computed(() => {
+  const layout = props.content.layout ?? {};
+  return {
+    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
+    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
+    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
+    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+  };
+});
 </script>
