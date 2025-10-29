@@ -12,11 +12,6 @@ describe('CustomerReview.vue', () => {
   it('should render the block component', () => {
     const wrapper = mount(CustomerReview, {
       props: { ...mockCustomerReviewBlock, product: mockProduct },
-      global: {
-        stubs: {
-          SfLoaderCircular: true,
-        },
-      },
     });
     expect(wrapper.exists()).toBe(true);
   });
@@ -24,11 +19,6 @@ describe('CustomerReview.vue', () => {
   it('should render the block with the correct title and structure', () => {
     const wrapper = mount(CustomerReview, {
       props: { ...mockCustomerReviewBlock, product: mockProduct },
-      global: {
-        stubs: {
-          SfLoaderCircular: true,
-        },
-      },
     });
     expect(wrapper.find('[data-testid="reviews-accordion"]').exists()).toBe(true);
     expect(wrapper.find('#customerReviewsClick').text()).toBe('Customer Reviews');
@@ -37,11 +27,6 @@ describe('CustomerReview.vue', () => {
   it('should show "no reviews" message when there are no reviews', () => {
     const wrapper = mount(CustomerReview, {
       props: { ...mockCustomerReviewBlock, product: mockProduct },
-      global: {
-        stubs: {
-          SfLoaderCircular: true,
-        },
-      },
     });
     expect(wrapper.find('[data-testid="no-review-text"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="no-review-text"]').text()).toBe('customerReviewsNone');
@@ -57,11 +42,6 @@ describe('CustomerReview.vue', () => {
           layout: { ...mockCustomerReviewBlock.content.layout, collapsible: false },
         },
       },
-      global: {
-        stubs: {
-          SfLoaderCircular: true,
-        },
-      },
     });
     expect(wrapper.find('[data-testid="reviews-accordion"]').exists()).toBe(false);
     expect(wrapper.find('#customerReviewsClick').exists()).toBe(true);
@@ -75,11 +55,6 @@ describe('CustomerReview.vue', () => {
         content: {
           ...mockCustomerReviewBlock.content,
           text: { title: '' },
-        },
-      },
-      global: {
-        stubs: {
-          SfLoaderCircular: true,
         },
       },
     });
@@ -102,11 +77,6 @@ describe('CustomerReview.vue', () => {
             paddingLeft: 30,
             paddingRight: 40,
           },
-        },
-      },
-      global: {
-        stubs: {
-          SfLoaderCircular: true,
         },
       },
     });
