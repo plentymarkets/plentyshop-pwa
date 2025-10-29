@@ -4,7 +4,6 @@ export type ItemTextProps = {
     name?: string;
     type?: string;
     content?: ItemTextContent;
-    product?: Product;
     configuration?: object;
     index?: number;
     meta: {
