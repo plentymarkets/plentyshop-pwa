@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
@@ -16,8 +16,7 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('robotsStopIndexing');
-const runtimeConfig = useRuntimeConfig();
+const { updateSetting, getSetting } = useSiteSettings('seoCategoryRobotsNoIndex');
 
 const robots = computed({
   get: () => getSetting(),

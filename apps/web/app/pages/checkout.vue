@@ -7,8 +7,10 @@
         <UiDivider id="top-shipping-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer id="shipping-address" :key="0" :type="AddressType.Shipping" />
         <UiDivider id="top-billing-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
-        <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <div v-if="showBillingAddressSection">
+          <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
+          <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        </div>
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :disabled="disableShippingPayment"
@@ -27,6 +29,7 @@
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <CustomerReference />
         <CustomerWish />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
@@ -51,6 +54,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType, cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
@@ -63,7 +67,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
-const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
+const { countryHasDelivery, hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const checkoutReady = ref(false);
 const {
   cart,
@@ -73,9 +77,11 @@ const {
   persistBillingAddress,
   setBillingSkeleton,
   setShippingSkeleton,
+  showBillingAddressSection,
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
+const { getScript } = usePayPal();
 const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
@@ -86,32 +92,29 @@ const checkPayPalPaymentsEligible = async () => {
     const { data: cart } = useCart();
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    await Promise.all([
-      useGooglePay().checkIsEligible(),
-      useApplePay().checkIsEligible(),
-      usePayPal().updateAvailableAPMs(currency.value, true),
-    ]);
-    await fetchPaymentMethods();
+    await getScript(currency.value, true);
   }
 };
 await callOnce(async () => {
-  await Promise.all([fetchPaymentMethods(), useAggregatedCountries().fetchAggregatedCountries()]);
+  await fetchPaymentMethods();
 });
 
 onNuxtReady(async () => {
-  await useFetchAddress(AddressType.Shipping)
-    .fetchServer()
+  await useFetchAddressesData()
+    .fetch()
     .then(() => persistShippingAddress())
-    .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
     .then(() => persistBillingAddress())
-    .then(() => setBillingSkeleton(false))
-    .catch((error) => useHandleError(error));
+    .catch((error: ApiError) => useHandleError(error))
+    .finally(() => {
+      setBillingSkeleton(false);
+      setShippingSkeleton(false);
+    });
 
-  await Promise.all([useCartShippingMethods().getShippingMethods(), checkPayPalPaymentsEligible()]);
+  await Promise.all([
+    checkPayPalPaymentsEligible(),
+    ...(hasCheckoutAddress.value ? [useCartShippingMethods().getShippingMethods()] : []),
+  ]);
+
   checkoutReady.value = true;
 });
 

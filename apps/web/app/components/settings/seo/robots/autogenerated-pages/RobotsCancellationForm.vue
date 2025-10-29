@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.public.isDev" class="py-2">
+  <div class="py-2">
     <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
@@ -20,8 +20,7 @@
 import Multiselect from 'vue-multiselect';
 import { robotsOptions } from '~/utils/editorSettings';
 
-const { updateSetting, getSetting } = useSiteSettings('robotsCancellationForm');
-const runtimeConfig = useRuntimeConfig();
+const { updateSetting, getSetting } = useSiteSettings('seoRobotsCancellationForm');
 
 const robots = computed({
   get: () => getSetting(),

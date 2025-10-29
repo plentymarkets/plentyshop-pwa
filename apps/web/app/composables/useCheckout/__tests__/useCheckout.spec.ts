@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { AddressType } from '@plentymarkets/shop-api';
 
 const addressFixture = {
   id: 1,
@@ -20,9 +21,11 @@ const { useCart } = vi.hoisted(() => {
   };
 });
 
-const { useAddressForm } = vi.hoisted(() => {
+const { setInitialStateMock, useAddressForm } = vi.hoisted(() => {
+  const setInitialStateMock = vi.fn();
   return {
-    useAddressForm: vi.fn().mockReturnValue({}),
+    setInitialStateMock,
+    useAddressForm: vi.fn(),
   };
 });
 
@@ -42,6 +45,16 @@ const { useCheckoutAddress } = vi.hoisted(() => {
   return {
     useCheckoutAddress: vi.fn().mockReturnValue({}),
   };
+});
+
+const { useShippingAsBilling } = vi.hoisted(() => {
+  return {
+    useShippingAsBilling: vi.fn().mockReturnValue({}),
+  };
+});
+
+mockNuxtImport('useShippingAsBilling', () => {
+  return useShippingAsBilling;
 });
 
 mockNuxtImport('useCheckoutAddress', () => {
@@ -67,15 +80,15 @@ mockNuxtImport('useCart', () => {
 describe('useCheckout', () => {
   afterEach(() => {
     clearNuxtState();
-    vi.resetAllMocks();
+    vi.clearAllMocks();
   });
 
   beforeEach(() => {
-    useAddressForm.mockImplementation(() => {
+    useAddressForm.mockImplementation((_addressType) => {
       return {
         open: ref(true),
         add: ref(true),
-        setInitialState: vi.fn(),
+        setInitialState: setInitialStateMock,
       };
     });
     useAgreementCheckbox.mockImplementation(() => {
@@ -101,14 +114,20 @@ describe('useCheckout', () => {
     useCheckoutAddress.mockImplementation(() => {
       return {
         set: vi.fn(),
+        hasCheckoutAddress: ref(false),
+      };
+    });
+    useShippingAsBilling.mockImplementation(() => {
+      return {
+        shippingAsBilling: ref(false),
       };
     });
   });
 
-  it('should check if any form is open', () => {
-    const { anyAddressFormIsOpen } = useCheckout();
+  it('should check if only the shipping address form is open', () => {
+    const { add: shipping } = useAddressForm(AddressType.Shipping);
 
-    expect(anyAddressFormIsOpen.value).toBeTruthy();
+    expect(shipping.value).toBeTruthy();
   });
 
   it.todo('should go back backToFormEditing');
@@ -121,9 +140,9 @@ describe('useCheckout', () => {
       };
     });
 
-    const { anyAddressFormIsOpen } = useCheckout();
+    const { add } = useAddressForm(AddressType.Shipping);
 
-    expect(anyAddressFormIsOpen.value).toBeTruthy();
+    expect(add.value).toBeTruthy();
   });
 
   it('should test if terms are accepted', () => {
@@ -146,18 +165,6 @@ describe('useCheckout', () => {
     });
     const { validateTerms } = useCheckout();
     expect(validateTerms()).toBe(false);
-  });
-
-  it('should set initial state when persisting shipping address', () => {
-    const setInitialStateSpy = vi.fn();
-    useAddressForm.mockImplementation(() => {
-      return {
-        setInitialState: setInitialStateSpy,
-      };
-    });
-    const { persistShippingAddress } = useCheckout();
-    persistShippingAddress();
-    expect(setInitialStateSpy).toHaveBeenCalled();
   });
 
   it('should use the cart address id first when persisting shipping address', () => {
@@ -217,18 +224,6 @@ describe('useCheckout', () => {
     persistShippingAddress();
 
     expect(useCheckoutAddressSpy).toHaveBeenCalledWith(shippingAddresses[0], false);
-  });
-
-  it('should set initial state when persisting billing address', () => {
-    const setInitialStateSpy = vi.fn();
-    useAddressForm.mockImplementation(() => {
-      return {
-        setInitialState: setInitialStateSpy,
-      };
-    });
-    const { persistBillingAddress } = useCheckout();
-    persistBillingAddress();
-    expect(setInitialStateSpy).toHaveBeenCalled();
   });
 
   it('should use the cart address id first when persisting billing address', () => {

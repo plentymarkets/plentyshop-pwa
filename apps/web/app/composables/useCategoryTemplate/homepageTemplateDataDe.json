@@ -128,7 +128,7 @@
       "isGlobalTemplate": false
     },
     "configuration": {
-      "columnWidths": [4, 4]
+      "columnWidths": [6, 6]
     },
     "content": [
       {
@@ -221,7 +221,7 @@
         "title": "Rechtliches"
       },
       "column2": {
-        "title": "Kontakt",
+        "title": "Services",
         "showContactLink": true,
         "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
       },

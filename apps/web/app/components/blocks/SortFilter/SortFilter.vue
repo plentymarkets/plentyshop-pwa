@@ -7,16 +7,17 @@
         </template>
 
         <template v-if="key === 'sortBy' && props.content?.fields.sortBy">
-          <CategorySorting class="mb-4" />
+          <CategorySorting class="mb-6" />
         </template>
 
         <template v-if="key === 'perPage' && props.content?.fields.perPage">
-          <CategoryItemsPerPage class="mt-6 mb-4" :total-products="productsCatalog.pagination?.totals ?? 0" />
+          <CategoryItemsPerPage class="mb-6" :total-products="productsCatalog.pagination?.totals ?? 0" />
         </template>
 
         <template v-if="key === 'itemRating' && props.content?.fields.itemRating">
           <CategoryFiltersSort
             v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+            class="mb-1"
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
@@ -26,6 +27,7 @@
         <template v-if="key === 'manufacturer' && props.content?.fields.manufacturer">
           <CategoryFiltersSort
             v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+            class="mb-1"
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
@@ -35,6 +37,7 @@
         <template v-if="key === 'price' && props.content?.fields.price">
           <CategoryFiltersSort
             v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+            class="mb-1"
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
@@ -44,6 +47,7 @@
         <template v-if="key === 'availability' && props.content?.fields.availability">
           <CategoryFiltersSort
             v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+            class="mb-1"
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
@@ -53,6 +57,7 @@
         <template v-if="key === 'customizedFilters' && props.content?.fields.customizedFilters">
           <CategoryFiltersSort
             v-if="productsCatalog.facets && facetGetters.hasFilters(productsCatalog.facets)"
+            class="mb-1"
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
@@ -70,7 +75,7 @@
   </div>
 
   <template v-else>
-    <h2 class="text-center">{{ getEditorTranslation('no-sorting-or-filter-text') }}</h2>
+    <h2 v-if="clientPreview" class="text-center">{{ getEditorTranslation('no-sorting-or-filter-text') }}</h2>
   </template>
 </template>
 
@@ -86,7 +91,12 @@ const props = defineProps<SortFilterProps>();
 const showSortAndFilter = ref(false);
 const { isOpen, open, close } = useDisclosure();
 const { t } = useI18n();
+const clientPreview = ref(false);
 
+const { $isPreview } = useNuxtApp();
+onNuxtReady(() => {
+  clientPreview.value = !!$isPreview;
+});
 watch(
   () => props.content?.fields,
   (newValue) => {

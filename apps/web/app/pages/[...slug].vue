@@ -7,20 +7,45 @@
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <EditablePage
-      v-else
-      :has-enabled-actions="!!config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
-      :identifier="identifier"
-      :type="'category'"
-      data-testid="category-page-content"
-      prevent-blocks-request
-    />
+    <template v-if="config.enableCategoryEditing || productsCatalog.category?.type === 'content'">
+      <EditablePage
+        :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
+        :identifier="identifier"
+        :type="'category'"
+        data-testid="category-page-content"
+        prevent-blocks-request
+      />
+    </template>
+
+    <template v-else>
+      <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+        <template #prefix>
+          <SfIconTune />
+        </template>
+        {{ t('listSettings') }}
+      </UiButton>
+
+      <CategoryPageContent
+        v-if="productsCatalog?.products"
+        :title="categoryGetters.getCategoryName(productsCatalog.category)"
+        :total-products="productsCatalog.pagination.totals"
+        :products="productsCatalog.products"
+        :items-per-page="Number(productsPerPage)"
+      >
+        <template #sidebar>
+          <CategoryTree :category="productsCatalog.category" />
+          <CategorySorting />
+          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
+          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
+        </template>
+      </CategoryPageContent>
+    </template>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
@@ -28,10 +53,13 @@ const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
 const { setBlocksListContext } = useBlockManager();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, loading } = useProducts();
+const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
+const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
+
+const { open } = useDisclosure();
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
@@ -41,8 +69,12 @@ definePageMeta({
   layout: false,
   middleware: ['category-guard'],
   type: 'category',
-  isBlockified: true,
+  isBlockified: false,
   identifier: 0,
+});
+
+watchEffect(() => {
+  route.meta.isBlockified = isEditablePage.value;
 });
 
 const breadcrumbs = computed(() => {

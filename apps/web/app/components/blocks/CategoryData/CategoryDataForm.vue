@@ -40,6 +40,23 @@
             </div>
           </template>
         </draggable>
+        <div
+          v-if="showTextHint"
+          class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+          role="alert"
+          aria-live="polite"
+          data-testid="fields-empty-hint"
+        >
+          <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
+          <span class="italic">
+            {{ fieldsEmptyHintText }}
+            (
+            <a :href="learnMoreTextUrl" target="_blank" rel="noopener noreferrer" class="underline">
+              {{ t('learn-more') }}
+            </a>
+            ).
+          </span>
+        </div>
       </div>
 
       <div class="py-2">
@@ -141,7 +158,20 @@
           </div>
         </div>
       </div>
-
+      <div
+        v-if="showImageSlotHint"
+        class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+        role="alert"
+        aria-live="polite"
+        data-testid="image-slot-empty-hint"
+      >
+        <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
+        <span class="italic">
+          {{ t('image-slot-empty-hint-prefix') }}
+          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline"> {{ t('learn-more') }} </a
+          >.
+        </span>
+      </div>
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
         <div class="flex items-center gap-2">
           <legend class="text-sm font-medium text-black m-0">
@@ -442,7 +472,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CategoryDataContent, CategoryDataFieldKey } from './types';
+import type { CategoryDataFieldKey } from './types';
 import {
   SfIconArrowBack,
   SfIconArrowDownward,
@@ -453,69 +483,25 @@ import {
   SfInput,
   SfTooltip,
   SfIconInfo,
+  SfIconWarning,
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
-import { clamp } from '@storefront-ui/shared';
-
-const { data } = useCategoryTemplate();
-const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const textOpen = ref(true);
 const imageOpen = ref(true);
+const { t } = useI18n();
 
-const categoryDataBlock = computed(
-  () => findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent,
-);
-
-const clampBrightness = (event: Event, type: string) => {
-  const currentValue = (event.target as HTMLInputElement)?.value;
-  const nextValue = Number.parseFloat(currentValue);
-
-  if (type === 'image') {
-    categoryDataBlock.value.image.brightness = clamp(nextValue, 0, 1);
-  }
-  if (type === 'text') {
-    categoryDataBlock.value.text.bgOpacity = clamp(nextValue, 0, 1);
-  }
-};
-
-const fieldLabels: Record<CategoryDataFieldKey, string> = {
-  name: getEditorTranslation('category-name'),
-  description1: getEditorTranslation('category-description-1'),
-  description2: getEditorTranslation('category-description-2'),
-  shortDescription: getEditorTranslation('short-description'),
-};
-
-watch(
-  () => categoryDataBlock.value.image.fillMode,
-  (newMode) => {
-    if (newMode === 'fill') {
-      categoryDataBlock.value.layout.paddingTop = 0;
-      categoryDataBlock.value.layout.paddingBottom = 0;
-      categoryDataBlock.value.layout.paddingLeft = 0;
-      categoryDataBlock.value.layout.paddingRight = 0;
-
-      changeCategoryImageWidth(true);
-    }
-
-    if (newMode === 'fit') {
-      changeCategoryImageWidth(false);
-    }
-  },
-);
-
-const changeCategoryImageWidth = (fullWidth: boolean) => {
-  categoryDataBlock.value.layout.narrowContainer = !fullWidth;
-
-  setTimeout(() => {
-    const el = document.querySelector(`[data-uuid="${blockUuid.value}"]`);
-    if (el) {
-      fullWidth ? el.classList.remove('max-w-screen-3xl', 'px-4', 'md:px-6') : el.classList.add('max-w-screen-3xl');
-    }
-  }, 100);
-};
+const {
+  learnMoreUrl,
+  learnMoreTextUrl,
+  categoryDataBlock,
+  fieldLabels,
+  showImageSlotHint,
+  showTextHint,
+  fieldsEmptyHintText,
+  clampBrightness,
+} = useCategoryData();
 </script>
 
 <i18n lang="json">
@@ -573,7 +559,12 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "field-empty-hint-prefix": "The field {field} has no content",
+    "fields-empty-hint-prefix": "The fields {fields} have no content",
+    "image-slot-empty-hint-prefix": "The selected image slot doesn't have a linked image",
+    "learn-more": "learn more"
   },
   "de": {
     "item-card-label": "Category text",
@@ -628,7 +619,12 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "field-empty-hint-prefix": "The field {field} has no content",
+    "fields-empty-hint-prefix": "The fields {fields} have no content",
+    "image-slot-empty-hint-prefix": "The selected image slot doesn't have a linked image",
+    "learn-more": "learn more"
   }
 }
 </i18n>
