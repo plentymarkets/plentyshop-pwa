@@ -1,6 +1,5 @@
 <template>
   <div data-testid="product-accordion">
-    <BlocksProductDetails :product="product" />
     <UiAccordionItem
       v-if="productGetters.getTechnicalData(product)?.length"
       v-model="technicalDataOpen"
@@ -18,8 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { BlocksProductDetails } from '#components';
+import { BlocksItemText } from '#components';
 import { productGetters } from '@plentymarkets/shop-api';
+
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();

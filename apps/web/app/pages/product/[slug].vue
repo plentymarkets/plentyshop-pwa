@@ -12,6 +12,11 @@
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
+          
+          <!-- <NuxtLazyHydrate when-visible>
+            <BlocksItemText v-if="product && productGetters.getDescription(product).length" :ItemTextProps="localItemProps" />
+          </NuxtLazyHydrate> -->
+          
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
@@ -61,6 +66,7 @@ const { data: productReviews, fetchProductReviews } = useProductReviews(Number(p
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
+import type { ItemTextContent } from '~/components/blocks/ItemText/types';
 
 const config = useRuntimeConfig().public;
 
@@ -81,6 +87,19 @@ const RecommendedProductsAsync = defineAsyncComponent(
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);
 const productName = computed(() => productGetters.getName(product.value));
+const localItemProps = computed(() => {
+  return { 
+    title: 'test',
+    type: '',
+    content: {
+      title: 'title luat din getBlocks call'
+    },
+    product: product.value,
+    meta: {
+        uuid: 'meta uid luat din baza de data din fetch - din getBlocks'
+    }
+  };
+})
 const icon = 'sell';
 setPageMeta(productName.value, icon);
 
