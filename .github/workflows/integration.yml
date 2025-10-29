@@ -126,6 +126,7 @@ jobs:
           name: build
           path: build.tar.gz
   smoke:
+    if: github.repository == 'plentymarkets/plentyshop-pwa'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
