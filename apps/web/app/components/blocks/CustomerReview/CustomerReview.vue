@@ -7,7 +7,11 @@
   >
     <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
 
-    <div v-if="props.content.layout.collapsible" id="customerReviewsAccordion" data-testid="reviews-accordion">
+    <div
+      v-if="hasTitle && props.content.layout.collapsible"
+      id="customerReviewsAccordion"
+      data-testid="reviews-accordion"
+    >
       <UiAccordionItem
         v-model="reviewsOpen"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
@@ -100,13 +104,18 @@ const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productRe
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
+const hasTitle = computed(() => {
+  return props.content.text.title && props.content.text.title.trim().length > 0;
+});
+
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value) fetchReviews();
+    if (value && hasTitle.value && props.content.layout.collapsible) {
+      fetchReviews();
+    }
   },
 );
-
 watch(
   () => route.query.feedbackPage,
   async () => {

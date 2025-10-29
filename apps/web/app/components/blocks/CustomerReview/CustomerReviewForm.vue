@@ -7,7 +7,7 @@
       data-testid="customer-review-text"
     >
       <template #summary>
-        <h2>{{ getEditorTranslation('customer-reviews-label') }}</h2>
+        <h2>{{ getEditorTranslation('text-label') }}</h2>
       </template>
       <div data-testid="customer-review-form">
         <div class="py-2">
@@ -48,7 +48,7 @@
         />
       </div>
 
-      <div class="py-2 flex items-center justify-between gap-3">
+      <div class="py-2 flex items-center justify-between gap-3" :class="{ 'opacity-50': !isCollapsible }">
         <UiFormLabel for="initially-collapsed" class="m-0">
           {{ getEditorTranslation('initially-collapsed-label') }}
         </UiFormLabel>
@@ -56,8 +56,9 @@
         <SfSwitch
           id="initially-collapsed"
           v-model="isInitiallyCollapsed"
+          :disabled="!isCollapsible"
           data-testid="initially-collapsed"
-          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
         />
       </div>
 
@@ -116,6 +117,7 @@ import {
   SfIconArrowForward,
   SfSwitch,
 } from '@storefront-ui/vue';
+
 const reviewsOpen = ref(true);
 const layoutOpen = ref(true);
 const props = defineProps<CustomerReviewProps>();
@@ -123,11 +125,6 @@ const props = defineProps<CustomerReviewProps>();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
-
-// const customerReview = computed<CustomerReviewContent>(() => {
-//   const rawContent = findOrDeleteBlockByUuid(data.value, props.meta.uuid || blockUuid.value)?.content ?? {};
-//   return rawContent as CustomerReviewContent;
-// });
 
 const customerReview = computed<CustomerReviewContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
@@ -150,30 +147,36 @@ const customerReview = computed<CustomerReviewContent>(() => {
 const isCollapsibleInit = customerReview.value.layout.collapsible;
 const isCollapsible = ref(isCollapsibleInit);
 
-watch(isCollapsible, () => {
-  customerReview.value.layout.collapsible = isCollapsible.value;
+watch(isCollapsible, (newValue) => {
+  customerReview.value.layout.collapsible = newValue;
+
+  if (!newValue) {
+    isInitiallyCollapsed.value = false;
+    customerReview.value.layout.initiallyCollapsed = false;
+  }
 });
 
 const isInitiallyCollapsedInit = customerReview.value.layout.initiallyCollapsed;
 const isInitiallyCollapsed = ref(isInitiallyCollapsedInit);
 
-watch(isInitiallyCollapsed, () => {
-  customerReview.value.layout.initiallyCollapsed = isInitiallyCollapsed.value;
+watch(isInitiallyCollapsed, (newValue) => {
+  customerReview.value.layout.initiallyCollapsed = newValue;
 });
 </script>
+
 <i18n lang="json">
 {
   "en": {
-    "customer-reviews-label": "Customer reviews",
-    "title-label": "Customer reviews",
+    "text-label": "Text",
+    "title-label": "Title",
     "padding-label": "Padding",
     "display-collapsible-label": "Display as collapsible",
     "initially-collapsed-label": "Initially collapsed",
     "layout-group-label": "Layout Settings"
   },
   "de": {
-    "customer-reviews-label": "Kundenbewertungen",
-    "title-label": "Kundenbewertungen",
+    "text-label": "Text",
+    "title-label": "Titel",
     "padding-label": "Padding",
     "display-collapsible-label": "Als zusammenklappbar anzeigen",
     "initially-collapsed-label": "Ursprünglich kollabiert",
