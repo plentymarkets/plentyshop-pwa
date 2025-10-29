@@ -24,11 +24,12 @@ import { productGetters } from '@plentymarkets/shop-api';
 import type { ItemTextProps } from './types';
 import type { ItemTextContent } from '~/components/blocks/ItemText/types';
 const { t } = useI18n();
+const route = useRoute();
 const props = defineProps<ItemTextProps>();
 const title = props.content?.title
 const initiallyCollapsed = props.content?.initiallyCollapsed
 const displayAsCollapsable = props.content?.displayAsCollapsable
-// const product = computed(() => productsCatalog.value.products || []);
-// const text = productGetters.getDescription(props.content.product);
-const text = 'Demo text';
+const { productId } = createProductParams(route.params);
+const { data: product } = useProduct(productId);
+const text = computed(() => { return productGetters.getDescription(product.value) ?? 'see tab "item text"' });
 </script>
