@@ -47,7 +47,7 @@ describe('CustomerReview.vue', () => {
     expect(wrapper.find('#customerReviewsClick').exists()).toBe(true);
   });
 
-  it('renders no title and no accordion if title is empty', () => {
+  it('should render no title and no accordion if title is empty', () => {
     const wrapper = mount(CustomerReview, {
       props: {
         ...mockCustomerReviewBlock,
