@@ -205,7 +205,56 @@ import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/Purcha
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
-const { product, configuration } = defineProps<PurchaseCardProps>();
+const { product, configuration } = withDefaults(defineProps<PurchaseCardProps>(), {
+  configuration: () => ({
+    fields: {
+      itemName: true,
+      price: true,
+      tags: true,
+      availability: true,
+      starRating: true,
+      orderProperties: true,
+      variationProperties: true,
+      previewText: true,
+      attributes: true,
+      itemBundle: false,
+      graduatedPrices: false,
+      addToWishlist: true,
+      quantityAndAddToCart: true,
+      itemText: false,
+      technicalData: false,
+    },
+    fieldsOrder: [
+      'itemName',
+      'price',
+      'tags',
+      'availability',
+      'starRating',
+      'variationProperties',
+      'orderProperties',
+      'previewText',
+      'attributes',
+      'itemBundle',
+      'graduatedPrices',
+      'addToWishlist',
+      'quantityAndAddToCart',
+      'itemText',
+      'technicalData',
+    ],
+    fieldsDisabled: ['quantityAndAddToCart', 'price', 'itemBundle', 'attributes'],
+    wishlistSize: 'small',
+
+    dropShadow: true,
+    borders: true,
+    borderColor: '#EFF4F1',
+    layout: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingRight: 0,
+      paddingLeft: 0,
+    },
+  }),
+});
 
 const { currentProduct } = useProducts();
 
