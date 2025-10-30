@@ -1,6 +1,6 @@
 <template>
   <section data-testid="category-sort" aria-label="Sort products" :style="layoutStyle">
-    <CategorySorting
+    <CategorySortingSingleBlock
       :key="useSelectionModeAlways ? 'no-ph' : 'ph'"
       :selection-mode-always="useSelectionModeAlways"
       class="mb-4"

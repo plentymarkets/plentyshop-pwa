@@ -7,9 +7,8 @@ export type SortContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
-  }
+  };
   settings: SortSettings;
-
 };
 export interface SortFormProps {
   uuid?: string;

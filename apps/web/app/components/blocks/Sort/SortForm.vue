@@ -17,10 +17,7 @@
         data-testid="switch-sort-placeholder"
       />
     </div>
-    <div
-      id="sort-form-padding-form"
-      class="py-2"
-    >
+    <div id="sort-form-padding-form" class="py-2">
       <div class="flex items-center gap-2 mb-2">
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       </div>
@@ -66,7 +63,6 @@
       </div>
     </div>
   </UiAccordionItem>
-
 </template>
 <script setup lang="ts">
 import {
@@ -74,26 +70,23 @@ import {
   SfIconArrowDownward,
   SfIconArrowForward,
   SfIconArrowUpward,
-  SfSwitch
-} from '@storefront-ui/vue'
+  SfSwitch,
+} from '@storefront-ui/vue';
 import type { SortContent, SortFormProps } from '~/components/blocks/Sort/types';
 
-const props = defineProps<SortFormProps>()
+const props = defineProps<SortFormProps>();
 
-const { data } = useCategoryTemplate()
-const { blockUuid } = useSiteConfiguration()
-const { findOrDeleteBlockByUuid } = useBlockManager()
+const { data } = useCategoryTemplate();
+const { blockUuid } = useSiteConfiguration();
+const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const sortBlock = computed<SortContent>(() => {
-  const rawContent = findOrDeleteBlockByUuid(
-    data.value,
-    props.uuid || blockUuid.value
-  )?.content ?? {}
+  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
-  const content = rawContent as Partial<SortContent>
+  const content = rawContent as Partial<SortContent>;
 
   if (!content.settings) {
-    content.settings = { selectionModeAlways: false }
+    content.settings = { selectionModeAlways: false };
   }
   if (!content.layout) {
     content.layout = {
@@ -101,13 +94,13 @@ const sortBlock = computed<SortContent>(() => {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
-    }
+    };
   }
 
-  return content as SortContent
-})
+  return content as SortContent;
+});
 
-const layoutOpen = ref(false)
+const layoutOpen = ref(false);
 </script>
 
 <i18n lang="json">
