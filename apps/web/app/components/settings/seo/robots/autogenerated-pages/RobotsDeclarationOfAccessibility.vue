@@ -19,7 +19,7 @@
 import Multiselect from 'vue-multiselect';
 import { robotsOptions } from '~/utils/editorSettings';
 
-const { updateSetting, getSetting } = useSiteSettings('robotsAccessibilityDeclaration');
+const { updateSetting, getSetting } = useSiteSettings('seoRobotsAccessibilityDeclarationResult');
 
 const robots = computed({
   get: () => getSetting(),
