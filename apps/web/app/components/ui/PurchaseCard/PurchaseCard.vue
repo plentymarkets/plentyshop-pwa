@@ -218,7 +218,7 @@ const { product, configuration } = withDefaults(defineProps<PurchaseCardProps>()
       previewText: true,
       attributes: true,
       itemBundle: false,
-      graduatedPrices: false,
+      graduatedPrices: true,
       addToWishlist: true,
       quantityAndAddToCart: true,
       itemText: false,
