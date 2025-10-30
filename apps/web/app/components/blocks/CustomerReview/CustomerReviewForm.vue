@@ -131,6 +131,10 @@ const customerReview = computed<CustomerReviewContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   const content = rawContent as Partial<CustomerReviewContent>;
 
+  if (!content.text) {
+    content.text = { title: '' };
+  }
+
   if (!content.layout) {
     content.layout = {
       paddingTop: 0,
