@@ -4,20 +4,22 @@ import { ItemTextMock } from './ItemText.mock';
 import ItemText from '../ItemText.vue';
 
 describe('ItemText.vue', () => {
-  it('should render item text accordeo open if displayAsCollapsable and initallyCollapsed is true', async () => {
+  it('should render item text accordeon open if displayAsCollapsable and initallyCollapsed is true', async () => {
     const wrapper = mount(ItemText, {
       props: { ...ItemTextMock },
     });
+    const isOpen = ItemTextMock.content?.displayAsCollapsable && ItemTextMock.content?.initiallyCollapsed;
     const itemText = wrapper.find('[data-testid="item-text-innertext"]');
 
-    expect(itemText.exists()).toBe(true);
+    expect(itemText.exists()).toBe(isOpen);
   });
   it('should render element with correct padding', () => {
     const wrapper = mount(ItemText, {
       props: { ...ItemTextMock },
     });
+    const paddingTop = ItemTextMock.content?.layout.paddingTop;
     const itemText = wrapper.find('[data-testid="item-text-block"]');
 
-    expect(itemText.attributes('style')).toContain(`padding-top: 10px;`);
+    expect(itemText.attributes('style')).toContain(`padding-top: ${paddingTop}px`);
   });
 });
