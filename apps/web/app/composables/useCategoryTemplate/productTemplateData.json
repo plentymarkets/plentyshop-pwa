@@ -8,7 +8,13 @@
     },
     "configuration": {
       "columnWidths": [6, 6],
-      "sticky": [1]
+      "sticky": [1],
+      "layout": {
+        "marginTop": "0",
+        "marginLeft": "0",
+        "marginRight": "0",
+        "marginBottom": "0"
+      }
     },
     "layout": {
       "gap": "XL",

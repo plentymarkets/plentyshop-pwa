@@ -36,10 +36,10 @@
               />
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
-              <UiBadges class="mt-4" :product="product" :use-availability="false" :use-tags="true" />
+              <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
             </template>
             <template v-if="key === 'availability' && configuration?.fields.availability">
-              <UiBadges class="mt-4" :product="product" :use-availability="true" :use-tags="false" />
+              <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
             </template>
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
               <div class="mt-2 variation-properties">
@@ -47,7 +47,7 @@
               </div>
             </template>
             <template v-if="key === 'starRating' && configuration?.fields.starRating">
-              <div class="inline-flex items-center mt-4 mb-2">
+              <div class="inline-flex items-center mb-2">
                 <SfRating
                   size="xs"
                   :half-increment="true"
@@ -81,21 +81,20 @@
                   :product="product"
                   :quantity="quantitySelectorValue"
                   :square="viewport.isLessThan('lg')"
-                  class="!m-0"
+                  class="!m-0 !mb-2"
                   :class="{
-                    'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
-                      viewport.isLessThan('lg'),
+                    'mr-2 mb-2 bg-white': viewport.isLessThan('lg'),
                     'w-full': configuration?.wishlistSize === 'large',
                     '!p-0 hover:bg-transparent active:bg-transparent': configuration?.wishlistSize === 'small',
                   }"
                 >
-                  <template v-if="viewport.isGreaterOrEquals('lg')">
+                  <div>
                     {{
                       !isWishlistItem(productGetters.getVariationId(product))
                         ? t('addToWishlist')
                         : t('removeFromWishlist')
                     }}
-                  </template>
+                  </div>
                 </WishlistButton>
               </div>
             </template>
@@ -205,7 +204,7 @@ import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/Purcha
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
-const { product, configuration } = withDefaults(defineProps<PurchaseCardProps>(), {
+const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
     fields: {
       itemName: true,
@@ -279,22 +278,22 @@ const {
 const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
+const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(props?.product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
-const { crossedPrice } = useProductPrice(product);
-const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
+const { crossedPrice } = useProductPrice(props?.product);
+const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
-  const layout = configuration?.layout || ({} as PriceCardPadding);
+  const layout = props?.configuration?.layout || ({} as PriceCardPadding);
 
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
-    borderColor: configuration?.borderColor || 'transparent',
+    borderColor: props?.configuration?.borderColor || 'transparent',
   };
 });
 
@@ -311,16 +310,16 @@ onBeforeRouteLeave(() => {
 
 const priceWithProperties = computed(
   () =>
-    (productGetters.getSpecialOffer(product) ||
-      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
-      productGetters.getPrice(product) ||
-      0) + getPropertiesPrice(product),
+    (productGetters.getSpecialOffer(props?.product) ||
+      productGetters.getGraduatedPriceByQuantity(props?.product, quantitySelectorValue.value)?.unitPrice.value ||
+      productGetters.getPrice(props?.product) ||
+      0) + getPropertiesPrice(props?.product),
 );
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
-    productGetters.getDefaultBasePrice(product),
+    productGetters.getGraduatedPriceByQuantity(props?.product, quantitySelectorValue.value)?.basePrice ??
+    productGetters.getDefaultBasePrice(props?.product),
 );
 
 const handleValidationErrors = (): boolean => {
@@ -353,14 +352,14 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   const addedToCart = await addToCart({
-    productId: Number(productGetters.getId(product)),
+    productId: Number(productGetters.getId(props?.product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
   });
 
   if (addedToCart) {
     quickCheckout
-      ? openQuickCheckout(product, quantitySelectorValue.value)
+      ? openQuickCheckout(props?.product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
 
     if (getSetting() === '0') {
@@ -393,9 +392,9 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
+const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
-const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
+const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

@@ -3,7 +3,7 @@
     v-model="cardOpen"
     summary-active-class="bg-neutral-100"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    data-testid="price-card-card"
+    data-testid="price-card"
   >
     <template #summary>
       <h2>{{ getEditorTranslation('card-section-label') }}</h2>
@@ -190,13 +190,16 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from 'assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
+import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
 const { data } = useCategoryTemplate();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
+const props = defineProps<PriceCardFormProps>();
+
 const priceCardBlock = computed<PriceCardContent>(() => {
-  const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
+  const block = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
   return block?.content as PriceCardContent;
 });
 
