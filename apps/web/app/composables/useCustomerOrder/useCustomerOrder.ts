@@ -1,4 +1,4 @@
-import type { OrderSearchParams, Order, GetOrderError } from '@plentymarkets/shop-api';
+import type { OrderSearchParams, Order, GetOrderError, ApiError } from '@plentymarkets/shop-api';
 import type { FetchOrder, UseCustomerOrderReturn, UseCustomerOrderState } from '~/composables/useCustomerOrder/types';
 
 /**
@@ -53,8 +53,47 @@ export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
     return state.value.data;
   };
 
+  /**
+   * @description Function for fetching an order from client side.
+   * @param params { OrderSearchParams }
+   * @return FetchOrder
+   * @example
+   * ``` ts
+   * fetchOrderClient({
+   *   orderId: '';
+   *   accessKey: '';
+   *   name: '';
+   *   postcode: '';
+   * })
+   *
+   * fetchOrderClient({
+   *   orderId: '';
+   * })
+   * ```
+   */
+  const fetchOrderClient: FetchOrder = async (params: OrderSearchParams) => {
+    state.value.loading = true;
+
+    try {
+      const { data } = await useSdk().plentysystems.getOrder(params);
+
+      const orderData = data as Order;
+      const errorData = data as GetOrderError;
+
+      state.value.data = orderData?.order ? orderData : null;
+      state.value.error = errorData?.error ? errorData : null;
+    } catch (e) {
+      useHandleError(e as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+
+    return state.value.data;
+  };
+
   return {
     fetchOrder,
+    fetchOrderClient,
     ...toRefs(state.value),
   };
 };
