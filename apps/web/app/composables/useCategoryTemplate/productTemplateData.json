@@ -49,7 +49,7 @@
             "orderProperties": true,
             "variationProperties": true,
             "previewText": true,
-            "attributes": false,
+            "attributes": true,
             "itemBundle": false,
             "graduatedPrices": false,
             "addToWishlist": true,
@@ -74,7 +74,7 @@
             "itemText",
             "technicalData"
           ],
-          "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle"],
+          "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle", "attributes"],
           "wishlistSize": "small",
 
           "dropShadow": true,
