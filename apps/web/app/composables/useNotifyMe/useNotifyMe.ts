@@ -1,12 +1,18 @@
-import type { ApiError, NotifyMeSubscribeParams } from '@plentymarkets/shop-api';
-import type { UseNotifyMeState, UseNotifyMeReturn, Subscribe } from '~/composables/useNotifyMe/types';
+import type { ApiError, NotifyMeSubscribeParams, NotifyMeRouteTokenParams } from '@plentymarkets/shop-api';
+import type {
+  UseNotifyMeState,
+  UseNotifyMeReturn,
+  Subscribe,
+  ConfirmNotifyMe,
+  UnsubscribeNotifyMe,
+} from '~/composables/useNotifyMe/types';
 
 /**
  * @description Composable for subscribing to the back in stock notifications.
  * @return UseNotifyMeReturn
  * @example
  * ``` ts
- * const { loading, subscribe } = useNotifyMe();
+ * const { loading, subscribe, confirmNotifyMe, unsubscribeNotifyMe } = useNotifyMe();
  * ```
  */
 export const useNotifyMe: UseNotifyMeReturn = () => {
@@ -41,8 +47,54 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
     }
   };
 
+  /**
+   * @description Function for confirming the back in stock notifications subscription (opt-in).
+   * @param params { NotifyMeRouteTokenParams }
+   * @return ConfirmNotifyMe
+   * @example
+   * ``` ts
+   * const result = await confirmNotifyMe({token: '[token]'});
+   * ```
+   */
+  const confirmNotifyMe: ConfirmNotifyMe = async (params: NotifyMeRouteTokenParams) => {
+    try {
+      state.value.loading = true;
+
+      const { data } = await useSdk().plentysystems.doConfirmNotifyMe(params);
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
+  /**
+   * @description Function for unsubscribing from notify me notifications.
+   * @param params { NotifyMeRouteTokenParams }
+   * @return UnsubscribeNotifyMe
+   * @example
+   * ``` ts
+   * const result = await unsubscribeNotifyMe({token: '[token]'});
+   * ```
+   */
+  const unsubscribeNotifyMe: UnsubscribeNotifyMe = async (params: NotifyMeRouteTokenParams) => {
+    try {
+      state.value.loading = true;
+
+      const { data } = await useSdk().plentysystems.doUnsubscribeNotifyMe(params);
+      return data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
   return {
     subscribe,
+    confirmNotifyMe,
+    unsubscribeNotifyMe,
     ...toRefs(state.value),
   };
 };

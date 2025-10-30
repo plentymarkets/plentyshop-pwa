@@ -8,7 +8,11 @@
       "emailPlaceholder": "Ihre E-Mail",
       "turnstileFailed": "Turnstile Validierung Fehlgeschlagen",
       "successCheckEmail": "Prüfe dein Postfach! Wir haben Ihnen eine Bestätigungs E-Mail gesendet."
-    }
+    },
+    "notifyMeOptInMessage": "Ihre Benachrichtigung wurde erfolgreich bestätigt. Sie erhalten eine E-Mail, sobald der Artikel wieder verfügbar ist.",
+    "notifyMeOptInMessageError": "Die Bestätigung Ihrer Benachrichtigung ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
+    "notifyMeUnsubscribeMessage": "Sie wurden erfolgreich von den Benachrichtigungen abgemeldet.",
+    "notifyMeUnsubscribeMessageError": "Die Abmeldung von den Benachrichtigungen ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support."
   },
   "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert",
   "customerWish": "Hinweise und Wünsche",

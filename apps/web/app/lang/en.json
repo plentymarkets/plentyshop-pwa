@@ -8,7 +8,11 @@
       "emailPlaceholder": "Your E-mail",
       "turnstileFailed": "Turnstile validation failed",
       "successCheckEmail": "Check your inbox! We've sent you a confirmation email."
-    }
+    },
+    "notifyMeOptInMessage": "Your notification has been successfully confirmed. You will receive an email once the item is back in stock.",
+    "notifyMeOptInMessageError": "Failed to confirm your notification. Please try again or contact our support.",
+    "notifyMeUnsubscribeMessage": "You have been successfully unsubscribed from notifications.",
+    "notifyMeUnsubscribeMessageError": "Failed to unsubscribe from notifications. Please try again or contact our support."
   },
   "readAndAccepted": "I have read and accepted the {insertText}",
   "customerWish": "Notes and requests",
