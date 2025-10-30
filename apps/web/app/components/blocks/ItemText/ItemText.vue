@@ -1,16 +1,17 @@
 <template>
-  <div :style="inlineStyle">
+  <div data-testid="item-text-block" :style="inlineStyle">
     <UiAccordionItem
       v-if="displayAsCollapsable"
       v-model="initiallyCollapsed"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
+      data-testid="item-text"
     >
       <template #summary>
         <h2 class="font-bold text-lg leading-6 md:text-2xl">
           {{ title }}
         </h2>
       </template>
-      <div v-if="text" class="no-preflight" v-html="text" />
+      <div v-if="text" data-testid="item-text-innertext" class="no-preflight" v-html="text" />
     </UiAccordionItem>
     <div v-else>
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
