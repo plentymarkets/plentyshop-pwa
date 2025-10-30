@@ -1,8 +1,7 @@
 export type OpenDrawer = () => void;
 
-export interface UseProductLegalDetailsMethods {
-  open: Readonly<Ref<boolean>>;
-  openDrawer: OpenDrawer;
+export interface UseProductLegalDetailsDrawer {
+  open: Ref<boolean>;
+  openedBlockUuid: Ref<string | null>;
+  openDrawer: (uuid?: string) => void;
 }
-
-export type UseProductLegalDetailsMethodsReturn = () => UseProductLegalDetailsMethods;

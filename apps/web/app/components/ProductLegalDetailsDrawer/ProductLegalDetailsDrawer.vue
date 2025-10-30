@@ -15,7 +15,10 @@
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
-        <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
+        <!-- <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div> -->
+        <div class="flex items-center text-white">{{ linkText }}</div>
+
+
         <UiButton
           square
           variant="tertiary"
@@ -90,6 +93,19 @@ const setActiveTab = (index: number) => {
 };
 
 const productLegalDrawerRef = ref();
-const { open } = useProductLegalDetailsDrawer();
+const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
+
+const { data } = useCategoryTemplate();
+
+const productLegalBlock = computed(() => {
+  if (!openedBlockUuid.value) return null;
+  return data.value
+    .flatMap((block) => (Array.isArray(block.content) ? block.content : [block]))
+    .find((block) => block.meta?.uuid === openedBlockUuid.value);
+});
+
+const linkText = computed(() => productLegalBlock.value?.content?.text?.linkText || '');
+
+console.log('linkText', linkText);
 </script>
