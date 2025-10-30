@@ -19,6 +19,6 @@ const { t } = useI18n();
 const { setCustomerWish } = useAdditionalInformation();
 const { getSetting } = useSiteSettings('showCustomerWishComponent');
 const customerWish = ref('');
-const showCustomerWishComponent = getSetting();
+const showCustomerWishComponent = computed(() => getSetting() === 'true');
 setCustomerWish(null);
 </script>

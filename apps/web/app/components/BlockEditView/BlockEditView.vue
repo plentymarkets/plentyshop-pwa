@@ -51,6 +51,7 @@ const blockTypeNames: Record<string, string> = {
   NewsletterSubscribe: 'Newsletter',
   ProductRecommendedProducts: 'Product Gallery',
   TextCard: 'Rich Text',
+  CustomerReview: 'Customer reviews',
   MultiGrid: 'Layout',
   Footer: 'Footer',
   ItemText: 'Item Details',
