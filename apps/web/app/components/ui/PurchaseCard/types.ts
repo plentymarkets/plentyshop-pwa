@@ -37,7 +37,7 @@ export interface PriceCardContent {
   dropShadow: boolean;
   borders: boolean;
   borderColor: string;
-  layout: PriceCardPadding
+  layout: PriceCardPadding;
 }
 
 export type PurchaseCardProps = {

@@ -107,15 +107,15 @@ const getGridClasses = () => {
 };
 
 const getColumnClasses = (colIndex: number) => {
-  const columnWidth = configuration.columnWidths[colIndex]
-  const classes = [`col-span-${columnWidth}`]
+  const columnWidth = configuration.columnWidths[colIndex];
+  const classes = [`col-span-${columnWidth}`];
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
-    classes.push('sticky', 'top-40')
+    classes.push('sticky', 'top-40');
   }
 
-  return classes
-}
+  return classes;
+};
 
 const getBlockActions = () => ({
   isEditable: true,

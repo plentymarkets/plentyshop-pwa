@@ -1,7 +1,7 @@
 <template>
   <form
     class="md:rounded-md"
-    :class="{ 'md:shadow-lg': configuration?.dropShadow, 'md:border md:border-neutral-100': configuration?.borders}"
+    :class="{ 'md:shadow-lg': configuration?.dropShadow, 'md:border md:border-neutral-100': configuration?.borders }"
     :style="inlineStyle"
     data-testid="purchase-card"
     @submit.prevent="handleAddToCart()"
@@ -47,7 +47,7 @@
               </div>
             </template>
             <template v-if="key === 'starRating' && configuration?.fields.starRating">
-              <div  class="inline-flex items-center mt-4 mb-2">
+              <div class="inline-flex items-center mt-4 mb-2">
                 <SfRating
                   size="xs"
                   :half-increment="true"
@@ -84,9 +84,9 @@
                   class="!m-0"
                   :class="{
                     'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
-                     viewport.isLessThan('lg'),
-                     'w-full': configuration?.wishlistSize === 'large',
-                     '!p-0 hover:bg-transparent active:bg-transparent': configuration?.wishlistSize === 'small'
+                      viewport.isLessThan('lg'),
+                    'w-full': configuration?.wishlistSize === 'large',
+                    '!p-0 hover:bg-transparent active:bg-transparent': configuration?.wishlistSize === 'small',
                   }"
                 >
                   <template v-if="viewport.isGreaterOrEquals('lg')">
@@ -120,59 +120,59 @@
                 :product="product"
               />
               <div class="mt-4">
-              <div class="flex flex-col md:flex-row flex-wrap gap-4">
-                <UiQuantitySelector
-                  :min-value="productGetters.getMinimumOrderQuantity(product)"
-                  :value="quantitySelectorValue"
-                  class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
-                  @change-quantity="changeQuantity"
-                />
-                <SfTooltip
-                  show-arrow
-                  placement="top"
-                  :label="isNotValidVariation || isSalableText"
-                  class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-                >
-                  <UiButton
-                    type="submit"
-                    data-testid="add-to-cart"
-                    size="lg"
-                    class="w-full h-full"
-                    :disabled="loading || !productGetters.isSalable(product)"
+                <div class="flex flex-col md:flex-row flex-wrap gap-4">
+                  <UiQuantitySelector
+                    :min-value="productGetters.getMinimumOrderQuantity(product)"
+                    :value="quantitySelectorValue"
+                    class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
+                    @change-quantity="changeQuantity"
+                  />
+                  <SfTooltip
+                    show-arrow
+                    placement="top"
+                    :label="isNotValidVariation || isSalableText"
+                    class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
                   >
-                    <template #prefix>
-                      <div v-if="!loading" class="flex row items-center">
-                        <SfIconShoppingCart size="sm" />
-                        {{ t('addToCart') }}
-                      </div>
-                      <div v-else>
-                        <SfLoaderCircular size="sm" />
-                      </div>
-                    </template>
-                  </UiButton>
-                </SfTooltip>
-              </div>
-
-              <div class="mt-4 typography-text-xs flex gap-1">
-                <span>{{ t('asterisk') }}</span>
-                <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
-                <i18n-t keypath="excludedShipping" scope="global">
-                  <template #shipping>
-                    <SfLink
-                      :href="localePath(paths.shipping)"
-                      target="_blank"
-                      class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                    <UiButton
+                      type="submit"
+                      data-testid="add-to-cart"
+                      size="lg"
+                      class="w-full h-full"
+                      :disabled="loading || !productGetters.isSalable(product)"
                     >
-                      {{ t('delivery') }}
-                    </SfLink>
-                  </template>
-                </i18n-t>
+                      <template #prefix>
+                        <div v-if="!loading" class="flex row items-center">
+                          <SfIconShoppingCart size="sm" />
+                          {{ t('addToCart') }}
+                        </div>
+                        <div v-else>
+                          <SfLoaderCircular size="sm" />
+                        </div>
+                      </template>
+                    </UiButton>
+                  </SfTooltip>
+                </div>
+
+                <div class="mt-4 typography-text-xs flex gap-1">
+                  <span>{{ t('asterisk') }}</span>
+                  <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
+                  <i18n-t keypath="excludedShipping" scope="global">
+                    <template #shipping>
+                      <SfLink
+                        :href="localePath(paths.shipping)"
+                        target="_blank"
+                        class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                      >
+                        {{ t('delivery') }}
+                      </SfLink>
+                    </template>
+                  </i18n-t>
+                </div>
+                <template v-if="showPayPalButtons">
+                  <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
+                  <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+                </template>
               </div>
-              <template v-if="showPayPalButtons">
-                <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
-                <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
-              </template>
-            </div>
             </template>
 
             <template v-if="key === 'itemText' && configuration?.fields.itemText">
@@ -217,8 +217,6 @@ const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });
 
-
-
 const { showNetPrices } = useCart();
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
@@ -240,7 +238,7 @@ const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
-  const layout = configuration?.layout || {} as PriceCardPadding;
+  const layout = configuration?.layout || ({} as PriceCardPadding);
 
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
