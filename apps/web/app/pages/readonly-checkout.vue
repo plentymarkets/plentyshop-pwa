@@ -95,7 +95,6 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
-import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const ID_CHECKBOX = '#terms-checkbox';
@@ -171,17 +170,15 @@ const handle = async () => {
   await setAddressesFromPayPal(paypalOrderId);
   await fetchSession();
 
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetch()
     .then(() => persistShippingAddress())
-    .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddress(AddressType.Billing)
-    .fetch()
     .then(() => persistBillingAddress())
-    .then(() => setBillingSkeleton(false))
-    .catch((error) => useHandleError(error));
+    .catch((error) => useHandleError(error))
+    .finally(() => {
+      setBillingSkeleton(false);
+      setShippingSkeleton(false);
+    });
 
   if (user.value === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
     await loginAsGuest(billingAddress.value?.email || shippingAddress.value?.email || '');
