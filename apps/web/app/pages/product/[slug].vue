@@ -48,7 +48,6 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import type { ItemTextProps } from '~/components/blocks/ItemText/types';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -82,27 +81,6 @@ const RecommendedProductsAsync = defineAsyncComponent(
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);
 const productName = computed(() => productGetters.getName(product.value));
-// aici faci un mapping ca in product categories
-const localItemProps = computed((): ItemTextProps => {
-  return {
-    name: 'test',
-    type: '',
-    content: {
-      "title":"Item details",
-      "displayAsCollapsable": true,
-      "initiallyCollapsed": true,
-      "layout": {
-        "paddingTop": 0,
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0
-      }
-    },
-    meta: {
-      uuid: 'todo - use from getBlocks',
-    },
-  };
-});
 const icon = 'sell';
 setPageMeta(productName.value, icon);
 
