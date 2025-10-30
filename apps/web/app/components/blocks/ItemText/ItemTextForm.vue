@@ -4,7 +4,7 @@
       v-model="textSettings"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-layout"
+      data-testid="item-text-settings"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('text-settings-label') }}</h2>
@@ -30,7 +30,7 @@
       v-model="layoutSettings"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-layout"
+      data-testid="item-text-layout"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
