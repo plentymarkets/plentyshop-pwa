@@ -1,5 +1,5 @@
 <template>
-  <UiOverlay :visible="open">
+  <!-- <UiOverlay :visible="open">
     <SfDrawer
       ref="productLegalDrawerRef"
       v-model="open"
@@ -13,7 +13,7 @@
         'z-50',
         { 'lg:min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
-    >
+    > -->
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
         <UiButton
@@ -61,8 +61,8 @@
       >
         <component :is="tab.component" :product="product" />
       </div>
-    </SfDrawer>
-  </UiOverlay>
+    <!-- </SfDrawer>
+  </UiOverlay> -->
 </template>
 
 <script setup lang="ts">
@@ -93,3 +93,12 @@ const productLegalDrawerRef = ref();
 const { open } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
 </script>
+
+
+
+<!-- <template>
+<p>Mata</p>
+</template>
+
+<script lang="ts" setup>
+</script> -->
