@@ -30,10 +30,6 @@ export type CategoryDataContent = {
   };
   displayCategoryImage: string;
   image: {
-    wideScreen?: string;
-    desktop?: string;
-    tablet?: string;
-    mobile?: string;
     alt?: string;
     brightness?: number;
     fillMode?: 'fill' | 'fit';

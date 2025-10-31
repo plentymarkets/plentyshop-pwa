@@ -36,7 +36,6 @@
         />
 
         <div
-          v-if="showNoTextMessage"
           :class="[
             'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
             { 'md:p-10': props.content.text.bgColor },
@@ -58,7 +57,16 @@
             }"
             :data-testid="'category-data-content-' + meta.uuid"
           >
-            <FieldsOrder v-bind="content" />
+            <div
+              v-if="showNoTextMessage"
+              class="text-center"
+              role="alert"
+              aria-live="polite"
+              data-testid="no-text-selected"
+            >
+              {{ getEditorTranslation('no-text-fields-selected') }}
+            </div>
+            <FieldsOrder v-else v-bind="content" />
           </div>
         </div>
       </div>
