@@ -64,15 +64,4 @@ describe('ProductLegalInformation', () => {
     expect(mainDiv.exists()).toBe(true);
     expect(mainDiv.attributes('style')).toContain('padding: 10px 40px 20px 30px;');
   });
-
-  //   it('calls openDrawer with correct uuid when clicked', async () => {
-  //     const { useProductLegalDetailsDrawer } = await import('~/composables/useProductLegalDetailsDrawer');
-  //     const { openDrawer } = useProductLegalDetailsDrawer();
-
-  //     const wrapper = mount(ProductLegalInformation, {
-  //       props: productLegalInformationBlock,
-  //     });
-  //     await wrapper.find('[data-testid="open-manufacturer-drawer"]').trigger('click');
-  //     expect(openDrawer).toHaveBeenCalledWith(productLegalInformationBlock.meta.uuid);
-  //   });
 });
