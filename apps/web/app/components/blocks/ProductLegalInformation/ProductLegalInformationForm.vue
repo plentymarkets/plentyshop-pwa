@@ -49,10 +49,6 @@
             </SfInput>
           </label>
         </div>
-
-        <div class="p-2 mt-2 mb-2 bg-[#EFF4F1] border border-[#BBC6BE] text-[#151A16] rounded-md">
-          <span>{{ getEditorTranslation('legal-information-note') }}</span>
-        </div>
       </div>
     </UiAccordionItem>
     <UiAccordionItem

@@ -2,12 +2,6 @@ import { mount } from '@vue/test-utils';
 import ProductLegalInformation from '../ProductLegalInformation.vue';
 import { productLegalInformationBlock } from './ProductLegalInformation.mock';
 
-vi.mock('~/composables/useProductLegalDetailsDrawer', () => ({
-  useProductLegalDetailsDrawer: () => ({
-    openDrawer: vi.fn(),
-  }),
-}));
-
 describe('ProductLegalInformation', () => {
   it('should render the block component', () => {
     const wrapper = mount(ProductLegalInformation, {
