@@ -18,9 +18,13 @@ const { locale } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const { currentProduct } = useProducts();
 
-const itemId = Object.keys(currentProduct.value).length ? productGetters.getItemId(currentProduct.value) : '';
+const itemId = computed(() =>
+  Object.keys(currentProduct.value).length
+    ? productGetters.getItemId(currentProduct.value)
+    : props.content.source.itemId,
+);
 
-const firstCategoryId = categoryTree.value?.[0]?.id;
+const firstCategoryId = categoryTree.value?.find((category) => category.type === 'item')?.id || '';
 
 const shouldRenderAfterUpdate = ref(false);
 
@@ -34,7 +38,7 @@ const isProduct = computed(() => props.content.source?.type === 'cross_selling')
 const getContentSource = () => {
   return {
     ...props.content.source,
-    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString(), itemId },
+    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString(), itemId: itemId.value },
   };
 };
 
@@ -58,7 +62,12 @@ watch(
     () => locale.value,
   ],
   () => {
-    if (shouldFetch.value) fetchProductRecommended(getContentSource());
+    if (
+      shouldFetch.value &&
+      ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
+        (props.content.source?.categoryId && props.content.source?.type === 'category'))
+    )
+      fetchProductRecommended(getContentSource());
     shouldRenderAfterUpdate.value = true;
   },
 );
