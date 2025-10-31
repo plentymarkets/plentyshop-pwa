@@ -75,7 +75,7 @@
             </template>
 
             <template v-if="key === 'addToWishlist' && configuration?.fields.addToWishlist">
-              <div class="flex items-center" :class="{ 'justify-center': configuration?.wishlistSize === 'large' }">
+              <div class="flex items-center mt-2" :class="{ 'justify-center': configuration?.wishlistSize === 'large' }">
                 <WishlistButton
                   :variant="configuration?.wishlistSize === 'small' ? 'tertiary' : 'secondary'"
                   :product="product"
