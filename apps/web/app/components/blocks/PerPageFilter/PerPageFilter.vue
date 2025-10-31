@@ -1,7 +1,26 @@
-<template v-if="key === 'perPage' && props.content?.fields.perPage">
-  <CategoryItemsPerPage class="mb-6" :total-products="productsCatalog.pagination?.totals ?? 0" />
+<template>
+  <section data-testid="category-per-page" aria-label="Show products per page" :style="layoutStyle">
+    <CategoryItemsPerPage
+      :key="useSelectionModeAlways ? 'no-ph' : 'ph'"
+      class="mb-6"
+      :selection-mode-always="useSelectionModeAlways"
+      :total-products="productsCatalog.pagination?.totals ?? 0"
+    />
+  </section>
 </template>
 <script setup lang="ts">
-const { data: productsCatalog } = useProducts();
+import type { PerPageContent } from '~/components/blocks/PerPageFilter/types';
 
+const { data: productsCatalog } = useProducts();
+const props = defineProps<{ content: PerPageContent }>();
+const useSelectionModeAlways = computed(() => props.content.settings?.selectionModeAlways ?? false);
+const layoutStyle = computed(() => {
+  const layout = props.content.layout ?? {};
+  return {
+    paddingTop: `${layout.paddingTop ?? 0}px`,
+    paddingBottom: `${layout.paddingBottom ?? 0}px`,
+    paddingLeft: `${layout.paddingLeft ?? 0}px`,
+    paddingRight: `${layout.paddingRight ?? 0}px`,
+  };
+});
 </script>

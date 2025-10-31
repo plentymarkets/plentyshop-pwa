@@ -1288,6 +1288,15 @@
             "content": {
               "fields": {
                 "perPage": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              },
+              "settings": {
+                "selectionModeAlways": true
               }
             }
           },
@@ -1301,6 +1310,15 @@
             "content": {
               "fields": {
                 "perPage": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              },
+              "settings": {
+                "selectionModeAlways": true
               }
             }
           }
