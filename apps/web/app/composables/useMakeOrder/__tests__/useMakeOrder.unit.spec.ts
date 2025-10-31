@@ -256,7 +256,7 @@ describe('useMakeOrder', () => {
       });
       expect(useHandleError).toHaveBeenCalledWith(
         new ApiError({
-          key: 'null',
+          key: '',
           code: '400',
           message: 'my prepayment error',
           cause: 'my prepayment error',
