@@ -62,6 +62,7 @@
     </div>
     <div
       v-else
+      data-testid="shipping-method-no-address-set"
       class="mt-4 bg-gray-200 shadow-md p-4 ring-1 ring-gray-300 text-gray-700 typography-text-sm md:typography-text-base rounded-md"
     >
       {{ t('shipping.noShippingMethodsNoAddress') }}

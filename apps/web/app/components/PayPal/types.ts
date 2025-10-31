@@ -4,7 +4,9 @@ import type { PayPalVisibilityLocations } from '~/composables';
 export type PaypalButtonPropsType = {
   type: string;
   location?: PayPalVisibilityLocations;
+  plentyOrderId?: number;
   disabled?: boolean;
+  currency?: string;
 };
 
 export type PaypalAPMPropsType = {

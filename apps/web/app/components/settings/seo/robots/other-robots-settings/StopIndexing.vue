@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('robotsStopIndexing');
+const { updateSetting, getSetting } = useSiteSettings('seoCategoryRobotsNoIndex');
 
 const robots = computed({
   get: () => getSetting(),

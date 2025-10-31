@@ -26,12 +26,14 @@ const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
 const { t } = useI18n();
 
-const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const currency = computed(
+  () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
+);
 const localePath = useLocalePath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
-  (event: 'on-approved'): void;
+  (event: 'on-approved' | 'on-payed'): void;
 }>();
 
 const props = defineProps<PaypalButtonPropsType>();
@@ -40,8 +42,9 @@ const currentInstance = getCurrentInstance();
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
+const TypeOrderAlreadyExisting = 'OrderAlreadyExisting';
 
-const isCommit = props.type === TypeCheckout;
+const isCommit = props.type === TypeCheckout || props.type === TypeOrderAlreadyExisting;
 const loadScript = computed(
   () => payPalVisibility.getVisibility(props.location) || payLaterVisibility.getVisibility(props.location),
 );
@@ -102,6 +105,24 @@ const onApprove = async (data: OnApproveData) => {
       emit('frontend:orderCreated', order);
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
     }
+  } else if (props.type === TypeOrderAlreadyExisting && props.plentyOrderId) {
+    if (!paypalOrder.value?.isAutocaptured) {
+      await captureOrder(data.orderID);
+    }
+    await createPlentyPaymentFromPayPalOrder(data.orderID, props.plentyOrderId);
+    emits('on-payed');
+  }
+};
+
+const getLabel = (type: string) => {
+  switch (type) {
+    case TypeCartPreview:
+    case TypeSingleItem:
+      return 'checkout';
+    case TypeOrderAlreadyExisting:
+      return 'pay';
+    default:
+      return 'buynow';
   }
 };
 
@@ -110,7 +131,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
     const button = paypalScript.value?.Buttons({
       style: {
         layout: 'vertical',
-        label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
+        label: getLabel(props.type),
         color: 'gold',
       },
       fundingSource: fundingSource,
@@ -132,14 +153,18 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
+        const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
         const order = await createTransaction({
-          type: isCommit ? 'basket' : 'express',
+          type: transactionType,
+          ...(props.type === TypeOrderAlreadyExisting && { plentyOrderId: props.plentyOrderId }),
         });
 
-        if (order?.id && (await useCartStockReservation().reserve())) {
-          return order.id;
+        if (order?.id && props.type !== TypeOrderAlreadyExisting) {
+          const reserved = await useCartStockReservation().reserve();
+          if (!reserved) return '';
         }
-        return '';
+
+        return order?.id ?? '';
       },
       async onApprove(data) {
         await onApprove(data);
