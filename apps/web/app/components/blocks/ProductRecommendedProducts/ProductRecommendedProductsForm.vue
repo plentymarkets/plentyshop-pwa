@@ -151,6 +151,8 @@
           name="itemId"
           type="text"
           :placeholder="getEditorTranslation('product-id-placeholder')"
+          :disabled="Object.keys(currentProduct).length > 0"
+          :wrapper-class="{ '!bg-disabled-100 !ring-disabled-300 !ring-1' : Object.keys(currentProduct).length > 0 }"
           @input="debouncedFn($event)"
         />
 
