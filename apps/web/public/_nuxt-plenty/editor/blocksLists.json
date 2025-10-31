@@ -1264,7 +1264,7 @@
                 "paddingRight": 0
               },
               "settings": {
-                "selectionModeAlways": true
+                "selectionModeAlways": false
               }
             }
           },
@@ -1286,7 +1286,7 @@
                 "paddingRight": 0
               },
               "settings": {
-                "selectionModeAlways": true
+                "selectionModeAlways": false
               }
             }
           }
