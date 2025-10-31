@@ -62,6 +62,7 @@ export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
 
 export const createDefaultFooterSettings = (): FooterSettings => {
   const { $i18n } = useNuxtApp();
+  const runtimeConfig = useRuntimeConfig();
 
   return {
     meta: {
@@ -85,7 +86,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
     },
     column3: { title: '', description: '' },
     column4: { title: '', description: '' },
-    footnote: `© PlentyONE GmbH ${new Date().getFullYear()}`,
+    footnote: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
     footnoteAlign: 'right',
     colors: {
       background: '#cfe4ec',
