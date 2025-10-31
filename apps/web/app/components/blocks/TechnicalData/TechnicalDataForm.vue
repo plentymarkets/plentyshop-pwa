@@ -39,7 +39,10 @@
       <div class="flex justify-between my-5">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
         <span>
-          <SfSwitch v-model="itemTextBlock.displayAsCollapsable" data-testid="technical-data-displayAsCollapsable-switch" />
+          <SfSwitch
+            v-model="itemTextBlock.displayAsCollapsable"
+            data-testid="technical-data-displayAsCollapsable-switch"
+          />
         </span>
       </div>
 
@@ -127,7 +130,7 @@ const layoutSettings = ref(false);
 watch(
   () => itemTextBlock.value.displayAsCollapsable,
   (newValue) => {
-    if(!newValue) itemTextBlock.value.initiallyCollapsed = false;
+    if (!newValue) itemTextBlock.value.initiallyCollapsed = false;
   },
 );
 </script>

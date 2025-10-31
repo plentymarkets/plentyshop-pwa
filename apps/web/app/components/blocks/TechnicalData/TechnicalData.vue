@@ -1,9 +1,11 @@
 <template>
   <div :style="inlineStyle" data-testid="technical-data-block">
     <div v-if="displayAsCollapsable">
-      <UiAccordionItem v-model="initiallyCollapsed"
+      <UiAccordionItem
+        v-model="initiallyCollapsed"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
-        data-testid="technical-data">
+        data-testid="technical-data"
+      >
         <template #summary>
           <h2 class="font-bold text-lg leading-6 md:text-2xl">
             {{ title }}
@@ -19,7 +21,6 @@
       </h2>
       <div v-if="text" class="no-preflight" v-html="text" />
     </div>
-
   </div>
 </template>
 

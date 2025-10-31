@@ -128,7 +128,7 @@ const layoutSettings = ref(false);
 watch(
   () => itemTextBlock.value.displayAsCollapsable,
   (newValue) => {
-    if(!newValue) itemTextBlock.value.initiallyCollapsed = false;
+    if (!newValue) itemTextBlock.value.initiallyCollapsed = false;
   },
 );
 </script>
