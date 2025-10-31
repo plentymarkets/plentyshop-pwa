@@ -49,6 +49,10 @@
             </SfInput>
           </label>
         </div>
+
+        <div class="p-2 mt-2 mb-2 bg-[#EFF4F1] border border-[#BBC6BE] text-[#151A16] rounded-md">
+          <span>{{ getEditorTranslation('legal-information-note') }}</span>
+        </div>
       </div>
     </UiAccordionItem>
     <UiAccordionItem
@@ -127,6 +131,17 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   const content = rawContent as Partial<ProductLegalInformationContent>;
+
+  if (!content.text) {
+    content.text = {
+      title: '',
+      linkText: '',
+    };
+  } else {
+    if (content.text.title === undefined) content.text.title = '';
+    if (content.text.linkText === undefined) content.text.linkText = '';
+  }
+
   if (!content.layout) {
     content.layout = {
       paddingTop: 0,
@@ -151,14 +166,16 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
     "title-label": "Title",
     "padding-label": "Padding",
     "layout-group-label": "Layout Settings",
-    "link-text-label": "Link Text"
+    "link-text-label": "Link Text",
+    "legal-information-note": "You can configure which legal information is displayed in the 'EU Responsible Person' and 'Manufacturer' tabs from the backend. You can find them under “Item Settings” > “Legal”."
   },
   "de": {
     "text-label": "Text",
     "title-label": "Titel",
     "padding-label": "Padding",
     "layout-group-label": "Layout Settings",
-    "link-text-label": "Link Text"
+    "link-text-label": "Link Text",
+    "legal-information-note": "Sie können unter „Artikeleinstellungen“ > „Rechtliches“ festlegen, welche rechtlichen Informationen in den Reitern „EU-Verantwortlicher“ und „Hersteller“ angezeigt werden."
   }
 }
 </i18n>

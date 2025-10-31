@@ -1,31 +1,6 @@
-
-
-
-<!-- <template>
-  <div class="p-4 flex">
-    <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
-      <span>{{ props.content.text.linkText }}</span>
-      <SfIconChevronRight />
-    </p>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { SfIconChevronRight } from '@storefront-ui/vue';
-import type { ProductLegalInformationProps } from './types';
-const props = defineProps<ProductLegalInformationProps>();
-
-const { openDrawer } = useProductLegalDetailsDrawer();
-</script> -->
-
-
 <template>
-  <div class="p-4 flex">
-    <p
-      class="font-bold leading-6 cursor-pointer"
-      data-testid="open-manufacturer-drawer"
-      @click="openDrawer(meta.uuid)"
-    >
+  <div class="p-4 flex" :style="productLegalInlineStyle">
+    <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer(meta.uuid)">
       <span>{{ props.content.text.linkText }}</span>
       <SfIconChevronRight />
     </p>
@@ -39,4 +14,14 @@ const props = defineProps<ProductLegalInformationProps>();
 const { meta } = props;
 
 const { openDrawer } = useProductLegalDetailsDrawer();
+
+const productLegalInlineStyle = computed(() => {
+  const layout = props.content.layout ?? {};
+  return {
+    paddingTop: `${layout.paddingTop ?? 0}px`,
+    paddingBottom: `${layout.paddingBottom ?? 0}px`,
+    paddingLeft: `${layout.paddingLeft ?? 0}px`,
+    paddingRight: `${layout.paddingRight ?? 0}px`,
+  };
+});
 </script>
