@@ -54,6 +54,7 @@ const blockTypeNames: Record<string, string> = {
   CustomerReview: 'Customer reviews',
   MultiGrid: 'Layout',
   Footer: 'Footer',
+  ItemText: 'Item Details',
 };
 
 const getBlockTypeName = (blockType: string) => {
