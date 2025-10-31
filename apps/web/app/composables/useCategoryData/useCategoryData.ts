@@ -14,15 +14,13 @@ export const useCategoryData = () => {
   const learnMoreUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#900';
   const learnMoreTextUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#800';
 
-  const categoryDataBlock = computed(
-    () => {
-      const block = findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent;
-      if (block?.image && typeof block.image.fillMode === 'undefined') {
-        block.image.fillMode = 'fill';
-      }
-      return block;
+  const categoryDataBlock = computed(() => {
+    const block = findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent;
+    if (block?.image && typeof block.image.fillMode === 'undefined') {
+      block.image.fillMode = 'fill';
     }
-  );
+    return block;
+  });
 
   const isBlank = (v: string | null | undefined): boolean => v == null || v.trim() === '';
 
