@@ -209,7 +209,6 @@ export default defineNuxtConfig({
         process.env.LOGO ||
         'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
-      shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.NAME || 'PlentyONE GmbH',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
