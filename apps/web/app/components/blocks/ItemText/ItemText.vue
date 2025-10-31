@@ -1,25 +1,24 @@
 <template>
   <div :style="inlineStyle" data-testid="item-text-block">
-    <UiAccordionItem
-      v-if="displayAsCollapsable"
-      v-model="initiallyCollapsed"
-      summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
-      data-testid="item-text"
-    >
-      <template #summary>
-        <h2 class="font-bold text-lg leading-6 md:text-2xl">
-          {{ title }}
-        </h2>
-      </template>
-      <div v-if="text" data-testid="item-text-innertext" class="no-preflight" v-html="text" />
-    </UiAccordionItem>
+    <div v-if="displayAsCollapsable">
+      <UiAccordionItem v-model="initiallyCollapsed"
+        summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
+        data-testid="item-text">
+        <template #summary>
+          <h2 class="font-bold text-lg leading-6 md:text-2xl">
+            {{ title }}
+          </h2>
+        </template>
+        <div v-if="text" data-testid="item-text-innertext" class="no-preflight" v-html="text" />
+      </UiAccordionItem>
+      <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
+    </div>
     <div v-else>
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
         {{ title }}
       </h2>
       <div v-if="text" class="no-preflight" v-html="text" />
     </div>
-    <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
   </div>
 </template>
 
@@ -28,13 +27,10 @@ import { productGetters } from '@plentymarkets/shop-api';
 import type { ItemTextProps } from './types';
 const props = defineProps<ItemTextProps>();
 const title = computed(() => props.content?.title);
-const initiallyCollapsed = computed(() => props.content?.initiallyCollapsed);
+const initiallyCollapsed = computed(() => !props.content?.initiallyCollapsed);
 const displayAsCollapsable = computed(() => props.content?.displayAsCollapsable);
 const { currentProduct } = useProducts();
-
-const text = computed(() => {
-  return productGetters.getDescription(currentProduct.value);
-});
+const text = computed(() => productGetters.getDescription(currentProduct.value));
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
   return {

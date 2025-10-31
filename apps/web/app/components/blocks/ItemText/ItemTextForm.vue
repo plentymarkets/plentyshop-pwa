@@ -124,6 +124,13 @@ const itemTextBlock = computed<ItemTextContent>(() => {
 
 const textSettings = ref(false);
 const layoutSettings = ref(false);
+
+watch(
+  () => itemTextBlock.value.displayAsCollapsable,
+  (newValue) => {
+    if(!newValue) itemTextBlock.value.initiallyCollapsed = false;
+  },
+);
 </script>
 
 <i18n lang="json">
