@@ -1484,7 +1484,7 @@
     "variations": [
       {
         "title": "ItemText",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/rich_text.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/ItemText.png",
         "template": {
           "en": {
             "name": "ItemText",
