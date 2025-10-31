@@ -70,7 +70,15 @@ import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 const emit = defineEmits(['confirmCancel']);
 
 const { t } = useI18n();
-const { config, loadConfig, getFraudId, getScript } = usePayPal();
+const {
+  config,
+  fraudId,
+  loadConfig,
+  getScript,
+  createTransaction,
+  createPlentyOrder,
+  createPlentyPaymentFromPayPalOrder,
+} = usePayPal();
 const { emit: plentyEmit } = usePlentyEvent();
 const localePath = useLocalePath();
 const { processingOrder } = useProcessingOrder();
@@ -94,7 +102,7 @@ const disableCloseButton = computed(() => processingOrder.value || loading.value
 
 const fetchDependencies = async () => {
   await loadConfig().then(() => (fraudNet.value.merchantId = config.value?.merchantId || null));
-  fraudNet.value.fraudId = await getFraudId();
+  fraudNet.value.fraudId = fraudId.value;
   await insertLegalText();
 };
 
@@ -119,7 +127,7 @@ const insertFraudNetScript = () => {
   scriptTag.textContent = JSON.stringify({
     f: fraudNet.value.fraudId,
     s: `${fraudNet.value.merchantId}_${fraudNet.value.pageId}`,
-    sandbox: config.value?.extra?.sandbox ?? true,
+    sandbox: config.value?.isSandbox ?? true,
   });
 
   document.body.appendChild(scriptTag);
@@ -144,7 +152,6 @@ const validateAndSubmitForm = async () => {
 
 const createPayPalPayUponInvoiceOrder = async () => {
   loading.value = true;
-  const { createTransaction, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
 
   try {
     const orderData = {

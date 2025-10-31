@@ -1,11 +1,7 @@
 import { type PayPalNamespace, type FUNDING_SOURCE, loadScript as loadPayPalScript } from '@paypal/paypal-js';
-import type {
-  ApiError,
-  PayPalConfigResponse,
-  PayPalCreateOrder,
-  PayPalCreateOrderRequest,
-} from '@plentymarkets/shop-api';
+import type { ApiError, PayPalCreateOrder, PayPalCreateOrderRequest, PayPalSettings } from '@plentymarkets/shop-api';
 import { paypalGetters } from '@plentymarkets/shop-api';
+import { PayPalPayLaterKey, PayPalPaymentKey } from './types';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
@@ -21,14 +17,16 @@ const configPromise: Ref<Promise<boolean> | null> = ref(null);
  * ```
  */
 export const usePayPal = () => {
+  const payPalVisibility = usePayPalVisibility(PayPalPaymentKey);
+  const payLaterVisibility = usePayPalVisibility(PayPalPayLaterKey);
+
   const state = useState('usePayPal', () => ({
     loading: false,
     paypalScript: null as PayPalScript | null,
     loadingScripts: {} as PayPalLoadScript,
     order: null as PayPalCreateOrder | null,
-    config: null as PayPalConfigResponse | null,
+    config: null as PayPalSettings | null,
     loadedConfig: false,
-    isAvailable: false,
     isReady: false,
     activatedAPMs: '',
     fraudId: null as string | null,
@@ -50,11 +48,13 @@ export const usePayPal = () => {
 
     configPromise.value = (async () => {
       try {
-        const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
+        const { data } = await useSdk().plentysystems.getPayPalSettings();
         state.value.loadedConfig = true;
         if (data) {
           state.value.config = data ?? null;
-          state.value.isAvailable = !!state.value.config;
+          state.value.fraudId = data.fraudId ?? null;
+          payPalVisibility.setState(data.expressSmartButtonSettings);
+          payLaterVisibility.setState(data.payLaterSmartButtonSettings);
           return true;
         }
         return false;
@@ -87,6 +87,11 @@ export const usePayPal = () => {
       });
     }
   };
+
+  const isAvailable = (key: PayPalVisibilityLocations) =>
+    computed(() => {
+      return payPalVisibility.getVisibility(key) || payLaterVisibility.getVisibility(key);
+    });
 
   /**
    * @description Function for get the PayPal sdk script.
@@ -341,6 +346,7 @@ export const usePayPal = () => {
 
   return {
     state,
+    isAvailable,
     createPlentyOrder,
     createTransaction,
     loadConfig,
@@ -352,6 +358,8 @@ export const usePayPal = () => {
     getFraudId,
     createPlentyPaymentFromPayPalOrder,
     setAddressesFromPayPal,
+    payPalVisibility,
+    payLaterVisibility,
     ...toRefs(state.value),
   };
 };

@@ -40,12 +40,16 @@
               </UiButton>
             </div>
             <div v-else-if="payPalAvailable">
-              <PayPalExpressButton
-                v-if="changedTotal"
-                :disabled="interactionDisabled"
-                type="Checkout"
-                @validation-callback="payPalValidateCallback"
-              />
+              <template v-if="changedTotal">
+                <PayPalExpressButton
+                  v-if="changedTotal"
+                  :disabled="interactionDisabled"
+                  type="Checkout"
+                  location="checkoutPage"
+                  @validation-callback="payPalValidateCallback"
+                />
+                <PayPalPayLaterBanner placement="payment" location="checkoutPage" :amount="initialTotal" />
+              </template>
 
               <UiButton
                 v-else
@@ -117,7 +121,7 @@ const {
   setAddressesFromPayPal,
 } = usePayPal();
 const { processingOrder } = useProcessingOrder();
-const { setInitialCartTotal, changedTotal } = useCartTotalChange();
+const { setInitialCartTotal, changedTotal, initialTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
 const { unreserve, loading: unreserveLoading } = useCartStockReservation();

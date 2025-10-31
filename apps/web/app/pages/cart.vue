@@ -21,8 +21,12 @@
             {{ t('goToCheckout') }}
           </UiButton>
           <client-only>
-            <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
-            <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
+            <PayPalExpressButton :disabled="loading" location="cartPage" class="mt-4" type="CartPreview" />
+            <PayPalPayLaterBanner
+              placement="cart"
+              location="cartPage"
+              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
+            />
           </client-only>
         </OrderSummary>
       </div>

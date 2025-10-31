@@ -1,6 +1,8 @@
 import type { PayPalNamespace } from '@paypal/paypal-js';
 
+export type PayPalVisibilityLocations = 'itemPage' | 'quickCheckout' | 'cartPage' | 'guestLoginPage' | 'checkoutPage';
 export const PayPalPaymentKey = 'PAYPAL';
+export const PayPalPayLaterKey = 'PAYPAL_PAY_LATER';
 export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';
 
 export const PayPalGooglePayKey = 'PAYPAL_GOOGLE_PAY';
