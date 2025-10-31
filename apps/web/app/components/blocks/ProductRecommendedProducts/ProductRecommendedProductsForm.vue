@@ -281,7 +281,7 @@ const crossSellingModel = computed({
 
 const categoryOptions = computed(() => categoriesData.value.entries.filter((cat) => cat.right !== 'customer'));
 
-const firstCategoryId = (categoryTree.value?.[0]?.id || '').toString();
+const firstCategoryId = (categoryTree.value?.find((category) => category.type === 'item')?.id || '').toString();
 
 const categoryIdModel = computed({
   get() {

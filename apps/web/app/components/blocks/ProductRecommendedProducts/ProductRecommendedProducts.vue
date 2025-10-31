@@ -24,7 +24,7 @@ const itemId = computed(() =>
     : props.content.source.itemId,
 );
 
-const firstCategoryId = categoryTree.value?.[0]?.id;
+const firstCategoryId = categoryTree.value?.find((category) => category.type === 'item')?.id || '';
 
 const shouldRenderAfterUpdate = ref(false);
 
