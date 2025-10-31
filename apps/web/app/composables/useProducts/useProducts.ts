@@ -1,4 +1,4 @@
-import type { FacetSearchCriteria, Product, Facet } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 
@@ -34,6 +34,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
    * ```
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
+    const { setupBlocks } = useCategoryTemplate();
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
@@ -49,6 +50,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
       handlePreviewProducts(state);
+
+      await setupBlocks((state.value.data.blocks || []) as Block[], 'category');
     }
 
     state.value.loading = false;

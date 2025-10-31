@@ -20,4 +20,5 @@ export type EditablePageProps = {
   identifier: string | number;
   type: string;
   hasEnabledActions?: boolean;
+  preventBlocksRequest?: boolean;
 };
