@@ -63,12 +63,12 @@ describe('DryRunManager', () => {
     });
 
     it('should generate summary for create operations', () => {
-      dryRunManager.logOperation('create', '/project/apps/web/components/Test.vue', 'content');
+      dryRunManager.logOperation('create', '/project/apps/web/app/components/Test.vue', 'content');
 
       const summary = dryRunManager.getSummary();
       expect(summary).toContain('📋 Planned Operations:');
       expect(summary).toContain('✅ Files to create:');
-      expect(summary).toContain('apps/web/components/Test.vue');
+      expect(summary).toContain('apps/web/app/components/Test.vue');
     });
 
     it('should detect conflicts for existing files', () => {

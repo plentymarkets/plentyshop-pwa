@@ -78,7 +78,7 @@ npm run lint:fix     # Auto-fix linting issues
 
 - `apps/web/nuxt.config.ts` - Main Nuxt configuration
 - `apps/server/middleware.config.ts` - Alokai middleware setup
-- `apps/web/composables/` - Business logic and API interactions
+- `apps/web/app/composables/` - Business logic and API interactions
 - `turbo.json` - Monorepo task pipeline configuration
 
 ## Code Generation & CLI Tools
@@ -96,8 +96,8 @@ The project includes `@plentymarkets/shop-cli` for automated code generation. **
 
 **Always use generators for:**
 
-- Creating new Vue components in `apps/web/components/`
-- Creating new composables in `apps/web/composables/`
+- Creating new Vue components in `apps/web/app/components/`
+- Creating new composables in `apps/web/app/composables/`
 - Any standardized file structures that follow project patterns
 
 **Generator workflow:**
