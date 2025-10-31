@@ -15,7 +15,10 @@
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
-        <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
+        <div v-if="config.enableProductEditing" class="flex items-center text-white">{{ title }}</div>
+
+        <div v-else class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
+
         <UiButton
           square
           variant="tertiary"
@@ -82,6 +85,8 @@ const tabs = [
   { label: t('manufacturer.manufacturerTabName'), component: ManufacturerInformation, disabled: false },
 ];
 
+const config = useRuntimeConfig().public;
+
 const activeTabIndex = ref(0);
 
 const isActiveTab = (index: number) => activeTabIndex.value === index;
@@ -90,6 +95,17 @@ const setActiveTab = (index: number) => {
 };
 
 const productLegalDrawerRef = ref();
-const { open } = useProductLegalDetailsDrawer();
+const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
+
+const { data } = useCategoryTemplate();
+
+const productLegalBlock = computed(() => {
+  if (!openedBlockUuid.value) return null;
+  return data.value
+    .flatMap((block) => (Array.isArray(block.content) ? block.content : [block]))
+    .find((block) => block.meta?.uuid === openedBlockUuid.value);
+});
+
+const title = computed(() => productLegalBlock.value?.content?.text?.title || '');
 </script>
