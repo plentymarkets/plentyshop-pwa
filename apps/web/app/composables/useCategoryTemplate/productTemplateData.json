@@ -56,6 +56,21 @@
         }
       },
       {
+        "name": "ProductLegalInformation",
+        "type": "content",
+        "meta": {
+          "uuid": "c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 0,
+        "content": {
+          "text": {
+            "title": "Item legal details",
+            "linkText": "EU Responsible Person - click for details"
+          }
+        }
+      },
+      {
         "name": "PriceCard",
         "type": "content",
         "meta": {
@@ -109,21 +124,6 @@
             "paddingBottom": 0,
             "paddingRight": 0,
             "paddingLeft": 0
-          }
-        }
-      },
-      {
-        "name": "ProductLegalInformation",
-        "type": "content",
-        "meta": {
-          "uuid": "c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l",
-          "isGlobalTemplate": false
-        },
-        "parent_slot": 0,
-        "content": {
-          "text": {
-            "title": "Item legal details",
-            "linkText": "EU Responsible Person - click for details"
           }
         }
       }
