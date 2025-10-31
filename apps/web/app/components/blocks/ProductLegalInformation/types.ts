@@ -9,7 +9,6 @@ export type ProductLegalInformationProps = {
   };
 };
 
-
 export type ProductLegalInformationContent = {
   text: {
     title: string;
