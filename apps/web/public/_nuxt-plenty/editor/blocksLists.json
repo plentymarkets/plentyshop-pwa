@@ -1475,7 +1475,7 @@
     ]
   },
   "item-text": {
-    "category": "item-text",
+    "category": "Item",
     "accessControl": [
       "product"
     ],
@@ -1516,6 +1516,62 @@
             "parent_slot": 0,
             "content": {
               "title": "Item details",
+              "displayAsCollapsable": true,
+              "initiallyCollapsed": true,
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "technical-data": {
+    "category": "Item",
+    "accessControl": [
+      "product"
+    ],
+    "title": "Technical Data",
+    "blockName": "TechnicalData",
+    "variations": [
+      {
+        "title": "TechnicalData",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Technical_data.svg",
+        "template": {
+          "en": {
+            "name": "TechnicalData",
+            "type": "content",
+            "meta": {
+              "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c523",
+              "isGlobalTemplate": false
+            },
+            "parent_slot": 0,
+            "content": {
+              "title": "Technical Data",
+              "displayAsCollapsable": true,
+              "initiallyCollapsed": true,
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
+          },
+          "de": {
+            "name": "TechnicalData",
+            "type": "content",
+            "meta": {
+              "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c523",
+              "isGlobalTemplate": false
+            },
+            "parent_slot": 0,
+            "content": {
+              "title": "Technical Data",
               "displayAsCollapsable": true,
               "initiallyCollapsed": true,
               "layout": {
