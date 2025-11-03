@@ -13,7 +13,7 @@ export function extractFolders(items: StorageObject[]): string[] {
   return Array.from(folderSet);
 }
 
-export function createPlaceholderObject(key: string, size: number, uploadingClass: string): StorageObject {
+export const createPlaceholderObject = (key: string, size: number, uploadingClass: string): StorageObject => {
   return {
     key,
     eTag: '',
@@ -23,16 +23,35 @@ export function createPlaceholderObject(key: string, size: number, uploadingClas
     publicUrl: '',
     previewUrl: '',
   };
-}
+};
 
-export function removeByKeyFromArray(arr: StorageObject[], key: string): StorageObject[] {
+export const removeByKeyFromArray = (arr: StorageObject[], key: string): StorageObject[] => {
   return arr.filter((item) => item.key !== key);
-}
+};
 
-export function replaceByKeyInArray(arr: StorageObject[], key: string, item: StorageObject): StorageObject[] {
+export const replaceByKeyInArray = (arr: StorageObject[], key: string, item: StorageObject): StorageObject[] => {
   const idx = arr.findIndex((el) => el.key === key);
   if (idx < 0) return [item, ...arr];
   const copy = arr.slice();
   copy.splice(idx, 1, item);
   return copy;
-}
+};
+
+export const buildItemHelper = (
+  api: Partial<StorageObject>,
+  file: File,
+  registerBlobUrl: (url: string) => void,
+): StorageObject => {
+  const objectUrl = api.publicUrl ? undefined : URL.createObjectURL(file);
+  if (objectUrl) registerBlobUrl(objectUrl);
+
+  return {
+    key: api.key ?? file.name,
+    eTag: api.eTag ?? '',
+    size: api.size ?? String(file.size),
+    lastModified: api.lastModified ?? new Date().toISOString(),
+    storageClass: api.storageClass ?? '',
+    publicUrl: api.publicUrl ?? (objectUrl as string),
+    previewUrl: api.publicUrl ? undefined : (objectUrl as string),
+  };
+};

@@ -6,6 +6,7 @@ import {
   createPlaceholderObject,
   removeByKeyFromArray,
   replaceByKeyInArray,
+  buildItemHelper,
 } from './helpers/itemTableHelpers';
 export const UPLOADING_CLASS = '__uploading__';
 
@@ -97,18 +98,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   };
 
   const buildItemFrom = (api: Partial<StorageObject>, file: File): StorageObject => {
-    const objectUrl = api.publicUrl ? undefined : URL.createObjectURL(file);
-    if (objectUrl) registerBlobUrl(objectUrl);
-
-    return {
-      key: api.key ?? file.name,
-      eTag: api.eTag ?? '',
-      size: api.size ?? String(file.size),
-      lastModified: api.lastModified ?? new Date().toISOString(),
-      storageClass: api.storageClass ?? '',
-      publicUrl: api.publicUrl ?? (objectUrl as string),
-      previewUrl: api.publicUrl ? undefined : (objectUrl as string),
-    };
+    return buildItemHelper(api, file, registerBlobUrl);
   };
 
   const uploadStorageItem = async (file: File, filePath = ''): Promise<StorageObject | null> => {

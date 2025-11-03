@@ -1,6 +1,11 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { StorageObject } from '@plentymarkets/shop-api';
-import { extractFolders, createPlaceholderObject, removeByKeyFromArray } from '../helpers/itemTableHelpers';
+import {
+  extractFolders,
+  createPlaceholderObject,
+  removeByKeyFromArray,
+  buildItemHelper,
+} from '../helpers/itemTableHelpers';
 const { useSdk } = vi.hoisted(() => {
   return {
     useSdk: vi.fn().mockReturnValue({
@@ -133,5 +138,21 @@ describe('useItemsTable', () => {
       message: 'Only SVG, PNG, JPG, JPEG, WEBP, AVIF, ICO files are allowed.',
     });
     expect(result).toBeNull();
+  });
+
+  it('should build a StorageObject and register a blob URL if needed', () => {
+    const registerBlobUrl = vi.fn();
+    const api = { key: 'api-key', size: '123' };
+    const file = new File(['dummy'], 'image.png', { type: 'image/png' });
+
+    const objectUrl = 'blob:mock-url';
+    const createObjectURLSpy = vi.spyOn(URL, 'createObjectURL').mockReturnValue(objectUrl);
+
+    const result = buildItemHelper(api, file, registerBlobUrl);
+
+    expect(result.publicUrl).toBe(objectUrl);
+    expect(registerBlobUrl).toHaveBeenCalledWith(objectUrl);
+
+    createObjectURLSpy.mockRestore();
   });
 });
