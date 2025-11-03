@@ -767,25 +767,27 @@
                 "meta": { "uuid": "78787878-7878-4787-8787-787878787878" },
                 "parent_slot": 0,
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "Headphones",
-                  "imageAlignment": "right",
-                  "fillMode": "fill",
-                  "aspectRatio": "16 / 9"
-                },
-                "text": {
-                  "textOverlay": "",
-                  "textOverlayColor": "#333333",
-                  "textOverlayAlignY": "center",
-                  "textOverlayAlignX": "center"
-                },
-                "button": {
-                  "label": "",
-                  "link": "",
-                  "variant": "primary"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "Alt-Text",
+                    "imageAlignment": "right",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
+                  },
+                  "text": {
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "",
+                    "link": "",
+                    "variant": "primary"
+                  }
                 }
               },
               {
