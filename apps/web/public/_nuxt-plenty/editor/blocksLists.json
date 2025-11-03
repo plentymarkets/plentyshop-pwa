@@ -1046,9 +1046,7 @@
   },
   "item-category": {
     "category": "item-category",
-    "accessControl": [
-      "productCategory"
-    ],
+    "accessControl": ["productCategory"],
     "title": "Item Category",
     "blockName": "ItemGrid",
     "variations": [
@@ -1078,18 +1076,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
@@ -1120,18 +1108,8 @@
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": [
-                "manufacturer",
-                "title",
-                "rating",
-                "previewText",
-                "shippingBadge",
-                "price",
-                "addToCart"
-              ],
-              "fieldsDisabled": [
-                "title"
-              ],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
               "showSecondImageOnHover": false,
@@ -1252,7 +1230,16 @@
                 "availability": true,
                 "customizedFilters": true
               },
-              "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+              "filtersOrder": [
+                "category",
+                "sortBy",
+                "perPage",
+                "itemRating",
+                "manufacturer",
+                "price",
+                "availability",
+                "customizedFilters"
+              ],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
               "numberOfFiltersToShowInitially": 0
@@ -1276,10 +1263,69 @@
                 "availability": true,
                 "customizedFilters": true
               },
-              "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
+              "filtersOrder": [
+                "category",
+                "sortBy",
+                "perPage",
+                "itemRating",
+                "manufacturer",
+                "price",
+                "availability",
+                "customizedFilters"
+              ],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
               "numberOfFiltersToShowInitially": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Category Sort",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Sort_by.png",
+        "template": {
+          "en": {
+            "name": "Sort",
+            "type": "content",
+            "meta": {
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb948",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "sortBy": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              },
+              "settings": {
+                "selectionModeCompact": false
+              }
+            }
+          },
+          "de": {
+            "name": "Sort",
+            "type": "content",
+            "meta": {
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb948",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "sortBy": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              },
+              "settings": {
+                "selectionModeCompact": false
+              }
             }
           }
         }
