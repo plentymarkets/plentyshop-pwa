@@ -123,10 +123,12 @@
     },
     "parent_slot": 0,
     "content": {
-      "title":"Item details",
-      "displayAsCollapsable": true,
-      "initiallyCollapsed": true,
+      "text" : {
+        "title":"Item details"
+      },
       "layout": {
+        "displayAsCollapsable": true,
+        "initiallyCollapsed": true,
         "paddingTop": 0,
         "paddingBottom": 0,
         "paddingLeft": 0,
@@ -143,10 +145,12 @@
     },
     "parent_slot": 0,
     "content": {
-      "title":"Technical Data",
-      "displayAsCollapsable": true,
-      "initiallyCollapsed": true,
+      "text" : {
+        "title":"Technical Data"
+      },
       "layout": {
+        "displayAsCollapsable": true,
+        "initiallyCollapsed": true,
         "paddingTop": 0,
         "paddingBottom": 0,
         "paddingLeft": 0,
