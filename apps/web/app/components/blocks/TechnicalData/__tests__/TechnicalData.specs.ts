@@ -8,7 +8,8 @@ describe('TechnicalData.vue', () => {
     const wrapper = mount(TechnicalData, {
       props: { ...TechnicalDataMock },
     });
-    const isOpen = TechnicalDataMock.content?.displayAsCollapsable && TechnicalDataMock.content?.initiallyCollapsed;
+    const isOpen =
+      TechnicalDataMock.content?.layout.displayAsCollapsable && TechnicalDataMock.content?.layout.initiallyCollapsed;
     const technicalData = wrapper.find('[data-testid="technical-data-innertext"]');
 
     expect(technicalData.exists()).toBe(isOpen);

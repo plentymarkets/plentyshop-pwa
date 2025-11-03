@@ -8,7 +8,7 @@ describe('ItemText.vue', () => {
     const wrapper = mount(ItemText, {
       props: { ...ItemTextMock },
     });
-    const isOpen = ItemTextMock.content?.displayAsCollapsable && ItemTextMock.content?.initiallyCollapsed;
+    const isOpen = ItemTextMock.content.layout.displayAsCollapsable && ItemTextMock.content.layout.initiallyCollapsed;
     const itemText = wrapper.find('[data-testid="item-text-innertext"]');
 
     expect(itemText.exists()).toBe(isOpen);

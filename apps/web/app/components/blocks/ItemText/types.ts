@@ -1,7 +1,7 @@
 export type ItemTextProps = {
   name?: string;
   type?: string;
-  content?: ItemTextContent;
+  content: ItemTextContent;
   configuration?: object;
   index?: number;
   meta: {
@@ -10,10 +10,12 @@ export type ItemTextProps = {
 };
 
 export type ItemTextContent = {
-  title: string;
-  displayAsCollapsable: boolean;
-  initiallyCollapsed: boolean;
+  text: {
+    title: string;
+  };
   layout: {
+    displayAsCollapsable: boolean;
+    initiallyCollapsed: boolean;
     paddingTop?: number;
     paddingBottom?: number;
     paddingLeft?: number;

@@ -1,7 +1,7 @@
 export type TechnicalDataProps = {
   name?: string;
   type?: string;
-  content?: TechnicalDataContent;
+  content: TechnicalDataContent;
   configuration?: object;
   index?: number;
   meta: {
@@ -10,10 +10,12 @@ export type TechnicalDataProps = {
 };
 
 export type TechnicalDataContent = {
-  title: string;
-  displayAsCollapsable: boolean;
-  initiallyCollapsed: boolean;
+  text: {
+    title: string;
+  };
   layout: {
+    displayAsCollapsable: boolean;
+    initiallyCollapsed: boolean;
     paddingTop?: number;
     paddingBottom?: number;
     paddingLeft?: number;

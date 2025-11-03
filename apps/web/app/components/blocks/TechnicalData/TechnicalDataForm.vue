@@ -15,10 +15,10 @@
           <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="itemTextBlock.title" type="text" data-testid="input-main-title">
+          <SfInput v-model="itemTextBlock.text.title" type="text" data-testid="input-main-title">
             <template #suffix>
               <label for="text-title" class="rounded-lg cursor-pointer">
-                <input id="text-title" v-model="itemTextBlock.title" type="text" class="invisible w-8" />
+                <input id="text-title" v-model="itemTextBlock.text.title" type="text" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -40,7 +40,7 @@
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
         <span>
           <SfSwitch
-            v-model="itemTextBlock.displayAsCollapsable"
+            v-model="itemTextBlock.layout.displayAsCollapsable"
             data-testid="technical-data-displayAsCollapsable-switch"
           />
         </span>
@@ -49,7 +49,10 @@
       <div class="flex justify-between">
         <span>{{ getEditorTranslation('initially-collapsed') }}</span>
         <span>
-          <SfSwitch v-model="itemTextBlock.initiallyCollapsed" data-testid="technical-data-initiallyCollapsed-switch" />
+          <SfSwitch
+            v-model="itemTextBlock.layout.initiallyCollapsed"
+            data-testid="technical-data-initiallyCollapsed-switch"
+          />
         </span>
       </div>
 
@@ -121,16 +124,18 @@ const props = defineProps<TechnicalDataFormProps>();
 const itemTextBlock = computed<TechnicalDataContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
   const content = rawContent as Partial<TechnicalDataContent>;
-  if (!content.title) content.title = '';
+  if (!content.text) {
+    content.text = { title: '' };
+  }
   return content as TechnicalDataContent;
 });
 
 const textSettings = ref(false);
 const layoutSettings = ref(false);
 watch(
-  () => itemTextBlock.value.displayAsCollapsable,
+  () => itemTextBlock.value.layout.displayAsCollapsable,
   (newValue) => {
-    if (!newValue) itemTextBlock.value.initiallyCollapsed = false;
+    if (!newValue) itemTextBlock.value.layout.initiallyCollapsed = false;
   },
 );
 </script>

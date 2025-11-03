@@ -7,10 +7,12 @@ export const TechnicalDataMock: TechnicalDataProps = {
     uuid: 'b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c522',
   },
   content: {
-    title: 'Technical Data',
-    displayAsCollapsable: true,
-    initiallyCollapsed: true,
+    text: {
+      title: 'Technical Data',
+    },
     layout: {
+      displayAsCollapsable: true,
+      initiallyCollapsed: true,
       paddingTop: 10,
       paddingBottom: 0,
       paddingLeft: 0,

@@ -8,7 +8,7 @@
       >
         <template #summary>
           <h2 class="font-bold text-lg leading-6 md:text-2xl">
-            {{ title }}
+            {{ content.text.title }}
           </h2>
         </template>
         <div v-if="text" data-testid="item-text-innertext" class="no-preflight" v-html="text" />
@@ -17,7 +17,7 @@
     </div>
     <div v-else>
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
-        {{ title }}
+        {{ content.text.title }}
       </h2>
       <div v-if="text" class="no-preflight" v-html="text" />
     </div>
@@ -28,10 +28,10 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import type { ItemTextProps } from './types';
 const props = defineProps<ItemTextProps>();
-const title = computed(() => props.content?.title);
-const initiallyCollapsed = computed(() => !props.content?.initiallyCollapsed);
-const displayAsCollapsable = computed(() => props.content?.displayAsCollapsable);
+const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
+const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
+const content = computed(() => props.content);
 const text = computed(() => productGetters.getDescription(currentProduct.value));
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};

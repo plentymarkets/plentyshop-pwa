@@ -7,10 +7,12 @@ export const ItemTextMock: ItemTextProps = {
     uuid: 'b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c522',
   },
   content: {
-    title: 'Item details',
-    displayAsCollapsable: true,
-    initiallyCollapsed: true,
+    text: {
+      title: 'Item details',
+    },
     layout: {
+      displayAsCollapsable: true,
+      initiallyCollapsed: true,
       paddingTop: 10,
       paddingBottom: 0,
       paddingLeft: 0,

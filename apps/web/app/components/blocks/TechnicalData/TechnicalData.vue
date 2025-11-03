@@ -8,7 +8,7 @@
       >
         <template #summary>
           <h2 class="font-bold text-lg leading-6 md:text-2xl">
-            {{ title }}
+            {{ content.text.title }}
           </h2>
         </template>
         <div v-if="text" data-testid="technical-data-innertext" class="no-preflight" v-html="text" />
@@ -17,7 +17,7 @@
     </div>
     <div v-else>
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
-        {{ title }}
+        {{ content.text.title }}
       </h2>
       <div v-if="text" class="no-preflight" v-html="text" />
     </div>
@@ -28,9 +28,9 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import type { TechnicalDataProps } from './types';
 const props = defineProps<TechnicalDataProps>();
-const title = computed(() => props.content?.title);
-const initiallyCollapsed = computed(() => !props.content?.initiallyCollapsed);
-const displayAsCollapsable = computed(() => props.content?.displayAsCollapsable);
+const content = computed(() => props.content);
+const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
+const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
 const text = computed(() => productGetters.getTechnicalData(currentProduct.value));
 
