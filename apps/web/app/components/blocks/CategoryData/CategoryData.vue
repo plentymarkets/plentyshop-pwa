@@ -2,7 +2,7 @@
   <div :style="inlineStyle" data-testid="category-data">
     <template v-if="props.content.displayCategoryImage === 'off'">
       <div
-        v-if="disableActions || (!disableActions && !showNoTextMessage)"
+        v-if="shouldShowTextBlock"
         data-testid="text-card"
         :class="['w-full']"
         :style="{
@@ -37,7 +37,7 @@
         />
 
         <div
-          v-if="disableActions || (!disableActions && !showNoTextMessage)"
+          v-if="shouldShowTextBlock"
           :class="[
             'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
             { 'md:p-10': props.content.text.bgColor },
@@ -97,6 +97,7 @@ const enabledText = computed(
     (props.content.fields.shortDescription && details.value.shortDescription),
 );
 const showNoTextMessage = computed(() => !enabledText.value);
+const shouldShowTextBlock = computed(() => disableActions.value || (!disableActions.value && !showNoTextMessage.value));
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
 
