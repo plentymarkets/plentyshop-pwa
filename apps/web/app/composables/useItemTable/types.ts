@@ -18,6 +18,7 @@ export interface UseItemTableTemplate {
   getStorageMetadata: (key: string) => Promise<StorageMetadataData>;
   folders: Readonly<Ref<string[]>>;
   revokeAllBlobUrls: () => void;
+  registerBlobUrl: (url: string) => void;
 }
 
 export type UseItemTableReturn = () => UseItemTableTemplate;
