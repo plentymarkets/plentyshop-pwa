@@ -14,7 +14,6 @@
       @start="handleDragStart"
       @end="handleDragEnd"
     >
-
       <template #item="{ element: block, index }">
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
