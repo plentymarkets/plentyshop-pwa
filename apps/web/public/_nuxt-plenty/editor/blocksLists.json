@@ -1031,7 +1031,11 @@
                 "subtitle": "Untertitel",
                 "htmlDescription": "Text mit HTML-Formatierung"
               },
-              "categoryId": "49"
+              "source": {
+                "type": "category",
+                "itemId": "",
+                "categoryId": ""
+              }
             }
           }
         }
