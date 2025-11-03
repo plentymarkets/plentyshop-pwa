@@ -103,6 +103,10 @@ if (Object.keys(product.value).length === 0) {
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
 
+onBeforeRouteLeave(() => {
+  setCurrentProduct({} as Product);
+});
+
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
