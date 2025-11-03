@@ -14,6 +14,7 @@
       @start="handleDragStart"
       @end="handleDragEnd"
     >
+
       <template #item="{ element: block, index }">
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
@@ -52,7 +53,7 @@ const props = withDefaults(defineProps<EditablePageProps>(), {
   preventBlocksRequest: false,
 });
 
-const { data, getBlocksServer, cleanData } = useCategoryTemplate();
+const { data, getBlocksServer, cleanData } = useCategoryTemplate(props.identifier.toString(), props.type.toString());
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(

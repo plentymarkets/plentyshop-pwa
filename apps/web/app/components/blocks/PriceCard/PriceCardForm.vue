@@ -192,7 +192,8 @@ import dragIcon from 'assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 

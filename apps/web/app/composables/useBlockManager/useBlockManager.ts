@@ -34,7 +34,10 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data, cleanData, updateBlocks } = useCategoryTemplate();
+
+  const route = useRoute();
+  const { data, cleanData, updateBlocks } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+
   const { isEditingEnabled } = useEditor();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();

@@ -139,7 +139,8 @@ import {
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const { blockUuid } = useSiteConfiguration();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());

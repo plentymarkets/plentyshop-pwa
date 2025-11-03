@@ -23,8 +23,8 @@ const useProductTemplateData = () => productTemplateData as Block[];
 
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
-export const useCategoryTemplate: UseCategoryTemplateReturn = (blocks?: string) => {
-  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate${blocks ? `-${blocks}` : ''}`, () => ({
+export const useCategoryTemplate: UseCategoryTemplateReturn = (identifier: string = 'unknown', type: string = 'unknown', blocks: string = 'all') => {
+  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${identifier}-${type}-${blocks}`, () => ({
     data: [],
     cleanData: [],
     categoryTemplateData: null,

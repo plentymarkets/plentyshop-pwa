@@ -34,7 +34,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
    * ```
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
-    const { setupBlocks } = useCategoryTemplate();
+    const route = useRoute();
+    const { setupBlocks } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
