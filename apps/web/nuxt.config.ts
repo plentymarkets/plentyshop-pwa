@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: [
+        'cookie',
         '@intlify/core-base',
         '@intlify/shared',
         '@paypal/paypal-js',
