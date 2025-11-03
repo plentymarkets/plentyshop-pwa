@@ -5,7 +5,7 @@
     </div>
     <label>
       <SfInput
-        v-model="googleAnalyticsTrakingId"
+        v-model="googleAnalyticsTrackingId"
         type="text"
         data-testid="google-analytics-tracking-id"
         :placeholder="getEditorTranslation('placeholder')"
@@ -16,9 +16,9 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('googleAnalyticsTrakingId');
+const { updateSetting, getSetting } = useSiteSettings('googleAnalyticsTrackingId');
 
-const googleAnalyticsTrakingId = computed({
+const googleAnalyticsTrackingId = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
