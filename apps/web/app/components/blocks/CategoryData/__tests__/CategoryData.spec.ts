@@ -12,7 +12,6 @@ vi.mock('@plentymarkets/shop-api', () => {
       getCategoryDescription1: (category: CategoryDetails) => category?.description ?? '',
       getCategoryDescription2: (category: CategoryDetails) => category?.description2 ?? '',
       getCategoryShortDescription: (category: CategoryDetails) => category?.shortDescription ?? '',
-      getCategoryDetails: (category: CategoryDetails) => category,
     },
   };
 });
@@ -58,11 +57,9 @@ describe('CategoryData', () => {
   });
 
   mockNuxtImport('useProducts', () => {
-    return () => ({
-      data: computed(() => ({
-        category: { ...CategoryMock.details, name: 'Test Category' },
-      })),
-    });
+    return () => {
+      return { data: computed(() => ({ category: CategoryMock.details })) };
+    };
   });
 
   it('should render category name', () => {
