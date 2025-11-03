@@ -2,7 +2,7 @@
   <div :style="inlineStyle" data-testid="category-data">
     <template v-if="props.content.displayCategoryImage === 'off'">
       <div
-        v-if="disableActions || !disableActions && !showNoTextMessage"
+        v-if="disableActions || (!disableActions && !showNoTextMessage)"
         data-testid="text-card"
         :class="['w-full']"
         :style="{
@@ -37,7 +37,7 @@
         />
 
         <div
-          v-if="disableActions || !disableActions && !showNoTextMessage"
+          v-if="disableActions || (!disableActions && !showNoTextMessage)"
           :class="[
             'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
             { 'md:p-10': props.content.text.bgColor },
@@ -91,10 +91,10 @@ const { disableActions } = useEditor();
 const category = computed(() => productsCatalog.value.category || ({} as Category));
 const enabledText = computed(
   () =>
-    props.content.fields.name && details.value.name ||
-    props.content.fields.description1 && details.value.description ||
-    props.content.fields.description2 && details.value.description2 ||
-    props.content.fields.shortDescription && details.value.shortDescription,
+    (props.content.fields.name && details.value.name) ||
+    (props.content.fields.description1 && details.value.description) ||
+    (props.content.fields.description2 && details.value.description2) ||
+    (props.content.fields.shortDescription && details.value.shortDescription),
 );
 const showNoTextMessage = computed(() => !enabledText.value);
 
