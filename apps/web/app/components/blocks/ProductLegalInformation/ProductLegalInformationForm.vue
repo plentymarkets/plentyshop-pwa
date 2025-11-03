@@ -103,6 +103,14 @@
         </div>
       </div>
     </UiAccordionItem>
+
+    <div
+      class="bg-[#FEDCA5] border border-[#BBC6BE] text-[#151A16] px-4 py-3 rounded-md mx-5 mt-5 mb-0 shadow-md shadow-[#0000000F]"
+    >
+      <span class="color-[#151A16]font-normal">
+        {{ getEditorTranslation('legal-information-note') }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -163,7 +171,7 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
     "padding-label": "Padding",
     "layout-group-label": "Layout Settings",
     "link-text-label": "Link Text",
-    "legal-information-note": "You can configure which legal information is displayed in the 'EU Responsible Person' and 'Manufacturer' tabs from the backend. You can find them under “Item Settings” > “Legal”."
+    "legal-information-note": "To set up the legal information displayed in this block, in your Plenty system, go to Setup » Item » Manufacturers."
   },
   "de": {
     "text-label": "Text",
@@ -171,7 +179,7 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
     "padding-label": "Padding",
     "layout-group-label": "Layout Settings",
     "link-text-label": "Link Text",
-    "legal-information-note": "Sie können unter „Artikeleinstellungen“ > „Rechtliches“ festlegen, welche rechtlichen Informationen in den Reitern „EU-Verantwortlicher“ und „Hersteller“ angezeigt werden."
+    "legal-information-note": "To set up the legal information displayed in this block, in your Plenty system, go to Setup » Item » Manufacturers."
   }
 }
 </i18n>
