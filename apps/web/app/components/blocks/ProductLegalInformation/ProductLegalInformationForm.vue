@@ -105,7 +105,7 @@
     </UiAccordionItem>
 
     <div
-      class="bg-[#FEDCA5] border border-[#BBC6BE] text-[#151A16] px-4 py-3 rounded-md mx-5 mt-5 mb-0 shadow-md shadow-[#0000000F]"
+      class="bg-[#FEDCA5] border border-[#BBC6BE] text-[#151A16] px-4 py-3 rounded-md mx-5 mt-1 mb-0 shadow-md shadow-[#0000000F]"
     >
       <span class="color-[#151A16]font-normal">
         {{ getEditorTranslation('legal-information-note') }}
