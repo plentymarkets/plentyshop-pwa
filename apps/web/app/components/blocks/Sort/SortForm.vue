@@ -13,7 +13,7 @@
       </UiFormLabel>
       <SfSwitch
         id="show-placeholder"
-        v-model="sortBlock.settings.selectionModeAlways"
+        v-model="sortBlock.settings.selectionModeCompact"
         data-testid="switch-sort-placeholder"
       />
     </div>
@@ -86,7 +86,7 @@ const sortBlock = computed<SortContent>(() => {
   const content = rawContent as Partial<SortContent>;
 
   if (!content.settings) {
-    content.settings = { selectionModeAlways: false };
+    content.settings = { selectionModeCompact: false };
   }
   if (!content.layout) {
     content.layout = {

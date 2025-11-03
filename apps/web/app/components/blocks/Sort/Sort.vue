@@ -1,8 +1,8 @@
 <template>
   <section data-testid="category-sort" aria-label="Sort products" :style="layoutStyle">
     <CategorySorting
-      :key="useSelectionModeAlways ? 'ph' : 'no-ph'"
-      :selection-mode-always="useSelectionModeAlways"
+      :key="useSelectionModeCompact ? 'ph' : 'no-ph'"
+      :selection-mode-compact="useSelectionModeCompact"
       class="mb-4"
     />
   </section>
@@ -12,7 +12,7 @@
 import type { SortContent } from '~/components/blocks/Sort/types';
 
 const props = defineProps<{ content: SortContent }>();
-const useSelectionModeAlways = computed(() => props.content.settings?.selectionModeAlways ?? false);
+const useSelectionModeCompact = computed(() => props.content.settings?.selectionModeCompact ?? false);
 const layoutStyle = computed(() => {
   const layout = props.content.layout ?? {};
   return {
