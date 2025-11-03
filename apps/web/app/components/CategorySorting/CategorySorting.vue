@@ -31,8 +31,8 @@ const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSear
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
 const route = useRoute();
-const useSelectionModeAlways = computed(() => props.selectionModeCompact);
-watch(useSelectionModeAlways, (on) => {
+const useSelectionModeCompact = computed(() => props.selectionModeCompact);
+watch(useSelectionModeCompact, (on) => {
   if (on) updateSorting('');
 });
 const options = computed<string[]>(() => availableSortingOptions());
@@ -42,7 +42,7 @@ const defaultOption = computed<string | undefined>(() =>
 
 const selected = computed<string>({
   get: () => {
-    if (useSelectionModeAlways.value) return '';
+    if (useSelectionModeCompact.value) return '';
 
     const sortQueryParam = route.query.sort;
     const currentSort = typeof sortQueryParam === 'string' ? sortQueryParam : '';
