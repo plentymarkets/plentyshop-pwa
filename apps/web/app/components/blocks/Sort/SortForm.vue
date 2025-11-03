@@ -108,12 +108,12 @@ const layoutOpen = ref(false);
   "en": {
     "layout-label": "Layout",
     "padding-label": "Padding",
-    "show-selectionModeAlways-label": "Selection mode on click"
+    "show-selectionModeAlways-label": "Compact mode"
   },
   "de": {
     "layout-label": "Layout",
     "padding-label": "Padding",
-    "show-selectionModeAlways-label": "Selection mode on click"
+    "show-selectionModeAlways-label": "Compact mode"
   }
 }
 </i18n>
