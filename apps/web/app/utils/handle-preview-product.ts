@@ -33,7 +33,7 @@ function isMissing(value: unknown, treatEmptyStringAsMissing: boolean): boolean 
 
 function cloneDeepPlain<T>(input: T): T {
   if (Array.isArray(input)) {
-    return (input.map(cloneDeepPlain) as unknown) as T;
+    return input.map(cloneDeepPlain) as unknown as T;
   }
   if (isPlainObject(input)) {
     const out: Record<string, unknown> = {};
@@ -41,23 +41,19 @@ function cloneDeepPlain<T>(input: T): T {
     for (const k of Object.keys(obj)) {
       out[k] = cloneDeepPlain(obj[k]);
     }
-    return (out as unknown) as T;
+    return out as unknown as T;
   }
   return input;
 }
 
-function complementInPlace<T extends object>(
-  target: T,
-  source: T,
-  opts: ComplementOptions = {},
-): T {
+function complementInPlace<T extends object>(target: T, source: T, opts: ComplementOptions = {}): T {
   if (!isPlainObject(target)) throw new TypeError('target must be a plain object');
   if (!isPlainObject(source)) return target;
 
   const { deep = false, treatEmptyStringAsMissing = false } = opts;
 
-  const tgt = (target as unknown) as Mutable<T>;
-  const src = (source as unknown) as T;
+  const tgt = target as unknown as Mutable<T>;
+  const src = source as unknown as T;
 
   for (const key of Object.keys(target) as Array<keyof T>) {
     const pk = key as unknown as PropertyKey;
