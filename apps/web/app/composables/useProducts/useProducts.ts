@@ -53,7 +53,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       state.value.data = data.value.data;
       handlePreviewProducts(state);
 
-      await setupBlocks((state.value.data.blocks || []) as Block[], 'category');
+      await setupBlocks((state.value.data.blocks || []) as Block[]);
     }
 
     state.value.loading = false;

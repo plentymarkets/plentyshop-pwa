@@ -44,8 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { type Block, categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
 
 const { t, locale } = useI18n();
 const route = useRoute();
@@ -58,6 +59,7 @@ const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
+const { setDefaultTemplate } = useCategoryTemplate();
 
 const { open } = useDisclosure();
 
@@ -72,6 +74,10 @@ definePageMeta({
   isBlockified: false,
   identifier: 0,
 });
+
+if (productsCatalog.value.category?.type === 'item') {
+  setDefaultTemplate(categoryTemplateData as Block[]);
+}
 
 watchEffect(() => {
   route.meta.isBlockified = isEditablePage.value;

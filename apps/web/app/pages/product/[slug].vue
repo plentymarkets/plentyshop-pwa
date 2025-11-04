@@ -46,8 +46,9 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import type { Product } from '@plentymarkets/shop-api';
+import type { Block, Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -61,6 +62,7 @@ const { data: productReviews, fetchProductReviews } = useProductReviews(Number(p
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
+const { setDefaultTemplate } = useCategoryTemplate();
 
 const config = useRuntimeConfig().public;
 
@@ -102,6 +104,7 @@ if (Object.keys(product.value).length === 0) {
 }
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
+setDefaultTemplate(productTemplateData as Block[]);
 
 onBeforeRouteLeave(() => {
   setCurrentProduct({} as Product);

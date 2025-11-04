@@ -7,21 +7,10 @@ import type {
 } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 
-import homepageTemplateDataDe from './homepageTemplateDataDe.json';
-import homepageTemplateDataEn from './homepageTemplateDataEn.json';
-import categoryTemplateData from './categoryTemplateData.json';
-import productTemplateData from './productTemplateData.json';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { OldContent } from '~/utils/migrate-recommended-content';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
-
-const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
-
-const useProductTemplateData = () => productTemplateData as Block[];
-
-const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
   identifier: string = 'unknown',
@@ -32,6 +21,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     data: [],
     cleanData: [],
     categoryTemplateData: null,
+    defaultTemplateData: [],
     loading: false,
   }));
 
@@ -78,7 +68,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       return;
     }
 
-    setupBlocks(data?.value?.data ?? [], type);
+    setupBlocks(data?.value?.data ?? state.value.defaultTemplateData ?? []);
 
     await ensureFooterBlock();
   };
@@ -91,24 +81,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
     state.value.loading = false;
 
-    setupBlocks(data ?? [], type);
+    setupBlocks(data ?? state.value.defaultTemplateData ?? []);
   };
 
-  const setupBlocks = (fetchedBlocks: Block[], type: string) => {
-    const { data: productsCatalog } = useProducts();
-
-    if (!fetchedBlocks.length && type === 'immutable') {
-      fetchedBlocks = useLocaleSpecificHomepageTemplate($i18n.locale.value);
-    }
-
-    if (!fetchedBlocks.length && type === 'category' && productsCatalog.value.category?.type === 'item') {
-      fetchedBlocks = useCategoryTemplateData();
-    }
-
-    if (!fetchedBlocks.length && type === 'product') {
-      fetchedBlocks = useProductTemplateData();
-    }
-
+  const setupBlocks = (fetchedBlocks: Block[]) => {
     if (Array.isArray(fetchedBlocks)) {
       migrateAllImageBlocks(fetchedBlocks);
     }
@@ -119,6 +95,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
+  };
+
+  const setDefaultTemplate = (blocks: Block[]) => {
+    state.value.defaultTemplateData = blocks;
   };
 
   /**
@@ -180,6 +160,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     getBlocksServer,
     updateBlocks,
     setupBlocks,
+    setDefaultTemplate,
     ...toRefs(state.value),
   };
 };
