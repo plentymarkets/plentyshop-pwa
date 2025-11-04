@@ -51,7 +51,7 @@ export const useItemsTable: UseItemTableReturn = () => {
       return;
     }
 
-    const response = await useSdk().plentysystems.getStorageItems({ fileTypes });
+    const response = await useSdk().plentysystems.getStorageItems({ fileTypes, includeFolders: 'true' });
     state.value.loading = false;
 
     if (!response || !response.data) {

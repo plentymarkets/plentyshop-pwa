@@ -51,10 +51,6 @@ const props = withDefaults(defineProps<EditablePageProps>(), {
   hasEnabledActions: true,
 });
 
-definePageMeta({
-  identifier: props.identifier,
-});
-
 const { data, getBlocksServer, cleanData } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 

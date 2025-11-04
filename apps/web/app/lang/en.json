@@ -540,7 +540,8 @@
     "editor": {
       "add": {
         "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead.",
-        "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout."
+        "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
+        "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page."
       },
       "save": {
         "success": "Your changes have been saved.",
@@ -1230,6 +1231,5 @@
       }
     }
   },
-  "cancelOrder": "Cancel order",
-  "tooltipForDummyPlaceholder": "Please note that this is only sample data. In preview and live mode, you will see the facets for the actual products in this category. The number and type of customized filters may therefore vary."
+  "cancelOrder": "Cancel order"
 }
