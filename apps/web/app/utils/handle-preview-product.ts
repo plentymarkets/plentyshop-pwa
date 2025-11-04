@@ -95,7 +95,7 @@ export const handlePreviewProduct = (state: Ref<UseProductState>) => {
   if ($isPreview) {
     const rawA = toRaw(state.value.data) as Product;
     const rawB = fakeProduct as Product;
-    
+
     state.value.data = complement<Product>(rawA, rawB, {
       deep: true,
       treatEmptyStringAsMissing: true,
