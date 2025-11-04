@@ -25,8 +25,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     loading: false,
   }));
 
-  const { $i18n } = useNuxtApp();
-
   const ensureFooterBlock = async () => {
     const { fetchFooterSettings } = useFooter();
 
