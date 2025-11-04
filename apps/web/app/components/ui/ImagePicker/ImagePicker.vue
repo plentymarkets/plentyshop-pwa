@@ -14,7 +14,16 @@
 
       <div class="flex-1">
         <template v-if="!isPlaceholder">
-          <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
+          <p class="text-sm text-gray-800 break-all">
+            <template v-if="imageName.length >= 38">
+              <span v-for="(chunk, idx) in imageNameChunks" :key="idx"
+                >{{ chunk }}<br v-if="idx < imageNameChunks.length - 1"
+              /></span>
+            </template>
+            <template v-else>
+              {{ imageName || '—' }}
+            </template>
+          </p>
           <p class="text-sm text-gray-500">{{ dimensions }}</p>
         </template>
         <template v-else>
@@ -60,15 +69,39 @@ import type { ImagePickerProps } from './types';
 const props = defineProps<ImagePickerProps>();
 const emit = defineEmits<{
   (e: 'delete'): void;
-  (e: 'add', payload: { image: string; type: string }): void;
+  (e: 'add', payload: { image: string; name: string; type: string }): void;
 }>();
+
+const { extractFileName } = usePickerHelper();
+
+const imageName = ref(props.image ? extractFileName(props.image) : '');
+
+const imageNameChunks = computed(() => {
+  if (!imageName.value) return [];
+  const chunkSize = 38;
+  const str = imageName.value;
+  const chunks = [];
+  for (let i = 0; i < str.length; i += chunkSize) {
+    chunks.push(str.slice(i, i + chunkSize));
+  }
+  return chunks;
+});
 
 const isPlaceholder = computed(() => props.image === props.placeholder);
 const isUploaderOpen = ref(false);
 const selectedImageType = ref(props.selectedImageType || 'wideScreen');
 
-const handleImageAdd = ({ image, type }: { image: string; type: string }) => {
-  emit('add', { image, type });
+const handleImageAdd = ({ image, name, type }: { image: string; name: string; type: string }) => {
+  emit('add', { image, name, type });
+  imageName.value = name;
   isUploaderOpen.value = false;
 };
+
+watch(
+  () => props.image,
+  (newImage) => {
+    imageName.value = newImage ? extractFileName(newImage) : '';
+  },
+  { immediate: true },
+);
 </script>
