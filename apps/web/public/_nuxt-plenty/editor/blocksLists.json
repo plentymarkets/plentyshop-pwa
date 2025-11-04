@@ -1391,8 +1391,120 @@
     "blockName": "ItemPage",
     "variations": [
       {
+        "title": "Item Page",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/price_card_2.png",
+        "template": {
+          "en": {
+            "name": "PriceCard",
+            "type": "content",
+            "meta": { "uuid": "a1b2c3d4-e5f6-4789-9a0b-1c2d3e4f5a6b", "isGlobalTemplate": false },
+            "content": {
+              "fields": {
+                "itemName": true,
+                "price": true,
+                "tags": true,
+                "availability": true,
+                "starRating": true,
+                "orderProperties": true,
+                "variationProperties": true,
+                "previewText": true,
+                "attributes": true,
+                "itemBundle": false,
+                "graduatedPrices": false,
+                "addToWishlist": true,
+                "quantityAndAddToCart": true,
+                "itemText": false,
+                "technicalData": false
+              },
+              "fieldsOrder": [
+                "itemName",
+                "price",
+                "tags",
+                "availability",
+                "starRating",
+                "variationProperties",
+                "orderProperties",
+                "previewText",
+                "attributes",
+                "itemBundle",
+                "graduatedPrices",
+                "addToWishlist",
+                "quantityAndAddToCart",
+                "itemText",
+                "technicalData"
+              ],
+              "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle", "attributes"],
+              "wishlistSize": "small",
+
+              "dropShadow": true,
+              "borders": true,
+              "borderColor": "#EFF4F1",
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingRight": 0,
+                "paddingLeft": 0
+              }
+            }
+          },
+          "de": {
+            "name": "PriceCard",
+            "type": "content",
+            "meta": { "uuid": "b1c2d3e4-f5a6-4890-0b1c-2d3e4f5a6b7c", "isGlobalTemplate": false },
+            "content": {
+              "fields": {
+                "itemName": true,
+                "price": true,
+                "tags": true,
+                "availability": true,
+                "starRating": true,
+                "orderProperties": true,
+                "variationProperties": true,
+                "previewText": true,
+                "attributes": true,
+                "itemBundle": false,
+                "graduatedPrices": false,
+                "addToWishlist": true,
+                "quantityAndAddToCart": true,
+                "itemText": false,
+                "technicalData": false
+              },
+              "fieldsOrder": [
+                "itemName",
+                "price",
+                "tags",
+                "availability",
+                "starRating",
+                "variationProperties",
+                "orderProperties",
+                "previewText",
+                "attributes",
+                "itemBundle",
+                "graduatedPrices",
+                "addToWishlist",
+                "quantityAndAddToCart",
+                "itemText",
+                "technicalData"
+              ],
+              "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle", "attributes"],
+              "wishlistSize": "small",
+
+              "dropShadow": true,
+              "borders": true,
+              "borderColor": "#EFF4F1",
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingRight": 0,
+                "paddingLeft": 0
+              }
+            }
+          }
+        }
+      },
+      {
         "title": "Item Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_text.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_text.svg",
         "template": {
           "en": {
             "name": "ItemText",
@@ -1436,7 +1548,7 @@
       },
       {
         "title": "Technical Data",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/technical_data.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Technical_data.svg",
         "template": {
           "en": {
             "name": "TechnicalData",
@@ -1480,7 +1592,7 @@
       },
       {
         "title": "Customer Reviews",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/customer_review.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/customer_reviews.svg",
         "template": {
           "en": {
             "name": "CustomerReview",
