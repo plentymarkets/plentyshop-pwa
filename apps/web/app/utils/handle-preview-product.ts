@@ -10,28 +10,28 @@ type ComplementOptions = {
 
 type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 
-function isPlainObject(x: unknown): x is object {
+const isPlainObject = (x: unknown): x is object => {
   return Object.prototype.toString.call(x) === '[object Object]';
-}
+};
 
-function isEmptyObject(x: unknown): boolean {
+const isEmptyObject = (x: unknown): boolean => {
   return isPlainObject(x) && Object.keys(x as object).length === 0;
-}
+};
 
-function isEmptyArray(x: unknown): x is unknown[] {
+const isEmptyArray = (x: unknown): x is unknown[] => {
   return Array.isArray(x) && x.length === 0;
-}
+};
 
-function isMissing(value: unknown, treatEmptyStringAsMissing: boolean): boolean {
+const isMissing = (value: unknown, treatEmptyStringAsMissing: boolean): boolean => {
   if (value === undefined || value === null) return true;
   if (typeof value === 'number' && Number.isNaN(value)) return true;
   if (isEmptyArray(value)) return true;
   if (isEmptyObject(value)) return true;
   if (treatEmptyStringAsMissing && typeof value === 'string' && value.trim() === '') return true;
   return false;
-}
+};
 
-function cloneDeepPlain<T>(input: T): T {
+const cloneDeepPlain = <T>(input: T): T => {
   if (Array.isArray(input)) {
     return input.map(cloneDeepPlain) as unknown as T;
   }
@@ -44,9 +44,9 @@ function cloneDeepPlain<T>(input: T): T {
     return out as unknown as T;
   }
   return input;
-}
+};
 
-function complementInPlace<T extends object>(target: T, source: T, opts: ComplementOptions = {}): T {
+const complementInPlace = <T extends object>(target: T, source: T, opts: ComplementOptions = {}): T => {
   if (!isPlainObject(source)) return target;
 
   const { deep = false, treatEmptyStringAsMissing = false } = opts;
@@ -82,12 +82,12 @@ function complementInPlace<T extends object>(target: T, source: T, opts: Complem
   }
 
   return target;
-}
+};
 
-function complement<T extends object>(a: T, b: T, opts: ComplementOptions = {}): T {
+const complement = <T extends object>(a: T, b: T, opts: ComplementOptions = {}): T => {
   const clone = cloneDeepPlain(a);
   return complementInPlace(clone, b, opts);
-}
+};
 
 export const handlePreviewProduct = (state: Ref<UseProductState>) => {
   const { $isPreview } = useNuxtApp();
