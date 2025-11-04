@@ -40,7 +40,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     return Array.from(folderSet);
   };
 
-  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
+  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp,svg') => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
