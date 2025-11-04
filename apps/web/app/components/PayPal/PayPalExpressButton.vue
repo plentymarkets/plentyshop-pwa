@@ -14,10 +14,13 @@ const paypalScript = ref<PayPalNamespace | null>(null);
 const {
   order: paypalOrder,
   getScript,
+  loadConfig,
   createTransaction,
   captureOrder,
   createPlentyOrder,
   createPlentyPaymentFromPayPalOrder,
+  payPalVisibility,
+  payLaterVisibility,
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
@@ -42,6 +45,9 @@ const TypeCheckout = 'Checkout';
 const TypeOrderAlreadyExisting = 'OrderAlreadyExisting';
 
 const isCommit = props.type === TypeCheckout || props.type === TypeOrderAlreadyExisting;
+const loadScript = computed(
+  () => payPalVisibility.getVisibility(props.location) || payLaterVisibility.getVisibility(props.location),
+);
 
 const checkonValidationCallbackEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
@@ -174,21 +180,32 @@ const createButton = () => {
     if (paypalButton.value) {
       paypalButton.value.innerHTML = '';
     }
-    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL];
-    if (props.type !== TypeOrderAlreadyExisting) {
-      FUNDING_SOURCES.push(paypalScript.value.FUNDING?.PAYLATER);
+
+    if (paypalScript.value.FUNDING) {
+      const FUNDING_SOURCES: Array<string> = [];
+
+      if (payPalVisibility.getVisibility(props.location)) {
+        FUNDING_SOURCES.push(paypalScript.value.FUNDING.PAYPAL as string);
+      }
+      if (payLaterVisibility.getVisibility(props.location)) {
+        FUNDING_SOURCES.push(paypalScript.value.FUNDING.PAYLATER as string);
+      }
+
+      FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
     }
-    FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
   }
 };
 
 onNuxtReady(async () => {
+  await loadConfig();
+  if (!loadScript.value) return;
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
-});
 
-watch(currency, async () => {
-  paypalScript.value = await getScript(currency.value, isCommit);
-  createButton();
+  watch([currency, loadScript], async () => {
+    if (!loadScript.value) return;
+    paypalScript.value = await getScript(currency.value, isCommit);
+    createButton();
+  });
 });
 </script>
