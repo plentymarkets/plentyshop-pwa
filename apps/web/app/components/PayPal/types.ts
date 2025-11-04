@@ -2,7 +2,9 @@ import type { Order } from '@plentymarkets/shop-api';
 
 export type PaypalButtonPropsType = {
   type: string;
+  plentyOrderId?: number;
   disabled?: boolean;
+  currency?: string;
 };
 
 export type PaypalAPMPropsType = {

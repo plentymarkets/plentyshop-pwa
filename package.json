@@ -39,7 +39,7 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.12.0",
+    "@plentymarkets/shop-core": "^1.13.1",
     "@plentymarkets/shop-api": "^0.140.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.2.0",
@@ -63,7 +63,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@lhci/cli": "^0.15.1",
-    "@nuxt/test-utils": "^3.19.2",
+    "@nuxt/test-utils": "^3.20.1",
     "@nuxtjs/turnstile": "^1.1.1",
     "@paypal/paypal-js": "8.4.2",
     "@types/google.maps": "^3.58.1",
@@ -75,7 +75,7 @@
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
     "eslint-module-utils": "^2.12.1",
-    "happy-dom": "^15.11.7",
+    "happy-dom": "^20.0.10",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "nuxt": "4.1.3",

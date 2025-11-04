@@ -16,6 +16,7 @@ export type MultiGridProps = {
   configuration: {
     columnWidths: number[];
     layout?: MultiGridLayout;
+    sticky?: number[];
   };
   meta: {
     uuid: string;
