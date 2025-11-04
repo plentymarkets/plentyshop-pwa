@@ -767,25 +767,27 @@
                 "meta": { "uuid": "78787878-7878-4787-8787-787878787878" },
                 "parent_slot": 0,
                 "content": {
-                  "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                  "alt": "Headphones",
-                  "imageAlignment": "right",
-                  "fillMode": "fill",
-                  "aspectRatio": "16 / 9"
-                },
-                "text": {
-                  "textOverlay": "",
-                  "textOverlayColor": "#333333",
-                  "textOverlayAlignY": "center",
-                  "textOverlayAlignX": "center"
-                },
-                "button": {
-                  "label": "",
-                  "link": "",
-                  "variant": "primary"
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "Alt-Text",
+                    "imageAlignment": "right",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
+                  },
+                  "text": {
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
+                  "button": {
+                    "label": "",
+                    "link": "",
+                    "variant": "primary"
+                  }
                 }
               },
               {
@@ -1300,7 +1302,7 @@
                 "paddingRight": 0
               },
               "settings": {
-                "selectionModeAlways": false
+                "selectionModeCompact": false
               }
             }
           },
@@ -1322,57 +1324,7 @@
                 "paddingRight": 0
               },
               "settings": {
-                "selectionModeAlways": false
-              }
-            }
-          }
-        }
-      },
-      {
-        "title": "Category Per Page",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/perpage.png",
-        "template": {
-          "en": {
-            "name": "PerPageFilter",
-            "type": "content",
-            "meta": {
-              "uuid": "57fa6e83-3c5d-437c-b0f0-f97c81010fe3",
-              "isGlobalTemplate": false
-            },
-            "content": {
-              "fields": {
-                "perPage": true
-              },
-              "layout": {
-                "paddingTop": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 0,
-                "paddingRight": 0
-              },
-              "settings": {
-                "selectionModeAlways": true
-              }
-            }
-          },
-          "de": {
-            "name": "PerPageFilter",
-            "type": "content",
-            "meta": {
-              "uuid": "57fa6e83-3c5d-437c-b0f0-f97c81010fe3",
-              "isGlobalTemplate": false
-            },
-            "content": {
-              "fields": {
-                "perPage": true
-              },
-              "layout": {
-                "paddingTop": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 0,
-                "paddingRight": 0
-              },
-              "settings": {
-                "selectionModeAlways": true
+                "selectionModeCompact": false
               }
             }
           }

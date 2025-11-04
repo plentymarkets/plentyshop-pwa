@@ -9,11 +9,11 @@
     </template>
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
-        {{ getEditorTranslation('show-selectionModeAlways-label') }}
+        {{ getEditorTranslation('show-selectionModeCompact-label') }}
       </UiFormLabel>
       <SfSwitch
         id="show-placeholder"
-        v-model="sortBlock.settings.selectionModeAlways"
+        v-model="sortBlock.settings.selectionModeCompact"
         data-testid="switch-sort-placeholder"
       />
     </div>
@@ -86,7 +86,7 @@ const sortBlock = computed<SortContent>(() => {
   const content = rawContent as Partial<SortContent>;
 
   if (!content.settings) {
-    content.settings = { selectionModeAlways: false };
+    content.settings = { selectionModeCompact: false };
   }
   if (!content.layout) {
     content.layout = {
@@ -108,12 +108,12 @@ const layoutOpen = ref(false);
   "en": {
     "layout-label": "Layout",
     "padding-label": "Padding",
-    "show-selectionModeAlways-label": "Compact mode"
+    "show-selectionModeCompact-label": "Compact mode"
   },
   "de": {
     "layout-label": "Layout",
     "padding-label": "Padding",
-    "show-selectionModeAlways-label": "Compact mode"
+    "show-selectionModeCompact-label": "Compact mode"
   }
 }
 </i18n>

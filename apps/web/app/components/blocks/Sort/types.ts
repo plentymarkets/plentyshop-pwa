@@ -1,5 +1,5 @@
 export interface SortSettings {
-  selectionModeAlways: boolean;
+  selectionModeCompact: boolean;
 }
 export type SortContent = {
   layout: {

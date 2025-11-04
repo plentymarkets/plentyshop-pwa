@@ -1,7 +1,7 @@
 <template>
   <div class="w-full" data-testid="category-sorting">
     <h6
-      v-if="!selectionModeAlways"
+      v-if="!selectionModeCompact"
       class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('sortBy') }}
@@ -9,7 +9,7 @@
 
     <div class="px-4">
       <SfSelect id="sortBy" v-model="selected" :aria-label="t('sortBy')" data-testid="select-sort-by">
-        <option v-if="selectionModeAlways" value="" disabled hidden>{{ t('sortBy') }}</option>
+        <option v-if="selectionModeCompact" value="" disabled hidden>{{ t('sortBy') }}</option>
         <option v-for="option in options" :key="option" :value="option">
           {{ t(`sortType.${option}`) }}
         </option>
@@ -23,7 +23,7 @@ import { SfSelect } from '@storefront-ui/vue';
 import { useRoute } from 'vue-router';
 import { isPageOfType } from '~/utils/pathHelper';
 
-const props = defineProps<{ selectionModeAlways?: boolean }>();
+const props = defineProps<{ selectionModeCompact?: boolean }>();
 const { updateSorting } = useCategoryFilter();
 const { t } = useI18n();
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
@@ -31,8 +31,8 @@ const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSear
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
 const route = useRoute();
-const useSelectionModeAlways = computed(() => props.selectionModeAlways);
-watch(useSelectionModeAlways, (on) => {
+const useSelectionModeCompact = computed(() => props.selectionModeCompact);
+watch(useSelectionModeCompact, (on) => {
   if (on) updateSorting('');
 });
 const options = computed<string[]>(() => availableSortingOptions());
@@ -42,7 +42,7 @@ const defaultOption = computed<string | undefined>(() =>
 
 const selected = computed<string>({
   get: () => {
-    if (useSelectionModeAlways.value) return '';
+    if (useSelectionModeCompact.value) return '';
 
     const sortQueryParam = route.query.sort;
     const currentSort = typeof sortQueryParam === 'string' ? sortQueryParam : '';
