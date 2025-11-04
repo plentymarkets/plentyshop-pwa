@@ -13,7 +13,7 @@
         :identifier="identifier"
         :type="'category'"
         data-testid="category-page-content"
-        prevent-blocks-request
+        :prevent-blocks-request="productsCatalog.category?.type === 'item'"
       />
     </template>
 
