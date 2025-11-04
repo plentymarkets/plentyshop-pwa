@@ -59,7 +59,6 @@ const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
-const { setDefaultTemplate } = useCategoryTemplate();
 
 const { open } = useDisclosure();
 
@@ -74,10 +73,6 @@ definePageMeta({
   isBlockified: false,
   identifier: 0,
 });
-
-if (productsCatalog.value.category?.type === 'item') {
-  setDefaultTemplate(categoryTemplateData as Block[]);
-}
 
 watchEffect(() => {
   route.meta.isBlockified = isEditablePage.value;

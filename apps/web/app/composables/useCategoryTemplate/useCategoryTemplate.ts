@@ -66,7 +66,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       return;
     }
 
-    setupBlocks(data?.value?.data ?? state.value.defaultTemplateData ?? []);
+    setupBlocks(data?.value?.data ?? []);
 
     await ensureFooterBlock();
   };
@@ -79,16 +79,18 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
     state.value.loading = false;
 
-    setupBlocks(data ?? state.value.defaultTemplateData ?? []);
+    setupBlocks(data ?? []);
   };
 
   const setupBlocks = (fetchedBlocks: Block[]) => {
-    if (Array.isArray(fetchedBlocks)) {
-      migrateAllImageBlocks(fetchedBlocks);
+    const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData
+
+    if (Array.isArray(blocks)) {
+      migrateAllImageBlocks(blocks);
     }
 
-    state.value.data = fetchedBlocks;
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(fetchedBlocks)));
+    state.value.data = blocks;
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
   };
 
   const updateBlocks: UpdateBlocks = (blocks) => {

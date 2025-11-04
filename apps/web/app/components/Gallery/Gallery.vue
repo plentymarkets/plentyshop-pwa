@@ -50,7 +50,7 @@
             :key="`thumb-${index}`"
             :class="thumbSlideClass(index)"
             @click="slideTo(index)"
-            >object-contain
+            >
             <NuxtImg
               :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
               :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"

@@ -4,6 +4,9 @@ import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
+import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
+
+const useProductTemplateData = () => productTemplateData as Block[];
 
 /**
  * @description Composable managing product data
@@ -44,7 +47,7 @@ export const useProduct: UseProductReturn = (slug) => {
       () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value ?? null);
-    await setupBlocks((state.value.data.blocks || []) as Block[]);
+    await setupBlocks((state.value.data.blocks?.length ? state.value.data.blocks : useProductTemplateData()) as Block[]);
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);

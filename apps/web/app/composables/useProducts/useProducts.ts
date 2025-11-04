@@ -1,6 +1,10 @@
 import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
+import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
+
+
+const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
 /**
  * @description Composable for managing products.
@@ -53,7 +57,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
       state.value.data = data.value.data;
       handlePreviewProducts(state);
 
-      await setupBlocks((state.value.data.blocks || []) as Block[]);
+      const defaultData = state.value.data.category.type === 'item' ? useCategoryTemplateData() : [];
+
+      await setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
     }
 
     state.value.loading = false;
