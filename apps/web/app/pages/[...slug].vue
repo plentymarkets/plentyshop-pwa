@@ -44,9 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import { type Block, categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
 
 const { t, locale } = useI18n();
 const route = useRoute();
