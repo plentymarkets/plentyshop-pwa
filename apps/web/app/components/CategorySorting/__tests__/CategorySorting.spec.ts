@@ -1,10 +1,16 @@
 import { mount } from '@vue/test-utils';
 import { CategorySorting } from '#components';
 
+vi.mock('vue-router', () => ({
+  useRoute: () => ({
+    query: {},
+  }),
+}));
+
 describe('<CategorySorting />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(CategorySorting);
+    const wrapper = mount(CategorySorting);
 
-    expect(getByTestId('category-sorting'));
+    expect(wrapper.get('[data-testid="category-sorting"]')).toBeTruthy();
   });
 });
