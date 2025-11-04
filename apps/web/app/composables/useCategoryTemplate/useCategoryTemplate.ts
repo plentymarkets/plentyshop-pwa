@@ -83,7 +83,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   };
 
   const setupBlocks = (fetchedBlocks: Block[]) => {
-    const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData
+    const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
 
     if (Array.isArray(blocks)) {
       migrateAllImageBlocks(blocks);

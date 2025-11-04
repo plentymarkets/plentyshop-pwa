@@ -47,7 +47,9 @@ export const useProduct: UseProductReturn = (slug) => {
       () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value ?? null);
-    await setupBlocks((state.value.data.blocks?.length ? state.value.data.blocks : useProductTemplateData()) as Block[]);
+    await setupBlocks(
+      (state.value.data.blocks?.length ? state.value.data.blocks : useProductTemplateData()) as Block[],
+    );
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);

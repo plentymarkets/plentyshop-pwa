@@ -3,7 +3,6 @@ import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
 
-
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
 /**
