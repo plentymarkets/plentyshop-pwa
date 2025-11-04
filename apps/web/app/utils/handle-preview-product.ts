@@ -27,7 +27,7 @@ function isMissing(value: unknown, treatEmptyStringAsMissing: boolean): boolean 
   if (typeof value === 'number' && Number.isNaN(value)) return true;
   if (isEmptyArray(value)) return true;
   if (isEmptyObject(value)) return true;
-  if (treatEmptyStringAsMissing && typeof value === 'string' && value.trim() === '') return true; // why: treat whitespace-only as missing
+  if (treatEmptyStringAsMissing && typeof value === 'string' && value.trim() === '') return true;
   return false;
 }
 
@@ -47,7 +47,6 @@ function cloneDeepPlain<T>(input: T): T {
 }
 
 function complementInPlace<T extends object>(target: T, source: T, opts: ComplementOptions = {}): T {
-  if (!isPlainObject(target)) throw new TypeError('target must be a plain object');
   if (!isPlainObject(source)) return target;
 
   const { deep = false, treatEmptyStringAsMissing = false } = opts;
@@ -86,7 +85,6 @@ function complementInPlace<T extends object>(target: T, source: T, opts: Complem
 }
 
 function complement<T extends object>(a: T, b: T, opts: ComplementOptions = {}): T {
-  if (!isPlainObject(a)) throw new TypeError('a must be a plain object');
   const clone = cloneDeepPlain(a);
   return complementInPlace(clone, b, opts);
 }
@@ -97,7 +95,7 @@ export const handlePreviewProduct = (state: Ref<UseProductState>) => {
   if ($isPreview) {
     const rawA = toRaw(state.value.data) as Product;
     const rawB = fakeProduct as Product;
-
+    
     state.value.data = complement<Product>(rawA, rawB, {
       deep: true,
       treatEmptyStringAsMissing: true,
