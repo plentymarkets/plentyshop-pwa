@@ -37,7 +37,7 @@
       </SfListItem>
     </div>
 
-    <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
+    <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4 px-4" @submit.prevent="updatePriceFilter">
       <div class="mb-3">
         <label for="min">
           <UiFormLabel class="text-start">{{ t('min') }}</UiFormLabel>
