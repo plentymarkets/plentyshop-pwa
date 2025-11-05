@@ -116,7 +116,6 @@ export default defineNuxtConfig({
               'customer-management',
               'variation-position-based-on-sales',
               'security',
-              'item-internal-sorting',
               'contact-form',
               'default-B2B-customer-class',
               'default-B2C-and-guest-customer-class',

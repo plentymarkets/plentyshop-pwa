@@ -22,7 +22,7 @@
             :index="index"
             :active-index="activeIndex"
             :is-first-image="index === 0"
-            :disable-zoom="configuration.thumbnails.enableHoverZoom === false"
+            :disable-zoom="disableActions || configuration.thumbnails.enableHoverZoom === false"
           />
         </SwiperSlide>
       </Swiper>
@@ -119,6 +119,8 @@ const props = withDefaults(defineProps<GalleryProps>(), {
     },
   }),
 });
+
+const { disableActions } = useEditor();
 
 const configuration = computed(() => props.configuration);
 const { images } = toRefs(props);
