@@ -107,7 +107,7 @@ export default defineNuxtConfig({
       editorSettingsDevFlag:
         process.env.NODE_ENV === 'development' || process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1'
           ? []
-          : ['search-engines', 'tracking-and-analytics', 'security', 'contact-form', 'session-and-url-lifetime'],
+          : ['tracking-and-analytics', 'security', 'contact-form', 'session-and-url-lifetime'],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true' || process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
