@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" />
+    <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" prevent-blocks-request />
 
     <NarrowContainer v-else>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
@@ -102,6 +102,10 @@ if (Object.keys(product.value).length === 0) {
 }
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
+
+onBeforeRouteLeave(() => {
+  setCurrentProduct({} as Product);
+});
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);

@@ -1,8 +1,12 @@
 import type { Order } from '@plentymarkets/shop-api';
+import type { PayPalVisibilityLocations } from '~/composables';
 
 export type PaypalButtonPropsType = {
   type: string;
+  location?: PayPalVisibilityLocations;
+  plentyOrderId?: number;
   disabled?: boolean;
+  currency?: string;
 };
 
 export type PaypalAPMPropsType = {
@@ -14,6 +18,7 @@ export type PayPalAddToCartCallback = (successfully: boolean) => void;
 export type PayPalPayLaterBannerType = {
   placement: 'home' | 'product' | 'cart' | 'category' | 'payment';
   amount: number;
+  location?: PayPalVisibilityLocations;
   commit?: boolean;
 };
 

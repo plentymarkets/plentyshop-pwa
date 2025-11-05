@@ -105,9 +105,16 @@ const gridInlineStyle = computed(() => ({
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
+
 const getColumnClasses = (colIndex: number) => {
   const columnWidth = configuration.columnWidths[colIndex];
-  return [`col-span-${columnWidth}`];
+  const classes = [`col-span-${columnWidth}`];
+
+  if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
+    classes.push('md:sticky', 'md:top-40');
+  }
+
+  return classes;
 };
 
 const getBlockActions = () => ({

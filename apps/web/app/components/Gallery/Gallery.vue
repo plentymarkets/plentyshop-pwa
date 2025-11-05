@@ -54,7 +54,7 @@
             <NuxtImg
               :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
               :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"
-              class="rounded h-full w-full"
+              class="rounded h-full w-full object-contain"
               :class="activeIndex === index ? 'border-primary-500' : ''"
               :width="productImageGetters.getImageWidth(image) ?? 80"
               :height="productImageGetters.getImageHeight(image) ?? 80"
