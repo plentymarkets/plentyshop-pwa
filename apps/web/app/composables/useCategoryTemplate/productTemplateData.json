@@ -113,7 +113,7 @@
             "linkText": "EU Responsible Person - click for details",
             "paddingTop": 0,
             "paddingBottom": 0,
-            "paddingLeft": 0,
+            "paddingLeft": 15,
             "paddingRight": 0
           }
         }
