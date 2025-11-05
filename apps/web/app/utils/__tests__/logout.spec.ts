@@ -17,7 +17,7 @@ afterAll(() => {
   });
 });
 
-describe('auth utils', () => {
+describe('logout utils', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

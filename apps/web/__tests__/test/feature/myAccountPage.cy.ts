@@ -4,7 +4,6 @@ import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObje
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
 
 beforeEach(() => {
-  cy.clearAllCookies();
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   cy.visitAndHydrate(paths.authLogin);
   myAccount.successLogin();
