@@ -30,6 +30,11 @@
     <h2 class="font-medium text-base mt-4">{{ t('customerWish') }}</h2>
     <p>{{ orderContactWish }}</p>
   </template>
+
+  <template v-if="orderCustomerSign">
+    <h2 class="font-medium text-base mt-4">{{ t('customerReference') }}</h2>
+    <p>{{ orderCustomerSign }}</p>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -43,4 +48,5 @@ const shippingAddress = orderGetters.getShippingAddress(props.order);
 const shippingMethod = orderGetters.getShippingProvider(props.order);
 const preferredDeliveryServices = orderGetters.getPreferredDeliveryServices(props.order);
 const orderContactWish = orderGetters.getOrderContactWish(props.order);
+const orderCustomerSign = orderGetters.getOrderCustomerSign(props.order);
 </script>
