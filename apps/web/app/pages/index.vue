@@ -23,7 +23,9 @@ const { $i18n } = useNuxtApp();
 const { t } = useI18n();
 
 const { setPageMeta } = usePageMeta();
-const { setDefaultTemplate } = useCategoryTemplate();
+const route = useRoute();
+const { setDefaultTemplate } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
 
