@@ -115,8 +115,9 @@ import {
 } from '@storefront-ui/vue';
 import type { ItemTextFormProps, ItemTextContent } from './types';
 
-const { data } = useCategoryTemplate();
-const { blockUuid } = useSiteConfiguration();
+const route = useRoute();
+
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<ItemTextFormProps>();

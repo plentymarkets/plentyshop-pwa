@@ -76,7 +76,9 @@ import type { PerPageContent, PerPageProps } from '~/components/blocks/PerPageFi
 
 const props = defineProps<PerPageProps>();
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
