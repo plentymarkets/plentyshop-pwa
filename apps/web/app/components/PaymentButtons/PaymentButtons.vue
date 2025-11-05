@@ -8,9 +8,15 @@
   />
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
-      <PayPalExpressButton :disabled="disableBuyButton" type="Checkout" @validation-callback="handlePreparePayment" />
+      <PayPalExpressButton
+        :disabled="disableBuyButton"
+        type="Checkout"
+        location="checkoutPage"
+        @validation-callback="handlePreparePayment"
+      />
       <PayPalPayLaterBanner
         placement="payment"
+        location="checkoutPage"
         :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
         :commit="true"
       />

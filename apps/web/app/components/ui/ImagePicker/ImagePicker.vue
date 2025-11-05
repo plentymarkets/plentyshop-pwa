@@ -14,7 +14,13 @@
 
       <div class="flex-1">
         <template v-if="!isPlaceholder">
-          <p class="text-sm text-gray-800 truncate">image_name_111.png</p>
+          <SfTooltip :label="imageName" placement="top">
+            <p
+              class="text-sm text-gray-800 overflow-hidden text-ellipsis whitespace-nowrap max-w-[180px] cursor-pointer"
+            >
+              {{ imageName || '—' }}
+            </p>
+          </SfTooltip>
           <p class="text-sm text-gray-500">{{ dimensions }}</p>
         </template>
         <template v-else>
@@ -60,15 +66,28 @@ import type { ImagePickerProps } from './types';
 const props = defineProps<ImagePickerProps>();
 const emit = defineEmits<{
   (e: 'delete'): void;
-  (e: 'add', payload: { image: string; type: string }): void;
+  (e: 'add', payload: { image: string; name: string; type: string }): void;
 }>();
+
+const { extractFileName } = usePickerHelper();
+
+const imageName = ref(props.image ? extractFileName(props.image) : '');
 
 const isPlaceholder = computed(() => props.image === props.placeholder);
 const isUploaderOpen = ref(false);
 const selectedImageType = ref(props.selectedImageType || 'wideScreen');
 
-const handleImageAdd = ({ image, type }: { image: string; type: string }) => {
-  emit('add', { image, type });
+const handleImageAdd = ({ image, name, type }: { image: string; name: string; type: string }) => {
+  emit('add', { image, name, type });
+  imageName.value = name;
   isUploaderOpen.value = false;
 };
+
+watch(
+  () => props.image,
+  (newImage) => {
+    imageName.value = newImage ? extractFileName(newImage) : '';
+  },
+  { immediate: true },
+);
 </script>
