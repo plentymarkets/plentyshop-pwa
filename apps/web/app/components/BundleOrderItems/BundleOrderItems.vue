@@ -9,7 +9,7 @@
       >
         <NuxtImg
           ref="image"
-          :src="productBundleGetters.getBundleItemImage(item)"
+          :src="addModernImageExtension(productBundleGetters.getBundleItemImage(item))"
           class="size-28 aspect-square object-contain pr-4"
           :alt="productBundleGetters.getBundleItemName(item)"
           loading="lazy"
@@ -19,7 +19,7 @@
       <NuxtImg
         v-else
         ref="image"
-        :src="productBundleGetters.getBundleItemImage(item)"
+        :src="addModernImageExtension(productBundleGetters.getBundleItemImage(item))"
         class="size-28 aspect-square mr-4 object-contain"
         :alt="productBundleGetters.getBundleItemName(item)"
         loading="lazy"
@@ -57,6 +57,7 @@ const { t } = useI18n();
 const { product } = defineProps<BundleOrderItemsProps>();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
+const { addModernImageExtension } = useModernImage();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (

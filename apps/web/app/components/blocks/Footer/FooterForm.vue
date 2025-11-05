@@ -336,7 +336,8 @@
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterSettings } from './types';
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const props = defineProps<{ uuid?: string }>();
