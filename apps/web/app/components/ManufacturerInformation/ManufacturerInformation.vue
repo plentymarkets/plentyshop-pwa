@@ -6,66 +6,25 @@
     <p class="mb-2">{{ t('manufacturer.subtitle') }}</p>
 
     <div class="border-2 py-2 px-4">
-      <p v-if="shouldShow('manufacturerLogo') && manufacturerInfo.logo">
+      <p v-if="manufacturerInfo.logo">
         <NuxtImg :src="manufacturerInfo.logo" :alt="t('manufacturer.logoAlt')" loading="lazy" />
       </p>
-
-      <p v-if="shouldShow('manufacturerName') && manufacturerInfo.name" data-testid="manufacturerInfo-name">
-        {{ manufacturerInfo.name }}
+      <p v-if="manufacturerInfo.name" data-testid="manufacturerInfo-name">{{ manufacturerInfo.name }}</p>
+      <p v-else-if="manufacturerInfo.externalName">{{ manufacturerInfo.externalName }}</p>
+      <p v-if="manufacturerInfo.legalName">{{ manufacturerInfo.legalName }}</p>
+      <p v-if="manufacturerInfo.street || manufacturerInfo.houseNo">
+        {{ manufacturerInfo.street }} {{ manufacturerInfo.houseNo }}
       </p>
-      <p v-else-if="shouldShow('manufacturerExternalName') && manufacturerInfo.externalName">
-        {{ manufacturerInfo.externalName }}
+      <p v-if="manufacturerInfo.postcode || manufacturerInfo.town || manufacturerInfo.country">
+        {{ manufacturerInfo.postcode }}
+        <span v-if="manufacturerInfo.town"> {{ manufacturerInfo.town }},&nbsp;</span>
+        {{ manufacturerInfo.country }}
       </p>
-
-      <p v-if="shouldShow('manufacturerLegalName') && manufacturerInfo.legalName">
-        {{ manufacturerInfo.legalName }}
-      </p>
-
-      <p
-        v-if="
-          (shouldShow('manufacturerStreet') && manufacturerInfo.street) ||
-          (shouldShow('manufacturerHouseNo') && manufacturerInfo.houseNo)
-        "
-      >
-        <span v-if="shouldShow('manufacturerStreet') && manufacturerInfo.street">{{ manufacturerInfo.street }}</span>
-        <span v-if="shouldShow('manufacturerHouseNo') && manufacturerInfo.houseNo">
-          {{ manufacturerInfo.houseNo }}</span
-        >
-      </p>
-
-      <p
-        v-if="
-          (shouldShow('manufacturerPostcode') && manufacturerInfo.postcode) ||
-          (shouldShow('manufacturerTown') && manufacturerInfo.town) ||
-          (shouldShow('manufacturerCountryId') && manufacturerInfo.country)
-        "
-      >
-        <span v-if="shouldShow('manufacturerPostcode') && manufacturerInfo.postcode">{{
-          manufacturerInfo.postcode
-        }}</span>
-        <span v-if="shouldShow('manufacturerTown') && manufacturerInfo.town"> {{ manufacturerInfo.town }},&nbsp;</span>
-        <span v-if="shouldShow('manufacturerCountryId') && manufacturerInfo.country">{{
-          manufacturerInfo.country
-        }}</span>
-      </p>
-
-      <p v-if="shouldShow('manufacturerPhoneNumber') && manufacturerInfo.phoneNumber">
-        {{ t('phone') }}: {{ manufacturerInfo.phoneNumber }}
-      </p>
-
-      <p v-if="shouldShow('manufacturerFaxNumber') && manufacturerInfo.faxNumber">
-        {{ t('fax') }}: {{ manufacturerInfo.faxNumber }}
-      </p>
-
-      <p v-if="shouldShow('manufacturerEmail') && manufacturerInfo.email">
-        {{ t('email') }}: {{ manufacturerInfo.email }}
-      </p>
-
-      <p v-if="shouldShow('manufacturerContactUrl') && manufacturerInfo.contactUrl">
-        {{ t('contactUrl') }}: {{ manufacturerInfo.contactUrl }}
-      </p>
-
-      <p v-if="shouldShow('manufacturerUrl') && manufacturerInfo.url">
+      <p v-if="manufacturerInfo.phoneNumber">{{ t('phone') }}: {{ manufacturerInfo.phoneNumber }}</p>
+      <p v-if="manufacturerInfo.faxNumber">{{ t('fax') }}: {{ manufacturerInfo.faxNumber }}</p>
+      <p v-if="manufacturerInfo.email">{{ t('email') }}: {{ manufacturerInfo.email }}</p>
+      <p v-if="manufacturerInfo.contactUrl">{{ t('contactUrl') }}: {{ manufacturerInfo.contactUrl }}</p>
+      <p v-if="manufacturerInfo.url">
         <NuxtLink :to="manufacturerInfo.url" target="_blank">{{ t('homepage') }}: {{ manufacturerInfo.url }}</NuxtLink>
       </p>
     </div>
@@ -84,30 +43,6 @@ const { t } = useI18n();
 
 const manufacturer = productGetters.getManufacturer(props.product);
 const country = manufacturerGetters.getManufacturerCountry(manufacturer);
-
-const settings = reactive({} as Record<string, string>);
-
-const settingKeys = [
-  'manufacturerName',
-  'manufacturerExternalName',
-  'manufacturerLegalName',
-  'manufacturerLogo',
-  'manufacturerUrl',
-  'manufacturerStreet',
-  'manufacturerHouseNo',
-  'manufacturerPostcode',
-  'manufacturerTown',
-  'manufacturerCountryId',
-  'manufacturerPhoneNumber',
-  'manufacturerFaxNumber',
-  'manufacturerEmail',
-  'manufacturerContactUrl',
-];
-
-settingKeys.forEach((key: string) => {
-  const { getSetting } = useSiteSettings(key);
-  settings[key] = getSetting();
-});
 
 const manufacturerInfo = computed(() => {
   return {
@@ -128,16 +63,8 @@ const manufacturerInfo = computed(() => {
   };
 });
 
-const shouldShow = (field: string) => {
-  return settings[field] === '1';
-};
-
 const hasAnyInfo = computed(() => {
   const info = manufacturerInfo.value;
-
-  return Object.entries(info).some(([key, value]) => {
-    const settingKey = `manufacturer${key.charAt(0).toUpperCase() + key.slice(1)}`;
-    return shouldShow(settingKey) && Boolean(value);
-  });
+  return Object.values(info).some(Boolean);
 });
 </script>
