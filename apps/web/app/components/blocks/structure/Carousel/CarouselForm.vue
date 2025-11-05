@@ -201,7 +201,8 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 setIndex(blockUuid.value, 0);
 

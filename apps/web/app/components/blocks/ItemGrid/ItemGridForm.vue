@@ -244,7 +244,9 @@ import type { ItemGridFormProps, ItemGridContent, ItemGridFieldKey } from './typ
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -306,7 +308,8 @@ const fieldLabels: Record<string, string> = {
     "button-primary": "Primary",
     "button-secondary": "Secondary",
     "pagination-label": "Pagination",
-    "pagination-position": "Pagination position"
+    "pagination-position": "Pagination position",
+    "drag-reorder-aria": "Drag to reorder"
   },
   "de": {
     "layout-settings-label": "Layout settings",
@@ -337,6 +340,7 @@ const fieldLabels: Record<string, string> = {
     "add-to-cart-button-style": "“Add to cart” button",
     "button-primary": "Primary",
     "button-secondary": "Secondary",
+    "drag-reorder-aria": "Drag to reorder",
 
     "pagination-label": "Pagination",
     "pagination-position": "Pagination position"
