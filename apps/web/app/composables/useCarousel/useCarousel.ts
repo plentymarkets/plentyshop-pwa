@@ -9,7 +9,9 @@ export const useCarousel: UseCarouselReturn = () => {
   }));
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
-  const { data } = useCategoryTemplate();
+  const route = useRoute();
+  const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 

@@ -2,10 +2,12 @@ export const useUpdatePageTemplate = () => {
   const updatePageTemplate = async (): Promise<boolean> => {
     const { isEditingEnabled } = useEditor();
     const { send } = useNotification();
-    const { saveBlocks, data } = useCategoryTemplate();
+    const route = useRoute();
+
+    const { saveBlocks, data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 
     const { data: dataProducts } = useProducts();
-    const route = useRoute();
+
     try {
       const cleanedData = JSON.stringify(data.value);
       const identifier = ref(route.meta.identifier as string | number);
