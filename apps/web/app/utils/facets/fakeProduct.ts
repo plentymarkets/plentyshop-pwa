@@ -40,10 +40,20 @@ export const fakeProduct = {
   },
   texts: {
     urlPath: 'wohnzimmer/sessel-hocker/barhocker-white-sanfrancisco',
-    name3: '',
-    name2: '',
+    technicalData:
+      '<ul><li data-start="923" data-end="961" id="isPasted"><p data-start="925" data-end="961">Exterior material: premium leather</p></li><li data-start="962" data-end="1007"><p data-start="964" data-end="1007">Interior lining: grey silk with B2B print</p></li><li data-start="1008" data-end="1050"><p data-start="1010" data-end="1050">Emblem: genuine gold (B2B logo, front)</p></li><li data-start="1051" data-end="1090"><p data-start="1053" data-end="1090">Dimensions: approx. 42 × 30 × 12 cm</p></li><li data-start="1091" data-end="1117"><p data-start="1093" data-end="1117">Weight: approx. 1.2 kg</p></li><li data-start="1118" data-end="1196"><p data-start="1120" data-end="1196">Main compartment: large zippered section, suitable for laptops up to 15.6″</p></li><li data-start="1197" data-end="1269"><p data-start="1199" data-end="1269">Interior: multiple organizer pockets for documents, smartphone, pens</p></li><li data-start="1270" data-end="1335"><p data-start="1272" data-end="1335">Extra feature: padded laptop compartment with RFID protection</p></li><li data-start="1336" data-end="1383"><p data-start="1338" data-end="1383">Carrying options: two short leather handles</p></li><li data-start="1336" data-end="1383"><p data-start="1338" data-end="1383">This is technical data EN.</p></li></ul>',
+    name3: 'Name 3 EN',
+    title: 'HTML Title for Webshop EN',
+    itemId: 128,
+    id: 104,
     lang: 'de',
+    description:
+      '<p>Crafted for professionals who demand both sophistication and practicality, this luxurious business bag is made from premium leather and adorned with an authentic gold B2B emblem. Two sturdy short handles ensure comfortable carrying, while the spacious zippered main compartment provides ample room for a laptop. Multiple interior pockets keep documents and essentials neatly organized. The lining, made of grey silk with an elegant B2B print, adds a refined touch to the interior. A must-have accessory for business trips and the modern professional lifestyle. This is descr. EN.</p>',
+    metaDescription: 'Meta Description EN',
+    name2: 'Name 2 EN',
     name1: 'Example Product ',
+    shortDescription: 'Premium business bag in fine leather: Elegance meets functionality. This is Preview Text EN.',
+    keywords: 'Meta-Keywords EN',
   },
   defaultCategories: [
     {

@@ -75,7 +75,10 @@
             </template>
 
             <template v-if="key === 'addToWishlist' && configuration?.fields.addToWishlist">
-              <div class="flex items-center" :class="{ 'justify-center': configuration?.wishlistSize === 'large' }">
+              <div
+                class="flex items-center mt-2"
+                :class="{ 'justify-center': configuration?.wishlistSize === 'large' }"
+              >
                 <WishlistButton
                   :variant="configuration?.wishlistSize === 'small' ? 'tertiary' : 'secondary'"
                   :product="product"
@@ -168,8 +171,17 @@
                   </i18n-t>
                 </div>
                 <template v-if="showPayPalButtons">
-                  <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
-                  <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+                  <PayPalExpressButton
+                    type="SingleItem"
+                    location="itemPage"
+                    class="mt-4"
+                    @validation-callback="paypalHandleAddToCart"
+                  />
+                  <PayPalPayLaterBanner
+                    placement="product"
+                    location="itemPage"
+                    :amount="priceWithProperties * quantitySelectorValue"
+                  />
                 </template>
               </div>
             </template>
