@@ -38,6 +38,7 @@
           placement="bottom"
           :show-arrow="true"
         >
+          {{ settingsIsDirty }} / {{ isEditingEnabled }}
           <button
             class="self-start bg-[#062633] text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
             :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
@@ -75,7 +76,9 @@ const editLabel = 'Switch to Edit mode to modify your page content and layout.';
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
-const { data, loading, cleanData } = useCategoryTemplate();
+const route = useRoute();
+const { data, loading, cleanData } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
 
