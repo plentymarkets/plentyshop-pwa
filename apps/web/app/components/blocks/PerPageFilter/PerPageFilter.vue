@@ -1,9 +1,9 @@
 <template>
   <section data-testid="category-per-page" aria-label="Show products per page" :style="layoutStyle">
     <CategoryItemsPerPage
-      :key="useSelectionModeAlways ? 'no-ph' : 'ph'"
+      :key="useSelectionModeCompact ? 'ph' : 'no-ph'"
       class="mb-6"
-      :selection-mode-always="useSelectionModeAlways"
+      :selection-mode-compact="useSelectionModeCompact"
       :total-products="productsCatalog.pagination?.totals ?? 0"
     />
   </section>
@@ -13,7 +13,7 @@ import type { PerPageContent } from '~/components/blocks/PerPageFilter/types';
 
 const { data: productsCatalog } = useProducts();
 const props = defineProps<{ content: PerPageContent }>();
-const useSelectionModeAlways = computed(() => props.content.settings?.selectionModeAlways ?? false);
+const useSelectionModeCompact = computed(() => props.content.settings?.selectionModeCompact ?? false);
 const layoutStyle = computed(() => {
   const layout = props.content.layout ?? {};
   return {

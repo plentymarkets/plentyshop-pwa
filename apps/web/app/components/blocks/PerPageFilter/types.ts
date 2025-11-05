@@ -1,5 +1,5 @@
 export interface PerPageSettings {
-  selectionModeAlways: boolean;
+  selectionModeCompact: boolean;
 }
 export type PerPageContent = {
   layout: {
