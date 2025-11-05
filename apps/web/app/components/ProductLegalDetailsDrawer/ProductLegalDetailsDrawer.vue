@@ -98,7 +98,8 @@ const productLegalDrawerRef = ref();
 const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 
 const productLegalBlock = computed(() => {
   if (!openedBlockUuid.value) return null;
