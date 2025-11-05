@@ -221,6 +221,7 @@ import {
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
+import { handleLogout } from '~/utils/logout';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();
@@ -274,11 +275,7 @@ watch(
   },
 );
 
-const logOut = async () => {
-  accountDropdownToggle();
-  await logout();
-  window.location.reload();
-};
+const logOut = () => handleLogout({ logout, toggle: accountDropdownToggle });
 
 const accountDropdown = computed(() => [
   {

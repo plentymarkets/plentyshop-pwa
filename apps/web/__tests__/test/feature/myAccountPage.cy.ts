@@ -4,6 +4,7 @@ import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObje
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
 
 beforeEach(() => {
+  cy.clearAllCookies();
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   cy.visitAndHydrate(paths.authLogin);
   myAccount.successLogin();
@@ -22,10 +23,6 @@ describe('Smoke: My Account', () => {
 
   it('[smoke] Navigating to Returns from top header', () => {
     myAccount.clickTopBarReturnsLink();
-  });
-
-  it('[smoke] Logout from top header', () => {
-    myAccount.clickTopBarLogoutButton();
   });
 
   it('[smoke] Checking all My Account sections functionality', () => {
