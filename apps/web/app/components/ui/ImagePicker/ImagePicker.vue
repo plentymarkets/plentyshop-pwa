@@ -14,16 +14,13 @@
 
       <div class="flex-1">
         <template v-if="!isPlaceholder">
-          <p class="text-sm text-gray-800 break-all">
-            <template v-if="imageName.length >= 38">
-              <span v-for="(chunk, idx) in imageNameChunks" :key="idx"
-                >{{ chunk }}<br v-if="idx < imageNameChunks.length - 1"
-              /></span>
-            </template>
-            <template v-else>
+          <SfTooltip :label="imageName" placement="top">
+            <p
+              class="text-sm text-gray-800 overflow-hidden text-ellipsis whitespace-nowrap max-w-[180px] cursor-pointer"
+            >
               {{ imageName || '—' }}
-            </template>
-          </p>
+            </p>
+          </SfTooltip>
           <p class="text-sm text-gray-500">{{ dimensions }}</p>
         </template>
         <template v-else>
@@ -75,17 +72,6 @@ const emit = defineEmits<{
 const { extractFileName } = usePickerHelper();
 
 const imageName = ref(props.image ? extractFileName(props.image) : '');
-
-const imageNameChunks = computed(() => {
-  if (!imageName.value) return [];
-  const chunkSize = 38;
-  const str = imageName.value;
-  const chunks = [];
-  for (let i = 0; i < str.length; i += chunkSize) {
-    chunks.push(str.slice(i, i + chunkSize));
-  }
-  return chunks;
-});
 
 const isPlaceholder = computed(() => props.image === props.placeholder);
 const isUploaderOpen = ref(false);
