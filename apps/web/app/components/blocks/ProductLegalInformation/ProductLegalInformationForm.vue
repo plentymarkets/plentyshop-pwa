@@ -129,7 +129,8 @@ const layoutOpen = ref(true);
 const props = defineProps<ProductLegalInformationProps>();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 
 const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
