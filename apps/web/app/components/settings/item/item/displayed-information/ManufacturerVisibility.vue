@@ -9,7 +9,7 @@
         {{ getEditorTranslation(`${setting}.label`) }}
       </UiFormLabel>
       <SfSwitch
-        v-model="settingValues[setting]"
+        v-model="localSettings[setting]"
         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
       />
     </div>
@@ -36,15 +36,19 @@ const settings = [
   'manufacturerContactUrl',
 ];
 
-const settingValues = reactive({});
+const localSettings = reactive<Record<string, boolean>>({});
 
 settings.forEach((key) => {
   const { updateSetting, getSetting } = useSiteSettings(key);
 
-  settingValues[key] = computed({
-    get: () => getSetting() === '1',
-    set: (value) => updateSetting(value ? '1' : '0'),
-  });
+  localSettings[key] = getSetting() === '1';
+
+  watch(
+    () => localSettings[key],
+    (newValue) => {
+      updateSetting(newValue ? '1' : '0');
+    },
+  );
 });
 </script>
 
