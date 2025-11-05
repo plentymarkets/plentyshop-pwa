@@ -46,9 +46,8 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import type { Block, Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
 const route = useRoute();
 const { t } = useI18n();
