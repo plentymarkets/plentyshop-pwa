@@ -70,14 +70,13 @@ describe('Checkout Addresses', () => {
   it('should not show any forms as logged in user with existing addresses', () => {
     cy.addToCart();
     cy.intercept('/plentysystems/doLogin').as('doLogin');
-    cy.intercept('/plentysystems/getAddresses').as('getAddresses');
+    cy.intercept('/plentysystems/getAddressesData').as('getAddressesData');
     cy.visitAndHydrate(paths.authLogin);
     myAccount.successLogin();
     cy.wait('@doLogin');
     checkout.goToCheckoutPath();
 
-    cy.wait('@getAddresses');
-    cy.wait('@getAddresses');
+    cy.wait('@getAddressesData');
 
     checkout.billingAddressForm.should('not.exist');
     checkout.shippingAddressForm.should('not.exist');
