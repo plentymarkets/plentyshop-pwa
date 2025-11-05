@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts" setup>
-import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTemplateDataDe.json';
 import type { Block } from '@plentymarkets/shop-api';
+import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTemplateDataDe.json';
 import homepageTemplateDataEn from '~/composables/useCategoryTemplate/homepageTemplateDataEn.json';
 
 definePageMeta({
