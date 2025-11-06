@@ -18,13 +18,6 @@
     </template>
 
     <template v-else>
-      <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
-        <template #prefix>
-          <SfIconTune />
-        </template>
-        {{ t('listSettings') }}
-      </UiButton>
-
       <CategoryPageContent
         v-if="productsCatalog?.products"
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -45,7 +38,7 @@
 
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
@@ -57,8 +50,6 @@ const { fetchProducts, data: productsCatalog, productsPerPage, loading } = usePr
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 const config = useRuntimeConfig().public;
-
-const { open } = useDisclosure();
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
