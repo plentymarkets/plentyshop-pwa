@@ -109,12 +109,12 @@ export const useCategoryData = () => {
       else el.classList.add('max-w-screen-3xl');
     }, 100);
   };
-
   onMounted(() => {
     watch(
       () => categoryDataBlock.value.image?.fillMode,
       (newMode) => {
-        if (newMode === 'fill') {
+        const display = categoryDataBlock.value.displayCategoryImage;
+        if (newMode === 'fill' && display !== 'off') {
           categoryDataBlock.value.layout.paddingTop = 0;
           categoryDataBlock.value.layout.paddingBottom = 0;
           categoryDataBlock.value.layout.paddingLeft = 0;
