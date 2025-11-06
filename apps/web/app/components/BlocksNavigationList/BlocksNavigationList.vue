@@ -1,5 +1,5 @@
 <template>
-  <template v-for="(category, categoryIndex) in filteredCategories" :key="categoryIndex">
+  <template v-for="(category, categoryIndex) in blocksLists" :key="categoryIndex">
     <UiAccordionItem
       v-if="pageHasAccessToCategory(category)"
       summary-active-class="bg-neutral-100 border-t-0"
@@ -65,11 +65,6 @@ const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBloc
   useBlockManager();
 getBlocksLists();
 
-const filteredCategories = computed(() =>
-  Object.values(blocksLists.value).filter(
-    (category) => Array.isArray(category.accessControl) && category.accessControl.includes(blocksListContext.value),
-  ),
-);
 
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
