@@ -67,6 +67,7 @@ definePageMeta({
 
 watchEffect(() => {
   route.meta.isBlockified = isBlockified.value;
+  route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
 
 const breadcrumbs = computed(() => {
