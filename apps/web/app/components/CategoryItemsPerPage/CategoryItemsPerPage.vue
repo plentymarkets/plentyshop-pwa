@@ -1,7 +1,8 @@
 <template>
   <div class="w-full" data-testid="category-items-per-page">
     <h6
-      class="bg-primary-200 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
+      v-if="!selectionModeCompact"
+      class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('perPage') }}
     </h6>
@@ -13,6 +14,9 @@
         :aria-label="t('perPage')"
         @change="updateItemsPerPage(Number(selected))"
       >
+        <option v-if="selectionModeCompact" value="" disabled hidden>
+          {{ t('perPage') }}
+        </option>
         <option v-for="{ value, label, disabled } in options" :key="value" :value="value" :disabled="disabled">
           {{ label }}
         </option>
@@ -26,10 +30,12 @@ import { SfSelect } from '@storefront-ui/vue';
 import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
 import { defaults } from '~/composables';
 
-const props = defineProps<CategoryItemsPerPageProps>();
+const props = defineProps<CategoryItemsPerPageProps & { selectionModeCompact?: boolean }>();
 
-const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
+const { updateItemsPerPage: updateItemsPerPageFromComposable, getFacetsFromURL } = useCategoryFilter();
 const { t } = useI18n();
+
+const selectionModeCompact = computed(() => props.selectionModeCompact ?? false);
 
 const options = ref(
   defaults.PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })),
@@ -58,4 +64,22 @@ const selectedValue =
     : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
 
 const selected = ref(selectedValue);
+watch(
+  selectionModeCompact,
+  (on) => {
+    if (on) {
+      selected.value = '';
+    } else {
+      if (!selected.value) {
+        selected.value = lastDisabledValue;
+      }
+    }
+  },
+  { immediate: true },
+);
+
+const updateItemsPerPage = (itemsPerPage: number): void => {
+  if (!itemsPerPage) return;
+  updateItemsPerPageFromComposable(itemsPerPage);
+};
 </script>

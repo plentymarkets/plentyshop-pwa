@@ -19,13 +19,13 @@
           />
         </div>
 
-        <div v-if="multiGridStructure.layout" class="py-2">
+        <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
               <input
-                v-model.number="multiGridStructure.layout.marginTop"
+                v-model.number="multiGridStructure.configuration.layout.marginTop"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-top"
@@ -34,7 +34,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowDownward /></span>
               <input
-                v-model.number="multiGridStructure.layout.marginBottom"
+                v-model.number="multiGridStructure.configuration.layout.marginBottom"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-bottom"
@@ -43,7 +43,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowBack /></span>
               <input
-                v-model.number="multiGridStructure.layout.marginLeft"
+                v-model.number="multiGridStructure.configuration.layout.marginLeft"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-left"
@@ -52,7 +52,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
               <span><SfIconArrowForward /></span>
               <input
-                v-model.number="multiGridStructure.layout.marginRight"
+                v-model.number="multiGridStructure.configuration.layout.marginRight"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-right"
@@ -61,7 +61,7 @@
           </div>
         </div>
 
-        <div v-if="multiGridStructure.layout" class="py-2">
+        <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('gap-label') }}</UiFormLabel>
           <div class="border-b py-1 flex gap-2">
             <button
@@ -69,14 +69,17 @@
               :key="gapOption"
               type="button"
               data-testid="gap-btn"
-              :class="[gapBtnClasses, { 'bg-editor-button text-white': gapOption === multiGridStructure.layout.gap }]"
-              @click="multiGridStructure.layout.gap = gapOption"
+              :class="[
+                gapBtnClasses,
+                { 'bg-editor-button text-white': gapOption === multiGridStructure.configuration.layout.gap },
+              ]"
+              @click="multiGridStructure.configuration.layout.gap = gapOption"
             >
               {{ getEditorTranslation('gap-size-' + gapOption.toLowerCase()) }}
             </button>
           </div>
           <div class="mt-2 text-xs text-neutral-700">
-            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.layout.gap) }}px
+            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
           </div>
         </div>
       </div>
@@ -92,21 +95,25 @@
         <h2>{{ getEditorTranslation('layout-background') }}</h2>
       </template>
 
-      <div v-if="multiGridStructure.layout" class="py-2">
+      <div v-if="multiGridStructure.configuration.layout" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="multiGridStructure.layout.backgroundColor" type="text" data-testid="input-background-color">
+          <SfInput
+            v-model="multiGridStructure.configuration.layout.backgroundColor"
+            type="text"
+            data-testid="input-background-color"
+          >
             <template #suffix>
               <label
                 for="background-color"
-                :style="{ backgroundColor: multiGridStructure.layout.backgroundColor || '#ffffff' }"
+                :style="{ backgroundColor: multiGridStructure.configuration.layout.backgroundColor || '#ffffff' }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
                 <input
                   id="background-color"
-                  v-model="multiGridStructure.layout.backgroundColor"
+                  v-model="multiGridStructure.configuration.layout.backgroundColor"
                   data-testid="color-input-background"
                   type="color"
                   class="invisible w-8"
@@ -132,7 +139,8 @@ import {
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const { blockUuid } = useSiteConfiguration();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
@@ -158,8 +166,8 @@ const defaultMarginBottom = computed(() => {
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
-  if (!block.layout) {
-    block.layout = {
+  if (!block.configuration.layout) {
+    block.configuration.layout = {
       marginTop: 0,
       marginBottom: defaultMarginBottom.value,
       marginLeft: 40,
@@ -168,10 +176,10 @@ const multiGridStructure = computed(() => {
       gap: 'M',
     };
   } else {
-    if (!block.layout.backgroundColor) block.layout.backgroundColor = '#ffffff';
-    if (!block.layout.gap) block.layout.gap = 'M';
-    if (block.layout.marginBottom === undefined || block.layout.marginBottom === null) {
-      block.layout.marginBottom = defaultMarginBottom.value;
+    if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
+    if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
+    if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
+      block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
   }
   return block;

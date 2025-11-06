@@ -114,18 +114,19 @@ jobs:
 
       - name: Install productive dependencies for server
         run: |
-          npm install --omit=dev --workspace=apps/web
-          npm install --omit=dev --workspace=apps/server
+          npm install --omit=dev --ignore-scripts --workspace=apps/web
+          npm install --omit=dev --ignore-scripts --workspace=apps/server
 
       - name: Tar build output
         run: tar -czf build.tar.gz -C ${{ github.workspace }} apps/server/dist apps/web/.output apps/web/.nuxt
 
       - name: Upload build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build
           path: build.tar.gz
   smoke:
+    if: github.repository == 'plentymarkets/plentyshop-pwa'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -142,7 +143,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: build
 

@@ -52,7 +52,7 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { layout, content, configuration } = defineProps<MultiGridProps>();
+const { content, configuration } = defineProps<MultiGridProps>();
 
 const hoveredRowUuid = ref<string | null>(null);
 const onRowEnter = (row: Block) => {
@@ -75,7 +75,7 @@ const gapClassMap: Record<string, string> = {
   L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
   XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
-const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
+const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
 
 const defaultMarginBottom = computed(() => {
   switch (blockSize.value) {
@@ -93,18 +93,28 @@ const defaultMarginBottom = computed(() => {
 });
 
 const gridInlineStyle = computed(() => ({
-  backgroundColor: layout?.backgroundColor ?? 'transparent',
-  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : '0px',
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
-  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
-  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
+  backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+  marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
+  marginBottom:
+    configuration.layout?.marginBottom !== undefined
+      ? `${configuration.layout.marginBottom}px`
+      : `${defaultMarginBottom.value}px`,
+  marginLeft: configuration.layout?.marginLeft !== undefined ? `${configuration.layout.marginLeft}px` : '40px',
+  marginRight: configuration.layout?.marginRight !== undefined ? `${configuration.layout.marginRight}px` : '40px',
 }));
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
+
 const getColumnClasses = (colIndex: number) => {
   const columnWidth = configuration.columnWidths[colIndex];
-  return [`col-span-${columnWidth}`];
+  const classes = [`col-span-${columnWidth}`];
+
+  if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
+    classes.push('md:sticky', 'md:top-40');
+  }
+
+  return classes;
 };
 
 const getBlockActions = () => ({

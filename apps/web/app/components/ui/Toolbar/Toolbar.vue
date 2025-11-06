@@ -1,5 +1,6 @@
 <template>
   <div
+    :key="`${$route.meta?.identifier ?? ''}:${$route.meta?.type ?? ''}`"
     class="mb-3 font-editor"
     :class="['sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111]', drawerZIndexClass]"
     data-testid="edit-mode-toolbar"
@@ -75,7 +76,21 @@ const editLabel = 'Switch to Edit mode to modify your page content and layout.';
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
-const { data, loading, cleanData } = useCategoryTemplate();
+const route = useRoute();
+const initial = shallowRef(useCategoryTemplate(String(route.meta?.identifier ?? ''), String(route.meta?.type ?? '')));
+
+watch(
+  () => [route.meta?.identifier, route.meta?.type],
+  () => {
+    initial.value = useCategoryTemplate(String(route.meta?.identifier ?? ''), String(route.meta?.type ?? ''));
+  },
+  { immediate: true },
+);
+
+const data = computed(() => initial.value.data.value);
+const loading = computed(() => initial.value.loading.value);
+const cleanData = computed(() => initial.value.cleanData.value);
+
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
 

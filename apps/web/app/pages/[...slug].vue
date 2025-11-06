@@ -7,12 +7,13 @@
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <template v-if="config.enableCategoryEditing || productsCatalog.category?.type === 'content'">
+    <template v-if="isBlockified">
       <EditablePage
-        :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
+        :has-enabled-actions="isBlockified"
         :identifier="identifier"
         :type="'category'"
         data-testid="category-page-content"
+        :prevent-blocks-request="productsCatalog.category?.type === 'item'"
       />
     </template>
 
@@ -55,7 +56,6 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
 
 const { open } = useDisclosure();
@@ -63,6 +63,8 @@ const { open } = useDisclosure();
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
 );
+
+const isBlockified = computed(() => config.enableCategoryEditing || productsCatalog.value.category?.type === 'content');
 
 definePageMeta({
   layout: false,
@@ -73,7 +75,7 @@ definePageMeta({
 });
 
 watchEffect(() => {
-  route.meta.isBlockified = isEditablePage.value;
+  route.meta.isBlockified = isBlockified.value;
 });
 
 const breadcrumbs = computed(() => {

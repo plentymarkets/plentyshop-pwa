@@ -1133,7 +1133,8 @@
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "security": {
-      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page."
+      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page.",
+      "tooManyRequests": "Too many actions have been made in a short period of time. Please try again later."
     },
     "unknownError": "An unknown error has occurred."
   },
@@ -1231,6 +1232,5 @@
       }
     }
   },
-  "cancelOrder": "Cancel order",
-  "tooltipForDummyPlaceholder": "Please note that this is only sample data. In preview and live mode, you will see the facets for the actual products in this category. The number and type of customized filters may therefore vary."
+  "cancelOrder": "Cancel order"
 }

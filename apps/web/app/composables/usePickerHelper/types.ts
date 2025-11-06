@@ -23,6 +23,7 @@ export interface PickerHelperTemplate {
   selectedImageType: Readonly<Ref<ImageType>>;
   customLabel: Readonly<Ref<string>>;
   getImageTypeLabel: GetImageTypeLabel;
+  extractFileName: (image: string | undefined) => string;
 }
 
 export type UsePickerHelperReturn = () => PickerHelperTemplate;

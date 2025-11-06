@@ -1,6 +1,9 @@
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
+import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
+import { paths } from '../../../app/utils/paths';
 
 const checkout = new CheckoutPageObject();
+const myAccount = new MyAccountPageObject();
 
 beforeEach(() => {
   cy.clearCookies().visitSmoke();
@@ -50,5 +53,32 @@ describe('Checkout Addresses', () => {
     checkout.firstNameInput.type('John Guest Edit');
     checkout.saveBilling.click({ force: true });
     cy.get('#billing-address').should('contain', 'John Guest Edit');
+  });
+
+  it('should toggle billing address section with sameAsBilling checkbox', () => {
+    cy.addToCart();
+
+    checkout
+      .goToCheckoutPath()
+      .fillContactInformationForm()
+      .checkSameAsBilling()
+      .billingAddressSection.should('not.exist');
+    checkout.uncheckSameAsBilling().billingAddressSection.should('exist');
+    checkout.billingAddressForm.should('exist');
+  });
+
+  it('should not show any forms as logged in user with existing addresses', () => {
+    cy.addToCart();
+    cy.intercept('/plentysystems/doLogin').as('doLogin');
+    cy.intercept('/plentysystems/getAddressesData').as('getAddressesData');
+    cy.visitAndHydrate(paths.authLogin);
+    myAccount.successLogin();
+    cy.wait('@doLogin');
+    checkout.goToCheckoutPath();
+
+    cy.wait('@getAddressesData');
+
+    checkout.billingAddressForm.should('not.exist');
+    checkout.shippingAddressForm.should('not.exist');
   });
 });

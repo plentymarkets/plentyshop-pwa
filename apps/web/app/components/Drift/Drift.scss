@@ -170,6 +170,7 @@
 }
 .drift-bounding-box {
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
