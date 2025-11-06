@@ -1698,6 +1698,12 @@
               "text": {
                 "title": "Item legal details",
                 "linkText": "EU Responsible Person - click for details"
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
               }
             }
           },
@@ -1710,6 +1716,12 @@
               "text": {
                 "title": "Rechtliche Angaben zum Artikel",
                 "linkText": "EU-Verantwortlicher – hier klicken für Details"
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
               }
             }
           }
