@@ -65,7 +65,6 @@ const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBloc
   useBlockManager();
 getBlocksLists();
 
-
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
 const runtimeConfig = useRuntimeConfig();
