@@ -52,6 +52,7 @@ import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarke
 const route = useRoute();
 const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
+const { setBlocksListContext } = useBlockManager();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
@@ -102,6 +103,7 @@ if (Object.keys(product.value).length === 0) {
 }
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
+setBlocksListContext('product');
 
 onBeforeRouteLeave(() => {
   setCurrentProduct({} as Product);
