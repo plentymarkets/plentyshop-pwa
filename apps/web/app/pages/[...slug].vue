@@ -74,10 +74,6 @@ definePageMeta({
   identifier: 0,
 });
 
-watchEffect(() => {
-  route.meta.isBlockified = isBlockified.value;
-});
-
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
     const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
@@ -158,6 +154,11 @@ watch(
     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
   },
 );
+
+watchEffect(() => {
+  route.meta.isBlockified = isBlockified.value;
+  route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
+});
 
 useHead({
   title: headTitle,
