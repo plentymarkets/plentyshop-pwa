@@ -40,7 +40,7 @@
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
-      aria-controls="carousel-{{index}}"
+      :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
@@ -48,7 +48,7 @@
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       :class="`swiper-button-next swiper-button-next-${index}`"
-      aria-controls="carousel-{{index}}"
+      :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelNextSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
