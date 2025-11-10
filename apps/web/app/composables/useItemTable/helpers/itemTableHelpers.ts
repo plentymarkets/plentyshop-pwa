@@ -1,6 +1,7 @@
 import type { StorageObject } from '@plentymarkets/shop-api';
+import type { RegisterBlobUrl } from '../types';
 
-export function extractFolders(items: StorageObject[]): string[] {
+export const extractFolders = (items: StorageObject[]): string[] => {
   const folderSet = new Set<string>();
   items.forEach((item) => {
     const key = item.key;
@@ -11,7 +12,7 @@ export function extractFolders(items: StorageObject[]): string[] {
     }
   });
   return Array.from(folderSet);
-}
+};
 
 export const createPlaceholderObject = (key: string, size: number, uploadingClass: string): StorageObject => {
   return {
@@ -40,7 +41,7 @@ export const replaceByKeyInArray = (arr: StorageObject[], key: string, item: Sto
 export const buildItemHelper = (
   api: Partial<StorageObject>,
   file: File,
-  registerBlobUrl: (url: string) => void,
+  registerBlobUrl: RegisterBlobUrl,
 ): StorageObject => {
   const objectUrl = api.publicUrl ? undefined : URL.createObjectURL(file);
   if (objectUrl) registerBlobUrl(objectUrl);

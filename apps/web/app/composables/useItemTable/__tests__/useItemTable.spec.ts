@@ -42,12 +42,12 @@ describe('useItemsTable', () => {
 
     expect(mockGetStorageItems).toHaveBeenCalledWith(
       expect.objectContaining({
-        fileTypes: 'png,jpg,jpeg,avif,webp, svg',
+        fileTypes: 'png,jpg,jpeg,avif,webp,svg,ico',
         includeFolders: 'true',
       }),
     );
 
-    const expectedTypes = ['png', 'jpg', 'jpeg', 'avif', 'webp', 'svg'];
+    const expectedTypes = ['png', 'jpg', 'jpeg', 'avif', 'webp', 'svg', 'ico'];
     const calledFileTypes = mockGetStorageItems.mock.calls[0]?.[0]?.fileTypes?.replace(/\s/g, '').split(',');
 
     expectedTypes.forEach((type) => {

@@ -34,7 +34,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
   const folders = useState<string[]>('image-table-folders', () => []);
 
-  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp, svg') => {
+  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp,svg,ico') => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
