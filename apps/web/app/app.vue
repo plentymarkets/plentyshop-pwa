@@ -49,6 +49,7 @@
   <ClientOnly>
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
+    <component :is="ResetProductPageModal" v-if="clientPreview" />
   </ClientOnly>
   <ClientOnly>
     <LazyReloadPWA hydrate-on-idle />
@@ -129,5 +130,8 @@ const SiteConfigurationDrawer = defineAsyncComponent(
 const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
 const UnlinkCategoryModal = defineAsyncComponent(
   () => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'),
+);
+const ResetProductPageModal = defineAsyncComponent(
+  () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
 </script>

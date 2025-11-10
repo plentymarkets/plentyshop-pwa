@@ -122,6 +122,74 @@
           </ul>
         </div>
       </UiAccordionItem>
+
+      <UiAccordionItem
+        v-model="globalPagesOpen"
+        data-testid="global-pages-section"
+        summary-active-class="bg-neutral-100 border-t-0"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
+      >
+        <template #summary>
+          <h2>{{ getEditorTranslation('global-pages-label') }}</h2>
+        </template>
+
+        <div class="mt-4">
+          <p class="mb-4">{{ getEditorTranslation('global-pages-description') }}</p>
+        </div>
+
+        <div class="border-b border-neutral-200 my-4" />
+
+        <p class="mb-4">{{ getEditorTranslation('global-pages-product-category') }}</p>
+        <div class="mt-3 flex flex-col gap-2">
+          <button
+            type="button"
+            class="flex-[10] border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
+            @click="goToProductTemplatePage"
+          >
+            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path :d="editPath" fill="black" />
+              </svg>
+            </SfIconBase>
+            {{ getEditorTranslation('global-pages-edit-label') }}
+          </button>
+          <button
+            type="button"
+            class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
+            @click="toggleResetModal(true, 'category')"
+          >
+            <SfIconUndo class="fill-primary-900 cursor-pointer mr-2" />
+            {{ getEditorTranslation('global-pages-reset-label') }}
+          </button>
+        </div>
+
+        <div class="border-b border-neutral-200 my-4" />
+
+        <p class="mb-4">{{ getEditorTranslation('global-pages-product-detail') }}</p>
+        <div class="mt-3 flex flex-col gap-2">
+          <button
+            type="button"
+            class="flex-[10] border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
+          >
+            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path :d="editPath" fill="black" />
+              </svg>
+            </SfIconBase>
+            {{ getEditorTranslation('global-pages-edit-label') }}
+          </button>
+          <button
+            type="button"
+            class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
+            @click="toggleResetModal(true, 'detail')"
+          >
+            <SfIconUndo class="fill-primary-900 cursor-pointer mr-2" />
+            {{ getEditorTranslation('global-pages-reset-label') }}
+          </button>
+        </div>
+
+        <div class="border-b border-neutral-200 my-4" />
+      </UiAccordionItem>
     </div>
   </div>
   <CategorySettingsDrawer v-if="settingsCategory" />
@@ -137,10 +205,14 @@ import {
   SfIconHome,
   SfLoaderCircular,
   SfIconWarning,
+  SfIconBase,
+  SfIconUndo,
 } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
+import { editPath } from '~/assets/icons/paths/edit';
 const { locale, defaultLocale } = useI18n();
 
+const router = useRouter();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
@@ -149,10 +221,16 @@ const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, r
 
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
+const globalPagesOpen = ref(false);
+const goToProductTemplatePage = () => {
+  router.push('/product-template-page');
+};
+
+const { toggleResetModal } = useResetProductPageModal();
 
 const isDefaultLocale = computed(() => locale.value === defaultLocale);
 
-const limitAccordionHeight = computed(() => contentPagesOpen.value && productPagesOpen.value);
+const limitAccordionHeight = computed(() => contentPagesOpen.value && productPagesOpen.value && globalPagesOpen.value);
 
 const handleScroll = async (e: Event, type: 'content' | 'item') => {
   const el = e.target as HTMLElement;
@@ -253,7 +331,13 @@ const homepageItem = computed<CategoryEntry>(() => ({
     "save-settings-label": "Save Settings",
     "reload-hint": "Changes to page settings are only reflected on reload.",
     "content-pages-label": "Content Pages",
-    "product-categories-label": "Product Categories"
+    "product-categories-label": "Product Categories",
+    "global-pages-label": "Global Page Structures",
+    "global-pages-description": "The global template controls the layout of your product detail pages. Use Edit to modify it, or revert to the default if needed.",
+    "global-pages-product-category": "Product category page",
+    "global-pages-product-detail": "Product detail page",
+    "global-pages-edit-label": "Edit page",
+    "global-pages-reset-label": "Reset to default"
   },
   "de": {
     "label": "Pages",
@@ -263,7 +347,13 @@ const homepageItem = computed<CategoryEntry>(() => ({
     "save-settings-label": "Save Settings",
     "reload-hint": "Changes to page settings are only reflected on reload.",
     "content-pages-label": "Content Pages",
-    "product-categories-label": "Product Categories"
+    "product-categories-label": "Product Categories",
+    "global-pages-label": "Global Page Structures",
+    "global-pages-description": "The global template controls the layout of your product detail pages. Use Edit to modify it, or revert to the default if needed.",
+    "global-pages-product-category": "Product category page",
+    "global-pages-product-detail": "Product detail page",
+    "global-pages-edit-label": "Edit page",
+    "global-pages-reset-label": "Reset to default"
   }
 }
 </i18n>
