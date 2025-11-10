@@ -1,7 +1,14 @@
 <template>
-  <ClientOnly>
+  <!-- (Old code )-->
+  <!-- <ClientOnly>
     <component :is="Toolbar" v-if="clientPreview" />
+  </ClientOnly> -->
+
+  <!-- (New Layer) -->
+  <ClientOnly>
+    <component :is="ToolbarLayer" v-if="clientPreview" />
   </ClientOnly>
+
   <div
     class="w-100 relative md:flex"
     :class="{
@@ -56,6 +63,8 @@
 </template>
 
 <script setup lang="ts">
+import { ToolbarLayer } from '#components';
+
 const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
@@ -121,7 +130,7 @@ onMounted(() => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
-const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
+// const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
 const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
 const SiteConfigurationDrawer = defineAsyncComponent(
   () => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue'),

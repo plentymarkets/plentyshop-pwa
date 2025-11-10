@@ -7,6 +7,12 @@ import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 
 export default defineNuxtConfig({
+  // extends: [
+  //   '../base',
+  //   '/Users/alexolteanplenty/workspace/editor-layer-nuxi',
+  // ],
+
+
   srcDir: 'app/',
   telemetry: false,
   devtools: { enabled: true },

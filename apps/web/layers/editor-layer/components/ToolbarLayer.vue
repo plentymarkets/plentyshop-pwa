@@ -5,6 +5,8 @@
     :class="['sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111]', drawerZIndexClass]"
     data-testid="edit-mode-toolbar"
   >
+
+
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">

@@ -1,9 +1,11 @@
 <template>
   <div>
+    <HelloWorld />
     <EditablePage :identifier="'index'" :type="'immutable'" />
   </div>
 </template>
 
+==
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTemplateDataDe.json';
