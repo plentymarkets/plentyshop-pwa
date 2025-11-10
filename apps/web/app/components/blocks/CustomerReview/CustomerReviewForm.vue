@@ -124,7 +124,8 @@ const props = defineProps<CustomerReviewProps>();
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
 
 const customerReview = computed<CustomerReviewContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
