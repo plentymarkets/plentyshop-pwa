@@ -7,7 +7,14 @@
       "isGlobalTemplate": false
     },
     "configuration": {
-      "columnWidths": [6, 6]
+      "columnWidths": [6, 6],
+      "sticky": [1],
+      "layout": {
+        "marginTop": "0",
+        "marginLeft": "0",
+        "marginRight": "0",
+        "marginBottom": "0"
+      }
     },
     "layout": {
       "gap": "XL",
@@ -29,8 +36,142 @@
             "enableHoverZoom": true
           }
         }
+      },
+      {
+        "name": "CustomerReview",
+        "type": "content",
+        "meta": {
+          "uuid": "c1a2c3d3-5e6q-4a7b-8c9j-0e1f2a3b4c5l",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 0,
+        "content": {
+          "text": {
+            "title": "Customer Reviews"
+          },
+          "layout": {
+            "collapsible": true,
+            "initiallyCollapsed": false
+          }
+        }
+      },
+      {
+        "name": "ProductLegalInformation",
+        "type": "content",
+        "meta": {
+          "uuid": "c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 0,
+        "content": {
+          "text": {
+            "title": "Item legal details",
+            "linkText": "EU Responsible Person - click for details"
+          }
+        }
+      },
+      {
+        "name": "PriceCard",
+        "type": "content",
+        "meta": {
+          "uuid": "p1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "isGlobalTemplate": false
+        },
+        "parent_slot": 1,
+        "content": {
+          "fields": {
+            "itemName": true,
+            "price": true,
+            "tags": true,
+            "availability": true,
+            "starRating": true,
+            "orderProperties": true,
+            "variationProperties": true,
+            "previewText": true,
+            "attributes": true,
+            "itemBundle": false,
+            "graduatedPrices": false,
+            "addToWishlist": true,
+            "quantityAndAddToCart": true,
+            "itemText": false,
+            "technicalData": false
+          },
+          "fieldsOrder": [
+            "itemName",
+            "price",
+            "tags",
+            "availability",
+            "starRating",
+            "variationProperties",
+            "orderProperties",
+            "previewText",
+            "attributes",
+            "itemBundle",
+            "graduatedPrices",
+            "addToWishlist",
+            "quantityAndAddToCart",
+            "itemText",
+            "technicalData"
+          ],
+          "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle", "attributes"],
+          "wishlistSize": "small",
+
+          "dropShadow": true,
+          "borders": true,
+          "borderColor": "#EFF4F1",
+          "layout": {
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": 0,
+            "paddingLeft": 0
+          }
+        }
       }
     ]
+  },
+  {
+    "name": "ItemText",
+    "type": "content",
+    "meta": {
+      "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c522",
+      "isGlobalTemplate": false
+    },
+    "parent_slot": 0,
+    "content": {
+      "text" : {
+        "title":"Item details"
+      },
+      "layout": {
+        "displayAsCollapsable": true,
+        "initiallyCollapsed": true,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      }
+    }
+  },
+  {
+    "name": "TechnicalData",
+    "type": "content",
+    "meta": {
+      "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c523",
+      "isGlobalTemplate": false
+    },
+    "parent_slot": 0,
+    "content": {
+      "text" : {
+        "title":"Technical Data"
+      },
+      "layout": {
+        "displayAsCollapsable": true,
+        "initiallyCollapsed": true,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      }
+    }
   },
   {
     "name": "ProductRecommendedProducts",

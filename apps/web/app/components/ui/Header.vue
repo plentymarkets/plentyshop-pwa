@@ -132,6 +132,7 @@
         class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
         data-testid="open-languageselect-button"
+        :style="{ color: iconColor }"
         :aria-label="t('languageSelector')"
         :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
         @click="toggleLanguageSelect()"
@@ -142,6 +143,7 @@
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
+        :style="{ color: iconColor }"
         :aria-label="t('openSearchModalButtonLabel')"
         @click="searchModalOpen"
       >

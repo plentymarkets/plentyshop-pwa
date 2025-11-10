@@ -64,6 +64,7 @@ import type { Category, Variation } from '~/components/BlocksNavigationList/type
 const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
   useBlockManager();
 getBlocksLists();
+
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
 const runtimeConfig = useRuntimeConfig();

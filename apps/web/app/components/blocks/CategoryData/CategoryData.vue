@@ -2,6 +2,7 @@
   <div :style="inlineStyle" data-testid="category-data">
     <template v-if="props.content.displayCategoryImage === 'off'">
       <div
+        v-if="shouldShowTextBlock"
         data-testid="text-card"
         :class="['w-full']"
         :style="{
@@ -36,7 +37,7 @@
         />
 
         <div
-          v-if="showNoTextMessage"
+          v-if="shouldShowTextBlock"
           :class="[
             'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
             { 'md:p-10': props.content.text.bgColor },
@@ -58,7 +59,16 @@
             }"
             :data-testid="'category-data-content-' + meta.uuid"
           >
-            <FieldsOrder v-bind="content" />
+            <div
+              v-if="showNoTextMessage"
+              class="text-center"
+              role="alert"
+              aria-live="polite"
+              data-testid="no-text-selected"
+            >
+              {{ getEditorTranslation('no-text-fields-selected') }}
+            </div>
+            <FieldsOrder v-else v-bind="content" />
           </div>
         </div>
       </div>
@@ -77,22 +87,17 @@ const runtimeConfig = useRuntimeConfig();
 const props = defineProps<CategoryDataProps>();
 const { hexToRgba, getTextAlignment, getContentPosition, isMobile } = useBlockContentHelper();
 const { data: productsCatalog } = useProducts();
-const clientPreview = ref(false);
-
+const { disableActions } = useEditor();
 const category = computed(() => productsCatalog.value.category || ({} as Category));
-const { $isPreview } = useNuxtApp();
-onNuxtReady(() => {
-  clientPreview.value = !!$isPreview;
-});
-
 const enabledText = computed(
   () =>
-    props.content.fields.name ||
-    props.content.fields.description1 ||
-    props.content.fields.description2 ||
-    props.content.fields.shortDescription,
+    (props.content.fields.name && details.value.name) ||
+    (props.content.fields.description1 && details.value.description) ||
+    (props.content.fields.description2 && details.value.description2) ||
+    (props.content.fields.shortDescription && details.value.shortDescription),
 );
-const showNoTextMessage = computed(() => clientPreview.value && !enabledText.value);
+const showNoTextMessage = computed(() => !enabledText.value);
+const shouldShowTextBlock = computed(() => disableActions.value || (!disableActions.value && !showNoTextMessage.value));
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
 
