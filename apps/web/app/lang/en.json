@@ -629,6 +629,7 @@
       "ariaLabelSlideControls": "Slide controls",
       "ariaLabelNextSlide": "Next slide",
       "ariaLabelPreviousSlide": "Previous slide",
+      "ariaLabelSlidePosition": "Slide {current} of {total}",
       "ariaRoleDescriptionCarousel": "Carousel",
       "ariaRoleDescriptionSlide": "Slide"
     },
