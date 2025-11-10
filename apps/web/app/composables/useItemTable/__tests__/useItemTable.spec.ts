@@ -1,6 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { StorageObject } from '@plentymarkets/shop-api';
-import { getAllowedImageExtensions } from '~/utils/allowedImageFilesHelper';
 
 import {
   extractFolders,
