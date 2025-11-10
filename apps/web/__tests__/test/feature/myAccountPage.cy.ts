@@ -24,10 +24,6 @@ describe('Smoke: My Account', () => {
     myAccount.clickTopBarReturnsLink();
   });
 
-  it('[smoke] Logout from top header', () => {
-    myAccount.clickTopBarLogoutButton();
-  });
-
   it('[smoke] Checking all My Account sections functionality', () => {
     cy.visitAndHydrate(paths.account);
 

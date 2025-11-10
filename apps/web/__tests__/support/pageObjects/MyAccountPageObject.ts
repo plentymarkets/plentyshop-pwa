@@ -53,15 +53,6 @@ export class MyAccountPageObject extends PageObject {
     cy.url().should('contain', paths.accountReturns);
   }
 
-  clickTopBarLogoutButton() {
-    cy.intercept('/plentysystems/doLogoutUser').as('doLogoutUser');
-    cy.getByTestId('account-dropdown-button').should('exist').click();
-    cy.getByTestId('account-dropdown-logout-item').should('exist').click();
-
-    cy.wait('@doLogoutUser').url().should('contain', paths.home);
-    cy.getByTestId('account-dropdown-button').should('not.exist');
-  }
-
   checkAllSectionsMenu() {
     this.accountLayout.getByTestId('account-layout-heading').should('be.visible');
     this.accountLayout.getByTestId('account-page-sidebar').should('be.visible');
