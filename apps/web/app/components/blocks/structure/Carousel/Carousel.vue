@@ -1,11 +1,13 @@
 <template>
   <NuxtErrorBoundary>
     <Swiper
+      :id="`carousel-${index}`"
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       v-bind="carouselProps"
       :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
+      :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
       :loop="true"
       :pagination="paginationConfig"
       :navigation="navigationConfig"
@@ -17,6 +19,11 @@
         v-for="(banner, slideIndex) in content"
         :key="slideIndex"
         :aria-labelledby="content.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
+        :aria-label="
+          content.length > 1
+            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: content.length })
+            : null
+        "
         v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
       >
@@ -30,23 +37,23 @@
       </SwiperSlide>
       <div
         v-if="enableModules"
-        role="group"
-        :aria-label="t('homepage.banner.ariaLabelSlideControls')"
         :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
       />
     </Swiper>
 
-    <div
+    <button
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
+      type="button"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
       :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
-    <div
+    <button
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
+      type="button"
       :class="`swiper-button-next swiper-button-next-${index}`"
       :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelNextSlide')"
@@ -106,6 +113,7 @@ const onSwiperInit = async (swiper: SwiperType) => {
     setIndex(meta.uuid, swiper.realIndex);
   }
 };
+
 const reinitializeSwiper = async () => {
   if (!slider || slider.destroyed) return;
 

@@ -629,6 +629,7 @@
       "ariaLabelSlideControls": "Steuerelemente für die Slides",
       "ariaLabelNextSlide": "Nächste Slide",
       "ariaLabelPreviousSlide": "Vorherige Slide",
+      "ariaLabelSlidePosition": "Slide {current} von {total}",
       "ariaRoleDescriptionCarousel": "Karussell",
       "ariaRoleDescriptionSlide": "Slide"
     },
