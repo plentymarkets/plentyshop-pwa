@@ -19,7 +19,11 @@
         v-for="(banner, slideIndex) in content"
         :key="slideIndex"
         :aria-labelledby="content.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
-        :aria-label="content.length > 1 ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: content.length }) : null"
+        :aria-label="
+          content.length > 1
+            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: content.length })
+            : null
+        "
         v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
       >
