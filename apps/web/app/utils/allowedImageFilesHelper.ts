@@ -16,6 +16,10 @@ export const ALLOWED_ACCEPT =
 
 export const MAX_BYTES = 512 * 1024 * 1024;
 
+export const getAllowedImageExtensions = (): string => {
+  return Array.from(ALLOWED_EXT).join(',');
+};
+
 export type InvalidCb = (reason: string) => void;
 
 export const validateImageFile = (file: File): { ok: true } | { ok: false; reason: string } => {
@@ -39,6 +43,7 @@ export const validateImageFile = (file: File): { ok: true } | { ok: false; reaso
   }
   return { ok: true };
 };
+
 export const makeHandleFileChange = (onSelected: (file: File) => void, onInvalid?: InvalidCb) => {
   return (event: Event) => {
     const input = event.target as HTMLInputElement | null;
@@ -51,6 +56,7 @@ export const makeHandleFileChange = (onSelected: (file: File) => void, onInvalid
     if (input) input.value = '';
   };
 };
+
 export const makeHandleDrop = (onSelected: (file: File) => void, onInvalid?: InvalidCb) => {
   return (event: DragEvent) => {
     event.preventDefault?.();

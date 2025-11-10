@@ -5,7 +5,7 @@ export interface UseItemTableState {
   loading: boolean;
 }
 
-export type GetStorageItems = (fileTypes?: string) => Promise<void>;
+export type GetStorageItems = (fileTypes: string) => Promise<void>;
 export type RegisterBlobUrl = (url: string) => void;
 
 export interface UseItemTableTemplate {

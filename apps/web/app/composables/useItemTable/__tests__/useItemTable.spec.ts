@@ -1,5 +1,7 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { StorageObject } from '@plentymarkets/shop-api';
+import { getAllowedImageExtensions } from '~/utils/allowedImageFilesHelper';
+
 import {
   extractFolders,
   createPlaceholderObject,
@@ -36,18 +38,18 @@ describe('useItemsTable', () => {
   it('should use all expected image types in getStorageItems default fileTypes', async () => {
     const { getStorageItems } = (await import('../useItemTable')).useItemsTable();
 
-    await getStorageItems();
+    await getStorageItems(getAllowedImageExtensions());
 
     const mockGetStorageItems = useSdk().plentysystems.getStorageItems as ReturnType<typeof vi.fn>;
 
     expect(mockGetStorageItems).toHaveBeenCalledWith(
       expect.objectContaining({
-        fileTypes: 'png,jpg,jpeg,avif,webp,svg,ico',
+        fileTypes: 'svg,png,jpg,jpeg,webp,avif,ico',
         includeFolders: 'true',
       }),
     );
 
-    const expectedTypes = ['png', 'jpg', 'jpeg', 'avif', 'webp', 'svg', 'ico'];
+    const expectedTypes = ['svg', 'png', 'jpg', 'jpeg', 'webp', 'avif', 'ico'];
     const calledFileTypes = mockGetStorageItems.mock.calls[0]?.[0]?.fileTypes?.replace(/\s/g, '').split(',');
 
     expectedTypes.forEach((type) => {

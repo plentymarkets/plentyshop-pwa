@@ -1,6 +1,6 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
 import type { ApiError, StorageObject } from '@plentymarkets/shop-api';
-import { validateImageFile } from '~/utils/allowedImageFilesHelper';
+import { validateImageFile, getAllowedImageExtensions } from '~/utils/allowedImageFilesHelper';
 import {
   extractFolders,
   createPlaceholderObject,
@@ -34,18 +34,20 @@ export const useItemsTable: UseItemTableReturn = () => {
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
   const folders = useState<string[]>('image-table-folders', () => []);
 
-  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp,svg,ico') => {
+  const getStorageItems = async (fileTypes: string) => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
       state.value.data = cachedImages.value;
-
       folders.value = extractFolders(cachedImages.value);
       state.value.loading = false;
       return;
     }
 
-    const response = await useSdk().plentysystems.getStorageItems({ fileTypes, includeFolders: 'true' });
+    const response = await useSdk().plentysystems.getStorageItems({
+      fileTypes: fileTypes ?? getAllowedImageExtensions(),
+      includeFolders: 'true',
+    });
     state.value.loading = false;
 
     if (!response || !response.data) {
@@ -58,7 +60,6 @@ export const useItemsTable: UseItemTableReturn = () => {
 
     state.value.data = items;
     cachedImages.value = items;
-
     folders.value = extractFolders(items);
   };
 
