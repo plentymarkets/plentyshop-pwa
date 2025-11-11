@@ -3,11 +3,13 @@
     <UiButton
       v-for="(document, key) in documents"
       :key="key"
+      :disabled="loading"
       class="mt-4 w-full cursor-pointer"
       variant="secondary"
       @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
     >
-      {{ getDocumentName(document) }}
+      <SfLoaderCircular v-if="loading" class="mr-2" />
+      <span>{{ getDocumentName(document) }}</span>
     </UiButton>
   </div>
 </template>
@@ -16,12 +18,13 @@
 import type { OrderDocument } from '@plentymarkets/shop-api';
 import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-api';
 import type { DocumentsListProps } from './types';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const props = defineProps<DocumentsListProps>();
 
 const documents = computed(() => orderGetters.getDocuments(props.order));
 
-const { data, getDocument, downloadFile } = useOrderDocument();
+const { data, getDocument, downloadFile, loading } = useOrderDocument();
 
 const { t } = useI18n();
 
