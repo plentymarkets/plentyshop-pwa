@@ -55,20 +55,6 @@ export const fakeProductEN = {
     shortDescription: 'Premium business bag in fine leather: Elegance meets functionality. This is Preview Text EN.',
     keywords: 'Meta-Keywords EN',
   },
-  defaultCategories: [
-    {
-      id: 17,
-      parentCategoryId: 16,
-      level: 2,
-      type: 'item',
-      linklist: true,
-      right: 'all',
-      sitemap: true,
-      updatedAt: '2021-11-16T08:28:25+01:00',
-      manually: false,
-      plentyId: 60796,
-    },
-  ],
   variation: {
     itemId: 109,
     availabilityId: 1,
