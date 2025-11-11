@@ -36,6 +36,7 @@ export const useProduct: UseProductReturn = (slug) => {
    * });
    * ```
    */
+
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;
     const { $i18n } = useNuxtApp();
@@ -47,9 +48,9 @@ export const useProduct: UseProductReturn = (slug) => {
       () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value ?? null);
-    await setupBlocks(
-      (state.value.data.blocks?.length ? state.value.data.blocks : useProductTemplateData()) as Block[],
-    );
+
+    const dbBlocks = data.value?.data.blocks;
+    await setupBlocks((dbBlocks && dbBlocks.length > 0 ? dbBlocks : useProductTemplateData()) as Block[]);
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);

@@ -150,7 +150,7 @@ watch(
     "main-title-label": "Title",
     "layout-settings-label": "Layout Settings",
     "display-as-collapsable": "Display as Collapsable",
-    "initially-collapsed": "Initially Collpsed",
+    "initially-collapsed": "Initially Collapsed",
     "padding": "Padding"
   },
   "de": {
@@ -158,7 +158,7 @@ watch(
     "main-title-label": "Title",
     "display-as-collapsable": "Display as Collapsable",
     "layout-settings-label": "Layout Settings",
-    "initially-collapsed": "Initially Collpsed",
+    "initially-collapsed": "Initially Collapsed",
     "padding": "Padding"
   }
 }
