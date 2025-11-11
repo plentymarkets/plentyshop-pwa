@@ -101,8 +101,7 @@ const sortFilterOpen = ref(true);
 const props = defineProps<SortFilterFormProps>();
 
 const sortFilterBlock = computed<SortFilterContent>(() => {
-  const rawContent =
-    findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
+  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
   const content = rawContent as Partial<SortFilterContent>;
 
@@ -117,14 +116,13 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
   return content as SortFilterContent;
 });
 
-
 watch(
   () => sortFilterBlock.value.fields?.customizedFilters,
   (isOn) => {
     if (!isOn) {
       sortFilterBlock.value.numberOfFiltersToShowInitially = 0;
     }
-  }
+  },
 );
 
 const fieldLabels: Record<string, string> = {

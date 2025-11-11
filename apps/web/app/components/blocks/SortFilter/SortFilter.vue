@@ -100,9 +100,7 @@ onNuxtReady(() => {
   clientPreview.value = !!$isPreview;
 });
 const showAllFiltersImmediately = computed(() => props.content?.showAllFiltersImmediately ?? true);
-const numberOfFiltersToShowInitially = computed(
-  () => props.content?.numberOfFiltersToShowInitially ?? 0,
-);
+const numberOfFiltersToShowInitially = computed(() => props.content?.numberOfFiltersToShowInitially ?? 0);
 
 watch(
   () => props.content?.fields,
