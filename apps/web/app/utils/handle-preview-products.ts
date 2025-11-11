@@ -1,5 +1,5 @@
 import { facetMock } from './facets/fakeFacetCall';
-import { fakeProduct } from './facets/fakeProduct';
+import { fakeProduct } from './facets/fakeProductDE';
 
 import type { UseProductsState } from '~/composables/useProducts/types';
 

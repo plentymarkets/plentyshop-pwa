@@ -1,4 +1,4 @@
-import { fakeProduct } from './facets/fakeProduct';
+import { fakeProduct } from './facets/fakeProductDE';
 import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
