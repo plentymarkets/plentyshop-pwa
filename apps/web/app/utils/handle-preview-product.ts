@@ -1,4 +1,5 @@
-import { fakeProduct } from './facets/fakeProductDE';
+import { fakeProductDE } from './facets/fakeProductDE';
+import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
@@ -89,10 +90,11 @@ const complement = <T extends object>(a: T, b: T, opts: ComplementOptions = {}):
   return complementInPlace(clone, b, opts);
 };
 
-export const handlePreviewProduct = (state: Ref<UseProductState>) => {
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) => {
   const { $isPreview } = useNuxtApp();
 
   if ($isPreview) {
+    const fakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
     const rawA = toRaw(state.value.data) as Product;
     const rawB = fakeProduct as Product;
 

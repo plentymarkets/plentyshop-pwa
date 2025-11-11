@@ -1,4 +1,4 @@
-export const fakeProductDE = {
+export const fakeProductEN = {
   images: {
     all: [
       {
@@ -41,14 +41,14 @@ export const fakeProductDE = {
   texts: {
     urlPath: 'wohnzimmer/sessel-hocker/barhocker-white-sanfrancisco',
     technicalData:
-      'Das Feld „Technische Daten“ ermöglicht es Ihnen, zusätzliche detaillierte Informationen zu einem Produkt bereitzustellen. Es bietet die gleichen Formatierungsoptionen wie das Artikeltext-Feld.</br>Neben technischen Daten können Sie dieses Feld auch für andere Produktinformationen nutzen, die Sie gesondert hervorheben möchten, z. B.:<ul><li>Pflegehinweise bei Kleidung</li><li>Zutaten oder Nährwertangaben bei Lebensmitteln</li><li>Maße bei Möbeln</li><li>Weitere relevante Produktdetails</li></ul>',
+      'The Technical Data field allows you to provide additional detailed information about a product and offers the same formatting options as the Item Text field.</br></br>Besides technical data, you can use this field for other types of product information you want to highlight separately, such as:<ul><li>Care instructions for clothing</li><li>Ingredients or nutritional information for food</li><li>Dimensions for furniture</li><li>Any other relevant product details</li></ul>',
     name3: 'Name 3 EN',
     title: 'HTML Title for Webshop EN',
     itemId: 128,
     id: 104,
     lang: 'de',
     description:
-      "<p>Auf dieser Seite können Sie festlegen, wie Ihre Produktdetailseiten gestaltet werden sollen. Sie bestimmen selbst, welche Inhalte sichtbar sind, in welcher Reihenfolge diese erscheinen und wie umfangreich die Informationen sein sollen. Um die Bearbeitung zu starten, bewegen Sie die Maus über ein Element und<span style='color: purple'>klicken Sie auf den lilafarbenen Stift.</span></p>Das Feld, das Sie hier gerade sehen, ist der <span style='font-weight: bold'>Artikeltext</span>. Hierbei handelt es sich um einen Fließtext, der beliebig lang sein darf. Nutzen Sie diesen Platz, um Ihren Kundinnen und Kunden ausführliche Informationen zu Ihrem Produkt bereitzustellen, zum Beispiel besondere Merkmale oder Einsatzmöglichkeiten</br></br>Der Text, den Sie aktuell sehen, ist selbstverständlich nur ein Platzhaltertext. Er dient dazu, Ihnen zu veranschaulichen, an welcher Stelle die Produktbeschreibung auf der Produktdetailseite angezeigt wird und wie diese optisch eingebettet ist.</br></br>Die eigentlichen Artikeltexte verwalten Sie im Backend in der Artikelverwaltung. Dort stehen Ihnen zahlreiche Formatierungsmöglichkeiten zur Verfügung, mit denen Sie Ihre Inhalte ansprechend gestalten können, zum Beispiel:<ul><li>Einfügen von Links</li><li>Integration von kleinen Bildern oder Icons</li><li>Erstellen übersichtlicher Tabellen</li><li>Verwendung von Absätzen und Listen zur besseren Strukturierung</li><li>und vieles mehr.</li></ul></br>Nutzen Sie diese Funktionen, um Ihre Produktseiten individuell zu gestalten und ein überzeugendes Einkaufserlebnis zu schaffen.",
+      "<p>On this page, you can define how your item detail pages should be structured. You decide which content is visible, in what order the elements appear, and how much information you want to provide. To edit the content, hover your mouse over an element and <span style='color: purple'>then click the purple pencil icon.</span></p>The field you are currently looking at is the item text. This is a free text field that can be as long as you like. Use this space to give your customers detailed information about the item, such as special features or possible uses.</br></br>The text you see here is, of course, just placeholder text. It is meant to show you where the item description will be positioned on the item detail page and how it will be displayed.</br></br>The actual item texts are managed in the backend, within the item management section. There, you have a variety of formatting options to help you present your content in an attractive way, such as:<ul><li>Adding links</li><li>Inserting small images or icons</li><li>Creating clear and structured tables</li><li>Using paragraphs and lists for better readability</li><li>And much more.</li></ul></br>Make use of these features to customize your item detail pages and create a convincing and enjoyable shopping experience for your customers.",
     metaDescription: 'Meta Description EN',
     name2: 'Name 2 EN',
     name1: 'Example Product ',
