@@ -52,7 +52,8 @@ export const fakeProductDE = {
     metaDescription: 'Meta Description DE',
     name2: 'Beispielprodukt DE',
     name1: 'Beispielprodukt',
-    shortDescription: 'Hochwertige Businesstasche aus feinstem Leder: Eleganz trifft auf Funktionalität. Dies ist der Vorschautext (DE).',
+    shortDescription:
+      'Hochwertige Businesstasche aus feinstem Leder: Eleganz trifft auf Funktionalität. Dies ist der Vorschautext (DE).',
     keywords: 'Meta-Keywords DE',
   },
   variation: {
