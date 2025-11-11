@@ -1,6 +1,8 @@
 <template>
   <div :style="inlineStyle" data-testid="category-data">
-    <template v-if="props.content.displayCategoryImage === 'off' || (!imageUrl && props.content.displayCategoryImage !== 'off')">
+    <template
+      v-if="props.content.displayCategoryImage === 'off' || (!imageUrl && props.content.displayCategoryImage !== 'off')"
+    >
       <div
         v-if="shouldShowTextBlock"
         data-testid="text-card"
@@ -99,10 +101,11 @@ const enabledText = computed(
 );
 const showNoTextMessage = computed(() => !enabledText.value);
 const { $isPreview } = useNuxtApp();
-const shouldShowTextBlock = computed(() =>
-  ($isPreview && disableActions.value) ||
-  (!disableActions.value && !showNoTextMessage.value) ||
-  (!$isPreview  && disableActions.value && !showNoTextMessage.value)
+const shouldShowTextBlock = computed(
+  () =>
+    ($isPreview && disableActions.value) ||
+    (!disableActions.value && !showNoTextMessage.value) ||
+    (!$isPreview && disableActions.value && !showNoTextMessage.value),
 );
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
@@ -118,9 +121,7 @@ const imagePath = computed(() => {
 });
 
 const imageUrl = computed(() => {
-  return imagePath.value
-    ? runtimeConfig.public.domain + '/documents/' + imagePath.value
-    : '';
+  return imagePath.value ? runtimeConfig.public.domain + '/documents/' + imagePath.value : '';
 });
 
 const inlineStyle = computed(() => {
