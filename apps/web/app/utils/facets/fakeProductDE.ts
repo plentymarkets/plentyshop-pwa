@@ -8,16 +8,62 @@ export const fakeProductDE = {
           imageId: 23,
           alternate: '',
         },
-        url: '/_nuxt-plenty/images/productPlaceholder.png',
-        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
-        urlSecondPreview: '',
-        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        position: 0,
+        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
+        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
+      },
+      {
+        names: {
+          name: '',
+          lang: 'de',
+          imageId: 23,
+          alternate: '',
+        },
+        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
+        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
+        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
+        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
+        position: 0,
+        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
+        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
+      },
+      {
+        names: {
+          name: '',
+          lang: 'de',
+          imageId: 23,
+          alternate: '',
+        },
+        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
+        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
+        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
+        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
         position: 0,
         path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
         cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
       },
     ],
-    variation: [],
+    variation: [
+      {
+        names: {
+          name: '',
+          lang: 'de',
+          imageId: 23,
+          alternate: '',
+        },
+        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        position: 0,
+        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
+        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
+      },
+    ],
   },
   item: {
     id: 109,
@@ -53,7 +99,7 @@ export const fakeProductDE = {
     name2: 'Beispielprodukt DE',
     name1: 'Beispielprodukt',
     shortDescription:
-      'Hochwertige Businesstasche aus feinstem Leder: Eleganz trifft auf Funktionalität. Dies ist der Vorschautext (DE).',
+      '(Bestelleigenschaft) Ihre Initialen: Inputfield',
     keywords: 'Meta-Keywords DE',
   },
   variation: {
@@ -108,44 +154,44 @@ export const fakeProductDE = {
   prices: {
     default: {
       price: {
-        value: 110,
-        formatted: '110,00 EUR',
+        value: 4000,
+        formatted: "4.000,00 EUR"
       },
       unitPrice: {
-        value: 110,
-        formatted: '110,00 EUR',
+        value: 4000,
+        formatted: "4.000,00 EUR"
       },
-      basePrice: '110,00 EUR / Stück',
-      baseLot: 1,
-      baseUnit: 'C62',
-      baseSinglePrice: 110,
+      basePrice: "",
+      baseLot: null,
+      baseUnit: null,
+      baseSinglePrice: null,
       minimumOrderQuantity: 1,
       contactClassDiscount: {
         percent: 0,
-        amount: 0,
+        amount: 0
       },
       categoryDiscount: {
         percent: 0,
-        amount: 0,
+        amount: 0
       },
-      currency: 'EUR',
+      currency: "EUR",
       lowestPrice: {
         value: null,
-        formatted: '',
+        formatted: ""
       },
       vat: {
         id: 0,
-        value: 19,
+        value: 19
       },
       isNet: false,
       data: {
         salesPriceId: 1,
-        price: 110,
-        priceNet: 92.436974789916,
-        basePrice: 110,
-        basePriceNet: 92.436974789916,
-        unitPrice: 110,
-        unitPriceNet: 92.436974789916,
+        price: 4000,
+        priceNet: 3361.3445378151,
+        basePrice: 4000,
+        basePriceNet: 3361.3445378151,
+        unitPrice: 4000,
+        unitPriceNet: 3361.3445378151,
         lowestPrice: null,
         lowestPriceNet: null,
         customerClassDiscountPercent: 0,
@@ -156,55 +202,55 @@ export const fakeProductDE = {
         categoryDiscountNet: 0,
         vatId: 0,
         vatValue: 19,
-        currency: 'EUR',
-        interval: 'none',
+        currency: "EUR",
+        interval: "none",
         conversionFactor: 1,
-        minimumOrderQuantity: '1.00',
-        updatedAt: '2022-03-18 10:29:04',
-        type: 'default',
-        pricePosition: 0,
-      },
+        minimumOrderQuantity: "1.00",
+        updatedAt: "2025-10-07 11:55:31",
+        type: "default",
+        pricePosition: 0
+      }
     },
     rrp: {
       price: {
-        value: 110,
-        formatted: '110,00 EUR',
+        value: 5000,
+        formatted: "5.000,00 EUR"
       },
       unitPrice: {
-        value: 110,
-        formatted: '110,00 EUR',
+        value: 5000,
+        formatted: "5.000,00 EUR"
       },
-      basePrice: '110,00 EUR / Stück',
-      baseLot: 1,
-      baseUnit: 'C62',
-      baseSinglePrice: 150,
+      basePrice: "",
+      baseLot: null,
+      baseUnit: null,
+      baseSinglePrice: null,
       minimumOrderQuantity: 0,
       contactClassDiscount: {
         percent: 0,
-        amount: 0,
+        amount: 0
       },
       categoryDiscount: {
         percent: 0,
-        amount: 0,
+        amount: 0
       },
-      currency: 'EUR',
+      currency: "EUR",
       lowestPrice: {
         value: null,
-        formatted: '',
+        formatted: ""
       },
       vat: {
         id: 0,
-        value: 19,
+        value: 19
       },
       isNet: false,
       data: {
         salesPriceId: 2,
-        price: 150,
-        priceNet: 126.05042016807,
-        basePrice: 150,
-        basePriceNet: 126.05042016807,
-        unitPrice: 150,
-        unitPriceNet: 126.05042016807,
+        price: 5000,
+        priceNet: 4201.6806722689,
+        basePrice: 5000,
+        basePriceNet: 4201.6806722689,
+        unitPrice: 5000,
+        unitPriceNet: 4201.6806722689,
         lowestPrice: null,
         lowestPriceNet: null,
         customerClassDiscountPercent: 0,
@@ -215,18 +261,137 @@ export const fakeProductDE = {
         categoryDiscountNet: 0,
         vatId: 0,
         vatValue: 19,
-        currency: 'EUR',
-        interval: 'none',
+        currency: "EUR",
+        interval: "none",
         conversionFactor: 1,
-        minimumOrderQuantity: '0.00',
-        updatedAt: '2022-03-18 10:29:04',
-        type: 'rrp',
-        pricePosition: 0,
-      },
+        minimumOrderQuantity: "0.00",
+        updatedAt: "2025-10-07 11:55:10",
+        type: "rrp",
+        pricePosition: 0
+      }
     },
     set: null,
     specialOffer: null,
-    graduatedPrices: [],
+    graduatedPrices: [
+      {
+        price: {
+          value: 3800,
+          formatted: "3.800,00 EUR"
+        },
+        unitPrice: {
+          value: 3800,
+          formatted: "3.800,00 EUR"
+        },
+        basePrice: "",
+        baseLot: null,
+        baseUnit: null,
+        baseSinglePrice: null,
+        minimumOrderQuantity: 5,
+        contactClassDiscount: {
+          percent: 0,
+          amount: 0
+        },
+        categoryDiscount: {
+          percent: 0,
+          amount: 0
+        },
+        currency: "EUR",
+        lowestPrice: {
+          value: 3600,
+          formatted: "3.600,00 EUR"
+        },
+        vat: {
+          id: 0,
+          value: 19
+        },
+        isNet: false,
+        data: {
+          salesPriceId: 3,
+          price: 3800,
+          priceNet: 3193.2773109244,
+          basePrice: 3800,
+          basePriceNet: 3193.2773109244,
+          unitPrice: 3800,
+          unitPriceNet: 3193.2773109244,
+          lowestPrice: 3600,
+          lowestPriceNet: 3025.2100840336,
+          customerClassDiscountPercent: 0,
+          customerClassDiscount: 0,
+          customerClassDiscountNet: 0,
+          categoryDiscountPercent: 0,
+          categoryDiscount: 0,
+          categoryDiscountNet: 0,
+          vatId: 0,
+          vatValue: 19,
+          currency: "EUR",
+          interval: "none",
+          conversionFactor: 1,
+          minimumOrderQuantity: "5.00",
+          updatedAt: "2025-10-07 11:56:02",
+          type: "default",
+          pricePosition: 0
+        }
+      },
+      {
+        price: {
+          value: 4000,
+          formatted: "4.000,00 EUR"
+        },
+        unitPrice: {
+          value: 4000,
+          formatted: "4.000,00 EUR"
+        },
+        basePrice: "",
+        baseLot: null,
+        baseUnit: null,
+        baseSinglePrice: null,
+        minimumOrderQuantity: 1,
+        contactClassDiscount: {
+          percent: 0,
+          amount: 0
+        },
+        categoryDiscount: {
+          percent: 0,
+          amount: 0
+        },
+        currency: "EUR",
+        lowestPrice: {
+          value: null,
+          formatted: ""
+        },
+        vat: {
+          id: 0,
+          value: 19
+        },
+        isNet: false,
+        data: {
+          salesPriceId: 1,
+          price: 4000,
+          priceNet: 3361.3445378151,
+          basePrice: 4000,
+          basePriceNet: 3361.3445378151,
+          unitPrice: 4000,
+          unitPriceNet: 3361.3445378151,
+          lowestPrice: null,
+          lowestPriceNet: null,
+          customerClassDiscountPercent: 0,
+          customerClassDiscount: 0,
+          customerClassDiscountNet: 0,
+          categoryDiscountPercent: 0,
+          categoryDiscount: 0,
+          categoryDiscountNet: 0,
+          vatId: 0,
+          vatValue: 19,
+          currency: "EUR",
+          interval: "none",
+          conversionFactor: 1,
+          minimumOrderQuantity: "1.00",
+          updatedAt: "2025-10-07 11:55:31",
+          type: "default",
+          pricePosition: 0
+        }
+      }
+    ]
   },
   facets: [],
   attributes: [],
