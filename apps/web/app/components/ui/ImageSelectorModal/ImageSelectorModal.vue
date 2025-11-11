@@ -192,7 +192,7 @@ watch(
   () => props.open,
   (isOpen) => {
     if (isOpen) {
-      getStorageItems();
+      getStorageItems(getAllowedImageExtensions());
     }
   },
   { immediate: true },
