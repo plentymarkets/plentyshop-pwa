@@ -6,9 +6,9 @@
       :disabled="loading"
       class="mt-4 w-full cursor-pointer"
       variant="secondary"
-      @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
+      @click="downloadPDF(document, orderGetters.getAccessKey(props.order), key)"
     >
-      <SfLoaderCircular v-if="loading" class="mr-2" />
+      <SfLoaderCircular v-if="downloadingDocument === key" class="mr-2" />
       <span>{{ getDocumentName(document) }}</span>
     </UiButton>
   </div>
@@ -21,11 +21,9 @@ import type { DocumentsListProps } from './types';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const props = defineProps<DocumentsListProps>();
-
 const documents = computed(() => orderGetters.getDocuments(props.order));
-
 const { data, getDocument, downloadFile, loading } = useOrderDocument();
-
+const downloadingDocument = ref<number | null>(null);
 const { t } = useI18n();
 
 const translations = {
@@ -53,11 +51,13 @@ const getDocumentName = (document: OrderDocument) => {
   return getTypeName(orderDocumentGetters.getType(document)) || orderDocumentGetters.getNumberWithPrefix(document);
 };
 
-const downloadPDF = async (document: OrderDocument, accessKey: string) => {
+const downloadPDF = async (document: OrderDocument, accessKey: string, key: number) => {
+  downloadingDocument.value = key;
   await getDocument(document, accessKey);
 
   const name = document.path.split('/').join('_');
 
   downloadFile(data.value, name, 'application/pdf');
+  downloadingDocument.value = null;
 };
 </script>
