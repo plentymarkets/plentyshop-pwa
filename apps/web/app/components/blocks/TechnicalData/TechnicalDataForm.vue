@@ -51,6 +51,7 @@
         <span>
           <SfSwitch
             v-model="itemTextBlock.layout.initiallyCollapsed"
+            :disabled="!itemTextBlock.layout.displayAsCollapsable"
             data-testid="technical-data-initiallyCollapsed-switch"
           />
         </span>
