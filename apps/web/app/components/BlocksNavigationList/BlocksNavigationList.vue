@@ -3,14 +3,14 @@
     <UiAccordionItem
       v-if="pageHasAccessToCategory(category)"
       summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-3 flex justify-between items-center select-none border-b"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-4 flex justify-between items-center select-none border-b"
       :data-testid="'block-category-' + categoryIndex"
     >
       <template #summary>
         <h2>{{ category.title }}</h2>
       </template>
       <div class="py-4 mb-4">
-        <div class="overflow-y-auto max-h-[400px]">
+        <div ref="variationList" class="overflow-y-auto" :style="{ maxHeight: maxScrollHeight + 'px' }">
           <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="mb-10">
             <div class="relative w-fit mx-auto">
               <NuxtImg :src="variation.image" class="block" :alt="variation.title" width="253" height="120" />
@@ -107,4 +107,28 @@ const pageHasAccessToCategory = (category: Category) => {
     return accessControl?.includes(blocksListContext.value);
   }
 };
+
+const variationList = ref<HTMLElement | null>(null);
+const maxScrollHeight = ref(400);
+
+const updateScrollHeight = () => {
+  if (variationList.value) {
+    const parent = variationList.value.parentElement;
+    if (parent) {
+      maxScrollHeight.value = parent.clientHeight - 32;
+    }
+  }
+};
+
+onMounted(() => {
+  nextTick(updateScrollHeight);
+});
+watch(
+  () => blocksLists.value,
+  () => {
+    nextTick(updateScrollHeight);
+  },
+  { deep: true },
+);
+window.addEventListener('resize', () => nextTick(updateScrollHeight));
 </script>
