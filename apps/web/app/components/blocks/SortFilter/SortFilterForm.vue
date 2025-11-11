@@ -42,7 +42,7 @@
         </draggable>
       </div>
 
-      <div class="py-2">
+      <div v-if="sortFilterBlock.fields.customizedFilters" class="py-2">
         <div class="flex items-center justify-between gap-3">
           <UiFormLabel for="keep-transparent" class="m-0">
             {{ getEditorTranslation('show-filters-immediately-label') }}
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div v-if="!sortFilterBlock.showAllFiltersImmediately" class="py-2">
+      <div v-if="sortFilterBlock.fields.customizedFilters && !sortFilterBlock.showAllFiltersImmediately" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('number-of-filters-label') }}</UiFormLabel>
         </div>
@@ -101,15 +101,31 @@ const sortFilterOpen = ref(true);
 const props = defineProps<SortFilterFormProps>();
 
 const sortFilterBlock = computed<SortFilterContent>(() => {
-  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
+  const rawContent =
+    findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
   const content = rawContent as Partial<SortFilterContent>;
 
-  if (!content.showAllFiltersImmediately) content.showAllFiltersImmediately = false;
-  if (!content.numberOfFiltersToShowInitially) content.numberOfFiltersToShowInitially = 0;
+  if (typeof content.showAllFiltersImmediately === 'undefined') {
+    content.showAllFiltersImmediately = true;
+  }
+
+  if (typeof content.numberOfFiltersToShowInitially === 'undefined') {
+    content.numberOfFiltersToShowInitially = 0;
+  }
 
   return content as SortFilterContent;
 });
+
+
+watch(
+  () => sortFilterBlock.value.fields?.customizedFilters,
+  (isOn) => {
+    if (!isOn) {
+      sortFilterBlock.value.numberOfFiltersToShowInitially = 0;
+    }
+  }
+);
 
 const fieldLabels: Record<string, string> = {
   category: getEditorTranslation('category'),
@@ -138,8 +154,8 @@ const fieldLabels: Record<string, string> = {
     "availability": "Availability",
     "customizedFilters": "Customized filters",
 
-    "show-filters-immediately-label": "Show all filters immediately",
-    "number-of-filters-label": "Number of filters to show initially",
+    "show-filters-immediately-label": "Show all customized filters immediately",
+    "number-of-filters-label": "Number of customized filters to show initially",
     "items-per-page-label": "Items per page"
   },
   "de": {
@@ -155,8 +171,8 @@ const fieldLabels: Record<string, string> = {
     "customizedFilters": "Customized filters",
 
     "enable-filters-label": "Enable filters",
-    "show-filters-immediately-label": "Show all filters immediately",
-    "number-of-filters-label": "Number of filters to show initially",
+    "show-filters-immediately-label": "Show all customized filters immediately",
+    "number-of-filters-label": "Number of customized filters to show initially",
     "items-per-page-label": "Items per page"
   }
 }

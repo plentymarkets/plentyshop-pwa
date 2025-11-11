@@ -61,6 +61,8 @@
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
+            :show-all="showAllFiltersImmediately"
+            :limit="numberOfFiltersToShowInitially"
           />
         </template>
       </template>
@@ -97,6 +99,11 @@ const { $isPreview } = useNuxtApp();
 onNuxtReady(() => {
   clientPreview.value = !!$isPreview;
 });
+const showAllFiltersImmediately = computed(() => props.content?.showAllFiltersImmediately ?? true);
+const numberOfFiltersToShowInitially = computed(
+  () => props.content?.numberOfFiltersToShowInitially ?? 0,
+);
+
 watch(
   () => props.content?.fields,
   (newValue) => {
