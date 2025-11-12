@@ -83,6 +83,26 @@
           </div>
         </div>
       </div>
+      <div v-if="multiGridStructure.configuration.columnWidths?.length" class="py-4">
+        <UiFormLabel>{{ getEditorTranslation('sticky-columns') }}</UiFormLabel>
+
+        <div class="grid grid-cols-3 gap-2 mt-2">
+          <button
+            v-for="i in numColumns"
+            :key="`sticky-col-${i}`"
+            type="button"
+            class="px-3 py-2 rounded-md border text-sm transition-colors"
+            :class="
+              isSticky(i - 1)
+                ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
+                : 'border-neutral-300 hover:border-neutral-400'
+            "
+            @click="toggleSticky(i - 1)"
+          >
+            {{ getEditorTranslation('column') }} {{ i }}
+          </button>
+        </div>
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -202,6 +222,32 @@ const getGapPx = (gap: string | undefined): number => {
   return gapPxMap[validGap as GapSize];
 };
 
+if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
+
+const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
+
+const isSticky = (columnIndex: number) => {
+  const sticky = multiGridStructure.value.configuration?.sticky || [];
+  return sticky.includes(columnIndex);
+};
+
+const toggleSticky = (columnIndex: number) => {
+  const cfg = multiGridStructure.value.configuration;
+
+  if (!Array.isArray(cfg?.sticky)) {
+    cfg.sticky = [];
+  }
+
+  const pos = cfg?.sticky.indexOf(columnIndex);
+
+  if (pos === -1) {
+    cfg?.sticky.push(columnIndex);
+  }
+  else {
+    cfg?.sticky.splice(pos, 1);
+  }
+};
+
 const textSettings = ref(false);
 const layoutBackground = ref(false);
 </script>
@@ -221,22 +267,26 @@ const layoutBackground = ref(false);
     "spacing-around": "Spacing around",
     "spacing-between": "Spacing between Blocks:",
     "layout-background": "Layout Background",
-    "column-size": "Column Size"
+    "sticky-columns": "Sticky columns",
+    "column-size": "Column Size",
+    "column": "Column"
   },
   "de": {
-    "layout-settings": "Layout Einstellungen",
+    "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
-    "background-color-label": "Hintergrundfarbe",
-    "gap-label": "Abstand",
-    "gap-size-none": "Keiner",
+    "background-color-label": "Background Color",
+    "gap-label": "Gap",
+    "gap-size-none": "None",
     "gap-size-s": "S",
     "gap-size-m": "M",
     "gap-size-l": "L",
     "gap-size-xl": "XL",
-    "spacing-around": "Abstand um",
-    "spacing-between": "Abstand zwischen Blöcken:",
-    "layout-background": "Layout Hintergrund",
-    "column-size": "Spaltengröße"
+    "spacing-around": "Spacing around",
+    "spacing-between": "Spacing between Blocks:",
+    "layout-background": "Layout Background",
+    "sticky-columns": "Sticky columns",
+    "column-size": "Column Size",
+    "column": "Column"
   }
 }
 </i18n>
