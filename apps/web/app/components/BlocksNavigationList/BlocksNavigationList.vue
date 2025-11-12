@@ -1,10 +1,13 @@
 <template>
-  <template v-for="(category, categoryIndex) in blocksLists" :key="categoryIndex">
+  <template v-for="(category, categoryIndex) in blocksLists">
     <UiAccordionItem
       v-if="pageHasAccessToCategory(category)"
+      :key="categoryIndex"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-4 flex justify-between items-center select-none border-b"
       :data-testid="'block-category-' + categoryIndex"
+      :model-value="isOpen(String(categoryIndex))"
+      @update:model-value="toggle(String(categoryIndex), $event)"
     >
       <template #summary>
         <h2>{{ category.title }}</h2>
@@ -66,6 +69,18 @@ import type { Category, Variation } from '~/components/BlocksNavigationList/type
 const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
   useBlockManager();
 getBlocksLists();
+
+const opened = ref<string | null>(null);
+
+const isOpen = (id: string) => id === opened.value;
+
+const toggle = (id: string, open: boolean) => {
+  if (open) {
+    opened.value = id;
+  } else if (isOpen(id)) {
+    opened.value = null;
+  }
+};
 
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
