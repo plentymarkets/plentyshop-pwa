@@ -1,62 +1,57 @@
 <template>
-  <template v-for="(category, categoryIndex) in blocksLists">
+  <template v-for="(category, categoryIndex) in blocksLists" :key="categoryIndex">
     <UiAccordionItem
       v-if="pageHasAccessToCategory(category)"
-      :key="categoryIndex"
       summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-4 flex justify-between items-center select-none border-b"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       :data-testid="'block-category-' + categoryIndex"
-      :model-value="isOpen(String(categoryIndex))"
-      @update:model-value="toggle(String(categoryIndex), $event)"
     >
       <template #summary>
         <h2>{{ category.title }}</h2>
       </template>
-      <div class="py-4 mb-4">
-        <div ref="variationList" class="overflow-y-auto" :style="{ maxHeight: maxScrollHeight + 'px' }">
-          <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="mb-10">
-            <div class="relative w-fit mx-auto">
-              <NuxtImg :src="variation.image" class="block" :alt="variation.title" width="253" height="120" />
-              <button
-                class="absolute right-[-5px] top-[100%] -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md"
-                :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
-                :disabled="isAddDisabled(category, variation, targetUuid)"
-                :class="{
-                  'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
-                }"
-                @click="
-                  drawerOpen = false;
-                  addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
-                "
+      <div class="px-4 py-4 mb-4">
+        <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="mb-10">
+          <div class="relative w-fit mx-auto">
+            <NuxtImg :src="variation.image" class="block" :alt="variation.title" width="253" height="120" />
+            <button
+              class="absolute right-[-5px] top-[100%] -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md"
+              :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
+              :disabled="isAddDisabled(category, variation, targetUuid)"
+              :class="{
+                'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
+              }"
+              @click="
+                drawerOpen = false;
+                addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
+              "
+            >
+              <SfTooltip
+                v-if="isSingleInstanceOnPage(variation.template.en.name)"
+                :label="getEditorTranslation('errorMessages.editor.add.disabledOneInstancePerPage')"
+                placement="top"
+                :show-arrow="true"
               >
-                <SfTooltip
-                  v-if="isSingleInstanceOnPage(variation.template.en.name)"
-                  :label="getEditorTranslation('errorMessages.editor.add.disabledOneInstancePerPage')"
-                  placement="top"
-                  :show-arrow="true"
-                >
-                  <SfIconAdd />
-                </SfTooltip>
-                <SfIconAdd v-else />
-              </button>
-            </div>
+                <SfIconAdd />
+              </SfTooltip>
+              <SfIconAdd v-else />
+            </button>
           </div>
-          <div
-            v-if="isNestedMultigrid(category, targetUuid)"
-            class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
-          >
-            <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-            <span class="italic">{{ getEditorTranslation('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
-          </div>
-          <div
-            v-if="isForbiddenBlock(category, targetUuid)"
-            class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
-          >
-            <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-            <span class="italic">{{
-              getEditorTranslation('errorMessages.editor.add.disabledNotCompatibleWithLayouts')
-            }}</span>
-          </div>
+        </div>
+        <div
+          v-if="isNestedMultigrid(category, targetUuid)"
+          class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+        >
+          <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
+          <span class="italic">{{ getEditorTranslation('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
+        </div>
+        <div
+          v-if="isForbiddenBlock(category, targetUuid)"
+          class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+        >
+          <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
+          <span class="italic">{{
+            getEditorTranslation('errorMessages.editor.add.disabledNotCompatibleWithLayouts')
+          }}</span>
         </div>
       </div>
     </UiAccordionItem>
@@ -69,18 +64,6 @@ import type { Category, Variation } from '~/components/BlocksNavigationList/type
 const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
   useBlockManager();
 getBlocksLists();
-
-const opened = ref<string | null>(null);
-
-const isOpen = (id: string) => id === opened.value;
-
-const toggle = (id: string, open: boolean) => {
-  if (open) {
-    opened.value = id;
-  } else if (isOpen(id)) {
-    opened.value = null;
-  }
-};
 
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
@@ -122,35 +105,4 @@ const pageHasAccessToCategory = (category: Category) => {
     return accessControl?.includes(blocksListContext.value);
   }
 };
-
-const variationList = ref<HTMLElement | null>(null);
-const maxScrollHeight = ref(400);
-
-const updateScrollHeight = () => {
-  if (variationList.value) {
-    const parent = variationList.value.parentElement;
-    if (parent) {
-      maxScrollHeight.value = parent.clientHeight - 32;
-    }
-  }
-};
-
-const resizeHandler = () => {
-  nextTick(() => updateScrollHeight());
-};
-
-onMounted(() => {
-  window.addEventListener('resize', resizeHandler);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', resizeHandler);
-});
-watch(
-  () => blocksLists.value,
-  () => {
-    nextTick(updateScrollHeight);
-  },
-  { deep: true },
-);
 </script>
