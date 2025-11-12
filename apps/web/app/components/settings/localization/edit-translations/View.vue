@@ -11,7 +11,7 @@
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <span v-else class="flex items-center">
             {{ getEditorTranslation('label') }}
-            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
+            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer ml-2">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path :d="editPath" fill="black" />
               </svg>
