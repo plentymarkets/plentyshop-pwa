@@ -39,10 +39,7 @@
       <div class="flex justify-between my-5">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
         <span>
-          <SfSwitch
-            v-model="itemTextBlock.layout.displayAsCollapsable"
-            data-testid="technical-data-displayAsCollapsable-switch"
-          />
+          <SfSwitch v-model="isCollapsible" data-testid="technical-data-displayAsCollapsable-switch" />
         </span>
       </div>
 
@@ -50,8 +47,8 @@
         <span>{{ getEditorTranslation('initially-collapsed') }}</span>
         <span>
           <SfSwitch
-            v-model="itemTextBlock.layout.initiallyCollapsed"
-            :disabled="!itemTextBlock.layout.displayAsCollapsable"
+            v-model="isInitiallyCollapsed"
+            :disabled="!isCollapsible"
             data-testid="technical-data-initiallyCollapsed-switch"
           />
         </span>
@@ -141,6 +138,24 @@ watch(
     if (!newValue) itemTextBlock.value.layout.initiallyCollapsed = false;
   },
 );
+
+const isCollapsibleInit = itemTextBlock.value.layout.displayAsCollapsable;
+const isCollapsible = ref(isCollapsibleInit);
+
+const isInitiallyCollapsedInit = itemTextBlock.value.layout.initiallyCollapsed;
+const isInitiallyCollapsed = ref(isInitiallyCollapsedInit);
+
+watch(isCollapsible, (newValue) => {
+  itemTextBlock.value.layout.displayAsCollapsable = newValue;
+  if (!newValue) {
+    isInitiallyCollapsed.value = false;
+    itemTextBlock.value.layout.initiallyCollapsed = false;
+  }
+});
+
+watch(isInitiallyCollapsed, (newValue) => {
+  itemTextBlock.value.layout.initiallyCollapsed = newValue;
+});
 </script>
 
 <i18n lang="json">
