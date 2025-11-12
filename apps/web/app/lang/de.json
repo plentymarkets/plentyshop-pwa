@@ -629,6 +629,7 @@
       "ariaLabelSlideControls": "Steuerelemente für die Slides",
       "ariaLabelNextSlide": "Nächste Slide",
       "ariaLabelPreviousSlide": "Vorherige Slide",
+      "ariaLabelSlidePosition": "Slide {current} von {total}",
       "ariaRoleDescriptionCarousel": "Karussell",
       "ariaRoleDescriptionSlide": "Slide"
     },
@@ -1133,7 +1134,8 @@
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "security": {
-      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite erneut."
+      "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
+      "tooManyRequests": "Es wurden zu viele Anfragen gesendet. Bitte warten Sie einen Moment und versuchen Sie es dann erneut."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },

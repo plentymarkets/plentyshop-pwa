@@ -1,8 +1,10 @@
 {
   "en": {
-    "item": "Item"
+    "item": "Item",
+    "displayed-information": "Displayed information"
   },
   "de": {
-    "item": "Item"
+    "item": "Item",
+    "displayed-information": "Displayed information"
   }
 }

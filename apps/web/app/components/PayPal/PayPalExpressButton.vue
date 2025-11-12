@@ -13,12 +13,14 @@ const paypalScript = ref<PayPalNamespace | null>(null);
 
 const {
   order: paypalOrder,
+  isAvailable,
   getScript,
   loadConfig,
   createTransaction,
   captureOrder,
   createPlentyOrder,
   createPlentyPaymentFromPayPalOrder,
+  config,
   payPalVisibility,
   payLaterVisibility,
 } = usePayPal();
@@ -184,10 +186,10 @@ const createButton = () => {
     if (paypalScript.value.FUNDING) {
       const FUNDING_SOURCES: Array<string> = [];
 
-      if (payPalVisibility.getVisibility(props.location)) {
+      if (payPalVisibility.getVisibility(props.location ?? 'checkoutPage')) {
         FUNDING_SOURCES.push(paypalScript.value.FUNDING.PAYPAL as string);
       }
-      if (payLaterVisibility.getVisibility(props.location)) {
+      if (payLaterVisibility.getVisibility(props.location ?? 'checkoutPage')) {
         FUNDING_SOURCES.push(paypalScript.value.FUNDING.PAYLATER as string);
       }
 
@@ -198,12 +200,12 @@ const createButton = () => {
 
 onNuxtReady(async () => {
   await loadConfig();
-  if (!loadScript.value) return;
+  if (!config.value || !isAvailable(props.location ?? 'checkoutPage').value) return;
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
 
   watch([currency, loadScript], async () => {
-    if (!loadScript.value) return;
+    if (!loadScript.value || !config.value || !isAvailable(props.location ?? 'checkoutPage').value) return;
     paypalScript.value = await getScript(currency.value, isCommit);
     createButton();
   });

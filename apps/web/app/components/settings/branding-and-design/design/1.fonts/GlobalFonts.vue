@@ -58,14 +58,14 @@ const font = computed({
     "label": "Global fonts",
     "description": "⚠️ This setting will require a shop redeploy to take effect.",
     "tooltip": "Choose one Google Font for all texts. Fonts are served locally to ensure privacy compliance, with no live requests to Google.",
-    "placeholder": "Select a font",
+    "placeholder": "Search fonts...",
     "deselect-label": "Selected"
   },
   "de": {
     "label": "Global fonts",
     "description": "⚠️ This setting will require a shop redeploy to take effect.",
     "tooltip": "Choose one Google Font for all texts. Fonts are served locally to ensure privacy compliance, with no live requests to Google.",
-    "placeholder": "Select a font",
+    "placeholder": "Search fonts...",
     "deselect-label": "Selected"
   }
 }
