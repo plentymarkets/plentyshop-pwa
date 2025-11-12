@@ -10,14 +10,45 @@ export const fakeProductEN = {
         },
         url: '/_nuxt-plenty/images/productPlaceholder.png',
         urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
-        urlSecondPreview: '',
+        urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+        position: 0,
+        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
+        cleanImageName: 'productPlaceholder.jpg',
+      },
+    ],
+    variation: [
+      {
+        names: {
+          name: '',
+          lang: 'de',
+          imageId: 23,
+          alternate: '',
+        },
+        url: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+        position: 0,
+        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
+        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
+      },
+      {
+        names: {
+          name: '',
+          lang: 'de',
+          imageId: 24,
+          alternate: '',
+        },
+        url: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
         urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
         position: 0,
         path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
         cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
       },
     ],
-    variation: [],
   },
   item: {
     id: 109,
@@ -25,8 +56,60 @@ export const fakeProductEN = {
     manufacturerId: 2,
     itemType: 'default',
     manufacturer: {
-      position: 0,
-      externalName: 'A & C Design',
+      name: 'Teston Testerton',
+      legalName: 'Teston Testerton',
+      logo: '',
+      url: '',
+      contactUrl: '',
+      street: 'Teststreet',
+      email: '',
+      responsibleName: 'Teston Testerton',
+      responsibleStreet: 'Teststreet',
+      responsibleHouseNo: '1',
+      responsiblePostCode: '12345',
+      responsibleTown: 'New Test City',
+      responsibleCountry: 1,
+      responsibleEmail: '',
+      responsibleContactUrl: '',
+      responsiblePhoneNo: '',
+      externalName: '',
+      postcode: '54321',
+      houseNo: '2',
+      town: 'Testington',
+      countryId: 1,
+      phoneNumber: '',
+      faxNumber: '',
+      nameExternal: '',
+      countryObject: {
+        names: [
+          { language: 'en', country_id: '1', name: 'Testcountry', id: 250 },
+          { country_id: '1', language: 'en', id: 1, name: 'Testcountry' },
+        ],
+        shippingDestinationId: 101,
+        active: 1,
+        lang: 'de',
+        name: 'Germany',
+        id: 1,
+        storehouseId: 0,
+        isoCode3: 'DEU',
+        isCountryStateMandatory: null,
+        isoCode2: 'DE',
+      },
+      responsibleCountryObject: {
+        names: [
+          { language: 'en', country_id: '1', name: 'Germany', id: 250 },
+          { country_id: '1', language: 'de', id: 1, name: 'Deutschland' },
+        ],
+        shippingDestinationId: 101,
+        active: 1,
+        lang: 'de',
+        name: 'Germany',
+        id: 1,
+        storehouseId: 0,
+        isoCode3: 'DEU',
+        isCountryStateMandatory: null,
+        isoCode2: 'DE',
+      },
     },
     rebate: 0,
     salableVariationCount: 1,
@@ -76,7 +159,7 @@ export const fakeProductEN = {
         id: 41,
         availabilityId: 1,
         lang: 'de',
-        name: 'Sofort versandfertig, Lieferzeit 48h',
+        name: 'Ready for shipping, in 48h',
         createdAt: '2022-06-27 09:20:16',
         updatedAt: '2022-06-27 09:20:16',
       },
@@ -100,6 +183,129 @@ export const fakeProductEN = {
     unitOfMeasurement: 'C62',
     content: 1,
   },
+  tags: [
+    {
+      id: 2,
+      names: {
+        name: 'NEW',
+        lang: 'en',
+      },
+      color: '#0282a2',
+    },
+    {
+      id: 3,
+      names: {
+        name: 'TOPSELLER',
+        lang: 'en',
+      },
+      color: '#a26d6d',
+    },
+  ],
+  variationAttributeMap: {
+    variations: [
+      {
+        variationId: 1097,
+        isSalable: true,
+        unitCombinationId: 1,
+        unitId: 1,
+        unitName: '1 piece',
+        attributes: [
+          {
+            attributeId: 2,
+            attributeValueId: 6,
+          },
+        ],
+      },
+      {
+        variationId: 1098,
+        isSalable: true,
+        unitCombinationId: 1,
+        unitId: 1,
+        unitName: '1 piece',
+        attributes: [
+          {
+            attributeId: 2,
+            attributeValueId: 7,
+          },
+        ],
+      },
+      {
+        variationId: 1099,
+        isSalable: true,
+        unitCombinationId: 1,
+        unitId: 1,
+        unitName: '1 piece',
+        attributes: [
+          {
+            attributeId: 2,
+            attributeValueId: 11,
+          },
+        ],
+      },
+      {
+        variationId: 1096,
+        isSalable: true,
+        unitCombinationId: 47,
+        unitId: 36,
+        unitName: '250 gramm',
+        attributes: [],
+      },
+    ],
+    attributes: [
+      {
+        attributeId: 2,
+        position: 1,
+        name: '(Attribute) Color: Select between red, yellow, blue',
+        type: 'box',
+        values: [
+          {
+            attributeValueId: 6,
+            position: 2,
+            imageUrl: '',
+            name: 'red',
+          },
+          {
+            attributeValueId: 7,
+            position: 3,
+            imageUrl: '',
+            name: 'yellow',
+          },
+          {
+            attributeValueId: 11,
+            position: 4,
+            imageUrl: '',
+            name: 'blue',
+          },
+        ],
+      },
+      {
+        attributeId: 2,
+        position: 1,
+        name: '(Attribute) Size: Select between S, M, L',
+        type: 'box',
+        values: [
+          {
+            attributeValueId: 6,
+            position: 2,
+            imageUrl: '',
+            name: 'S',
+          },
+          {
+            attributeValueId: 7,
+            position: 3,
+            imageUrl: '',
+            name: 'M',
+          },
+          {
+            attributeValueId: 11,
+            position: 4,
+            imageUrl: '',
+            name: 'L',
+          },
+        ],
+      },
+    ],
+  },
   properties: [],
   hasOrderProperties: false,
   hasRequiredOrderProperty: false,
@@ -108,33 +314,33 @@ export const fakeProductEN = {
     default: {
       price: {
         value: 4000,
-        formatted: "EUR 4,000.00"
+        formatted: 'EUR 4,000.00',
       },
       unitPrice: {
         value: 4000,
-        formatted: "EUR 4,000.00"
+        formatted: 'EUR 4,000.00',
       },
-      basePrice: "",
+      basePrice: '',
       baseLot: null,
       baseUnit: null,
       baseSinglePrice: null,
       minimumOrderQuantity: 1,
       contactClassDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
       categoryDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
-      currency: "EUR",
+      currency: 'EUR',
       lowestPrice: {
         value: null,
-        formatted: ""
+        formatted: '',
       },
       vat: {
         id: 0,
-        value: 19
+        value: 19,
       },
       isNet: false,
       data: {
@@ -155,45 +361,45 @@ export const fakeProductEN = {
         categoryDiscountNet: 0,
         vatId: 0,
         vatValue: 19,
-        currency: "EUR",
-        interval: "none",
+        currency: 'EUR',
+        interval: 'none',
         conversionFactor: 1,
-        minimumOrderQuantity: "1.00",
-        updatedAt: "2025-10-07 11:55:31",
-        type: "default",
-        pricePosition: 0
-      }
+        minimumOrderQuantity: '1.00',
+        updatedAt: '2025-10-07 11:55:31',
+        type: 'default',
+        pricePosition: 0,
+      },
     },
     rrp: {
       price: {
         value: 5000,
-        formatted: "EUR 5,000.00"
+        formatted: 'EUR 5,000.00',
       },
       unitPrice: {
         value: 5000,
-        formatted: "EUR 5,000.00"
+        formatted: 'EUR 5,000.00',
       },
-      basePrice: "",
+      basePrice: '',
       baseLot: null,
       baseUnit: null,
       baseSinglePrice: null,
       minimumOrderQuantity: 0,
       contactClassDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
       categoryDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
-      currency: "EUR",
+      currency: 'EUR',
       lowestPrice: {
         value: null,
-        formatted: ""
+        formatted: '',
       },
       vat: {
         id: 0,
-        value: 19
+        value: 19,
       },
       isNet: false,
       data: {
@@ -214,14 +420,14 @@ export const fakeProductEN = {
         categoryDiscountNet: 0,
         vatId: 0,
         vatValue: 19,
-        currency: "EUR",
-        interval: "none",
+        currency: 'EUR',
+        interval: 'none',
         conversionFactor: 1,
-        minimumOrderQuantity: "0.00",
-        updatedAt: "2025-10-07 11:55:10",
-        type: "rrp",
-        pricePosition: 0
-      }
+        minimumOrderQuantity: '0.00',
+        updatedAt: '2025-10-07 11:55:10',
+        type: 'rrp',
+        pricePosition: 0,
+      },
     },
     set: null,
     specialOffer: null,
@@ -229,33 +435,33 @@ export const fakeProductEN = {
       {
         price: {
           value: 3800,
-          formatted: "EUR 3,800.00"
+          formatted: 'EUR 3,800.00',
         },
         unitPrice: {
           value: 3800,
-          formatted: "EUR 3,800.00"
+          formatted: 'EUR 3,800.00',
         },
-        basePrice: "",
+        basePrice: '',
         baseLot: null,
         baseUnit: null,
         baseSinglePrice: null,
         minimumOrderQuantity: 5,
         contactClassDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
         categoryDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
-        currency: "EUR",
+        currency: 'EUR',
         lowestPrice: {
           value: 3600,
-          formatted: "EUR 3,600.00"
+          formatted: 'EUR 3,600.00',
         },
         vat: {
           id: 0,
-          value: 19
+          value: 19,
         },
         isNet: false,
         data: {
@@ -276,45 +482,45 @@ export const fakeProductEN = {
           categoryDiscountNet: 0,
           vatId: 0,
           vatValue: 19,
-          currency: "EUR",
-          interval: "none",
+          currency: 'EUR',
+          interval: 'none',
           conversionFactor: 1,
-          minimumOrderQuantity: "5.00",
-          updatedAt: "2025-10-07 11:56:02",
-          type: "default",
-          pricePosition: 0
-        }
+          minimumOrderQuantity: '5.00',
+          updatedAt: '2025-10-07 11:56:02',
+          type: 'default',
+          pricePosition: 0,
+        },
       },
       {
         price: {
           value: 4000,
-          formatted: "EUR 4,000.00"
+          formatted: 'EUR 4,000.00',
         },
         unitPrice: {
           value: 4000,
-          formatted: "EUR 4,000.00"
+          formatted: 'EUR 4,000.00',
         },
-        basePrice: "",
+        basePrice: '',
         baseLot: null,
         baseUnit: null,
         baseSinglePrice: null,
         minimumOrderQuantity: 1,
         contactClassDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
         categoryDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
-        currency: "EUR",
+        currency: 'EUR',
         lowestPrice: {
           value: null,
-          formatted: ""
+          formatted: '',
         },
         vat: {
           id: 0,
-          value: 19
+          value: 19,
         },
         isNet: false,
         data: {
@@ -335,17 +541,228 @@ export const fakeProductEN = {
           categoryDiscountNet: 0,
           vatId: 0,
           vatValue: 19,
-          currency: "EUR",
-          interval: "none",
+          currency: 'EUR',
+          interval: 'none',
           conversionFactor: 1,
-          minimumOrderQuantity: "1.00",
-          updatedAt: "2025-10-07 11:55:31",
-          type: "default",
-          pricePosition: 0
-        }
-      }
-    ]
+          minimumOrderQuantity: '1.00',
+          updatedAt: '2025-10-07 11:55:31',
+          type: 'default',
+          pricePosition: 0,
+        },
+      },
+    ],
   },
   facets: [],
   attributes: [],
+  variationProperties: [
+    {
+      id: 3,
+      position: 1,
+      name: null,
+      description: null,
+      properties: [
+        {
+          cast: 'text',
+          referrer: [1, 162],
+          names: {
+            id: 15,
+            propertyId: 9,
+            lang: 'en',
+            name: '(Property) Example: Example 1',
+            description: 'As Text Property',
+            createdAt: '2025-09-22 19:01:56',
+            updatedAt: '2025-09-22 19:03:13',
+          },
+          clients: [70016],
+          display: ['showOnItemsPage', 'groupIsHidden'],
+          groups: [
+            {
+              id: 3,
+              position: 1,
+              createdAt: '2025-03-28 10:36:56',
+              updatedAt: '2025-03-28 10:36:56',
+              options: [],
+            },
+          ],
+          id: 9,
+          groupId: 3,
+          position: 30,
+          markup: 0,
+          values: {
+            id: 37,
+            lang: 'en',
+            value: 'Glass (Bottle), Cap (Metal)',
+            description: '',
+          },
+        },
+      ],
+    },
+    {
+      id: 1,
+      position: 1,
+      name: 'no group (automatically generated)',
+      description: '',
+      properties: [
+        {
+          cast: 'selection',
+          referrer: [1, 162],
+          names: {
+            id: 9,
+            propertyId: 5,
+            lang: 'en',
+            name: 'Color',
+            description: '',
+            createdAt: '2025-09-22 10:41:42',
+            updatedAt: '2025-09-22 10:41:42',
+          },
+          clients: [70016],
+          display: ['showInItemListing', 'showOnItemsPage', 'groupIsHidden'],
+          options: [],
+          groups: [
+            {
+              id: 1,
+              position: 1,
+              createdAt: '2021-07-15 12:23:32',
+              updatedAt: '2021-07-15 12:23:32',
+              options: [
+                {
+                  id: 1,
+                  groupId: 1,
+                  type: 'groupType',
+                  value: 'none',
+                  createdAt: '2021-07-15 12:23:32',
+                  updatedAt: '2021-07-15 12:23:32',
+                },
+                {
+                  id: 2,
+                  groupId: 1,
+                  type: 'surchargeType',
+                  value: 'flat',
+                  createdAt: '2021-07-15 12:23:32',
+                  updatedAt: '2021-07-15 12:23:32',
+                },
+              ],
+            },
+          ],
+          id: 5,
+          groupId: 1,
+          position: 0,
+          markup: 0,
+          values: {
+            selectionId: 1,
+            lang: 'en',
+            value: 'Copper',
+            description: '',
+            position: 1,
+          },
+        },
+        {
+          cast: 'selection',
+          referrer: [1, 162],
+          names: {
+            id: 11,
+            propertyId: 6,
+            lang: 'en',
+            name: 'Material',
+            description: '',
+            createdAt: '2025-09-22 10:45:39',
+            updatedAt: '2025-09-22 10:45:39',
+          },
+          clients: [70016],
+          display: ['groupIsHidden', 'showInItemListing', 'showOnItemsPage'],
+          options: [],
+          groups: [
+            {
+              id: 1,
+              position: 1,
+              createdAt: '2021-07-15 12:23:32',
+              updatedAt: '2021-07-15 12:23:32',
+              options: [
+                {
+                  id: 1,
+                  groupId: 1,
+                  type: 'groupType',
+                  value: 'none',
+                  createdAt: '2021-07-15 12:23:32',
+                  updatedAt: '2021-07-15 12:23:32',
+                },
+                {
+                  id: 2,
+                  groupId: 1,
+                  type: 'surchargeType',
+                  value: 'flat',
+                  createdAt: '2021-07-15 12:23:32',
+                  updatedAt: '2021-07-15 12:23:32',
+                },
+              ],
+            },
+          ],
+          id: 6,
+          groupId: 1,
+          position: 20,
+          markup: 0,
+          values: {
+            selectionId: 14,
+            lang: 'en',
+            value: '(Property) Example: Example 1',
+            description: '',
+            position: 20,
+          },
+        },
+        {
+          cast: 'text',
+          referrer: [1, 162],
+          names: [],
+          clients: [70016],
+          display: ['showOnItemsPage'],
+          options: [],
+          groups: [
+            {
+              id: 1,
+              position: 1,
+              createdAt: '2021-07-15 12:23:32',
+              updatedAt: '2021-07-15 12:23:32',
+              names: {
+                id: 2,
+                groupId: 1,
+                lang: 'en',
+                name: 'no group (automatically generated)',
+                description: '',
+                createdAt: '2021-07-15 12:23:32',
+                updatedAt: '2021-07-15 12:23:32',
+              },
+              options: [
+                {
+                  id: 1,
+                  groupId: 1,
+                  type: 'groupType',
+                  value: 'none',
+                  createdAt: '2021-07-15 12:23:32',
+                  updatedAt: '2021-07-15 12:23:32',
+                },
+                {
+                  id: 2,
+                  groupId: 1,
+                  type: 'surchargeType',
+                  value: 'flat',
+                  createdAt: '2021-07-15 12:23:32',
+                  updatedAt: '2021-07-15 12:23:32',
+                },
+              ],
+            },
+          ],
+          id: 7,
+          groupId: 1,
+          position: 1000,
+          markup: 0,
+          values: {
+            id: 39,
+            lang: 'en',
+            value: '(Property) Example: Example 2',
+            description: '',
+          },
+        },
+      ],
+    },
+  ],
 };

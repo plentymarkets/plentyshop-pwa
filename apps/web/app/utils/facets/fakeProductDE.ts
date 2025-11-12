@@ -8,43 +8,13 @@ export const fakeProductDE = {
           imageId: 23,
           alternate: '',
         },
-        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
-        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
-        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
-        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        url: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
         position: 0,
         path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
-        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
-      },
-      {
-        names: {
-          name: '',
-          lang: 'de',
-          imageId: 23,
-          alternate: '',
-        },
-        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
-        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
-        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
-        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-blue.png',
-        position: 0,
-        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
-        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
-      },
-      {
-        names: {
-          name: '',
-          lang: 'de',
-          imageId: 23,
-          alternate: '',
-        },
-        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
-        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
-        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
-        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-yellow.png',
-        position: 0,
-        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
-        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
+        cleanImageName: 'productPlaceholder.jpg',
       },
     ],
     variation: [
@@ -55,13 +25,28 @@ export const fakeProductDE = {
           imageId: 23,
           alternate: '',
         },
-        url: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
-        urlPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
-        urlSecondPreview: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
-        urlMiddle: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/fake-red.png',
+        url: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
         position: 0,
-        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
-        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
+        path: 'S3:productPlaceholderjpg',
+        cleanImageName: '109-productPlaceholder.jpg',
+      },
+      {
+        names: {
+          name: '',
+          lang: 'de',
+          imageId: 24,
+          alternate: '',
+        },
+        url: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+        position: 0,
+        path: 'S3:productPlaceholderjpg',
+        cleanImageName: '109-productPlaceholder.jpg',
       },
     ],
   },
@@ -71,8 +56,60 @@ export const fakeProductDE = {
     manufacturerId: 2,
     itemType: 'default',
     manufacturer: {
-      position: 0,
-      externalName: 'A & C Design',
+      name: 'Teston Testerton',
+      legalName: 'Teston Testerton',
+      logo: '',
+      url: '',
+      contactUrl: '',
+      street: 'Teststreet',
+      email: '',
+      responsibleName: 'Teston Testerton',
+      responsibleStreet: 'Teststreet',
+      responsibleHouseNo: '1',
+      responsiblePostCode: '12345',
+      responsibleTown: 'New Test City',
+      responsibleCountry: 1,
+      responsibleEmail: '',
+      responsibleContactUrl: '',
+      responsiblePhoneNo: '',
+      externalName: '',
+      postcode: '54321',
+      houseNo: '2',
+      town: 'Testington',
+      countryId: 1,
+      phoneNumber: '',
+      faxNumber: '',
+      nameExternal: '',
+      countryObject: {
+        names: [
+          { language: 'en', country_id: '1', name: 'Testcountry', id: 250 },
+          { country_id: '1', language: 'en', id: 1, name: 'Testcountry' },
+        ],
+        shippingDestinationId: 101,
+        active: 1,
+        lang: 'de',
+        name: 'Germany',
+        id: 1,
+        storehouseId: 0,
+        isoCode3: 'DEU',
+        isCountryStateMandatory: null,
+        isoCode2: 'DE',
+      },
+      responsibleCountryObject: {
+        names: [
+          { language: 'en', country_id: '1', name: 'Germany', id: 250 },
+          { country_id: '1', language: 'de', id: 1, name: 'Deutschland' },
+        ],
+        shippingDestinationId: 101,
+        active: 1,
+        lang: 'de',
+        name: 'Germany',
+        id: 1,
+        storehouseId: 0,
+        isoCode3: 'DEU',
+        isCountryStateMandatory: null,
+        isoCode2: 'DE',
+      },
     },
     rebate: 0,
     salableVariationCount: 1,
@@ -85,7 +122,7 @@ export const fakeProductDE = {
     },
   },
   texts: {
-    urlPath: 'wohnzimmer/sessel-hocker/barhocker-white-sanfrancisco',
+    urlPath: 'wohnzimmer/test/test-product',
     technicalData:
       'Das Feld „Technische Daten“ ermöglicht es Ihnen, zusätzliche detaillierte Informationen zu einem Produkt bereitzustellen. Es bietet die gleichen Formatierungsoptionen wie das Artikeltext-Feld.</br>Neben technischen Daten können Sie dieses Feld auch für andere Produktinformationen nutzen, die Sie gesondert hervorheben möchten, z. B.:<ul><li>Pflegehinweise bei Kleidung</li><li>Zutaten oder Nährwertangaben bei Lebensmitteln</li><li>Maße bei Möbeln</li><li>Weitere relevante Produktdetails</li></ul>',
     name3: 'Name 3 EN',
@@ -98,8 +135,7 @@ export const fakeProductDE = {
     metaDescription: 'Meta Description DE',
     name2: 'Beispielprodukt DE',
     name1: 'Beispielprodukt',
-    shortDescription:
-      '(Bestelleigenschaft) Ihre Initialen: Inputfield',
+    shortDescription: 'Dies ist ein kurzer Vorschautext, der beispielsweise in Produktlisten verwendet werden kann.',
     keywords: 'Meta-Keywords DE',
   },
   variation: {
@@ -147,6 +183,103 @@ export const fakeProductDE = {
     unitOfMeasurement: 'C62',
     content: 1,
   },
+  tags: [
+    {
+      id: 2,
+      names: {
+        name: 'NEU',
+        lang: 'de',
+      },
+      color: '#0282a2',
+    },
+    {
+      id: 3,
+      names: {
+        name: 'BELIEBT',
+        lang: 'de',
+      },
+      color: '#a26d6d',
+    },
+  ],
+  variationAttributeMap: {
+    variations: [
+      {
+        variationId: 1097,
+        isSalable: true,
+        unitCombinationId: 1,
+        unitId: 1,
+        unitName: '1 piece',
+        attributes: [
+          {
+            attributeId: 2,
+            attributeValueId: 6,
+          },
+        ],
+      },
+      {
+        variationId: 1098,
+        isSalable: true,
+        unitCombinationId: 1,
+        unitId: 1,
+        unitName: '1 piece',
+        attributes: [
+          {
+            attributeId: 2,
+            attributeValueId: 7,
+          },
+        ],
+      },
+      {
+        variationId: 1099,
+        isSalable: true,
+        unitCombinationId: 1,
+        unitId: 1,
+        unitName: '1 piece',
+        attributes: [
+          {
+            attributeId: 2,
+            attributeValueId: 11,
+          },
+        ],
+      },
+      {
+        variationId: 1096,
+        isSalable: true,
+        unitCombinationId: 47,
+        unitId: 36,
+        unitName: '250 gramm',
+        attributes: [],
+      },
+    ],
+    attributes: [
+      {
+        attributeId: 2,
+        position: 1,
+        name: 'Size',
+        type: 'box',
+        values: [
+          {
+            attributeValueId: 6,
+            position: 2,
+            imageUrl: '',
+            name: 'S',
+          },
+          {
+            attributeValueId: 7,
+            position: 3,
+            imageUrl: '',
+            name: 'M',
+          },
+          {
+            attributeValueId: 11,
+            position: 4,
+            imageUrl: '',
+            name: 'L',
+          },
+        ],
+      },
+    ],
+  },
   properties: [],
   hasOrderProperties: false,
   hasRequiredOrderProperty: false,
@@ -155,33 +288,33 @@ export const fakeProductDE = {
     default: {
       price: {
         value: 4000,
-        formatted: "4.000,00 EUR"
+        formatted: '4.000,00 EUR',
       },
       unitPrice: {
         value: 4000,
-        formatted: "4.000,00 EUR"
+        formatted: '4.000,00 EUR',
       },
-      basePrice: "",
+      basePrice: '',
       baseLot: null,
       baseUnit: null,
       baseSinglePrice: null,
       minimumOrderQuantity: 1,
       contactClassDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
       categoryDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
-      currency: "EUR",
+      currency: 'EUR',
       lowestPrice: {
         value: null,
-        formatted: ""
+        formatted: '',
       },
       vat: {
         id: 0,
-        value: 19
+        value: 19,
       },
       isNet: false,
       data: {
@@ -202,45 +335,45 @@ export const fakeProductDE = {
         categoryDiscountNet: 0,
         vatId: 0,
         vatValue: 19,
-        currency: "EUR",
-        interval: "none",
+        currency: 'EUR',
+        interval: 'none',
         conversionFactor: 1,
-        minimumOrderQuantity: "1.00",
-        updatedAt: "2025-10-07 11:55:31",
-        type: "default",
-        pricePosition: 0
-      }
+        minimumOrderQuantity: '1.00',
+        updatedAt: '2025-10-07 11:55:31',
+        type: 'default',
+        pricePosition: 0,
+      },
     },
     rrp: {
       price: {
         value: 5000,
-        formatted: "5.000,00 EUR"
+        formatted: '5.000,00 EUR',
       },
       unitPrice: {
         value: 5000,
-        formatted: "5.000,00 EUR"
+        formatted: '5.000,00 EUR',
       },
-      basePrice: "",
+      basePrice: '',
       baseLot: null,
       baseUnit: null,
       baseSinglePrice: null,
       minimumOrderQuantity: 0,
       contactClassDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
       categoryDiscount: {
         percent: 0,
-        amount: 0
+        amount: 0,
       },
-      currency: "EUR",
+      currency: 'EUR',
       lowestPrice: {
         value: null,
-        formatted: ""
+        formatted: '',
       },
       vat: {
         id: 0,
-        value: 19
+        value: 19,
       },
       isNet: false,
       data: {
@@ -261,14 +394,14 @@ export const fakeProductDE = {
         categoryDiscountNet: 0,
         vatId: 0,
         vatValue: 19,
-        currency: "EUR",
-        interval: "none",
+        currency: 'EUR',
+        interval: 'none',
         conversionFactor: 1,
-        minimumOrderQuantity: "0.00",
-        updatedAt: "2025-10-07 11:55:10",
-        type: "rrp",
-        pricePosition: 0
-      }
+        minimumOrderQuantity: '0.00',
+        updatedAt: '2025-10-07 11:55:10',
+        type: 'rrp',
+        pricePosition: 0,
+      },
     },
     set: null,
     specialOffer: null,
@@ -276,33 +409,33 @@ export const fakeProductDE = {
       {
         price: {
           value: 3800,
-          formatted: "3.800,00 EUR"
+          formatted: '3.800,00 EUR',
         },
         unitPrice: {
           value: 3800,
-          formatted: "3.800,00 EUR"
+          formatted: '3.800,00 EUR',
         },
-        basePrice: "",
+        basePrice: '',
         baseLot: null,
         baseUnit: null,
         baseSinglePrice: null,
         minimumOrderQuantity: 5,
         contactClassDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
         categoryDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
-        currency: "EUR",
+        currency: 'EUR',
         lowestPrice: {
           value: 3600,
-          formatted: "3.600,00 EUR"
+          formatted: '3.600,00 EUR',
         },
         vat: {
           id: 0,
-          value: 19
+          value: 19,
         },
         isNet: false,
         data: {
@@ -323,45 +456,45 @@ export const fakeProductDE = {
           categoryDiscountNet: 0,
           vatId: 0,
           vatValue: 19,
-          currency: "EUR",
-          interval: "none",
+          currency: 'EUR',
+          interval: 'none',
           conversionFactor: 1,
-          minimumOrderQuantity: "5.00",
-          updatedAt: "2025-10-07 11:56:02",
-          type: "default",
-          pricePosition: 0
-        }
+          minimumOrderQuantity: '5.00',
+          updatedAt: '2025-10-07 11:56:02',
+          type: 'default',
+          pricePosition: 0,
+        },
       },
       {
         price: {
           value: 4000,
-          formatted: "4.000,00 EUR"
+          formatted: '4.000,00 EUR',
         },
         unitPrice: {
           value: 4000,
-          formatted: "4.000,00 EUR"
+          formatted: '4.000,00 EUR',
         },
-        basePrice: "",
+        basePrice: '',
         baseLot: null,
         baseUnit: null,
         baseSinglePrice: null,
         minimumOrderQuantity: 1,
         contactClassDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
         categoryDiscount: {
           percent: 0,
-          amount: 0
+          amount: 0,
         },
-        currency: "EUR",
+        currency: 'EUR',
         lowestPrice: {
           value: null,
-          formatted: ""
+          formatted: '',
         },
         vat: {
           id: 0,
-          value: 19
+          value: 19,
         },
         isNet: false,
         data: {
@@ -382,16 +515,16 @@ export const fakeProductDE = {
           categoryDiscountNet: 0,
           vatId: 0,
           vatValue: 19,
-          currency: "EUR",
-          interval: "none",
+          currency: 'EUR',
+          interval: 'none',
           conversionFactor: 1,
-          minimumOrderQuantity: "1.00",
-          updatedAt: "2025-10-07 11:55:31",
-          type: "default",
-          pricePosition: 0
-        }
-      }
-    ]
+          minimumOrderQuantity: '1.00',
+          updatedAt: '2025-10-07 11:55:31',
+          type: 'default',
+          pricePosition: 0,
+        },
+      },
+    ],
   },
   facets: [],
   attributes: [],

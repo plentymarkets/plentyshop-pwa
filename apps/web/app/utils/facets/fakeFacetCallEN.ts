@@ -215,7 +215,7 @@ export const fakeFacetCallEN = {
     },
     pagination: {
       perPageOptions: [20, 40, 100],
-      totals: 1,
+      totals: 8,
     },
   },
 };

@@ -35,10 +35,6 @@ export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string
         ...(fakeProduct.texts ?? {}),
         name1: exampleProductName + (ind + 1),
       },
-      images: {
-        all: defaultAll,
-        variation: []
-      }
     }));
   }
 };
