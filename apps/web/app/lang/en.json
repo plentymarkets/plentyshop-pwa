@@ -417,7 +417,8 @@
     "Return Note": "Return Note",
     "Reversal Document": "Reversal Document",
     "Success Confirmation": "Success Confirmation",
-    "correctionDocuments": "Correction Documents"
+    "correctionDocuments": "Correction Documents",
+    "downloadFailed": "Downloading the document failed. Please try again later."
   },
   "editAddress": "Edit address",
   "editMode": {

@@ -53,11 +53,18 @@ const getDocumentName = (document: OrderDocument) => {
 
 const downloadPDF = async (document: OrderDocument, accessKey: string, key: number) => {
   downloadingDocument.value = key;
-  await getDocument(document, accessKey);
+  try {
+    await getDocument(document, accessKey);
+    const name = document.path.split('/').join('_');
 
-  const name = document.path.split('/').join('_');
-
-  downloadFile(data.value, name, 'application/pdf');
-  downloadingDocument.value = null;
+    downloadFile(data.value, name, 'application/pdf');
+  } catch {
+    useNotification().send({
+      type: 'negative',
+      message: t('documents.downloadFailed'),
+    });
+  } finally {
+    downloadingDocument.value = null;
+  }
 };
 </script>
