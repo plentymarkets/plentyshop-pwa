@@ -1,13 +1,44 @@
-## Why:
+## Issue:
 
-Closes: #ID
+Closes: AB#ID
 
 ## Describe your changes
 
-## Checklist before requesting a review
+- [What changed]
+- [Notable implementation decisions]
+- [Known limitations]
 
-- [ ] My code follows the code style of this project.
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] I have added tests to cover my changes.
-- [ ] All new and existing tests passed.
-- [ ] I've updated `docs/changelog/changelog_en.md` and `docs/changelog/changelog_de.md`. If I'm a non-German speaker, I've still updated the file with the English version as a placeholder.
+## Definition of Done
+
+**Review the following checklist and tick off completed tasks before requesting a review.**
+
+### Environment
+
+**Mode**: Production (`build` & `start`)
+
+**Feature flags**:
+
+- [Which flags have to be enabled for this change]
+
+### Functionality
+
+- [ ] Implemented all acceptance criteria from the issue
+- [ ] Encoded requirements in executable specifications (unit and/or e2e tests)
+- [ ] Verified functionality under the following scenarios:
+  - Initial load (mobile & desktop)
+  - After navigation (mobile & desktop)
+  - After language switch (mobile & desktop)
+- [ ] Verified error handling
+
+### Compliance
+
+- [ ] Checked accessibility (mobile & desktop)
+
+### Documentation
+
+- [ ] Added TSDoc annotations to TypeScript files
+
+### Screenshots
+
+_Add screenshots to illustrate visual changes._
+_Take care not to include sensitive information._
