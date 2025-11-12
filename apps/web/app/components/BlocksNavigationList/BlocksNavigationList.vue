@@ -120,8 +120,16 @@ const updateScrollHeight = () => {
   }
 };
 
+const resizeHandler = () => {
+  nextTick(() => updateScrollHeight());
+};
+
 onMounted(() => {
-  nextTick(updateScrollHeight);
+  window.addEventListener('resize', resizeHandler);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeHandler);
 });
 watch(
   () => blocksLists.value,
@@ -130,5 +138,4 @@ watch(
   },
   { deep: true },
 );
-window.addEventListener('resize', () => nextTick(updateScrollHeight));
 </script>
