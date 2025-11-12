@@ -91,7 +91,7 @@
             v-for="i in numColumns"
             :key="`sticky-col-${i}`"
             type="button"
-            class="px-3 py-2 rounded-md border text-sm transition-colors"
+            class="px-3 py-2 rounded-md border text-sm"
             :class="
               isSticky(i - 1)
                 ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
