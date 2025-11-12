@@ -242,8 +242,7 @@ const toggleSticky = (columnIndex: number) => {
 
   if (pos === -1) {
     cfg?.sticky.push(columnIndex);
-  }
-  else {
+  } else {
     cfg?.sticky.splice(pos, 1);
   }
 };
