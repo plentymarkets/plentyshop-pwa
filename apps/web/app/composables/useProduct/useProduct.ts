@@ -49,8 +49,10 @@ export const useProduct: UseProductReturn = (slug) => {
     );
     useHandleError(error.value ?? null);
 
-    const dbBlocks = data.value?.data.blocks;
-    await setupBlocks((dbBlocks && dbBlocks.length > 0 ? dbBlocks : useProductTemplateData()) as Block[]);
+    const fetchedBlocks = data.value?.data.blocks;
+    await setupBlocks(
+      (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
+    );
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
