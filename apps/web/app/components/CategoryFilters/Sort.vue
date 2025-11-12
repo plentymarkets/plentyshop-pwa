@@ -102,7 +102,7 @@ watch(
     "show-all-filters": "Show all"
   },
   "de": {
-    "show-all-filters": "Show all"
+    "show-all-filters": "Alle anzeigen"
   }
 }
 </i18n>
