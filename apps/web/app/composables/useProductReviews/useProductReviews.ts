@@ -68,19 +68,22 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     return state.value.data;
   };
 
-  const fetchProductAuthenticatedReviews: FetchProductAuthenticatedReviews = async (itemId: number, variationId: number) => {
+  const fetchProductAuthenticatedReviews: FetchProductAuthenticatedReviews = async (
+    itemId: number,
+    variationId: number,
+  ) => {
     state.value.loading = true;
 
     try {
       const { data, error } = await useAsyncData(`${itemId}-${variationId} - ${Math.random()}`, () =>
-          useSdk().plentysystems.getAuthenticatedReview({
-            itemId: itemId,
-            variationId: variationId,
-          }),
+        useSdk().plentysystems.getAuthenticatedReview({
+          itemId: itemId,
+          variationId: variationId,
+        }),
       );
       useHandleError(error.value ?? null);
       const authenticatedFeedbacks = data?.value?.data?.feedbacks ?? state.value.authenticatedData.feedbacks;
-      state.value.authenticatedData.feedbacks = authenticatedFeedbacks.filter(feedback => !feedback.isVisible);
+      state.value.authenticatedData.feedbacks = authenticatedFeedbacks.filter((feedback) => !feedback.isVisible);
       state.value.loading = false;
 
       return state.value.authenticatedData;
@@ -89,7 +92,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     }
 
     return state.value.authenticatedData;
-  }
+  };
 
   const fetchReviews = async () => {
     await fetchProductReviews(itemId, productVariationId);
