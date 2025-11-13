@@ -1,10 +1,5 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
 
-export const getActiveLanguages = (): string[] => {
-  const activeLanguages = process.env.LANGUAGELIST || 'en,de';
-  return activeLanguages.split(',').map((lang) => lang.trim());
-};
-
 export const getLocales = (): LocaleObject[] => {
   const locales: unknown[] = [];
   const allLocales = [
@@ -36,12 +31,8 @@ export const getLocales = (): LocaleObject[] => {
     { code: 'zh', file: 'zh.ts' },
   ];
 
-  const activeLanguages = getActiveLanguages();
-
   allLocales.forEach((locale) => {
-    if (activeLanguages.includes(locale.code)) {
-      locales.push(locale);
-    }
+    locales.push(locale);
   });
 
   return locales as LocaleObject[];
