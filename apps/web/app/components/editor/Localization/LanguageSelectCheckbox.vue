@@ -2,7 +2,10 @@
   <div class="flex w-full items-center p-2">
     <div class="mr-auto">
       <div class="text-lg">{{ lang }}</div>
-      <div class="text-sm text-gray-600">
+      <div
+        class="text-sm text-gray-600"
+        :class="{ '!text-red-600': translatedCount.total > translatedCount.translated }"
+      >
         {{
           getEditorTranslation('keysTranslated', {
             translated: translatedCount.translated,

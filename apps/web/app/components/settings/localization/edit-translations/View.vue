@@ -43,12 +43,7 @@ const { allLanguages, initializeLocales } = useEditorLocalizationLocales();
 initializeLocales();
 
 const fetchAllTranslations = async () => {
-  try {
-    await loadKeys();
-    console.log(keys.value);
-  } catch (error) {
-    console.error(error);
-  }
+  await loadKeys();
 };
 </script>
 
