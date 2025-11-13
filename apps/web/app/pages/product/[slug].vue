@@ -58,7 +58,7 @@ const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
-const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
+const { data: productReviews, fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
@@ -112,6 +112,7 @@ onBeforeRouteLeave(() => {
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
+  await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
 }
 await fetchReviews();
 

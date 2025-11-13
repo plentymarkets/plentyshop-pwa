@@ -150,6 +150,6 @@ const isAnswerEditable = (replyItem: ReviewItem) =>
   replyItem.sourceRelation?.[0]?.feedbackRelationSourceId === user.value?.id?.toString();
 
 const isEditable = computed(
-  () => reviewItem.value.sourceRelation?.[0]?.feedbackRelationSourceId === user.value?.id?.toString(),
+  () => reviewItem.value.sourceRelation?.[0]?.feedbackRelationSourceId?.toString() === user.value?.id?.toString(),
 );
 </script>
