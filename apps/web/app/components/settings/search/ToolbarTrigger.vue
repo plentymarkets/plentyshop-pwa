@@ -1,6 +1,6 @@
 <template>
   <SfTooltip
-    v-if="runtimeConfig.public.isDev"
+    v-if="isShopSearchEnabled"
     :label="getEditorTranslation('tooltip')"
     placement="right"
     class="inline-grid font-editor"
@@ -27,6 +27,7 @@ defineProps({
 });
 
 const runtimeConfig = useRuntimeConfig();
+const isShopSearchEnabled = ref(!runtimeConfig.public.disabledEditorSettings.includes('shop-search'));
 </script>
 
 <i18n lang="json">
