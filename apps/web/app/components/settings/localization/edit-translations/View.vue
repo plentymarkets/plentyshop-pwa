@@ -18,6 +18,16 @@
             </SfIconBase>
           </span>
         </UiButton>
+
+        <template v-if="keys.length > 0">
+          <div class="m-3">{{ getEditorTranslation('markLanguages') }}</div>
+          <EditorLocalizationLanguageSelectCheckbox
+            v-for="(language, locale) in allLanguages"
+            :key="locale"
+            :lang="language"
+            :locale="locale"
+          />
+        </template>
       </div>
     </template>
   </SiteConfigurationView>
@@ -28,14 +38,12 @@ import { SfIconBase, SfLoaderCircular } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { loadKeys, keys, loading } = useEditorLocalizationKeys();
+const { allLanguages, initializeLocales } = useEditorLocalizationLocales();
+
+initializeLocales();
 
 const fetchAllTranslations = async () => {
-  try {
-    await loadKeys();
-    console.log(keys.value);
-  } catch (error) {
-    console.error(error);
-  }
+  await loadKeys();
 };
 </script>
 
@@ -43,11 +51,13 @@ const fetchAllTranslations = async () => {
 {
   "en": {
     "label": "Edit Translations",
-    "description": "Translate static texts of your shop."
+    "description": "Translate static texts of your shop.",
+    "markLanguages": "Mark languages you want to translate. Once marked, chosen languages will be shown in the table."
   },
   "de": {
     "label": "Edit Translations",
-    "description": "Translate static texts of your shop."
+    "description": "Translate static texts of your shop.",
+    "markLanguages": "Mark languages you want to translate. Once marked, chosen languages will be shown in the table."
   }
 }
 </i18n>

@@ -1,13 +1,13 @@
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
 
-export const getEditorTranslation = (key: string): string => {
+export const getEditorTranslation = (key: string, named?: Record<string, unknown>): string => {
   const locale = 'en';
 
   const { t } = useI18n({
     locale: locale,
   });
 
-  return t(key, 0, { locale: locale }) as string;
+  return t(key, { ...named }, { locale: locale }) as string;
 };
 
 export const getMappedOptions = (options: string[]): SortingOption[] => {

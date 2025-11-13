@@ -286,6 +286,9 @@ export default defineNuxtConfig({
   },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    apiEndpoint: process.env.API_ENDPOINT,
+    configId: Number(process.env.CONFIG_ID) || 1,
+    securityToken: process.env.API_SECURITY_TOKEN || '',
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
