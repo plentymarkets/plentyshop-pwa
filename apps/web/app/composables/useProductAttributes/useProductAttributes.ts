@@ -66,6 +66,27 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
   };
 
   /**
+   * @description Helper function to check if a combination matches the given attribute values.
+   */
+  const combinationMatchesAttributes = (
+    combination: VariationMapProductVariation,
+    attributeValues: Record<number, number>,
+  ): boolean => {
+    return Object.entries(attributeValues).every(([attributeId, valueId]) => {
+      return combination.attributes?.some((attribute) => {
+        return attribute.attributeId === Number(attributeId) && attribute.attributeValueId === valueId;
+      });
+    });
+  };
+
+  /**
+   * @description Helper function to check if a value is available in any combination.
+   */
+  const isValueAvailableInCombinations = (attributeValues: Record<number, number>): boolean => {
+    return state.value.combinations?.some((combination) => combinationMatchesAttributes(combination, attributeValues)) ?? false;
+  };
+
+  /**
    * @description Function disabling attributes based on possible combinations.
    * @example
    * ``` ts
@@ -76,13 +97,7 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
     state.value.attributes.forEach((attribute) => {
       attribute.values.forEach((value) => {
         const attributeValues = { ...state.value.attributeValues, [attribute.attributeId]: value.attributeValueId };
-        value.disabled = !state.value.combinations?.some((combination) => {
-          return Object.entries(attributeValues).every(([attributeId, valueId]) => {
-            return combination.attributes?.some((attribute) => {
-              return attribute.attributeId === Number(attributeId) && attribute.attributeValueId === valueId;
-            });
-          });
-        });
+        value.disabled = !isValueAvailableInCombinations(attributeValues);
       });
     });
 

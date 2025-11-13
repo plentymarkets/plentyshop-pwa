@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 // test save address method of useAddress
 
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
