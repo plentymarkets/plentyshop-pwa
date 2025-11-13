@@ -24,6 +24,7 @@ Closes: AB#ID
 
 - [ ] Implemented all acceptance criteria from the issue
 - [ ] Encoded requirements in executable specifications (unit and/or e2e tests)
+- [ ] Ran e2e tests relevant to my changes locally
 - [ ] Verified functionality under the following scenarios:
   - Initial load (mobile & desktop)
   - After navigation (mobile & desktop)
