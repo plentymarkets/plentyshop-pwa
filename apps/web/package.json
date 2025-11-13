@@ -35,7 +35,7 @@
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@nuxt/fonts": "^0.12.1",
     "@plentymarkets/tailwind-colors": "^1.0.1",
-    "@vueuse/core": "^10.11.0",
+    "@vueuse/core": "^14.0.0",
     "axios": "^1.12.0",
     "nuxt-lazy-hydrate": "^1.0.0",
     "uuid": "^9.0.1"
