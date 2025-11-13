@@ -25,7 +25,7 @@
       </div>
     </template>
     <template v-else>
-      <div>
+      <div class="relative">
         <NuxtImg
           v-if="imageUrl"
           :src="imageUrl"
