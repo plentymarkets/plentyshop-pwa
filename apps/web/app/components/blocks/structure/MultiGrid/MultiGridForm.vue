@@ -232,18 +232,18 @@ const isSticky = (columnIndex: number) => {
 };
 
 const toggleSticky = (columnIndex: number) => {
-  const cfg = multiGridStructure.value.configuration;
+  const configuration = multiGridStructure.value.configuration;
 
-  if (!Array.isArray(cfg?.sticky)) {
-    cfg.sticky = [];
+  if (!Array.isArray(configuration?.sticky)) {
+    configuration.sticky = [];
   }
 
-  const pos = cfg?.sticky.indexOf(columnIndex);
+  const position = configuration?.sticky.indexOf(columnIndex);
 
-  if (pos === -1) {
-    cfg?.sticky.push(columnIndex);
+  if (position === -1) {
+    configuration?.sticky.push(columnIndex);
   } else {
-    cfg?.sticky.splice(pos, 1);
+    configuration?.sticky.splice(position, 1);
   }
 };
 
