@@ -83,7 +83,10 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
    * @description Helper function to check if a value is available in any combination.
    */
   const isValueAvailableInCombinations = (attributeValues: Record<number, number>): boolean => {
-    return state.value.combinations?.some((combination) => combinationMatchesAttributes(combination, attributeValues)) ?? false;
+    return (
+      state.value.combinations?.some((combination) => combinationMatchesAttributes(combination, attributeValues)) ??
+      false
+    );
   };
 
   /**
