@@ -343,7 +343,7 @@
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
                     "textAlignment": "left",
-                    "justify": "bottom",
+                    "justify": "top",
                     "align": "right"
                   },
                   "button": {
@@ -374,7 +374,7 @@
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
                     "textAlignment": "left",
-                    "justify": "bottom",
+                    "justify": "top",
                     "align": "right"
                   },
                   "button": {
@@ -417,7 +417,7 @@
                     "htmlDescription": "Text mit HTML-Formatierung",
                     "textAlignment": "left",
                     "justify": "top",
-                    "align": "left"
+                    "align": "right"
                   },
                   "button": {
                     "label": "Button",
@@ -863,7 +863,7 @@
                     "aspectRatio": "16 / 9"
                   },
                   "text": {
-                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlay": "Overlay Text",
                     "textOverlayColor": "#00ff00",
                     "textOverlayAlignY": "center",
                     "textOverlayAlignX": "center"
@@ -922,7 +922,7 @@
                     "aspectRatio": "16 / 9"
                   },
                   "text": {
-                    "textOverlay": "Beispiel Overlay Text",
+                    "textOverlay": "Overlay-Text",
                     "textOverlayColor": "#00ff00",
                     "textOverlayAlignY": "center",
                     "textOverlayAlignX": "center"
