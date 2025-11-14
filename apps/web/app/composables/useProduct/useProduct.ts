@@ -53,10 +53,9 @@ export const useProduct: UseProductReturn = (slug) => {
     await setupBlocks(
       (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
     );
-
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
-    handlePreviewProduct(state);
+    handlePreviewProduct(state, $i18n.locale.value);
     state.value.loading = false;
     return state.value.data;
   };
