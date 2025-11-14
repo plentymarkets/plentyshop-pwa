@@ -39,10 +39,7 @@
       <div class="flex justify-between my-5">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
         <span>
-          <SfSwitch
-            v-model="itemTextBlock.layout.displayAsCollapsable"
-            data-testid="item-text-displayAsCollapsable-switch"
-          />
+          <SfSwitch v-model="isCollapsible" data-testid="item-text-displayAsCollapsable-switch" />
         </span>
       </div>
 
@@ -50,8 +47,9 @@
         <span>{{ getEditorTranslation('initially-collapsed') }}</span>
         <span>
           <SfSwitch
-            v-model="itemTextBlock.layout.initiallyCollapsed"
+            v-model="isInitiallyCollapsed"
             data-testid="item-text-initiallyCollapsed-switch"
+            :disabled="!isCollapsible"
           />
         </span>
       </div>
@@ -135,12 +133,23 @@ const itemTextBlock = computed<ItemTextContent>(() => {
 const textSettings = ref(false);
 const layoutSettings = ref(false);
 
-watch(
-  () => itemTextBlock.value.layout.displayAsCollapsable,
-  (newValue) => {
-    if (!newValue) itemTextBlock.value.layout.initiallyCollapsed = false;
-  },
-);
+const isCollapsibleInit = itemTextBlock.value.layout.displayAsCollapsable;
+const isCollapsible = ref(isCollapsibleInit);
+
+const isInitiallyCollapsedInit = itemTextBlock.value.layout.initiallyCollapsed;
+const isInitiallyCollapsed = ref(isInitiallyCollapsedInit);
+
+watch(isCollapsible, (newValue) => {
+  itemTextBlock.value.layout.displayAsCollapsable = newValue;
+  if (!newValue) {
+    isInitiallyCollapsed.value = false;
+    itemTextBlock.value.layout.initiallyCollapsed = false;
+  }
+});
+
+watch(isInitiallyCollapsed, (newValue) => {
+  itemTextBlock.value.layout.initiallyCollapsed = newValue;
+});
 </script>
 
 <i18n lang="json">
@@ -150,7 +159,7 @@ watch(
     "main-title-label": "Title",
     "layout-settings-label": "Layout Settings",
     "display-as-collapsable": "Display as Collapsable",
-    "initially-collapsed": "Initially Collpsed",
+    "initially-collapsed": "Initially Collapsed",
     "padding": "Padding"
   },
   "de": {
@@ -158,7 +167,7 @@ watch(
     "main-title-label": "Title",
     "display-as-collapsable": "Display as Collapsable",
     "layout-settings-label": "Layout Settings",
-    "initially-collapsed": "Initially Collpsed",
+    "initially-collapsed": "Initially Collapsed",
     "padding": "Padding"
   }
 }
