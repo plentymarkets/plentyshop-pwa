@@ -89,7 +89,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       migrateAllImageBlocks(blocks);
     }
 
-    state.value.data = blocks;
+    if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
+      state.value.data.splice(0, state.value.data.length, ...blocks);
+    }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
   };
 
