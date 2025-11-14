@@ -19,11 +19,21 @@ const useProductTemplateData = () => productTemplateData as Block[];
  */
 export const useProduct: UseProductReturn = (slug) => {
   const properties = useProductOrderProperties();
-  const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
+  // Use route.fullPath for unique key per request
+  const route = typeof useRoute === 'function' ? useRoute() : undefined;
+  const key = `useProduct-${slug}-${route?.fullPath ?? ''}`;
+  const state = useState<UseProductState>(key, () => ({
     data: {} as Product,
     loading: false,
     breadcrumbs: [],
   }));
+
+  // Helper to reset state on navigation
+  const resetState = () => {
+    state.value.data = {} as Product;
+    state.value.loading = false;
+    state.value.breadcrumbs = [];
+  };
 
   /** Function for fetching product data.
    * @param params { ProductParams }
@@ -101,6 +111,7 @@ export const useProduct: UseProductReturn = (slug) => {
     setProductMeta,
     setBreadcrumbs,
     fetchProduct,
+    resetState,
     ...toRefs(state.value),
     properties,
   };

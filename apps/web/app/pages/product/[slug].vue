@@ -57,7 +57,7 @@ const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaDat
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs, resetState } = useProduct(productId);
 const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
@@ -87,6 +87,7 @@ setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
+resetState();
 await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
     product: product.value,

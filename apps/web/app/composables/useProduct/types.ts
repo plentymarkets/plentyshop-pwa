@@ -18,6 +18,7 @@ export interface UseProduct {
   setBreadcrumbs: SetBreadcrumbs;
   setProductMeta: () => void;
   properties: UseProductOrderProperties;
+  resetState: () => void;
 }
 
 export type UseProductReturn = (slug: string) => UseProduct;

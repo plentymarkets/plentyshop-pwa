@@ -17,13 +17,25 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   type: string = 'unknown',
   blocks: string = 'all',
 ) => {
-  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${identifier}-${type}-${blocks}`, () => ({
+  // Use route.fullPath for unique key per request
+  const route = typeof useRoute === 'function' ? useRoute() : undefined;
+  const key = `useCategoryTemplate-${identifier}-${type}-${blocks}-${route?.fullPath ?? ''}`;
+  const state = useState<UseCategoryTemplateState>(key, () => ({
     data: [],
     cleanData: [],
     categoryTemplateData: null,
     defaultTemplateData: [],
     loading: false,
   }));
+
+  // Helper to reset state on navigation
+  const resetState = () => {
+    state.value.data = [];
+    state.value.cleanData = [];
+    state.value.categoryTemplateData = null;
+    state.value.defaultTemplateData = [];
+    state.value.loading = false;
+  };
 
   const ensureFooterBlock = async () => {
     const { fetchFooterSettings } = useFooter();
@@ -163,6 +175,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     updateBlocks,
     setupBlocks,
     setDefaultTemplate,
+    resetState,
     ...toRefs(state.value),
   };
 };
