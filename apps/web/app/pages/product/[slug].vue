@@ -87,12 +87,14 @@ setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-resetState();
-await fetchProduct(productParams).then(() => {
-  usePlentyEvent().emit('frontend:productLoaded', {
-    product: product.value,
-  });
-});
+watch(
+  () => route.fullPath,
+  async () => {
+    resetState();
+    await fetchProduct(productParams);
+    // ...any other logic needed after fetching
+  }
+);
 
 if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
