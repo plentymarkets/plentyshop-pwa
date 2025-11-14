@@ -49,6 +49,7 @@ describe('Banner', () => {
     it('should render all elements in the correct order', () => {
       const expectedOrder = ['image', 'overlay', 'content', 'pretitle', 'title', 'subtitle', 'description', 'button'];
       const elements = wrapper.findAll('[data-testid^="banner-"]');
+      // eslint-disable-next-line max-nested-callbacks
       elements.forEach((element, index) => {
         expect(element.attributes('data-testid')).toContain(expectedOrder[index]);
       });

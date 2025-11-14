@@ -14,7 +14,7 @@ export default withNuxt(
     maxLines: 500,
     maxLinesPerFunction: 1000, // target: 100
     maxStatements: 150, // target: 15
-    maxNestedCallbacks: 30, // target: 3
+    maxNestedCallbacks: 3,
     maxParams: 4
   }),
   ecma({

@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useMakeOrder } from '../useMakeOrder';
 import { ApiError } from '@plentymarkets/shop-api';

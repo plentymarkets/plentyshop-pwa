@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import postCodeMapper from '../../fixtures/postCodeMapper.json';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 
