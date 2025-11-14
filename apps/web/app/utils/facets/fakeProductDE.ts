@@ -13,7 +13,7 @@ export const fakeProductDE = {
         urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
         urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
         position: 0,
-        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
+        path: 'S3:109:placeholder.jpg',
         cleanImageName: 'productPlaceholder.jpg',
       },
     ],
@@ -82,8 +82,8 @@ export const fakeProductDE = {
       nameExternal: '',
       countryObject: {
         names: [
-          { language: 'en', country_id: '1', name: 'Testcountry', id: 250 },
-          { country_id: '1', language: 'en', id: 1, name: 'Testcountry' },
+          { language: 'de', country_id: '1', name: 'Testcountry', id: 250 },
+          { country_id: '1', language: 'de', id: 1, name: 'Testcountry' },
         ],
         shippingDestinationId: 101,
         active: 1,
@@ -97,7 +97,7 @@ export const fakeProductDE = {
       },
       responsibleCountryObject: {
         names: [
-          { language: 'en', country_id: '1', name: 'Germany', id: 250 },
+          { language: 'de', country_id: '1', name: 'Germany', id: 250 },
           { country_id: '1', language: 'de', id: 1, name: 'Deutschland' },
         ],
         shippingDestinationId: 101,
@@ -122,7 +122,7 @@ export const fakeProductDE = {
     },
   },
   texts: {
-    urlPath: 'wohnzimmer/test/test-product',
+    urlPath: 'placeholderText',
     technicalData:
       'Das Feld „Technische Daten“ ermöglicht es Ihnen, zusätzliche detaillierte Informationen zu einem Produkt bereitzustellen. Es bietet die gleichen Formatierungsoptionen wie das Artikeltext-Feld.</br>Neben technischen Daten können Sie dieses Feld auch für andere Produktinformationen nutzen, die Sie gesondert hervorheben möchten, z. B.:<ul><li>Pflegehinweise bei Kleidung</li><li>Zutaten oder Nährwertangaben bei Lebensmitteln</li><li>Maße bei Möbeln</li><li>Weitere relevante Produktdetails</li></ul>',
     name3: 'Name 3 EN',
@@ -147,6 +147,12 @@ export const fakeProductDE = {
     releasedAt: null,
     name: '',
     vatId: 0,
+    weightG: 400,
+    weightNetG: 300,
+    widthMM: 650,
+    lengthMM: 550,
+    heightMM: 330,
+    unitsContained: 1,
     bundleType: null,
     mayShowUnitPrice: true,
     availability: {
@@ -201,85 +207,6 @@ export const fakeProductDE = {
       color: '#a26d6d',
     },
   ],
-  variationAttributeMap: {
-    variations: [
-      {
-        variationId: 1097,
-        isSalable: true,
-        unitCombinationId: 1,
-        unitId: 1,
-        unitName: '1 piece',
-        attributes: [
-          {
-            attributeId: 2,
-            attributeValueId: 6,
-          },
-        ],
-      },
-      {
-        variationId: 1098,
-        isSalable: true,
-        unitCombinationId: 1,
-        unitId: 1,
-        unitName: '1 piece',
-        attributes: [
-          {
-            attributeId: 2,
-            attributeValueId: 7,
-          },
-        ],
-      },
-      {
-        variationId: 1099,
-        isSalable: true,
-        unitCombinationId: 1,
-        unitId: 1,
-        unitName: '1 piece',
-        attributes: [
-          {
-            attributeId: 2,
-            attributeValueId: 11,
-          },
-        ],
-      },
-      {
-        variationId: 1096,
-        isSalable: true,
-        unitCombinationId: 47,
-        unitId: 36,
-        unitName: '250 gramm',
-        attributes: [],
-      },
-    ],
-    attributes: [
-      {
-        attributeId: 2,
-        position: 1,
-        name: 'Size',
-        type: 'box',
-        values: [
-          {
-            attributeValueId: 6,
-            position: 2,
-            imageUrl: '',
-            name: 'S',
-          },
-          {
-            attributeValueId: 7,
-            position: 3,
-            imageUrl: '',
-            name: 'M',
-          },
-          {
-            attributeValueId: 11,
-            position: 4,
-            imageUrl: '',
-            name: 'L',
-          },
-        ],
-      },
-    ],
-  },
   properties: [],
   hasOrderProperties: false,
   hasRequiredOrderProperty: false,

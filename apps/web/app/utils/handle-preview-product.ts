@@ -3,25 +3,18 @@ import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
+// import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
+// import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
 
 export type ComplementOptions = {
   deep?: boolean;
   treatEmptyStringAsMissing?: boolean;
-
   excludeKeys?: ReadonlyArray<PropertyKey>;
   excludePaths?: ReadonlyArray<string>;
   excludePathPrefixes?: ReadonlyArray<string>;
-
-  skip?: (ctx: {
-    key: PropertyKey | null;
-    path: ReadonlyArray<PropertyKey>;
-    pathStr: string;
-    target: unknown;
-    source: unknown;
-  }) => boolean;
+  skip?: (key: PropertyKey | null, path: ReadonlyArray<PropertyKey>, target: unknown, source: unknown) => boolean;
 };
 
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 type Path = Array<PropertyKey>;
 
 const isPlainObject = (x: unknown): x is Record<PropertyKey, unknown> =>
@@ -56,55 +49,62 @@ const createShouldSkip = (opts: ComplementOptions) => {
   const keySet = opts.excludeKeys?.length ? new Set(opts.excludeKeys) : null;
   const exactSet = opts.excludePaths?.length ? new Set(opts.excludePaths) : null;
   const prefixList = (opts.excludePathPrefixes ?? []).slice().sort((a, b) => b.length - a.length);
-
   return (key: PropertyKey | null, path: ReadonlyArray<PropertyKey>, tVal: unknown, sVal: unknown): boolean => {
     if (keySet && key !== null && keySet.has(key)) return true;
     const pathStr = joinPath(path);
     if (exactSet && exactSet.has(pathStr)) return true;
     for (const p of prefixList) {
-      if (pathStr === p || pathStr.startsWith(p + '.')) return true; // subtree
+      if (pathStr === p || pathStr.startsWith(p + '.')) return true; // subtree skip
     }
-    if (opts.skip?.({ key, path, pathStr, target: tVal, source: sVal })) return true;
+    if (opts.skip?.(key, path, tVal, sVal)) return true;
     return false;
   };
 };
 
-const complementTraverse = (
-  target: unknown,
-  source: unknown,
-  opts: ComplementOptions,
-  path: Path,
-  shouldSkip: (key: PropertyKey | null, path: ReadonlyArray<PropertyKey>, tVal: unknown, sVal: unknown) => boolean,
-): void => {
+type TraversalCtx = {
+  opts: ComplementOptions;
+  shouldSkip: (key: PropertyKey | null, path: ReadonlyArray<PropertyKey>, tVal: unknown, sVal: unknown) => boolean;
+};
+
+const complementTraverse = (target: unknown, source: unknown, path: Path, ctx: TraversalCtx): void => {
+  const { opts, shouldSkip } = ctx;
   if (shouldSkip(path[path.length - 1] ?? null, path, target, source)) return;
 
   const { deep = false, treatEmptyStringAsMissing = false } = opts;
 
   if (Array.isArray(target) && Array.isArray(source)) {
     if (target.length === 0) {
-      (target as unknown[]).splice(0, target.length, ...source);
+      (target as unknown[]).splice(0, target.length, ...source); // replace only when truly empty
       return;
     }
     const tArr = target as unknown[];
     const sArr = source as unknown[];
     const max = Math.max(tArr.length, sArr.length);
+
     for (let i = 0; i < max; i++) {
       const te = tArr[i];
       const se = sArr[i];
       if (se === undefined) continue;
+
       const idxPath = [...path, i];
       if (shouldSkip(i, idxPath, te, se)) continue;
 
       if (deep && Array.isArray(te) && Array.isArray(se)) {
-        complementTraverse(te, se, opts, idxPath, shouldSkip);
+        complementTraverse(te, se, idxPath, ctx);
         continue;
       }
       if (deep && isPlainObject(te) && isPlainObject(se)) {
-        complementTraverse(te, se, opts, idxPath, shouldSkip);
+        complementTraverse(te, se, idxPath, ctx);
         continue;
       }
-      if (isMissing(te, treatEmptyStringAsMissing)) {
+      const isObjectLike = isPlainObject(te) || Array.isArray(te);
+      if (te === undefined || te === null) {
         tArr[i] = se;
+        continue;
+      }
+      if (!isObjectLike && isMissing(te, treatEmptyStringAsMissing)) {
+        tArr[i] = se;
+        continue;
       }
     }
     return;
@@ -132,11 +132,11 @@ const complementTraverse = (
       if (shouldSkip(k, nextPath, tVal, sVal)) continue;
 
       if (deep && Array.isArray(tVal) && Array.isArray(sVal)) {
-        complementTraverse(tVal, sVal, opts, nextPath, shouldSkip);
+        complementTraverse(tVal, sVal, nextPath, ctx);
         continue;
       }
       if (deep && isPlainObject(tVal) && isPlainObject(sVal)) {
-        complementTraverse(tVal, sVal, opts, nextPath, shouldSkip);
+        complementTraverse(tVal, sVal, nextPath, ctx);
         continue;
       }
       if (Array.isArray(tVal) && tVal.length === 0) {
@@ -147,14 +147,13 @@ const complementTraverse = (
         tgt[k] = sVal;
       }
     }
-    return;
   }
 };
 
 export const complementInPlace = <T extends object>(target: T, source: T, opts: ComplementOptions = {}): T => {
   if (!isPlainObject(source) || !isPlainObject(target)) return target;
-  const shouldSkip = createShouldSkip(opts);
-  complementTraverse(target, source, opts, [], shouldSkip);
+  const ctx: TraversalCtx = { opts, shouldSkip: createShouldSkip(opts) };
+  complementTraverse(target, source, [], ctx);
   return target;
 };
 
@@ -167,14 +166,35 @@ export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) 
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 
-  const fakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
+  const fakeProduct: Product = lang === 'de' ? fakeProductDE : fakeProductEN;
+  // fakeProduct.variationAttributeMap = lang === 'de' ? variationAttributeMapDE : variationAttributeMapEN;
+  // fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
   const rawA = toRaw(state.value.data) as Product;
   const rawB = fakeProduct as Product;
-
+  // state.value.data = fakeProduct;
   state.value.data = complement<Product>(rawA, rawB, {
     deep: true,
     treatEmptyStringAsMissing: true,
-    excludePathPrefixes: ['images.variation'],
-    excludeKeys: [],
+    excludePathPrefixes: ['images.variation', 'texts.urlPath'],
   });
+
+  if (state.value.data.images.all.length === 0) {
+    const createPlaceholderImage = () => ({
+      names: {
+        name: '',
+        lang: 'de',
+        imageId: 23,
+        alternate: '',
+      },
+      url: '/_nuxt-plenty/images/productPlaceholder.png',
+      urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+      urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+      urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+      position: 0,
+      path: 'S3:109:placeholder.jpg',
+      cleanImageName: 'placeholder.jpg',
+    });
+
+    state.value.data.images.all = Array.from({ length: 2 }, createPlaceholderImage);
+  }
 };

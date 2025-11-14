@@ -12,23 +12,7 @@ export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string
     state.value.data = lang === 'de' ? fakeFacetCallDE.data : fakeFacetCallEN.data;
     const fakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
     const exampleProductName = lang === 'de' ? 'Beispielprodukt ' : 'Example Product ';
-    const defaultAll = [
-      {
-        names: {
-          name: '',
-          lang: 'de',
-          imageId: 23,
-          alternate: '',
-        },
-        url: '/_nuxt-plenty/images/productPlaceholder.png',
-        urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
-        urlSecondPreview: '',
-        urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
-        position: 0,
-        path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
-        cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',
-      },
-    ];
+
     state.value.data.products = Array.from({ length: 8 }, (_, ind) => ({
       ...fakeProduct,
       texts: {
