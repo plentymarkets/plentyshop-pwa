@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-center p-2">
+  <div class="flex w-full items-center py-2">
     <div class="mr-auto">
       <div class="text-lg">{{ lang }}</div>
       <div

@@ -31,6 +31,7 @@ const { drawerOpen, drawerView, placement, activeSetting, activeSubCategory } = 
 
 const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
+  if (view === 'LocalizationView') return resolveComponent('LocalizationView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };
