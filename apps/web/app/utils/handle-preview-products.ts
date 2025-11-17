@@ -8,7 +8,6 @@ export const handlePreviewProducts = (state: Ref<UseProductsState>) => {
 
   if (state.value.data.category.type === 'item' && $isPreview && state.value.data.products.length === 0) {
     state.value.data = { ...state.value.data, facets: facetMock.data.facets };
-
     state.value.data.products = Array.from({ length: 8 }, (_, ind) => ({
       ...fakeProduct,
       texts: {
