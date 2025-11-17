@@ -19,7 +19,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   blocks: string = 'all',
 ) => {
   const state = useState<UseCategoryTemplateState>(
-    `useCategoryTemplate-${identifier}-${type}-${blocks}-${locale}`,
+    `useCategoryTemplate-${identifier}-${type}-${locale}-${blocks}`,
     () => ({
       data: [],
       cleanData: [],
