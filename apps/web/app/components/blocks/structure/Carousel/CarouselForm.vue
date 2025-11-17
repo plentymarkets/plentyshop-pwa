@@ -202,7 +202,7 @@ const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, useNuxtApp().$i18n.locale.value);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 setIndex(blockUuid.value, 0);
 

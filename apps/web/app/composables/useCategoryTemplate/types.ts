@@ -29,4 +29,4 @@ export interface UseCategoryTemplate {
   setDefaultTemplate: SetDefaultTemplate;
 }
 
-export type UseCategoryTemplateReturn = (identifier?: string, type?: string, blocks?: string) => UseCategoryTemplate;
+export type UseCategoryTemplateReturn = (identifier?: string, type?: string, locale?: string, blocks?: string) => UseCategoryTemplate;

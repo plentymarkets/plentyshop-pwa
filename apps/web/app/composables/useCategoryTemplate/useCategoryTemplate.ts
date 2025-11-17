@@ -15,9 +15,11 @@ import type { ProductRecommendedProductsContent } from '~/components/blocks/Prod
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
   identifier: string = 'unknown',
   type: string = 'unknown',
+  locale: string = 'locale',
   blocks: string = 'all',
 ) => {
-  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${identifier}-${type}-${blocks}`, () => ({
+
+  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${identifier}-${type}-${blocks}-${locale}`, () => ({
     data: [],
     cleanData: [],
     categoryTemplateData: null,

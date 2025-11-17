@@ -39,6 +39,7 @@ export const useBlockManager = () => {
   const { data, cleanData, updateBlocks } = useCategoryTemplate(
     route?.meta?.identifier as string,
     route.meta.type as string,
+    useNuxtApp().$i18n.locale.value
   );
 
   const { isEditingEnabled } = useEditor();

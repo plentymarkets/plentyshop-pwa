@@ -4,7 +4,7 @@ export const useUpdatePageTemplate = () => {
     const { send } = useNotification();
     const route = useRoute();
 
-    const { saveBlocks, data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+    const { saveBlocks, data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, useNuxtApp().$i18n.locale.value);
 
     const { data: dataProducts } = useProducts();
 
