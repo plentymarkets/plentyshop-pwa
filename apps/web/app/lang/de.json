@@ -417,7 +417,8 @@
     "Return Note": "Rücksendeschein",
     "Reversal Document": "Stornobeleg",
     "Success Confirmation": "Gelangensbestätigung",
-    "correctionDocuments": "Korrekturbeleg"
+    "correctionDocuments": "Korrekturbeleg",
+    "downloadFailed": "Das Herunterladen des Dokuments ist fehlgeschlagen. Bitte versuchen Sie es erneut."
   },
   "editAddress": "Adresse bearbeiten",
   "editMode": {
@@ -629,6 +630,7 @@
       "ariaLabelSlideControls": "Steuerelemente für die Slides",
       "ariaLabelNextSlide": "Nächste Slide",
       "ariaLabelPreviousSlide": "Vorherige Slide",
+      "ariaLabelSlidePosition": "Slide {current} von {total}",
       "ariaRoleDescriptionCarousel": "Karussell",
       "ariaRoleDescriptionSlide": "Slide"
     },

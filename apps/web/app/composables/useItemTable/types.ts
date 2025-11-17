@@ -5,7 +5,8 @@ export interface UseItemTableState {
   loading: boolean;
 }
 
-export type GetStorageItems = (fileTypes?: string) => Promise<void>;
+export type GetStorageItems = (fileTypes: string) => Promise<void>;
+export type RegisterBlobUrl = (url: string) => void;
 
 export interface UseItemTableTemplate {
   data: Readonly<Ref<UseItemTableState['data']>>;
@@ -18,6 +19,7 @@ export interface UseItemTableTemplate {
   getStorageMetadata: (key: string) => Promise<StorageMetadataData>;
   folders: Readonly<Ref<string[]>>;
   revokeAllBlobUrls: () => void;
+  registerBlobUrl: RegisterBlobUrl;
 }
 
 export type UseItemTableReturn = () => UseItemTableTemplate;
