@@ -88,7 +88,6 @@ let headerScrollHandler: () => void = () => {};
 let leftScrollHandler: () => void = () => {};
 
 onMounted(() => {
-  // Synchronisiere Scrolling vom rechten Content-Bereich
   contentScrollHandler = () => {
     if (headerScroll.value && contentScroll.value) {
       headerScroll.value.scrollLeft = contentScroll.value.scrollLeft;
@@ -98,7 +97,6 @@ onMounted(() => {
     }
   };
 
-  // Synchronisiere Scrolling vom linken Bereich
   leftScrollHandler = () => {
     if (contentScroll.value && leftScroll.value) {
       contentScroll.value.scrollTop = leftScroll.value.scrollTop;
@@ -119,6 +117,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   contentScroll.value?.removeEventListener('scroll', contentScrollHandler);
   leftScroll.value?.removeEventListener('scroll', leftScrollHandler);
+  headerScroll.value?.removeEventListener('scroll', headerScrollHandler);
 });
 </script>
 
