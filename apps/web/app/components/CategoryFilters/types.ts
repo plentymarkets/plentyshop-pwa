@@ -5,10 +5,14 @@ export type CategoryFiltersProps = {
   facets: FilterGroup[];
   configuration?: SortFilterContent;
   renderKey?: string;
+  showAll?: boolean;
+  limit?: number;
 };
 
 export type FilterProps = {
   facet?: FilterGroup;
   configuration?: SortFilterContent;
   renderKey?: string;
+  showAll?: boolean;
+  limit?: number;
 };

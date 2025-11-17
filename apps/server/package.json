@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "eslint": "^9.36.0",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.11",
     "ts-node-dev": "^2.0.0",
-    "tsup": "^8.5.0"
+    "tsup": "^8.5.1"
   }
 }
