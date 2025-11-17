@@ -208,8 +208,8 @@ export const fakeProductEN = {
     },
   ],
   properties: [],
-  hasOrderProperties: false,
-  hasRequiredOrderProperty: false,
+  hasOrderProperties: true,
+  hasRequiredOrderProperty: true,
   groupedAttributes: [],
   prices: {
     default: {
@@ -453,6 +453,7 @@ export const fakeProductEN = {
       },
     ],
   },
+  bundleComponents: [],
   facets: [],
   attributes: [],
 };

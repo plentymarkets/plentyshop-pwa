@@ -1,7 +1,7 @@
 export const variationAttributeMapEN = {
   variations: [
     {
-      variationId: 1097,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 1,
       unitId: 1,
@@ -14,7 +14,7 @@ export const variationAttributeMapEN = {
       ],
     },
     {
-      variationId: 1098,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 1,
       unitId: 1,
@@ -27,7 +27,7 @@ export const variationAttributeMapEN = {
       ],
     },
     {
-      variationId: 1099,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 1,
       unitId: 1,
@@ -52,7 +52,7 @@ export const variationAttributeMapEN = {
     {
       attributeId: 2,
       position: 1,
-      name: '(Attribute) Color: Select between red, yellow, blue',
+      name: '(Attribute) Color',
       type: 'box',
       values: [
         {
@@ -78,7 +78,7 @@ export const variationAttributeMapEN = {
     {
       attributeId: 2,
       position: 1,
-      name: '(Attribute) Size: Select between S, M, L',
+      name: '(Attribute) Size',
       type: 'box',
       values: [
         {

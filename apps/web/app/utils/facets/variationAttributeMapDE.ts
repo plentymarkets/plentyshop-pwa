@@ -1,7 +1,7 @@
 export const variationAttributeMapDE = {
   variations: [
     {
-      variationId: 1097,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 1,
       unitId: 1,
@@ -14,7 +14,7 @@ export const variationAttributeMapDE = {
       ],
     },
     {
-      variationId: 1098,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 1,
       unitId: 1,
@@ -27,7 +27,7 @@ export const variationAttributeMapDE = {
       ],
     },
     {
-      variationId: 1099,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 1,
       unitId: 1,
@@ -40,7 +40,7 @@ export const variationAttributeMapDE = {
       ],
     },
     {
-      variationId: 3000,
+      variationId: 1096,
       isSalable: true,
       unitCombinationId: 47,
       unitId: 36,

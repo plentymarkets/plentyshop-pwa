@@ -1,0 +1,60 @@
+export const orderPropertiesEN = [
+    {
+        propertySelectionId: null,
+        propertySelection: [],
+        propertyId: 9,
+        surcharge: 8.8160989,
+        group: null,
+        property: {
+            id: 9,
+            position: 0,
+            valueType: "text",
+            isOderProperty: true,
+            isShownAsAdditionalCosts: true,
+            isRequired: false,
+            isPreSelected: false,
+            isShownOnItemPage: true,
+            isShownOnItemList: true,
+            isShownAtCheckout: true,
+            isMultiline: false,
+            surcharge: 8.8160989,
+            vatId: null,
+            names: {
+                lang: "en",
+                name: "Engrave",
+                description: "",
+                propertyId: "9"
+            },
+            selectionValues: []
+        }
+    },
+    {
+        propertySelectionId: null,
+        propertySelection: [],
+        propertyId: 21,
+        surcharge: 0,
+        group: null,
+        property: {
+            id: 21,
+            position: 0,
+            valueType: "empty",
+            isOderProperty: true,
+            isShownAsAdditionalCosts: true,
+            isRequired: false,
+            isPreSelected: false,
+            isShownOnItemPage: true,
+            isShownOnItemList: true,
+            isShownAtCheckout: true,
+            isMultiline: false,
+            surcharge: 0,
+            vatId: "none",
+            names: {
+                lang: "en",
+                name: "I would like a free travel bag with it.",
+                description: "",
+                propertyId: "21"
+            },
+            selectionValues: []
+        }
+    }
+]

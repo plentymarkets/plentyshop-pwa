@@ -1,211 +1,147 @@
 export const variationPropertiesEN = [
   {
-    id: 3,
-    position: 1,
-    name: null,
-    description: null,
+    id: 6,
+    position: 0,
+    name: "Product properties",
+    description: "Properties for displaying product information",
     properties: [
       {
-        cast: 'text',
-        referrer: [1, 162],
-        names: {
-          id: 15,
-          propertyId: 9,
-          lang: 'en',
-          name: '(Property) Example: Example 1',
-          description: 'As Text Property',
-          createdAt: '2025-09-22 19:01:56',
-          updatedAt: '2025-09-22 19:03:13',
-        },
-        clients: [70016],
-        display: ['showOnItemsPage', 'groupIsHidden'],
-        groups: [
-          {
-            id: 3,
-            position: 1,
-            createdAt: '2025-03-28 10:36:56',
-            updatedAt: '2025-03-28 10:36:56',
-            options: [],
-          },
+        cast: "text",
+        referrer: [
+          1
         ],
-        id: 9,
-        groupId: 3,
-        position: 30,
-        markup: 0,
-        values: {
-          id: 37,
-          lang: 'en',
-          value: 'Glass (Bottle), Cap (Metal)',
-          description: '',
-        },
-      },
-    ],
-  },
-  {
-    id: 1,
-    position: 1,
-    name: 'no group (automatically generated)',
-    description: '',
-    properties: [
-      {
-        cast: 'selection',
-        referrer: [1, 162],
         names: {
-          id: 9,
-          propertyId: 5,
-          lang: 'en',
-          name: 'Color',
-          description: '',
-          createdAt: '2025-09-22 10:41:42',
-          updatedAt: '2025-09-22 10:41:42',
+          createdAt: "2024-07-17 16:40:31",
+          propertyId: 10,
+          name: "Property Example",
+          updatedAt: "2024-07-17 16:40:31",
+          description: "Used to indicate legally required material properties",
+          id: 15,
+          lang: "en"
         },
-        clients: [70016],
-        display: ['showInItemListing', 'showOnItemsPage', 'groupIsHidden'],
-        options: [],
+        clients: [
+          67698
+        ],
+        display: [
+          'showInItemListing',
+          'showOnItemsPage',
+          'displayInOrderProcess'
+        ],
         groups: [
           {
-            id: 1,
-            position: 1,
-            createdAt: '2021-07-15 12:23:32',
-            updatedAt: '2021-07-15 12:23:32',
             options: [
               {
-                id: 1,
-                groupId: 1,
-                type: 'groupType',
-                value: 'none',
-                createdAt: '2021-07-15 12:23:32',
-                updatedAt: '2021-07-15 12:23:32',
+                id: 10,
+                updatedAt: "2024-06-10 09:10:33",
+                type: "surchargeType",
+                createdAt: "2024-06-10 09:10:33",
+                groupId: 6,
+                value: "flat"
               },
               {
-                id: 2,
-                groupId: 1,
-                type: 'surchargeType',
-                value: 'flat',
-                createdAt: '2021-07-15 12:23:32',
-                updatedAt: '2021-07-15 12:23:32',
-              },
+                createdAt: "2024-06-10 09:10:33",
+                id: 9,
+                type: "groupType",
+                groupId: 6,
+                value: "none",
+                updatedAt: "2024-06-10 09:10:33"
+              }
             ],
-          },
+            position: 0,
+            names: {
+              id: 8,
+              groupId: 6,
+              description: "Properties for displaying product information",
+              name: "Product properties",
+              createdAt: "2024-06-10 09:10:33",
+              updatedAt: "2024-06-10 09:10:33",
+              lang: "en"
+            },
+            updatedAt: "2024-06-10 09:10:33",
+            id: 6,
+            createdAt: "2024-06-10 09:10:33"
+          }
         ],
-        id: 5,
-        groupId: 1,
+        id: 10,
+        groupId: 6,
         position: 0,
         markup: 0,
         values: {
-          selectionId: 1,
-          lang: 'en',
-          value: 'Copper',
-          description: '',
-          position: 1,
-        },
+          id: 2,
+          lang: "en",
+          value: "Example 1",
+          description: ""
+        }
       },
       {
-        cast: 'selection',
-        referrer: [1, 162],
+        cast: "text",
+        referrer: [
+          1
+        ],
         names: {
-          id: 11,
-          propertyId: 6,
-          lang: 'en',
-          name: 'Material',
-          description: '',
-          createdAt: '2025-09-22 10:45:39',
-          updatedAt: '2025-09-22 10:45:39',
+          createdAt: "2024-07-17 16:40:31",
+          propertyId: 10,
+          name: "Property Example",
+          updatedAt: "2024-07-17 16:40:31",
+          description: "Used to indicate legally required material properties",
+          id: 15,
+          lang: "en"
         },
-        clients: [70016],
-        display: ['groupIsHidden', 'showInItemListing', 'showOnItemsPage'],
-        options: [],
+        clients: [
+          67698
+        ],
+        display: [
+          'showInItemListing',
+          'showOnItemsPage',
+          'displayInOrderProcess'
+        ],
         groups: [
           {
-            id: 1,
-            position: 1,
-            createdAt: '2021-07-15 12:23:32',
-            updatedAt: '2021-07-15 12:23:32',
             options: [
               {
-                id: 1,
-                groupId: 1,
-                type: 'groupType',
-                value: 'none',
-                createdAt: '2021-07-15 12:23:32',
-                updatedAt: '2021-07-15 12:23:32',
+                id: 10,
+                updatedAt: "2024-06-10 09:10:33",
+                type: "surchargeType",
+                createdAt: "2024-06-10 09:10:33",
+                groupId: 6,
+                value: "flat"
               },
               {
-                id: 2,
-                groupId: 1,
-                type: 'surchargeType',
-                value: 'flat',
-                createdAt: '2021-07-15 12:23:32',
-                updatedAt: '2021-07-15 12:23:32',
-              },
+                createdAt: "2024-06-10 09:10:33",
+                id: 9,
+                type: "groupType",
+                groupId: 6,
+                value: "none",
+                updatedAt: "2024-06-10 09:10:33"
+              }
             ],
-          },
-        ],
-        id: 6,
-        groupId: 1,
-        position: 20,
-        markup: 0,
-        values: {
-          selectionId: 14,
-          lang: 'en',
-          value: '(Property) Example: Example 1',
-          description: '',
-          position: 20,
-        },
-      },
-      {
-        cast: 'text',
-        referrer: [1, 162],
-        names: [],
-        clients: [70016],
-        display: ['showOnItemsPage'],
-        options: [],
-        groups: [
-          {
-            id: 1,
-            position: 1,
-            createdAt: '2021-07-15 12:23:32',
-            updatedAt: '2021-07-15 12:23:32',
+            position: 0,
             names: {
-              id: 2,
-              groupId: 1,
-              lang: 'en',
-              name: 'no group (automatically generated)',
-              description: '',
-              createdAt: '2021-07-15 12:23:32',
-              updatedAt: '2021-07-15 12:23:32',
+              id: 8,
+              groupId: 6,
+              description: "Properties for displaying product information",
+              name: "Product properties",
+              createdAt: "2024-06-10 09:10:33",
+              updatedAt: "2024-06-10 09:10:33",
+              lang: "en"
             },
-            options: [
-              {
-                id: 1,
-                groupId: 1,
-                type: 'groupType',
-                value: 'none',
-                createdAt: '2021-07-15 12:23:32',
-                updatedAt: '2021-07-15 12:23:32',
-              },
-              {
-                id: 2,
-                groupId: 1,
-                type: 'surchargeType',
-                value: 'flat',
-                createdAt: '2021-07-15 12:23:32',
-                updatedAt: '2021-07-15 12:23:32',
-              },
-            ],
-          },
+            updatedAt: "2024-06-10 09:10:33",
+            id: 6,
+            createdAt: "2024-06-10 09:10:33"
+          }
         ],
-        id: 7,
-        groupId: 1,
-        position: 1000,
+        id: 10,
+        groupId: 6,
+        position: 0,
         markup: 0,
         values: {
-          id: 39,
-          lang: 'en',
-          value: '(Property) Example: Example 2',
-          description: '',
-        },
-      },
-    ],
-  },
+          id: 2,
+          lang: "en",
+          value: "Example 2",
+          description: ""
+        }
+      }
+    ]
+  }
 ];
+

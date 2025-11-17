@@ -3,8 +3,20 @@ import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
-// import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
-// import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
+import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
+import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
+import { variationPropertiesEN } from './facets/variationPropertiesEN';
+import { variationPropertiesDE } from './facets/variationPropertiesDE';
+import { bundleComponentsDE } from './facets/bundleComponentsDE';
+import { bundleComponentsEN } from './facets/bundleComponentsEN';
+import type {
+  UseProductOrderProperties
+} from '~/composables/useProductOrderProperties/types';
+import { orderPropertiesEN } from './facets/orderPropertiesEN';
+import { orderPropertiesDE } from './facets/orderPropertiesDE';
+import type { ProductProperty } from '@plentymarkets/shop-api';
+import { propertiesEN } from './facets/propertiesEN';
+import { propertiesDE } from './facets/propertiesDE';
 
 export type ComplementOptions = {
   deep?: boolean;
@@ -162,39 +174,23 @@ export const complement = <T extends object>(a: T, b: T, opts: ComplementOptions
   return complementInPlace(clone, b, opts);
 };
 
-export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) => {
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, properties: UseProductOrderProperties) => {
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 
   const fakeProduct: Product = lang === 'de' ? fakeProductDE : fakeProductEN;
-  // fakeProduct.variationAttributeMap = lang === 'de' ? variationAttributeMapDE : variationAttributeMapEN;
-  // fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
+  fakeProduct.variationAttributeMap = lang === 'de' ? variationAttributeMapDE : variationAttributeMapEN;
+  fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
+  fakeProduct.bundleComponents = lang === 'de' ? bundleComponentsDE : bundleComponentsEN;
+  fakeProduct.properties = lang === 'de' ? propertiesDE : propertiesEN;
+  const ord: ProductProperty[] = lang === 'de' ? orderPropertiesDE : orderPropertiesEN;
+  properties.setProperties(ord);
+
   const rawA = toRaw(state.value.data) as Product;
   const rawB = fakeProduct as Product;
-  // state.value.data = fakeProduct;
   state.value.data = complement<Product>(rawA, rawB, {
     deep: true,
     treatEmptyStringAsMissing: true,
     excludePathPrefixes: ['images.variation', 'texts.urlPath'],
   });
-
-  if (state.value.data.images.all.length === 0) {
-    const createPlaceholderImage = () => ({
-      names: {
-        name: '',
-        lang: 'de',
-        imageId: 23,
-        alternate: '',
-      },
-      url: '/_nuxt-plenty/images/productPlaceholder.png',
-      urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
-      urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
-      urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
-      position: 0,
-      path: 'S3:109:placeholder.jpg',
-      cleanImageName: 'placeholder.jpg',
-    });
-
-    state.value.data.images.all = Array.from({ length: 2 }, createPlaceholderImage);
-  }
 };

@@ -55,7 +55,7 @@ export const useProduct: UseProductReturn = (slug) => {
     );
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
-    handlePreviewProduct(state, $i18n.locale.value);
+    handlePreviewProduct(state, $i18n.locale.value, properties);
     state.value.loading = false;
     return state.value.data;
   };
