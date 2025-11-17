@@ -18,7 +18,7 @@
           <div class="flex border-b">
             <div class="flex-shrink-0 flex z-20">
               <div class="w-48 px-4 py-3 font-semibold">{{ getEditorTranslation('category-key') }}</div>
-              <div class="w-48 px-4 py-3 font-semibold border-r"/>
+              <div class="w-48 px-4 py-3 font-semibold border-r" />
             </div>
 
             <div ref="headerScroll" class="flex-1 overflow-x-auto scrollbar-thin">
@@ -74,11 +74,11 @@ const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
 const { keys, getCategoryFromKey, getKeyFromFullKey, drawerOpen } = useEditorLocalizationKeys();
 const languages = computed(() => {
   return selectedLocales.value
-      .map((locale) => {
-        const typedLocale = locale as keyof typeof allLanguages.value;
-        return allLanguages.value[typedLocale] ?? null;
-      })
-      .filter((lang): lang is string => lang !== null);
+    .map((locale) => {
+      const typedLocale = locale as keyof typeof allLanguages.value;
+      return allLanguages.value[typedLocale] ?? null;
+    })
+    .filter((lang): lang is string => lang !== null);
 });
 
 const headerScroll = ref<HTMLElement | null>(null);
