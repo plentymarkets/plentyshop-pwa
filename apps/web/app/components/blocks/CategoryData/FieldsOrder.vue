@@ -1,50 +1,53 @@
 <template>
-  <template v-for="key in content.fieldsOrder" :key="key">
-    <template v-if="content.fields[key]">
+  <template v-for="key in renderOrder" :key="key">
+    <template v-if="fields?.[key]">
       <h1
-        v-if="key === 'name' && name"
+        v-if="key === 'name' && texts.name"
         id="category-headline"
-        :key="key"
         class="font-bold typography-headline-3 md:typography-headline-2"
         data-testid="category-name"
       >
-        {{ name }}
+        {{ texts.name }}
       </h1>
 
-      <p
-        v-if="key === 'description1' && description1"
-        :key="key"
+      <div
+        v-else-if="key === 'description1' && texts.description1"
         data-testid="category-description-1"
-        v-html="description1"
+        v-html="texts.description1"
       />
 
-      <p
-        v-if="key === 'description2' && description2"
-        :key="key"
+      <div
+        v-else-if="key === 'description2' && texts.description2"
         data-testid="category-description-2"
-        v-html="description2"
+        v-html="texts.description2"
       />
 
-      <p
-        v-if="key === 'shortDescription' && shortDescription"
-        :key="key"
+      <div
+        v-else-if="key === 'shortDescription' && texts.shortDescription"
         data-testid="category-short-description"
-        v-html="shortDescription"
+        v-html="texts.shortDescription"
       />
     </template>
   </template>
 </template>
 
 <script setup lang="ts">
-import { type Category, categoryGetters } from '@plentymarkets/shop-api';
-import type { CategoryDataContent } from './types';
+import { computed } from 'vue'
+import type {
+  CategoryDataFieldKey,
+  CategoryDataFieldsVisibility,
+  CategoryData
+} from '~/components/blocks/CategoryData/types'
 
-const content = defineProps<CategoryDataContent>();
-const { data: productsCatalog } = useProducts();
+const props = defineProps<{
+  fields: CategoryDataFieldsVisibility
+  fieldsOrder: CategoryDataFieldKey[]
+  texts: CategoryData
+}>()
 
-const category = computed(() => productsCatalog.value.category || ({} as Category));
-const name = computed(() => categoryGetters.getCategoryName(category.value) || '');
-const description1 = computed(() => categoryGetters.getCategoryDescription1(category.value) || '');
-const description2 = computed(() => categoryGetters.getCategoryDescription2(category.value) || '');
-const shortDescription = computed(() => categoryGetters.getCategoryShortDescription(category.value) || '');
+const renderOrder = computed<CategoryDataFieldKey[]>(() =>
+  props.fieldsOrder?.length
+    ? props.fieldsOrder
+    : (['name', 'description1', 'description2', 'shortDescription'] as CategoryDataFieldKey[])
+)
 </script>
