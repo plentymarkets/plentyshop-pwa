@@ -454,5 +454,5 @@ export const fakeProductEN = {
     ],
   },
   facets: [],
-  attributes: []
+  attributes: [],
 };
