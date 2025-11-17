@@ -42,7 +42,7 @@
               <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
             </template>
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
-              <div class="mt-2 variation-properties">
+              <div class="mb-2 variation-properties">
                 <VariationProperties :product="product" />
               </div>
             </template>
@@ -68,7 +68,7 @@
             <template v-if="key === 'previewText' && configuration?.fields.previewText">
               <div
                 v-if="productGetters.getShortDescription(product).length > 0"
-                class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
+                class="mb-2 font-normal typography-text-sm whitespace-pre-line break-words"
                 data-testid="product-description"
                 v-html="productGetters.getShortDescription(product)"
               />
