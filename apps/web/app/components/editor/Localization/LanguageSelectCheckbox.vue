@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-center p-2">
+  <div class="flex w-full items-center py-2">
     <div class="mr-auto">
       <div class="text-lg">{{ lang }}</div>
       <div
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <SfCheckbox v-model="isSelected" class="peer" @update:model-value="toggleLocale(locale)" />
+      <SfCheckbox :model-value="isSelected" class="peer" @update:model-value="toggleLocale(locale)" />
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@ const { getTranslatedCount } = useEditorLocalizationKeys();
 const { toggleLocale, selectedLocales } = useEditorLocalizationLocales();
 const props = defineProps<LanguageSelectCheckboxProps>();
 const translatedCount = computed(() => getTranslatedCount(props.locale));
-const isSelected = ref(selectedLocales.value.includes(props.locale));
+const isSelected = computed(() => selectedLocales.value.includes(props.locale));
 </script>
 
 <i18n lang="json">
