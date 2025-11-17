@@ -73,10 +73,12 @@ const open = ref(true);
 const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
 const { keys, getCategoryFromKey, getKeyFromFullKey, drawerOpen } = useEditorLocalizationKeys();
 const languages = computed(() => {
-  return selectedLocales.value.map((locale) => {
-    const typedLocale = locale as keyof typeof allLanguages.value;
-    return allLanguages.value[typedLocale] ?? null;
-  });
+  return selectedLocales.value
+      .map((locale) => {
+        const typedLocale = locale as keyof typeof allLanguages.value;
+        return allLanguages.value[typedLocale] ?? null;
+      })
+      .filter((lang): lang is string => lang !== null);
 });
 
 const headerScroll = ref<HTMLElement | null>(null);
