@@ -132,12 +132,7 @@ const texts = computed<CategoryData>(() => {
 
 const detailsReady = computed(() => {
   const textsData = texts.value;
-  return !!(
-    (textsData.name && textsData.name) ||
-    (textsData.description1 && textsData.description1) ||
-    (textsData.description2 && textsData.description2) ||
-    (textsData.shortDescription && textsData.shortDescription)
-  );
+  return !!(textsData.name || textsData.description1 || textsData.description2 || textsData.shortDescription);
 });
 const imagePath = computed(() => {
   if (props.content.displayCategoryImage === 'image-1') {
