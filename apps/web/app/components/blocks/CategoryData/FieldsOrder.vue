@@ -32,22 +32,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 import type {
   CategoryDataFieldKey,
   CategoryDataFieldsVisibility,
-  CategoryData
-} from '~/components/blocks/CategoryData/types'
+  CategoryData,
+} from '~/components/blocks/CategoryData/types';
 
 const props = defineProps<{
-  fields: CategoryDataFieldsVisibility
-  fieldsOrder: CategoryDataFieldKey[]
-  texts: CategoryData
-}>()
+  fields: CategoryDataFieldsVisibility;
+  fieldsOrder: CategoryDataFieldKey[];
+  texts: CategoryData;
+}>();
 
 const renderOrder = computed<CategoryDataFieldKey[]>(() =>
   props.fieldsOrder?.length
     ? props.fieldsOrder
-    : (['name', 'description1', 'description2', 'shortDescription'] as CategoryDataFieldKey[])
-)
+    : (['name', 'description1', 'description2', 'shortDescription'] as CategoryDataFieldKey[]),
+);
 </script>
