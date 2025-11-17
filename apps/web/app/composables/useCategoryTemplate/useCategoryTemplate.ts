@@ -18,14 +18,16 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   locale: string = 'locale',
   blocks: string = 'all',
 ) => {
-
-  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${identifier}-${type}-${blocks}-${locale}`, () => ({
-    data: [],
-    cleanData: [],
-    categoryTemplateData: null,
-    defaultTemplateData: [],
-    loading: false,
-  }));
+  const state = useState<UseCategoryTemplateState>(
+    `useCategoryTemplate-${identifier}-${type}-${blocks}-${locale}`,
+    () => ({
+      data: [],
+      cleanData: [],
+      categoryTemplateData: null,
+      defaultTemplateData: [],
+      loading: false,
+    }),
+  );
 
   const ensureFooterBlock = async () => {
     const { fetchFooterSettings } = useFooter();

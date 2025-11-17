@@ -41,7 +41,11 @@ export const useProduct: UseProductReturn = (slug) => {
     state.value.loading = true;
     const { $i18n } = useNuxtApp();
     const route = useRoute();
-    const { setupBlocks } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, useNuxtApp().$i18n.locale.value);
+    const { setupBlocks } = useCategoryTemplate(
+      route?.meta?.identifier as string,
+      route.meta.type as string,
+      useNuxtApp().$i18n.locale.value,
+    );
 
     const { data, error } = await useAsyncData(
       `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,

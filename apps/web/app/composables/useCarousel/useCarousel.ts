@@ -10,7 +10,11 @@ export const useCarousel: UseCarouselReturn = () => {
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
   const route = useRoute();
-  const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, useNuxtApp().$i18n.locale.value);
+  const { data } = useCategoryTemplate(
+    route?.meta?.identifier as string,
+    route.meta.type as string,
+    useNuxtApp().$i18n.locale.value,
+  );
 
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);

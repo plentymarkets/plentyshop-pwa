@@ -77,12 +77,22 @@ const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
 const route = useRoute();
-const initial = shallowRef(useCategoryTemplate(String(route.meta?.identifier ?? ''), String(route.meta?.type ?? ''), useNuxtApp().$i18n.locale.value));
+const initial = shallowRef(
+  useCategoryTemplate(
+    String(route.meta?.identifier ?? ''),
+    String(route.meta?.type ?? ''),
+    useNuxtApp().$i18n.locale.value,
+  ),
+);
 
 watch(
   () => [route.meta?.identifier, route.meta?.type],
   () => {
-    initial.value = useCategoryTemplate(String(route.meta?.identifier ?? ''), String(route.meta?.type ?? ''), useNuxtApp().$i18n.locale.value);
+    initial.value = useCategoryTemplate(
+      String(route.meta?.identifier ?? ''),
+      String(route.meta?.type ?? ''),
+      useNuxtApp().$i18n.locale.value,
+    );
   },
   { immediate: true },
 );

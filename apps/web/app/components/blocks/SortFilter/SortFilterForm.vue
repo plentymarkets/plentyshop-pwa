@@ -91,7 +91,11 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, useNuxtApp().$i18n.locale.value);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();

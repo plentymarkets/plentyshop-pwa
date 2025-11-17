@@ -205,7 +205,11 @@ import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, useNuxtApp().$i18n.locale.value);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { currentProduct } = useProducts();
