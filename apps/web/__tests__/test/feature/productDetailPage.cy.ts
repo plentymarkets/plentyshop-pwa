@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { ProductDetailPageObject } from '../../support/pageObjects/ProductDetailPageObject';
 import { paths } from '../../../app/utils/paths';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
