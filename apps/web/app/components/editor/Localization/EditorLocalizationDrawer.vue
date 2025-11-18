@@ -53,7 +53,7 @@
                       v-if="row?.translations?.[lang]?.input !== undefined"
                       :value="row.translations[lang].input"
                       class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
-                      @input="updateTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
+                      @input="handleTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
                     />
                     <SfTooltip
                       v-if="row.translations[lang]?.input === row.translations[lang]?.default"
@@ -100,7 +100,8 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconBase, SfIconChevronLeft, SfTooltip } from '@storefront-ui/vue';
-import type { LocalizationMessage } from '../../../../../../../shop-core/src/runtime/types';
+import { useDebounceFn } from '@vueuse/core';
+import type { LocalizationMessage } from '@plentymarkets/shop-core';
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
@@ -117,6 +118,14 @@ const languages = computed(() => {
 
 const revertToDefault = (data: LocalizationMessage) => {
   data.input = data.default ?? '';
+}
+
+const debouncedUpdate = useDebounceFn((key: string, lang: string, value: string) => {
+  updateTranslationInput(key, lang, value);
+}, 300);
+
+const handleTranslationInput = (key: string, lang: string, value: string) => {
+  debouncedUpdate(key, lang, value);
 };
 
 const headerScroll = ref<HTMLElement | null>(null);
