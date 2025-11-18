@@ -114,8 +114,9 @@ const scrollToBlock = (evt: DragEvent) => {
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
-const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
+const enabledActions = computed(() => props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value);
 
 onMounted(() => {
   isEditingEnabled.value = false;
