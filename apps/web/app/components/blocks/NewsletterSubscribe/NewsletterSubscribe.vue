@@ -188,8 +188,6 @@ const [email, emailAttributes] = defineField('email');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 
-const emailFolderId = props.content.settings?.emailFolderId ?? 1;
-
 const lastNameLabel = useFormLabel(
   t('newsletter.lastName'),
   computed(() => !props.content.input?.nameIsRequired),
@@ -208,7 +206,7 @@ const subscribeNewsletter = async () => {
     firstName: firstName.value,
     lastName: lastName.value,
     email: email.value || '',
-    emailFolder: emailFolderId,
+    emailFolder: props.content.settings?.emailFolderId ?? 1,
     'cf-turnstile-response': turnstile.value,
   });
 
