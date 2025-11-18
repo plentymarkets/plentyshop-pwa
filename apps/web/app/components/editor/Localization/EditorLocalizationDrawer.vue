@@ -52,7 +52,7 @@
                     <textarea
                       v-if="row?.translations?.[lang]?.input !== undefined"
                       :value="row.translations[lang].input"
-                      class="p-2 m-1 h-10 resize-none border rounded-lg w-full text-xs absolute"
+                      class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
                       @input="updateTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
                     />
                     <SfTooltip
@@ -70,12 +70,12 @@
                     <SfTooltip
                       v-else-if="row.translations[lang]?.default"
                       :label="getEditorTranslation('revert-to-default')"
-                      class="right-0 z-10 !absolute"
+                      class="right-0 z-10 !absolute hidden group-hover:block"
                       strategy="absolute"
                       :show-arrow="true"
                       placement="right"
                     >
-                      <div class="h-10 p-2 flex items-center" @click="revertToDefault(row.translations[lang])">
+                      <div class="h-10 p-2 flex items-center cursor-pointer" @click="revertToDefault(row.translations[lang])">
                         <SfIconBase viewBox="0 -960 960 960" size="sm" class="fill-none">
                           <path
                             fill="rgb(var(--colors-2-primary-500) / 1)"
