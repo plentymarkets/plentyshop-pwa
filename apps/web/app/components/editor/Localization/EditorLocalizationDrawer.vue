@@ -3,7 +3,7 @@
     <SfDrawer
       v-if="open"
       v-model="open"
-      class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !fixed right-0 top-[64px] bottom-0 w-[calc(50vw+25px)] lg:w-[calc(76vw)] pointer-events-auto z-[11]"
+      class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !fixed right-0 top-[64px] bottom-0 w-[50vw] lg:w-[72vw] pointer-events-auto z-[11]"
       :placement="placement"
       :disable-click-away="true"
     >
