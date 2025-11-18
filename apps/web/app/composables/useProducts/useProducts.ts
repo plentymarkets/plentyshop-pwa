@@ -38,8 +38,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const route = useRoute();
-    const { $i18n } = useNuxtApp();
-    const { setupBlocks } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+    const { setupBlocks } = useCategoryTemplate(
+      route?.meta?.identifier as string,
+      route.meta.type as string,
+      useNuxtApp().$i18n.locale.value,
+    );
 
     state.value.loading = true;
 

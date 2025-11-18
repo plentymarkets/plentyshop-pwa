@@ -210,8 +210,8 @@ export const fakeFacetCallDE = {
     ],
     languageUrls: {
       'x-default': '/living-room/armchair-stool/',
-      de: '/wohnzimmer/sessel-hocker/',
-      en: '/living-room/armchair-stool/',
+      de: '/',
+      en: '/',
     },
     pagination: {
       perPageOptions: [20, 40, 100],

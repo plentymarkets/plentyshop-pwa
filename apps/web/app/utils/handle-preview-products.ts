@@ -9,7 +9,8 @@ export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string
   const { $isPreview } = useNuxtApp();
 
   if (state.value.data.category.type === 'item' && $isPreview && state.value.data.products.length === 0) {
-    state.value.data = lang === 'de' ? fakeFacetCallDE.data : fakeFacetCallEN.data;
+    state.value.data = { ...state.value.data, facets: ang === 'de' ? fakeFacetCallDE.data : fakeFacetCallEN.data};
+
     const fakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
     const exampleProductName = lang === 'de' ? 'Beispielprodukt ' : 'Example Product ';
 

@@ -9,7 +9,7 @@
         :class="['w-full']"
         :style="{
           color: props.content.text.color,
-          backgroundColor: content.text.bgColor,
+          backgroundColor: props.content.text.bgColor,
         }"
       >
         <div
@@ -21,7 +21,12 @@
         >
           {{ getEditorTranslation('no-text-fields-selected') }}
         </div>
-        <FieldsOrder v-else v-bind="props.content" />
+        <FieldsOrder
+          v-else-if="detailsReady"
+          :fields="props.content.fields"
+          :fields-order="props.content.fieldsOrder"
+          :texts="texts"
+        />
       </div>
     </template>
     <template v-else>
@@ -71,7 +76,12 @@
             >
               {{ getEditorTranslation('no-text-fields-selected') }}
             </div>
-            <FieldsOrder v-else v-bind="content" />
+            <FieldsOrder
+              v-else-if="detailsReady"
+              :fields="props.content.fields"
+              :fields-order="props.content.fieldsOrder"
+              :texts="texts"
+            />
           </div>
         </div>
       </div>
@@ -81,7 +91,7 @@
 
 <script setup lang="ts">
 import { type Category, categoryGetters } from '@plentymarkets/shop-api';
-import type { CategoryDataProps } from '~/components/blocks/CategoryData/types';
+import type { CategoryData, CategoryDataProps } from '~/components/blocks/CategoryData/types';
 import type { CategoryDetails } from '@plentymarkets/shop-api/server/types';
 import FieldsOrder from './FieldsOrder.vue';
 
@@ -109,7 +119,21 @@ const shouldShowTextBlock = computed(
 );
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
+const texts = computed<CategoryData>(() => {
+  const fields = props.content.fields || {};
+  const detailsText = details.value || ({} as CategoryDetails);
+  return {
+    name: fields.name && detailsText.name ? detailsText.name : '',
+    description1: fields.description1 && detailsText.description ? detailsText.description : '',
+    description2: fields.description2 && detailsText.description2 ? detailsText.description2 : '',
+    shortDescription: fields.shortDescription && detailsText.shortDescription ? detailsText.shortDescription : '',
+  };
+});
 
+const detailsReady = computed(() => {
+  const textsData = texts.value;
+  return !!(textsData.name || textsData.description1 || textsData.description2 || textsData.shortDescription);
+});
 const imagePath = computed(() => {
   if (props.content.displayCategoryImage === 'image-1') {
     return details.value.imagePath;
