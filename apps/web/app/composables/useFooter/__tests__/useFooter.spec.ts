@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useFooter } from '../useFooter';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
