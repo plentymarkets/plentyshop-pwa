@@ -97,22 +97,31 @@
         <h2>{{ getEditorTranslation('settings-group-label') }}</h2>
       </template>
 
-      <div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('email-folder-id-label') }}</UiFormLabel>
+        <SfInput
+          v-model="newsletterBlock.settings.emailFolderId"
+          name="emailFolderId"
+          type="number"
+          :placeholder="getEditorTranslation('email-folder-id-label')"
+          data-testid="newsletter-form-email-folder-id"
+        />
+      </div>
 
-          <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
-            <template #suffix>
-              <label
-                for="text-color"
-                :style="{ backgroundColor: newsletterBlock.text.bgColor }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+
+        <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
+          <template #suffix>
+            <label
+              for="text-color"
+              :style="{ backgroundColor: newsletterBlock.text.bgColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
       </div>
     </UiAccordionItem>
   </div>
@@ -135,9 +144,16 @@ const { data } = useCategoryTemplate(
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const newsletterBlock = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent,
-);
+const newsletterBlock = computed(() => {
+  const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent;
+  return {
+    ...block,
+    settings: {
+      ...(block.settings ?? {}),
+      emailFolderId: block.settings?.emailFolderId ?? 1,
+    },
+  };
+});
 </script>
 
 <i18n lang="json">
@@ -151,7 +167,7 @@ const newsletterBlock = computed(
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
-
+    "email-folder-id-label": "Email Folder ID",
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
@@ -168,7 +184,7 @@ const newsletterBlock = computed(
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
-
+    "email-folder-id-label": "Email Folder ID",
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
