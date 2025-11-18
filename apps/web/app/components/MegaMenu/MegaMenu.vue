@@ -107,7 +107,7 @@
                   >
                     {{ categoryTreeGetters.getName(node) }}
                   </SfListItem>
-                  <ul class="mt-2">
+                  <ul class="mt-2 mb-3">
                     <li v-for="child in node.children" :key="child.id">
                       <SfListItem
                         v-if="categoryTreeGetters.getName(child)"
