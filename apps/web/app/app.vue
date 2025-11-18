@@ -35,6 +35,7 @@
         'lg:w-3/4': drawerOpen,
         'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
         'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,
+        'pointer-events-none': localizationDrawerOpen,
       }"
     >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
@@ -62,6 +63,7 @@ const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { setStaticPageMeta } = useCanonical();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
 const clientPreview = ref(false);
 
