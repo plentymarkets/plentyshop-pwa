@@ -1,5 +1,9 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
+vi.mock('@plentymarkets/shop-core', () => ({
+  t: vi.fn((key: string) => key),
+}));
+
 const { useCustomer } = vi.hoisted(() => {
   return {
     useCustomer: vi.fn().mockReturnValue({
@@ -201,7 +205,7 @@ describe('useRegisterForm', () => {
 
     expect(mockRegister).toHaveBeenCalled();
     expect(mockSend).toHaveBeenCalledWith({
-      message: 'auth.signup.success',
+      message: 'Your account has been created successfully',
       type: 'positive',
     });
   });
