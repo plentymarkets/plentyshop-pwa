@@ -216,12 +216,7 @@ const subscribeNewsletter = async () => {
       message: t('newsletter.success'),
     });
     resetForm();
-  } else {
-    send({
-      type: 'negative',
-      message: 'Incorect email folder id',
-    });
-  }
+  } 
 
   turnstile.value = '';
   turnstileElement.value?.reset();
