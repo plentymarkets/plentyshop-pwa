@@ -15,15 +15,19 @@ import type { ProductRecommendedProductsContent } from '~/components/blocks/Prod
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
   identifier: string = 'unknown',
   type: string = 'unknown',
+  locale: string = 'locale',
   blocks: string = 'all',
 ) => {
-  const state = useState<UseCategoryTemplateState>(`useCategoryTemplate-${identifier}-${type}-${blocks}`, () => ({
-    data: [],
-    cleanData: [],
-    categoryTemplateData: null,
-    defaultTemplateData: [],
-    loading: false,
-  }));
+  const state = useState<UseCategoryTemplateState>(
+    `useCategoryTemplate-${identifier}-${type}-${locale}-${blocks}`,
+    () => ({
+      data: [],
+      cleanData: [],
+      categoryTemplateData: null,
+      defaultTemplateData: [],
+      loading: false,
+    }),
+  );
 
   const ensureFooterBlock = async () => {
     const { fetchFooterSettings } = useFooter();
@@ -89,7 +93,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       migrateAllImageBlocks(blocks);
     }
 
-    state.value.data = blocks;
+    if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
+      state.value.data.splice(0, state.value.data.length, ...blocks);
+    }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
   };
 
