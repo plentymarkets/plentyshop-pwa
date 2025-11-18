@@ -25,7 +25,7 @@
           aria-label="top add block"
           @click.stop="addNewBlock(block, 'top')"
         >
-          <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
+          <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true" class="z-[9999]">
             <SfIconAdd class="cursor-pointer" />
           </SfTooltip>
         </button>
@@ -91,7 +91,7 @@
           aria-label="bottom add block"
           @click.stop="addNewBlock(block, 'bottom')"
         >
-          <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
+          <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true" class="z-[9999]">
             <SfIconAdd class="cursor-pointer" />
           </SfTooltip>
         </button>
