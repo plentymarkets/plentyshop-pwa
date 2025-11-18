@@ -214,11 +214,11 @@ export const fakeProductEN = {
   prices: {
     default: {
       price: {
-        value: 4000,
+        value: 1000,
         formatted: 'EUR 4,000.00',
       },
       unitPrice: {
-        value: 4000,
+        value: 1000,
         formatted: 'EUR 4,000.00',
       },
       basePrice: '',
@@ -246,11 +246,11 @@ export const fakeProductEN = {
       isNet: false,
       data: {
         salesPriceId: 1,
-        price: 4000,
+        price: 1000,
         priceNet: 3361.3445378151,
-        basePrice: 4000,
+        basePrice: 1000,
         basePriceNet: 3361.3445378151,
-        unitPrice: 4000,
+        unitPrice: 1000,
         unitPriceNet: 3361.3445378151,
         lowestPrice: null,
         lowestPriceNet: null,
@@ -273,12 +273,12 @@ export const fakeProductEN = {
     },
     rrp: {
       price: {
-        value: 5000,
-        formatted: 'EUR 5,000.00',
+        value: 1200,
+        formatted: 'EUR 1,200.00',
       },
       unitPrice: {
-        value: 5000,
-        formatted: 'EUR 5,000.00',
+        value: 1200,
+        formatted: 'EUR 1,200.00',
       },
       basePrice: '',
       baseLot: null,
@@ -305,12 +305,12 @@ export const fakeProductEN = {
       isNet: false,
       data: {
         salesPriceId: 2,
-        price: 5000,
-        priceNet: 4201.6806722689,
-        basePrice: 5000,
-        basePriceNet: 4201.6806722689,
-        unitPrice: 5000,
-        unitPriceNet: 4201.6806722689,
+        price: 1200,
+        priceNet: 900,
+        basePrice: 1200,
+        basePriceNet: 900,
+        unitPrice: 1200,
+        unitPriceNet: 900,
         lowestPrice: null,
         lowestPriceNet: null,
         customerClassDiscountPercent: 0,
@@ -335,12 +335,12 @@ export const fakeProductEN = {
     graduatedPrices: [
       {
         price: {
-          value: 3800,
-          formatted: 'EUR 3,800.00',
+          value: 900,
+          formatted: 'EUR 900.00',
         },
         unitPrice: {
-          value: 3800,
-          formatted: 'EUR 3,800.00',
+          value: 900,
+          formatted: 'EUR 900.00',
         },
         basePrice: '',
         baseLot: null,
@@ -367,11 +367,11 @@ export const fakeProductEN = {
         isNet: false,
         data: {
           salesPriceId: 3,
-          price: 3800,
+          price: 900,
           priceNet: 3193.2773109244,
-          basePrice: 3800,
+          basePrice: 900,
           basePriceNet: 3193.2773109244,
-          unitPrice: 3800,
+          unitPrice: 900,
           unitPriceNet: 3193.2773109244,
           lowestPrice: 3600,
           lowestPriceNet: 3025.2100840336,
@@ -394,11 +394,11 @@ export const fakeProductEN = {
       },
       {
         price: {
-          value: 4000,
+          value: 1000,
           formatted: 'EUR 4,000.00',
         },
         unitPrice: {
-          value: 4000,
+          value: 1000,
           formatted: 'EUR 4,000.00',
         },
         basePrice: '',
@@ -426,11 +426,11 @@ export const fakeProductEN = {
         isNet: false,
         data: {
           salesPriceId: 1,
-          price: 4000,
+          price: 1000,
           priceNet: 3361.3445378151,
-          basePrice: 4000,
+          basePrice: 1000,
           basePriceNet: 3361.3445378151,
-          unitPrice: 4000,
+          unitPrice: 1000,
           unitPriceNet: 3361.3445378151,
           lowestPrice: null,
           lowestPriceNet: null,
