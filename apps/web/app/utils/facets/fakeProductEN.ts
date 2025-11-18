@@ -215,11 +215,11 @@ export const fakeProductEN = {
     default: {
       price: {
         value: 1000,
-        formatted: 'EUR 4,000.00',
+        formatted: 'EUR 1,000.00',
       },
       unitPrice: {
         value: 1000,
-        formatted: 'EUR 4,000.00',
+        formatted: 'EUR 1,000.00',
       },
       basePrice: '',
       baseLot: null,
@@ -395,11 +395,11 @@ export const fakeProductEN = {
       {
         price: {
           value: 1000,
-          formatted: 'EUR 4,000.00',
+          formatted: 'EUR 1,000.00',
         },
         unitPrice: {
           value: 1000,
-          formatted: 'EUR 4,000.00',
+          formatted: 'EUR 1,000.00',
         },
         basePrice: '',
         baseLot: null,

@@ -21,6 +21,7 @@ export const useProduct: UseProductReturn = (slug) => {
   const properties = useProductOrderProperties();
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: {} as Product,
+    fakeData: {} as Product,
     loading: false,
     breadcrumbs: [],
   }));
