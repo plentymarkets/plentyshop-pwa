@@ -216,7 +216,7 @@ const subscribeNewsletter = async () => {
       message: t('newsletter.success'),
     });
     resetForm();
-  } 
+  }
 
   turnstile.value = '';
   turnstileElement.value?.reset();

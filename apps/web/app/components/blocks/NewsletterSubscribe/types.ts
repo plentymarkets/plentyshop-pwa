@@ -21,6 +21,6 @@ export type NewsletterSubscribeContent = {
   };
 
   settings: {
-    emailFolderId?: number;
+    emailFolderId: number;
   };
 };
