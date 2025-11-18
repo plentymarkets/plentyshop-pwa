@@ -73,7 +73,7 @@ const emit = defineEmits(['close']);
 
 const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
   useReturnOrder();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 const runtimeConfig = useRuntimeConfig();

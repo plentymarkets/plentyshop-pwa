@@ -103,7 +103,7 @@
             <div class="flex justify-between mb-4">
               <p class="font-bold text-xl">{{ t('orderSummary') }}</p>
               <p class="font-medium">
-                {{ t('itemsInCart', offerGetters.getItemsCountInOffer(offer.order.orderItems)) }}
+                {{ t('itemsInCart', { count: offerGetters.getItemsCountInOffer(offer.order.orderItems) }) }}
               </p>
             </div>
             <!-- @TODO: Fix typing -->
@@ -196,7 +196,7 @@ import type { OfferPageContentProps } from './types';
 
 const { loading: offerLoading } = useOffer();
 const { send } = useNotification();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const localePath = useLocalePath();
 const props = defineProps<OfferPageContentProps>();
 const emit = defineEmits(['accept', 'decline']);

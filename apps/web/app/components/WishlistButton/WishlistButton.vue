@@ -29,8 +29,6 @@ import { SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } f
 import { productGetters } from '@plentymarkets/shop-api';
 
 const { product, quantity = 1, discard = false, variant = 'tertiary' } = defineProps<WishlistButtonProps>();
-
-const { t } = useI18n();
 const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
 const actionLoading = ref(false);
 

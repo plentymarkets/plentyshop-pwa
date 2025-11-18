@@ -38,7 +38,6 @@ import { SfIconCheck } from '@storefront-ui/vue';
 
 const { product, count = 0 } = defineProps<GraduatedPriceListProps>();
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const graduatedList = computed(() => productGetters.getGraduatedList(product));
 const selectedList = computed(() => productGetters.getGraduatedPriceByQuantity(product, count));
 </script>

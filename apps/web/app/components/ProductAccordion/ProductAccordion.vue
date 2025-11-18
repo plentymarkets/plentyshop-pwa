@@ -36,7 +36,6 @@ import type { ProductAccordionPropsType } from '~/components/ProductAccordion/ty
 const props = defineProps<ProductAccordionPropsType>();
 
 const { product } = toRefs(props);
-const { t } = useI18n();
 
 const productDetailsOpen = ref(true);
 const technicalDataOpen = ref(false);

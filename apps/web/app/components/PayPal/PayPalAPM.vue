@@ -20,7 +20,6 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(useId());
 const paypalScript = ref<PayPalNamespace | null>(null);
-const { t } = useI18n();
 
 const { processingOrder } = useProcessingOrder();
 const {

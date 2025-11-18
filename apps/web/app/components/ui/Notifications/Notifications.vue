@@ -52,7 +52,6 @@ import { SfIconClose, SfIconCheckCircle, SfIconInfo, SfIconWarning, SfIconError 
 import type { Notification } from '@plentymarkets/shop-core';
 
 const { data: notifications } = useNotification();
-const { t } = useI18n();
 
 const classMapper = {
   neutral: 'text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300 hover:text-neutral-800 active:text-neutral-900',

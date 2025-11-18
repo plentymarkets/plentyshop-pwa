@@ -3,7 +3,7 @@
     <div class="flex border border-neutral-300 rounded-md h-full w-full">
       <SfTooltip
         v-if="count <= minValue"
-        :label="t('minimumOrderQuantity', minValue)"
+        :label="t('minimumOrderQuantity', { count: minValue })"
         placement="left"
         :show-arrow="true"
         class="flex"
@@ -71,7 +71,6 @@ import { useCounter } from '@vueuse/core';
 import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
 
 const emit = defineEmits(['changeQuantity']);
-const { t } = useI18n();
 
 const {
   value = 1,

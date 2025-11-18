@@ -37,7 +37,6 @@ const props = defineProps<{
 }>();
 
 const localePath = useLocalePath();
-const { t } = useI18n();
 const router = useRouter();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();

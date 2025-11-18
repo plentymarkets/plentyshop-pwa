@@ -42,7 +42,7 @@ import { flagImports } from './flags';
 const { isOpen } = useLocalization();
 const viewport = useViewport();
 const { getCategoryTree } = useCategoryTree();
-const { localeCodes, locale: currentLocale, t } = useI18n();
+const { localeCodes, locale: currentLocale } = useI18n();
 const config = useRuntimeConfig();
 const flagList: { [key: string]: string } = {};
 

@@ -165,7 +165,6 @@ import { userGetters } from '@plentymarkets/shop-api';
 const localePath = useLocalePath();
 const router = useRouter();
 const { register, loading, isAuthorized } = useCustomer();
-const { t } = useI18n();
 const { send } = useNotification();
 const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();

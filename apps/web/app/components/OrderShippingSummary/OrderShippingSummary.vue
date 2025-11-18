@@ -43,7 +43,6 @@ import type { OrderShippingSummaryPropsType } from './types';
 
 const props = defineProps<OrderShippingSummaryPropsType>();
 
-const { t } = useI18n();
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const shippingMethod = orderGetters.getShippingProvider(props.order);
 const preferredDeliveryServices = orderGetters.getPreferredDeliveryServices(props.order);

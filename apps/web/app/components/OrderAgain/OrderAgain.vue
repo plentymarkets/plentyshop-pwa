@@ -82,7 +82,6 @@ import { paths } from '~/utils/paths';
 const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
-const { t } = useI18n();
 const { showNetPrices } = useCart();
 
 const localePath = useLocalePath();

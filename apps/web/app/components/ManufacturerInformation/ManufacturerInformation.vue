@@ -39,8 +39,6 @@ import { productGetters, manufacturerGetters } from '@plentymarkets/shop-api';
 import type { ManufacturerInformationProps } from '~/components/ManufacturerInformation/types';
 
 const props = defineProps<ManufacturerInformationProps>();
-const { t } = useI18n();
-
 const manufacturer = productGetters.getManufacturer(props.product);
 const country = manufacturerGetters.getManufacturerCountry(manufacturer);
 

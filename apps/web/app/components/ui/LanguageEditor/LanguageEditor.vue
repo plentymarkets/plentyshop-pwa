@@ -27,7 +27,7 @@ import type { Locale } from 'vue-i18n';
 
 const languageLabel = 'Change the active language to manage multilingual content.';
 
-const { localeCodes, locale: currentLocale, t } = useI18n();
+const { localeCodes, locale: currentLocale } = useI18n();
 const { switchLocale } = useLocalization();
 const switchLanguage = async (locale: Locale) => {
   await switchLocale(locale, false);

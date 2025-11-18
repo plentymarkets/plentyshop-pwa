@@ -31,7 +31,6 @@
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
-const { t } = useI18n();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const { goToPreviousRoute } = useBrowserNavigation();

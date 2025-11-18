@@ -49,8 +49,6 @@ import { manufacturerGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ManufacturerResponsibleInfoProps } from '~/components/ManufacturerResponsibleInfo/types';
 
 const props = defineProps<ManufacturerResponsibleInfoProps>();
-const { t } = useI18n();
-
 const manufacturer = productGetters.getManufacturer(props.product);
 const country = manufacturerGetters.getManufacturerResponsibleCountry(manufacturer);
 

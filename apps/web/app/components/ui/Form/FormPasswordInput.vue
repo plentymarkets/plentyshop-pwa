@@ -14,6 +14,5 @@ import type { FormPasswordProps } from '~/components/ui/Form/types';
 
 defineProps<FormPasswordProps>();
 
-const { t } = useI18n();
 const isPasswordVisible = ref<boolean>();
 </script>

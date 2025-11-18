@@ -74,7 +74,6 @@ import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '
 import { getSubCategories } from '~/utils/settings-groups-imports';
 import type { Messages } from '~/components/SiteConfigurationView/types';
 import { getSettingsTranslations } from '~/utils/settings-translations-imports';
-const { t } = useI18n();
 
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();

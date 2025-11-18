@@ -75,11 +75,10 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     closeReviewModal();
 
     const { send } = useNotification();
-    const { $i18n } = useNuxtApp();
 
     try {
       await useSdk().plentysystems.doReview(params);
-      send({ type: 'positive', message: $i18n.t('review.notification.success') });
+      send({ type: 'positive', message: t('review.notification.success') });
     } catch (error) {
       useHandleError(error as ApiError);
       return state.value.data;
@@ -112,12 +111,11 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     closeReviewModal();
 
     const { send } = useNotification();
-    const { $i18n } = useNuxtApp();
 
     try {
       await useSdk().plentysystems.setReview(params);
 
-      send({ type: 'positive', message: $i18n.t('review.notification.success') });
+      send({ type: 'positive', message: t('review.notification.success') });
     } catch (error) {
       useHandleError(error as ApiError);
       return state.value.data;

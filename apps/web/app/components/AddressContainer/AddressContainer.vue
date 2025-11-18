@@ -74,7 +74,6 @@ import { type Address, AddressType } from '@plentymarkets/shop-api';
 
 const { disabled = false, type } = defineProps<AddressContainerProps>();
 
-const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);

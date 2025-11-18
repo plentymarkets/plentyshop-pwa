@@ -20,7 +20,6 @@
 <script setup lang="ts">
 import type { PayPalInvoiceDetailsProps } from '~/components/PayPal/types';
 
-const { t } = useI18n();
 const props = defineProps<PayPalInvoiceDetailsProps>();
 
 const paymentText = props.order.paymentText ?? '';
