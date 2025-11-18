@@ -96,9 +96,17 @@
       <template #summary>
         <h2>{{ getEditorTranslation('settings-group-label') }}</h2>
       </template>
-
       <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('email-folder-id-label') }}</UiFormLabel>
+        <div class="mb-2 flex items-center gap-2">
+          <div class="flex items-center">
+            <UiFormLabel class="mb-0 mr-2 inline-block">{{
+              getEditorTranslation('email-folder-id-label')
+            }}</UiFormLabel>
+            <SfTooltip :label="getEditorTranslation('newsletter-form-email-folder-id-tooltip')" class="inline-flex">
+              <SfIconInfo size="sm" />
+            </SfTooltip>
+          </div>
+        </div>
         <SfInput
           v-model="newsletterBlock.settings.emailFolderId"
           name="emailFolderId"
@@ -107,7 +115,6 @@
           data-testid="newsletter-form-email-folder-id"
         />
       </div>
-
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
 
@@ -128,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { NewsletterSubscribeContent } from './types';
 
 const textGroup = ref(true);
@@ -206,7 +213,7 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
-
+    "newsletter-form-email-folder-id-tooltip": "To add an email folder id you need to navigate to Setup » CRM » Newsletter.",
     "settings-group-label": "Settings",
     "background-color-label": "Background Color"
   },
@@ -223,6 +230,7 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
+    "newsletter-form-email-folder-id-tooltip": "To add an email folder id you need to navigate to Setup » CRM » Newsletter.",
 
     "settings-group-label": "Settings",
     "background-color-label": "Background Color"
