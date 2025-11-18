@@ -54,20 +54,34 @@
                       v-model="row.translations[lang].input"
                       class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
                     />
-                    <SfTooltip v-if="row.translations[lang]?.input === row.translations[lang]?.default" :label="getEditorTranslation('default-tooltip')" class="top-1 right-0 z-10 !absolute hidden group-hover:block" strategy="absolute" :show-arrow="true" placement="right">
+                    <SfTooltip
+                      v-if="row.translations[lang]?.input === row.translations[lang]?.default"
+                      :label="getEditorTranslation('default-tooltip')"
+                      class="top-1 right-0 z-10 !absolute hidden group-hover:block"
+                      strategy="absolute"
+                      :show-arrow="true"
+                      placement="right"
+                    >
                       <div class="right-1 p-2 h-8 bg-neutral-100 text-xs rounded-lg absolute text-gray-700">
                         {{ getEditorTranslation('default') }}
                       </div>
                     </SfTooltip>
-                    <SfTooltip v-else-if="row.translations[lang]?.default" :label="getEditorTranslation('revert-to-default')" class="right-0 z-10 !absolute" strategy="absolute" :show-arrow="true" placement="right">
+                    <SfTooltip
+                      v-else-if="row.translations[lang]?.default"
+                      :label="getEditorTranslation('revert-to-default')"
+                      class="right-0 z-10 !absolute"
+                      strategy="absolute"
+                      :show-arrow="true"
+                      placement="right"
+                    >
                       <div class="h-10 p-2 flex items-center" @click="revertToDefault(row.translations[lang])">
                         <SfIconBase viewBox="0 -960 960 960" size="sm" class="fill-none">
                           <path
-                              fill="rgb(var(--colors-2-primary-500) / 1)"
-                              d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                            fill="rgb(var(--colors-2-primary-500) / 1)"
+                            d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
                           />
                         </SfIconBase>
                       </div>
@@ -84,8 +98,8 @@
 </template>
 
 <script setup lang="ts">
-import {SfDrawer, SfIconBase, SfIconChevronLeft, SfTooltip} from '@storefront-ui/vue';
-import type {LocalizationMessage} from "../../../../../../../shop-core/src/runtime/types";
+import { SfDrawer, SfIconBase, SfIconChevronLeft, SfTooltip } from '@storefront-ui/vue';
+import type { LocalizationMessage } from '../../../../../../../shop-core/src/runtime/types';
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
@@ -102,7 +116,7 @@ const languages = computed(() => {
 
 const revertToDefault = (data: LocalizationMessage) => {
   data.input = data.default ?? '';
-}
+};
 
 const headerScroll = ref<HTMLElement | null>(null);
 const contentScroll = ref<HTMLElement | null>(null);
