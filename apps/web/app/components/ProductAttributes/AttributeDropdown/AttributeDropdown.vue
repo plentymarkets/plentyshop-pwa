@@ -36,7 +36,6 @@ import { number, object } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 
-const { t } = useI18n();
 const { attribute } = defineProps<AttributeSelectProps>();
 const { updateValue, getValue } = useProductAttributes();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');

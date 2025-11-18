@@ -55,7 +55,6 @@ import type { AccountFormsPasswordProps } from '~/components/AccountForms/types'
 
 const { send } = useNotification();
 const { loading, changePassword } = useCustomer();
-const { t } = useI18n();
 
 const props = defineProps<AccountFormsPasswordProps>();
 const { oldPassword, firstNewPassword, secondNewPassword } = toRefs(props);

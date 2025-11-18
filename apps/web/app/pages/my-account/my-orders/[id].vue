@@ -159,7 +159,7 @@ import { paths } from '~/utils/paths';
 
 const route = useRoute();
 const localePath = useLocalePath();
-const { locale, t } = useI18n();
+const { locale } = useI18n();
 const { format } = usePriceFormatter();
 const { isOpen } = useDisclosure({ initialValue: true });
 const { fetchOrder, data } = useCustomerOrder(route.params.id as string);

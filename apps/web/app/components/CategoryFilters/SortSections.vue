@@ -116,7 +116,6 @@ import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
-const { t } = useI18n();
 
 const open = ref(true);
 const props = defineProps<FilterProps>();

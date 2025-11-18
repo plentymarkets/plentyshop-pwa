@@ -39,7 +39,6 @@ import { paths } from '~/utils/paths';
 
 const { showNetPrices } = useCart();
 const localePath = useLocalePath();
-const { t } = useI18n();
 
 defineProps<ProductSliderProps>();
 </script>

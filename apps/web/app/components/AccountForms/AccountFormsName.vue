@@ -25,7 +25,6 @@ import type { AccountFormsNameProps } from '~/components/AccountForms/types';
 const props = defineProps<AccountFormsNameProps>();
 defineEmits(['on-save', 'on-cancel']);
 
-const { t } = useI18n();
 const { firstName, lastName } = toRefs(props);
 const userData = ref({
   firstName: firstName?.value ?? '',

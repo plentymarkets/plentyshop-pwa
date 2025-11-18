@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
-const { t } = useI18n();
 const { getSetting } = useSiteSettings('showCustomerReferenceComponent');
 const { setCustomerSign } = useAdditionalInformation();
 const showCustomerReferenceComponent = computed(() => getSetting().toString() === 'true');

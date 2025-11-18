@@ -184,7 +184,7 @@ const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
 const { formatWithSymbol } = usePriceFormatter();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);

@@ -111,7 +111,6 @@ import type { ApiError } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
 
 const { resetPassword, loading } = useResetPassword();
-const { t } = useI18n();
 const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();

@@ -108,7 +108,6 @@ import type { ReviewItem } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
 const { reviewItem = null } = defineProps<ReviewFormProps>();
-const { t } = useI18n();
 const { currentProduct } = useProducts();
 const { createProductReview, setProductReview, closeReviewModal, modalType } = useProductReviews(
   Number(productGetters.getItemId(currentProduct.value)),

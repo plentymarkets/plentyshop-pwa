@@ -65,8 +65,6 @@ import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 defineProps<BreadcrumbsProps>();
 
 const localePath = useLocalePath();
-const { t } = useI18n();
-
 const dropdownOpened = ref(false);
 const close = () => {
   dropdownOpened.value = false;

@@ -16,7 +16,6 @@ import type { PriceProps } from '~/components/Price/types';
 const props = defineProps<PriceProps>();
 
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 
 const differentPrices = computed(() => {
   return props.crossedPrice

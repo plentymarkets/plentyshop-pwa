@@ -61,7 +61,6 @@ export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
 ];
 
 export const createDefaultFooterSettings = (): FooterSettings => {
-  const { $i18n } = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
 
   return {
@@ -70,7 +69,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       isGlobalTemplate: true,
     },
     column1: {
-      title: $i18n.t('categories.legal.label'),
+      title: t('categories.legal.label'),
       showTermsAndConditions: true,
       showCancellationRights: true,
       showCancellationForm: true,
@@ -79,7 +78,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       showDeclarationOfAccessibility: true,
     },
     column2: {
-      title: $i18n.t('categories.services.label'),
+      title: t('categories.services.label'),
       description: '',
       showContactLink: true,
       showRegisterLink: true,

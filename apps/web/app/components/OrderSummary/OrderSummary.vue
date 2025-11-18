@@ -3,7 +3,7 @@
     <div class="flex justify-between items-end py-2 px-4 md:px-6 md:pt-6 md:pb-4">
       <h2 class="typography-headline-4 font-bold md:typography-headline-3">{{ t('orderSummary') }}</h2>
       <p class="typography-text-base font-medium" data-testid="total-in-cart">
-        {{ t('itemsInCart', cartItemsCount) }}
+        {{ t('itemsInCart', { count: cartItemsCount }) }}
       </p>
     </div>
 
@@ -98,7 +98,6 @@ import { cartGetters } from '@plentymarkets/shop-api';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
-const { t } = useI18n();
 const { showNetPrices } = useCart();
 const { format } = usePriceFormatter();
 

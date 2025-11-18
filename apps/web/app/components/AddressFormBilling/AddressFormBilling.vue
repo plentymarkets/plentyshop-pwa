@@ -214,7 +214,6 @@ const {
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Billing);
 const { invalidVAT, clearInvalidVAT, vatServerError } = useCreateAddress(AddressType.Billing);
-const { t } = useI18n();
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: billingSchema });

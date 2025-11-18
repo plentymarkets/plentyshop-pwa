@@ -16,7 +16,6 @@ interface ErrorProp {
   [key: string]: unknown;
 }
 const props = defineProps<{ error: ErrorProp }>();
-const { t } = useI18n();
 const { setInitialDataSSR } = useInitialSetup();
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');

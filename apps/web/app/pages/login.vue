@@ -10,7 +10,6 @@ definePageMeta({
   layout: false,
   middleware: ['guest-guard'],
 });
-const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';

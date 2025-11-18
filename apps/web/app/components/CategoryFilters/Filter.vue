@@ -113,7 +113,6 @@ import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
-const { t } = useI18n();
 
 const open = ref(true);
 const props = defineProps<FilterProps>();

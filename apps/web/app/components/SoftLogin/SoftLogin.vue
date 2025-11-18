@@ -28,7 +28,6 @@ import type { SoftLoginProps } from './types';
 
 const emits = defineEmits(['submit']);
 const props = defineProps<SoftLoginProps>();
-const { t } = useI18n();
 const errorType = computed(() => props.error?.error?.data?.authType ?? props.error?.error?.data?.type ?? '');
 
 const TYPE_LOGIN = 'login';

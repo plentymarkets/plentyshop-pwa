@@ -26,7 +26,6 @@ const {
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
-const { t } = useI18n();
 
 const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),

@@ -27,7 +27,6 @@ import type { AddressProps } from './types';
 
 const { address } = defineProps<AddressProps>();
 
-const { t } = useI18n();
 const countryName = computed(() =>
   address?.country ? useAggregatedCountries().localeCountryName(address.country) : '',
 );

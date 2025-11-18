@@ -15,10 +15,8 @@
 
 <script setup lang="ts">
 const { $pwa } = useNuxtApp();
-const { t } = useI18n();
 
 const needRefresh = computed(() => $pwa?.needRefresh);
-
 const updatePWA = async () => {
   await $pwa?.updateServiceWorker();
 };

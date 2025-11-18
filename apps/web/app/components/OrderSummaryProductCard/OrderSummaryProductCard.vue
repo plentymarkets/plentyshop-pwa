@@ -127,7 +127,6 @@ import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
 const { formatWithSymbol } = usePriceFormatter();
-const { t } = useI18n();
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

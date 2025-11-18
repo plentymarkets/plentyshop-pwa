@@ -44,7 +44,6 @@ const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(productProperty.property.id);

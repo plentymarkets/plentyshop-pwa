@@ -66,7 +66,6 @@ import type { AddressSelectProps } from './types';
 
 const { disabled = false, type } = defineProps<AddressSelectProps>();
 
-const { t } = useI18n();
 const { addresses, get: getAddress } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);

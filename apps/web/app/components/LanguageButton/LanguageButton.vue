@@ -15,5 +15,4 @@ import type { Locale } from '#i18n';
 
 defineProps<{ locale: Locale }>();
 const { switchLocale } = useLocalization();
-const { t } = useI18n();
 </script>

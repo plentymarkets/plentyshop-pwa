@@ -164,7 +164,6 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
