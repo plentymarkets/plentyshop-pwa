@@ -118,12 +118,10 @@ const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
 const enabledActions = computed(() => props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value);
 
-onMounted(() => {
+onMounted(async () => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
-});
 
-onMounted(async () => {
   if ($isPreview) {
     await import('./draggable.css');
   }
