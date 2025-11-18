@@ -29,6 +29,9 @@ export const useToolbar = () => {
       await handleSave(updatePageTemplate);
     }
 
+    const { hasChanges: localizationHasChanges, saveLocalizations } = useEditorLocalizationKeys();
+    if (localizationHasChanges.value) await saveLocalizations();
+
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 
