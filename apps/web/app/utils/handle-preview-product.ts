@@ -1,6 +1,6 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, ProductProperty } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
@@ -9,12 +9,9 @@ import { variationPropertiesEN } from './facets/variationPropertiesEN';
 import { variationPropertiesDE } from './facets/variationPropertiesDE';
 import { bundleComponentsDE } from './facets/bundleComponentsDE';
 import { bundleComponentsEN } from './facets/bundleComponentsEN';
-import type {
-  UseProductOrderProperties
-} from '~/composables/useProductOrderProperties/types';
+import type { UseProductOrderProperties } from '~/composables/useProductOrderProperties/types';
 import { orderPropertiesEN } from './facets/orderPropertiesEN';
 import { orderPropertiesDE } from './facets/orderPropertiesDE';
-import type { ProductProperty } from '@plentymarkets/shop-api';
 import { propertiesEN } from './facets/propertiesEN';
 import { propertiesDE } from './facets/propertiesDE';
 
@@ -174,7 +171,11 @@ export const complement = <T extends object>(a: T, b: T, opts: ComplementOptions
   return complementInPlace(clone, b, opts);
 };
 
-export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, properties: UseProductOrderProperties) => {
+export const handlePreviewProduct = (
+  state: Ref<UseProductState>,
+  lang: string,
+  properties: UseProductOrderProperties,
+) => {
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 

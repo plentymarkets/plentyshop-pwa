@@ -1,503 +1,338 @@
 export const bundleComponentsEN = [
-    {
-        quantity: '2',
-        data: {
-            item: {
-                id: 115,
-                manufacturerId: 2,
-                itemType: "default",
-                manufacturer: {
-                    name: "A & C Design",
-                    legalName: "A & C Design Manufacturing Corp.",
-                    logo: "",
-                    url: "",
-                    contactUrl: "",
-                    street: "",
-                    email: "info@acdesign.com",
-                    responsibleName: "Matthias Richter",
-                    responsibleStreet: "Sophienstraße",
-                    responsibleHouseNo: "13",
-                    responsiblePostCode: "80333",
-                    responsibleTown: "München",
-                    responsibleCountry: 1,
-                    responsibleEmail: "eu-representative@acdesign.eu",
-                    responsibleContactUrl: "",
-                    responsiblePhoneNo: "+49 89 98765432",
-                    externalName: "A & C Design",
-                    postcode: "94576",
-                    houseNo: "456",
-                    town: "Berlin",
-                    countryId: 1,
-                    phoneNumber: "+1-555-0100",
-                    faxNumber: "+1-555-0123",
-                    nameExternal: "A & C Design",
-                    countryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Germany",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    },
-                    responsibleCountryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Germany",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    }
-                },
-                customsTariffNumber: "",
-                producingCountry: {
-                    names: []
-                },
-                condition: {
-                    names: []
-                }
-            },
-            texts: {
-                name3: "",
-                urlPath: "#",
-                name2: "",
-                lang: "en",
-                description: "<p>The name says it all! The fresh colour and the simple design fit into every dining room. The brushed steel chair legs blend in very well with the bright orange. The feet made of non-slip rubber offer optimal grip even on tiles and laminate.</p>",
-                name1: "Bundle component 2",
-                shortDescription: ""
-            },
-            variation: {
-                itemId: 115,
-                number: "109",
-                availabilityId: 1,
-                maximumOrderQuantity: null,
-                minimumOrderQuantity: null,
-                intervalOrderQuantity: null,
-                name: "",
-                vatId: 0,
-                bundleType: "bundle_item",
-                mayShowUnitPrice: true,
-                availabilityUpdatedAt: "2018-02-28T11:49:53+01:00",
-                availability: {
-                    id: 1,
-                    icon: "av1.gif",
-                    averageDays: 2,
-                    createdAt: "2024-02-05 10:23:10",
-                    updatedAt: "2024-02-05 10:23:10",
-                    names: {
-                        id: 42,
-                        availabilityId: 1,
-                        lang: "en",
-                        name: "Ready for shipping, delivery in 48h",
-                        createdAt: "2024-02-05 10:23:10",
-                        updatedAt: "2024-02-05 10:23:10"
-                    }
-                },
-                id: 1013,
-                model: ""
-            },
-            images: {
-                all: [
-                    {
-                        names: [],
-                        url: "/_nuxt-plenty/images/productPlaceholder.png",
-                        width: 480,
-                        position: 0,
-                        urlSecondPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlMiddle: "/_nuxt-plenty/images/productPlaceholder.png",
-                        height: 600,
-                        path: "",
-                        cleanImageName: ""
-                    }
-                ],
-                variation: []
-            },
-            filter: {
-                isSalable: true,
-                isSalableAndActive: true
-            },
-            unit: {
-                names: {
-                    unitId: 1,
-                    lang: "en",
-                    name: "piece"
-                },
-                unitOfMeasurement: "C62",
-                content: 1
-            },
-            properties: [],
-            hasOrderProperties: false,
-            hasRequiredOrderProperty: false,
-            facets: [],
-            attributes: []
-        }
+  {
+    quantity: '2',
+    data: {
+      item: {
+        id: 115,
+        manufacturerId: 2,
+        itemType: 'default',
+        manufacturer: {
+          name: '',
+          legalName: '',
+          logo: '',
+          url: '',
+          contactUrl: '',
+          street: '',
+          email: 'info@acdesign.com',
+          responsibleName: 'Matthias Richter',
+          responsibleStreet: 'Sophienstraße',
+          responsibleHouseNo: '13',
+          responsiblePostCode: '80333',
+          responsibleTown: 'München',
+          responsibleCountry: 1,
+          responsibleEmail: 'eu-representative@acdesign.eu',
+          responsibleContactUrl: '',
+          responsiblePhoneNo: '+49 89 98765432',
+          externalName: 'A & C Design',
+          postcode: '94576',
+          houseNo: '456',
+          town: 'Berlin',
+          countryId: 1,
+          phoneNumber: '+1-555-0100',
+          faxNumber: '+1-555-0123',
+          nameExternal: 'A & C Design',
+          countryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Germany',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+          responsibleCountryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Germany',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+        },
+        customsTariffNumber: '',
+        producingCountry: {
+          names: [],
+        },
+        condition: {
+          names: [],
+        },
+      },
+      texts: {
+        name3: '',
+        urlPath: '#',
+        name2: '',
+        lang: 'en',
+        description:
+          '<p>The name says it all! The fresh colour and the simple design fit into every dining room. The brushed steel chair legs blend in very well with the bright orange. The feet made of non-slip rubber offer optimal grip even on tiles and laminate.</p>',
+        name1: 'Bundle component 2',
+        shortDescription: '',
+      },
+      variation: {
+        itemId: 115,
+        number: '109',
+        availabilityId: 1,
+        maximumOrderQuantity: null,
+        minimumOrderQuantity: null,
+        intervalOrderQuantity: null,
+        name: '',
+        vatId: 0,
+        bundleType: 'bundle_item',
+        mayShowUnitPrice: true,
+        availabilityUpdatedAt: '2018-02-28T11:49:53+01:00',
+        availability: {
+          id: 1,
+          icon: 'av1.gif',
+          averageDays: 2,
+          createdAt: '2024-02-05 10:23:10',
+          updatedAt: '2024-02-05 10:23:10',
+          names: {
+            id: 42,
+            availabilityId: 1,
+            lang: 'en',
+            name: 'Ready for shipping, delivery in 48h',
+            createdAt: '2024-02-05 10:23:10',
+            updatedAt: '2024-02-05 10:23:10',
+          },
+        },
+        id: 1013,
+        model: '',
+      },
+      images: {
+        all: [
+          {
+            names: [],
+            url: '/_nuxt-plenty/images/productPlaceholder.png',
+            width: 480,
+            position: 0,
+            urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+            height: 600,
+            path: '',
+            cleanImageName: '',
+          },
+        ],
+        variation: [],
+      },
+      filter: {
+        isSalable: true,
+        isSalableAndActive: true,
+      },
+      unit: {
+        names: {
+          unitId: 1,
+          lang: 'en',
+          name: 'piece',
+        },
+        unitOfMeasurement: 'C62',
+        content: 1,
+      },
+      properties: [],
+      hasOrderProperties: false,
+      hasRequiredOrderProperty: false,
+      facets: [],
+      attributes: [],
     },
-    {
-        quantity: '2',
-        data: {
-            item: {
-                id: 115,
-                manufacturerId: 2,
-                itemType: "default",
-                manufacturer: {
-                    name: "A & C Design",
-                    legalName: "A & C Design Manufacturing Corp.",
-                    logo: "",
-                    url: "",
-                    contactUrl: "",
-                    street: "",
-                    email: "info@acdesign.com",
-                    responsibleName: "Matthias Richter",
-                    responsibleStreet: "Sophienstraße",
-                    responsibleHouseNo: "13",
-                    responsiblePostCode: "80333",
-                    responsibleTown: "München",
-                    responsibleCountry: 1,
-                    responsibleEmail: "eu-representative@acdesign.eu",
-                    responsibleContactUrl: "",
-                    responsiblePhoneNo: "+49 89 98765432",
-                    externalName: "A & C Design",
-                    postcode: "94576",
-                    houseNo: "456",
-                    town: "Berlin",
-                    countryId: 1,
-                    phoneNumber: "+1-555-0100",
-                    faxNumber: "+1-555-0123",
-                    nameExternal: "A & C Design",
-                    countryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Germany",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    },
-                    responsibleCountryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Germany",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    }
-                },
-                customsTariffNumber: "",
-                producingCountry: {
-                    names: []
-                },
-                condition: {
-                    names: []
-                }
-            },
-            texts: {
-                name3: "",
-                urlPath: "#",
-                name2: "",
-                lang: "en",
-                description: "<p>The name says it all! The fresh colour and the simple design fit into every dining room. The brushed steel chair legs blend in very well with the bright orange. The feet made of non-slip rubber offer optimal grip even on tiles and laminate.</p>",
-                name1: "Bundle component 1",
-                shortDescription: ""
-            },
-            variation: {
-                itemId: 115,
-                number: "109",
-                availabilityId: 1,
-                maximumOrderQuantity: null,
-                minimumOrderQuantity: null,
-                intervalOrderQuantity: null,
-                name: "",
-                vatId: 0,
-                bundleType: "bundle_item",
-                mayShowUnitPrice: true,
-                availabilityUpdatedAt: "2018-02-28T11:49:53+01:00",
-                availability: {
-                    id: 1,
-                    icon: "av1.gif",
-                    averageDays: 2,
-                    createdAt: "2024-02-05 10:23:10",
-                    updatedAt: "2024-02-05 10:23:10",
-                    names: {
-                        id: 42,
-                        availabilityId: 1,
-                        lang: "en",
-                        name: "Ready for shipping, delivery in 48h",
-                        createdAt: "2024-02-05 10:23:10",
-                        updatedAt: "2024-02-05 10:23:10"
-                    }
-                },
-                id: 1013,
-                model: ""
-            },
-            images: {
-                all: [
-                    {
-                        names: [],
-                        url: "/_nuxt-plenty/images/productPlaceholder.png",
-                        width: 480,
-                        position: 0,
-                        urlSecondPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlMiddle: "/_nuxt-plenty/images/productPlaceholder.png",
-                        height: 600,
-                        path: "",
-                        cleanImageName: ""
-                    }
-                ],
-                variation: []
-            },
-            filter: {
-                isSalable: true,
-                isSalableAndActive: true
-            },
-            unit: {
-                names: {
-                    unitId: 1,
-                    lang: "en",
-                    name: "piece"
-                },
-                unitOfMeasurement: "C62",
-                content: 1
-            },
-            properties: [],
-            hasOrderProperties: false,
-            hasRequiredOrderProperty: false,
-            facets: [],
-            attributes: []
-        }
+  },
+  {
+    quantity: '2',
+    data: {
+      item: {
+        id: 115,
+        manufacturerId: 2,
+        itemType: 'default',
+        manufacturer: {
+          name: 'A & C Design',
+          legalName: 'A & C Design Manufacturing Corp.',
+          logo: '',
+          url: '',
+          contactUrl: '',
+          street: '',
+          email: 'info@acdesign.com',
+          responsibleName: 'Matthias Richter',
+          responsibleStreet: 'Sophienstraße',
+          responsibleHouseNo: '13',
+          responsiblePostCode: '80333',
+          responsibleTown: 'München',
+          responsibleCountry: 1,
+          responsibleEmail: 'eu-representative@acdesign.eu',
+          responsibleContactUrl: '',
+          responsiblePhoneNo: '+49 89 98765432',
+          externalName: 'A & C Design',
+          postcode: '94576',
+          houseNo: '456',
+          town: 'Berlin',
+          countryId: 1,
+          phoneNumber: '+1-555-0100',
+          faxNumber: '+1-555-0123',
+          nameExternal: 'A & C Design',
+          countryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Germany',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+          responsibleCountryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Germany',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+        },
+        customsTariffNumber: '',
+        producingCountry: {
+          names: [],
+        },
+        condition: {
+          names: [],
+        },
+      },
+      texts: {
+        name3: '',
+        urlPath: '#',
+        name2: '',
+        lang: 'en',
+        description:
+          '<p>The name says it all! The fresh colour and the simple design fit into every dining room. The brushed steel chair legs blend in very well with the bright orange. The feet made of non-slip rubber offer optimal grip even on tiles and laminate.</p>',
+        name1: 'Bundle component 1',
+        shortDescription: '',
+      },
+      variation: {
+        itemId: 115,
+        number: '109',
+        availabilityId: 1,
+        maximumOrderQuantity: null,
+        minimumOrderQuantity: null,
+        intervalOrderQuantity: null,
+        name: '',
+        vatId: 0,
+        bundleType: 'bundle_item',
+        mayShowUnitPrice: true,
+        availabilityUpdatedAt: '2018-02-28T11:49:53+01:00',
+        availability: {
+          id: 1,
+          icon: 'av1.gif',
+          averageDays: 2,
+          createdAt: '2024-02-05 10:23:10',
+          updatedAt: '2024-02-05 10:23:10',
+          names: {
+            id: 42,
+            availabilityId: 1,
+            lang: 'en',
+            name: 'Ready for shipping, delivery in 48h',
+            createdAt: '2024-02-05 10:23:10',
+            updatedAt: '2024-02-05 10:23:10',
+          },
+        },
+        id: 1013,
+        model: '',
+      },
+      images: {
+        all: [
+          {
+            names: [],
+            url: '/_nuxt-plenty/images/productPlaceholder.png',
+            width: 480,
+            position: 0,
+            urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+            height: 600,
+            path: '',
+            cleanImageName: '',
+          },
+        ],
+        variation: [],
+      },
+      filter: {
+        isSalable: true,
+        isSalableAndActive: true,
+      },
+      unit: {
+        names: {
+          unitId: 1,
+          lang: 'en',
+          name: 'piece',
+        },
+        unitOfMeasurement: 'C62',
+        content: 1,
+      },
+      properties: [],
+      hasOrderProperties: false,
+      hasRequiredOrderProperty: false,
+      facets: [],
+      attributes: [],
     },
-    {
-        quantity: '2',
-        data: {
-            item: {
-                id: 115,
-                manufacturerId: 2,
-                itemType: "default",
-                manufacturer: {
-                    name: "A & C Design",
-                    legalName: "A & C Design Manufacturing Corp.",
-                    logo: "",
-                    url: "",
-                    contactUrl: "",
-                    street: "",
-                    email: "info@acdesign.com",
-                    responsibleName: "Matthias Richter",
-                    responsibleStreet: "Sophienstraße",
-                    responsibleHouseNo: "13",
-                    responsiblePostCode: "80333",
-                    responsibleTown: "München",
-                    responsibleCountry: 1,
-                    responsibleEmail: "eu-representative@acdesign.eu",
-                    responsibleContactUrl: "",
-                    responsiblePhoneNo: "+49 89 98765432",
-                    externalName: "A & C Design",
-                    postcode: "94576",
-                    houseNo: "456",
-                    town: "Berlin",
-                    countryId: 1,
-                    phoneNumber: "+1-555-0100",
-                    faxNumber: "+1-555-0123",
-                    nameExternal: "A & C Design",
-                    countryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Germany",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    },
-                    responsibleCountryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Germany",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    }
-                },
-                customsTariffNumber: "",
-                producingCountry: {
-                    names: []
-                },
-                condition: {
-                    names: []
-                }
-            },
-            texts: {
-                name3: "",
-                urlPath: "#",
-                name2: "",
-                lang: "en",
-                description: "<p>The name says it all! The fresh colour and the simple design fit into every dining room. The brushed steel chair legs blend in very well with the bright orange. The feet made of non-slip rubber offer optimal grip even on tiles and laminate.</p>",
-                name1: "Bundle component 3",
-                shortDescription: ""
-            },
-            variation: {
-                itemId: 115,
-                number: "109",
-                availabilityId: 1,
-                maximumOrderQuantity: null,
-                minimumOrderQuantity: null,
-                intervalOrderQuantity: null,
-                name: "",
-                vatId: 0,
-                bundleType: "bundle_item",
-                mayShowUnitPrice: true,
-                availabilityUpdatedAt: "2018-02-28T11:49:53+01:00",
-                availability: {
-                    id: 1,
-                    icon: "av1.gif",
-                    averageDays: 2,
-                    createdAt: "2024-02-05 10:23:10",
-                    updatedAt: "2024-02-05 10:23:10",
-                    names: {
-                        id: 42,
-                        availabilityId: 1,
-                        lang: "en",
-                        name: "Ready for shipping, delivery in 48h",
-                        createdAt: "2024-02-05 10:23:10",
-                        updatedAt: "2024-02-05 10:23:10"
-                    }
-                },
-                id: 1013,
-                model: ""
-            },
-            images: {
-                all: [
-                    {
-                        names: [],
-                        url: "/_nuxt-plenty/images/productPlaceholder.png",
-                        width: 480,
-                        position: 0,
-                        urlSecondPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlMiddle: "/_nuxt-plenty/images/productPlaceholder.png",
-                        height: 600,
-                        path: "",
-                        cleanImageName: ""
-                    }
-                ],
-                variation: []
-            },
-            filter: {
-                isSalable: true,
-                isSalableAndActive: true
-            },
-            unit: {
-                names: {
-                    unitId: 1,
-                    lang: "en",
-                    name: "piece"
-                },
-                unitOfMeasurement: "C62",
-                content: 1
-            },
-            properties: [],
-            hasOrderProperties: false,
-            hasRequiredOrderProperty: false,
-            facets: [],
-            attributes: []
-        }
-    }
+  },
 ];

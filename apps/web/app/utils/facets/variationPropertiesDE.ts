@@ -2,65 +2,57 @@ export const variationPropertiesDE = [
   {
     id: 6,
     position: 0,
-    name: "Product properties",
-    description: "Properties for displaying product information",
+    name: 'Product properties',
+    description: 'Properties for displaying product information',
     properties: [
       {
-        cast: "text",
-        referrer: [
-          1
-        ],
+        cast: 'text',
+        referrer: [1],
         names: {
-          createdAt: "2024-07-17 16:40:31",
+          createdAt: '2024-07-17 16:40:31',
           propertyId: 10,
-          name: "(Eigenschaft) Beispiel",
-          updatedAt: "2024-07-17 16:40:31",
-          description: "Used to indicate legally required material properties",
+          name: '(Eigenschaft) Beispiel',
+          updatedAt: '2024-07-17 16:40:31',
+          description: 'Used to indicate legally required material properties',
           id: 15,
-          lang: "en"
+          lang: 'en',
         },
-        clients: [
-          67698
-        ],
-        display: [
-          'showInItemListing',
-          'showOnItemsPage',
-          'displayInOrderProcess'
-        ],
+        clients: [67698],
+        display: ['showInItemListing', 'showOnItemsPage', 'displayInOrderProcess'],
         groups: [
           {
             options: [
               {
                 id: 10,
-                updatedAt: "2024-06-10 09:10:33",
-                type: "surchargeType",
-                createdAt: "2024-06-10 09:10:33",
+                updatedAt: '2024-06-10 09:10:33',
+                type: 'surchargeType',
+                createdAt: '2024-06-10 09:10:33',
                 groupId: 6,
-                value: "flat"
+                value: 'flat',
               },
               {
-                createdAt: "2024-06-10 09:10:33",
+                createdAt: '2024-06-10 09:10:33',
                 id: 9,
-                type: "groupType",
+                type: 'groupType',
                 groupId: 6,
-                value: "none",
-                updatedAt: "2024-06-10 09:10:33"
-              }
+                value: 'none',
+                updatedAt: '2024-06-10 09:10:33',
+              },
             ],
             position: 0,
             names: {
               id: 8,
               groupId: 6,
-              description: "Properties for displaying product information",
-              name: "Product properties",
-              createdAt: "2024-06-10 09:10:33",
-              updatedAt: "2024-06-10 09:10:33",
-              lang: "en"
+              description: 'Properties for displaying product information',
+              name: 'Product properties',
+              createdAt: '2024-06-10 09:10:33',
+              updatedAt: '2024-06-10 09:10:33',
+              lang: 'en',
             },
-            updatedAt: "2024-06-10 09:10:33",
+            updatedAt: '2024-06-10 09:10:33',
             id: 6,
-            createdAt: "2024-06-10 09:10:33"
-          }
+            createdAt: '2024-06-10 09:10:33',
+          },
         ],
         id: 10,
         groupId: 6,
@@ -68,67 +60,59 @@ export const variationPropertiesDE = [
         markup: 0,
         values: {
           id: 2,
-          lang: "en",
-          value: "Beispiel 1",
-          description: ""
-        }
+          lang: 'en',
+          value: 'Beispiel 1',
+          description: '',
+        },
       },
       {
-        cast: "text",
-        referrer: [
-          1
-        ],
+        cast: 'text',
+        referrer: [1],
         names: {
-          createdAt: "2024-07-17 16:40:31",
+          createdAt: '2024-07-17 16:40:31',
           propertyId: 10,
-          name: "(Eigenschaft) Beispiel",
-          updatedAt: "2024-07-17 16:40:31",
-          description: "Used to indicate legally required material properties",
+          name: '(Eigenschaft) Beispiel',
+          updatedAt: '2024-07-17 16:40:31',
+          description: 'Used to indicate legally required material properties',
           id: 15,
-          lang: "en"
+          lang: 'en',
         },
-        clients: [
-          67698
-        ],
-        display: [
-          'showInItemListing',
-          'showOnItemsPage',
-          'displayInOrderProcess'
-        ],
+        clients: [67698],
+        display: ['showInItemListing', 'showOnItemsPage', 'displayInOrderProcess'],
         groups: [
           {
             options: [
               {
                 id: 10,
-                updatedAt: "2024-06-10 09:10:33",
-                type: "surchargeType",
-                createdAt: "2024-06-10 09:10:33",
+                updatedAt: '2024-06-10 09:10:33',
+                type: 'surchargeType',
+                createdAt: '2024-06-10 09:10:33',
                 groupId: 6,
-                value: "flat"
+                value: 'flat',
               },
               {
-                createdAt: "2024-06-10 09:10:33",
+                createdAt: '2024-06-10 09:10:33',
                 id: 9,
-                type: "groupType",
+                type: 'groupType',
                 groupId: 6,
-                value: "none",
-                updatedAt: "2024-06-10 09:10:33"
-              }
+                value: 'none',
+                updatedAt: '2024-06-10 09:10:33',
+              },
             ],
             position: 0,
             names: {
               id: 8,
               groupId: 6,
-              description: "Properties for displaying product information",
-              name: "Product properties",
-              createdAt: "2024-06-10 09:10:33",
-              updatedAt: "2024-06-10 09:10:33",
-              lang: "en"
+              description: 'Properties for displaying product information',
+              name: 'Product properties',
+              createdAt: '2024-06-10 09:10:33',
+              updatedAt: '2024-06-10 09:10:33',
+              lang: 'en',
             },
-            updatedAt: "2024-06-10 09:10:33",
+            updatedAt: '2024-06-10 09:10:33',
             id: 6,
-            createdAt: "2024-06-10 09:10:33"
-          }
+            createdAt: '2024-06-10 09:10:33',
+          },
         ],
         id: 10,
         groupId: 6,
@@ -136,12 +120,11 @@ export const variationPropertiesDE = [
         markup: 0,
         values: {
           id: 2,
-          lang: "en",
-          value: "Beispiel 2",
-          description: ""
-        }
-      }
-    ]
-  }
+          lang: 'en',
+          value: 'Beispiel 2',
+          description: '',
+        },
+      },
+    ],
+  },
 ];
-

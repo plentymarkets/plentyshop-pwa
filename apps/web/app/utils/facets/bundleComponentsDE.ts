@@ -1,518 +1,347 @@
 export const bundleComponentsDE = [
-    {
-        quantity: '2',
-        data: {
-            item: {
-                id: 115,
-                manufacturerId: 2,
-                itemType: "default",
-                manufacturer: {
-                    name: "A & C Design",
-                    legalName: "A & C Design Manufacturing Corp.",
-                    logo: "",
-                    url: "",
-                    contactUrl: "",
-                    street: "",
-                    email: "info@acdesign.com",
-                    responsibleName: "Matthias Richter",
-                    responsibleStreet: "Sophienstraße",
-                    responsibleHouseNo: "13",
-                    responsiblePostCode: "80333",
-                    responsibleTown: "München",
-                    responsibleCountry: 1,
-                    responsibleEmail: "eu-representative@acdesign.eu",
-                    responsibleContactUrl: "",
-                    responsiblePhoneNo: "+49 89 98765432",
-                    externalName: "A & C Design",
-                    postcode: "94576",
-                    houseNo: "456",
-                    town: "Berlin",
-                    countryId: 1,
-                    phoneNumber: "+1-555-0100",
-                    faxNumber: "+1-555-0123",
-                    nameExternal: "A & C Design",
-                    countryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Deutschland",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    },
-                    responsibleCountryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Deutschland",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    }
-                },
-                customsTariffNumber: "",
-                producingCountry: {
-                    names: []
-                },
-                condition: {
-                    names: []
-                }
+  {
+    quantity: '2',
+    data: {
+      item: {
+        id: 115,
+        manufacturerId: 2,
+        itemType: 'default',
+        manufacturer: {
+          name: '',
+          legalName: '',
+          logo: '',
+          url: '',
+          contactUrl: '',
+          street: '',
+          email: 'info@acdesign.com',
+          responsibleName: 'Matthias Richter',
+          responsibleStreet: 'Sophienstraße',
+          responsibleHouseNo: '13',
+          responsiblePostCode: '80333',
+          responsibleTown: 'München',
+          responsibleCountry: 1,
+          responsibleEmail: 'eu-representative@acdesign.eu',
+          responsibleContactUrl: '',
+          responsiblePhoneNo: '+49 89 98765432',
+          externalName: 'A & C Design',
+          postcode: '94576',
+          houseNo: '456',
+          town: 'Berlin',
+          countryId: 1,
+          phoneNumber: '+1-555-0100',
+          faxNumber: '+1-555-0123',
+          nameExternal: 'A & C Design',
+          countryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Deutschland',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+          responsibleCountryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Deutschland',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+        },
+        customsTariffNumber: '',
+        producingCountry: {
+          names: [],
+        },
+        condition: {
+          names: [],
+        },
+      },
+      texts: {
+        lang: 'de',
+        name2: '',
+        name3: '',
+        description: '',
+        urlPath: '',
+        name1: 'Set Komponente 1',
+        shortDescription: '',
+      },
+      variation: {
+        itemId: 115,
+        number: '109',
+        availabilityId: 1,
+        maximumOrderQuantity: null,
+        minimumOrderQuantity: null,
+        intervalOrderQuantity: null,
+        name: '',
+        vatId: 0,
+        bundleType: 'bundle_item',
+        mayShowUnitPrice: true,
+        availabilityUpdatedAt: '2018-02-28T11:49:53+01:00',
+        availability: {
+          id: 1,
+          icon: 'av1.gif',
+          averageDays: 2,
+          createdAt: '2024-02-05 10:23:10',
+          updatedAt: '2024-02-05 10:23:10',
+          names: {
+            id: 41,
+            availabilityId: 1,
+            lang: 'de',
+            name: 'Sofort versandfertig, Lieferzeit 48h',
+            createdAt: '2024-02-05 10:23:10',
+            updatedAt: '2024-02-05 10:23:10',
+          },
+        },
+        id: 1013,
+        model: '',
+      },
+      images: {
+        all: [
+          {
+            names: {
+              imageId: 29,
+              lang: 'de',
+              name: '',
+              alternate: '',
             },
-            texts: {
-                lang: "de",
-                name2: "",
-                name3: "",
-                description: "<p>Der Name ist Programm! Die frische Farbe und das schlichte Design passen in jedes Esszimmer. Die Stuhlbeine aus gebürstetem Stahl schmiegen sich zum grellen Orange sehr gut an. Die Füße aus rutschfester Gummierung bieten auch auf Fließen und Laminat optimalen Halt.</p>\n",
-                urlPath: "wohnzimmer/sessel-sofas/esszimmerstuhl-juicyorange",
-                name1: "Set Komponente 1",
-                shortDescription: ""
-            },
-            variation: {
-                itemId: 115,
-                number: "109",
-                availabilityId: 1,
-                maximumOrderQuantity: null,
-                minimumOrderQuantity: null,
-                intervalOrderQuantity: null,
-                name: "",
-                vatId: 0,
-                bundleType: "bundle_item",
-                mayShowUnitPrice: true,
-                availabilityUpdatedAt: "2018-02-28T11:49:53+01:00",
-                availability: {
-                    id: 1,
-                    icon: "av1.gif",
-                    averageDays: 2,
-                    createdAt: "2024-02-05 10:23:10",
-                    updatedAt: "2024-02-05 10:23:10",
-                    names: {
-                        id: 41,
-                        availabilityId: 1,
-                        lang: "de",
-                        name: "Sofort versandfertig, Lieferzeit 48h",
-                        createdAt: "2024-02-05 10:23:10",
-                        updatedAt: "2024-02-05 10:23:10"
-                    }
-                },
-                id: 1013,
-                model: ""
-            },
-            images: {
-                all: [
-                    {
-                        names: {
-                            imageId: 29,
-                            lang: "de",
-                            name: "",
-                            alternate: ""
-                        },
-                        path: "S3:115:115-Esszimmerstuhl-JuicyOrange.jpg",
-                        position: 0,
-                        height: 600,
-                        width: 480,
-                        url: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlMiddle: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlSecondPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        cleanImageName: "115-Esszimmerstuhl-JuicyOrange.jpg"
-                    }
-                ],
-                variation: []
-            },
-            filter: {
-                isSalable: true,
-                isSalableAndActive: true
-            },
-            unit: {
-                names: {
-                    unitId: 1,
-                    lang: "de",
-                    name: "Stück"
-                },
-                unitOfMeasurement: "C62",
-                content: 1
-            },
-            properties: [],
-            hasOrderProperties: false,
-            hasRequiredOrderProperty: false,
-            facets: [],
-            attributes: []
-        }
+            path: '',
+            position: 0,
+            height: 600,
+            width: 480,
+            url: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            cleanImageName: '115-Esszimmerstuhl-JuicyOrange.jpg',
+          },
+        ],
+        variation: [],
+      },
+      filter: {
+        isSalable: true,
+        isSalableAndActive: true,
+      },
+      unit: {
+        names: {
+          unitId: 1,
+          lang: 'de',
+          name: 'Stück',
+        },
+        unitOfMeasurement: 'C62',
+        content: 1,
+      },
+      properties: [],
+      hasOrderProperties: false,
+      hasRequiredOrderProperty: false,
+      facets: [],
+      attributes: [],
     },
-    {
-        quantity: '2',
-        data: {
-            item: {
-                id: 115,
-                manufacturerId: 2,
-                itemType: "default",
-                manufacturer: {
-                    name: "A & C Design",
-                    legalName: "A & C Design Manufacturing Corp.",
-                    logo: "",
-                    url: "",
-                    contactUrl: "",
-                    street: "",
-                    email: "info@acdesign.com",
-                    responsibleName: "Matthias Richter",
-                    responsibleStreet: "Sophienstraße",
-                    responsibleHouseNo: "13",
-                    responsiblePostCode: "80333",
-                    responsibleTown: "München",
-                    responsibleCountry: 1,
-                    responsibleEmail: "eu-representative@acdesign.eu",
-                    responsibleContactUrl: "",
-                    responsiblePhoneNo: "+49 89 98765432",
-                    externalName: "A & C Design",
-                    postcode: "94576",
-                    houseNo: "456",
-                    town: "Berlin",
-                    countryId: 1,
-                    phoneNumber: "+1-555-0100",
-                    faxNumber: "+1-555-0123",
-                    nameExternal: "A & C Design",
-                    countryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Deutschland",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    },
-                    responsibleCountryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Deutschland",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    }
-                },
-                customsTariffNumber: "",
-                producingCountry: {
-                    names: []
-                },
-                condition: {
-                    names: []
-                }
+  },
+  {
+    quantity: '2',
+    data: {
+      item: {
+        id: 115,
+        manufacturerId: 2,
+        itemType: 'default',
+        manufacturer: {
+          name: 'A & C Design',
+          legalName: 'A & C Design Manufacturing Corp.',
+          logo: '',
+          url: '',
+          contactUrl: '',
+          street: '',
+          email: 'info@acdesign.com',
+          responsibleName: 'Matthias Richter',
+          responsibleStreet: 'Sophienstraße',
+          responsibleHouseNo: '13',
+          responsiblePostCode: '80333',
+          responsibleTown: 'München',
+          responsibleCountry: 1,
+          responsibleEmail: 'eu-representative@acdesign.eu',
+          responsibleContactUrl: '',
+          responsiblePhoneNo: '+49 89 98765432',
+          externalName: 'A & C Design',
+          postcode: '94576',
+          houseNo: '456',
+          town: 'Berlin',
+          countryId: 1,
+          phoneNumber: '+1-555-0100',
+          faxNumber: '+1-555-0123',
+          nameExternal: 'A & C Design',
+          countryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Deutschland',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+          responsibleCountryObject: {
+            names: [
+              {
+                language: 'en',
+                country_id: '1',
+                name: 'Germany',
+                id: 250,
+              },
+              {
+                country_id: '1',
+                language: 'de',
+                id: 1,
+                name: 'Deutschland',
+              },
+            ],
+            shippingDestinationId: 101,
+            active: 1,
+            lang: 'de',
+            name: 'Deutschland',
+            id: 1,
+            storehouseId: 0,
+            isoCode3: 'DEU',
+            isCountryStateMandatory: null,
+            isoCode2: 'DE',
+          },
+        },
+        customsTariffNumber: '',
+        producingCountry: {
+          names: [],
+        },
+        condition: {
+          names: [],
+        },
+      },
+      texts: {
+        lang: 'de',
+        name2: '',
+        name3: '',
+        description:
+          '<p>Der Name ist Programm! Die frische Farbe und das schlichte Design passen in jedes Esszimmer. Die Stuhlbeine aus gebürstetem Stahl schmiegen sich zum grellen Orange sehr gut an. Die Füße aus rutschfester Gummierung bieten auch auf Fließen und Laminat optimalen Halt.</p>\n',
+        urlPath: 'wohnzimmer/sessel-sofas/esszimmerstuhl-juicyorange',
+        name1: 'Set Komponente 2',
+        shortDescription: '',
+      },
+      variation: {
+        itemId: 115,
+        number: '109',
+        availabilityId: 1,
+        maximumOrderQuantity: null,
+        minimumOrderQuantity: null,
+        intervalOrderQuantity: null,
+        name: '',
+        vatId: 0,
+        bundleType: 'bundle_item',
+        mayShowUnitPrice: true,
+        availabilityUpdatedAt: '2018-02-28T11:49:53+01:00',
+        availability: {
+          id: 1,
+          icon: 'av1.gif',
+          averageDays: 2,
+          createdAt: '2024-02-05 10:23:10',
+          updatedAt: '2024-02-05 10:23:10',
+          names: {
+            id: 41,
+            availabilityId: 1,
+            lang: 'de',
+            name: 'Sofort versandfertig, Lieferzeit 48h',
+            createdAt: '2024-02-05 10:23:10',
+            updatedAt: '2024-02-05 10:23:10',
+          },
+        },
+        id: 1013,
+        model: '',
+      },
+      images: {
+        all: [
+          {
+            names: {
+              imageId: 29,
+              lang: 'de',
+              name: '',
+              alternate: '',
             },
-            texts: {
-                lang: "de",
-                name2: "",
-                name3: "",
-                description: "<p>Der Name ist Programm! Die frische Farbe und das schlichte Design passen in jedes Esszimmer. Die Stuhlbeine aus gebürstetem Stahl schmiegen sich zum grellen Orange sehr gut an. Die Füße aus rutschfester Gummierung bieten auch auf Fließen und Laminat optimalen Halt.</p>\n",
-                urlPath: "wohnzimmer/sessel-sofas/esszimmerstuhl-juicyorange",
-                name1: "Set Komponente 2",
-                shortDescription: ""
-            },
-            variation: {
-                itemId: 115,
-                number: "109",
-                availabilityId: 1,
-                maximumOrderQuantity: null,
-                minimumOrderQuantity: null,
-                intervalOrderQuantity: null,
-                name: "",
-                vatId: 0,
-                bundleType: "bundle_item",
-                mayShowUnitPrice: true,
-                availabilityUpdatedAt: "2018-02-28T11:49:53+01:00",
-                availability: {
-                    id: 1,
-                    icon: "av1.gif",
-                    averageDays: 2,
-                    createdAt: "2024-02-05 10:23:10",
-                    updatedAt: "2024-02-05 10:23:10",
-                    names: {
-                        id: 41,
-                        availabilityId: 1,
-                        lang: "de",
-                        name: "Sofort versandfertig, Lieferzeit 48h",
-                        createdAt: "2024-02-05 10:23:10",
-                        updatedAt: "2024-02-05 10:23:10"
-                    }
-                },
-                id: 1013,
-                model: ""
-            },
-            images: {
-                all: [
-                    {
-                        names: {
-                            imageId: 29,
-                            lang: "de",
-                            name: "",
-                            alternate: ""
-                        },
-                        path: "S3:115:115-Esszimmerstuhl-JuicyOrange.jpg",
-                        position: 0,
-                        height: 600,
-                        width: 480,
-                        url: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlMiddle: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlSecondPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        cleanImageName: "115-Esszimmerstuhl-JuicyOrange.jpg"
-                    }
-                ],
-                variation: []
-            },
-            filter: {
-                isSalable: true,
-                isSalableAndActive: true
-            },
-            unit: {
-                names: {
-                    unitId: 1,
-                    lang: "de",
-                    name: "Stück"
-                },
-                unitOfMeasurement: "C62",
-                content: 1
-            },
-            properties: [],
-            hasOrderProperties: false,
-            hasRequiredOrderProperty: false,
-            facets: [],
-            attributes: []
-        }
+            path: 'S3:115:115-Esszimmerstuhl-JuicyOrange.jpg',
+            position: 0,
+            height: 600,
+            width: 480,
+            url: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlMiddle: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            urlSecondPreview: '/_nuxt-plenty/images/productPlaceholder.png',
+            cleanImageName: '115-Esszimmerstuhl-JuicyOrange.jpg',
+          },
+        ],
+        variation: [],
+      },
+      filter: {
+        isSalable: true,
+        isSalableAndActive: true,
+      },
+      unit: {
+        names: {
+          unitId: 1,
+          lang: 'de',
+          name: 'Stück',
+        },
+        unitOfMeasurement: 'C62',
+        content: 1,
+      },
+      properties: [],
+      hasOrderProperties: false,
+      hasRequiredOrderProperty: false,
+      facets: [],
+      attributes: [],
     },
-    {
-        quantity: '2',
-        data: {
-            item: {
-                id: 115,
-                manufacturerId: 2,
-                itemType: "default",
-                manufacturer: {
-                    name: "A & C Design",
-                    legalName: "A & C Design Manufacturing Corp.",
-                    logo: "",
-                    url: "",
-                    contactUrl: "",
-                    street: "",
-                    email: "info@acdesign.com",
-                    responsibleName: "Matthias Richter",
-                    responsibleStreet: "Sophienstraße",
-                    responsibleHouseNo: "13",
-                    responsiblePostCode: "80333",
-                    responsibleTown: "München",
-                    responsibleCountry: 1,
-                    responsibleEmail: "eu-representative@acdesign.eu",
-                    responsibleContactUrl: "",
-                    responsiblePhoneNo: "+49 89 98765432",
-                    externalName: "A & C Design",
-                    postcode: "94576",
-                    houseNo: "456",
-                    town: "Berlin",
-                    countryId: 1,
-                    phoneNumber: "+1-555-0100",
-                    faxNumber: "+1-555-0123",
-                    nameExternal: "A & C Design",
-                    countryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Deutschland",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    },
-                    responsibleCountryObject: {
-                        names: [
-                            {
-                                language: "en",
-                                country_id: "1",
-                                name: "Germany",
-                                id: 250
-                            },
-                            {
-                                country_id: "1",
-                                language: "de",
-                                id: 1,
-                                name: "Deutschland"
-                            }
-                        ],
-                        shippingDestinationId: 101,
-                        active: 1,
-                        lang: "de",
-                        name: "Deutschland",
-                        id: 1,
-                        storehouseId: 0,
-                        isoCode3: "DEU",
-                        isCountryStateMandatory: null,
-                        isoCode2: "DE"
-                    }
-                },
-                customsTariffNumber: "",
-                producingCountry: {
-                    names: []
-                },
-                condition: {
-                    names: []
-                }
-            },
-            texts: {
-                lang: "de",
-                name2: "",
-                name3: "",
-                description: "<p>Der Name ist Programm! Die frische Farbe und das schlichte Design passen in jedes Esszimmer. Die Stuhlbeine aus gebürstetem Stahl schmiegen sich zum grellen Orange sehr gut an. Die Füße aus rutschfester Gummierung bieten auch auf Fließen und Laminat optimalen Halt.</p>\n",
-                urlPath: "wohnzimmer/sessel-sofas/esszimmerstuhl-juicyorange",
-                name1: "Set Komponente 3",
-                shortDescription: ""
-            },
-            variation: {
-                itemId: 115,
-                number: "109",
-                availabilityId: 1,
-                maximumOrderQuantity: null,
-                minimumOrderQuantity: null,
-                intervalOrderQuantity: null,
-                name: "",
-                vatId: 0,
-                bundleType: "bundle_item",
-                mayShowUnitPrice: true,
-                availabilityUpdatedAt: "2018-02-28T11:49:53+01:00",
-                availability: {
-                    id: 1,
-                    icon: "av1.gif",
-                    averageDays: 2,
-                    createdAt: "2024-02-05 10:23:10",
-                    updatedAt: "2024-02-05 10:23:10",
-                    names: {
-                        id: 41,
-                        availabilityId: 1,
-                        lang: "de",
-                        name: "Sofort versandfertig, Lieferzeit 48h",
-                        createdAt: "2024-02-05 10:23:10",
-                        updatedAt: "2024-02-05 10:23:10"
-                    }
-                },
-                id: 1013,
-                model: ""
-            },
-            images: {
-                all: [
-                    {
-                        names: {
-                            imageId: 29,
-                            lang: "de",
-                            name: "",
-                            alternate: ""
-                        },
-                        path: "S3:115:115-Esszimmerstuhl-JuicyOrange.jpg",
-                        position: 0,
-                        height: 600,
-                        width: 480,
-                        url: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlMiddle: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        urlSecondPreview: "/_nuxt-plenty/images/productPlaceholder.png",
-                        cleanImageName: "115-Esszimmerstuhl-JuicyOrange.jpg"
-                    }
-                ],
-                variation: []
-            },
-            filter: {
-                isSalable: true,
-                isSalableAndActive: true
-            },
-            unit: {
-                names: {
-                    unitId: 1,
-                    lang: "de",
-                    name: "Stück"
-                },
-                unitOfMeasurement: "C62",
-                content: 1
-            },
-            properties: [],
-            hasOrderProperties: false,
-            hasRequiredOrderProperty: false,
-            facets: [],
-            attributes: []
-        }
-    }
+  },
 ];

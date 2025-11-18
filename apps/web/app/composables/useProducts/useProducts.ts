@@ -58,7 +58,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
-      handlePreviewProducts(state, $i18n.locale.value);
+      handlePreviewProducts(state, useNuxtApp().$i18n.locale.value);
 
       const defaultData = state.value.data.category.type === 'item' ? useCategoryTemplateData() : [];
 
