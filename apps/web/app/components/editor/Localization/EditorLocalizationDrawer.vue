@@ -51,8 +51,9 @@
                   <div v-for="lang in selectedLocales" :key="lang" class="w-64 flex-shrink-0 m-1 mr-2 group relative">
                     <textarea
                       v-if="row?.translations?.[lang]?.input !== undefined"
-                      v-model="row.translations[lang].input"
-                      class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
+                      :value="row.translations[lang].input"
+                      class="p-2 m-1 h-10 resize-none border rounded-lg w-full text-xs absolute"
+                      @input="updateTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
                     />
                     <SfTooltip
                       v-if="row.translations[lang]?.input === row.translations[lang]?.default"
@@ -104,12 +105,12 @@ import type { LocalizationMessage } from '../../../../../../../shop-core/src/run
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
-const { keys, getCategoryFromKey, getKeyFromFullKey, drawerOpen } = useEditorLocalizationKeys();
+const { keys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } = useEditorLocalizationKeys();
 const languages = computed(() => {
   return selectedLocales.value
     .map((locale) => {
-      const typedLocale = locale as keyof typeof allLanguages.value;
-      return allLanguages.value[typedLocale] ?? null;
+      const typedLocale = locale as keyof typeof allLanguages;
+      return allLanguages[typedLocale] ?? null;
     })
     .filter((lang): lang is string => lang !== null);
 });
