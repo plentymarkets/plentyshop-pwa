@@ -53,7 +53,7 @@
                       v-if="row?.translations?.[lang]?.input !== undefined"
                       :value="row.translations[lang].input"
                       class="p-2 m-1 h-10 resize-none border rounded-lg w-full text-xs"
-                      @input="updateTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
+                      @input="handleTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
                     />
                   </div>
                 </div>
@@ -68,6 +68,7 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconChevronLeft } from '@storefront-ui/vue';
+import { useDebounceFn } from '@vueuse/core';
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
@@ -81,6 +82,14 @@ const languages = computed(() => {
     })
     .filter((lang): lang is string => lang !== null);
 });
+
+const debouncedUpdate = useDebounceFn((key: string, lang: string, value: string) => {
+  updateTranslationInput(key, lang, value);
+}, 300);
+
+const handleTranslationInput = (key: string, lang: string, value: string) => {
+  debouncedUpdate(key, lang, value);
+};
 
 const headerScroll = ref<HTMLElement | null>(null);
 const contentScroll = ref<HTMLElement | null>(null);
