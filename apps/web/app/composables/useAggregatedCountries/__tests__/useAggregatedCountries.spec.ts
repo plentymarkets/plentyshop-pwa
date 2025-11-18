@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { useAggregatedCountries } from '../useAggregatedCountries';
 import { ActiveShippingCountryList } from './mocks/ActiveShippingCountriesMock';
 import countryList from '../../../../__tests__/fixtures/postCodeMapper.json';

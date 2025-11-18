@@ -52,7 +52,11 @@ const props = withDefaults(defineProps<EditablePageProps>(), {
   preventBlocksRequest: false,
 });
 
-const { data, getBlocksServer, cleanData } = useCategoryTemplate(props.identifier.toString(), props.type.toString());
+const { data, getBlocksServer, cleanData } = useCategoryTemplate(
+  props.identifier.toString(),
+  props.type.toString(),
+  useNuxtApp().$i18n.locale.value,
+);
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
