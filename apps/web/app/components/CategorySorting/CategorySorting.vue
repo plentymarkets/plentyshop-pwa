@@ -25,7 +25,6 @@ import { isPageOfType } from '~/utils/pathHelper';
 
 const props = defineProps<{ selectionModeCompact?: boolean }>();
 const { updateSorting } = useCategoryFilter();
-const { t } = useI18n();
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSearch');
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');

@@ -15,7 +15,6 @@ export const useCategoryData = () => {
   const { blockUuid } = useSiteConfiguration();
   const { findOrDeleteBlockByUuid } = useBlockManager();
   const { data: productsCatalog } = useProducts();
-  const { t } = useI18n();
 
   const learnMoreUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#900';
   const learnMoreTextUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#800';

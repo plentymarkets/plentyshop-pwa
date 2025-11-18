@@ -62,7 +62,6 @@ const { showNetPrices } = useCart();
 const localePath = useLocalePath();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
-const { t } = useI18n();
 const { fetchWishlist, data: products, loading } = useWishlist();
 
 fetchWishlist();

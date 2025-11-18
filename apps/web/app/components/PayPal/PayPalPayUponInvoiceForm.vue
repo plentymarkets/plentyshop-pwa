@@ -69,7 +69,6 @@ import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const emit = defineEmits(['confirmCancel']);
 
-const { t } = useI18n();
 const {
   config,
   fraudId,

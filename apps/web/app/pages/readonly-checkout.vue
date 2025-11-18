@@ -105,7 +105,6 @@ const ID_CHECKBOX = '#terms-checkbox';
 const localePath = useLocalePath();
 const route = useRoute();
 const { send } = useNotification();
-const { t } = useI18n();
 const { loginAsGuest, user } = useCustomer();
 const { fetchSession } = useFetchSession();
 const { isLoading: navigationInProgress } = useLoadingIndicator();

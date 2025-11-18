@@ -52,7 +52,6 @@ const { updateValue, getValue } = useProductAttributes();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
-const { t } = useI18n();
 const selectedAttributeValueName = ref<string>('');
 const runtimeConfig = useRuntimeConfig();
 const domain = runtimeConfig.public?.domain ?? '';

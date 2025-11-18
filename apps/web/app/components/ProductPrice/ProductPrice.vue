@@ -22,7 +22,6 @@ import type { ProductPriceProps } from '~/components/ProductPrice/types';
 
 const props = defineProps<ProductPriceProps>();
 
-const { t } = useI18n();
 const { getPropertiesPrice } = useProductOrderProperties();
 const { crossedPrice } = useProductPrice(props.product);
 const { lastUpdatedCartItem } = useCart();

@@ -48,7 +48,6 @@ const emit = defineEmits(['closed', 'previous']);
 
 const localePath = useLocalePath();
 const { currentReturnOrder, returnData, makeOrderReturn, loading, cleanReturnData } = useReturnOrder();
-const { t } = useI18n();
 const { send } = useNotification();
 
 const getItemByVariation = (variationId: number) => {

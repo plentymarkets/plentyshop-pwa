@@ -33,8 +33,6 @@ import { defaults } from '~/composables';
 const props = defineProps<CategoryItemsPerPageProps & { selectionModeCompact?: boolean }>();
 
 const { updateItemsPerPage: updateItemsPerPageFromComposable, getFacetsFromURL } = useCategoryFilter();
-const { t } = useI18n();
-
 const selectionModeCompact = computed(() => props.selectionModeCompact ?? false);
 
 const options = ref(

@@ -4,7 +4,6 @@ import { boolean, object, string } from 'yup';
 
 export const useAddressForm = (type: AddressType) => {
   const { create, clearInvalidVAT } = useCreateAddress(type);
-  const { $i18n } = useNuxtApp();
   const { selectedMethod, getShippingMethods } = useCartShippingMethods();
   const { fetchPaymentMethods } = usePaymentMethods();
   const { fetchSession } = useFetchSession();
@@ -62,32 +61,27 @@ export const useAddressForm = (type: AddressType) => {
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
         then: () =>
-          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
+          string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.firstName),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
-        then: () =>
-          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
+        then: () => string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.lastName),
       }),
       country: string()
-        .required($i18n.t('errorMessages.requiredField'))
+        .required(t('errorMessages.requiredField'))
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
-      streetName: string()
-        .required($i18n.t('errorMessages.requiredField'))
-        .default(state.value.defaultFormValues.streetName),
-      apartment: string()
-        .required($i18n.t('errorMessages.requiredField'))
-        .default(state.value.defaultFormValues.apartment),
-      city: string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.city),
+      streetName: string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.streetName),
+      apartment: string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.apartment),
+      city: string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.city),
       state: string().default('').optional(),
       zipCode: string()
-        .required($i18n.t('errorMessages.requiredField'))
+        .required(t('errorMessages.requiredField'))
         .when('country', ([countryId], schema) => {
           const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), type);
           return zipCodeRegex
-            ? schema.matches(zipCodeRegex, $i18n.t('PreferredDelivery.packstation.zipcodeInvalid'))
+            ? schema.matches(zipCodeRegex, t('PreferredDelivery.packstation.zipcodeInvalid'))
             : schema;
         })
         .default(state.value.defaultFormValues.zipCode),
@@ -95,7 +89,7 @@ export const useAddressForm = (type: AddressType) => {
       companyName: string().when([], {
         is: () => state.value.hasCompany,
         then: () =>
-          string().required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
+          string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.companyName),
       }),
       vatNumber: string().when([], {
@@ -113,13 +107,13 @@ export const useAddressForm = (type: AddressType) => {
       shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
         shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
     ) {
-      send({ message: $i18n.t('shipping.methodChanged'), type: 'warning' });
+      send({ message: t('shipping.methodChanged'), type: 'warning' });
     }
   };
 
   const notifyIfBillingChanged = () => {
     if (cartData.value.methodOfPaymentId !== cartData.value.methodOfPaymentId) {
-      if (!restrictedAddresses.value) send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
+      if (!restrictedAddresses.value) send({ message: t('billing.methodChanged'), type: 'warning' });
     }
   };
 

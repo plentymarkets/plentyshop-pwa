@@ -52,7 +52,6 @@ import type { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/Ch
 const { disabled = false } = defineProps<CheckoutPaymentProps>();
 const emit = defineEmits<CheckoutPaymentEmits>();
 
-const { t } = useI18n();
 const { send } = useNotification();
 const { data: cart } = useCart();
 const { selectedMethod: selectedShippingMethod } = useCartShippingMethods();

@@ -70,7 +70,6 @@ const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPa
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const localePath = useLocalePath();
-const { t } = useI18n();
 const { processingOrder } = useProcessingOrder();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);

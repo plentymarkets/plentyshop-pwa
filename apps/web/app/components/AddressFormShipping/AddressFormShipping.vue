@@ -205,7 +205,6 @@ const { disabled, address, addAddress = false } = defineProps<AddressFormShippin
 
 const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
 const { fetchSession } = useFetchSession();
-const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { handleCartTotalChanges } = useCartTotalChange();

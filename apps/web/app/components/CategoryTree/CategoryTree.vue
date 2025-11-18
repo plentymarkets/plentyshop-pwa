@@ -41,8 +41,6 @@ const { data: categoryTree } = useCategoryTree();
 const { buildCategoryMenuLink } = useLocalization();
 
 const localePath = useLocalePath();
-const { t } = useI18n();
-
 const categoryTreeItem = computed(() =>
   categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getId(props.category)),
 );

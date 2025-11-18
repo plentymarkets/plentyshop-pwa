@@ -29,7 +29,6 @@ import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();
-const { t } = useI18n();
 const { fetchOrderClient } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);

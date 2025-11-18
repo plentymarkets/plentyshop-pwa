@@ -54,7 +54,6 @@ import type { ImagesData } from '@plentymarkets/shop-api';
 import type { ZoomableImageProps } from '~/components/ZoomableImage/types';
 
 const props = defineProps<ZoomableImageProps>();
-const { t } = useI18n();
 
 const containerReference = useTemplateRef<null>('containerReference');
 const imagesLoaded = ref([] as unknown as { [key: string]: boolean });

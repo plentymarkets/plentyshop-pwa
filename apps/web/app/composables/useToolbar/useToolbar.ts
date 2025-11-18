@@ -1,7 +1,6 @@
 export const useToolbar = () => {
   const { isEditingEnabled } = useEditor();
   const { send } = useNotification();
-  const { $i18n } = useNuxtApp();
 
   const { settingsIsDirty, dirtyKeys, saveSiteSettings } = useSiteSettings();
   const { updatePageTemplate } = useUpdatePageTemplate();
@@ -11,7 +10,7 @@ export const useToolbar = () => {
     const messageList: string[] = [];
     let hasError = false;
     let saved = null;
-    const errorMessage = $i18n.t('errorMessages.editor.save.error');
+    const errorMessage = t('errorMessages.editor.save.error');
 
     const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
       saved = await saveFunction();
@@ -35,12 +34,12 @@ export const useToolbar = () => {
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 
-      await handleSave(saveSiteSettings, touchedFont ? $i18n.t('errorMessages.editor.save.settings') : undefined);
+      await handleSave(saveSiteSettings, touchedFont ? t('errorMessages.editor.save.settings') : undefined);
     }
 
     if (saved && !hasError) {
       send({
-        message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
+        message: [t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',
       });
       if (import.meta.client) {

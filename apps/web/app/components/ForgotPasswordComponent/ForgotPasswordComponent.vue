@@ -48,7 +48,6 @@ const { isSoftLogin = false, isForgotPasswordOnly = false } = defineProps<Forgot
 
 const { sendEmail, loading } = useResetPassword();
 const { send } = useNotification();
-const { t } = useI18n();
 
 const emits = defineEmits(['change-view-login', 'change-view-register']);
 

@@ -62,7 +62,6 @@ import { orderGetters, offerGetters } from '@plentymarkets/shop-api';
 import type { OrderTotalsPropsType } from './types';
 
 const props = defineProps<OrderTotalsPropsType>();
-const { t } = useI18n();
 const { formatWithSymbol } = usePriceFormatter();
 const originalTotals = orderGetters.getTotals(props.order);
 const currency = orderGetters.getCurrency(props.order);

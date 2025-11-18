@@ -80,7 +80,6 @@ const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const emit = defineEmits<CheckoutShippingEmits>();
 
 const { data: cart } = useCart();
-const { t } = useI18n();
 const { format } = usePriceFormatter();
 const { selectedMethod } = useCartShippingMethods();
 const { shippingMethods } = useCheckoutPagePaymentAndShipping();

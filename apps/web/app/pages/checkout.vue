@@ -64,7 +64,6 @@ definePageMeta({
 });
 
 const { send } = useNotification();
-const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { countryHasDelivery, hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);

@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
 const { data, getLegalTexts } = useLegalInformation();
-const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 const { getRobots, setRobotForStaticPage } = useRobots();
 

@@ -78,8 +78,6 @@ import { ErrorMessage, useForm } from 'vee-validate';
 import type { ContactInformationProps } from './types';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
-
-const { t } = useI18n();
 const {
   user,
   loginAsGuest,

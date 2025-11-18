@@ -89,7 +89,6 @@ import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const { uploadFile, getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();

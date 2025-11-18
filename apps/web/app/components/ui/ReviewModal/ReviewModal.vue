@@ -38,7 +38,6 @@ import { productGetters } from '@plentymarkets/shop-api';
 import { SfIconClose } from '@storefront-ui/vue';
 import { defaults } from '~/composables';
 
-const { t } = useI18n();
 const { currentProduct } = useProducts();
 
 const productId = Number(productGetters.getItemId(currentProduct.value));

@@ -113,7 +113,6 @@ import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/
 import type { AddressFormProps } from '~/components/AddressForm/types';
 
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
-const { t } = useI18n();
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
 const { billingCountries, default: defaultCountries } = useAggregatedCountries();

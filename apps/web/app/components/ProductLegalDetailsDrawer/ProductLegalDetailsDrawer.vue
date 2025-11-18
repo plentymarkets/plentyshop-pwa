@@ -77,8 +77,6 @@ import ManufacturerInformation from '~/components/ManufacturerInformation/Manufa
 
 defineProps<ProductLegalDetailsProps>();
 
-const { t } = useI18n();
-
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const tabs = [
   { label: t('manufacturer.euResponsibleTabName'), component: ManufacturerResponsibleInfo, disabled: false },

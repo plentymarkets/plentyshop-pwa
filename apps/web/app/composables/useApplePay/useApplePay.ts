@@ -83,7 +83,6 @@ export const useApplePay = () => {
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
     const localePath = useLocalePath();
-    const { $i18n } = useNuxtApp();
     const { emit } = usePlentyEvent();
 
     try {
@@ -121,7 +120,7 @@ export const useApplePay = () => {
           if (!transaction || !transaction.id) {
             await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-            showErrorNotification($i18n.t('storefrontError.order.createFailed'));
+            showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
 
@@ -129,7 +128,7 @@ export const useApplePay = () => {
           if (!order || !order.order || !order.order.id) {
             await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-            showErrorNotification($i18n.t('storefrontError.order.createFailed'));
+            showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
 
@@ -142,7 +141,7 @@ export const useApplePay = () => {
           } catch (error) {
             await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-            showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
+            showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
             return;
           }
 
@@ -158,7 +157,7 @@ export const useApplePay = () => {
           return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
           await useCartStockReservation().unreserve();
-          showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));
+          showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
       };
@@ -170,7 +169,7 @@ export const useApplePay = () => {
 
       paymentSession.begin();
     } catch {
-      showErrorNotification($i18n.t('storefrontError.unknownError'));
+      showErrorNotification(t('storefrontError.unknownError'));
     }
   };
 
