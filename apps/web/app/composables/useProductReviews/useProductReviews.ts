@@ -75,7 +75,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     state.value.loading = true;
 
     try {
-      const { data, error } = await useAsyncData(`${itemId}-${variationId}`, () =>
+      const { data, error } = await useAsyncData(`authenticated-${itemId}-${variationId}`, () =>
         useSdk().plentysystems.getAuthenticatedReview({
           itemId: itemId,
           variationId: variationId,
