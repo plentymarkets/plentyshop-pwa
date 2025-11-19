@@ -70,7 +70,11 @@
     >
       <template v-for="key in configuration?.fieldsOrder" :key="key">
         <template v-if="key === 'manufacturer' && configuration?.fields?.manufacturer">
-          <div class="mb-1 typography-text-xs text-neutral-500" data-testid="productcard-manufacturer">
+          <div
+            v-if="manufacturer"
+            class="mb-1 typography-text-xs text-neutral-500"
+            data-testid="productcard-manufacturer"
+          >
             {{ manufacturer.externalName }}
           </div>
         </template>
@@ -170,7 +174,7 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
       addToCart: true,
       manufacturer: false,
     },
-    fieldsOrder: ['title', 'rating', 'previewText', 'price', 'addToCart', 'manufacturer'],
+    fieldsOrder: ['title', 'manufacturer', 'rating', 'previewText', 'price', 'addToCart'],
     showWishlistButton: false,
     showSecondImageOnHover: false,
     addToCartStyle: 'primary',
