@@ -171,11 +171,11 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
-    "email-folder-id-label": "Email Folder ID",
+    "email-folder-id-label": "Email folder ID",
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
-    "newsletter-form-email-folder-id-tooltip": "To add an email folder id you need to navigate to Setup » CRM » Newsletter.",
+    "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
     "background-color-label": "Background Color"
   },
@@ -188,12 +188,11 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
-    "email-folder-id-label": "Email Folder ID",
+    "email-folder-id-label": "Email folder ID",
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
-    "newsletter-form-email-folder-id-tooltip": "To add an email folder id you need to navigate to Setup » CRM » Newsletter.",
-
+    "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
     "background-color-label": "Background Color"
   }
