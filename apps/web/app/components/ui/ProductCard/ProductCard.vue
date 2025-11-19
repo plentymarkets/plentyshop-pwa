@@ -69,15 +69,6 @@
       }"
     >
       <template v-for="key in configuration?.fieldsOrder" :key="key">
-        <template v-if="key === 'manufacturer' && configuration?.fields?.manufacturer">
-          <div
-            v-if="manufacturer"
-            class="mb-1 typography-text-xs text-neutral-500"
-            data-testid="productcard-manufacturer"
-          >
-            {{ manufacturer.externalName }}
-          </div>
-        </template>
         <template v-if="key === 'title' && configuration?.fields?.title">
           <SfLink
             :tag="NuxtLink"
@@ -88,6 +79,15 @@
           >
             {{ name }}
           </SfLink>
+        </template>
+        <template v-if="key === 'manufacturer' && configuration?.fields?.manufacturer">
+          <div
+            v-if="manufacturer"
+            class="mb-1 typography-text-xs text-neutral-500"
+            data-testid="productcard-manufacturer"
+          >
+            {{ manufacturer.externalName }}
+          </div>
         </template>
         <template v-if="key === 'rating' && configuration?.fields?.rating">
           <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
