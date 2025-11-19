@@ -42,8 +42,8 @@ const getContentSource = () => {
   };
 };
 
-const shouldFetch = computed(() => initialShouldRender.value && (isCategory.value || isProduct.value));
 const initialShouldRender = ref(shouldRender.value);
+const shouldFetch = computed(() => initialShouldRender.value && (isCategory.value || isProduct.value));
 
 onMounted(() => {
   initialShouldRender.value = shouldRender.value;
