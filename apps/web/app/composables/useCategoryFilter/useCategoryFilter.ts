@@ -44,7 +44,6 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * ```
  */
 export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  // const route = to ?? useNuxtApp().$router.currentRoute.value;
   const nuxtApp = useNuxtApp();
 
   const getRoute = () => to ?? nuxtApp.$router.currentRoute.value;
