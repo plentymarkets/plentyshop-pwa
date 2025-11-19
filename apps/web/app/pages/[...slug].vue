@@ -49,19 +49,16 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const config = useRuntimeConfig().public;
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
 );
 
-const isBlockified = computed(() => config.enableCategoryEditing || productsCatalog.value.category?.type === 'content');
-
 definePageMeta({
   layout: false,
   middleware: ['category-guard'],
   type: 'category',
-  isBlockified: false,
+  isBlockified: true,
   identifier: 0,
 });
 
@@ -142,7 +139,6 @@ watch(
 );
 
 watchEffect(() => {
-  route.meta.isBlockified = isBlockified.value;
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
 
