@@ -144,12 +144,11 @@ onBeforeUnmount(() => {
 
 /* WebKit browsers */
 .scrollbar-thin::-webkit-scrollbar {
-  height: 5px;
   width: 5px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 1px;
+  border-radius: 5px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
