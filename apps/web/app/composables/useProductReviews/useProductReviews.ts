@@ -84,11 +84,12 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       useHandleError(error.value ?? null);
       const authenticatedFeedbacks = data?.value?.data?.feedbacks ?? state.value.authenticatedData.feedbacks;
       state.value.authenticatedData.feedbacks = authenticatedFeedbacks.filter((feedback) => !feedback.isVisible);
-      state.value.loading = false;
 
       return state.value.authenticatedData;
     } catch (error: unknown) {
       useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
     }
 
     return state.value.authenticatedData;
