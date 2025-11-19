@@ -48,6 +48,11 @@ export const useBlockManager = () => {
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
   const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
+  const blockDepthCache = ref<Map<string, number>>(new Map());
+
+  watch(data, () => {
+    blockDepthCache.value.clear();
+  }, { deep: false });
 
   const updateMultigridColumnUuid = (uuid: string) => {
     multigridColumnUuid.value = uuid;
@@ -296,6 +301,10 @@ export const useBlockManager = () => {
   };
 
   const getBlockDepth = (uuid: string): number => {
+    if (blockDepthCache.value.has(uuid)) {
+      return blockDepthCache.value.get(uuid)!;
+    }
+    
     const search = (blocks: Block[], targetUuid: string, depth: number): number => {
       for (const block of blocks) {
         if (block.meta.uuid === targetUuid) return depth;
@@ -306,7 +315,10 @@ export const useBlockManager = () => {
       }
       return -1;
     };
-    return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
+  
+    const result = Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
+    blockDepthCache.value.set(uuid, result);
+    return result;
   };
 
   const shouldLazyLoad = (blockName: string): boolean => {

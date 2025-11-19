@@ -163,12 +163,7 @@ const blockSize = computed(() => getBlockSize());
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
 
-  const loader = getBlockLoader(props.block.name);
-  if (!loader) return null;
-
-  return defineAsyncComponent({
-    loader,
-  });
+  return getAsyncBlockComponent(props.block.name);
 });
 
 const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid);

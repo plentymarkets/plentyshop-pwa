@@ -72,7 +72,7 @@ definePageMeta({
   identifier: 0,
 });
 
-watchEffect(() => {
+const metaWatcher = watchEffect(() => {
   route.meta.isBlockified = isEditablePage.value;
 });
 
@@ -118,7 +118,7 @@ const categoryName = computed(() => categoryGetters.getCategoryName(productsCata
 const icon = 'sell';
 setPageMeta(categoryName.value, icon);
 
-watch(
+const localeWatcher = watch(
   () => locale.value,
   (changedLocale: string) => {
     router.push({
@@ -150,7 +150,7 @@ const robotsContent = computed((): string =>
   productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
 );
 
-watch(
+const queryWatcher = watch(
   () => route.query,
   async () => {
     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
@@ -164,5 +164,11 @@ useHead({
     { name: 'keywords', content: keywordsContent },
     { name: 'robots', content: robotsContent },
   ],
+});
+
+onBeforeUnmount(() => {
+  localeWatcher();
+  queryWatcher();
+  metaWatcher();
 });
 </script>
