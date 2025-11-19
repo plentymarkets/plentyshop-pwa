@@ -94,12 +94,7 @@ const handleQueryUpdate = async () => {
 
 await handleQueryUpdate().then(() => {
   setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
-  setBlocksListContext(
-    categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getId(productsCatalog.value.category))
-      ?.type === 'item'
-      ? 'productCategory'
-      : 'content',
-  );
+  setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
 });
 
 const { setPageMeta } = usePageMeta();
