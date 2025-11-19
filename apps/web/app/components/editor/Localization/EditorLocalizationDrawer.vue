@@ -47,51 +47,16 @@
             <!-- Scrollable Right Content -->
             <div ref="contentScroll" class="flex-1 overflow-auto scrollbar-thin">
               <div class="flex flex-col">
-                <div v-for="(row, index) in keys" :key="index" class="flex h-12">
-                  <div v-for="lang in selectedLocales" :key="lang" class="w-64 flex-shrink-0 m-1 mr-2 group relative">
-                    <textarea
-                      v-if="row?.translations?.[lang]?.input !== undefined"
-                      :id="`translation-${row.key}-${lang}`"
-                      :value="row.translations[lang].input"
-                      class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
-                      @input="handleTranslationInput(row.key, lang, ($event.target as HTMLTextAreaElement).value)"
-                    />
-                    <SfTooltip
-                      v-if="row.translations[lang]?.input === row.translations[lang]?.default"
-                      :label="getEditorTranslation('default-tooltip')"
-                      class="top-1 right-0 h-8 z-10 !absolute hidden group-hover:block"
-                      strategy="absolute"
-                      :show-arrow="true"
-                      placement="right"
-                    >
-                      <div class="right-1 p-2 h-8 bg-neutral-100 text-xs rounded-lg absolute text-gray-700">
-                        {{ getEditorTranslation('default') }}
-                      </div>
-                    </SfTooltip>
-                    <SfTooltip
-                      v-else-if="row.translations[lang]?.default"
-                      :label="getEditorTranslation('revert-to-default')"
-                      class="right-0 z-10 !absolute hidden group-hover:block"
-                      strategy="absolute"
-                      :show-arrow="true"
-                      placement="right"
-                    >
-                      <div
-                        class="h-10 p-2 flex items-center cursor-pointer"
-                        @click="revertToDefault(row.key, lang, row.translations[lang])"
-                      >
-                        <SfIconBase viewBox="0 -960 960 960" size="xs" class="fill-none">
-                          <path
-                            fill="rgb(var(--colors-2-primary-500) / 1)"
-                            d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </SfIconBase>
-                      </div>
-                    </SfTooltip>
-                  </div>
+                <div v-for="row in keys" :key="row.key" class="flex h-12">
+                  <TranslationInput
+                    v-for="lang in selectedLocales"
+                    :key="`${row.key}-${lang}`"
+                    :row-key="row.key"
+                    :lang="lang"
+                    :translation="row.translations[lang]"
+                    @update="handleTranslationInput"
+                    @revert="revertToDefault"
+                  />
                 </div>
               </div>
             </div>
@@ -103,9 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconBase, SfIconChevronLeft, SfTooltip } from '@storefront-ui/vue';
-import { useDebounceFn } from '@vueuse/core';
+import { SfDrawer, SfIconChevronLeft } from '@storefront-ui/vue';
 import type { LocalizationMessage } from '@plentymarkets/shop-core';
+import TranslationInput from './TranslationInput.vue';
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
@@ -124,12 +89,8 @@ const revertToDefault = (key: string, lang: string, data: LocalizationMessage) =
   updateTranslationInput(key, lang, data.default ?? '');
 };
 
-const debouncedUpdate = useDebounceFn((key: string, lang: string, value: string) => {
-  updateTranslationInput(key, lang, value);
-}, 300);
-
 const handleTranslationInput = (key: string, lang: string, value: string) => {
-  debouncedUpdate(key, lang, value);
+  updateTranslationInput(key, lang, value);
 };
 
 const headerScroll = ref<HTMLElement | null>(null);
@@ -175,12 +136,22 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Firefox */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+/* WebKit browsers */
 .scrollbar-thin::-webkit-scrollbar {
-  height: 5px;
   width: 5px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  border-radius: 1px;
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 5px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
 }
 </style>
 
@@ -188,17 +159,11 @@ onBeforeUnmount(() => {
 {
   "en": {
     "category-key": "Category + Key",
-    "edit-translations": "Edit translations",
-    "default": "Default",
-    "default-tooltip": "This translation is a default value that you can override",
-    "revert-to-default": "Revert to default"
+    "edit-translations": "Edit translations"
   },
   "de": {
     "category-key": "Category + Key",
-    "edit-translations": "Edit translations",
-    "default": "Default",
-    "default-tooltip": "This translation is a default value that you can override",
-    "revert-to-default": "Revert to default"
+    "edit-translations": "Edit translations"
   }
 }
 </i18n>
