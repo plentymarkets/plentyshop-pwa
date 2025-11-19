@@ -100,6 +100,12 @@ export const useProduct: UseProductReturn = (slug) => {
       ],
     });
   };
+  const { disableActions } = useEditor();
+  const { $isPreview } = useNuxtApp();
+
+  const productForEditor = computed(() =>
+    $isPreview && disableActions.value ? state.value.fakeData : state.value.data,
+  );
 
   return {
     setProductMeta,
@@ -107,5 +113,6 @@ export const useProduct: UseProductReturn = (slug) => {
     fetchProduct,
     ...toRefs(state.value),
     properties,
+    productForEditor,
   };
 };

@@ -115,10 +115,12 @@ export const handlePreviewProduct = (
   if (!$isPreview) return;
 
   const fakeProduct: Product = lang === 'de' ? fakeProductDE : fakeProductEN;
-  fakeProduct.variationAttributeMap =
-    lang === 'de'
-      ? variationAttributeMapDE(Number(state.value.data.variation.id))
-      : variationAttributeMapEN(Number(state.value.data.variation.id));
+  if (state.value.data && state.value.data.variation && state.value.data.variation.id) {
+    fakeProduct.variationAttributeMap =
+      lang === 'de'
+        ? variationAttributeMapDE(Number(state.value.data.variation.id))
+        : variationAttributeMapEN(Number(state.value.data.variation.id));
+  }
   fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
   fakeProduct.bundleComponents = lang === 'de' ? bundleComponentsDE : bundleComponentsEN;
   fakeProduct.properties = lang === 'de' ? propertiesDE : propertiesEN;
@@ -127,5 +129,5 @@ export const handlePreviewProduct = (
 
   const rawA = toRaw(state.value.data) as Product;
   const rawB = fakeProduct as Product;
-  state.value.data = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
+  state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
 };
