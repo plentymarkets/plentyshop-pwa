@@ -24,13 +24,19 @@ yarn add @plentymarkets/shop-core
 ```
 :::
 
-You can also install the module in your `nuxt.config.ts` or `module.ts`/`index.ts` using `@nuxt/kit`'s `installModule`:
+To install the module you can add it to our projects `nuxt.config.ts` or directly install the module inside your module as [moduleDependencies](https://nuxt.com/docs/4.x/api/kit/modules#specifying-module-dependencies) inside your `module.ts/index.ts`:
 
-```typescript
-await installModule('@plentymarkets/shop-core')
+``` ts
+ moduleDependencies: {
+    '@plentymarkets/shop-core': {
+      version: '>=1.13.4',
+    },
+  },
 ```
 
-For reference, see our [Google Analytics implementation](https://github.com/plentymarkets/shop-module-gtag/blob/main/src/module.ts#L33).
+You are still able to install the module with `installModule` from  `@nuxt/kit` but this has been deprecated https://nuxt.com/docs/4.x/api/kit/modules#installmodule
+
+Outdated reference, see our [Google Analytics implementation](https://github.com/plentymarkets/shop-module-gtag/blob/main/src/module.ts#L33).
 
 - [Nuxt documentation: Using other modules in your module](https://nuxt.com/docs/guide/going-further/modules#using-other-modules-in-your-module)
 
@@ -41,9 +47,11 @@ For reference, see our [Google Analytics implementation](https://github.com/plen
 - React to cookie consent changes
 - Utility composables for shop functionality
 - Exposes `useSdk` composable for initializing and accessing the SDK
+- Error handling.
 
 ## Available pages
 
 - [Usage Guide](/guide/modules/shop-core/usage-guide.md)
 - [Cookie Consent System](/guide/modules/shop-core/cookie-consent.md)
 - [Event Bus](/guide/modules/shop-core/event-bus.md)
+- [Error handling](/guide/modules/shop-core/error-handling.md)

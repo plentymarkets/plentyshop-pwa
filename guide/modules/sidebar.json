@@ -18,6 +18,10 @@
         {
             "text": "Event Bus",
             "link": "/guide/modules/shop-core/event-bus.md"
+        },
+        {
+            "text": "Error Handling",
+            "link": "/guide/modules/shop-core/error-handling.md"
         }
     ]
   },

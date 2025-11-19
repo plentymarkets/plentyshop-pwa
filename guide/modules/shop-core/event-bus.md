@@ -46,6 +46,7 @@ Here are some common events you might use in your shop application:
 - `'frontend:productLoaded': { product: Product };`
 - `'frontend:orderCreated': Order;`
 - `'frontend:searchProduct': string;`
+- `'frontend:paypalAPMsLoaded': null;`
 - `'backend:AfterBasketChanged': AfterBasketChanged;`
 - `'backend:CheckoutChanged': CheckoutChanged;`
 - `'backend:AfterAccountAuthentication': AfterAccountAuthentication;`
