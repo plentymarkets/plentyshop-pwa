@@ -98,7 +98,6 @@ export default defineNuxtConfig({
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
       activeLanguages: process.env.LANGUAGELIST || 'en,de',
-      enableCategoryEditing: process.env?.ENABLE_CATEGORY_EDITING === '1',
       enableProductEditing: process.env?.ENABLE_PRODUCT_EDITING === '1',
       disabledEditorSettings:
         process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1'
