@@ -44,7 +44,10 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * ```
  */
 export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  const route = to ?? useNuxtApp().$router.currentRoute.value;
+  // const route = to ?? useNuxtApp().$router.currentRoute.value;
+  const nuxtApp = useNuxtApp();
+
+  const getRoute = () => to ?? nuxtApp.$router.currentRoute.value;
 
   /**
    * @description Function for getting facets from url.
@@ -60,7 +63,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
     const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSearch');
     const config = useRuntimeConfig().public;
 
-    const currentRoute = useNuxtApp().$router.currentRoute.value;
+    const currentRoute = getRoute();
 
     const defaultOption = isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption();
 
@@ -106,9 +109,11 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
-    return Object.keys(route.query)
+    const currentRoute = getRoute();
+
+    return Object.keys(currentRoute.query)
       .filter((f) => nonFilters.has(f))
-      .reduce(reduceFilters(route.query), {});
+      .reduce(reduceFilters(currentRoute.query), {});
   };
 
   /***
@@ -234,7 +239,9 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const updateSorting = (sort: string): void => {
-    const query = { ...route.query };
+    const currentRoute = getRoute();
+
+    const query = { ...currentRoute.query };
     if (sort) query.sort = sort;
     else delete query.sort;
     navigateTo({ query });
