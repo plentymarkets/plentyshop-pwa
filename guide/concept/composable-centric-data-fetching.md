@@ -12,8 +12,8 @@ In this guide, you'll learn the benefits of this pattern and how to interact wit
 // apps/web/app/pages/[...slug].vue
 
 <script setup lang="ts">
-  const { fetchProducts, data: products } = useProducts('1');
-  await fetchProducts({ categoryId: '1' });
+const { fetchProducts, data: products } = useProducts("1");
+await fetchProducts({ categoryId: "1" });
 </script>
 ```
 

@@ -11,6 +11,7 @@ When developing with PlentyONE shop, one challenge is how to maintain your custo
 **Approach:** Fork the main PlentyONE shop repository and continuously update your fork as the main project evolves.
 
 **Advantages:**
+
 - Direct Git relationship with upstream for easier change tracking
 - Built-in tools to identify and compare upstream changes
 - Git remembers conflict resolution patterns, reducing repeated work
@@ -23,7 +24,8 @@ When developing with PlentyONE shop, one challenge is how to maintain your custo
 When forking a public GitHub repository, your fork has to remain public as well.
 :::
 
-**Best for:** 
+**Best for:**
+
 - Projects making extensive modifications directly to core files
 - Teams needing to track every change between their version and the main project
 - Developers who want to contribute improvements back to the main project
@@ -34,17 +36,20 @@ When forking a public GitHub repository, your fork has to remain public as well.
 **Approach:** Create a mirror of the main repository and use vendor branching to manage upstream changes alongside your customisations.
 
 **Advantages:**
+
 - Can be private even if main project is public
 - Clear separation between upstream code and your customisations
 - Structured approach to incorporating upstream changes
 - Flexibility to choose when and what updates to incorporate
 
 **Challenges:**
+
 - Requires more Git expertise to set up and maintain
 - Need to manually sync with upstream repository (i.e., fetch and merge into your vendor branch)
 - Additional overhead in managing vendor branches
 
-**Best for:** 
+**Best for:**
+
 - Commercial or proprietary implementations that require private repositories
 - Projects that need to diverge significantly from the main project
 - Teams that want structured control over which updates to incorporate
@@ -76,17 +81,18 @@ When forking a public GitHub repository, your fork has to remain public as well.
     You will now typically work on your `main` branch, creating feature branches off it as needed.
 
 Periodically update your `vendor` branch with the latest changes from the main project and merge them into your development branch:
-   ```bash
-   git checkout vendor
-   git pull upstream main
-   # Optional: Push the updated vendor branch to your private remote if you want to keep a remote copy of it updated
-   # git push origin vendor
 
-   git checkout main
-   git merge vendor        # Merge the updated vendor branch into your development branch
-                           # Resolve any merge conflicts that arise
-   git push origin main    # Push your updated development branch to your private remote
-   ```
+```bash
+git checkout vendor
+git pull upstream main
+# Optional: Push the updated vendor branch to your private remote if you want to keep a remote copy of it updated
+# git push origin vendor
+
+git checkout main
+git merge vendor        # Merge the updated vendor branch into your development branch
+                        # Resolve any merge conflicts that arise
+git push origin main    # Push your updated development branch to your private remote
+```
 
 ## Isolating customisation
 

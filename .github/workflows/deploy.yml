@@ -22,23 +22,23 @@ jobs:
     name: Get PWA documentation
     runs-on: ubuntu-latest
     steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-          with:
-            repository: 'plentymarkets/plentyshop-pwa'
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: "plentymarkets/plentyshop-pwa"
 
-        - name: Setup Node
-          uses: ./.github/actions/setup
-  
-        - name: Build typedoc
-          run: cd apps/web && npm run publish-typedoc
-  
-        - name: Upload artifact
-          uses: actions/upload-artifact@v4
-          with:
-            name: pwa-docs
-            path: ${{ github.workspace }}/apps/web/docs/reference/
-  
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Build typedoc
+        run: cd apps/web && npm run publish-typedoc
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pwa-docs
+          path: ${{ github.workspace }}/apps/web/docs/reference/
+
   get-sdk:
     name: Get SDK documentation
     runs-on: ubuntu-latest
@@ -46,15 +46,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-            repository: 'plentymarkets/plentymarkets-sdk'
-            token: ${{ secrets.ORGA_PAT_CICD1_FULL_REPO_AND_PACKAGES }}
+          repository: "plentymarkets/plentymarkets-sdk"
+          token: ${{ secrets.ORGA_PAT_CICD1_FULL_REPO_AND_PACKAGES }}
 
       - name: Setup Node
         uses: ./.github/actions/setup
 
       - name: Build typedoc
         run: npm run publish-typedoc
-    
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -71,17 +71,17 @@ jobs:
       - name: Download sdk-docs
         uses: actions/download-artifact@v4
         with:
-            name: sdk-docs
-            path: ${{ github.workspace }}/reference/
+          name: sdk-docs
+          path: ${{ github.workspace }}/reference/
       - name: Download pwa-docs
         uses: actions/download-artifact@v4
         with:
-            name: pwa-docs
-            path: ${{ github.workspace }}/reference/
-      
+          name: pwa-docs
+          path: ${{ github.workspace }}/reference/
+
       - name: Enable corepack
         run: corepack enable
-        
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -96,7 +96,7 @@ jobs:
 
       - name: Setup .yarnrc.yml
         run: |
-            yarn config set nodeLinker node-modules
+          yarn config set nodeLinker node-modules
       - name: Install dependencies
         run: yarn install
       - name: Build with VitePress

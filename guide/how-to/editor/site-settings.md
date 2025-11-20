@@ -22,10 +22,10 @@ Site settings use the [Nuxt runtime configuration](https://nuxt.com/docs/guide/g
 When building the application, the runtime configuration is populated from environment variables written in the `.env` file.
 Environment variables are written in one of two ways:
 
-- :white_check_mark: [Build via Plenty](https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop.html#shop-build): The build pipeline reads the system database. <br />
-***Note:*** If you want to use site settings, the build via Plenty flow is recommended.
+- :white*check_mark: [Build via Plenty](https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop.html#shop-build): The build pipeline reads the system database. <br />
+  \*\*\_Note:*\*\* If you want to use site settings, the build via Plenty flow is recommended.
 - :warning: [Build via GitHub](/guide/setup/deployment.md): The build workflow reads the repository's `CONFIG` variable. <br />
-***Note:*** This means you have to maintain settings manually in the repository configuration. In this scenario, site settings are only useful to provide a playground.
+  **_Note:_** This means you have to maintain settings manually in the repository configuration. In this scenario, site settings are only useful to provide a playground.
 
 `useSiteConfiguration` holds a [state](https://nuxt.com/docs/getting-started/state-management).
 This way, it serves as the central touchpoint for settings within the editor.
@@ -59,7 +59,7 @@ When adding your property, keep the following points in mind:
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
+      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || "#062633",
     },
   },
 });
@@ -81,7 +81,7 @@ export interface UseSiteConfigurationState {
 }
 
 export interface UseSiteConfiguration {
-  primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
+  primaryColor: Readonly<Ref<UseSiteConfigurationState["primaryColor"]>>;
 }
 ```
 
@@ -98,7 +98,7 @@ For every setting you want to add, you have to update the following parts in `us
 // apps/web/app/composables/useSiteConfiguration/useSiteConfiguration.ts
 
 export const useSiteConfiguration = () => {
-  const state = useState('siteConfiguration', () => ({
+  const state = useState("siteConfiguration", () => ({
     primaryColor: useRuntimeConfig().public.primaryColor,
     initialData: {
       primaryColor: useRuntimeConfig().public.primaryColor,
@@ -106,25 +106,24 @@ export const useSiteConfiguration = () => {
   }));
 
   const settingsIsDirty = computed(() => {
-    return (
-      state.value.primaryColor !== state.value.initialData.primaryColor
-    );
+    return state.value.primaryColor !== state.value.initialData.primaryColor;
   });
 
   const saveSettings = async (): Promise<boolean> => {
     const settings = [
       {
-        key: 'primaryColor',
+        key: "primaryColor",
         value: state.value.primaryColor,
       },
     ];
-    
+
     state.value.initialData.primaryColor = state.value.primaryColor;
-    
+
     return true;
   };
 };
 ```
+
 The `key` in `saveSettings` determines what the environment variable will be called in the Plenty build pipeline.
 On save, it gets prefixed with `NUXT_PUBLIC_` and camelCase is transformed to SCREAMING_SNAKE_CASE.
 This means `primaryColor` becomes `NUXT_PUBLIC_PRIMARY_COLOR`.
@@ -142,11 +141,14 @@ To react to changes the user makes in the editor, use a watcher and a correspond
 
 export const useSiteConfiguration = () => {
   const updatePrimaryColor: SetColorPalette = (hexColor: string) => {
-    const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
+    const tailwindColors: TailwindPalette = getPaletteFromColor(
+      "primary",
+      hexColor,
+    ).map((color) => ({
       ...color,
     }));
 
-    setColorProperties('primary', tailwindColors);
+    setColorProperties("primary", tailwindColors);
   };
 
   watch(
@@ -180,7 +182,10 @@ Each view is a form with inputs that are tied to the state property from `useSit
 <!-- apps/web/app/components/DesignView/DesignView.vue -->
 
 <template>
-  <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
+  <div
+    class="site-settings-view sticky top-[52px]"
+    data-testid="site-settings-drawer"
+  >
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
       <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
@@ -210,14 +215,29 @@ Each view is a form with inputs that are tied to the state property from `useSit
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
+          <SfInput
+            v-model="primaryColor"
+            type="text"
+            data-testid="primary-color-select"
+          >
             <template #suffix>
-              <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
-                <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
+              <label
+                for="primary-color"
+                :style="{ backgroundColor: primaryColor }"
+                class="rounded-lg cursor-pointer"
+              >
+                <input
+                  id="primary-color"
+                  v-model="primaryColor"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
-          <span class="typography-text-xs text-neutral-700">Choose primary color</span>
+          <span class="typography-text-xs text-neutral-700"
+            >Choose primary color</span
+          >
         </label>
       </div>
     </UiAccordionItem>
@@ -225,7 +245,12 @@ Each view is a form with inputs that are tied to the state property from `useSit
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
+import {
+  SfIconClose,
+  SfIconInfo,
+  SfInput,
+  SfTooltip,
+} from "@storefront-ui/vue";
 
 const { closeDrawer, primaryColor } = useSiteConfiguration();
 const colorsOpen = ref(false);
@@ -240,8 +265,8 @@ If you create your own `MyNewView.vue` component, you have to register it in `Si
 
 <script setup lang="ts">
 const getDrawerView = (view: string) => {
-  if (view === 'DesignView') return resolveComponent('DesignView');
-  if (view === 'MyNewView') return resolveComponent('MyNewView');
+  if (view === "DesignView") return resolveComponent("DesignView");
+  if (view === "MyNewView") return resolveComponent("MyNewView");
 };
 </script>
 ```
@@ -252,7 +277,9 @@ const getDrawerView = (view: string) => {
 <button
   type="button"
   class="editor-button relative py-2 flex justify-center"
-  :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MyNewView' }"
+  :class="{
+    'bg-editor-button text-white rounded-md': drawerView === 'MyNewView',
+  }"
   aria-label="Open my drawer"
   data-testid="open-my-drawer"
   @click="openDrawerWithView('MyNewView')"
@@ -274,12 +301,12 @@ Finally, extend the `DrawerView` in `types.ts`.
 // apps/web/app/composables/useSiteConfiguration/types.ts
 
 export type DrawerView =
-  | 'MyNewView'
-  | 'SettingsView'
-  | 'blocksList'
-  | 'DesignView'
-  | 'SeoView'
-  | 'PagesView'
-  | 'blocksSettings'
+  | "MyNewView"
+  | "SettingsView"
+  | "blocksList"
+  | "DesignView"
+  | "SeoView"
+  | "PagesView"
+  | "blocksSettings"
   | null;
 ```

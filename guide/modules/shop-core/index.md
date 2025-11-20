@@ -2,6 +2,7 @@
 prev: false
 next: false
 ---
+
 # Shop Core
 
 A Nuxt module for managing core shop functionality, shop events, and cookie consent.  
@@ -14,19 +15,22 @@ If you want to use it in a custom module, install it with your preferred package
 
 ::: tabs
 == npm
+
 ```
 npm install @plentymarkets/shop-core
 ```
 
 == yarn
+
 ```
 yarn add @plentymarkets/shop-core
 ```
+
 :::
 
 To install the module you can add it to our projects `nuxt.config.ts` or directly install the module inside your module as [moduleDependencies](https://nuxt.com/docs/4.x/api/kit/modules#specifying-module-dependencies) inside your `module.ts/index.ts`:
 
-``` ts
+```ts
  moduleDependencies: {
     '@plentymarkets/shop-core': {
       version: '>=1.13.4',
@@ -34,7 +38,7 @@ To install the module you can add it to our projects `nuxt.config.ts` or directl
   },
 ```
 
-You are still able to install the module with `installModule` from  `@nuxt/kit` but this has been deprecated https://nuxt.com/docs/4.x/api/kit/modules#installmodule
+You are still able to install the module with `installModule` from `@nuxt/kit` but this has been deprecated https://nuxt.com/docs/4.x/api/kit/modules#installmodule
 
 Outdated reference, see our [Google Analytics implementation](https://github.com/plentymarkets/shop-module-gtag/blob/main/src/module.ts#L33).
 

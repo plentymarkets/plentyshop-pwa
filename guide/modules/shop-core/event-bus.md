@@ -2,6 +2,7 @@
 prev: false
 next: false
 ---
+
 # Event Bus
 
 The Shop Core module provides a powerful event bus system for emitting and listening to shop-related events. This enables different parts of your application to communicate in a decoupled way, making your codebase more modular and maintainable.
@@ -23,11 +24,11 @@ The `usePlentyEvent` composable exposes a simple API for working with events:
 ```ts
 const { on, emit } = usePlentyEvent();
 
-on('frontend:addToCart', (payload) => {
+on("frontend:addToCart", (payload) => {
   // Handle event when a product is added to the cart
 });
 
-emit('frontend:addToCart', { productId: 123 });
+emit("frontend:addToCart", { productId: 123 });
 ```
 
 - `on(event: string, handler: Function)`: Listen to a specific event and execute a handler when it occurs.

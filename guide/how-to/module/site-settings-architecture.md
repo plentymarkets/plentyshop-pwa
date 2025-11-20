@@ -8,9 +8,10 @@ This document explains how the settings drawer works, why the folder structure l
 
 The folder-layout convention defines a single, predictable path for every settings component, enabling automatic discovery, clean overrides, and zero manual registration. By adhering to `settings/<mainCategory>/<subCategory>/<group>/<Setting>.vue` with `View.vue` and `ToolbarTrigger.vue`, core code, Nuxt modules, and client customisations integrate seamlessly.
 
-| | |
-| --- | --- |
+|                                                              |                                            |
+| ------------------------------------------------------------ | ------------------------------------------ |
 | ![Settings subcategories](images/settings-subcategories.png) | ![Site settings](images/site-settings.png) |
+
 ```
 components/
 └─ settings/
@@ -27,6 +28,7 @@ components/
          ├─ lang.json                # translation file for the section
          └─ View.vue                 # wrapper for the subCategory section
 ```
+
 > [!NOTE]
 > The structure will be visually displayed if there is a valid individual setting component in the folder.
 
@@ -49,14 +51,17 @@ components/
           <SfIconInfo size="sm" />
           <span class="px-2 align-middle font-bold">Global defaults</span>
         </p>
-        <p>The settings below apply to any page without its own, page-specific settings.</p>
+        <p>
+          The settings below apply to any page without its own, page-specific
+          settings.
+        </p>
       </div>
     </template>
   </SiteConfigurationView>
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo } from '@storefront-ui/vue';
+import { SfIconInfo } from "@storefront-ui/vue";
 </script>
 ```
 
@@ -64,7 +69,7 @@ import { SfIconInfo } from '@storefront-ui/vue';
 
 ### Lang.json
 
-This file is optional but recommended. It is used to provide translations for the folder names. These translations will be used in the settings drawer for the intermediate section name and the group names. 
+This file is optional but recommended. It is used to provide translations for the folder names. These translations will be used in the settings drawer for the intermediate section name and the group names.
 
 ```json
 {
@@ -82,16 +87,16 @@ Each time a new setting is plugged in, it needs to be registered manually in the
 
 ```ts
 // modules/my-module/runtime/index.ts
-import { defineNuxtModule, updateRuntimeConfig } from '@nuxt/kit';
+import { defineNuxtModule, updateRuntimeConfig } from "@nuxt/kit";
 
 export default defineNuxtModule({
-    setup() {
-        updateRuntimeConfig({
-            public: {
-                primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
-            },
-        });
-    },
+  setup() {
+    updateRuntimeConfig({
+      public: {
+        primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || "#062633",
+      },
+    });
+  },
 });
 ```
 
@@ -99,24 +104,29 @@ To work with the settings in the individual components use a [Writable computed]
 
 ```ts
 // components/settings/design/2.colors/PrimaryColor.vue
-import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
+import {
+  getPaletteFromColor,
+  setColorProperties,
+} from "~/utils/tailwindHelper";
 
-const { updateSetting, getSetting } = useSiteSettings('primaryColor');
+const { updateSetting, getSetting } = useSiteSettings("primaryColor");
 
 const updatePrimaryColor = (hexColor: string) => {
-    const tailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({
-        ...color,
-    }));
+  const tailwindColors = getPaletteFromColor("primary", hexColor).map(
+    (color) => ({
+      ...color,
+    }),
+  );
 
-    setColorProperties('primary', tailwindColors);
+  setColorProperties("primary", tailwindColors);
 };
 
 const primaryColor = computed({
-    get: () => getSetting(),
-    set: (value) => {
-        updateSetting(value);
-        updatePrimaryColor(value);
-    },
+  get: () => getSetting(),
+  set: (value) => {
+    updateSetting(value);
+    updatePrimaryColor(value);
+  },
 });
 ```
 
@@ -127,22 +137,18 @@ const primaryColor = computed({
 `useSiteSettings.ts` centralises all state management for site-level settings. It exposes a minimal API - staging, reading, dirty-checking, and committing changes - so UI components can update settings without duplicating logic.
 
 ```ts
-const {
-  updateSetting,
-  getSetting,
-  isDirty,
-  saveSiteSettings,
-} = useSiteSettings('primaryColor');
+const { updateSetting, getSetting, isDirty, saveSiteSettings } =
+  useSiteSettings("primaryColor");
 
-updateSetting('#ff0000');
-console.log(getSetting());     // → '#ff0000'
+updateSetting("#ff0000");
+console.log(getSetting()); // → '#ff0000'
 if (isDirty.value) await saveSiteSettings();
 ```
 
 - **`data`** – live (unsaved) key → value map.
 - **`initialData`** – snapshot of the last saved state (sourced from `useRuntimeConfig().public`).
 - **`updateSetting(key, value)`** – stage a change locally.
-- **`getSetting(key)`** – read the staged *or* saved value (staged takes precedence).
+- **`getSetting(key)`** – read the staged _or_ saved value (staged takes precedence).
 - **`isDirty`** – `true` when staged data differs from saved data; useful for change notifications.
 - **`saveSiteSettings()`** – commit staged data to `initialData`; long-term persistence is handled in `useSiteConfiguration.ts`.
 
@@ -187,4 +193,5 @@ components/
 ---
 
 ### Further Reading
-* [Writable computed](https://vuejs.org/guide/essentials/computed#writable-computed)
+
+- [Writable computed](https://vuejs.org/guide/essentials/computed#writable-computed)

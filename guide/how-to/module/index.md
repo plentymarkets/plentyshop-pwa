@@ -18,9 +18,11 @@ For further information, refer to the [Nuxt documentation](https://nuxt.com/docs
 :::
 
 ## Quick start
+
 Check out our [pwa-module-boilerplate](https://github.com/plentymarkets/pwa-module-boilerplate)
 
 ## Guides
+
 - [Components](/guide/how-to/module/components.md)
 - [Layouts](/guide/how-to/module/layouts.md)
 - [Pages](/guide/how-to/module/pages.md)
@@ -31,4 +33,5 @@ Check out our [pwa-module-boilerplate](https://github.com/plentymarkets/pwa-modu
 - [Inject components into shop areas](/guide/how-to/module/inject-components.md)
 
 ## Further reading
+
 [https://nuxt.com/docs/guide/going-further/modules](https://nuxt.com/docs/guide/going-further/modules)

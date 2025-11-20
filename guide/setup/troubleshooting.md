@@ -8,8 +8,8 @@
 
 For general debugging tools, you should familiarise yourself with the development tools of the frameworks we use:
 
-* [Vue DevTools](https://devtools.vuejs.org/)
-* [Nuxt DevTools](https://devtools.nuxt.com/)
+- [Vue DevTools](https://devtools.vuejs.org/)
+- [Nuxt DevTools](https://devtools.nuxt.com/)
 
 To get even more information, you can enable [debug mode](https://nuxt.com/docs/4.x/api/nuxt-config#debug) in `nuxt.config.ts`.
 
@@ -36,7 +36,7 @@ npm install
 
 New major versions may require other changes as well. Below you can find a reference of adjustments made in the main repository:
 
-* [v22 -> v24](https://github.com/plentymarkets/plentyshop-pwa/pull/1883)
+- [v22 -> v24](https://github.com/plentymarkets/plentyshop-pwa/pull/1883)
 
 ### The build failed. How can I tell what went wrong?
 

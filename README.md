@@ -1,6 +1,7 @@
 # plentyshop-pwa-docs
 
 ## Prerequisites
+
 Node.js 20+
 
 ### Starting the app

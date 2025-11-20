@@ -15,25 +15,26 @@ You can get the `itemId` by using `useProduct()`; if you are on the product page
 > The cross-selling fetch needs to be called only after the product has been fetched.
 
 Example
+
 ```ts
 const { data: product, fetchProduct } = useProduct(productId);
-const itemId = productGetters.getItemId(product.value)
+const itemId = productGetters.getItemId(product.value);
 ```
 
 ### Fetch cross-selling data:
 
-``` ts
-const itemId = productGetters.getItemId(product.value)
+```ts
+const itemId = productGetters.getItemId(product.value);
 
 // the param for useProducts is your state key; if you want to have multiple item lists, this identifier must be unique
-const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + itemId + 'Similar');
+const { fetchProducts: fetchCrossSelling, data: crossSellingItems } =
+  useProducts("crossSelling" + itemId + "Similar");
 
 fetchCrossSelling({
   itemId: itemId,
-  type: 'cross_selling',
-  crossSellingRelation: 'Similar'
+  type: "cross_selling",
+  crossSellingRelation: "Similar",
 });
-
 ```
 
 ### Fetch multiple cross-selling lists by relation type
@@ -41,62 +42,74 @@ fetchCrossSelling({
 The svailable `crossSellingRelation` types are:
 `Accessory`, `ReplacementPart`, `Similar`, `Bundle`
 
-``` ts
-
+```ts
 // the param for useProducts is your state key; if you want to have multiple item lists, this identifier must be unique
 // type Similar
-const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts(productId + 'Similar');
+const { fetchProducts: fetchCrossSelling, data: crossSellingItems } =
+  useProducts(productId + "Similar");
 
 fetchCrossSelling({
   itemId: productGetters.getItemId(product.value),
-  type: 'cross_selling',
-  crossSellingRelation: 'Similar'
+  type: "cross_selling",
+  crossSellingRelation: "Similar",
 });
 
 // type Accessory
-const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts(productId + 'Accessory');
+const {
+  fetchProducts: fetchCrossSellingAccessory,
+  data: crossSellingItemsAccessory,
+} = useProducts(productId + "Accessory");
 
 fetchCrossSellingAccessory({
   itemId: productGetters.getItemId(product.value),
-  type: 'cross_selling',
-  crossSellingRelation: 'Accessory'
+  type: "cross_selling",
+  crossSellingRelation: "Accessory",
 });
 
 // type Bundle
-const { fetchProducts: fetchCrossSellingBundle, data: crossSellingItemsBundle } = useProducts(productId + 'Bundle');
+const {
+  fetchProducts: fetchCrossSellingBundle,
+  data: crossSellingItemsBundle,
+} = useProducts(productId + "Bundle");
 
 fetchCrossSellingBundle({
   itemId: productGetters.getItemId(product.value),
-  type: 'cross_selling',
-  crossSellingRelation: 'Bundle'
+  type: "cross_selling",
+  crossSellingRelation: "Bundle",
 });
 
 // type ReplacementPart
-const { fetchProducts: fetchCrossSellingReplacementPart, data: crossSellingItemsReplacementPart } = useProducts(productId + 'ReplacementPart');
+const {
+  fetchProducts: fetchCrossSellingReplacementPart,
+  data: crossSellingItemsReplacementPart,
+} = useProducts(productId + "ReplacementPart");
 
 fetchCrossSellingReplacementPart({
   itemId: productGetters.getItemId(product.value),
-  type: 'cross_selling',
-  crossSellingRelation: 'ReplacementPart'
+  type: "cross_selling",
+  crossSellingRelation: "ReplacementPart",
 });
-
 ```
 
 ### Render with ProductSlider
 
-
-``` html
-<ProductSlider v-if="crossSellingItemsAccessory" :items="crossSellingItemsAccessory.products"></ProductSlider>
+```html
+<ProductSlider
+  v-if="crossSellingItemsAccessory"
+  :items="crossSellingItemsAccessory.products"
+></ProductSlider>
 ```
 
-``` ts
-
-const itemId = productGetters.getItemId(product.value)
-const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts(itemId + 'Accessory');
+```ts
+const itemId = productGetters.getItemId(product.value);
+const {
+  fetchProducts: fetchCrossSellingAccessory,
+  data: crossSellingItemsAccessory,
+} = useProducts(itemId + "Accessory");
 
 fetchCrossSellingAccessory({
   itemId: itemId,
-  type: 'cross_selling',
-  crossSellingRelation: 'Accessory'
+  type: "cross_selling",
+  crossSellingRelation: "Accessory",
 });
 ```

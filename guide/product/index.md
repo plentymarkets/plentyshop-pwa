@@ -12,12 +12,12 @@ Besides its own online shop, PlentyONE connects to all relevant marketplace, pay
 
 Progressive Web Apps (PWAs) are websites that offer functionality you typically only find in local apps:
 
-* Home screen icon; full-screen app without visible browser
-* Different operating systems may provide additional functionality
-* Customers can view products even when they're offline or have a bad connection
-* No significant delay in load times
-* One app for all devices
-* Easy to use in the browser; downloading and installing the app isn't required
+- Home screen icon; full-screen app without visible browser
+- Different operating systems may provide additional functionality
+- Customers can view products even when they're offline or have a bad connection
+- No significant delay in load times
+- One app for all devices
+- Easy to use in the browser; downloading and installing the app isn't required
 
 Based on the e-commerce framework Alokai, the shop of PlentyONE offers great performance out of the box. Once you’re set up, you benefit from a headless progressive web app that still seamlessly integrates with the rest of PlentyONE.
 
@@ -29,7 +29,7 @@ Have a look at our official [Demo Shop](https://plentyshop.plentymarkets.com/).
 
 The documentation consists of two main parts: a guide and a reference.
 
-* The guide walks you through the initial setup of the app, describes important concepts and provides solutions to common use cases.
-* The reference is a means for advanced users to look up specific APIs.
+- The guide walks you through the initial setup of the app, describes important concepts and provides solutions to common use cases.
+- The reference is a means for advanced users to look up specific APIs.
 
 You can switch between the guide and the reference via the header navigation.

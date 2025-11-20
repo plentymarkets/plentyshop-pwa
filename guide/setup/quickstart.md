@@ -7,8 +7,8 @@ For details, refer to the **Next steps** section at the end.
 
 By the end of this guide, you will have:
 
-* A running local application
-* Deployed your first shop inside PlentyONE
+- A running local application
+- Deployed your first shop inside PlentyONE
 
 Before you begin, you need a PlentyONE system.
 If you don't have one yet, you can book a 30-day trial [on our website](https://www.plentyone.com/).
@@ -46,14 +46,14 @@ Now that your GitHub repository is ready, you'll connect it to PlentyONE.
 1. Enter the information according to the table below.
 1. Click on **Create**.
 
-| Input | Value |
-|-------|-------|
-| Application name | Display name of the app in PlentyONE |
-| Select client | Client to connect to the app |
-| Select app source | GitHub Integration |
-| GitHub HTTPS URL | URL of your repository |
-| GitHub token | Your Personal Access Token |
-| GitHub branch | Name of the branch you want to deploy, usually `main` |
+| Input             | Value                                                 |
+| ----------------- | ----------------------------------------------------- |
+| Application name  | Display name of the app in PlentyONE                  |
+| Select client     | Client to connect to the app                          |
+| Select app source | GitHub Integration                                    |
+| GitHub HTTPS URL  | URL of your repository                                |
+| GitHub token      | Your Personal Access Token                            |
+| GitHub branch     | Name of the branch you want to deploy, usually `main` |
 
 ::: tip :bulb: Edit application
 You can edit application details by opening the additional actions in the **Actions** column and clicking on :pen: **Edit Application**.

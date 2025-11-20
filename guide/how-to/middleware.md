@@ -25,7 +25,7 @@ To view detailed environment information in PlentyONE, go to **Shop » Managemen
 
 For additional details, refer to the following guide:
 
-* [Deployment](/guide/setup/deployment.md)
+- [Deployment](/guide/setup/deployment.md)
 
 ## References
 

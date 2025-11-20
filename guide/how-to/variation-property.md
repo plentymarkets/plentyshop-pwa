@@ -20,14 +20,14 @@ This example demonstrates how to extract a specific property from `variationProp
 2. Create a function that iterates through the variation properties, checks for the desired property using the helper functions, and returns the PDF URL.
 
 ```ts
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productPropertyGetters } from "@plentymarkets/shop-sdk";
 
 function getPDFUrlFromVariationProperties(variationProperties) {
   for (let variation of variationProperties) {
     for (let property of variation.properties) {
       if (
-              productPropertyGetters.getPropertyName(property) === 'PDF URL' &&
-              productPropertyGetters.getPropertyCast(property) === 'text'
+        productPropertyGetters.getPropertyName(property) === "PDF URL" &&
+        productPropertyGetters.getPropertyCast(property) === "text"
       ) {
         return productPropertyGetters.getPropertyValue(property);
       }
