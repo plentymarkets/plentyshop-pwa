@@ -31,7 +31,7 @@ const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
   );
 };
 
-const variationPropertyGroups = productGetters.getPropertyGroups(props.product ?? ({} as Product));
+const variationPropertyGroups = computed(() => productGetters.getPropertyGroups(props.product ?? ({} as Product)));
 
 const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
