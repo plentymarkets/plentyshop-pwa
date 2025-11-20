@@ -5,8 +5,8 @@
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
-    "build": "tsx ./build/index.ts && nuxt build",
-    "dev": "tsx ./build/index.ts && nuxt dev",
+    "build": "tsx ./scripts/init-i18n-directories.ts && tsx ./build/index.ts && nuxt build",
+    "dev": "tsx ./scripts/init-i18n-directories.ts && tsx ./build/index.ts && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "docs:dev": "npm run publish-typedoc && vitepress dev docs",
