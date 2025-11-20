@@ -20,7 +20,7 @@ export const propertiesEN = [
       surcharge: 10,
       vatId: null,
       names: {
-        lang: 'de',
+        lang: 'en',
         name: 'Order Property) Your Initials: Inputfield',
         description: '',
         propertyId: '9',
@@ -49,7 +49,7 @@ export const propertiesEN = [
       surcharge: 0,
       vatId: 'none',
       names: {
-        lang: 'de',
+        lang: 'en',
         name: 'I would like a free travel bag with it.',
         description: '',
         propertyId: '21',
