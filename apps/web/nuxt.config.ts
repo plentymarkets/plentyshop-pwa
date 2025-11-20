@@ -64,6 +64,7 @@ export default defineNuxtConfig({
       ],
     },
     build: {
+      cssCodeSplit: true,
       rollupOptions: {
         output: {
           manualChunks: {
@@ -268,6 +269,7 @@ export default defineNuxtConfig({
   fonts: {
     defaults: {
       weights: [300, 400, 500, 700],
+      preload: true,
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
