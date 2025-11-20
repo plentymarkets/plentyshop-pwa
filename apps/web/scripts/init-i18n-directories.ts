@@ -19,12 +19,12 @@ async function initI18nDirectories() {
         await Promise.all(translationFiles.map((file) => rm(join(langDir, file), { force: true })));
       }
     } catch {
-      console.error(`[init-i18n] ✓ Directory does not exist: ${langDir}`);
+      console.error(`[init-i18n] Directory does not exist: ${langDir}`);
     }
 
     await mkdir(langDir, { recursive: true });
-    console.warn(`[init-i18n] ✓ Directory ready: ${langDir}`);
-    console.warn('[init-i18n] ✓ Translation directories initialized successfully');
+    console.warn(`[init-i18n] Directory ready: ${langDir}`);
+    console.warn('[init-i18n] Translation directories initialized successfully');
   } catch (error) {
     console.error('[init-i18n] Failed to initialize i18n directories:', error);
     process.exit(1);
