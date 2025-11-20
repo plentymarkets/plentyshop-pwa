@@ -1,6 +1,6 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
-import type { Product, ProductProperty } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
@@ -9,9 +9,6 @@ import { variationPropertiesEN } from './facets/variationPropertiesEN';
 import { variationPropertiesDE } from './facets/variationPropertiesDE';
 import { bundleComponentsDE } from './facets/bundleComponentsDE';
 import { bundleComponentsEN } from './facets/bundleComponentsEN';
-import type { UseProductOrderProperties } from '~/composables/useProductOrderProperties/types';
-import { orderPropertiesEN } from './facets/orderPropertiesEN';
-import { orderPropertiesDE } from './facets/orderPropertiesDE';
 import { propertiesEN } from './facets/propertiesEN';
 import { propertiesDE } from './facets/propertiesDE';
 
@@ -106,11 +103,7 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
   return !isMissing(a) ? cloneValue(a) : cloneValue(b);
 };
 
-export const handlePreviewProduct = (
-  state: Ref<UseProductState>,
-  lang: string,
-  properties: UseProductOrderProperties,
-) => {
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) => {
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 
@@ -124,8 +117,6 @@ export const handlePreviewProduct = (
   fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
   fakeProduct.bundleComponents = lang === 'de' ? bundleComponentsDE : bundleComponentsEN;
   fakeProduct.properties = lang === 'de' ? propertiesDE : propertiesEN;
-  const ord: ProductProperty[] = lang === 'de' ? orderPropertiesDE : orderPropertiesEN;
-  properties.setProperties(ord);
 
   const rawA = toRaw(state.value.data) as Product;
   const rawB = fakeProduct as Product;
