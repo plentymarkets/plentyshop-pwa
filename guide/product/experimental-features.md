@@ -12,15 +12,6 @@ If you enable an experimental feature, you do so at your own risk.
 This page lists current experimental features and how to enable them.
 It doesn't include progress status, a release timeline, or similar information.
 
-## Blockified Item Category Page
-
-Date added: 02 October 2025 <br />
-Date removed: -
-
-- Enable with `ENABLE_CATEGORY_EDITING=1`
-- Controls content on `[...slug].vue`
-- Shifts item categories from rendering static content to rendering blocks
-
 ## Blockified Item Details Page
 
 Date added: 21 October 2025 <br />
@@ -38,3 +29,14 @@ Date removed: -
 - Enable with `ENABLE_ALL_EDITOR_SETTINGS=1`
 - Controls content in `SiteConfigurationDrawer.vue`
 - Adds additional settings; refer to `editorSettingsDevFlag` in `nuxt.config.ts` for a complete list
+
+## History
+
+## Blockified Item Category Page
+
+Date added: 02 October 2025 <br />
+Date removed: 20 November 2025
+
+- Enable with `ENABLE_CATEGORY_EDITING=1`
+- Controls content on `[...slug].vue`
+- Shifts item categories from rendering static content to rendering blocks
