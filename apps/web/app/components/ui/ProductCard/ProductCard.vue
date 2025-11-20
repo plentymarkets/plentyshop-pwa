@@ -19,6 +19,7 @@
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
       >
+      
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
