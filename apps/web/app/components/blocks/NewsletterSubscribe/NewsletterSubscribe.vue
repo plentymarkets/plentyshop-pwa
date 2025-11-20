@@ -206,7 +206,7 @@ const subscribeNewsletter = async () => {
     firstName: firstName.value,
     lastName: lastName.value,
     email: email.value || '',
-    emailFolder: 1,
+    emailFolder: props.content.settings?.emailFolderId ?? 1,
     'cf-turnstile-response': turnstile.value,
   });
 

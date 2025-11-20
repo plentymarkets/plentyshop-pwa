@@ -1,4 +1,6 @@
 name: New release app
+permissions:
+  contents: read
 
 on:
   release:
