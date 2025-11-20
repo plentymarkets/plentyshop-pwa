@@ -103,10 +103,6 @@ export default defineNuxtConfig({
         process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1'
           ? []
           : [
-              'customer-management',
-              'variation-position-based-on-sales',
-              'default-B2B-customer-class',
-              'default-B2C-and-guest-customer-class',
               'shop-search',
             ],
       cookieGroups: cookieConfig,
