@@ -41,7 +41,7 @@ const localSettings = reactive<Record<string, boolean>>({});
 settings.forEach((key) => {
   const { updateSetting, getSetting } = useSiteSettings(key);
 
-  localSettings[key] = getSetting() === '1';
+  localSettings[key] = parseInt(getSetting()) === 1;
 
   watch(
     () => localSettings[key],
