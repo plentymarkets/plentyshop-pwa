@@ -1,4 +1,7 @@
 name: Release Notification
+permissions:
+    contents: read
+
 on:
   release:
     types: [published]
