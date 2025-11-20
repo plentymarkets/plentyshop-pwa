@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: "plentymarkets/plentyshop-pwa"
 
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: "plentymarkets/plentymarkets-sdk"
           token: ${{ secrets.ORGA_PAT_CICD1_FULL_REPO_AND_PACKAGES }}
@@ -67,7 +67,7 @@ jobs:
     needs: [get-pwa, get-sdk]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download sdk-docs
         uses: actions/download-artifact@v4
         with:
@@ -78,30 +78,18 @@ jobs:
         with:
           name: pwa-docs
           path: ${{ github.workspace }}/reference/
-
-      - name: Enable corepack
-        run: corepack enable
-
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
-          cache: yarn
+          node-version-file: ".nvmrc"
+          cache: npm
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Set yarn version
-        run: |
-          yarn set version stable
-          yarn set version 3.6.4
-
-      - name: Setup .yarnrc.yml
-        run: |
-          yarn config set nodeLinker node-modules
       - name: Install dependencies
-        run: yarn install
+        run: npm install
       - name: Build with VitePress
         run: |
-          yarn docs:build
+          npm run docs:build
           touch .vitepress/dist/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
