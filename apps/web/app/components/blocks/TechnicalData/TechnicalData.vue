@@ -30,12 +30,10 @@ import { productGetters } from '@plentymarkets/shop-api';
 import type { TechnicalDataProps } from './types';
 const props = defineProps<TechnicalDataProps>();
 const content = computed(() => props.content);
-console.log('Technical Data Content:', content.value);
 const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
 const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
 const text = computed(() => productGetters.getTechnicalData(currentProduct.value));
-console.log('Technical Data Text:', text.value);
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
   return {
