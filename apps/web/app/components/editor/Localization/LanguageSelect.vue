@@ -32,6 +32,7 @@ const { allLanguages } = useEditorLocalizationLocales();
 const getAndLog = async () => {
   await loadKeys();
   console.log(keys);
+  console.log('keys');
 };
 </script>
 
