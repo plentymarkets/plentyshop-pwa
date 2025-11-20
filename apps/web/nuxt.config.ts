@@ -99,16 +99,7 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       activeLanguages: process.env.LANGUAGELIST || 'en,de',
       enableProductEditing: process.env?.ENABLE_PRODUCT_EDITING === '1',
-      disabledEditorSettings:
-        process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1'
-          ? []
-          : [
-              'customer-management',
-              'variation-position-based-on-sales',
-              'default-B2B-customer-class',
-              'default-B2C-and-guest-customer-class',
-              'shop-search',
-            ],
+      disabledEditorSettings: process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1' ? [] : ['shop-search'],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true' || process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
