@@ -38,10 +38,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const route = useRoute();
+    const { $i18n } = useNuxtApp();
     const { setupBlocks } = useCategoryTemplate(
       route?.meta?.identifier as string,
       route.meta.type as string,
-      useNuxtApp().$i18n.locale.value,
+      $i18n.locale.value,
     );
 
     state.value.loading = true;
@@ -58,7 +59,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
-      handlePreviewProducts(state, useNuxtApp().$i18n.locale.value);
+      handlePreviewProducts(state, $i18n.locale.value);
 
       const defaultData = state.value.data.category.type === 'item' ? useCategoryTemplateData() : [];
 
