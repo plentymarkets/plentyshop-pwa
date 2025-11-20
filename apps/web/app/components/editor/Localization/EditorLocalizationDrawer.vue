@@ -13,7 +13,17 @@
     </div>
 
     <div class="p-4">
-      <div class="w-full h-[calc(100vh-180px)] overflow-hidden border rounded-lg">
+      <SfInput
+        v-model="searchTerm"
+        :aria-label="t('search')"
+        :placeholder="t('search')"
+        @input="debouncedSearchTerm"
+      >
+        <template #prefix>
+          <SfIconSearch />
+        </template>
+      </SfInput>
+      <div class="w-full h-[calc(100vh-230px)] mt-4 overflow-hidden border rounded-lg">
         <div class="relative h-full">
           <div class="flex border-b">
             <div class="flex-shrink-0 flex z-20">
@@ -33,7 +43,7 @@
           <div class="flex overflow-hidden" style="height: calc(100% - 52px)">
             <div ref="leftScroll" class="flex-shrink-0 scrollbar-thin overflow-y-auto z-10">
               <div class="flex flex-col">
-                <div v-for="(row, index) in keys" :key="index" class="flex h-12 text-xs">
+                <div v-for="row in (filteredKeys ?? keys)" :key="row.key" class="flex h-12 text-xs">
                   <div class="w-96 overflow-hidden border-r flex items-center">
                     <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700">
                       {{ getCategoryFromKey(row.key) }}
@@ -47,8 +57,8 @@
             <!-- Scrollable Right Content -->
             <div ref="contentScroll" class="flex-1 overflow-auto scrollbar-thin">
               <div class="flex flex-col">
-                <div v-for="row in keys" :key="row.key" class="flex h-12">
-                  <TranslationInput
+                <div v-for="row in (filteredKeys ?? keys)" :key="row.key" class="flex h-12">
+                  <EditorLocalizationTranslationInput
                     v-for="lang in selectedLocales"
                     :key="`${row.key}-${lang}`"
                     :row-key="row.key"
@@ -68,14 +78,15 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconChevronLeft } from '@storefront-ui/vue';
+import { SfDrawer, SfIconChevronLeft, SfIconSearch, SfInput } from '@storefront-ui/vue';
 import type { LocalizationMessage } from '@plentymarkets/shop-core';
-import TranslationInput from './TranslationInput.vue';
+import { useDebounceFn } from '@vueuse/core';
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
-const { keys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } = useEditorLocalizationKeys();
+const { keys, filteredKeys, filterKeys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } = useEditorLocalizationKeys();
+const searchTerm = ref('');
 const languages = computed(() => {
   return selectedLocales.value
     .map((locale) => {
@@ -92,6 +103,10 @@ const revertToDefault = (key: string, lang: string, data: LocalizationMessage) =
 const handleTranslationInput = (key: string, lang: string, value: string) => {
   updateTranslationInput(key, lang, value);
 };
+
+const debouncedSearchTerm = useDebounceFn(() => {
+  filterKeys(searchTerm.value, selectedLocales.value);
+}, 300);
 
 const headerScroll = ref<HTMLElement | null>(null);
 const contentScroll = ref<HTMLElement | null>(null);
