@@ -206,6 +206,9 @@
       },
       "button": {
         "label": "Newsletter abonnieren"
+      },
+      "settings": {
+        "emailFolderId": 1
       }
     }
   },
