@@ -139,14 +139,6 @@ const handleRowClick = (item: StorageObject) => {
   display: none !important;
 }
 
-/* .v-icon {
-  --v-icon-size-multiplier: 0.55;
-}
-
-.v-btn--icon .v-icon {
-  --v-icon-size-multiplier: 0.55;
-} */
-
 .v-ripple__container {
   display: none !important;
 }
