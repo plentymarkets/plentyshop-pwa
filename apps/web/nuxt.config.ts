@@ -64,7 +64,6 @@ export default defineNuxtConfig({
       ],
     },
     build: {
-      // cssCodeSplit: true,
       rollupOptions: {
         output: {
           manualChunks: {
