@@ -43,12 +43,7 @@
       >
         <li v-if="categoryTree.length === 0" class="h-10" />
 
-        <li
-          v-for="(menuNode, index) in categoryTree"
-          v-else
-          :key="index"
-          @mouseenter="onCategoryMouseEnter(menuNode)"
-        >
+        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
           <div
             ref="triggerReference"
             data-testid="category-button"
@@ -125,7 +120,6 @@
         </li>
       </ul>
     </nav>
-
 
     <template v-else>
       <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
