@@ -40,7 +40,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@mdi/js": "7.4.47",
+    "@mdi/js": "^7.4.47",
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/image": "^1.11.0",
     "@nuxt/test-utils": "^3.20.1",
