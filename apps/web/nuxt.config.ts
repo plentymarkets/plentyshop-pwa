@@ -67,7 +67,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            vuetify: ['vuetify', '@fortawesome/fontawesome-free'],
+            vuetify: ['vuetify'],
           },
         },
       },
@@ -253,7 +253,7 @@ export default defineNuxtConfig({
     },
     vuetifyOptions: {
       icons: {
-        defaultSet: 'fa',
+        defaultSet: 'mdi-svg',
       },
     },
   },

@@ -32,7 +32,6 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^7.1.0",
     "@nuxt/fonts": "^0.12.1",
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@vueuse/core": "^10.11.0",
@@ -41,6 +40,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@mdi/js": "7.4.47",
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/image": "^1.11.0",
     "@nuxt/test-utils": "^3.20.1",
