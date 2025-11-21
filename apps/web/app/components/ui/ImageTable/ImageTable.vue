@@ -1,17 +1,16 @@
 <template>
   <VCard flat>
-    <div class="flex items-center gap-2 mb-5 border border-gray-300 rounded pr-2">
+    <div class="flex items-center gap-2 mb-5 bg-gray-100 border border-gray-300 rounded pl-2">
+      <SfIconSearch />
       <v-text-field
         v-model="search"
         density="compact"
-        prepend-inner-icon="magnify"
         label="Search file or path..."
         variant="solo"
         flat
         hide-details
         single-line
       />
-      <SfIconSearch />
     </div>
 
     <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
