@@ -19,7 +19,7 @@
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
       >
-      
+        <ProductEprel :product="product" :size="'lg'" />
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
