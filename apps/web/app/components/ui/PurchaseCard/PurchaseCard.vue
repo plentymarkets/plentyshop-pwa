@@ -1,12 +1,15 @@
 <template>
   <form
     class="md:rounded-md"
-    :class="{ 'md:shadow-lg': configuration?.dropShadow, 'md:border md:border-neutral-100': configuration?.borders }"
+    :class="{
+      'md:shadow-lg': configuration?.dropShadow,
+      'md:border md:border-neutral-100 fixed': configuration?.borders,
+    }"
     :style="inlineStyle"
     data-testid="purchase-card"
     @submit.prevent="handleAddToCart()"
   >
-    <div class="relative">
+    <div class="sticky">
       <div class="drift-zoom-image">
         <section class="p-4 xl:p-6">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
@@ -35,13 +38,13 @@
                 :unit-name="productGetters.getUnitName(product)"
               />
             </template>
-            <template v-if="key === 'tags' && configuration?.fields.tags">
+            <template v-if="key === 'tags' && configuration?.fields.tags && false">
               <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
             </template>
             <template v-if="key === 'availability' && configuration?.fields.availability">
               <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
             </template>
-            <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
+            <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties && 0">
               <div class="mb-2 variation-properties">
                 <VariationProperties :product="product" />
               </div>
