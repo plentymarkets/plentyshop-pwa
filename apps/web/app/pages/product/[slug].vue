@@ -51,7 +51,7 @@ import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarke
 const route = useRoute();
 const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
-const { setBlocksListContext } = useBlockManager();
+const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();

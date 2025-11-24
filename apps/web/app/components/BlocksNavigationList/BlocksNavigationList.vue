@@ -60,19 +60,20 @@
 
 <script setup lang="ts">
 import { SfIconAdd, SfIconWarning, SfTooltip } from '@storefront-ui/vue';
-import type { Category, Variation } from '~/components/BlocksNavigationList/types';
-const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
-  useBlockManager();
-getBlocksLists();
+import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
+
+const { blocksLists, pageHasAccessToCategory, getBlocksLists, blockExistsOnPage } = useBlocksList();
+
+await getBlocksLists();
 
 const { drawerOpen } = useSiteConfiguration();
-const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
+const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth } = useBlockManager();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
-const isNestedMultigrid = (category: Category, uuid: string) => {
+const isNestedMultigrid = (category: BlockListCategory, uuid: string) => {
   return category.blockName === 'MultiGrid' && getBlockDepth(uuid) > 0;
 };
-const isForbiddenBlock = (category: Category, uuid: string) => {
+const isForbiddenBlock = (category: BlockListCategory, uuid: string) => {
   return ['BannerCarousel', 'ImageText'].includes(category.blockName) && getBlockDepth(uuid) > 0;
 };
 const isSingleInstanceBlock = (blockName: string) => {
@@ -81,7 +82,7 @@ const isSingleInstanceBlock = (blockName: string) => {
 const isSingleInstanceOnPage = (blockName: string) => {
   return isSingleInstanceBlock(blockName) && blockExistsOnPage(blockName);
 };
-const isAddDisabled = (category: Category, variation: Variation, uuid: string): boolean => {
+const isAddDisabled = (category: BlockListCategory, variation: BlockTemplateVariation, uuid: string): boolean => {
   const blockName = variation.template.en.name;
   const isNested = isNestedMultigrid(category, uuid);
   const isForbidden = isForbiddenBlock(category, uuid);
@@ -93,13 +94,4 @@ const blockPosition = computed(() => {
   if (multigridColumnUuid.value) return 'inside';
   return visiblePlaceholder.value.position;
 });
-
-const pageHasAccessToCategory = (category: Category) => {
-  if (blocksListContext.value) {
-    const accessControl = category.accessControl || null;
-    return accessControl?.includes(blocksListContext.value);
-  }
-
-  return false;
-};
 </script>
