@@ -4,11 +4,10 @@ import ProductEprel from '../ProductEprel.vue';
 import type { Product } from '@plentymarkets/shop-api';
 import type { ProductEprelProps } from '../types';
 
-// 🔧 Fake Product erzeugen (minimales gültiges Plenty-Produkt)
 const fakeProduct = {
   id: 1,
   texts: {},
-  variationProperties: [], // wichtig für getProperty()
+  variationProperties: [],
 } as unknown as Product;
 
 describe('ProductEprel', () => {
@@ -30,6 +29,6 @@ describe('ProductEprel', () => {
       props: defaultProps,
     });
 
-    expect(wrapper.props().product).toBe(defaultProps.product);
+    expect(wrapper.props().product).toStrictEqual(defaultProps.product);
   });
 });
