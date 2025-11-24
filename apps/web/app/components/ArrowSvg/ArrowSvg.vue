@@ -30,8 +30,6 @@
 </template>
 <script setup lang="ts">
 import { SfIconBase } from '@storefront-ui/vue';
-import { arrowSvgProps, ArrowLevel } from './types';
-import { _size } from '#tailwind-config/theme';
 
 const props = defineProps(arrowSvgProps);
 
