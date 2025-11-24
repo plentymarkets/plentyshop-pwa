@@ -11,9 +11,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { productPropertyGetters } from '@plentymarkets/shop-api';
-import type { Product } from '@plentymarkets/shop-api';
 import ArrowSvg from '~/components/ArrowSvg/ArrowSvg.vue';
-import { ProductEprelProps } from './types';
+import type { ProductEprelProps } from './types';
 
 const EPREL_PROPERTY_ID = 172;
 const props = defineProps<ProductEprelProps>();

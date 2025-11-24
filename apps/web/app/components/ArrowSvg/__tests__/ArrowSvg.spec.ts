@@ -1,11 +1,9 @@
 import { mount } from '@vue/test-utils';
 import ArrowSvg from '../ArrowSvg.vue';
-import { sign } from 'crypto';
-import { _size } from '#tailwind-config/theme';
 
 describe('ArrowSvg', () => {
   const defaultProps = {
-    level: 'A', // <-- hier unbedingt setzen, sonst TS meckert
+    level: 'A',
     _size: 'base',
   };
 

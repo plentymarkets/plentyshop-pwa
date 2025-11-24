@@ -1,9 +1,9 @@
 <template>
   <SfIconBase
+    v-if="currentArrow"
     viewBox="0 0 91.15 50.12"
     :class="size + '-eprl-size eprl-arrow' + customClass"
     data-testid="arrowsvg"
-    v-if="currentArrow"
   >
     <rect class="cls-4" x="69.5" y=".73" width="21.33" height="49" />
     <g :id="level + '_CompleteCycle'">
