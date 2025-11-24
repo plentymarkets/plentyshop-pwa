@@ -8,19 +8,18 @@ import type { ProductEprelProps } from '../types';
 const fakeProduct = {
   id: 1,
   texts: {},
-  variationProperties: [] // wichtig für getProperty()
+  variationProperties: [], // wichtig für getProperty()
 } as unknown as Product;
 
 describe('ProductEprel', () => {
-
   const defaultProps: ProductEprelProps = {
-    product: fakeProduct
-    , size: 'lg'
+    product: fakeProduct,
+    size: 'lg',
   };
 
   it('renders correctly', () => {
     const wrapper = mount(ProductEprel, {
-      props: defaultProps
+      props: defaultProps,
     });
 
     expect(wrapper.find('[data-testid="producteprel"]').exists()).toBe(true);
@@ -28,7 +27,7 @@ describe('ProductEprel', () => {
 
   it('accepts props correctly', () => {
     const wrapper = mount(ProductEprel, {
-      props: defaultProps
+      props: defaultProps,
     });
 
     expect(wrapper.props().product).toBe(defaultProps.product);

@@ -11,5 +11,5 @@ export interface ArrowSvgProps {
 export const arrowSvgProps = {
   level: { type: String as PropType<ArrowLevel | null>, required: true },
   size: { type: String as PropType<'sm' | 'base' | 'lg' | 'xl' | 'xxl' | 'xxxl'>, default: 'base' },
-  customClass: { type: String, default: '' }
+  customClass: { type: String, default: '' },
 };

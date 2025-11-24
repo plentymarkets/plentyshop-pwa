@@ -1,7 +1,10 @@
 <template>
   <form
     class="md:rounded-md"
-    :class="{ 'md:shadow-lg': configuration?.dropShadow, 'md:border md:border-neutral-100 fixed': configuration?.borders }"
+    :class="{
+      'md:shadow-lg': configuration?.dropShadow,
+      'md:border md:border-neutral-100 fixed': configuration?.borders,
+    }"
     :style="inlineStyle"
     data-testid="purchase-card"
     @submit.prevent="handleAddToCart()"

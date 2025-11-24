@@ -6,7 +6,7 @@
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px] relative">
           <ProductEprel :product="product" :size="'xxxl'" />
-          <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />          
+          <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
@@ -37,7 +37,7 @@
           v-if="showRecommended"
           :category-id="productGetters.getCategoryIds(product)[0] ?? ''"
         />
-      </section>      
+      </section>
     </NarrowContainer>
 
     <UiReviewModal />
