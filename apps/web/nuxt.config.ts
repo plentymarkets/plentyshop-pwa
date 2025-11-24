@@ -67,7 +67,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            vuetify: ['vuetify', '@fortawesome/fontawesome-free'],
+            vuetify: ['vuetify', '@mdi/js'],
           },
         },
       },
@@ -253,7 +253,7 @@ export default defineNuxtConfig({
     },
     vuetifyOptions: {
       icons: {
-        defaultSet: 'fa',
+        defaultSet: 'mdi-svg',
       },
     },
   },
@@ -270,6 +270,7 @@ export default defineNuxtConfig({
   fonts: {
     defaults: {
       weights: [300, 400, 500, 700],
+      preload: true,
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
