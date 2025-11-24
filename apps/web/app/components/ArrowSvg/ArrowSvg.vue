@@ -30,6 +30,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconBase } from '@storefront-ui/vue';
+import { arrowSvgProps } from './types';
 
 const props = defineProps(arrowSvgProps);
 
