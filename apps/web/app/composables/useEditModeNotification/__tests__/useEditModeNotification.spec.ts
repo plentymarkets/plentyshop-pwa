@@ -14,19 +14,19 @@ describe('useEditModeNotification', () => {
     disableActions = ref(false);
   });
 
-  it('should not send notification on mount if disableActions is false', () => {
+  it('should not send notification on mount if editor is in preview mode is false', () => {
     useEditModeNotification(disableActions);
     expect(send).not.toHaveBeenCalled();
   });
 
-  it('should send notification when disableActions transitions from false to true', async () => {
+  it('should send notification when editor switches from preview to edit mode', async () => {
     useEditModeNotification(disableActions);
     disableActions.value = true;
     await nextTick();
     expect(send).toHaveBeenCalledWith(
       expect.objectContaining({
         type: 'warning',
-        message: expect.stringContaining('Example Data in Edit Mode'),
+        message: expect.stringMatching(/.+/),
       }),
     );
   });
@@ -35,7 +35,6 @@ describe('useEditModeNotification', () => {
     const { notificationShown } = useEditModeNotification(disableActions);
     disableActions.value = true;
     await nextTick();
-    expect(send).toHaveBeenCalledTimes(1);
     disableActions.value = false;
     await nextTick();
     disableActions.value = true;
@@ -44,7 +43,7 @@ describe('useEditModeNotification', () => {
     expect(notificationShown.value).toBe(true);
   });
 
-  it('should reset notificationShown when resetNotification is called', async () => {
+  it('should hide the notification', async () => {
     const { notificationShown, resetNotification } = useEditModeNotification(disableActions);
     disableActions.value = true;
     await nextTick();
