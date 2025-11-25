@@ -1,4 +1,3 @@
-import { ref, nextTick } from 'vue';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useEditModeNotification } from '../useEditModeNotification';
