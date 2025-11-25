@@ -61,7 +61,7 @@ export const useProduct: UseProductReturn = (slug) => {
       blocksToSetup = fetchedBlocks as Block[];
     } else {
       blocksToSetup = (useProductTemplateData() as Block[]).map((block) =>
-        setDynamicCategoryForDefaultRecommendedProducts(block, data.value?.data ?? ({} as Product)),
+        withRecommendedCategoryId(block, data.value?.data ?? ({} as Product)),
       );
     }
 
