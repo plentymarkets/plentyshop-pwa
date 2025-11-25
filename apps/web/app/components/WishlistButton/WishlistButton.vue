@@ -5,7 +5,7 @@
     :aria-label="
       isWishlistItem(variationId)
         ? t('removeProductFromWishlist', { label: productName })
-        : t('addProductToWishlist', { label: productName })
+        : t('common.actions.addProductToWishlist', { label: productName })
     "
     :class="{ 'p-[0.5rem]': !isCloseButton }"
     class="m-2"

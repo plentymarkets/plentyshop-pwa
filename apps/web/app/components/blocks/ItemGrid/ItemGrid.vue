@@ -12,7 +12,7 @@
       >
         <span class="font-bold md:text-lg">
           {{
-            t('numberOfProducts', {
+            t('search.numberOfProducts', {
               count: products?.length ?? 0,
               total: totalProducts,
             })

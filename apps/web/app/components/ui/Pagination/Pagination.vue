@@ -190,7 +190,7 @@ const pagination = computed(() =>
 );
 
 const getAriaLabel = (isCurrent: boolean, page: number) => {
-  return t(isCurrent ? 'currentPage' : 'goToPage', { page });
+  return t(isCurrent ? 'navigation.currentPage' : 'navigation.goToPage', { page });
 };
 
 const setPage = (page: number) => {
