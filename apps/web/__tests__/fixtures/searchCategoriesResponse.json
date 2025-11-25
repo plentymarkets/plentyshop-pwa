@@ -1,0 +1,107 @@
+{
+  "data": {
+    "entries": [
+      {
+        "id": 19,
+        "parentCategoryId": null,
+        "level": 1,
+        "type": "item",
+        "linklist": "Y",
+        "right": "all",
+        "sitemap": "Y",
+        "hasChildren": true,
+        "childrenCount": 1,
+        "isLinkedToWebstore": true,
+        "details": [
+          {
+            "categoryId": "19",
+            "lang": "en",
+            "name": "Study Room & Office",
+            "description": "",
+            "description2": "",
+            "shortDescription": "",
+            "metaKeywords": "furniture, study, office",
+            "metaDescription": "Furniture for study rooms & offices",
+            "nameUrl": "study-room-office",
+            "metaTitle": "",
+            "position": "2",
+            "updatedAt": "2021-11-23T13: 24: 43+01: 00",
+            "updatedBy": "Plentymarkets Support",
+            "itemListView": "ItemViewCategoriesList",
+            "singleItemView": "ItemViewSingleItem",
+            "pageView": "PageDesignContent",
+            "fulltext": "N",
+            "metaRobots": "ALL",
+            "canonicalLink": "",
+            "previewUrl": "https: //mevofvd5omld.c01-14.plentymarkets.com/en/study-room-office/",
+            "image": null,
+            "imagePath": null,
+            "image2": null,
+            "image2Path": null,
+            "plentyId": 12345
+          }
+        ],
+        "clients": [
+          {
+            "categoryId": "19",
+            "plentyId": 12345
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "parentCategoryId": 16,
+        "level": 2,
+        "type": "item",
+        "linklist": "Y",
+        "right": "all",
+        "sitemap": "Y",
+        "hasChildren": false,
+        "childrenCount": 0,
+        "isLinkedToWebstore": true,
+        "details": [
+          {
+            "categoryId": "17",
+            "lang": "en",
+            "name": "Armchair & Stool",
+            "description": "",
+            "description2": "",
+            "shortDescription": "",
+            "metaKeywords": "",
+            "metaDescription": "",
+            "nameUrl": "armchair-stool",
+            "metaTitle": "",
+            "position": "1",
+            "updatedAt": "2021-11-15T13: 56: 27+01: 00",
+            "updatedBy": "Plentymarkets Support",
+            "itemListView": "ItemViewCategoriesList",
+            "singleItemView": "ItemViewSingleItem",
+            "pageView": "PageDesignContent",
+            "fulltext": "N",
+            "metaRobots": "ALL",
+            "canonicalLink": "",
+            "previewUrl": "https: //mevofvd5omld.c01-14.plentymarkets.com/en/living-room/armchair-stool/",
+            "image": null,
+            "imagePath": null,
+            "image2": null,
+            "image2Path": null,
+            "plentyId": 12345
+          }
+        ],
+        "clients": [
+          {
+            "categoryId": "17",
+            "plentyId": 12345
+          }
+        ]
+      }
+    ],
+    "firstOnPage": 1,
+    "isLastPage": true,
+    "itemsPerPage": 50,
+    "lastOnPage": 42,
+    "lastPageNumber": 1,
+    "page": 1,
+    "totalsCount": 42
+  }
+}

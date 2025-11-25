@@ -4,7 +4,7 @@
       v-model="textsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="recommended-form-source"
+      data-testid="open-recommended-products-form-texts"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
@@ -106,7 +106,7 @@
       v-model="sourceOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="recommended-form-source"
+      data-testid="open-recommended-products-form-source"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('source-label') }}</h2>
