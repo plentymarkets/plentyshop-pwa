@@ -62,6 +62,7 @@ const { data: productReviews, fetchProductReviews } = useProductReviews(Number(p
 const { data: categoryTree } = useCategoryTree();
 const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
+const { resetNotification } = useEditModeNotification(disableActions);
 
 const config = useRuntimeConfig().public;
 
@@ -191,6 +192,10 @@ const observeRecommendedSection = () => {
     observer.observe(recommendedSection.value);
   }
 };
+
+onBeforeRouteLeave(() => {
+  resetNotification();
+});
 
 onNuxtReady(() => observeRecommendedSection());
 </script>
