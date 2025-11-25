@@ -49,7 +49,7 @@ export class RecommendedProductsObject extends PageObject {
     return this;
   };
 
-  changeTextAlinment = (value: string) => {
+  changeTextAlignment = (value: string) => {
     cy.getByTestId(`recommended-form-text-align-${value}`).should('exist').click();
 
     return this;

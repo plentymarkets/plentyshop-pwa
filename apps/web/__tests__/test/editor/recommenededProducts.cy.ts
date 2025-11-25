@@ -32,7 +32,7 @@ describe('Recommended Block Form', () => {
       .typeInRecommendedForm('subtitle', 'New subtitle')
       .typeInRecommendedForm('html', 'New description')
       .changeColor('#00ff00')
-      .changeTextAlinment('right')
+      .changeTextAlignment('right')
 
       .checkIfRecommendedBlockHasText('pretitle', 'Pretitle')
       .checkIfRecommendedBlockHasText('title', 'New title')
