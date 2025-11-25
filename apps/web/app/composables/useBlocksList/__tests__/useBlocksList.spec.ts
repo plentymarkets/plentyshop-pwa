@@ -152,26 +152,6 @@ describe('useBlocksList', () => {
     });
   });
 
-  describe('blockExistsOnPage', () => {
-    it('should return true if block exists at top level', () => {
-      const { blockExistsOnPage } = useBlocksList();
-
-      expect(blockExistsOnPage('TestBlock')).toBe(true);
-    });
-
-    it('should return true if block exists in nested content', () => {
-      const { blockExistsOnPage } = useBlocksList();
-
-      expect(blockExistsOnPage('NestedBlock')).toBe(true);
-    });
-
-    it('should return false if block does not exist', () => {
-      const { blockExistsOnPage } = useBlocksList();
-
-      expect(blockExistsOnPage('NonExistentBlock')).toBe(false);
-    });
-  });
-
   describe('pageHasAccessToCategory', () => {
     it('should return true when context matches accessControl', () => {
       const { setBlocksListContext, pageHasAccessToCategory } = useBlocksList();

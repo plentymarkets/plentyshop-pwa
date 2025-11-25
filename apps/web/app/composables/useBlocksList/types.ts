@@ -28,7 +28,6 @@ export interface UseBlocksList {
   setBlocksListContext: (context: BlocksListContext) => void;
   getBlocksLists: () => Promise<void>;
   getBlockTemplateByLanguage: (category: string, variationIndex: number, lang: string) => Promise<Block>;
-  blockExistsOnPage: (blockName: string) => boolean;
   pageHasAccessToCategory: (category: BlockListCategory) => boolean;
 }
 

@@ -1,4 +1,3 @@
-import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksList, BlocksListContext, BlockListCategory, UseBlocksListReturn } from './types';
 
 const blocksLists = ref<BlocksList>({});
@@ -17,13 +16,6 @@ const blocksListContext = ref<BlocksListContext>('');
  * ```
  */
 export const useBlocksList: UseBlocksListReturn = () => {
-  const route = useRoute();
-  const { data } = useCategoryTemplate(
-    route?.meta?.identifier as string,
-    route.meta.type as string,
-    useNuxtApp().$i18n.locale.value,
-  );
-
   /**
    * Sets the page context for block access control.
    * @param context - Page context: 'content' | 'productCategory' | 'product' | ''
@@ -70,16 +62,6 @@ export const useBlocksList: UseBlocksListReturn = () => {
   };
 
   /**
-   * Checks if a block exists on the current page (searches recursively).
-   * @param blockName - Block name to search for
-   */
-  const blockExistsOnPage = (blockName: string): boolean => {
-    const checkBlocks = (blocks: Block[]): boolean =>
-      blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
-    return checkBlocks(data.value);
-  };
-
-  /**
    * Checks if current page context has access to a block category.
    * Returns false unless access has been explicitly granted.
    * @param category - Block category to check
@@ -97,7 +79,6 @@ export const useBlocksList: UseBlocksListReturn = () => {
     setBlocksListContext,
     getBlocksLists,
     getBlockTemplateByLanguage,
-    blockExistsOnPage,
     pageHasAccessToCategory,
   };
 };

@@ -319,6 +319,12 @@ export const useBlockManager = () => {
     return isInsideMultiGrid && blockName !== 'EmptyGridBlock' && isRowHovered;
   };
 
+  const blockExistsOnPage = (blockName: string): boolean => {
+    const checkBlocks = (blocks: Block[]): boolean =>
+      blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
+    return checkBlocks(data.value);
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -349,5 +355,6 @@ export const useBlockManager = () => {
     getLazyLoadConfig,
     getLazyLoadRef,
     showBottomAddInGrid,
+    blockExistsOnPage,
   };
 };

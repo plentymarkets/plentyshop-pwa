@@ -97,13 +97,6 @@ export const mockSimpleBlocksList: BlocksList = {
 };
 
 export const setupNuxtMocks = () => {
-  mockNuxtImport('useRoute', () => () => ({
-    meta: {
-      identifier: 'test-category',
-      type: 'category',
-    },
-  }));
-
   mockNuxtImport('useNuxtApp', () => () => ({
     $i18n: {
       locale: {

@@ -62,12 +62,12 @@
 import { SfIconAdd, SfIconWarning, SfTooltip } from '@storefront-ui/vue';
 import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
 
-const { blocksLists, pageHasAccessToCategory, getBlocksLists, blockExistsOnPage } = useBlocksList();
+const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList();
 
 await getBlocksLists();
 
 const { drawerOpen } = useSiteConfiguration();
-const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth } = useBlockManager();
+const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
 const isNestedMultigrid = (category: BlockListCategory, uuid: string) => {
