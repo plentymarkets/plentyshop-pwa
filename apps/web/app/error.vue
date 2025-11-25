@@ -67,3 +67,7 @@ await callOnce(async () => {
   await setInitialDataSSR();
 });
 </script>
+
+<style lang="scss">
+@use '~/assets/style.scss';
+</style>

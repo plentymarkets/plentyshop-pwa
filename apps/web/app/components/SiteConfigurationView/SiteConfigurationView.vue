@@ -81,13 +81,9 @@ const runtimeConfig = useRuntimeConfig();
 
 const subCategories = computed(() => {
   const categories = getSubCategories(activeSetting.value);
+  const excludedSubCategories = runtimeConfig.public.disabledEditorSettings as string[];
 
-  if (!runtimeConfig.public.isDev) {
-    const excludedSubCategories = runtimeConfig.public.editorSettingsDevFlag as string[];
-    return categories.filter((subCategory) => !excludedSubCategories.includes(subCategory));
-  }
-
-  return categories;
+  return categories.filter((subCategory) => !excludedSubCategories.includes(subCategory));
 });
 
 setActiveSubCategory(
@@ -96,13 +92,9 @@ setActiveSubCategory(
 
 const groups = computed(() => {
   const allGroups = getSettingsGroups(activeSetting.value ?? '', activeSubCategory.value ?? '');
+  const excludedGroups = runtimeConfig.public.disabledEditorSettings as string[];
 
-  if (!runtimeConfig.public.isDev) {
-    const excludedGroups = runtimeConfig.public.editorSettingsDevFlag as string[];
-    return allGroups.filter((group) => !excludedGroups.includes(group.slug));
-  }
-
-  return allGroups;
+  return allGroups.filter((group) => !excludedGroups.includes(group.slug));
 });
 
 const messages: Messages = {};

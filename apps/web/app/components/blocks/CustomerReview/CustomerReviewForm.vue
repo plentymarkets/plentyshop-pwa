@@ -125,7 +125,11 @@ const props = defineProps<CustomerReviewProps>();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 
 const customerReview = computed<CustomerReviewContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;

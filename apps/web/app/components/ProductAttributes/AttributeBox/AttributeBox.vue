@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="leading-5 text-sm text-zinc-900">
+    <label for="attribute-box" class="leading-5 text-sm text-zinc-900">
       {{ productAttributeGetters.getAttributeName(attribute) }}
-    </div>
+    </label>
 
-    <div class="w-full flex gap-4 flex-wrap">
+    <div id="attribute-box" class="w-full flex gap-4 flex-wrap">
       <div
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
