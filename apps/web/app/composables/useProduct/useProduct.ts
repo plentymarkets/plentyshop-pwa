@@ -55,9 +55,18 @@ export const useProduct: UseProductReturn = (slug) => {
     useHandleError(error.value ?? null);
 
     const fetchedBlocks = data.value?.data.blocks;
-    await setupBlocks(
-      (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
-    );
+    let blocksToSetup: Block[];
+
+    if (fetchedBlocks && fetchedBlocks.length > 0) {
+      blocksToSetup = fetchedBlocks as Block[];
+    } else {
+      blocksToSetup = (useProductTemplateData() as Block[]).map((block) =>
+        setDynamicCategoryForDefaultRecommendedProducts(block, data.value?.data),
+      );
+    }
+
+    await setupBlocks(blocksToSetup);
+
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
     handlePreviewProduct(state, $i18n.locale.value);

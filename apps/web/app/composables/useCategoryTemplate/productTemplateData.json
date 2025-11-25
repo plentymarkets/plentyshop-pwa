@@ -185,9 +185,11 @@
       "isGlobalTemplate": false
     },
     "content": {
-      "text": {},
+      "text": {
+        "title": "Test"
+      },
       "source": {
-        "type": "cross_selling",
+        "type": "category",
         "itemId": "",
         "categoryId": "",
         "crossSellingRelation": "Similar"
