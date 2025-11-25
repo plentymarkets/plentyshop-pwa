@@ -29,8 +29,7 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const { disableActions } = useEditor();
-const { resetNotification } = useEditModeNotification(disableActions);
+
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
 );
@@ -121,10 +120,6 @@ watch(
 
 watchEffect(() => {
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
-});
-
-onBeforeRouteLeave(() => {
-  resetNotification();
 });
 
 useHead({
