@@ -14,7 +14,7 @@
           square
           class="rounded-r-none"
           :aria-controls="inputId"
-          :aria-label="t('quantitySelectorDecrease')"
+          :aria-label="t('product.decreaseQuantity')"
           data-testid="quantity-selector-decrease-button"
           @click="dec()"
         >
@@ -28,7 +28,7 @@
         square
         class="rounded-r-none"
         :aria-controls="inputId"
-        :aria-label="t('quantitySelectorDecrease')"
+        :aria-label="t('product.decreaseQuantity')"
         data-testid="quantity-selector-decrease-button"
         @click="dec()"
       >
@@ -44,7 +44,7 @@
         :max="maxValue"
         data-testid="quantity-selector-input"
         class="h-12"
-        :aria-label="t('quantitySelector')"
+        :aria-label="t('common.labels.quantitySelector')"
         :disabled="disabled"
         @input="handleOnChange"
       />
@@ -54,7 +54,7 @@
         square
         class="rounded-l-none"
         :aria-controls="inputId"
-        :aria-label="t('quantitySelectorIncrease')"
+        :aria-label="t('product.increaseQuantity')"
         data-testid="quantity-selector-increase-button"
         @click="inc()"
       >

@@ -48,7 +48,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('navigation.closeDialog')"
         type="button"
         square
         variant="tertiary"

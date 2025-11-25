@@ -105,7 +105,7 @@
                   target="_blank"
                   class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
-                  {{ t('privacyPolicy') }}
+                  {{ t('legal.privacyPolicy') }}
                 </SfLink>
               </template>
             </i18n-t>

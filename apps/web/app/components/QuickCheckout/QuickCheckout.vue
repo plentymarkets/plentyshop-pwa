@@ -14,7 +14,7 @@
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
         <UiButton
-          :aria-label="t('closeDialog')"
+          :aria-label="t('navigation.closeDialog')"
           data-testid="quick-checkout-close"
           square
           variant="tertiary"
@@ -60,17 +60,17 @@
         />
 
         <div class="mt-4 typography-text-xs flex gap-1">
-          <span>{{ t('asterisk') }}</span>
-          <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
-          <span v-else>{{ t('itemInclVAT') }}</span>
-          <i18n-t keypath="excludedShipping" scope="global">
+          <span>{{ t('common.labels.asterisk') }}</span>
+          <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
+          <span v-else>{{ t('product.priceInclVAT') }}</span>
+          <i18n-t keypath="shipping.excludedLabel" scope="global">
             <template #shipping>
               <SfLink
                 :href="localePath(paths.shipping)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ t('delivery') }}
+                {{ t('common.labels.delivery') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -106,7 +106,7 @@
           class="w-full mb-4 md:mb-0"
           @click="goToCheckout()"
         >
-          {{ t('goToCheckout') }}
+          {{ t('common.actions.goToCheckout') }}
         </UiButton>
         <OrDivider v-if="isPaypalAvailable('quickCheckout').value" class="my-4" />
         <PayPalExpressButton

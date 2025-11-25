@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('back')"
-    :back-label-mobile="t('back')"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
     :heading="t('offerForm.offer')"
   >
     <div v-if="offer" class="md:grid md:grid-cols-12 md:gap-x-6">
@@ -58,14 +58,14 @@
               @change="showTermsError = false"
             />
             <div>
-              <i18n-t keypath="termsInfo" scope="global">
+              <i18n-t keypath="legal.termsInfo" scope="global">
                 <template #terms>
                   <SfLink
                     :href="localePath(paths.termsAndConditions)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('termsAndConditions') }}
+                    {{ t('legal.termsAndConditions') }}
                   </SfLink>
                 </template>
                 <template #cancellationRights>
@@ -74,7 +74,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('cancellationRights') }}
+                    {{ t('legal.cancellationRights') }}
                   </SfLink>
                 </template>
                 <template #privacyPolicy>
@@ -83,13 +83,13 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('privacyPolicy') }}
+                    {{ t('legal.privacyPolicy') }}
                   </SfLink>
                 </template>
               </i18n-t>
             </div>
           </div>
-          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ t('termsRequired') }}</div>
+          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ t('legal.termsRequired') }}</div>
         </div>
       </div>
       <div class="col-span-5">
@@ -101,7 +101,7 @@
           <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <div class="border rounded-md p-4 shadow-lg">
             <div class="flex justify-between mb-4">
-              <p class="font-bold text-xl">{{ t('orderSummary') }}</p>
+              <p class="font-bold text-xl">{{ t('common.labels.orderSummary') }}</p>
               <p class="font-medium">
                 {{ t('itemsInCart', { count: offerGetters.getItemsCountInOffer(offer.order.orderItems) }) }}
               </p>
@@ -141,7 +141,7 @@
             aria-labelledby="address-modal-title"
           >
             <UiButton
-              :aria-label="t('closeAddressForm')"
+              :aria-label="t('navigation.closeAddressForm')"
               square
               variant="tertiary"
               class="absolute right-2 top-2"

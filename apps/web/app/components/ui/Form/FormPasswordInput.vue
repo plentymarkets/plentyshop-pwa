@@ -1,7 +1,7 @@
 <template>
   <SfInput :type="isPasswordVisible ? 'text' : 'password'" :minlength="minlength" :pattern="pattern">
     <template #suffix>
-      <button type="button" :aria-label="t('passwordVisibilty')" @click="isPasswordVisible = !isPasswordVisible">
+      <button type="button" :aria-label="t('accessibility.passwordVisibility')" @click="isPasswordVisible = !isPasswordVisible">
         <component :is="isPasswordVisible ? SfIconVisibilityOff : SfIconVisibility" />
       </button>
     </template>

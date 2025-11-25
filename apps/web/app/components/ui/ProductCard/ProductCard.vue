@@ -112,7 +112,7 @@
             <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
               <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
-              <span>{{ t('asterisk') }}</span>
+              <span>{{ t('common.labels.asterisk') }}</span>
             </span>
             <span
               v-if="crossedPrice && differentPrices(price, crossedPrice)"
@@ -136,7 +136,7 @@
               <SfIconShoppingCart size="sm" />
             </template>
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>{{ t('addToCartShort') }}</span>
+            <span v-else>{{ t('common.actions.add') }}</span>
           </UiButton>
           <UiButton
             v-else
@@ -147,7 +147,7 @@
             size="sm"
             class="w-fit"
           >
-            <span>{{ t('showOptions') }}</span>
+            <span>{{ t('common.actions.showOptions') }}</span>
           </UiButton>
         </template>
       </template>
@@ -267,7 +267,7 @@ const addWithLoader = async (productId: number, quickCheckout = true) => {
     if (quickCheckout) {
       openQuickCheckout(product.value, 1);
     } else {
-      send({ message: t('addedToCart'), type: 'positive' });
+      send({ message: t('cart.itemAdded'), type: 'positive' });
     }
   } finally {
     loading.value = false;

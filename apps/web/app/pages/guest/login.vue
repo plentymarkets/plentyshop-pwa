@@ -1,8 +1,8 @@
 <template>
-  <NuxtLayout name="checkout" :back-label-desktop="t('back')" :back-label-mobile="t('back')" :heading="t('checkout')">
+  <NuxtLayout name="checkout" :back-label-desktop="t('common.actions.back')" :back-label-mobile="t('common.actions.back')" :heading="t('common.labels.checkout')">
     <div class="md:w-full md:flex md:justify-center">
       <div class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-2/3 lg:w-1/2 3xl:w-2/5">
-        <h2 class="font-bold text-lg">{{ t('guestCheckout') }}</h2>
+        <h2 class="font-bold text-lg">{{ t('checkout.guestCheckout') }}</h2>
 
         <UiButton
           data-testid="guest-checkout-button"
@@ -10,7 +10,7 @@
           :to="localePath(paths.checkout)"
           class="w-full my-4"
         >
-          {{ t('continueAsGuest') }}
+          {{ t('checkout.continueAsGuest') }}
         </UiButton>
 
         <OrDivider />
@@ -26,7 +26,7 @@
         </template>
 
         <form :class="{ 'mt-4': isAvailable('guestLoginPage').value }" @submit.prevent="loginUser">
-          <h2 class="font-bold text-lg">{{ t('loginFastCheckout') }}</h2>
+          <h2 class="font-bold text-lg">{{ t('checkout.loginFastCheckout') }}</h2>
 
           <label>
             <UiFormLabel class="w-full mt-4">{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
@@ -63,7 +63,7 @@
       >
         <header>
           <UiButton
-            :aria-label="t('closeDialog')"
+            :aria-label="t('navigation.closeDialog')"
             square
             variant="tertiary"
             class="absolute right-2 top-2"

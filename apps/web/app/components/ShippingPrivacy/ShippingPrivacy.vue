@@ -13,7 +13,7 @@
       {{ t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
     </label>
   </div>
-  <div v-if="showErrors" class="text-negative-700 text-sm mb-4">{{ t('privacyPolicyRequired') }}</div>
+  <div v-if="showErrors" class="text-negative-700 text-sm mb-4">{{ t('legal.privacyPolicyRequired') }}</div>
 </template>
 
 <script lang="ts" setup>

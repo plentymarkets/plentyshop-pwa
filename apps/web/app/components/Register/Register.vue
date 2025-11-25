@@ -42,7 +42,7 @@
         <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="password"
-          :title="t('invalidPassword')"
+          :title="t('validation.invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-bind="passwordAttributes"
@@ -56,7 +56,7 @@
         <UiFormLabel>{{ t('form.repeatPasswordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="repeatPassword"
-          :title="t('invalidPassword')"
+          :title="t('validation.invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-bind="repeatPasswordAttributes"
@@ -105,7 +105,7 @@
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ t('privacyPolicy') }}
+                {{ t('legal.privacyPolicy') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -204,7 +204,7 @@ const validationSchema = toTypedSchema(
           return value === passwordValue;
         })
         .default(''),
-      privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
+      privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
           ? string().required(t('errorMessages.turnstileRequired')).default('')

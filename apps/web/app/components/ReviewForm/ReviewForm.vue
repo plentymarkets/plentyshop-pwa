@@ -10,7 +10,7 @@
         </template>
       </h3>
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -64,7 +64,7 @@
         <UiFormLabel for="review-message" class="mt-4">
           <template v-if="isReplyUpdateModal">
             {{ t('review.yourAnswer') }}
-            {{ t('asterisk') }}
+            {{ t('common.labels.asterisk') }}
           </template>
           <template v-else-if="isCreateReviewModal || isUpdateReviewModal">
             {{ t('review.reviewText') }}

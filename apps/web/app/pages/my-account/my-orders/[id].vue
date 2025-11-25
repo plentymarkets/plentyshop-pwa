@@ -15,7 +15,7 @@
           square
           variant="tertiary"
           :tag="NuxtLink"
-          :aria-label="t('closeDialog')"
+          :aria-label="t('navigation.closeDialog')"
           :to="localePath(paths.accountMyOrders)"
           class="md:absolute md:top-2 md:right-2"
         >

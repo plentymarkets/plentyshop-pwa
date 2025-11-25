@@ -20,12 +20,14 @@
         <span v-if="manufacturerInfo.town"> {{ manufacturerInfo.town }},&nbsp;</span>
         {{ manufacturerInfo.country }}
       </p>
-      <p v-if="manufacturerInfo.phoneNumber">{{ t('phone') }}: {{ manufacturerInfo.phoneNumber }}</p>
-      <p v-if="manufacturerInfo.faxNumber">{{ t('fax') }}: {{ manufacturerInfo.faxNumber }}</p>
-      <p v-if="manufacturerInfo.email">{{ t('email') }}: {{ manufacturerInfo.email }}</p>
-      <p v-if="manufacturerInfo.contactUrl">{{ t('contactUrl') }}: {{ manufacturerInfo.contactUrl }}</p>
+      <p v-if="manufacturerInfo.phoneNumber">{{ t('common.labels.phone') }}: {{ manufacturerInfo.phoneNumber }}</p>
+      <p v-if="manufacturerInfo.faxNumber">{{ t('manufacturer.fax') }}: {{ manufacturerInfo.faxNumber }}</p>
+      <p v-if="manufacturerInfo.email">{{ t('common.labels.email') }}: {{ manufacturerInfo.email }}</p>
+      <p v-if="manufacturerInfo.contactUrl">{{ t('manufacturer.contactUrl') }}: {{ manufacturerInfo.contactUrl }}</p>
       <p v-if="manufacturerInfo.url">
-        <NuxtLink :to="manufacturerInfo.url" target="_blank">{{ t('homepage') }}: {{ manufacturerInfo.url }}</NuxtLink>
+        <NuxtLink :to="manufacturerInfo.url" target="_blank"
+          >{{ t('manufacturer.homepage') }}: {{ manufacturerInfo.url }}</NuxtLink
+        >
       </p>
     </div>
   </div>

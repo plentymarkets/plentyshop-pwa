@@ -23,7 +23,7 @@
             @edit="edit"
           />
 
-          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('editAddress')">
+          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('address.edit')">
             <UiButton
               :disabled="!hasCheckoutAddress || saveAddressLoading || disabled"
               variant="secondary"

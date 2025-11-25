@@ -115,7 +115,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .trim()
         .required(t('errorMessages.requiredField'))
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
-      privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
+      privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
           ? string()
