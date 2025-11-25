@@ -10,9 +10,11 @@
         />
 
         <div>
-          <div v-if="typeof notification.message === 'string'" class="typography-text-sm">
-            {{ notification.message }}
-          </div>
+          <div
+            v-if="typeof notification.message === 'string'"
+            class="typography-text-sm"
+            v-html="notification.message"
+          />
           <div
             v-for="message in notification.message"
             v-else
