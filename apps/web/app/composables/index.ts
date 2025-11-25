@@ -18,6 +18,7 @@ export * from './useAggregatedCountries';
 export * from './useAgreementCheckbox';
 export * from './useApplePay';
 export * from './useBlockManager';
+export * from './useBlocksList';
 export * from './useCanonical';
 export * from './useCarousel';
 export * from './useCart';

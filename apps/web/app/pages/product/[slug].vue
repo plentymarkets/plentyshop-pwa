@@ -50,7 +50,7 @@ import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
-const { setBlocksListContext } = useBlockManager();
+const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
