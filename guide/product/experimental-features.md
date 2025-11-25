@@ -32,7 +32,7 @@ Date removed: -
 
 ## History
 
-## Blockified Item Category Page
+### Blockified Item Category Page
 
 Date added: 02 October 2025 <br />
 Date removed: 20 November 2025
