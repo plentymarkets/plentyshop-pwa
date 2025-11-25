@@ -22,5 +22,7 @@ export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string
         name1: exampleProductName + (ind + 1),
       },
     }));
+
+    sendFakeDataNotification();
   }
 };
