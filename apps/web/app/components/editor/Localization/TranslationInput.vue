@@ -1,5 +1,8 @@
 <template>
-  <div class="w-64 flex-shrink-0 m-1 mr-2 group relative">
+  <div
+    class="w-64 min-w-64 flex-shrink-0 m-1 mr-2 group relative last:mr-0"
+    :class="{ '!w-[calc(50%-12px)]': selectedLocales.length === 2 }"
+  >
     <textarea
       v-if="translation?.input !== undefined"
       :id="`translation-${rowKey}-${lang}`"
@@ -50,6 +53,7 @@ import type { TranslationInputProps, TranslationInputEmits } from './types';
 const props = defineProps<TranslationInputProps>();
 const emit = defineEmits<TranslationInputEmits>();
 const localValue = ref(props.translation?.input ?? '');
+const { selectedLocales } = useEditorLocalizationLocales();
 
 watch(
   () => props.translation?.input,
