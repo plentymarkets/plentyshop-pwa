@@ -26,8 +26,8 @@ export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string
     const { send } = useNotification();
     send({
       type: 'warning',
-      message: `<strong>Example Data in Edit Mode</strong><br>
-        Fields without product data are shown with example data for editing purposes. To view only real data, please click the preview link.`,
+      message:
+        'Example Data in Edit Mode: Fields without product data are shown with example data for editing purposes. To view only real data, please click the preview link.',
     });
   }
 };
