@@ -29,4 +29,5 @@ For additional details, refer to the following guide:
 
 ## References
 
+- [Custom API Endpoints](/guide/how-to/custom-api-endpoints.md)
 - [Alokai: Middleware](https://docs.alokai.com/middleware)

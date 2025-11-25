@@ -30,10 +30,6 @@
       {
         "text": "Bot protection",
         "link": "/guide/how-to/bot-protection.md"
-      },
-      {
-        "text": "Customer wish",
-        "link": "/guide/how-to/customer-wish.md"
       }
     ]
   },
@@ -60,6 +56,10 @@
       {
         "text": "Currency Formatter",
         "link": "/guide/how-to/currency-formatter.md"
+      },
+      {
+        "text": "Custom API Endpoints",
+        "link": "/guide/how-to/custom-api-endpoints.md"
       }
     ]
   },
