@@ -193,8 +193,11 @@ import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/Purcha
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
-console.log('data in PriceCardForm', data);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 

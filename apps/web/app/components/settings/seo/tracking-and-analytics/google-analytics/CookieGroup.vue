@@ -1,6 +1,7 @@
 <template>
   <div class="py-2">
-    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
+    <p class="mb-4">{{ getEditorTranslation('description1') }}</p>
+    <p class="mb-4">{{ getEditorTranslation('description2') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
     </div>
@@ -43,12 +44,14 @@ const googleAnalyticsCookieGroup = computed({
 {
   "en": {
     "label": "Cookie Group",
-    "description": "Control if and how you want to use Google Analytics. \n When using Google Analytics, you are obliged to inform visitors about the type of use of the data. We would like to point out that when using services that transfer personal data to a third country (e.g. USA), the conditions for permissible data transfer according to Art. 44 ff GDPR must be met. This is the case, for example, when Google Analytics is used.",
+    "description1": "⚠️ This group of settings will require a shop redeploy to take effect.",
+    "description2": "Control if and how you want to use Google Analytics. \n When using Google Analytics, you are obliged to inform visitors about the type of use of the data. We would like to point out that when using services that transfer personal data to a third country (e.g. USA), the conditions for permissible data transfer according to Art. 44 ff GDPR must be met. This is the case, for example, when Google Analytics is used.",
     "placeholder": "Select Cookie Group"
   },
   "de": {
     "label": "Cookie Group",
-    "description": "Control if and how you want to use Google Analytics. \n When using Google Analytics, you are obliged to inform visitors about the type of use of the data. We would like to point out that when using services that transfer personal data to a third country (e.g. USA), the conditions for permissible data transfer according to Art. 44 ff GDPR must be met. This is the case, for example, when Google Analytics is used.",
+    "description1": "⚠️ This group of settings will require a shop redeploy to take effect.",
+    "description2": "Control if and how you want to use Google Analytics. \n When using Google Analytics, you are obliged to inform visitors about the type of use of the data. We would like to point out that when using services that transfer personal data to a third country (e.g. USA), the conditions for permissible data transfer according to Art. 44 ff GDPR must be met. This is the case, for example, when Google Analytics is used.",
     "placeholder": "Select Cookie Group"
   }
 }

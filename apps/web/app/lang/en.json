@@ -417,7 +417,8 @@
     "Return Note": "Return Note",
     "Reversal Document": "Reversal Document",
     "Success Confirmation": "Success Confirmation",
-    "correctionDocuments": "Correction Documents"
+    "correctionDocuments": "Correction Documents",
+    "downloadFailed": "Downloading the document failed. Please try again later."
   },
   "editAddress": "Edit address",
   "editMode": {
@@ -629,6 +630,7 @@
       "ariaLabelSlideControls": "Slide controls",
       "ariaLabelNextSlide": "Next slide",
       "ariaLabelPreviousSlide": "Previous slide",
+      "ariaLabelSlidePosition": "Slide {current} of {total}",
       "ariaRoleDescriptionCarousel": "Carousel",
       "ariaRoleDescriptionSlide": "Slide"
     },
@@ -703,7 +705,7 @@
     "vn": "Vietnamese"
   },
   "languageSelector": "Open language select",
-  "legalDetails": "EU Responsible Person - click for details",
+  "legalDetails": "Legal information - click for details",
   "listSettings": "List settings",
   "loading": "Loading...",
   "loadingReviews": "Loading Reviews...",
@@ -1133,7 +1135,8 @@
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "security": {
-      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page."
+      "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page.",
+      "tooManyRequests": "Too many actions have been made in a short period of time. Please try again later."
     },
     "unknownError": "An unknown error has occurred."
   },

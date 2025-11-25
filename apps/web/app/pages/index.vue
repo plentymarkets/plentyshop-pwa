@@ -14,6 +14,7 @@ definePageMeta({
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
+  middleware: ['newsletter-confirmation-client'],
 });
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
@@ -23,7 +24,13 @@ const { $i18n } = useNuxtApp();
 const { t } = useI18n();
 
 const { setPageMeta } = usePageMeta();
-const { setDefaultTemplate } = useCategoryTemplate();
+const route = useRoute();
+const { setDefaultTemplate } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
+
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
 

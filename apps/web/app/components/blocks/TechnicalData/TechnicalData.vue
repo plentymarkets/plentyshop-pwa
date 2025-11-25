@@ -2,6 +2,7 @@
   <div :style="inlineStyle" data-testid="technical-data-block">
     <div v-if="displayAsCollapsable">
       <UiAccordionItem
+        v-if="text"
         v-model="initiallyCollapsed"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
         data-testid="technical-data"
@@ -33,7 +34,6 @@ const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollap
 const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
 const text = computed(() => productGetters.getTechnicalData(currentProduct.value));
-
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
   return {

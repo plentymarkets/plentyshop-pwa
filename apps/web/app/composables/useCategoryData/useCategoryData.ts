@@ -6,7 +6,11 @@ declare const getEditorTranslation: (key: string) => string;
 
 export const useCategoryData = () => {
   const route = useRoute();
-  const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+  const { data } = useCategoryTemplate(
+    route?.meta?.identifier as string,
+    route.meta.type as string,
+    useNuxtApp().$i18n.locale.value,
+  );
 
   const { blockUuid } = useSiteConfiguration();
   const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -109,12 +113,12 @@ export const useCategoryData = () => {
       else el.classList.add('max-w-screen-3xl');
     }, 100);
   };
-
   onMounted(() => {
     watch(
       () => categoryDataBlock.value.image?.fillMode,
       (newMode) => {
-        if (newMode === 'fill') {
+        const display = categoryDataBlock.value.displayCategoryImage;
+        if (newMode === 'fill' && display !== 'off') {
           categoryDataBlock.value.layout.paddingTop = 0;
           categoryDataBlock.value.layout.paddingBottom = 0;
           categoryDataBlock.value.layout.paddingLeft = 0;

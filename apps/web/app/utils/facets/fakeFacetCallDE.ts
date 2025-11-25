@@ -1,4 +1,4 @@
-export const facetMock = {
+export const fakeFacetCallDE = {
   data: {
     category: {
       id: 17,
@@ -81,7 +81,7 @@ export const facetMock = {
       },
       {
         id: 6,
-        name: 'Example Customized Filter 1',
+        name: 'Bsp individueller Filter 1',
         cssClass: '',
         position: 1,
         sort: 'position',
@@ -139,7 +139,7 @@ export const facetMock = {
       },
       {
         id: 2,
-        name: 'Example Customized Filter 2',
+        name: 'Bsp individueller Filter 2',
         cssClass: '',
         position: 2,
         sort: 'position',
@@ -210,12 +210,12 @@ export const facetMock = {
     ],
     languageUrls: {
       'x-default': '/living-room/armchair-stool/',
-      de: '/wohnzimmer/sessel-hocker/',
-      en: '/living-room/armchair-stool/',
+      de: '/',
+      en: '/',
     },
     pagination: {
       perPageOptions: [20, 40, 100],
-      totals: 1,
+      totals: 8,
     },
   },
 };

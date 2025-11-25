@@ -64,9 +64,9 @@ import type { Category, Variation } from '~/components/BlocksNavigationList/type
 const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
   useBlockManager();
 getBlocksLists();
+
 const { drawerOpen } = useSiteConfiguration();
 const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
-const runtimeConfig = useRuntimeConfig();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
 const isNestedMultigrid = (category: Category, uuid: string) => {
@@ -95,13 +95,11 @@ const blockPosition = computed(() => {
 });
 
 const pageHasAccessToCategory = (category: Category) => {
-  if (runtimeConfig.public.isDev) {
-    return true;
-  }
-
   if (blocksListContext.value) {
     const accessControl = category.accessControl || null;
     return accessControl?.includes(blocksListContext.value);
   }
+
+  return false;
 };
 </script>
