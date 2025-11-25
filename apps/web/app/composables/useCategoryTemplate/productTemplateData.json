@@ -103,7 +103,6 @@
       "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c522",
       "isGlobalTemplate": false
     },
-    "parent_slot": 0,
     "content": {
       "text": {
         "title": "Item details"
@@ -125,7 +124,6 @@
       "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c523",
       "isGlobalTemplate": false
     },
-    "parent_slot": 0,
     "content": {
       "text": {
         "title": "Technical Data"
@@ -147,7 +145,6 @@
       "uuid": "c1a2c3d3-5e6q-4a7b-8c9j-0e1f2a3b4c5l",
       "isGlobalTemplate": false
     },
-    "parent_slot": 0,
     "content": {
       "text": {
         "title": "Customer Reviews"
@@ -165,7 +162,6 @@
       "uuid": "c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l",
       "isGlobalTemplate": false
     },
-    "parent_slot": 0,
     "content": {
       "text": {
         "title": "Item legal details",
