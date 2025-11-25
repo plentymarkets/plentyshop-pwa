@@ -1,4 +1,6 @@
-export const useEditModeNotification = (disableActions: Ref<boolean>) => {
+import type { UseEditModeNotificationReturn } from './types';
+
+export const useEditModeNotification = (disableActions: Ref<boolean>): UseEditModeNotificationReturn => {
   const { send } = useNotification();
   const notificationShown = ref(false);
   const prevDisableActions = ref(disableActions.value);
