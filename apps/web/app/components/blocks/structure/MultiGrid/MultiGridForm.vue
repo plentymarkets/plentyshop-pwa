@@ -19,6 +19,8 @@
           />
         </div>
 
+        <FullWidthToggle />
+
         <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
