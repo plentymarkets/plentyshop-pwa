@@ -55,17 +55,9 @@ export const useProduct: UseProductReturn = (slug) => {
     useHandleError(error.value ?? null);
 
     const fetchedBlocks = data.value?.data.blocks;
-    let blocksToSetup: Block[];
-
-    if (fetchedBlocks && fetchedBlocks.length > 0) {
-      blocksToSetup = fetchedBlocks as Block[];
-    } else {
-      blocksToSetup = (useProductTemplateData() as Block[]).map((block) =>
-        withRecommendedCategoryId(block, data.value?.data ?? ({} as Product)),
-      );
-    }
-
-    await setupBlocks(blocksToSetup);
+    await setupBlocks(
+      (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
+    );
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
