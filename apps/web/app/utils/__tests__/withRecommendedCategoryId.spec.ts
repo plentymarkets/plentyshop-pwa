@@ -7,7 +7,7 @@ vi.mock('@plentymarkets/shop-api', () => ({
   },
 }));
 
-const PRODUCT_RECOMMENDED_PRODUCTS_UUID = 'g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c';
+const DEFAULT_PRODUCT_RECOMMENDED_PRODUCTS_UUID = 'g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c';
 
 type ProductWithCategories = Product & { categories: string[] };
 
@@ -16,7 +16,7 @@ describe('withRecommendedCategoryId', () => {
     const block: Block = {
       name: 'ProductRecommendedProducts',
       type: 'content',
-      meta: { uuid: PRODUCT_RECOMMENDED_PRODUCTS_UUID },
+      meta: { uuid: DEFAULT_PRODUCT_RECOMMENDED_PRODUCTS_UUID },
       content: {
         source: {
           categoryId: '',
@@ -55,7 +55,7 @@ describe('withRecommendedCategoryId', () => {
     const block: Block = {
       name: 'ProductRecommendedProducts',
       type: 'content',
-      meta: { uuid: PRODUCT_RECOMMENDED_PRODUCTS_UUID },
+      meta: { uuid: DEFAULT_PRODUCT_RECOMMENDED_PRODUCTS_UUID },
       content: {},
     };
     const product = { categories: ['123', '456'] } as ProductWithCategories;
@@ -69,7 +69,7 @@ describe('withRecommendedCategoryId', () => {
     const block: Block = {
       name: 'ProductRecommendedProducts',
       type: 'content',
-      meta: { uuid: PRODUCT_RECOMMENDED_PRODUCTS_UUID },
+      meta: { uuid: DEFAULT_PRODUCT_RECOMMENDED_PRODUCTS_UUID },
       content: {
         source: {
           categoryId: '',
