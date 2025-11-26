@@ -17,7 +17,7 @@ export default defineVitestConfig({
         branches: 95,
         lines: 80,
         statements: 80,
-      }
+      },
     },
     testTimeout: 6000,
     environment: 'nuxt',
