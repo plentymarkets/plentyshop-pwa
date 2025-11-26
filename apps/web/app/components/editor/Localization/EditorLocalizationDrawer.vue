@@ -13,12 +13,7 @@
     </div>
 
     <div class="p-4">
-      <SfInput
-        v-model="searchTerm"
-        :aria-label="t('search')"
-        :placeholder="t('search')"
-        @input="debouncedSearchTerm"
-      >
+      <SfInput v-model="searchTerm" :aria-label="t('search')" :placeholder="t('search')" @input="debouncedSearchTerm">
         <template #prefix>
           <SfIconSearch />
         </template>
@@ -43,7 +38,7 @@
           <div class="flex overflow-hidden" style="height: calc(100% - 52px)">
             <div ref="leftScroll" class="flex-shrink-0 scrollbar-thin overflow-y-auto z-10">
               <div class="flex flex-col">
-                <div v-for="row in (filteredKeys ?? keys)" :key="row.key" class="flex h-12 text-xs">
+                <div v-for="row in filteredKeys ?? keys" :key="row.key" class="flex h-12 text-xs">
                   <div class="w-96 overflow-hidden border-r flex items-center">
                     <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700">
                       {{ getCategoryFromKey(row.key) }}
@@ -57,7 +52,7 @@
             <!-- Scrollable Right Content -->
             <div ref="contentScroll" class="flex-1 overflow-auto scrollbar-thin">
               <div class="flex flex-col">
-                <div v-for="row in (filteredKeys ?? keys)" :key="row.key" class="flex h-12">
+                <div v-for="row in filteredKeys ?? keys" :key="row.key" class="flex h-12">
                   <EditorLocalizationTranslationInput
                     v-for="lang in selectedLocales"
                     :key="`${row.key}-${lang}`"
@@ -85,7 +80,8 @@ import { useDebounceFn } from '@vueuse/core';
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
-const { keys, filteredKeys, filterKeys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } = useEditorLocalizationKeys();
+const { keys, filteredKeys, filterKeys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } =
+  useEditorLocalizationKeys();
 const searchTerm = ref('');
 const languages = computed(() => {
   return selectedLocales.value

@@ -19,7 +19,7 @@ export const getLocales = (): LocaleObject[] => {
     { code: 'lt', file: 'lt.ts' },
     { code: 'lv', file: 'lv.ts' },
     { code: 'nl', file: 'nl.ts' },
-    { code: 'no', file: 'no.ts' },
+    { code: 'nn', file: 'nn.ts' },
     { code: 'pl', file: 'pl.ts' },
     { code: 'pt', file: 'pt.ts' },
     { code: 'ro', file: 'ro.ts' },

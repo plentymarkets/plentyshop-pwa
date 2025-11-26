@@ -1,5 +1,5 @@
 import { defineI18nLocale } from '#i18n';
-import translations from './no.json';
+import translations from './nn.json';
 
 export default defineI18nLocale(async () => {
   const config = useRuntimeConfig().public;

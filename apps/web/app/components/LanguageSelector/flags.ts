@@ -42,7 +42,7 @@ export const flagImports: FlagImports = {
   nl: NL as string,
   pl: PL as string,
   pt: PT as string,
-  no: NO as string,
+  nn: NO as string,
   ro: RO as string,
   dk: DK as string,
   se: SE as string,
