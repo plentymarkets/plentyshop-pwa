@@ -24,7 +24,7 @@ dist
 .data
 
 # testing
-#coverage/web/*
+coverage
 
 # misc
 .DS_Store
