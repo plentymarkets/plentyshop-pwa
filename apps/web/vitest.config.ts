@@ -12,6 +12,12 @@ export default defineVitestConfig({
       reporter: ['text', 'html', 'json-summary', 'json'],
       exclude: [...coverageConfigDefaults.exclude, 'assets/**', 'build/**'],
       reportOnFailure: true,
+      thresholds: {
+        functions: 80,
+        branches: 95,
+        lines: 80,
+        statements: 80,
+      }
     },
     testTimeout: 6000,
     environment: 'nuxt',

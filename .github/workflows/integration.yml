@@ -79,7 +79,22 @@ jobs:
 
       - name: Run linter
         run: npm run lint
-  test-unit:
+  test-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Unit test coverage
+        run: npm run test:coverage
+      - name: 'Report Coverage'
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: './apps/web/app'
+  unit-test:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -88,12 +103,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Unit tests
-        run: npm run test:coverage
-      - name: 'Report Coverage'
-        if: always()
-        uses: davelosert/vitest-coverage-report-action@v2
-        with:
-          working-directory: './apps/web/app'
+        run: npm run test
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
