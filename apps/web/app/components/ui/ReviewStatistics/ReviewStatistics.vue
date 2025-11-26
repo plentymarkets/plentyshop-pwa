@@ -15,7 +15,9 @@
             {{ reviewAverageText }}
           </h3>
         </div>
-        <p class="text-xs text-center" data-testid="review-count">{{ t('basedOnratings', { count: totalReviews }) }}</p>
+        <p class="text-xs text-center" data-testid="review-count">
+          {{ t('product.basedOnRatings', { count: totalReviews }) }}
+        </p>
         <UiButton
           data-testid="add-review-button"
           class="mt-2 mb-4 mx-auto"

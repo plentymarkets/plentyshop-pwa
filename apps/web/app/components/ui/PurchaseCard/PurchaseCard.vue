@@ -23,7 +23,7 @@
                   class="m-auto"
                 >
                   <UiTag :size="'sm'" :variant="'secondary'">{{
-                    t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+                    t('product.bundleSavings', { percent: productBundleGetters.getBundleDiscount(product) })
                   }}</UiTag>
                 </div>
               </div>

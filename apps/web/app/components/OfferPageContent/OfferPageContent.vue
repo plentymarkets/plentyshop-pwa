@@ -103,7 +103,7 @@
             <div class="flex justify-between mb-4">
               <p class="font-bold text-xl">{{ t('common.labels.orderSummary') }}</p>
               <p class="font-medium">
-                {{ t('itemsInCart', { count: offerGetters.getItemsCountInOffer(offer.order.orderItems) }) }}
+                {{ t('cart.itemCount', { count: offerGetters.getItemsCountInOffer(offer.order.orderItems) }) }}
               </p>
             </div>
             <!-- @TODO: Fix typing -->

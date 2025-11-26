@@ -3,7 +3,7 @@
     <div class="flex justify-between items-end py-2 px-4 md:px-6 md:pt-6 md:pb-4">
       <h2 class="typography-headline-4 font-bold md:typography-headline-3">{{ t('common.labels.orderSummary') }}</h2>
       <p class="typography-text-base font-medium" data-testid="total-in-cart">
-        {{ t('itemsInCart', { count: cartItemsCount }) }}
+        {{ t('cart.itemCount', { count: cartItemsCount }) }}
       </p>
     </div>
 
@@ -33,7 +33,9 @@
           </p>
           <p v-if="cartGetters.getCouponDiscount(props.cart)" data-testid="coupon-label">{{ t('coupon.name') }}</p>
           <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat-label">
-            {{ showNetPrices ? t('common.labels.excludedTax') : t('common.labels.includedTax') }} ({{ cartGetters.getTotalVatValue(vat) }}%)
+            {{ showNetPrices ? t('common.labels.excludedTax') : t('common.labels.includedTax') }} ({{
+              cartGetters.getTotalVatValue(vat)
+            }}%)
           </p>
         </div>
         <div v-if="showNetPrices" class="flex flex-col gap-1 text-right">
