@@ -235,8 +235,11 @@ const unitName = computed(() => productGetters.getUnitName(product.value));
 const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
 
 const variationId = computed(() => productGetters.getVariationId(product.value));
-
+const { isGlobalProductCategoryTemplate } = useProducts();
 const productPath = computed(() => {
+  if (isGlobalProductCategoryTemplate.value) {
+    return '/item-template-page';
+  }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
   const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product.value) === 1;
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);

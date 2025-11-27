@@ -16,7 +16,7 @@
     <p class="mb-6">{{ getModalText() }}</p>
     <p class="mb-6">{{ getEditorTranslation('resetConfirmation') }}</p>
     <div class="flex items-center justify-between gap-4">
-      <UiButton variant="secondary" class="w-full">Cancel</UiButton>
+      <UiButton variant="secondary" class="w-full" @click="closeModal">Cancel</UiButton>
       <UiButton variant="primary" class="w-full">Reset to default</UiButton>
     </div>
   </UiModal>
