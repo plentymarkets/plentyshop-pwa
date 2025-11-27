@@ -436,7 +436,7 @@
       <template #summary>
         <h2>{{ getEditorTranslation('layout-label') }}</h2>
       </template>
-
+      <FullWidthToggle />
       <div
         class="py-2"
         :class="

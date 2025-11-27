@@ -224,6 +224,8 @@
       />
     </div>
 
+    <FullWidthToggle />
+
     <div v-if="!isTransparent" class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>

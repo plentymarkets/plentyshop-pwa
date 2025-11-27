@@ -132,6 +132,17 @@
         </SfInput>
       </div>
     </UiAccordionItem>
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+      </template>
+
+      <FullWidthToggle />
+    </UiAccordionItem>
   </div>
 </template>
 
@@ -143,6 +154,7 @@ import { initializeNewsletterContent } from './utils';
 const textGroup = ref(true);
 const buttonGroup = ref(true);
 const settingsGroup = ref(true);
+const layoutOpen = ref(true);
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -177,7 +189,8 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     "button-text-placeholder": "label",
     "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "layout-label": "Layout"
   },
   "de": {
     "text-group-label": "Text",
@@ -194,7 +207,8 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
     "button-text-placeholder": "label",
     "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "layout-label": "Layout"
   }
 }
 </i18n>

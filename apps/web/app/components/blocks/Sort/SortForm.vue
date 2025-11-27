@@ -7,6 +7,7 @@
     <template #summary>
       <h2 data-testid="sort-form-layout-label">{{ getEditorTranslation('layout-label') }}</h2>
     </template>
+    <FullWidthToggle />
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
         {{ getEditorTranslation('show-selectionModeCompact-label') }}
