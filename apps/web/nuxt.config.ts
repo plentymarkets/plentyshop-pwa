@@ -66,6 +66,7 @@ export default defineNuxtConfig({
     build: {
       rollupOptions: {
         output: {
+          experimentalMinChunkSize: Number(process.env.MIN_CHUNK_SIZE) || 1,
           manualChunks: {
             vuetify: ['vuetify', '@mdi/js'],
           },
