@@ -2,10 +2,10 @@ import type { UseFullWidthToggleReturn } from './types';
 
 /**
  * Composable to manage full-width toggle state for blocks.
- * 
+ *
  * @param block - A computed or ref containing the block data with optional layout property
  * @returns Computed ref for two-way binding to FullWidthToggle component
- * 
+ *
  * @example
  * ```ts
  * const newsletterBlock = computed(() => findBlock(...));
