@@ -25,6 +25,7 @@ const itemId = computed(() =>
 );
 
 const firstCategoryId = categoryTree.value?.find((category) => category.type === 'item')?.id || '';
+const categoryId = productGetters.getCategoryIds(currentProduct.value)[0] ?? '';
 
 const shouldRenderAfterUpdate = ref(false);
 
@@ -38,7 +39,10 @@ const shouldFetch = computed(() => shouldRender.value && (isCategory.value || is
 const getContentSource = () => {
   return {
     ...props.content.source,
-    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString(), itemId: itemId.value },
+    ...{
+      categoryId: props.content.source?.categoryId || (categoryId || firstCategoryId || '').toString(),
+      itemId: itemId.value,
+    },
   };
 };
 
