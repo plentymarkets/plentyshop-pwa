@@ -46,13 +46,6 @@ import type { DragEvent, EditablePageProps } from './types';
 
 export interface BlockLayout {
   fullWidth?: boolean;
-  narrowContainer?: boolean;
-  marginTop?: number;
-  marginBottom?: number;
-  marginLeft?: number;
-  marginRight?: number;
-  backgroundColor?: string;
-  gap?: string;
 }
 
 export interface Block {
@@ -215,18 +208,11 @@ const isExcluded = (blockName: string, excludedSet: Set<string>) => {
 
 const getBlockClass = (block: Block) =>
   computed(() => {
-    // const hasFullWidth =
-    //   (block?.content as { layout?: { fullWidth?: boolean } })?.layout?.fullWidth ||
-    //   (block as { layout?: { fullWidth?: boolean } })?.layout?.fullWidth ||
-    //   false;
-
     const hasFullWidth = block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? false;
-    // const hasFullWidth2 = block.layout?.fullWidth ?? false;
-    console.log('hasFullWidth:', hasFullWidth);
 
     return {
-      // Remove max-width constraint if fullWidth is enabled OR block is in excluded set
-      'max-w-screen-3xl mx-auto mt-3': !hasFullWidth && !isExcluded(block.name, containerExcludedBlockSet),
+      'max-w-screen-3xl': !hasFullWidth && !isExcluded(block.name, containerExcludedBlockSet),
+      'mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
       'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
     };
   });
