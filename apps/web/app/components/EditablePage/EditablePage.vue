@@ -48,10 +48,15 @@ export interface BlockLayout {
   fullWidth?: boolean;
 }
 
+export interface BlockConfiguration {
+  layout?: BlockLayout;
+  [key: string]: unknown;
+}
+
 export interface Block {
   name: string;
   type: string;
-  configuration?: unknown;
+  configuration?: BlockConfiguration;
   meta: {
     uuid: string;
     isGlobalTemplate?: boolean;
@@ -192,7 +197,7 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
-const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid', 'CategoryData']);
+const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'CategoryData']);
 const paddingExcludedBlockSet = new Set([
   'Banner',
   'Carousel',
@@ -208,7 +213,8 @@ const isExcluded = (blockName: string, excludedSet: Set<string>) => {
 
 const getBlockClass = (block: Block) =>
   computed(() => {
-    const hasFullWidth = block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? false;
+    const hasFullWidth =
+      block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? block.configuration?.layout?.fullWidth ?? false;
 
     return {
       'max-w-screen-3xl': !hasFullWidth && !isExcluded(block.name, containerExcludedBlockSet),

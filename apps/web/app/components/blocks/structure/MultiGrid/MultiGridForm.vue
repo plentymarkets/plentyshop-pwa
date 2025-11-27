@@ -19,7 +19,7 @@
           />
         </div>
 
-        <FullWidthToggle />
+        <EditorFullWidthToggle v-model="isFullWidth" />
 
         <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
@@ -209,6 +209,24 @@ const multiGridStructure = computed(() => {
     }
   }
   return block;
+});
+
+const isFullWidth = computed({
+  get: () => multiGridStructure.value.configuration.layout?.fullWidth ?? false,
+  set: (value: boolean) => {
+    if (!multiGridStructure.value.configuration.layout) {
+      multiGridStructure.value.configuration.layout = {
+        marginTop: 0,
+        marginBottom: defaultMarginBottom.value,
+        marginLeft: 40,
+        marginRight: 40,
+        backgroundColor: '#ffffff',
+        gap: 'M',
+        fullWidth: false,
+      };
+    }
+    multiGridStructure.value.configuration.layout.fullWidth = value;
+  },
 });
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
