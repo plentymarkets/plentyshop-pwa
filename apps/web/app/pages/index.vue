@@ -14,6 +14,7 @@ definePageMeta({
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
+  middleware: ['newsletter-confirmation-client'],
 });
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
@@ -39,6 +40,6 @@ const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
 setRobotForStaticPage('Homepage');
 
-const { setBlocksListContext } = useBlockManager();
+const { setBlocksListContext } = useBlocksList();
 setBlocksListContext('content');
 </script>

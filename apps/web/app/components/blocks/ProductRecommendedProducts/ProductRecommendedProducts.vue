@@ -25,29 +25,26 @@ const itemId = computed(() =>
 );
 
 const firstCategoryId = categoryTree.value?.find((category) => category.type === 'item')?.id || '';
+const categoryId = productGetters.getCategoryIds(currentProduct.value)[0] ?? '';
 
 const shouldRenderAfterUpdate = ref(false);
 
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.meta.uuid);
 
-const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
-
 const isCategory = computed(() => props.content.source?.type === 'category');
-const isProduct = computed(() => props.content.source?.type === 'cross_selling');
+const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
+const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
+const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
 
 const getContentSource = () => {
   return {
     ...props.content.source,
-    ...{ categoryId: props.content.source?.categoryId || (firstCategoryId || '').toString(), itemId: itemId.value },
+    ...{
+      categoryId: props.content.source?.categoryId || (categoryId || firstCategoryId || '').toString(),
+      itemId: itemId.value,
+    },
   };
 };
-
-const initialShouldRender = ref(shouldRender.value);
-const shouldFetch = computed(() => initialShouldRender.value && (isCategory.value || isProduct.value));
-
-onMounted(() => {
-  initialShouldRender.value = shouldRender.value;
-});
 
 watch(
   shouldFetch,
@@ -71,8 +68,9 @@ watch(
       shouldFetch.value &&
       ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
         (props.content.source?.categoryId && props.content.source?.type === 'category'))
-    )
+    ) {
       fetchProductRecommended(getContentSource());
+    }
     shouldRenderAfterUpdate.value = true;
   },
 );
