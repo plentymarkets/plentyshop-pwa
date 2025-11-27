@@ -15,10 +15,10 @@ export default defineVitestConfig({
       exclude: [...coverageConfigDefaults.exclude, 'assets/**', 'build/**'],
       reportOnFailure: true,
       thresholds: {
-        functions: 40,
-        branches: 40,
-        lines: 40,
-        statements: 40,
+        lines: 50, // target 80
+        statements: 50, // target 80
+        functions: 80, // target 80
+        branches: 80, // target 90
       },
     },
     testTimeout: 6000,
