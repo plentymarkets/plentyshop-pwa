@@ -1,6 +1,6 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, Block  } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
@@ -11,6 +11,9 @@ import { bundleComponentsDE } from './facets/bundleComponentsDE';
 import { bundleComponentsEN } from './facets/bundleComponentsEN';
 import { propertiesEN } from './facets/propertiesEN';
 import { propertiesDE } from './facets/propertiesDE';
+import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
+
+const useProductTemplateData = () => productTemplateData as Block[];
 
 type PlainObject = Record<string, unknown>;
 
@@ -103,7 +106,7 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
   return !isMissing(a) ? cloneValue(a) : cloneValue(b);
 };
 
-export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) => {
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, shouldComplement: boolean) => {
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 
@@ -120,5 +123,10 @@ export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) 
 
   const rawA = toRaw(state.value.data) as Product;
   const rawB = fakeProduct as Product;
-  state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
+  if (shouldComplement) {
+    state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
+  } else {
+    state.value.fakeData = fakeProduct;
+  }
+  state.value.fakeData.blocks = useProductTemplateData();
 };

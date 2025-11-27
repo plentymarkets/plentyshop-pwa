@@ -24,6 +24,7 @@ export const paths = {
   cancellationRights: '/cancellation-rights',
   legalDisclosure: '/legal-disclosure',
   privacyPolicy: '/privacy-policy',
+  fakeProductTemplate: '/fake-product-template',
   shipping: '/shipping',
   cancellationForm: '/cancellation-form',
   declarationOfAccessibility: '/declaration-of-accessibility',
