@@ -202,7 +202,7 @@
         <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
       </template>
 
-      <FullWidthToggle />
+      <FullWidthToggle v-model="isFullWidth" />
     </UiAccordionItem>
   </div>
 </template>
@@ -317,6 +317,16 @@ const categoryIdModel = computed({
       };
     }
     recommendedBlock.value.source.categoryId = option?.id.toString() || '';
+  },
+});
+
+const isFullWidth = computed({
+  get: () => recommendedBlock.value.layout?.fullWidth ?? false,
+  set: (value: boolean) => {
+    if (!recommendedBlock.value.layout) {
+      recommendedBlock.value.layout = {};
+    }
+    recommendedBlock.value.layout.fullWidth = value;
   },
 });
 

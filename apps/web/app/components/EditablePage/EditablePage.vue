@@ -42,7 +42,51 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
-import type { Block } from '@plentymarkets/shop-api';
+// import type { Block } from '@plentymarkets/shop-api';
+
+export interface BlockLayout {
+  fullWidth?: boolean;
+  narrowContainer?: boolean;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
+  backgroundColor?: string;
+  gap?: string;
+}
+
+export interface Block {
+  name: string;
+  type: string;
+  configuration?: unknown;
+  meta: {
+    uuid: string;
+    isGlobalTemplate?: boolean;
+  };
+  parent_slot?: number;
+  content: {
+    layout?: BlockLayout;
+    [key: string]: unknown;
+  };
+  layout?: BlockLayout;
+}
+
+export interface DoSaveBlocksParams {
+  identifier: number | string;
+  entityType: string;
+  blocks: string;
+}
+
+export interface SaveBlock {
+  identifier: number | string;
+  entityType: string;
+  blocks: string;
+}
+
+export interface DeleteBlocksParams {
+  identifier: string | number;
+  type: string;
+}
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
@@ -170,8 +214,20 @@ const isExcluded = (blockName: string, excludedSet: Set<string>) => {
 };
 
 const getBlockClass = (block: Block) =>
-  computed(() => ({
-    'max-w-screen-3xl mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
-    'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
-  }));
+  computed(() => {
+    // const hasFullWidth =
+    //   (block?.content as { layout?: { fullWidth?: boolean } })?.layout?.fullWidth ||
+    //   (block as { layout?: { fullWidth?: boolean } })?.layout?.fullWidth ||
+    //   false;
+
+    const hasFullWidth = block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? false;
+    // const hasFullWidth2 = block.layout?.fullWidth ?? false;
+    console.log('hasFullWidth:', hasFullWidth);
+
+    return {
+      // Remove max-width constraint if fullWidth is enabled OR block is in excluded set
+      'max-w-screen-3xl mx-auto mt-3': !hasFullWidth && !isExcluded(block.name, containerExcludedBlockSet),
+      'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
+    };
+  });
 </script>
