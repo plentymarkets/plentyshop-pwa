@@ -737,14 +737,18 @@
   "lang": {
     "bg": "Bulgarian",
     "cn": "Chinese",
+    "cs": "Czech",
     "cz": "Czech",
+    "da": "Danish",
     "de": "German",
     "dk": "Danish",
     "ee": "Estonian",
     "en": "English",
     "es": "Spanish",
+    "et": "Estonian",
     "fi": "Finnish",
     "fr": "French",
+    "ga": "Irish",
     "hr": "Croatian",
     "hu": "Hungarian",
     "ie": "Irish",
@@ -759,8 +763,11 @@
     "ru": "Russian",
     "se": "Swedish",
     "sk": "Slovak",
+    "sv": "Swedish",
     "tr": "Turkish",
-    "vn": "Vietnamese"
+    "vi": "Vietnamese",
+    "vn": "Vietnamese",
+    "zh": "Chinese"
   },
   "legal": {
     "cancellationRights": "Cancellation rights",

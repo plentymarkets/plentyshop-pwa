@@ -32,7 +32,7 @@
     <div
       class="bg-white w-full relative"
       :class="{
-        'lg:w-3/4': drawerOpen,
+        'w-[calc(50vw-80px)] lg:w-[calc(75vw-80px)] xl:w-[calc(80vw-80px)]': drawerOpen,
         'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
         'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,
       }"
