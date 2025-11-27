@@ -202,7 +202,7 @@
         <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
       </template>
 
-      <FullWidthToggle v-model="isFullWidth" />
+      <EditorFullWidthToggle v-model="isFullWidth" />
     </UiAccordionItem>
   </div>
 </template>

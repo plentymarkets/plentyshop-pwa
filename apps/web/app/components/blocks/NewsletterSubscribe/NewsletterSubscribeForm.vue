@@ -141,7 +141,7 @@
         <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
       </template>
 
-      <FullWidthToggle v-model="isFullWidth" />
+      <EditorFullWidthToggle v-model="isFullWidth" />
     </UiAccordionItem>
   </div>
 </template>
@@ -171,15 +171,7 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
   return initializeNewsletterContent(rawContent as Partial<NewsletterSubscribeContent>);
 });
 
-const isFullWidth = computed({
-  get: () => newsletterBlock.value.layout?.fullWidth ?? false,
-  set: (value: boolean) => {
-    if (!newsletterBlock.value.layout) {
-      newsletterBlock.value.layout = {};
-    }
-    newsletterBlock.value.layout.fullWidth = value;
-  },
-});
+const { isFullWidth } = useFullWidthToggle(newsletterBlock);
 </script>
 
 <i18n lang="json">
