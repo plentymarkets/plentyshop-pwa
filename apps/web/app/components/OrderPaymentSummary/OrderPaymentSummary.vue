@@ -34,7 +34,8 @@ const { fetchOrderClient } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
 const isUnpaid = computed(() => orderGetters.getPaymentStatus(props.order) === 'unpaid');
-const showPaymentButton = computed(() => isUnpaid.value && orderGetters.getStatus(props.order).toLocaleLowerCase() !== 'canceled');
+const validOrderStatus = computed(()  => props.order.order.statusId <= 3.4)
+const showPaymentButton = computed(() => isUnpaid.value && validOrderStatus.value);
 const currency = orderGetters.getCurrency(props.order);
 const paymentKey = props.order.paymentMethodKey;
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
