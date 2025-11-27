@@ -179,6 +179,7 @@
             {{ getEditorTranslation('global-pages-edit-label') }}
           </button>
           <button
+            v-if="config.enableTemplateReset"
             type="button"
             class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
             @click="toggleResetModal(true, 'detail')"
@@ -211,6 +212,7 @@ import {
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 import { editPath } from '~/assets/icons/paths/edit';
 const { locale, defaultLocale } = useI18n();
+const config = useRuntimeConfig().public;
 
 const router = useRouter();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
