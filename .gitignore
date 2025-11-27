@@ -24,9 +24,9 @@ dist
 .data
 
 # testing
-apps/web/app/coverage/*
-!apps/web/app/coverage/coverage-summary.json
-!apps/web/app/coverage/coverage-final.json
+apps/web/coverage/*
+!apps/web/coverage/coverage-summary.json
+!apps/web/coverage/coverage-final.json
 packages/shop-cli/coverage/*
 !packages/shop-cli/coverage/coverage-summary.json
 !packages/shop-cli/coverage/coverage-final.json
