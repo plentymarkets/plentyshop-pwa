@@ -1,7 +1,7 @@
 <template>
   <SfDrawer
     v-model="open"
-    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[calc(50vw+25px)] lg:w-[calc(76vw)]"
+    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[calc(50vw+18px)] lg:w-[calc(75vw-66px)] xl:w-[calc(80vw-66px)]"
     :placement="placement"
     :disable-click-away="true"
   >
@@ -26,11 +26,14 @@
               <div class="w-48 px-4 py-3 font-semibold border-r" />
             </div>
 
-            <div ref="headerScroll" class="flex-1 overflow-x-auto scrollbar-thin">
-              <div class="flex">
-                <div v-for="lang in languages" :key="lang" class="w-64 px-4 py-3 mr-2 font-semibold flex-shrink-0">
-                  {{ lang }}
-                </div>
+            <div ref="headerScroll" class="overflow-x-auto scrollbar-thin pl-4 w-full flex">
+              <div
+                v-for="lang in languages"
+                :key="lang"
+                class="w-64 px-4 py-3 mr-3 font-semibold flex-shrink-0 last:mr-0"
+                :class="{ 'min-w-64 !w-[calc(50%-12px)]': selectedLocales.length === 2 }"
+              >
+                {{ lang }}
               </div>
             </div>
           </div>
@@ -50,7 +53,7 @@
             </div>
 
             <!-- Scrollable Right Content -->
-            <div ref="contentScroll" class="flex-1 overflow-auto scrollbar-thin">
+            <div ref="contentScroll" class="flex-1 overflow-auto no-scrollbar">
               <div class="flex flex-col">
                 <div v-for="row in filteredKeys ?? keys" :key="row.key" class="flex h-12">
                   <EditorLocalizationTranslationInput
@@ -163,6 +166,13 @@ onBeforeUnmount(() => {
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 0;
 }
 </style>
 

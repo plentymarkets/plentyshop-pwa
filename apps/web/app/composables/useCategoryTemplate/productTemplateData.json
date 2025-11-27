@@ -181,9 +181,8 @@
       "isGlobalTemplate": false
     },
     "content": {
-      "text": {},
       "source": {
-        "type": "cross_selling",
+        "type": "category",
         "itemId": "",
         "categoryId": "",
         "crossSellingRelation": "Similar"
