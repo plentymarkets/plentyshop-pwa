@@ -1,4 +1,7 @@
 export const sendFakeDataNotification = () => {
+  const { $isPreview } = useNuxtApp();
+  if (!$isPreview) return;
+
   const { send } = useNotification();
   send({
     type: 'warning',
