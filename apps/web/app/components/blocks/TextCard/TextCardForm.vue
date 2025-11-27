@@ -251,6 +251,8 @@
       </label>
     </div>
     <div class="py-2">
+      <EditorFullWidthToggle v-model="isFullWidth" />
+
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -342,6 +344,7 @@ const textCardBlock = computed<TextCardContent>(() => {
 
   return content as TextCardContent;
 });
+const { isFullWidth } = useFullWidthToggle(textCardBlock);
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);

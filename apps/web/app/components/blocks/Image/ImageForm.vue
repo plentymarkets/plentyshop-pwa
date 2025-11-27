@@ -378,12 +378,12 @@
         </SfInput>
       </label>
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" />
     <div
       id="padding-form"
       class="py-2"
       :class="uiImageTextBlock.image.fillMode !== 'fit' ? 'opacity-60  cursor-not-allowed' : ''"
     >
-      <FullWidthToggle />
       <div class="flex items-center gap-2 mb-2">
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <SfTooltip :label="paddingTooltip" placement="right">
@@ -492,6 +492,8 @@ const uiImageTextBlock = computed(() => {
   }
   return migrated;
 });
+
+const { isFullWidth } = useFullWidthToggle(uiImageTextBlock);
 
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
