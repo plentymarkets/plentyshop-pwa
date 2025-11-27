@@ -15,24 +15,27 @@
         @mouseenter="onRowEnter(row)"
         @mouseleave="onRowLeave"
       >
-        <ClientOnly>
-          <template v-if="showOverlay(row)">
-            <div
-              class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
-              style="box-shadow: inset 0 0 0 2px #7c3aed"
-            />
+        <div
+          v-if="showOverlay(row)"
+          class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+          style="box-shadow: inset 0 0 0 2px #7c3aed"
+        />
 
-            <div
-              class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
-            />
+        <div
+          v-if="showOverlay(row)"
+          class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+        />
 
-            <div
-              class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
-            >
-              <UiBlockActions :block="row" :index="colIndex" :actions="getBlockActions()" />
-            </div>
-          </template>
-        </ClientOnly>
+        <div
+          class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
+          :class="
+            showOverlay(row)
+              ? 'group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto'
+              : ''
+          "
+        >
+          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
+        </div>
 
         <slot
           name="content"
