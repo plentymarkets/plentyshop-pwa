@@ -13,7 +13,7 @@
   <h2 class="font-medium text-base mt-4">{{ t('account.ordersAndReturns.paymentSummary.paymentStatus') }}</h2>
   <p data-testid="order-payment-status">{{ t(orderGetters.getPaymentStatusKey(order)) }}</p>
 
-  <div v-if="isUnpaid" class="mt-4">
+  <div v-if="showPaymentButton" class="mt-4">
     <PayPalExpressButton
       v-if="paymentKey === 'PAYPAL'"
       type="OrderAlreadyExisting"
@@ -34,6 +34,7 @@ const { fetchOrderClient } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
 const isUnpaid = computed(() => orderGetters.getPaymentStatus(props.order) === 'unpaid');
+const showPaymentButton = computed(() => isUnpaid.value && orderGetters.getStatus(props.order).toLocaleLowerCase() !== 'canceled');
 const currency = orderGetters.getCurrency(props.order);
 const paymentKey = props.order.paymentMethodKey;
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
