@@ -196,30 +196,4 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
-
-const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'CategoryData']);
-const paddingExcludedBlockSet = new Set([
-  'Banner',
-  'Carousel',
-  'NewsletterSubscribe',
-  'Footer',
-  'MultiGrid',
-  'CategoryData',
-]);
-
-const isExcluded = (blockName: string, excludedSet: Set<string>) => {
-  return excludedSet.has(blockName);
-};
-
-const getBlockClass = (block: Block) =>
-  computed(() => {
-    const hasFullWidth =
-      block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? block.configuration?.layout?.fullWidth ?? false;
-
-    return {
-      'max-w-screen-3xl': !hasFullWidth && !isExcluded(block.name, containerExcludedBlockSet),
-      'mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
-      'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
-    };
-  });
 </script>
