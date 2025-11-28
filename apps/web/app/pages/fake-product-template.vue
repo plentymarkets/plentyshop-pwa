@@ -21,6 +21,9 @@ definePageMeta({
   type: 'product',
   identifier: 0,
 });
+useSeoMeta({
+  robots: () => 'noindex',
+});
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);
 const productName = computed(() => productGetters.getName(product.value));
