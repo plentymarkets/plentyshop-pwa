@@ -174,6 +174,16 @@
           </div>
         </div>
       </UiAccordionItem>
+      <UiAccordionItem
+        v-model="layoutOpen"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2 data-testid="slider-button-gr oup-title">{{ getEditorTranslation('layout-label') }}</h2>
+        </template>
+        <EditorFullWidthToggle v-model="isFullWidth" />
+      </UiAccordionItem>
     </div>
   </div>
 </template>
@@ -209,11 +219,12 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 setIndex(blockUuid.value, 0);
-
+const layoutOpen = ref(true);
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
+const { isFullWidth } = useFullWidthToggle(carouselStructure);
 const controls = computed(() => carouselStructure.value.configuration.controls);
 
 const slides = computed({

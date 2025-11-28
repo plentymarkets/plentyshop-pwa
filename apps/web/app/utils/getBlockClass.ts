@@ -31,12 +31,12 @@ export interface Block {
 /**
  * Block names that should not have container constraints (max-width, centering)
  */
-const CONTAINER_EXCLUDED_BLOCKS = new Set(['Banner', 'Carousel', 'Footer']);
+const CONTAINER_EXCLUDED_BLOCKS = new Set(['Footer']);
 
 /**
  * Block names that should not have padding applied
  */
-const PADDING_EXCLUDED_BLOCKS = new Set(['Banner', 'Carousel', 'NewsletterSubscribe', 'Footer']);
+const PADDING_EXCLUDED_BLOCKS = new Set(['NewsletterSubscribe', 'Footer']);
 
 /**
  * Checks if a block name is in the excluded set

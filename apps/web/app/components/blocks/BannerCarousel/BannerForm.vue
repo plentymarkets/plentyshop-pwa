@@ -404,18 +404,6 @@
           </div>
         </div>
       </UiAccordionItem>
-
-      <UiAccordionItem
-        v-model="layoutOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-        </template>
-
-        <FullWidthToggle />
-      </UiAccordionItem>
     </div>
   </div>
 </template>
@@ -446,7 +434,6 @@ const banner = computed(
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
-const layoutOpen = ref(true);
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
