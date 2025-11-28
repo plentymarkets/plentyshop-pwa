@@ -14,4 +14,7 @@ export type CarouselStructureProps = {
   meta: {
     uuid: string;
   };
+  layout?: {
+    fullWidth?: boolean;
+  };
 };
