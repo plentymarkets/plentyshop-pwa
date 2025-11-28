@@ -10,7 +10,6 @@ export const useToolbar = () => {
     const messageList: string[] = [];
     let hasError = false;
     let saved = null;
-    const errorMessage = t('errorMessages.editor.save.error');
 
     const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
       saved = await saveFunction();
@@ -34,12 +33,12 @@ export const useToolbar = () => {
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 
-      await handleSave(saveSiteSettings, touchedFont ? t('errorMessages.editor.save.settings') : undefined);
+      await handleSave(saveSiteSettings, touchedFont ? getEditorTranslationForComposable('settings') : undefined);
     }
 
     if (saved && !hasError) {
       send({
-        message: [t('errorMessages.editor.save.success'), ...messageList],
+        message: [getEditorTranslationForComposable('toolbarSuccess'), ...messageList],
         type: 'positive',
       });
       if (import.meta.client) {
@@ -49,7 +48,7 @@ export const useToolbar = () => {
 
     if (hasError) {
       send({
-        message: errorMessage,
+        message: getEditorTranslationForComposable('toolbarError'),
         type: 'negative',
       });
     }

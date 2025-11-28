@@ -596,24 +596,6 @@
       "turnstileRequired": "Please check the box to verify that you are human."
     },
     "decimalNumber": "Enter a decimal number.",
-    "editor": {
-      "add": {
-        "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
-        "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page.",
-        "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead."
-      },
-      "categories": {
-        "deleteError": "The page {pageName} (category ID: {id}) couldn't be deleted. {errorMessage}",
-        "deleteSuccess": "The page {pageName} (category ID: {id}) has been deleted.",
-        "error": "Error saving categories.",
-        "success": "Categories saved successfully."
-      },
-      "save": {
-        "error": "The changes couldn't be saved. Your session may have expired. Re-enter the editor to start a new session.",
-        "settings": "For settings changes to take effect, update your shop.",
-        "success": "Your changes have been saved."
-      }
-    },
     "email": {
       "required": "Email is required.",
       "valid": "This field needs to be a valid email."

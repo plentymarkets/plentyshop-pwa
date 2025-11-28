@@ -1,6 +1,5 @@
 import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
-import { stripChildren } from '~/utils/stripChildren';
 
 export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
@@ -107,8 +106,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   };
 
   const save = async () => {
-    const successMessage = t('errorMessages.editor.categories.success');
-    const errorMessage = t('errorMessages.editor.categories.error');
+    const successMessage = getEditorTranslationForComposable('success');
+    const errorMessage = getEditorTranslationForComposable('error');
     const route = useRoute();
     const router = useRouter();
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
