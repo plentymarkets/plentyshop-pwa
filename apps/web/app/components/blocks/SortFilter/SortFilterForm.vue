@@ -82,6 +82,18 @@
       </div>
     </div>
   </UiAccordionItem>
+
+  <UiAccordionItem
+    v-model="layoutOpen"
+    summary-active-class="bg-neutral-100"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+    </template>
+
+    <EditorFullWidthToggle v-model="isFullWidth" />
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
@@ -101,7 +113,7 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const sortFilterOpen = ref(true);
-
+const layoutOpen = ref(true);
 const props = defineProps<SortFilterFormProps>();
 
 const sortFilterBlock = computed<SortFilterContent>(() => {
@@ -119,6 +131,8 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
 
   return content as SortFilterContent;
 });
+
+const { isFullWidth } = useFullWidthToggle(sortFilterBlock);
 
 watch(
   () => sortFilterBlock.value.fields?.customizedFilters,

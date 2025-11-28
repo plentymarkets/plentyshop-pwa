@@ -18,6 +18,7 @@
         data-testid="switch-sort-placeholder"
       />
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" />
     <div id="sort-form-padding-form" class="py-2">
       <div class="flex items-center gap-2 mb-2">
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
@@ -107,6 +108,7 @@ const sortBlock = computed<SortContent>(() => {
   return content as SortContent;
 });
 
+const { isFullWidth } = useFullWidthToggle(sortBlock);
 const layoutOpen = ref(false);
 </script>
 

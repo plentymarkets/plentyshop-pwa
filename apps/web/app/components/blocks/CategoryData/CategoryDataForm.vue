@@ -436,7 +436,7 @@
       <template #summary>
         <h2>{{ getEditorTranslation('layout-label') }}</h2>
       </template>
-      <FullWidthToggle />
+      <EditorFullWidthToggle v-model="isFullWidth" />
       <div
         class="py-2"
         :class="
@@ -484,11 +484,6 @@
             />
           </div>
         </div>
-        <div class="px-4 py-3">
-          <span class="typography-text-xs text-neutral-700">
-            {{ getEditorTranslation('spacing-around') }}
-          </span>
-        </div>
       </div>
     </UiAccordionItem>
   </div>
@@ -526,6 +521,8 @@ const {
   fieldsEmptyHintText,
   clampBrightness,
 } = useCategoryData();
+
+const { isFullWidth } = useFullWidthToggle(categoryDataBlock);
 </script>
 
 <i18n lang="json">
