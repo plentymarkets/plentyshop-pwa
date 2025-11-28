@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <EditablePage :identifier="'0'" :type="'product'" />
   </ClientOnly>
 </template>
 
