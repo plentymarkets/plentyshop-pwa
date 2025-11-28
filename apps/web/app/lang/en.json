@@ -1,7 +1,4 @@
 {
-  "accessibility": {
-    "passwordVisibility": "Password visibility"
-  },
   "account": {
     "accountSettings": {
       "billingDetails": {
@@ -654,6 +651,7 @@
     "lastNameLabel": "Last Name",
     "optional": "optional",
     "passwordLabel": "Password",
+    "passwordVisibility": "Password visibility",
     "phoneLabel": "Phone",
     "postalCodeLabel": "Zip Code",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",

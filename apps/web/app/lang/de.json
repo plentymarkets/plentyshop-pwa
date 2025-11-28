@@ -1,7 +1,4 @@
 {
-  "accessibility": {
-    "passwordVisibility": "Sichtbarkeit des Passworts"
-  },
   "account": {
     "accountSettings": {
       "billingDetails": {
@@ -654,6 +651,7 @@
     "lastNameLabel": "Nachname",
     "optional": "optional",
     "passwordLabel": "Passwort",
+    "passwordVisibility": "Sichtbarkeit des Passworts",
     "phoneLabel": "Telefon",
     "postalCodeLabel": "Postleitzahl",
     "privacyPolicyLabel": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
@@ -835,7 +833,7 @@
   "order": {
     "errorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
     "errorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
-    "failedHeader": "Es tut uns wirklich leid.",
+    "failedHeader": "Es tut uns leid.",
     "failedMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
     "searchResults": "Ergebnisse für \"{phrase}\"",
     "successHeader": "Vielen Dank für Ihre Bestellung!",
