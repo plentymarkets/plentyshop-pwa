@@ -42,49 +42,6 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
-// import type { Block } from '@plentymarkets/shop-api';
-
-export interface BlockLayout {
-  fullWidth?: boolean;
-}
-
-export interface BlockConfiguration {
-  layout?: BlockLayout;
-  [key: string]: unknown;
-}
-
-export interface Block {
-  name: string;
-  type: string;
-  configuration?: BlockConfiguration;
-  meta: {
-    uuid: string;
-    isGlobalTemplate?: boolean;
-  };
-  parent_slot?: number;
-  content: {
-    layout?: BlockLayout;
-    [key: string]: unknown;
-  };
-  layout?: BlockLayout;
-}
-
-export interface DoSaveBlocksParams {
-  identifier: number | string;
-  entityType: string;
-  blocks: string;
-}
-
-export interface SaveBlock {
-  identifier: number | string;
-  entityType: string;
-  blocks: string;
-}
-
-export interface DeleteBlocksParams {
-  identifier: string | number;
-  type: string;
-}
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 

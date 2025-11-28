@@ -346,7 +346,7 @@ input[type='number'] {
     "slide-label": "Slide",
     "add-slide-label": "Add Slide",
     "drag-reorder-aria": "Drag to reorder slide",
-
+    "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour"
   },
@@ -355,7 +355,7 @@ input[type='number'] {
     "slide-label": "Slide",
     "add-slide-label": "Add Slide",
     "drag-reorder-aria": "Drag to reorder slide",
-
+    "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour"
   }
