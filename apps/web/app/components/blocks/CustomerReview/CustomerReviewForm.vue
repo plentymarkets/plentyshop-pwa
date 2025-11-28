@@ -62,6 +62,8 @@
         />
       </div>
 
+      <EditorFullWidthToggle v-model="isFullWidth" />
+
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -160,6 +162,8 @@ const customerReview = computed<CustomerReviewContent>(() => {
 
   return content as CustomerReviewContent;
 });
+
+const { isFullWidth } = useFullWidthToggle(customerReview);
 
 const isCollapsibleInit = customerReview.value.layout.collapsible;
 const isCollapsible = ref(isCollapsibleInit);

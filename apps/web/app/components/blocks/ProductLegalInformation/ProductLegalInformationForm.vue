@@ -61,6 +61,8 @@
         <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
       </template>
 
+      <EditorFullWidthToggle v-model="isFullWidth" />
+
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -166,6 +168,8 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   }
   return content as ProductLegalInformationContent;
 });
+
+const { isFullWidth } = useFullWidthToggle(productLegalInformation);
 </script>
 
 <i18n lang="json">

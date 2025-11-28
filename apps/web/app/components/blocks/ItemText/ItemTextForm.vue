@@ -54,6 +54,8 @@
         </span>
       </div>
 
+      <EditorFullWidthToggle v-model="isFullWidth" />
+
       <div class="mt-5">
         {{ getEditorTranslation('padding') }}
       </div>
@@ -133,6 +135,8 @@ const itemTextBlock = computed<ItemTextContent>(() => {
   }
   return content as ItemTextContent;
 });
+
+const { isFullWidth } = useFullWidthToggle(itemTextBlock);
 
 const textSettings = ref(false);
 const layoutSettings = ref(false);

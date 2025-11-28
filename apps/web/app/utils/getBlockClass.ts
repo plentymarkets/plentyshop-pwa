@@ -31,23 +31,16 @@ export interface Block {
 /**
  * Block names that should not have container constraints (max-width, centering)
  */
-const CONTAINER_EXCLUDED_BLOCKS = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid', 'CategoryData']);
+const CONTAINER_EXCLUDED_BLOCKS = new Set(['Banner', 'Carousel', 'Footer', 'CategoryData']);
 
 /**
  * Block names that should not have padding applied
  */
-const PADDING_EXCLUDED_BLOCKS = new Set([
-  'Banner',
-  'Carousel',
-  'NewsletterSubscribe',
-  'Footer',
-  'MultiGrid',
-  'CategoryData',
-]);
+const PADDING_EXCLUDED_BLOCKS = new Set(['Banner', 'Carousel', 'NewsletterSubscribe', 'Footer', 'CategoryData']);
 
 /**
  * Checks if a block name is in the excluded set
- * 
+ *
  * @param blockName - The name of the block to check
  * @param excludedSet - Set of excluded block names
  * @returns True if the block is excluded
@@ -58,30 +51,25 @@ const isExcluded = (blockName: string, excludedSet: Set<string>): boolean => {
 
 /**
  * Checks if a block has fullWidth enabled in any of its layout locations
- * 
+ *
  * Supports three possible locations:
  * - block.content.layout.fullWidth (Banner, etc.)
  * - block.layout.fullWidth (standard blocks)
  * - block.configuration.layout.fullWidth (MultiGrid, etc.)
- * 
+ *
  * @param block - The block to check
  * @returns True if fullWidth is enabled
  */
 const hasFullWidth = (block: Block): boolean => {
-  return (
-    block.content?.layout?.fullWidth ?? 
-    block.layout?.fullWidth ?? 
-    block.configuration?.layout?.fullWidth ?? 
-    false
-  );
+  return block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? block.configuration?.layout?.fullWidth ?? false;
 };
 
 /**
  * Generates CSS classes for a block based on its properties and configuration
- * 
+ *
  * @param block - The block to generate classes for
  * @returns Computed ref with CSS class object
- * 
+ *
  * @example
  * ```ts
  * const blockClasses = getBlockClass(block);
