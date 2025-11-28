@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-api';
+import { orderConfirmationGetters, orderGetters } from '@plentymarkets/shop-api';
 import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();
@@ -33,9 +33,9 @@ const { t } = useI18n();
 const { fetchOrderClient } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
-const isUnpaid = computed(() => orderGetters.getPaymentStatus(props.order) === 'unpaid');
-const validOrderStatus = computed(() => props.order.order.statusId <= 3.4);
-const showPaymentButton = computed(() => isUnpaid.value && validOrderStatus.value);
+const isUnpaid = computed(() => !orderConfirmationGetters.isOrderPaid(props.order));
+const validOrderPaymentStatus = computed(() => orderConfirmationGetters.orderStatusValidForPayment(props.order));
+const showPaymentButton = computed(() => isUnpaid.value && validOrderPaymentStatus.value);
 const currency = orderGetters.getCurrency(props.order);
 const paymentKey = props.order.paymentMethodKey;
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
