@@ -21,6 +21,7 @@ export const useProduct: UseProductReturn = (slug) => {
   const properties = useProductOrderProperties();
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: {} as Product,
+    fakeData: {} as Product,
     loading: false,
     breadcrumbs: [],
   }));
@@ -60,7 +61,7 @@ export const useProduct: UseProductReturn = (slug) => {
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
-    handlePreviewProduct(state);
+    handlePreviewProduct(state, $i18n.locale.value);
     state.value.loading = false;
     return state.value.data;
   };
@@ -100,6 +101,12 @@ export const useProduct: UseProductReturn = (slug) => {
       ],
     });
   };
+  const { disableActions } = useEditor();
+  const { $isPreview } = useNuxtApp();
+
+  const productForEditor = computed(() =>
+    $isPreview && disableActions.value ? state.value.fakeData : state.value.data,
+  );
 
   return {
     setProductMeta,
@@ -107,5 +114,6 @@ export const useProduct: UseProductReturn = (slug) => {
     fetchProduct,
     ...toRefs(state.value),
     properties,
+    productForEditor,
   };
 };

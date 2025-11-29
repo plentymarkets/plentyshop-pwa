@@ -1,104 +1,124 @@
-import { fakeProduct } from './facets/fakeProduct';
+import { fakeProductDE } from './facets/fakeProductDE';
+import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
+import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
+import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
+import { variationPropertiesEN } from './facets/variationPropertiesEN';
+import { variationPropertiesDE } from './facets/variationPropertiesDE';
+import { bundleComponentsDE } from './facets/bundleComponentsDE';
+import { bundleComponentsEN } from './facets/bundleComponentsEN';
+import { propertiesEN } from './facets/propertiesEN';
+import { propertiesDE } from './facets/propertiesDE';
 
-type ComplementOptions = {
-  deep?: boolean;
-  treatEmptyStringAsMissing?: boolean;
+type PlainObject = Record<string, unknown>;
+
+export const complement = <T>(
+  a: Partial<T> | T,
+  b: T,
+  forcedKeys?: ReadonlyArray<string> | ReadonlySet<string>,
+  ignoredKeys?: ReadonlyArray<string> | ReadonlySet<string>,
+): T =>
+  mergeComplement({
+    a,
+    b,
+    forced: toSet(forcedKeys),
+    ignored: toSet(ignoredKeys),
+    path: '',
+  }) as T;
+
+type MergeOpts = {
+  a: unknown;
+  b: unknown;
+  forced: Set<string>;
+  ignored: Set<string>;
+  path: string;
 };
 
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+const toSet = (keys?: ReadonlyArray<string> | ReadonlySet<string>): Set<string> =>
+  !keys ? new Set() : keys instanceof Set ? new Set(keys) : new Set(keys);
 
-const isPlainObject = (x: unknown): x is object => {
-  return Object.prototype.toString.call(x) === '[object Object]';
+const isMissing = (value: unknown): boolean =>
+  value == null || (typeof value === 'string' && value.length === 0) || (Array.isArray(value) && value.length === 0);
+
+const isPlainObject = (value: unknown): value is PlainObject => {
+  if (Object.prototype.toString.call(value) !== '[object Object]') return false;
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
 };
 
-const isEmptyObject = (x: unknown): boolean => {
-  return isPlainObject(x) && Object.keys(x as object).length === 0;
+const shallowCloneObject = <T extends PlainObject>(obj: T): T =>
+  Object.assign(Object.create(Object.getPrototypeOf(obj)), obj);
+
+const cloneValue = (v: unknown): unknown => {
+  if (Array.isArray(v)) return (v as unknown[]).slice();
+  if (isPlainObject(v)) return shallowCloneObject(v);
+  return v;
 };
 
-const isEmptyArray = (x: unknown): x is unknown[] => {
-  return Array.isArray(x) && x.length === 0;
-};
+const matches = (set: Set<string>, key: string, path: string): boolean =>
+  set.has(key) || (path ? set.has(`${path}.${key}`) : set.has(key));
 
-const isMissing = (value: unknown, treatEmptyStringAsMissing: boolean): boolean => {
-  if (value === undefined || value === null) return true;
-  if (typeof value === 'number' && Number.isNaN(value)) return true;
-  if (isEmptyArray(value)) return true;
-  if (isEmptyObject(value)) return true;
-  if (treatEmptyStringAsMissing && typeof value === 'string' && value.trim() === '') return true;
-  return false;
-};
+const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown => {
+  if (isPlainObject(a) && isPlainObject(b)) {
+    const result: PlainObject = {};
+    const keys = new Set<string>([...Object.keys(a), ...Object.keys(b)]);
 
-const cloneDeepPlain = <T>(input: T): T => {
-  if (Array.isArray(input)) {
-    return input.map(cloneDeepPlain) as unknown as T;
-  }
-  if (isPlainObject(input)) {
-    const out: Record<string, unknown> = {};
-    const obj = input as Record<string, unknown>;
-    for (const k of Object.keys(obj)) {
-      out[k] = cloneDeepPlain(obj[k]);
-    }
-    return out as unknown as T;
-  }
-  return input;
-};
+    for (const key of keys) {
+      const aHas = Object.prototype.hasOwnProperty.call(a, key);
+      const bHas = Object.prototype.hasOwnProperty.call(b, key);
+      const nextPath = path ? `${path}.${key}` : key;
+      const ignoredHere = matches(ignored, key, path);
+      const forcedHere = matches(forced, key, path);
 
-const complementInPlace = <T extends object>(target: T, source: T, opts: ComplementOptions = {}): T => {
-  if (!isPlainObject(source)) return target;
-
-  const { deep = false, treatEmptyStringAsMissing = false } = opts;
-
-  const tgt = target as unknown as Mutable<T>;
-  const src = source as unknown as T;
-
-  for (const key of Object.keys(target) as Array<keyof T>) {
-    const pk = key as unknown as PropertyKey;
-
-    if (!Object.prototype.hasOwnProperty.call(src, pk)) continue;
-
-    const tVal = tgt[key] as unknown;
-    const sVal = src[key] as unknown;
-
-    if (deep && isPlainObject(tVal) && isPlainObject(sVal)) {
-      if (isEmptyObject(tVal)) {
-        tgt[key] = sVal as unknown as Mutable<T>[typeof key];
-      } else {
-        complementInPlace(tVal as object, sVal as object, { deep, treatEmptyStringAsMissing });
+      if (ignoredHere) {
+        if (aHas) result[key] = cloneValue((a as PlainObject)[key]);
+        continue;
       }
-      continue;
-    }
 
-    if (isEmptyArray(tVal)) {
-      tgt[key] = sVal as unknown as Mutable<T>[typeof key];
-      continue;
-    }
+      if (aHas) {
+        const av = (a as PlainObject)[key];
+        const bv = bHas ? (b as PlainObject)[key] : undefined;
 
-    if (isMissing(tVal, treatEmptyStringAsMissing)) {
-      tgt[key] = sVal as unknown as Mutable<T>[typeof key];
+        if (forcedHere && bHas) {
+          result[key] = cloneValue(bv);
+        } else if (isMissing(av) && bHas) {
+          result[key] = cloneValue(bv);
+        } else if (isPlainObject(av) && isPlainObject(bv)) {
+          result[key] = mergeComplement({ a: av, b: bv, forced, ignored, path: nextPath });
+        } else {
+          result[key] = cloneValue(av);
+        }
+      } else if (bHas) {
+        result[key] = cloneValue((b as PlainObject)[key]);
+      }
     }
+    return result;
   }
 
-  return target;
+  if (isPlainObject(a)) return shallowCloneObject(a);
+  if (isPlainObject(b)) return isMissing(a) ? shallowCloneObject(b) : a;
+
+  return !isMissing(a) ? cloneValue(a) : cloneValue(b);
 };
 
-const complement = <T extends object>(a: T, b: T, opts: ComplementOptions = {}): T => {
-  const clone = cloneDeepPlain(a);
-  return complementInPlace(clone, b, opts);
-};
-
-export const handlePreviewProduct = (state: Ref<UseProductState>) => {
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) => {
   const { $isPreview } = useNuxtApp();
+  if (!$isPreview) return;
 
-  if ($isPreview) {
-    const rawA = toRaw(state.value.data) as Product;
-    const rawB = fakeProduct as Product;
-
-    state.value.data = complement<Product>(rawA, rawB, {
-      deep: true,
-      treatEmptyStringAsMissing: true,
-    });
+  const fakeProduct: Product = lang === 'de' ? fakeProductDE : fakeProductEN;
+  if (state.value.data && state.value.data.variation && state.value.data.variation.id) {
+    fakeProduct.variationAttributeMap =
+      lang === 'de'
+        ? variationAttributeMapDE(Number(state.value.data.variation.id))
+        : variationAttributeMapEN(Number(state.value.data.variation.id));
   }
+  fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
+  fakeProduct.bundleComponents = lang === 'de' ? bundleComponentsDE : bundleComponentsEN;
+  fakeProduct.properties = lang === 'de' ? propertiesDE : propertiesEN;
+
+  const rawA = toRaw(state.value.data) as Product;
+  const rawB = fakeProduct as Product;
+  state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
 };
