@@ -605,7 +605,7 @@
       "firstNameRequired": "Vorname ist erforderlich.",
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
-      "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
+      "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     },
     "orderId": {
       "required": "Die Bestellnummer ist erforderlich."
