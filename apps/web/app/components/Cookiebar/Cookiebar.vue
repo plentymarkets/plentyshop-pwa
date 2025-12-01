@@ -11,14 +11,10 @@
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
         <i18n-t v-if="cookieJson.barDescription" :keypath="cookieJson.barDescription" scope="global">
           <template #legal
-            ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{
-              t('CookieBar.legalDisclosure')
-            }}</SfLink></template
+            ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{ t('CookieBar.legalDisclosure') }}</SfLink></template
           >
           <template #policy
-            ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{
-              t('CookieBar.privacyPolicy')
-            }}</SfLink></template
+            ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.privacyPolicy') }}</SfLink></template
           >
         </i18n-t>
       </div>

@@ -1,6 +1,8 @@
 <template>
   <div v-if="!isForgotPassword">
-    <div class="text-lg font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">{{ t('authentication.login.heading') }}</div>
+    <div class="text-lg font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">
+      {{ t('authentication.login.heading') }}
+    </div>
     <div class="flex flex-col items-center justify-center my-1">
       <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="loginUser">
         <label>

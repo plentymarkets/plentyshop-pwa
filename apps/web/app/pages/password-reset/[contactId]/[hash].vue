@@ -29,7 +29,9 @@
         >
           <SfIconCheck v-if="passwordValidationLength" size="sm" class="mr-2" />
           <SfIconClose v-else size="sm" class="mr-2" />
-          {{ t('authentication.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
+          {{
+            t('authentication.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength })
+          }}
         </div>
         <div
           class="flex items-center"

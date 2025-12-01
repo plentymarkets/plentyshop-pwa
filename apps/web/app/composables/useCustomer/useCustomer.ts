@@ -220,9 +220,7 @@ export const useCustomer = () => {
     object({
       customerEmail: string()
         .required(t('error.email.required'))
-        .test('is-valid-email', t('error.email.valid'), (email: string) =>
-          userGetters.isValidEmailAddress(email),
-        )
+        .test('is-valid-email', t('error.email.valid'), (email: string) => userGetters.isValidEmailAddress(email))
         .default(state.value.user?.email ?? state.value.user?.guestMail ?? ''),
     }),
   );

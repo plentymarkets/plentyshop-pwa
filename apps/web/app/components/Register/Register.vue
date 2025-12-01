@@ -71,7 +71,12 @@
           <SfIconCheck v-if="passwordValidationLength" size="sm" />
           <SfIconClose v-else size="sm" />
           <span class="ml-1">
-            {{ t('authentication.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
+            {{
+              t('authentication.signup.passwordValidation.characters', {
+                min: passwordMinLength,
+                max: passwordMaxLength,
+              })
+            }}
           </span>
         </div>
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneDigit }">

@@ -65,16 +65,14 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .trim()
         .when([], {
           is: () => !state.value.hasCompany,
-          then: (schema) =>
-            schema.required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
+          then: (schema) => schema.required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.firstName),
         }),
       lastName: string()
         .trim()
         .when([], {
           is: () => !state.value.hasCompany,
-          then: (schema) =>
-            schema.required(t('error.requiredField')).default(state.value.defaultFormValues.lastName),
+          then: (schema) => schema.required(t('error.requiredField')).default(state.value.defaultFormValues.lastName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.lastName),
         }),
       companyName: string()
@@ -92,14 +90,8 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
           then: (schema) => schema.default(state.value.defaultFormValues.vatNumber),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.vatNumber),
         }),
-      streetName: string()
-        .trim()
-        .required(t('error.requiredField'))
-        .default(state.value.defaultFormValues.streetName),
-      apartment: string()
-        .trim()
-        .required(t('error.requiredField'))
-        .default(state.value.defaultFormValues.apartment),
+      streetName: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.streetName),
+      apartment: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.apartment),
       city: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.city),
       zipCode: string()
         .trim()
@@ -118,10 +110,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
       privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
-          ? string()
-              .trim()
-              .required(t('error.turnstileRequired'))
-              .default(state.value.defaultFormValues.turnstile)
+          ? string().trim().required(t('error.turnstileRequired')).default(state.value.defaultFormValues.turnstile)
           : string().trim().optional().default(state.value.defaultFormValues.turnstile),
     }),
   );

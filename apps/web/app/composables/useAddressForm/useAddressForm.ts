@@ -60,8 +60,7 @@ export const useAddressForm = (type: AddressType) => {
     object({
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
-        then: () =>
-          string().required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
+        then: () => string().required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.firstName),
       }),
       lastName: string().when([], {
@@ -88,8 +87,7 @@ export const useAddressForm = (type: AddressType) => {
       primary: boolean().default(false),
       companyName: string().when([], {
         is: () => state.value.hasCompany,
-        then: () =>
-          string().required(t('error.requiredField')).default(state.value.defaultFormValues.companyName),
+        then: () => string().required(t('error.requiredField')).default(state.value.defaultFormValues.companyName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.companyName),
       }),
       vatNumber: string().when([], {

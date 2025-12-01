@@ -1,5 +1,10 @@
 <template>
-  <NuxtLayout name="checkout" :back-label-desktop="t('common.actions.back')" :back-label-mobile="t('common.actions.back')" :heading="t('common.labels.checkout')">
+  <NuxtLayout
+    name="checkout"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
+    :heading="t('common.labels.checkout')"
+  >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider id="top-contact-information-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
