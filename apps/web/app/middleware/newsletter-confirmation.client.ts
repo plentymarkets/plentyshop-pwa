@@ -7,13 +7,13 @@ export default defineNuxtRouteMiddleware(async ({ query }) => {
       const response = await confirmEmail(query.newsletterEmailId.toString(), query.authString.toString());
       if (response && response.data) {
         send({
-          message: t('emailConfirmation.newsletterOptInMessage'),
+          message: t('newsletter.confirmation.newsletterOptInMessage'),
           type: 'positive',
           persist: true,
         });
       } else {
         send({
-          message: t('emailConfirmation.newsletterOptInMessageError'),
+          message: t('newsletter.confirmation.newsletterOptInMessageError'),
           type: 'negative',
         });
       }

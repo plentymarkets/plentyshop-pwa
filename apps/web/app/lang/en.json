@@ -515,10 +515,6 @@
     "save": "Save",
     "stopEdit": "Cancel"
   },
-  "emailConfirmation": {
-    "newsletterOptInMessage": "Your email address has been confirmed.",
-    "newsletterOptInMessageError": "An error occurred while confirming your email."
-  },
   "error": {
     "accessKeyMailFailed": "Email could not be delivered, please contact the webshop owner.",
     "accessKeyMailSent": "Email sent!",
@@ -621,7 +617,11 @@
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
       "termsRequired": "You must accept the terms and conditions.",
-      "turnstileRequired": "Please check the box to verify that you are human."
+      "turnstileRequired": "Please check the box to verify that you are human.",
+      "confirmation": {
+        "newsletterOptInMessage": "Your email address has been confirmed.",
+        "newsletterOptInMessageError": "An error occurred while confirming your email."
+      }
     },
     "orderId": {
       "required": "Order ID is required."
