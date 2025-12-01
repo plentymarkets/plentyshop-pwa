@@ -340,10 +340,6 @@
       "wishlist": "Wishlist"
     },
     "messages": {
-      "comingSoon": "Coming Soon",
-      "loading": "Loading...",
-      "loadingReviews": "Loading Reviews...",
-      "none": "None",
       "offline": "It seems you are currently offline, check your internet connection"
     },
     "reloadPWA": {
