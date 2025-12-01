@@ -605,7 +605,7 @@
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
       "termsRequired": "You must accept the terms and conditions.",
-      "turnstileRequired": "Please check the box to verify that you are human.",
+      "turnstileRequired": "Please check the box to verify that you are human."
     },
     "orderId": {
       "required": "Order ID is required."
