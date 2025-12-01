@@ -1110,7 +1110,7 @@
       "title": "Recommended sorting"
     }
   },
-  "sortType": {
+  "categorySorting": {
     "default": {
       "recommended_sorting": "Recommended"
     },
