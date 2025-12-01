@@ -107,7 +107,7 @@ const showEditAddressTooltip = computed(
 );
 
 const dynamicAddressText = computed(() =>
-  t(showSameAsShippingText.value ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
+  t(showSameAsShippingText.value ? 'address.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
 );
 
 const edit = (address: Address) => {

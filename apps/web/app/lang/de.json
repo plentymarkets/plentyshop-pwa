@@ -138,9 +138,7 @@
     "savedShippingAddresses": "Gespeicherte Lieferadressen",
     "shippingAddress": "Lieferadresse",
     "shippingRequired": "Bitte Lieferadresse auswählen.",
-    "unsavedWarning": "Die eingegebene Adresse wurde noch nicht gespeichert."
-  },
-  "addressContainer": {
+    "unsavedWarning": "Die eingegebene Adresse wurde noch nicht gespeichert.",
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
   "authentication": {

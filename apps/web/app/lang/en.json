@@ -138,9 +138,7 @@
     "savedShippingAddresses": "Saved shipping adresses",
     "shippingAddress": "Shipping address",
     "shippingRequired": "Please select a shipping address.",
-    "unsavedWarning": "The address you entered has not yet been saved. Click Save address to proceed with the checkout."
-  },
-  "addressContainer": {
+    "unsavedWarning": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
     "sameAsShippingAddress": "Same as shipping address"
   },
   "authentication": {
