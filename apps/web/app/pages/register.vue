@@ -29,7 +29,7 @@
             <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
             <UiFormPasswordInput
               v-model="formFields.password.value"
-              :title="t('validation.invalidPassword')"
+              :title="t('authentication.signup.passwordValidation.invalidPassword')"
               name="password"
               autocomplete="current-password"
               v-bind="formFieldsAttributes.password"
@@ -43,7 +43,7 @@
             <UiFormLabel>{{ t('form.repeatPasswordLabel') }} {{ t('form.required') }}</UiFormLabel>
             <UiFormPasswordInput
               v-model="formFields.repeatPassword.value"
-              :title="t('validation.invalidPassword')"
+              :title="t('authentication.signup.passwordValidation.invalidPassword')"
               name="password"
               autocomplete="current-password"
               v-bind="formFieldsAttributes.repeatPassword"

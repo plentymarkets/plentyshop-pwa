@@ -193,7 +193,8 @@
       "passwordValidation": {
         "characters": "The password must contain between {min} and {max} characters.",
         "letters": "The password must contain at least one letter.",
-        "numbers": "The password must contain at least one digit."
+        "numbers": "The password must contain at least one digit.",
+        "invalidPassword": "At least 8 characters long and must contain at least one letter and one number."
       },
       "subheading": "Sign up now to enjoy awesome benefits",
       "submitLabel": "Sign up!",
@@ -1222,15 +1223,6 @@
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "unknownError": "An unknown error has occurred."
-  },
-  "validation": {
-    "heading": "To complete order:",
-    "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
-    "missingBillingAddress": "add billing address",
-    "missingEmail": "add email",
-    "missingPaymentMethod": "choose payment method",
-    "missingShippingAddress": "add shipping address",
-    "missingShippingDetails": "choose shipping method"
   },
   "wishlistInteraction": {
     "add": "The item was added to your wish list.",

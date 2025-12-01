@@ -193,7 +193,8 @@
       "passwordValidation": {
         "characters": "Das Passwort muss zwischen {min} und {max} Zeichen lang sein.",
         "letters": "Das Passwort muss mindestens einen Buchstaben enthalten.",
-        "numbers": "Das Passwort muss mindestens eine Zahl enthalten."
+        "numbers": "Das Passwort muss mindestens eine Zahl enthalten.",
+        "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten."
       },
       "subheading": "Jetzt registrieren, um großartige Vorteile zu genießen",
       "submitLabel": "Account erstellen",
@@ -1222,15 +1223,6 @@
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
-  },
-  "validation": {
-    "heading": "Um die Bestellung abzuschließen:",
-    "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
-    "missingBillingAddress": "Rechnungsadresse hinzufügen",
-    "missingEmail": "E-Mail hinzufügen",
-    "missingPaymentMethod": "Zahlungsart wählen",
-    "missingShippingAddress": "Lieferadresse hinzufügen",
-    "missingShippingDetails": "Versandart wählen"
   },
   "wishlistInteraction": {
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
