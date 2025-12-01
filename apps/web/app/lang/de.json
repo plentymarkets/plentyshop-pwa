@@ -286,19 +286,19 @@
       "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein."
     },
     "guestCheckout": "Gast Checkout",
-    "loginFastCheckout": "Einloggen, um schneller auszuchecken"
-  },
-  "checkoutPayment": {
-    "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
-    "birthdateLabel": "Geburtsdatum",
-    "comingSoon": "Bald verfügbar",
-    "countrySearch": "Suche nach einem Land",
-    "creditCard": "Kreditkarte",
-    "heading": "Zahlungsart",
-    "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "payUponInvoice": "Bezahlen Sie per Rechnung",
-    "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
-    "phoneLabel": "Telefonnummer"
+    "loginFastCheckout": "Einloggen, um schneller auszuchecken",
+    "payment": {
+      "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
+      "birthdateLabel": "Geburtsdatum",
+      "comingSoon": "Bald verfügbar",
+      "countrySearch": "Suche nach einem Land",
+      "creditCard": "Kreditkarte",
+      "heading": "Zahlungsart",
+      "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
+      "payUponInvoice": "Bezahlen Sie per Rechnung",
+      "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
+      "phoneLabel": "Telefonnummer"
+    }
   },
   "common": {
     "actions": {

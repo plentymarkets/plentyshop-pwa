@@ -1,7 +1,7 @@
 <template>
   <header>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-      {{ t('checkoutPayment.payUponInvoice') }}
+      {{ t('checkout.payment.payUponInvoice') }}
     </h3>
 
     <UiButton
@@ -19,7 +19,7 @@
 
   <form class="grid grid-cols-1" novalidate @submit.prevent="validateAndSubmitForm">
     <label>
-      <UiFormLabel class="flex">{{ t('checkoutPayment.birthdateLabel') }} &#8727;</UiFormLabel>
+      <UiFormLabel class="flex">{{ t('checkout.payment.birthdateLabel') }} &#8727;</UiFormLabel>
       <SfInput
         v-model="birthDate"
         label="Phone Number"
@@ -31,13 +31,13 @@
 
     <div class="h-[2rem] mt-1">
       <div v-if="!validBirthDate" class="text-sm text-negative-700">
-        {{ t('checkoutPayment.birthdateError') }}
+        {{ t('checkout.payment.birthdateError') }}
       </div>
     </div>
 
     <UiTelephoneInput
       v-model="phoneWithPrefix"
-      :label="`${t('checkoutPayment.phoneLabel')} &#8727;`"
+      :label="`${t('checkout.payment.phoneLabel')} &#8727;`"
       :default-country="defaultCountry"
       :error="phoneError"
       @valid-phone-number="handlePhoneNumberValidation"
@@ -140,7 +140,7 @@ const insertFraudNetScript = () => {
 const validateAndSubmitForm = async () => {
   if (submitFirstTime.value) {
     validBirthDate.value = isDateValid();
-    if (!validPhone.value) phoneError.value = t('checkoutPayment.phoneError');
+    if (!validPhone.value) phoneError.value = t('checkout.payment.phoneError');
     submitFirstTime.value = false;
   }
 
@@ -199,7 +199,7 @@ onNuxtReady(async () => {
 });
 
 watch(validPhone, (updatedStatus) => {
-  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkoutPayment.phoneError') : '';
+  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkout.payment.phoneError') : '';
 });
 
 watch(birthDate, () => {

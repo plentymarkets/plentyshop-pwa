@@ -12,7 +12,7 @@
       <SfIconClose />
     </UiButton>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-      {{ t('checkoutPayment.creditCard') }}
+      {{ t('checkout.payment.creditCard') }}
     </h3>
   </header>
   <div id="pay-container" class="payment-container">
