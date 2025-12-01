@@ -850,7 +850,14 @@
     "subTotal": "Subtotal",
     "total": "Total",
     "trackingOrder": "Track your order",
-    "vat": "VAT"
+    "vat": "VAT",
+    "softLogin": {
+      "check": "Check",
+      "fullName": "Last name or company name",
+      "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
+      "titleLogin": "Log in to your account to access your order",
+      "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details."
+    }
   },
   "orderConfirmationPaymentStatus": {
     "fullyPaid": "Paid",
@@ -1100,13 +1107,6 @@
     "maxDeliveryDays": "Delivery within {days} days",
     "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
     "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
-  },
-  "softLogin": {
-    "check": "Check",
-    "fullName": "Last name or company name",
-    "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
-    "titleLogin": "Log in to your account to access your order",
-    "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details."
   },
   "sortingAndPagination": {
     "recommendedSorting": {

@@ -850,7 +850,14 @@
     "subTotal": "Zwischensumme",
     "total": "Summe",
     "trackingOrder": "Bestellung nachverfolgen",
-    "vat": "MwSt."
+    "vat": "MwSt.",
+    "softLogin": {
+      "check": "Prüfen",
+      "fullName": "Nachname oder Firmenname",
+      "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+      "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
+      "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen."
+    }
   },
   "orderConfirmationPaymentStatus": {
     "fullyPaid": "Bezahlt",
@@ -1100,13 +1107,6 @@
     "maxDeliveryDays": "Lieferung in {days} Tagen",
     "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
     "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
-  },
-  "softLogin": {
-    "check": "Prüfen",
-    "fullName": "Nachname oder Firmenname",
-    "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
-    "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
-    "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen."
   },
   "sortingAndPagination": {
     "recommendedSorting": {
