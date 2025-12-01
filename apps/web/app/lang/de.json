@@ -606,10 +606,6 @@
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
-      "confirmation": {
-        "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
-        "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
-      }
     },
     "orderId": {
       "required": "Die Bestellnummer ist erforderlich."
@@ -781,7 +777,11 @@
     "lastName": "Nachname",
     "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
     "subscribe": "Newsletter abonnieren",
-    "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren."
+    "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren.",
+    "confirmation": {
+      "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
+      "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
+    }
   },
   "offers": {
     "acceptOffer": "Angebot annehmen",

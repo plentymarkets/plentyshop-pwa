@@ -606,10 +606,6 @@
       "lastNameRequired": "Last Name is required.",
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human.",
-      "confirmation": {
-        "newsletterOptInMessage": "Your email address has been confirmed.",
-        "newsletterOptInMessageError": "An error occurred while confirming your email."
-      }
     },
     "orderId": {
       "required": "Order ID is required."
@@ -781,7 +777,11 @@
     "lastName": "Last Name",
     "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
     "subscribe": "Subscribe To Newsletter",
-    "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
+    "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription.",
+    "confirmation": {
+      "newsletterOptInMessage": "Your email address has been confirmed.",
+      "newsletterOptInMessageError": "An error occurred while confirming your email."
+    }
   },
   "offers": {
     "acceptOffer": "Accept offer",
