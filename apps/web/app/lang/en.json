@@ -676,12 +676,6 @@
     "prev": "Previous",
     "thumb": "Go to slide {index}"
   },
-  "graduatedPrices": {
-    "discount": "DISCOUNT",
-    "price": "PRICE",
-    "quantity": "QUANTITY",
-    "title": "Buy more, pay less"
-  },
   "homepage": {
     "background": "New Wireless Pro headphones with sleek design and modern features",
     "banner": {
@@ -993,7 +987,13 @@
     "priceExclVAT": "Excl. VAT",
     "priceInclVAT": "Incl. VAT",
     "reviewsCount": "{count} reviews",
-    "showAllReviews": "Show all reviews"
+    "showAllReviews": "Show all reviews",
+    "graduatedPrices": {
+      "discount": "DISCOUNT",
+      "price": "PRICE",
+      "quantity": "QUANTITY",
+      "title": "Buy more, pay less"
+    }
   },
   "productAttributes": {
     "notValidVariation": "Please select a valid variation.",

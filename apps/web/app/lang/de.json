@@ -676,12 +676,6 @@
     "prev": "Vorherige",
     "thumb": "Zu Bild {index}"
   },
-  "graduatedPrices": {
-    "discount": "RABATT",
-    "price": "PREIS",
-    "quantity": "ANZAHL",
-    "title": "Mehr kaufen, weniger bezahlen"
-  },
   "homepage": {
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
     "banner": {
@@ -993,7 +987,13 @@
     "priceExclVAT": "zzgl. ges. MwSt",
     "priceInclVAT": "inkl. ges. MwSt",
     "reviewsCount": "{Anzahl} Bewertungen",
-    "showAllReviews": "Alle Bewertungen anzeigen"
+    "showAllReviews": "Alle Bewertungen anzeigen",
+    "graduatedPrices": {
+      "discount": "RABATT",
+      "price": "PREIS",
+      "quantity": "ANZAHL",
+      "title": "Mehr kaufen, weniger bezahlen"
+    }
   },
   "productAttributes": {
     "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
