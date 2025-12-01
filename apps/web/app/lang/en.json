@@ -889,7 +889,7 @@
       "plus": "plus"
     }
   },
-  "paypal": {
+  "paypalPayment": {
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date.",
     "expressNotAvailable": "PayPal is not available for this delivery country. Please adjust your address accordingly or proceed to checkout to complete your order with another payment provider.",
     "invalidOrder": "The order cannot be processed. Please try again.",

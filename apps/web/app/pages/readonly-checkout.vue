@@ -70,7 +70,7 @@
               >
                 <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
                 <div class="py-2 mr-2">
-                  {{ t('paypal.expressNotAvailable') }}
+                  {{ t('paypalPayment.expressNotAvailable') }}
                 </div>
               </div>
               <NuxtLink :to="localePath(paths.checkout)">
@@ -274,7 +274,7 @@ const buy = async () => {
         navigateTo(localePath(`${paths.confirmation}/${order.order.id}/${order.order.accessKey}`));
       }
     } else {
-      send({ type: 'negative', message: t('paypal.invalidOrder') });
+      send({ type: 'negative', message: t('paypalPayment.invalidOrder') });
       navigateTo(localePath(paths.cart));
     }
   }

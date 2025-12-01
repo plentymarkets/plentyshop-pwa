@@ -52,12 +52,12 @@
 
     <div class="flex justify-end gap-x-4">
       <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="emit('confirmCancel')">
-        {{ t('paypal.unbrandedCancel') }}
+        {{ t('paypalPayment.unbrandedCancel') }}
       </UiButton>
 
       <UiButton type="submit" :disabled="loading" class="min-w-[120px] w-fit">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-        <template v-else>{{ t('paypal.unbrandedPay') }}</template>
+        <template v-else>{{ t('paypalPayment.unbrandedPay') }}</template>
       </UiButton>
     </div>
   </form>
