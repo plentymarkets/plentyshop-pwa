@@ -20,7 +20,7 @@
       </SfInput>
       <div class="w-full h-[calc(100vh-230px)] mt-4 overflow-hidden border rounded-lg">
         <div class="relative h-full">
-          <div class="flex border-b">
+          <div class="flex border-b sticky-header">
             <div class="flex-shrink-0 flex z-20">
               <div class="w-48 px-4 py-3 font-semibold">{{ getEditorTranslation('category-key') }}</div>
               <div class="w-48 px-4 py-3 font-semibold border-r" />
@@ -41,7 +41,12 @@
           <div class="flex overflow-hidden" style="height: calc(100% - 52px)">
             <div ref="leftScroll" class="flex-shrink-0 scrollbar-thin overflow-y-auto z-10">
               <div class="flex flex-col">
-                <div v-for="row in filteredKeys ?? keys" :key="row.key" class="flex h-12 text-xs">
+                <div
+                  v-for="row in displayedKeys"
+                  :key="row.key"
+                  v-memo="[row.key]"
+                  class="flex h-12 text-xs row-item"
+                >
                   <div class="w-96 overflow-x-scroll no-scrollbar border-r flex items-center">
                     <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700 flex-shrink-0">
                       {{ getCategoryFromKey(row.key) }}
@@ -55,13 +60,19 @@
             <!-- Scrollable Right Content -->
             <div ref="contentScroll" class="flex-1 overflow-auto no-scrollbar">
               <div class="flex flex-col">
-                <div v-for="row in filteredKeys ?? keys" :key="row.key" class="flex h-12">
+                <div
+                  v-for="row in displayedKeys"
+                  :key="row.key"
+                  v-memo="[row.key, ...selectedLocales.map(l => row.translations[l]?.input)]"
+                  class="flex h-12 row-item"
+                >
+                  <!-- Nur selected Sprachen rendern (Original-Ansatz) -->
                   <EditorLocalizationTranslationInput
-                    v-for="lang in selectedLocales"
-                    :key="`${row.key}-${lang}`"
+                    v-for="locale in selectedLocales"
+                    :key="`${row.key}-${locale}`"
                     :row-key="row.key"
-                    :lang="lang"
-                    :translation="row.translations[lang]"
+                    :lang="allLanguages[locale as keyof typeof allLanguages]"
+                    :translation="row.translations[locale as keyof typeof row.translations]"
                     @update="handleTranslationInput"
                     @revert="revertToDefault"
                   />
@@ -86,6 +97,12 @@ const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
 const { keys, filteredKeys, filterKeys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } =
   useEditorLocalizationKeys();
 const searchTerm = ref('');
+
+// Simple computed für angezeigte Keys
+const displayedKeys = computed(() => {
+  return filteredKeys.value || keys.value;
+});
+
 const languages = computed(() => {
   return selectedLocales.value
     .map((locale) => {
@@ -115,31 +132,53 @@ let contentScrollHandler: () => void = () => {};
 let headerScrollHandler: () => void = () => {};
 let leftScrollHandler: () => void = () => {};
 
+// Optimized scroll sync with requestAnimationFrame
+let scrollPending = false;
+let headerScrollPending = false;
+
 onMounted(() => {
   contentScrollHandler = () => {
-    if (headerScroll.value && contentScroll.value) {
-      headerScroll.value.scrollLeft = contentScroll.value.scrollLeft;
-    }
-    if (leftScroll.value && contentScroll.value) {
-      leftScroll.value.scrollTop = contentScroll.value.scrollTop;
+    if (!scrollPending) {
+      scrollPending = true;
+      requestAnimationFrame(() => {
+        if (headerScroll.value && contentScroll.value) {
+          headerScroll.value.scrollLeft = contentScroll.value.scrollLeft;
+        }
+        if (leftScroll.value && contentScroll.value) {
+          leftScroll.value.scrollTop = contentScroll.value.scrollTop;
+        }
+        scrollPending = false;
+      });
     }
   };
 
   leftScrollHandler = () => {
-    if (contentScroll.value && leftScroll.value) {
-      contentScroll.value.scrollTop = leftScroll.value.scrollTop;
+    if (!scrollPending) {
+      scrollPending = true;
+      requestAnimationFrame(() => {
+        if (contentScroll.value && leftScroll.value) {
+          contentScroll.value.scrollTop = leftScroll.value.scrollTop;
+        }
+        scrollPending = false;
+      });
     }
   };
 
   headerScrollHandler = () => {
-    if (contentScroll.value && headerScroll.value) {
-      contentScroll.value.scrollLeft = headerScroll.value.scrollLeft;
+    if (!headerScrollPending) {
+      headerScrollPending = true;
+      requestAnimationFrame(() => {
+        if (contentScroll.value && headerScroll.value) {
+          contentScroll.value.scrollLeft = headerScroll.value.scrollLeft;
+        }
+        headerScrollPending = false;
+      });
     }
   };
 
-  contentScroll.value?.addEventListener('scroll', contentScrollHandler);
-  leftScroll.value?.addEventListener('scroll', leftScrollHandler);
-  headerScroll.value?.addEventListener('scroll', headerScrollHandler);
+  contentScroll.value?.addEventListener('scroll', contentScrollHandler, { passive: true });
+  leftScroll.value?.addEventListener('scroll', leftScrollHandler, { passive: true });
+  headerScroll.value?.addEventListener('scroll', headerScrollHandler, { passive: true });
 });
 
 onBeforeUnmount(() => {
@@ -150,7 +189,18 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* Firefox */
+/* CSS Containment + content-visibility for massive Firefox performance gains */
+.row-item {
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 48px;
+}
+
+.sticky-header {
+  contain: layout style paint;
+}
+
+/* Firefox scrollbar optimization */
 .scrollbar-thin {
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
@@ -171,7 +221,7 @@ onBeforeUnmount(() => {
 .no-scrollbar {
   scrollbar-width: none;
 }
-.scrollbar-thin::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar {
   width: 0;
 }
 </style>
