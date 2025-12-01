@@ -15,10 +15,10 @@ export const seoAvailabilities = [
 ];
 
 export const cookieGroupOptions = [
-  { key: 'cookieGroup.functional', value: 'CookieBar.functional.label' },
-  { key: 'cookieGroup.externalMedia', value: 'CookieBar.externalMedia.label' },
-  { key: 'cookieGroup.necessary', value: 'CookieBar.essentials.label' },
-  { key: 'cookieGroup.marketing', value: 'CookieBar.marketing.label' },
+  { key: 'CookieBar.group.functional', value: 'CookieBar.functional.label' },
+  { key: 'CookieBar.group.externalMedia', value: 'CookieBar.externalMedia.label' },
+  { key: 'CookieBar.group.necessary', value: 'CookieBar.essentials.label' },
+  { key: 'CookieBar.group.marketing', value: 'CookieBar.marketing.label' },
 ];
 
 export const conditionOptions = [

@@ -420,6 +420,12 @@
     "Accept Selection": "Auswahl akzeptieren",
     "Back": "Zurück",
     "Cookie Settings": "Cookie-Einstellungen",
+    "group": {
+      "externalMedia": "Externe Medien",
+      "functional": "Funktional",
+      "marketing": "Marketing (empfohlen)",
+      "necessary": "Essenziell"
+    },
     "essentials": {
       "cookies": {
         "cloudflareTurnstile": {
@@ -470,12 +476,6 @@
     "Privacy Settings": "Datenschutzeinstellungen",
     "Reject All": "Alles ablehnen",
     "Show less": "Weniger anzeigen"
-  },
-  "cookieGroup": {
-    "externalMedia": "Externe Medien",
-    "functional": "Funktional",
-    "marketing": "Marketing (empfohlen)",
-    "necessary": "Essenziell"
   },
   "coupon": {
     "apply": "Einlösen",
