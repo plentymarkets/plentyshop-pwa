@@ -202,7 +202,7 @@
       "success": "Ihr Konto wurde erfolgreich erstellt."
     }
   },
-  "availabilitiesOptions": {
+  "availabilities": {
     "availabilityBackOrder": "Lieferrückstand (BackOrder)",
     "availabilityDiscontinued": "Abgekündigt (Discontinued)",
     "availabilityInStock": "Auf Lager (InStock)",

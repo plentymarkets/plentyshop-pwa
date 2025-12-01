@@ -202,7 +202,7 @@
       "success": "Your account has been created successfully"
     }
   },
-  "availabilitiesOptions": {
+  "availabilities": {
     "availabilityBackOrder": "Back order",
     "availabilityDiscontinued": "Discontinued",
     "availabilityInStock": "In stock",
