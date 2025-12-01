@@ -22,6 +22,7 @@ export const getLocales = (): LocaleObject[] => {
     { code: 'sk', file: 'sk.json' },
     { code: 'cn', file: 'cn.json' },
     { code: 'vn', file: 'vn.json' },
+    /*
     { code: 'fi', file: 'fi.json' },
     { code: 'ga', file: 'ga.json' },
     { code: 'lt', file: 'lt.json' },
@@ -29,6 +30,7 @@ export const getLocales = (): LocaleObject[] => {
     { code: 'et', file: 'et.json' },
     { code: 'hr', file: 'hr.json' },
     { code: 'hu', file: 'hu.json' },
+     */
   ];
 
   allLocales.forEach((locale) => {

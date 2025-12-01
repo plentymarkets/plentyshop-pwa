@@ -42,11 +42,14 @@ import { flagImports } from './flags';
 const { isOpen } = useLocalization();
 const viewport = useViewport();
 const { getCategoryTree } = useCategoryTree();
-const { localeCodes, locale: currentLocale } = useI18n();
+const { localeCodes, locale: currentLocale, availableLocales } = useI18n();
 const config = useRuntimeConfig();
 const flagList: { [key: string]: string } = {};
 
-const activeLanguages = (config.public.activeLanguages as string).split(',').map((lang: string) => lang.trim());
+const activeLanguages = (config.public.activeLanguages as string)
+  .split(',')
+  .filter((lang) => (availableLocales as string[]).includes(lang))
+  .map((lang: string) => lang.trim());
 const filteredLocaleCodes = computed(() =>
   localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode)),
 );
