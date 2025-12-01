@@ -40,13 +40,13 @@
                 :unit-name="productGetters.getUnitName(product)"
               />
             </template>
-            <template v-if="key === 'tags' && configuration?.fields.tags">
+            <template v-if="key === 'tags' && configuration?.fields.tags && false">
               <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
             </template>
             <template v-if="key === 'availability' && configuration?.fields.availability">
               <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
             </template>
-            <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
+            <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties && 0">
               <div class="mb-2 variation-properties">
                 <VariationProperties :product="product" />
               </div>
