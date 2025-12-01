@@ -117,7 +117,7 @@
           :style="{ color: iconColor }"
           class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
-          :aria-label="t('auth.login.openLoginForm')"
+          :aria-label="t('authentication.login.openLoginForm')"
           square
           @click="navigateToLogin"
         >

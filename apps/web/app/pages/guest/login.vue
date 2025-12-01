@@ -40,18 +40,18 @@
 
           <div class="text-end mt-4">
             <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
-              {{ t('auth.login.forgotPasswordLabel') }}
+              {{ t('authentication.login.forgotPasswordLabel') }}
             </SfLink>
           </div>
 
           <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">
             <SfLoaderCircular v-if="loading || loginSubmit" class="flex justify-center items-center" size="base" />
-            <template v-else>{{ t('auth.login.loginAndContinue') }}</template>
+            <template v-else>{{ t('authentication.login.loginAndContinue') }}</template>
           </UiButton>
 
           <div class="text-center mt-6">
-            <h3 class="font-bold text-lg mb-6">{{ t('auth.login.createAccount') }}</h3>
-            <p>{{ t('auth.login.createAccountLater') }}!</p>
+            <h3 class="font-bold text-lg mb-6">{{ t('authentication.login.createAccount') }}</h3>
+            <p>{{ t('authentication.login.createAccountLater') }}!</p>
           </div>
         </form>
       </div>
@@ -114,7 +114,7 @@ const loginUser = async () => {
       return;
     }
 
-    send({ message: t('auth.login.success'), type: 'positive' });
+    send({ message: t('authentication.login.success'), type: 'positive' });
     navigateTo(localePath(paths.checkout));
   });
 };

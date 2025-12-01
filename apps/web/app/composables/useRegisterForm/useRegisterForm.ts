@@ -199,13 +199,13 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     const response = await register(getRegisterData());
 
     if (response?.data.code === 1) {
-      send({ message: t('auth.signup.emailAlreadyExists'), type: 'negative' });
+      send({ message: t('authentication.signup.emailAlreadyExists'), type: 'negative' });
       clearTurnstile();
       return;
     }
 
     if (response?.data?.id) {
-      send({ message: t('auth.signup.success'), type: 'positive' });
+      send({ message: t('authentication.signup.success'), type: 'positive' });
     }
 
     return response;

@@ -43,9 +43,9 @@
     </form>
 
     <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mt-4">
-      <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
+      <div>{{ t('authentication.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
-        {{ t('auth.signup.logInLinkLabel') }}
+        {{ t('authentication.signup.logInLinkLabel') }}
       </SfLink>
     </div>
 

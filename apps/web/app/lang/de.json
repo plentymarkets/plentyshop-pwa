@@ -143,7 +143,7 @@
   "addressContainer": {
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
-  "auth": {
+  "authentication": {
     "login": {
       "createAccount": "Sie haben noch kein Konto?",
       "createAccountLater": "Keine Sorge. Sie können nach Ihrer Bestellung ein Konto erstellen",

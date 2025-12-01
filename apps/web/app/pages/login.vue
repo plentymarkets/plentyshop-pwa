@@ -13,7 +13,7 @@ definePageMeta({
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('auth.login.submitLabel'), icon);
+setPageMeta(t('authentication.login.submitLabel'), icon);
 
 const router = useRouter();
 const localePath = useLocalePath();
