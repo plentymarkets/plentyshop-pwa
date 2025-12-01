@@ -123,6 +123,10 @@
       "heading": "Wunschliste",
       "section": {
         "myWishlist": "Meine Wunschliste"
+      },
+      "notifications": {
+        "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
+        "delete": "Der Artikel wurde von der Wunschliste entfernt."
       }
     }
   },
@@ -1223,9 +1227,5 @@
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
-  },
-  "wishlistInteraction": {
-    "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
-    "delete": "Der Artikel wurde von der Wunschliste entfernt."
   }
 }

@@ -153,10 +153,10 @@ export const useWishlist: UseWishlistReturn = () => {
 
     await (isWishlistItem(variationId)
       ? deleteWishlistItem({ variationId }).then(() =>
-          send({ type: 'positive', message: t('wishlistInteraction.delete') }),
+          send({ type: 'positive', message: t('account.wishlist.notifications.delete') }),
         )
       : addWishlistItem({ variationId, quantity }).then(() =>
-          send({ type: 'positive', message: t('wishlistInteraction.add') }),
+          send({ type: 'positive', message: t('account.wishlist.notifications.add') }),
         ));
   };
 

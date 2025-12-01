@@ -123,6 +123,10 @@
       "heading": "Wishlist",
       "section": {
         "myWishlist": "My wishlist"
+      },
+      "notifications": {
+        "add": "The item was added to your wish list.",
+        "delete": "The item was removed from your wish list."
       }
     }
   },
@@ -1223,9 +1227,5 @@
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "unknownError": "An unknown error has occurred."
-  },
-  "wishlistInteraction": {
-    "add": "The item was added to your wish list.",
-    "delete": "The item was removed from your wish list."
   }
 }
