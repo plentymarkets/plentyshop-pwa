@@ -285,7 +285,10 @@
       "buy": "Kaufen",
       "cancelOrder": "Kauf abbrechen",
       "clear": "Zurücksetzen",
+      "clearAll": "Alles zurücksetzen",
+      "cancel": "Abbrechen",
       "continueShopping": "Einkauf fortsetzen",
+      "edit": "Bearbeiten",
       "goToCheckout": "Zur Kasse",
       "goToHomepage": "Zur Startseite gehen",
       "next": "Nächste",
@@ -299,6 +302,7 @@
       "removeProductFromWishlist": "{label} von der Wunschliste entfernen",
       "resetSearch": "Suche zurücksetzen",
       "saveAddress": "Adresse speichern",
+      "save": "Speichern",
       "scrollTop": "Nach oben scrollen",
       "search": "Suche",
       "showLess": "Weniger anzeigen",
@@ -390,20 +394,11 @@
     },
     "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
-    "success": "Nachricht erfolgreich gesendet"
-  },
-  "contactInfo": {
-    "add": "Kontaktinformationen hinzufügen",
-    "cancel": "Zurücksetzen",
-    "clear": "Löschen",
-    "clearAll": "Alles löschen",
-    "description": "Fügen Sie Ihre E-Mail-Adresse hinzu.",
-    "edit": "Bearbeiten",
-    "email": "E-Mail",
-    "heading": "Kontaktinformationen",
-    "phone": "Telefonnummer",
-    "phonePlaceholder": "z.B. 1234 567890",
-    "save": "Speichern"
+    "success": "Nachricht erfolgreich gesendet",
+    "info": {
+      "heading": "Kontaktinformationen",
+      "email": "E-Mail"
+    }
   },
   "CookieBar": {
     "about": {

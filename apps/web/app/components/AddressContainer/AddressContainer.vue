@@ -30,7 +30,7 @@
               :data-testid="'edit-address-' + type"
               @click="edit(checkoutAddress)"
             >
-              {{ t('contactInfo.edit') }}
+              {{ t('common.actions.edit') }}
             </UiButton>
           </SfTooltip>
         </div>

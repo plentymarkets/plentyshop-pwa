@@ -285,7 +285,10 @@
       "buy": "Buy",
       "cancelOrder": "Cancel order",
       "clear": "Clear",
+      "clearAll": "Clear all",
+      "cancel": "Cancel",
       "continueShopping": "Continue shopping",
+      "edit": "Edit",
       "goToCheckout": "Go to checkout",
       "goToHomepage": "Go to Homepage",
       "next": "Next",
@@ -298,6 +301,7 @@
       "removeItemFromBasket": "Remove item from basket",
       "removeProductFromWishlist": "Remove {label} from wishlist",
       "resetSearch": "Reset Search",
+      "save": "Save",
       "saveAddress": "Save address",
       "scrollTop": "Scroll to top",
       "search": "Search",
@@ -390,20 +394,11 @@
     },
     "misConfigured": "Our contact form is temporarily disabled due to a missing configuration. Please check back later or reach out to us via alternative contact methods.",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}.",
-    "success": "Message sent successfully"
-  },
-  "contactInfo": {
-    "add": "Add contact information",
-    "cancel": "Cancel",
-    "clear": "Clear all",
-    "clearAll": "Clear all",
-    "description": "Add your email.",
-    "edit": "Edit",
-    "email": "Email",
-    "heading": "Contact Information",
-    "phone": "Phone number",
-    "phonePlaceholder": "eg. 1234 567890",
-    "save": "Save"
+    "success": "Message sent successfully",
+    "info": {
+      "heading": "Contact Information",
+      "email": "Email"
+    }
   },
   "CookieBar": {
     "about": {

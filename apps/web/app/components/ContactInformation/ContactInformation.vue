@@ -1,10 +1,10 @@
 <template>
   <div data-testid="contact-information" class="md:px-4 py-6">
     <h2 class="w-full text-neutral-900 text-lg font-bold mb-4">
-      {{ t('contactInfo.heading') }}
+      {{ t('contact.info.heading') }}
     </h2>
 
-    <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contactInfo.email') }}: {{ customerEmail }}</div>
+    <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contact.info.email') }}: {{ customerEmail }}</div>
 
     <form
       v-if="(!isAuthorized && !isGuest) || isGuest"
@@ -13,7 +13,7 @@
       @submit.prevent="validateAndSubmitEmail"
     >
       <label for="customerEmail">
-        <UiFormLabel>{{ t('contactInfo.email') }} {{ t('form.required') }}</UiFormLabel>
+        <UiFormLabel>{{ t('contact.info.email') }} {{ t('form.required') }}</UiFormLabel>
       </label>
       <div class="relative">
         <SfInput
