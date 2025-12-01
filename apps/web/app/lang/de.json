@@ -819,7 +819,7 @@
     "subscribe": "Newsletter abonnieren",
     "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren."
   },
-  "offerForm": {
+  "offers": {
     "acceptOffer": "Angebot annehmen",
     "cancel": "Abbrechen",
     "declineDialogSubline": "Helfen Sie uns, uns zu verbessern, indem Sie uns mitteilen, warum Sie das Angebot abgelehnt haben.",

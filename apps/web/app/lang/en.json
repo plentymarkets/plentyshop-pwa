@@ -819,7 +819,7 @@
     "subscribe": "Subscribe To Newsletter",
     "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
   },
-  "offerForm": {
+  "offers": {
     "acceptOffer": "Accept offer",
     "cancel": "Cancel",
     "declineDialogSubline": "Help us improve by sharing why you declined the offer.",
