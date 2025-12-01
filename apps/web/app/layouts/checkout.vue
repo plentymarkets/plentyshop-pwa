@@ -7,7 +7,7 @@
           <UiButton
             :class="[viewport.isLessThan('lg') ? 'flex lg:hidden whitespace-nowrap' : 'hidden lg:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
-            :aria-label="t('navigation.previousAriaLabel')"
+            :aria-label="t('common.navigation.previousAriaLabel')"
             data-testid="checkout-back-button"
             variant="tertiary"
             @click="goToPreviousRoute()"

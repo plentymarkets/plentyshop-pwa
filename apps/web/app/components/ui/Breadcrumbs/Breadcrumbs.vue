@@ -7,7 +7,7 @@
             <template #trigger>
               <UiButton
                 class="relative w-5 h-5 !p-0 rounded-sm outline-secondary-600 hover:bg-transparent active:bg-transparent"
-                :aria-label="t('navigation.breadcrumbsDropdown')"
+                :aria-label="t('common.navigation.breadcrumbsDropdown')"
                 variant="tertiary"
                 square
                 data-testid="breadcrumbs-dropdown-button"

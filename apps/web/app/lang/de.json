@@ -386,6 +386,25 @@
       "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren.",
       "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
       "refresh": "Aktualisieren"
+    },
+    "navigation": {
+      "breadcrumbsDropdown": "Mehr Breadcrumbs anzeigen",
+      "closeAddressForm": "Adressbearbeitung beenden",
+      "closeAuthentication": "Authentifizierungsmodal schließen",
+      "closeDialog": "Dialogfenster schließen",
+      "closeDrawer": "Drawer schließen",
+      "closeListSettings": "Listeneinstellungen schließen",
+      "closeMenu": "Menü schließen",
+      "closeNeutralAlert": "Benachrichtigung schließen",
+      "closePickSavedAddress": "Adressauswahl schließen",
+      "currentPage": "Die aktuelle Seite ist {page}",
+      "goToPage": "Zur Seite navigieren {page}",
+      "languageSelector": "Sprachauswahl öffnen",
+      "nextAriaLabel": "Zur nächsten Seite navigieren",
+      "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
+      "openSearchModal": "Suche öffnen",
+      "previousAriaLabel": "Zur vorherigen Seite navigieren",
+      "socialLabel": "Gehe zu {label}"
     }
   },
   "contact": {
@@ -789,25 +808,6 @@
     "responsibleHeader": "Verantwortliche Stelle in der EU",
     "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass der Artikel allen notwendigen Vorschriften entspricht.",
     "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Artikels."
-  },
-  "navigation": {
-    "breadcrumbsDropdown": "Mehr Breadcrumbs anzeigen",
-    "closeAddressForm": "Adressbearbeitung beenden",
-    "closeAuthentication": "Authentifizierungsmodal schließen",
-    "closeDialog": "Dialogfenster schließen",
-    "closeDrawer": "Drawer schließen",
-    "closeListSettings": "Listeneinstellungen schließen",
-    "closeMenu": "Menü schließen",
-    "closeNeutralAlert": "Benachrichtigung schließen",
-    "closePickSavedAddress": "Adressauswahl schließen",
-    "currentPage": "Die aktuelle Seite ist {page}",
-    "goToPage": "Zur Seite navigieren {page}",
-    "languageSelector": "Sprachauswahl öffnen",
-    "nextAriaLabel": "Zur nächsten Seite navigieren",
-    "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
-    "openSearchModal": "Suche öffnen",
-    "previousAriaLabel": "Zur vorherigen Seite navigieren",
-    "socialLabel": "Gehe zu {label}"
   },
   "newsletter": {
     "email": "E-Mail",

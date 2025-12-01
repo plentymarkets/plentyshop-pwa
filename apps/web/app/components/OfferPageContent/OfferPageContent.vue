@@ -141,7 +141,7 @@
             aria-labelledby="address-modal-title"
           >
             <UiButton
-              :aria-label="t('navigation.closeAddressForm')"
+              :aria-label="t('common.navigation.closeAddressForm')"
               square
               variant="tertiary"
               class="absolute right-2 top-2"

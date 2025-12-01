@@ -14,7 +14,7 @@
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
         <UiButton
-          :aria-label="t('navigation.closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           data-testid="quick-checkout-close"
           square
           variant="tertiary"

@@ -2,7 +2,7 @@
   <header>
     <UiButton
       v-if="!disableCloseButton"
-      :aria-label="t('navigation.closeDialog')"
+      :aria-label="t('common.navigation.closeDialog')"
       type="button"
       square
       variant="tertiary"

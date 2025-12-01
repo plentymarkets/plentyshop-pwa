@@ -386,6 +386,25 @@
       "ariaLabel": "A new version of the shop is available. Press to refresh the page.",
       "newVersionAvailable": "A new version of the shop is available.",
       "refresh": "Refresh"
+    },
+    "navigation": {
+      "breadcrumbsDropdown": "Show more breadcrumbs",
+      "closeAddressForm": "End address editing",
+      "closeAuthentication": "Close authentication",
+      "closeDialog": "Close Dialog",
+      "closeDrawer": "Close Drawer",
+      "closeListSettings": "Close list settings",
+      "closeMenu": "Close Menu",
+      "closeNeutralAlert": "Close neutral alert",
+      "closePickSavedAddress": "Close addresses picker",
+      "currentPage": "Current Page is {page}",
+      "goToPage": "Navigate to Page {page}",
+      "languageSelector": "Open language select",
+      "nextAriaLabel": "Navigate to next page",
+      "openConfigurationDrawer": "Open configuration drawer",
+      "openSearchModal": "Open item search",
+      "previousAriaLabel": "Navigate to previous page",
+      "socialLabel": "Go to {label} page"
     }
   },
   "contact": {
@@ -789,25 +808,6 @@
     "responsibleHeader": "Responsible Person in the EU",
     "responsibleSubtitle": "An economic operator based within the EU who ensures that the item complies with all necessary regulations.",
     "subtitle": "Manufacturer information includes the address and additional details about the producer of the item."
-  },
-  "navigation": {
-    "breadcrumbsDropdown": "Show more breadcrumbs",
-    "closeAddressForm": "End address editing",
-    "closeAuthentication": "Close authentication",
-    "closeDialog": "Close Dialog",
-    "closeDrawer": "Close Drawer",
-    "closeListSettings": "Close list settings",
-    "closeMenu": "Close Menu",
-    "closeNeutralAlert": "Close neutral alert",
-    "closePickSavedAddress": "Close addresses picker",
-    "currentPage": "Current Page is {page}",
-    "goToPage": "Navigate to Page {page}",
-    "languageSelector": "Open language select",
-    "nextAriaLabel": "Navigate to next page",
-    "openConfigurationDrawer": "Open configuration drawer",
-    "openSearchModal": "Open item search",
-    "previousAriaLabel": "Navigate to previous page",
-    "socialLabel": "Go to {label} page"
   },
   "newsletter": {
     "email": "Email",

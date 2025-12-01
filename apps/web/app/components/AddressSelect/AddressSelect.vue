@@ -20,7 +20,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('navigation.closePickSavedAddress')"
+        :aria-label="t('common.navigation.closePickSavedAddress')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
