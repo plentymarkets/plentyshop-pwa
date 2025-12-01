@@ -12,12 +12,12 @@
         <i18n-t v-if="cookieJson.barDescription" :keypath="cookieJson.barDescription" scope="global">
           <template #legal
             ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{
-              t('categories.legal.subcategories.legalDisclosure')
+              t('CookieBar.legalDisclosure')
             }}</SfLink></template
           >
           <template #policy
             ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{
-              t('categories.legal.subcategories.privacyPolicy')
+              t('CookieBar.privacyPolicy')
             }}</SfLink></template
           >
         </i18n-t>
