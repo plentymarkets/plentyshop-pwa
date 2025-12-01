@@ -298,6 +298,9 @@
       "payUponInvoice": "Bezahlen Sie per Rechnung",
       "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
       "phoneLabel": "Telefonnummer"
+    },
+    "googlePay": {
+      "paymentInProgress": "Zahlung in Bearbeitung..."
     }
   },
   "common": {
@@ -672,9 +675,6 @@
     "next": "Nächste",
     "prev": "Vorherige",
     "thumb": "Zu Bild {index}"
-  },
-  "googlePay": {
-    "paymentInProgress": "Zahlung in Bearbeitung..."
   },
   "graduatedPrices": {
     "discount": "RABATT",

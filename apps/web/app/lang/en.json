@@ -298,6 +298,9 @@
       "payUponInvoice": "Pay upon invoice",
       "phoneError": "Enter a valid phone number.",
       "phoneLabel": "Phone number"
+    },
+    "googlePay": {
+      "paymentInProgress": "Payment in progress..."
     }
   },
   "common": {
@@ -672,9 +675,6 @@
     "next": "Next",
     "prev": "Previous",
     "thumb": "Go to slide {index}"
-  },
-  "googlePay": {
-    "paymentInProgress": "Payment in progress..."
   },
   "graduatedPrices": {
     "discount": "DISCOUNT",
