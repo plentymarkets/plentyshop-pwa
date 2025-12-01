@@ -1,16 +1,17 @@
 <template>
   <div class="flex-1">
     <template v-if="content?.showItemCount">
-      <div
-        class="flex items-center mb-6"
-        :class="{
+      <div class="grid md:grid-cols-3 md:gap-4">
+        <div
+          class="flex items-center md:col-span-2 mb-2 md:mb-6"
+          :class="{
           'justify-end': content?.itemCountPosition === 'right',
           'justify-center': content?.itemCountPosition === 'center',
           'justify-start': content?.itemCountPosition === 'left',
         }"
-        data-testid="item-count"
-      >
-        <span class="font-bold md:text-lg">
+          data-testid="item-count"
+        >
+        <span class="md:text-sm">
           {{
             t('numberOfProducts', {
               count: products?.length ?? 0,
@@ -18,7 +19,13 @@
             })
           }}
         </span>
+        </div>
+        <CategorySorting
+          :selection-mode-compact=true
+          class="mb-6"
+        />
       </div>
+
     </template>
 
     <template v-if="content?.paginationPosition === 'top' || content?.paginationPosition === 'both'">

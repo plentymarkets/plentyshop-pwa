@@ -31,6 +31,7 @@
             :facets="productsCatalog.facets"
             :configuration="content"
             :render-key="key"
+            :force-open="true"
           />
         </template>
 
@@ -68,7 +69,7 @@
       </template>
     </CategorySidebar>
 
-    <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+    <UiButton variant="secondary" class="md:hidden whitespace-nowrap w-[100%] mb-2" @click="open">
       <template #prefix>
         <SfIconTune />
       </template>
@@ -117,7 +118,7 @@ watch(
     "no-sorting-or-filter-text": "You do not have any sorting or filter options enabled"
   },
   "de": {
-    "no-sorting-or-filter-text": "You do not have any sorting or filter options enabled"
+    "no-sorting-or-filter-text": "Sie haben keine Sortier- oder Filteroptionen aktiviert."
   }
 }
 </i18n>

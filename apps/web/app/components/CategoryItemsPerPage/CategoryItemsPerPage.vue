@@ -7,7 +7,7 @@
       {{ t('perPage') }}
     </h6>
 
-    <div class="px-4">
+    <div class="px-0">
       <SfSelect
         id="perPage"
         v-model="selected"

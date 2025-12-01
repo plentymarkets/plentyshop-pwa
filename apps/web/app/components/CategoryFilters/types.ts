@@ -16,3 +16,9 @@ export type FilterProps = {
   showAll?: boolean;
   limit?: number;
 };
+
+export type FilterOpenState = {
+  isopen?: boolean;
+  forceOpen?: boolean;
+  index?: number;
+};

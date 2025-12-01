@@ -6,7 +6,7 @@
         <template v-if="localeCodes.length > 1">
           <UiButton
             v-if="!isLanguageSelectOpen"
-            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer hidden"
             :aria-label="t('languageSelector')"
             variant="tertiary"
             :style="{ color: iconColor }"
@@ -129,7 +129,7 @@
     <div v-if="viewport.isLessThan('lg')">
       <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md hidden"
         square
         data-testid="open-languageselect-button"
         :style="{ color: iconColor }"

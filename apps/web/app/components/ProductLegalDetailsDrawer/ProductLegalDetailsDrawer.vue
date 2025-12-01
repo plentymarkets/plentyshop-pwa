@@ -1,5 +1,13 @@
 <template>
   <UiOverlay :visible="open">
+    <transition
+      enter-active-class="transition duration-500 ease-in-out"
+      leave-active-class="transition duration-500 ease-in-out"
+      :enter-from-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
+      :enter-to-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
+      :leave-from-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
+      :leave-to-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
+    >
     <SfDrawer
       ref="productLegalDrawerRef"
       v-model="open"
@@ -65,6 +73,7 @@
         <component :is="tab.component" :product="product" />
       </div>
     </SfDrawer>
+    </transition>
   </UiOverlay>
 </template>
 

@@ -161,21 +161,21 @@ const fieldLabels: Record<string, string> = {
     "items-per-page-label": "Items per page"
   },
   "de": {
-    "display-and-order-label": "Display and order",
+    "display-and-order-label": "Anzeige und Bestellung",
 
-    "category": "Category",
-    "sortBy": "Sort by",
-    "perPage": "Per page",
-    "itemRating": "Item rating",
-    "manufacturer": "Manufacturer",
-    "price": "Price",
-    "availability": "Availability",
-    "customizedFilters": "Customized filters",
+    "category": "Kategorie",
+    "sortBy": "Sortieren nach",
+    "perPage": "Pro Seite",
+    "itemRating": "Artikelbewertung",
+    "manufacturer": "Hersteller",
+    "price": "Preis",
+    "availability": "Verfügbarkeit",
+    "customizedFilters": "Individuell angepasste Filter",
 
-    "enable-filters-label": "Enable filters",
-    "show-filters-immediately-label": "Show all customized filters immediately",
-    "number-of-filters-label": "Number of customized filters to show initially",
-    "items-per-page-label": "Items per page"
+    "enable-filters-label": "Filter aktivieren",
+    "show-filters-immediately-label": "Alle benutzerdefinierten Filter sofort anzeigen",
+    "number-of-filters-label": "Anzahl der anpassbaren Filter, die zunächst angezeigt werden sollen",
+    "items-per-page-label": "Elemente pro Seite"
   }
 }
 </i18n>

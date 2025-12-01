@@ -15,7 +15,8 @@ export type PriceCardFieldKey =
   | 'addToWishlist'
   | 'quantityAndAddToCart'
   | 'itemText'
-  | 'technicalData';
+  | 'technicalData'
+  | 'bulletPoints';
 
 export type WishlistSize = 'small' | 'large';
 

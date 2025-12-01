@@ -955,6 +955,7 @@
   "showOptions": "Show options",
   "showProducts": "Show items",
   "mostPopular": "Most popular",
+  "rrp": "RRP",
   "socialLabel": "Go to {label} page",
   "softLogin": {
     "check": "Check",
@@ -1147,6 +1148,7 @@
   "technicalData": "Technical data",
   "termsAndConditions": "Terms and Conditions",
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply. *",
+  "termsInfoInstant": "Please take note of our {terms}, {cancellationRights}, and {privacyPolicy}.",
   "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
   "total": "Total",

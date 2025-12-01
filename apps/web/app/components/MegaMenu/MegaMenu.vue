@@ -123,11 +123,19 @@
 
     <template v-else>
       <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
-      <SfDrawer
+      <transition
+        enter-active-class="transition duration-500 ease-in-out"
+        leave-active-class="transition duration-500 ease-in-out"
+        :enter-from-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
+        :enter-to-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
+        :leave-from-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
+        :leave-to-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
+      ><SfDrawer
         ref="drawerReference"
         v-model="isOpen"
-        placement="left"
-        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        :placement="placement"
+        class="bg-white overflow-y-auto z-[1000] w-full"
+        :class="{ 'w-100': placement === 'left' || placement === 'right' }"
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
@@ -184,7 +192,8 @@
             </template>
           </ul>
         </nav>
-      </SfDrawer>
+      </SfDrawer></transition>
+
     </template>
   </header>
 </template>
@@ -201,6 +210,7 @@ import {
   useTrapFocus,
   useDropdown,
 } from '@storefront-ui/vue';
+import type {SfDrawerPlacement} from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
@@ -208,6 +218,8 @@ import type { MegaMenuProps } from '~/components/MegaMenu/types';
 
 const props = defineProps<MegaMenuProps>();
 const NuxtLink = resolveComponent('NuxtLink');
+
+const placement = ref<`${SfDrawerPlacement}`>('left');
 
 const { t } = useI18n();
 const viewport = useViewport();

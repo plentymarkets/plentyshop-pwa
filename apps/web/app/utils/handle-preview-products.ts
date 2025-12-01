@@ -8,7 +8,7 @@ import type { UseProductsState } from '~/composables/useProducts/types';
 export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string) => {
   const { $isPreview } = useNuxtApp();
 
-  if (state.value.data.category.type === 'item' && $isPreview && state.value.data.products.length === 0) {
+  if (state.value.data.category?.type === 'item' && $isPreview && state.value.data.products.length === 0) {
     const fakeFacetCall = lang === 'de' ? fakeFacetCallDE.data : fakeFacetCallEN.data;
     state.value.data = { ...state.value.data, facets: fakeFacetCall.facets };
 

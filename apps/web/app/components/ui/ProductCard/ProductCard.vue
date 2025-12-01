@@ -5,6 +5,7 @@
     :class="{ 'border border-neutral-200': configuration?.cardBorders }"
   >
     <div class="relative overflow-hidden">
+      <ProductEprel :product="product" :size="'lg'" />
       <UiBadges
         :use-tags="useTagsOnCategoryPage"
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
@@ -19,7 +20,7 @@
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
       >
-        <ProductEprel :product="product" :size="'lg'" />
+
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
@@ -124,34 +125,47 @@
           </div>
         </template>
         <template v-if="key === 'addToCart' && configuration?.fields?.addToCart">
-          <UiButton
-            v-if="canAddFromCategory"
-            size="sm"
-            class="min-w-[80px] w-fit"
-            data-testid="add-to-basket-short"
-            :disabled="loading"
-            :variant="configuration?.addToCartStyle || 'primary'"
-            @click="addWithLoader(Number(productGetters.getId(product)))"
+          <div
+            class="flex flex-col w-full justify-between"
+            :class="{
+                  'flex-col': isFromSlider,
+                  'lg:flex-row': !isFromSlider
+                }"
           >
-            <template v-if="!loading" #prefix>
-              <SfIconShoppingCart size="sm" />
-            </template>
-            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>{{ t('addToCartShort') }}</span>
-          </UiButton>
-          <UiButton
-            v-else
-            :variant="configuration?.addToCartStyle || 'primary'"
-            type="button"
-            :tag="NuxtLink"
-            :to="productPath"
-            size="sm"
-            class="w-fit"
-          >
-            <span>{{ t('showOptions') }}</span>
-          </UiButton>
+            <UiButton
+              v-if="canAddFromCategory"
+              size="sm"
+              class="min-w-[144px] mb-2"
+              data-testid="add-to-basket-short"
+              :disabled="loading"
+              :variant="configuration?.addToCartStyle || 'primary'"
+              @click="addWithLoader(Number(productGetters.getId(product)))"
+            >
+              <template v-if="!loading" #prefix>
+                <SfIconShoppingCart size="sm" />
+              </template>
+              <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+              <span v-else>{{ t('addToCartShort') }}</span>
+            </UiButton>
+            <UiButton
+              v-else
+              :variant="configuration?.addToCartStyle || 'primary'"
+              type="button"
+              :tag="NuxtLink"
+              :to="productPath"
+              size="sm"
+              class="mb-2"
+            >
+              <span>{{ t('showOptions') }}</span>
+            </UiButton>
+            <UiProductPreview
+              :product="product"
+            />
+          </div>
+
         </template>
       </template>
+
     </div>
   </div>
 </template>
@@ -162,6 +176,7 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } fro
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
+
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({

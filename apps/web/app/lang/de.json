@@ -955,6 +955,7 @@
   "showOptions": "Optionen anzeigen",
   "showProducts": "Artikel anzeigen",
   "mostPopular": "Am beliebtesten",
+  "rrp": "UVP",
   "socialLabel": "Gehe zu {label}",
   "softLogin": {
     "check": "Prüfen",
@@ -1147,6 +1148,7 @@
   "technicalData": "Technische Daten",
   "termsAndConditions": "AGB",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis. *",
+  "termsInfoInstant": "Bitte nehmen Sie unsere {terms}, {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
   "tomorrow": "Morgen",
   "total": "Gesamt",

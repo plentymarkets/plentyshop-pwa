@@ -14,7 +14,7 @@
     </UiAccordionItem>
     <UiDivider v-if="productDetailsOpen && productGetters.getDescription(product)?.length" class="mb-2 mt-2" />
     <UiAccordionItem
-      v-if="productGetters.getTechnicalData(product)?.length"
+      v-if="productGetters.getTechnicalData(product)?.length && false"
       v-model="technicalDataOpen"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
     >
