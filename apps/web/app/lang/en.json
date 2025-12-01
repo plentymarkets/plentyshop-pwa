@@ -1098,15 +1098,15 @@
     "heading": "Shipping address",
     "methodChanged": "The selected shipping method is not available anymore.",
     "noShippingMessage": "No shipping information available",
-    "noShippingMethodsNoAddress": "Enter your shipping address to see the available shipping methods."
-  },
-  "shippingMethod": {
-    "description": "Not available until a shipping address is provided.",
-    "free": "Free",
-    "heading": "Shipping method",
-    "maxDeliveryDays": "Delivery within {days} days",
-    "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
-    "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
+    "noShippingMethodsNoAddress": "Enter your shipping address to see the available shipping methods.",
+    "method": {
+      "description": "Not available until a shipping address is provided.",
+      "free": "Free",
+      "heading": "Shipping method",
+      "maxDeliveryDays": "Delivery within {days} days",
+      "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
+      "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
+    }
   },
   "sortingAndPagination": {
     "recommendedSorting": {

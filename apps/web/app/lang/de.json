@@ -1098,15 +1098,15 @@
     "heading": "Lieferadresse",
     "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar.",
     "noShippingMessage": "Keine Versandinformationen verfügbar",
-    "noShippingMethodsNoAddress": "Tragen Sie Ihre Lieferadresse ein, um die passenden Versandarten zu sehen."
-  },
-  "shippingMethod": {
-    "description": "Nicht verfügbar, solange keine Lieferadresse angegeben wird.",
-    "free": "Kostenlos",
-    "heading": "Versandart",
-    "maxDeliveryDays": "Lieferung in {days} Tagen",
-    "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+    "noShippingMethodsNoAddress": "Tragen Sie Ihre Lieferadresse ein, um die passenden Versandarten zu sehen.",
+    "method": {
+      "description": "Nicht verfügbar, solange keine Lieferadresse angegeben wird.",
+      "free": "Kostenlos",
+      "heading": "Versandart",
+      "maxDeliveryDays": "Lieferung in {days} Tagen",
+      "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
+      "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+    }
   },
   "sortingAndPagination": {
     "recommendedSorting": {

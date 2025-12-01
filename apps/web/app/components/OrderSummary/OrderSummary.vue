@@ -113,7 +113,7 @@ const totals = computed(() => {
 });
 
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shippingMethod.free') : format(Number(amount));
+  return amount === 0 ? t('shipping.method.free') : format(Number(amount));
 };
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
