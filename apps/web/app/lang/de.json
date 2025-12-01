@@ -993,12 +993,12 @@
       "price": "PREIS",
       "quantity": "ANZAHL",
       "title": "Mehr kaufen, weniger bezahlen"
+    },
+    "attributes": {
+      "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
+      "productNameMissing": "Artikelname fehlt",
+      "seeAvailableOptions": "Verfügbare Optionen anzeigen"
     }
-  },
-  "productAttributes": {
-    "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
-    "productNameMissing": "Artikelname fehlt",
-    "seeAvailableOptions": "Verfügbare Optionen anzeigen"
   },
   "quickCheckout": {
     "cartContains": "Ihr Warenkorb enthält {count} Artikel",

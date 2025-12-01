@@ -42,7 +42,7 @@ const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
-  return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
+  return productAttributeGetters.isAttributeValueDisabled(item) ? t('product.attributes.seeAvailableOptions') : '';
 };
 
 const validationSchema = toTypedSchema(

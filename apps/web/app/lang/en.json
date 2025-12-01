@@ -993,12 +993,12 @@
       "price": "PRICE",
       "quantity": "QUANTITY",
       "title": "Buy more, pay less"
+    },
+    "attributes": {
+      "notValidVariation": "Please select a valid variation.",
+      "productNameMissing": "Item name missing",
+      "seeAvailableOptions": "See available options"
     }
-  },
-  "productAttributes": {
-    "notValidVariation": "Please select a valid variation.",
-    "productNameMissing": "Item name missing",
-    "seeAvailableOptions": "See available options"
   },
   "quickCheckout": {
     "cartContains": "Your cart contains {count} item | Your cart contains {count} items",

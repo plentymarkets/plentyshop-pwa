@@ -358,7 +358,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   if (!getCombination()) {
-    send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
+    send({ message: t('product.attributes.notValidVariation'), type: 'negative' });
     return false;
   }
 
@@ -404,7 +404,7 @@ const openReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('product.notAvailable')));
-const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('product.attributes.notValidVariation')));
 const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
 
 const scrollToReviews = () => {
