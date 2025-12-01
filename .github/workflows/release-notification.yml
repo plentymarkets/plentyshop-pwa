@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Push release notification
         run: |
-          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
+          curl --location --request POST "${{ secrets.CHAT_WEBHOOK }}" \
           --header 'Content-Type: application/json' \
           --data-raw '{
             "cardsV2": [
