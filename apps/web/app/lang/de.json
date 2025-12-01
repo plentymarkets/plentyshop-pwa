@@ -231,46 +231,12 @@
     "numberInCart": "{count} Artikel im Warenkorb",
     "numberInWishlist": "{count} Artikel in der Wunschliste"
   },
-  "categories": {
-    "about": {
-      "label": "Über",
-      "subcategories": {
-        "aboutUs": "Über uns",
-        "affiliateProgram": "Partnerprogramm",
-        "jobs": "Jobs",
-        "pressCenter": "Presse",
-        "suppliers": "Lieferanten"
-      }
-    },
-    "contact": {
-      "label": "Kontakt"
-    },
-    "help": {
-      "label": "Hilfe",
-      "subcategories": {
-        "contact": "Kontakt",
-        "feedback": "Feedback",
-        "helpCenter": "Hilfezentrum",
-        "securityFraud": "Sicherheit & Missbrauch"
-      }
-    },
+  "footer": {
     "legal": {
-      "label": "Rechtliches",
-      "subcategories": {
-        "cancellationForm": "Widerrufsformular",
-        "cancellationRights": "Widerrufsbelehrung",
-        "declarationOfAccessibility": "Barrierefreiheitserklärung",
-        "legalDisclosure": "Impressum",
-        "privacyPolicy": "Datenschutzerklärung",
-        "termsAndConditions": "AGB"
-      }
+      "label": "Rechtliches"
     },
     "services": {
-      "label": "Services",
-      "subcategories": {
-        "contact": "Kontakt",
-        "register": "Registrieren"
-      }
+      "label": "Services"
     }
   },
   "checkout": {
@@ -406,6 +372,7 @@
     }
   },
   "contact": {
+    "label": "Kontakt",
     "clearAll": "Alles löschen",
     "contact": "Kontakt",
     "contactSend": "Anfrage senden",
@@ -790,7 +757,10 @@
     "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
     "termsAndConditions": "AGB",
     "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis. *",
-    "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen."
+    "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
+    "cancellationForm": "Widerrufsformular",
+    "declarationOfAccessibility": "Barrierefreiheitserklärung",
+    "legalDisclosure": "Impressum"
   },
   "manufacturer": {
     "contactUrl": "Kontaktformular",

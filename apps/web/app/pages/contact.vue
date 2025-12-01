@@ -175,7 +175,7 @@ const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('categories.contact.label'), icon);
+setPageMeta(t('contact.label'), icon);
 
 const validationSchema = toTypedSchema(
   object({

@@ -69,7 +69,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       isGlobalTemplate: true,
     },
     column1: {
-      title: t('categories.legal.label'),
+      title: t('footer.legal.label'),
       showTermsAndConditions: true,
       showCancellationRights: true,
       showCancellationForm: true,
@@ -78,7 +78,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       showDeclarationOfAccessibility: true,
     },
     column2: {
-      title: t('categories.services.label'),
+      title: t('footer.services.label'),
       description: '',
       showContactLink: true,
       showRegisterLink: true,

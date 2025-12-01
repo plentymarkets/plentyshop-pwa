@@ -231,46 +231,12 @@
     "numberInCart": "{count} item in cart",
     "numberInWishlist": "{count} items in wishlist"
   },
-  "categories": {
-    "about": {
-      "label": "About",
-      "subcategories": {
-        "aboutUs": "About us",
-        "affiliateProgram": "Affiliate program",
-        "jobs": "Jobs",
-        "pressCenter": "Press Center",
-        "suppliers": "Suppliers"
-      }
-    },
-    "contact": {
-      "label": "Contact"
-    },
-    "help": {
-      "label": "Help",
-      "subcategories": {
-        "contact": "Contact",
-        "feedback": "Feedback",
-        "helpCenter": "Help center",
-        "securityFraud": "Security & fraud"
-      }
-    },
+  "footer": {
     "legal": {
-      "label": "Legal",
-      "subcategories": {
-        "cancellationForm": "Cancellation form",
-        "cancellationRights": "Cancellation rights",
-        "declarationOfAccessibility": "Declaration of accessibility",
-        "legalDisclosure": "Legal disclosure",
-        "privacyPolicy": "Privacy policy",
-        "termsAndConditions": "Terms and conditions"
-      }
+      "label": "Legal"
     },
     "services": {
-      "label": "Services",
-      "subcategories": {
-        "contact": "Contact",
-        "register": "Register"
-      }
+      "label": "Services"
     }
   },
   "checkout": {
@@ -406,6 +372,7 @@
     }
   },
   "contact": {
+    "label": "Contact",
     "clearAll": "Clear all",
     "contact": "Contact",
     "contactSend": "Send request",
@@ -790,7 +757,10 @@
     "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
     "termsAndConditions": "Terms and Conditions",
     "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply. *",
-    "termsRequired": "You have to agree with the terms and conditions."
+    "termsRequired": "You have to agree with the terms and conditions.",
+    "cancellationForm": "Cancellation form",
+    "declarationOfAccessibility": "Declaration of accessibility",
+    "legalDisclosure": "Legal disclosure"
   },
   "manufacturer": {
     "contactUrl": "Contact form",
