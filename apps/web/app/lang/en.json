@@ -231,20 +231,6 @@
     "numberInCart": "{count} item in cart",
     "numberInWishlist": "{count} items in wishlist"
   },
-  "footer": {
-    "legal": {
-      "label": "Legal"
-    },
-    "services": {
-      "label": "Services"
-    },
-    "contact": {
-      "label": "Contact"
-    },
-    "register": {
-      "label": "Register"
-    }
-  },
   "checkout": {
     "backToCheckout": "Back to Checkout",
     "continueAsGuest": "Continue as guest",
@@ -624,6 +610,20 @@
     "requiredField": "This is a mandatory field.",
     "turnstileRequired": "Please check the box to verify that you are human.",
     "wholeNumber": "Enter a whole number."
+  },
+  "footer": {
+    "legal": {
+      "label": "Legal"
+    },
+    "services": {
+      "label": "Services"
+    },
+    "contact": {
+      "label": "Contact"
+    },
+    "register": {
+      "label": "Register"
+    }
   },
   "form": {
     "addCompany": "+ Add company data",
