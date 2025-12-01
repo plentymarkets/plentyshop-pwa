@@ -9,7 +9,7 @@
           data-testid="editor-language-select"
           @input="(ev: any) => switchLanguage(ev.target.value)"
         >
-          <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
+          <option v-for="locale in availableLocales" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
             {{ t(`lang.${locale}`) }}
           </option>
         </select>
@@ -27,7 +27,7 @@ import type { Locale } from 'vue-i18n';
 
 const languageLabel = 'Change the active language to manage multilingual content.';
 
-const { localeCodes, locale: currentLocale } = useI18n();
+const { locale: currentLocale, availableLocales } = useI18n();
 const { switchLocale } = useLocalization();
 const switchLanguage = async (locale: Locale) => {
   await switchLocale(locale, false);
