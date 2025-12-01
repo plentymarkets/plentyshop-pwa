@@ -236,6 +236,46 @@
     "numberInCart": "{count} Artikel im Warenkorb",
     "numberInWishlist": "{count} Artikel in der Wunschliste"
   },
+  "category": {
+    "sorting": {
+      "default": {
+        "recommended_sorting": "Empfohlen"
+      },
+      "item": {
+        "feedbackDecimal_asc": "Kundenbewertung ⬆",
+        "feedbackDecimal_desc": "Kundenbewertung ⬇",
+        "manufacturer": {
+          "externalName_asc": "Hersteller A-Z",
+          "externalName_desc": "Hersteller Z-A"
+        },
+        "score": "Relevanz"
+      },
+      "sorting": {
+        "price": {
+          "avg_asc": "Preis ⬆",
+          "avg_desc": "Preis ⬇"
+        }
+      },
+      "texts": {
+        "name1_asc": "Name A-Z",
+        "name1_desc": "Name Z-A"
+      },
+      "variation": {
+        "availability": {
+          "averageDays_asc": "Verfügbarkeit ⬆",
+          "averageDays_desc": "Verfügbarkeit ⬇"
+        },
+        "createdAt_asc": "Älteste Artikel",
+        "createdAt_desc": "Neueste Artikel",
+        "number_asc": "Variantennummer ⬆",
+        "number_desc": "Variantennummer ⬇",
+        "position_asc": "Meistverkaufte Artikel ⬆",
+        "position_desc": "Meistverkaufte Artikel ⬇",
+        "updatedAt_asc": "Letzte Aktualisierung",
+        "updatedAt_desc": "Erste Aktualisierung"
+      }
+    }
+  },
   "checkout": {
     "backToCheckout": "Zurück zur Kasse",
     "continueAsGuest": "Weiter als Gast",
@@ -1113,44 +1153,6 @@
       "secondSortingOptionLabel": "Zweiter Sortierungswert",
       "thirdSortingOptionLabel": "Dritter Sortierungswert",
       "title": "Empfohlene Sortierung"
-    }
-  },
-  "categorySorting": {
-    "default": {
-      "recommended_sorting": "Empfohlen"
-    },
-    "item": {
-      "feedbackDecimal_asc": "Kundenbewertung ⬆",
-      "feedbackDecimal_desc": "Kundenbewertung ⬇",
-      "manufacturer": {
-        "externalName_asc": "Hersteller A-Z",
-        "externalName_desc": "Hersteller Z-A"
-      },
-      "score": "Relevanz"
-    },
-    "sorting": {
-      "price": {
-        "avg_asc": "Preis ⬆",
-        "avg_desc": "Preis ⬇"
-      }
-    },
-    "texts": {
-      "name1_asc": "Name A-Z",
-      "name1_desc": "Name Z-A"
-    },
-    "variation": {
-      "availability": {
-        "averageDays_asc": "Verfügbarkeit ⬆",
-        "averageDays_desc": "Verfügbarkeit ⬇"
-      },
-      "createdAt_asc": "Älteste Artikel",
-      "createdAt_desc": "Neueste Artikel",
-      "number_asc": "Variantennummer ⬆",
-      "number_desc": "Variantennummer ⬇",
-      "position_asc": "Meistverkaufte Artikel ⬆",
-      "position_desc": "Meistverkaufte Artikel ⬇",
-      "updatedAt_asc": "Letzte Aktualisierung",
-      "updatedAt_desc": "Erste Aktualisierung"
     }
   },
   "storefrontError": {

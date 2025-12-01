@@ -236,6 +236,46 @@
     "numberInCart": "{count} item in cart",
     "numberInWishlist": "{count} items in wishlist"
   },
+  "category": {
+    "sorting": {
+      "default": {
+        "recommended_sorting": "Recommended"
+      },
+      "item": {
+        "feedbackDecimal_asc": "Item reviews ⬆",
+        "feedbackDecimal_desc": "Item reviews ⬇",
+        "manufacturer": {
+          "externalName_asc": "Manufacturer A-Z",
+          "externalName_desc": "Manufacturer Z-A"
+        },
+        "score": "Relevance"
+      },
+      "sorting": {
+        "price": {
+          "avg_asc": "Price ⬆",
+          "avg_desc": "Price ⬇"
+        }
+      },
+      "texts": {
+        "name1_asc": "Name A-Z",
+        "name1_desc": "Name Z-A"
+      },
+      "variation": {
+        "availability": {
+          "averageDays_asc": "Availability ⬆",
+          "averageDays_desc": "Availability ⬇"
+        },
+        "createdAt_asc": "Oldest items",
+        "createdAt_desc": "Newest items",
+        "number_asc": "Variation number ⬆",
+        "number_desc": "Variation number ⬇",
+        "position_asc": "Top seller ⬆",
+        "position_desc": "Top seller ⬇",
+        "updatedAt_asc": "Last update",
+        "updatedAt_desc": "First update"
+      }
+    }
+  },
   "checkout": {
     "backToCheckout": "Back to Checkout",
     "continueAsGuest": "Continue as guest",
@@ -1113,44 +1153,6 @@
       "secondSortingOptionLabel": "Second sorting option",
       "thirdSortingOptionLabel": "Third sorting option",
       "title": "Recommended sorting"
-    }
-  },
-  "categorySorting": {
-    "default": {
-      "recommended_sorting": "Recommended"
-    },
-    "item": {
-      "feedbackDecimal_asc": "Item reviews ⬆",
-      "feedbackDecimal_desc": "Item reviews ⬇",
-      "manufacturer": {
-        "externalName_asc": "Manufacturer A-Z",
-        "externalName_desc": "Manufacturer Z-A"
-      },
-      "score": "Relevance"
-    },
-    "sorting": {
-      "price": {
-        "avg_asc": "Price ⬆",
-        "avg_desc": "Price ⬇"
-      }
-    },
-    "texts": {
-      "name1_asc": "Name A-Z",
-      "name1_desc": "Name Z-A"
-    },
-    "variation": {
-      "availability": {
-        "averageDays_asc": "Availability ⬆",
-        "averageDays_desc": "Availability ⬇"
-      },
-      "createdAt_asc": "Oldest items",
-      "createdAt_desc": "Newest items",
-      "number_asc": "Variation number ⬆",
-      "number_desc": "Variation number ⬇",
-      "position_asc": "Top seller ⬆",
-      "position_desc": "Top seller ⬇",
-      "updatedAt_asc": "Last update",
-      "updatedAt_desc": "First update"
     }
   },
   "storefrontError": {

@@ -11,7 +11,7 @@
       <SfSelect id="sortBy" v-model="selected" :aria-label="t('common.labels.sortBy')" data-testid="select-sort-by">
         <option v-if="selectionModeCompact" value="" disabled hidden>{{ t('common.labels.sortBy') }}</option>
         <option v-for="option in options" :key="option" :value="option">
-          {{ t(`categorySorting.${option}`) }}
+          {{ t(`category.sorting.${option}`) }}
         </option>
       </SfSelect>
     </div>
