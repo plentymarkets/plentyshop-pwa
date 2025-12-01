@@ -219,8 +219,8 @@ export const useCustomer = () => {
   const emailValidationSchema = toTypedSchema(
     object({
       customerEmail: string()
-        .required(t('errorMessages.email.required'))
-        .test('is-valid-email', t('errorMessages.email.valid'), (email: string) =>
+        .required(t('error.email.required'))
+        .test('is-valid-email', t('error.email.valid'), (email: string) =>
           userGetters.isValidEmailAddress(email),
         )
         .default(state.value.user?.email ?? state.value.user?.guestMail ?? ''),

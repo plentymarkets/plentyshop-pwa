@@ -209,7 +209,7 @@ const readyToBuy = () => {
   }
 
   if (!hasShippingAddress.value || !hasBillingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToShippingAddress();
     return false;
   }

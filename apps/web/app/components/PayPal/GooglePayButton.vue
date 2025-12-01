@@ -38,7 +38,7 @@ async function onGooglePaymentButtonClicked() {
         .then((paymentData: google.payments.api.PaymentData) => {
           processPayment(paymentData).catch((error: Error) => {
             useNotification().send({
-              message: error.message || t('errorMessages.paymentFailed'),
+              message: error.message || t('error.paymentFailed'),
               type: 'negative',
             });
             paymentLoading.value = false;
@@ -47,7 +47,7 @@ async function onGooglePaymentButtonClicked() {
         })
         .catch((error: Error) => {
           useNotification().send({
-            message: error.message || t('errorMessages.paymentFailed'),
+            message: error.message || t('error.paymentFailed'),
             type: 'negative',
           });
           paymentLoading.value = false;

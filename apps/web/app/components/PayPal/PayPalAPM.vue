@@ -107,14 +107,14 @@ const onApprove = async (data: OnApproveData) => {
     } else {
       processingOrder.value = false;
       useNotification().send({
-        message: t('errorMessages.paymentFailed'),
+        message: t('error.paymentFailed'),
         type: 'negative',
       });
     }
   } else {
     processingOrder.value = false;
     useNotification().send({
-      message: t('errorMessages.paymentFailed'),
+      message: t('error.paymentFailed'),
       type: 'negative',
     });
   }
@@ -140,7 +140,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       async onError(error) {
         if (showError.value) {
           useNotification().send({
-            message: error?.toString() || t('errorMessages.paymentFailed'),
+            message: error?.toString() || t('error.paymentFailed'),
             type: 'negative',
           });
           await useCartStockReservation().unreserve();
@@ -148,7 +148,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       async onCancel() {
         useNotification().send({
-          message: t('errorMessages.paymentCancelled'),
+          message: t('error.paymentCancelled'),
           type: 'negative',
         });
         await useCartStockReservation().unreserve();

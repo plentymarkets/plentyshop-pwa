@@ -135,14 +135,14 @@ const validatePasswordLength = (value: string) =>
   value.length >= passwordMinLength && value.length <= passwordMaxLength;
 
 const getPasswordError = (value: string) => {
-  if (!value) return t('errorMessages.password.required');
+  if (!value) return t('error.password.required');
   if (!validatePasswordLength(value)) {
     return value.length < passwordMinLength
-      ? t('errorMessages.password.minLength', { min: passwordMinLength })
-      : t('errorMessages.password.maxLength', { max: passwordMaxLength });
+      ? t('error.password.minLength', { min: passwordMinLength })
+      : t('error.password.maxLength', { max: passwordMaxLength });
   }
   if (!validateHasDigit(value) || !validateHasLetter(value)) {
-    return t('errorMessages.password.valid');
+    return t('error.password.valid');
   }
   return '';
 };
@@ -167,7 +167,7 @@ const isPasswordValid = computed(
 const passwordErrorMessage = computed(() => getPasswordError(password.value));
 const repeatPasswordErrorMessage = computed(() => {
   const error = getPasswordError(repeatPassword.value);
-  return error || (!passwordsMatch.value ? t('errorMessages.password.match') : '');
+  return error || (!passwordsMatch.value ? t('error.password.match') : '');
 });
 
 const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {

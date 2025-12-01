@@ -229,13 +229,13 @@ const validateFields = async () => {
   }
 
   if (!hasShippingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToShippingAddress();
     return false;
   }
 
   if (!hasBillingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingBillingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingBillingAddress') });
     scrollToBillingAddress();
     return false;
   }

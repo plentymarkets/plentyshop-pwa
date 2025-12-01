@@ -336,12 +336,12 @@ const basePriceSingleValue = computed(
 const handleValidationErrors = (): boolean => {
   send({
     message: [
-      t('errorMessages.missingOrWrongProperties'),
+      t('error.missingOrWrongProperties'),
       '',
       ...invalidAttributeFields.value.map((field) => field.name),
       ...invalidFields.value.map((field) => field.name),
       '',
-      t('errorMessages.pleaseFillOutAllFields'),
+      t('error.pleaseFillOutAllFields'),
     ],
     type: 'negative',
   });

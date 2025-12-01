@@ -601,9 +601,7 @@
     "pageNotFound": "Page not found",
     "pageNotFoundSubtitle": "We are sorry! Use search or categories to find what you are looking for.",
     "pageNotFoundTitle": "We couldn't find that page.",
-    "somethingWentWrongImageAlt": "Image that describes that something went wrong"
-  },
-  "errorMessages": {
+    "somethingWentWrongImageAlt": "Image that describes that something went wrong",
     "checkout": {
       "missingAddress": "Please provide your address to continue with the checkout.",
       "missingBillingAddress": "Please provide a billing address to continue with the checkout."

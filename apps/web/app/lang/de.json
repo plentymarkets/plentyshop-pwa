@@ -601,9 +601,7 @@
     "pageNotFound": "Seite nicht gefunden",
     "pageNotFoundSubtitle": "Es tut uns leid! Benutze die Suche oder die Kategorieauswahl um zu finden, wonach du suchst.",
     "pageNotFoundTitle": "Wir konnten diese Seite nicht finden.",
-    "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist"
-  },
-  "errorMessages": {
+    "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
     "checkout": {
       "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren.",
       "missingBillingAddress": "Bitte geben Sie Ihre Rechnungsadresse ein, um mit dem Bezahlvorgang fortzufahren."

@@ -186,20 +186,20 @@ const validationSchema = toTypedSchema(
     register: object({
       email: string()
         .trim()
-        .required(t('errorMessages.email.required'))
-        .test('is-valid-email', t('errorMessages.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
+        .required(t('error.email.required'))
+        .test('is-valid-email', t('error.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
         .default(''),
       password: string()
-        .required(t('errorMessages.password.required'))
+        .required(t('error.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .min(passwordMinLength, t('errorMessages.password.minLength', { min: passwordMinLength }))
-        .max(passwordMaxLength, t('errorMessages.password.maxLength', { max: passwordMaxLength }))
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('errorMessages.password.valid'))
+        .min(passwordMinLength, t('error.password.minLength', { min: passwordMinLength }))
+        .max(passwordMaxLength, t('error.password.maxLength', { max: passwordMaxLength }))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('error.password.valid'))
         .default(''),
       repeatPassword: string()
-        .required(t('errorMessages.password.required'))
+        .required(t('error.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .test('passwords-match', t('errorMessages.password.match'), function (value) {
+        .test('passwords-match', t('error.password.match'), function (value) {
           const passwordValue = this.parent.password?.replace(/\s/g, '');
           return value === passwordValue;
         })
@@ -207,7 +207,7 @@ const validationSchema = toTypedSchema(
       privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
-          ? string().required(t('errorMessages.turnstileRequired')).default('')
+          ? string().required(t('error.turnstileRequired')).default('')
           : string().optional().default(''),
     }),
   }),

@@ -52,7 +52,7 @@ watch(
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: number().required(t('errorMessages.requiredField')),
+    selectedValue: number().required(t('error.requiredField')),
   }),
 );
 

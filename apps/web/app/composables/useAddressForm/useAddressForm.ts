@@ -61,23 +61,23 @@ export const useAddressForm = (type: AddressType) => {
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
         then: () =>
-          string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
+          string().required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.firstName),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
-        then: () => string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
+        then: () => string().required(t('error.requiredField')).default(state.value.defaultFormValues.lastName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.lastName),
       }),
       country: string()
-        .required(t('errorMessages.requiredField'))
+        .required(t('error.requiredField'))
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
-      streetName: string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.streetName),
-      apartment: string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.apartment),
-      city: string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.city),
+      streetName: string().required(t('error.requiredField')).default(state.value.defaultFormValues.streetName),
+      apartment: string().required(t('error.requiredField')).default(state.value.defaultFormValues.apartment),
+      city: string().required(t('error.requiredField')).default(state.value.defaultFormValues.city),
       state: string().default('').optional(),
       zipCode: string()
-        .required(t('errorMessages.requiredField'))
+        .required(t('error.requiredField'))
         .when('country', ([countryId], schema) => {
           const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), type);
           return zipCodeRegex
@@ -89,7 +89,7 @@ export const useAddressForm = (type: AddressType) => {
       companyName: string().when([], {
         is: () => state.value.hasCompany,
         then: () =>
-          string().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
+          string().required(t('error.requiredField')).default(state.value.defaultFormValues.companyName),
         otherwise: () => string().optional().default(state.value.defaultFormValues.companyName),
       }),
       vatNumber: string().when([], {

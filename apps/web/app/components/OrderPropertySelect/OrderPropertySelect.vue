@@ -69,7 +69,7 @@ const options = Object.values(productProperty.property.selectionValues).map(
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: string().required(t('errorMessages.requiredField')).default(''),
+    selectedValue: string().required(t('error.requiredField')).default(''),
   }),
 );
 
