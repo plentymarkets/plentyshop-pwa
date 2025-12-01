@@ -237,6 +237,12 @@
     },
     "services": {
       "label": "Services"
+    },
+    "contact": {
+      "label": "Kontakt"
+    },
+    "register": {
+      "label": "Registrieren"
     }
   },
   "checkout": {
