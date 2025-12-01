@@ -381,6 +381,11 @@
       "loadingReviews": "Kundenrezensionen werden geladen...",
       "none": "Keine vorhanden",
       "offline": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
+    },
+    "reloadPWA": {
+      "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren.",
+      "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
+      "refresh": "Aktualisieren"
     }
   },
   "contact": {
@@ -1007,11 +1012,6 @@
     "heading": "Zum Warenkorb hinzugefügt",
     "quantity": "Anzahl",
     "subTotal": "Zwischensumme"
-  },
-  "reloadPWA": {
-    "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren.",
-    "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
-    "refresh": "Aktualisieren"
   },
   "returns": {
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",

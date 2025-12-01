@@ -381,6 +381,11 @@
       "loadingReviews": "Loading Reviews...",
       "none": "None",
       "offline": "It seems you are currently offline, check your internet connection"
+    },
+    "reloadPWA": {
+      "ariaLabel": "A new version of the shop is available. Press to refresh the page.",
+      "newVersionAvailable": "A new version of the shop is available.",
+      "refresh": "Refresh"
     }
   },
   "contact": {
@@ -1007,11 +1012,6 @@
     "heading": "Added to shopping cart",
     "quantity": "Quantity",
     "subTotal": "Items subtotal"
-  },
-  "reloadPWA": {
-    "ariaLabel": "A new version of the shop is available. Press to refresh the page.",
-    "newVersionAvailable": "A new version of the shop is available.",
-    "refresh": "Refresh"
   },
   "returns": {
     "areYouSure": "Are you sure you what to return these items?",
