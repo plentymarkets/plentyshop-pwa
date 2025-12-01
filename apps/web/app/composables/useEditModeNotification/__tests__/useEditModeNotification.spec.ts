@@ -5,6 +5,8 @@ import { useEditModeNotification } from '../useEditModeNotification';
 const send = vi.fn();
 
 mockNuxtImport('useNotification', () => () => ({ send }));
+mockNuxtImport('useNuxtApp', () => () => ({ $isPreview: true }));
+mockNuxtImport('useEditor', () => () => ({ disableActions: ref(false) }));
 
 describe('useEditModeNotification', () => {
   let disableActions: Ref<boolean>;
