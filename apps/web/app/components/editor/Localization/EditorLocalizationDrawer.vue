@@ -56,8 +56,8 @@
                     }"
                   >
                     <div class="flex h-12 text-xs border-r">
-                      <div class="w-96 overflow-x-scroll no-scrollbar flex items-center">
-                        <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700 flex-shrink-0">
+                      <div class="w-96 overflow-hidden flex items-center">
+                        <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700">
                           {{ getCategoryFromKey(virtualRow.item.key) }}
                         </div>
                         {{ getKeyFromFullKey(virtualRow.item.key) }}
