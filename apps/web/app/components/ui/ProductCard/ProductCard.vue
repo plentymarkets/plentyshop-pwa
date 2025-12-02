@@ -237,7 +237,7 @@ const showBasePrice = computed(() => productGetters.showPricePerUnit(product.val
 const variationId = computed(() => productGetters.getVariationId(product.value));
 const { isGlobalProductCategoryTemplate } = useProducts();
 const productPath = computed(() => {
-  if (isGlobalProductCategoryTemplate.value) {
+  if (isGlobalProductCategoryTemplate?.value) {
     return '/item-template-page';
   }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
