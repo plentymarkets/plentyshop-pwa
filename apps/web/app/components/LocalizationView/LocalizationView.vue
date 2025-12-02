@@ -14,7 +14,20 @@
       </div>
     </header>
 
+    <p class="m-4">{{ getEditorTranslation('description') }}</p>
+
     <div>
+      <UiAccordionItem
+        v-model="editLanguagesOpen"
+        data-testid="content-pages-section"
+        summary-active-class="bg-neutral-100 border-t-0"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
+      >
+        <template #summary>
+          <h2>{{ getEditorTranslation('shop-languages') }}</h2>
+        </template>
+        <EditorLocalizationShopLanguages />
+      </UiAccordionItem>
       <UiAccordionItem
         v-model="editTranslationsOpen"
         data-testid="content-pages-section"
@@ -40,19 +53,24 @@ const { initializeLocales } = useEditorLocalizationLocales();
 initializeLocales();
 const { closeDrawer } = useSiteConfiguration();
 const editTranslationsOpen = ref(false);
+const editLanguagesOpen = ref(false);
 </script>
 
 <i18n lang="json">
 {
   "en": {
     "label": "Localization",
+    "description": "⚠️ These settings will require a shop redeploy to take effect.",
     "tooltip": "Manage translations for static texts inside the shop.",
-    "edit-translations": "Edit translations"
+    "edit-translations": "Edit translations",
+    "shop-languages": "Shop languages"
   },
   "de": {
     "label": "Localization",
+    "description": "⚠️ These settings will require a shop redeploy to take effect.",
     "tooltip": "Manage translations for static texts inside the shop.",
-    "edit-translations": "Edit translations"
+    "edit-translations": "Edit translations",
+    "shop-languages": "Shop languages"
   }
 }
 </i18n>

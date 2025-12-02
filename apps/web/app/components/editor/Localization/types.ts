@@ -5,6 +5,12 @@ export type LanguageSelectCheckboxProps = {
   locale: string;
 };
 
+export type ActiveLanguageSwitchProps = {
+  lang: string;
+  locale: string;
+  selected: boolean;
+};
+
 export interface TranslationInputProps {
   rowKey: string;
   lang: string;
