@@ -50,6 +50,8 @@ const getModalText = () => {
   } else if (resetType.value === 'detail') {
     return getEditorTranslation('resetDetailText');
   }
+
+  return '';
 };
 </script>
 
