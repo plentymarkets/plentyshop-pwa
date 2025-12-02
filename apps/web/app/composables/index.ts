@@ -80,6 +80,7 @@ export * from './useProductReviewAverage';
 export * from './useProductReviews';
 export * from './useProducts';
 export * from './useQuickCheckout';
+export * from './useResetProductPageModal';
 export * from './useReturnOrder';
 export * from './useRestrictedAddress';
 export * from './useBrowserNavigation';
