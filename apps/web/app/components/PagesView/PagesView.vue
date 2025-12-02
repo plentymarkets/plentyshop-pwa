@@ -139,7 +139,7 @@
 
         <div class="border-b border-neutral-200 my-4" />
 
-        <p class="mb-4">{{ getEditorTranslation('global-pages-product-category') }}</p>
+        <p class="mb-4 font-medium">{{ getEditorTranslation('global-pages-product-category') }}</p>
         <div class="mt-3 flex flex-col gap-2">
           <button
             type="button"
@@ -154,6 +154,7 @@
             {{ getEditorTranslation('global-pages-edit-label') }}
           </button>
           <button
+            v-if="config.enableTemplateReset"
             type="button"
             class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
             @click="toggleResetModal(true, 'category')"
@@ -165,7 +166,7 @@
 
         <div class="border-b border-neutral-200 my-4" />
 
-        <p class="mb-4">{{ getEditorTranslation('global-pages-product-detail') }}</p>
+        <p class="mb-4 font-medium">{{ getEditorTranslation('global-pages-product-detail') }}</p>
         <div class="mt-3 flex flex-col gap-2">
           <button
             type="button"
