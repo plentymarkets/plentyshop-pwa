@@ -42,8 +42,8 @@
             <div ref="leftScroll" class="flex-shrink-0 scrollbar-thin overflow-y-auto z-10">
               <div class="flex flex-col">
                 <div v-for="row in filteredKeys ?? keys" :key="row.key" class="flex h-12 text-xs">
-                  <div class="w-96 overflow-x-scroll no-scrollbar border-r flex items-center">
-                    <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700 flex-shrink-0">
+                  <div class="w-96 overflow-hidden border-r flex items-center">
+                    <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700">
                       {{ getCategoryFromKey(row.key) }}
                     </div>
                     {{ getKeyFromFullKey(row.key) }}

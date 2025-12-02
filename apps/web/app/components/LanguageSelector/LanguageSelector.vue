@@ -5,7 +5,7 @@
     class="absolute w-full bg-white py-10 flex flex-row items-center justify-center z-10 drop-shadow-md"
   >
     <UiModal v-model="isOpen" tag="section" class="w-full bg-white !max-h-fit relative !rounded-none">
-      <div class="flex justify-center">
+      <div class="flex justify-center flex-wrap">
         <div v-for="locale in filteredLocaleCodes" :key="locale">
           <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'">
             <div class="w-6 lg:w-8" v-html="flagList[locale]" />
@@ -42,11 +42,14 @@ import { flagImports } from './flags';
 const { isOpen } = useLocalization();
 const viewport = useViewport();
 const { getCategoryTree } = useCategoryTree();
-const { localeCodes, locale: currentLocale } = useI18n();
+const { localeCodes, locale: currentLocale, availableLocales } = useI18n();
 const config = useRuntimeConfig();
 const flagList: { [key: string]: string } = {};
 
-const activeLanguages = (config.public.activeLanguages as string).split(',').map((lang: string) => lang.trim());
+const activeLanguages = (config.public.activeLanguages as string)
+  .split(',')
+  .filter((lang) => (availableLocales as string[]).includes(lang))
+  .map((lang: string) => lang.trim());
 const filteredLocaleCodes = computed(() =>
   localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode)),
 );
