@@ -12,7 +12,7 @@
       >
         <span class="font-bold md:text-lg">
           {{
-            t('numberOfProducts', {
+            t('search.numberOfProducts', {
               count: products?.length ?? 0,
               total: totalProducts,
             })
@@ -39,10 +39,10 @@
     </section>
     <LazyCategoryEmptyState v-else />
     <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
-      <span>{{ t('asterisk') }}</span>
-      <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
-      <span v-else>{{ t('itemInclVAT') }}</span>
-      <i18n-t keypath="excludedShipping" scope="global">
+      <span>{{ t('common.labels.asterisk') }}</span>
+      <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
+      <span v-else>{{ t('product.priceInclVAT') }}</span>
+      <i18n-t keypath="shipping.excludedLabel" scope="global">
         <template #shipping>
           <SfLink
             :href="localePath(paths.shipping)"
@@ -50,7 +50,7 @@
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             data-testid="shipping-link"
           >
-            {{ t('delivery') }}
+            {{ t('common.labels.delivery') }}
           </SfLink>
         </template>
       </i18n-t>

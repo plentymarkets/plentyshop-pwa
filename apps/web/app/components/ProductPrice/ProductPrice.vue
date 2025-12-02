@@ -3,7 +3,7 @@
     <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
     <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
       <UiTag :size="'sm'" :variant="'secondary'">{{
-        t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+        t('product.bundleSavings', { percent: productBundleGetters.getBundleDiscount(product) })
       }}</UiTag>
     </div>
   </div>

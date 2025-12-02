@@ -32,7 +32,7 @@ export const useCartTotalChange = () => {
         cartGetters.getCurrency(cartData.value) !== state.value.initialCurrency;
     } else {
       send({
-        message: t('paypal.invalidOrder'),
+        message: t('paypalPayment.invalidOrder'),
         type: 'warning',
       });
       await navigateTo(localePath(paths.home));

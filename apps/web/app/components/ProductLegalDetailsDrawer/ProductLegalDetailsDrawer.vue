@@ -17,14 +17,14 @@
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div v-if="config.enableProductEditing" class="flex items-center text-white">{{ title }}</div>
 
-        <div v-else class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
+        <div v-else class="flex items-center text-white">{{ t('product.legalDetails') }}</div>
 
         <UiButton
           square
           variant="tertiary"
           data-testid="product-legal-details-close"
           class="text-white"
-          :aria-label="t('closeDrawer')"
+          :aria-label="t('common.navigation.closeDrawer')"
           @click="open = false"
         >
           <SfIconClose />

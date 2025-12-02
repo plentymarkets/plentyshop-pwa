@@ -141,7 +141,7 @@ export const useApplePay = () => {
           } catch (error) {
             await useCartStockReservation().unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-            showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
+            showErrorNotification(error?.toString() ?? t('error.paymentFailed'));
             return;
           }
 
@@ -157,7 +157,7 @@ export const useApplePay = () => {
           return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
           await useCartStockReservation().unreserve();
-          showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
+          showErrorNotification(error?.toString() ?? t('error.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
       };

@@ -129,7 +129,7 @@ const validationSchema = toTypedSchema(
   object({
     value: string().test((value, context) => {
       if (isOrderPropertyRequired && !value) {
-        return context.createError({ message: t('errorMessages.requiredField') });
+        return context.createError({ message: t('error.requiredField') });
       }
       return true;
     }),

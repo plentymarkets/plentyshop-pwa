@@ -5,10 +5,10 @@
     role="alert"
   >
     <div>
-      <span>{{ t('reloadPWA.newVersionAvailable') }}</span>
+      <span>{{ t('common.reloadPWA.newVersionAvailable') }}</span>
     </div>
-    <UiButton :aria-label="t('reloadPWA.ariaLabel')" @click="updatePWA">
-      {{ t('reloadPWA.refresh') }}
+    <UiButton :aria-label="t('common.reloadPWA.ariaLabel')" @click="updatePWA">
+      {{ t('common.reloadPWA.refresh') }}
     </UiButton>
   </div>
 </template>

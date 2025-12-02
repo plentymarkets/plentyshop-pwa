@@ -20,7 +20,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('closePickSavedAddress')"
+        :aria-label="t('common.navigation.closePickSavedAddress')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -29,9 +29,9 @@
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
-        {{ t('pickSavedAddress') }}
+        {{ t('address.pickSavedAddress') }}
       </h3>
-      <h1 class="my-2 mb-6 font-semibold">{{ t('pickSavedAddressSubtitle') }}</h1>
+      <h1 class="my-2 mb-6 font-semibold">{{ t('address.pickSavedSubtitle') }}</h1>
     </header>
 
     <Address
@@ -52,7 +52,7 @@
 
     <div class="flex justify-end w-full">
       <UiButton variant="secondary" class="mt-10" @click="emitNewAddressEvent">
-        {{ type === AddressType.Shipping ? t('newShippingAddress') : t('newBillingAddress') }}
+        {{ type === AddressType.Shipping ? t('address.newShippingAddress') : t('address.newBillingAddress') }}
       </UiButton>
     </div>
   </UiModal>
@@ -82,7 +82,7 @@ const tooltipLabel = computed(() =>
   disabled
     ? ''
     : addresses.value.length > 0
-      ? t('manageAddresses')
+      ? t('address.manage')
       : type === AddressType.Shipping
         ? t('shipping.addButton')
         : t('billing.addButton'),
@@ -90,7 +90,7 @@ const tooltipLabel = computed(() =>
 
 const buttonLabel = computed(() =>
   disabled || addresses.value.length > 0
-    ? t('pickSavedAddress')
+    ? t('address.pickSavedAddress')
     : t(type === AddressType.Shipping ? 'newShippingAddress' : 'newBillingAddress'),
 );
 

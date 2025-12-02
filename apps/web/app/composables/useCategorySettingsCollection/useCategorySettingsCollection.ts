@@ -107,8 +107,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   };
 
   const save = async () => {
-    const successMessage = t('errorMessages.editor.categories.success');
-    const errorMessage = t('errorMessages.editor.categories.error');
+    const successMessage = t('error.editor.categories.success');
+    const errorMessage = t('error.editor.categories.error');
     const route = useRoute();
     const router = useRouter();
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));

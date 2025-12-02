@@ -1,6 +1,6 @@
 <template>
   <div data-testid="shipping-method" class="md:px-4 my-6">
-    <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
+    <h3 class="text-neutral-900 text-lg font-bold">{{ t('shipping.method.heading') }}</h3>
     <div v-if="hasCheckoutAddress">
       <div v-if="!loading" class="mt-4">
         <ul
@@ -36,7 +36,7 @@
             <div v-if="getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method))">
               <span class="text-sm">
                 {{
-                  t('shippingMethod.maxDeliveryDays', {
+                  t('shipping.method.maxDeliveryDays', {
                     days: getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method)),
                   })
                 }}</span
@@ -52,7 +52,7 @@
         >
           <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
           <div class="py-2 mr-2">
-            {{ t('shippingMethod.noMethodsAvailable') }}
+            {{ t('shipping.method.noMethodsAvailable') }}
           </div>
         </div>
       </div>
@@ -103,6 +103,6 @@ const updateShippingMethod = (shippingId: string) => {
 };
 
 const getShippingAmount = (amount: string) => {
-  return amount === '0' ? t('shippingMethod.free') : format(Number(amount));
+  return amount === '0' ? t('shipping.method.free') : format(Number(amount));
 };
 </script>

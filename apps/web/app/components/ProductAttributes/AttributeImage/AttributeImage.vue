@@ -58,7 +58,7 @@ const domain = runtimeConfig.public?.domain ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
   return productAttributeGetters.isAttributeValueDisabled(item)
-    ? t('productAttributes.seeAvailableOptions')
+    ? t('product.attributes.seeAvailableOptions')
     : productAttributeGetters.getAttributeValueName(item);
 };
 
@@ -69,7 +69,7 @@ const getImagePath = (item: VariationMapProductAttributeValue): string => {
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: number().required(t('errorMessages.requiredField')),
+    selectedValue: number().required(t('error.requiredField')),
   }),
 );
 

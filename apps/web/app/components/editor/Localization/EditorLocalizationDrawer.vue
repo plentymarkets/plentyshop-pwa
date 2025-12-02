@@ -13,7 +13,12 @@
     </div>
 
     <div class="p-4">
-      <SfInput v-model="searchTerm" :aria-label="t('search')" :placeholder="t('search')" @input="debouncedSearchTerm">
+      <SfInput
+        v-model="searchTerm"
+        :aria-label="t('common.actions.search')"
+        :placeholder="t('common.actions.search')"
+        @input="debouncedSearchTerm"
+      >
         <template #prefix>
           <SfIconSearch />
         </template>

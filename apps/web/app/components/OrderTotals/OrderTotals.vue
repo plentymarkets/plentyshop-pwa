@@ -72,7 +72,7 @@ const format = (value: number) => {
 };
 
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shippingMethod.free') : formatWithSymbol(Number(amount), currency);
+  return amount === 0 ? t('shipping.method.free') : formatWithSymbol(Number(amount), currency);
 };
 
 const isOrderTypeOffer = offerGetters.isTypeOffer(props.order);

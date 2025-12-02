@@ -36,7 +36,7 @@
           data-testid="no-review-text"
           class="font-bold leading-6 w-full py-2"
         >
-          {{ t('customerReviewsNone') }}
+          {{ t('product.noReviews') }}
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
@@ -63,7 +63,7 @@
         data-testid="no-review-text"
         class="font-bold leading-6 w-full py-2"
       >
-        {{ t('customerReviewsNone') }}
+        {{ t('product.noReviews') }}
       </p>
       <UiPagination
         v-if="paginatedProductReviews.length > 0"

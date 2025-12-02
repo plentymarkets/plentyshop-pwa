@@ -168,7 +168,7 @@ const getSubsections = (sections: MyAccountSubsection[]) => {
 };
 
 const breadcrumbs = computed(() => [
-  { name: t('home'), link: localePath(paths.home) },
+  { name: t('common.labels.home'), link: localePath(paths.home) },
   { name: t('account.heading'), link: localePath(paths.account) },
   ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label || '', link: currentPath.value }]),
 ]);

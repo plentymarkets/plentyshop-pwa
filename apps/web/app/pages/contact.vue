@@ -109,7 +109,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('privacyPolicy') }}
+                    {{ t('legal.privacyPolicy') }}
                   </SfLink>
                 </template>
               </i18n-t>
@@ -175,19 +175,19 @@ const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('categories.contact.label'), icon);
+setPageMeta(t('contact.label'), icon);
 
 const validationSchema = toTypedSchema(
   object({
     email: string()
       .trim()
-      .required(t('errorMessages.email.required'))
+      .required(t('error.email.required'))
       .test('is-valid-email', t('storefrontError.contactMail.emailInvalid'), (mail: string) =>
         userGetters.isValidEmailAddress(mail),
       )
       .default(''),
     message: string()
-      .required(t('errorMessages.contact.messageRequired'))
+      .required(t('error.contact.messageRequired'))
       .test('min-clean-length', t('storefrontError.contactMail.messageInvalid'), (val: string | undefined) => {
         if (!val) return false;
         const cleaned = val.replace(/\n/g, '').trim();
@@ -204,7 +204,7 @@ const validationSchema = toTypedSchema(
       }),
     subject: string()
       .trim()
-      .required(t('errorMessages.contact.subjectRequired'))
+      .required(t('error.contact.subjectRequired'))
       .default('')
       .test('min-length', t('storefrontError.contactMail.subjectInvalid'), (val) => !!(val && val.length >= 3)),
     orderId: string()
@@ -216,10 +216,10 @@ const validationSchema = toTypedSchema(
         t('storefrontError.contactMail.orderIdInvalid'),
         (val) => !val || /^[1-9][0-9]*$/.test(val),
       ),
-    privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
+    privacyPolicy: boolean().oneOf([true], t('error.contact.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
-        ? string().required(t('errorMessages.contact.turnstileRequired')).default('')
+        ? string().required(t('error.contact.turnstileRequired')).default('')
         : string().optional().default(''),
   }),
 );

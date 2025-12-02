@@ -2,7 +2,7 @@
   <div>
     <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
       <div class="relative">
-        <WishlistPageContent :title="t('wishlist')" />
+        <WishlistPageContent :title="t('common.labels.wishlist')" />
       </div>
     </NuxtLayout>
   </div>
@@ -17,7 +17,7 @@ const icon = 'page';
 setPageMeta(t('account.wishlist.heading'), icon);
 
 const breadcrumbs = computed(() => [
-  { name: t('home'), link: localePath(paths.home) },
-  { name: t('wishlist'), link: localePath(paths.wishlist) },
+  { name: t('common.labels.home'), link: localePath(paths.home) },
+  { name: t('common.labels.wishlist'), link: localePath(paths.wishlist) },
 ]);
 </script>

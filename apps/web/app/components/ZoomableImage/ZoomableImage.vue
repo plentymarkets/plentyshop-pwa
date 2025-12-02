@@ -7,7 +7,7 @@
       v-if="showZoomHint && isMobile"
       class="zoom-hint absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded z-20"
     >
-      {{ t('double-tap-zoom') }}
+      {{ t('product.doubleTapZoom') }}
     </div>
 
     <template v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]">

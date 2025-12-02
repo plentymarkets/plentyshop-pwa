@@ -40,14 +40,14 @@
     <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4 px-4" @submit.prevent="updatePriceFilter">
       <div class="mb-3">
         <label for="min">
-          <UiFormLabel class="text-start">{{ t('min') }}</UiFormLabel>
-          <SfInput id="min" v-model="minPrice" :placeholder="t('min')" />
+          <UiFormLabel class="text-start">{{ t('common.labels.min') }}</UiFormLabel>
+          <SfInput id="min" v-model="minPrice" :placeholder="t('common.labels.min')" />
         </label>
       </div>
       <div class="mb-3">
         <label for="max">
-          <UiFormLabel class="text-start">{{ t('max') }}</UiFormLabel>
-          <SfInput id="max" v-model="maxPrice" :placeholder="t('max')" />
+          <UiFormLabel class="text-start">{{ t('common.labels.max') }}</UiFormLabel>
+          <SfInput id="max" v-model="maxPrice" :placeholder="t('common.labels.max')" />
         </label>
       </div>
       <div class="flex">
@@ -60,9 +60,15 @@
           <template #prefix>
             <SfIconCheck />
           </template>
-          {{ t('apply') }}
+          {{ t('common.actions.apply') }}
         </UiButton>
-        <UiButton type="reset" class="h-10" variant="secondary" :aria-label="t('clear')" @click="resetPriceFilter">
+        <UiButton
+          type="reset"
+          class="h-10"
+          variant="secondary"
+          :aria-label="t('common.actions.clear')"
+          @click="resetPriceFilter"
+        >
           <SfIconClose />
         </UiButton>
       </div>

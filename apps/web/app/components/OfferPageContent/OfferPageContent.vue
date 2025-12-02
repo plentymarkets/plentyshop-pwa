@@ -1,23 +1,23 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('back')"
-    :back-label-mobile="t('back')"
-    :heading="t('offerForm.offer')"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
+    :heading="t('offers.offer')"
   >
     <div v-if="offer" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
         <h1 v-if="validUntil" class="px-4 py-6 font-medium">
-          {{ t('offerForm.offerValidUntil', { date: validUntil }) }}
+          {{ t('offers.offerValidUntil', { date: validUntil }) }}
         </h1>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="px-4 py-6">
-          <h1 class="font-bold text-lg mb-2">{{ t('contactInfo.heading') }}</h1>
+          <h1 class="font-bold text-lg mb-2">{{ t('contact.info.heading') }}</h1>
           <div>
             {{
               offerGetters.getOfferEmail(offer).length > 0
                 ? offerGetters.getOfferEmail(offer)
-                : t('offerForm.missingEmail')
+                : t('offers.missingEmail')
             }}
           </div>
         </div>
@@ -58,14 +58,14 @@
               @change="showTermsError = false"
             />
             <div>
-              <i18n-t keypath="termsInfo" scope="global">
+              <i18n-t keypath="legal.termsInfo" scope="global">
                 <template #terms>
                   <SfLink
                     :href="localePath(paths.termsAndConditions)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('termsAndConditions') }}
+                    {{ t('legal.termsAndConditions') }}
                   </SfLink>
                 </template>
                 <template #cancellationRights>
@@ -74,7 +74,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('cancellationRights') }}
+                    {{ t('legal.cancellationRights') }}
                   </SfLink>
                 </template>
                 <template #privacyPolicy>
@@ -83,13 +83,13 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('privacyPolicy') }}
+                    {{ t('legal.privacyPolicy') }}
                   </SfLink>
                 </template>
               </i18n-t>
             </div>
           </div>
-          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ t('termsRequired') }}</div>
+          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ t('legal.termsRequired') }}</div>
         </div>
       </div>
       <div class="col-span-5">
@@ -101,9 +101,9 @@
           <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <div class="border rounded-md p-4 shadow-lg">
             <div class="flex justify-between mb-4">
-              <p class="font-bold text-xl">{{ t('orderSummary') }}</p>
+              <p class="font-bold text-xl">{{ t('common.labels.orderSummary') }}</p>
               <p class="font-medium">
-                {{ t('itemsInCart', { count: offerGetters.getItemsCountInOffer(offer.order.orderItems) }) }}
+                {{ t('cart.itemCount', { count: offerGetters.getItemsCountInOffer(offer.order.orderItems) }) }}
               </p>
             </div>
             <!-- @TODO: Fix typing -->
@@ -117,7 +117,7 @@
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('offerForm.acceptOffer') }}
+                {{ t('offers.acceptOffer') }}
               </span>
             </UiButton>
             <UiButton
@@ -130,7 +130,7 @@
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('offerForm.declineOffer') }}
+                {{ t('offers.declineOffer') }}
               </span>
             </UiButton>
           </div>
@@ -141,7 +141,7 @@
             aria-labelledby="address-modal-title"
           >
             <UiButton
-              :aria-label="t('closeAddressForm')"
+              :aria-label="t('common.navigation.closeAddressForm')"
               square
               variant="tertiary"
               class="absolute right-2 top-2"
@@ -149,13 +149,13 @@
             >
               <SfIconClose />
             </UiButton>
-            <h1 class="font-bold text-xl mb-2">{{ t('offerForm.declineOffer') }}</h1>
-            <p class="mb-4">{{ t('offerForm.declineDialogSubline') }}</p>
+            <h1 class="font-bold text-xl mb-2">{{ t('offers.declineOffer') }}</h1>
+            <p class="mb-4">{{ t('offers.declineDialogSubline') }}</p>
             <p>{{ t('returns.commentOptional') }}</p>
             <textarea
               v-model="declineText"
               class="w-full min-h-32 md:min-w-96 border-2 rounded-md p-4"
-              :placeholder="t('offerForm.inputPlaceholder')"
+              :placeholder="t('offers.inputPlaceholder')"
             />
             <div class="flex space-x-4">
               <UiButton
@@ -167,7 +167,7 @@
                 @click="toggleModal"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-                <span v-else> {{ t('offerForm.cancel') }} </span>
+                <span v-else> {{ t('offers.cancel') }} </span>
               </UiButton>
               <UiButton
                 type="submit"
@@ -178,7 +178,7 @@
                 @click="handleDecline"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-                <span v-else> {{ t('offerForm.declineOffer') }} </span>
+                <span v-else> {{ t('offers.declineOffer') }} </span>
               </UiButton>
             </div>
           </UiModal>

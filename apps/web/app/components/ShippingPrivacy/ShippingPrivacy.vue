@@ -10,10 +10,10 @@
       @update:model-value="(event) => setShippingPrivacyAgreement(Boolean(event))"
     />
     <label for="shipping-agreement-checkbox" class="cursor-pointer select-none">
-      {{ t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+      {{ t('shipping.method.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
     </label>
   </div>
-  <div v-if="showErrors" class="text-negative-700 text-sm mb-4">{{ t('privacyPolicyRequired') }}</div>
+  <div v-if="showErrors" class="text-negative-700 text-sm mb-4">{{ t('legal.privacyPolicyRequired') }}</div>
 </template>
 
 <script lang="ts" setup>

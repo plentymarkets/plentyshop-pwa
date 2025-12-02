@@ -9,7 +9,7 @@
         class="leading-5 text-sm text-zinc-900"
         for="unit-combination"
         data-testing="variation-select-unit-label"
-        >{{ t('content') }}</label
+        >{{ t('common.labels.content') }}</label
       >
       <SfSelect
         id="unit-combination"
