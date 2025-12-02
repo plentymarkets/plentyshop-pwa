@@ -1,6 +1,6 @@
 <template>
   <div :style="inlineStyle" data-testid="item-data-block">
-    <div   v-if="!hasTitle && noFieldsSelected" class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
+    <div v-if="!hasTitle && noFieldsSelected" class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
       <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
       <span class="italic">{{ getEditorTranslation('no-data-to-show') }}</span>
     </div>
