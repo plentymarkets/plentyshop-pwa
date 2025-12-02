@@ -1,4 +1,3 @@
-
 export type ItemDataFieldKey =
   | 'itemId'
   | 'condition'
@@ -12,32 +11,31 @@ export type ItemDataFieldKey =
   | 'netWeight'
   | 'dimensions'
   | 'customTariffNumber'
-  | 'properties'
+  | 'properties';
 
-export type ItemDataFieldsVisibility = Partial<Record<ItemDataFieldKey, boolean>>
+export type ItemDataFieldsVisibility = Partial<Record<ItemDataFieldKey, boolean>>;
 
-export type ItemDataFieldsOrder = ItemDataFieldKey[]
+export type ItemDataFieldsOrder = ItemDataFieldKey[];
 
 export interface ItemDataLayout {
-  paddingTop: number
-  paddingBottom: number
-  paddingRight: number
-  paddingLeft: number
-  displayAsCollapsable?: boolean
-  initiallyCollapsed?: boolean
+  paddingTop: number;
+  paddingBottom: number;
+  paddingRight: number;
+  paddingLeft: number;
+  displayAsCollapsable?: boolean;
+  initiallyCollapsed?: boolean;
 }
 
-
 export interface ItemDataText {
-  title: string
+  title: string;
 }
 
 export interface ItemDataContent {
-  text: ItemDataText
-  fields: ItemDataFieldsVisibility
-  fieldsOrder: ItemDataFieldsOrder
-  layout: ItemDataLayout
+  text: ItemDataText;
+  fields: ItemDataFieldsVisibility;
+  fieldsOrder: ItemDataFieldsOrder;
+  layout: ItemDataLayout;
 }
 
-export type ItemDataFieldLabels = Record<ItemDataFieldKey, string>
-export type ItemDataFieldValues = Record<ItemDataFieldKey, string>
+export type ItemDataFieldLabels = Record<ItemDataFieldKey, string>;
+export type ItemDataFieldValues = Record<ItemDataFieldKey, string>;

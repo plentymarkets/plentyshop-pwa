@@ -1,6 +1,6 @@
 <template>
   <div :style="inlineStyle" data-testid="item-data-block">
-    <div   v-if="!hasTitle && noFieldsSelected" class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
+    <div v-if="!hasTitle && noFieldsSelected" class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
       <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
       <span class="italic">{{ getEditorTranslation('no-data-to-show') }}</span>
     </div>
@@ -19,11 +19,27 @@
 
           <v-table density="comfortable" class="item-info-table">
             <tbody>
-            <tr
-              v-for="row in visibleRows"
-              :key="row.key"
-              class="item-info-table__row"
-            >
+              <tr v-for="row in visibleRows" :key="row.key" class="item-info-table__row">
+                <td class="item-info-table__cell item-info-table__label">
+                  {{ row.label }}
+                </td>
+                <td class="item-info-table__cell item-info-table__value">
+                  {{ row.value }}
+                </td>
+              </tr>
+            </tbody>
+          </v-table>
+        </UiAccordionItem>
+      </div>
+
+      <div v-else>
+        <h2 v-if="title" class="font-bold text-lg leading-6 md:text-2xl mb-2">
+          {{ title }}
+        </h2>
+
+        <v-table density="comfortable" class="item-info-table">
+          <tbody>
+            <tr v-for="row in visibleRows" :key="row.key" class="item-info-table__row">
               <td class="item-info-table__cell item-info-table__label">
                 {{ row.label }}
               </td>
@@ -31,33 +47,6 @@
                 {{ row.value }}
               </td>
             </tr>
-            </tbody>
-          </v-table>
-        </UiAccordionItem>
-      </div>
-
-      <div v-else>
-        <h2
-          v-if="title"
-          class="font-bold text-lg leading-6 md:text-2xl mb-2"
-        >
-          {{ title }}
-        </h2>
-
-        <v-table density="comfortable" class="item-info-table">
-          <tbody>
-          <tr
-            v-for="row in visibleRows"
-            :key="row.key"
-            class="item-info-table__row"
-          >
-            <td class="item-info-table__cell item-info-table__label">
-              {{ row.label }}
-            </td>
-            <td class="item-info-table__cell item-info-table__value">
-              {{ row.value }}
-            </td>
-          </tr>
           </tbody>
         </v-table>
       </div>
@@ -66,26 +55,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, type Ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import type { Product } from '@plentymarkets/shop-api'
-import type {
-  ItemDataContent,
-  ItemDataFieldKey,
-  ItemDataFieldLabels,
-} from './types'
+import { computed, ref, watch, type Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import type { Product } from '@plentymarkets/shop-api';
+import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
 import { SfIconWarning } from '@storefront-ui/vue';
 
 const props = defineProps<{
-  content: ItemDataContent
-}>()
+  content: ItemDataContent;
+}>();
 
-const { t } = useI18n()
-const { currentProduct } = useProducts()
+const { t } = useI18n();
+const { currentProduct } = useProducts();
 
-const { fieldValues } = useItemDataTable(
-  currentProduct as Ref<Product | null>,
-)
+const { fieldValues } = useItemDataTable(currentProduct as Ref<Product | null>);
 
 const fieldLabels = computed<ItemDataFieldLabels>(() => ({
   itemId: t('field-itemId'),
@@ -101,44 +84,41 @@ const fieldLabels = computed<ItemDataFieldLabels>(() => ({
   dimensions: t('field-dimensions'),
   customTariffNumber: t('field-customTariffNumber'),
   properties: t('field-properties'),
-}))
+}));
 
-const rawTitle = computed(() => props.content.text?.title)
+const rawTitle = computed(() => props.content.text?.title);
 
 const title = computed(() => {
-  if (rawTitle.value === undefined) return 'More details'
-  return rawTitle.value
-})
+  if (rawTitle.value === undefined) return 'More details';
+  return rawTitle.value;
+});
 
 const displayAsCollapsable = computed(() => {
-  const layout = props.content.layout
-  const hasNonEmptyTitle = title.value.trim().length > 0
+  const layout = props.content.layout;
+  const hasNonEmptyTitle = title.value.trim().length > 0;
 
-  return hasNonEmptyTitle && (layout?.displayAsCollapsable ?? false)
-})
+  return hasNonEmptyTitle && (layout?.displayAsCollapsable ?? false);
+});
 
-const hasTitle = computed(() =>
-  typeof rawTitle.value === 'string' &&
-  rawTitle.value.trim().length > 0,
-)
+const hasTitle = computed(() => typeof rawTitle.value === 'string' && rawTitle.value.trim().length > 0);
 
 const noFieldsSelected = computed(() => {
-  const fields = props.content.fields
-  if (!fields) return false
+  const fields = props.content.fields;
+  if (!fields) return false;
 
-  const values = Object.values(fields)
-  if (!values.length) return false
+  const values = Object.values(fields);
+  if (!values.length) return false;
 
-  return values.every((v) => !v)
-})
+  return values.every((v) => !v);
+});
 
 const visibleRows = computed(() => {
   const order =
     props.content.fieldsOrder && props.content.fieldsOrder.length
       ? props.content.fieldsOrder
-      : (Object.keys(fieldLabels.value) as ItemDataFieldKey[])
+      : (Object.keys(fieldLabels.value) as ItemDataFieldKey[]);
 
-  const visibility = props.content.fields || {}
+  const visibility = props.content.fields || {};
 
   const rows = order
     .filter((key: ItemDataFieldKey) => visibility[key] ?? true)
@@ -146,36 +126,36 @@ const visibleRows = computed(() => {
       key,
       label: fieldLabels.value[key],
       value: fieldValues.value[key],
-    }))
+    }));
 
   return rows.filter((row) => {
-    const v = row.value
-    if (v == null) return false
-    return String(v).trim().length > 0
-  })
-})
+    const v = row.value;
+    if (v == null) return false;
+    return String(v).trim().length > 0;
+  });
+});
 
-const hasRows = computed(() => visibleRows.value.length > 0)
+const hasRows = computed(() => visibleRows.value.length > 0);
 
-const isOpen = ref(!(props.content.layout?.initiallyCollapsed ?? false))
+const isOpen = ref(!(props.content.layout?.initiallyCollapsed ?? false));
 
 const inlineStyle = computed(() => {
-  const layout = props.content.layout
+  const layout = props.content.layout;
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : undefined,
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : undefined,
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : undefined,
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : undefined,
-  }
-})
+  };
+});
 
 watch(
   () => props.content.layout?.initiallyCollapsed,
   (val) => {
-    if (val === undefined) return
-    isOpen.value = !val
+    if (val === undefined) return;
+    isOpen.value = !val;
   },
-)
+);
 </script>
 
 <i18n lang="json">
