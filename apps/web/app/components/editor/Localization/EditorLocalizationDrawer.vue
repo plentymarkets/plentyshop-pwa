@@ -268,7 +268,6 @@ onBeforeUnmount(() => {
   background: transparent;
 }
 
-/* Keine vertikale Scrollbar */
 .no-scrollbar-y {
   scrollbar-width: none;
 }
