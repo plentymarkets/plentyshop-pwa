@@ -23,14 +23,17 @@ export interface ItemDataLayout {
   paddingBottom: number
   paddingRight: number
   paddingLeft: number
+  displayAsCollapsable?: boolean
+  initiallyCollapsed?: boolean
 }
+
 
 export interface ItemDataText {
   title: string
 }
 
 export interface ItemDataContent {
-  text?: ItemDataText
+  text: ItemDataText
   fields: ItemDataFieldsVisibility
   fieldsOrder: ItemDataFieldsOrder
   layout: ItemDataLayout
