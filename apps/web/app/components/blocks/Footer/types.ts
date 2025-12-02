@@ -45,6 +45,9 @@ export interface FooterSettings {
   footnote: string;
   footnoteAlign: 'left' | 'center' | 'right';
   colors: FooterSettingsColors;
+  layout:{
+    fullWidth: boolean;
+  }
 }
 
 type AddFooterBlockOptions = {

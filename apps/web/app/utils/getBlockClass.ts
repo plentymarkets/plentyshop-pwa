@@ -1,32 +1,4 @@
-export interface BlockLayout {
-  fullWidth?: boolean;
-  narrowContainer?: boolean;
-  marginTop?: number;
-  marginBottom?: number;
-  marginLeft?: number;
-  marginRight?: number;
-  backgroundColor?: string;
-  gap?: string;
-}
-
-export interface Block {
-  name: string;
-  type: string;
-  configuration?: {
-    layout?: BlockLayout;
-    [key: string]: unknown;
-  };
-  meta: {
-    uuid: string;
-    isGlobalTemplate?: boolean;
-  };
-  parent_slot?: number;
-  content: {
-    layout?: BlockLayout;
-    [key: string]: unknown;
-  };
-  layout?: BlockLayout;
-}
+import type { Block } from '@plentymarkets/shop-api';
 
 /**
  * Block names that should not have container constraints (max-width, centering)
@@ -43,6 +15,17 @@ const PADDING_EXCLUDED_BLOCKS = new Set([
   'Footer',
   'Carousel',
   'CategoryData',
+  'SortFilter',
+  'ProductRecommendedProducts',
+  'ProductGrid',
+  'Image',
+  'ItemGrid',
+  'ItemPage',
+  'PriceCard',
+  'ItemText',
+  'TechnicalData',
+  'CustomerReview',
+  'ProductLegalInformation'
 ]);
 
 /**
@@ -68,7 +51,7 @@ const isExcluded = (blockName: string, excludedSet: Set<string>): boolean => {
  * @returns True if fullWidth is enabled
  */
 const hasFullWidth = (block: Block): boolean => {
-  return block.content?.layout?.fullWidth ?? block.layout?.fullWidth ?? block.configuration?.layout?.fullWidth ?? false;
+  return block.content?.layout?.fullWidth ?? block.configuration?.layout?.fullWidth ?? false;
 };
 
 /**

@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+
+
 import MultiGrid from '../../../../../components/blocks/structure/MultiGrid/MultiGrid.vue';
 import { multiGridBlockUuid, mockMultiGridProps } from './multiGrid.mock';
 
@@ -15,6 +17,7 @@ describe('MultiGrid block', () => {
           marginRight: 5,
           backgroundColor: '#fff',
           gap: 'M',
+          fullWidth: false,
         },
       },
     });
@@ -31,21 +34,21 @@ describe('MultiGrid block', () => {
           {
             name: 'TextCard',
             type: 'text',
-            content: { text: 'Test text' },
+            content: {},
             meta: { uuid: '33333333-3333-4333-8333-333333333333' },
             parent_slot: 0,
           },
           {
             name: 'Image',
             type: 'image',
-            content: { src: '/test.jpg', alt: 'Test image' },
+            content: {},
             meta: { uuid: '44444444-4444-4444-8444-444444444444' },
             parent_slot: 1,
           },
           {
             name: 'TextCard',
             type: 'text',
-            content: { text: 'Another text' },
+            content: {},
             meta: { uuid: '55555555-5555-4555-8555-555555555555' },
             parent_slot: 2,
           },
@@ -151,15 +154,27 @@ describe('MultiGrid block', () => {
 
   it('should render a 2 columns multigrid with 2 blocks in the first column and 1 block in the second column', () => {
     const blocks = [
-      { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'a' }, parent_slot: 0 },
+      {
+        name: 'Text',
+        type: 'text',
+        content: {},
+        meta: { uuid: 'a' },
+        parent_slot: 0,
+      },
       {
         name: 'Image',
         type: 'image',
-        content: { src: '/test.jpg', alt: 'Test image' },
+        content: {},
         meta: { uuid: 'b' },
         parent_slot: 0,
       },
-      { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'c' }, parent_slot: 1 },
+      {
+        name: 'Text',
+        type: 'text',
+        content: {},
+        meta: { uuid: 'c' },
+        parent_slot: 1,
+      },
     ];
 
     const wrapper = mount(MultiGrid, {
