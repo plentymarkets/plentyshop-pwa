@@ -139,58 +139,34 @@
 
         <div class="border-b border-neutral-200 my-4" />
 
-        <p class="mb-4 font-medium">{{ getEditorTranslation('global-pages-product-category') }}</p>
-        <div class="mt-3 flex flex-col gap-2">
-          <button
-            type="button"
-            class="flex-[10] border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-            @click="goToProductTemplatePage"
-          >
-            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path :d="editPath" fill="black" />
-              </svg>
-            </SfIconBase>
-            {{ getEditorTranslation('global-pages-edit-label') }}
-          </button>
-          <button
-            v-if="config.enableTemplateReset"
-            type="button"
-            class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-            @click="toggleResetModal(true, 'category')"
-          >
-            <SfIconUndo class="fill-primary-900 cursor-pointer mr-2" />
-            {{ getEditorTranslation('global-pages-reset-label') }}
-          </button>
-        </div>
+        <template v-for="(pageSection, index) in globalPagesButtons" :key="pageSection.type">
+          <p class="mb-4 font-medium">{{ getEditorTranslation(pageSection.labelKey) }}</p>
+          <div class="mt-3 flex flex-col gap-2">
+            <button
+              type="button"
+              class="flex-[10] border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
+              @click="pageSection.onEdit"
+            >
+              <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path :d="editPath" fill="black" />
+                </svg>
+              </SfIconBase>
+              {{ getEditorTranslation('global-pages-edit-label') }}
+            </button>
+            <button
+              v-if="config.enableTemplateReset"
+              type="button"
+              class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
+              @click="pageSection.onReset"
+            >
+              <SfIconUndo class="fill-primary-900 cursor-pointer mr-2" />
+              {{ getEditorTranslation('global-pages-reset-label') }}
+            </button>
+          </div>
 
-        <div class="border-b border-neutral-200 my-4" />
-
-        <p class="mb-4 font-medium">{{ getEditorTranslation('global-pages-product-detail') }}</p>
-        <div class="mt-3 flex flex-col gap-2">
-          <button
-            type="button"
-            class="flex-[10] border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-          >
-            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path :d="editPath" fill="black" />
-              </svg>
-            </SfIconBase>
-            {{ getEditorTranslation('global-pages-edit-label') }}
-          </button>
-          <button
-            v-if="config.enableTemplateReset"
-            type="button"
-            class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-            @click="toggleResetModal(true, 'detail')"
-          >
-            <SfIconUndo class="fill-primary-900 cursor-pointer mr-2" />
-            {{ getEditorTranslation('global-pages-reset-label') }}
-          </button>
-        </div>
-
-        <div class="border-b border-neutral-200 my-4" />
+          <div v-if="index < globalPagesButtons.length - 1" class="border-b border-neutral-200 my-4" />
+        </template>
       </UiAccordionItem>
     </div>
   </div>
@@ -225,10 +201,6 @@ const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, r
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const globalPagesOpen = ref(false);
-const goToProductTemplatePage = () => {
-  router.push('/product-template-page');
-};
-
 const { toggleResetModal } = useResetProductPageModal();
 
 const isDefaultLocale = computed(() => locale.value === defaultLocale);
@@ -322,6 +294,21 @@ const homepageItem = computed<CategoryEntry>(() => ({
   type: 'immutable',
   isLinkedToWebstore: true,
 }));
+
+const globalPagesButtons = [
+  {
+    type: 'category',
+    labelKey: 'global-pages-product-category',
+    onEdit: () => router.push('/product-template-page'),
+    onReset: () => toggleResetModal(true, 'category'),
+  },
+  {
+    type: 'detail',
+    labelKey: 'global-pages-product-detail',
+    onEdit: () => null,
+    onReset: () => toggleResetModal(true, 'detail'),
+  },
+];
 </script>
 
 <i18n lang="json">
