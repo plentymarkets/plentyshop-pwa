@@ -16,8 +16,8 @@
     <p class="mb-6">{{ getModalText() }}</p>
     <p class="mb-6">{{ getEditorTranslation('resetConfirmation') }}</p>
     <div class="flex items-center justify-between gap-4">
-      <UiButton variant="secondary" class="w-full" @click="closeModal">Cancel</UiButton>
-      <UiButton variant="primary" class="w-full">Reset to default</UiButton>
+      <UiButton variant="secondary" class="w-full" @click="closeModal">{{ getEditorTranslation('cancel') }}</UiButton>
+      <UiButton variant="primary" class="w-full">{{ getEditorTranslation('resetButton') }}</UiButton>
     </div>
   </UiModal>
 </template>
@@ -46,13 +46,17 @@ const getModalText = () => {
     "resetTitle": "Reset to default",
     "resetCategoryText": "All your customisations for the product category page will be permanently reset to default.",
     "resetDetailText": "All your customisations for the product detail page will be permanently reset to default.",
-    "resetConfirmation": "Are you sure you want to continue?"
+    "resetConfirmation": "Are you sure you want to continue?",
+    "cancel": "Cancel",
+    "resetButton": "Reset to default"
   },
   "de": {
     "resetTitle": "Reset to default",
     "resetCategoryText": "All your customisations for the product category page will be permanently reset to default.",
     "resetDetailText": "All your customisations for the product detail page will be permanently reset to default.",
-    "resetConfirmation": "Are you sure you want to continue?"
+    "resetConfirmation": "Are you sure you want to continue?",
+    "cancel": "Cancel",
+    "resetButton": "Reset to default"
   }
 }
 </i18n>
