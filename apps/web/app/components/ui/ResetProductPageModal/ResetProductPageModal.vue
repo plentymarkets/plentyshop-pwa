@@ -44,14 +44,14 @@ const getModalText = () => {
 {
   "en": {
     "resetTitle": "Reset to default",
-    "resetCategoryText": "All your customizations for the product category page will be permanently reseted to default.",
-    "resetDetailText": "All your customizations for the product detail page will be permanently reseted to default.",
+    "resetCategoryText": "All your customisations for the product category page will be permanently reset to default.",
+    "resetDetailText": "All your customisations for the product detail page will be permanently reset to default.",
     "resetConfirmation": "Are you sure you want to continue?"
   },
   "de": {
     "resetTitle": "Reset to default",
-    "resetCategoryMessage": "All your customizations for the product category page will be permanently reseted to default.",
-    "resetDetailText": "All your customizations for the product detail page will be permanently reseted to default.",
+    "resetCategoryText": "All your customisations for the product category page will be permanently reset to default.",
+    "resetDetailText": "All your customisations for the product detail page will be permanently reset to default.",
     "resetConfirmation": "Are you sure you want to continue?"
   }
 }
