@@ -27,7 +27,7 @@
             >
               <SfTooltip
                 v-if="isSingleInstanceOnPage(variation.template.en.name)"
-                :label="getEditorTranslation('errorMessages.editor.add.disabledOneInstancePerPage')"
+                :label="getEditorTranslation('error.editor.add.disabledOneInstancePerPage')"
                 placement="top"
                 :show-arrow="true"
               >
@@ -42,16 +42,14 @@
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{ getEditorTranslation('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
+          <span class="italic">{{ getEditorTranslation('error.editor.add.disabledTooDeeplyNested') }}</span>
         </div>
         <div
           v-if="isForbiddenBlock(category, targetUuid)"
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{
-            getEditorTranslation('errorMessages.editor.add.disabledNotCompatibleWithLayouts')
-          }}</span>
+          <span class="italic">{{ getEditorTranslation('error.editor.add.disabledNotCompatibleWithLayouts') }}</span>
         </div>
       </div>
     </UiAccordionItem>

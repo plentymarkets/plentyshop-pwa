@@ -2,9 +2,9 @@
   <NuxtLayout
     name="checkout"
     page-type="static"
-    :back-label-desktop="t('back')"
-    :back-label-mobile="t('back')"
-    :heading="t('checkout')"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
+    :heading="t('common.labels.checkout')"
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
@@ -61,7 +61,7 @@
                 @click="buy"
               >
                 <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
-                <template v-else>{{ t('buy') }}</template>
+                <template v-else>{{ t('common.actions.buy') }}</template>
               </UiButton>
             </div>
             <div v-else>
@@ -70,11 +70,11 @@
               >
                 <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
                 <div class="py-2 mr-2">
-                  {{ t('paypal.expressNotAvailable') }}
+                  {{ t('paypalPayment.expressNotAvailable') }}
                 </div>
               </div>
               <NuxtLink :to="localePath(paths.checkout)">
-                <UiButton class="w-full">{{ t('goToCheckout') }}</UiButton>
+                <UiButton class="w-full">{{ t('common.actions.goToCheckout') }}</UiButton>
               </NuxtLink>
             </div>
             <UiButton
@@ -87,7 +87,7 @@
               @click="cancelOrder"
             >
               <SfLoaderCircular v-if="unreserveLoading" class="flex justify-center items-center" size="sm" />
-              <template v-else>{{ t('cancelOrder') }}</template>
+              <template v-else>{{ t('common.actions.cancelOrder') }}</template>
             </UiButton>
           </OrderSummary>
         </div>
@@ -218,24 +218,24 @@ const validateFields = async () => {
   if (interactionDisabled.value) return false;
 
   if (cartIsEmpty.value) {
-    send({ type: 'neutral', message: t('emptyCartNotification') });
+    send({ type: 'neutral', message: t('cart.emptyNotification') });
     await navigateTo(localePath(paths.cart));
     return false;
   }
 
   if (anyAddressFormIsOpen.value) {
-    send({ type: 'secondary', message: t('unsavedAddress') });
+    send({ type: 'secondary', message: t('address.unsavedWarning') });
     return backToFormEditing();
   }
 
   if (!hasShippingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToShippingAddress();
     return false;
   }
 
   if (!hasBillingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingBillingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingBillingAddress') });
     scrollToBillingAddress();
     return false;
   }
@@ -274,7 +274,7 @@ const buy = async () => {
         navigateTo(localePath(`${paths.confirmation}/${order.order.id}/${order.order.accessKey}`));
       }
     } else {
-      send({ type: 'negative', message: t('paypal.invalidOrder') });
+      send({ type: 'negative', message: t('paypalPayment.invalidOrder') });
       navigateTo(localePath(paths.cart));
     }
   }

@@ -7,7 +7,7 @@
       class="py-2 px-4 mb-4 bg-primary-50/50 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
       data-testid="category-tree"
     >
-      {{ t('category') }}
+      {{ t('common.labels.category') }}
     </h6>
     <template v-if="parent">
       <CategoryTreeItem

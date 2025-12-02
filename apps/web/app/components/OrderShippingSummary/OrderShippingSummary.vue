@@ -27,12 +27,12 @@
   </template>
 
   <template v-if="orderContactWish">
-    <h2 class="font-medium text-base mt-4">{{ t('customerWish') }}</h2>
+    <h2 class="font-medium text-base mt-4">{{ t('checkout.fields.customerWish') }}</h2>
     <p>{{ orderContactWish }}</p>
   </template>
 
   <template v-if="orderCustomerSign">
-    <h2 class="font-medium text-base mt-4">{{ t('customerReference') }}</h2>
+    <h2 class="font-medium text-base mt-4">{{ t('checkout.fields.customerReference') }}</h2>
     <p>{{ orderCustomerSign }}</p>
   </template>
 </template>

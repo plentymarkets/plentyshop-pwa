@@ -63,7 +63,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         setCategoryId({});
         deletePageFromTree(id);
         send({
-          message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
+          message: t('error.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
           type: 'positive',
         });
         const lang = locale.value;
@@ -77,7 +77,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         }
       }
       send({
-        message: t('errorMessages.editor.categories.deleteError', {
+        message: t('error.editor.categories.deleteError', {
           pageName: pageName,
           id: id,
           errorMessage: errorMessage,

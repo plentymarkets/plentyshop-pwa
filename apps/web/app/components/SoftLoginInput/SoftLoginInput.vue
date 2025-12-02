@@ -8,7 +8,7 @@
     <UiButton type="submit" class="mt-2" :disabled="loading">
       <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
       <span v-if="!loading">
-        {{ t('softLogin.check') }}
+        {{ t('orderConfirmation.softLogin.check') }}
       </span>
     </UiButton>
   </form>

@@ -5,7 +5,7 @@
     v-if="paymentLoading"
     class="fixed top-0 left-0 bg-black bg-opacity-75 bottom-0 right-0 !z-50 flex items-center justify-center flex-col"
   >
-    <div class="text-white mb-4">{{ t('googlePay.paymentInProgress') }}</div>
+    <div class="text-white mb-4">{{ t('checkout.googlePay.paymentInProgress') }}</div>
     <SfLoaderCircular class="flex justify-center items-center" size="lg" />
   </div>
 </template>
@@ -38,7 +38,7 @@ async function onGooglePaymentButtonClicked() {
         .then((paymentData: google.payments.api.PaymentData) => {
           processPayment(paymentData).catch((error: Error) => {
             useNotification().send({
-              message: error.message || t('errorMessages.paymentFailed'),
+              message: error.message || t('error.paymentFailed'),
               type: 'negative',
             });
             paymentLoading.value = false;
@@ -47,7 +47,7 @@ async function onGooglePaymentButtonClicked() {
         })
         .catch((error: Error) => {
           useNotification().send({
-            message: error.message || t('errorMessages.paymentFailed'),
+            message: error.message || t('error.paymentFailed'),
             type: 'negative',
           });
           paymentLoading.value = false;

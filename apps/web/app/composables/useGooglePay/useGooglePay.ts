@@ -128,7 +128,7 @@ export const useGooglePay = () => {
       return { transactionState: 'SUCCESS' };
     } else {
       await useCartStockReservation().unreserve();
-      showErrorNotification(t('errorMessages.paymentFailed'));
+      showErrorNotification(t('error.paymentFailed'));
       return { transactionState: 'ERROR' };
     }
   };

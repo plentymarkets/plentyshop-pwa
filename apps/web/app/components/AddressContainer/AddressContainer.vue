@@ -23,14 +23,14 @@
             @edit="edit"
           />
 
-          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('editAddress')">
+          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('address.edit')">
             <UiButton
               :disabled="!hasCheckoutAddress || saveAddressLoading || disabled"
               variant="secondary"
               :data-testid="'edit-address-' + type"
               @click="edit(checkoutAddress)"
             >
-              {{ t('contactInfo.edit') }}
+              {{ t('common.actions.edit') }}
             </UiButton>
           </SfTooltip>
         </div>
@@ -107,7 +107,7 @@ const showEditAddressTooltip = computed(
 );
 
 const dynamicAddressText = computed(() =>
-  t(showSameAsShippingText.value ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
+  t(showSameAsShippingText.value ? 'address.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
 );
 
 const edit = (address: Address) => {

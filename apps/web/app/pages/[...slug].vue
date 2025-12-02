@@ -48,7 +48,7 @@ const breadcrumbs = computed(() => {
       categoryTree.value,
       categoryGetters.getId(productsCatalog.value.category),
     );
-    breadcrumb.unshift({ name: t('home'), link: '/' });
+    breadcrumb.unshift({ name: t('common.labels.home'), link: '/' });
 
     return breadcrumb;
   }

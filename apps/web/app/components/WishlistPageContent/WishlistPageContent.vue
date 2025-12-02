@@ -1,6 +1,11 @@
 <template>
   <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="wishlist-layout">
-    <HeaderWithLink v-if="withHeader && title" :heading="title" :label-desktop="t('back')" :label-mobile="t('back')" />
+    <HeaderWithLink
+      v-if="withHeader && title"
+      :heading="title"
+      :label-desktop="t('common.actions.back')"
+      :label-mobile="t('common.actions.back')"
+    />
 
     <div
       v-if="products.length > 0"
@@ -30,21 +35,21 @@
     >
       <SfLoaderCircular v-if="loading" class="absolute z-[99999]" size="2xl" />
       <h2 data-testid="empty-wishlist-text" class="typography-headline-3 font-bold">
-        {{ t('emptyWishlist') }}
+        {{ t('cart.emptyWishlist') }}
       </h2>
     </div>
     <div v-if="products.length > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
-      <span>{{ t('asterisk') }}</span>
-      <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
-      <span v-else>{{ t('itemInclVAT') }}</span>
-      <i18n-t keypath="excludedShipping" scope="global">
+      <span>{{ t('common.labels.asterisk') }}</span>
+      <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
+      <span v-else>{{ t('product.priceInclVAT') }}</span>
+      <i18n-t keypath="shipping.excludedLabel" scope="global">
         <template #shipping>
           <SfLink
             :href="localePath(paths.shipping)"
             target="_blank"
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
           >
-            {{ t('delivery') }}
+            {{ t('common.labels.delivery') }}
           </SfLink>
         </template>
       </i18n-t>

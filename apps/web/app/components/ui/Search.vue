@@ -5,8 +5,8 @@
       ref="inputReference"
       v-model="inputModel"
       data-testid="search-bar-input"
-      :aria-label="t('search')"
-      :placeholder="t('search')"
+      :aria-label="t('common.actions.search')"
+      :placeholder="t('common.actions.search')"
       @focus="open"
     >
       <template #prefix>
@@ -17,7 +17,7 @@
         <button
           v-if="inputModel"
           type="button"
-          :aria-label="t('resetSearch')"
+          :aria-label="t('common.actions.resetSearch')"
           class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
           @click="handleReset"
         >

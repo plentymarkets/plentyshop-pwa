@@ -7,7 +7,7 @@
     >
       <template #summary>
         <h2 class="font-bold text-lg leading-6 md:text-2xl">
-          {{ t('productDetails') }}
+          {{ t('product.details') }}
         </h2>
       </template>
       <div class="no-preflight" v-html="productGetters.getDescription(product)" />
@@ -20,7 +20,7 @@
     >
       <template #summary>
         <h2 class="font-bold text-lg leading-6 md:text-2xl">
-          {{ t('technicalData') }}
+          {{ t('common.labels.technicalData') }}
         </h2>
       </template>
       <div class="no-preflight" v-html="productGetters.getTechnicalData(product)" />

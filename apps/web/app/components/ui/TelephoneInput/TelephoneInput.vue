@@ -63,7 +63,7 @@ const dropdownOptions = {
   showDialCodeInSelection: false,
   showFlags: true,
   showSearchBox: true,
-  searchBoxPlaceholder: t('checkoutPayment.countrySearch'),
+  searchBoxPlaceholder: t('checkout.payment.countrySearch'),
 };
 
 const inputOptions = {

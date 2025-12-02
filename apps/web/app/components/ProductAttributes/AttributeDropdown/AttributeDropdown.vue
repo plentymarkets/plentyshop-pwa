@@ -10,11 +10,11 @@
       :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
       v-model="value"
       size="lg"
-      :placeholder="t('pleaseSelect')"
+      :placeholder="t('form.selectPlaceholder')"
       :invalid="Boolean(errors['selectedValue'])"
       @update:model-value="(event) => doUpdateValue(Number(event))"
     >
-      <option :value="undefined">{{ t('pleaseSelect') }}</option>
+      <option :value="undefined">{{ t('form.selectPlaceholder') }}</option>
       <option
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
@@ -52,7 +52,7 @@ watch(
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: number().required(t('errorMessages.requiredField')),
+    selectedValue: number().required(t('error.requiredField')),
   }),
 );
 
