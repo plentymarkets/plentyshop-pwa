@@ -300,13 +300,13 @@ const globalPagesButtons = [
   {
     type: 'category',
     labelKey: 'global-pages-product-category',
-    onEdit: () => router.push('/product-template-page'),
+    onEdit: () => router.push(paths.globalItemCategory),
     onReset: () => toggleResetModal(true, 'category'),
   },
   {
     type: 'detail',
     labelKey: 'global-pages-product-detail',
-    onEdit: () => null,
+    onEdit: () => router.push(paths.globalItemDetails),
     onReset: () => toggleResetModal(true, 'detail'),
   },
 ];

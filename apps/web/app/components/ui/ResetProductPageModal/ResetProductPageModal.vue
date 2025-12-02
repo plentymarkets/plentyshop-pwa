@@ -18,15 +18,15 @@
     <div class="flex items-center justify-between gap-4">
       <button
         type="button"
-        data-testid="block-spacing-btn"
+        data-testid="reset-modal-cancel-button"
         class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
         @click="closeModal"
       >
         {{ getEditorTranslation('cancel') }}
       </button>
       <button
-        type="submit"
-        data-testid="block-spacing-btn"
+        type="button"
+        data-testid="reset-modal-confirm-button"
         class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
       >
         {{ getEditorTranslation('resetButton') }}

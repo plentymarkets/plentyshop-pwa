@@ -27,7 +27,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     const route = useRoute();
     const slugParam = route.params.slug;
     const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
-    return parts.join('/') === 'product-template-page';
+    return parts.join('/') === paths.globalItemCategory;
   });
 
   /**
