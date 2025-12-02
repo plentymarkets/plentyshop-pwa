@@ -124,6 +124,7 @@
       </UiAccordionItem>
 
       <UiAccordionItem
+        v-if="config.enableTemplateReset"
         v-model="globalPagesOpen"
         data-testid="global-pages-section"
         summary-active-class="bg-neutral-100 border-t-0"
