@@ -1,10 +1,10 @@
 import type {
-  useResetProductPageModalReturn,
-  useResetProductPageModalState,
+  UseResetProductPageModalReturn,
+  UseResetProductPageModalState,
 } from '~/composables/useResetProductPageModal/types';
 
-export const useResetProductPageModal: useResetProductPageModalReturn = () => {
-  const state = useState<useResetProductPageModalState>(`resetProductPageModal`, () => ({
+export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
+  const state = useState<UseResetProductPageModalState>(`resetProductPageModal`, () => ({
     unlinkModalOpen: false,
     resetType: null,
   }));
