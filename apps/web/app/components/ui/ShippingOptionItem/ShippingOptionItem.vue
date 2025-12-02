@@ -19,6 +19,6 @@ const { format } = usePriceFormatter();
 const props = defineProps<ShippingOptionItemProps>();
 
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shippingMethod.free') : format(amount);
+  return amount === 0 ? t('shipping.method.free') : format(amount);
 };
 </script>

@@ -53,7 +53,7 @@ const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(p
 
 const validationSchema = toTypedSchema(
   object({
-    value: boolean().oneOf([true], t('errorMessages.requiredField')),
+    value: boolean().oneOf([true], t('error.requiredField')),
   }),
 );
 

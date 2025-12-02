@@ -2,7 +2,7 @@
   <header>
     <UiButton
       v-if="!disableCloseButton"
-      :aria-label="t('navigation.closeDialog')"
+      :aria-label="t('common.navigation.closeDialog')"
       type="button"
       square
       variant="tertiary"
@@ -12,13 +12,13 @@
       <SfIconClose />
     </UiButton>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-      {{ t('checkoutPayment.creditCard') }}
+      {{ t('checkout.payment.creditCard') }}
     </h3>
   </header>
   <div id="pay-container" class="payment-container">
     <div class="row">
       <div class="grid-cols-12">
-        <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCardNumber') }} *</UiFormLabel>
+        <UiFormLabel class="pl-2">{{ t('paypalPayment.unbrandedCardNumber') }} *</UiFormLabel>
         <div id="card-number" />
       </div>
     </div>
@@ -26,13 +26,13 @@
     <div class="grid grid-cols-2 gap-x-5 mt-5">
       <div>
         <div class="grid-cols-12">
-          <UiFormLabel class="pl-2">{{ t('paypal.unbrandedExpirationDate') }} *</UiFormLabel>
+          <UiFormLabel class="pl-2">{{ t('paypalPayment.unbrandedExpirationDate') }} *</UiFormLabel>
           <div id="expiration-date" />
         </div>
       </div>
       <div>
         <div class="grid-cols-12">
-          <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCvv') }} *</UiFormLabel>
+          <UiFormLabel class="pl-2">{{ t('paypalPayment.unbrandedCvv') }} *</UiFormLabel>
           <div id="credit-card-cvv" />
         </div>
       </div>
@@ -43,14 +43,14 @@
     <div class="flex justify-end gap-x-4 mt-6">
       <div>
         <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="confirmCancel">{{
-          t('paypal.unbrandedCancel')
+          t('paypalPayment.unbrandedCancel')
         }}</UiButton>
       </div>
       <div>
         <UiButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else>
-            {{ t('paypal.unbrandedPay') }}
+            {{ t('paypalPayment.unbrandedPay') }}
           </span>
         </UiButton>
       </div>
@@ -115,7 +115,7 @@ onMounted(() => {
         await useCartStockReservation().unreserve();
         send({
           type: 'negative',
-          message: t('paypal.errorMessageCreditCard'),
+          message: t('paypalPayment.errorMessageCreditCard'),
         });
         loading.value = false;
       },

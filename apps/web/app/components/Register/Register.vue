@@ -1,24 +1,24 @@
 <template>
   <div class="font-medium ml-8" :class="{ 'flex flex-col items-center': !isModal }">
-    <div class="text-lg">{{ t('auth.signup.heading') }}</div>
-    <div class="text-base">{{ t('auth.signup.subheading') }}</div>
+    <div class="text-lg">{{ t('authentication.signup.heading') }}</div>
+    <div class="text-base">{{ t('authentication.signup.subheading') }}</div>
 
     <div class="mt-5 font-normal flex flex-col gap-2">
       <div class="flex items-center gap-2">
         <SfIconPerson class="text-primary-500" />
-        <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
+        <div>{{ t('authentication.signup.benefits.saveAddresses') }}</div>
       </div>
       <div class="flex items-center gap-2">
         <SfIconLocalShipping class="text-primary-500" />
-        <div>{{ t('auth.signup.benefits.orderTracking') }}</div>
+        <div>{{ t('authentication.signup.benefits.orderTracking') }}</div>
       </div>
       <div class="flex items-center gap-2">
         <SfIconFavorite class="text-primary-500" />
-        <div>{{ t('auth.signup.benefits.wishlist') }}</div>
+        <div>{{ t('authentication.signup.benefits.wishlist') }}</div>
       </div>
       <div class="flex items-center gap-2">
         <SfIconSchedule class="text-primary-500" />
-        <div>{{ t('auth.signup.benefits.orderHistory') }}</div>
+        <div>{{ t('authentication.signup.benefits.orderHistory') }}</div>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
         <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="password"
-          :title="t('validation.invalidPassword')"
+          :title="t('authentication.signup.passwordValidation.invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-bind="passwordAttributes"
@@ -56,7 +56,7 @@
         <UiFormLabel>{{ t('form.repeatPasswordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="repeatPassword"
-          :title="t('validation.invalidPassword')"
+          :title="t('authentication.signup.passwordValidation.invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-bind="repeatPasswordAttributes"
@@ -71,18 +71,23 @@
           <SfIconCheck v-if="passwordValidationLength" size="sm" />
           <SfIconClose v-else size="sm" />
           <span class="ml-1">
-            {{ t('auth.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
+            {{
+              t('authentication.signup.passwordValidation.characters', {
+                min: passwordMinLength,
+                max: passwordMaxLength,
+              })
+            }}
           </span>
         </div>
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneDigit }">
           <SfIconCheck v-if="passwordValidationOneDigit" size="sm" />
           <SfIconClose v-else size="sm" />
-          <span class="ml-1">{{ t('auth.signup.passwordValidation.numbers') }}</span>
+          <span class="ml-1">{{ t('authentication.signup.passwordValidation.numbers') }}</span>
         </div>
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneLetter }">
           <SfIconCheck v-if="passwordValidationOneLetter" size="sm" />
           <SfIconClose v-else size="sm" />
-          <span class="ml-1">{{ t('auth.signup.passwordValidation.letters') }}</span>
+          <span class="ml-1">{{ t('authentication.signup.passwordValidation.letters') }}</span>
         </div>
       </div>
 
@@ -128,14 +133,14 @@
       <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
         <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
-          {{ t('auth.signup.submitLabel') }}
+          {{ t('authentication.signup.submitLabel') }}
         </span>
       </UiButton>
 
       <div v-if="changeableView" class="text-center">
-        <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
+        <div class="my-5 font-bold">{{ t('authentication.signup.alreadyHaveAccount') }}</div>
         <SfLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
-          {{ t('auth.signup.logInLinkLabel') }}
+          {{ t('authentication.signup.logInLinkLabel') }}
         </SfLink>
       </div>
     </form>
@@ -186,20 +191,20 @@ const validationSchema = toTypedSchema(
     register: object({
       email: string()
         .trim()
-        .required(t('errorMessages.email.required'))
-        .test('is-valid-email', t('errorMessages.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
+        .required(t('error.email.required'))
+        .test('is-valid-email', t('error.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
         .default(''),
       password: string()
-        .required(t('errorMessages.password.required'))
+        .required(t('error.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .min(passwordMinLength, t('errorMessages.password.minLength', { min: passwordMinLength }))
-        .max(passwordMaxLength, t('errorMessages.password.maxLength', { max: passwordMaxLength }))
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('errorMessages.password.valid'))
+        .min(passwordMinLength, t('error.password.minLength', { min: passwordMinLength }))
+        .max(passwordMaxLength, t('error.password.maxLength', { max: passwordMaxLength }))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('error.password.valid'))
         .default(''),
       repeatPassword: string()
-        .required(t('errorMessages.password.required'))
+        .required(t('error.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .test('passwords-match', t('errorMessages.password.match'), function (value) {
+        .test('passwords-match', t('error.password.match'), function (value) {
           const passwordValue = this.parent.password?.replace(/\s/g, '');
           return value === passwordValue;
         })
@@ -207,7 +212,7 @@ const validationSchema = toTypedSchema(
       privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
-          ? string().required(t('errorMessages.turnstileRequired')).default('')
+          ? string().required(t('error.turnstileRequired')).default('')
           : string().optional().default(''),
     }),
   }),
@@ -259,13 +264,13 @@ const registerUser = async () => {
   });
 
   if (response?.data.code === 1) {
-    send({ message: t('auth.signup.emailAlreadyExists'), type: 'negative' });
+    send({ message: t('authentication.signup.emailAlreadyExists'), type: 'negative' });
     clearTurnstile();
     return;
   }
 
   if (response?.data.id) {
-    send({ message: t('auth.signup.success'), type: 'positive' });
+    send({ message: t('authentication.signup.success'), type: 'positive' });
 
     if (order) {
       await migrateGuestOrder({

@@ -77,7 +77,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('navigation.closeAuthentication')"
+        :aria-label="t('common.navigation.closeAuthentication')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"

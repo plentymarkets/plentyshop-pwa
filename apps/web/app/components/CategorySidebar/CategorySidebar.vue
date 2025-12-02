@@ -18,7 +18,7 @@
       <div class="grid grid-rows-category-sidebar md:h-full md:block">
         <div class="p-4 flex justify-between items-center md:hidden">
           <span class="font-bold text-lg">{{ t('common.labels.listSettings') }}</span>
-          <UiButton variant="tertiary" :aria-label="t('navigation.closeListSettings')" @click="$emit('close')">
+          <UiButton variant="tertiary" :aria-label="t('common.navigation.closeListSettings')" @click="$emit('close')">
             <template #prefix>
               <SfIconClose class="text-neutral-500" />
             </template>

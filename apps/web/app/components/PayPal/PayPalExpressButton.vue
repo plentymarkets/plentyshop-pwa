@@ -148,7 +148,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       async onCancel() {
         useNotification().send({
-          message: t('errorMessages.paymentCancelled'),
+          message: t('error.paymentCancelled'),
           type: 'negative',
         });
         await useCartStockReservation().unreserve();

@@ -1,7 +1,4 @@
 {
-  "accessibility": {
-    "passwordVisibility": "Sichtbarkeit des Passworts"
-  },
   "account": {
     "accountSettings": {
       "billingDetails": {
@@ -126,6 +123,10 @@
       "heading": "Wunschliste",
       "section": {
         "myWishlist": "Meine Wunschliste"
+      },
+      "notifications": {
+        "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
+        "delete": "Der Artikel wurde von der Wunschliste entfernt."
       }
     }
   },
@@ -141,12 +142,10 @@
     "savedShippingAddresses": "Gespeicherte Lieferadressen",
     "shippingAddress": "Lieferadresse",
     "shippingRequired": "Bitte Lieferadresse auswählen.",
-    "unsavedWarning": "Die eingegebene Adresse wurde noch nicht gespeichert."
-  },
-  "addressContainer": {
+    "unsavedWarning": "Die eingegebene Adresse wurde noch nicht gespeichert.",
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
-  "auth": {
+  "authentication": {
     "login": {
       "createAccount": "Sie haben noch kein Konto?",
       "createAccountLater": "Keine Sorge. Sie können nach Ihrer Bestellung ein Konto erstellen",
@@ -198,14 +197,15 @@
       "passwordValidation": {
         "characters": "Das Passwort muss zwischen {min} und {max} Zeichen lang sein.",
         "letters": "Das Passwort muss mindestens einen Buchstaben enthalten.",
-        "numbers": "Das Passwort muss mindestens eine Zahl enthalten."
+        "numbers": "Das Passwort muss mindestens eine Zahl enthalten.",
+        "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten."
       },
       "subheading": "Jetzt registrieren, um großartige Vorteile zu genießen",
       "submitLabel": "Account erstellen",
       "success": "Ihr Konto wurde erfolgreich erstellt."
     }
   },
-  "availabilitiesOptions": {
+  "availabilities": {
     "availabilityBackOrder": "Lieferrückstand (BackOrder)",
     "availabilityDiscontinued": "Abgekündigt (Discontinued)",
     "availabilityInStock": "Auf Lager (InStock)",
@@ -236,45 +236,43 @@
     "numberInCart": "{count} Artikel im Warenkorb",
     "numberInWishlist": "{count} Artikel in der Wunschliste"
   },
-  "categories": {
-    "about": {
-      "label": "Über",
-      "subcategories": {
-        "aboutUs": "Über uns",
-        "affiliateProgram": "Partnerprogramm",
-        "jobs": "Jobs",
-        "pressCenter": "Presse",
-        "suppliers": "Lieferanten"
-      }
-    },
-    "contact": {
-      "label": "Kontakt"
-    },
-    "help": {
-      "label": "Hilfe",
-      "subcategories": {
-        "contact": "Kontakt",
-        "feedback": "Feedback",
-        "helpCenter": "Hilfezentrum",
-        "securityFraud": "Sicherheit & Missbrauch"
-      }
-    },
-    "legal": {
-      "label": "Rechtliches",
-      "subcategories": {
-        "cancellationForm": "Widerrufsformular",
-        "cancellationRights": "Widerrufsbelehrung",
-        "declarationOfAccessibility": "Barrierefreiheitserklärung",
-        "legalDisclosure": "Impressum",
-        "privacyPolicy": "Datenschutzerklärung",
-        "termsAndConditions": "AGB"
-      }
-    },
-    "services": {
-      "label": "Services",
-      "subcategories": {
-        "contact": "Kontakt",
-        "register": "Registrieren"
+  "category": {
+    "sorting": {
+      "default": {
+        "recommended_sorting": "Empfohlen"
+      },
+      "item": {
+        "feedbackDecimal_asc": "Kundenbewertung ⬆",
+        "feedbackDecimal_desc": "Kundenbewertung ⬇",
+        "manufacturer": {
+          "externalName_asc": "Hersteller A-Z",
+          "externalName_desc": "Hersteller Z-A"
+        },
+        "score": "Relevanz"
+      },
+      "sorting": {
+        "price": {
+          "avg_asc": "Preis ⬆",
+          "avg_desc": "Preis ⬇"
+        }
+      },
+      "texts": {
+        "name1_asc": "Name A-Z",
+        "name1_desc": "Name Z-A"
+      },
+      "variation": {
+        "availability": {
+          "averageDays_asc": "Verfügbarkeit ⬆",
+          "averageDays_desc": "Verfügbarkeit ⬇"
+        },
+        "createdAt_asc": "Älteste Artikel",
+        "createdAt_desc": "Neueste Artikel",
+        "number_asc": "Variantennummer ⬆",
+        "number_desc": "Variantennummer ⬇",
+        "position_asc": "Meistverkaufte Artikel ⬆",
+        "position_desc": "Meistverkaufte Artikel ⬇",
+        "updatedAt_asc": "Letzte Aktualisierung",
+        "updatedAt_desc": "Erste Aktualisierung"
       }
     }
   },
@@ -289,19 +287,22 @@
       "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein."
     },
     "guestCheckout": "Gast Checkout",
-    "loginFastCheckout": "Einloggen, um schneller auszuchecken"
-  },
-  "checkoutPayment": {
-    "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
-    "birthdateLabel": "Geburtsdatum",
-    "comingSoon": "Bald verfügbar",
-    "countrySearch": "Suche nach einem Land",
-    "creditCard": "Kreditkarte",
-    "heading": "Zahlungsart",
-    "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "payUponInvoice": "Bezahlen Sie per Rechnung",
-    "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
-    "phoneLabel": "Telefonnummer"
+    "loginFastCheckout": "Einloggen, um schneller auszuchecken",
+    "payment": {
+      "birthdateError": "Geben Sie ein gültiges Geburtsdatum ein.",
+      "birthdateLabel": "Geburtsdatum",
+      "comingSoon": "Bald verfügbar",
+      "countrySearch": "Suche nach einem Land",
+      "creditCard": "Kreditkarte",
+      "heading": "Zahlungsart",
+      "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
+      "payUponInvoice": "Bezahlen Sie per Rechnung",
+      "phoneError": "Geben Sie eine gültige Telefonnummer ein.",
+      "phoneLabel": "Telefonnummer"
+    },
+    "googlePay": {
+      "paymentInProgress": "Zahlung in Bearbeitung..."
+    }
   },
   "common": {
     "actions": {
@@ -315,7 +316,10 @@
       "buy": "Kaufen",
       "cancelOrder": "Kauf abbrechen",
       "clear": "Zurücksetzen",
+      "clearAll": "Alles zurücksetzen",
+      "cancel": "Abbrechen",
       "continueShopping": "Einkauf fortsetzen",
+      "edit": "Bearbeiten",
       "goToCheckout": "Zur Kasse",
       "goToHomepage": "Zur Startseite gehen",
       "next": "Nächste",
@@ -329,6 +333,7 @@
       "removeProductFromWishlist": "{label} von der Wunschliste entfernen",
       "resetSearch": "Suche zurücksetzen",
       "saveAddress": "Adresse speichern",
+      "save": "Speichern",
       "scrollTop": "Nach oben scrollen",
       "search": "Suche",
       "showLess": "Weniger anzeigen",
@@ -376,14 +381,35 @@
       "wishlist": "Wunschliste"
     },
     "messages": {
-      "comingSoon": "Demnächst",
-      "loading": "Wird geladen...",
-      "loadingReviews": "Kundenrezensionen werden geladen...",
-      "none": "Keine vorhanden",
       "offline": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
+    },
+    "reloadPWA": {
+      "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren.",
+      "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
+      "refresh": "Aktualisieren"
+    },
+    "navigation": {
+      "breadcrumbsDropdown": "Mehr Breadcrumbs anzeigen",
+      "closeAddressForm": "Adressbearbeitung beenden",
+      "closeAuthentication": "Authentifizierungsmodal schließen",
+      "closeDialog": "Dialogfenster schließen",
+      "closeDrawer": "Drawer schließen",
+      "closeListSettings": "Listeneinstellungen schließen",
+      "closeMenu": "Menü schließen",
+      "closeNeutralAlert": "Benachrichtigung schließen",
+      "closePickSavedAddress": "Adressauswahl schließen",
+      "currentPage": "Die aktuelle Seite ist {page}",
+      "goToPage": "Zur Seite navigieren {page}",
+      "languageSelector": "Sprachauswahl öffnen",
+      "nextAriaLabel": "Zur nächsten Seite navigieren",
+      "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
+      "openSearchModal": "Suche öffnen",
+      "previousAriaLabel": "Zur vorherigen Seite navigieren",
+      "socialLabel": "Gehe zu {label}"
     }
   },
   "contact": {
+    "label": "Kontakt",
     "clearAll": "Alles löschen",
     "contact": "Kontakt",
     "contactSend": "Anfrage senden",
@@ -399,20 +425,11 @@
     },
     "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
-    "success": "Nachricht erfolgreich gesendet"
-  },
-  "contactInfo": {
-    "add": "Kontaktinformationen hinzufügen",
-    "cancel": "Zurücksetzen",
-    "clear": "Löschen",
-    "clearAll": "Alles löschen",
-    "description": "Fügen Sie Ihre E-Mail-Adresse hinzu.",
-    "edit": "Bearbeiten",
-    "email": "E-Mail",
-    "heading": "Kontaktinformationen",
-    "phone": "Telefonnummer",
-    "phonePlaceholder": "z.B. 1234 567890",
-    "save": "Speichern"
+    "success": "Nachricht erfolgreich gesendet",
+    "info": {
+      "heading": "Kontaktinformationen",
+      "email": "E-Mail"
+    }
   },
   "CookieBar": {
     "about": {
@@ -423,6 +440,12 @@
     "Accept Selection": "Auswahl akzeptieren",
     "Back": "Zurück",
     "Cookie Settings": "Cookie-Einstellungen",
+    "group": {
+      "externalMedia": "Externe Medien",
+      "functional": "Funktional",
+      "marketing": "Marketing (empfohlen)",
+      "necessary": "Essenziell"
+    },
     "essentials": {
       "cookies": {
         "cloudflareTurnstile": {
@@ -471,14 +494,10 @@
     },
     "More information": "Mehr Informationen",
     "Privacy Settings": "Datenschutzeinstellungen",
+    "legalDisclosure": "Impressum",
+    "privacyPolicy": "Datenschutzerklärung",
     "Reject All": "Alles ablehnen",
     "Show less": "Weniger anzeigen"
-  },
-  "cookieGroup": {
-    "externalMedia": "Externe Medien",
-    "functional": "Funktional",
-    "marketing": "Marketing (empfohlen)",
-    "necessary": "Essenziell"
   },
   "coupon": {
     "apply": "Einlösen",
@@ -517,10 +536,6 @@
     "publish": "Veröffentlichen",
     "save": "Speichern",
     "stopEdit": "Abbrechen"
-  },
-  "emailConfirmation": {
-    "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
-    "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
   },
   "error": {
     "accessKeyMailFailed": "Die E-Mail konnte nicht versendet werden, bitte kontaktieren Sie den Shopbetreiber.",
@@ -581,9 +596,7 @@
     "pageNotFound": "Seite nicht gefunden",
     "pageNotFoundSubtitle": "Es tut uns leid! Benutze die Suche oder die Kategorieauswahl um zu finden, wonach du suchst.",
     "pageNotFoundTitle": "Wir konnten diese Seite nicht finden.",
-    "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist"
-  },
-  "errorMessages": {
+    "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
     "checkout": {
       "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren.",
       "missingBillingAddress": "Bitte geben Sie Ihre Rechnungsadresse ein, um mit dem Bezahlvorgang fortzufahren."
@@ -625,6 +638,20 @@
     "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
     "wholeNumber": "Geben Sie eine ganze Zahl ein."
   },
+  "footer": {
+    "legal": {
+      "label": "Rechtliches"
+    },
+    "services": {
+      "label": "Services"
+    },
+    "contact": {
+      "label": "Kontakt"
+    },
+    "register": {
+      "label": "Registrieren"
+    }
+  },
   "form": {
     "addCompany": "+ Firmendaten hinzufügen",
     "asterixHint": "* markierte Zustimmungen sind erforderlich",
@@ -636,6 +663,7 @@
     "lastNameLabel": "Nachname",
     "optional": "optional",
     "passwordLabel": "Passwort",
+    "passwordVisibility": "Sichtbarkeit des Passworts",
     "phoneLabel": "Telefon",
     "postalCodeLabel": "Postleitzahl",
     "privacyPolicyLabel": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
@@ -656,15 +684,6 @@
     "next": "Nächste",
     "prev": "Vorherige",
     "thumb": "Zu Bild {index}"
-  },
-  "googlePay": {
-    "paymentInProgress": "Zahlung in Bearbeitung..."
-  },
-  "graduatedPrices": {
-    "discount": "RABATT",
-    "price": "PREIS",
-    "quantity": "ANZAHL",
-    "title": "Mehr kaufen, weniger bezahlen"
   },
   "homepage": {
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
@@ -758,7 +777,10 @@
     "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
     "termsAndConditions": "AGB",
     "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis. *",
-    "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen."
+    "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
+    "cancellationForm": "Widerrufsformular",
+    "declarationOfAccessibility": "Barrierefreiheitserklärung",
+    "legalDisclosure": "Impressum"
   },
   "manufacturer": {
     "contactUrl": "Kontaktformular",
@@ -775,25 +797,6 @@
     "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass der Artikel allen notwendigen Vorschriften entspricht.",
     "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Artikels."
   },
-  "navigation": {
-    "breadcrumbsDropdown": "Mehr Breadcrumbs anzeigen",
-    "closeAddressForm": "Adressbearbeitung beenden",
-    "closeAuthentication": "Authentifizierungsmodal schließen",
-    "closeDialog": "Dialogfenster schließen",
-    "closeDrawer": "Drawer schließen",
-    "closeListSettings": "Listeneinstellungen schließen",
-    "closeMenu": "Menü schließen",
-    "closeNeutralAlert": "Benachrichtigung schließen",
-    "closePickSavedAddress": "Adressauswahl schließen",
-    "currentPage": "Die aktuelle Seite ist {page}",
-    "goToPage": "Zur Seite navigieren {page}",
-    "languageSelector": "Sprachauswahl öffnen",
-    "nextAriaLabel": "Zur nächsten Seite navigieren",
-    "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
-    "openSearchModal": "Suche öffnen",
-    "previousAriaLabel": "Zur vorherigen Seite navigieren",
-    "socialLabel": "Gehe zu {label}"
-  },
   "newsletter": {
     "email": "E-Mail",
     "firstName": "Vorname",
@@ -802,9 +805,13 @@
     "lastName": "Nachname",
     "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
     "subscribe": "Newsletter abonnieren",
-    "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren."
+    "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren.",
+    "confirmation": {
+      "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
+      "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
+    }
   },
-  "offerForm": {
+  "offers": {
     "acceptOffer": "Angebot annehmen",
     "cancel": "Abbrechen",
     "declineDialogSubline": "Helfen Sie uns, uns zu verbessern, indem Sie uns mitteilen, warum Sie das Angebot abgelehnt haben.",
@@ -817,7 +824,7 @@
   "order": {
     "errorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
     "errorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
-    "failedHeader": "Es tut uns wirklich leid.",
+    "failedHeader": "Es tut uns leid.",
     "failedMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
     "searchResults": "Ergebnisse für \"{phrase}\"",
     "successHeader": "Vielen Dank für Ihre Bestellung!",
@@ -835,7 +842,14 @@
     "subTotal": "Zwischensumme",
     "total": "Summe",
     "trackingOrder": "Bestellung nachverfolgen",
-    "vat": "MwSt."
+    "vat": "MwSt.",
+    "softLogin": {
+      "check": "Prüfen",
+      "fullName": "Nachname oder Firmenname",
+      "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+      "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
+      "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen."
+    }
   },
   "orderConfirmationPaymentStatus": {
     "fullyPaid": "Bezahlt",
@@ -867,7 +881,7 @@
       "plus": "zzgl."
     }
   },
-  "paypal": {
+  "paypalPayment": {
     "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum.",
     "expressNotAvailable": "PayPal ist für das Lieferland nicht verfügbar. Bitte passen Sie Ihre Adresse entsprechend an oder gehen Sie zur Kasse, um die Bestellung mit einem anderen Zahlungsanbieter abzuschließen.",
     "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
@@ -977,12 +991,18 @@
     "priceExclVAT": "zzgl. ges. MwSt",
     "priceInclVAT": "inkl. ges. MwSt",
     "reviewsCount": "{Anzahl} Bewertungen",
-    "showAllReviews": "Alle Bewertungen anzeigen"
-  },
-  "productAttributes": {
-    "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
-    "productNameMissing": "Artikelname fehlt",
-    "seeAvailableOptions": "Verfügbare Optionen anzeigen"
+    "showAllReviews": "Alle Bewertungen anzeigen",
+    "graduatedPrices": {
+      "discount": "RABATT",
+      "price": "PREIS",
+      "quantity": "ANZAHL",
+      "title": "Mehr kaufen, weniger bezahlen"
+    },
+    "attributes": {
+      "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
+      "productNameMissing": "Artikelname fehlt",
+      "seeAvailableOptions": "Verfügbare Optionen anzeigen"
+    }
   },
   "quickCheckout": {
     "cartContains": "Ihr Warenkorb enthält {count} Artikel",
@@ -991,11 +1011,6 @@
     "heading": "Zum Warenkorb hinzugefügt",
     "quantity": "Anzahl",
     "subTotal": "Zwischensumme"
-  },
-  "reloadPWA": {
-    "ariaLabel": "Eine neue Version der App ist verfügbar. Klicken Sie hier, um die Seite zu aktualisieren.",
-    "newVersionAvailable": "Eine neue Version der App ist verfügbar.",
-    "refresh": "Aktualisieren"
   },
   "returns": {
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
@@ -1075,22 +1090,15 @@
     "heading": "Lieferadresse",
     "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar.",
     "noShippingMessage": "Keine Versandinformationen verfügbar",
-    "noShippingMethodsNoAddress": "Tragen Sie Ihre Lieferadresse ein, um die passenden Versandarten zu sehen."
-  },
-  "shippingMethod": {
-    "description": "Nicht verfügbar, solange keine Lieferadresse angegeben wird.",
-    "free": "Kostenlos",
-    "heading": "Versandart",
-    "maxDeliveryDays": "Lieferung in {days} Tagen",
-    "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
-  },
-  "softLogin": {
-    "check": "Prüfen",
-    "fullName": "Nachname oder Firmenname",
-    "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
-    "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
-    "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen."
+    "noShippingMethodsNoAddress": "Tragen Sie Ihre Lieferadresse ein, um die passenden Versandarten zu sehen.",
+    "method": {
+      "description": "Nicht verfügbar, solange keine Lieferadresse angegeben wird.",
+      "free": "Kostenlos",
+      "heading": "Versandart",
+      "maxDeliveryDays": "Lieferung in {days} Tagen",
+      "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
+      "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+    }
   },
   "sortingAndPagination": {
     "recommendedSorting": {
@@ -1127,44 +1135,6 @@
       "secondSortingOptionLabel": "Zweiter Sortierungswert",
       "thirdSortingOptionLabel": "Dritter Sortierungswert",
       "title": "Empfohlene Sortierung"
-    }
-  },
-  "sortType": {
-    "default": {
-      "recommended_sorting": "Empfohlen"
-    },
-    "item": {
-      "feedbackDecimal_asc": "Kundenbewertung ⬆",
-      "feedbackDecimal_desc": "Kundenbewertung ⬇",
-      "manufacturer": {
-        "externalName_asc": "Hersteller A-Z",
-        "externalName_desc": "Hersteller Z-A"
-      },
-      "score": "Relevanz"
-    },
-    "sorting": {
-      "price": {
-        "avg_asc": "Preis ⬆",
-        "avg_desc": "Preis ⬇"
-      }
-    },
-    "texts": {
-      "name1_asc": "Name A-Z",
-      "name1_desc": "Name Z-A"
-    },
-    "variation": {
-      "availability": {
-        "averageDays_asc": "Verfügbarkeit ⬆",
-        "averageDays_desc": "Verfügbarkeit ⬇"
-      },
-      "createdAt_asc": "Älteste Artikel",
-      "createdAt_desc": "Neueste Artikel",
-      "number_asc": "Variantennummer ⬆",
-      "number_desc": "Variantennummer ⬇",
-      "position_asc": "Meistverkaufte Artikel ⬆",
-      "position_desc": "Meistverkaufte Artikel ⬇",
-      "updatedAt_asc": "Letzte Aktualisierung",
-      "updatedAt_desc": "Erste Aktualisierung"
     }
   },
   "storefrontError": {
@@ -1241,18 +1211,5 @@
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
-  },
-  "validation": {
-    "heading": "Um die Bestellung abzuschließen:",
-    "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
-    "missingBillingAddress": "Rechnungsadresse hinzufügen",
-    "missingEmail": "E-Mail hinzufügen",
-    "missingPaymentMethod": "Zahlungsart wählen",
-    "missingShippingAddress": "Lieferadresse hinzufügen",
-    "missingShippingDetails": "Versandart wählen"
-  },
-  "wishlistInteraction": {
-    "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
-    "delete": "Der Artikel wurde von der Wunschliste entfernt."
   }
 }

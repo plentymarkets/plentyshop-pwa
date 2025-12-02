@@ -23,5 +23,5 @@ await getRobots();
 setRobotForStaticPage('CancellationForm');
 
 const icon = 'page';
-setPageMeta(t('categories.legal.subcategories.cancellationForm'), icon);
+setPageMeta(t('legal.cancellationForm'), icon);
 </script>

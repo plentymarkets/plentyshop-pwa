@@ -1,6 +1,6 @@
 <template>
   <fieldset class="md:mx-4 my-6" data-testid="checkout-payment">
-    <legend class="text-neutral-900 text-lg font-bold mb-4">{{ t('checkoutPayment.heading') }}</legend>
+    <legend class="text-neutral-900 text-lg font-bold mb-4">{{ t('checkout.payment.heading') }}</legend>
     <div v-if="paymentMethods?.list && paymentMethods.list.length > 0" class="grid gap-4 grid-cols-2">
       <label v-for="paymentMethod in paymentMethods.list" :key="paymentMethod.id" class="relative">
         <input
@@ -24,7 +24,7 @@
         >
           <span v-if="paymentMethod.id === -1">
             <SfIconCreditCard class="mr-2" />
-            <span class="font-medium">{{ t('checkoutPayment.creditCard') }}</span>
+            <span class="font-medium">{{ t('checkout.payment.creditCard') }}</span>
           </span>
           <NuxtImg v-else :src="paymentMethod.icon" :alt="paymentMethod.name" class="!h-[40px]" loading="lazy" />
           <span class="text-xs mt-2 text-neutral-500">{{ paymentMethod.name }}</span>
@@ -38,7 +38,7 @@
     >
       <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
       <div class="py-2 mr-2">
-        <p>{{ t('checkoutPayment.noMethodsAvailable') }}</p>
+        <p>{{ t('checkout.payment.noMethodsAvailable') }}</p>
       </div>
     </div>
   </fieldset>

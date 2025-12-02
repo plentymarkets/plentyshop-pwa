@@ -41,7 +41,7 @@
       <div v-else>
         <p class="font-medium text-sm">
           {{ productBundleGetters.getBundleItemQuantity(item) }} x
-          <span class="h-auto">[{{ t('productAttributes.productNameMissing') }}]</span>
+          <span class="h-auto">[{{ t('product.attributes.productNameMissing') }}]</span>
         </p>
       </div>
     </div>

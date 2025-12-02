@@ -64,7 +64,13 @@
             </template>
             {{ t('common.actions.apply') }}
           </UiButton>
-          <UiButton type="reset" class="h-10" variant="secondary" :aria-label="t('common.actions.clear')" @click="resetPriceFilter">
+          <UiButton
+            type="reset"
+            class="h-10"
+            variant="secondary"
+            :aria-label="t('common.actions.clear')"
+            @click="resetPriceFilter"
+          >
             <SfIconClose />
           </UiButton>
         </div>

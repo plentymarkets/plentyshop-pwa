@@ -12,9 +12,9 @@
     </div>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
       <UiButton type="reset" variant="secondary" @click="$emit('on-cancel')">
-        {{ t('contactInfo.cancel') }}
+        {{ t('common.actions.cancel') }}
       </UiButton>
-      <UiButton type="submit" class="min-w-[120px]"> {{ t('contactInfo.save') }} </UiButton>
+      <UiButton type="submit" class="min-w-[120px]"> {{ t('common.actions.save') }} </UiButton>
     </div>
   </form>
 </template>

@@ -12,7 +12,7 @@ definePageMeta({
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('categories.legal.subcategories.termsAndConditions'), icon);
+setPageMeta(t('legal.termsAndConditions'), icon);
 
 await getLegalTexts({
   type: 'TermsConditions',

@@ -1,7 +1,4 @@
 {
-  "accessibility": {
-    "passwordVisibility": "Password visibility"
-  },
   "account": {
     "accountSettings": {
       "billingDetails": {
@@ -126,6 +123,10 @@
       "heading": "Wishlist",
       "section": {
         "myWishlist": "My wishlist"
+      },
+      "notifications": {
+        "add": "The item was added to your wish list.",
+        "delete": "The item was removed from your wish list."
       }
     }
   },
@@ -141,12 +142,10 @@
     "savedShippingAddresses": "Saved shipping adresses",
     "shippingAddress": "Shipping address",
     "shippingRequired": "Please select a shipping address.",
-    "unsavedWarning": "The address you entered has not yet been saved. Click Save address to proceed with the checkout."
-  },
-  "addressContainer": {
+    "unsavedWarning": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
     "sameAsShippingAddress": "Same as shipping address"
   },
-  "auth": {
+  "authentication": {
     "login": {
       "createAccount": "Don't have an account yet?",
       "createAccountLater": "Dont worry. You can create an account after your order",
@@ -198,14 +197,15 @@
       "passwordValidation": {
         "characters": "The password must contain between {min} and {max} characters.",
         "letters": "The password must contain at least one letter.",
-        "numbers": "The password must contain at least one digit."
+        "numbers": "The password must contain at least one digit.",
+        "invalidPassword": "At least 8 characters long and must contain at least one letter and one number."
       },
       "subheading": "Sign up now to enjoy awesome benefits",
       "submitLabel": "Sign up!",
       "success": "Your account has been created successfully"
     }
   },
-  "availabilitiesOptions": {
+  "availabilities": {
     "availabilityBackOrder": "Back order",
     "availabilityDiscontinued": "Discontinued",
     "availabilityInStock": "In stock",
@@ -236,45 +236,43 @@
     "numberInCart": "{count} item in cart",
     "numberInWishlist": "{count} items in wishlist"
   },
-  "categories": {
-    "about": {
-      "label": "About",
-      "subcategories": {
-        "aboutUs": "About us",
-        "affiliateProgram": "Affiliate program",
-        "jobs": "Jobs",
-        "pressCenter": "Press Center",
-        "suppliers": "Suppliers"
-      }
-    },
-    "contact": {
-      "label": "Contact"
-    },
-    "help": {
-      "label": "Help",
-      "subcategories": {
-        "contact": "Contact",
-        "feedback": "Feedback",
-        "helpCenter": "Help center",
-        "securityFraud": "Security & fraud"
-      }
-    },
-    "legal": {
-      "label": "Legal",
-      "subcategories": {
-        "cancellationForm": "Cancellation form",
-        "cancellationRights": "Cancellation rights",
-        "declarationOfAccessibility": "Declaration of accessibility",
-        "legalDisclosure": "Legal disclosure",
-        "privacyPolicy": "Privacy policy",
-        "termsAndConditions": "Terms and conditions"
-      }
-    },
-    "services": {
-      "label": "Services",
-      "subcategories": {
-        "contact": "Contact",
-        "register": "Register"
+  "category": {
+    "sorting": {
+      "default": {
+        "recommended_sorting": "Recommended"
+      },
+      "item": {
+        "feedbackDecimal_asc": "Item reviews ⬆",
+        "feedbackDecimal_desc": "Item reviews ⬇",
+        "manufacturer": {
+          "externalName_asc": "Manufacturer A-Z",
+          "externalName_desc": "Manufacturer Z-A"
+        },
+        "score": "Relevance"
+      },
+      "sorting": {
+        "price": {
+          "avg_asc": "Price ⬆",
+          "avg_desc": "Price ⬇"
+        }
+      },
+      "texts": {
+        "name1_asc": "Name A-Z",
+        "name1_desc": "Name Z-A"
+      },
+      "variation": {
+        "availability": {
+          "averageDays_asc": "Availability ⬆",
+          "averageDays_desc": "Availability ⬇"
+        },
+        "createdAt_asc": "Oldest items",
+        "createdAt_desc": "Newest items",
+        "number_asc": "Variation number ⬆",
+        "number_desc": "Variation number ⬇",
+        "position_asc": "Top seller ⬆",
+        "position_desc": "Top seller ⬇",
+        "updatedAt_asc": "Last update",
+        "updatedAt_desc": "First update"
       }
     }
   },
@@ -289,19 +287,22 @@
       "customerWishMessage": "Enter your message to us here."
     },
     "guestCheckout": "Guest checkout",
-    "loginFastCheckout": "Login to checkout faster"
-  },
-  "checkoutPayment": {
-    "birthdateError": "Enter a valid date of birth.",
-    "birthdateLabel": "Date of Birth",
-    "comingSoon": "Coming soon",
-    "countrySearch": "Search for a country",
-    "creditCard": "Credit Card",
-    "heading": "Payment method",
-    "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider.",
-    "payUponInvoice": "Pay upon invoice",
-    "phoneError": "Enter a valid phone number.",
-    "phoneLabel": "Phone number"
+    "loginFastCheckout": "Login to checkout faster",
+    "payment": {
+      "birthdateError": "Enter a valid date of birth.",
+      "birthdateLabel": "Date of Birth",
+      "comingSoon": "Coming soon",
+      "countrySearch": "Search for a country",
+      "creditCard": "Credit Card",
+      "heading": "Payment method",
+      "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider.",
+      "payUponInvoice": "Pay upon invoice",
+      "phoneError": "Enter a valid phone number.",
+      "phoneLabel": "Phone number"
+    },
+    "googlePay": {
+      "paymentInProgress": "Payment in progress..."
+    }
   },
   "common": {
     "actions": {
@@ -315,7 +316,10 @@
       "buy": "Buy",
       "cancelOrder": "Cancel order",
       "clear": "Clear",
+      "clearAll": "Clear all",
+      "cancel": "Cancel",
       "continueShopping": "Continue shopping",
+      "edit": "Edit",
       "goToCheckout": "Go to checkout",
       "goToHomepage": "Go to Homepage",
       "next": "Next",
@@ -328,6 +332,7 @@
       "removeItemFromBasket": "Remove item from basket",
       "removeProductFromWishlist": "Remove {label} from wishlist",
       "resetSearch": "Reset Search",
+      "save": "Save",
       "saveAddress": "Save address",
       "scrollTop": "Scroll to top",
       "search": "Search",
@@ -376,14 +381,35 @@
       "wishlist": "Wishlist"
     },
     "messages": {
-      "comingSoon": "Coming Soon",
-      "loading": "Loading...",
-      "loadingReviews": "Loading Reviews...",
-      "none": "None",
       "offline": "It seems you are currently offline, check your internet connection"
+    },
+    "reloadPWA": {
+      "ariaLabel": "A new version of the shop is available. Press to refresh the page.",
+      "newVersionAvailable": "A new version of the shop is available.",
+      "refresh": "Refresh"
+    },
+    "navigation": {
+      "breadcrumbsDropdown": "Show more breadcrumbs",
+      "closeAddressForm": "End address editing",
+      "closeAuthentication": "Close authentication",
+      "closeDialog": "Close Dialog",
+      "closeDrawer": "Close Drawer",
+      "closeListSettings": "Close list settings",
+      "closeMenu": "Close Menu",
+      "closeNeutralAlert": "Close neutral alert",
+      "closePickSavedAddress": "Close addresses picker",
+      "currentPage": "Current Page is {page}",
+      "goToPage": "Navigate to Page {page}",
+      "languageSelector": "Open language select",
+      "nextAriaLabel": "Navigate to next page",
+      "openConfigurationDrawer": "Open configuration drawer",
+      "openSearchModal": "Open item search",
+      "previousAriaLabel": "Navigate to previous page",
+      "socialLabel": "Go to {label} page"
     }
   },
   "contact": {
+    "label": "Contact",
     "clearAll": "Clear all",
     "contact": "Contact",
     "contactSend": "Send request",
@@ -399,20 +425,11 @@
     },
     "misConfigured": "Our contact form is temporarily disabled due to a missing configuration. Please check back later or reach out to us via alternative contact methods.",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}.",
-    "success": "Message sent successfully"
-  },
-  "contactInfo": {
-    "add": "Add contact information",
-    "cancel": "Cancel",
-    "clear": "Clear all",
-    "clearAll": "Clear all",
-    "description": "Add your email.",
-    "edit": "Edit",
-    "email": "Email",
-    "heading": "Contact Information",
-    "phone": "Phone number",
-    "phonePlaceholder": "eg. 1234 567890",
-    "save": "Save"
+    "success": "Message sent successfully",
+    "info": {
+      "heading": "Contact Information",
+      "email": "Email"
+    }
   },
   "CookieBar": {
     "about": {
@@ -423,6 +440,12 @@
     "Accept Selection": "Accept Selection",
     "Back": "Back",
     "Cookie Settings": "Cookie Settings",
+    "group": {
+      "externalMedia": "External Media",
+      "functional": "Functional",
+      "marketing": "Marketing (recommended)",
+      "necessary": "Necessary"
+    },
     "essentials": {
       "cookies": {
         "cloudflareTurnstile": {
@@ -471,14 +494,10 @@
     },
     "More information": "More information",
     "Privacy Settings": "Privacy Settings",
+    "legalDisclosure": "Legal disclosure",
+    "privacyPolicy": "Privacy policy",
     "Reject All": "Reject All",
     "Show less": "Show less"
-  },
-  "cookieGroup": {
-    "externalMedia": "External Media",
-    "functional": "Functional",
-    "marketing": "Marketing (recommended)",
-    "necessary": "Necessary"
   },
   "coupon": {
     "apply": "Apply",
@@ -517,10 +536,6 @@
     "publish": "Publish",
     "save": "Save",
     "stopEdit": "Cancel"
-  },
-  "emailConfirmation": {
-    "newsletterOptInMessage": "Your email address has been confirmed.",
-    "newsletterOptInMessageError": "An error occurred while confirming your email."
   },
   "error": {
     "accessKeyMailFailed": "Email could not be delivered, please contact the webshop owner.",
@@ -581,9 +596,7 @@
     "pageNotFound": "Page not found",
     "pageNotFoundSubtitle": "We are sorry! Use search or categories to find what you are looking for.",
     "pageNotFoundTitle": "We couldn't find that page.",
-    "somethingWentWrongImageAlt": "Image that describes that something went wrong"
-  },
-  "errorMessages": {
+    "somethingWentWrongImageAlt": "Image that describes that something went wrong",
     "checkout": {
       "missingAddress": "Please provide your address to continue with the checkout.",
       "missingBillingAddress": "Please provide a billing address to continue with the checkout."
@@ -625,6 +638,20 @@
     "turnstileRequired": "Please check the box to verify that you are human.",
     "wholeNumber": "Enter a whole number."
   },
+  "footer": {
+    "legal": {
+      "label": "Legal"
+    },
+    "services": {
+      "label": "Services"
+    },
+    "contact": {
+      "label": "Contact"
+    },
+    "register": {
+      "label": "Register"
+    }
+  },
   "form": {
     "addCompany": "+ Add company data",
     "asterixHint": "* marked consents are required",
@@ -636,6 +663,7 @@
     "lastNameLabel": "Last Name",
     "optional": "optional",
     "passwordLabel": "Password",
+    "passwordVisibility": "Password visibility",
     "phoneLabel": "Phone",
     "postalCodeLabel": "Zip Code",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
@@ -656,15 +684,6 @@
     "next": "Next",
     "prev": "Previous",
     "thumb": "Go to slide {index}"
-  },
-  "googlePay": {
-    "paymentInProgress": "Payment in progress..."
-  },
-  "graduatedPrices": {
-    "discount": "DISCOUNT",
-    "price": "PRICE",
-    "quantity": "QUANTITY",
-    "title": "Buy more, pay less"
   },
   "homepage": {
     "background": "New Wireless Pro headphones with sleek design and modern features",
@@ -758,7 +777,10 @@
     "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
     "termsAndConditions": "Terms and Conditions",
     "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply. *",
-    "termsRequired": "You have to agree with the terms and conditions."
+    "termsRequired": "You have to agree with the terms and conditions.",
+    "cancellationForm": "Cancellation form",
+    "declarationOfAccessibility": "Declaration of accessibility",
+    "legalDisclosure": "Legal disclosure"
   },
   "manufacturer": {
     "contactUrl": "Contact form",
@@ -775,25 +797,6 @@
     "responsibleSubtitle": "An economic operator based within the EU who ensures that the item complies with all necessary regulations.",
     "subtitle": "Manufacturer information includes the address and additional details about the producer of the item."
   },
-  "navigation": {
-    "breadcrumbsDropdown": "Show more breadcrumbs",
-    "closeAddressForm": "End address editing",
-    "closeAuthentication": "Close authentication",
-    "closeDialog": "Close Dialog",
-    "closeDrawer": "Close Drawer",
-    "closeListSettings": "Close list settings",
-    "closeMenu": "Close Menu",
-    "closeNeutralAlert": "Close neutral alert",
-    "closePickSavedAddress": "Close addresses picker",
-    "currentPage": "Current Page is {page}",
-    "goToPage": "Navigate to Page {page}",
-    "languageSelector": "Open language select",
-    "nextAriaLabel": "Navigate to next page",
-    "openConfigurationDrawer": "Open configuration drawer",
-    "openSearchModal": "Open item search",
-    "previousAriaLabel": "Navigate to previous page",
-    "socialLabel": "Go to {label} page"
-  },
   "newsletter": {
     "email": "Email",
     "firstName": "First Name",
@@ -802,9 +805,13 @@
     "lastName": "Last Name",
     "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
     "subscribe": "Subscribe To Newsletter",
-    "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
+    "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription.",
+    "confirmation": {
+      "newsletterOptInMessage": "Your email address has been confirmed.",
+      "newsletterOptInMessageError": "An error occurred while confirming your email."
+    }
   },
-  "offerForm": {
+  "offers": {
     "acceptOffer": "Accept offer",
     "cancel": "Cancel",
     "declineDialogSubline": "Help us improve by sharing why you declined the offer.",
@@ -835,7 +842,14 @@
     "subTotal": "Subtotal",
     "total": "Total",
     "trackingOrder": "Track your order",
-    "vat": "VAT"
+    "vat": "VAT",
+    "softLogin": {
+      "check": "Check",
+      "fullName": "Last name or company name",
+      "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
+      "titleLogin": "Log in to your account to access your order",
+      "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details."
+    }
   },
   "orderConfirmationPaymentStatus": {
     "fullyPaid": "Paid",
@@ -867,7 +881,7 @@
       "plus": "plus"
     }
   },
-  "paypal": {
+  "paypalPayment": {
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date.",
     "expressNotAvailable": "PayPal is not available for this delivery country. Please adjust your address accordingly or proceed to checkout to complete your order with another payment provider.",
     "invalidOrder": "The order cannot be processed. Please try again.",
@@ -977,12 +991,18 @@
     "priceExclVAT": "Excl. VAT",
     "priceInclVAT": "Incl. VAT",
     "reviewsCount": "{count} reviews",
-    "showAllReviews": "Show all reviews"
-  },
-  "productAttributes": {
-    "notValidVariation": "Please select a valid variation.",
-    "productNameMissing": "Item name missing",
-    "seeAvailableOptions": "See available options"
+    "showAllReviews": "Show all reviews",
+    "graduatedPrices": {
+      "discount": "DISCOUNT",
+      "price": "PRICE",
+      "quantity": "QUANTITY",
+      "title": "Buy more, pay less"
+    },
+    "attributes": {
+      "notValidVariation": "Please select a valid variation.",
+      "productNameMissing": "Item name missing",
+      "seeAvailableOptions": "See available options"
+    }
   },
   "quickCheckout": {
     "cartContains": "Your cart contains {count} item | Your cart contains {count} items",
@@ -991,11 +1011,6 @@
     "heading": "Added to shopping cart",
     "quantity": "Quantity",
     "subTotal": "Items subtotal"
-  },
-  "reloadPWA": {
-    "ariaLabel": "A new version of the shop is available. Press to refresh the page.",
-    "newVersionAvailable": "A new version of the shop is available.",
-    "refresh": "Refresh"
   },
   "returns": {
     "areYouSure": "Are you sure you what to return these items?",
@@ -1075,22 +1090,15 @@
     "heading": "Shipping address",
     "methodChanged": "The selected shipping method is not available anymore.",
     "noShippingMessage": "No shipping information available",
-    "noShippingMethodsNoAddress": "Enter your shipping address to see the available shipping methods."
-  },
-  "shippingMethod": {
-    "description": "Not available until a shipping address is provided.",
-    "free": "Free",
-    "heading": "Shipping method",
-    "maxDeliveryDays": "Delivery within {days} days",
-    "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
-    "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
-  },
-  "softLogin": {
-    "check": "Check",
-    "fullName": "Last name or company name",
-    "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
-    "titleLogin": "Log in to your account to access your order",
-    "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details."
+    "noShippingMethodsNoAddress": "Enter your shipping address to see the available shipping methods.",
+    "method": {
+      "description": "Not available until a shipping address is provided.",
+      "free": "Free",
+      "heading": "Shipping method",
+      "maxDeliveryDays": "Delivery within {days} days",
+      "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
+      "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
+    }
   },
   "sortingAndPagination": {
     "recommendedSorting": {
@@ -1127,44 +1135,6 @@
       "secondSortingOptionLabel": "Second sorting option",
       "thirdSortingOptionLabel": "Third sorting option",
       "title": "Recommended sorting"
-    }
-  },
-  "sortType": {
-    "default": {
-      "recommended_sorting": "Recommended"
-    },
-    "item": {
-      "feedbackDecimal_asc": "Item reviews ⬆",
-      "feedbackDecimal_desc": "Item reviews ⬇",
-      "manufacturer": {
-        "externalName_asc": "Manufacturer A-Z",
-        "externalName_desc": "Manufacturer Z-A"
-      },
-      "score": "Relevance"
-    },
-    "sorting": {
-      "price": {
-        "avg_asc": "Price ⬆",
-        "avg_desc": "Price ⬇"
-      }
-    },
-    "texts": {
-      "name1_asc": "Name A-Z",
-      "name1_desc": "Name Z-A"
-    },
-    "variation": {
-      "availability": {
-        "averageDays_asc": "Availability ⬆",
-        "averageDays_desc": "Availability ⬇"
-      },
-      "createdAt_asc": "Oldest items",
-      "createdAt_desc": "Newest items",
-      "number_asc": "Variation number ⬆",
-      "number_desc": "Variation number ⬇",
-      "position_asc": "Top seller ⬆",
-      "position_desc": "Top seller ⬇",
-      "updatedAt_asc": "Last update",
-      "updatedAt_desc": "First update"
     }
   },
   "storefrontError": {
@@ -1241,18 +1211,5 @@
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
     "unknownError": "An unknown error has occurred."
-  },
-  "validation": {
-    "heading": "To complete order:",
-    "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
-    "missingBillingAddress": "add billing address",
-    "missingEmail": "add email",
-    "missingPaymentMethod": "choose payment method",
-    "missingShippingAddress": "add shipping address",
-    "missingShippingDetails": "choose shipping method"
-  },
-  "wishlistInteraction": {
-    "add": "The item was added to your wish list.",
-    "delete": "The item was removed from your wish list."
   }
 }

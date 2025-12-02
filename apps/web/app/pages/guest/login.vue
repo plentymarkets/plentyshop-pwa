@@ -1,5 +1,10 @@
 <template>
-  <NuxtLayout name="checkout" :back-label-desktop="t('common.actions.back')" :back-label-mobile="t('common.actions.back')" :heading="t('common.labels.checkout')">
+  <NuxtLayout
+    name="checkout"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
+    :heading="t('common.labels.checkout')"
+  >
     <div class="md:w-full md:flex md:justify-center">
       <div class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-2/3 lg:w-1/2 3xl:w-2/5">
         <h2 class="font-bold text-lg">{{ t('checkout.guestCheckout') }}</h2>
@@ -40,18 +45,18 @@
 
           <div class="text-end mt-4">
             <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
-              {{ t('auth.login.forgotPasswordLabel') }}
+              {{ t('authentication.login.forgotPasswordLabel') }}
             </SfLink>
           </div>
 
           <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">
             <SfLoaderCircular v-if="loading || loginSubmit" class="flex justify-center items-center" size="base" />
-            <template v-else>{{ t('auth.login.loginAndContinue') }}</template>
+            <template v-else>{{ t('authentication.login.loginAndContinue') }}</template>
           </UiButton>
 
           <div class="text-center mt-6">
-            <h3 class="font-bold text-lg mb-6">{{ t('auth.login.createAccount') }}</h3>
-            <p>{{ t('auth.login.createAccountLater') }}!</p>
+            <h3 class="font-bold text-lg mb-6">{{ t('authentication.login.createAccount') }}</h3>
+            <p>{{ t('authentication.login.createAccountLater') }}!</p>
           </div>
         </form>
       </div>
@@ -63,7 +68,7 @@
       >
         <header>
           <UiButton
-            :aria-label="t('navigation.closeDialog')"
+            :aria-label="t('common.navigation.closeDialog')"
             square
             variant="tertiary"
             class="absolute right-2 top-2"
@@ -114,7 +119,7 @@ const loginUser = async () => {
       return;
     }
 
-    send({ message: t('auth.login.success'), type: 'positive' });
+    send({ message: t('authentication.login.success'), type: 'positive' });
     navigateTo(localePath(paths.checkout));
   });
 };

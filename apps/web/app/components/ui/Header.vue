@@ -7,7 +7,7 @@
           <UiButton
             v-if="!isLanguageSelectOpen"
             class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-            :aria-label="t('navigation.languageSelector')"
+            :aria-label="t('common.navigation.languageSelector')"
             variant="tertiary"
             :style="{ color: iconColor }"
             square
@@ -22,7 +22,7 @@
           <UiButton
             v-else
             class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-            :aria-label="t('navigation.languageSelector')"
+            :aria-label="t('common.navigation.languageSelector')"
             :style="{ color: isActive ? iconColor : '' }"
             variant="tertiary"
             square
@@ -117,7 +117,7 @@
           :style="{ color: iconColor }"
           class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
-          :aria-label="t('auth.login.openLoginForm')"
+          :aria-label="t('authentication.login.openLoginForm')"
           square
           @click="navigateToLogin"
         >
@@ -133,7 +133,7 @@
         square
         data-testid="open-languageselect-button"
         :style="{ color: iconColor }"
-        :aria-label="t('navigation.languageSelector')"
+        :aria-label="t('common.navigation.languageSelector')"
         :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
         @click="toggleLanguageSelect()"
       >
@@ -144,7 +144,7 @@
         class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
         :style="{ color: iconColor }"
-        :aria-label="t('navigation.openSearchModal')"
+        :aria-label="t('common.navigation.openSearchModal')"
         @click="searchModalOpen"
       >
         <SfIconSearch />
@@ -160,7 +160,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('navigation.closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -188,7 +188,7 @@
     >
       <header class="mb-4">
         <UiButton
-          :aria-label="t('navigation.closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           square
           variant="tertiary"
           class="absolute right-4 top-2"

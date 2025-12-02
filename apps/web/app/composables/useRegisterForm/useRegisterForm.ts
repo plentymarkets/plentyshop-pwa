@@ -43,20 +43,20 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     object({
       email: string()
         .trim()
-        .required(t('errorMessages.email.required'))
-        .test('is-valid-email', t('errorMessages.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
+        .required(t('error.email.required'))
+        .test('is-valid-email', t('error.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
         .default(state.value.defaultFormValues.email),
       password: string()
-        .required(t('errorMessages.password.required'))
+        .required(t('error.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .min(passwordMinLength, t('errorMessages.password.minLength', { min: passwordMinLength }))
-        .max(passwordMaxLength, t('errorMessages.password.maxLength', { max: passwordMaxLength }))
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('errorMessages.password.valid'))
+        .min(passwordMinLength, t('error.password.minLength', { min: passwordMinLength }))
+        .max(passwordMaxLength, t('error.password.maxLength', { max: passwordMaxLength }))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('error.password.valid'))
         .default(state.value.defaultFormValues.password),
       repeatPassword: string()
-        .required(t('errorMessages.password.required'))
+        .required(t('error.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .test('passwords-match', t('errorMessages.password.match'), function (value) {
+        .test('passwords-match', t('error.password.match'), function (value) {
           const passwordValue = this.parent.password?.replace(/\s/g, '');
           return value === passwordValue;
         })
@@ -65,16 +65,14 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .trim()
         .when([], {
           is: () => !state.value.hasCompany,
-          then: (schema) =>
-            schema.required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
+          then: (schema) => schema.required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.firstName),
         }),
       lastName: string()
         .trim()
         .when([], {
           is: () => !state.value.hasCompany,
-          then: (schema) =>
-            schema.required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
+          then: (schema) => schema.required(t('error.requiredField')).default(state.value.defaultFormValues.lastName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.lastName),
         }),
       companyName: string()
@@ -82,7 +80,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .when([], {
           is: () => state.value.hasCompany,
           then: (schema) =>
-            schema.required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
+            schema.required(t('error.requiredField')).default(state.value.defaultFormValues.companyName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.companyName),
         }),
       vatNumber: string()
@@ -92,18 +90,12 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
           then: (schema) => schema.default(state.value.defaultFormValues.vatNumber),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.vatNumber),
         }),
-      streetName: string()
-        .trim()
-        .required(t('errorMessages.requiredField'))
-        .default(state.value.defaultFormValues.streetName),
-      apartment: string()
-        .trim()
-        .required(t('errorMessages.requiredField'))
-        .default(state.value.defaultFormValues.apartment),
-      city: string().trim().required(t('errorMessages.requiredField')).default(state.value.defaultFormValues.city),
+      streetName: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.streetName),
+      apartment: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.apartment),
+      city: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.city),
       zipCode: string()
         .trim()
-        .required(t('errorMessages.requiredField'))
+        .required(t('error.requiredField'))
         .when('country', ([countryId], schema) => {
           const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), AddressType.Shipping);
           return zipCodeRegex
@@ -113,15 +105,12 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .default(state.value.defaultFormValues.zipCode),
       country: string()
         .trim()
-        .required(t('errorMessages.requiredField'))
+        .required(t('error.requiredField'))
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
       privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
-          ? string()
-              .trim()
-              .required(t('errorMessages.turnstileRequired'))
-              .default(state.value.defaultFormValues.turnstile)
+          ? string().trim().required(t('error.turnstileRequired')).default(state.value.defaultFormValues.turnstile)
           : string().trim().optional().default(state.value.defaultFormValues.turnstile),
     }),
   );
@@ -199,13 +188,13 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     const response = await register(getRegisterData());
 
     if (response?.data.code === 1) {
-      send({ message: t('auth.signup.emailAlreadyExists'), type: 'negative' });
+      send({ message: t('authentication.signup.emailAlreadyExists'), type: 'negative' });
       clearTurnstile();
       return;
     }
 
     if (response?.data?.id) {
-      send({ message: t('auth.signup.success'), type: 'positive' });
+      send({ message: t('authentication.signup.success'), type: 'positive' });
     }
 
     return response;

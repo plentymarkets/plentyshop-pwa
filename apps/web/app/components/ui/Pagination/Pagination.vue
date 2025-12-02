@@ -7,7 +7,7 @@
   >
     <UiButton
       size="lg"
-      :aria-label="t('navigation.previousAriaLabel')"
+      :aria-label="t('common.navigation.previousAriaLabel')"
       :disabled="pagination.selectedPage <= 1 || disabled"
       variant="tertiary"
       class="gap-3"
@@ -148,7 +148,7 @@
     </ul>
     <UiButton
       size="lg"
-      :aria-label="t('navigation.nextAriaLabel')"
+      :aria-label="t('common.navigation.nextAriaLabel')"
       :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
       variant="tertiary"
       class="gap-3"
@@ -190,7 +190,7 @@ const pagination = computed(() =>
 );
 
 const getAriaLabel = (isCurrent: boolean, page: number) => {
-  return t(isCurrent ? 'navigation.currentPage' : 'navigation.goToPage', { page });
+  return t(isCurrent ? 'common.navigation.currentPage' : 'common.navigation.goToPage', { page });
 };
 
 const setPage = (page: number) => {

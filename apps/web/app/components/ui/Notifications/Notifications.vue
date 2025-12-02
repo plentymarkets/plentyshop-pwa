@@ -36,7 +36,7 @@
           type="button"
           class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
           :class="[{ 'ml-auto': !notification?.action?.text }, getButtonClasses(notification)]"
-          :aria-label="t('navigation.closeNeutralAlert')"
+          :aria-label="t('common.navigation.closeNeutralAlert')"
           @click="notification.dismiss"
         >
           <SfIconClose class="hidden md:block" />

@@ -8,7 +8,7 @@
   >
     <header class="mb-4">
       <UiButton
-        :aria-label="t('navigation.closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"

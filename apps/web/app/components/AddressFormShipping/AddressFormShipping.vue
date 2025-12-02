@@ -185,7 +185,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Shipping}`"
-          :aria-label="t('navigation.closeAddressForm')"
+          :aria-label="t('common.navigation.closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />

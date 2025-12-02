@@ -17,7 +17,7 @@ export const getMappedOptions = (options: string[]): SortingOption[] => {
   const { $i18n } = useNuxtApp();
 
   return options.map((key: string) => ({
-    label: $i18n.t(`sortType.${key}`, {}, { locale }) as string,
+    label: $i18n.t(`category.sorting.${key}`, {}, { locale }) as string,
     value: key,
   }));
 };
