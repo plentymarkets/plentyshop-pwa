@@ -17,10 +17,7 @@ import type { UseFullWidthToggleReturn } from './types';
 type Layout = { fullWidth?: boolean };
 type ConfigurationWithLayout = { layout?: Layout };
 
-export const useFullWidthToggle = (
-  layout: Ref<Layout> | Ref<Layout>,
-  defaultValue = false,
-): UseFullWidthToggleReturn => {
+export const useFullWidthToggle = (layout: Ref<Layout>, defaultValue = false): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
     get: () => layout.value.fullWidth ?? defaultValue,
     set: (value: boolean) => {

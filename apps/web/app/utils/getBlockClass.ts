@@ -46,10 +46,9 @@ const isExcluded = (blockName: string, excludedSet: Set<string>): boolean => {
 /**
  * Checks if a block has fullWidth enabled in any of its layout locations
  *
- * Supports three possible locations:
+ * Supports two possible locations:
  * - block.content.layout.fullWidth (Banner, etc.)
- * - block.layout.fullWidth (standard blocks)
- * - block.configuration.layout.fullWidth (MultiGrid, etc.)
+ * - block.layout.fullWidth (TextCard, Image, etc.)
  *
  * @param block - The block to check
  * @returns True if fullWidth is enabled
@@ -66,8 +65,7 @@ const hasFullWidth = (block: Block): boolean => {
  *
  * @example
  * ```ts
- * const blockClasses = getBlockClass(block);
- * <div :class="blockClasses.value">...</div>
+ * <PageBlock :class="getBlockClass(block).value">
  * ```
  */
 export const getBlockClass = (block: Block): ComputedRef<Record<string, boolean>> => {

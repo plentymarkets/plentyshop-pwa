@@ -543,7 +543,6 @@ const { isFullWidth } = useFullWidthToggle(computed(() => categoryDataBlock.valu
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",
@@ -605,7 +604,6 @@ const { isFullWidth } = useFullWidthToggle(computed(() => categoryDataBlock.valu
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",
