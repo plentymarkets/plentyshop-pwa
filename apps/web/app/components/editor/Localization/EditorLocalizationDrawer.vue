@@ -154,7 +154,7 @@ const leftVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => leftScrollerRef.value,
   estimateSize: () => 48,
-  overscan: 30,
+  overscan: 20,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -162,7 +162,7 @@ const rightVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => rightScrollerRef.value,
   estimateSize: () => 48,
-  overscan: 30,
+  overscan: 20,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -183,38 +183,25 @@ const rightVirtualItems = computed(() => {
   }));
 });
 
-const isFirefox = typeof navigator !== 'undefined' && /firefox/i.test(navigator.userAgent);
-
-let isScrolling = false;
-let rafId: number | null = null;
-let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-const scheduleSync = (callback: () => void) => {
-  if (isFirefox) {
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(callback, 10);
-  } else {
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(callback);
-  }
-};
+let scrollPending = false;
+let headerScrollPending = false;
 
 const syncScrollLeft = () => {
-  if (!isScrolling && leftScrollerRef.value && rightScrollerRef.value) {
-    scheduleSync(() => {
-      isScrolling = true;
+  if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
+    scrollPending = true;
+    requestAnimationFrame(() => {
       if (leftScrollerRef.value && rightScrollerRef.value) {
         rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
       }
-      isScrolling = false;
+      scrollPending = false;
     });
   }
 };
 
 const syncScrollRight = () => {
-  if (!isScrolling && leftScrollerRef.value && rightScrollerRef.value) {
-    scheduleSync(() => {
-      isScrolling = true;
+  if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
+    scrollPending = true;
+    requestAnimationFrame(() => {
       if (leftScrollerRef.value && rightScrollerRef.value) {
         leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
 
@@ -222,17 +209,19 @@ const syncScrollRight = () => {
           headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
         }
       }
-      isScrolling = false;
+      scrollPending = false;
     });
   }
 };
 
 const headerScrollHandler = () => {
-  if (headerScroll.value && rightScrollerRef.value && !isScrolling) {
-    scheduleSync(() => {
+  if (!headerScrollPending && headerScroll.value && rightScrollerRef.value) {
+    headerScrollPending = true;
+    requestAnimationFrame(() => {
       if (headerScroll.value && rightScrollerRef.value) {
         rightScrollerRef.value.scrollLeft = headerScroll.value.scrollLeft;
       }
+      headerScrollPending = false;
     });
   }
 };
@@ -243,8 +232,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   headerScroll.value?.removeEventListener('scroll', headerScrollHandler);
-  if (timeoutId) clearTimeout(timeoutId);
-  if (rafId) cancelAnimationFrame(rafId);
 });
 </script>
 
