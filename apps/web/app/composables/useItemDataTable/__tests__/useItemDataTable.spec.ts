@@ -1,41 +1,41 @@
-import { describe, it, expect, vi } from 'vitest'
-import { ref } from 'vue'
-import type { Product } from '@plentymarkets/shop-api'
-import { useItemDataTable } from '~/composables/useItemDataTable/useItemDataTable'
+import { describe, it, expect, vi } from 'vitest';
+import { ref } from 'vue';
+import type { Product } from '@plentymarkets/shop-api';
+import { useItemDataTable } from '~/composables/useItemDataTable/useItemDataTable';
 
 vi.mock('vue-i18n', () => ({
   useI18n: () => ({
     t: (key: string, params?: object) => {
-      const p = params as { age?: number } | undefined
+      const p = params as { age?: number } | undefined;
       switch (key) {
         case 'single-item-age-restriction':
-          return `${p?.age} and older`
+          return `${p?.age} and older`;
         case 'single-item-age-restriction-none':
-          return 'No age restriction'
+          return 'No age restriction';
         case 'single-item-age-restriction-not-flagged':
-          return 'Not rated'
+          return 'Not rated';
         case 'single-item-age-restriction-not-required':
-          return 'Not required'
+          return 'Not required';
         case 'single-item-age-restriction-unknown':
-          return 'Unknown'
+          return 'Unknown';
         default:
-          return key
+          return key;
       }
     },
   }),
-}))
+}));
 
 describe('useItemDataTable', () => {
   it('returns empty values when product is null', () => {
-    const productRef = ref<Product | null>(null)
-    const { fieldValues } = useItemDataTable(productRef)
+    const productRef = ref<Product | null>(null);
+    const { fieldValues } = useItemDataTable(productRef);
 
-    expect(fieldValues.value.itemId).toBe('')
-    expect(fieldValues.value.manufacturer).toBe('')
-    expect(fieldValues.value.grossWeight).toBe('')
-    expect(fieldValues.value.dimensions).toBe('')
-    expect(fieldValues.value.ageRating).toBe('')
-  })
+    expect(fieldValues.value.itemId).toBe('');
+    expect(fieldValues.value.manufacturer).toBe('');
+    expect(fieldValues.value.grossWeight).toBe('');
+    expect(fieldValues.value.dimensions).toBe('');
+    expect(fieldValues.value.ageRating).toBe('');
+  });
 
   it('maps product fields correctly', () => {
     const productRef = ref<Product | null>({
@@ -64,17 +64,17 @@ describe('useItemDataTable', () => {
         names: { name: 'Piece' },
       },
       variationProperties: [],
-    } as unknown as Product)
+    } as unknown as Product);
 
-    const { fieldValues } = useItemDataTable(productRef)
+    const { fieldValues } = useItemDataTable(productRef);
 
-    expect(fieldValues.value.itemId).toBe('109')
-    expect(fieldValues.value.manufacturer).toBe('Teston Testerton')
-    expect(fieldValues.value.manufacturingCountry).toBe('Germany')
-    expect(fieldValues.value.content).toBe('1 Piece')
-    expect(fieldValues.value.grossWeight).toBe('400 g')
-    expect(fieldValues.value.netWeight).toBe('300 g')
-    expect(fieldValues.value.dimensions).toBe('550 x 650 x 330 mm')
-    expect(fieldValues.value.ageRating).toBe('16 and older')
-  })
-})
+    expect(fieldValues.value.itemId).toBe('109');
+    expect(fieldValues.value.manufacturer).toBe('Teston Testerton');
+    expect(fieldValues.value.manufacturingCountry).toBe('Germany');
+    expect(fieldValues.value.content).toBe('1 Piece');
+    expect(fieldValues.value.grossWeight).toBe('400 g');
+    expect(fieldValues.value.netWeight).toBe('300 g');
+    expect(fieldValues.value.dimensions).toBe('550 x 650 x 330 mm');
+    expect(fieldValues.value.ageRating).toBe('16 and older');
+  });
+});
