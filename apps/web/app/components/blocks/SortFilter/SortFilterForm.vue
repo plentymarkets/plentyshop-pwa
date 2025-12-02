@@ -172,7 +172,8 @@ const fieldLabels: Record<string, string> = {
 
     "show-filters-immediately-label": "Show all customized filters immediately",
     "number-of-filters-label": "Number of customized filters to show initially",
-    "items-per-page-label": "Items per page"
+    "items-per-page-label": "Items per page",
+    "layout-label": "Layout"
   },
   "de": {
     "display-and-order-label": "Display and order",
@@ -189,7 +190,8 @@ const fieldLabels: Record<string, string> = {
     "enable-filters-label": "Enable filters",
     "show-filters-immediately-label": "Show all customized filters immediately",
     "number-of-filters-label": "Number of customized filters to show initially",
-    "items-per-page-label": "Items per page"
+    "items-per-page-label": "Items per page",
+    "layout-label": "Layout"
   }
 }
 </i18n>

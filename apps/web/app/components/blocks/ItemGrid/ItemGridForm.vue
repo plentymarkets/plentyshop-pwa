@@ -264,7 +264,14 @@ const uiItemGridBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ItemGridContent,
 );
 
-const { isFullWidth } = useFullWidthToggle(computed(() => uiItemGridBlock.value.layout ?? { fullWidth: false }));
+const { isFullWidth } = useFullWidthToggle(
+  computed({
+    get: () => uiItemGridBlock.value.layout ?? {},
+    set: () => {
+      if (!uiItemGridBlock.value.layout) uiItemGridBlock.value.layout = {};
+    },
+  }),
+);
 
 const desktopOptions = [2, 3, 4, 5, 6, 7];
 const tabletOptions = [2, 3, 4, 5, 6];

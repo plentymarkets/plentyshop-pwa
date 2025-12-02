@@ -15,7 +15,8 @@ const PADDING_EXCLUDED_BLOCKS = new Set([
   'Footer',
   'Carousel',
   'CategoryData',
-  'SortFilter',
+  'CategorySorting',
+  'BlockSort',
   'ProductRecommendedProducts',
   'ProductGrid',
   'Image',
@@ -25,7 +26,10 @@ const PADDING_EXCLUDED_BLOCKS = new Set([
   'ItemText',
   'TechnicalData',
   'CustomerReview',
-  'ProductLegalInformation'
+  'ProductLegalInformation',
+  'PerPageFilter',
+  'Sort',
+  'SortFilter',
 ]);
 
 /**
