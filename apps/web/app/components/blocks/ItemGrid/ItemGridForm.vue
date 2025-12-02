@@ -263,7 +263,8 @@ const props = defineProps<ItemGridFormProps>();
 const uiItemGridBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ItemGridContent,
 );
-const { isFullWidth } = useFullWidthToggle(uiItemGridBlock);
+
+const { isFullWidth } = useFullWidthToggle(computed(() => uiItemGridBlock.value.layout ?? { fullWidth: false }));
 
 const desktopOptions = [2, 3, 4, 5, 6, 7];
 const tabletOptions = [2, 3, 4, 5, 6];

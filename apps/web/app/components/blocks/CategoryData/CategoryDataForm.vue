@@ -522,7 +522,7 @@ const {
   clampBrightness,
 } = useCategoryData();
 
-const { isFullWidth } = useFullWidthToggle(categoryDataBlock);
+const { isFullWidth } = useFullWidthToggle(computed(() => categoryDataBlock.value.layout ?? { fullWidth: false }));
 </script>
 
 <i18n lang="json">

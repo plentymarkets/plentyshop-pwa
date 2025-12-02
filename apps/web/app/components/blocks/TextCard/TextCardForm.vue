@@ -337,12 +337,13 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingBottom: '0',
       paddingLeft: '0',
       paddingRight: '0',
+      fullWidth: false,
     };
   }
 
   return content as TextCardContent;
 });
-const { isFullWidth } = useFullWidthToggle(textCardBlock);
+const { isFullWidth } = useFullWidthToggle(computed(() => textCardBlock.value.layout));
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);

@@ -36,7 +36,14 @@ const CONTAINER_EXCLUDED_BLOCKS = new Set(['Footer']);
 /**
  * Block names that should not have padding applied
  */
-const PADDING_EXCLUDED_BLOCKS = new Set(['NewsletterSubscribe', 'MultiGrid', 'TextCard', 'Footer', 'Carousel']);
+const PADDING_EXCLUDED_BLOCKS = new Set([
+  'NewsletterSubscribe',
+  'MultiGrid',
+  'TextCard',
+  'Footer',
+  'Carousel',
+  'CategoryData',
+]);
 
 /**
  * Checks if a block name is in the excluded set

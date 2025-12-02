@@ -12,16 +12,16 @@ import type { UseFullWidthToggleReturn } from './types';
  * const isFullWidth = useFullWidthToggle(newsletterBlock);
  * ```
  */
-export const useFullWidthToggle = <T extends { layout?: { fullWidth?: boolean } }>(
-  block: ComputedRef<T> | Ref<T>,
+type Layout = { fullWidth?: boolean };
+
+export const useFullWidthToggle = (
+  layout: Ref<Layout> | ComputedRef<Layout>,
+  defaultValue = false,
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
-    get: () => block.value.layout?.fullWidth ?? false,
+    get: () => layout.value.fullWidth ?? defaultValue,
     set: (value: boolean) => {
-      if (!block.value.layout) {
-        block.value.layout = {};
-      }
-      block.value.layout.fullWidth = value;
+      layout.value.fullWidth = value;
     },
   });
 

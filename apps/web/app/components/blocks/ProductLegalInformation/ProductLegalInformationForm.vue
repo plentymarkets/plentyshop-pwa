@@ -159,6 +159,7 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      fullWidth: false,
     };
   } else {
     if (content.layout.paddingTop === undefined) content.layout.paddingTop = 0;
@@ -169,7 +170,7 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   return content as ProductLegalInformationContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(productLegalInformation);
+const { isFullWidth } = useFullWidthToggle(computed(() => productLegalInformation.value.layout));
 </script>
 
 <i18n lang="json">

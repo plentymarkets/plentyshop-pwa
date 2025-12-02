@@ -102,13 +102,15 @@ const sortBlock = computed<SortContent>(() => {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      fullWidth: false,
     };
   }
 
   return content as SortContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(sortBlock);
+const { isFullWidth } = useFullWidthToggle(computed(() => sortBlock.value.layout ?? { fullWidth: false }));
+
 const layoutOpen = ref(false);
 </script>
 
