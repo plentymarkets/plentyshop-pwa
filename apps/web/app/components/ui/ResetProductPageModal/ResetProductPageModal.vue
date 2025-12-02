@@ -17,20 +17,20 @@
     <p class="mb-6">{{ getEditorTranslation('resetConfirmation') }}</p>
     <div class="flex items-center justify-between gap-4">
       <button
-          type="button"
-          data-testid="block-spacing-btn"
-          class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
-          @click="closeModal"
-        >
-          {{ getEditorTranslation('cancel') }}
-        </button>
-        <button
-          type="submit"
-          data-testid="block-spacing-btn"
-          class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
-        >
-          {{ getEditorTranslation('resetButton') }}
-        </button>
+        type="button"
+        data-testid="block-spacing-btn"
+        class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
+        @click="closeModal"
+      >
+        {{ getEditorTranslation('cancel') }}
+      </button>
+      <button
+        type="submit"
+        data-testid="block-spacing-btn"
+        class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
+      >
+        {{ getEditorTranslation('resetButton') }}
+      </button>
     </div>
   </UiModal>
 </template>
