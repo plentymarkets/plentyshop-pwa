@@ -19,8 +19,6 @@
           />
         </div>
 
-        <EditorFullWidthToggle v-model="isFullWidth" />
-
         <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -105,6 +103,7 @@
           </button>
         </div>
       </div>
+      <EditorFullWidthToggle v-model="isFullWidth" />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -211,23 +210,25 @@ const multiGridStructure = computed(() => {
   return block;
 });
 
-const isFullWidth = computed({
-  get: () => multiGridStructure.value.configuration.layout?.fullWidth ?? false,
-  set: (value: boolean) => {
-    if (!multiGridStructure.value.configuration.layout) {
-      multiGridStructure.value.configuration.layout = {
-        marginTop: 0,
-        marginBottom: defaultMarginBottom.value,
-        marginLeft: 40,
-        marginRight: 40,
-        backgroundColor: '#ffffff',
-        gap: 'M',
-        fullWidth: false,
-      };
-    }
-    multiGridStructure.value.configuration.layout.fullWidth = value;
-  },
-});
+const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
+
+// const isFullWidth = computed({
+//   get: () => multiGridStructure.value.configuration.layout?.fullWidth ?? false,
+//   set: (value: boolean) => {
+//     if (!multiGridStructure.value.configuration.layout) {
+//       multiGridStructure.value.configuration.layout = {
+//         marginTop: 0,
+//         marginBottom: defaultMarginBottom.value,
+//         marginLeft: 40,
+//         marginRight: 40,
+//         backgroundColor: '#ffffff',
+//         gap: 'M',
+//         fullWidth: false,
+//       };
+//     }
+//     multiGridStructure.value.configuration.layout.fullWidth = value;
+//   },
+// });
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =

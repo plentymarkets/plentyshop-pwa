@@ -224,7 +224,10 @@ const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
-const { isFullWidth } = useFullWidthToggle(carouselStructure);
+const { isFullWidth } = useFullWidthToggleForConfig(
+  computed(() => carouselStructure.value.configuration),
+  { fullWidth: true },
+);
 const controls = computed(() => carouselStructure.value.configuration.controls);
 
 const slides = computed({

@@ -13,6 +13,7 @@ import type { UseFullWidthToggleReturn } from './types';
  * ```
  */
 type Layout = { fullWidth?: boolean };
+type ConfigurationWithLayout = { layout?: Layout };
 
 export const useFullWidthToggle = (
   layout: Ref<Layout> | ComputedRef<Layout>,
@@ -22,6 +23,23 @@ export const useFullWidthToggle = (
     get: () => layout.value.fullWidth ?? defaultValue,
     set: (value: boolean) => {
       layout.value.fullWidth = value;
+    },
+  });
+
+  return { isFullWidth };
+};
+
+export const useFullWidthToggleForConfig = (
+  configuration: Ref<ConfigurationWithLayout> | ComputedRef<ConfigurationWithLayout>,
+  defaultLayout: Layout = { fullWidth: false },
+): UseFullWidthToggleReturn => {
+  const isFullWidth = computed({
+    get: () => configuration.value.layout?.fullWidth ?? defaultLayout.fullWidth ?? false,
+    set: (value: boolean) => {
+      if (!configuration.value.layout) {
+        configuration.value.layout = { ...defaultLayout };
+      }
+      configuration.value.layout.fullWidth = value;
     },
   });
 
