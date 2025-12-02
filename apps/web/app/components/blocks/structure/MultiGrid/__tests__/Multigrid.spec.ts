@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-
 import MultiGrid from '../../../../../components/blocks/structure/MultiGrid/MultiGrid.vue';
 import { multiGridBlockUuid, mockMultiGridProps } from './multiGrid.mock';
 
