@@ -103,7 +103,7 @@
           </button>
         </div>
       </div>
-      <EditorFullWidthToggle v-model="isFullWidth" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     </UiAccordionItem>
 
     <UiAccordionItem

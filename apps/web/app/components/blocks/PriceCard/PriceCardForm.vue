@@ -109,7 +109,7 @@
       <UiFormLabel>{{ getEditorTranslation('borders-label') }}</UiFormLabel>
       <SfSwitch v-model="priceCardBlock.borders" data-testid="price-card-borders" />
     </div>
-    <EditorFullWidthToggle v-model="isFullWidth" />
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
 

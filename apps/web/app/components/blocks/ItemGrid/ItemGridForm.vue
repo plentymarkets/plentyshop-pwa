@@ -52,7 +52,7 @@
         <SfSwitch v-model="uiItemGridBlock.showItemCount" data-testid="show-item-count" />
       </div>
 
-      <EditorFullWidthToggle v-model="isFullWidth" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
       <div v-if="uiItemGridBlock.showItemCount">
         <UiFormLabel>{{ getEditorTranslation('item-count-position') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">

@@ -211,7 +211,7 @@
       <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
     </template>
 
-    <EditorFullWidthToggle v-model="isFullWidth" />
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
 
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">

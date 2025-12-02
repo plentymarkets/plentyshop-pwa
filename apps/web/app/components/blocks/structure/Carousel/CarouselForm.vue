@@ -182,7 +182,7 @@
         <template #summary>
           <h2 data-testid="slider-button-gr oup-title">{{ getEditorTranslation('layout-label') }}</h2>
         </template>
-        <EditorFullWidthToggle v-model="isFullWidth" />
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       </UiAccordionItem>
     </div>
   </div>

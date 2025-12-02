@@ -378,7 +378,7 @@
         </SfInput>
       </label>
     </div>
-    <EditorFullWidthToggle v-model="isFullWidth" />
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
     <div
       id="padding-form"
       class="py-2"

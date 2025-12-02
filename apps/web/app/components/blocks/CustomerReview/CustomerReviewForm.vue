@@ -62,7 +62,7 @@
         />
       </div>
 
-      <EditorFullWidthToggle v-model="isFullWidth" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.meta?.uuid || blockUuid" />
 
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>

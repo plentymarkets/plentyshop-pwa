@@ -4,6 +4,7 @@
       <UiFormLabel class="mb-1">{{ getEditorTranslation('full-width') }}</UiFormLabel>
       <SfSwitch
         :model-value="modelValue"
+        :disabled="!isTopLevel"
         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
         @update:model-value="emit('update:modelValue', $event)"
       />
@@ -15,9 +16,12 @@
 import { SfSwitch } from '@storefront-ui/vue';
 import type { FullWidthToggleProps } from './types';
 
-defineProps<FullWidthToggleProps>();
-
+const props = defineProps<FullWidthToggleProps & { blockUuid: string }>();
 const emit = defineEmits(['update:modelValue']);
+
+const { getBlockDepth } = useBlockManager();
+
+const isTopLevel = computed(() => getBlockDepth(props.blockUuid) === 0);
 </script>
 
 <i18n lang="json">

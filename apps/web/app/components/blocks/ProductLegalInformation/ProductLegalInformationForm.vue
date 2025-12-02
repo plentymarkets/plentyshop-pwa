@@ -61,7 +61,7 @@
         <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
       </template>
 
-      <EditorFullWidthToggle v-model="isFullWidth" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
 
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
