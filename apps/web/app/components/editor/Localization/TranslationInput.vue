@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-64 flex-shrink-0 m-1 mr-2 group relative last:mr-0 input-container"
+    class="w-64 flex-shrink-0 m-1 mr-2 group relative last:mr-0"
     :class="{ 'min-w-64 !w-[calc(50%-12px)]': selectedLocales.length === 2 }"
   >
     <textarea
@@ -79,20 +79,6 @@ const onRevert = () => {
   if (props.translation) emit('revert', props.rowKey, props.lang, props.translation);
 };
 </script>
-
-<style scoped>
-/* CSS Containment for better rendering performance */
-.input-container {
-  contain: layout style paint;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 48px;
-}
-
-/* Optimize textarea rendering */
-textarea {
-  contain: layout style;
-}
-</style>
 
 <i18n lang="json">
 {

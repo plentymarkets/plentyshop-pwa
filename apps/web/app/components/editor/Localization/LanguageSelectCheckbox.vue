@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-memo="[isSelected, translatedCount.translated, translatedCount.total]"
-    class="flex w-full items-center py-2 checkbox-container"
-  >
+  <div class="flex w-full items-center py-2">
     <div class="mr-auto">
       <div class="text-lg">{{ lang }}</div>
       <div
@@ -18,7 +15,7 @@
       </div>
     </div>
     <div>
-      <SfCheckbox :model-value="isSelected" class="peer" @update:model-value="handleToggle" />
+      <SfCheckbox :model-value="isSelected" class="peer" @update:model-value="toggleLocale(locale)" />
     </div>
   </div>
 </template>
@@ -32,20 +29,7 @@ const { toggleLocale, selectedLocales } = useEditorLocalizationLocales();
 const props = defineProps<LanguageSelectCheckboxProps>();
 const translatedCount = computed(() => getTranslatedCount(props.locale));
 const isSelected = computed(() => selectedLocales.value.includes(props.locale));
-
-// Batched updates with nextTick to reduce re-renders
-const handleToggle = async () => {
-  toggleLocale(props.locale);
-  await nextTick();
-};
 </script>
-
-<style scoped>
-/* CSS Containment for checkbox container */
-.checkbox-container {
-  contain: layout style paint;
-}
-</style>
 
 <i18n lang="json">
 {

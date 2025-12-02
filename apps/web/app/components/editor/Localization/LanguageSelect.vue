@@ -1,5 +1,5 @@
 <template>
-  <UiButton variant="secondary" class="mt-2 mb-5 w-full button-container" :disabled="loading" @click="loadKeys">
+  <UiButton variant="secondary" class="mt-2 mb-5 w-full" :disabled="loading" @click="loadKeys">
     <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
     <span v-else class="flex items-center">
       <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
@@ -29,13 +29,6 @@ import { SfIconBase, SfLoaderCircular } from '@storefront-ui/vue';
 const { loadKeys, keys, loading } = useEditorLocalizationKeys();
 const { allLanguages } = useEditorLocalizationLocales();
 </script>
-
-<style scoped>
-/* CSS Containment for button */
-.button-container {
-  contain: layout style;
-}
-</style>
 
 <i18n lang="json">
 {
