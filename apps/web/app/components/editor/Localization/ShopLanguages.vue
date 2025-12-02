@@ -31,6 +31,8 @@ const { allLanguages } = useEditorLocalizationLocales();
 const { getSetting, updateSetting } = useSiteSettings('defaultLanguage');
 const { getSetting: getList } = useSiteSettings('languageList');
 const allLanguagesArray = Object.entries(allLanguages).map(([locale, name]) => ({ locale, name }));
+const WarningAtLeastOneMessage = getEditorTranslation('warning-at-least-one');
+const WarningDefaultChangedMessage = getEditorTranslation('warning-default-changed');
 
 const selectedDefaultLanguage = ref(getSetting());
 const allActiveLanguages = ref(
@@ -58,7 +60,7 @@ const updateLanguageSwitch = async (locale: string, isSelected: boolean) => {
     allActiveLanguages.value.push(locale);
     useNotification().send({
       type: 'warning',
-      message: getEditorTranslation('warning-at-least-one'),
+      message: WarningAtLeastOneMessage,
     });
   }
 
@@ -66,7 +68,7 @@ const updateLanguageSwitch = async (locale: string, isSelected: boolean) => {
     selectedDefaultLanguage.value = allActiveLanguages.value[0]!;
     useNotification().send({
       type: 'warning',
-      message: getEditorTranslation('warning-default-changed'),
+      message: WarningDefaultChangedMessage,
     });
   }
 
