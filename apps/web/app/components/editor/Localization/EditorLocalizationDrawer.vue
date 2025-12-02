@@ -148,16 +148,16 @@ const rightScrollerRef = ref<HTMLElement | null>(null);
 const leftVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => leftScrollerRef.value,
-  estimateSize: () => 48,
-  overscan: 5,
+  estimateSize: () => 50,
+  overscan: 10,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
 const rightVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => rightScrollerRef.value,
-  estimateSize: () => 48,
-  overscan: 5,
+  estimateSize: () => 50,
+  overscan: 10,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
