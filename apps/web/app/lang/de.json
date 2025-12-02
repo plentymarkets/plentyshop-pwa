@@ -609,6 +609,24 @@
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     },
     "decimalNumber": "Geben Sie eine Kommazahl ein.",
+    "editor": {
+      "add": {
+        "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
+        "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page.",
+        "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead."
+      },
+      "categories": {
+        "deleteError": "Die Seite {pageName} (Kategorie-ID: {id}) konnte nicht gelöscht werden. {errorMessage}",
+        "deleteSuccess": "Die Seite {pageName} (Kategorie-ID: {id}) wurde gelöscht.",
+        "error": "Fehler beim Speichern der Kategorien.",
+        "success": "Kategorien erfolgreich gespeichert."
+      },
+      "save": {
+        "error": "Die Änderungen konnten nicht gespeichert werden. Falls die aktuelle Sitzung abgelaufen ist, starte eine neue Sitzung. Öffne dazu den Editor erneut.",
+        "settings": "Um Änderungen an den Einstellungen anzuwenden, aktualisiere deinen Shop.",
+        "success": "Die Änderungen wurden gespeichert."
+      }
+    },
     "email": {
       "required": "E-Mail ist erforderlich.",
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln."
