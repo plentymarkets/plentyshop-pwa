@@ -154,7 +154,7 @@ const leftVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => leftScrollerRef.value,
   estimateSize: () => 48,
-  overscan: 20,
+  overscan: 30,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -162,7 +162,7 @@ const rightVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => rightScrollerRef.value,
   estimateSize: () => 48,
-  overscan: 20,
+  overscan: 30,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -183,55 +183,54 @@ const rightVirtualItems = computed(() => {
   }));
 });
 
-let scrollPending = false;
-let headerScrollPending = false;
+const isFirefox = /firefox/i.test(navigator.userAgent);
+const scrollState = {
+  isScrolling: false,
+  rafId: null as number | null,
+  timeoutId: null as ReturnType<typeof setTimeout> | null,
+};
+
+const scheduleSync = (callback: () => void) => {
+  if (isFirefox) {
+    if (scrollState.timeoutId) clearTimeout(scrollState.timeoutId);
+    scrollState.timeoutId = setTimeout(callback, 10);
+  } else {
+    if (scrollState.rafId) cancelAnimationFrame(scrollState.rafId);
+    scrollState.rafId = requestAnimationFrame(callback);
+  }
+};
 
 const syncScrollLeft = () => {
-  if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
-    scrollPending = true;
-    requestAnimationFrame(() => {
-      if (leftScrollerRef.value && rightScrollerRef.value) {
-        rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
-      }
-      scrollPending = false;
-    });
-  }
+  if (scrollState.isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
+
+  scheduleSync(() => {
+    scrollState.isScrolling = true;
+    if (leftScrollerRef.value && rightScrollerRef.value) {
+      rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
+    }
+    scrollState.isScrolling = false;
+  });
 };
 
 const syncScrollRight = () => {
-  if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
-    scrollPending = true;
-    requestAnimationFrame(() => {
-      if (leftScrollerRef.value && rightScrollerRef.value) {
-        leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
+  if (scrollState.isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
 
-        if (headerScroll.value && rightScrollerRef.value) {
-          headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
-        }
+  scheduleSync(() => {
+    scrollState.isScrolling = true;
+    if (leftScrollerRef.value && rightScrollerRef.value) {
+      leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
+
+      if (headerScroll.value) {
+        headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
       }
-      scrollPending = false;
-    });
-  }
+    }
+    scrollState.isScrolling = false;
+  });
 };
-
-const headerScrollHandler = () => {
-  if (!headerScrollPending && headerScroll.value && rightScrollerRef.value) {
-    headerScrollPending = true;
-    requestAnimationFrame(() => {
-      if (headerScroll.value && rightScrollerRef.value) {
-        rightScrollerRef.value.scrollLeft = headerScroll.value.scrollLeft;
-      }
-      headerScrollPending = false;
-    });
-  }
-};
-
-onMounted(() => {
-  headerScroll.value?.addEventListener('scroll', headerScrollHandler, { passive: true });
-});
 
 onBeforeUnmount(() => {
-  headerScroll.value?.removeEventListener('scroll', headerScrollHandler);
+  if (scrollState.timeoutId) clearTimeout(scrollState.timeoutId);
+  if (scrollState.rafId) cancelAnimationFrame(scrollState.rafId);
 });
 </script>
 
