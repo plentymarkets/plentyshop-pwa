@@ -106,8 +106,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   };
 
   const save = async () => {
-    const successMessage = getEditorTranslationForComposable('success');
-    const errorMessage = getEditorTranslationForComposable('error');
+    const successMessage = getEditorUITranslation('success');
+    const errorMessage = getEditorUITranslation('error');
     const route = useRoute();
     const router = useRouter();
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));

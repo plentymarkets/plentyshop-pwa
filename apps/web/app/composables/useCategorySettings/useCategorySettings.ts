@@ -63,7 +63,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         setCategoryId({});
         deletePageFromTree(id);
         send({
-          message: getEditorTranslationForComposable('deleteSuccess', { pageName, id }),
+          message: getEditorUITranslation('deleteSuccess', { pageName, id }),
           type: 'positive',
         });
         const lang = locale.value;
@@ -77,7 +77,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         }
       }
       send({
-        message: getEditorTranslationForComposable('deleteError', { pageName, id, errorMessage }),
+        message: getEditorUITranslation('deleteError', { pageName, id, errorMessage }),
         type: 'negative',
       });
     }

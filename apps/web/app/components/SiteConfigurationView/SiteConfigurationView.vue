@@ -28,7 +28,7 @@
           @click="activeSubCategory = subCategory"
         >
           <span class="break-words">
-            {{ t(`${subCategory}`) }}
+            {{ getEditorUITranslation(subCategory) }}
           </span>
           <template #suffix><SfIconChevronRight /></template>
         </SfListItem>
@@ -40,7 +40,7 @@
           <div class="flex items-start flex-col">
             <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
               <slot name="setting-breadcrumbs">
-                {{ t(`${activeSetting}`) }}
+                {{ getEditorUITranslation(activeSetting) }}
               </slot>
             </div>
             <div class="text-xl font-bold">
@@ -71,9 +71,6 @@
 
 <script setup lang="ts">
 import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
-import { getSubCategories } from '~/utils/settings-groups-imports';
-import type { Messages } from '~/components/SiteConfigurationView/types';
-import { getSettingsTranslations } from '~/utils/settings-translations-imports';
 
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
@@ -95,18 +92,4 @@ const groups = computed(() => {
 
   return allGroups.filter((group) => !excludedGroups.includes(group.slug));
 });
-
-const messages: Messages = {};
-
-const { $registerMessages } = useNuxtApp();
-Object.values(getSettingsTranslations()).forEach((fileContent) => {
-  Object.entries(fileContent).forEach(([locale, translations]) => {
-    if (!messages[locale]) {
-      messages[locale] = {};
-    }
-    Object.assign(messages[locale]!, translations);
-  });
-});
-
-$registerMessages(messages);
 </script>

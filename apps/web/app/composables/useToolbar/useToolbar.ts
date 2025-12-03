@@ -33,12 +33,12 @@ export const useToolbar = () => {
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 
-      await handleSave(saveSiteSettings, touchedFont ? getEditorTranslationForComposable('settings') : undefined);
+      await handleSave(saveSiteSettings, touchedFont ? getEditorUITranslation('settings') : undefined);
     }
 
     if (saved && !hasError) {
       send({
-        message: [getEditorTranslationForComposable('toolbarSuccess'), ...messageList],
+        message: [getEditorUITranslation('toolbarSuccess'), ...messageList],
         type: 'positive',
       });
       if (import.meta.client) {
@@ -48,7 +48,7 @@ export const useToolbar = () => {
 
     if (hasError) {
       send({
-        message: getEditorTranslationForComposable('toolbarError'),
+        message: getEditorUITranslation('toolbarError'),
         type: 'negative',
       });
     }
