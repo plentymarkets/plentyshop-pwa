@@ -21,7 +21,7 @@
 
         <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
-          <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
               <input
@@ -38,24 +38,6 @@
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-bottom"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowBack /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginLeft"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-left"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-              <span><SfIconArrowForward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginRight"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-right"
               />
             </div>
           </div>
@@ -149,13 +131,7 @@
 
 <script setup lang="ts">
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
-import {
-  SfInput,
-  SfIconArrowUpward,
-  SfIconArrowDownward,
-  SfIconArrowBack,
-  SfIconArrowForward,
-} from '@storefront-ui/vue';
+import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const { blockUuid } = useSiteConfiguration();
@@ -194,8 +170,6 @@ const multiGridStructure = computed(() => {
     block.configuration.layout = {
       marginTop: 0,
       marginBottom: defaultMarginBottom.value,
-      marginLeft: 40,
-      marginRight: 40,
       backgroundColor: '#ffffff',
       gap: 'M',
     };
