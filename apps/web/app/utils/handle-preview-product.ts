@@ -13,7 +13,7 @@ import { propertiesEN } from './facets/propertiesEN';
 import { propertiesDE } from './facets/propertiesDE';
 import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
-const useProductTemplateData = () => productTemplateData as Block[];
+const getProductTemplateData = () => productTemplateData as Block[];
 
 type PlainObject = Record<string, unknown>;
 
@@ -128,5 +128,5 @@ export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, 
   } else {
     state.value.fakeData = fakeProduct;
   }
-  state.value.fakeData.blocks = useProductTemplateData();
+  state.value.fakeData.blocks = getProductTemplateData();
 };
