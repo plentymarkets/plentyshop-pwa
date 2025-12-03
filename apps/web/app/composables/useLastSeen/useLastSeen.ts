@@ -65,7 +65,7 @@ export const useLastSeen = () => {
 
     try {
       const params: FacetSearchCriteria = {
-        itemIds: state.value.variationIds.join(','),
+        itemIds: state.value.variationIds.map((id) => id.toString()),
         itemsPerPage: maxItems,
       };
 
