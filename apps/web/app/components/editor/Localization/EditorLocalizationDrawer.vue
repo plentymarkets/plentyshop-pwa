@@ -183,27 +183,53 @@ const rightVirtualItems = computed(() => {
   }));
 });
 
-let isScrolling = false;
+let scrollPending = false;
+let headerScrollPending = false;
 
 const syncScrollLeft = () => {
-  if (isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
-
-  isScrolling = true;
-  rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
-  isScrolling = false;
+  if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
+    scrollPending = true;
+    requestAnimationFrame(() => {
+      if (leftScrollerRef.value && rightScrollerRef.value) {
+        rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
+      }
+      scrollPending = false;
+    });
+  }
 };
 
 const syncScrollRight = () => {
-  if (isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
-
-  isScrolling = true;
-  leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
-
-  if (headerScroll.value) {
-    headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
+  if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
+    scrollPending = true;
+    requestAnimationFrame(() => {
+      if (leftScrollerRef.value && rightScrollerRef.value && headerScroll.value) {
+        leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
+        headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
+      }
+      scrollPending = false;
+    });
   }
-  isScrolling = false;
 };
+
+const headerScrollHandler = () => {
+  if (!headerScrollPending && headerScroll.value && rightScrollerRef.value) {
+    headerScrollPending = true;
+    requestAnimationFrame(() => {
+      if (headerScroll.value && rightScrollerRef.value) {
+        rightScrollerRef.value.scrollLeft = headerScroll.value.scrollLeft;
+      }
+      headerScrollPending = false;
+    });
+  }
+};
+
+onMounted(() => {
+  headerScroll.value?.addEventListener('scroll', headerScrollHandler, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  headerScroll.value?.removeEventListener('scroll', headerScrollHandler);
+});
 </script>
 
 <style scoped>
