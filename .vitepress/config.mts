@@ -16,6 +16,7 @@ export default withMermaid({
     "Documentation for PlentyONE Shop, built with VueJS, Nuxt 3 and Alokai.",
   cleanUrls: true,
   ignoreDeadLinks: true,
+  lastUpdated: true,
   vite: {
     optimizeDeps: {
       include: ["debug"],
