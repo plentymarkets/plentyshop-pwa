@@ -74,7 +74,7 @@
             </div>
 
             <div class="flex-1 overflow-hidden">
-              <div ref="rightScrollerRef" class="h-full overflow-auto scrollbar-thin" @scroll="syncScrollRight">
+              <div ref="rightScrollerRef" class="h-full overflow-x-auto overflow-y-auto no-scrollbar-y scrollbar-thin-x" @scroll="syncScrollRight">
                 <div :style="{ height: `${rightVirtualizer.getTotalSize()}px`, position: 'relative' }">
                   <div
                     v-for="virtualRow in rightVirtualItems"
@@ -153,16 +153,16 @@ const rightScrollerRef = ref<HTMLElement | null>(null);
 const leftVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => leftScrollerRef.value,
-  estimateSize: () => 50,
-  overscan: 10,
+  estimateSize: () => 48,
+  overscan: 30,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
 const rightVirtualizerOptions = computed(() => ({
   count: displayedKeys.value.length,
   getScrollElement: () => rightScrollerRef.value,
-  estimateSize: () => 50,
-  overscan: 10,
+  estimateSize: () => 48,
+  overscan: 30,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -254,11 +254,40 @@ onBeforeUnmount(() => {
   background: transparent;
 }
 
+.scrollbar-thin-x {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.scrollbar-thin-x::-webkit-scrollbar {
+  height: 5px;
+  width: 0;
+}
+
+.scrollbar-thin-x::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 5px;
+}
+
+.scrollbar-thin-x::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.no-scrollbar-y {
+  scrollbar-width: none;
+}
+
+.no-scrollbar-y::-webkit-scrollbar {
+  width: 0;
+}
+
 .no-scrollbar {
   scrollbar-width: none;
 }
-.scrollbar-thin::-webkit-scrollbar {
+
+.no-scrollbar::-webkit-scrollbar {
   width: 0;
+  height: 0;
 }
 </style>
 
