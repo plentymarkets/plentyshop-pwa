@@ -1,4 +1,3 @@
-import { computed, type Ref } from 'vue';
 import type { Product } from '@plentymarkets/shop-api';
 import type { ItemDataFieldValues } from '~/components/blocks/ItemData/types';
 import { useI18n } from 'vue-i18n';

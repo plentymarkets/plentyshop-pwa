@@ -137,7 +137,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import {
   SfInput,
@@ -284,13 +283,10 @@ watch(isCollapsible, (newValue) => {
 
 watch(isInitiallyCollapsed, (newValue) => {
   if (!hasTitle.value || !isCollapsible.value) {
-    if (isInitiallyCollapsed.value !== false) {
-      isInitiallyCollapsed.value = false;
-    }
+    isInitiallyCollapsed.value = false;
     itemTableBlock.layout.initiallyCollapsed = false;
     return;
   }
-
   itemTableBlock.layout.initiallyCollapsed = newValue;
 });
 </script>
@@ -298,6 +294,34 @@ watch(isInitiallyCollapsed, (newValue) => {
 <i18n lang="json">
 {
   "en": {
+    "text-settings-label": "Text",
+    "main-title-label": "Title",
+
+    "item-table-section-label": "Item data",
+    "elements-display-order": "Elements display and order",
+    "layout-settings-label": "Layout settings",
+    "padding-label": "Padding (px)",
+    "spacing-around": "Spacing around the table",
+    "display-as-collapsable": "Display as collapsable",
+    "initially-collapsed": "Initially collapsed",
+
+    "field-itemId": "Item ID",
+    "field-condition": "Condition",
+    "field-ageRating": "Age rating",
+    "field-externalVariationId": "External variation ID",
+    "field-model": "Model",
+    "field-manufacturer": "Manufacturer",
+    "field-manufacturingCountry": "Manufacturing country",
+    "field-content": "Content",
+    "field-grossWeight": "Gross weight",
+    "field-netWeight": "Net weight",
+    "field-dimensions": "Dimensions",
+    "field-customTariffNumber": "Custom tariff number",
+    "field-properties": "Properties",
+
+    "drag-reorder-aria": "Drag to reorder"
+  },
+  "de": {
     "text-settings-label": "Text",
     "main-title-label": "Title",
 

@@ -31,54 +31,54 @@ const tMock = (key: string, params?: object) => {
 };
 
 describe('formatAgeRating', () => {
-  it('returns empty string when age is null/undefined', () => {
+  it('should return empty string when age is null/undefined', () => {
     expect(formatAgeRating(tMock, null)).toBe('');
     expect(formatAgeRating(tMock, undefined)).toBe('');
   });
 
-  it('handles age = 0 (no restriction)', () => {
+  it('should handle age = 0 (no restriction)', () => {
     expect(formatAgeRating(tMock, 0)).toBe('No age restriction');
   });
 
-  it('handles age between 1 and 18', () => {
+  it('should handle age between 1 and 18', () => {
     expect(formatAgeRating(tMock, 16)).toBe('16 and older');
   });
 
-  it('handles age = 50 (not flagged)', () => {
+  it('should handle age = 50 (not flagged)', () => {
     expect(formatAgeRating(tMock, 50)).toBe('Not rated');
   });
 
-  it('handles age = 80 (not required)', () => {
+  it('should handle age = 80 (not required)', () => {
     expect(formatAgeRating(tMock, 80)).toBe('Not required');
   });
 
-  it('handles unknown age', () => {
+  it('should handle unknown age', () => {
     expect(formatAgeRating(tMock, 999)).toBe('Unknown');
   });
 });
 
 describe('formatWeight', () => {
-  it('returns empty string for null/undefined', () => {
+  it('should return empty string for null/undefined', () => {
     expect(formatWeight(null)).toBe('');
     expect(formatWeight(undefined)).toBe('');
   });
 
-  it('formats number including 0', () => {
+  it('should format number including 0', () => {
     expect(formatWeight(0)).toBe('0 g');
     expect(formatWeight(400)).toBe('400 g');
   });
 });
 
 describe('formatDimensions', () => {
-  it('returns empty string when all dims are null/undefined', () => {
+  it('should return empty string when all dims are null/undefined', () => {
     expect(formatDimensions(null, null, null)).toBe('');
   });
 
-  it('formats all 3 dimensions', () => {
+  it('should format all 3 dimensions', () => {
     expect(formatDimensions(550, 650, 330)).toBe('550 x 650 x 330 mm');
   });
 
-  it('skips missing dimensions but keeps existing ones', () => {
+  it('should skip missing dimensions but keeps existing ones', () => {
     expect(formatDimensions(550, null, 330)).toBe('550 x 330 mm');
   });
 });
@@ -88,11 +88,11 @@ describe('formatContent', () => {
     unit: {},
   } as unknown as Product;
 
-  it('returns empty string when no content and no unit name', () => {
+  it('should return empty string when no content and no unit name', () => {
     expect(formatContent(baseProduct)).toBe('');
   });
 
-  it('handles unit names as single object', () => {
+  it('should handle unit names as single object', () => {
     const product = {
       unit: {
         content: 1,
@@ -103,7 +103,7 @@ describe('formatContent', () => {
     expect(formatContent(product)).toBe('1 Piece');
   });
 
-  it('handles unit names as array', () => {
+  it('should handle unit names as array', () => {
     const product = {
       unit: {
         content: 2,
@@ -116,12 +116,12 @@ describe('formatContent', () => {
 });
 
 describe('getManufacturerName', () => {
-  it('returns empty string if no manufacturer', () => {
+  it('should return empty string if no manufacturer', () => {
     const product = { item: {} } as unknown as Product;
     expect(getManufacturerName(product)).toBe('');
   });
 
-  it('prefers name over externalName', () => {
+  it('should prefer name over externalName', () => {
     const product = {
       item: {
         manufacturer: {
@@ -136,7 +136,7 @@ describe('getManufacturerName', () => {
 });
 
 describe('getConditionName', () => {
-  it('uses conditionApi if available (array)', () => {
+  it('should use conditionApi if available (array)', () => {
     const product = {
       item: {
         conditionApi: { names: [{ name: 'New' }] },
@@ -147,7 +147,7 @@ describe('getConditionName', () => {
     expect(getConditionName(product)).toBe('New');
   });
 
-  it('falls back to condition if no conditionApi', () => {
+  it('should fall back to condition if no conditionApi', () => {
     const product = {
       item: {
         condition: { names: [{ name: 'Used' }] },
@@ -159,7 +159,7 @@ describe('getConditionName', () => {
 });
 
 describe('getManufacturingCountryName', () => {
-  it('returns empty string if no country', () => {
+  it('should return empty string if no country', () => {
     const product = {
       item: {},
     } as unknown as Product;
@@ -167,7 +167,7 @@ describe('getManufacturingCountryName', () => {
     expect(getManufacturingCountryName(product)).toBe('');
   });
 
-  it('uses first entry when country.names is array', () => {
+  it('should use first entry when country.names is array', () => {
     const product = {
       item: {
         producingCountry: {
@@ -179,7 +179,7 @@ describe('getManufacturingCountryName', () => {
     expect(getManufacturingCountryName(product)).toBe('Germany');
   });
 
-  it('uses names.name when names is object', () => {
+  it('should use names.name when names is object', () => {
     const product = {
       item: {
         producingCountry: {
@@ -193,12 +193,12 @@ describe('getManufacturingCountryName', () => {
 });
 
 describe('formatVariationProperties', () => {
-  it('returns empty string when no variationProperties', () => {
+  it('should return empty string when no variationProperties', () => {
     const product = {} as unknown as Product;
     expect(formatVariationProperties(product)).toBe('');
   });
 
-  it('joins properties with label when available', () => {
+  it('should join properties with label when available', () => {
     const product = {
       variationProperties: [
         {

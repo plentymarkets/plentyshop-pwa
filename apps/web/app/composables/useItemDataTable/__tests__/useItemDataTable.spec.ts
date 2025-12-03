@@ -1,5 +1,4 @@
 import { describe, it, expect, vi } from 'vitest';
-import { ref } from 'vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { useItemDataTable } from '~/composables/useItemDataTable/useItemDataTable';
 
@@ -26,7 +25,7 @@ vi.mock('vue-i18n', () => ({
 }));
 
 describe('useItemDataTable', () => {
-  it('returns empty values when product is null', () => {
+  it('should return empty values when product is null', () => {
     const productRef = ref<Product | null>(null);
     const { fieldValues } = useItemDataTable(productRef);
 
@@ -37,7 +36,7 @@ describe('useItemDataTable', () => {
     expect(fieldValues.value.ageRating).toBe('');
   });
 
-  it('maps product fields correctly', () => {
+  it('should map product fields correctly', () => {
     const productRef = ref<Product | null>({
       item: {
         id: 109,

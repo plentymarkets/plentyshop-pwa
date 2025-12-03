@@ -56,16 +56,23 @@ export const formatContent = (product: Product): string => {
   const content = product.unit?.content;
   const names = product.unit?.names;
 
-  let unitName: string | undefined;
+  const getUnitName = (): string | undefined => {
+    switch (true) {
+      case Array.isArray(names):
+        return names[0]?.name;
 
-  if (Array.isArray(names)) {
-    unitName = names[0]?.name as string | undefined;
-  } else if (names && typeof names === 'object' && 'name' in names) {
-    unitName = String((names as { name?: string | number | null }).name ?? '') || undefined;
-  }
+      case !!names && typeof names === 'object' && 'name' in names:
+        return names.name ? String(names.name) : undefined;
+
+      default:
+        return undefined;
+    }
+  };
+
+  const unitName = getUnitName();
 
   if (content == null && !unitName) return '';
-  return [content ?? '', unitName || ''].join(' ').trim();
+  return [content ?? '', unitName ?? ''].join(' ').trim();
 };
 
 export const formatVariationProperties = (product: Product): string => {

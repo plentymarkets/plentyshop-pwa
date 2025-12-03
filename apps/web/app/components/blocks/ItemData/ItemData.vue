@@ -55,7 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, type Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { Product } from '@plentymarkets/shop-api';
 import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
@@ -86,21 +85,14 @@ const fieldLabels = computed<ItemDataFieldLabels>(() => ({
   properties: t('field-properties'),
 }));
 
-const rawTitle = computed(() => props.content.text?.title);
+const title = computed(() => props.content.text?.title ?? 'More details');
 
-const title = computed(() => {
-  if (rawTitle.value === undefined) return 'More details';
-  return rawTitle.value;
-});
+const hasTitle = computed(() => title.value.trim().length > 0);
 
 const displayAsCollapsable = computed(() => {
   const layout = props.content.layout;
-  const hasNonEmptyTitle = title.value.trim().length > 0;
-
-  return hasNonEmptyTitle && (layout?.displayAsCollapsable ?? false);
+  return hasTitle.value && (layout?.displayAsCollapsable ?? false);
 });
-
-const hasTitle = computed(() => typeof rawTitle.value === 'string' && rawTitle.value.trim().length > 0);
 
 const noFieldsSelected = computed(() => {
   const fields = props.content.fields;
@@ -161,6 +153,27 @@ watch(
 <i18n lang="json">
 {
   "en": {
+    "field-itemId": "Item ID",
+    "field-condition": "Condition",
+    "field-externalVariationId": "External variation ID",
+    "field-model": "Model",
+    "field-manufacturer": "Manufacturer",
+    "field-manufacturingCountry": "Manufacturing country",
+    "field-content": "Content",
+    "field-grossWeight": "Gross weight",
+    "field-netWeight": "Net weight",
+    "field-dimensions": "Dimensions",
+    "field-customTariffNumber": "Custom tariff number",
+    "field-properties": "Properties",
+    "field-ageRating": "Age rating",
+    "single-item-age-restriction": " {age} and older",
+    "single-item-age-restriction-none": "No age restriction",
+    "single-item-age-restriction-not-flagged": "Not rated",
+    "single-item-age-restriction-not-required": "Not required",
+    "single-item-age-restriction-unknown": "Unknown",
+    "no-data-to-show": "You haven’t selected any field to display. Please choose a field or remove this block."
+  },
+  "de": {
     "field-itemId": "Item ID",
     "field-condition": "Condition",
     "field-externalVariationId": "External variation ID",
