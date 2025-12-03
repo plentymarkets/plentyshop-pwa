@@ -202,9 +202,12 @@ const syncScrollRight = () => {
   if (!scrollPending && leftScrollerRef.value && rightScrollerRef.value) {
     scrollPending = true;
     requestAnimationFrame(() => {
-      if (leftScrollerRef.value && rightScrollerRef.value && headerScroll.value) {
+      if (leftScrollerRef.value && rightScrollerRef.value) {
         leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
-        headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
+
+        if (headerScroll.value && rightScrollerRef.value) {
+          headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
+        }
       }
       scrollPending = false;
     });
