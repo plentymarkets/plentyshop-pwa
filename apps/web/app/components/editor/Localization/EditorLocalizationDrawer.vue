@@ -183,55 +183,27 @@ const rightVirtualItems = computed(() => {
   }));
 });
 
-const isFirefox = /firefox/i.test(navigator.userAgent);
-const scrollState = {
-  isScrolling: false,
-  rafId: null as number | null,
-  timeoutId: null as ReturnType<typeof setTimeout> | null,
-};
-
-const scheduleSync = (callback: () => void) => {
-  if (isFirefox) {
-    if (scrollState.timeoutId) clearTimeout(scrollState.timeoutId);
-    scrollState.timeoutId = setTimeout(callback, 10);
-  } else {
-    if (scrollState.rafId) cancelAnimationFrame(scrollState.rafId);
-    scrollState.rafId = requestAnimationFrame(callback);
-  }
-};
+let isScrolling = false;
 
 const syncScrollLeft = () => {
-  if (scrollState.isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
+  if (isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
 
-  scheduleSync(() => {
-    scrollState.isScrolling = true;
-    if (leftScrollerRef.value && rightScrollerRef.value) {
-      rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
-    }
-    scrollState.isScrolling = false;
-  });
+  isScrolling = true;
+  rightScrollerRef.value.scrollTop = leftScrollerRef.value.scrollTop;
+  isScrolling = false;
 };
 
 const syncScrollRight = () => {
-  if (scrollState.isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
+  if (isScrolling || !leftScrollerRef.value || !rightScrollerRef.value) return;
 
-  scheduleSync(() => {
-    scrollState.isScrolling = true;
-    if (leftScrollerRef.value && rightScrollerRef.value) {
-      leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
+  isScrolling = true;
+  leftScrollerRef.value.scrollTop = rightScrollerRef.value.scrollTop;
 
-      if (headerScroll.value) {
-        headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
-      }
-    }
-    scrollState.isScrolling = false;
-  });
+  if (headerScroll.value) {
+    headerScroll.value.scrollLeft = rightScrollerRef.value.scrollLeft;
+  }
+  isScrolling = false;
 };
-
-onBeforeUnmount(() => {
-  if (scrollState.timeoutId) clearTimeout(scrollState.timeoutId);
-  if (scrollState.rafId) cancelAnimationFrame(scrollState.rafId);
-});
 </script>
 
 <style scoped>
