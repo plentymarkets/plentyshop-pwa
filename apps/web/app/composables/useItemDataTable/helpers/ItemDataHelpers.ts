@@ -90,7 +90,7 @@ export const formatVariationProperties = (product: Product): string => {
 };
 
 export const formatAgeRating = (
-  t: (key: string, params?: object) => string,
+  t: (key: string, listOrNamed?: Record<string, unknown>) => string,
   age: number | null | undefined,
 ): string => {
   if (age == null) return '';
