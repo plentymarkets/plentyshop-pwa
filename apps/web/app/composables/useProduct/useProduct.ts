@@ -38,30 +38,36 @@ export const useProduct: UseProductReturn = (slug) => {
    * ```
    */
 
-  const fetchProduct: FetchProduct = async (params: ProductParams) => {
+  const fetchProduct: FetchProduct = async (params?: ProductParams) => {
     state.value.loading = true;
     const { $i18n } = useNuxtApp();
     const route = useRoute();
+    state.value.data.blocks = [];
     const { setupBlocks } = useCategoryTemplate(
       route?.meta?.identifier as string,
       route.meta.type as string,
       useNuxtApp().$i18n.locale.value,
     );
+    let fetchedBlocks = null;
+    let shouldComplement = false;
+    if (params) {
+      const { data, error } = await useAsyncData(
+        `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
+        () => useSdk().plentysystems.getProduct(params),
+      );
 
-    const { data, error } = await useAsyncData(
-      `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
-      () => useSdk().plentysystems.getProduct(params),
-    );
-    useHandleError(error.value ?? null);
-
-    const fetchedBlocks = data.value?.data.blocks;
+      useHandleError(error.value ?? null);
+      properties.setProperties(data.value?.data.properties ?? []);
+      state.value.data = data.value?.data ?? ({} as Product);
+      fetchedBlocks = data.value?.data.blocks;
+      shouldComplement = true;
+    }
     await setupBlocks(
       (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
     );
 
-    properties.setProperties(data.value?.data.properties ?? []);
-    state.value.data = data.value?.data ?? ({} as Product);
-    handlePreviewProduct(state, $i18n.locale.value);
+    handlePreviewProduct(state, $i18n.locale.value, shouldComplement);
+
     state.value.loading = false;
     return state.value.data;
   };
