@@ -163,7 +163,7 @@ const customerReview = computed<CustomerReviewContent>(() => {
   return content as CustomerReviewContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(computed(() => customerReview.value.layout));
+const { isFullWidth } = useFullWidthToggle(customerReview);
 
 const isCollapsibleInit = customerReview.value.layout.collapsible;
 const isCollapsible = ref(isCollapsibleInit);

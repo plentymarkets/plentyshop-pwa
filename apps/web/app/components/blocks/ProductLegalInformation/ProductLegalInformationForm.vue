@@ -170,7 +170,7 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   return content as ProductLegalInformationContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(computed(() => productLegalInformation.value.layout));
+const { isFullWidth } = useFullWidthToggle(productLegalInformation);
 </script>
 
 <i18n lang="json">

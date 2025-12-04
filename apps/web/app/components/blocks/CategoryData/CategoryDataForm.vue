@@ -524,7 +524,7 @@ const {
 const { blockUuid } = useSiteConfiguration();
 const props = defineProps<{ uuid?: string }>();
 const uuid = props.uuid;
-const { isFullWidth } = useFullWidthToggle(computed(() => categoryDataBlock.value.layout ?? { fullWidth: false }));
+const { isFullWidth } = useFullWidthToggle(categoryDataBlock);
 </script>
 
 <i18n lang="json">

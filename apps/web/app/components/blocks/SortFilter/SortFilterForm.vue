@@ -132,7 +132,7 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
   return content as SortFilterContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(computed(() => sortFilterBlock.value.layout ?? { fullWidth: false }));
+const { isFullWidth } = useFullWidthToggle(sortFilterBlock);
 
 watch(
   () => sortFilterBlock.value.fields?.customizedFilters,

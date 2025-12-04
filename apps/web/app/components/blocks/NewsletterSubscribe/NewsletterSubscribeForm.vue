@@ -171,7 +171,7 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
   return initializeNewsletterContent(rawContent as Partial<NewsletterSubscribeContent>);
 });
 
-const { isFullWidth } = useFullWidthToggle(computed(() => newsletterBlock.value.layout ?? { fullWidth: false }));
+const { isFullWidth } = useFullWidthToggle(newsletterBlock);
 </script>
 
 <i18n lang="json">

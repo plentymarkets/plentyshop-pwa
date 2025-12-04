@@ -212,6 +212,7 @@ if (!rawContent.layout) {
     paddingRight: 0,
     displayAsCollapsable: false,
     initiallyCollapsed: false,
+    fullWidth: false,
   };
 } else {
   rawContent.layout.paddingTop ??= 0;
@@ -220,11 +221,12 @@ if (!rawContent.layout) {
   rawContent.layout.paddingRight ??= 0;
   rawContent.layout.displayAsCollapsable ??= false;
   rawContent.layout.initiallyCollapsed ??= false;
+  rawContent.layout.fullWidth ??= false;
 }
 
 const itemTableBlock = reactive(rawContent as ItemDataContent);
 
-const { isFullWidth } = useFullWidthToggle(computed(() => itemTableBlock.layout));
+const { isFullWidth } = useFullWidthToggle(toRef(itemTableBlock));
 
 const fieldLabels: ItemDataFieldLabels = {
   itemId: getEditorTranslation('field-itemId'),
