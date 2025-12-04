@@ -1,8 +1,8 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
-vi.mock('@plentymarkets/shop-core', () => ({
-  t: vi.fn((key: string) => key),
-}));
+mockNuxtImport('t', () => {
+  return () => 'Your account has been created successfully';
+});
 
 const { useCustomer } = vi.hoisted(() => {
   return {
