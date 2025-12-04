@@ -115,8 +115,8 @@ describe('useRegisterForm', () => {
 
     useNuxtApp.mockReturnValue({
       $i18n: {
-        t: vi.fn(() => 'Your account has been created successfully'),
-        te: vi.fn(() => true),
+        t: vi.fn((key: string) => key),
+        te: vi.fn((key: string) => !!key),
       },
     });
 
