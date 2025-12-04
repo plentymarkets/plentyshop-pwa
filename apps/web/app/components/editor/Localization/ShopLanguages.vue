@@ -35,11 +35,15 @@ const WarningAtLeastOneMessage = getEditorTranslation('warning-at-least-one');
 const WarningDefaultChangedMessage = getEditorTranslation('warning-default-changed');
 
 const selectedDefaultLanguage = ref(getSetting());
-const allActiveLanguages = ref(
-  getList()
+
+const parseLanguageList = () => {
+  const list = getList()
     .split(',')
-    .filter((lang: string) => lang && allLanguagesArray.some((l) => l.locale === lang)),
-);
+    .filter((lang: string) => lang && allLanguagesArray.some((l) => l.locale === lang));
+  return list.length > 0 ? list : ['en'];
+};
+
+const allActiveLanguages = ref(parseLanguageList());
 
 const selectedLanguages = computed(() => allActiveLanguages.value.map((lang: string) => lang.trim()));
 const selectedLanguageList = computed(() =>
