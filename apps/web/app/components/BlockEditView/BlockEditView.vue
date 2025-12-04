@@ -58,6 +58,7 @@ const blockTypeNames: Record<string, string> = {
   ItemText: 'Item Details',
   CategoryData: 'Category Data',
   TechnicalData: 'Technical Data',
+  ItemData: 'Item Data',
 };
 
 const getBlockTypeName = (blockType: string) => {
