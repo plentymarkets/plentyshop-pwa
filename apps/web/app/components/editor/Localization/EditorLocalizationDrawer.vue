@@ -74,7 +74,11 @@
             </div>
 
             <div class="flex-1 overflow-hidden">
-              <div ref="rightScrollerRef" class="h-full overflow-x-auto overflow-y-auto no-scrollbar-y scrollbar-thin-x" @scroll="syncScrollRight">
+              <div
+                ref="rightScrollerRef"
+                class="h-full overflow-x-auto overflow-y-auto no-scrollbar-y scrollbar-thin-x"
+                @scroll="syncScrollRight"
+              >
                 <div :style="{ height: `${rightVirtualizer.getTotalSize()}px`, position: 'relative' }">
                   <div
                     v-for="virtualRow in rightVirtualItems"
