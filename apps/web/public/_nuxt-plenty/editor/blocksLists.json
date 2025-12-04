@@ -1805,8 +1805,8 @@
                 "manufacturingCountry": true,
                 "content": true,
                 "grossWeight": true,
-                "netWeight": false,
-                "dimensions": false,
+                "netWeight": true,
+                "dimensions": true,
                 "customTariffNumber": true,
                 "properties": true
               },

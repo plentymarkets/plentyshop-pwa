@@ -1,6 +1,6 @@
 <template>
   <div :style="inlineStyle" data-testid="item-data-block">
-    <div v-if="!hasTitle && noFieldsSelected" class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
+    <div v-if="showNoDataMessage" class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600">
       <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
       <span class="italic">{{ getEditorTranslation('no-data-to-show') }}</span>
     </div>
@@ -62,8 +62,14 @@ import { SfIconWarning } from '@storefront-ui/vue';
 const props = defineProps<{
   content: ItemDataContent;
 }>();
-
+const { t } = useI18n({
+  useScope: 'local',
+});
 const { currentProduct } = useProducts();
+
+const { $isPreview } = useNuxtApp();
+
+const { disableActions } = useEditor();
 
 const { fieldValues } = useItemDataTable(currentProduct as Ref<Product | null>);
 
@@ -101,6 +107,10 @@ const noFieldsSelected = computed(() => {
 
   return values.every((v) => !v);
 });
+
+const showNoDataMessage = computed(
+  () => $isPreview && disableActions.value && !hasTitle.value && noFieldsSelected.value,
+);
 
 const visibleRows = computed(() => {
   const order =
