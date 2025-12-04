@@ -9,7 +9,12 @@
           data-testid="editor-language-select"
           @input="(ev: any) => switchLanguage(ev.target.value)"
         >
-          <option v-for="locale in availableLocales" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
+          <option
+            v-for="locale in availableLocales"
+            :key="locale"
+            :value="locale"
+            class="font-medium text-sm md:text-base"
+          >
             {{ t(`lang.${locale}`) }}
           </option>
         </select>
