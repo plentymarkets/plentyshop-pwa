@@ -9,6 +9,9 @@ export type CarouselStructureProps = {
       color: string;
       displayArrows: boolean;
     };
+    layout?: {
+      fullWidth?: boolean;
+    };
   };
   index: number;
   meta: {

@@ -7,20 +7,13 @@ export const mockCategoryTemplateBlocks: Block[] = [
     name: 'TestBlock',
     type: 'test',
     meta: { uuid: 'test-uuid-1' },
-    content: [],
+    content: {},
   },
   {
     name: 'ParentBlock',
     type: 'parent',
     meta: { uuid: 'test-uuid-2' },
-    content: [
-      {
-        name: 'NestedBlock',
-        type: 'nested',
-        meta: { uuid: 'test-uuid-3' },
-        content: [],
-      },
-    ],
+    content: {},
   },
 ];
 
@@ -28,14 +21,14 @@ export const mockExpectedEnglishTemplate: Block = {
   name: 'HeroBanner',
   type: 'banner',
   meta: { uuid: 'banner-uuid-1' },
-  content: { title: 'Welcome' },
+  content: {},
 };
 
 export const mockExpectedGermanTemplate: Block = {
   name: 'HeroBanner',
   type: 'banner',
   meta: { uuid: 'banner-uuid-1' },
-  content: { title: 'Willkommen' },
+  content: {},
 };
 
 export const getMockBlocksList = (): BlocksList => ({

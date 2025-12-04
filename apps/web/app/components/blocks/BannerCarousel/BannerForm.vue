@@ -498,6 +498,7 @@ input[type='number'] {
     "textbox-background-label": "Textbox Background",
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
+    "layout-label": "Layout",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
     "textbox-align-x-left-label": "Left",
@@ -553,6 +554,7 @@ input[type='number'] {
     "textbox-background-label": "Textbox Background",
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
+    "layout-label": "Layout",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
     "textbox-align-x-left-label": "Left",

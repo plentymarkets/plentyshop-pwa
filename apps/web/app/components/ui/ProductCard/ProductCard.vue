@@ -185,6 +185,9 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
     itemCountPosition: 'center',
     fieldsDisabled: [],
     paginationPosition: 'bottom',
+    layout: {
+      fullWidth: false,
+    },
   }),
 });
 

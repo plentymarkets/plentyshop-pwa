@@ -26,6 +26,9 @@ export const ItemGridMock: ItemGridProps = {
     showWishlistButton: false,
     addToCartStyle: 'primary',
     paginationPosition: 'bottom',
+    layout: {
+      fullWidth: false,
+    },
   },
   meta: {
     uuid: 'mock-item-grid-uuid',

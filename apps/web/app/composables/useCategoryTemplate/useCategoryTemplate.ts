@@ -9,6 +9,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { OldContent } from '~/utils/migrate-recommended-content';
+import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
@@ -39,9 +40,18 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
+  const isImageContentLike = (content: unknown): content is OldContent | ImageContent => {
+    return (
+      !!content &&
+      typeof content === 'object' &&
+      ('wideScreen' in content ||
+        'desktop' in content ||
+        ('image' in content && 'text' in content && 'button' in content))
+    );
+  };
   const migrateAllImageBlocks = (blocks: Block[]) => {
     for (const block of blocks) {
-      if (block.name === 'Image' && block.content) {
+      if (block.name === 'Image' && block.content && isImageContentLike(block.content)) {
         block.content = migrateImageContent(block.content);
       }
       if (block.name === 'ProductRecommendedProducts' && block.content) {

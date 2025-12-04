@@ -38,6 +38,9 @@ export interface ItemGridContent {
   showWishlistButton: boolean;
   addToCartStyle: AddToCartStyle;
   paginationPosition: PaginationPosition;
+  layout: {
+    fullWidth?: boolean;
+  };
 }
 
 export interface ItemGridFormProps {
