@@ -88,6 +88,8 @@
         />
       </div>
 
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
+
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300 mt-1">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -221,6 +223,8 @@ if (!rawContent.layout) {
 }
 
 const itemTableBlock = reactive(rawContent as ItemDataContent);
+
+const { isFullWidth } = useFullWidthToggle(computed(() => itemTableBlock.layout));
 
 const fieldLabels: ItemDataFieldLabels = {
   itemId: getEditorTranslation('field-itemId'),
