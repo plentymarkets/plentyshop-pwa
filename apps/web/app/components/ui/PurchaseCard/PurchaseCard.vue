@@ -263,7 +263,6 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
       paddingBottom: 0,
       paddingRight: 0,
       paddingLeft: 0,
-      fullWidth: false,
     },
   }),
 });

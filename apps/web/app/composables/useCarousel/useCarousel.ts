@@ -20,10 +20,7 @@ export const useCarousel: UseCarouselReturn = () => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
     if (carouselBlock) {
-      (carouselBlock.content as unknown) = {
-        ...carouselBlock.content,
-        banners: [...newBannerItems],
-      };
+      carouselBlock.content = [...newBannerItems];
     }
   };
 
