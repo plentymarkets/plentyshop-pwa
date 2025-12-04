@@ -5,63 +5,62 @@ export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   {
     columnGroup: 'legal',
     key: 'showTermsAndConditions',
-    shopTranslationKey: 'categories.legal.subcategories.termsAndConditions',
+    shopTranslationKey: 'legal.termsAndConditions',
     editorTranslationKey: 'column-1-terms-and-conditions-label',
     link: paths.termsAndConditions,
   },
   {
     columnGroup: 'legal',
     key: 'showCancellationRights',
-    shopTranslationKey: 'categories.legal.subcategories.cancellationRights',
+    shopTranslationKey: 'legal.cancellationRights',
     editorTranslationKey: 'column-1-cancellation-rights-label',
     link: paths.cancellationRights,
   },
   {
     columnGroup: 'legal',
     key: 'showCancellationForm',
-    shopTranslationKey: 'categories.legal.subcategories.cancellationForm',
+    shopTranslationKey: 'legal.cancellationForm',
     editorTranslationKey: 'column-1-cancellation-form-label',
     link: paths.cancellationForm,
   },
   {
     columnGroup: 'legal',
     key: 'showLegalDisclosure',
-    shopTranslationKey: 'categories.legal.subcategories.legalDisclosure',
+    shopTranslationKey: 'legal.legalDisclosure',
     editorTranslationKey: 'column-1-legal-disclosure-label',
     link: paths.legalDisclosure,
   },
   {
     columnGroup: 'legal',
     key: 'showPrivacyPolicy',
-    shopTranslationKey: 'categories.legal.subcategories.privacyPolicy',
+    shopTranslationKey: 'legal.privacyPolicy',
     editorTranslationKey: 'column-1-privacy-policy-label',
     link: paths.privacyPolicy,
   },
   {
     columnGroup: 'legal',
     key: 'showDeclarationOfAccessibility',
-    shopTranslationKey: 'categories.legal.subcategories.declarationOfAccessibility',
+    shopTranslationKey: 'legal.declarationOfAccessibility',
     editorTranslationKey: 'column-1-declaration-of-accessibility-label',
     link: paths.declarationOfAccessibility,
   },
   {
     columnGroup: 'services',
     key: 'showContactLink',
-    shopTranslationKey: 'categories.services.subcategories.contact',
+    shopTranslationKey: 'footer.contact.label',
     editorTranslationKey: 'column-2-contact-label',
     link: paths.contact,
   },
   {
     columnGroup: 'services',
     key: 'showRegisterLink',
-    shopTranslationKey: 'categories.services.subcategories.register',
+    shopTranslationKey: 'footer.register.label',
     editorTranslationKey: 'column-2-register-label',
     link: paths.register,
   },
 ];
 
 export const createDefaultFooterSettings = (): FooterSettings => {
-  const { $i18n } = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
 
   return {
@@ -70,7 +69,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       isGlobalTemplate: true,
     },
     column1: {
-      title: $i18n.t('categories.legal.label'),
+      title: t('footer.legal.label'),
       showTermsAndConditions: true,
       showCancellationRights: true,
       showCancellationForm: true,
@@ -79,7 +78,7 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       showDeclarationOfAccessibility: true,
     },
     column2: {
-      title: $i18n.t('categories.services.label'),
+      title: t('footer.services.label'),
       description: '',
       showContactLink: true,
       showRegisterLink: true,

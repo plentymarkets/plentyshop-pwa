@@ -29,7 +29,6 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 definePageMeta({ layout: false });
 
 const route = useRoute();
-const { t } = useI18n();
 const { data: productsCatalog, productsPerPage, loading, searchByTag } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
 const slug = route.params.slug?.toString() ?? '';

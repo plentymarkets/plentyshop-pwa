@@ -23,7 +23,7 @@
                   class="m-auto"
                 >
                   <UiTag :size="'sm'" :variant="'secondary'">{{
-                    t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+                    t('product.bundleSavings', { percent: productBundleGetters.getBundleDiscount(product) })
                   }}</UiTag>
                 </div>
               </div>
@@ -61,7 +61,7 @@
                   data-testid="show-reviews"
                   @click="scrollToReviews"
                 >
-                  {{ t('showAllReviews') }}
+                  {{ t('product.showAllReviews') }}
                 </UiButton>
               </div>
             </template>
@@ -94,8 +94,8 @@
                   <div>
                     {{
                       !isWishlistItem(productGetters.getVariationId(product))
-                        ? t('addToWishlist')
-                        : t('removeFromWishlist')
+                        ? t('common.actions.addToWishlist')
+                        : t('common.actions.removeFromWishlist')
                     }}
                   </div>
                 </WishlistButton>
@@ -145,7 +145,7 @@
                       <template #prefix>
                         <div v-if="!loading" class="flex row items-center">
                           <SfIconShoppingCart size="sm" />
-                          {{ t('addToCart') }}
+                          {{ t('common.actions.addToCart') }}
                         </div>
                         <div v-else>
                           <SfLoaderCircular size="sm" />
@@ -156,16 +156,16 @@
                 </div>
 
                 <div class="mt-4 typography-text-xs flex gap-1">
-                  <span>{{ t('asterisk') }}</span>
-                  <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
-                  <i18n-t keypath="excludedShipping" scope="global">
+                  <span>{{ t('common.labels.asterisk') }}</span>
+                  <span>{{ showNetPrices ? t('product.priceExclVAT') : t('product.priceInclVAT') }}</span>
+                  <i18n-t keypath="shipping.excludedLabel" scope="global">
                     <template #shipping>
                       <SfLink
                         :href="localePath(paths.shipping)"
                         target="_blank"
                         class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                       >
-                        {{ t('delivery') }}
+                        {{ t('common.labels.delivery') }}
                       </SfLink>
                     </template>
                   </i18n-t>
@@ -290,7 +290,6 @@ const {
 } = useValidatorAggregator('attributes');
 const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
-const { t } = useI18n();
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(props?.product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
@@ -338,12 +337,12 @@ const basePriceSingleValue = computed(
 const handleValidationErrors = (): boolean => {
   send({
     message: [
-      t('errorMessages.missingOrWrongProperties'),
+      t('error.missingOrWrongProperties'),
       '',
       ...invalidAttributeFields.value.map((field) => field.name),
       ...invalidFields.value.map((field) => field.name),
       '',
-      t('errorMessages.pleaseFillOutAllFields'),
+      t('error.pleaseFillOutAllFields'),
     ],
     type: 'negative',
   });
@@ -360,7 +359,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   if (!getCombination()) {
-    send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
+    send({ message: t('product.attributes.notValidVariation'), type: 'negative' });
     return false;
   }
 
@@ -373,7 +372,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   if (addedToCart) {
     quickCheckout
       ? openQuickCheckout(props?.product, quantitySelectorValue.value)
-      : send({ message: t('addedToCart'), type: 'positive' });
+      : send({ message: t('cart.itemAdded'), type: 'positive' });
 
     if (getSetting() === '0') {
       send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' });
@@ -405,8 +404,8 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('itemNotAvailable')));
-const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
+const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('product.notAvailable')));
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('product.attributes.notValidVariation')));
 const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
 
 const scrollToReviews = () => {
