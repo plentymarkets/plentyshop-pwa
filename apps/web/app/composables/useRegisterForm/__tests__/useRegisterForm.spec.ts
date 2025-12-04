@@ -73,7 +73,8 @@ const { useNuxtApp } = vi.hoisted(() => {
   return {
     useNuxtApp: vi.fn().mockReturnValue({
       $i18n: {
-        t: vi.fn((key: string) => key),
+        t: vi.fn(() => 'Your account has been created successfully'),
+        te: vi.fn(() => true),
       },
     }),
   };
@@ -113,7 +114,10 @@ describe('useRegisterForm', () => {
     vi.resetAllMocks();
 
     useNuxtApp.mockReturnValue({
-      $i18n: { t: vi.fn((key: string) => key) },
+      $i18n: {
+        t: vi.fn(() => 'Your account has been created successfully'),
+        te: vi.fn(() => true),
+      },
     });
 
     useRuntimeConfig.mockReturnValue({
