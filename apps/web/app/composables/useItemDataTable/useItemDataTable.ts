@@ -1,6 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
 import type { ItemDataFieldValues } from '~/components/blocks/ItemData/types';
-import { useI18n } from 'vue-i18n';
 
 import {
   getConditionName,
@@ -14,7 +13,6 @@ import {
 } from './helpers/ItemDataHelpers';
 
 export function useItemDataTable(productRef: Ref<Product | null>) {
-  const { t } = useI18n();
   const fieldValues = computed<ItemDataFieldValues>(() => {
     const product = productRef.value as Product | null;
 

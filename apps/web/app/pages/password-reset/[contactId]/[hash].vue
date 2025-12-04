@@ -1,14 +1,14 @@
 <template>
-  <NuxtLayout name="auth" :heading="t('auth.setNewPassword.heading')">
+  <NuxtLayout name="auth" :heading="t('authentication.setNewPassword.heading')">
     <form
       novalidate
       class="pb-4 md:p-6 my-10 md:border md:border-neutral-200 rounded-md"
       @submit.prevent="executeResetPassword"
     >
-      <p class="mb-6">{{ t('auth.setNewPassword.description') }}</p>
+      <p class="mb-6">{{ t('authentication.setNewPassword.description') }}</p>
 
       <label class="block mb-4">
-        <UiFormLabel>{{ t('auth.setNewPassword.password') }} {{ t('form.required') }}</UiFormLabel>
+        <UiFormLabel>{{ t('authentication.setNewPassword.password') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="password"
           name="password"
@@ -29,7 +29,9 @@
         >
           <SfIconCheck v-if="passwordValidationLength" size="sm" class="mr-2" />
           <SfIconClose v-else size="sm" class="mr-2" />
-          {{ t('auth.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
+          {{
+            t('authentication.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength })
+          }}
         </div>
         <div
           class="flex items-center"
@@ -37,7 +39,7 @@
         >
           <SfIconCheck v-if="passwordValidationOneDigit" size="sm" class="mr-2" />
           <SfIconClose v-else size="sm" class="mr-2" />
-          {{ t('auth.signup.passwordValidation.numbers') }}
+          {{ t('authentication.signup.passwordValidation.numbers') }}
         </div>
         <div
           class="flex items-center"
@@ -48,12 +50,12 @@
         >
           <SfIconCheck v-if="passwordValidationOneLetter" size="sm" class="mr-2" />
           <SfIconClose v-else size="sm" class="mr-2" />
-          {{ t('auth.signup.passwordValidation.letters') }}
+          {{ t('authentication.signup.passwordValidation.letters') }}
         </div>
       </div>
 
       <label>
-        <UiFormLabel>{{ t('auth.setNewPassword.repeatPassword') }} {{ t('form.required') }}</UiFormLabel>
+        <UiFormLabel>{{ t('authentication.setNewPassword.repeatPassword') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           v-model="repeatPassword"
           name="repeatedPassword"
@@ -71,13 +73,13 @@
         <UiButton type="submit" class="w-1/2" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <span v-else>
-            {{ t('auth.setNewPassword.button') }}
+            {{ t('authentication.setNewPassword.button') }}
           </span>
         </UiButton>
       </div>
 
       <div class="text-center mt-2">
-        <span class="my-5 mr-1">{{ t('auth.setNewPassword.rememberPassword') }}</span>
+        <span class="my-5 mr-1">{{ t('authentication.setNewPassword.rememberPassword') }}</span>
         <SfLink variant="primary" class="cursor-pointer" @click="openAuthentication">
           {{ t('account.navBottomHeadingLogin') }}
         </SfLink>
@@ -92,7 +94,7 @@
     >
       <header>
         <UiButton
-          :aria-label="t('closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           square
           variant="tertiary"
           class="absolute right-2 top-2"
@@ -111,7 +113,6 @@ import type { ApiError } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
 
 const { resetPassword, loading } = useResetPassword();
-const { t } = useI18n();
 const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const localePath = useLocalePath();
@@ -136,14 +137,14 @@ const validatePasswordLength = (value: string) =>
   value.length >= passwordMinLength && value.length <= passwordMaxLength;
 
 const getPasswordError = (value: string) => {
-  if (!value) return t('errorMessages.password.required');
+  if (!value) return t('error.password.required');
   if (!validatePasswordLength(value)) {
     return value.length < passwordMinLength
-      ? t('errorMessages.password.minLength', { min: passwordMinLength })
-      : t('errorMessages.password.maxLength', { max: passwordMaxLength });
+      ? t('error.password.minLength', { min: passwordMinLength })
+      : t('error.password.maxLength', { max: passwordMaxLength });
   }
   if (!validateHasDigit(value) || !validateHasLetter(value)) {
-    return t('errorMessages.password.valid');
+    return t('error.password.valid');
   }
   return '';
 };
@@ -168,7 +169,7 @@ const isPasswordValid = computed(
 const passwordErrorMessage = computed(() => getPasswordError(password.value));
 const repeatPasswordErrorMessage = computed(() => {
   const error = getPasswordError(repeatPassword.value);
-  return error || (!passwordsMatch.value ? t('errorMessages.password.match') : '');
+  return error || (!passwordsMatch.value ? t('error.password.match') : '');
 });
 
 const stripSpaces = (fieldName: 'password' | 'repeatPassword') => {
@@ -196,7 +197,7 @@ const executeResetPassword = async () => {
       contactId: contactId,
     });
 
-    if (resetSucceded) send({ message: t('auth.setNewPassword.resetSucceded'), type: 'positive' });
+    if (resetSucceded) send({ message: t('authentication.setNewPassword.resetSucceded'), type: 'positive' });
   } catch (error) {
     useHandleError(error as ApiError);
   } finally {

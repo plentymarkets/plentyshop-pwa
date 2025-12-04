@@ -55,7 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import type { Product } from '@plentymarkets/shop-api';
 import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
 import { SfIconWarning } from '@storefront-ui/vue';
@@ -64,7 +63,6 @@ const props = defineProps<{
   content: ItemDataContent;
 }>();
 
-const { t } = useI18n();
 const { currentProduct } = useProducts();
 
 const { fieldValues } = useItemDataTable(currentProduct as Ref<Product | null>);

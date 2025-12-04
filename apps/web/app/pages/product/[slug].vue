@@ -23,7 +23,7 @@
 
           <div class="p-4 flex">
             <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
-              <span>{{ t('legalDetails') }}</span>
+              <span>{{ t('legal.details') }}</span>
               <SfIconChevronRight />
             </p>
           </div>
@@ -49,7 +49,6 @@ import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 const route = useRoute();
-const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();

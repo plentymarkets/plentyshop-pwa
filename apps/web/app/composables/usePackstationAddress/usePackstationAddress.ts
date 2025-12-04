@@ -2,7 +2,6 @@ import { type Address, type Packstation, AddressType } from '@plentymarkets/shop
 
 export const usePackstationAddress = () => {
   const { send } = useNotification();
-  const { $i18n } = useNuxtApp();
   const { data, resetComponent } = usePackstationFinder();
 
   const state = useState('usePackstationAddress', () => ({
@@ -13,7 +12,7 @@ export const usePackstationAddress = () => {
 
   const savePackstationAddress = async (packstation: Packstation) => {
     if ((packstation.location.keyword === 'Packstation' || postNumberRequired.value) && !state.value.postNumber) {
-      send({ message: $i18n.t('PreferredDelivery.packstation.postnumberRequired'), type: 'warning' });
+      send({ message: t('PreferredDelivery.packstation.postnumberRequired'), type: 'warning' });
       return;
     }
 
@@ -40,7 +39,7 @@ export const usePackstationAddress = () => {
           shippingAddresses.value?.find((item) => item.primary === true)?.id || -1;
       }
 
-      send({ message: $i18n.t('PreferredDelivery.packstation.packstationAddedSuccessMessage'), type: 'positive' });
+      send({ message: t('PreferredDelivery.packstation.packstationAddedSuccessMessage'), type: 'positive' });
     };
 
     save()

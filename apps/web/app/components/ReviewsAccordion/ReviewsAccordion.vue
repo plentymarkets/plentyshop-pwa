@@ -9,7 +9,7 @@
       >
         <template #summary>
           <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 md:text-2xl">
-            {{ t('customerReviews') }}
+            {{ t('product.customerReviews') }}
           </h2>
         </template>
 
@@ -21,7 +21,7 @@
           data-testid="no-review-text"
           class="font-bold leading-6 w-full py-2"
         >
-          {{ t('customerReviewsNone') }}
+          {{ t('product.noReviews') }}
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
@@ -43,8 +43,6 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 
 const { product } = defineProps<ProductAccordionPropsType>();
-
-const { t } = useI18n();
 
 const viewport = useViewport();
 const reviewsOpen = ref(true);
