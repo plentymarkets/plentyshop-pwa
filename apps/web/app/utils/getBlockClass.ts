@@ -76,7 +76,7 @@ export const getBlockClass = (block: Block): ComputedRef<Record<string, boolean>
 
     return {
       'max-w-screen-3xl': !fullWidth && !isContainerExcluded,
-      'mx-auto mt-3': !isContainerExcluded,
+      'mx-auto': !isContainerExcluded,
       'px-4 md:px-6': !isPaddingExcluded,
     };
   });
