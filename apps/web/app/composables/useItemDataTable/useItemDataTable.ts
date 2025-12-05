@@ -43,7 +43,7 @@ export function useItemDataTable(productRef: Ref<Product | null>) {
     const widthMM = variation.widthMM ?? null;
     const heightMM = variation.heightMM ?? null;
 
-    const hideZeroInPreview = $isPreview === true;
+    const hideZeroInPreview = $isPreview;
 
     const shouldHideWeightG = hideZeroInPreview && weightG === 0;
     const shouldHideWeightNetG = hideZeroInPreview && weightNetG === 0;
