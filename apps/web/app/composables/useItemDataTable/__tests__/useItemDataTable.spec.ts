@@ -62,7 +62,7 @@ describe('useItemDataTable', () => {
       variationProperties: [],
     } as unknown as Product);
 
-    const { fieldValues } = useItemDataTable(productRef);
+    const { fieldValues } = useItemDataTable(productRef, { t: mockT });
 
     expect(fieldValues.value.itemId).toBe('109');
     expect(fieldValues.value.manufacturer).toBe('Teston Testerton');
