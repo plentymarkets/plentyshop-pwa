@@ -71,8 +71,9 @@ const { $isPreview } = useNuxtApp();
 
 const { disableActions } = useEditor();
 
-const { fieldValues } = useItemDataTable(currentProduct as Ref<Product | null>);
-
+const { fieldValues } = useItemDataTable(currentProduct as Ref<Product | null>, {
+  t,
+});
 const fieldLabels = computed<ItemDataFieldLabels>(() => ({
   itemId: t('field-itemId'),
   condition: t('field-condition'),
@@ -137,8 +138,6 @@ const visibleRows = computed(() => {
 
 const hasRows = computed(() => visibleRows.value.length > 0);
 
-const isOpen = ref(!(props.content.layout?.initiallyCollapsed ?? false));
-
 const inlineStyle = computed(() => {
   const layout = props.content.layout;
   return {
@@ -149,11 +148,13 @@ const inlineStyle = computed(() => {
   };
 });
 
+const isOpen = ref(!(props.content.layout?.initiallyCollapsed ?? false));
+
 watch(
   () => props.content.layout?.initiallyCollapsed,
   (val) => {
     if (val === undefined) return;
-    isOpen.value = !val;
+    isOpen.value = !(val ?? false);
   },
 );
 </script>
@@ -182,24 +183,24 @@ watch(
     "no-data-to-show": "You haven’t selected any field to display. Please choose a field or remove this block."
   },
   "de": {
-    "field-itemId": "Item ID",
-    "field-condition": "Condition",
-    "field-externalVariationId": "External variation ID",
-    "field-model": "Model",
-    "field-manufacturer": "Manufacturer",
-    "field-manufacturingCountry": "Manufacturing country",
-    "field-content": "Content",
-    "field-grossWeight": "Gross weight",
-    "field-netWeight": "Net weight",
-    "field-dimensions": "Dimensions",
-    "field-customTariffNumber": "Custom tariff number",
-    "field-properties": "Properties",
-    "field-ageRating": "Age rating",
-    "single-item-age-restriction": " {age} and older",
-    "single-item-age-restriction-none": "No age restriction",
-    "single-item-age-restriction-not-flagged": "Not rated",
-    "single-item-age-restriction-not-required": "Not required",
-    "single-item-age-restriction-unknown": "Unknown",
+    "field-itemId": "Art.-ID",
+    "field-condition": "Zustand",
+    "field-externalVariationId": "Varianten-ID",
+    "field-model": "Modell",
+    "field-manufacturer": "Hersteller",
+    "field-manufacturingCountry": "Herstellungsland",
+    "field-content": "Inhalt",
+    "field-grossWeight": "Gewicht",
+    "field-netWeight": "Netto-Gewicht",
+    "field-dimensions": "Maße",
+    "field-customTariffNumber": "Zolltarifnummer",
+    "field-properties": "Eigenschaften",
+    "field-ageRating": "Altersfreigabe",
+    "single-item-age-restriction": "Ab {age} freigegeben",
+    "single-item-age-restriction-none": "Ohne Altersbeschränkung",
+    "single-item-age-restriction-not-flagged": "Nicht gekennzeichnet",
+    "single-item-age-restriction-not-required": "Nicht erforderlich",
+    "single-item-age-restriction-unknown": "Noch nicht bekannt",
     "no-data-to-show": "You haven’t selected any field to display. Please choose a field or remove this block."
   }
 }

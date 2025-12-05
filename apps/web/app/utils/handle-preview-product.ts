@@ -89,11 +89,7 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
         const av = (a as PlainObject)[key];
         const bv = bHas ? (b as PlainObject)[key] : undefined;
 
-        if (
-          ZERO_MISSING_PATHS.has(nextPath) &&
-          typeof av === 'number' &&
-          av === 0
-        ) {
+        if (ZERO_MISSING_PATHS.has(nextPath) && typeof av === 'number' && av === 0) {
           if (bHas) {
             result[key] = cloneValue(bv);
           }
