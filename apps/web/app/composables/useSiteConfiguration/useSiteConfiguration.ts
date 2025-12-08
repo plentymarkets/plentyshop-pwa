@@ -97,6 +97,18 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.drawerView = null;
   };
 
+  if (import.meta.client) {
+    const route = useRoute();
+    watch(
+      () => route.fullPath,
+      () => {
+        state.value.drawerOpen = false;
+        state.value.drawerView = null;
+        state.value.activeSetting = '';
+      },
+    );
+  }
+
   return {
     ...toRefs(state.value),
     updateNewBlockPosition,
