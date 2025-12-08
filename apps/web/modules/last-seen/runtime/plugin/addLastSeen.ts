@@ -1,5 +1,6 @@
 import { defineNuxtPlugin } from '#app';
 import { productGetters } from '@plentymarkets/shop-api';
+import { useLastSeen } from '../composables/useLastSeen';
 
 export default defineNuxtPlugin(() => {
     if (import.meta.client) {
