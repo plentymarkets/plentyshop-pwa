@@ -62,9 +62,6 @@ export const useProduct: UseProductReturn = (slug) => {
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
 
-    const variationId = productGetters.getId(state.value.data)
-    if (variationId) useLastSeen().addToLastSeen(Number(variationId));
-    
     handlePreviewProduct(state, $i18n.locale.value);
     state.value.loading = false;
     return state.value.data;

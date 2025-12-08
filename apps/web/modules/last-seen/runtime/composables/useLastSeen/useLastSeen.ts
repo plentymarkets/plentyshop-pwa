@@ -20,7 +20,6 @@ export const useLastSeen = () => {
     total: 0
   }));
 
-  const page = computed(() => state.value.page);
   const totalPages = ref();
   const storedVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
   const itemsNotFetched = ref();
@@ -78,7 +77,7 @@ export const useLastSeen = () => {
       const { data: products } = await useSdk().plentysystems.getProductsByIds({
         variationIds: itemsNotFetched.value,
         itemsPerPage: state.value.itemsPerPage,
-        page: page.value
+        page: state.value.page
       })
 
       handleLastSeenProducts(products);
