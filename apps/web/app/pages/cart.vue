@@ -25,7 +25,7 @@
     </div>
     <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
       <h2 class="mt-8 typography-headline-3 font-bold">{{ t('emptyCart') }}</h2>
-      <LastSeen class="mt-10"></LastSeen>
+      <ModuleComponentRendering area="cart.empty" />
     </div>
   </NuxtLayout>
 </template>

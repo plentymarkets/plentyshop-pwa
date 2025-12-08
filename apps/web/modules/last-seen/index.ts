@@ -21,9 +21,10 @@ export default defineNuxtModule({
 
         addComponentsDir({
             path: resolver.resolve('runtime/components'),
+            global: true,
         })
 
-        addPlugin(resolver.resolve('./runtime/plugin/addLastSeen.client.ts'));
+        addPlugin(resolver.resolve('./runtime/plugin/addLastSeen.ts'));
 
         nuxt.options.runtimeConfig.public.lastSeen = {
             enabled: options.enabled,

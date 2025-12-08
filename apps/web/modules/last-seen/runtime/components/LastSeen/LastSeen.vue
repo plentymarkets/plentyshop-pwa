@@ -1,5 +1,5 @@
 <template>
-    <div v-if="products.length > 0" class="w-full">
+    <div v-if="products.length > 0" class="w-full mt-10">
         <h3 class="font-bold mb-3">Last seen products</h3>
         <SfScrollable buttons-placement="floating" class="pb-4 scrollbar-hidden"
             data-testid="product-slider">
