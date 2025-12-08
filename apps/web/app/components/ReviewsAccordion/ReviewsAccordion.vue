@@ -15,6 +15,7 @@
 
         <UiReviewStatistics :product="product" />
 
+        <UiReview v-for="(reviewItem, key) in authenticatedProductReviews" :key="key" :review-item="reviewItem" />
         <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
         <p
           v-if="paginatedProductReviews.length === 0"
@@ -55,12 +56,15 @@ const productVariationId = productGetters.getVariationId(product);
 
 const {
   data: productReviews,
+  authenticatedData: productAuthenticatedReviews,
   loading: loadingReviews,
   fetchReviews,
+  fetchAuthenticatedReviews,
   reviewArea,
 } = useProductReviews(productId, productVariationId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
+const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviews.value));
 
@@ -69,7 +73,10 @@ const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value) fetchReviews();
+    if (value) {
+      fetchReviews();
+      fetchAuthenticatedReviews();
+    }
   },
 );
 
