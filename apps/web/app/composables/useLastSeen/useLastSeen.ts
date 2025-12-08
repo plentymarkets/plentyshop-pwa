@@ -1,6 +1,5 @@
+import { ApiError, Product, productGetters, ProductsByIdsResponse } from '@plentymarkets/shop-api';
 import { useLocalStorage } from '@vueuse/core';
-import type { Product, FacetSearchCriteria, ApiError } from '@plentymarkets/shop-api';
-import type { UseLastSeenState } from './types';
 
 const STORAGE_KEY = 'plentyshop-last-seen';
 
@@ -13,20 +12,26 @@ const STORAGE_KEY = 'plentyshop-last-seen';
  * ```
  */
 export const useLastSeen = () => {
-  const config = useRuntimeConfig();
-  const maxItems = Number(config.public.lastSeenMaxItems || 10);
-
-  const state = useState<UseLastSeenState>('useLastSeen', () => ({
-    data: [],
+  const state = useState('useLastSeen', () => ({
+    data: new Map as Map<number, Product>,
     loading: false,
-    variationIds: [],
+    page: 1,
+    itemsPerPage: 10,
+    total: 0
   }));
 
+  const page = computed(() => state.value.page);
+  const totalPages = ref();
   const storedVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
+  const itemsNotFetched = ref();
 
-  if (state.value.variationIds.length === 0 && storedVariationIds.value.length > 0) {
-    state.value.variationIds = storedVariationIds.value;
-  }
+  watch(storedVariationIds, () => {
+    itemsNotFetched.value = storedVariationIds.value.filter((id) =>
+      !state.value.data.has(id)
+    );
+  }, {
+    immediate: true
+  });
 
   /**
    * @description Add a variation ID to the last seen list
@@ -37,14 +42,20 @@ export const useLastSeen = () => {
    * ```
    */
   const addToLastSeen = (variationId: number): void => {
-    const filtered = state.value.variationIds.filter((id) => id !== variationId);
-    
-    const updated = [variationId, ...filtered];
-    
-    const limited = updated.slice(0, maxItems);
-    
-    state.value.variationIds = limited;
-    storedVariationIds.value = limited;
+    if (storedVariationIds.value.includes(variationId)) {
+      return;
+    }
+    storedVariationIds.value.unshift(variationId);
+  };
+
+  const handleLastSeenProducts = (data: ProductsByIdsResponse) => {
+    const fetchedProducts = new Map();
+
+    for (const product of data?.products ?? []) {
+      fetchedProducts.set(Number(productGetters.getVariationId(product)), product);
+    }
+    state.value.data = new Map([...fetchedProducts, ...state.value.data]);
+    totalPages.value = Math.ceil((data?.total ?? 0) / state.value.itemsPerPage);
   };
 
   /**
@@ -55,33 +66,38 @@ export const useLastSeen = () => {
    * const products = await fetchLastSeenProducts();
    * ```
    */
-  const fetchLastSeenProducts = async () => {
-    if (state.value.variationIds.length === 0) {
-      state.value.data = [];
-      return [];
-    }
+  const fetchLastSeenProducts = async (itemsPerPage: number): Promise<void> => {
 
+    if (storedVariationIds.value.length === 0 || itemsNotFetched.value.length <= 0) {
+      return;
+    }
+    state.value.itemsPerPage = itemsPerPage;
     state.value.loading = true;
 
     try {
-      const params: FacetSearchCriteria = {
-        itemIds: state.value.variationIds.map((id) => id.toString()),
-        itemsPerPage: maxItems,
-      };
+      const { data: products } = await useSdk().plentysystems.getProductsByIds({
+        variationIds: itemsNotFetched.value,
+        itemsPerPage: state.value.itemsPerPage,
+        page: page.value
+      })
 
-      const { data } = await useSdk().plentysystems.getFacet(params)
-      const products = data?.products;
-      
-      const sortedProducts = state.value.variationIds
-        .map((id) => products.find((p: Product) => p.variation.id === id))
-        .filter((p): p is Product => p !== undefined);
-
-      state.value.data = sortedProducts;
-      state.value.loading = false;
-      
-      return sortedProducts;
+      handleLastSeenProducts(products);
     } catch (error) {
       useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
+  const nextPage = () => {
+    if (state.value.page < totalPages.value) {
+      state.value.page++;
+    }
+  };
+
+  const prevPage = () => {
+    if (state.value.page > 1) {
+      state.value.page--;
     }
   };
 
@@ -93,15 +109,19 @@ export const useLastSeen = () => {
    * ```
    */
   const clearLastSeen = () => {
-    state.value.variationIds = [];
-    state.value.data = [];
+    state.value.data.clear();
     storedVariationIds.value = [];
   };
 
   return {
+    nextPage,
+    prevPage,
     addToLastSeen,
     fetchLastSeenProducts,
     clearLastSeen,
     ...toRefs(state.value),
+    itemsNotFetched,
+    storedVariationIds,
+    totalPages
   };
 };

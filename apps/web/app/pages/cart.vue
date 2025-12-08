@@ -11,28 +11,21 @@
         <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
         <OrderSummary :cart="cart">
           <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />
-          <UiButton
-            data-testid="checkout-button"
-            :tag="NuxtLink"
-            :to="goToCheckout()"
-            size="lg"
-            class="w-full mb-4 md:mb-0"
-          >
+          <UiButton data-testid="checkout-button" :tag="NuxtLink" :to="goToCheckout()" size="lg"
+            class="w-full mb-4 md:mb-0">
             {{ t('goToCheckout') }}
           </UiButton>
           <client-only>
             <PayPalExpressButton :disabled="loading" location="cartPage" class="mt-4" type="CartPreview" />
-            <PayPalPayLaterBanner
-              placement="cart"
-              location="cartPage"
-              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
-            />
+            <PayPalPayLaterBanner placement="cart" location="cartPage"
+              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
           </client-only>
         </OrderSummary>
       </div>
     </div>
     <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
       <h2 class="mt-8 typography-headline-3 font-bold">{{ t('emptyCart') }}</h2>
+      <LastSeen class="mt-10"></LastSeen>
     </div>
   </NuxtLayout>
 </template>
