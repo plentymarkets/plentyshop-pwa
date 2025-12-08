@@ -14,10 +14,6 @@
 import { useLastSeen } from '../../composables/useLastSeen';
 const { data, fetchLastSeenProducts, nextPage, loading, itemsNotFetched, totalPages, page } = useLastSeen();
 
-
-const { showNetPrices } = useCart();
-const localePath = useLocalePath();
-
 const products = computed(() => {
     return Array.from(data.value.values());
 });
