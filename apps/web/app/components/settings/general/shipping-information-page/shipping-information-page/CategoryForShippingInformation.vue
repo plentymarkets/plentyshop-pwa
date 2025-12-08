@@ -20,8 +20,8 @@
       select-label=""
       :searchable="true"
       :custom-label="categoryCustomLabel"
-      @search-change="handleSearch"
       :deselect-label="getEditorTranslation('deselect-label')"
+      @search-change="handleSearch"
     />
   </div>
 </template>
@@ -54,7 +54,7 @@ onMounted(async () => {
 
   categories.value = data.value.entries.map((category: CategoryEntry) => {
     return {
-      id: category.id.toString() ?? '0',
+      id: (category.id ?? 0).toString(),
       name: category.details[0]?.name ?? '',
     };
   });
@@ -64,7 +64,7 @@ const { updateSetting, getSetting } = useSiteSettings('shippingTextCategoryId');
 
 const shippingTextCategoryId = computed({
   get: () => {
-    return categories.value.find((c: CategoryOption) => c.id === getSetting()) ?? null;
+    return categories.value.find((c: CategoryOption) => c.id === getSetting()?.toString()) ?? null;
   },
   set: (value: CategoryOption) => {
     updateSetting(value.id);
