@@ -1,6 +1,13 @@
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { UseCarouselState } from '~/composables/useCarousel/types';
 
+/**
+ * Type guard to check if an object has a specific property
+ */
+const hasProperty = <K extends string>(obj: object, key: K): obj is Record<K, unknown> => {
+  return key in obj;
+};
+
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({
     data: [],
@@ -19,8 +26,12 @@ export const useCarousel: UseCarouselReturn = () => {
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
-    if (carouselBlock && carouselBlock.content && 'bannerItems' in carouselBlock.content) {
-      carouselBlock.content.bannerItems = [...newBannerItems];
+    if (
+      carouselBlock?.content &&
+      typeof carouselBlock.content === 'object' &&
+      hasProperty(carouselBlock.content, 'bannerItems')
+    ) {
+      (carouselBlock.content as { bannerItems: BannerProps[] }).bannerItems = [...newBannerItems];
     }
   };
 
