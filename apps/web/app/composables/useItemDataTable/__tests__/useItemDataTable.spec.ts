@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import type { Product } from '@plentymarkets/shop-api';
 import { useItemDataTable } from '~/composables/useItemDataTable/useItemDataTable';
 
-// Mock the auto-imported t function
 const mockT = (key: string, params?: Record<string, unknown>) => {
   const p = params as { age?: number } | undefined;
   switch (key) {

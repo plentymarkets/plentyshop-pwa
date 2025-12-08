@@ -9,9 +9,9 @@ import {
   formatDimensions,
   formatContent,
   formatVariationProperties,
-  formatAgeRating,
+  getAgeRatingDescriptor,
 } from './helpers/ItemDataHelpers';
-type TranslateFn = (key: string, listOrNamed?: Record<string, unknown>) => string;
+import type { TranslateFn } from '~/composables/useItemDataTable/types';
 
 export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?: TranslateFn }) {
   const { $isPreview } = useNuxtApp();
@@ -49,14 +49,16 @@ export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?
 
     const shouldHideWeightG = hideZeroInPreview && weightG === 0;
     const shouldHideWeightNetG = hideZeroInPreview && weightNetG === 0;
-    const allDimsZero = hideZeroInPreview && (lengthMM ?? 0) === 0 && (widthMM ?? 0) === 0 && (heightMM ?? 0) === 0;
+    const allDimensionsZero =
+      hideZeroInPreview && (lengthMM ?? 0) === 0 && (widthMM ?? 0) === 0 && (heightMM ?? 0) === 0;
+    const ageDescriptor = getAgeRatingDescriptor(item.ageRestriction);
 
     return {
       itemId: item.id?.toString() ?? '',
 
       condition: getConditionName(product),
 
-      ageRating: translate ? formatAgeRating(translate, item.ageRestriction) : '',
+      ageRating: translate && ageDescriptor ? translate(ageDescriptor.key, ageDescriptor.params) : '',
 
       externalVariationId: variation.externalId ?? '',
 
@@ -72,7 +74,7 @@ export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?
 
       netWeight: shouldHideWeightNetG ? '' : formatWeight(weightNetG),
 
-      dimensions: allDimsZero ? '' : formatDimensions(lengthMM, widthMM, heightMM),
+      dimensions: allDimensionsZero ? '' : formatDimensions(lengthMM, widthMM, heightMM),
 
       customTariffNumber: variation.customsTariffNumber ?? item.customsTariffNumber ?? '',
 

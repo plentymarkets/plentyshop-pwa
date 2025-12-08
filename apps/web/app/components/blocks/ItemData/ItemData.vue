@@ -62,9 +62,7 @@ import { SfIconWarning } from '@storefront-ui/vue';
 const props = defineProps<{
   content: ItemDataContent;
 }>();
-const { t } = useI18n({
-  useScope: 'local',
-});
+const { t } = useI18n({});
 const { currentProduct } = useProducts();
 
 const { $isPreview } = useNuxtApp();

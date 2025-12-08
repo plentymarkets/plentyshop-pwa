@@ -86,24 +86,24 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
       }
 
       if (aHas) {
-        const av = (a as PlainObject)[key];
-        const bv = bHas ? (b as PlainObject)[key] : undefined;
+        const valueA = (a as PlainObject)[key];
+        const valueB = bHas ? (b as PlainObject)[key] : undefined;
 
-        if (ZERO_MISSING_PATHS.has(nextPath) && typeof av === 'number' && av === 0) {
+        if (ZERO_MISSING_PATHS.has(nextPath) && typeof valueA === 'number' && valueA === 0) {
           if (bHas) {
-            result[key] = cloneValue(bv);
+            result[key] = cloneValue(valueB);
           }
           continue;
         }
 
         if (forcedHere && bHas) {
-          result[key] = cloneValue(bv);
-        } else if (isMissing(av) && bHas) {
-          result[key] = cloneValue(bv);
-        } else if (isPlainObject(av) && isPlainObject(bv)) {
-          result[key] = mergeComplement({ a: av, b: bv, forced, ignored, path: nextPath });
+          result[key] = cloneValue(valueB);
+        } else if (isMissing(valueA) && bHas) {
+          result[key] = cloneValue(valueB);
+        } else if (isPlainObject(valueA) && isPlainObject(valueB)) {
+          result[key] = mergeComplement({ a: valueA, b: valueB, forced, ignored, path: nextPath });
         } else {
-          result[key] = cloneValue(av);
+          result[key] = cloneValue(valueA);
         }
       } else if (bHas) {
         result[key] = cloneValue((b as PlainObject)[key]);
