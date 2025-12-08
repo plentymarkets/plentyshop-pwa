@@ -4,7 +4,30 @@ import type { Block } from '@plentymarkets/shop-api';
  * Block names that should not have container constraints (max-width, centering)
  */
 const CONTAINER_EXCLUDED_BLOCKS = new Set(['Footer']);
-
+/**
+ * Block names that should not have full width
+ */
+const FULLWIDTH_EXCLUDED_BLOCKS = new Set([
+  'MultiGrid',
+  'NewsletterSubscribe',
+  'TextCard',
+  'CategoryData',
+  'CategorySorting',
+  'BlockSort',
+  'ProductRecommendedProducts',
+  'ProductGrid',
+  'Image',
+  'ItemGrid',
+  'ItemPage',
+  'PriceCard',
+  'ItemText',
+  'TechnicalData',
+  'CustomerReview',
+  'ProductLegalInformation',
+  'PerPageFilter',
+  'Sort',
+  'SortFilter',
+]);
 /**
  * Block names that should not have padding applied
  */
@@ -47,16 +70,40 @@ const isExcluded = (blockName: string, excludedSet: Set<string>): boolean => {
  * Checks if a block has fullWidth enabled in any of its layout locations
  *
  * Supports two possible locations:
- * - block.content.layout.fullWidth (Banner, etc.)
- * - block.layout.fullWidth (TextCard, Image, etc.)
+ * - block.content.layout.fullWidth (Banner, etc.) - defaults to false
+ * - block.configuration.layout.fullWidth (TextCard, Image, etc.) - defaults to true
+ *
+ * @param block - The block to check
+ * @returns True if fullWidth is enabled
+ */
+/**
+ * Checks if a block has fullWidth enabled in any of its layout locations
+ *
+ * Supports two possible locations:
+ * - block.content.layout.fullWidth (Banner, etc.) - defaults to false
+ * - block.configuration.layout.fullWidth (TextCard, Image, etc.) - defaults to true
  *
  * @param block - The block to check
  * @returns True if fullWidth is enabled
  */
 const hasFullWidth = (block: Block): boolean => {
-  return block.content?.layout?.fullWidth ?? block.configuration?.layout?.fullWidth ?? false;
-};
+  const contentBlocks = block.content?.layout?.fullWidth;
+  const structureBlocks = block.configuration?.layout?.fullWidth;
 
+  if (contentBlocks !== undefined) {
+    return contentBlocks;
+  }
+
+  if (structureBlocks !== undefined) {
+    return structureBlocks;
+  }
+
+  if (isExcluded(block.name, FULLWIDTH_EXCLUDED_BLOCKS)) {
+    return false;
+  }
+
+  return true;
+};
 /**
  * Generates CSS classes for a block based on its properties and configuration
  *

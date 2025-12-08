@@ -1,7 +1,6 @@
 import type { UseFullWidthToggleReturn } from './types';
 
 type Layout = { fullWidth?: boolean };
-type ConfigurationWithLayout = { layout?: Layout };
 
 /**
  * Composable to manage the full-width toggle state for blocks with a direct `layout` property.
@@ -10,10 +9,7 @@ type ConfigurationWithLayout = { layout?: Layout };
  * @param defaultValue - The default value to use if `fullWidth` is undefined (default: false).
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
-export const useFullWidthToggle = (
-  block: Ref<{ layout?: Layout }>,
-  defaultValue = false,
-): UseFullWidthToggleReturn => {
+export const useFullWidthToggle = (block: Ref<{ layout?: Layout }>, defaultValue = false): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
     get: () => block.value?.layout?.fullWidth ?? defaultValue,
     set: (value: boolean) => {
@@ -35,17 +31,18 @@ export const useFullWidthToggle = (
  * @param defaultLayout - The default layout object to use if `layout` is missing.
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
+
 export const useFullWidthToggleForConfig = (
-  configuration: Ref<ConfigurationWithLayout>,
+  block: Ref<{ layout?: Layout }>,
   defaultLayout: Layout = { fullWidth: false },
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
-    get: () => configuration.value?.layout?.fullWidth ?? defaultLayout.fullWidth ?? false,
+    get: () => block.value?.layout?.fullWidth ?? defaultLayout.fullWidth ?? false,
     set: (value: boolean) => {
-      if (!configuration.value.layout) {
-        configuration.value.layout = { ...defaultLayout };
+      if (!block.value.layout) {
+        block.value.layout = { ...defaultLayout };
       }
-      configuration.value.layout.fullWidth = value;
+      block.value.layout.fullWidth = value;
     },
   });
 

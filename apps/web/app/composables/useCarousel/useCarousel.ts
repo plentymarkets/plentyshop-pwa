@@ -19,8 +19,8 @@ export const useCarousel: UseCarouselReturn = () => {
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
-    if (carouselBlock) {
-      carouselBlock.content = [...newBannerItems];
+    if (carouselBlock && carouselBlock.content && 'bannerItems' in carouselBlock.content) {
+      carouselBlock.content.bannerItems = [...newBannerItems];
     }
   };
 
