@@ -14,7 +14,7 @@ const STORAGE_KEY = 'plentyshop-last-seen';
  */
 export const useLastSeen = () => {
   const state = useState('useLastSeen', () => ({
-    data: new Map() as Map<number, Product>,
+    data: new Map<number, Product>(),
     loading: false,
     page: 1,
     itemsPerPage: 10,
