@@ -117,6 +117,9 @@ const props = withDefaults(defineProps<GalleryProps>(), {
       thumbnailType: 'left-vertical',
       enableHoverZoom: true,
     },
+    layout: {
+      fullWidth: false,
+    },
   }),
 });
 
