@@ -1824,8 +1824,8 @@
                 "manufacturingCountry": true,
                 "content": true,
                 "grossWeight": true,
-                "netWeight": false,
-                "dimensions": false,
+                "netWeight": true,
+                "dimensions": true,
                 "customTariffNumber": true,
                 "properties": true
               },
@@ -1849,8 +1849,8 @@
                 "paddingBottom": 0,
                 "paddingRight": 0,
                 "paddingLeft": 0,
-                "displayAsCollapsable": "true",
-                "initiallyCollapsed": "true"
+                "displayAsCollapsable": false,
+                "initiallyCollapsed": false
               }
             }
           },
@@ -1873,8 +1873,8 @@
                 "manufacturingCountry": true,
                 "content": true,
                 "grossWeight": true,
-                "netWeight": false,
-                "dimensions": false,
+                "netWeight": true,
+                "dimensions": true,
                 "customTariffNumber": true,
                 "properties": true
               },
@@ -1898,8 +1898,8 @@
                 "paddingBottom": 0,
                 "paddingRight": 0,
                 "paddingLeft": 0,
-                "displayAsCollapsable": "true",
-                "initiallyCollapsed": "true"
+                "displayAsCollapsable": false,
+                "initiallyCollapsed": false
               }
             }
           }
