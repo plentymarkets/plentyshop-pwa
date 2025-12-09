@@ -1,6 +1,6 @@
 <template>
   <div class="flex ml-3 gap-1 flex-shrink-0 items-center">
-    <SfTooltip label="Reset to default" strategy="absolute" :show-arrow="true" placement="top">
+    <SfTooltip :label="getEditorTranslation('reset')" strategy="absolute" :show-arrow="true" placement="top">
       <UiButton variant="secondary" class="!px-2" :disabled="!hasChanges" @click="reset">
         <SfIconBase viewBox="0 -960 960 960" size="sm" class="fill-none">
           <path
@@ -10,12 +10,12 @@
         </SfIconBase>
       </UiButton>
     </SfTooltip>
-    <SfTooltip label="Export" strategy="absolute" :show-arrow="true" placement="top">
+    <SfTooltip :label="getEditorTranslation('export')" strategy="absolute" :show-arrow="true" placement="top">
       <UiButton variant="secondary" class="!px-2" @click="handleExportFile">
         <SfIconDownload size="sm" />
       </UiButton>
     </SfTooltip>
-    <SfTooltip label="Import" strategy="absolute" :show-arrow="true" placement="top">
+    <SfTooltip :label="getEditorTranslation('import')" strategy="absolute" :show-arrow="true" placement="top">
       <UiButton variant="secondary" class="!px-2" @click="openFileDialog">
         <SfIconUpload size="sm" />
       </UiButton>
@@ -58,3 +58,18 @@ const handleFileSelect = async (event: Event): Promise<void> => {
   importFile(text);
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "import": "Import",
+    "export": "Export",
+    "reset": "Reset"
+  },
+  "de": {
+    "import": "Import",
+    "export": "Export",
+    "reset": "Reset"
+  }
+}
+</i18n>
