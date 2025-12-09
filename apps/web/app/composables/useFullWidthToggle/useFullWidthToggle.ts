@@ -10,7 +10,8 @@ type Layout = { fullWidth?: boolean };
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
 export const useFullWidthToggleForContent = (
-  block: Ref<{ layout?: Layout }>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  block: Ref<any>,
   defaultValue = false,
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
@@ -25,7 +26,6 @@ export const useFullWidthToggleForContent = (
 
   return { isFullWidth };
 };
-
 /**
  * Composable to manage the full-width toggle state for "structure" blocks
  * where the `layout` object is nested inside a `configuration` property.
@@ -36,7 +36,8 @@ export const useFullWidthToggleForContent = (
  */
 
 export const useFullWidthToggleForConfig = (
-  block: Ref<{ layout?: Layout }>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  block: Ref<any>,
   defaultLayout: Layout = { fullWidth: false },
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
