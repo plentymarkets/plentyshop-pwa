@@ -93,9 +93,6 @@ export const createDefaultFooterSettings = (): FooterSettings => {
       footnoteBackground: '#161a16',
       footnoteText: '#959795',
     },
-    layout: {
-      fullWidth: false,
-    },
   };
 };
 
