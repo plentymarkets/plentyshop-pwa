@@ -10,13 +10,12 @@ export default defineNuxtModule({
         maxItems: 10,
     },
     setup(options, nuxt) {
-        console.log('Last Seen module setup with options:', options);
         const resolver = createResolver(import.meta.url);
 
         addImports({
-            name: 'useLastSeen', // name of the composable to be used
+            name: 'useLastSeen',
             as: 'useLastSeen',
-            from: resolver.resolve('runtime/composables/useLastSeen'), // path of composable
+            from: resolver.resolve('runtime/composables/useLastSeen'),
         })
 
         addComponentsDir({
@@ -25,10 +24,5 @@ export default defineNuxtModule({
         })
 
         addPlugin(resolver.resolve('./runtime/plugin/addLastSeen.ts'));
-
-        nuxt.options.runtimeConfig.public.lastSeen = {
-            enabled: options.enabled,
-            maxItems: options.maxItems,
-        };
     },
 });

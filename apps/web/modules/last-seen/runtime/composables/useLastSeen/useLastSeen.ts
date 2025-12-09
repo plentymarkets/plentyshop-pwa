@@ -47,13 +47,17 @@ export const useLastSeen = () => {
     storedVariationIds.value.unshift(variationId);
   };
 
-  const handleLastSeenProducts = (data: ProductsByIdsResponse) => {
+  const handleLastSeenProducts = (data: ProductsByIdsResponse, appendData = false) => {
     const fetchedProducts = new Map();
 
     for (const product of data?.products ?? []) {
       fetchedProducts.set(Number(productGetters.getVariationId(product)), product);
     }
-    state.value.data = new Map([...fetchedProducts, ...state.value.data]);
+    if (appendData) {
+      state.value.data = new Map([...state.value.data, ...fetchedProducts]);
+    } else {
+      state.value.data = new Map([...fetchedProducts, ...state.value.data]);
+    }
     totalPages.value = Math.ceil((data?.total ?? 0) / state.value.itemsPerPage);
   };
 
@@ -65,7 +69,7 @@ export const useLastSeen = () => {
    * const products = await fetchLastSeenProducts();
    * ```
    */
-  const fetchLastSeenProducts = async (itemsPerPage: number): Promise<void> => {
+  const fetchLastSeenProducts = async (itemsPerPage: number, appendData = false): Promise<void> => {
 
     if (storedVariationIds.value.length === 0 || itemsNotFetched.value.length <= 0) {
       return;
@@ -80,7 +84,7 @@ export const useLastSeen = () => {
         page: state.value.page
       })
 
-      handleLastSeenProducts(products);
+      handleLastSeenProducts(products, appendData);
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
