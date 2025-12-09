@@ -90,6 +90,9 @@ export const mockImageGalleryContent: ImageGalleryContent = {
     thumbnailType: 'bottom',
     enableHoverZoom: true,
   },
+  layout: {
+    fullWidth: false,
+  },
 };
 export const mockImageGalleryBlock: ImageGalleryProps = {
   name: 'ImageGallery',
