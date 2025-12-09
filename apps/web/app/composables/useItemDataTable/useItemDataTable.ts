@@ -1,6 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
 import type { ItemDataFieldValues } from '~/components/blocks/ItemData/types';
-import { useI18n } from 'vue-i18n';
 
 import {
   getConditionName,
@@ -10,11 +9,14 @@ import {
   formatDimensions,
   formatContent,
   formatVariationProperties,
-  formatAgeRating,
+  getAgeRatingDescriptor,
 } from './helpers/ItemDataHelpers';
+import type { TranslateFn } from '~/composables/useItemDataTable/types';
 
-export function useItemDataTable(productRef: Ref<Product | null>) {
-  const { t } = useI18n();
+export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?: TranslateFn }) {
+  const { $isPreview } = useNuxtApp();
+  const { disableActions } = useEditor();
+
   const fieldValues = computed<ItemDataFieldValues>(() => {
     const product = productRef.value as Product | null;
 
@@ -35,15 +37,28 @@ export function useItemDataTable(productRef: Ref<Product | null>) {
         properties: '',
       };
     }
-
+    const translate = options?.t;
     const { item, variation } = product;
+    const weightG = variation.weightG ?? null;
+    const weightNetG = variation.weightNetG ?? null;
+    const lengthMM = variation.lengthMM ?? null;
+    const widthMM = variation.widthMM ?? null;
+    const heightMM = variation.heightMM ?? null;
+
+    const hideZeroInPreview = ($isPreview && !disableActions.value) || !$isPreview;
+
+    const shouldHideWeightG = hideZeroInPreview && weightG === 0;
+    const shouldHideWeightNetG = hideZeroInPreview && weightNetG === 0;
+    const allDimensionsZero =
+      hideZeroInPreview && (lengthMM ?? 0) === 0 && (widthMM ?? 0) === 0 && (heightMM ?? 0) === 0;
+    const ageDescriptor = getAgeRatingDescriptor(item.ageRestriction);
 
     return {
       itemId: item.id?.toString() ?? '',
 
       condition: getConditionName(product),
 
-      ageRating: formatAgeRating(t, item.ageRestriction),
+      ageRating: translate && ageDescriptor ? translate(ageDescriptor.key, ageDescriptor.params) : '',
 
       externalVariationId: variation.externalId ?? '',
 
@@ -55,11 +70,11 @@ export function useItemDataTable(productRef: Ref<Product | null>) {
 
       content: formatContent(product),
 
-      grossWeight: formatWeight(variation.weightG),
+      grossWeight: shouldHideWeightG ? '' : formatWeight(weightG),
 
-      netWeight: formatWeight(variation.weightNetG),
+      netWeight: shouldHideWeightNetG ? '' : formatWeight(weightNetG),
 
-      dimensions: formatDimensions(variation.lengthMM, variation.widthMM, variation.heightMM),
+      dimensions: allDimensionsZero ? '' : formatDimensions(lengthMM, widthMM, heightMM),
 
       customTariffNumber: variation.customsTariffNumber ?? item.customsTariffNumber ?? '',
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Product } from '@plentymarkets/shop-api';
 import {
-  formatAgeRating,
+  getAgeRatingDescriptor,
   formatContent,
   formatWeight,
   formatDimensions,
@@ -11,7 +11,7 @@ import {
   getManufacturerName,
 } from '../ItemDataHelpers';
 
-const tMock = (key: string, params?: object) => {
+const tMock = (key: string, params?: Record<string, unknown>) => {
   const p = params as { age?: number } | undefined;
 
   switch (key) {
@@ -30,33 +30,49 @@ const tMock = (key: string, params?: object) => {
   }
 };
 
-describe('formatAgeRating', () => {
-  it('should return empty string when age is null/undefined', () => {
-    expect(formatAgeRating(tMock, null)).toBe('');
-    expect(formatAgeRating(tMock, undefined)).toBe('');
+describe('getAgeRatingDescriptor', () => {
+  it('should return null when age is null/undefined', () => {
+    expect(getAgeRatingDescriptor(null)).toBeNull();
+    expect(getAgeRatingDescriptor(undefined)).toBeNull();
   });
 
   it('should handle age = 0 (no restriction)', () => {
-    expect(formatAgeRating(tMock, 0)).toBe('No age restriction');
+    expect(getAgeRatingDescriptor(0)).toEqual({
+      key: 'single-item-age-restriction-none',
+    });
   });
 
   it('should handle age between 1 and 18', () => {
-    expect(formatAgeRating(tMock, 16)).toBe('16 and older');
+    expect(getAgeRatingDescriptor(16)).toEqual({
+      key: 'single-item-age-restriction',
+      params: { age: 16 },
+    });
   });
 
   it('should handle age = 50 (not flagged)', () => {
-    expect(formatAgeRating(tMock, 50)).toBe('Not rated');
+    expect(getAgeRatingDescriptor(50)).toEqual({
+      key: 'single-item-age-restriction-not-flagged',
+    });
   });
 
   it('should handle age = 80 (not required)', () => {
-    expect(formatAgeRating(tMock, 80)).toBe('Not required');
+    expect(getAgeRatingDescriptor(80)).toEqual({
+      key: 'single-item-age-restriction-not-required',
+    });
   });
 
   it('should handle unknown age', () => {
-    expect(formatAgeRating(tMock, 999)).toBe('Unknown');
+    expect(getAgeRatingDescriptor(999)).toEqual({
+      key: 'single-item-age-restriction-unknown',
+    });
+  });
+
+  it('should integrate with a translate function correctly', () => {
+    const descriptor = getAgeRatingDescriptor(16);
+    const label = descriptor ? tMock(descriptor.key, descriptor.params) : '';
+    expect(label).toBe('16 and older');
   });
 });
-
 describe('formatWeight', () => {
   it('should return empty string for null/undefined', () => {
     expect(formatWeight(null)).toBe('');

@@ -4,18 +4,18 @@
       v-if="!selectionModeCompact"
       class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
-      {{ t('perPage') }}
+      {{ t('common.labels.perPage') }}
     </h6>
 
     <div class="px-4">
       <SfSelect
         id="perPage"
         v-model="selected"
-        :aria-label="t('perPage')"
+        :aria-label="t('common.labels.perPage')"
         @change="updateItemsPerPage(Number(selected))"
       >
         <option v-if="selectionModeCompact" value="" disabled hidden>
-          {{ t('perPage') }}
+          {{ t('common.labels.perPage') }}
         </option>
         <option v-for="{ value, label, disabled } in options" :key="value" :value="value" :disabled="disabled">
           {{ label }}
@@ -33,8 +33,6 @@ import { defaults } from '~/composables';
 const props = defineProps<CategoryItemsPerPageProps & { selectionModeCompact?: boolean }>();
 
 const { updateItemsPerPage: updateItemsPerPageFromComposable, getFacetsFromURL } = useCategoryFilter();
-const { t } = useI18n();
-
 const selectionModeCompact = computed(() => props.selectionModeCompact ?? false);
 
 const options = ref(

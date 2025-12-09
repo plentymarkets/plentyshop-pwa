@@ -89,25 +89,24 @@ export const formatVariationProperties = (product: Product): string => {
     .join('; ');
 };
 
-export const formatAgeRating = (
-  t: (key: string, params?: object) => string,
-  age: number | null | undefined,
-): string => {
-  if (age == null) return '';
+export type AgeRatingDescriptor = { key: string; params?: Record<string, unknown> } | null;
+
+export const getAgeRatingDescriptor = (age: number | null | undefined): AgeRatingDescriptor => {
+  if (age == null) return null;
 
   const a = Number(age);
 
   switch (a) {
     case 0:
-      return t('single-item-age-restriction-none');
+      return { key: 'single-item-age-restriction-none' };
     case 50:
-      return t('single-item-age-restriction-not-flagged');
+      return { key: 'single-item-age-restriction-not-flagged' };
     case 80:
-      return t('single-item-age-restriction-not-required');
+      return { key: 'single-item-age-restriction-not-required' };
     default:
       if (a > 0 && a <= 18) {
-        return t('single-item-age-restriction', { age: a });
+        return { key: 'single-item-age-restriction', params: { age: a } };
       }
-      return t('single-item-age-restriction-unknown');
+      return { key: 'single-item-age-restriction-unknown' };
   }
 };

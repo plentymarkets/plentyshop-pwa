@@ -32,7 +32,6 @@ definePageMeta({
 const route = useRoute();
 const { getSearch, data: productsCatalog, productsPerPage, loading } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
-const { t } = useI18n();
 
 const handleQueryUpdate = async () => {
   await getSearch(getFacetsFromURL());

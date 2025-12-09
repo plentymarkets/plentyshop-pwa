@@ -101,7 +101,6 @@ import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
 const viewport = useViewport();
-const { t } = useI18n();
 const router = useRouter();
 const { logout } = useCustomer();
 
@@ -169,7 +168,7 @@ const getSubsections = (sections: MyAccountSubsection[]) => {
 };
 
 const breadcrumbs = computed(() => [
-  { name: t('home'), link: localePath(paths.home) },
+  { name: t('common.labels.home'), link: localePath(paths.home) },
   { name: t('account.heading'), link: localePath(paths.account) },
   ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label || '', link: currentPath.value }]),
 ]);

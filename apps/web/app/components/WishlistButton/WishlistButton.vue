@@ -4,8 +4,8 @@
     size="sm"
     :aria-label="
       isWishlistItem(variationId)
-        ? t('removeProductFromWishlist', { label: productName })
-        : t('addProductToWishlist', { label: productName })
+        ? t('common.actions.removeProductFromWishlist', { label: productName })
+        : t('common.actions.addProductToWishlist', { label: productName })
     "
     :class="{ 'p-[0.5rem]': !isCloseButton }"
     class="m-2"
@@ -29,8 +29,6 @@ import { SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } f
 import { productGetters } from '@plentymarkets/shop-api';
 
 const { product, quantity = 1, discard = false, variant = 'tertiary' } = defineProps<WishlistButtonProps>();
-
-const { t } = useI18n();
 const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
 const actionLoading = ref(false);
 
