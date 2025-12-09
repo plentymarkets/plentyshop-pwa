@@ -23,17 +23,12 @@ export const useLastSeen = () => {
 
   const totalPages = ref();
   const storedVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
-  const itemsNotFetched = ref();
 
-  watch(
-    storedVariationIds,
-    () => {
-      itemsNotFetched.value = storedVariationIds.value.filter((id) => !state.value.data.has(id));
-    },
-    {
-      immediate: true,
-    },
-  );
+  const calculateNotFetchedItems = () => {
+    return storedVariationIds.value.filter((id) => !state.value.data.has(id));
+  };
+
+  const itemsNotFetched = ref(calculateNotFetchedItems());
 
   /**
    * @description Add a variation ID to the last seen list
@@ -48,6 +43,7 @@ export const useLastSeen = () => {
       return;
     }
     storedVariationIds.value.unshift(variationId);
+    itemsNotFetched.value = calculateNotFetchedItems();
   };
 
   const handleLastSeenProducts = (data: ProductsByIdsResponse, appendData = false) => {
