@@ -5,7 +5,7 @@ type Layout = { fullWidth?: boolean };
 /**
  * Composable to manage the full-width toggle state for blocks with a direct `layout` property.
  *
- * @param block - A Ref containing the block object with optional `layout` property.
+ * @param content - A Ref to any object that may have a `layout` property inside the block.
  * @param defaultValue - The default value to use if `fullWidth` is undefined (default: false).
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
@@ -30,7 +30,7 @@ export const useFullWidthToggleForContent = (
  * Composable to manage the full-width toggle state for "structure" blocks
  * where the `layout` object is nested inside a `configuration` property.
  *
- * @param configuration - A Ref containing the configuration object with optional `layout` property.
+ * @param content - A Ref to any object that may have a `layout` property inside the block.
  * @param defaultLayout - The default layout object to use if `layout` is missing.
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
