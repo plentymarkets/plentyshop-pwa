@@ -5,10 +5,6 @@ export default defineNuxtModule({
     name: 'last-seen',
     configKey: 'lastSeen',
   },
-  defaults: {
-    enabled: true,
-    maxItems: 10,
-  },
   setup() {
     const resolver = createResolver(import.meta.url);
 
