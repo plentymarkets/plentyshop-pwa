@@ -1,3 +1,3 @@
 export type ProductSliderSkeletonProps = {
-    itemsCount?: number;
+  itemsCount?: number;
 };

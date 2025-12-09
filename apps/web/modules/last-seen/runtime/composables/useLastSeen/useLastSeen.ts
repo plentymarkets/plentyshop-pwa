@@ -13,24 +13,26 @@ const STORAGE_KEY = 'plentyshop-last-seen';
  */
 export const useLastSeen = () => {
   const state = useState('useLastSeen', () => ({
-    data: new Map as Map<number, Product>,
+    data: new Map() as Map<number, Product>,
     loading: false,
     page: 1,
     itemsPerPage: 10,
-    total: 0
+    total: 0,
   }));
 
   const totalPages = ref();
   const storedVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
   const itemsNotFetched = ref();
 
-  watch(storedVariationIds, () => {
-    itemsNotFetched.value = storedVariationIds.value.filter((id) =>
-      !state.value.data.has(id)
-    );
-  }, {
-    immediate: true
-  });
+  watch(
+    storedVariationIds,
+    () => {
+      itemsNotFetched.value = storedVariationIds.value.filter((id) => !state.value.data.has(id));
+    },
+    {
+      immediate: true,
+    },
+  );
 
   /**
    * @description Add a variation ID to the last seen list
@@ -70,7 +72,6 @@ export const useLastSeen = () => {
    * ```
    */
   const fetchLastSeenProducts = async (itemsPerPage: number, appendData = false): Promise<void> => {
-
     if (storedVariationIds.value.length === 0 || itemsNotFetched.value.length <= 0) {
       return;
     }
@@ -81,8 +82,8 @@ export const useLastSeen = () => {
       const { data: products } = await useSdk().plentysystems.getProductsByIds({
         variationIds: itemsNotFetched.value,
         itemsPerPage: state.value.itemsPerPage,
-        page: state.value.page
-      })
+        page: state.value.page,
+      });
 
       handleLastSeenProducts(products, appendData);
     } catch (error) {
@@ -125,6 +126,6 @@ export const useLastSeen = () => {
     ...toRefs(state.value),
     itemsNotFetched,
     storedVariationIds,
-    totalPages
+    totalPages,
   };
 };

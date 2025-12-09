@@ -3,14 +3,14 @@ import { productGetters } from '@plentymarkets/shop-api';
 import { useLastSeen } from '../composables/useLastSeen';
 
 export default defineNuxtPlugin(() => {
-    if (import.meta.client) {
-        const { on } = usePlentyEvent();
+  if (import.meta.client) {
+    const { on } = usePlentyEvent();
 
-        on('frontend:productLoaded', (event) => {
-            const variationId = productGetters.getId(event.product);
-            if (variationId) useLastSeen().addToLastSeen(Number(variationId));
-        });
-    }
-    const { addComponent } = useModuleRendering('cart.empty');
-    addComponent('LastSeen');
+    on('frontend:productLoaded', (event) => {
+      const variationId = productGetters.getId(event.product);
+      if (variationId) useLastSeen().addToLastSeen(Number(variationId));
+    });
+  }
+  const { addComponent } = useModuleRendering('cart.empty');
+  addComponent('LastSeen');
 });

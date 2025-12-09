@@ -27,8 +27,11 @@
           </UiButton>
           <client-only>
             <PayPalExpressButton :disabled="loading" location="cartPage" class="mt-4" type="CartPreview" />
-            <PayPalPayLaterBanner placement="cart" location="cartPage"
-              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
+            <PayPalPayLaterBanner
+              placement="cart"
+              location="cartPage"
+              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
+            />
           </client-only>
         </OrderSummary>
       </div>
