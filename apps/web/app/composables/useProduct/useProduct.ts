@@ -61,7 +61,6 @@ export const useProduct: UseProductReturn = (slug) => {
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
-
     handlePreviewProduct(state, $i18n.locale.value);
     state.value.loading = false;
     return state.value.data;
