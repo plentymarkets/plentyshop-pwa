@@ -11,16 +11,16 @@ type Layout = { fullWidth?: boolean };
  */
 export const useFullWidthToggleForContent = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  block: Ref<any>,
+  content: Ref<any>,
   defaultValue = false,
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
-    get: () => block.value?.layout?.fullWidth ?? defaultValue,
+    get: () => content.value?.layout?.fullWidth ?? defaultValue,
     set: (value: boolean) => {
-      if (!block.value.layout) {
-        block.value.layout = {};
+      if (!content.value.layout) {
+        content.value.layout = {};
       }
-      block.value.layout.fullWidth = value;
+      content.value.layout.fullWidth = value;
     },
   });
 
@@ -37,16 +37,16 @@ export const useFullWidthToggleForContent = (
 
 export const useFullWidthToggleForConfig = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  block: Ref<any>,
+  content: Ref<any>,
   defaultLayout: Layout = { fullWidth: false },
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
-    get: () => block.value?.layout?.fullWidth ?? defaultLayout.fullWidth ?? false,
+    get: () => content.value?.layout?.fullWidth ?? defaultLayout.fullWidth ?? false,
     set: (value: boolean) => {
-      if (!block.value.layout) {
-        block.value.layout = { ...defaultLayout };
+      if (!content.value.layout) {
+        content.value.layout = { ...defaultLayout };
       }
-      block.value.layout.fullWidth = value;
+      content.value.layout.fullWidth = value;
     },
   });
 
