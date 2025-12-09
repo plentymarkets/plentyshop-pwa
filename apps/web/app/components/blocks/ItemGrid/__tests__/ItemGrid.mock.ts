@@ -1,6 +1,11 @@
 import type { ItemGridProps } from '../types';
 import { mockProduct } from './Products.mock';
 
+/**
+ * Mock ItemGrid block for testing
+ * Fully typed with ItemGridProps for type safety
+ * Includes runtime-injected products property
+ */
 export const ItemGridMock: ItemGridProps = {
   name: 'ItemGrid',
   type: 'content',

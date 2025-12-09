@@ -2,6 +2,10 @@ import type { CustomerReviewProps } from '../types';
 
 export const customerReviewBlockUuid = '45454545-4545-4455-8455-454545454545';
 
+/**
+ * Mock CustomerReview block for testing
+ * Fully typed with CustomerReviewProps for type safety
+ */
 export const mockCustomerReviewBlock: CustomerReviewProps = {
   name: 'CustomerReview',
   type: 'content',

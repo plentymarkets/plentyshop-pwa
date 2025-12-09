@@ -1,10 +1,6 @@
-export type NewsletterSubscribeProps = {
-  name: string;
-  type: string;
-  content: NewsletterSubscribeContent;
-  configuration?: object;
-  index?: number;
-};
+import type { BlockProps } from '~/types/blocks';
+
+export type NewsletterSubscribeProps = BlockProps<NewsletterSubscribeContent>;
 export type NewsletterSubscribeContent = {
   index?: number;
   text: {
@@ -19,8 +15,10 @@ export type NewsletterSubscribeContent = {
   button: {
     label?: string;
   };
-
   settings: {
     emailFolderId: number;
+  };
+  layout?: {
+    fullWidth?: boolean;
   };
 };

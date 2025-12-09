@@ -1,23 +1,11 @@
-export type ProductLegalInformationProps = {
-  name: string;
-  type: string;
-  configuration?: object;
-  content: ProductLegalInformationContent;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
-};
+import type { BlockProps, PaddingLayout } from '~/types/blocks';
+
+export type ProductLegalInformationProps = BlockProps<ProductLegalInformationContent>;
 
 export type ProductLegalInformationContent = {
   text: {
     title: string;
     linkText: string;
   };
-  layout: {
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
-  };
+  layout: PaddingLayout;
 };

@@ -1,25 +1,14 @@
-export type ItemTextProps = {
-  name?: string;
-  type?: string;
-  content: ItemTextContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
-};
+import type { BlockProps, PaddingLayout } from '~/types/blocks';
+
+export type ItemTextProps = BlockProps<ItemTextContent>;
 
 export type ItemTextContent = {
   text: {
     title: string;
   };
-  layout: {
+  layout: Partial<PaddingLayout> & {
     displayAsCollapsable: boolean;
     initiallyCollapsed: boolean;
-    paddingTop?: number;
-    paddingBottom?: number;
-    paddingLeft?: number;
-    paddingRight?: number;
   };
 };
 

@@ -1,13 +1,13 @@
-export type ImageProps = {
-  name: string;
-  type: string;
-  content: ImageContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
-};
+import type {
+  BlockProps,
+  ButtonSection,
+  FillMode,
+  VerticalAlignment,
+  TextAlignment,
+  PaddingLayout,
+} from '~/types/blocks';
+
+export type ImageProps = BlockProps<ImageContent>;
 
 export type ImageContent = {
   index?: number;
@@ -20,25 +20,17 @@ export type ImageContent = {
     linktarget?: string;
     imageAlignment: 'left' | 'right';
     brightness?: number;
-    fillMode?: 'fill' | 'fit';
+    fillMode?: FillMode;
     aspectRatio?: string;
   };
   text: {
     textOverlay?: string;
     textOverlayColor?: string;
-    textOverlayAlignY?: 'top' | 'center' | 'bottom';
-    textOverlayAlignX?: 'left' | 'center' | 'right';
+    textOverlayAlignY?: VerticalAlignment;
+    textOverlayAlignX?: TextAlignment;
   };
-  button: {
-    label?: string;
-    link?: string;
-    variant?: 'primary' | 'secondary';
-  };
-  layout: {
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
+  button: ButtonSection;
+  layout: PaddingLayout & {
     backgroundColor?: string;
   };
 };

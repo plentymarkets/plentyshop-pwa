@@ -2,6 +2,10 @@ import type { ProductLegalInformationProps } from '../types';
 
 export const productLegalInformationBlockUuid = '45454545-4545-4455-8455-454545454545';
 
+/**
+ * Mock ProductLegalInformation block for testing
+ * Fully typed with ProductLegalInformationProps for type safety
+ */
 export const productLegalInformationBlock: ProductLegalInformationProps = {
   name: 'ProductLegalInformation',
   type: 'content',

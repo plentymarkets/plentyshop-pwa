@@ -1,13 +1,10 @@
+import type { PaddingLayout } from '~/types/blocks';
+
 export interface SortSettings {
   selectionModeCompact: boolean;
 }
 export type SortContent = {
-  layout: {
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
-  };
+  layout: PaddingLayout;
   settings: SortSettings;
 };
 export interface SortFormProps {

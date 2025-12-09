@@ -1,3 +1,5 @@
+import type { BlockProps, ButtonSection, TextAlignment, VerticalAlignment } from '~/types/blocks';
+
 export type Size = {
   width: string;
   height: string;
@@ -24,42 +26,33 @@ export type HeroContentProps = {
   link?: string;
 };
 
-export type BannerProps = {
-  name: string;
-  type: string;
-  content: {
-    image: {
-      wideScreen?: string;
-      desktop?: string;
-      tablet?: string;
-      mobile?: string;
-      alt?: string;
-      brightness?: number;
-    };
-    text: {
-      color?: string;
-      bgcolor?: string;
-      bgopacity?: number;
-      pretitle?: string;
-      title?: string;
-      subtitle?: string;
-      htmlDescription?: string;
-      textAlignment?: 'left' | 'center' | 'right';
-      justify?: 'top' | 'center' | 'bottom';
-      align?: 'left' | 'center' | 'right';
-      background?: boolean;
-    };
-    button: {
-      label?: string;
-      link?: string;
-      variant?: 'primary' | 'secondary';
-    };
-  };
-  index: number;
+export type BannerProps = BlockProps<BannerContent> & {
   lazyLoading: 'lazy' | 'eager';
-  meta: {
-    uuid: string;
+};
+
+export type BannerContent = {
+  image: {
+    wideScreen?: string;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
+    alt?: string;
+    brightness?: number;
   };
+  text: {
+    color?: string;
+    bgcolor?: string;
+    bgopacity?: number;
+    pretitle?: string;
+    title?: string;
+    subtitle?: string;
+    htmlDescription?: string;
+    textAlignment?: TextAlignment;
+    justify?: VerticalAlignment;
+    align?: TextAlignment;
+    background?: boolean;
+  };
+  button: ButtonSection;
 };
 
 export type BannerFormProps = {

@@ -1,17 +1,15 @@
 import type { Category } from '@plentymarkets/shop-api';
+import type { BlockProps, FillMode, TextAlignment, VerticalAlignment, PaddingLayout } from '~/types/blocks';
+
 export type CategoryDataFieldKey = 'name' | 'description1' | 'description2' | 'shortDescription';
 
 export type CategoryDataFieldsVisibility = Record<CategoryDataFieldKey, boolean>;
 
-export type CategoryDataProps = {
-  name: string;
-  type: string;
-  content: CategoryDataContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
+/**
+ * CategoryData block with runtime-injected properties.
+ * Uses intersection pattern to extend BlockProps with category and shouldLoad runtime properties.
+ */
+export type CategoryDataProps = BlockProps<CategoryDataContent> & {
   shouldLoad?: boolean;
   category?: Category;
 };
@@ -21,18 +19,14 @@ export type CategoryDataContent = {
   fields: CategoryDataFieldsVisibility;
   fieldsOrder: CategoryDataFieldKey[];
   fieldsDisabled: CategoryDataFieldKey[];
-  layout: {
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
+  layout: PaddingLayout & {
     narrowContainer: boolean;
   };
   displayCategoryImage: string;
   image: {
     alt?: string;
     brightness?: number;
-    fillMode?: 'fill' | 'fit';
+    fillMode?: FillMode;
   };
   text: {
     pretitle?: string;
@@ -42,9 +36,9 @@ export type CategoryDataContent = {
     color?: string;
     bgColor?: string;
     bgOpacity?: number;
-    textAlignment?: 'left' | 'center' | 'right';
-    justify?: 'top' | 'center' | 'bottom';
-    align?: 'left' | 'center' | 'right';
+    textAlignment?: TextAlignment;
+    justify?: VerticalAlignment;
+    align?: TextAlignment;
     background?: boolean;
   };
 };

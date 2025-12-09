@@ -1,25 +1,14 @@
-export type TechnicalDataProps = {
-  name?: string;
-  type?: string;
-  content: TechnicalDataContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
-};
+import type { BlockProps, PaddingLayout } from '~/types/blocks';
+
+export type TechnicalDataProps = BlockProps<TechnicalDataContent>;
 
 export type TechnicalDataContent = {
   text: {
     title: string;
   };
-  layout: {
+  layout: Partial<PaddingLayout> & {
     displayAsCollapsable: boolean;
     initiallyCollapsed: boolean;
-    paddingTop?: number;
-    paddingBottom?: number;
-    paddingLeft?: number;
-    paddingRight?: number;
   };
 };
 

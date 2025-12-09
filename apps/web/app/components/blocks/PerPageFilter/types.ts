@@ -1,13 +1,10 @@
+import type { PaddingLayout } from '~/types/blocks';
+
 export interface PerPageSettings {
   selectionModeCompact: boolean;
 }
 export type PerPageContent = {
-  layout: {
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
-  };
+  layout: PaddingLayout;
   settings: PerPageSettings;
 };
 export interface PerPageProps {

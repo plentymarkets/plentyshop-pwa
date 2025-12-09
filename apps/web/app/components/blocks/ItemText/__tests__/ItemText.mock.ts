@@ -1,5 +1,9 @@
 import type { ItemTextProps } from '../types';
 
+/**
+ * Mock ItemText block for testing
+ * Fully typed with ItemTextProps for type safety
+ */
 export const ItemTextMock: ItemTextProps = {
   name: 'ItemText',
   type: 'content',

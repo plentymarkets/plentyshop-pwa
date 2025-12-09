@@ -1,24 +1,13 @@
-export type CustomerReviewProps = {
-  name: string;
-  type: string;
-  configuration?: object;
-  content: CustomerReviewContent;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
-};
+import type { BlockProps, PaddingLayout } from '~/types/blocks';
+
+export type CustomerReviewProps = BlockProps<CustomerReviewContent>;
 
 export type CustomerReviewContent = {
   text: {
     title: string;
   };
-  layout: {
+  layout: PaddingLayout & {
     collapsible: boolean;
     initiallyCollapsed: boolean;
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
   };
 };

@@ -2,6 +2,10 @@ import type { ImageProps } from '../types';
 
 export const imageBlockUuid = '45454545-4545-4455-8455-454545454545';
 
+/**
+ * Mock Image block for testing
+ * Fully typed with ImageProps for type safety
+ */
 export const mockImageBlock: ImageProps = {
   name: 'Image',
   type: 'content',

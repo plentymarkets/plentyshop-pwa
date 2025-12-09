@@ -1,0 +1,21 @@
+## Plan: Standardize Block Types with Generic Extension Pattern (Option A)
+
+Implement a type-safe, backward-compatible block type system using generic extension of the `Block` interface with minimal primitive composition, runtime padding migration in `utils/`, incremental block migration with validation checkpoints, UUID-only form props, full type annotations for test mocks, component-level migration documentation, fix-forward approach, and text-only developer documentation including plugin guidance.
+
+### Steps
+
+1. **Create shared type foundation** in [`apps/web/app/types/blocks.ts`] defining `BlockProps<TContent, TConfig = unknown>` generic extending `Block` via intersection (`Block & { content: TContent; configuration?: TConfig; index?: number }`), plus minimal primitives: `PaddingLayout`, `ButtonSection`, `TextSection`, and shared unions (`ButtonVariant`, `TextAlignment`, `FillMode`, `VerticalAlignment`)
+
+2. **Create runtime padding normalizer** in [`apps/web/app/utils/normalize-padding.ts`] with JSDoc explaining legacy string format from TextCard, exporting `normalizePadding(layout?: Partial<PaddingLayout> | Record<string, string | number>): PaddingLayout` converting mixed types to numbers, plus `ensureLayoutDefaults(layout: any): PaddingLayout` helper for form components like [`ImageForm.vue`] initializing missing padding to 0
+
+3. **Migrate first batch (Image, CustomerReview, TechnicalData)** - update [`Image/types.ts`], [`CustomerReview/types.ts`], [`TechnicalData/types.ts`] replacing manual Block properties with `BlockProps<Content>`, refactor content using shared primitives, add component comments documenting `normalizePadding()` usage with "Handles legacy string padding from older stored blocks", update test mocks with full type annotations (`const mockImage: ImageProps = { ... }`), update form components, then validate with `npm run test && vue-tsc --noEmit` - fix any issues before proceeding
+
+4. **Migrate second batch (TextCard, ItemText, ProductLegalInformation)** - update [`TextCard/types.ts`] (source of string padding legacy), [`ItemText/types.ts`], [`ProductLegalInformation/types.ts`] following same pattern, add component comment in [`TextCard/TextCard.vue`] explaining "Runtime migration from legacy string-based padding to number-based", update tests/forms/components, validate with `npm run test && vue-tsc --noEmit` - address failures before next batch
+
+5. **Migrate third batch (ItemGrid, CategoryData, ProductRecommendedProducts)** - update [`ItemGrid/types.ts`], [`CategoryData/types.ts`], [`ProductRecommendedProducts/types.ts`] using intersection pattern `BlockProps<Content> & { products?: Product[]; shouldLoad?: boolean; category?: Category }` for runtime-injected properties, update tests ensuring runtime props properly typed, validate with `npm run test && vue-tsc --noEmit` - fix-forward any type errors
+
+6. **Migrate fourth batch (structure blocks)** - update [`structure/MultiGrid/types.ts`] removing duplicate Block properties while keeping `AlignableBlock = Block & { ... }` and `ColumnBlock = Block & { ... }` patterns (already correct), update [`structure/Carousel/types.ts`] to use `BlockProps<Block[]>` for recursive content, validate structure blocks work with nested content
+
+7. **Migrate remaining blocks and final validation** - update [`BannerCarousel/types.ts`], [`NewsletterSubscribe/types.ts`], [`Footer/types.ts`] (needs full `BlockProps` pattern added), [`ImageGallery/types.ts`], [`ItemData/types.ts`], [`Sort/types.ts`], [`PerPageFilter/types.ts`], [`SortFilter/types.ts`], [`PriceCard/types.ts`], run comprehensive validation `npm run test && vue-tsc --noEmit && npm run lint` to ensure type safety and code quality across all migrated blocks
+
+8. **Create developer documentation** in [`docs/block-type-system.md`] with text-only sections: (1) Overview of `BlockProps` generic pattern with code examples, (2) When to use intersection for runtime props with ItemGrid example, (3) How `normalizePadding()` provides backward compatibility, (4) Available shared primitive types for composition, (5) "Creating Custom Blocks" section for plugin developers showing full example of extending block system with new block type using `BlockProps`, (6) Reference to [`apps/web/app/types/blocks.ts`] JSDoc for additional details

@@ -10,7 +10,16 @@
 
 <script setup lang="ts">
 import type { TextCardProps } from './types';
+import { normalizePadding } from '~/utils/normalize-padding';
 
+/**
+ * TextCard component with legacy padding support
+ *
+ * Handles legacy string-based padding values (e.g., "10", "20px") from older stored blocks.
+ * Runtime migration to number-based padding is handled by normalizePadding() utility.
+ *
+ * @see normalizePadding() for backward compatibility details
+ */
 const props = defineProps<TextCardProps>();
 
 const textAlignmentClass = computed(() => {
@@ -24,14 +33,15 @@ const textAlignmentClass = computed(() => {
   }
 });
 const inlineStyle = computed(() => {
-  const layout = props.content.layout || {};
+  // Runtime migration from legacy string-based padding to number-based
+  const layout = normalizePadding(props.content.layout);
 
   return {
-    backgroundColor: layout.backgroundColor ?? 'transparent',
-    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
-    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
-    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
-    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+    backgroundColor: props.content.layout?.backgroundColor ?? 'transparent',
+    paddingTop: `${layout.paddingTop}px`,
+    paddingBottom: `${layout.paddingBottom}px`,
+    paddingLeft: `${layout.paddingLeft}px`,
+    paddingRight: `${layout.paddingRight}px`,
   };
 });
 </script>

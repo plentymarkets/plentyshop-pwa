@@ -1,3 +1,5 @@
+import type { BlockProps } from '~/types/blocks';
+
 export type SortFilterFieldKey =
   | 'category'
   | 'sortBy'
@@ -10,15 +12,11 @@ export type SortFilterFieldKey =
 
 export type SortFilterFieldsVisibility = Record<SortFilterFieldKey, boolean>;
 
-export type SortFilterProps = {
-  name: string;
-  type: string;
-  configuration?: object;
-  content: SortFilterContent;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
+/**
+ * SortFilter block with runtime-injected properties.
+ * Uses intersection pattern to extend BlockProps with shouldLoad runtime property.
+ */
+export type SortFilterProps = BlockProps<SortFilterContent> & {
   shouldLoad?: boolean;
 };
 

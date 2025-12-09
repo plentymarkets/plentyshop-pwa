@@ -1,5 +1,9 @@
 import type { TechnicalDataProps } from '../types';
 
+/**
+ * Mock TechnicalData block for testing
+ * Fully typed with TechnicalDataProps for type safety
+ */
 export const TechnicalDataMock: TechnicalDataProps = {
   name: 'TechnicalData',
   type: 'content',

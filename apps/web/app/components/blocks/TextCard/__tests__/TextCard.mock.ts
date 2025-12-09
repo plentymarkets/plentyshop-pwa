@@ -1,5 +1,9 @@
 import type { TextCardProps } from '../types';
 
+/**
+ * Mock TextCard block for testing
+ * Fully typed with TextCardProps for type safety
+ */
 export const mockTextCard: TextCardProps = {
   name: 'TextCard',
   type: 'block',

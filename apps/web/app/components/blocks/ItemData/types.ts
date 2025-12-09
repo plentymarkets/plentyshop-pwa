@@ -1,3 +1,5 @@
+import type { PaddingLayout } from '~/types/blocks';
+
 export type ItemDataFieldKey =
   | 'itemId'
   | 'condition'
@@ -17,11 +19,7 @@ export type ItemDataFieldsVisibility = Partial<Record<ItemDataFieldKey, boolean>
 
 export type ItemDataFieldsOrder = ItemDataFieldKey[];
 
-export interface ItemDataLayout {
-  paddingTop: number;
-  paddingBottom: number;
-  paddingRight: number;
-  paddingLeft: number;
+export interface ItemDataLayout extends PaddingLayout {
   displayAsCollapsable?: boolean;
   initiallyCollapsed?: boolean;
 }

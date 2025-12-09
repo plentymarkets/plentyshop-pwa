@@ -1,14 +1,12 @@
+import type { BlockProps, TextAlignment } from '~/types/blocks';
+
 export type CrossSellingRelationType = 'Accessory' | 'ReplacementPart' | 'Similar' | 'Bundle';
 
-export type ProductRecommendedProductsProps = {
-  name: string;
-  type: string;
-  content: ProductRecommendedProductsContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
+/**
+ * ProductRecommendedProducts block with runtime-injected properties.
+ * Uses intersection pattern to extend BlockProps with shouldLoad runtime property.
+ */
+export type ProductRecommendedProductsProps = BlockProps<ProductRecommendedProductsContent> & {
   shouldLoad?: boolean;
 };
 
@@ -27,6 +25,9 @@ export type ProductRecommendedProductsContent = {
     subtitle?: string;
     htmlDescription?: string;
     color?: string;
-    textAlignment?: 'left' | 'center' | 'right';
+    textAlignment?: TextAlignment;
+  };
+  layout?: {
+    fullWidth?: boolean;
   };
 };

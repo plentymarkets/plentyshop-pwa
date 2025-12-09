@@ -1,8 +1,15 @@
 import type { Block } from '@plentymarkets/shop-api';
+import type { BlockProps } from '~/types/blocks';
 
-export type FooterProps = {
-  content?: FooterSettings;
-};
+/**
+ * Footer block - special case with optional content.
+ * Note: This block has a unique structure and may not follow standard Block pattern.
+ */
+export type FooterProps =
+  | BlockProps<FooterSettings | undefined>
+  | {
+      content?: FooterSettings;
+    };
 
 export interface FooterSwitchDefinition {
   columnGroup: 'legal' | 'services';

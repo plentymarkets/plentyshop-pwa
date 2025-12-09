@@ -1,7 +1,8 @@
 import type { Product } from '@plentymarkets/shop-api';
+import type { BlockProps, TextAlignment } from '~/types/blocks';
 
-export type ItemCountPosition = 'left' | 'center' | 'right';
-export type ContentAlignment = 'left' | 'center' | 'right';
+export type ItemCountPosition = TextAlignment;
+export type ContentAlignment = TextAlignment;
 export type PaginationPosition = 'top' | 'bottom' | 'both';
 export type AddToCartStyle = 'primary' | 'secondary';
 
@@ -9,15 +10,11 @@ export type ItemGridFieldKey = 'title' | 'rating' | 'previewText' | 'price' | 'a
 
 export type ItemGridFieldsVisibility = Record<ItemGridFieldKey, boolean>;
 
-export type ItemGridProps = {
-  name: string;
-  type: string;
-  content: ItemGridContent;
-  configuration?: object;
-  index?: number;
-  meta: {
-    uuid: string;
-  };
+/**
+ * ItemGrid block with runtime-injected properties.
+ * Uses intersection pattern to extend BlockProps with products array and pagination properties.
+ */
+export type ItemGridProps = BlockProps<ItemGridContent> & {
   products?: Product[];
   productsPerPage?: number;
   totalProducts?: number;
