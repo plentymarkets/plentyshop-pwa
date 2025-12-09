@@ -207,7 +207,7 @@ const priceCardBlock = computed<PriceCardContent>(() => {
   return block?.content as PriceCardContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(priceCardBlock);
+const { isFullWidth } = useFullWidthToggleForContent(priceCardBlock);
 
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';

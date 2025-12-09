@@ -322,7 +322,7 @@ const categoryIdModel = computed({
 
 const recommendedBlockRef = ref(recommendedBlock.value);
 
-const { isFullWidth } = useFullWidthToggle(recommendedBlockRef);
+const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
 
 const selectCategoryTab = async () => {
   recommendedBlock.value.source.type = 'category';

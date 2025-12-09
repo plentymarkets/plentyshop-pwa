@@ -109,7 +109,7 @@ const perPageBlock = computed<PerPageContent>(() => {
   return content as PerPageContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(perPageBlock);
+const { isFullWidth } = useFullWidthToggleForContent(perPageBlock);
 const layoutOpen = ref(false);
 </script>
 

@@ -83,7 +83,7 @@ const uiItemImageBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ImageGalleryContent,
 );
 
-const { isFullWidth } = useFullWidthToggle(uiItemImageBlock);
+const { isFullWidth } = useFullWidthToggleForContent(uiItemImageBlock);
 
 const thumbsOpen = ref(true);
 const layoutOpen = ref(true);

@@ -522,7 +522,7 @@ const {
 } = useCategoryData();
 
 const { blockUuid } = useSiteConfiguration();
-const { isFullWidth } = useFullWidthToggle(categoryDataBlock);
+const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 </script>
 
 <i18n lang="json">

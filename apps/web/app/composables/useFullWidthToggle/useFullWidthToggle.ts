@@ -9,7 +9,10 @@ type Layout = { fullWidth?: boolean };
  * @param defaultValue - The default value to use if `fullWidth` is undefined (default: false).
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
-export const useFullWidthToggle = (block: Ref<{ layout?: Layout }>, defaultValue = false): UseFullWidthToggleReturn => {
+export const useFullWidthToggleForContent = (
+  block: Ref<{ layout?: Layout }>,
+  defaultValue = false,
+): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
     get: () => block.value?.layout?.fullWidth ?? defaultValue,
     set: (value: boolean) => {

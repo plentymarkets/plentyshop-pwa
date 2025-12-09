@@ -226,7 +226,7 @@ if (!rawContent.layout) {
 
 const itemTableBlock = reactive(rawContent as ItemDataContent);
 
-const { isFullWidth } = useFullWidthToggle(toRef(itemTableBlock));
+const { isFullWidth } = useFullWidthToggleForContent(toRef(itemTableBlock));
 
 const fieldLabels: ItemDataFieldLabels = {
   itemId: getEditorTranslation('field-itemId'),

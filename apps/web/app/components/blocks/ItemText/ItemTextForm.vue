@@ -136,7 +136,7 @@ const itemTextBlock = computed<ItemTextContent>(() => {
   return content as ItemTextContent;
 });
 
-const { isFullWidth } = useFullWidthToggle(itemTextBlock);
+const { isFullWidth } = useFullWidthToggleForContent(itemTextBlock);
 
 const textSettings = ref(false);
 const layoutSettings = ref(false);

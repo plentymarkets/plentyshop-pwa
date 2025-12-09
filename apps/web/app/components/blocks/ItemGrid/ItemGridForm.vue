@@ -264,7 +264,7 @@ const uiItemGridBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ItemGridContent,
 );
 
-const { isFullWidth } = useFullWidthToggle(uiItemGridBlock);
+const { isFullWidth } = useFullWidthToggleForContent(uiItemGridBlock);
 
 const desktopOptions = [2, 3, 4, 5, 6, 7];
 const tabletOptions = [2, 3, 4, 5, 6];

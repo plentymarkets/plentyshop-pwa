@@ -1,11 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { ref, computed, type Ref } from 'vue';
-import { useFullWidthToggle } from '../useFullWidthToggle';
 
 describe('useFullWidthToggleForContent', () => {
   it('should return false when layout is undefined', () => {
     const block = ref<{ name: string; layout?: { fullWidth?: boolean } }>({ name: 'TestBlock' });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     expect(isFullWidth.value).toBe(false);
   });
@@ -15,7 +13,7 @@ describe('useFullWidthToggleForContent', () => {
       name: 'TestBlock',
       layout: {},
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     expect(isFullWidth.value).toBe(false);
   });
@@ -25,7 +23,7 @@ describe('useFullWidthToggleForContent', () => {
       name: 'TestBlock',
       layout: { fullWidth: true },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     expect(isFullWidth.value).toBe(true);
   });
@@ -35,7 +33,7 @@ describe('useFullWidthToggleForContent', () => {
       name: 'TestBlock',
       layout: { fullWidth: false },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     expect(isFullWidth.value).toBe(false);
   });
@@ -47,7 +45,7 @@ describe('useFullWidthToggleForContent', () => {
       configuration: { enabled: true },
       layout: { fullWidth: true },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     expect(isFullWidth.value).toBe(true);
     expect(block.value.content).toEqual({ text: 'Hello' });
@@ -56,7 +54,7 @@ describe('useFullWidthToggleForContent', () => {
 
   it('should handle setting fullWidth to false explicitly', () => {
     const block = ref<{ name: string; layout?: { fullWidth?: boolean } }>({ name: 'TestBlock' });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = false;
 
@@ -66,7 +64,7 @@ describe('useFullWidthToggleForContent', () => {
 
   it('should handle setting fullWidth to true explicitly', () => {
     const block = ref<{ name: string; layout?: { fullWidth?: boolean } }>({ name: 'TestBlock' });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
 
@@ -79,7 +77,7 @@ describe('useFullWidthToggleForContent', () => {
       name: 'TestBlock',
       layout: { fullWidth: false },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     block.value.layout.fullWidth = true;
 
@@ -95,7 +93,7 @@ describe('useFullWidthToggleForContent', () => {
         padding: { left: 5, right: 5 },
       },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
 
@@ -108,8 +106,8 @@ describe('useFullWidthToggleForContent', () => {
     const block1 = ref({ name: 'Block1', layout: { fullWidth: false } });
     const block2 = ref({ name: 'Block2', layout: { fullWidth: true } });
 
-    const { isFullWidth: isFullWidth1 } = useFullWidthToggle(block1);
-    const { isFullWidth: isFullWidth2 } = useFullWidthToggle(block2);
+    const { isFullWidth: isFullWidth1 } = useFullWidthToggleForContent(block1);
+    const { isFullWidth: isFullWidth2 } = useFullWidthToggleForContent(block2);
 
     expect(isFullWidth1.value).toBe(false);
     expect(isFullWidth2.value).toBe(true);
@@ -126,7 +124,7 @@ describe('useFullWidthToggleForContent', () => {
   it('should maintain reactivity when block reference changes', () => {
     const initialBlock = { name: 'TestBlock', layout: { fullWidth: false } };
     const block = ref(initialBlock);
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
     expect(block.value.layout.fullWidth).toBe(true);
@@ -140,7 +138,7 @@ describe('useFullWidthToggleForContent', () => {
 
   it('should initialize layout object when setting fullWidth on a block without layout', () => {
     const block = ref<{ name: string; layout?: { fullWidth?: boolean } }>({ name: 'TestBlock' });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
 
@@ -153,7 +151,7 @@ describe('useFullWidthToggleForContent', () => {
       name: 'TestBlock',
       layout: { fullWidth: false },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
 
@@ -165,7 +163,7 @@ describe('useFullWidthToggleForContent', () => {
       name: 'TestBlock',
       layout: { fullWidth: false },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
     expect(isFullWidth.value).toBe(true);
@@ -183,7 +181,7 @@ describe('useFullWidthToggleForContent', () => {
       layout: { fullWidth: false },
     });
     const computedBlock = computed(() => baseBlock.value);
-    const { isFullWidth } = useFullWidthToggle(computedBlock);
+    const { isFullWidth } = useFullWidthToggleForContent(computedBlock);
 
     isFullWidth.value = true;
 
@@ -200,7 +198,7 @@ describe('useFullWidthToggleForContent', () => {
         backgroundColor: '#fff',
       },
     });
-    const { isFullWidth } = useFullWidthToggle(block);
+    const { isFullWidth } = useFullWidthToggleForContent(block);
 
     isFullWidth.value = true;
 

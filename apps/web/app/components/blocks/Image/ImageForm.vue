@@ -494,7 +494,7 @@ const uiImageTextBlock = computed(() => {
   return migrated;
 });
 
-const { isFullWidth } = useFullWidthToggle(uiImageTextBlock);
+const { isFullWidth } = useFullWidthToggleForContent(uiImageTextBlock);
 
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
