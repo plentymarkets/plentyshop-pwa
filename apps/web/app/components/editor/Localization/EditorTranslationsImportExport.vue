@@ -11,7 +11,7 @@
       </UiButton>
     </SfTooltip>
     <SfTooltip label="Export" strategy="absolute" :show-arrow="true" placement="top">
-      <UiButton variant="secondary" class="!px-2" @click="exportFile">
+      <UiButton variant="secondary" class="!px-2" @click="handleExportFile">
         <SfIconDownload size="sm" />
       </UiButton>
     </SfTooltip>
@@ -44,6 +44,10 @@ const reset = () => {
   });
   hasChanges.value = checkHasUnsavedChanges();
 };
+
+const handleExportFile = () => {
+  exportFile('export.csv');
+}
 
 const handleFileSelect = async (event: Event): Promise<void> => {
   const input = event.target as HTMLInputElement;
