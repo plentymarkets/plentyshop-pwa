@@ -5,20 +5,18 @@
     role="alert"
   >
     <div>
-      <span>{{ t('reloadPWA.newVersionAvailable') }}</span>
+      <span>{{ t('common.reloadPWA.newVersionAvailable') }}</span>
     </div>
-    <UiButton :aria-label="t('reloadPWA.ariaLabel')" @click="updatePWA">
-      {{ t('reloadPWA.refresh') }}
+    <UiButton :aria-label="t('common.reloadPWA.ariaLabel')" @click="updatePWA">
+      {{ t('common.reloadPWA.refresh') }}
     </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
 const { $pwa } = useNuxtApp();
-const { t } = useI18n();
 
 const needRefresh = computed(() => $pwa?.needRefresh);
-
 const updatePWA = async () => {
   await $pwa?.updateServiceWorker();
 };

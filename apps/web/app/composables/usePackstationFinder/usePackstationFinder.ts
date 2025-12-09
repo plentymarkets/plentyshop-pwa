@@ -9,10 +9,9 @@ import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 export const usePackstationFinder = () => {
-  const { $i18n } = useNuxtApp();
   const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
   const { data: cartData } = useCart();
-  const genericMessage = $i18n.t('PreferredDelivery.packstation.noResult2');
+  const genericMessage = t('PreferredDelivery.packstation.noResult2');
 
   const state = useState('usePackstationFinder', () => ({
     loading: false,

@@ -58,6 +58,7 @@ export const useProduct: UseProductReturn = (slug) => {
     await setupBlocks(
       (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
     );
+
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
     handlePreviewProduct(state, $i18n.locale.value);
@@ -71,9 +72,8 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const setBreadcrumbs = () => {
     const { data: categoryTree } = useCategoryTree();
-    const { $i18n } = useNuxtApp();
 
-    state.value.breadcrumbs = generateBreadcrumbs(categoryTree.value, state.value.data, $i18n.t('home'));
+    state.value.breadcrumbs = generateBreadcrumbs(categoryTree.value, state.value.data, t('common.labels.home'));
   };
 
   /**

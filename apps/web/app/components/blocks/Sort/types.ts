@@ -7,6 +7,7 @@ export type SortContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
+    fullWidth?: boolean;
   };
   settings: SortSettings;
 };

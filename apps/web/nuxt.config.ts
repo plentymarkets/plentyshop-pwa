@@ -99,6 +99,7 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       activeLanguages: process.env.LANGUAGELIST || 'en,de',
       enableProductEditing: process.env?.ENABLE_PRODUCT_EDITING === '1',
+      enableTemplateReset: process.env?.ENABLE_TEMPLATE_RESET === '1',
       disabledEditorSettings: process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1' ? [] : ['shop-search'],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
@@ -259,6 +260,8 @@ export default defineNuxtConfig({
   },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    apiEndpoint: process.env.API_ENDPOINT,
+    configId: Number(process.env.CONFIG_ID) || 1,
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,

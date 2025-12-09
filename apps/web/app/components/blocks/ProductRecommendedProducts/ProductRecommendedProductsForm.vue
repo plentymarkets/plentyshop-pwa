@@ -4,7 +4,7 @@
       v-model="textsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="recommended-form-source"
+      data-testid="open-recommended-products-form-texts"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
@@ -106,7 +106,7 @@
       v-model="sourceOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="recommended-form-source"
+      data-testid="open-recommended-products-form-source"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('source-label') }}</h2>
@@ -192,6 +192,18 @@
         />
       </div>
     </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+      </template>
+
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+    </UiAccordionItem>
   </div>
 </template>
 
@@ -215,6 +227,7 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 const { currentProduct } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { data: categoriesData, getCategories } = useCategoriesSearch();
+const layoutOpen = ref(true);
 
 const baseCategoryParams = {
   type: 'in:item',
@@ -307,6 +320,10 @@ const categoryIdModel = computed({
   },
 });
 
+const recommendedBlockRef = ref(recommendedBlock.value);
+
+const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
+
 const selectCategoryTab = async () => {
   recommendedBlock.value.source.type = 'category';
 };
@@ -345,7 +362,7 @@ const selectCategoryTab = async () => {
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
-
+    "layout-label": "Layout",
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
     "cross-selling-relation-replacement": "Replacement part",
@@ -369,7 +386,7 @@ const selectCategoryTab = async () => {
     "category-id-placeholder": "Enter Category Id",
 
     "text-color-label": "Text Colour",
-
+    "layout-label": "Layout",
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
