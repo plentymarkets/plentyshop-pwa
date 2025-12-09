@@ -20,9 +20,6 @@ const mockFooterData: FooterSettings = {
     footnoteBackground: '#f5f5f5',
     footnoteText: '#666666',
   },
-  layout: {
-    fullWidth: false,
-  },
 };
 
 const { useSdk } = vi.hoisted(() => {

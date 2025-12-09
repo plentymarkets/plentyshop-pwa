@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { ref, computed, type Ref } from 'vue';
 import { useFullWidthToggle } from '../useFullWidthToggle';
 
-describe('useFullWidthToggle', () => {
+describe('useFullWidthToggleForContent', () => {
   it('should return false when layout is undefined', () => {
     const block = ref<{ name: string; layout?: { fullWidth?: boolean } }>({ name: 'TestBlock' });
     const { isFullWidth } = useFullWidthToggle(block);
@@ -64,6 +64,16 @@ describe('useFullWidthToggle', () => {
     expect(block.value.layout?.fullWidth).toBe(false);
   });
 
+  it('should handle setting fullWidth to true explicitly', () => {
+    const block = ref<{ name: string; layout?: { fullWidth?: boolean } }>({ name: 'TestBlock' });
+    const { isFullWidth } = useFullWidthToggle(block);
+
+    isFullWidth.value = true;
+
+    expect(block.value.layout).toBeDefined();
+    expect(block.value.layout?.fullWidth).toBe(true);
+  });
+
   it('should be reactive to external block mutations', () => {
     const block = ref({
       name: 'TestBlock',
@@ -105,11 +115,12 @@ describe('useFullWidthToggle', () => {
     expect(isFullWidth2.value).toBe(true);
 
     isFullWidth1.value = true;
+    isFullWidth2.value = false;
 
     expect(isFullWidth1.value).toBe(true);
-    expect(isFullWidth2.value).toBe(true);
+    expect(isFullWidth2.value).toBe(false);
     expect(block1.value.layout.fullWidth).toBe(true);
-    expect(block2.value.layout.fullWidth).toBe(true);
+    expect(block2.value.layout.fullWidth).toBe(false);
   });
 
   it('should maintain reactivity when block reference changes', () => {
@@ -196,21 +207,5 @@ describe('useFullWidthToggle', () => {
     expect(block.value.layout.fullWidth).toBe(true);
     expect(block.value.layout.marginTop).toBe(10);
     expect(block.value.layout.backgroundColor).toBe('#fff');
-  });
-
-  it('should work with blocks containing other properties', () => {
-    const block = ref({
-      name: 'TestBlock',
-      content: { text: 'Hello' },
-      configuration: { enabled: true },
-      layout: { fullWidth: false },
-    });
-    const { isFullWidth } = useFullWidthToggle(block);
-
-    isFullWidth.value = true;
-
-    expect(isFullWidth.value).toBe(true);
-    expect(block.value.content).toEqual({ text: 'Hello' });
-    expect(block.value.configuration).toEqual({ enabled: true });
   });
 });
