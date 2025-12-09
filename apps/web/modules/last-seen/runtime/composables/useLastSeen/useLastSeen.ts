@@ -1,4 +1,5 @@
-import { ApiError, Product, productGetters, ProductsByIdsResponse } from '@plentymarkets/shop-api';
+import type { ApiError, Product, ProductsByIdsResponse } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import { useLocalStorage } from '@vueuse/core';
 
 const STORAGE_KEY = 'plentyshop-last-seen';

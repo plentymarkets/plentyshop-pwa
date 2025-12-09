@@ -9,7 +9,7 @@ export default defineNuxtModule({
     enabled: true,
     maxItems: 10,
   },
-  setup(options, nuxt) {
+  setup() {
     const resolver = createResolver(import.meta.url);
 
     addImports({

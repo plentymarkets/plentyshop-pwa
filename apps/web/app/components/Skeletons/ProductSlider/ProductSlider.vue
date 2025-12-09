@@ -24,7 +24,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconBase, SfScrollable } from '@storefront-ui/vue';
-import { ProductSliderSkeletonProps } from './types';
+import type { ProductSliderSkeletonProps } from './types';
 
 const { itemsCount = 5 } = defineProps<ProductSliderSkeletonProps>();
 </script>
