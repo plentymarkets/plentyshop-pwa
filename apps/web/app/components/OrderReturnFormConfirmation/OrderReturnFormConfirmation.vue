@@ -2,7 +2,7 @@
   <div>
     <header>
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -27,7 +27,7 @@
     <div class="flex flex-row justify-between mt-5">
       <UiButton variant="secondary" @click="$emit('previous')">
         <SfIconArrowBack />
-        {{ t('prev') }}
+        {{ t('common.actions.previous') }}
       </UiButton>
       <UiButton :disabled="loading" @click="confirmReturn()">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
@@ -48,7 +48,6 @@ const emit = defineEmits(['closed', 'previous']);
 
 const localePath = useLocalePath();
 const { currentReturnOrder, returnData, makeOrderReturn, loading, cleanReturnData } = useReturnOrder();
-const { t } = useI18n();
 const { send } = useNotification();
 
 const getItemByVariation = (variationId: number) => {

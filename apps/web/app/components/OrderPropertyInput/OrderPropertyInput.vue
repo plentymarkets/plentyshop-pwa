@@ -48,7 +48,6 @@ const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
@@ -61,22 +60,22 @@ const validationSchema = toTypedSchema(
   object({
     value: string().test((value, context) => {
       if (isOrderPropertyRequired && !value) {
-        return context.createError({ message: t('errorMessages.requiredField') });
+        return context.createError({ message: t('error.requiredField') });
       }
 
       if (value && value.length > 128) {
-        return context.createError({ message: t('errorMessages.maxCharacters', { max: 128 }) });
+        return context.createError({ message: t('error.maxCharacters', { max: 128 }) });
       }
 
       const isInt = productPropertyGetters.isOrderPropertyInt(productProperty);
       const isFloat = productPropertyGetters.isOrderPropertyFloat(productProperty);
 
       if (value && isInt && /\D/.test(value)) {
-        return context.createError({ message: t('errorMessages.wholeNumber') });
+        return context.createError({ message: t('error.wholeNumber') });
       }
 
       if (value && isFloat && !/^\d+(?:[,.]\d*)?$/.test(value)) {
-        return context.createError({ message: t('errorMessages.decimalNumber') });
+        return context.createError({ message: t('error.decimalNumber') });
       }
 
       return true;

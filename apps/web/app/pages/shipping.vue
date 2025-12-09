@@ -12,7 +12,6 @@ const { getSetting } = useSiteSettings('shippingTextCategoryId');
 const { categoryTemplateData, fetchCategoryTemplate } = useCategoryTemplate();
 
 await fetchCategoryTemplate(Number(getSetting()));
-const { t } = useI18n();
 
 const icon = 'page';
 setPageMeta(t('orderConfirmation.shipping'), icon);

@@ -90,7 +90,7 @@
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import type { FooterProps, FooterSettingsColumn } from './types';
-const { t } = useI18n();
+
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

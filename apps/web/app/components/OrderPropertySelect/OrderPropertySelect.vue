@@ -53,7 +53,6 @@ const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
@@ -70,7 +69,7 @@ const options = Object.values(productProperty.property.selectionValues).map(
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: string().required(t('errorMessages.requiredField')).default(''),
+    selectedValue: string().required(t('error.requiredField')).default(''),
   }),
 );
 

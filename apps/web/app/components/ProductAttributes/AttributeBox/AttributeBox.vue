@@ -40,15 +40,14 @@ const { updateValue, getValue } = useProductAttributes();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
-const { t } = useI18n();
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
-  return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
+  return productAttributeGetters.isAttributeValueDisabled(item) ? t('product.attributes.seeAvailableOptions') : '';
 };
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: number().required(t('errorMessages.requiredField')),
+    selectedValue: number().required(t('error.requiredField')),
   }),
 );
 

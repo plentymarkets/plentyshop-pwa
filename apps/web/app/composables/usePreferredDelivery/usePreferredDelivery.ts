@@ -11,7 +11,6 @@ import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 export const usePreferredDelivery = () => {
-  const { $i18n } = useNuxtApp();
   const { countryHasDelivery, checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
   const { data: cartData } = useCart();
 
@@ -46,7 +45,7 @@ export const usePreferredDelivery = () => {
       location: object({
         value: string().when([], {
           is: () => state.value.data.location.checked,
-          then: () => string().required($i18n.t('PreferredDelivery.general.preferredLocationAlertMessage')).default(''),
+          then: () => string().required(t('PreferredDelivery.general.preferredLocationAlertMessage')).default(''),
           otherwise: () => string().optional().default(''),
         }),
       }),
@@ -55,10 +54,10 @@ export const usePreferredDelivery = () => {
           is: () => state.value.data.neighbour.checked,
           then: () =>
             string()
-              .required($i18n.t('PreferredDelivery.general.preferredNeighbourNameAlertMessage'))
+              .required(t('PreferredDelivery.general.preferredNeighbourNameAlertMessage'))
               .test(
                 'is-valid-neighbour-name',
-                $i18n.t('PreferredDelivery.general.preferredNeigbourMaxCharViolation'),
+                t('PreferredDelivery.general.preferredNeigbourMaxCharViolation'),
                 (name: string) => name.length <= 100,
               )
               .default(''),
@@ -68,10 +67,10 @@ export const usePreferredDelivery = () => {
           is: () => state.value.data.neighbour.checked,
           then: () =>
             string()
-              .required($i18n.t('PreferredDelivery.general.preferredNeighbourAddressMessage'))
+              .required(t('PreferredDelivery.general.preferredNeighbourAddressMessage'))
               .test(
                 'is-valid-neighbour-address',
-                $i18n.t('PreferredDelivery.general.preferredNeigbourMaxCharViolation'),
+                t('PreferredDelivery.general.preferredNeigbourMaxCharViolation'),
                 (address: string) => address.length <= 100,
               )
               .default(''),
@@ -127,7 +126,7 @@ export const usePreferredDelivery = () => {
           {
             date: '',
             dayNumber: '',
-            dayName: $i18n.t('PreferredDelivery.general.wunschtagNone'),
+            dayName: t('PreferredDelivery.general.wunschtagNone'),
           },
           ...Object.values(data.preferredDay),
         ];
@@ -140,7 +139,7 @@ export const usePreferredDelivery = () => {
 
       useNotification().send({
         type: 'negative',
-        message: $i18n.t('PreferredDelivery.general.invalidPostalCodeMessage'),
+        message: t('PreferredDelivery.general.invalidPostalCodeMessage'),
       });
     }
   };
@@ -211,7 +210,7 @@ export const usePreferredDelivery = () => {
       await useSdk().plentysystems.doSavePreferredDeliveryServices(parameters);
       useNotification().send({
         type: 'positive',
-        message: $i18n.t('PreferredDelivery.general.submitWunschpaketServices'),
+        message: t('PreferredDelivery.general.submitWunschpaketServices'),
       });
     } catch (error: unknown) {
       useHandleError(error as ApiError);
