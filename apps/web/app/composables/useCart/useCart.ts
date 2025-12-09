@@ -224,12 +224,11 @@ export const useCart = () => {
       });
 
       if (isCartItemError(data as unknown as Cart | CartItemError)) {
-        const { $i18n } = useNuxtApp();
         const { send } = useNotification();
         const responseData = data as CartItemError;
         state.value.data.itemQuantity = responseData.availableStock;
 
-        send({ message: $i18n.t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
+        send({ message: t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
       } else {
         state.value.data = migrateVariationData(state.value.data, data as Cart) ?? state.value.data;
         // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized

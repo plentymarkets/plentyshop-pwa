@@ -1,18 +1,7 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title>{{ getEditorTranslation('label') }}</template>
+    <template #setting-title>{{ getEditorUITranslation('branding-and-design') }}</template>
   </SiteConfigurationView>
 </template>
 
 <script setup lang="ts"></script>
-
-<i18n lang="json">
-{
-  "en": {
-    "label": "Branding & design"
-  },
-  "de": {
-    "label": "Branding & design"
-  }
-}
-</i18n>

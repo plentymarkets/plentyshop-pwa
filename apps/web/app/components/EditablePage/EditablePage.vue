@@ -114,15 +114,14 @@ const scrollToBlock = (evt: DragEvent) => {
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
-const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
-
-onMounted(() => {
-  isEditingEnabled.value = false;
-  window.addEventListener('beforeunload', handleBeforeUnload);
-});
+const enabledActions = computed(() => props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value);
 
 onMounted(async () => {
+  isEditingEnabled.value = false;
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
   if ($isPreview) {
     await import('./draggable.css');
   }

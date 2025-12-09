@@ -11,7 +11,7 @@
       data-testid="recommended-first-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
-      :custom-label="(option) => $dynamicEditorTranslation(option)"
+      :custom-label="(option) => getEditorUITranslation(option)"
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
@@ -28,7 +28,6 @@ import { getEditorTranslation, sortingCategory } from '~/utils/sortingOptionsHel
 const { updateSetting, getSetting } = useSiteSettings('recommendedFirstSortingOption');
 
 const sortingOptions = computed(() => sortingCategory);
-const { $dynamicEditorTranslation } = useNuxtApp();
 
 const recommendedFirstSortingOption = computed({
   get: () => {

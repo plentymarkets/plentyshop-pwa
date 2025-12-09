@@ -55,7 +55,7 @@ const inputModel = ref('');
 
 const { pages } = await usePages();
 
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const isOpen = ref(true);
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
 

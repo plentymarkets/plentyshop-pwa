@@ -10,14 +10,14 @@
         @update:model-value="(event) => setCheckboxValue(Boolean(event))"
       />
       <label for="terms-checkbox" class="select-none">
-        <i18n-t keypath="termsInfo" scope="global">
+        <i18n-t keypath="legal.termsInfo" scope="global">
           <template #terms>
             <SfLink
               :href="localePath(paths.termsAndConditions)"
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
-              {{ t('termsAndConditions') }}
+              {{ t('legal.termsAndConditions') }}
             </SfLink>
           </template>
 
@@ -27,7 +27,7 @@
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
-              {{ t('cancellationRights') }}
+              {{ t('legal.cancellationRights') }}
             </SfLink>
           </template>
 
@@ -37,14 +37,14 @@
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
-              {{ t('privacyPolicy') }}
+              {{ t('legal.privacyPolicy') }}
             </SfLink>
           </template>
         </i18n-t>
       </label>
     </div>
     <div class="text-sm text-neutral-500 mt-1 ml-7">* {{ t('contact.form.asterixHint') }}</div>
-    <div v-if="showErrors" class="text-negative-700 text-sm">{{ t('termsRequired') }}</div>
+    <div v-if="showErrors" class="text-negative-700 text-sm">{{ t('legal.termsRequired') }}</div>
   </div>
 </template>
 
@@ -53,7 +53,6 @@ import { SfCheckbox, SfLink } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
-const { t } = useI18n();
 
 const { checkboxValue, setCheckboxValue, showErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 </script>

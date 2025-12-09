@@ -136,7 +136,6 @@ const { loading, data, getShippingProfilesData, deliveryLocationAvailable, valid
 const { mapElement, packstationRefs, currentPackstationIndex, showPackstationDetails, realMarkers } =
   usePackstationMap();
 
-const { t } = useI18n();
 const { handleSubmit, errors, validate, defineField } = useForm({ validationSchema: validationSchema });
 
 const [street, streetAttributes] = defineField('searchParams.street');

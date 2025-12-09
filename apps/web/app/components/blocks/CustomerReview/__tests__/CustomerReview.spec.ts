@@ -29,7 +29,9 @@ describe('CustomerReview.vue', () => {
       props: { ...mockCustomerReviewBlock, product: mockProduct },
     });
     expect(wrapper.find('[data-testid="no-review-text"]').exists()).toBe(true);
-    expect(wrapper.find('[data-testid="no-review-text"]').text()).toBe('customerReviewsNone');
+    expect(wrapper.find('[data-testid="no-review-text"]').text()).toBe(
+      'Nobody has submitted a review for this item yet',
+    );
   });
 
   it('should render non-collapsible content if collapsible is false', () => {

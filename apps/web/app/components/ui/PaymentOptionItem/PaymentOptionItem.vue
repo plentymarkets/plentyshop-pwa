@@ -1,6 +1,6 @@
 <template>
   <div class="relative pb-4">
-    <h1 class="font-bold text-lg ml-4 mt-6">{{ t('checkoutPayment.heading') }}</h1>
+    <h1 class="font-bold text-lg ml-4 mt-6">{{ t('checkout.payment.heading') }}</h1>
     <div class="w-auto max-w-[400px] min-w-[250px] m-2 pl-1">
       <input
         type="radio"
@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import type { PaymentOptionItemProps } from './types';
-const { t } = useI18n();
 
 const props = defineProps<PaymentOptionItemProps>();
 </script>
