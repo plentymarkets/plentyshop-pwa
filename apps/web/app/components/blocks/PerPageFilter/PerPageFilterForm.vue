@@ -18,7 +18,7 @@
         data-testid="switch-per-page-placeholder"
       />
     </div>
-    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div id="per-page-form-padding-form" class="py-2">
       <div class="flex items-center gap-2 mb-2">
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>

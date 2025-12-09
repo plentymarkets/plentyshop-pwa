@@ -53,7 +53,7 @@
           />
         </span>
       </div>
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       <div class="mt-5">
         {{ getEditorTranslation('padding') }}
       </div>

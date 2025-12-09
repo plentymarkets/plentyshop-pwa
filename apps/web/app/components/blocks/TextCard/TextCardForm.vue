@@ -248,7 +248,7 @@
         </SfInput>
       </label>
     </div>
-    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
 
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>

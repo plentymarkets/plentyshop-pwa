@@ -166,6 +166,7 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
     if (content.layout.paddingBottom === undefined) content.layout.paddingBottom = 0;
     if (content.layout.paddingLeft === undefined) content.layout.paddingLeft = 0;
     if (content.layout.paddingRight === undefined) content.layout.paddingRight = 0;
+    if (content.layout.fullWidth === undefined) content.layout.fullWidth = false;
   }
   return content as ProductLegalInformationContent;
 });

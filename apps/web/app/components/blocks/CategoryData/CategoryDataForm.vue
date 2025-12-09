@@ -436,7 +436,7 @@
       <template #summary>
         <h2>{{ getEditorTranslation('layout-label') }}</h2>
       </template>
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="uuid || blockUuid" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       <div
         class="py-2"
         :class="
@@ -522,8 +522,6 @@ const {
 } = useCategoryData();
 
 const { blockUuid } = useSiteConfiguration();
-const props = defineProps<{ uuid?: string }>();
-const uuid = props.uuid;
 const { isFullWidth } = useFullWidthToggle(categoryDataBlock);
 </script>
 
