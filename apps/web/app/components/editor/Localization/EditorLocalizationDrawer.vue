@@ -12,17 +12,21 @@
       <SfIconChevronLeft class="cursor-pointer flex-shrink-0 ml-2" @click="drawerOpen = false" />
     </div>
 
-    <div class="p-4">
-      <SfInput
-        v-model="searchTerm"
-        :aria-label="t('common.actions.search')"
-        :placeholder="t('common.actions.search')"
-        @input="debouncedSearchTerm"
-      >
-        <template #prefix>
-          <SfIconSearch />
-        </template>
-      </SfInput>
+    <div class="p-4 w-full">
+      <div class="flex w-full">
+        <SfInput
+          v-model="searchTerm"
+          :aria-label="t('common.actions.search')"
+          :placeholder="t('common.actions.search')"
+          wrapper-class="w-full"
+          @input="debouncedSearchTerm"
+        >
+          <template #prefix>
+            <SfIconSearch />
+          </template>
+        </SfInput>
+        <EditorLocalizationEditorTranslationsImportExport />
+      </div>
 
       <div class="w-full h-[calc(100vh-230px)] mt-4 overflow-hidden border rounded-lg">
         <div class="relative h-full flex flex-col">
