@@ -24,6 +24,7 @@ export interface ItemDataLayout {
   paddingLeft: number;
   displayAsCollapsable?: boolean;
   initiallyCollapsed?: boolean;
+  fullWidth?: boolean;
 }
 
 export interface ItemDataText {
