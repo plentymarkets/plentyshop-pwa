@@ -53,6 +53,7 @@ export type ColumnBlock = Block & {
       marginLeft?: number;
       marginRight?: number;
       backgroundColor?: string;
+      fullWidth?: boolean;
     };
   };
 };
