@@ -5,11 +5,10 @@
 <script setup lang="ts">
 const { data, getLegalTexts } = useLegalInformation();
 const { getRobots, setRobotForStaticPage } = useRobots();
-const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('categories.legal.subcategories.legalDisclosure'), icon);
+setPageMeta(t('legal.legalDisclosure'), icon);
 
 definePageMeta({
   pageType: 'static',

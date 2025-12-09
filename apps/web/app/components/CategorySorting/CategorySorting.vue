@@ -4,14 +4,14 @@
       v-if="!selectionModeCompact"
       class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
-      {{ t('sortBy') }}
+      {{ t('common.labels.sortBy') }}
     </h6>
 
     <div class="px-4">
-      <SfSelect id="sortBy" v-model="selected" :aria-label="t('sortBy')" data-testid="select-sort-by">
-        <option v-if="selectionModeCompact" value="" disabled hidden>{{ t('sortBy') }}</option>
+      <SfSelect id="sortBy" v-model="selected" :aria-label="t('common.labels.sortBy')" data-testid="select-sort-by">
+        <option v-if="selectionModeCompact" value="" disabled hidden>{{ t('common.labels.sortBy') }}</option>
         <option v-for="option in options" :key="option" :value="option">
-          {{ t(`sortType.${option}`) }}
+          {{ t(`category.sorting.${option}`) }}
         </option>
       </SfSelect>
     </div>
@@ -25,7 +25,6 @@ import { isPageOfType } from '~/utils/pathHelper';
 
 const props = defineProps<{ selectionModeCompact?: boolean }>();
 const { updateSorting } = useCategoryFilter();
-const { t } = useI18n();
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');
 const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSearch');
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');

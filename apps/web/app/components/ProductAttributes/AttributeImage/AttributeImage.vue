@@ -52,14 +52,13 @@ const { updateValue, getValue } = useProductAttributes();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
-const { t } = useI18n();
 const selectedAttributeValueName = ref<string>('');
 const runtimeConfig = useRuntimeConfig();
 const domain = runtimeConfig.public?.domain ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
   return productAttributeGetters.isAttributeValueDisabled(item)
-    ? t('productAttributes.seeAvailableOptions')
+    ? t('product.attributes.seeAvailableOptions')
     : productAttributeGetters.getAttributeValueName(item);
 };
 
@@ -70,7 +69,7 @@ const getImagePath = (item: VariationMapProductAttributeValue): string => {
 
 const validationSchema = toTypedSchema(
   object({
-    selectedValue: number().required(t('errorMessages.requiredField')),
+    selectedValue: number().required(t('error.requiredField')),
   }),
 );
 

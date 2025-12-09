@@ -44,7 +44,6 @@ const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(productProperty.property.id);
@@ -54,7 +53,7 @@ const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(p
 
 const validationSchema = toTypedSchema(
   object({
-    value: boolean().oneOf([true], t('errorMessages.requiredField')),
+    value: boolean().oneOf([true], t('error.requiredField')),
   }),
 );
 

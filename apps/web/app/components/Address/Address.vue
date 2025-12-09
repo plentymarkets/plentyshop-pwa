@@ -47,7 +47,6 @@ import { userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, isDefault, isSelected, showDivider } = defineProps<AddressProps>();
 
-const { t } = useI18n();
 const { isGuest } = useCustomer();
 const emit = defineEmits(['on-edit', 'on-delete', 'make-default']);
 </script>

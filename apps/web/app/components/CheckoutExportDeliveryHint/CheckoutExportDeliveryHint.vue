@@ -19,7 +19,6 @@
 import { SfIconWarning } from '@storefront-ui/vue';
 import { cartGetters } from '@plentymarkets/shop-api';
 
-const { t } = useI18n();
 const { data: cart } = useCart();
 const { default: shippingCountries } = useAggregatedCountries();
 

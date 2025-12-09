@@ -98,7 +98,6 @@ const { station, index, isActive, setRef } = defineProps<PackstationProps>();
 
 defineEmits(['on-station-select']);
 
-const { t } = useI18n();
 const { postNumber, postNumberRequired, savePackstationAddress } = usePackstationAddress();
 
 const stationBadgeClass = computed(() =>

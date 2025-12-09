@@ -60,7 +60,6 @@ import type { RemoveLookupCookie } from './types';
 
 const { $isPreview } = useNuxtApp();
 
-const { t } = useI18n();
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteSettings();
 const { save: saveBlocksAndSiteSettings } = useToolbar();

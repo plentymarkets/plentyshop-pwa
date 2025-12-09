@@ -29,13 +29,13 @@
         <span v-if="manufacturerResponsibleInfo.country">{{ manufacturerResponsibleInfo.country.name }}</span>
       </p>
       <p v-if="manufacturerResponsibleInfo.phoneNo" data-testid="manufacturer-responsible-info-phone">
-        {{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}
+        {{ t('common.labels.phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}
       </p>
       <p v-if="manufacturerResponsibleInfo.email" data-testid="manufacturer-responsible-info-email">
-        {{ t('email') }}: {{ manufacturerResponsibleInfo.email }}
+        {{ t('common.labels.email') }}: {{ manufacturerResponsibleInfo.email }}
       </p>
       <p v-if="manufacturerResponsibleInfo.responsibleContactUrl">
-        {{ t('responsibleContactUrl') }}: {{ manufacturerResponsibleInfo.responsibleContactUrl }}
+        {{ t('manufacturer.responsibleContactUrl') }}: {{ manufacturerResponsibleInfo.responsibleContactUrl }}
       </p>
     </div>
   </div>
@@ -49,8 +49,6 @@ import { manufacturerGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ManufacturerResponsibleInfoProps } from '~/components/ManufacturerResponsibleInfo/types';
 
 const props = defineProps<ManufacturerResponsibleInfoProps>();
-const { t } = useI18n();
-
 const manufacturer = productGetters.getManufacturer(props.product);
 const country = manufacturerGetters.getManufacturerResponsibleCountry(manufacturer);
 

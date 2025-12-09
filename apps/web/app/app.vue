@@ -32,7 +32,7 @@
     <div
       class="bg-white w-full relative"
       :class="{
-        'lg:w-3/4': drawerOpen,
+        'w-[calc(50vw-80px)] lg:w-[calc(75vw-80px)] xl:w-[calc(80vw-80px)]': drawerOpen,
         'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
         'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,
       }"
@@ -49,6 +49,7 @@
   <ClientOnly>
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
+    <component :is="ResetProductPageModal" v-if="clientPreview" />
   </ClientOnly>
   <ClientOnly>
     <LazyReloadPWA hydrate-on-idle />
@@ -129,6 +130,9 @@ const SiteConfigurationDrawer = defineAsyncComponent(
 const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
 const UnlinkCategoryModal = defineAsyncComponent(
   () => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'),
+);
+const ResetProductPageModal = defineAsyncComponent(
+  () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
 </script>
 

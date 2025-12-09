@@ -19,7 +19,6 @@ import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderTrackingProps } from './types';
 import { SfLink } from '@storefront-ui/vue';
 
-const { t } = useI18n();
 const { order } = defineProps<OrderTrackingProps>();
 
 const trackingNumbers = computed(() => orderGetters.getOrderTrackingNumbers(order));

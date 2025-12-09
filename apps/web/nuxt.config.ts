@@ -67,7 +67,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            vuetify: ['vuetify', '@fortawesome/fontawesome-free'],
+            vuetify: ['vuetify', '@mdi/js'],
           },
         },
       },
@@ -99,6 +99,7 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       activeLanguages: process.env.LANGUAGELIST || 'en,de',
       enableProductEditing: process.env?.ENABLE_PRODUCT_EDITING === '1',
+      enableTemplateReset: process.env?.ENABLE_TEMPLATE_RESET === '1',
       disabledEditorSettings: process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1' ? [] : ['shop-search'],
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
@@ -253,12 +254,14 @@ export default defineNuxtConfig({
     },
     vuetifyOptions: {
       icons: {
-        defaultSet: 'fa',
+        defaultSet: 'mdi-svg',
       },
     },
   },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    apiEndpoint: process.env.API_ENDPOINT,
+    configId: Number(process.env.CONFIG_ID) || 1,
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
@@ -268,6 +271,7 @@ export default defineNuxtConfig({
   fonts: {
     defaults: {
       weights: [300, 400, 500, 700],
+      preload: true,
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
