@@ -1,12 +1,11 @@
 <template>
   <div class="w-full" data-testid="category-items-per-page">
-    <h6
+    <div
       v-if="!selectionModeCompact"
       class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('common.labels.perPage') }}
-    </h6>
-
+    </div>
     <div class="px-4">
       <SfSelect
         id="perPage"
