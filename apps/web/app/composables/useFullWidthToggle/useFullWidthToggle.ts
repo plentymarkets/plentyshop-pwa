@@ -1,6 +1,4 @@
-import type { UseFullWidthToggleReturn } from './types';
-
-type Layout = { fullWidth?: boolean };
+import type { UseFullWidthToggleReturn, Layout } from './types';
 
 /**
  * Composable to manage the full-width toggle state for blocks with a direct `layout` property.
@@ -9,9 +7,8 @@ type Layout = { fullWidth?: boolean };
  * @param defaultValue - The default value to use if `fullWidth` is undefined (default: false).
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
-export const useFullWidthToggleForContent = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  content: Ref<any>,
+export const useFullWidthToggleForContent = <Type extends { layout?: Layout }>(
+  content: Ref<Type>,
   defaultValue = false,
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
@@ -26,6 +23,7 @@ export const useFullWidthToggleForContent = (
 
   return { isFullWidth };
 };
+
 /**
  * Composable to manage the full-width toggle state for "structure" blocks
  * where the `layout` object is nested inside a `configuration` property.
@@ -35,10 +33,11 @@ export const useFullWidthToggleForContent = (
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
 
-export const useFullWidthToggleForConfig = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  configuration: Ref<any>,
-  defaultLayout: Layout = { fullWidth: false },
+const DEFAULT_LAYOUT: Layout = { fullWidth: false };
+
+export const useFullWidthToggleForConfig = <Type extends { layout?: Layout }>(
+  configuration: Ref<Type>,
+  defaultLayout: Layout = DEFAULT_LAYOUT,
 ): UseFullWidthToggleReturn => {
   const isFullWidth = computed({
     get: () => configuration.value?.layout?.fullWidth ?? defaultLayout.fullWidth ?? false,
