@@ -153,8 +153,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
           }
         }
       }
+      return true;
     } catch (error) {
       console.error('Error saving blocks:', error);
+      return false;
     } finally {
       state.value.loading = false;
     }
