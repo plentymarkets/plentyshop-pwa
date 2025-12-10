@@ -1,6 +1,6 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
-import type { Product, Block } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
@@ -11,13 +11,10 @@ import { bundleComponentsDE } from './facets/bundleComponentsDE';
 import { bundleComponentsEN } from './facets/bundleComponentsEN';
 import { propertiesEN } from './facets/propertiesEN';
 import { propertiesDE } from './facets/propertiesDE';
-import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
-
-const getProductTemplateData = () => productTemplateData as Block[];
 
 type PlainObject = Record<string, unknown>;
 
-export const complement = <T>(
+export const fillMissingFields = <T>(
   a: Partial<T> | T,
   b: T,
   forcedKeys?: ReadonlyArray<string> | ReadonlySet<string>,
@@ -42,7 +39,7 @@ type MergeOpts = {
 const toSet = (keys?: ReadonlyArray<string> | ReadonlySet<string>): Set<string> =>
   !keys ? new Set() : keys instanceof Set ? new Set(keys) : new Set(keys);
 
-const isMissing = (value: unknown): boolean =>
+const isEmpty = (value: unknown): boolean =>
   value == null || (typeof value === 'string' && value.length === 0) || (Array.isArray(value) && value.length === 0);
 
 const isPlainObject = (value: unknown): value is PlainObject => {
@@ -63,7 +60,7 @@ const cloneValue = (v: unknown): unknown => {
 const matches = (set: Set<string>, key: string, path: string): boolean =>
   set.has(key) || (path ? set.has(`${path}.${key}`) : set.has(key));
 
-const ZERO_MISSING_PATHS = new Set([
+const DIMENSION_FIELDS_WITH_ZERO_DEFAULT = new Set([
   'variation.weightG',
   'variation.weightNetG',
   'variation.lengthMM',
@@ -92,7 +89,7 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
         const valueA = (a as PlainObject)[key];
         const valueB = bHas ? (b as PlainObject)[key] : undefined;
 
-        if (ZERO_MISSING_PATHS.has(nextPath) && typeof valueA === 'number' && valueA === 0) {
+        if (DIMENSION_FIELDS_WITH_ZERO_DEFAULT.has(nextPath) && typeof valueA === 'number' && valueA === 0) {
           if (bHas) {
             result[key] = cloneValue(valueB);
           }
@@ -101,7 +98,7 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
 
         if (forcedHere && bHas) {
           result[key] = cloneValue(valueB);
-        } else if (isMissing(valueA) && bHas) {
+        } else if (isEmpty(valueA) && bHas) {
           result[key] = cloneValue(valueB);
         } else if (isPlainObject(valueA) && isPlainObject(valueB)) {
           result[key] = mergeComplement({ a: valueA, b: valueB, forced, ignored, path: nextPath });
@@ -116,32 +113,37 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
   }
 
   if (isPlainObject(a)) return shallowCloneObject(a);
-  if (isPlainObject(b)) return isMissing(a) ? shallowCloneObject(b) : a;
+  if (isPlainObject(b)) return isEmpty(a) ? shallowCloneObject(b) : a;
 
-  return !isMissing(a) ? cloneValue(a) : cloneValue(b);
+  return !isEmpty(a) ? cloneValue(a) : cloneValue(b);
+};
+
+const getFakeProductForLanguage = (lang: string, variationId?: number): Product => {
+  const baseFakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
+  
+  const getVariationAttributeMap = () => {
+    if (!variationId) return undefined;
+    return lang === 'de' ? variationAttributeMapDE(variationId) : variationAttributeMapEN(variationId);
+  };
+
+  return {
+    ...baseFakeProduct,
+    variationAttributeMap: getVariationAttributeMap(),
+    variationProperties: lang === 'de' ? variationPropertiesDE : variationPropertiesEN,
+    bundleComponents: lang === 'de' ? bundleComponentsDE : bundleComponentsEN,
+    properties: lang === 'de' ? propertiesDE : propertiesEN,
+  };
 };
 
 export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, shouldComplement: boolean) => {
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 
-  const fakeProduct: Product = lang === 'de' ? fakeProductDE : fakeProductEN;
-  if (state.value.data && state.value.data.variation && state.value.data.variation.id) {
-    fakeProduct.variationAttributeMap =
-      lang === 'de'
-        ? variationAttributeMapDE(Number(state.value.data.variation.id))
-        : variationAttributeMapEN(Number(state.value.data.variation.id));
-  }
-  fakeProduct.variationProperties = lang === 'de' ? variationPropertiesDE : variationPropertiesEN;
-  fakeProduct.bundleComponents = lang === 'de' ? bundleComponentsDE : bundleComponentsEN;
-  fakeProduct.properties = lang === 'de' ? propertiesDE : propertiesEN;
+  const variationId = state.value.data?.variation?.id;
+  const fakeProduct = getFakeProductForLanguage(lang, variationId ? Number(variationId) : undefined);
+  const realProduct = toRaw(state.value.data);
 
-  const rawA = toRaw(state.value.data) as Product;
-  const rawB = fakeProduct as Product;
-  if (shouldComplement) {
-    state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
-  } else {
-    state.value.fakeData = fakeProduct;
-  }
-  state.value.fakeData.blocks = getProductTemplateData();
+  state.value.fakeData = shouldComplement
+    ? fillMissingFields<Product>(realProduct, fakeProduct, ['prices.graduatedPrices'], ['images'])
+    : fakeProduct;
 };
