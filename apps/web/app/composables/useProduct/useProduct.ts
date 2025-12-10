@@ -73,7 +73,7 @@ export const useProduct: UseProductReturn = (slug) => {
 
       setupBlocks(blocks);
 
-      handlePreviewProduct(state, $i18n.locale.value, true);
+      handlePreviewProduct(state, $i18n.locale.value, false);
 
       state.value.loading = false;
       return state.value.data;
@@ -90,7 +90,7 @@ export const useProduct: UseProductReturn = (slug) => {
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
-    handlePreviewProduct(state, $i18n.locale.value, false);
+    handlePreviewProduct(state, $i18n.locale.value, true);
     state.value.loading = false;
     return state.value.data;
   };
