@@ -12,25 +12,25 @@ export const useUpdatePageTemplate = () => {
 
     const { data: dataProducts } = useProducts();
 
+    let success = false;
+
     try {
       const cleanedData = JSON.stringify(data.value);
-      const identifier = ref(route.meta.identifier as string | number);
 
-      if (dataProducts.value.category?.type === 'content') {
-        identifier.value = dataProducts.value.category?.id;
+      let identifier: string | number = route.meta.identifier as string | number;
+
+      if (dataProducts.value?.category?.type === 'content' && dataProducts.value.category.id) {
+        identifier = dataProducts.value.category.id;
       }
 
-      await saveBlocks(identifier.value, route.meta.type as string, cleanedData);
-
-      return true;
+      success = await saveBlocks(identifier, route.meta.type as string, cleanedData);
+      return success;
     } catch (error) {
-      if (error) {
-        send({
-          message: error.toString(),
-          type: 'negative',
-        });
-        console.error(error);
-      }
+      send({
+        message: error instanceof Error ? error.message : String(error),
+        type: 'negative',
+      });
+      console.error(error);
       return false;
     } finally {
       isEditingEnabled.value = false;
