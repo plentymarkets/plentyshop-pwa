@@ -12,7 +12,6 @@ export const useUpdatePageTemplate = () => {
 
     const { data: dataProducts } = useProducts();
 
-    let success = false;
 
     try {
       const cleanedData = JSON.stringify(data.value);
@@ -23,8 +22,7 @@ export const useUpdatePageTemplate = () => {
         identifier = dataProducts.value.category.id;
       }
 
-      success = await saveBlocks(identifier, route.meta.type as string, cleanedData);
-      return success;
+      return await saveBlocks(identifier, route.meta.type as string, cleanedData);
     } catch (error) {
       send({
         message: `Failed to update page template: ${error instanceof Error ? error.toString() : String(error)}`,
