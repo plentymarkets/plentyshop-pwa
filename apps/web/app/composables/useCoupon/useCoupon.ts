@@ -26,12 +26,11 @@ export const useCoupon: UseCouponReturn = () => {
    * ```
    */
   const addCoupon: AddCoupon = async (params: DoAddCouponParams) => {
-    const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const { fetchSession } = useFetchSession();
     state.value.loading = true;
     if (params.couponCode.trim() === '') {
-      send({ message: $i18n.t('coupon.pleaseProvideCoupon'), type: 'warning' });
+      send({ message: t('coupon.pleaseProvideCoupon'), type: 'warning' });
       state.value.loading = false;
       return {} as Cart;
     }
@@ -39,7 +38,7 @@ export const useCoupon: UseCouponReturn = () => {
     try {
       await useSdk().plentysystems.doAddCoupon(params);
       await fetchSession();
-      send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
+      send({ message: t('coupon.couponApplied'), type: 'positive' });
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
@@ -49,7 +48,6 @@ export const useCoupon: UseCouponReturn = () => {
   };
 
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
-    const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const { fetchSession } = useFetchSession();
 
@@ -59,7 +57,7 @@ export const useCoupon: UseCouponReturn = () => {
 
       if (data) {
         await fetchSession();
-        send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
+        send({ message: t('coupon.couponRemoved'), type: 'positive' });
       }
     } catch (error) {
       useHandleError(error as ApiError);

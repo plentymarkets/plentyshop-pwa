@@ -63,6 +63,14 @@ const cloneValue = (v: unknown): unknown => {
 const matches = (set: Set<string>, key: string, path: string): boolean =>
   set.has(key) || (path ? set.has(`${path}.${key}`) : set.has(key));
 
+const ZERO_MISSING_PATHS = new Set([
+  'variation.weightG',
+  'variation.weightNetG',
+  'variation.lengthMM',
+  'variation.widthMM',
+  'variation.heightMM',
+]);
+
 const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown => {
   if (isPlainObject(a) && isPlainObject(b)) {
     const result: PlainObject = {};
@@ -81,17 +89,24 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
       }
 
       if (aHas) {
-        const av = (a as PlainObject)[key];
-        const bv = bHas ? (b as PlainObject)[key] : undefined;
+        const valueA = (a as PlainObject)[key];
+        const valueB = bHas ? (b as PlainObject)[key] : undefined;
+
+        if (ZERO_MISSING_PATHS.has(nextPath) && typeof valueA === 'number' && valueA === 0) {
+          if (bHas) {
+            result[key] = cloneValue(valueB);
+          }
+          continue;
+        }
 
         if (forcedHere && bHas) {
-          result[key] = cloneValue(bv);
-        } else if (isMissing(av) && bHas) {
-          result[key] = cloneValue(bv);
-        } else if (isPlainObject(av) && isPlainObject(bv)) {
-          result[key] = mergeComplement({ a: av, b: bv, forced, ignored, path: nextPath });
+          result[key] = cloneValue(valueB);
+        } else if (isMissing(valueA) && bHas) {
+          result[key] = cloneValue(valueB);
+        } else if (isPlainObject(valueA) && isPlainObject(valueB)) {
+          result[key] = mergeComplement({ a: valueA, b: valueB, forced, ignored, path: nextPath });
         } else {
-          result[key] = cloneValue(av);
+          result[key] = cloneValue(valueA);
         }
       } else if (bHas) {
         result[key] = cloneValue((b as PlainObject)[key]);
