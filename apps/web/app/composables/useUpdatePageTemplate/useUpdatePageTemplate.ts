@@ -12,7 +12,6 @@ export const useUpdatePageTemplate = () => {
 
     const { data: dataProducts } = useProducts();
 
-
     try {
       const cleanedData = JSON.stringify(data.value);
 
