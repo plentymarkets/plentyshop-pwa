@@ -1,12 +1,11 @@
 <template>
   <div class="w-full" data-testid="category-sorting">
-    <h6
+    <div
       v-if="!selectionModeCompact"
       class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('common.labels.sortBy') }}
-    </h6>
-
+    </div>
     <div class="px-4">
       <SfSelect id="sortBy" v-model="selected" :aria-label="t('common.labels.sortBy')" data-testid="select-sort-by">
         <option v-if="selectionModeCompact" value="" disabled hidden>{{ t('common.labels.sortBy') }}</option>
