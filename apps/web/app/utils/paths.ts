@@ -31,5 +31,5 @@ export const paths = {
   contact: '/contact',
   register: '/register',
   globalItemCategory: 'editor-layout-item-category',
-  globalItemDetails: 'editor-layout-item-details',
+  globalItemDetails: 'editor-layout-item-details_0',
 };

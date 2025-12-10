@@ -26,6 +26,13 @@ export const useProduct: UseProductReturn = (slug) => {
     breadcrumbs: [],
   }));
 
+  const isGlobalProductDetailsTemplate = computed(() => {
+    const route = useRoute();
+    const slugParam = `${route.params.slug}_${route.params.itemId}`;
+    const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
+    return parts.join('/') === paths.globalItemDetails;
+  });
+
   /** Function for fetching product data.
    * @param params { ProductParams }
    * @return FetchProduct
@@ -38,36 +45,52 @@ export const useProduct: UseProductReturn = (slug) => {
    * ```
    */
 
-  const fetchProduct: FetchProduct = async (params?: ProductParams) => {
-    state.value.loading = true;
-    const { $i18n } = useNuxtApp();
+  const fetchProduct: FetchProduct = async (params: ProductParams) => {
     const route = useRoute();
-    state.value.data.blocks = [];
-    const { setupBlocks } = useCategoryTemplate(
+    const { $i18n, $isPreview } = useNuxtApp();
+    const {
+      data: blockData,
+      setupBlocks,
+      getBlocksServer,
+    } = useCategoryTemplate(
       route?.meta?.identifier as string,
       route.meta.type as string,
       useNuxtApp().$i18n.locale.value,
     );
-    let fetchedBlocks = null;
-    let shouldComplement = false;
-    if (params) {
-      const { data, error } = await useAsyncData(
-        `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
-        () => useSdk().plentysystems.getProduct(params),
-      );
 
-      useHandleError(error.value ?? null);
-      properties.setProperties(data.value?.data.properties ?? []);
-      state.value.data = data.value?.data ?? ({} as Product);
-      fetchedBlocks = data.value?.data.blocks;
-      shouldComplement = true;
+    state.value.loading = true;
+
+    if (isGlobalProductDetailsTemplate.value && $isPreview) {
+      const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
+
+      await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
+      const blocks = blockData.value ?? useProductTemplateData();
+
+      state.value.data = {
+        blocks: blocks,
+        ...fakeProduct,
+      };
+
+      setupBlocks(blocks);
+
+      handlePreviewProduct(state, $i18n.locale.value, true);
+
+      state.value.loading = false;
+      return state.value.data;
     }
-    await setupBlocks(
-      (fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData()) as Block[],
+
+    const { data, error } = await useAsyncData(
+      `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
+      () => useSdk().plentysystems.getProduct(params),
     );
+    useHandleError(error.value ?? null);
 
-    handlePreviewProduct(state, $i18n.locale.value, shouldComplement);
+    const fetchedBlocks = data.value?.data.blocks;
+    setupBlocks(fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData());
 
+    properties.setProperties(data.value?.data.properties ?? []);
+    state.value.data = data.value?.data ?? ({} as Product);
+    handlePreviewProduct(state, $i18n.locale.value, false);
     state.value.loading = false;
     return state.value.data;
   };

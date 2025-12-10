@@ -8,7 +8,7 @@ export interface UseProductState {
   breadcrumbs: Breadcrumb[];
 }
 
-export type FetchProduct = (params?: ProductParams) => Promise<Product>;
+export type FetchProduct = (params: ProductParams) => Promise<Product>;
 export type SetBreadcrumbs = () => void;
 
 export interface UseProduct {
