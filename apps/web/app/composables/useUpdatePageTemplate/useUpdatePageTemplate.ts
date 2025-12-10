@@ -27,7 +27,7 @@ export const useUpdatePageTemplate = () => {
       return success;
     } catch (error) {
       send({
-        message: error instanceof Error ? error.message : String(error),
+        message: `Failed to update page template: ${error instanceof Error ? error.toString() : String(error)}`,
         type: 'negative',
       });
       console.error(error);
