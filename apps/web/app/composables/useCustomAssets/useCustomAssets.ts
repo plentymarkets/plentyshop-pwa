@@ -27,19 +27,29 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
   }));
 
   const addOrUpdate: AddOrUpdate = async (asset: Asset) => {
-    console.log('asd: ', asset)
+    const uuidValue = asset.uuid || uuid();
     const existingIndex = state.value.data.findIndex((a) => a.uuid === asset.uuid);
 
     if (existingIndex !== -1) {
-      state.value.data[existingIndex] = {
+      const updated = {
         ...state.value.data[existingIndex],
         ...asset,
+        uuid: uuidValue,
       };
+
+      state.value.data[existingIndex] = updated;
+
+      if (state.value.currentAsset?.uuid === uuidValue) {
+        state.value.currentAsset = updated;
+      }
     } else {
-      state.value.data.push({
+      const created = {
         ...asset,
-        ...({uuid: asset.uuid || uuid()})
-      });
+        uuid: uuidValue,
+      };
+
+      state.value.data.push(created);
+      state.value.currentAsset = created;
     }
   };
 
@@ -49,10 +59,13 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
     const merged = [...initialAssets, ...currentAssets]
       .filter((asset) => asset.type === type)
-      .reduce((acc, asset) => {
-        acc[asset.uuid] = asset;
-        return acc;
-      }, {} as Record<string, Asset>);
+      .reduce(
+        (acc, asset) => {
+          acc[asset.uuid] = asset;
+          return acc;
+        },
+        {} as Record<string, Asset>,
+      );
 
     const assets = Object.values(merged) as Asset[];
     return assets.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));

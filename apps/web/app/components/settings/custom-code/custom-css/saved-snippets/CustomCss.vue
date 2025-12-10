@@ -1,7 +1,5 @@
 <template>
-  <AssetsList type="css"/>
+  <AssetsList type="css" />
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>

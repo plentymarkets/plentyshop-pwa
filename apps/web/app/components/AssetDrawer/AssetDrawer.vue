@@ -12,20 +12,24 @@
       </h3>
       <SfIconChevronLeft class="cursor-pointer flex-shrink-0 ml-2" @click="selectAsset({} as Asset)" />
     </div>
+    <div class="p-4">
+      <div class="mb-4">
+        <label>
+          <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+          <SfInput
+            v-model="currentAsset.name"
+            data-testid="slider-button-label"
+            name="label"
+            type="text"
+            :placeholder="getEditorTranslation('button-text-placeholder')"
+            @update:model-value="() => addOrUpdate(currentAsset)"
+          />
+        </label>
+      </div>
+      <UiFormLabel class="mb-1">{{ getEditorTranslation('custom-css') }}</UiFormLabel>
 
-    <label>
-      <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
-      <SfInput
-        v-model="currentAsset.name"
-        data-testid="slider-button-label"
-        name="label"
-        type="text"
-        :placeholder="getEditorTranslation('button-text-placeholder')"
-        @update:model-value="() => addOrUpdate(currentAsset)"
-      />
-    </label>
-
-    {{ currentAsset }}
+      <CodeEditor v-model="currentAsset.content" language="css" />
+    </div>
   </SfDrawer>
 </template>
 
@@ -42,11 +46,13 @@ const open = ref(true);
 {
   "en": {
     "button-text-label": "Snippet name",
-    "button-text-placeholder": "label"
+    "button-text-placeholder": "label",
+    "custom-css": "Custom CSS"
   },
   "de": {
     "button-text-label": "Snippet name",
-    "button-text-placeholder": "label"
+    "button-text-placeholder": "label",
+    "custom-css": "Custom CSS"
   }
 }
 </i18n>

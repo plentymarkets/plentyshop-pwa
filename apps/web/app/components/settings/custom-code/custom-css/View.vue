@@ -29,4 +29,3 @@ const { currentAsset } = useCustomAssets();
   }
 }
 </i18n>
-

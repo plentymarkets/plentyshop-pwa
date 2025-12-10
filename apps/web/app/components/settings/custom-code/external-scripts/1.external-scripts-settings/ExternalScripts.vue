@@ -1,9 +1,7 @@
 <template>
   <div class="">test</div>
 </template>
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <i18n lang="json">
 {
@@ -17,4 +15,3 @@
   }
 }
 </i18n>
-

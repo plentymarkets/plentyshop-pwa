@@ -43,5 +43,3 @@ export interface UseCustomAssetsReturn {
     selectAsset: SelectAsset;
   };
 }
-
-

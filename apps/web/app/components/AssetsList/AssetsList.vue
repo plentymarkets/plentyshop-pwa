@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ currentAsset }}
     <div v-if="snippets.length === 0">
       <p class="mb-4">No snippets added yet</p>
       <button
@@ -52,15 +53,17 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-[auto,1fr] border rounded-lg overflow-hidden">
+            <div class="grid grid-cols-[auto,1fr] border rounded-lg max-h-24 overflow-scroll">
               <pre
                 class="m-0 py-3 pl-3 pr-2 text-right select-none text-gray-500 bg-gray-50 font-mono text-sm leading-5 whitespace-pre"
-              >{{ lineNumbers[asset.id] }}</pre
+                >{{ lineNumbers[asset.id] }}</pre
               >
               <textarea
+                :id="`snippet-${asset.id}-overview`"
                 :value="asset.content"
                 readonly
                 :rows="4"
+                name="snippet-overview"
                 class="w-full p-3 font-mono text-sm leading-5 outline-none resize-none opacity-40 bg-gray-50"
               />
             </div>
@@ -88,7 +91,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { AssetsListProps } from '~/components/AssetsList/types';
 
-const { getAssetsOfType, addOrUpdate, selectAsset } = useCustomAssets();
+const { getAssetsOfType, addOrUpdate, selectAsset, currentAsset } = useCustomAssets();
 const props = defineProps<AssetsListProps>();
 
 const snippets = computed({
@@ -97,8 +100,11 @@ const snippets = computed({
   },
   set: (option) => {
     if (Array.isArray(option)) {
-      option.forEach((asset) => {
-        addOrUpdate(asset);
+      option.forEach((asset, index) => {
+        addOrUpdate({
+          ...asset,
+          order: index,
+        });
       });
     } else {
       addOrUpdate(option);
@@ -120,7 +126,16 @@ watch(
 );
 
 const onAdd = () => {
-  console.log('added');
+  const newAsset = {
+    type: props.type,
+    name: 'New snippet',
+    content: '',
+    isActive: false,
+    placement: 'head_end',
+    order: snippets.value.length,
+  } as Asset;
+
+  addOrUpdate(newAsset);
 };
 
 const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isActive: value });

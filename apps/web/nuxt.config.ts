@@ -68,6 +68,13 @@ export default defineNuxtConfig({
         output: {
           manualChunks: {
             vuetify: ['vuetify', '@mdi/js'],
+            cmmain: ['codemirror'],
+            cmplugins: [
+              'js-beautify',
+              '@codemirror/lang-css',
+              '@codemirror/lang-javascript',
+              '@codemirror/theme-one-dark',
+            ],
           },
         },
       },
@@ -254,14 +261,12 @@ export default defineNuxtConfig({
     },
     vuetifyOptions: {
       icons: {
-        defaultSet: 'mdi-svg',
+        defaultSet: 'fa',
       },
     },
   },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-    apiEndpoint: process.env.API_ENDPOINT,
-    configId: Number(process.env.CONFIG_ID) || 1,
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
@@ -271,7 +276,6 @@ export default defineNuxtConfig({
   fonts: {
     defaults: {
       weights: [300, 400, 500, 700],
-      preload: true,
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
