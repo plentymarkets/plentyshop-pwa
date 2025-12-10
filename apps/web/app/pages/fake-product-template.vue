@@ -44,7 +44,11 @@ if (Object.keys(product.value).length === 0) {
     statusMessage: 'Product not found',
   });
 }
+
 setCurrentProduct(product.value || ({} as Product));
+setProductMeta();
+setBlocksListContext('product');
+setBreadcrumbs();
 
 watch(
   disableActions,
@@ -53,15 +57,6 @@ watch(
   },
   { immediate: true },
 );
-
-setProductMeta();
-setBlocksListContext('product');
-
-onBeforeRouteLeave(() => {
-  setCurrentProduct({} as Product);
-});
-
-setBreadcrumbs();
 
 watch(
   () => categoryTree.value,
@@ -102,6 +97,7 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
+  setCurrentProduct({} as Product);
 });
 
 onNuxtReady(() => observeRecommendedSection());
