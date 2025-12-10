@@ -1,5 +1,7 @@
 import type { UseFullWidthToggleReturn, Layout } from './types';
 
+const DEFAULT_LAYOUT: Layout = { fullWidth: false };
+
 /**
  * Composable to manage the full-width toggle state for blocks with a direct `layout` property.
  *
@@ -32,9 +34,6 @@ export const useFullWidthToggleForContent = <Type extends { layout?: Layout }>(
  * @param defaultLayout - The default layout object to use if `layout` is missing.
  * @returns An object with a reactive `isFullWidth` property for two-way binding.
  */
-
-const DEFAULT_LAYOUT: Layout = { fullWidth: false };
-
 export const useFullWidthToggleForConfig = <Type extends { layout?: Layout }>(
   configuration: Ref<Type>,
   defaultLayout: Layout = DEFAULT_LAYOUT,
