@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ currentAsset }}
     <div v-if="snippets.length === 0">
       <p class="mb-4">No snippets added yet</p>
       <button
