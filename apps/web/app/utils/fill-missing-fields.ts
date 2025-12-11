@@ -34,8 +34,7 @@ const cloneValue = (value: unknown): unknown => {
   return value;
 };
 
-const matches = (set: Set<string>, key: string, path: string): boolean =>
-  set.has(key) || set.has(`${path}.${key}`);
+const matches = (set: Set<string>, key: string, path: string): boolean => set.has(key) || set.has(`${path}.${key}`);
 
 const mergePropertyValue = (
   realValue: unknown,
