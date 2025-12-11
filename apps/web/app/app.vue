@@ -122,6 +122,8 @@ onMounted(() => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
+console.log(useRouter().getRoutes());
+
 const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
 const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
 const SiteConfigurationDrawer = defineAsyncComponent(
