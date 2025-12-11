@@ -165,9 +165,8 @@ const debouncedSearchTerm = useDebounceFn(() => {
   filterKeys(searchTerm.value, selectedLocales.value, showMissingOnly.value);
 }, 300);
 
-watch(showMissingOnly, (newValue) => {
-  filterKeys(searchTerm.value, selectedLocales.value, newValue);
-});
+watch(showMissingOnly, (newValue) => filterKeys(searchTerm.value, selectedLocales.value, newValue));
+watch(selectedLocales, (newLocales) => filterKeys(searchTerm.value, newLocales, showMissingOnly.value), { deep: true });
 
 const headerScroll = ref<HTMLElement | null>(null);
 const leftScrollerRef = ref<HTMLElement | null>(null);
