@@ -1,6 +1,6 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, Block } from '@plentymarkets/shop-api';
 import { toRaw, type Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
@@ -11,6 +11,9 @@ import { bundleComponentsDE } from './facets/bundleComponentsDE';
 import { bundleComponentsEN } from './facets/bundleComponentsEN';
 import { propertiesEN } from './facets/propertiesEN';
 import { propertiesDE } from './facets/propertiesDE';
+import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
+
+const getProductTemplateData = () => productTemplateData as Block[];
 
 type PlainObject = Record<string, unknown>;
 
@@ -60,6 +63,14 @@ const cloneValue = (v: unknown): unknown => {
 const matches = (set: Set<string>, key: string, path: string): boolean =>
   set.has(key) || (path ? set.has(`${path}.${key}`) : set.has(key));
 
+const ZERO_MISSING_PATHS = new Set([
+  'variation.weightG',
+  'variation.weightNetG',
+  'variation.lengthMM',
+  'variation.widthMM',
+  'variation.heightMM',
+]);
+
 const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown => {
   if (isPlainObject(a) && isPlainObject(b)) {
     const result: PlainObject = {};
@@ -78,17 +89,24 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
       }
 
       if (aHas) {
-        const av = (a as PlainObject)[key];
-        const bv = bHas ? (b as PlainObject)[key] : undefined;
+        const valueA = (a as PlainObject)[key];
+        const valueB = bHas ? (b as PlainObject)[key] : undefined;
+
+        if (ZERO_MISSING_PATHS.has(nextPath) && typeof valueA === 'number' && valueA === 0) {
+          if (bHas) {
+            result[key] = cloneValue(valueB);
+          }
+          continue;
+        }
 
         if (forcedHere && bHas) {
-          result[key] = cloneValue(bv);
-        } else if (isMissing(av) && bHas) {
-          result[key] = cloneValue(bv);
-        } else if (isPlainObject(av) && isPlainObject(bv)) {
-          result[key] = mergeComplement({ a: av, b: bv, forced, ignored, path: nextPath });
+          result[key] = cloneValue(valueB);
+        } else if (isMissing(valueA) && bHas) {
+          result[key] = cloneValue(valueB);
+        } else if (isPlainObject(valueA) && isPlainObject(valueB)) {
+          result[key] = mergeComplement({ a: valueA, b: valueB, forced, ignored, path: nextPath });
         } else {
-          result[key] = cloneValue(av);
+          result[key] = cloneValue(valueA);
         }
       } else if (bHas) {
         result[key] = cloneValue((b as PlainObject)[key]);
@@ -103,7 +121,7 @@ const mergeComplement = ({ a, b, forced, ignored, path }: MergeOpts): unknown =>
   return !isMissing(a) ? cloneValue(a) : cloneValue(b);
 };
 
-export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) => {
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, shouldComplement: boolean) => {
   const { $isPreview } = useNuxtApp();
   if (!$isPreview) return;
 
@@ -120,5 +138,10 @@ export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string) 
 
   const rawA = toRaw(state.value.data) as Product;
   const rawB = fakeProduct as Product;
-  state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
+  if (shouldComplement) {
+    state.value.fakeData = complement<Product>(rawA, rawB, ['prices.graduatedPrices'], ['images']);
+  } else {
+    state.value.fakeData = fakeProduct;
+  }
+  state.value.fakeData.blocks = getProductTemplateData();
 };

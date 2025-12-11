@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { SfSelect, SfIconHelp, SfTooltip } from '@storefront-ui/vue';
 
+const config = useRuntimeConfig();
 const { allLanguages } = useEditorLocalizationLocales();
 const { getSetting, updateSetting } = useSiteSettings('defaultLanguage');
 const { getSetting: getList } = useSiteSettings('languageList');
@@ -35,11 +36,15 @@ const WarningAtLeastOneMessage = getEditorTranslation('warning-at-least-one');
 const WarningDefaultChangedMessage = getEditorTranslation('warning-default-changed');
 
 const selectedDefaultLanguage = ref(getSetting());
-const allActiveLanguages = ref(
-  getList()
+
+const parseLanguageList = () => {
+  const list = getList()
     .split(',')
-    .filter((lang: string) => lang && allLanguagesArray.some((l) => l.locale === lang)),
-);
+    .filter((lang: string) => lang && allLanguagesArray.some((l) => l.locale === lang));
+  return list.length > 0 ? list : (config.public.activeLanguages as string).split(',');
+};
+
+const allActiveLanguages = ref(parseLanguageList());
 
 const selectedLanguages = computed(() => allActiveLanguages.value.map((lang: string) => lang.trim()));
 const selectedLanguageList = computed(() =>

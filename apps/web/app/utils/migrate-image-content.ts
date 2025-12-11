@@ -54,6 +54,7 @@ export function migrateImageContent(content: OldContent | ImageContent): ImageCo
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      fullWidth: false,
     },
   };
 }

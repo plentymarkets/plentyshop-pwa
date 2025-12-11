@@ -6,7 +6,7 @@
     <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
     <div class="py-2 mr-2">
       {{
-        t('checkoutExportDelivery', {
+        t('checkout.exportDeliveryNotice', {
           shopCountry: shopCountry,
           deliveryCountry: deliveryCountry,
         })

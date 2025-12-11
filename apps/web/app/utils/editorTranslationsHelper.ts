@@ -7,7 +7,7 @@ export const editorTranslations = {
 };
 
 export const getEditorUITranslation = (key: string, params: Record<string, string | number> = {}): string => {
-  const { locale } = useI18n();
+  const { locale } = useNuxtApp().$i18n;
   const lang = (locale.value as keyof typeof editorTranslations) || 'en';
   let template: string =
     editorTranslations[lang]?.[key as keyof (typeof editorTranslations)['en']] ??
