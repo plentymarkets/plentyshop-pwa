@@ -22,7 +22,7 @@ const DIMENSION_FIELDS_WITH_ZERO_DEFAULT = new Set([
 ]);
 
 const isDimensionFieldWithZero = (path: string, value: unknown): boolean =>
-  DIMENSION_FIELDS_WITH_ZERO_DEFAULT.has(path) && typeof value === 'number' && value === 0;
+  DIMENSION_FIELDS_WITH_ZERO_DEFAULT.has(path) && value === 0;
 
 const getFakeProductForLanguage = (lang: string, variationId?: number): Product => {
   const baseFakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
