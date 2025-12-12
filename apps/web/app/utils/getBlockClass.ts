@@ -147,6 +147,7 @@ const hasFullWidth = (block: Block): boolean => {
   }
 
   return true;
+};
 /**
  * Maps horizontal spacing setting to Tailwind max-width class
  */
