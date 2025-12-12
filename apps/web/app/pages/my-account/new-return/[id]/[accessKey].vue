@@ -55,7 +55,7 @@ import { paths } from '~/utils/paths';
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 definePageMeta({
   layout: 'account',
   pageType: 'static',

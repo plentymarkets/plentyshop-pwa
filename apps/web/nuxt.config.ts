@@ -43,6 +43,7 @@ export default defineNuxtConfig({
         '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
         '@storefront-ui/vue',
+        '@tanstack/vue-virtual',
         '@vee-validate/yup',
         '@vue/devtools-core',
         '@vue/devtools-kit',
@@ -260,6 +261,8 @@ export default defineNuxtConfig({
   },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    apiEndpoint: process.env.API_ENDPOINT,
+    configId: Number(process.env.CONFIG_ID) || 1,
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,

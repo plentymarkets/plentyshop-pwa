@@ -23,7 +23,6 @@ const CONTACT_INFORMATION = '#contact-information';
  */
 export const useCustomer = () => {
   const { emit } = usePlentyEvent();
-  const { $i18n } = useNuxtApp();
   const { invalidVAT } = useCreateAddress(AddressType.Shipping);
   const state = useState(`useCustomer`, () => ({
     user: null as User | null,
@@ -220,10 +219,8 @@ export const useCustomer = () => {
   const emailValidationSchema = toTypedSchema(
     object({
       customerEmail: string()
-        .required($i18n.t('errorMessages.email.required'))
-        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (email: string) =>
-          userGetters.isValidEmailAddress(email),
-        )
+        .required(t('error.email.required'))
+        .test('is-valid-email', t('error.email.valid'), (email: string) => userGetters.isValidEmailAddress(email))
         .default(state.value.user?.email ?? state.value.user?.guestMail ?? ''),
     }),
   );

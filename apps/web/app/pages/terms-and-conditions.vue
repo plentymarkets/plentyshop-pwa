@@ -5,7 +5,6 @@
 <script setup lang="ts">
 const { data, getLegalTexts } = useLegalInformation();
 const { getRobots, setRobotForStaticPage } = useRobots();
-const { t } = useI18n();
 
 definePageMeta({
   pageType: 'static',
@@ -13,7 +12,7 @@ definePageMeta({
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('categories.legal.subcategories.termsAndConditions'), icon);
+setPageMeta(t('legal.termsAndConditions'), icon);
 
 await getLegalTexts({
   type: 'TermsConditions',

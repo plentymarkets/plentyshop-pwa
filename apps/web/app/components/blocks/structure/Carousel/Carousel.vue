@@ -67,7 +67,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
-const { t } = useI18n();
+
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);

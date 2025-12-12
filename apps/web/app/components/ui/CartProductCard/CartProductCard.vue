@@ -126,7 +126,7 @@
       v-else-if="!disabled"
       square
       data-testid="remove-item-from-basket"
-      :aria-label="t('removeItemFromBasket')"
+      :aria-label="t('common.actions.removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="top-2 right-2 bg-white items-start h-fit"
@@ -150,7 +150,6 @@ const emit = defineEmits(['load']);
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
-const { t } = useI18n();
 const { format } = usePriceFormatter();
 const localePath = useLocalePath();
 
@@ -222,7 +221,7 @@ const changeQuantity = async (quantity: string) => {
 const deleteItem = async () => {
   deleteLoading.value = true;
   await deleteCartItem(cartItem);
-  send({ message: t('deletedFromCart'), type: 'positive' });
+  send({ message: t('cart.itemRemoved'), type: 'positive' });
   deleteLoading.value = false;
 };
 

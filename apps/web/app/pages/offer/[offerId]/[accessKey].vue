@@ -21,7 +21,6 @@ const { data, error, relatedOrder, hasError, fetchOffer, declineOffer, acceptOff
 const { send } = useNotification();
 const route = useRoute();
 const localePath = useLocalePath();
-const { t } = useI18n();
 
 const offerId = route.params.offerId ? route.params.offerId.toString() : '';
 const accessKey = route.params.accessKey ? route.params.accessKey.toString() : '';

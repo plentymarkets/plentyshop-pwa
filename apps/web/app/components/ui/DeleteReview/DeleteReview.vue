@@ -25,7 +25,6 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
-const { t } = useI18n();
 const { currentProduct } = useProducts();
 
 const productId = Number(productGetters.getItemId(currentProduct.value));

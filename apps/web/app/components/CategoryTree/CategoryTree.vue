@@ -3,12 +3,12 @@
     v-if="parent || (categoryTreeItem && categoryTreeGetters.getItems(categoryTreeItem)?.length)"
     class="category-tree"
   >
-    <h6
+    <div
       class="py-2 px-4 mb-4 bg-primary-50/50 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
       data-testid="category-tree"
     >
-      {{ t('category') }}
-    </h6>
+      {{ t('common.labels.category') }}
+    </div>
     <template v-if="parent">
       <CategoryTreeItem
         :name="categoryTreeGetters.getName(parent)"
@@ -41,8 +41,6 @@ const { data: categoryTree } = useCategoryTree();
 const { buildCategoryMenuLink } = useLocalization();
 
 const localePath = useLocalePath();
-const { t } = useI18n();
-
 const categoryTreeItem = computed(() =>
   categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getId(props.category)),
 );

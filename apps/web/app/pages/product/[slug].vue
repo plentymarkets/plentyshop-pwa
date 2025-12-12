@@ -23,7 +23,7 @@
 
           <div class="p-4 flex">
             <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
-              <span>{{ t('legalDetails') }}</span>
+              <span>{{ t('legal.details') }}</span>
               <SfIconChevronRight />
             </p>
           </div>
@@ -49,7 +49,6 @@ import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 const route = useRoute();
-const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
@@ -57,7 +56,7 @@ const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
-const product = ref(productForEditor);
+const product = productForEditor;
 const { disableActions } = useEditor();
 const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
@@ -94,7 +93,6 @@ await fetchProduct(productParams).then(() => {
     product: product.value,
   });
 });
-
 if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
 
@@ -103,7 +101,17 @@ if (Object.keys(product.value).length === 0) {
     statusMessage: 'Product not found',
   });
 }
-setCurrentProduct(product.value || ({} as Product));
+
+setCurrentProduct(productForEditor.value || ({} as Product));
+setProductMeta();
+setBlocksListContext('product');
+setBreadcrumbs();
+
+async function fetchReviews() {
+  const productVariationId = productGetters.getVariationId(product.value);
+  await fetchProductReviews(Number(productId), productVariationId);
+}
+await fetchReviews();
 
 watch(
   disableActions,
@@ -112,21 +120,6 @@ watch(
   },
   { immediate: true },
 );
-
-setProductMeta();
-setBlocksListContext('product');
-
-onBeforeRouteLeave(() => {
-  setCurrentProduct({} as Product);
-});
-
-async function fetchReviews() {
-  const productVariationId = productGetters.getVariationId(product.value);
-  await fetchProductReviews(Number(productId), productVariationId);
-}
-await fetchReviews();
-
-setBreadcrumbs();
 
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
@@ -196,6 +189,7 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
+  setCurrentProduct({} as Product);
 });
 
 onNuxtReady(() => observeRecommendedSection());

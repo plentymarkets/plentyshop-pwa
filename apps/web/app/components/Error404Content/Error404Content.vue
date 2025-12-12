@@ -37,7 +37,6 @@ import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const localePath = useLocalePath();
-const { t } = useI18n();
 const NuxtLink = resolveComponent('NuxtLink');
 
 const { data } = await useAsyncData('404-products', () =>
