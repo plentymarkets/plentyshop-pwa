@@ -299,6 +299,10 @@ import { paths } from '~/utils/paths';
 import { useRegisterForm } from '~/composables/useRegisterForm';
 import { SfLink, SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
 import { AddressType } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 const { default: shippingCountries, fetchAggregatedCountries } = useAggregatedCountries();
 const localePath = useLocalePath();

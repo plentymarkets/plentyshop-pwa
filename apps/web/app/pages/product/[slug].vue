@@ -48,6 +48,10 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
