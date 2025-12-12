@@ -13,42 +13,40 @@
         {{ getEditorTranslation('block-spacing-size-' + blocksSpacingSize) }}
       </button>
     </div>
-    <div class="px-4 py-3">
+    <div class="py-3">
       <span class="typography-text-xs text-neutral-700">
-        {{ getEditorTranslation('spacing-between-blocks') }}: {{ spacingInPx }}px
+        {{ horizontalSpacingDescription }}
       </span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
-
-const { updateSetting, getSetting } = useSiteSettings('blockSize');
+const { updateSetting, getSetting } = useSiteSettings('horizontalBlockSize');
 
 const btnClasses = ref(
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 uppercase inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed',
 );
 
-const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
+const blocksSpacingSizes = ref(['s', 'm', 'l']);
 
 const blockSize = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
 
-const spacingInPx = computed(() => {
-  if (!blockSize.value) return '0';
+const horizontalSpacingDescription = computed(() => {
+  const key = blockSize.value ?? 's';
 
-  const sizeMap: Record<string, string> = {
-    s: _s,
-    m: _m,
-    l: _l,
-    xl: _xl,
+  const map: Record<string, { bp: string; class: string }> = {
+    s: { bp: '3xl', class: 'max-w-screen-3xl' },
+    m: { bp: '2xl', class: 'max-w-screen-2xl' },
+    l: { bp: 'xl', class: 'max-w-screen-xl' },
   };
 
-  const remValue = parseFloat(sizeMap[blockSize.value] ?? '0');
-  return remValue * 16;
+  const entry = map[key] ?? map.s ?? { class: 'max-w-screen-3xl' };
+  const description = `Sets container max-width to ${entry.class}. Applies on non–full-width blocks.`;
+  return description;
 });
 </script>
 
@@ -59,16 +57,18 @@ const spacingInPx = computed(() => {
     "block-spacing-size-m": "m",
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
-    "spacing-between-blocks": "Spacing between blocks",
-    "label": "Default spacing"
+    "spacing-between-blocks-horizontal": "Spacing between blocks (horizontal)",
+    "label": "Horizontal spacing",
+    "horizontal-spacing-description": "Sets container max-width to {class} (up to {bp}). Applies on non–full-width blocks with container enabled."
   },
   "de": {
     "block-spacing-size-s": "s",
     "block-spacing-size-m": "m",
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
-    "spacing-between-blocks": "Spacing between blocks",
-    "label": "Default spacing"
+    "spacing-between-blocks-horizontal": "Spacing between blocks (horizontal)",
+    "label": "Horizontal spacing",
+    "horizontal-spacing-description": "Setzt die Container-Maximalbreite auf {class} (bis {bp}). Gilt für nicht vollbreite Blöcke mit aktiviertem Container."
   }
 }
 </i18n>
