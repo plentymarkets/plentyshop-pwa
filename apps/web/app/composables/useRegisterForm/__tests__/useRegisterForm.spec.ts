@@ -1,5 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { mount } from '@vue/test-utils';
+import { flushPromises, mount } from '@vue/test-utils';
 
 mockNuxtImport('t', () => {
   return () => 'Your account has been created successfully';
@@ -225,7 +225,7 @@ describe('useRegisterForm', () => {
     composable!.formFields.privacyPolicy.value = true;
     composable!.formFields.turnstile.value = 'token';
 
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await flushPromises();
 
     await composable!.onSubmit();
 
