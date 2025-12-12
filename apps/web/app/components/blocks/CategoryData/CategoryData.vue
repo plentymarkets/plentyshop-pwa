@@ -38,7 +38,6 @@
           :class="['object-cover', 'w-full']"
           :style="{
             filter: props.content.image?.brightness ? 'brightness(' + (props.content.image?.brightness ?? 1) + ')' : '',
-            height: '432px',
           }"
           :loading="'lazy'"
           :data-testid="'category-data-image-' + meta.uuid"

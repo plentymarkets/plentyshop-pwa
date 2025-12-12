@@ -107,6 +107,10 @@ setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
 
+onBeforeRouteLeave(() => {
+  setCurrentProduct({} as Product);
+});
+
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
