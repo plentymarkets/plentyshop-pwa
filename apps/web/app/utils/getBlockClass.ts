@@ -1,5 +1,4 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { ComputedRef } from 'vue';
 
 // NOTE: Exclusion sets were replaced by a centralized configuration in
 // '~/configuration/block-layout.config'.
