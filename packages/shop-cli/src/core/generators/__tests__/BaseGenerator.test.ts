@@ -95,8 +95,12 @@ describe('BaseGenerator', () => {
     const registeredConfig = mockPlop.setGenerator.mock.calls[0][1];
     const actionsFunction = registeredConfig.actions;
 
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
     const emptyResult = actionsFunction(undefined);
     expect(emptyResult).toEqual([]);
+
+    consoleErrorSpy.mockRestore();
 
     const validData = { name: 'TestComponent' };
     const actions = actionsFunction(validData);

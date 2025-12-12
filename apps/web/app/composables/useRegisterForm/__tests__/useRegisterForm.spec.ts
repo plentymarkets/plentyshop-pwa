@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { mount } from '@vue/test-utils';
 
 mockNuxtImport('t', () => {
   return () => 'Your account has been created successfully';
@@ -165,15 +166,25 @@ describe('useRegisterForm', () => {
 
   it('should initialize composable with proper structure', async () => {
     const { useRegisterForm } = await import('../useRegisterForm');
-    const composable = useRegisterForm();
 
-    expect(composable.formFields).toBeDefined();
-    expect(composable.formFieldsAttributes).toBeDefined();
-    expect(composable.hasCompany).toBeDefined();
-    expect(composable.onSubmit).toBeDefined();
-    expect(composable.passwordValidationLength).toBeDefined();
-    expect(composable.passwordValidationOneDigit).toBeDefined();
-    expect(composable.passwordValidationOneLetter).toBeDefined();
+    let composable: ReturnType<typeof useRegisterForm> | undefined;
+
+    mount({
+      setup() {
+        composable = useRegisterForm();
+        return {};
+      },
+      template: '<div></div>',
+    });
+
+    expect(composable).toBeDefined();
+    expect(composable!.formFields).toBeDefined();
+    expect(composable!.formFieldsAttributes).toBeDefined();
+    expect(composable!.hasCompany).toBeDefined();
+    expect(composable!.onSubmit).toBeDefined();
+    expect(composable!.passwordValidationLength).toBeDefined();
+    expect(composable!.passwordValidationOneDigit).toBeDefined();
+    expect(composable!.passwordValidationOneLetter).toBeDefined();
   });
 
   it('should handle form submission', async () => {
@@ -190,22 +201,33 @@ describe('useRegisterForm', () => {
     });
 
     const { useRegisterForm } = await import('../useRegisterForm');
-    const composable = useRegisterForm();
 
-    composable.formFields.email.value = 'test@example.com';
-    composable.formFields.password.value = 'Password123';
-    composable.formFields.repeatPassword.value = 'Password123';
-    composable.formFields.firstName.value = 'John';
-    composable.formFields.lastName.value = 'Doe';
-    composable.formFields.streetName.value = 'Main Street';
-    composable.formFields.apartment.value = '1A';
-    composable.formFields.city.value = 'Test City';
-    composable.formFields.zipCode.value = '12345';
-    composable.formFields.country.value = '1';
-    composable.formFields.privacyPolicy.value = true;
-    composable.formFields.turnstile.value = 'token';
+    let composable: ReturnType<typeof useRegisterForm> | undefined;
 
-    await composable.onSubmit();
+    mount({
+      setup() {
+        composable = useRegisterForm();
+        return {};
+      },
+      template: '<div></div>',
+    });
+
+    composable!.formFields.email.value = 'test@example.com';
+    composable!.formFields.password.value = 'Password123';
+    composable!.formFields.repeatPassword.value = 'Password123';
+    composable!.formFields.firstName.value = 'John';
+    composable!.formFields.lastName.value = 'Doe';
+    composable!.formFields.streetName.value = 'Main Street';
+    composable!.formFields.apartment.value = '1A';
+    composable!.formFields.city.value = 'Test City';
+    composable!.formFields.zipCode.value = '12345';
+    composable!.formFields.country.value = '1';
+    composable!.formFields.privacyPolicy.value = true;
+    composable!.formFields.turnstile.value = 'token';
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    await composable!.onSubmit();
 
     expect(mockRegister).toHaveBeenCalled();
     expect(mockSend).toHaveBeenCalledWith({
