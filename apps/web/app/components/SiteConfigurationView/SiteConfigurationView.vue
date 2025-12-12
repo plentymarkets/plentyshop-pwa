@@ -66,6 +66,8 @@
         </SettingsGroup>
       </div>
     </div>
+
+    <slot />
   </div>
 </template>
 
