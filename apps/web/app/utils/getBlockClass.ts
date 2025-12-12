@@ -1,72 +1,10 @@
 import type { Block } from '@plentymarkets/shop-api';
+import { computed, type ComputedRef } from 'vue';
 import { useSiteSettings } from '~/composables/useSiteSettings/useSiteSettings';
+import { resolveBlockLayoutRule } from '~/configuration/block-layout.config';
 
-/**
- * Block names that should not have container constraints (max-width, centering)
- */
-const CONTAINER_EXCLUDED_BLOCKS = new Set(['Footer']);
-
-/**
- * Block names that should not have full width
- */
-const FULLWIDTH_EXCLUDED_BLOCKS = new Set([
-  'MultiGrid',
-  'NewsletterSubscribe',
-  'TextCard',
-  'CategoryData',
-  'CategorySorting',
-  'BlockSort',
-  'ProductRecommendedProducts',
-  'ProductGrid',
-  'Image',
-  'ItemGrid',
-  'ItemPage',
-  'PriceCard',
-  'ItemText',
-  'TechnicalData',
-  'CustomerReview',
-  'ProductLegalInformation',
-  'PerPageFilter',
-  'Sort',
-  'SortFilter',
-]);
-/**
- * Block names that should not have padding applied
- */
-const PADDING_EXCLUDED_BLOCKS = new Set([
-  'NewsletterSubscribe',
-  'MultiGrid',
-  'TextCard',
-  'Footer',
-  'Carousel',
-  'CategoryData',
-  'CategorySorting',
-  'BlockSort',
-  'ProductRecommendedProducts',
-  'ProductGrid',
-  'Image',
-  'ItemGrid',
-  'ItemPage',
-  'PriceCard',
-  'ItemText',
-  'TechnicalData',
-  'CustomerReview',
-  'ProductLegalInformation',
-  'PerPageFilter',
-  'Sort',
-  'SortFilter',
-]);
-
-/**
- * Checks if a block name is in the excluded set
- *
- * @param blockName - The name of the block to check
- * @param excludedSet - Set of excluded block names
- * @returns True if the block is excluded
- */
-const isExcluded = (blockName: string, excludedSet: Set<string>): boolean => {
-  return excludedSet.has(blockName);
-};
+// NOTE: Exclusion sets were replaced by a centralized configuration in
+// '~/configuration/block-layout.config'.
 
 /**
  * Checks if a block has fullWidth enabled in any of its layout locations
@@ -134,19 +72,11 @@ const getFullWidthFromObject = (obj: unknown): boolean | undefined => {
  * @returns True if fullWidth is enabled
  */
 const hasFullWidth = (block: Block): boolean => {
-  // Content blocks have layout in content, structure blocks have it in configuration
-  const fullWidth =
+  const explicit =
     block.type === 'content' ? getFullWidthFromObject(block.content) : getFullWidthFromObject(block.configuration);
-
-  if (fullWidth !== undefined) {
-    return fullWidth;
-  }
-
-  if (isExcluded(block.name, FULLWIDTH_EXCLUDED_BLOCKS)) {
-    return false;
-  }
-
-  return true;
+  if (explicit !== undefined) return explicit;
+  const rule = resolveBlockLayoutRule(block.name);
+  return rule.defaultFullWidth;
 };
 /**
  * Maps horizontal spacing setting to Tailwind max-width class
@@ -181,8 +111,9 @@ export const getBlockClass = (block: Block): ComputedRef<Record<string, boolean>
   const { getSetting } = useSiteSettings('horizontalBlockSize');
   return computed(() => {
     const fullWidth = hasFullWidth(block);
-    const isContainerExcluded = isExcluded(block.name, CONTAINER_EXCLUDED_BLOCKS);
-    const isPaddingExcluded = isExcluded(block.name, PADDING_EXCLUDED_BLOCKS);
+    const rule = resolveBlockLayoutRule(block.name);
+    const isContainerExcluded = rule.container === false;
+    const isPaddingExcluded = rule.padding === false;
 
     const horizontalSpacing = getSetting();
     const horizontalClass =
