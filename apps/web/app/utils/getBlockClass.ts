@@ -1,7 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
-import { computed, type ComputedRef } from 'vue';
-import { useSiteSettings } from '~/composables/useSiteSettings/useSiteSettings';
-import { resolveBlockLayoutRule } from '~/configuration/block-layout.config';
+import type { ComputedRef } from 'vue';
 
 // NOTE: Exclusion sets were replaced by a centralized configuration in
 // '~/configuration/block-layout.config'.
@@ -19,7 +17,7 @@ import { resolveBlockLayoutRule } from '~/configuration/block-layout.config';
 /**
  * Type guard to check if an object has a specific property
  */
-const hasProperty = <K extends string>(obj: object, key: K): obj is Record<K, unknown> => {
+export const hasProperty = <K extends string>(obj: object, key: K): obj is Record<K, unknown> => {
   return key in obj;
 };
 
@@ -38,7 +36,7 @@ const hasProperty = <K extends string>(obj: object, key: K): obj is Record<K, un
  * getNestedValue(block.content, ['layout', 'paddingTop'], 'number') // returns number | undefined
  * ```
  */
-const getNestedValue = <T>(obj: unknown, path: string[], expectedType: string): T | undefined => {
+export const getNestedValue = <T>(obj: unknown, path: string[], expectedType: string): T | undefined => {
   if (!obj || typeof obj !== 'object') return undefined;
 
   let current: unknown = obj;
@@ -58,41 +56,7 @@ const getNestedValue = <T>(obj: unknown, path: string[], expectedType: string): 
  * @param obj - The object to check (e.g., block.content or block.configuration)
  * @returns The fullWidth value if found, undefined otherwise
  */
-const getFullWidthFromObject = (obj: unknown): boolean | undefined => {
-  return getNestedValue<boolean>(obj, ['layout', 'fullWidth'], 'boolean');
-};
-
-/**
- * Checks if a block has fullWidth enabled
- *
- * Content blocks check content.layout.fullWidth
- * Structure blocks check configuration.layout.fullWidth
- *
- * @param block - The block to check
- * @returns True if fullWidth is enabled
- */
-const hasFullWidth = (block: Block): boolean => {
-  const explicit =
-    block.type === 'content' ? getFullWidthFromObject(block.content) : getFullWidthFromObject(block.configuration);
-  if (explicit !== undefined) return explicit;
-  const rule = resolveBlockLayoutRule(block.name);
-  return rule.defaultFullWidth;
-};
-/**
- * Maps horizontal spacing setting to Tailwind max-width class
- */
-// const horizontalSpacingClassMap: Record<string, string> = {
-//   s: 'max-w-screen-xl',
-//   m: 'max-w-screen-2xl',
-//   l: 'max-w-screen-3xl',
-//   xl: 'max-w-screen-4xl',
-// };
-
-const horizontalSpacingClassMap: Record<string, string> = {
-  s: 'max-w-screen-3xl',
-  m: 'max-w-screen-2xl',
-  l: 'max-w-screen-xl',
-};
+// NOTE: FullWidth resolution and spacing mapping are handled in useBlockClasses/buildBlockClasses.
 
 /**
  * Generates CSS classes for a block based on its properties and configuration,
@@ -108,23 +72,5 @@ const horizontalSpacingClassMap: Record<string, string> = {
  * ```
  */
 export const getBlockClass = (block: Block): ComputedRef<Record<string, boolean>> => {
-  const { getSetting } = useSiteSettings('horizontalBlockSize');
-  return computed(() => {
-    const fullWidth = hasFullWidth(block);
-    const rule = resolveBlockLayoutRule(block.name);
-    const isContainerExcluded = rule.container === false;
-    const isPaddingExcluded = rule.padding === false;
-
-    const horizontalSpacing = getSetting();
-    const horizontalClass =
-      !fullWidth && !isContainerExcluded && horizontalSpacingClassMap[horizontalSpacing]
-        ? horizontalSpacingClassMap[horizontalSpacing]
-        : 'max-w-screen-3xl';
-
-    return {
-      [horizontalClass]: !fullWidth && !isContainerExcluded,
-      'mx-auto mt-3': !isContainerExcluded,
-      'px-4 md:px-6': !isPaddingExcluded,
-    };
-  });
+  return useBlockClasses(block);
 };
