@@ -51,13 +51,17 @@ describe('SortFilter', () => {
   });
 
   it('should not render CategoryFilters when not visible', () => {
-    const wrapper = mount(SortFilter);
+    const wrapper = mount(SortFilter, {
+      props: mockProps,
+    });
 
     expect(wrapper.find('[data-testid="category-filters"]').exists()).toBe(false);
   });
 
   it('should not render categories from CategoryTree', () => {
-    const wrapper = mount(SortFilter);
+    const wrapper = mount(SortFilter, {
+      props: mockProps,
+    });
 
     expect(wrapper.find('[data-testid="categories"]').exists()).toBe(false);
   });

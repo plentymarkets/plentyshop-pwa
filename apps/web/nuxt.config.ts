@@ -42,33 +42,31 @@ export default defineNuxtConfig({
         '@plentymarkets/shop-api',
         '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
-        '@storefront-ui/vue',
         '@tanstack/vue-virtual',
-        '@vee-validate/yup',
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
-        '@vueuse/core',
-        '@vueuse/shared',
         'country-flag-icons/string/3x2',
         'dotenv',
         'drift-zoom',
         'js-sha256',
-        'swiper/modules',
-        'swiper/vue',
         'uuid',
         'validator',
         'vue-multiselect',
         'vue3-lazy-hydration',
         'vue-tel-input',
         'vuedraggable/src/vuedraggable',
-        'yup',
       ],
+      exclude: ['cypress', 'vitest', '@vue/test-utils', 'happy-dom', 'msw'],
     },
     build: {
+      chunkSizeWarningLimit: 600,
+      cssCodeSplit: true,
+      minify: 'esbuild',
+      target: 'esnext',
       rollupOptions: {
         output: {
-          manualChunks: {
-            vuetify: ['vuetify', '@mdi/js'],
+          manualChunks: (id) => {
+            if (id.includes('vuetify') || id.includes('@mdi/js')) {
+              return 'vuetify';
+            }
           },
         },
       },
