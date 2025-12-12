@@ -13,17 +13,15 @@
         {{ getEditorTranslation('block-spacing-size-' + blocksSpacingSize) }}
       </button>
     </div>
-    <!-- <div class="py-3">
+    <div class="py-3">
       <span class="typography-text-xs text-neutral-700">
-        {{ getEditorTranslation('spacing-between-blocks-horizontal') }}: {{ spacingInPx }}px
+        {{ horizontalSpacingDescription }}
       </span>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
-
 const { updateSetting, getSetting } = useSiteSettings('horizontalBlockSize');
 
 const btnClasses = ref(
@@ -37,18 +35,19 @@ const blockSize = computed({
   set: (value) => updateSetting(value),
 });
 
-// const spacingInPx = computed(() => {
-//   if (!blockSize.value) return '0';
+const horizontalSpacingDescription = computed(() => {
+  const key = blockSize.value ?? 's';
 
-//   const sizeMap: Record<string, string> = {
-//     s: _s,
-//     m: _m,
-//     l: _l,
-//   };
+  const map: Record<string, { bp: string; class: string }> = {
+    s: { bp: '3xl', class: 'max-w-screen-3xl' },
+    m: { bp: '2xl', class: 'max-w-screen-2xl' },
+    l: { bp: 'xl', class: 'max-w-screen-xl' },
+  };
 
-//   const remValue = parseFloat(sizeMap[blockSize.value] ?? '0');
-//   return remValue * 16;
-// });
+  const entry = map[key] ?? map.s ?? { class: 'max-w-screen-3xl' };
+  const description = `Sets container max-width to ${entry.class}. Applies on non–full-width blocks.`;
+  return description;
+});
 </script>
 
 <i18n lang="json">
@@ -59,7 +58,8 @@ const blockSize = computed({
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
     "spacing-between-blocks-horizontal": "Spacing between blocks (horizontal)",
-    "label": "Horizontal spacing"
+    "label": "Horizontal spacing",
+    "horizontal-spacing-description": "Sets container max-width to {class} (up to {bp}). Applies on non–full-width blocks with container enabled."
   },
   "de": {
     "block-spacing-size-s": "s",
@@ -67,7 +67,8 @@ const blockSize = computed({
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
     "spacing-between-blocks-horizontal": "Spacing between blocks (horizontal)",
-    "label": "Horizontal spacing"
+    "label": "Horizontal spacing",
+    "horizontal-spacing-description": "Setzt die Container-Maximalbreite auf {class} (bis {bp}). Gilt für nicht vollbreite Blöcke mit aktiviertem Container."
   }
 }
 </i18n>
