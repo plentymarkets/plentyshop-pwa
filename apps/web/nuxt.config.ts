@@ -358,18 +358,17 @@ export default defineNuxtConfig({
       navigationPreload: true,
       runtimeCaching: [
         {
-          urlPattern: /.\/$/,
+          urlPattern: ({ request }) => request.mode === 'navigate',
           handler: 'NetworkFirst',
           options: {
-            cacheName: 'plenty-navigation-cache',
             precacheFallback: {
               fallbackURL: '/offline',
             },
           },
         },
         {
-          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif)$/i,
-          handler: 'CacheFirst',
+          urlPattern: ({ request }) => request.destination === 'image',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'plenty-image-cache',
             expiration: {
