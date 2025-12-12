@@ -19,7 +19,9 @@
       class="cursor-pointer"
       select-label=""
       :searchable="true"
+      :custom-label="categoryCustomLabel"
       :deselect-label="getEditorTranslation('deselect-label')"
+      @search-change="handleSearch"
     />
   </div>
 </template>
@@ -32,15 +34,27 @@ const { data, getCategories } = useCategoriesSearch();
 
 const categories = ref<CategoryOption[]>([]);
 
-onMounted(async () => {
+const baseCategoryParams = {
+  type: 'in:content',
+  sortBy: 'position_asc,name_asc',
+};
+
+const handleSearch = debounce(async (query: string) => {
+  const q = query?.trim();
   await getCategories({
-    type: 'in:item,content',
-    sortBy: 'position_asc,name_asc',
+    ...baseCategoryParams,
+    ...(q ? { name: `like:${q}` } : {}),
   });
+}, 500);
+
+const categoryCustomLabel = (opt: CategoryOption) => `[${opt.id}] ${opt.name}`;
+
+onMounted(async () => {
+  await getCategories(baseCategoryParams);
 
   categories.value = data.value.entries.map((category: CategoryEntry) => {
     return {
-      id: category.details[0]?.categoryId ?? '0',
+      id: (category.id ?? 0).toString(),
       name: category.details[0]?.name ?? '',
     };
   });
@@ -50,7 +64,7 @@ const { updateSetting, getSetting } = useSiteSettings('shippingTextCategoryId');
 
 const shippingTextCategoryId = computed({
   get: () => {
-    return categories.value.find((c: CategoryOption) => c.id === getSetting()) ?? {};
+    return categories.value.find((c: CategoryOption) => c.id === getSetting()?.toString()) ?? null;
   },
   set: (value: CategoryOption) => {
     updateSetting(value.id);
