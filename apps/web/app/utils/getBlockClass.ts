@@ -151,11 +151,17 @@ const hasFullWidth = (block: Block): boolean => {
 /**
  * Maps horizontal spacing setting to Tailwind max-width class
  */
+// const horizontalSpacingClassMap: Record<string, string> = {
+//   s: 'max-w-screen-xl',
+//   m: 'max-w-screen-2xl',
+//   l: 'max-w-screen-3xl',
+//   xl: 'max-w-screen-4xl',
+// };
+
 const horizontalSpacingClassMap: Record<string, string> = {
-  s: 'max-w-xl',
-  m: 'max-w-2xl',
-  l: 'max-w-3xl',
-  xl: 'max-w-4xl',
+  s: 'max-w-screen-3xl',
+  m: 'max-w-screen-2xl',
+  l: 'max-w-screen-xl',
 };
 
 /**
