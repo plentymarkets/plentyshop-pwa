@@ -47,7 +47,7 @@ const reset = () => {
 
 const handleExportFile = () => {
   exportFile('export.csv');
-}
+};
 
 const handleFileSelect = async (event: Event): Promise<void> => {
   const input = event.target as HTMLInputElement;
