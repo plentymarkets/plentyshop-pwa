@@ -15,7 +15,7 @@ const projectRoot = path.resolve(cliRoot, '../../');
 /**
  * Plop configuration for PlentyONE Shop generators
  */
-export default function plopConfiguration(plop: NodePlopAPI): void {
+export default function (plop: NodePlopAPI): void {
   registerDefaultHelpers(plop, true);
 
   const partialsDir = path.join(__dirname, 'templates/partials');
