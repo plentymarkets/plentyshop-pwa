@@ -71,7 +71,7 @@ const handleFileSelect = async (event: Event): Promise<void> => {
     const file = input.files?.[0];
     input.value = '';
     if (!file) return;
-    const text: string = await file.text();
+    const text = await file.text();
     importFile(text);
     useNotification().send({
       message: successMessageImport,
