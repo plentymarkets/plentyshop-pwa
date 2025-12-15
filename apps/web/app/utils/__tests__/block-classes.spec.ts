@@ -13,8 +13,8 @@ describe('utils/buildBlockClasses', () => {
       horizontalSpacing: 'm',
     });
     expect(classes['max-w-screen-2xl']).toBe(true);
-    expect(classes['mx-auto mt-3']).toBe(true);
-    expect(classes['px-4 md:px-6']).toBe(true);
+    expect(classes['mx-auto']).toBe(true);
+    expect(classes['md:px-6 lg:px-10 p-4']).toBe(true);
   });
 
   it('should omit padding when padding excluded', () => {
@@ -23,7 +23,7 @@ describe('utils/buildBlockClasses', () => {
       rule: { container: true, padding: false, defaultFullWidth: false },
       horizontalSpacing: 's',
     });
-    expect(classes['px-4 md:px-6']).toBe(false);
+    expect(classes['md:px-6 lg:px-10 p-4']).toBe(false);
     expect(Object.keys(classes).some((k) => k.startsWith('max-w-'))).toBe(true);
   });
 

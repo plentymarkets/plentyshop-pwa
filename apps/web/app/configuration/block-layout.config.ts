@@ -20,24 +20,24 @@ export const BLOCK_LAYOUT_RULES: Record<string, BlockLayoutRule> = {
   Footer: { container: false, padding: false },
 
   MultiGrid: { defaultFullWidth: false, padding: false },
-  NewsletterSubscribe: { defaultFullWidth: false, padding: false },
-  TextCard: { defaultFullWidth: false, padding: false },
-  CategoryData: { defaultFullWidth: false, padding: false },
-  CategorySorting: { defaultFullWidth: false, padding: false },
-  BlockSort: { defaultFullWidth: false, padding: false },
-  ProductRecommendedProducts: { defaultFullWidth: false, padding: false },
-  ProductGrid: { defaultFullWidth: false, padding: false },
-  Image: { defaultFullWidth: false, padding: false },
-  ItemGrid: { defaultFullWidth: false, padding: false },
-  ItemPage: { defaultFullWidth: false, padding: false },
-  PriceCard: { defaultFullWidth: false, padding: false },
-  ItemText: { defaultFullWidth: false, padding: false },
-  TechnicalData: { defaultFullWidth: false, padding: false },
-  CustomerReview: { defaultFullWidth: false, padding: false },
-  ProductLegalInformation: { defaultFullWidth: false, padding: false },
-  PerPageFilter: { defaultFullWidth: false, padding: false },
-  Sort: { defaultFullWidth: false, padding: false },
-  SortFilter: { defaultFullWidth: false, padding: false },
+  NewsletterSubscribe: { defaultFullWidth: false, padding: true },
+  TextCard: { defaultFullWidth: false, padding: true },
+  CategoryData: { defaultFullWidth: false, padding: true },
+  CategorySorting: { defaultFullWidth: false, padding: true },
+  BlockSort: { defaultFullWidth: false, padding: true },
+  ProductRecommendedProducts: { defaultFullWidth: false, padding: true },
+  ProductGrid: { defaultFullWidth: false, padding: true },
+  Image: { defaultFullWidth: false, padding: true },
+  ItemGrid: { defaultFullWidth: false, padding: true },
+  ItemPage: { defaultFullWidth: false, padding: true },
+  PriceCard: { defaultFullWidth: false, padding: true },
+  ItemText: { defaultFullWidth: false, padding: true },
+  TechnicalData: { defaultFullWidth: false, padding: true },
+  CustomerReview: { defaultFullWidth: false, padding: true },
+  ProductLegalInformation: { defaultFullWidth: false, padding: true },
+  PerPageFilter: { defaultFullWidth: false, padding: true },
+  Sort: { defaultFullWidth: false, padding: true },
+  SortFilter: { defaultFullWidth: false, padding: true },
 
   Carousel: { padding: false },
 };
@@ -46,7 +46,7 @@ export const BLOCK_LAYOUT_RULES: Record<string, BlockLayoutRule> = {
  * Resolve the normalized rule for a block name with defaults applied.
  */
 export const resolveBlockLayoutRule = (
-  name: string
+  name: string,
 ): Required<Pick<BlockLayoutRule, 'container' | 'padding' | 'defaultFullWidth'>> => {
   const rule = BLOCK_LAYOUT_RULES[name] || {};
   return {

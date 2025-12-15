@@ -39,14 +39,14 @@ describe('useBlockClasses', () => {
     const block = contentBlock('TextCard', false);
     const classes = useBlockClasses(block).value;
     expect(classes['max-w-screen-2xl']).toBe(true);
-    expect(classes['mx-auto mt-3']).toBe(true);
+    expect(classes['mx-auto']).toBe(true);
   });
 
   it('should not add container max-width when block is fullWidth, but should still center the container', () => {
     const block = contentBlock('TextCard', true);
     const classes = useBlockClasses(block).value;
     expect(classes['max-w-screen-2xl']).toBeFalsy();
-    expect(classes['mx-auto mt-3']).toBe(true);
+    expect(classes['mx-auto']).toBe(true);
   });
 
   it('should use defaultFullWidth from rules when explicit is not provided', () => {

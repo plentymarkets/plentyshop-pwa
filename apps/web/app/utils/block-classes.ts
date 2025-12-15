@@ -1,5 +1,4 @@
 import type { Block } from '@plentymarkets/shop-api';
-import { getHorizontalClass } from './layout-spacing';
 
 export type BlockLayoutResolvedRule = {
   container: boolean;
@@ -17,17 +16,18 @@ export const buildBlockClasses = (
     fullWidth: boolean;
     rule: BlockLayoutResolvedRule;
     horizontalSpacing: string | undefined;
-  }
+  },
 ): Record<string, boolean> => {
   const { fullWidth, rule, horizontalSpacing } = opts;
   const isContainerExcluded = rule.container === false;
   const isPaddingExcluded = rule.padding === false;
 
-  const horizontalClass = !fullWidth && !isContainerExcluded ? getHorizontalClass(horizontalSpacing) : getHorizontalClass(undefined);
+  const horizontalClass =
+    !fullWidth && !isContainerExcluded ? getHorizontalClass(horizontalSpacing) : getHorizontalClass(undefined);
 
   return {
     [horizontalClass]: !fullWidth && !isContainerExcluded,
-    'mx-auto mt-3': !isContainerExcluded,
-    'px-4 md:px-6': !isPaddingExcluded,
+    'mx-auto': !isContainerExcluded,
+    'md:px-6 lg:px-10 p-4': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
   };
 };
