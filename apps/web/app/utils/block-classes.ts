@@ -22,12 +22,11 @@ export const buildBlockClasses = (
   const isContainerExcluded = rule.container === false;
   const isPaddingExcluded = rule.padding === false;
 
-  const horizontalClass =
-    !fullWidth && !isContainerExcluded ? getHorizontalClass(horizontalSpacing) : getHorizontalClass(undefined);
+  const horizontalClass = getHorizontalClass(!fullWidth && !isContainerExcluded ? horizontalSpacing : undefined);
 
   return {
     [horizontalClass]: !fullWidth && !isContainerExcluded,
     'mx-auto': !isContainerExcluded,
-    'md:px-6 lg:px-10 p-4': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
+    'p-4 md:px-6 lg:px-10': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
   };
 };

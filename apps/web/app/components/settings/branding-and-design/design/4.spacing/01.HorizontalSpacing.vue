@@ -45,7 +45,7 @@ const horizontalSpacingDescription = computed(() => {
   };
 
   const entry = map[key] ?? map.s ?? { class: 'max-w-screen-3xl' };
-  const description = `Sets container max-width to ${entry.class}. Applies on non–full-width blocks.`;
+  const description = `Sets container max-width to ${entry.class}. Applies on non-full-width blocks.`;
   return description;
 });
 </script>
