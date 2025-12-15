@@ -1,8 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
 
-// NOTE: Exclusion sets were replaced by a centralized configuration in
-// '~/configuration/block-layout.config'.
-
 /**
  * Checks if a block has fullWidth enabled in any of its layout locations
  *
