@@ -120,7 +120,7 @@ export const fakeFacetCallDE = {
         values: [
           {
             id: 1,
-            name: 'Exclusive Leather',
+            name: 'Exklusives Leder',
             cssClass: '',
             position: 1,
             count: 5,
@@ -149,7 +149,7 @@ export const fakeFacetCallDE = {
         values: [
           {
             id: 3,
-            name: 'Value 1',
+            name: 'Wert 1',
             cssClass: '',
             position: 1,
             count: 2,
@@ -157,7 +157,7 @@ export const fakeFacetCallDE = {
           },
           {
             id: 4,
-            name: 'Value 2',
+            name: 'Wert 2',
             cssClass: '',
             position: 2,
             count: 5,
@@ -165,7 +165,7 @@ export const fakeFacetCallDE = {
           },
           {
             id: 6,
-            name: 'Value',
+            name: 'Wert',
             cssClass: '',
             position: 4,
             count: 4,
