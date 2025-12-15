@@ -27,6 +27,11 @@
 <script setup lang="ts">
 import { SfIconDownload, SfIconUpload, SfTooltip, SfIconBase } from '@storefront-ui/vue';
 
+const successMessageImport = getEditorTranslation('successImport');
+const errorMessageImport = getEditorTranslation('errorImport');
+const successMessageExport = getEditorTranslation('successExport');
+const errorMessageExport = getEditorTranslation('errorExport');
+
 const fileInput = ref<HTMLInputElement | null>(null);
 const { keys, checkHasUnsavedChanges, hasChanges, importFile, exportFile } = useEditorLocalizationKeys();
 const openFileDialog = () => {
@@ -46,16 +51,38 @@ const reset = () => {
 };
 
 const handleExportFile = () => {
-  exportFile('export.csv');
+  try {
+    exportFile('export.csv');
+    useNotification().send({
+      message: successMessageExport,
+      type: 'positive',
+    });
+  } catch {
+    useNotification().send({
+      message: errorMessageExport,
+      type: 'negative',
+    });
+  }
 };
 
 const handleFileSelect = async (event: Event): Promise<void> => {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-  input.value = '';
-  if (!file) return;
-  const text: string = await file.text();
-  importFile(text);
+  try {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) return;
+    const text: string = await file.text();
+    importFile(text);
+    useNotification().send({
+      message: successMessageImport,
+      type: 'positive',
+    });
+  } catch {
+    useNotification().send({
+      message: errorMessageImport,
+      type: 'negative',
+    });
+  }
 };
 </script>
 
@@ -64,12 +91,20 @@ const handleFileSelect = async (event: Event): Promise<void> => {
   "en": {
     "import": "Import",
     "export": "Export",
-    "reset": "Reset"
+    "reset": "Reset",
+    "successImport": "Translations imported successfully",
+    "errorImport": "Error while importing translations",
+    "successExport": "Translations exported successfully",
+    "errorExport": "Error while exporting translations"
   },
   "de": {
     "import": "Import",
     "export": "Export",
-    "reset": "Reset"
+    "reset": "Reset",
+    "successImport": "Übersetzungen erfolgreich importiert",
+    "errorImport": "Fehler beim Importieren der Übersetzungen",
+    "successExport": "Übersetzungen erfolgreich exportiert",
+    "errorExport": "Fehler beim Exportieren der Übersetzungen"
   }
 }
 </i18n>
