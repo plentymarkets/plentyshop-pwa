@@ -1,33 +1,29 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import type { Product } from '@plentymarkets/shop-api';
 import { useItemDataTable } from '~/composables/useItemDataTable/useItemDataTable';
 
-vi.mock('vue-i18n', () => ({
-  useI18n: () => ({
-    t: (key: string, params?: object) => {
-      const p = params as { age?: number } | undefined;
-      switch (key) {
-        case 'single-item-age-restriction':
-          return `${p?.age} and older`;
-        case 'single-item-age-restriction-none':
-          return 'No age restriction';
-        case 'single-item-age-restriction-not-flagged':
-          return 'Not rated';
-        case 'single-item-age-restriction-not-required':
-          return 'Not required';
-        case 'single-item-age-restriction-unknown':
-          return 'Unknown';
-        default:
-          return key;
-      }
-    },
-  }),
-}));
+const mockT = (key: string, params?: Record<string, unknown>) => {
+  const p = params as { age?: number } | undefined;
+  switch (key) {
+    case 'single-item-age-restriction':
+      return `${p?.age} and older`;
+    case 'single-item-age-restriction-none':
+      return 'No age restriction';
+    case 'single-item-age-restriction-not-flagged':
+      return 'Not rated';
+    case 'single-item-age-restriction-not-required':
+      return 'Not required';
+    case 'single-item-age-restriction-unknown':
+      return 'Unknown';
+    default:
+      return key;
+  }
+};
 
 describe('useItemDataTable', () => {
   it('should return empty values when product is null', () => {
     const productRef = ref<Product | null>(null);
-    const { fieldValues } = useItemDataTable(productRef);
+    const { fieldValues } = useItemDataTable(productRef, { t: mockT });
 
     expect(fieldValues.value.itemId).toBe('');
     expect(fieldValues.value.manufacturer).toBe('');
@@ -65,7 +61,7 @@ describe('useItemDataTable', () => {
       variationProperties: [],
     } as unknown as Product);
 
-    const { fieldValues } = useItemDataTable(productRef);
+    const { fieldValues } = useItemDataTable(productRef, { t: mockT });
 
     expect(fieldValues.value.itemId).toBe('109');
     expect(fieldValues.value.manufacturer).toBe('Teston Testerton');

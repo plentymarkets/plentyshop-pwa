@@ -14,7 +14,8 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [6, 6]
+              "columnWidths": [6, 6],
+              "fullWidth": false
             },
             "content": [
               {
@@ -42,7 +43,8 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [6, 6]
+              "columnWidths": [6, 6],
+              "fullWidth": false
             },
             "content": [
               {
@@ -76,7 +78,8 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [4, 4, 4]
+              "columnWidths": [4, 4, 4],
+              "fullWidth": false
             },
             "content": [
               {
@@ -113,7 +116,8 @@
             "type": "structure",
             "meta": { "uuid": "64893934-ce1b-461e-8263-da8df6753872" },
             "configuration": {
-              "columnWidths": [4, 4, 4]
+              "columnWidths": [4, 4, 4],
+              "fullWidth": false
             },
             "content": [
               {
@@ -164,7 +168,8 @@
             "type": "structure",
             "meta": { "uuid": "11111111-1111-4111-8111-111111111111" },
             "configuration": {
-              "controls": { "color": "#000" }
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -238,7 +243,8 @@
             "type": "structure",
             "meta": { "uuid": "44444444-4444-4444-8444-444444444444" },
             "configuration": {
-              "controls": { "color": "#000" }
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -319,7 +325,8 @@
             "type": "structure",
             "meta": { "uuid": "77777777-7777-4777-8777-777777777777" },
             "configuration": {
-              "controls": { "color": "#000" }
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -391,7 +398,8 @@
             "type": "structure",
             "meta": { "uuid": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" },
             "configuration": {
-              "controls": { "color": "#000" }
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -470,7 +478,8 @@
             "type": "structure",
             "meta": { "uuid": "dddddddd-dddd-4ddd-8ddd-dddddddddddd" },
             "configuration": {
-              "controls": { "color": "#000" }
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -542,7 +551,8 @@
             "type": "structure",
             "meta": { "uuid": "01010101-0101-4011-8011-010101010101" },
             "configuration": {
-              "controls": { "color": "#000" }
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -649,6 +659,9 @@
                 "label": "",
                 "link": "",
                 "variant": "primary"
+              },
+              "layout": {
+                "fullWidth": false
               }
             }
           },
@@ -677,6 +690,9 @@
                 "label": "",
                 "link": "",
                 "variant": "primary"
+              },
+              "layout": {
+                "fullWidth": false
               }
             }
           }
@@ -691,7 +707,8 @@
             "type": "structure",
             "meta": { "uuid": "34343434-3434-4343-8434-343434343434" },
             "configuration": {
-              "columnWidths": [6, 6]
+              "columnWidths": [6, 6],
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -758,7 +775,8 @@
             "type": "structure",
             "meta": { "uuid": "67676767-6767-4676-8767-676767676767" },
             "configuration": {
-              "columnWidths": [6, 6]
+              "columnWidths": [6, 6],
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -823,7 +841,8 @@
             "type": "structure",
             "meta": { "uuid": "9a9a9a9a-9a9a-49a9-89a9-9a9a9a9a9a9a" },
             "configuration": {
-              "columnWidths": [6, 6]
+              "columnWidths": [6, 6],
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -882,7 +901,8 @@
             "type": "structure",
             "meta": { "uuid": "dcdcdcdc-dcdc-4cdc-8cdc-dcdcdcdcdcdc" },
             "configuration": {
-              "columnWidths": [6, 6]
+              "columnWidths": [6, 6],
+              "layout": { "fullWidth": true }
             },
             "content": [
               {
@@ -967,6 +987,9 @@
                 "buttonText": "Button",
                 "link": "/",
                 "variant": "primary"
+              },
+              "layout": {
+                "fullWidth": false
               }
             }
           },
@@ -987,6 +1010,9 @@
                 "buttonText": "Buttom",
                 "link": "/",
                 "variant": "primary"
+              },
+              "layout": {
+                "fullWidth": false
               }
             }
           }
@@ -1015,6 +1041,9 @@
                 "subtitle": "Subtitle.",
                 "htmlDescription": "Text that supports HTML formatting"
               },
+              "layout": {
+                "fullWidth": false
+              },
               "source": {
                 "type": "category",
                 "itemId": "",
@@ -1032,6 +1061,9 @@
                 "title": "h2 Titel",
                 "subtitle": "Untertitel",
                 "htmlDescription": "Text mit HTML-Formatierung"
+              },
+              "layout": {
+                "fullWidth": false
               },
               "source": {
                 "type": "category",
@@ -1083,7 +1115,11 @@
               "showSecondImageOnHover": false,
               "showWishlistButton": true,
               "addToCartStyle": "primary",
-              "paginationPosition": "bottom"
+              "paginationPosition": "bottom",
+
+              "layout": {
+                "fullWidth": false
+              }
             }
           },
           "de": {
@@ -1115,7 +1151,10 @@
               "showSecondImageOnHover": false,
               "showWishlistButton": true,
               "addToCartStyle": "primary",
-              "paginationPosition": "bottom"
+              "paginationPosition": "bottom",
+              "layout": {
+                "fullWidth": false
+              }
             }
           }
         }
@@ -1161,7 +1200,8 @@
                 "paddingBottom": 40,
                 "paddingLeft": 0,
                 "paddingRight": 0,
-                "narrowContainer": true
+                "narrowContainer": true,
+                "fullWidth": false
               }
             }
           },
@@ -1202,7 +1242,8 @@
                 "paddingBottom": 40,
                 "paddingLeft": 0,
                 "paddingRight": 0,
-                "narrowContainer": true
+                "narrowContainer": true,
+                "fullWidth": false
               }
             }
           }
@@ -1242,7 +1283,10 @@
               ],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
-              "numberOfFiltersToShowInitially": 0
+              "numberOfFiltersToShowInitially": 0,
+              "layout": {
+                "isFullWidth": false
+              }
             }
           },
           "de": {
@@ -1263,6 +1307,7 @@
                 "availability": true,
                 "customizedFilters": true
               },
+
               "filtersOrder": [
                 "category",
                 "sortBy",
@@ -1275,7 +1320,10 @@
               ],
               "filtersDisabled": [],
               "showAllFiltersImmediately": true,
-              "numberOfFiltersToShowInitially": 0
+              "numberOfFiltersToShowInitially": 0,
+              "layout": {
+                "isFullWidth": false
+              }
             }
           }
         }
@@ -1299,7 +1347,8 @@
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingRight": 0,
+                "fullWidth": false
               },
               "settings": {
                 "selectionModeCompact": false
@@ -1321,7 +1370,8 @@
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingRight": 0,
+                "fullWidth": false
               },
               "settings": {
                 "selectionModeCompact": false
@@ -1349,7 +1399,8 @@
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingRight": 0,
+                "fullWidth": false
               },
               "settings": {
                 "selectionModeCompact": false
@@ -1371,7 +1422,8 @@
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingRight": 0,
+                "fullWidth": false
               },
               "settings": {
                 "selectionModeCompact": false
@@ -1411,6 +1463,9 @@
               },
               "settings": {
                 "emailFolderId": 1
+              },
+              "layout": {
+                "fullWidth": false
               }
             }
           },
@@ -1433,6 +1488,9 @@
               },
               "settings": {
                 "emailFolderId": 1
+              },
+              "layout": {
+                "fullWidth": false
               }
             }
           }
@@ -1465,8 +1523,8 @@
                 "variationProperties": true,
                 "previewText": true,
                 "attributes": true,
-                "itemBundle": false,
-                "graduatedPrices": false,
+                "itemBundle": true,
+                "graduatedPrices": true,
                 "addToWishlist": true,
                 "quantityAndAddToCart": true,
                 "itemText": false,
@@ -1499,7 +1557,8 @@
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingRight": 0,
-                "paddingLeft": 0
+                "paddingLeft": 0,
+                "fullWidth": false
               }
             }
           },
@@ -1518,8 +1577,8 @@
                 "variationProperties": true,
                 "previewText": true,
                 "attributes": true,
-                "itemBundle": false,
-                "graduatedPrices": false,
+                "itemBundle": true,
+                "graduatedPrices": true,
                 "addToWishlist": true,
                 "quantityAndAddToCart": true,
                 "itemText": false,
@@ -1552,7 +1611,8 @@
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingRight": 0,
-                "paddingLeft": 0
+                "paddingLeft": 0,
+                "fullWidth": false
               }
             }
           }
@@ -1574,6 +1634,7 @@
               "layout": {
                 "displayAsCollapsable": true,
                 "initiallyCollapsed": true,
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1593,6 +1654,7 @@
               "layout": {
                 "displayAsCollapsable": true,
                 "initiallyCollapsed": true,
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1618,6 +1680,7 @@
               "layout": {
                 "displayAsCollapsable": true,
                 "initiallyCollapsed": true,
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1637,6 +1700,7 @@
               "layout": {
                 "displayAsCollapsable": true,
                 "initiallyCollapsed": true,
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1662,6 +1726,7 @@
               "layout": {
                 "collapsible": true,
                 "initiallyCollapsed": false,
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1682,6 +1747,7 @@
               "layout": {
                 "collapsible": true,
                 "initiallyCollapsed": false,
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1706,6 +1772,7 @@
                 "linkText": "EU Responsible Person - click for details"
               },
               "layout": {
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1724,6 +1791,7 @@
                 "linkText": "EU-Verantwortlicher – hier klicken für Details"
               },
               "layout": {
+                "fullWidth": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
@@ -1756,8 +1824,8 @@
                 "manufacturingCountry": true,
                 "content": true,
                 "grossWeight": true,
-                "netWeight": false,
-                "dimensions": false,
+                "netWeight": true,
+                "dimensions": true,
                 "customTariffNumber": true,
                 "properties": true
               },
@@ -1781,8 +1849,8 @@
                 "paddingBottom": 0,
                 "paddingRight": 0,
                 "paddingLeft": 0,
-                "displayAsCollapsable": "true",
-                "initiallyCollapsed": "true"
+                "displayAsCollapsable": false,
+                "initiallyCollapsed": false
               }
             }
           },
@@ -1805,8 +1873,8 @@
                 "manufacturingCountry": true,
                 "content": true,
                 "grossWeight": true,
-                "netWeight": false,
-                "dimensions": false,
+                "netWeight": true,
+                "dimensions": true,
                 "customTariffNumber": true,
                 "properties": true
               },
@@ -1830,8 +1898,8 @@
                 "paddingBottom": 0,
                 "paddingRight": 0,
                 "paddingLeft": 0,
-                "displayAsCollapsable": "true",
-                "initiallyCollapsed": "true"
+                "displayAsCollapsable": false,
+                "initiallyCollapsed": false
               }
             }
           }

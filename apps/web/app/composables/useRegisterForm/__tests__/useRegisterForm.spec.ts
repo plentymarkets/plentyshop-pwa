@@ -1,5 +1,9 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
+mockNuxtImport('t', () => {
+  return () => 'Your account has been created successfully';
+});
+
 const { useCustomer } = vi.hoisted(() => {
   return {
     useCustomer: vi.fn().mockReturnValue({
@@ -69,7 +73,8 @@ const { useNuxtApp } = vi.hoisted(() => {
   return {
     useNuxtApp: vi.fn().mockReturnValue({
       $i18n: {
-        t: vi.fn((key: string) => key),
+        t: vi.fn(() => 'Your account has been created successfully'),
+        te: vi.fn(() => true),
       },
     }),
   };
@@ -109,7 +114,10 @@ describe('useRegisterForm', () => {
     vi.resetAllMocks();
 
     useNuxtApp.mockReturnValue({
-      $i18n: { t: vi.fn((key: string) => key) },
+      $i18n: {
+        t: vi.fn((key: string) => key),
+        te: vi.fn((key: string) => !!key),
+      },
     });
 
     useRuntimeConfig.mockReturnValue({
@@ -201,7 +209,7 @@ describe('useRegisterForm', () => {
 
     expect(mockRegister).toHaveBeenCalled();
     expect(mockSend).toHaveBeenCalledWith({
-      message: 'auth.signup.success',
+      message: 'Your account has been created successfully',
       type: 'positive',
     });
   });

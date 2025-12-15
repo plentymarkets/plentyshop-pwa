@@ -90,7 +90,7 @@
           </div>
         </template>
         <template v-if="key === 'rating' && configuration?.fields?.rating">
-          <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
+          <div class="flex items-center pt-1 gap-1 mb-2">
             <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
             <SfCounter size="xs">{{ ratingCount }}</SfCounter>
           </div>
@@ -112,7 +112,7 @@
             <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
               <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
-              <span>{{ t('asterisk') }}</span>
+              <span>{{ t('common.labels.asterisk') }}</span>
             </span>
             <span
               v-if="crossedPrice && differentPrices(price, crossedPrice)"
@@ -136,7 +136,7 @@
               <SfIconShoppingCart size="sm" />
             </template>
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>{{ t('addToCartShort') }}</span>
+            <span v-else>{{ t('common.actions.add') }}</span>
           </UiButton>
           <UiButton
             v-else
@@ -147,7 +147,7 @@
             size="sm"
             class="w-fit"
           >
-            <span>{{ t('showOptions') }}</span>
+            <span>{{ t('common.actions.showOptions') }}</span>
           </UiButton>
         </template>
       </template>
@@ -185,6 +185,9 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
     itemCountPosition: 'center',
     fieldsDisabled: [],
     paginationPosition: 'bottom',
+    layout: {
+      fullWidth: false,
+    },
   }),
 });
 
@@ -195,7 +198,6 @@ const configuration = computed(() => props.configuration || ({} as ItemGridConte
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product.value);
@@ -271,7 +273,7 @@ const addWithLoader = async (productId: number, quickCheckout = true) => {
     if (quickCheckout) {
       openQuickCheckout(product.value, 1);
     } else {
-      send({ message: t('addedToCart'), type: 'positive' });
+      send({ message: t('cart.itemAdded'), type: 'positive' });
     }
   } finally {
     loading.value = false;

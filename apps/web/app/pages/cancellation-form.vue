@@ -6,7 +6,6 @@
 const { data, getLegalTexts } = useLegalInformation();
 const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
-const { t } = useI18n();
 
 definePageMeta({
   pageType: 'static',
@@ -24,5 +23,5 @@ await getRobots();
 setRobotForStaticPage('CancellationForm');
 
 const icon = 'page';
-setPageMeta(t('categories.legal.subcategories.cancellationForm'), icon);
+setPageMeta(t('legal.cancellationForm'), icon);
 </script>

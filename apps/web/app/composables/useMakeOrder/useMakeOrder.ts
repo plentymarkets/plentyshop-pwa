@@ -40,7 +40,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ```
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
-    const { $i18n } = useNuxtApp();
     state.value.loading = true;
     state.value.data = null;
 
@@ -101,7 +100,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       default: {
         useNotification().send({
-          message: $i18n.t('orderErrorProvider', { paymentType: paymentType.value }),
+          message: t('orderErrorProvider', { paymentType: paymentType.value }),
           type: 'negative',
         });
         break;

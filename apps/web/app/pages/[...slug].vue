@@ -20,7 +20,7 @@
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
@@ -48,7 +48,7 @@ const breadcrumbs = computed(() => {
       categoryTree.value,
       categoryGetters.getId(productsCatalog.value.category),
     );
-    breadcrumb.unshift({ name: t('home'), link: '/' });
+    breadcrumb.unshift({ name: t('common.labels.home'), link: '/' });
 
     return breadcrumb;
   }

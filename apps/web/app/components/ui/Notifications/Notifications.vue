@@ -36,7 +36,7 @@
           type="button"
           class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
           :class="[{ 'ml-auto': !notification?.action?.text }, getButtonClasses(notification)]"
-          :aria-label="t('closeNeutralAlert')"
+          :aria-label="t('common.navigation.closeNeutralAlert')"
           @click="notification.dismiss"
         >
           <SfIconClose class="hidden md:block" />
@@ -52,7 +52,6 @@ import { SfIconClose, SfIconCheckCircle, SfIconInfo, SfIconWarning, SfIconError 
 import type { Notification } from '@plentymarkets/shop-core';
 
 const { data: notifications } = useNotification();
-const { t } = useI18n();
 
 const classMapper = {
   neutral: 'text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300 hover:text-neutral-800 active:text-neutral-900',

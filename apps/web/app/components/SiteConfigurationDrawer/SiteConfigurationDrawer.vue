@@ -11,7 +11,10 @@
         'border-0',
         'border-gray-300',
         'z-[15]',
-        { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
+        {
+          'w-1/2 min-w-[50%] lg:w-1/4 lg:min-w-[25%] xl:w-[20%] xl:min-w-[20%]':
+            placement === 'left' || placement === 'right',
+        },
       ]"
     >
       <component :is="getDrawerView(drawerView)" v-if="drawerView" />
@@ -31,6 +34,7 @@ const { drawerOpen, drawerView, placement, activeSetting, activeSubCategory } = 
 
 const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
+  if (view === 'LocalizationView') return resolveComponent('LocalizationView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };

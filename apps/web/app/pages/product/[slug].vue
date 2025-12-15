@@ -23,7 +23,7 @@
 
           <div class="p-4 flex">
             <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
-              <span>{{ t('legalDetails') }}</span>
+              <span>{{ t('legal.details') }}</span>
               <SfIconChevronRight />
             </p>
           </div>
@@ -49,7 +49,6 @@ import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 const route = useRoute();
-const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
@@ -106,22 +105,11 @@ if (Object.keys(product.value).length === 0) {
     statusMessage: 'Product not found',
   });
 }
+
 setCurrentProduct(productForEditor.value || ({} as Product));
-
-watch(
-  disableActions,
-  () => {
-    setCurrentProduct(productForEditor.value || ({} as Product));
-  },
-  { immediate: true },
-);
-
 setProductMeta();
 setBlocksListContext('product');
-
-onBeforeRouteLeave(() => {
-  setCurrentProduct({} as Product);
-});
+setBreadcrumbs();
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
@@ -130,7 +118,13 @@ async function fetchReviews() {
 }
 await fetchReviews();
 
-setBreadcrumbs();
+watch(
+  disableActions,
+  () => {
+    setCurrentProduct(productForEditor.value || ({} as Product));
+  },
+  { immediate: true },
+);
 
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
@@ -200,6 +194,7 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
+  setCurrentProduct({} as Product);
 });
 
 onNuxtReady(() => observeRecommendedSection());

@@ -128,7 +128,6 @@ import { defaults } from '~/composables';
 import { penPath } from '~/assets/icons/paths/pen';
 
 const props = defineProps<ReviewProps>();
-const { t } = useI18n();
 const { reviewItem } = toRefs(props);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
