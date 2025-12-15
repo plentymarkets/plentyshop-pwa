@@ -355,6 +355,7 @@
       "estimatedTax": "VAT",
       "excludedTax": "plus VAT",
       "filters": "Filters",
+
       "grossPrice": "Gross",
       "home": "Home",
       "includedTax": "included VAT",
@@ -1010,6 +1011,7 @@
     "priceInclVAT": "Incl. VAT",
     "reviewsCount": "{count} reviews",
     "showAllReviews": "Show all reviews",
+    "showAll": "Show all",
     "graduatedPrices": {
       "discount": "DISCOUNT",
       "price": "PRICE",

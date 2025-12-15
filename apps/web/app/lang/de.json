@@ -1010,6 +1010,7 @@
     "priceInclVAT": "inkl. ges. MwSt",
     "reviewsCount": "{Anzahl} Bewertungen",
     "showAllReviews": "Alle Bewertungen anzeigen",
+    "showAll": "alle Filter",
     "graduatedPrices": {
       "discount": "RABATT",
       "price": "PREIS",
