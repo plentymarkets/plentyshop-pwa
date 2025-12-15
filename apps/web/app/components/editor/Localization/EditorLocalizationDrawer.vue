@@ -12,19 +12,30 @@
       <SfIconChevronLeft class="cursor-pointer flex-shrink-0 ml-2" @click="drawerOpen = false" />
     </div>
 
-    <div class="p-4 w-full">
-      <div class="flex w-full">
-        <SfInput
-          v-model="searchTerm"
-          :aria-label="t('common.actions.search')"
-          :placeholder="t('common.actions.search')"
-          wrapper-class="w-full"
-          @input="debouncedSearchTerm"
-        >
-          <template #prefix>
-            <SfIconSearch />
-          </template>
-        </SfInput>
+    <div class="p-4">
+      <div class="flex items-center gap-4">
+        <div class="flex-1">
+          <SfInput
+            v-model="searchTerm"
+            :aria-label="t('common.actions.search')"
+            :placeholder="t('common.actions.search')"
+            @input="debouncedSearchTerm"
+          >
+            <template #prefix>
+              <SfIconSearch />
+            </template>
+          </SfInput>
+        </div>
+
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <SfSwitch v-model="showMissingOnly" />
+          <label
+            class="text-sm whitespace-nowrap cursor-pointer select-none"
+            @click="showMissingOnly = !showMissingOnly"
+          >
+            {{ getEditorTranslation('show-missing-only') }}
+          </label>
+        </div>
         <EditorLocalizationEditorTranslationsImportExport />
       </div>
 
@@ -119,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconChevronLeft, SfIconSearch, SfInput } from '@storefront-ui/vue';
+import { SfDrawer, SfIconChevronLeft, SfIconSearch, SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { LocalizationMessage } from '@plentymarkets/shop-core';
 import { useDebounceFn } from '@vueuse/core';
 import { useVirtualizer } from '@tanstack/vue-virtual';
@@ -130,6 +141,7 @@ const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
 const { keys, filteredKeys, filterKeys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } =
   useEditorLocalizationKeys();
 const searchTerm = ref('');
+const showMissingOnly = ref(false);
 
 const displayedKeys = computed(() => filteredKeys.value || keys.value);
 
@@ -151,8 +163,11 @@ const handleTranslationInput = (key: string, lang: string, value: string) => {
 };
 
 const debouncedSearchTerm = useDebounceFn(() => {
-  filterKeys(searchTerm.value, selectedLocales.value);
+  filterKeys(searchTerm.value, selectedLocales.value, showMissingOnly.value);
 }, 300);
+
+watch(showMissingOnly, (newValue) => filterKeys(searchTerm.value, selectedLocales.value, newValue));
+watch(selectedLocales, (newLocales) => filterKeys(searchTerm.value, newLocales, showMissingOnly.value), { deep: true });
 
 const headerScroll = ref<HTMLElement | null>(null);
 const leftScrollerRef = ref<HTMLElement | null>(null);
@@ -303,11 +318,13 @@ onBeforeUnmount(() => {
 {
   "en": {
     "category-key": "Category + Key",
-    "edit-translations": "Edit translations"
+    "edit-translations": "Edit translations",
+    "show-missing-only": "Show missing translations only"
   },
   "de": {
     "category-key": "Category + Key",
-    "edit-translations": "Edit translations"
+    "edit-translations": "Edit translations",
+    "show-missing-only": "Show missing translations only"
   }
 }
 </i18n>

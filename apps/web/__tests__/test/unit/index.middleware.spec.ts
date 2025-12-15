@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 describe('index.vue', () => {
-  const indexPagePath = join(__dirname, '../index.vue');
+  const indexPagePath = join(__dirname, '../../../app/pages/index.vue');
 
   describe('Page Meta Configuration', () => {
     it('should have newsletter-confirmation-client middleware registered in definePageMeta', () => {
