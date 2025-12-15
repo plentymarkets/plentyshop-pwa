@@ -114,3 +114,4 @@ export * from './useCategoryData';
 export * from './useEditModeNotification';
 export * from './useItemDataTable';
 export * from './useFullWidthToggle';
+export * from './useBlockClasses';
