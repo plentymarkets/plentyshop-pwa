@@ -43,6 +43,7 @@ export default defineNuxtConfig({
         '@plentymarkets/tailwind-colors',
         '@storefront-ui/shared',
         '@storefront-ui/vue',
+        '@tanstack/vue-virtual',
         '@vee-validate/yup',
         '@vue/devtools-core',
         '@vue/devtools-kit',
