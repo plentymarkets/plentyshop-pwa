@@ -2,9 +2,16 @@
  * Tests for BaseGenerator factory pattern
  */
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { BaseGenerator } from '../index';
 import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../types';
+import { PathResolver } from '../../path/PathResolver';
+
+let pathResolver: PathResolver;
+
+beforeAll(() => {
+  pathResolver = new PathResolver();
+});
 
 class TestGenerator extends BaseGenerator {
   readonly name = 'test';
@@ -42,14 +49,14 @@ class TestGenerator extends BaseGenerator {
 
 describe('BaseGenerator', () => {
   it('should create a generator with correct properties', () => {
-    const generator = new TestGenerator();
+    const generator = new TestGenerator(pathResolver);
 
     expect(generator.name).toBe('test');
     expect(generator.description).toBe('Test generator for BaseGenerator pattern');
   });
 
   it('should return prompts correctly', () => {
-    const generator = new TestGenerator();
+    const generator = new TestGenerator(pathResolver);
     const prompts = generator.getPrompts();
 
     expect(prompts).toHaveLength(1);
@@ -58,7 +65,7 @@ describe('BaseGenerator', () => {
   });
 
   it('should create actions correctly', () => {
-    const generator = new TestGenerator();
+    const generator = new TestGenerator(pathResolver);
     const data: PromptAnswers = { name: 'TestComponent' };
     const actions = generator.createActions(data);
 
@@ -68,7 +75,7 @@ describe('BaseGenerator', () => {
   });
 
   it('should verify generator registration', () => {
-    const generator = new TestGenerator();
+    const generator = new TestGenerator(pathResolver);
     const mockPlop = {
       setGenerator: vi.fn(),
     };
@@ -85,7 +92,7 @@ describe('BaseGenerator', () => {
   });
 
   it('should handle data validation with error handling', () => {
-    const generator = new TestGenerator();
+    const generator = new TestGenerator(pathResolver);
     const mockPlop = {
       setGenerator: vi.fn(),
     };
