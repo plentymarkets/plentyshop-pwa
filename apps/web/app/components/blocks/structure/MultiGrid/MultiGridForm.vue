@@ -85,6 +85,7 @@
           </button>
         </div>
       </div>
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -182,6 +183,8 @@ const multiGridStructure = computed(() => {
   }
   return block;
 });
+
+const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
