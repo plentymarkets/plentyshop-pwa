@@ -36,6 +36,7 @@
             {{ getEditorTranslation('show-missing-only') }}
           </label>
         </div>
+        <EditorLocalizationEditorTranslationsImportExport />
       </div>
 
       <div class="w-full h-[calc(100vh-230px)] mt-4 overflow-hidden border rounded-lg">
