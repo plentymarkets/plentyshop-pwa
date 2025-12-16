@@ -1,20 +1,4 @@
-export interface Asset {
-  id: number;
-  configId: number;
-  language: string | null;
-  type: string;
-  name: string;
-  assetKey: string | null;
-  content: string;
-  isActive: boolean;
-  placement: string;
-  order: number;
-  scope: string | null;
-  attributes: unknown | null;
-  createdAt: string;
-  updatedAt: string;
-  uuid: string;
-}
+import type { Asset} from '@plentymarkets/shop-api';
 
 export interface UseCustomAssetsState {
   data: Asset[];
@@ -28,6 +12,7 @@ export type SetAssetsInitialData = (assets: Asset[]) => void;
 export type GetAssetsOfType = (type: string) => Asset[];
 export type AddOrUpdate = (assets: Asset) => void;
 export type SelectAsset = (assets: Asset) => void;
+export type DeleteAsset = (assets: Asset) => void;
 
 export interface UseCustomAssetsReturn {
   (assetKey?: string): {
@@ -41,5 +26,6 @@ export interface UseCustomAssetsReturn {
     getAssetsOfType: GetAssetsOfType;
     addOrUpdate: AddOrUpdate;
     selectAsset: SelectAsset;
+    deleteAsset: DeleteAsset;
   };
 }

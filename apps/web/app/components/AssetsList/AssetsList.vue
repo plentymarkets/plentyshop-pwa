@@ -55,10 +55,10 @@
             <div class="grid grid-cols-[auto,1fr] border rounded-lg max-h-24 overflow-scroll">
               <pre
                 class="m-0 py-3 pl-3 pr-2 text-right select-none text-gray-500 bg-gray-50 font-mono text-sm leading-5 whitespace-pre"
-                >{{ lineNumbers[asset.id] }}</pre
+                >{{ lineNumbers[asset.uuid] }}</pre
               >
               <textarea
-                :id="`snippet-${asset.id}-overview`"
+                :id="`snippet-${asset.uuid}-overview`"
                 :value="asset.content"
                 readonly
                 :rows="4"
@@ -89,8 +89,9 @@ import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { AssetsListProps } from '~/components/AssetsList/types';
+import type { Asset} from '@plentymarkets/shop-api';
 
-const { getAssetsOfType, addOrUpdate, selectAsset, currentAsset } = useCustomAssets();
+const { getAssetsOfType, addOrUpdate, selectAsset } = useCustomAssets();
 const props = defineProps<AssetsListProps>();
 
 const snippets = computed({
@@ -118,7 +119,7 @@ watch(
   (list) => {
     for (const asset of list) {
       const lines = Math.max(4, (asset.content || '').split('\n').length);
-      lineNumbers[asset.id] = Array.from({ length: lines }, (_, i) => String(i + 1)).join('\n');
+      lineNumbers[asset.uuid || ''] = Array.from({ length: lines }, (_, i) => String(i + 1)).join('\n');
     }
   },
   { immediate: true, deep: true },

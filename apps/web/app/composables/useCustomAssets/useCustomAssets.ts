@@ -3,11 +3,11 @@ import type {
   UseCustomAssetsState,
   SaveCustomAssets,
   SetAssetsInitialData,
-  Asset,
   AddOrUpdate,
   GetAssetsOfType,
   SelectAsset,
 } from './types';
+import type { Asset} from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
 /**
@@ -72,64 +72,76 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
   };
 
   const setInitialData: SetAssetsInitialData = (assets: Asset[]) => {
-    const asset = [
-      {
-        id: 1,
-        configId: 4,
-        language: null,
-        type: 'css',
-        name: 'snippet 1',
-        assetKey: null,
-        content: '.bg { color:yellow; }',
-        isActive: false,
-        placement: 'head_end',
-        order: 0,
-        scope: null,
-        attributes: null,
-        uuid: '123',
-        createdAt: '2025-11-24T12:03:44+01:00',
-        updatedAt: '2025-11-25T10:25:57+01:00',
-      },
-      {
-        id: 2,
-        configId: 4,
-        language: null,
-        type: 'css',
-        name: 'snippet 2',
-        assetKey: null,
-        content: '.bg { color:green; }',
-        isActive: false,
-        placement: 'head_end',
-        order: 1,
-        scope: null,
-        attributes: null,
-        uuid: '12345',
-        createdAt: '2025-11-25T10:25:14+01:00',
-        updatedAt: '2025-11-25T10:25:57+01:00',
-      },
-    ];
-    state.value.initialData = asset;
+    // Assign a random uuid to each asset
+    state.value.initialData = assets.map((asset) => ({
+      ...asset,
+      uuid: uuid(),
+    }));
   };
 
-  const assetsIsDirty = computed(() => JSON.stringify(state.value.initialData) !== JSON.stringify(state.value.data));
+  const assetsIsDirty = computed(() => {
+    const actualChanges = state.value.data.filter((changedAsset) => {
+      const initialAsset = state.value.initialData.find((a) => a.uuid === changedAsset.uuid);
+      if (!initialAsset) return true;
+      return JSON.stringify(initialAsset) !== JSON.stringify(changedAsset);
+    });
+
+    return actualChanges.length > 0;
+  });
 
   const selectAsset: SelectAsset = (asset: Asset) => {
     state.value.currentAsset = asset;
   };
 
+  const deleteAsset = async (asset: Asset) => {
+    const uuidValue = asset.uuid
+
+    if (!asset.id) {
+      state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue)
+    } else {
+      try {
+        state.value.loading = true
+
+        await useSdk().plentysystems.deleteCustomAsset({
+          id: asset.id,
+        })
+
+        state.value.initialData = state.value.initialData.filter((a) => a.uuid !== uuidValue)
+        state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue)
+      } finally {
+        state.value.loading = false
+      }
+    }
+
+    if (state.value.currentAsset?.uuid === uuidValue) {
+      state.value.currentAsset = {} as Asset
+    }
+  }
+
   const saveCustomAssets: SaveCustomAssets = async () => {
-    // try {
-    //   state.value.loading = true;
-    //
-    //   await useSdk().plentysystems.setAssets(state.value.data);
-    //
-    //   state.value.initialData = { ...state.value.initialData, ...state.value.data };
-    //   state.value.data = [] as Asset[];
-    // } catch (error) {
-    //   console.error('Error saving custom assets:', error);
-    // } finally {
-    //   state.value.loading = false;
-    // }
+    try {
+      state.value.loading = true;
+
+      const assetsToSave = state.value.data.map(({ uuid, ...asset }) => asset);
+
+      await useSdk().plentysystems.setCustomAssets(assetsToSave);
+
+      const merged = [...state.value.initialData];
+      state.value.data.forEach((changedAsset) => {
+        const existingIndex = merged.findIndex((a) => a.uuid === changedAsset.uuid);
+        if (existingIndex !== -1) {
+          merged[existingIndex] = changedAsset;
+        } else {
+          merged.push(changedAsset);
+        }
+      });
+      state.value.initialData = merged;
+      state.value.data = [] as Asset[];
+    } catch (error) {
+      console.error('Error saving custom assets:', error);
+    } finally {
+      state.value.loading = false;
+    }
     return true;
   };
 
@@ -140,6 +152,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
     getAssetsOfType,
     addOrUpdate,
     selectAsset,
+    deleteAsset,
     ...toRefs(state.value),
   };
 };

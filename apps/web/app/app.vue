@@ -77,6 +77,8 @@ const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
 const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 
+const { getAssetsOfType } = useCustomAssets();
+
 const title = ref(getMetaTitle());
 const ogTitle = ref(getOgTitle());
 const ogImage = ref(getOgImage());
@@ -85,6 +87,9 @@ const keywords = ref(getMetaKeywords());
 const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
+
+const cssAssets = computed(() => getAssetsOfType('css'));
+const jsAssets = computed(() => getAssetsOfType('js'));
 
 watchEffect(() => {
   title.value = getMetaTitle();
@@ -113,6 +118,16 @@ useHead({
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
   ],
+  style: () =>
+    cssAssets.value.map((asset, index) => ({
+      key: `custom-css-${asset.uuid ?? index}`,
+      textContent: asset.content,
+    })),
+  script: () =>
+    jsAssets.value.map((asset, index) => ({
+      key: `custom-js-${asset.uuid ?? index}`,
+      innerHTML: asset.content,
+    })),
 });
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();

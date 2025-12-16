@@ -49,13 +49,14 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
 
   try {
+
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
     if (data.value?.data) {
       setUser(data.value.data.session.user);
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
       setInitialData(data.value.data.settings);
-      setInitialAssetsData([]);
+      setInitialAssetsData(data.value.data.customAssets || []);
       setWishlistItemIds(Object.values(data.value.data.session?.basket?.itemWishListIds || []));
       if (data.value.data.robots) {
         setRobots(data.value.data.robots);
