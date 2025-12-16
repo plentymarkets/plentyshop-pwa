@@ -120,7 +120,7 @@ export const fakeFacetCallDE = {
         values: [
           {
             id: 1,
-            name: 'Exclusive Leather',
+            name: 'Exklusives Leder',
             cssClass: '',
             position: 1,
             count: 5,

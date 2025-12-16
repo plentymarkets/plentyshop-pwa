@@ -11,8 +11,6 @@
       "sticky": [1],
       "layout": {
         "marginTop": "0",
-        "marginLeft": "40",
-        "marginRight": "40",
         "marginBottom": "0"
       }
     },

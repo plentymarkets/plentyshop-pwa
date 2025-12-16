@@ -18,7 +18,7 @@
       @click="isExpanded = true"
     >
       <SfIconExpandMore class="shrink-0" />
-      {{ getEditorTranslation('show-all-filters') }}
+      {{ t('product.showAll') }}
     </button>
   </div>
 </template>
@@ -95,14 +95,3 @@ watch(
   },
 );
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "show-all-filters": "Show all"
-  },
-  "de": {
-    "show-all-filters": "Alle anzeigen"
-  }
-}
-</i18n>

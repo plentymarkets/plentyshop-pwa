@@ -39,8 +39,8 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.14.2",
-    "@plentymarkets/shop-api": "^0.148.1",
+    "@plentymarkets/shop-core": "^1.15.0",
+    "@plentymarkets/shop-api": "^0.149.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.4.0",
     "@tanstack/vue-virtual": "^3.13.12",
