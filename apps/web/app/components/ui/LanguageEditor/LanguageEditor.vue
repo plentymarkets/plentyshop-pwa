@@ -44,6 +44,10 @@ const selectWidth = ref('auto');
 const updateWidth = async () => {
   await nextTick();
   if (measureRef.value) {
+    /**
+     * Add 5px to the measured width to provide extra space for the dropdown arrow
+     * and prevent text clipping.
+     */
     selectWidth.value = `${measureRef.value.offsetWidth + 5}px`;
   }
 };
