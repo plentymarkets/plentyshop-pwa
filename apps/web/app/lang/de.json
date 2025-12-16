@@ -9,7 +9,7 @@
       "edit": "Bearbeiten",
       "heading": "Kontoeinstellungen",
       "makeDefault": "Als Standard festlegen",
-      "noAddresses": "Es sind noch keine Addresse vorhanden.",
+      "noAddresses": "Es sind noch keine Adresse vorhanden.",
       "personalData": {
         "change": "Ändern",
         "changePassword": "Passwort ändern",
@@ -1010,6 +1010,7 @@
     "priceInclVAT": "inkl. ges. MwSt",
     "reviewsCount": "{Anzahl} Bewertungen",
     "showAllReviews": "Alle Bewertungen anzeigen",
+    "showAll": "alle Filter",
     "graduatedPrices": {
       "discount": "RABATT",
       "price": "PREIS",
