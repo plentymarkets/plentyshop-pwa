@@ -51,7 +51,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
       state.value.data.push(created);
 
       if (selectAsset) {
-        state.value.currentAsset = created || {} as Asset;
+        state.value.currentAsset = created || ({} as Asset);
       }
     }
   };

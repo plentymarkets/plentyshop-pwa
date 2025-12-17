@@ -95,9 +95,7 @@ const cssAssets = computed(() => getAssetsOfType('css'));
 const jsAssets = computed(() => getAssetsOfType('javascript').filter((asset) => asset.isActive));
 
 const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive));
-const cssExternalAssets = computed(() =>
-  getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)),
-);
+const cssExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)));
 const jsExternalAssets = computed(() =>
   getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
 );

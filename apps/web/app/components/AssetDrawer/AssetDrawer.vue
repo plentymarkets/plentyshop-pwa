@@ -59,7 +59,7 @@
         v-if="isCodeAsset"
         ref="codeEditorRef"
         v-model="currentAsset.content"
-        :language="currentAsset.type as ('css' | 'javascript' | 'meta' | 'external')"
+        :language="currentAsset.type as 'css' | 'javascript' | 'meta' | 'external'"
         class="mb-4"
         @update:model-value="() => addOrUpdate(currentAsset)"
       />
