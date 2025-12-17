@@ -10,7 +10,6 @@
       >
         <SfIconAdd />
         {{ getEditorTranslation('add-snippet-label') }}
-
       </button>
     </div>
 
