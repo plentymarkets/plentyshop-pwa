@@ -10,7 +10,7 @@ export interface UseCustomAssetsState {
 export type SaveCustomAssets = () => Promise<boolean>;
 export type SetAssetsInitialData = (assets: Asset[]) => void;
 export type GetAssetsOfType = (type: string) => Asset[];
-export type AddOrUpdate = (assets: Asset) => void;
+export type AddOrUpdate = (assets: Asset, selectAsset?: boolean) => void;
 export type SelectAsset = (assets: Asset) => void;
 export type DeleteAsset = (assets: Asset) => void;
 

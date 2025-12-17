@@ -57,6 +57,8 @@
 </template>
 
 <script setup lang="ts">
+import { isCssUrl, isJsUrl } from '~/utils/assets';
+
 const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
@@ -88,8 +90,12 @@ const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
 
-const cssAssets = computed(() => getAssetsOfType('css'));
-const jsAssets = computed(() => getAssetsOfType('js'));
+const cssAssets = computed(() => getAssetsOfType('css').filter((asset) => asset.isActive));
+const jsAssets = computed(() => getAssetsOfType('javascript').filter((asset) => asset.isActive));
+
+const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive))
+const cssExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => asset.isActive && isCssUrl(asset.content)))
+const jsExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)))
 
 watchEffect(() => {
   title.value = getMetaTitle();
@@ -117,17 +123,36 @@ useHead({
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
+    ...cssExternalAssets.value.map((asset, index) => ({
+      key: `external-css-${asset.uuid ?? index}`,
+      rel: 'stylesheet',
+      href: asset.content,
+    })),
   ],
+  meta: () =>
+    metaAssets.value
+      .filter((asset) => asset.name && asset.content)
+      .map((asset, index) => ({
+        key: `custom-meta-${asset.uuid ?? index}`,
+        name: asset.name,
+        content: asset.content,
+      })),
   style: () =>
     cssAssets.value.map((asset, index) => ({
       key: `custom-css-${asset.uuid ?? index}`,
       textContent: asset.content,
     })),
-  script: () =>
-    jsAssets.value.map((asset, index) => ({
+  script: () => [
+    ...jsAssets.value.map((asset, index) => ({
       key: `custom-js-${asset.uuid ?? index}`,
       innerHTML: asset.content,
     })),
+    ...jsExternalAssets.value.map((asset, index) => ({
+      key: `external-js-${asset.uuid ?? index}`,
+      src: asset.content,
+      defer: true,
+    })),
+  ]
 });
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();

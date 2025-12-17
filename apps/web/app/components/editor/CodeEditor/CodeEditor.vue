@@ -1,10 +1,5 @@
 <template>
   <div class="code-editor">
-    <div class="editor-header">
-      <button class="format-button" :disabled="formatting" @click="formatCode">
-        {{ formatting ? 'Formatting...' : 'Format Code' }}
-      </button>
-    </div>
     <div ref="editorElement" class="editor-container" />
   </div>
 </template>
@@ -16,11 +11,11 @@ import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import jsBeautify from 'js-beautify';
 
-type Language = 'css' | 'javascript';
+type Language = 'css' | 'javascript' | 'meta' | 'external';
 
 const props = defineProps<{
   modelValue: string;
-  language?: Language;
+  language: Language;
 }>();
 
 const emit = defineEmits<{
@@ -178,6 +173,11 @@ onMounted(initializeEditor);
 onUnmounted(() => {
   editorView?.destroy();
 });
+
+defineExpose({
+  formatCode,
+  formatting,
+});
 </script>
 
 <style scoped>
@@ -188,53 +188,6 @@ onUnmounted(() => {
   background: white;
 }
 
-.editor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.language-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  color: #495057;
-}
-
-.language-selector select {
-  padding: 6px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background: white;
-  color: #495057;
-  font-size: 14px;
-}
-
-.format-button {
-  padding: 8px 16px;
-  background: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.format-button:hover:not(:disabled) {
-  background: #1565c0;
-}
-
-.format-button:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
 
 .editor-container {
   height: 400px;

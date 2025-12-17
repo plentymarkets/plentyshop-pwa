@@ -8,20 +8,30 @@
         </p>
       </div>
     </template>
+
+    <AssetDrawer v-if="Object.keys(currentAsset).length > 0" />
   </SiteConfigurationView>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Asset } from '@plentymarkets/shop-api';
+
+const { currentAsset, selectAsset } = useCustomAssets();
+
+onBeforeUnmount(() => {
+  selectAsset({} as Asset);
+});
+</script>
 
 <i18n lang="json">
 {
   "en": {
-    "label": "Other Settings",
-    "description": "Control other settings affecting the user experience during checkout."
+    "label": "Custom External Scripts",
+    "description": ""
   },
   "de": {
-    "label": "Other Settings",
-    "description": "Control other settings affecting the user experience during checkout."
+    "label": "Custom External Scripts",
+    "description": ""
   }
 }
 </i18n>

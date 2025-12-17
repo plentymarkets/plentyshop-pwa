@@ -45,7 +45,7 @@
                   </SfIconBase>
                 </button>
                 <SfSwitch
-                  :model-value="asset.isAvailable"
+                  :model-value="asset.isActive"
                   class="checked:bg-editor-button checked:before:hover:bg-editor-button"
                   @update:model-value="onToggle(asset, !asset.isActive)"
                 />
@@ -132,13 +132,17 @@ const onAdd = () => {
     content: '',
     isActive: false,
     placement: 'head_end',
+    scope: null,
+    attributes: null,
+    language: null,
+    assetKey: null,
     order: snippets.value.length,
   } as Asset;
 
   addOrUpdate(newAsset);
 };
 
-const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isActive: value });
+const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isActive: value }, false);
 </script>
 
 <i18n lang="json">

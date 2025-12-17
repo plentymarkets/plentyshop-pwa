@@ -14,7 +14,13 @@
 </template>
 
 <script setup lang="ts">
-const { currentAsset } = useCustomAssets();
+import type { Asset } from '@plentymarkets/shop-api';
+
+const { currentAsset, selectAsset } = useCustomAssets();
+
+onBeforeUnmount(() => {
+  selectAsset({} as Asset);
+});
 </script>
 
 <i18n lang="json">

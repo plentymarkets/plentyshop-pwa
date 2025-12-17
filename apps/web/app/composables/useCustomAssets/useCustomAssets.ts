@@ -26,7 +26,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
     currentAsset: {} as Asset,
   }));
 
-  const addOrUpdate: AddOrUpdate = async (asset: Asset) => {
+  const addOrUpdate: AddOrUpdate = async (asset: Asset, selectAsset = true) => {
     const uuidValue = asset.uuid || uuid();
     const existingIndex = state.value.data.findIndex((a) => a.uuid === asset.uuid);
 
@@ -39,7 +39,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
       state.value.data[existingIndex] = updated;
 
-      if (state.value.currentAsset?.uuid === uuidValue) {
+      if (selectAsset && state.value.currentAsset?.uuid === uuidValue) {
         state.value.currentAsset = updated;
       }
     } else {
@@ -49,13 +49,18 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
       };
 
       state.value.data.push(created);
-      state.value.currentAsset = created;
+
+      if (selectAsset) {
+        state.value.currentAsset = created;
+      }
     }
   };
 
   const getAssetsOfType: GetAssetsOfType = (type: string) => {
     const currentAssets = state.value.data || [];
-    const initialAssets = markRaw(JSON.parse(JSON.stringify(state.value.initialData || [])));
+    const initialAssets = Array.isArray(state.value.initialData)
+      ? markRaw(JSON.parse(JSON.stringify(state.value.initialData)))
+      : [];
 
     const merged = [...initialAssets, ...currentAssets]
       .filter((asset) => asset.type === type)
@@ -72,7 +77,6 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
   };
 
   const setInitialData: SetAssetsInitialData = (assets: Asset[]) => {
-    // Assign a random uuid to each asset
     state.value.initialData = assets.map((asset) => ({
       ...asset,
       uuid: uuid(),
@@ -95,9 +99,12 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
   const deleteAsset = async (asset: Asset) => {
     const uuidValue = asset.uuid
+    const { send } = useNotification();
+    const { $i18n } = useNuxtApp();
 
     if (!asset.id) {
       state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue)
+      send({ message: $i18n.t('customAssets.assetDeletedSuccessfully'), type: 'positive' });
     } else {
       try {
         state.value.loading = true
@@ -108,6 +115,10 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
         state.value.initialData = state.value.initialData.filter((a) => a.uuid !== uuidValue)
         state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue)
+        send({ message: $i18n.t('customAssets.assetDeletedSuccessfully'), type: 'positive' });
+      } catch (error) {
+        send({ message: $i18n.t('customAssets.failedToDeleteAsset'), type: 'negative' });
+        throw error;
       } finally {
         state.value.loading = false
       }
@@ -119,8 +130,32 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
   }
 
   const saveCustomAssets: SaveCustomAssets = async () => {
+    const { send } = useNotification();
+    const { $i18n } = useNuxtApp();
+
     try {
       state.value.loading = true;
+
+      const allAssets = [...state.value.initialData];
+      state.value.data.forEach((changedAsset) => {
+        const existingIndex = allAssets.findIndex((a) => a.uuid === changedAsset.uuid);
+        if (existingIndex !== -1) {
+          allAssets[existingIndex] = changedAsset;
+        } else {
+          allAssets.push(changedAsset);
+        }
+      });
+
+      const typeNameCombinations = new Map<string, Asset>();
+      for (const asset of allAssets) {
+        const key = `${asset.type}-${asset.name}`;
+        if (typeNameCombinations.has(key)) {
+          send({ message: $i18n.t('customAssets.duplicateAssetError'), type: 'negative' });
+          state.value.loading = false;
+          return false;
+        }
+        typeNameCombinations.set(key, asset);
+      }
 
       const assetsToSave = state.value.data.map(({ uuid, ...asset }) => asset);
 
