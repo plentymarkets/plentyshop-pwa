@@ -90,12 +90,13 @@ const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
 
-const cssAssets = computed(() => getAssetsOfType('css').filter((asset) => asset.isActive));
+const cssAssets = computed(() => getAssetsOfType('css'));
+
 const jsAssets = computed(() => getAssetsOfType('javascript').filter((asset) => asset.isActive));
 
 const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive));
 const cssExternalAssets = computed(() =>
-  getAssetsOfType('external').filter((asset) => asset.isActive && isCssUrl(asset.content)),
+  getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)),
 );
 const jsExternalAssets = computed(() =>
   getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
@@ -130,29 +131,32 @@ useHead({
     ...cssExternalAssets.value.map((asset, index) => ({
       key: `external-css-${asset.uuid ?? index}`,
       rel: 'stylesheet',
+      media: asset.isActive ? 'all' : 'not all',
       href: asset.content,
     })),
   ],
   meta: () =>
     metaAssets.value
       .filter((asset) => asset.name && asset.content)
-      .map((asset, index) => ({
-        key: `custom-meta-${asset.uuid ?? index}`,
+      .map((asset) => ({
+        key: `custom-meta-${asset.uuid}`,
         name: asset.name,
         content: asset.content,
       })),
   style: () =>
-    cssAssets.value.map((asset, index) => ({
-      key: `custom-css-${asset.uuid ?? index}`,
+    cssAssets.value.map((asset) => ({
+      key: `custom-css-${asset.uuid}-o${asset.order ?? 0}`,
       textContent: asset.content,
+      media: asset.isActive ? 'all' : 'not all',
+      tagPriority: 100 + (asset.order ?? 0),
     })),
   script: () => [
-    ...jsAssets.value.map((asset, index) => ({
-      key: `custom-js-${asset.uuid ?? index}`,
+    ...jsAssets.value.map((asset) => ({
+      key: `custom-js-${asset.uuid}`,
       innerHTML: asset.content,
     })),
-    ...jsExternalAssets.value.map((asset, index) => ({
-      key: `external-js-${asset.uuid ?? index}`,
+    ...jsExternalAssets.value.map((asset) => ({
+      key: `external-js-${asset.uuid}`,
       src: asset.content,
       defer: true,
     })),

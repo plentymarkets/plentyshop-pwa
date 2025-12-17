@@ -39,7 +39,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
       state.value.data[existingIndex] = updated;
 
-      if (selectAsset && state.value.currentAsset?.uuid === uuidValue) {
+      if (state.value.currentAsset?.uuid === uuidValue) {
         state.value.currentAsset = updated;
       }
     } else {
@@ -51,7 +51,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
       state.value.data.push(created);
 
       if (selectAsset) {
-        state.value.currentAsset = created;
+        state.value.currentAsset = created || {} as Asset;
       }
     }
   };
