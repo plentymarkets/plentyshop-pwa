@@ -48,11 +48,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const route = useRoute();
     const { $i18n, $isPreview } = useNuxtApp();
-    const { setupBlocks } = useCategoryTemplate(
-      route?.meta?.identifier as string,
-      route.meta.type as string,
-      $i18n.locale.value,
-    );
+    const {
+      data: blockData,
+      setupBlocks,
+      getBlocksServer,
+    } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
 
     state.value.loading = true;
 
@@ -60,7 +60,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (isGlobalProductCategoryTemplate.value && $isPreview) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
-      const fakeBlocks = useCategoryTemplateData();
+
+      await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
+      const fakeBlocks = blockData.value ?? useCategoryTemplateData();
 
       state.value.data = {
         category: fakeFacet['data'].category,
