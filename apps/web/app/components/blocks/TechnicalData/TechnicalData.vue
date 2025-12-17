@@ -44,12 +44,12 @@ const inlineStyle = computed(() => {
   };
 });
 
-
 const emit = defineEmits<{
-  (e: 'no-data' | 'has-data'): void;
+  'no-data': [];
+  'has-data': [];
 }>();
 
-const hasRealData = computed(() => !!text.value && text.value.length > 0);
+const hasRealData = computed(() => text.value?.length > 0);
 
 watch(
   () => hasRealData.value,
@@ -60,6 +60,6 @@ watch(
       emit('no-data');
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
