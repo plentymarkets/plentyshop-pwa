@@ -70,8 +70,8 @@ const formatCode = async () => {
     });
 
     emit('update:modelValue', formattedContent);
-  } catch (error) {
-    console.error('Error formatting code:', error);
+  } catch {
+    // Silently handle formatting errors
   } finally {
     formatting.value = false;
   }
