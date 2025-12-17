@@ -188,7 +188,6 @@ defineExpose({
   background: white;
 }
 
-
 .editor-container {
   height: 400px;
 }

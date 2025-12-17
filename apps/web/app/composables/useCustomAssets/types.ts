@@ -1,4 +1,4 @@
-import type { Asset} from '@plentymarkets/shop-api';
+import type { Asset } from '@plentymarkets/shop-api';
 
 export interface UseCustomAssetsState {
   data: Asset[];

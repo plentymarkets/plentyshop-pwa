@@ -108,7 +108,9 @@ const { assetsIsDirty } = useCustomAssets();
 
 const { save } = useToolbar();
 
-const isTouched = computed(() => assetsIsDirty.value || settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value);
+const isTouched = computed(
+  () => assetsIsDirty.value || settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value,
+);
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;

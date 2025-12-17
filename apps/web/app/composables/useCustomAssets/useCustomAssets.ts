@@ -7,7 +7,7 @@ import type {
   GetAssetsOfType,
   SelectAsset,
 } from './types';
-import type { Asset} from '@plentymarkets/shop-api';
+import type { Asset } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
 /**
@@ -98,36 +98,36 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
   };
 
   const deleteAsset = async (asset: Asset) => {
-    const uuidValue = asset.uuid
+    const uuidValue = asset.uuid;
     const { send } = useNotification();
     const { $i18n } = useNuxtApp();
 
     if (!asset.id) {
-      state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue)
+      state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue);
       send({ message: $i18n.t('customAssets.assetDeletedSuccessfully'), type: 'positive' });
     } else {
       try {
-        state.value.loading = true
+        state.value.loading = true;
 
         await useSdk().plentysystems.deleteCustomAsset({
           id: asset.id,
-        })
+        });
 
-        state.value.initialData = state.value.initialData.filter((a) => a.uuid !== uuidValue)
-        state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue)
+        state.value.initialData = state.value.initialData.filter((a) => a.uuid !== uuidValue);
+        state.value.data = state.value.data.filter((a) => a.uuid !== uuidValue);
         send({ message: $i18n.t('customAssets.assetDeletedSuccessfully'), type: 'positive' });
       } catch (error) {
         send({ message: $i18n.t('customAssets.failedToDeleteAsset'), type: 'negative' });
         throw error;
       } finally {
-        state.value.loading = false
+        state.value.loading = false;
       }
     }
 
     if (state.value.currentAsset?.uuid === uuidValue) {
-      state.value.currentAsset = {} as Asset
+      state.value.currentAsset = {} as Asset;
     }
-  }
+  };
 
   const saveCustomAssets: SaveCustomAssets = async () => {
     const { send } = useNotification();

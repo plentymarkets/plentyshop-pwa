@@ -59,7 +59,7 @@
         v-if="isCodeAsset"
         ref="codeEditorRef"
         v-model="currentAsset.content"
-        :language="currentAsset.type as ('css' | 'javascript' | 'meta' | 'external')"
+        :language="currentAsset.type as 'css' | 'javascript' | 'meta' | 'external'"
         class="mb-4"
         @update:model-value="() => addOrUpdate(currentAsset)"
       />
@@ -68,7 +68,9 @@
         v-else
         v-model="currentAsset.content"
         class="w-full h-32 p-2 border border-gray-300 rounded-md mb-4 font-mono text-sm"
-        :placeholder="currentAsset.type === 'meta' ? getEditorTranslation('content') : getEditorTranslation('source-url')"
+        :placeholder="
+          currentAsset.type === 'meta' ? getEditorTranslation('content') : getEditorTranslation('source-url')
+        "
         @input="() => addOrUpdate(currentAsset)"
       />
 
@@ -87,7 +89,7 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconDelete, SfIconChevronLeft, SfInput } from '@storefront-ui/vue';
-import type { Asset} from '@plentymarkets/shop-api';
+import type { Asset } from '@plentymarkets/shop-api';
 
 const { currentAsset, selectAsset, addOrUpdate, deleteAsset } = useCustomAssets();
 
@@ -157,4 +159,3 @@ const handleFormatCode = () => {
   opacity: 0.7;
 }
 </style>
-

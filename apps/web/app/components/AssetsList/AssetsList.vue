@@ -89,7 +89,7 @@ import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { AssetsListProps } from '~/components/AssetsList/types';
-import type { Asset} from '@plentymarkets/shop-api';
+import type { Asset } from '@plentymarkets/shop-api';
 
 const { getAssetsOfType, addOrUpdate, selectAsset } = useCustomAssets();
 const props = defineProps<AssetsListProps>();

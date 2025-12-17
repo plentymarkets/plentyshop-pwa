@@ -93,9 +93,13 @@ const themeColor = ref(getPrimaryColor());
 const cssAssets = computed(() => getAssetsOfType('css').filter((asset) => asset.isActive));
 const jsAssets = computed(() => getAssetsOfType('javascript').filter((asset) => asset.isActive));
 
-const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive))
-const cssExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => asset.isActive && isCssUrl(asset.content)))
-const jsExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)))
+const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive));
+const cssExternalAssets = computed(() =>
+  getAssetsOfType('external').filter((asset) => asset.isActive && isCssUrl(asset.content)),
+);
+const jsExternalAssets = computed(() =>
+  getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
+);
 
 watchEffect(() => {
   title.value = getMetaTitle();
@@ -152,7 +156,7 @@ useHead({
       src: asset.content,
       defer: true,
     })),
-  ]
+  ],
 });
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();

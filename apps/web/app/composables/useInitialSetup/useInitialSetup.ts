@@ -49,7 +49,6 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
 
   try {
-
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
     if (data.value?.data) {
       setUser(data.value.data.session.user);

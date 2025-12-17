@@ -2,5 +2,4 @@
   <AssetsList type="meta" />
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
