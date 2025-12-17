@@ -142,7 +142,6 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
-  setCurrentProduct({} as Product);
 });
 
 onNuxtReady(() => observeRecommendedSection());
