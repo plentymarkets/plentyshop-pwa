@@ -15,7 +15,12 @@
     <div class="p-4">
       <div class="mb-4">
         <label>
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+          <UiFormLabel v-if="isCodeAsset" class="mb-1">
+            {{ getEditorTranslation('snippet-name') }}
+          </UiFormLabel>
+          <UiFormLabel v-else class="mb-1">
+            {{ getEditorTranslation('name') }}
+          </UiFormLabel>
           <SfInput
             v-model="currentAsset.name"
             data-testid="slider-button-label"
@@ -27,8 +32,20 @@
         </label>
       </div>
       <div class="flex justify-between items-center mb-1">
-        <UiFormLabel>{{ getEditorTranslation('custom-css') }}</UiFormLabel>
+        <UiFormLabel v-if="currentAsset.type === 'css'">
+          {{ getEditorTranslation('custom-css') }}
+        </UiFormLabel>
+        <UiFormLabel v-else-if="currentAsset.type === 'javascript'">
+          {{ getEditorTranslation('custom-js') }}
+        </UiFormLabel>
+        <UiFormLabel v-else-if="currentAsset.type === 'meta'">
+          {{ getEditorTranslation('content') }}
+        </UiFormLabel>
+        <UiFormLabel v-else-if="currentAsset.type === 'external'">
+          {{ getEditorTranslation('source-url') }}
+        </UiFormLabel>
         <button
+          v-if="isCodeAsset"
           type="button"
           class="format-button"
           :disabled="codeEditorRef?.formatting"
@@ -39,11 +56,20 @@
       </div>
 
       <EditorCodeEditor
+        v-if="isCodeAsset"
         ref="codeEditorRef"
         v-model="currentAsset.content"
         :language="currentAsset.type as ('css' | 'javascript' | 'meta' | 'external')"
         class="mb-4"
         @update:model-value="() => addOrUpdate(currentAsset)"
+      />
+
+      <textarea
+        v-else
+        v-model="currentAsset.content"
+        class="w-full h-32 p-2 border border-gray-300 rounded-md mb-4 font-mono text-sm"
+        :placeholder="currentAsset.type === 'meta' ? getEditorTranslation('content') : getEditorTranslation('source-url')"
+        @input="() => addOrUpdate(currentAsset)"
       />
 
       <button
@@ -70,6 +96,8 @@ const open = ref(true);
 
 const codeEditorRef = ref<{ formatCode: () => void; formatting: Ref<boolean> } | null>(null);
 
+const isCodeAsset = computed(() => currentAsset.value.type === 'css' || currentAsset.value.type === 'javascript');
+
 const handleFormatCode = () => {
   if (codeEditorRef.value) {
     codeEditorRef.value.formatCode();
@@ -80,18 +108,26 @@ const handleFormatCode = () => {
 <i18n lang="json">
 {
   "en": {
-    "button-text-label": "Snippet name",
+    "snippet-name": "Snippet name",
+    "name": "Name",
     "button-text-placeholder": "label",
     "delete": "Delete",
     "custom-css": "Custom CSS",
+    "custom-js": "Custom JS",
+    "content": "Content",
+    "source-url": "Source URL",
     "format-code": "Format Code",
     "formatting": "Formatting..."
   },
   "de": {
-    "button-text-label": "Snippet name",
+    "snippet-name": "Snippet Name",
+    "name": "Name",
     "button-text-placeholder": "label",
-    "delete": "Delete",
+    "delete": "Löschen",
     "custom-css": "Custom CSS",
+    "custom-js": "Custom JS",
+    "content": "Inhalt",
+    "source-url": "Quell-URL",
     "format-code": "Code formatieren",
     "formatting": "Formatierung läuft..."
   }
