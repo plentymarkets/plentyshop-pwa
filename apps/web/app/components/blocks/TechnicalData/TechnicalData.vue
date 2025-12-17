@@ -43,20 +43,24 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
+
+
 const emit = defineEmits<{
   (e: 'no-data'): void;
+  (e: 'has-data'): void;
 }>();
-const { $isPreview } = useNuxtApp();
+
 const hasRealData = computed(() => !!text.value && text.value.length > 0);
 
 watch(
   () => hasRealData.value,
   (hasData) => {
-    if ($isPreview && !hasData) {
+    if (hasData) {
+      emit('has-data');
+    } else {
       emit('no-data');
     }
   },
   { immediate: true }
 );
-
 </script>
