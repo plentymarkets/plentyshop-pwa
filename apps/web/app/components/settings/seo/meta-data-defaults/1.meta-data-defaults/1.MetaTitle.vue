@@ -30,7 +30,7 @@ const metaTitle = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Shop name",
+    "label": "Title",
     "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
     "placeholder": "Enter title"
   },
