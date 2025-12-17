@@ -67,7 +67,7 @@ jobs:
         env:
           NUXT_PUBLIC_CONFIG_ID: 1
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: cypress-screenshots
