@@ -46,8 +46,7 @@ const inlineStyle = computed(() => {
 
 
 const emit = defineEmits<{
-  (e: 'no-data'): void;
-  (e: 'has-data'): void;
+  (e: 'no-data' | 'has-data'): void;
 }>();
 
 const hasRealData = computed(() => !!text.value && text.value.length > 0);

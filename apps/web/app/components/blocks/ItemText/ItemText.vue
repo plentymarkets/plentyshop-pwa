@@ -43,4 +43,21 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
+const emit = defineEmits<{
+  (e: 'no-data' | 'has-data'): void;
+}>();
+
+const hasRealData = computed(() => !!text.value && text.value.length > 0);
+
+watch(
+  () => hasRealData.value,
+  (hasData) => {
+    if (hasData) {
+      emit('has-data');
+    } else {
+      emit('no-data');
+    }
+  },
+  { immediate: true }
+);
 </script>
