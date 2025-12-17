@@ -1,9 +1,9 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
+  <div v-if="shouldRenderBlock && block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
-      :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
+      :ref="setBlockWrapperRef"
       :class="[
         'relative block-wrapper',
         marginBottomClasses,
@@ -140,7 +140,8 @@ const shouldShowBottomAddInGrid = computed(() =>
 );
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
-
+const blockWrapperRef = ref<HTMLElement | null>(null);
+const isVisuallyEmpty = ref(false);
 const marginBottomClasses = computed(() => {
   if (props.block.name === 'MultiGrid') return '';
   if (!isRootNonFooter.value) return '';
@@ -170,8 +171,36 @@ const getBlockComponent = computed(() => {
     loader,
   });
 });
-
+const setBlockWrapperRef: RefCallback = (el) => {
+  blockWrapperRef.value = el as HTMLElement | null;
+  getLazyLoadRef(props.block.name, props.block.meta.uuid)(el);
+};
 const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid);
+
+const shouldRenderBlock = computed(() => {
+  if (!props.block?.meta) return false;
+
+  if (isVisuallyEmpty.value) {
+    return false;
+  }
+
+  return !(props.blockHasData && !props.blockHasData(props.block));
+});
+
+const checkVisuallyEmpty = () => {
+  nextTick(() => {
+    const el = blockWrapperRef.value;
+    if (!el) return;
+
+    const text = el.textContent?.trim() ?? '';
+    const rect = el.getBoundingClientRect();
+
+    const hasText = text.length > 0;
+    const hasHeight = rect.height > 1;
+
+    isVisuallyEmpty.value = !hasText && !hasHeight;
+  });
+};
 
 const contentProps = computed(() => {
   const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
@@ -282,4 +311,11 @@ const getBlockActions = (block: Block) => {
   }
   return undefined;
 };
+onMounted(() => {
+  checkVisuallyEmpty();
+});
+
+onUpdated(() => {
+  checkVisuallyEmpty();
+});
 </script>

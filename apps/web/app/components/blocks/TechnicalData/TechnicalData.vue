@@ -1,5 +1,5 @@
 <template>
-  <div :style="inlineStyle" data-testid="technical-data-block">
+  <div v-if="shouldShow" :style="inlineStyle" data-testid="technical-data-block">
     <div v-if="displayAsCollapsable">
       <UiAccordionItem
         v-if="text"
@@ -28,6 +28,9 @@
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
 import type { TechnicalDataProps } from './types';
+const { $isPreview } = useNuxtApp();
+const { disableActions } = useEditor();
+
 const props = defineProps<TechnicalDataProps>();
 const content = computed(() => props.content);
 const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
@@ -42,5 +45,13 @@ const inlineStyle = computed(() => {
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
+});
+const hasRealData = computed(() => !!text.value && text.value.length > 0);
+
+const shouldShow = computed(() => {
+  if (($isPreview && !disableActions.value) || !$isPreview) {
+    return true;
+  }
+  return hasRealData.value;
 });
 </script>
