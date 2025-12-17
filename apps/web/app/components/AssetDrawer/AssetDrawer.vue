@@ -59,7 +59,7 @@
         v-if="isCodeAsset"
         ref="codeEditorRef"
         v-model="currentAsset.content"
-        :language="currentAsset.type as 'css' | 'javascript' | 'meta' | 'external'"
+        :language="currentAsset.type as AssetType"
         class="mb-4"
         @update:model-value="() => addOrUpdate(currentAsset)"
       />
@@ -89,14 +89,15 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconDelete, SfIconChevronLeft, SfInput } from '@storefront-ui/vue';
-import type { Asset } from '@plentymarkets/shop-api';
+import type { Asset, AssetType } from '@plentymarkets/shop-api';
+import type { CodeEditorExposed } from '~/components/AssetDrawer/types';
 
 const { currentAsset, selectAsset, addOrUpdate, deleteAsset } = useCustomAssets();
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 
-const codeEditorRef = ref<{ formatCode: () => void; formatting: Ref<boolean> } | null>(null);
+const codeEditorRef = ref<CodeEditorExposed | null>(null);
 
 const isCodeAsset = computed(() => currentAsset.value.type === 'css' || currentAsset.value.type === 'javascript');
 

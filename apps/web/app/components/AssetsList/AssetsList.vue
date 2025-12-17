@@ -10,10 +10,12 @@
       >
         <SfIconAdd />
         {{ getEditorTranslation('add-snippet-label') }}
+
       </button>
     </div>
 
     <div v-else class="space-y-3">
+      <p>{{ getEditorTranslation('js-disable-warning') }}</p>
       <draggable
         v-model="snippets"
         item-key="uuid"
@@ -151,12 +153,14 @@ const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isAct
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
     "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
+    "js-disable-warning": "If you disable JavaScript, you’ll also need to refresh the page for the changes to fully revert, otherwise some updates may still appear until reload.",
     "drag-reorder-aria": "Drag to reorder"
   },
   "de": {
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
     "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
+    "js-disable-warning": "If you disable JavaScript, you’ll also need to refresh the page for the changes to fully revert, otherwise some updates may still appear until reload.",
     "drag-reorder-aria": "Drag to reorder"
   }
 }

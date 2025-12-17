@@ -157,9 +157,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
         typeNameCombinations.set(key, asset);
       }
 
-      const assetsToSave = state.value.data.map(({ uuid, ...asset }) => asset);
-
-      await useSdk().plentysystems.setCustomAssets(assetsToSave);
+      await useSdk().plentysystems.setCustomAssets(state.value.data);
 
       const merged = [...state.value.initialData];
       state.value.data.forEach((changedAsset) => {
