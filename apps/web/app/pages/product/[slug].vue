@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
@@ -23,8 +23,6 @@ const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
-
-const config = useRuntimeConfig().public;
 
 definePageMeta({
   layout: false,
