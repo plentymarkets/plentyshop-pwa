@@ -18,11 +18,12 @@ const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const product = productForEditor;
 const { disableActions } = useEditor();
-const { fetchProductReviews } = useProductReviews(Number(productId));
+const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
+const { isAuthorized } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -63,6 +64,9 @@ setBreadcrumbs();
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
+  if (isAuthorized.value) {
+    await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
+  }
 }
 await fetchReviews();
 
