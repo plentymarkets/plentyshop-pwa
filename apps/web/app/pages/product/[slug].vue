@@ -19,7 +19,6 @@ const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcru
 const product = productForEditor;
 const { disableActions } = useEditor();
 const {
-  data: productReviews,
   fetchProductReviews,
   fetchProductAuthenticatedReviews,
 } = useProductReviews(Number(productId));
