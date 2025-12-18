@@ -148,18 +148,23 @@ useHead({
       media: asset.isActive ? 'all' : 'not all',
       tagPriority: 100 + (asset.order ?? 0),
     })),
-  script: () => [
-    ...jsAssets.value.map((asset) => ({
-      key: `custom-js-${asset.uuid}`,
-      innerHTML: asset.content,
-    })),
-    ...jsExternalAssets.value.map((asset) => ({
-      key: `external-js-${asset.uuid}`,
-      src: asset.content,
-      defer: true,
-    })),
-  ],
 });
+
+if (import.meta.client) {
+  useHead({
+    script: () => [
+      ...jsAssets.value.map((asset) => ({
+        key: `custom-js-${asset.uuid}`,
+        innerHTML: asset.content,
+      })),
+      ...jsExternalAssets.value.map((asset) => ({
+        key: `external-js-${asset.uuid}`,
+        src: asset.content,
+        defer: true,
+      })),
+    ],
+  });
+}
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
