@@ -31,12 +31,12 @@ const ogTitle = computed({
 {
   "en": {
     "label": "Shop name",
-    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
+    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name).  Title is editable under 'SEO Settings'.",
     "placeholder": "Enter shop name"
   },
   "de": {
     "label": "Shop name",
-    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
+    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). Title is editable under 'SEO Settings'.",
     "placeholder": "Enter shop name"
   }
 }

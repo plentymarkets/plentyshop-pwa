@@ -29,7 +29,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   };
 
   const getSetting: GetSetting = () => {
-    console.log('state.value.data', state.value.initialData);
     return (
       (state.value.data?.[setting as string] as string) ??
       (state.value.initialData?.[setting as string] as string) ??
