@@ -304,6 +304,11 @@
       "paymentInProgress": "Zahlung in Bearbeitung..."
     }
   },
+  "customAssets": {
+    "assetDeletedSuccessfully": "Asset erfolgreich gelöscht",
+    "failedToDeleteAsset": "Asset konnte nicht gelöscht werden",
+    "duplicateAssetError": "Ein Asset mit diesem Typ und Namen existiert bereits. Bitte verwenden Sie eine eindeutige Kombination."
+  },
   "common": {
     "actions": {
       "add": "Hinzufügen",
