@@ -30,6 +30,7 @@
   "customer-management": "Customer Management",
   "performance": "Performance",
   "contact-form": "Contact Form",
+  "shipping-information-page": "Shipping information page",
   "filter.prices.price_asc": "Price ⬆",
   "filter.prices.price_desc": "Price ⬇",
   "filter.position_asc": "Availability ⬆",
@@ -70,5 +71,10 @@
   "item.manufacturer.position_asc": "Manufacturer position ⬆",
   "item.manufacturer.position_desc": "Manufacturer position ⬇",
   "item.random": "Random",
-  "notSelected": "Not selected"
+  "notSelected": "Not selected",
+  "custom-css": "Custom CSS",
+  "custom-js": "Custom JavaScript",
+  "custom-meta-tags": "Custom Meta tags",
+  "external-scripts": "External Scripts & Styles",
+  "custom-code": "Custom Code"
 }

@@ -57,6 +57,8 @@
 </template>
 
 <script setup lang="ts">
+import { isCssUrl, isJsUrl } from '~/utils/assets';
+
 const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
@@ -77,6 +79,8 @@ const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
 const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 
+const { getAssetsOfType } = useCustomAssets();
+
 const title = ref(getMetaTitle());
 const ogTitle = ref(getOgTitle());
 const ogImage = ref(getOgImage());
@@ -85,6 +89,16 @@ const keywords = ref(getMetaKeywords());
 const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
+
+const cssAssets = computed(() => getAssetsOfType('css'));
+
+const jsAssets = computed(() => getAssetsOfType('javascript').filter((asset) => asset.isActive));
+
+const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive));
+const cssExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)));
+const jsExternalAssets = computed(() =>
+  getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
+);
 
 watchEffect(() => {
   title.value = getMetaTitle();
@@ -112,8 +126,45 @@ useHead({
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
+    ...cssExternalAssets.value.map((asset, index) => ({
+      key: `external-css-${asset.uuid ?? index}`,
+      rel: 'stylesheet',
+      media: asset.isActive ? 'all' : 'not all',
+      href: asset.content,
+    })),
   ],
+  meta: () =>
+    metaAssets.value
+      .filter((asset) => asset.name && asset.content)
+      .map((asset) => ({
+        key: `custom-meta-${asset.uuid}`,
+        name: asset.name,
+        content: asset.content,
+      })),
+  style: () =>
+    cssAssets.value.map((asset) => ({
+      key: `custom-css-${asset.uuid}-o${asset.order ?? 0}`,
+      textContent: asset.content,
+      media: asset.isActive ? 'all' : 'not all',
+      tagPriority: 100 + (asset.order ?? 0),
+    })),
 });
+
+if (import.meta.client) {
+  useHead({
+    script: () => [
+      ...jsAssets.value.map((asset) => ({
+        key: `custom-js-${asset.uuid}`,
+        innerHTML: asset.content,
+      })),
+      ...jsExternalAssets.value.map((asset) => ({
+        key: `external-js-${asset.uuid}`,
+        src: asset.content,
+        defer: true,
+      })),
+    ],
+  });
+}
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
