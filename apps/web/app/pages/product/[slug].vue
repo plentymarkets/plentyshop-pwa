@@ -23,6 +23,7 @@ const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
+const { isAuthorized } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -63,7 +64,9 @@ setBreadcrumbs();
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
-  await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
+  if (isAuthorized.value) {
+    await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
+  }
 }
 await fetchReviews();
 
