@@ -18,10 +18,7 @@ const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const product = productForEditor;
 const { disableActions } = useEditor();
-const {
-  fetchProductReviews,
-  fetchProductAuthenticatedReviews,
-} = useProductReviews(Number(productId));
+const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
