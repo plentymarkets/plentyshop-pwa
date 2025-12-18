@@ -49,7 +49,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const feedbackPerPage = Number(route.query.feedbackPage) || 1;
 
     try {
-      const { data, error } = await useAsyncData(`${itemId}-${feedbackPerPage}`, () =>
+      const { data, error } = await useAsyncData(`${itemId}-${feedbackPerPage}-${Math.random()}`, () =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
           feedbacksPerPage: config.defaultItemsPerPage,
@@ -75,7 +75,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     state.value.loading = true;
 
     try {
-      const { data, error } = await useAsyncData(`authenticated-${itemId}-${variationId}`, () =>
+      const { data, error } = await useAsyncData(`authenticated-${itemId}-${variationId}-${Math.random()}`, () =>
         useSdk().plentysystems.getAuthenticatedReview({
           itemId: itemId,
           variationId: variationId,
