@@ -99,9 +99,7 @@ const jsAssets = computed(() =>
   isSafeMode.value ? [] : getAssetsOfType('javascript').filter((asset) => asset.isActive),
 );
 
-const metaAssets = computed(() =>
-  isSafeMode.value ? [] : getAssetsOfType('meta').filter((asset) => asset.isActive),
-);
+const metaAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('meta').filter((asset) => asset.isActive)));
 const cssExternalAssets = computed(() =>
   isSafeMode.value ? [] : getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)),
 );
