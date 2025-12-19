@@ -78,8 +78,11 @@ const { getSetting: getMetaDescription } = useSiteSettings('metaDescription');
 const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
 const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
+const { getSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
 
 const { getAssetsOfType } = useCustomAssets();
+
+const isSafeMode = computed(() => customAssetsSafeMode());
 
 const title = ref(getMetaTitle());
 const ogTitle = ref(getOgTitle());
@@ -90,14 +93,20 @@ const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
 
-const cssAssets = computed(() => getAssetsOfType('css'));
+const cssAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('css')));
 
-const jsAssets = computed(() => getAssetsOfType('javascript').filter((asset) => asset.isActive));
+const jsAssets = computed(() =>
+  isSafeMode.value ? [] : getAssetsOfType('javascript').filter((asset) => asset.isActive),
+);
 
-const metaAssets = computed(() => getAssetsOfType('meta').filter((asset) => asset.isActive));
-const cssExternalAssets = computed(() => getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)));
+const metaAssets = computed(() =>
+  isSafeMode.value ? [] : getAssetsOfType('meta').filter((asset) => asset.isActive),
+);
+const cssExternalAssets = computed(() =>
+  isSafeMode.value ? [] : getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)),
+);
 const jsExternalAssets = computed(() =>
-  getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
+  isSafeMode.value ? [] : getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
 );
 
 watchEffect(() => {
