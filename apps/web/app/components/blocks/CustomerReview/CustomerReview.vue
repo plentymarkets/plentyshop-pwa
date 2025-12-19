@@ -30,6 +30,7 @@
 
         <UiReviewStatistics :product="props.product" />
 
+        <UiReview v-for="(reviewItem, key) in authenticatedProductReviews" :key="key" :review-item="reviewItem" />
         <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
         <p
           v-if="paginatedProductReviews.length === 0"
@@ -96,12 +97,15 @@ const productVariationId = productGetters.getVariationId(props.product);
 
 const {
   data: productReviews,
+  authenticatedData: productAuthenticatedReviews,
   loading: loadingReviews,
   fetchReviews,
+  fetchAuthenticatedReviews,
   reviewArea,
 } = useProductReviews(productId, productVariationId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
+const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviews.value));
 
@@ -116,6 +120,7 @@ watch(
   (value) => {
     if (value && hasTitle.value && props.content.layout.collapsible) {
       fetchReviews();
+      fetchAuthenticatedReviews();
     }
   },
 );
