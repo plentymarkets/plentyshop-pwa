@@ -236,6 +236,7 @@ export default defineNuxtConfig({
       manufacturerFaxNumber: process.env.NUXT_PUBLIC_MANUFACTURER_FAX_NUMBER || '0',
       manufacturerEmail: process.env.NUXT_PUBLIC_MANUFACTURER_EMAIL || '0',
       manufacturerContactUrl: process.env.NUXT_PUBLIC_MANUFACTURER_CONTACT_URL || '0',
+      customAssetsSafeMode: process.env.NUXT_PUBLIC_CUSTOM_ASSETS_SAFE_MODE === 'true',
     },
   },
   modules: [
