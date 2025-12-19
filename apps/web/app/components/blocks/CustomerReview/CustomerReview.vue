@@ -117,12 +117,11 @@ const hasTitle = computed(() => {
 
 watch(
   () => reviewsOpen.value,
-  (value) => {
-    if (value && hasTitle.value && props.content.layout.collapsible) {
-      fetchReviews();
-      fetchAuthenticatedReviews();
-    }
-  },
+    async (value) => {
+      if (value && hasTitle.value && props.content.layout.collapsible) {
+        await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
+      }
+    },
 );
 watch(
   () => route.query.feedbackPage,
