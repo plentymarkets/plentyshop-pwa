@@ -2,13 +2,20 @@
  * Tests for ActionBuilder and ActionBuilderPresets
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { ActionBuilder, ActionBuilderPresets } from '../index';
+import { PathResolver } from '../../path/PathResolver';
+
+let pathResolver: PathResolver;
+
+beforeAll(() => {
+  pathResolver = new PathResolver();
+});
 
 describe('ActionBuilder', () => {
   describe('Fluent API', () => {
     it('should create a component with all files', () => {
-      const actions = ActionBuilder.forGenerator('component', 'TestComponent')
+      const actions = ActionBuilder.forGenerator('component', 'TestComponent', pathResolver)
         .withData({ name: 'TestComponent' })
         .addMainFile()
         .addTypes()
@@ -40,7 +47,7 @@ describe('ActionBuilder', () => {
     });
 
     it('should create a composable with all files', () => {
-      const actions = ActionBuilder.forGenerator('composable', 'useTestData')
+      const actions = ActionBuilder.forGenerator('composable', 'useTestData', pathResolver)
         .withData({ name: 'useTestData' })
         .addMainFile()
         .addTypes()
@@ -80,7 +87,7 @@ describe('ActionBuilder', () => {
     });
 
     it('should support custom templates', () => {
-      const actions = ActionBuilder.forGenerator('component', 'CustomComponent')
+      const actions = ActionBuilder.forGenerator('component', 'CustomComponent', pathResolver)
         .addMainFile({ template: 'custom-component.vue.hbs' })
         .addTypes('custom-types.ts.hbs')
         .addTests({ template: 'custom-test.spec.ts.hbs' })
@@ -92,7 +99,7 @@ describe('ActionBuilder', () => {
     });
 
     it('should support custom files', () => {
-      const actions = ActionBuilder.forGenerator('component', 'CustomComponent')
+      const actions = ActionBuilder.forGenerator('component', 'CustomComponent', pathResolver)
         .addCustomFile('README.md', 'readme.md.hbs')
         .addFileToPath('/custom/path/file.ts', 'custom.ts.hbs')
         .build();
@@ -115,7 +122,7 @@ describe('ActionBuilder', () => {
     });
 
     it('should handle different file extensions', () => {
-      const actions = ActionBuilder.forGenerator('component', 'TestComponent')
+      const actions = ActionBuilder.forGenerator('component', 'TestComponent', pathResolver)
         .addMainFile({ extension: 'jsx' })
         .build();
 
@@ -125,13 +132,13 @@ describe('ActionBuilder', () => {
 
   describe('Path Resolution', () => {
     it('should resolve component paths correctly', () => {
-      const actions = ActionBuilder.forGenerator('component', 'TestComponent').addMainFile().build();
+      const actions = ActionBuilder.forGenerator('component', 'TestComponent', pathResolver).addMainFile().build();
 
       expect(actions[0].path).toMatch(/components\/TestComponent\/{{pascalCase name}}\.vue$/);
     });
 
     it('should resolve composable paths correctly', () => {
-      const actions = ActionBuilder.forGenerator('composable', 'useTestData').addMainFile().build();
+      const actions = ActionBuilder.forGenerator('composable', 'useTestData', pathResolver).addMainFile().build();
 
       expect(actions[0].path).toBe('../../apps/web/app/composables/useTestData/{{name}}.ts');
     });
@@ -140,7 +147,7 @@ describe('ActionBuilder', () => {
 
 describe('ActionBuilderPresets', () => {
   it('should create vue component preset', () => {
-    const actions = ActionBuilderPresets.vueComponent('TestComponent');
+    const actions = ActionBuilderPresets.vueComponent('TestComponent', pathResolver);
 
     expect(actions).toHaveLength(3);
     expect(actions[0].templateFile).toBe('templates/component/component.vue.hbs');
@@ -149,7 +156,7 @@ describe('ActionBuilderPresets', () => {
   });
 
   it('should create composable preset', () => {
-    const actions = ActionBuilderPresets.composable('useTestData');
+    const actions = ActionBuilderPresets.composable('useTestData', pathResolver);
 
     expect(actions).toHaveLength(4);
     expect(actions[0].templateFile).toBe('templates/composable/composable.ts.hbs');
@@ -160,7 +167,7 @@ describe('ActionBuilderPresets', () => {
 
   it('should accept custom data in presets', () => {
     const customData = { name: 'TestComponent', description: 'A test component' };
-    const actions = ActionBuilderPresets.vueComponent('TestComponent', customData);
+    const actions = ActionBuilderPresets.vueComponent('TestComponent', pathResolver, customData);
 
     actions.forEach((action) => {
       expect(action.data).toEqual(customData);
@@ -170,7 +177,7 @@ describe('ActionBuilderPresets', () => {
 
 describe('ActionBuilder Type Safety', () => {
   it('should return correct types for fluent interface', () => {
-    const builder = ActionBuilder.forGenerator('component', 'Test');
+    const builder = ActionBuilder.forGenerator('component', 'Test', pathResolver);
 
     const chainedBuilder = builder.withData({ name: 'Test' }).addMainFile().addTypes().addTests().addIndex();
 

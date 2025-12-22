@@ -5,7 +5,7 @@
 
 import type { NodePlopAPI } from 'plop';
 import { BaseGenerator, ActionBuilder } from '../../core';
-import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../../core';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt, PathResolver } from '../../core';
 import { componentPrompts } from './component-prompts';
 import { validateComponentName } from '../../utils/validation';
 
@@ -21,7 +21,7 @@ class ComponentGenerator extends BaseGenerator {
   }
 
   createActions(data: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('component', data.name)
+    return ActionBuilder.forGenerator('component', data.name, this.pathResolver)
       .withData(data)
       .addMainFile()
       .addTypes()
@@ -34,7 +34,7 @@ class ComponentGenerator extends BaseGenerator {
   }
 }
 
-export default function componentGenerator(plop: NodePlopAPI): void {
-  const generator = new ComponentGenerator();
+export default function componentGenerator(plop: NodePlopAPI, pathResolver: PathResolver): void {
+  const generator = new ComponentGenerator(pathResolver);
   generator.register(plop);
 }

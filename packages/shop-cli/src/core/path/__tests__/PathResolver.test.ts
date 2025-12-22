@@ -63,21 +63,22 @@ describe('PathResolver', () => {
 
     beforeEach(() => {
       const customConfig: Partial<PathConfig> = {
-        webAppRoot: '/custom/web',
+        cliPackageRoot: '/test/cli',
+        webAppRoot: '/test/cli/apps/web/app',
         templatesRoot: '/custom/templates',
       };
       customResolver = new PathResolver(customConfig);
     });
 
     it('should use custom configuration', () => {
-      expect(customResolver.getWebAppPath()).toBe('/custom/web');
+      expect(customResolver.getWebAppPath()).toBe('/test/cli/apps/web/app');
       expect(customResolver.getTemplatePath('component')).toBe('/custom/templates/component');
     });
 
     it('should resolve paths with custom config', () => {
       const result = customResolver.resolve('component', 'TestComponent');
 
-      expect(result.basePath).toBe('../../apps/web/app/components/TestComponent');
+      expect(result.basePath).toBe('apps/web/app/components/TestComponent');
     });
   });
 

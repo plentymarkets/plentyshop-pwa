@@ -2,7 +2,7 @@
  * Path strategies for different generator types
  */
 
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import type { PathOptions, PathResult, PathStrategy, PathConfig } from './types';
 
 /**
@@ -17,7 +17,7 @@ abstract class BasePathStrategy implements PathStrategy {
    * Get relative path from packages/shop-cli to target location
    */
   protected getRelativePath(absolutePath: string): string {
-    return join('../../apps/web/app', absolutePath.replace(this.config.webAppRoot, ''));
+    return relative(this.config.cliPackageRoot, absolutePath);
   }
 
   /**
