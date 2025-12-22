@@ -14,8 +14,13 @@
       </div>
 
       <div class="flex justify-center gap-2 overflow-x-auto scrollbar-hide flex-wrap">
-        <UiButton v-for="category in categoryTree" :key="category.id" :tag="NuxtLink"
-          :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary">
+        <UiButton
+          v-for="category in categoryTree"
+          :key="category.id"
+          :tag="NuxtLink"
+          :to="localePath('/' + categoryTreeGetters.getSlug(category))"
+          variant="secondary"
+        >
           {{ categoryTreeGetters.getName(category) }}
         </UiButton>
       </div>
@@ -28,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { ApiError, categoryTreeGetters, Product } from '@plentymarkets/shop-api';
+import type { ApiError, Product } from '@plentymarkets/shop-api';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const localePath = useLocalePath();
@@ -40,13 +46,12 @@ onMounted(async () => {
   try {
     const data = await useSdk().plentysystems.getFacet({
       type: 'all',
-      itemsPerPage: 20
+      itemsPerPage: 20,
     });
 
     products.value = data.data.products;
   } catch (error) {
     useHandleError(error as ApiError);
   }
-})
-
+});
 </script>
