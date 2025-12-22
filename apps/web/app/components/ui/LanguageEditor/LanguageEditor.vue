@@ -16,37 +16,21 @@
       </button>
     </SfTooltip>
 
-    <div
-      v-if="isOpen"
-      class="absolute top-full mt-2 z-50 min-w-[10rem] rounded-lg border bg-white shadow-lg"
-      role="listbox"
-      tabindex="-1"
-    >
-      <button
-        v-for="(locale, i) in availableLocales"
-        :key="locale"
-        type="button"
-        class="w-full text-left px-3 py-2 text-sm md:text-base hover:bg-gray-100"
-        :class="i === activeIndex ? 'bg-gray-100' : ''"
-        role="option"
-        :aria-selected="locale === currentLocale"
-        @click="selectLocale(locale)"
-        @mouseenter="activeIndex = i"
-      >
-        {{ t(`lang.${locale}`) }}
-      </button>
-    </div>
+    <UiLanguageList
+      :is-open="isOpen"
+      :active-index="activeIndex"
+      @locale-selected="handleLocaleSelected"
+      @active-index-change="activeIndex = $event"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconLanguage, SfIconExpandMore, SfTooltip } from '@storefront-ui/vue';
-import type { Locale } from 'vue-i18n';
 
 const languageLabel = 'Change the active language to manage multilingual content.';
 
 const { locale: currentLocale, availableLocales, t } = useI18n();
-const { switchLocale } = useLocalization();
 
 const loading = ref(true);
 const isOpen = ref(false);
@@ -63,9 +47,8 @@ const open = () => {
 const close = () => (isOpen.value = false);
 const toggle = () => (isOpen.value ? close() : open());
 
-const selectLocale = async (loc: Locale | string) => {
+const handleLocaleSelected = async () => {
   close();
-  await switchLocale(loc as Locale, false);
 };
 
 const clickOutside = (e: MouseEvent) => {
