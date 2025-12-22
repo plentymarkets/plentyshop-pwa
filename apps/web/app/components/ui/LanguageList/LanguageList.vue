@@ -28,6 +28,7 @@ interface Props {
   isOpen?: boolean;
   activeIndex?: number;
 }
+const { send } = useNotification();
 
 withDefaults(defineProps<Props>(), {
   isOpen: false,
@@ -43,7 +44,14 @@ const { locale: currentLocale, availableLocales, t } = useI18n();
 const { switchLocale } = useLocalization();
 
 const selectLocale = async (loc: Locale | string) => {
-  emit('locale-selected', loc);
-  await switchLocale(loc as Locale, false);
+  try {
+    await switchLocale(loc as Locale, false);
+    emit('locale-selected', loc);
+  } catch (error) {
+    send({
+      type: 'negative',
+      message: `Failed to switch locale-${error}`,
+    });
+  }
 };
 </script>

@@ -42,9 +42,14 @@ const currentLabel = computed(() => t(`lang.${currentLocale.value}`));
 const open = () => {
   isOpen.value = true;
   const idx = availableLocales.findIndex((language) => language === currentLocale.value);
-  activeIndex.value = Math.max(0, idx);
+  if (idx >= 0) {
+    activeIndex.value = idx;
+  }
 };
-const close = () => (isOpen.value = false);
+const close = () => {
+  isOpen.value = false;
+  activeIndex.value = 0;
+};
 const toggle = () => (isOpen.value ? close() : open());
 
 const handleLocaleSelected = async () => {
