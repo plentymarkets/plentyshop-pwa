@@ -117,6 +117,10 @@
 
 <script setup lang="ts">
 import { useOnline, whenever } from '@vueuse/core';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 const localePath = useLocalePath();
 const isOnline = useOnline();
