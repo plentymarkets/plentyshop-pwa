@@ -14,37 +14,35 @@
       </div>
 
       <div class="flex justify-center gap-2 overflow-x-auto scrollbar-hide flex-wrap">
-        <UiButton
-          v-for="category in categoryTree"
-          :key="category.id"
-          :tag="NuxtLink"
-          :to="localePath('/' + categoryTreeGetters.getSlug(category))"
-          variant="secondary"
-        >
+        <UiButton v-for="category in categoryTree" :key="category.id" :tag="NuxtLink"
+          :to="localePath('/' + categoryTreeGetters.getSlug(category))" variant="secondary">
           {{ categoryTreeGetters.getName(category) }}
         </UiButton>
       </div>
 
       <div class="rounded-lg mt-8 sm:p-6 text-left">
-        <ProductSlider :items="products" />
+        <ProductSlider v-if="products" :items="products" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, Product } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
+const products = ref<Product[]>();  
 
-const { data } = await useAsyncData('404-products', () =>
-  useSdk().plentysystems.getFacet({
+// load products on client to aviod left over SSR memory cache
+onMounted(async () => {
+  const data = await useSdk().plentysystems.getFacet({
     type: 'all',
-    itemsPerPage: 20,
-  }),
-);
+    itemsPerPage: 20
+  });
 
-const products = computed(() => data?.value?.data.products || []);
+  products.value = data.data.products;
+})
+
 </script>
