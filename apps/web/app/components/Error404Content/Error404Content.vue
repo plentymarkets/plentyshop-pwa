@@ -28,21 +28,25 @@
 </template>
 
 <script setup lang="ts">
-import { categoryTreeGetters, Product } from '@plentymarkets/shop-api';
+import { ApiError, categoryTreeGetters, Product } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const products = ref<Product[]>();  
+const products = ref<Product[]>([]);
 
 // load products on client to avoid left over SSR memory cache
 onMounted(async () => {
-  const data = await useSdk().plentysystems.getFacet({
-    type: 'all',
-    itemsPerPage: 20
-  });
+  try {
+    const data = await useSdk().plentysystems.getFacet({
+      type: 'all',
+      itemsPerPage: 20
+    });
 
-  products.value = data.data.products;
+    products.value = data.data.products;
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
 })
 
 </script>
