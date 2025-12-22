@@ -35,7 +35,7 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const products = ref<Product[]>();  
 
-// load products on client to aviod left over SSR memory cache
+// load products on client to avoid left over SSR memory cache
 onMounted(async () => {
   const data = await useSdk().plentysystems.getFacet({
     type: 'all',
