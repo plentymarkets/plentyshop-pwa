@@ -9,7 +9,7 @@
         @click="toggle"
       >
         <SfIconLanguage class="w-4 h-4 md:w-6 md:h-6" />
-        <span class="text-sm md:text-base">
+        <span class="ml-1 text-sm md:text-base">
           {{ currentLabel }}
         </span>
         <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
