@@ -8,7 +8,7 @@
     </div>
     <label>
       <SfInput
-        v-model="metaTitle"
+        v-model="ogTitle"
         type="text"
         data-testid="seo-title"
         :placeholder="getEditorTranslation('placeholder')"
@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('metaTitle');
+const { updateSetting, getSetting } = useSiteSettings('ogTitle');
 
-const metaTitle = computed({
+const ogTitle = computed({
   get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
@@ -30,14 +30,14 @@ const metaTitle = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": " Default title",
-    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
-    "placeholder": "Enter title"
+    "label": "Shop name",
+    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name).  Title is editable under 'SEO Settings'.",
+    "placeholder": "Enter shop name"
   },
   "de": {
-    "label": "Default title",
-    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). The Shop Name is editable under 'Branding & design'.",
-    "placeholder": "Enter title"
+    "label": "Shop name",
+    "tooltip": "Title displayed in search results of search engines (format: Title \uFF5C Shop Name). Title is editable under 'SEO Settings'.",
+    "placeholder": "Enter shop name"
   }
 }
 </i18n>

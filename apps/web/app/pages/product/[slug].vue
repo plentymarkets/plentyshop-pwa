@@ -1,70 +1,34 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" prevent-blocks-request />
-
-    <NarrowContainer v-else>
-      <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
-        <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-          <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
-        </section>
-        <section class="mb-10 grid-in-right md:mb-0">
-          <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
-        </section>
-        <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product" :product="product" />
-          </NuxtLazyHydrate>
-          <ReviewsAccordion
-            v-if="product"
-            :product="product"
-            :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
-          />
-
-          <div class="p-4 flex">
-            <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
-              <span>{{ t('legal.details') }}</span>
-              <SfIconChevronRight />
-            </p>
-          </div>
-        </section>
-      </div>
-
-      <section ref="recommendedSection" class="mx-4 mt-28 mb-20">
-        <component
-          :is="RecommendedProductsAsync"
-          v-if="showRecommended"
-          :category-id="productGetters.getCategoryIds(product)[0] ?? ''"
-        />
-      </section>
-    </NarrowContainer>
-
+    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
+import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
-const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const product = productForEditor;
 const { disableActions } = useEditor();
-const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
+const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
-const { open, openDrawer } = useProductLegalDetailsDrawer();
+const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
-
-const config = useRuntimeConfig().public;
+const { isAuthorized } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -73,20 +37,15 @@ definePageMeta({
     return validateProductParams(route.params);
   },
   type: 'product',
-  isBlockified: false,
+  isBlockified: true,
   identifier: 0,
 });
-const RecommendedProductsAsync = defineAsyncComponent(
-  async () => await import('~/components/RecommendedProducts/RecommendedProducts.vue'),
-);
 
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);
 const productName = computed(() => productGetters.getName(product.value));
 const icon = 'sell';
 setPageMeta(productName.value, icon);
-
-const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
@@ -110,6 +69,9 @@ setBreadcrumbs();
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
+  if (isAuthorized.value) {
+    await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
+  }
 }
 await fetchReviews();
 

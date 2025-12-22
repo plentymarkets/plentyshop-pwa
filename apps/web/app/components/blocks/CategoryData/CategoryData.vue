@@ -38,7 +38,9 @@
           :class="['object-cover', 'w-full']"
           :style="{
             filter: props.content.image?.brightness ? 'brightness(' + (props.content.image?.brightness ?? 1) + ')' : '',
-            height: '432px',
+            aspectRatio: 'auto 640 / 360',
+            width: '100%',
+            height: 'auto',
           }"
           :loading="'lazy'"
           :data-testid="'category-data-image-' + meta.uuid"
