@@ -104,10 +104,13 @@ const cleanData = computed(() => initial.value.cleanData.value);
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
+const { assetsIsDirty } = useCustomAssets();
 
 const { save } = useToolbar();
 
-const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value);
+const isTouched = computed(
+  () => assetsIsDirty.value || settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value,
+);
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
