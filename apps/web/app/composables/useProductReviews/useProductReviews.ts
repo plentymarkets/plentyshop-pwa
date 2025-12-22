@@ -1,6 +1,7 @@
 import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
+  FetchProductAuthenticatedReviews,
   UseProductReviews,
   UseProductReviewsState,
   DeleteProductReview,
@@ -22,6 +23,7 @@ import { reviewGetters } from '@plentymarkets/shop-api';
 export const useProductReviews: UseProductReviews = (itemId: number, productVariationId?: number) => {
   const state = useState<UseProductReviewsState>('useProductReviews', () => ({
     data: {} as Review,
+    authenticatedData: {} as Review,
     loading: false,
     review: {} as ReviewItem,
     reviewArea: null,
@@ -47,7 +49,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const feedbackPerPage = Number(route.query.feedbackPage) || 1;
 
     try {
-      const { data, error } = await useAsyncData(`${itemId}-${feedbackPerPage}`, () =>
+      const { data, error } = await useAsyncData(`${itemId}-${feedbackPerPage}-${Math.random()}`, () =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
           feedbacksPerPage: config.defaultItemsPerPage,
@@ -66,8 +68,39 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     return state.value.data;
   };
 
+  const fetchProductAuthenticatedReviews: FetchProductAuthenticatedReviews = async (
+    itemId: number,
+    variationId: number,
+  ) => {
+    state.value.loading = true;
+
+    try {
+      const { data, error } = await useAsyncData(`authenticated-${itemId}-${variationId}-${Math.random()}`, () =>
+        useSdk().plentysystems.getAuthenticatedReview({
+          itemId: itemId,
+          variationId: variationId,
+        }),
+      );
+      useHandleError(error.value ?? null);
+      const authenticatedFeedbacks = data?.value?.data?.feedbacks ?? state.value.authenticatedData.feedbacks;
+      state.value.authenticatedData.feedbacks = authenticatedFeedbacks.filter((feedback) => !feedback.isVisible);
+
+      return state.value.authenticatedData;
+    } catch (error: unknown) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+
+    return state.value.authenticatedData;
+  };
+
   const fetchReviews = async () => {
     await fetchProductReviews(itemId, productVariationId);
+  };
+
+  const fetchAuthenticatedReviews = async () => {
+    await fetchProductAuthenticatedReviews(itemId, productVariationId ?? 0);
   };
 
   const createProductReview: CreateProductReview = async (params: CreateReviewParams) => {
@@ -85,6 +118,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     }
 
     await fetchReviews();
+    await fetchAuthenticatedReviews();
 
     state.value.loading = false;
   };
@@ -102,6 +136,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     }
 
     await fetchReviews();
+    await fetchAuthenticatedReviews();
 
     state.value.loading = false;
   };
@@ -122,6 +157,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     }
 
     await fetchReviews();
+    await fetchAuthenticatedReviews();
 
     state.value.loading = false;
   };
@@ -134,10 +170,12 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
   return {
     fetchProductReviews,
+    fetchProductAuthenticatedReviews,
     deleteProductReview,
     setProductReview,
     createProductReview,
     fetchReviews,
+    fetchAuthenticatedReviews,
     openReviewModal,
     closeReviewModal,
     ...toRefs(state.value),

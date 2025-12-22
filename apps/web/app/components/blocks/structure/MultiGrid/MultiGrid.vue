@@ -96,8 +96,6 @@ const gridInlineStyle = computed(() => ({
     configuration.layout?.marginBottom !== undefined
       ? `${configuration.layout.marginBottom}px`
       : `${defaultMarginBottom.value}px`,
-  marginLeft: configuration.layout?.marginLeft !== undefined ? `${configuration.layout.marginLeft}px` : '40px',
-  marginRight: configuration.layout?.marginRight !== undefined ? `${configuration.layout.marginRight}px` : '40px',
 }));
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
