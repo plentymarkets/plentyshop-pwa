@@ -123,7 +123,7 @@
         </div>
       </UiAccordionItem>
 
-      <GlobalPageSection />
+      <GlobalPageSection v-if="config.enableTemplateReset" />
     </div>
   </div>
   <CategorySettingsDrawer v-if="settingsCategory" />
@@ -143,7 +143,7 @@ import {
 } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale, defaultLocale } = useI18n();
-
+const config = useRuntimeConfig().public;
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
