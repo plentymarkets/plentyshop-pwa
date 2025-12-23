@@ -105,7 +105,7 @@ onMounted(() => {
       const content = props.content ?? getFooterSettings();
       resolvedContent.value = mapFooterData(content);
     },
-    { immediate: true }
+    { immediate: true },
   );
 });
 
