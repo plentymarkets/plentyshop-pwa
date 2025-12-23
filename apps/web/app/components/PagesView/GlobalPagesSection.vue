@@ -89,7 +89,7 @@ const globalPagesButtons = [
     type: 'detail',
     labelKey: 'global-pages-product-detail',
     onEdit: () => router.push(paths.globalItemDetails),
-    onReset: () => toggleResetModal(true, 'detail'),
+    onReset: () => toggleResetModal(true, 'product'),
   },
 ];
 </script>

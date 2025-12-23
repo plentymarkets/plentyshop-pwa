@@ -6,7 +6,7 @@ import type {
 export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
   const state = useState<UseResetProductPageModalState>(`resetProductPageModal`, () => ({
     unlinkModalOpen: false,
-    resetType: null,
+    resetType: '',
     loading: false,
   }));
 
@@ -17,16 +17,18 @@ export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
     state.value.unlinkModalOpen = value;
   };
 
-  const deleteBlocks = async (identifier: string | number, type: string) => {
+  const deleteBlocks = async (identifier: number, type: string) => {
     state.value.loading = true;
+    const { send } = useNotification();
 
     try {
       await useSdk().plentysystems.deleteBlocks({ identifier, type });
     } catch (error) {
-      const { send } = useNotification();
       send({ type: 'negative', message: 'An error occurred while deleting blocks.' + error });
     } finally {
       state.value.loading = false;
+      send({ type: 'positive', message: 'Blocks deleted successfully.' });
+
       state.value.unlinkModalOpen = false;
     }
   };
