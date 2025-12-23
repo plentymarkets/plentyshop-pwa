@@ -94,11 +94,10 @@ import type { FooterProps, FooterSettings, FooterSettingsColumn } from './types'
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
+const { getFooterSettings, footerCache } = useFooter();
 const resolvedContent = ref<FooterSettings | null>(null);
 
 onMounted(() => {
-  const { getFooterSettings, footerCache } = useFooter();
-
   watch(
     footerCache,
     () => {
