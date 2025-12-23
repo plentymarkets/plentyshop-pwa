@@ -27,7 +27,7 @@ export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
       send({ type: 'negative', message: 'An error occurred while deleting blocks.' + error });
     } finally {
       state.value.loading = false;
-      send({ type: 'positive', message: 'Blocks deleted successfully.' });
+      send({ type: 'positive', message: 'Blocks deleted successfully. Please refresh the page.' });
 
       state.value.unlinkModalOpen = false;
     }
