@@ -49,34 +49,10 @@
 import { SfIconBase, SfIconUndo } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
 
-const { locale } = useI18n();
 const router = useRouter();
 const { toggleResetModal } = useResetProductPageModal();
 
 const globalPagesOpen = ref(false);
-
-const getEditorTranslation = (key: string) => {
-  const translations: Record<string, Record<string, string>> = {
-    en: {
-      'global-pages-label': 'Page Layouts',
-      'global-pages-description': 'Quick access to edit page layout, or reset to the default.',
-      'global-pages-product-category': 'Product category page',
-      'global-pages-product-detail': 'Product detail page',
-      'global-pages-edit-label': 'Edit page',
-      'global-pages-reset-label': 'Reset to default',
-    },
-    de: {
-      'global-pages-label': 'Page Layouts',
-      'global-pages-description': 'Quick access to edit page layout, or reset to the default.',
-      'global-pages-product-category': 'Product category page',
-      'global-pages-product-detail': 'Product detail page',
-      'global-pages-edit-label': 'Edit page',
-      'global-pages-reset-label': 'Reset to default',
-    },
-  };
-
-  return translations[locale.value]?.[key] ?? key;
-};
 
 const globalPagesButtons = [
   {
