@@ -124,7 +124,6 @@
       </UiAccordionItem>
 
       <GlobalPageSection />
-
     </div>
   </div>
   <CategorySettingsDrawer v-if="settingsCategory" />
@@ -140,11 +139,10 @@ import {
   SfIconAdd,
   SfIconHome,
   SfLoaderCircular,
-  SfIconWarning
+  SfIconWarning,
 } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale, defaultLocale } = useI18n();
-
 
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
@@ -247,8 +245,6 @@ const homepageItem = computed<CategoryEntry>(() => ({
   type: 'immutable',
   isLinkedToWebstore: true,
 }));
-
-
 </script>
 
 <i18n lang="json">

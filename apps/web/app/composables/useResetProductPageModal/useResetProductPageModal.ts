@@ -24,7 +24,7 @@ export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
     try {
       await useSdk().plentysystems.deleteBlocks({ identifier, type });
     } catch (error) {
-      send({ type: 'negative', message: 'An error occurred while deleting blocks.' + error });
+      send({ type: 'negative', message: `An error occurred while deleting blocks. ${error}` });
     } finally {
       state.value.loading = false;
       send({ type: 'positive', message: 'Blocks deleted successfully. Please refresh the page.' });

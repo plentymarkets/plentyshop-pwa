@@ -149,7 +149,6 @@ describe('useResetProductPageModal', () => {
       expect(unlinkModalOpen.value).toBe(false);
     });
 
-
     it('should close modal after successful deletion', async () => {
       const deleteBlocksMock = vi.fn().mockResolvedValue({});
       useSdk.mockReturnValue({
