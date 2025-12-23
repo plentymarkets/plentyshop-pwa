@@ -96,15 +96,21 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const { getFooterSettings, footerCache } = useFooter();
 const resolvedContent = ref<FooterSettings | null>(null);
+let stopWatch: (() => void) | null = null;
 
 onMounted(() => {
-  watch(
-    footerCache,
+  stopWatch = watch(
+    [() => props.content, footerCache],
     () => {
-      resolvedContent.value = mapFooterData(props.content ?? getFooterSettings());
+      const content = props.content ?? getFooterSettings();
+      resolvedContent.value = mapFooterData(content);
     },
-    { immediate: true },
+    { immediate: true }
   );
+});
+
+onBeforeUnmount(() => {
+  stopWatch?.();
 });
 
 const getColumnSwitches = (column: FooterSettingsColumn) => {
