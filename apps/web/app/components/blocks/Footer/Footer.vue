@@ -100,7 +100,7 @@ onMounted(() => {
   const { getFooterSettings, footerCache } = useFooter();
 
   watch(
-    [footerCache],
+    footerCache,
     () => {
       resolvedContent.value = mapFooterData(props.content ?? getFooterSettings());
     },
