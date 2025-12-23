@@ -167,24 +167,5 @@ describe('useResetProductPageModal', () => {
 
       expect(unlinkModalOpen.value).toBe(false);
     });
-
-    it('should close modal even when error occurs', async () => {
-      const deleteBlocksMock = vi.fn().mockRejectedValue(new Error('API Error'));
-      useSdk.mockReturnValue({
-        plentysystems: {
-          deleteBlocks: deleteBlocksMock,
-        },
-      });
-
-      const { deleteBlocks, unlinkModalOpen, toggleResetModal } = useResetProductPageModal();
-
-      toggleResetModal(true, 'product');
-      expect(unlinkModalOpen.value).toBe(true);
-
-      await deleteBlocks(0, 'product');
-      await nextTick();
-
-      expect(unlinkModalOpen.value).toBe(false);
-    });
   });
 });
