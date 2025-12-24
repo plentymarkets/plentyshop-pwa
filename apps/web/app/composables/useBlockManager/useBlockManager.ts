@@ -263,16 +263,15 @@ export const useBlockManager = () => {
       const placeholder: Block = emptyTemplate
         ? JSON.parse(JSON.stringify(emptyTemplate))
         : ({
-          name: 'EmptyGridBlock',
-          type: 'content',
-          meta: { uuid: uuid() },
-          parent_slot: targetSlot,
-          content: [],
-        } as Block);
+            name: 'EmptyGridBlock',
+            type: 'content',
+            meta: { uuid: uuid() },
+            parent_slot: targetSlot,
+            content: [],
+          } as Block);
 
       placeholder.meta = { ...(placeholder.meta ?? {}), uuid: uuid() };
       placeholder.parent_slot = targetSlot;
-
 
       placeholder.content = [];
 
