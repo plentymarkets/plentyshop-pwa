@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   if (pageType && safePageTypes.includes(pageType)) {
     try {
-        await $pwa?.updateServiceWorker();
+      await $pwa?.updateServiceWorker();
     } catch {
       // silently fail
     }
