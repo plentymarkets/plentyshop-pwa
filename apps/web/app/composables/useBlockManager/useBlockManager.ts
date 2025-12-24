@@ -236,25 +236,52 @@ export const useBlockManager = () => {
   };
 
   const deleteBlockFromColumn = async (blockUuid: string) => {
-    const parentInfo = findBlockParent(data.value, blockUuid);
-    if (parentInfo) {
-      const { parent, index } = parentInfo;
-      const layoutTemplate = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
-      const newBlock = { ...layoutTemplate };
+    if (!data.value) return;
 
-      const blockToDelete = parent[index];
-      if (!blockToDelete) return;
-      const targetSlot = blockToDelete.parent_slot;
+    const copiedData: Block[] = JSON.parse(JSON.stringify(data.value));
 
-      parent.splice(index, 1);
+    const parentInfo = findBlockParent(copiedData, blockUuid);
+    if (!parentInfo) return;
 
-      const columnBlocks = parent.filter((block) => block.parent_slot === targetSlot);
-      if (columnBlocks.length === 0) {
-        newBlock.parent_slot = targetSlot;
-        newBlock.meta.uuid = uuid();
-        parent.splice(index, 0, newBlock);
-      }
+    const { parent, index } = parentInfo;
+    const blockToDelete = parent[index];
+    if (!blockToDelete) return;
+
+    const targetSlot = blockToDelete.parent_slot;
+    if (targetSlot === undefined) return;
+
+    parent.splice(index, 1);
+
+    const slotIsEmpty = !parent.some((b) => b.parent_slot === targetSlot);
+    if (slotIsEmpty) {
+      const template = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
+
+      const emptyTemplate = Array.isArray(template.content)
+        ? (template.content.find((b: Block) => b.name === 'EmptyGridBlock') as Block | undefined)
+        : undefined;
+
+      const placeholder: Block = emptyTemplate
+        ? JSON.parse(JSON.stringify(emptyTemplate))
+        : ({
+          name: 'EmptyGridBlock',
+          type: 'content',
+          meta: { uuid: uuid() },
+          parent_slot: targetSlot,
+          content: [],
+        } as Block);
+
+      placeholder.meta = { ...(placeholder.meta ?? {}), uuid: uuid() };
+      placeholder.parent_slot = targetSlot;
+
+
+      placeholder.content = [];
+
+      parent.splice(index, 0, placeholder);
     }
+
+    updateBlocks(copiedData);
+
+    isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
   };
   const updateBlock = (index: number, updatedBlock: Block) => {
     if (data.value && index !== null && index < data.value.length) {

@@ -1,4 +1,30 @@
 {
+  "empty-grid": {
+    "category": "empty-grid",
+    "accessControl": [],
+    "title": "Internal",
+    "blockName": "EmptyGridBlock",
+    "variations": [
+      {
+        "title": "Empty",
+        "image": "",
+        "template": {
+          "en": {
+            "name": "EmptyGridBlock",
+            "type": "content",
+            "meta": { "uuid": "..." },
+            "content": []
+          },
+          "de": {
+            "name": "EmptyGridBlock",
+            "type": "content",
+            "meta": { "uuid": "..." },
+            "content": []
+          }
+        }
+      }
+    ]
+  },
   "layout": {
     "category": "layout",
     "accessControl": ["content", "productCategory", "product"],
