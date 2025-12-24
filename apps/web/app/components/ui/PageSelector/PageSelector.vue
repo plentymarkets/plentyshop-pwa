@@ -1,18 +1,15 @@
 <template>
-  <SfTooltip :label="pageLabel" placement="bottom" :show-arrow="true">
-    <div class="page-selector relative flex items-center space-x-1 md:space-x-2">
-      <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
-      <div class="relative flex items-center">
-        <button @click="toggleDropdown">
-          {{ pageMeta.name }}
-        </button>
-        <div class="flex items-center">
-          <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
-        </div>
-      </div>
-    </div>
+  <div class="page-selector relative flex items-center space-x-1 md:space-x-2">
+    <SfTooltip :label="pageLabel" placement="right" :show-arrow="true">
+      <button class="flex items-center gap-1" @click="toggleDropdown">
+        <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
+        <span>{{ pageMeta.name }}</span>
+        <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
+      </button>
+    </SfTooltip>
+
     <UiPageSearch v-if="isOpen" @close="closeDropdown" @page-selected="handlePageSelected" />
-  </SfTooltip>
+  </div>
 </template>
 
 <script setup lang="ts">
