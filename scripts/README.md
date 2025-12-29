@@ -1,6 +1,7 @@
 # Scripts
 
 ## `spawn-worktree.sh`
+
 Creates one or more Git worktrees under `../pwa-worktree/` (folder name = branch name with `/` replaced by `-`), then bootstraps each worktree:
 
 - loads `nvm` and runs `nvm use` (falls back to `nvm install`)
@@ -33,8 +34,10 @@ npm run worktree:spawn -- feat/a --head
 ```
 
 Notes:
+
 - If a target folder already exists but is not a registered worktree, the script errors; `git worktree prune` (and/or removing the folder) usually fixes this.
 - Designed for POSIX environments (macOS/Linux). Windows typically requires WSL or Git Bash.
 
 ## `postinstall.js`
+
 `chmod +x` for `scripts/spawn-worktree.sh` during `npm install`, so `npm run worktree:spawn` works reliably on fresh checkouts.
