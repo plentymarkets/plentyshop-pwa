@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
 
     on('frontend:productLoaded', (event) => {
       const variationId = productGetters.getId(event.product);
-      if (variationId) useLastSeen().addToLastSeen(Number(variationId));
+      if (variationId) useLastSeen().addToLastSeen(event.product);
     });
   }
   const { addComponent } = useModuleRendering('cart.empty');

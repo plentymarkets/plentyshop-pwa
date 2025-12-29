@@ -1,8 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useLastSeen } from '../useLastSeen';
-import { Product } from '@plentymarkets/shop-api';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { ProductMock } from '../../../../../../__tests__/__mocks__/product.mock';
+import { ProductFactory } from './ProductFactory';
 
 describe('useLastSeen', () => {
   const { useSdk } = vi.hoisted(() => {
@@ -30,54 +29,48 @@ describe('useLastSeen', () => {
   });
 
   it('should initialize with empty products array', () => {
-    const { data: products } = useLastSeen();
+    const { pages: products } = useLastSeen();
     expect(products.value).toEqual(new Map());
   });
 
   it('should add a variation ID to local storage', () => {
     const { addToLastSeen, storedVariationIds } = useLastSeen();
-    addToLastSeen(1234);
+    addToLastSeen(ProductFactory.create(1234));
     expect(storedVariationIds.value).toContain(1234);
   });
 
   it('should add multiple variation IDs to local storage without duplicates', () => {
     const { addToLastSeen, storedVariationIds } = useLastSeen();
-    addToLastSeen(1234);
-    addToLastSeen(5678);
-    addToLastSeen(1234); // duplicate
+    addToLastSeen(ProductFactory.create(1234));
+    addToLastSeen(ProductFactory.create(5678));
+    addToLastSeen(ProductFactory.create(1234)); // duplicate
     expect(storedVariationIds.value).toEqual([5678, 1234]);
   });
 
-  it('should add variation Ids to not fetched items', async () => {
-    const { addToLastSeen, itemsNotFetched } = useLastSeen();
-    addToLastSeen(1234);
-    addToLastSeen(4321);
+  it('should add products to page 1', async () => {
+    const { addToLastSeen, currentPageProducts } = useLastSeen();
+    addToLastSeen(ProductFactory.create(1234));
+    addToLastSeen(ProductFactory.create(4321));
     await nextTick();
-    expect(itemsNotFetched.value).toEqual([4321, 1234]);
-  });
-
-  it('should not add variation Ids to not fetched items if already fetched', async () => {
-    const { addToLastSeen, data, itemsNotFetched } = useLastSeen();
-    data.value.set(1234, {} as Product);
-    addToLastSeen(1234);
-    addToLastSeen(5678);
-    expect(itemsNotFetched.value).toEqual([5678]);
+    expect(currentPageProducts.value.length).toEqual(2);
   });
 
   it('should call SDK method to fetch products by IDs', async () => {
-    const { addToLastSeen, fetchLastSeenProducts } = useLastSeen();
-    addToLastSeen(1234);
-    addToLastSeen(5678);
-    await fetchLastSeenProducts(10);
+    const { fetchLastSeenProducts, storedVariationIds} = useLastSeen(2);
+    storedVariationIds.value = [5678, 1234];
+
+    await fetchLastSeenProducts();
     expect(useSdk().plentysystems.getProductsByIds).toHaveBeenCalledWith({
       variationIds: [5678, 1234],
-      itemsPerPage: 10,
+      itemsPerPage: 2,
       page: 1,
     });
   });
 
-  it('should add fetched products to data map', async () => {
-    const product = { ...ProductMock, variation: { ...ProductMock.variation, id: 1234 } };
+  it('should add new products to a new page in data map', async () => {
+    const product = ProductFactory.create(1234);
+    const product2 = ProductFactory.create(4444);
+
     useSdk.mockImplementation(() => {
       return {
         plentysystems: {
@@ -91,27 +84,72 @@ describe('useLastSeen', () => {
         },
       };
     });
-    const { addToLastSeen, fetchLastSeenProducts, data } = useLastSeen();
-    addToLastSeen(1234);
-    await fetchLastSeenProducts(10);
-    expect(data.value.size).toBe(1);
-    expect(data.value.has(1234)).toBe(true);
-    expect(data.value.get(product.variation.id)).toEqual(product);
+    const { addToLastSeen, fetchLastSeenProducts, pages, nextPage, page } = useLastSeen(1);
+
+    addToLastSeen(product);
+    await fetchLastSeenProducts();
+
+    addToLastSeen(product2);
+    nextPage();
+
+    useSdk.mockImplementation(() => {
+      return {
+        plentysystems: {
+          getProductsByIds: vi.fn().mockImplementation(() => {
+            return {
+              data: {
+                products: [product2],
+              },
+            };
+          }),
+        },
+      };
+    });
+
+    await fetchLastSeenProducts();
+
+    expect(pages.value.size).toBe(1);
+    expect(pages.value.get(1)![0]?.variation.id).toBe(product2.variation.id);
+    expect(page.value).toBe(1);
+
+  });
+
+  it('should add fetched products to data map', async () => {
+    const product = ProductFactory.create(1234);
+    useSdk.mockImplementation(() => {
+      return {
+        plentysystems: {
+          getProductsByIds: vi.fn().mockImplementation(() => {
+            return {
+              data: {
+                products: [product],
+              },
+            };
+          }),
+        },
+      };
+    });
+    const { addToLastSeen, fetchLastSeenProducts, pages } = useLastSeen();
+    addToLastSeen(product);
+    await fetchLastSeenProducts();
+    expect(pages.value.size).toBe(1);
+    const data = pages.value.get(1);
+    expect(data![0]?.variation.id).toEqual(product.variation.id);
   });
 
   it('should clear last seen items', () => {
-    const { addToLastSeen, clearLastSeen, data, storedVariationIds } = useLastSeen();
-    addToLastSeen(1234);
-    addToLastSeen(5678);
+    const { addToLastSeen, clearLastSeen, pages, storedVariationIds } = useLastSeen();
+    addToLastSeen(ProductFactory.create(1234));
+    addToLastSeen(ProductFactory.create(5678));
     clearLastSeen();
     expect(storedVariationIds.value.length).toBe(0);
-    expect(data.value.size).toBe(0);
+    expect(pages.value.size).toBe(0);
   });
 
   it('should paginate last seen products', async () => {
     const { addToLastSeen, fetchLastSeenProducts, nextPage, prevPage, page, itemsPerPage } = useLastSeen();
     for (let i = 1; i <= 25; i++) {
-      addToLastSeen(1000 + i);
+      addToLastSeen(ProductFactory.create(1000 + i));
     }
 
     useSdk.mockImplementation(() => {
@@ -128,7 +166,7 @@ describe('useLastSeen', () => {
         },
       };
     });
-    await fetchLastSeenProducts(10);
+    await fetchLastSeenProducts();
     expect(page.value).toBe(1);
     expect(itemsPerPage.value).toBe(10);
 

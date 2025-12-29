@@ -6,83 +6,104 @@ const STORAGE_KEY = 'plentyshop-last-seen';
 
 /**
  * @description Composable for managing last seen products using local storage
- * @returns UseLastSeen composable interface
- * @example
- * ``` ts
- * const { data, loading, variationIds, addToLastSeen, fetchLastSeenProducts, clearLastSeen } = useLastSeen();
- * ```
  */
-export const useLastSeen = () => {
+export const useLastSeen = (itemsPerPage = 10) => {
   const state = useState('useLastSeen', () => ({
-    data: new Map<number, Product>(),
+    pages: new Map<number, Product[]>(),
     loading: false,
     page: 1,
-    itemsPerPage: 10,
+    itemsPerPage: itemsPerPage,
     total: 0,
   }));
 
-  const totalPages = ref();
   const storedVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
 
-  const calculateNotFetchedItems = () => {
-    return storedVariationIds.value.filter((id) => !state.value.data.has(id));
+  const createPages = (storedVariationIds: number[]) => {
+    const totalItems = storedVariationIds.length;
+    const totalPages = Math.ceil(totalItems / state.value.itemsPerPage);
+    const pagesArray = new Array(totalPages);
+
+    for (let i = 0; i < totalPages; i++) {
+      const start = i * state.value.itemsPerPage;
+      pagesArray[i] = storedVariationIds.slice(start, start + state.value.itemsPerPage);
+    }
+
+    return pagesArray;
   };
 
-  const itemsNotFetched = ref(calculateNotFetchedItems());
+  const pageIds = computed(() => createPages(storedVariationIds.value));
+
+  const totalPages = computed(() => pageIds.value.length);
+
+  const currentPageIds = computed(() => {
+    const pageIndex = state.value.page - 1;
+    return pageIds.value[pageIndex] ?? [];
+  });
+
+
+  const currentPageProducts = computed(() => {
+    return state.value.pages.get(state.value.page) ?? [];
+  });
+
+  const needsToFetch = computed(() => {
+    const pageProducts = state.value.pages.get(state.value.page);
+    return !pageProducts || pageProducts.length === 0;
+  });
 
   /**
-   * @description Add a variation ID to the last seen list
-   * @param variationId - The variation ID to add
+   * @description Add a product to the last seen list
+   * @param product - The product to add
    * @example
    * ``` ts
-   * addToLastSeen(1234);
+   * addToLastSeen(product);
    * ```
    */
-  const addToLastSeen = (variationId: number): void => {
+  const addToLastSeen = (product: Product): void => {
+    const variationId = Number(productGetters.getVariationId(product));
+    
     if (storedVariationIds.value.includes(variationId)) {
       return;
     }
+    
     storedVariationIds.value.unshift(variationId);
-    itemsNotFetched.value = calculateNotFetchedItems();
+    state.value.total = storedVariationIds.value.length;
+    
+    const currentNewProducts = state.value.pages.get(1) ?? [];
+    state.value.pages.set(1, [product, ...currentNewProducts]);
   };
 
-  const handleLastSeenProducts = (data: ProductsByIdsResponse, appendData = false) => {
-    const fetchedProducts = new Map();
-
-    for (const product of data?.products ?? []) {
-      fetchedProducts.set(Number(productGetters.getVariationId(product)), product);
+  const handleLastSeenProducts = (data: ProductsByIdsResponse) => {
+    const fetchedProducts: Product[] = data?.products ?? [];
+    
+    if (fetchedProducts.length > 0) {
+      state.value.pages.set(state.value.page, fetchedProducts);
     }
-    if (appendData) {
-      state.value.data = new Map([...state.value.data, ...fetchedProducts]);
-    } else {
-      state.value.data = new Map([...fetchedProducts, ...state.value.data]);
-    }
-    totalPages.value = Math.ceil((data?.total ?? 0) / state.value.itemsPerPage);
+    
+    state.value.total = storedVariationIds.value.length;
   };
 
   /**
-   * @description Fetch products for all stored variation IDs
-   * @returns Promise<Product[]>
+   * @description Fetch products for the current page
+   * @returns Promise<void>
    * @example
    * ``` ts
-   * const products = await fetchLastSeenProducts();
+   * await fetchLastSeenProducts();
    * ```
    */
-  const fetchLastSeenProducts = async (itemsPerPage: number, appendData = false): Promise<void> => {
-    if (storedVariationIds.value.length === 0 || itemsNotFetched.value.length <= 0) {
+  const fetchLastSeenProducts = async (): Promise<void> => {
+    if (storedVariationIds.value.length === 0 || !needsToFetch.value) {
       return;
     }
-    state.value.itemsPerPage = itemsPerPage;
     state.value.loading = true;
 
     try {
       const { data: products } = await useSdk().plentysystems.getProductsByIds({
-        variationIds: itemsNotFetched.value,
-        itemsPerPage: state.value.itemsPerPage,
-        page: state.value.page,
+        variationIds: currentPageIds.value,
+        itemsPerPage: currentPageIds.value.length,
+        page: 1,
       });
 
-      handleLastSeenProducts(products, appendData);
+      handleLastSeenProducts(products);
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
@@ -110,8 +131,10 @@ export const useLastSeen = () => {
    * ```
    */
   const clearLastSeen = () => {
-    state.value.data.clear();
+    state.value.pages.clear();
     storedVariationIds.value = [];
+    state.value.page = 1;
+    state.value.total = 0;
   };
 
   return {
@@ -121,8 +144,9 @@ export const useLastSeen = () => {
     fetchLastSeenProducts,
     clearLastSeen,
     ...toRefs(state.value),
-    itemsNotFetched,
     storedVariationIds,
     totalPages,
+    currentPageProducts,
+    needsToFetch,
   };
 };
