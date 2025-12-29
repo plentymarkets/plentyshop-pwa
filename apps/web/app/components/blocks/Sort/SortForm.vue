@@ -7,6 +7,7 @@
     <template #summary>
       <h2 data-testid="sort-form-layout-label">{{ getEditorTranslation('layout-label') }}</h2>
     </template>
+
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
         {{ getEditorTranslation('show-selectionModeCompact-label') }}
@@ -17,6 +18,7 @@
         data-testid="switch-sort-placeholder"
       />
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div id="sort-form-padding-form" class="py-2">
       <div class="flex items-center gap-2 mb-2">
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
@@ -100,11 +102,14 @@ const sortBlock = computed<SortContent>(() => {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      fullWidth: false,
     };
   }
 
   return content as SortContent;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(sortBlock);
 
 const layoutOpen = ref(false);
 </script>

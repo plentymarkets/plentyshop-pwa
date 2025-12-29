@@ -3,12 +3,12 @@
     v-if="parent || (categoryTreeItem && categoryTreeGetters.getItems(categoryTreeItem)?.length)"
     class="category-tree"
   >
-    <h6
+    <div
       class="py-2 px-4 mb-4 bg-primary-50/50 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
       data-testid="category-tree"
     >
       {{ t('common.labels.category') }}
-    </h6>
+    </div>
     <template v-if="parent">
       <CategoryTreeItem
         :name="categoryTreeGetters.getName(parent)"

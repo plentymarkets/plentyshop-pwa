@@ -3,6 +3,7 @@ export const useToolbar = () => {
   const { send } = useNotification();
 
   const { settingsIsDirty, dirtyKeys, saveSiteSettings } = useSiteSettings();
+  const { assetsIsDirty, saveCustomAssets } = useCustomAssets();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
   const route = useRoute();
@@ -34,6 +35,10 @@ export const useToolbar = () => {
       const touchedFont = dirtyKeys.value.includes('font');
 
       await handleSave(saveSiteSettings, touchedFont ? getEditorUITranslation('settings') : undefined);
+    }
+
+    if (assetsIsDirty.value) {
+      await handleSave(saveCustomAssets);
     }
 
     if (saved && !hasError) {

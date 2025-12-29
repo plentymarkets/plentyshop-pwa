@@ -42,7 +42,6 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
-import type { Block } from '@plentymarkets/shop-api';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
@@ -153,24 +152,4 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
-
-const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid', 'CategoryData']);
-const paddingExcludedBlockSet = new Set([
-  'Banner',
-  'Carousel',
-  'NewsletterSubscribe',
-  'Footer',
-  'MultiGrid',
-  'CategoryData',
-]);
-
-const isExcluded = (blockName: string, excludedSet: Set<string>) => {
-  return excludedSet.has(blockName);
-};
-
-const getBlockClass = (block: Block) =>
-  computed(() => ({
-    'max-w-screen-3xl mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
-    'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
-  }));
 </script>

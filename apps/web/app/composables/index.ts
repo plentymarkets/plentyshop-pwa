@@ -111,5 +111,8 @@ export * from './useRegisterForm';
 export * from './useFormLabel';
 export * from './useBlockContentHelper';
 export * from './useCategoryData';
+export * from './useCustomAssets';
 export * from './useEditModeNotification';
 export * from './useItemDataTable';
+export * from './useFullWidthToggle';
+export * from './useBlockClasses';
