@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
- npx turbo run lint
+ npm run format
+ npm run lint
