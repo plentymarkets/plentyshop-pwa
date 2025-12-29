@@ -3,14 +3,22 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { PathResolver, pathResolver } from '../index';
 import type { PathConfig, PathOptions } from '../types';
 
 describe('PathResolver', () => {
   describe('Default Configuration', () => {
     it('should provide correct default paths', () => {
-      expect(pathResolver.getProjectRoot()).toMatch(/.*plentyshop-pwa$/);
-      expect(pathResolver.getWebAppPath()).toMatch(/.*plentyshop-pwa\/apps\/web\/app$/);
+      const projectRoot = pathResolver.getProjectRoot();
+      const rootPackageJsonPath = join(projectRoot, 'package.json');
+      expect(existsSync(rootPackageJsonPath)).toBe(true);
+
+      const rootPackageJson = JSON.parse(readFileSync(rootPackageJsonPath, 'utf8')) as { name?: string };
+      expect(rootPackageJson.name).toBe('@plentymarkets/plentyshop-pwa');
+
+      expect(pathResolver.getWebAppPath()).toBe(join(projectRoot, 'apps/web/app'));
       expect(pathResolver.getTemplatePath('component')).toMatch(/.*templates\/component$/);
     });
 
