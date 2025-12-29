@@ -34,17 +34,17 @@ describe('useLastSeen', () => {
   });
 
   it('should add a variation ID to local storage', () => {
-    const { addToLastSeen, storedVariationIds } = useLastSeen();
+    const { addToLastSeen, localStorageVariationIds } = useLastSeen();
     addToLastSeen(ProductFactory.create(1234));
-    expect(storedVariationIds.value).toContain(1234);
+    expect(localStorageVariationIds.value).toContain(1234);
   });
 
   it('should add multiple variation IDs to local storage without duplicates', () => {
-    const { addToLastSeen, storedVariationIds } = useLastSeen();
+    const { addToLastSeen, localStorageVariationIds } = useLastSeen();
     addToLastSeen(ProductFactory.create(1234));
     addToLastSeen(ProductFactory.create(5678));
     addToLastSeen(ProductFactory.create(1234)); // duplicate
-    expect(storedVariationIds.value).toEqual([5678, 1234]);
+    expect(localStorageVariationIds.value).toEqual([5678, 1234]);
   });
 
   it('should add products to page 1', async () => {
@@ -56,8 +56,8 @@ describe('useLastSeen', () => {
   });
 
   it('should call SDK method to fetch products by IDs', async () => {
-    const { fetchLastSeenProducts, storedVariationIds} = useLastSeen(2);
-    storedVariationIds.value = [5678, 1234];
+    const { fetchLastSeenProducts, localStorageVariationIds } = useLastSeen(2);
+    localStorageVariationIds.value = [5678, 1234];
 
     await fetchLastSeenProducts();
     expect(useSdk().plentysystems.getProductsByIds).toHaveBeenCalledWith({
@@ -111,7 +111,6 @@ describe('useLastSeen', () => {
     expect(pages.value.size).toBe(1);
     expect(pages.value.get(1)![0]?.variation.id).toBe(product2.variation.id);
     expect(page.value).toBe(1);
-
   });
 
   it('should add fetched products to data map', async () => {
@@ -138,11 +137,11 @@ describe('useLastSeen', () => {
   });
 
   it('should clear last seen items', () => {
-    const { addToLastSeen, clearLastSeen, pages, storedVariationIds } = useLastSeen();
+    const { addToLastSeen, clearLastSeen, pages, localStorageVariationIds } = useLastSeen();
     addToLastSeen(ProductFactory.create(1234));
     addToLastSeen(ProductFactory.create(5678));
     clearLastSeen();
-    expect(storedVariationIds.value.length).toBe(0);
+    expect(localStorageVariationIds.value.length).toBe(0);
     expect(pages.value.size).toBe(0);
   });
 

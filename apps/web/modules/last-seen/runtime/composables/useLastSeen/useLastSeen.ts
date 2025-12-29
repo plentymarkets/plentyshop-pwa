@@ -16,7 +16,7 @@ export const useLastSeen = (itemsPerPage = 10) => {
     total: 0,
   }));
 
-  const storedVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
+  const localStorageVariationIds = useLocalStorage<number[]>(STORAGE_KEY, []);
 
   const createPages = (storedVariationIds: number[]) => {
     const totalItems = storedVariationIds.length;
@@ -31,7 +31,7 @@ export const useLastSeen = (itemsPerPage = 10) => {
     return pagesArray;
   };
 
-  const pageIds = computed(() => createPages(storedVariationIds.value));
+  const pageIds = computed(() => createPages(localStorageVariationIds.value));
 
   const totalPages = computed(() => pageIds.value.length);
 
@@ -39,7 +39,6 @@ export const useLastSeen = (itemsPerPage = 10) => {
     const pageIndex = state.value.page - 1;
     return pageIds.value[pageIndex] ?? [];
   });
-
 
   const currentPageProducts = computed(() => {
     return state.value.pages.get(state.value.page) ?? [];
@@ -60,26 +59,26 @@ export const useLastSeen = (itemsPerPage = 10) => {
    */
   const addToLastSeen = (product: Product): void => {
     const variationId = Number(productGetters.getVariationId(product));
-    
-    if (storedVariationIds.value.includes(variationId)) {
+
+    if (localStorageVariationIds.value.includes(variationId)) {
       return;
     }
-    
-    storedVariationIds.value.unshift(variationId);
-    state.value.total = storedVariationIds.value.length;
-    
+
+    localStorageVariationIds.value.unshift(variationId);
+    state.value.total = localStorageVariationIds.value.length;
+
     const currentNewProducts = state.value.pages.get(1) ?? [];
     state.value.pages.set(1, [product, ...currentNewProducts]);
   };
 
   const handleLastSeenProducts = (data: ProductsByIdsResponse) => {
     const fetchedProducts: Product[] = data?.products ?? [];
-    
+
     if (fetchedProducts.length > 0) {
       state.value.pages.set(state.value.page, fetchedProducts);
     }
-    
-    state.value.total = storedVariationIds.value.length;
+
+    state.value.total = localStorageVariationIds.value.length;
   };
 
   /**
@@ -91,7 +90,7 @@ export const useLastSeen = (itemsPerPage = 10) => {
    * ```
    */
   const fetchLastSeenProducts = async (): Promise<void> => {
-    if (storedVariationIds.value.length === 0 || !needsToFetch.value) {
+    if (localStorageVariationIds.value.length === 0 || !needsToFetch.value) {
       return;
     }
     state.value.loading = true;
@@ -132,7 +131,7 @@ export const useLastSeen = (itemsPerPage = 10) => {
    */
   const clearLastSeen = () => {
     state.value.pages.clear();
-    storedVariationIds.value = [];
+    localStorageVariationIds.value = [];
     state.value.page = 1;
     state.value.total = 0;
   };
@@ -144,7 +143,7 @@ export const useLastSeen = (itemsPerPage = 10) => {
     fetchLastSeenProducts,
     clearLastSeen,
     ...toRefs(state.value),
-    storedVariationIds,
+    localStorageVariationIds,
     totalPages,
     currentPageProducts,
     needsToFetch,

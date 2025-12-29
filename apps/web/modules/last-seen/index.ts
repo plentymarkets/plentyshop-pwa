@@ -5,8 +5,24 @@ export default defineNuxtModule({
     name: 'last-seen',
     configKey: 'lastSeen',
   },
-  setup() {
+  setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
+
+    nuxt.hook('i18n:registerModule', (register: any) => {
+      register({
+        langDir: resolver.resolve('./runtime/lang'),
+        locales: [
+          {
+            code: 'en',
+            file: 'en.json',
+          },
+          {
+            code: 'de',
+            file: 'de.json',
+          },
+        ],
+      });
+    });
 
     addImports({
       name: 'useLastSeen',
