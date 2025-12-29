@@ -30,7 +30,7 @@ import { SfIconLanguage, SfIconExpandMore, SfTooltip } from '@storefront-ui/vue'
 
 const languageLabel = 'Change the active language to manage multilingual content.';
 
-const { locale: currentLocale, availableLocales, t } = useI18n();
+const { locale: currentLocale, availableLocales } = useI18n();
 
 const loading = ref(true);
 const isOpen = ref(false);
