@@ -1,10 +1,5 @@
 <template>
-  <SfTooltip
-    show-arrow
-    placement="top"
-    :label="t('notifyMe.notifyButtonTooltip')"
-    :middleware="[offset(24)]"
-  >
+  <SfTooltip show-arrow placement="top" :label="t('notifyMe.notifyButtonTooltip')" :middleware="[offset(24)]">
     <UiButton
       data-testid="notify-me-button"
       size="lg"
@@ -26,7 +21,7 @@
       tag="section"
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-      style="z-index: 9999;"
+      style="z-index: 9999"
       aria-labelledby="notify-modal-title"
       aria-describedby="notify-modal-description"
     >
@@ -41,7 +36,7 @@
           <SfIconClose aria-hidden="true" />
         </UiButton>
         <h3 id="notify-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
-          {{ t('outOfStock') }}
+          {{ t('notifyMe.outOfStock') }}
         </h3>
         <p id="notify-modal-description" class="text-neutral-700 mb-6">
           {{ t('notifyMe.form.subTitle') }}
@@ -74,7 +69,7 @@
             @change="formInteraction"
           />
           <label for="privacy-policy" class="text-sm text-neutral-700">
-            <i18n-t keypath="readAndAccepted" tag="span">
+            <i18n-t keypath="notifyMe.readAndAccepted" tag="span">
               <template #insertText>
                 <NuxtLink
                   :to="localePath(paths.privacyPolicy)"
@@ -121,56 +116,64 @@
 </template>
 
 <script lang="ts" setup>
-  import { SfIconEmail, SfIconClose, SfTooltip, SfInput, SfCheckbox, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-  import { offset } from '@floating-ui/vue';
-  import { ref } from 'vue';
-  import type { NotifyMeComponentProps } from './types';
+import {
+  SfIconEmail,
+  SfIconClose,
+  SfTooltip,
+  SfInput,
+  SfCheckbox,
+  SfLoaderCircular,
+  useDisclosure,
+} from '@storefront-ui/vue';
+import { offset } from '@floating-ui/vue';
+import { ref } from 'vue';
+import type { NotifyMeComponentProps } from './types';
 
-  const props = defineProps<NotifyMeComponentProps>();
+const props = defineProps<NotifyMeComponentProps>();
 
-  const { isOpen, open, close } = useDisclosure();
-  const { user } = useCustomer();
-  const { t, locale } = useI18n();
-  const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-  const { send } = useNotification();
-  const { loading, subscribe } = useNotifyMe();
-  const localePath = useLocalePath();
+const { isOpen, open, close } = useDisclosure();
+const { user } = useCustomer();
+const { t, locale } = useI18n();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const { send } = useNotification();
+const { loading, subscribe } = useNotifyMe();
+const localePath = useLocalePath();
 
-  const turnstileSiteKey = getSetting() ?? '';
+const turnstileSiteKey = getSetting() ?? '';
 
-  const email = ref(user.value?.email || user.value?.guestMail || '');
-  const agreedToPolicy = ref(false);
-  const turnstileLoad = ref(false);
-  const turnstileToken = ref('');
+const email = ref(user.value?.email || user.value?.guestMail || '');
+const agreedToPolicy = ref(false);
+const turnstileLoad = ref(false);
+const turnstileToken = ref('');
 
-  const formInteraction = () => {
-    if (!turnstileLoad.value) {
-      turnstileLoad.value = true;
-    }
-  };
+const formInteraction = () => {
+  if (!turnstileLoad.value) {
+    turnstileLoad.value = true;
+  }
+};
 
-  const handleSubmit = async () => {
-    if (turnstileSiteKey && !turnstileToken.value) {
-      send({
-        type: 'negative',
-        message: t('notifyMe.form.turnstileFailed'),
-      });
-      return;
-    }
-
-    const result = await subscribe({
-      lang: locale.value,
-      email: email.value,
-      variationId: props.variationId,
-      'cf-turnstile-response': turnstileToken.value,
+const handleSubmit = async () => {
+  if (turnstileSiteKey && !turnstileToken.value) {
+    send({
+      type: 'negative',
+      message: t('notifyMe.form.turnstileFailed'),
     });
+    return;
+  }
 
-    if (result?.success) {
-      send({
-        type: 'positive',
-        message: t('notifyMe.form.successCheckEmail'),
-      });
-      close();
-    }
-  };
+  const result = await subscribe({
+    lang: locale.value,
+    email: email.value,
+    variationId: props.variationId,
+    'cf-turnstile-response': turnstileToken.value,
+  });
+
+  if (result?.success) {
+    send({
+      type: 'positive',
+      message: t('notifyMe.form.successCheckEmail'),
+    });
+    close();
+  }
+};
 </script>

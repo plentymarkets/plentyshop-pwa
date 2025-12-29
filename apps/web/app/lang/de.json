@@ -12,70 +12,9 @@
     "notifyMeOptInMessage": "Ihre Benachrichtigung wurde erfolgreich bestätigt. Sie erhalten eine E-Mail, sobald der Artikel wieder verfügbar ist.",
     "notifyMeOptInMessageError": "Die Bestätigung Ihrer Benachrichtigung ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
     "notifyMeUnsubscribeMessage": "Sie wurden erfolgreich von den Benachrichtigungen abgemeldet.",
-    "notifyMeUnsubscribeMessageError": "Die Abmeldung von den Benachrichtigungen ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support."
-  },
-  "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert",
-  "customerWish": "Hinweise und Wünsche",
-  "customerWishMessage": "Geben Sie hier Ihre Nachricht an uns ein.",
-  "CookieBar": {
-    "Accept All": "Alles akzeptieren",
-    "Accept Selection": "Auswahl akzeptieren",
-    "Back": "Zurück",
-    "Cookie Settings": "Cookie-Einstellungen",
-    "Further Settings": "Weitere Einstellungen",
-    "More information": "Mehr Informationen",
-    "Privacy Settings": "Datenschutzeinstellungen",
-    "Reject All": "Alles ablehnen",
-    "Show less": "Weniger anzeigen",
-    "about": {
-      "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Beachten Sie unser {legal} und weitere Hinweise zur Verwendung personenbezogener Daten in unserer {policy}.",
-      "label": "Ihre Privatsphäre ist uns wichtig"
-    },
-    "essentials": {
-      "cookies": {
-        "payPal": {
-          "name": "paypal",
-          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
-          "status": "Erforderlich für die Zahlungsabwicklung über PayPal."
-        },
-        "cloudflareTurnstile": {
-          "name": "Cloudflare Turnstile",
-          "provider": "Cloudflare",
-          "status": "Erforderlich für den Turnstile-Service von Cloudflare."
-        },
-        "consentCookie": {
-          "name": "consent-cookie",
-          "provider": "PlentyONE GmbH",
-          "status": "Speichert die Einwilligungsauswahl."
-        },
-        "plentyId": {
-          "name": "plentyID",
-          "provider": "PlentyONE GmbH",
-          "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
-        }
-      },
-      "description": "Essenzielle Cookies ermöglichen grundlegende Funktionen und sind für die einwandfreie Funktion der Website erforderlich.",
-      "label": "Essenziell"
-    },
-    "externalMedia": {
-      "description": "Inhalte von Videoplattformen und Social Media Plattformen werden standardmäßig blockiert. Wenn Cookies von externen Medien akzeptiert werden, bedarf der Zugriff auf diese Inhalte keiner manuellen Zustimmung mehr.",
-      "label": "Externe Medien"
-    },
-    "functional": {
-      "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können.",
-      "label": "Funktional"
-    },
-    "keys": {
-      "Lifespan": "Lebensdauer",
-      "PrivacyPolicy": "Datenschutzerklärung",
-      "Provider": "Anbieter",
-      "Status": "Status",
-      "script": "Skript"
-    },
-    "marketing": {
-      "description": "Marketing-Cookies werden von Drittanbietern und Publishern verwendet, um personalisierte Werbung anzuzeigen. Sie tun dies, indem Sie Besucher über Websites hinweg verfolgen.",
-      "label": "Marketing"
-    }
+    "notifyMeUnsubscribeMessageError": "Die Abmeldung von den Benachrichtigungen ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
+    "outOfStock": "Der Artikel ist aktuell nicht auf Lager",
+    "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert"
   },
   "account": {
     "accountSettings": {
