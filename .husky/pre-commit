@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run format && git add -u
+npm run format:fix && git add -u
 npm run lint
