@@ -14,7 +14,7 @@
     "notifyMeUnsubscribeMessage": "Sie wurden erfolgreich von den Benachrichtigungen abgemeldet.",
     "notifyMeUnsubscribeMessageError": "Die Abmeldung von den Benachrichtigungen ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
     "outOfStock": "Der Artikel ist aktuell nicht auf Lager",
-    "readAndAccepted": "Ich habe die {insertText} gelesen und akzeptiert"
+    "readAndAccepted": "Ich habe die {privacyPolicy} gelesen und akzeptiert",
   },
   "account": {
     "accountSettings": {
@@ -1250,6 +1250,9 @@
     "turnstile": {
       "invalid": "Verifizierung fehlgeschlagen. Bitte versuchen Sie es in ein paar Minuten erneut.",
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
+    },
+    "notifyMe": {
+      "alreadySubscribed": "Sie haben sich bereits für diesen Artikel registriert"
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   }

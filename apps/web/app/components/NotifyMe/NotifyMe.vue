@@ -70,14 +70,14 @@
           />
           <label for="privacy-policy" class="text-sm text-neutral-700">
             <i18n-t keypath="notifyMe.readAndAccepted" tag="span">
-              <template #insertText>
+              <template #privacyPolicy>
                 <NuxtLink
                   :to="localePath(paths.privacyPolicy)"
                   class="text-primary-700 underline"
                   target="_blank"
                   aria-label="Privacy policy (opens in new tab)"
                 >
-                  {{ t('privacyPolicy') }}
+                  {{ t('legal.privacyPolicy') }}
                 </NuxtLink>
               </template>
             </i18n-t>

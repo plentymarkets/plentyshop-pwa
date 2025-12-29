@@ -14,7 +14,7 @@
     "notifyMeUnsubscribeMessage": "You have been successfully unsubscribed from notifications.",
     "notifyMeUnsubscribeMessageError": "Failed to unsubscribe from notifications. Please try again or contact our support.",
     "outOfStock": "The product is currently out of stock",
-    "readAndAccepted": "I have read and accepted the {insertText}"
+    "readAndAccepted": "I have read and accepted the {privacyPolicy}",
   },
   "account": {
     "accountSettings": {
@@ -1250,6 +1250,9 @@
     "turnstile": {
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
+    },
+    "notifyMe":{
+      "alreadySubscribed": "You have already subscribed to this product"
     },
     "unknownError": "An unknown error has occurred."
   }
