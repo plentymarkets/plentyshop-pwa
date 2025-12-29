@@ -51,9 +51,6 @@
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
   </ClientOnly>
-  <ClientOnly>
-    <LazyReloadPWA hydrate-on-idle />
-  </ClientOnly>
 </template>
 
 <script setup lang="ts">
