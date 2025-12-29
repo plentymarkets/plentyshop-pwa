@@ -1,5 +1,8 @@
 name: Integration Gates
 on:
+  merge_group:
+    branches:
+      - main
   pull_request:
     branches:
       - main
