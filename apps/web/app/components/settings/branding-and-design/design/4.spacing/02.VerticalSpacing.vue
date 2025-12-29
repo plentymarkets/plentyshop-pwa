@@ -13,7 +13,7 @@
         {{ getEditorTranslation('block-spacing-size-' + blocksSpacingSize) }}
       </button>
     </div>
-    <div class="px-4 py-3">
+    <div class="py-3">
       <span class="typography-text-xs text-neutral-700">
         {{ getEditorTranslation('spacing-between-blocks') }}: {{ spacingInPx }}px
       </span>
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
-const { updateSetting, getSetting } = useSiteSettings('blockSize');
+const { updateSetting, getSetting } = useSiteSettings('verticalBlockSize');
 
 const btnClasses = ref(
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 uppercase inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed',
@@ -59,16 +59,16 @@ const spacingInPx = computed(() => {
     "block-spacing-size-m": "m",
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
-    "spacing-between-blocks": "Spacing between blocks",
-    "label": "Default spacing"
+    "spacing-between-blocks": "Spacing between blocks (vertical)",
+    "label": "Vertical spacing"
   },
   "de": {
     "block-spacing-size-s": "s",
     "block-spacing-size-m": "m",
     "block-spacing-size-l": "l",
     "block-spacing-size-xl": "xl",
-    "spacing-between-blocks": "Spacing between blocks",
-    "label": "Default spacing"
+    "spacing-between-blocks": "Spacing between blocks (vertical)",
+    "label": "Vertical spacing"
   }
 }
 </i18n>

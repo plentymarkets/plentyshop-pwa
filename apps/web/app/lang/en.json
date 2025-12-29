@@ -304,6 +304,11 @@
       "paymentInProgress": "Payment in progress..."
     }
   },
+  "customAssets": {
+    "assetDeletedSuccessfully": "Asset deleted successfully",
+    "failedToDeleteAsset": "Failed to delete asset",
+    "duplicateAssetError": "An asset with this type and name already exists. Please use a unique combination."
+  },
   "common": {
     "actions": {
       "add": "Add",
@@ -1010,6 +1015,7 @@
     "priceInclVAT": "Incl. VAT",
     "reviewsCount": "{count} reviews",
     "showAllReviews": "Show all reviews",
+    "showAll": "Show all",
     "graduatedPrices": {
       "discount": "DISCOUNT",
       "price": "PRICE",
