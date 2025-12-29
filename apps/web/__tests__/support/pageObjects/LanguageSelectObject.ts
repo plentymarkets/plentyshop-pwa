@@ -15,8 +15,8 @@ export class LanguageSelectObject extends PageObject {
   }
 
   selectOption(option: string) {
-    cy.intercept('/plentysystems/getCart').as('getCart');
-    cy.getByTestId(`languageOption-${option}`).first().click().wait('@getCart');
+    cy.intercept('/plentysystems/getSession').as('getSession');
+    cy.getByTestId(`languageOption-${option}`).first().click().wait('@getSession');
     return this;
   }
 

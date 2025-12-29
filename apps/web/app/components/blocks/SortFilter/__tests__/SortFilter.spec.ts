@@ -2,6 +2,12 @@ import { mount } from '@vue/test-utils';
 import SortFilter from '../../../../components/blocks/SortFilter/SortFilter.vue';
 import type { SortFilterProps } from '../types';
 
+vi.mock('vue-router', () => ({
+  useRoute: () => ({
+    query: {},
+  }),
+}));
+
 const mockProps: SortFilterProps = {
   name: 'SortFilter',
   type: 'content',
@@ -29,6 +35,9 @@ const mockProps: SortFilterProps = {
     filtersDisabled: [],
     showAllFiltersImmediately: true,
     numberOfFiltersToShowInitially: 0,
+    layout: {
+      fullWidth: false,
+    },
   },
   meta: {
     uuid: 'test-uuid',

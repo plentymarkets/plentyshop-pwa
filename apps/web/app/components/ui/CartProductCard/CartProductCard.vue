@@ -3,6 +3,7 @@
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
+          v-if="cartItem.variation?.images?.all?.length"
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/_nuxt-plenty/images/placeholder.png'"
           :alt="imageAlt"
@@ -125,7 +126,7 @@
       v-else-if="!disabled"
       square
       data-testid="remove-item-from-basket"
-      :aria-label="t('removeItemFromBasket')"
+      :aria-label="t('common.actions.removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="top-2 right-2 bg-white items-start h-fit"
@@ -149,7 +150,6 @@ const emit = defineEmits(['load']);
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
-const { t } = useI18n();
 const { format } = usePriceFormatter();
 const localePath = useLocalePath();
 
@@ -178,6 +178,8 @@ onMounted(() => {
     nextTick(() => {
       if (!imgElement.complete) emit('load');
     });
+  } else {
+    imageLoaded.value = true;
   }
 });
 
@@ -219,7 +221,7 @@ const changeQuantity = async (quantity: string) => {
 const deleteItem = async () => {
   deleteLoading.value = true;
   await deleteCartItem(cartItem);
-  send({ message: t('deletedFromCart'), type: 'positive' });
+  send({ message: t('cart.itemRemoved'), type: 'positive' });
   deleteLoading.value = false;
 };
 

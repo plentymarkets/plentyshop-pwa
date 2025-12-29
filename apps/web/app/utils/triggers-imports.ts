@@ -6,7 +6,7 @@ const customerTriggers = import.meta.glob('/node_modules/*/runtime/components/**
   import: 'default',
 }) as Record<string, Loader>;
 
-const nuxtModuleTriggers = import.meta.glob('/modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
+const nuxtModuleTriggers = import.meta.glob('~~/modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
 }) as Record<string, Loader>;
 

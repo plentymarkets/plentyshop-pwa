@@ -9,7 +9,7 @@
       >
         <NuxtImg
           ref="image"
-          :src="productBundleGetters.getBundleItemImage(item)"
+          :src="addModernImageExtension(productBundleGetters.getBundleItemImage(item))"
           class="size-28 aspect-square object-contain pr-4"
           :alt="productBundleGetters.getBundleItemName(item)"
           loading="lazy"
@@ -19,7 +19,7 @@
       <NuxtImg
         v-else
         ref="image"
-        :src="productBundleGetters.getBundleItemImage(item)"
+        :src="addModernImageExtension(productBundleGetters.getBundleItemImage(item))"
         class="size-28 aspect-square mr-4 object-contain"
         :alt="productBundleGetters.getBundleItemName(item)"
         loading="lazy"
@@ -41,7 +41,7 @@
       <div v-else>
         <p class="font-medium text-sm">
           {{ productBundleGetters.getBundleItemQuantity(item) }} x
-          <span class="h-auto">[{{ t('productAttributes.productNameMissing') }}]</span>
+          <span class="h-auto">[{{ t('product.attributes.productNameMissing') }}]</span>
         </p>
       </div>
     </div>
@@ -52,11 +52,11 @@
 import { type ProductBundleComponent, productBundleGetters } from '@plentymarkets/shop-api';
 import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
 import { SfLink } from '@storefront-ui/vue';
-const { t } = useI18n();
 
 const { product } = defineProps<BundleOrderItemsProps>();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
+const { addModernImageExtension } = useModernImage();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (

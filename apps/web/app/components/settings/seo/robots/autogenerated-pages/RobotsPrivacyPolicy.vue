@@ -19,7 +19,7 @@
 import Multiselect from 'vue-multiselect';
 import { robotsOptions } from '~/utils/editorSettings';
 
-const { updateSetting, getSetting } = useSiteSettings('robotsPrivacyPolicy');
+const { updateSetting, getSetting } = useSiteSettings('seoRobotsPrivacyPolicy');
 
 const robots = computed({
   get: () => getSetting(),

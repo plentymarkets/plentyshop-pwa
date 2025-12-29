@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useMakeOrder } from '../useMakeOrder';
 import { ApiError } from '@plentymarkets/shop-api';
@@ -256,7 +257,7 @@ describe('useMakeOrder', () => {
       });
       expect(useHandleError).toHaveBeenCalledWith(
         new ApiError({
-          key: 'null',
+          key: '',
           code: '400',
           message: 'my prepayment error',
           cause: 'my prepayment error',

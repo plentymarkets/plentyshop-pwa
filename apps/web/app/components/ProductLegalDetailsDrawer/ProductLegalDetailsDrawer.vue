@@ -15,13 +15,16 @@
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
-        <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
+        <div v-if="config.enableProductEditing" class="flex items-center text-white">{{ title }}</div>
+
+        <div v-else class="flex items-center text-white">{{ t('product.legalDetails') }}</div>
+
         <UiButton
           square
           variant="tertiary"
           data-testid="product-legal-details-close"
           class="text-white"
-          :aria-label="t('closeDrawer')"
+          :aria-label="t('common.navigation.closeDrawer')"
           @click="open = false"
         >
           <SfIconClose />
@@ -74,13 +77,13 @@ import ManufacturerInformation from '~/components/ManufacturerInformation/Manufa
 
 defineProps<ProductLegalDetailsProps>();
 
-const { t } = useI18n();
-
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const tabs = [
   { label: t('manufacturer.euResponsibleTabName'), component: ManufacturerResponsibleInfo, disabled: false },
   { label: t('manufacturer.manufacturerTabName'), component: ManufacturerInformation, disabled: false },
 ];
+
+const config = useRuntimeConfig().public;
 
 const activeTabIndex = ref(0);
 
@@ -90,6 +93,22 @@ const setActiveTab = (index: number) => {
 };
 
 const productLegalDrawerRef = ref();
-const { open } = useProductLegalDetailsDrawer();
+const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
+
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
+
+const productLegalBlock = computed(() => {
+  if (!openedBlockUuid.value) return null;
+  return data.value
+    .flatMap((block) => (Array.isArray(block.content) ? block.content : [block]))
+    .find((block) => block.meta?.uuid === openedBlockUuid.value);
+});
+
+const title = computed(() => productLegalBlock.value?.content?.text?.title || '');
 </script>

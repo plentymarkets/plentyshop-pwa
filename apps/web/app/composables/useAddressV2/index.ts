@@ -4,3 +4,4 @@ export * from './useCreateAddress';
 export * from './useDeleteAddress';
 export * from './useFetchAddress';
 export * from './usePrimaryAddress';
+export * from './useFetchAddressesData';

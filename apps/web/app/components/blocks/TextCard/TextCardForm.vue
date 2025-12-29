@@ -248,6 +248,8 @@
         </SfInput>
       </label>
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -310,7 +312,12 @@ import {
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -330,11 +337,13 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingBottom: '0',
       paddingLeft: '0',
       paddingRight: '0',
+      fullWidth: false,
     };
   }
 
   return content as TextCardContent;
 });
+const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);

@@ -16,12 +16,12 @@ export class ReadonlyCheckoutPageObject extends PageObject {
   }
 
   waitUntilDataIsLoaded() {
-    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getSession').as('getSession');
     cy.intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');
     cy.intercept('/plentysystems/getPayPalOrder').as('getPayPalOrder');
     cy.intercept('/plentysystems/doHandlePayPalAddress').as('doHandlePayPalAddress');
 
-    cy.wait(['@getCart', '@getPaymentProviders', '@getPayPalOrder', '@doHandlePayPalAddress'], { timeout: 30000 });
+    cy.wait(['@getSession', '@getPaymentProviders', '@getPayPalOrder', '@doHandlePayPalAddress'], { timeout: 30000 });
 
     return this;
   }

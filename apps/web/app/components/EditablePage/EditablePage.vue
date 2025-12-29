@@ -42,20 +42,20 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
-import type { Block } from '@plentymarkets/shop-api';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { $isPreview } = useNuxtApp();
 const props = withDefaults(defineProps<EditablePageProps>(), {
   hasEnabledActions: true,
+  preventBlocksRequest: false,
 });
 
-definePageMeta({
-  identifier: props.identifier,
-});
-
-const { data, getBlocksServer, cleanData } = useCategoryTemplate();
+const { data, getBlocksServer, cleanData } = useCategoryTemplate(
+  props.identifier.toString(),
+  props.type.toString(),
+  useNuxtApp().$i18n.locale.value,
+);
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
@@ -66,7 +66,9 @@ const isContentEmptyInLive = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer'),
 );
 
-await getBlocksServer(props.identifier, props.type);
+if (!props.preventBlocksRequest) {
+  await getBlocksServer(props.identifier, props.type);
+}
 
 const { footerCache } = useFooter();
 addFooterBlock({
@@ -111,15 +113,14 @@ const scrollToBlock = (evt: DragEvent) => {
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
-const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
-
-onMounted(() => {
-  isEditingEnabled.value = false;
-  window.addEventListener('beforeunload', handleBeforeUnload);
-});
+const enabledActions = computed(() => props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value);
 
 onMounted(async () => {
+  isEditingEnabled.value = false;
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
   if ($isPreview) {
     await import('./draggable.css');
   }
@@ -151,24 +152,4 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
-
-const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid', 'CategoryData']);
-const paddingExcludedBlockSet = new Set([
-  'Banner',
-  'Carousel',
-  'NewsletterSubscribe',
-  'Footer',
-  'MultiGrid',
-  'CategoryData',
-]);
-
-const isExcluded = (blockName: string, excludedSet: Set<string>) => {
-  return excludedSet.has(blockName);
-};
-
-const getBlockClass = (block: Block) =>
-  computed(() => ({
-    'max-w-screen-3xl mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
-    'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
-  }));
 </script>

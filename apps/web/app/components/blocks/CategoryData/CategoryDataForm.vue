@@ -10,7 +10,13 @@
         <h2>{{ getEditorTranslation('item-card-label') }}</h2>
       </template>
 
-      <div class="py-4">
+      <div class="py-2">
+        <div class="flex items-center justify-between px-2 pb-2 text-sm font-medium text-gray-700">
+          <span>{{ getEditorTranslation('item-card-text') }}</span>
+          <SfTooltip :label="getEditorTranslation('item-card-tooltip')" placement="top">
+            <SfIconInfo size="base" class="ml-2 text-gray-500" />
+          </SfTooltip>
+        </div>
         <draggable
           v-if="categoryDataBlock.fieldsOrder.length"
           v-model="categoryDataBlock.fieldsOrder"
@@ -40,51 +46,21 @@
             </div>
           </template>
         </draggable>
-      </div>
-
-      <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
-        <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowUpward /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingTop"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-top"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowDownward /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingBottom"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-bottom"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowBack /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingLeft"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-left"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-            <span><SfIconArrowForward /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingRight"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-right"
-            />
-          </div>
-        </div>
-        <div class="px-4 py-3">
-          <span class="typography-text-xs text-neutral-700">
-            {{ getEditorTranslation('spacing-around') }}
+        <div
+          v-if="showTextHint"
+          class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+          role="alert"
+          aria-live="polite"
+          data-testid="fields-empty-hint"
+        >
+          <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
+          <span class="italic">
+            {{ fieldsEmptyHintText }}
+            (
+            <a :href="learnMoreTextUrl" target="_blank" rel="noopener noreferrer" class="underline">
+              {{ t('learn-more') }}
+            </a>
+            ).
           </span>
         </div>
       </div>
@@ -100,7 +76,7 @@
         <h2>{{ getEditorTranslation('image-label') }}</h2>
       </template>
 
-      <div class="mb-6">
+      <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('display-category-image-label') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
@@ -141,8 +117,21 @@
           </div>
         </div>
       </div>
-
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div
+        v-if="showImageSlotHint"
+        class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
+        role="alert"
+        aria-live="polite"
+        data-testid="image-slot-empty-hint"
+      >
+        <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
+        <span class="italic">
+          {{ t('image-slot-empty-hint-prefix') }}
+          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline"> {{ t('learn-more') }} </a
+          >.
+        </span>
+      </div>
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <div class="flex items-center gap-2">
           <legend class="text-sm font-medium text-black m-0">
             {{ getEditorTranslation('image-scalling-label') }}
@@ -180,7 +169,7 @@
         </div>
       </div>
 
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('image-brightness-label') }}</label>
         <div class="flex items-center gap-4">
           <div class="flex-1 space-y-1">
@@ -211,7 +200,7 @@
         </div>
       </div>
 
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('image-alt-label') }}</UiFormLabel>
         <SfInput v-model="categoryDataBlock.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
         <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
@@ -219,7 +208,7 @@
         </div>
       </div>
 
-      <div class="mb-6">
+      <div class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
 
         <SfInput v-model="categoryDataBlock.text.color" type="text">
@@ -240,7 +229,7 @@
         </SfInput>
       </div>
 
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>
         <SfSwitch
           v-model="categoryDataBlock.text.background"
@@ -248,7 +237,7 @@
         />
       </div>
 
-      <div v-if="categoryDataBlock.text.background" class="mb-6">
+      <div v-if="categoryDataBlock.text.background" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
 
         <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
@@ -264,7 +253,7 @@
         </SfInput>
       </div>
 
-      <div v-if="categoryDataBlock.text.background && categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.text.background && categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('textbox-opacity-label') }}</label>
         <div class="flex items-center gap-4">
           <div class="flex-1 space-y-1">
@@ -295,7 +284,7 @@
         </div>
       </div>
 
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-x-label') }}</UiFormLabel>
 
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -340,7 +329,7 @@
         </div>
       </div>
 
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
 
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -385,7 +374,7 @@
         </div>
       </div>
 
-      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="mb-6">
+      <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
@@ -438,11 +427,70 @@
         </div>
       </div>
     </UiAccordionItem>
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      data-testid="item-grid-card"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('layout-label') }}</h2>
+      </template>
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+      <div
+        class="py-2"
+        :class="
+          categoryDataBlock.image.fillMode !== 'fit' && categoryDataBlock.displayCategoryImage !== 'off'
+            ? 'opacity-60  cursor-not-allowed'
+            : ''
+        "
+      >
+        <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+        <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowUpward /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingTop"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-top"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowDownward /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingBottom"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-bottom"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowBack /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingLeft"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-left"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+            <span><SfIconArrowForward /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingRight"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-right"
+            />
+          </div>
+        </div>
+      </div>
+    </UiAccordionItem>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { CategoryDataContent, CategoryDataFieldKey } from './types';
+import type { CategoryDataFieldKey } from './types';
 import {
   SfIconArrowBack,
   SfIconArrowDownward,
@@ -453,75 +501,38 @@ import {
   SfInput,
   SfTooltip,
   SfIconInfo,
+  SfIconWarning,
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
-import { clamp } from '@storefront-ui/shared';
 
-const { data } = useCategoryTemplate();
-const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
-
+const layoutOpen = ref(true);
 const textOpen = ref(true);
 const imageOpen = ref(true);
 
-const categoryDataBlock = computed(
-  () => findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent,
-);
+const {
+  learnMoreUrl,
+  learnMoreTextUrl,
+  categoryDataBlock,
+  fieldLabels,
+  showImageSlotHint,
+  showTextHint,
+  fieldsEmptyHintText,
+  clampBrightness,
+} = useCategoryData();
 
-const clampBrightness = (event: Event, type: string) => {
-  const currentValue = (event.target as HTMLInputElement)?.value;
-  const nextValue = Number.parseFloat(currentValue);
-
-  if (type === 'image') {
-    categoryDataBlock.value.image.brightness = clamp(nextValue, 0, 1);
-  }
-  if (type === 'text') {
-    categoryDataBlock.value.text.bgOpacity = clamp(nextValue, 0, 1);
-  }
-};
-
-const fieldLabels: Record<CategoryDataFieldKey, string> = {
-  name: getEditorTranslation('category-name'),
-  description1: getEditorTranslation('category-description-1'),
-  description2: getEditorTranslation('category-description-2'),
-  shortDescription: getEditorTranslation('short-description'),
-};
-
-watch(
-  () => categoryDataBlock.value.image.fillMode,
-  (newMode) => {
-    if (newMode === 'fill') {
-      categoryDataBlock.value.layout.paddingTop = 0;
-      categoryDataBlock.value.layout.paddingBottom = 0;
-      categoryDataBlock.value.layout.paddingLeft = 0;
-      categoryDataBlock.value.layout.paddingRight = 0;
-
-      changeCategoryImageWidth(true);
-    }
-
-    if (newMode === 'fit') {
-      changeCategoryImageWidth(false);
-    }
-  },
-);
-
-const changeCategoryImageWidth = (fullWidth: boolean) => {
-  categoryDataBlock.value.layout.narrowContainer = !fullWidth;
-
-  setTimeout(() => {
-    const el = document.querySelector(`[data-uuid="${blockUuid.value}"]`);
-    if (el) {
-      fullWidth ? el.classList.remove('max-w-screen-3xl', 'px-4', 'md:px-6') : el.classList.add('max-w-screen-3xl');
-    }
-  }, 100);
-};
+const { blockUuid } = useSiteConfiguration();
+const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 </script>
 
 <i18n lang="json">
 {
   "en": {
+    "layout-label": "Layout",
+
     "item-card-label": "Category text",
+    "item-card-text": "Text display and order",
+    "item-card-tooltip": "You can manage the description texts in the backend under Images/Categories.",
     "category-placeholder": "Category name",
     "category-name": "Category name",
     "category-description-1": "Category description 1",
@@ -529,7 +540,6 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",
@@ -573,9 +583,16 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "field-empty-hint-prefix": "The field {field} has no content",
+    "fields-empty-hint-prefix": "The fields {fields} have no content",
+    "image-slot-empty-hint-prefix": "The selected image slot doesn't have a linked image",
+    "learn-more": "learn more"
   },
   "de": {
+    "layout-label": "Layout",
+
     "item-card-label": "Category text",
     "category-placeholder": "Category name",
     "category-name": "Category name",
@@ -584,7 +601,6 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",
@@ -628,7 +644,12 @@ const changeCategoryImageWidth = (fullWidth: boolean) => {
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right"
+    "text-align-option-right-label": "Right",
+
+    "field-empty-hint-prefix": "The field {field} has no content",
+    "fields-empty-hint-prefix": "The fields {fields} have no content",
+    "image-slot-empty-hint-prefix": "The selected image slot doesn't have a linked image",
+    "learn-more": "learn more"
   }
 }
 </i18n>

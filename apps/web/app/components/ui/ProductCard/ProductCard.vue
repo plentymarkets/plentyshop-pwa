@@ -80,14 +80,21 @@
             {{ name }}
           </SfLink>
         </template>
-
+        <template v-if="key === 'manufacturer' && configuration?.fields?.manufacturer">
+          <div
+            v-if="manufacturer"
+            class="mb-1 typography-text-xs text-neutral-500"
+            data-testid="productcard-manufacturer"
+          >
+            {{ manufacturer.externalName }}
+          </div>
+        </template>
         <template v-if="key === 'rating' && configuration?.fields?.rating">
-          <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
+          <div class="flex items-center pt-1 gap-1 mb-2">
             <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
             <SfCounter size="xs">{{ ratingCount }}</SfCounter>
           </div>
         </template>
-
         <template v-if="key === 'previewText' && configuration?.fields?.previewText">
           <div
             v-if="shortDescription"
@@ -96,20 +103,16 @@
             <div class="line-clamp-3" v-html="shortDescription" />
           </div>
         </template>
-
         <template v-if="key === 'price' && configuration?.fields?.price">
           <LowestPrice :product="product" />
           <div v-if="showBasePrice" class="mb-2">
             <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
           </div>
-
           <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
             <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-              <span v-if="!canAddFromCategory" class="mr-1">{{
-                t('account.ordersAndReturns.orderDetails.priceFrom')
-              }}</span>
+              <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
-              <span>{{ t('asterisk') }}</span>
+              <span>{{ t('common.labels.asterisk') }}</span>
             </span>
             <span
               v-if="crossedPrice && differentPrices(price, crossedPrice)"
@@ -119,7 +122,6 @@
             </span>
           </div>
         </template>
-
         <template v-if="key === 'addToCart' && configuration?.fields?.addToCart">
           <UiButton
             v-if="canAddFromCategory"
@@ -134,9 +136,8 @@
               <SfIconShoppingCart size="sm" />
             </template>
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>{{ t('addToCartShort') }}</span>
+            <span v-else>{{ t('common.actions.add') }}</span>
           </UiButton>
-
           <UiButton
             v-else
             :variant="configuration?.addToCartStyle || 'primary'"
@@ -146,7 +147,7 @@
             size="sm"
             class="w-fit"
           >
-            <span>{{ t('showOptions') }}</span>
+            <span>{{ t('common.actions.showOptions') }}</span>
           </UiButton>
         </template>
       </template>
@@ -171,8 +172,9 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
       previewText: false,
       price: true,
       addToCart: true,
+      manufacturer: false,
     },
-    fieldsOrder: ['title', 'rating', 'previewText', 'price', 'addToCart'],
+    fieldsOrder: ['title', 'manufacturer', 'rating', 'previewText', 'price', 'addToCart'],
     showWishlistButton: false,
     showSecondImageOnHover: false,
     addToCartStyle: 'primary',
@@ -183,6 +185,9 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
     itemCountPosition: 'center',
     fieldsDisabled: [],
     paginationPosition: 'bottom',
+    layout: {
+      fullWidth: false,
+    },
   }),
 });
 
@@ -193,7 +198,6 @@ const configuration = computed(() => props.configuration || ({} as ItemGridConte
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product.value);
@@ -203,10 +207,12 @@ const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
 const name = computed(() => productGetters.getName(product.value) ?? '');
+const manufacturer = computed(() => productGetters.getManufacturer(product.value));
 const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
 const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
 const shortDescription = computed(() => productGetters.getShortDescription(product.value) || '');
 const canAddFromCategory = computed(() => productGetters.canBeAddedToCartFromCategoryPage(product.value));
+const showFromText = computed(() => productGetters.showFromText(product.value));
 
 const cover = computed(() => productGetters.getCoverImage(product.value));
 const secondCover = computed(() => productGetters.getSecondCoverImage(product.value));
@@ -231,8 +237,11 @@ const unitName = computed(() => productGetters.getUnitName(product.value));
 const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
 
 const variationId = computed(() => productGetters.getVariationId(product.value));
-
+const { isGlobalProductCategoryTemplate } = useProducts();
 const productPath = computed(() => {
+  if (isGlobalProductCategoryTemplate?.value) {
+    return paths.globalItemDetails;
+  }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
   const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product.value) === 1;
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
@@ -264,7 +273,7 @@ const addWithLoader = async (productId: number, quickCheckout = true) => {
     if (quickCheckout) {
       openQuickCheckout(product.value, 1);
     } else {
-      send({ message: t('addedToCart'), type: 'positive' });
+      send({ message: t('cart.itemAdded'), type: 'positive' });
     }
   } finally {
     loading.value = false;

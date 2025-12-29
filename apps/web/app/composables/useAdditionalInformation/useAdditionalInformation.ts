@@ -22,6 +22,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     loading: false,
     shippingPrivacyAgreement: false,
     customerWish: null,
+    customerSign: null,
     showErrors: false,
   }));
 
@@ -85,10 +86,22 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     state.value.loading = false;
   };
 
+  /**
+   * @description Function for setting the customer sign value.
+   * @example
+   * ``` ts
+   * setCustomerSign('example custom sign');
+   * ```
+   */
+  const setCustomerSign = (setCustomerSign: string | null) => {
+    state.value.customerSign = setCustomerSign;
+  };
+
   return {
     setShippingPrivacyAgreementErrors,
     setShippingPrivacyAgreement,
     setCustomerWish,
+    setCustomerSign,
     doAdditionalInformation,
     ...toRefs(state.value),
   };

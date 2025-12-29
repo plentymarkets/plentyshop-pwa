@@ -54,17 +54,20 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
    */
   const downloadFile: DownloadFile = (bufferArray: number[], name: string, type: string) => {
     state.value.loading = true;
-    const base64 = window.btoa(String.fromCharCode.apply(null, bufferArray));
+
+    const blob = new Blob([new Uint8Array(bufferArray)], { type });
+    const url = window.URL.createObjectURL(blob);
 
     const link = document.createElement('a');
-    link.href = `data:${type};base64,${base64}`;
+    link.href = url;
     link.download = name;
     link.click();
 
     setTimeout(() => {
       link.remove();
-      window.URL.revokeObjectURL(link.href);
+      window.URL.revokeObjectURL(url);
     }, 200);
+
     state.value.loading = false;
   };
 

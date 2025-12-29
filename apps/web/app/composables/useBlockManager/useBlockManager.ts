@@ -1,11 +1,7 @@
-import type { BlocksList, BlocksListContext } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition, RefCallback } from './types';
+import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
-
-const blocksLists = ref<BlocksList>({});
-const blocksListContext = ref<BlocksListContext>('');
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.content;
@@ -34,9 +30,17 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data, cleanData, updateBlocks } = useCategoryTemplate();
+
+  const route = useRoute();
+  const { data, cleanData, updateBlocks } = useCategoryTemplate(
+    route?.meta?.identifier as string,
+    route.meta.type as string,
+    useNuxtApp().$i18n.locale.value,
+  );
+
   const { isEditingEnabled } = useEditor();
-  const { openDrawerWithView } = useSiteConfiguration();
+  const { getBlockTemplateByLanguage } = useBlocksList();
+  const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
 
   const currentBlock = ref<Block | null>(null);
@@ -53,46 +57,16 @@ export const useBlockManager = () => {
     multigridColumnUuid.value = uuid;
   };
 
-  const setBlocksListContext = (context: BlocksListContext) => {
-    blocksListContext.value = context;
-  };
-
-  const getBlocksLists = async () => {
-    try {
-      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      blocksLists.value = await response.json();
-    } catch (error) {
-      throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  };
-
-  const getTemplateByLanguage = async (category: string, variationIndex: number, lang: string) => {
-    if (!blocksLists.value[category]) {
-      await getBlocksLists();
-    }
-    const variationsInCategory = blocksLists.value[category];
-    if (!variationsInCategory) throw new Error(`Category ${category} not found in blocksLists`);
-    const variationToAdd = variationsInCategory.variations[variationIndex];
-    if (!variationToAdd) throw new Error(`Variation ${variationIndex} not found in category ${category}`);
-    const variationTemplate = variationToAdd.template;
-
-    return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
-  };
-
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
 
-    const newBlock = await getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
     const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
-
       return;
     }
 
@@ -108,6 +82,8 @@ export const useBlockManager = () => {
     const targetBlock = parent[index];
     if (!targetBlock) return;
 
+    newBlock.parent_slot = targetBlock.parent_slot;
+
     if (position === 'inside') {
       insertIntoColumn(targetBlock, newBlock, parent);
     } else {
@@ -120,6 +96,7 @@ export const useBlockManager = () => {
 
     updateBlocks(copiedData);
     openDrawerWithView('blocksSettings', newBlock);
+
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
@@ -231,16 +208,14 @@ export const useBlockManager = () => {
     return null;
   };
 
-  const deleteBlock = (uuid: string) => {
+  const deleteBlock = async (uuid: string) => {
     if (data.value && uuid !== null) {
       if (getBlockDepth(uuid) > 0) {
-        replaceWithEmptyGridBlock(uuid);
+        await deleteBlockFromColumn(uuid);
       } else {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-
-      const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
     }
   };
@@ -260,16 +235,25 @@ export const useBlockManager = () => {
     }
   };
 
-  const replaceWithEmptyGridBlock = async (blockUuid: string) => {
+  const deleteBlockFromColumn = async (blockUuid: string) => {
     const parentInfo = findBlockParent(data.value, blockUuid);
     if (parentInfo) {
       const { parent, index } = parentInfo;
-      const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
-      const newBlock = { ...layoutTemplate.content[0] };
+      const layoutTemplate = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
+      const newBlock = { ...layoutTemplate };
 
-      newBlock.parent_slot = index;
-      newBlock.meta.uuid = uuid();
-      parent.splice(index, 1, newBlock);
+      const blockToDelete = parent[index];
+      if (!blockToDelete) return;
+      const targetSlot = blockToDelete.parent_slot;
+
+      parent.splice(index, 1);
+
+      const columnBlocks = parent.filter((block) => block.parent_slot === targetSlot);
+      if (columnBlocks.length === 0) {
+        newBlock.parent_slot = targetSlot;
+        newBlock.meta.uuid = uuid();
+        parent.splice(index, 0, newBlock);
+      }
     }
   };
   const updateBlock = (index: number, updatedBlock: Block) => {
@@ -325,9 +309,23 @@ export const useBlockManager = () => {
     };
   };
 
+  const showBottomAddInGrid = ({
+    blockMetaUuid,
+    blockName,
+    isRowHovered,
+    getBlockDepth,
+  }: ShowBottomAddInGridOptions) => {
+    const isInsideMultiGrid = getBlockDepth(blockMetaUuid) > 0;
+    return isInsideMultiGrid && blockName !== 'EmptyGridBlock' && isRowHovered;
+  };
+
+  const blockExistsOnPage = (blockName: string): boolean => {
+    const checkBlocks = (blocks: Block[]): boolean =>
+      blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
+    return checkBlocks(data.value);
+  };
+
   return {
-    blocksLists,
-    blocksListContext,
     currentBlock,
     currentBlockUuid,
     isClicked,
@@ -340,7 +338,6 @@ export const useBlockManager = () => {
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,
-    getBlocksLists,
     blockHasData,
     tabletEdit,
     deleteBlock,
@@ -357,6 +354,7 @@ export const useBlockManager = () => {
     getLazyLoadKey,
     getLazyLoadConfig,
     getLazyLoadRef,
-    setBlocksListContext,
+    showBottomAddInGrid,
+    blockExistsOnPage,
   };
 };

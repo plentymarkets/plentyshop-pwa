@@ -8,7 +8,7 @@ const customer = import.meta.glob('/node_modules/*/runtime/components/settings/*
   import: 'default',
 }) as Record<string, Loader>;
 
-const nuxtModules = import.meta.glob('/modules/*/runtime/components/settings/**/*.vue', {
+const nuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/**/*.vue', {
   import: 'default',
 }) as Record<string, Loader>;
 

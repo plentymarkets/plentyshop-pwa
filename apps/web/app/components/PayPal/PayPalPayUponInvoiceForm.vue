@@ -1,12 +1,12 @@
 <template>
   <header>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-      {{ t('checkoutPayment.payUponInvoice') }}
+      {{ t('checkout.payment.payUponInvoice') }}
     </h3>
 
     <UiButton
       v-if="!disableCloseButton"
-      :aria-label="t('closeDialog')"
+      :aria-label="t('common.navigation.closeDialog')"
       type="button"
       square
       variant="tertiary"
@@ -19,7 +19,7 @@
 
   <form class="grid grid-cols-1" novalidate @submit.prevent="validateAndSubmitForm">
     <label>
-      <UiFormLabel class="flex">{{ t('checkoutPayment.birthdateLabel') }} &#8727;</UiFormLabel>
+      <UiFormLabel class="flex">{{ t('checkout.payment.birthdateLabel') }} &#8727;</UiFormLabel>
       <SfInput
         v-model="birthDate"
         label="Phone Number"
@@ -31,13 +31,13 @@
 
     <div class="h-[2rem] mt-1">
       <div v-if="!validBirthDate" class="text-sm text-negative-700">
-        {{ t('checkoutPayment.birthdateError') }}
+        {{ t('checkout.payment.birthdateError') }}
       </div>
     </div>
 
     <UiTelephoneInput
       v-model="phoneWithPrefix"
-      :label="`${t('checkoutPayment.phoneLabel')} &#8727;`"
+      :label="`${t('checkout.payment.phoneLabel')} &#8727;`"
       :default-country="defaultCountry"
       :error="phoneError"
       @valid-phone-number="handlePhoneNumberValidation"
@@ -52,12 +52,12 @@
 
     <div class="flex justify-end gap-x-4">
       <UiButton type="button" :disabled="disableCloseButton" variant="secondary" @click="emit('confirmCancel')">
-        {{ t('paypal.unbrandedCancel') }}
+        {{ t('paypalPayment.unbrandedCancel') }}
       </UiButton>
 
       <UiButton type="submit" :disabled="loading" class="min-w-[120px] w-fit">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-        <template v-else>{{ t('paypal.unbrandedPay') }}</template>
+        <template v-else>{{ t('paypalPayment.unbrandedPay') }}</template>
       </UiButton>
     </div>
   </form>
@@ -69,8 +69,15 @@ import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const emit = defineEmits(['confirmCancel']);
 
-const { t } = useI18n();
-const { config, loadConfig, getFraudId, getScript } = usePayPal();
+const {
+  config,
+  fraudId,
+  loadConfig,
+  getScript,
+  createTransaction,
+  createPlentyOrder,
+  createPlentyPaymentFromPayPalOrder,
+} = usePayPal();
 const { emit: plentyEmit } = usePlentyEvent();
 const localePath = useLocalePath();
 const { processingOrder } = useProcessingOrder();
@@ -94,7 +101,7 @@ const disableCloseButton = computed(() => processingOrder.value || loading.value
 
 const fetchDependencies = async () => {
   await loadConfig().then(() => (fraudNet.value.merchantId = config.value?.merchantId || null));
-  fraudNet.value.fraudId = await getFraudId();
+  fraudNet.value.fraudId = fraudId.value;
   await insertLegalText();
 };
 
@@ -119,7 +126,7 @@ const insertFraudNetScript = () => {
   scriptTag.textContent = JSON.stringify({
     f: fraudNet.value.fraudId,
     s: `${fraudNet.value.merchantId}_${fraudNet.value.pageId}`,
-    sandbox: config.value?.extra?.sandbox ?? true,
+    sandbox: config.value?.isSandbox ?? true,
   });
 
   document.body.appendChild(scriptTag);
@@ -133,7 +140,7 @@ const insertFraudNetScript = () => {
 const validateAndSubmitForm = async () => {
   if (submitFirstTime.value) {
     validBirthDate.value = isDateValid();
-    if (!validPhone.value) phoneError.value = t('checkoutPayment.phoneError');
+    if (!validPhone.value) phoneError.value = t('checkout.payment.phoneError');
     submitFirstTime.value = false;
   }
 
@@ -144,7 +151,6 @@ const validateAndSubmitForm = async () => {
 
 const createPayPalPayUponInvoiceOrder = async () => {
   loading.value = true;
-  const { createTransaction, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
 
   try {
     const orderData = {
@@ -193,7 +199,7 @@ onNuxtReady(async () => {
 });
 
 watch(validPhone, (updatedStatus) => {
-  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkoutPayment.phoneError') : '';
+  phoneError.value = !submitFirstTime.value && !updatedStatus ? t('checkout.payment.phoneError') : '';
 });
 
 watch(birthDate, () => {

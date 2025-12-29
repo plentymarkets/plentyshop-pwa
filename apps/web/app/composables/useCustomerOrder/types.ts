@@ -12,6 +12,7 @@ export interface UseCustomerOrder {
   data: Readonly<Ref<UseCustomerOrderState['data']>>;
   loading: Readonly<Ref<boolean>>;
   fetchOrder: FetchOrder;
+  fetchOrderClient: FetchOrder;
   error: Readonly<Ref<UseCustomerOrderState['error']>>;
 }
 

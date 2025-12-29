@@ -1,6 +1,13 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
 import type { ApiError, StorageObject } from '@plentymarkets/shop-api';
-import { validateImageFile } from '~/utils/allowedImageFilesHelper';
+import { validateImageFile, getAllowedImageExtensions } from '~/utils/allowedImageFilesHelper';
+import {
+  extractFolders,
+  createPlaceholderObject,
+  removeByKeyFromArray,
+  replaceByKeyInArray,
+  buildItemHelper,
+} from './helpers/itemTableHelpers';
 export const UPLOADING_CLASS = '__uploading__';
 
 export const useItemsTable: UseItemTableReturn = () => {
@@ -27,31 +34,20 @@ export const useItemsTable: UseItemTableReturn = () => {
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
   const folders = useState<string[]>('image-table-folders', () => []);
 
-  const extractFolders = (items: StorageObject[]): string[] => {
-    const folderSet = new Set<string>();
-    items.forEach((item) => {
-      const key = item.key;
-      const lastSlash = key.lastIndexOf('/');
-      if (lastSlash > 0) {
-        const folder = key.substring(0, lastSlash);
-        folderSet.add(folder);
-      }
-    });
-    return Array.from(folderSet);
-  };
-
-  const getStorageItems = async (fileTypes = 'png,jpg,jpeg,avif,webp') => {
+  const getStorageItems = async (fileTypes: string) => {
     state.value.loading = true;
 
     if (cachedImages.value.length > 0) {
       state.value.data = cachedImages.value;
-
       folders.value = extractFolders(cachedImages.value);
       state.value.loading = false;
       return;
     }
 
-    const response = await useSdk().plentysystems.getStorageItems({ fileTypes });
+    const response = await useSdk().plentysystems.getStorageItems({
+      fileTypes: fileTypes ?? getAllowedImageExtensions(),
+      includeFolders: 'true',
+    });
     state.value.loading = false;
 
     if (!response || !response.data) {
@@ -64,7 +60,6 @@ export const useItemsTable: UseItemTableReturn = () => {
 
     state.value.data = items;
     cachedImages.value = items;
-
     folders.value = extractFolders(items);
   };
 
@@ -78,35 +73,18 @@ export const useItemsTable: UseItemTableReturn = () => {
   const makeTempKey = (name: string) => `__uploading__:${Date.now()}:${name}`;
 
   const addPlaceholderFirst = (key: string, size: number) => {
-    const placeholder: StorageObject = {
-      key,
-      eTag: '',
-      size: String(size),
-      lastModified: new Date().toISOString(),
-      storageClass: UPLOADING_CLASS,
-      publicUrl: '',
-      previewUrl: '',
-    };
+    const placeholder = createPlaceholderObject(key, size, UPLOADING_CLASS);
     state.value.data = [placeholder, ...state.value.data];
     cachedImages.value = [placeholder, ...cachedImages.value];
   };
-
   const removeByKey = (key: string) => {
-    const remove = (arr: StorageObject[]) => arr.filter((item) => item.key !== key);
-    state.value.data = remove(state.value.data);
-    cachedImages.value = remove(cachedImages.value);
+    state.value.data = removeByKeyFromArray(state.value.data, key);
+    cachedImages.value = removeByKeyFromArray(cachedImages.value, key);
   };
 
   const replaceByKey = (key: string, item: StorageObject) => {
-    const replace = (arr: StorageObject[]) => {
-      const idx = arr.findIndex((item) => item.key === key);
-      if (idx < 0) return [item, ...arr];
-      const copy = arr.slice();
-      copy.splice(idx, 1, item);
-      return copy;
-    };
-    state.value.data = replace(state.value.data);
-    cachedImages.value = replace(cachedImages.value);
+    state.value.data = replaceByKeyInArray(state.value.data, key, item);
+    cachedImages.value = replaceByKeyInArray(cachedImages.value, key, item);
   };
 
   const uploadFile = async (base64: string, file: File, folderPath: string = '') => {
@@ -121,18 +99,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   };
 
   const buildItemFrom = (api: Partial<StorageObject>, file: File): StorageObject => {
-    const objectUrl = api.publicUrl ? undefined : URL.createObjectURL(file);
-    if (objectUrl) registerBlobUrl(objectUrl);
-
-    return {
-      key: api.key ?? file.name,
-      eTag: api.eTag ?? '',
-      size: api.size ?? String(file.size),
-      lastModified: api.lastModified ?? new Date().toISOString(),
-      storageClass: api.storageClass ?? '',
-      publicUrl: api.publicUrl ?? (objectUrl as string),
-      previewUrl: api.publicUrl ? undefined : (objectUrl as string),
-    };
+    return buildItemHelper(api, file, registerBlobUrl);
   };
 
   const uploadStorageItem = async (file: File, filePath = ''): Promise<StorageObject | null> => {
@@ -200,6 +167,7 @@ export const useItemsTable: UseItemTableReturn = () => {
     bytesToMB,
     formatDate,
     headers,
+    registerBlobUrl,
     revokeAllBlobUrls,
     folders,
     ...toRefs(state.value),

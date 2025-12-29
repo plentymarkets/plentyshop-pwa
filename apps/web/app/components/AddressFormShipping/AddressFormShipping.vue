@@ -176,7 +176,7 @@
           variant="secondary"
           type="submit"
         >
-          {{ t('saveAddress') }}
+          {{ t('common.actions.saveAddress') }}
         </UiButton>
 
         <UiButton
@@ -185,7 +185,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Shipping}`"
-          :aria-label="t('closeAddressForm')"
+          :aria-label="t('common.navigation.closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
@@ -205,7 +205,6 @@ const { disabled, address, addAddress = false } = defineProps<AddressFormShippin
 
 const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
 const { fetchSession } = useFetchSession();
-const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { handleCartTotalChanges } = useCartTotalChange();
@@ -213,9 +212,10 @@ const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
+const { hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
 const { restrictedAddresses } = useRestrictedAddress();
-const { setShippingSkeleton } = useCheckout();
+const { setShippingSkeleton, showBillingAddressSection } = useCheckout();
 const {
   isLoading: formIsLoading,
   add: showNewForm,
@@ -388,4 +388,8 @@ const edit = (address: Address) => {
   editing.value = !(editing.value || showNewForm.value);
   showNewForm.value = false;
 };
+
+watch(shippingAsBilling, () => {
+  showBillingAddressSection.value = !shippingAsBilling.value || hasBillingAddress.value;
+});
 </script>

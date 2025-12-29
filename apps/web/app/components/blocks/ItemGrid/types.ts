@@ -5,7 +5,7 @@ export type ContentAlignment = 'left' | 'center' | 'right';
 export type PaginationPosition = 'top' | 'bottom' | 'both';
 export type AddToCartStyle = 'primary' | 'secondary';
 
-export type ItemGridFieldKey = 'title' | 'rating' | 'previewText' | 'price' | 'addToCart';
+export type ItemGridFieldKey = 'title' | 'rating' | 'previewText' | 'price' | 'addToCart' | 'manufacturer';
 
 export type ItemGridFieldsVisibility = Record<ItemGridFieldKey, boolean>;
 
@@ -38,6 +38,9 @@ export interface ItemGridContent {
   showWishlistButton: boolean;
   addToCartStyle: AddToCartStyle;
   paginationPosition: PaginationPosition;
+  layout: {
+    fullWidth?: boolean;
+  };
 }
 
 export interface ItemGridFormProps {

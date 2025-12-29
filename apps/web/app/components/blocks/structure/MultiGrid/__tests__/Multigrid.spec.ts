@@ -11,8 +11,6 @@ describe('MultiGrid block', () => {
         layout: {
           marginTop: 10,
           marginBottom: 10,
-          marginLeft: 5,
-          marginRight: 5,
           backgroundColor: '#fff',
           gap: 'M',
         },
@@ -56,8 +54,6 @@ describe('MultiGrid block', () => {
         layout: {
           marginTop: 10,
           marginBottom: 10,
-          marginLeft: 5,
-          marginRight: 5,
           backgroundColor: '#fff',
           gap: 'M',
         },
@@ -84,7 +80,10 @@ describe('MultiGrid block', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,
-        layout: { ...mockMultiGridProps.layout, gap: 'XL' },
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, gap: 'XL' },
+        },
       },
     });
     expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-x-5');
@@ -94,13 +93,14 @@ describe('MultiGrid block', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,
-        layout: {
-          marginTop: 20,
-          marginBottom: 10,
-          marginLeft: 5,
-          marginRight: 15,
-          backgroundColor: '#ABCDEF',
-          gap: 'M',
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: {
+            marginTop: 20,
+            marginBottom: 10,
+            backgroundColor: '#ABCDEF',
+            gap: 'M',
+          },
         },
       },
     });
@@ -108,7 +108,8 @@ describe('MultiGrid block', () => {
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const style = grid.attributes('style');
     expect(style).toContain('background-color: #ABCDEF');
-    expect(style).toContain('margin: 20px 15px 10px 5px');
+    expect(style).toContain('margin-top: 20px');
+    expect(style).toContain('margin-bottom: 10px');
   });
 
   it('should apply responsive grid classes for a two-column grid', () => {
@@ -141,5 +142,50 @@ describe('MultiGrid block', () => {
     const classes = grid.classes();
     expect(classes).toContain('md:grid-cols-12');
     expect(classes).toContain('lg:grid-cols-12');
+  });
+
+  it('should render a 2 columns multigrid with 2 blocks in the first column and 1 block in the second column', () => {
+    const blocks = [
+      { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'a' }, parent_slot: 0 },
+      {
+        name: 'Image',
+        type: 'image',
+        content: { src: '/test.jpg', alt: 'Test image' },
+        meta: { uuid: 'b' },
+        parent_slot: 0,
+      },
+      { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'c' }, parent_slot: 1 },
+    ];
+
+    const wrapper = mount(MultiGrid, {
+      props: {
+        name: 'MultiGrid',
+        type: 'structure',
+        content: blocks,
+        configuration: { columnWidths: [6, 6] },
+        layout: { marginTop: 0, marginBottom: 0, backgroundColor: '#fff', gap: 'M' },
+        meta: { uuid: 'test-multigrid' },
+      },
+    });
+
+    const columns = wrapper.findAll('[data-testid="multi-grid-column"]');
+    expect(columns.length).toBe(2);
+    if (!columns[0] || !columns[1]) {
+      throw new Error('Expected two columns to be rendered');
+    }
+
+    expect(columns[0].findAll('.group\\/row').length).toBe(2);
+    expect(columns[1].findAll('.group\\/row').length).toBe(1);
+
+    const firstColBlocks = columns[0].findAll('.group\\/row');
+    if (!firstColBlocks[0] || !firstColBlocks[1]) {
+      throw new Error('Expected two blocks in the first column');
+    }
+
+    expect(firstColBlocks[0].attributes('data-uuid')).toBe('a');
+    expect(firstColBlocks[1].attributes('data-uuid')).toBe('b');
+
+    const secondColBlock = columns[1].find('.group\\/row');
+    expect(secondColBlock.attributes('data-uuid')).toBe('c');
   });
 });

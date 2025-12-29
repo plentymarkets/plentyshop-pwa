@@ -3,6 +3,7 @@ import type {
   AggregatedCountries,
   ApiError,
   GeoRegulatedCountry,
+  Country,
 } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
@@ -50,6 +51,34 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     state.value.loading = false;
   };
 
+  const setCountries = (defaultCountries: Country[], geoRegulatedCountries: GeoRegulatedCountry[]) => {
+    state.value.default = defaultCountries.map((country) => ({
+      id: country.id,
+      name: country.name,
+      currLangName: country.name,
+      isoCode2: country.isoCode2,
+      isoCode3: '',
+      lang: useNuxtApp().$i18n.locale.value,
+      states: (country.states || []).map((state) => ({
+        id: state.id,
+        name: state.name,
+        isoCode: '',
+        isoCode3166: '',
+        countryId: String(country.id),
+      })),
+      active: 1,
+      isGeoRegulated: false,
+      isCountryStateMandatory: null,
+      names: [],
+      shippingDestinationId: 0,
+      storehouseId: 0,
+      vatCodes: [],
+      zipCodeRegex: null,
+    })) as ActiveShippingCountry[];
+
+    state.value.geoRegulated = geoRegulatedCountries;
+  };
+
   const useGeoRegulatedCountries = state.value.geoRegulated.length > 0;
 
   const billingCountries = computed(() => {
@@ -66,7 +95,6 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
 
   const localeCountryName = (countryId: string) => {
     const id = Number.parseInt(countryId);
-
     if (Number.isNaN(id)) return '';
     return billingCountries.value.find((country) => country.id === id)?.currLangName ?? '';
   };
@@ -101,7 +129,6 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
 
   const getCountryIsoCode = (countryId: string): string => {
     const id = Number.parseInt(countryId);
-
     if (Number.isNaN(id)) return '';
     return billingCountries.value.find((country) => country.id === id)?.isoCode2?.toLowerCase() ?? '';
   };
@@ -109,6 +136,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   return {
     parseZipCodeRegex,
     fetchAggregatedCountries,
+    setCountries,
     useGeoRegulatedCountries,
     billingCountries,
     localeCountryName,

@@ -4,18 +4,29 @@
 </template>
 
 <script setup lang="ts">
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 definePageMeta({
   pageType: 'static',
 });
 const { setPageMeta } = usePageMeta();
-
+const { getSetting } = useSiteSettings('shippingTextCategoryId');
 const { categoryTemplateData, fetchCategoryTemplate } = useCategoryTemplate();
-const runtimeConfig = useRuntimeConfig();
-await fetchCategoryTemplate(Number(runtimeConfig.public.shippingTextCategoryId));
-const { t } = useI18n();
+
+await fetchCategoryTemplate(Number(getSetting()));
 
 const icon = 'page';
 setPageMeta(t('orderConfirmation.shipping'), icon);
 
 const text = computed(() => categoryTemplateData?.value?.data);
+const categoryId = computed(() => getSetting());
+
+watch(
+  () => categoryId.value,
+  async (changedCategoryId) => {
+    await fetchCategoryTemplate(Number(changedCategoryId));
+  },
+);
 </script>

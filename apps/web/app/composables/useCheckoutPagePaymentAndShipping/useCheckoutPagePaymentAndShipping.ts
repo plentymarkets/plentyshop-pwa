@@ -16,7 +16,6 @@ const getFallbackPaymentMethod = (
 };
 
 export const useCheckoutPagePaymentAndShipping = () => {
-  const { $i18n } = useNuxtApp();
   const { send } = useNotification();
   const { data: cart } = useCart();
   const { fetchSession } = useFetchSession();
@@ -64,7 +63,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
     );
 
     if (isPaymentMethodExcluded || isPaymentMethodUnavailable) {
-      send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
+      send({ message: t('billing.methodChanged'), type: 'warning' });
 
       const fallbackMethod = getFallbackPaymentMethod(paymentMethods.value.list, selectedShippingMethod.value);
       if (fallbackMethod) await savePaymentMethod(fallbackMethod.id);

@@ -4,33 +4,42 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      class="group/col relative overflow-hidden"
+      class="group/col relative"
       data-testid="multi-grid-column"
     >
-      <div v-for="row in column" :key="row.meta.uuid" class="group/row relative">
-        <div
-          v-if="showOverlay(row)"
-          class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
-          style="box-shadow: inset 0 0 0 2px #7c3aed"
+      <div
+        v-for="row in column"
+        :key="row.meta.uuid"
+        class="group/row relative"
+        :data-uuid="row.meta.uuid"
+        @mouseenter="onRowEnter(row)"
+        @mouseleave="onRowLeave"
+      >
+        <ClientOnly>
+          <template v-if="showOverlay(row)">
+            <div
+              class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+              style="box-shadow: inset 0 0 0 2px #7c3aed"
+            />
+
+            <div
+              class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+            />
+
+            <div
+              class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
+            >
+              <UiBlockActions :block="row" :index="colIndex" :actions="getBlockActions()" />
+            </div>
+          </template>
+        </ClientOnly>
+
+        <slot
+          name="content"
+          :content-block="row"
+          :column-length="column.length"
+          :is-row-hovered="showOverlay(row) && isRowHovered(row)"
         />
-
-        <div
-          v-if="showOverlay(row)"
-          class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
-        />
-
-        <div
-          class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none"
-          :class="
-            showOverlay(row)
-              ? 'group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto'
-              : ''
-          "
-        >
-          <UiBlockActions v-if="showOverlay(row)" :block="row" :index="colIndex" :actions="getBlockActions()" />
-        </div>
-
-        <slot name="content" :content-block="row" />
       </div>
     </div>
   </div>
@@ -40,7 +49,16 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { layout, content, configuration } = defineProps<MultiGridProps>();
+const { content, configuration } = defineProps<MultiGridProps>();
+
+const hoveredRowUuid = ref<string | null>(null);
+const onRowEnter = (row: Block) => {
+  hoveredRowUuid.value = row.meta.uuid;
+};
+const onRowLeave = () => {
+  hoveredRowUuid.value = null;
+};
+const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
@@ -54,7 +72,7 @@ const gapClassMap: Record<string, string> = {
   L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
   XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
-const gridGapClass = computed(() => gapClassMap[layout?.gap || 'M']);
+const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
 
 const defaultMarginBottom = computed(() => {
   switch (blockSize.value) {
@@ -72,18 +90,26 @@ const defaultMarginBottom = computed(() => {
 });
 
 const gridInlineStyle = computed(() => ({
-  backgroundColor: layout?.backgroundColor ?? 'transparent',
-  marginTop: layout?.marginTop !== undefined ? `${layout.marginTop}px` : '0px',
-  marginBottom: layout?.marginBottom !== undefined ? `${layout.marginBottom}px` : `${defaultMarginBottom.value}px`,
-  marginLeft: layout?.marginLeft !== undefined ? `${layout.marginLeft}px` : '40px',
-  marginRight: layout?.marginRight !== undefined ? `${layout.marginRight}px` : '40px',
+  backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+  marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
+  marginBottom:
+    configuration.layout?.marginBottom !== undefined
+      ? `${configuration.layout.marginBottom}px`
+      : `${defaultMarginBottom.value}px`,
 }));
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
+
 const getColumnClasses = (colIndex: number) => {
   const columnWidth = configuration.columnWidths[colIndex];
-  return [`col-span-${columnWidth}`];
+  const classes = [`col-span-${columnWidth}`];
+
+  if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
+    classes.push('md:sticky', 'md:top-40');
+  }
+
+  return classes;
 };
 
 const getBlockActions = () => ({

@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useFooter } from '../useFooter';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
@@ -8,7 +9,7 @@ const mockFooterData: FooterSettings = {
     isGlobalTemplate: true,
   },
   column1: { title: 'Legal' },
-  column2: { title: 'Contact', description: 'Get in touch', showContactLink: true },
+  column2: { title: 'Services', description: 'Get in touch', showContactLink: true, showRegisterLink: false },
   column3: { title: 'About', description: 'Learn more' },
   column4: { title: 'Help', description: 'Support' },
   footnote: '© Test Company 2024',
@@ -49,7 +50,7 @@ const { useI18n } = vi.hoisted(() => {
       t: vi.fn((key: string) => {
         const translations: Record<string, string> = {
           'categories.legal.label': 'Legal',
-          'categories.contact.label': 'Contact',
+          'categories.services.label': 'Services',
         };
         return translations[key] || key;
       }),
@@ -187,10 +188,11 @@ describe('useFooter', () => {
         setupApiResponse(apiResponse);
 
         const { fetchFooterSettings } = useFooter();
+        const { $i18n } = useNuxtApp();
 
         const result = await fetchFooterSettings();
 
-        expect(useAsyncData).toHaveBeenCalledWith('footer-settings', expect.any(Function));
+        expect(useAsyncData).toHaveBeenCalledWith(`footer-settings-${$i18n.locale}`, expect.any(Function));
         expect(result).toEqual(mockFooterData);
         expect(mockStateRef.value).toBe(mockFooterData);
       });
@@ -224,7 +226,7 @@ describe('useFooter', () => {
         const result = await fetchFooterSettings();
 
         expect(result.column1.title).toBe('Legal');
-        expect(result.column2.title).toBe('Contact');
+        expect(result.column2.title).toBe('Services');
         expect(mockStateRef.value).toEqual(result);
       });
 
@@ -236,7 +238,7 @@ describe('useFooter', () => {
         const result = await fetchFooterSettings();
 
         expect(result.column1.title).toBe('Legal');
-        expect(result.column2.title).toBe('Contact');
+        expect(result.column2.title).toBe('Services');
         expect(mockStateRef.value).toEqual(result);
       });
 
@@ -250,7 +252,7 @@ describe('useFooter', () => {
         const result = await fetchFooterSettings();
 
         expect(result.column1.title).toBe('Legal');
-        expect(result.column2.title).toBe('Contact');
+        expect(result.column2.title).toBe('Services');
         expect(mockStateRef.value).toEqual(result);
         expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch footer settings, using defaults:', expect.any(Error));
 
@@ -275,7 +277,7 @@ describe('useFooter', () => {
         const result = getFooterSettings();
 
         expect(result.column1.title).toBe('Legal');
-        expect(result.column2.title).toBe('Contact');
+        expect(result.column2.title).toBe('Services');
       });
     });
 

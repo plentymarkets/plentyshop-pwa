@@ -28,7 +28,7 @@
           @click="activeSubCategory = subCategory"
         >
           <span class="break-words">
-            {{ t(`${subCategory}`) }}
+            {{ getEditorUITranslation(subCategory) }}
           </span>
           <template #suffix><SfIconChevronRight /></template>
         </SfListItem>
@@ -40,7 +40,7 @@
           <div class="flex items-start flex-col">
             <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
               <slot name="setting-breadcrumbs">
-                {{ t(`${activeSetting}`) }}
+                {{ getEditorUITranslation(activeSetting) }}
               </slot>
             </div>
             <div class="text-xl font-bold">
@@ -66,28 +66,22 @@
         </SettingsGroup>
       </div>
     </div>
+
+    <slot />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
-import { getSubCategories } from '~/utils/settings-groups-imports';
-import type { Messages } from '~/components/SiteConfigurationView/types';
-import { getSettingsTranslations } from '~/utils/settings-translations-imports';
-const { t } = useI18n();
 
 const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 
 const subCategories = computed(() => {
   const categories = getSubCategories(activeSetting.value);
+  const excludedSubCategories = runtimeConfig.public.disabledEditorSettings as string[];
 
-  if (!runtimeConfig.public.isDev) {
-    const excludedSubCategories = runtimeConfig.public.editorSettingsDevFlag as string[];
-    return categories.filter((subCategory) => !excludedSubCategories.includes(subCategory));
-  }
-
-  return categories;
+  return categories.filter((subCategory) => !excludedSubCategories.includes(subCategory));
 });
 
 setActiveSubCategory(
@@ -96,26 +90,8 @@ setActiveSubCategory(
 
 const groups = computed(() => {
   const allGroups = getSettingsGroups(activeSetting.value ?? '', activeSubCategory.value ?? '');
+  const excludedGroups = runtimeConfig.public.disabledEditorSettings as string[];
 
-  if (!runtimeConfig.public.isDev) {
-    const excludedGroups = runtimeConfig.public.editorSettingsDevFlag as string[];
-    return allGroups.filter((group) => !excludedGroups.includes(group.slug));
-  }
-
-  return allGroups;
+  return allGroups.filter((group) => !excludedGroups.includes(group.slug));
 });
-
-const messages: Messages = {};
-
-const { $registerMessages } = useNuxtApp();
-Object.values(getSettingsTranslations()).forEach((fileContent) => {
-  Object.entries(fileContent).forEach(([locale, translations]) => {
-    if (!messages[locale]) {
-      messages[locale] = {};
-    }
-    Object.assign(messages[locale]!, translations);
-  });
-});
-
-$registerMessages(messages);
 </script>

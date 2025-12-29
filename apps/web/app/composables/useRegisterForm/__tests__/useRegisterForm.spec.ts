@@ -1,5 +1,9 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
+mockNuxtImport('t', () => {
+  return () => 'Your account has been created successfully';
+});
+
 const { useCustomer } = vi.hoisted(() => {
   return {
     useCustomer: vi.fn().mockReturnValue({
@@ -22,6 +26,8 @@ const { useRuntimeConfig } = vi.hoisted(() => {
     useRuntimeConfig: vi.fn().mockReturnValue({
       public: {
         turnstileSiteKey: 'test-turnstile-key',
+        passwordMinLength: 8,
+        passwordMaxLength: 64,
       },
     }),
   };
@@ -67,7 +73,8 @@ const { useNuxtApp } = vi.hoisted(() => {
   return {
     useNuxtApp: vi.fn().mockReturnValue({
       $i18n: {
-        t: vi.fn((key: string) => key),
+        t: vi.fn(() => 'Your account has been created successfully'),
+        te: vi.fn(() => true),
       },
     }),
   };
@@ -82,6 +89,14 @@ const { useState } = vi.hoisted(() => {
   };
 });
 
+const { useSiteSettings } = vi.hoisted(() => {
+  return {
+    useSiteSettings: vi.fn().mockReturnValue({
+      getSetting: vi.fn(() => 'test-turnstile-key'),
+    }),
+  };
+});
+
 mockNuxtImport('useCustomer', () => useCustomer);
 mockNuxtImport('useNotification', () => useNotification);
 mockNuxtImport('useRuntimeConfig', () => useRuntimeConfig);
@@ -92,17 +107,25 @@ mockNuxtImport('useLocalePath', () => useLocalePath);
 mockNuxtImport('navigateTo', () => navigateTo);
 mockNuxtImport('useNuxtApp', () => useNuxtApp);
 mockNuxtImport('useState', () => useState);
+mockNuxtImport('useSiteSettings', () => useSiteSettings);
 
 describe('useRegisterForm', () => {
   beforeEach(() => {
     vi.resetAllMocks();
 
     useNuxtApp.mockReturnValue({
-      $i18n: { t: vi.fn((key: string) => key) },
+      $i18n: {
+        t: vi.fn((key: string) => key),
+        te: vi.fn((key: string) => !!key),
+      },
     });
 
     useRuntimeConfig.mockReturnValue({
-      public: { turnstileSiteKey: 'test-key' },
+      public: {
+        turnstileSiteKey: 'test-key',
+        passwordMinLength: 8,
+        passwordMaxLength: 64,
+      },
     });
 
     useNotification.mockReturnValue({
@@ -133,6 +156,10 @@ describe('useRegisterForm', () => {
     useState.mockImplementation((key: string, init?: () => unknown) => {
       const state = init ? init() : {};
       return { value: state };
+    });
+
+    useSiteSettings.mockReturnValue({
+      getSetting: vi.fn(() => 'test-turnstile-key'),
     });
   });
 
@@ -182,7 +209,7 @@ describe('useRegisterForm', () => {
 
     expect(mockRegister).toHaveBeenCalled();
     expect(mockSend).toHaveBeenCalledWith({
-      message: 'auth.signup.success',
+      message: 'Your account has been created successfully',
       type: 'positive',
     });
   });

@@ -1,6 +1,5 @@
 export type UseRegisterFormReturn = {
   hasCompany: Ref<boolean>;
-  invalidVAT: Ref<boolean>;
   turnstileElement: Ref<{ reset?: () => void } | null>;
   errors: Ref<Record<string, string | undefined>>;
   onSubmit: (e?: Event) => void;

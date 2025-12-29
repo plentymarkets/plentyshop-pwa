@@ -178,13 +178,17 @@
 import { type Order, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconMoreHoriz, SfListItem, SfLoaderCircular } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
 const { formatWithSymbol } = usePriceFormatter();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);

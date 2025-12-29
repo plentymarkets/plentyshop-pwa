@@ -128,7 +128,7 @@
       "isGlobalTemplate": false
     },
     "configuration": {
-      "columnWidths": [4, 4]
+      "columnWidths": [6, 6]
     },
     "content": [
       {
@@ -206,6 +206,9 @@
       },
       "button": {
         "label": "Newsletter abonnieren"
+      },
+      "settings": {
+        "emailFolderId": 1
       }
     }
   },
@@ -221,7 +224,7 @@
         "title": "Rechtliches"
       },
       "column2": {
-        "title": "Kontakt",
+        "title": "Services",
         "showContactLink": true,
         "htmlDescription": "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>"
       },
@@ -233,7 +236,6 @@
         "title": "",
         "htmlDescription": ""
       },
-      "footnote": "© PlentyONE GmbH 2025",
       "footnoteAlign": "right",
       "colors": {
         "background": "#cfe4ec",
