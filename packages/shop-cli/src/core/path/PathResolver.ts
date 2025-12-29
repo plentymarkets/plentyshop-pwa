@@ -19,7 +19,7 @@ class DefaultPathConfig implements PathConfig {
   }
 
   get webAppRoot(): string {
-    return join(this.projectRoot, '/apps/web/app');
+    return join(this.projectRoot, 'apps/web/app');
   }
 
   get templatesRoot(): string {
