@@ -1,14 +1,16 @@
+export type ResetType = 'category' | 'product' | '';
+
 export interface UseResetProductPageModalState {
   unlinkModalOpen: boolean;
-  resetType: string;
+  resetType: ResetType;
   loading: boolean;
 }
 
 export interface UseResetProductPageModal {
   unlinkModalOpen: Readonly<Ref<UseResetProductPageModalState['unlinkModalOpen']>>;
   resetType: Readonly<Ref<UseResetProductPageModalState['resetType']>>;
-  toggleResetModal: (value: boolean, resetType?: string) => void;
-  deleteBlocks: (identifier: number, type: string) => void;
+  toggleResetModal: (value: boolean, resetType?: ResetType) => void;
+  resetBlocks: (identifier: number, type: ResetType) => void;
 }
 
 export type UseResetProductPageModalReturn = () => UseResetProductPageModal;

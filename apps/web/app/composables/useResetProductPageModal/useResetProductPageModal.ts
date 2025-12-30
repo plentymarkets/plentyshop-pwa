@@ -1,23 +1,24 @@
 import type {
   UseResetProductPageModalReturn,
   UseResetProductPageModalState,
+  ResetType,
 } from '~/composables/useResetProductPageModal/types';
 
 export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
   const state = useState<UseResetProductPageModalState>(`resetProductPageModal`, () => ({
     unlinkModalOpen: false,
-    resetType: '',
+    resetType: '' as ResetType,
     loading: false,
   }));
 
-  const toggleResetModal = (value: boolean, resetType?: string) => {
+  const toggleResetModal = (value: boolean, resetType?: ResetType) => {
     if (resetType) {
       state.value.resetType = resetType;
     }
     state.value.unlinkModalOpen = value;
   };
 
-  const deleteBlocks = async (identifier: number, type: string) => {
+  const resetBlocks = async (identifier: number, type: ResetType) => {
     state.value.loading = true;
     const { send } = useNotification();
 
@@ -32,5 +33,5 @@ export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
     }
   };
 
-  return { ...toRefs(state.value), toggleResetModal, deleteBlocks };
+  return { ...toRefs(state.value), toggleResetModal, resetBlocks };
 };

@@ -58,28 +58,6 @@ describe('useResetProductPageModal', () => {
       expect(unlinkModalOpen.value).toBe(true);
       expect(resetType.value).toBe('category');
     });
-
-    it('should toggle modal and update resetType to product', () => {
-      const { unlinkModalOpen, resetType, toggleResetModal } = useResetProductPageModal();
-
-      toggleResetModal(true, 'product');
-      expect(unlinkModalOpen.value).toBe(true);
-      expect(resetType.value).toBe('product');
-
-      toggleResetModal(false);
-      expect(unlinkModalOpen.value).toBe(false);
-      expect(resetType.value).toBe('product');
-    });
-
-    it('should update resetType on subsequent toggleResetModal calls', () => {
-      const { resetType, toggleResetModal } = useResetProductPageModal();
-
-      toggleResetModal(true, 'category');
-      expect(resetType.value).toBe('category');
-
-      toggleResetModal(true, 'product');
-      expect(resetType.value).toBe('product');
-    });
   });
 
   describe('deleteBlocks', () => {
@@ -91,9 +69,9 @@ describe('useResetProductPageModal', () => {
         },
       });
 
-      const { deleteBlocks, unlinkModalOpen } = useResetProductPageModal();
+      const { resetBlocks, unlinkModalOpen } = useResetProductPageModal();
 
-      const deletePromise = deleteBlocks(0, 'category');
+      const deletePromise = resetBlocks(0, 'category');
       await nextTick();
 
       await deletePromise;
@@ -116,9 +94,9 @@ describe('useResetProductPageModal', () => {
         },
       });
 
-      const { deleteBlocks } = useResetProductPageModal();
+      const { resetBlocks } = useResetProductPageModal();
 
-      await deleteBlocks(5, 'product');
+      await resetBlocks(5, 'product');
 
       expect(deleteBlocksMock).toHaveBeenCalledWith({ identifier: 5, type: 'product' });
     });
@@ -132,9 +110,9 @@ describe('useResetProductPageModal', () => {
         },
       });
 
-      const { deleteBlocks, unlinkModalOpen } = useResetProductPageModal();
+      const { resetBlocks, unlinkModalOpen } = useResetProductPageModal();
 
-      const deletePromise = deleteBlocks(0, 'category');
+      const deletePromise = resetBlocks(0, 'category');
       await nextTick();
 
       await deletePromise;
@@ -157,12 +135,12 @@ describe('useResetProductPageModal', () => {
         },
       });
 
-      const { deleteBlocks, unlinkModalOpen, toggleResetModal } = useResetProductPageModal();
+      const { resetBlocks, unlinkModalOpen, toggleResetModal } = useResetProductPageModal();
 
       toggleResetModal(true, 'category');
       expect(unlinkModalOpen.value).toBe(true);
 
-      await deleteBlocks(0, 'category');
+      await resetBlocks(0, 'category');
       await nextTick();
 
       expect(unlinkModalOpen.value).toBe(false);

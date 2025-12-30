@@ -85,14 +85,19 @@
           @scroll="(e: Event) => handleScroll(e, 'content')"
         >
           <ul class="rounded-lg">
-            <PagesItem
+            <PagesViewPagesItem
               :key="locale"
               :item="homepageItem"
               :parent-id="undefined"
               :icon="SfIconHome"
               :hide-settings="true"
             />
-            <PagesItem v-for="item in contentItems" :key="`${item.id}-${locale}`" :item="item" :parent-id="item.id" />
+            <PagesViewPagesItem
+              v-for="item in contentItems"
+              :key="`${item.id}-${locale}`"
+              :item="item"
+              :parent-id="item.id"
+            />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -115,7 +120,7 @@
           @scroll="(e: Event) => handleScroll(e, 'item')"
         >
           <ul class="rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
+            <PagesViewPagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingItem" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -123,15 +128,13 @@
         </div>
       </UiAccordionItem>
 
-      <GlobalPageSection v-if="config.enableTemplateReset" />
+      <PagesViewGlobalPagesSection v-if="config.enableTemplateReset" />
     </div>
   </div>
   <CategorySettingsDrawer v-if="settingsCategory" />
 </template>
 
 <script setup lang="ts">
-import PagesItem from '~/components/PagesView/PagesItem.vue';
-import GlobalPageSection from '~/components/PagesView/GlobalPagesSection.vue';
 import {
   SfIconClose,
   SfIconHelp,

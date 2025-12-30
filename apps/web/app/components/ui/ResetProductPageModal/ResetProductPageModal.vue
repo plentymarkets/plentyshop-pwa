@@ -28,7 +28,7 @@
         type="button"
         data-testid="reset-modal-confirm-button"
         class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
-        @click="() => deleteBlocks(0, resetType)"
+        @click="() => resetBlocks(0, resetType)"
       >
         {{ getEditorTranslation('resetButton') }}
       </button>
@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
 
-const { unlinkModalOpen, resetType, toggleResetModal, deleteBlocks } = useResetProductPageModal();
+const { unlinkModalOpen, resetType, toggleResetModal, resetBlocks } = useResetProductPageModal();
 
 const closeModal = () => {
   toggleResetModal(false);
