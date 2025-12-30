@@ -13,7 +13,7 @@
           :aria-label="t('common.navigation.closeMenu')"
           class="mr-5 hover:!bg-header-400"
           :style="{ color: iconColor }"
-          @click="openMenu([])"
+          @click="openMenu()"
         >
           <SfIconMenu />
         </UiButton>
@@ -41,37 +41,29 @@
           }
         "
       >
-        <li v-if="categoryTree.length === 0" class="h-10" />
-
-        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
+        <li v-for="(menuItem, index) in hardcodedMenuItems" :key="menuItem.id" @mouseenter="onCategoryMouseEnter(menuItem)">
           <div
             ref="triggerReference"
             data-testid="category-button"
             class="inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer"
-            @click="onCategoryTap(menuNode)"
+            @click="onCategoryTap(menuItem)"
           >
-            <template v-if="menuNode.childCount > 0">
-              <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+            <template v-if="menuItem.hasChildren">
+              <span>{{ menuItem.name }}</span>
               <SfIconChevronRight
                 class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
               />
             </template>
             <template v-else>
-              <NuxtLink :to="localePath(generateCategoryLink(menuNode))" class="flex items-center gap-2 w-full">
-                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+              <NuxtLink :to="menuItem.url" class="flex items-center gap-2 w-full">
+                <span>{{ menuItem.name }}</span>
               </NuxtLink>
             </template>
           </div>
 
           <div
-            v-if="
-              isOpen &&
-              activeMenu &&
-              activeNode.length === 1 &&
-              activeNode[0] === menuNode.id &&
-              menuNode.childCount > 0
-            "
-            :key="activeMenu.id"
+            v-if="isOpen && activeMenuData && activeMenuId === menuItem.id && menuItem.hasChildren"
+            :key="menuItem.id"
             ref="megaMenuReference"
             :style="style"
             class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40"
@@ -79,16 +71,16 @@
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
           >
-            <template v-for="node in activeMenu.children" :key="node.id">
-              <template v-if="node.childCount === 0">
+            <template v-for="child in activeMenuData.children" :key="child.id">
+              <template v-if="!child.hasGrandchildren">
                 <ul>
                   <SfListItem
                     :tag="NuxtLink"
                     size="sm"
-                    :href="localePath(generateCategoryLink(node))"
+                    :href="child.url"
                     class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
                   >
-                    {{ categoryTreeGetters.getName(node) }}
+                    {{ child.name }}
                   </SfListItem>
                 </ul>
               </template>
@@ -96,21 +88,20 @@
                 <SfListItem
                   :tag="NuxtLink"
                   size="sm"
-                  :href="localePath(generateCategoryLink(node))"
+                  :href="child.url"
                   class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded"
                 >
-                  {{ categoryTreeGetters.getName(node) }}
+                  {{ child.name }}
                 </SfListItem>
                 <ul class="mt-2 mb-3">
-                  <li v-for="child in node.children" :key="child.id">
+                  <li v-for="grandchild in child.children" :key="grandchild.id">
                     <SfListItem
-                      v-if="categoryTreeGetters.getName(child)"
                       :tag="NuxtLink"
                       size="sm"
-                      :href="localePath(generateCategoryLink(child))"
+                      :href="grandchild.url"
                       class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
                     >
-                      {{ categoryTreeGetters.getName(child) }}
+                      {{ grandchild.name }}
                     </SfListItem>
                   </li>
                 </ul>
@@ -131,63 +122,44 @@
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-            <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
+            <p class="typography-text-base font-medium">Browse Products</p>
             <UiButton
               variant="tertiary"
               square
-              :aria-label="t('common.navigation.closeMenu')"
+              aria-label="Close menu"
               class="ml-2"
               @click="close()"
             >
               <SfIconClose class="text-neutral-500" />
             </UiButton>
           </div>
-          <ul v-if="activeMenu" class="mt-2 mb-6">
-            <li v-if="activeMenu.id !== 0">
+          <ul class="mt-2 mb-6">
+            <li v-for="menuItem in hardcodedMenuItems" :key="menuItem.id">
               <SfListItem
+                v-if="!menuItem.hasChildren"
                 size="lg"
-                tag="button"
-                type="button"
-                class="border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
-                @click="goBack()"
+                :tag="NuxtLink"
+                :href="menuItem.url"
+                class="hover:bg-secondary-100"
+                @click="close()"
               >
                 <div class="flex items-center">
-                  <SfIconArrowBack class="text-neutral-500" />
-                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
+                  <p class="text-left">{{ menuItem.name }}</p>
+                </div>
+              </SfListItem>
+              <SfListItem v-else size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
+                <div class="flex items-center w-100">
+                  <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="menuItem.url" @click="close()">
+                    <div class="flex items-center">
+                      <p class="text-left">{{ menuItem.name }}</p>
+                    </div>
+                  </NuxtLink>
+                  <div class="flex justify-center items-center h-8 w-16">
+                    <SfIconChevronRight class="text-neutral-500" />
+                  </div>
                 </div>
               </SfListItem>
             </li>
-            <template v-for="node in activeMenu.children" :key="node.id">
-              <li v-if="node.childCount === 0">
-                <SfListItem
-                  size="lg"
-                  :tag="NuxtLink"
-                  :href="localePath(generateCategoryLink(node))"
-                  class="hover:bg-secondary-100"
-                  @click="close()"
-                >
-                  <div class="flex items-center">
-                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                    <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                  </div>
-                </SfListItem>
-              </li>
-              <li v-else>
-                <SfListItem size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
-                  <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
-                      <div class="flex items-center">
-                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                      </div>
-                    </NuxtLink>
-                    <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
-                      <SfIconChevronRight class="text-neutral-500" />
-                    </div>
-                  </div>
-                </SfListItem>
-              </li>
-            </template>
           </ul>
         </nav>
       </SfDrawer>
@@ -233,12 +205,161 @@ const iconColor = computed(() => getIconColor());
 
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
+// const hardcodedMenuItems = ref(
+//   Array.from({ length: 7 }, (_, i) => ({
+//     id: i + 1,
+//     name: `Category ${i + 1}`,
+//     url: `/category-${i + 1}`,
+//     hasChildren: true,
+//     children: Array.from({ length: 10 }, (_, j) => ({
+//       id: (i + 1) * 1000 + j,
+//       name: `Subcategory ${i + 1}.${j + 1}`,
+//       url: `/category-${i + 1}/sub-${j + 1}`,
+//       hasGrandchildren: j % 2 === 0,
+//       children: j % 2 === 0 ? Array.from({ length: 4 }, (_, k) => ({
+//         id: (i + 1) * 10000 + j * 100 + k,
+//         name: `Sub-subcategory ${i + 1}.${j + 1}.${k + 1}`,
+//         url: `/category-${i + 1}/sub-${j + 1}/item-${k + 1}`
+//       })) : []
+//     }))
+//   }))
+// );
+
+// const hardcodedMenuItems = ref(
+//   Array.from({ length: 7 }, (_, i) => ({
+//     id: i + 1,
+//     name: `Category ${i + 1}`,
+//     url: `/category-${i + 1}`,
+//     hasChildren: true,
+//     children: Array.from({ length: 10 }, (_, j) => ({
+//       id: (i + 1) * 1000 + j,
+//       name: `Subcategory Long Text Long Text Long Text ${i + 1}.${j + 1}`,
+//       url: `/category-${i + 1}/sub-${j + 1}`,
+//       hasGrandchildren: true,
+//       children: Array.from({ length: 20 }, (_, k) => ({
+//         id: (i + 1) * 10000 + j * 100 + k,
+//         name: `Sub-subcategory a lot of text a lot of text a lot of text  a lot of text  a lot of text  a lot of text huge strings huge huge strings${i + 1}.${j + 1}.${k + 1}`,
+//         url: `/category-${i + 1}/sub-${j + 1}/item-${k + 1}`
+//       }))
+//     }))
+//   }))
+// );
+
+// ...existing code...
+const hardcodedMenuItems = ref(
+  Array.from({ length: 7 }, (_, i) => ({
+    id: i + 1,
+    name: `Category ${i + 1}`,
+    url: `/category-${i + 1}`,
+    hasChildren: true,
+    children: Array.from({ length: 8 }, (_, j) => {
+      const grandchildrenCount = 5 + (j * 5); 
+      return {
+        id: (i + 1) * 1000 + j,
+        name: `Subcategory Long Text Long Text Long Text ${i + 1}.${j + 1}`,
+        url: `/category-${i + 1}/sub-${j + 1}`,
+        hasGrandchildren: true,
+        children: Array.from({ length: grandchildrenCount }, (_, k) => ({
+          id: (i + 1) * 10000 + j * 100 + k,
+          name: `Sub-subcategory a lot of text a lot of text a lot of text  a lot of text  a lot of text  a lot of text huge strings huge huge strings${i + 1}.${j + 1}.${k + 1}`,
+          url: `/category-${i + 1}/sub-${j + 1}/item-${k + 1}`
+        }))
+      };
+    })
+  }))
+);
+
+// ...existing code...
+// const hardcodedMenuItems = ref(
+//   Array.from({ length: 7 }, (_, i) => ({
+//     id: i + 1,
+//     name: `Category ${i + 1}`,
+//     url: `/category-${i + 1}`,
+//     hasChildren: true,
+//     children: Array.from({ length: 10 }, (_, j) => {
+//       // Special cases for first two subcategories (no name, single grandchild)
+//       if (j === 0) {
+//         return {
+//           id: (i + 1) * 1000 + j,
+//           name: '',
+//           url: `/category-${i + 1}/sub-${j + 1}`,
+//           hasGrandchildren: true,
+//           children: [{
+//             id: (i + 1) * 10000 + j * 100,
+//             name: 'Cobblers Tools & Supplies',
+//             url: `/category-${i + 1}/sub-${j + 1}/cobblers-tools`
+//           }]
+//         };
+//       }
+      
+//       if (j === 1) {
+//         return {
+//           id: (i + 1) * 1000 + j,
+//           name: '',
+//           url: `/category-${i + 1}/sub-${j + 1}`,
+//           hasGrandchildren: true,
+//           children: [{
+//             id: (i + 1) * 10000 + j * 100,
+//             name: 'Leather Edge Bevelers',
+//             url: `/category-${i + 1}/sub-${j + 1}/leather-bevelers`
+//           }]
+//         };
+//       }
+      
+//       // Subcategories 1.3 and 1.4 (3 grandchildren)
+//       if (j === 2 || j === 3) {
+//         return {
+//           id: (i + 1) * 1000 + j,
+//           name: `Subcategory Long Text Long Text Long Text ${i + 1}.${j + 1}`,
+//           url: `/category-${i + 1}/sub-${j + 1}`,
+//           hasGrandchildren: true,
+//           children: Array.from({ length: 3 }, (_, k) => ({
+//             id: (i + 1) * 10000 + j * 100 + k,
+//             name: `Random Item ${Math.random().toString(36).substring(7)} ${i + 1}.${j + 1}.${k + 1}`,
+//             url: `/category-${i + 1}/sub-${j + 1}/item-${k + 1}`
+//           }))
+//         };
+//       }
+      
+//       // Subcategory 1.5 (8 grandchildren)
+//       if (j === 4) {
+//         return {
+//           id: (i + 1) * 1000 + j,
+//           name: `Subcategory Long Text Long Text Long Text ${i + 1}.${j + 1}`,
+//           url: `/category-${i + 1}/sub-${j + 1}`,
+//           hasGrandchildren: true,
+//           children: Array.from({ length: 18 }, (_, k) => ({
+//             id: (i + 1) * 10000 + j * 100 + k,
+//             name: `Random Product ${Math.random().toString(36).substring(7)} ${i + 1}.${j + 1}.${k + 1}`,
+//             url: `/category-${i + 1}/sub-${j + 1}/item-${k + 1}`
+//           }))
+//         };
+//       }
+      
+//       // Rest of subcategories - progressive increase
+//       const grandchildrenCount = 5 + (j * 5);
+//       return {
+//         id: (i + 1) * 1000 + j,
+//         name: `Subcategory Long Text Long Text Long Text ${i + 1}.${j + 1}`,
+//         url: `/category-${i + 1}/sub-${j + 1}`,
+//         hasGrandchildren: true,
+//         children: Array.from({ length: grandchildrenCount }, (_, k) => ({
+//           id: (i + 1) * 10000 + j * 100 + k,
+//           name: `Sub-subcategory a lot of text a lot of text ${i + 1}.${j + 1}.${k + 1}`,
+//           url: `/category-${i + 1}/sub-${j + 1}/item-${k + 1}`
+//         }))
+//       };
+//     })
+//   }))
+// );
+// ...existing code...
+
 const isTouchDevice = ref(false);
-const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
 const tappedCategories = ref<Map<number, boolean>>(new Map());
+const activeMenuId = ref<number | null>(null);
 let removeHook: () => void;
 
 const trapFocusOptions = {
@@ -247,34 +368,14 @@ const trapFocusOptions = {
   initialFocus: 'container',
 } as const;
 
-const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
+const activeMenuData = computed(() => 
+  hardcodedMenuItems.value.find((item) => item.id === activeMenuId.value)
+);
 const headerClass = computed(() => ({ 'z-[10]': isOpen.value }));
 
-const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
-  if (keys.length > 1) {
-    const [currentKey, ...restKeys] = keys;
-    return findNode(restKeys, node.children?.find((child) => child.id === currentKey) || node);
-  } else {
-    return node.children?.find((child) => child.id === keys[0]) || node;
-  }
-};
-
-const generateCategoryLink = (category: CategoryTreeItem) => {
-  return buildCategoryMenuLink(category, categoryTree.value);
-};
-
-const openMenu = (menuType: number[]) => {
-  activeNode.value = menuType;
+const openMenu = () => {
   open();
   setDrawerOpen(true);
-};
-
-const goBack = () => {
-  activeNode.value = activeNode.value.slice(0, -1);
-};
-
-const goNext = (key: number) => {
-  activeNode.value = [...activeNode.value, key];
 };
 
 const focusTrigger = (index: number) => {
@@ -283,51 +384,45 @@ const focusTrigger = (index: number) => {
 
 const onMouseLeave = () => {
   close();
+  activeMenuId.value = null;
   tappedCategories.value.clear();
 };
 
-const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
+const onCategoryMouseEnter = (menuItem: any) => {
   if (!viewport.isGreaterOrEquals('lg')) return;
 
-  if (menuNode.childCount > 0) {
-    activeNode.value = [menuNode.id];
+  if (menuItem.hasChildren) {
+    activeMenuId.value = menuItem.id;
     open();
-    setCategory([menuNode]);
-    return;
+  } else {
+    activeMenuId.value = null;
   }
-
-  if (category.value !== null) category.value = null;
 };
 
-const handleFirstTouch = (menuNode: CategoryTreeItem) => {
-  tappedCategories.value.set(menuNode.id, true);
-  onCategoryMouseEnter(menuNode);
+const handleFirstTouch = (menuItem: any) => {
+  tappedCategories.value.set(menuItem.id, true);
+  onCategoryMouseEnter(menuItem);
 };
 
-const onCategoryTap = (menuNode: CategoryTreeItem) => {
-  if (menuNode.childCount > 0 && isTouchDevice.value && !tappedCategories.value.get(menuNode.id)) {
-    return handleFirstTouch(menuNode);
+const onCategoryTap = (menuItem: any) => {
+  if (menuItem.hasChildren && isTouchDevice.value && !tappedCategories.value.get(menuItem.id)) {
+    return handleFirstTouch(menuItem);
   }
 
-  router.push(localePath(generateCategoryLink(menuNode)));
+  if (!menuItem.hasChildren) {
+    router.push(menuItem.url);
+  }
 };
 
 onMounted(() => {
   isTouchDevice.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  removeHook = router.afterEach(() => close());
+  removeHook = router.afterEach(() => {
+    close();
+    activeMenuId.value = null;
+  });
 });
 
 onBeforeUnmount(() => removeHook?.());
-
-watch(
-  () => props.categories,
-  (categories: CategoryTreeItem[]) => {
-    categoryTree.value = categoryTreeGetters.getTree(categories);
-    setCategory(categoryTree.value);
-  },
-);
-
-setCategory(categoryTree.value);
 
 useTrapFocus(
   computed(() => megaMenuReference.value?.[0]),
@@ -336,3 +431,4 @@ useTrapFocus(
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
+
