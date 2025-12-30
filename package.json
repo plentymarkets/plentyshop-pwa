@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "node ./scripts/postinstall.js",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
     "turbo:disable-telemetry": "turbo telemetry disable",
@@ -36,7 +37,8 @@
     "test:cypress": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress\" \"npm run start\"",
     "test:cypress-dev": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
-    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
+    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
+    "worktree:spawn": "./scripts/spawn-worktree.sh"
   },
   "dependencies": {
     "@plentymarkets/shop-core": "^1.16.1",
