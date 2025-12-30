@@ -6,8 +6,9 @@
     tabindex="-1"
   >
     <button
-      v-for="(locale, i) in availableLocales"
+      v-for="(locale, i) in filteredLocaleCodes"
       :key="locale"
+      :data-testid="`language-option-${locale}`"
       type="button"
       class="w-full text-left px-3 py-2 text-sm md:text-base hover:bg-gray-100"
       :class="i === activeIndex ? 'bg-gray-100' : ''"
@@ -40,8 +41,18 @@ const emit = defineEmits<{
   'active-index-change': [index: number];
 }>();
 
-const { locale: currentLocale, availableLocales, t } = useI18n();
+const { localeCodes, locale: currentLocale, availableLocales } = useI18n();
+const config = useRuntimeConfig();
 const { switchLocale } = useLocalization();
+
+const activeLanguages = (config.public.activeLanguages as string)
+  .split(',')
+  .filter((lang) => (availableLocales as string[]).includes(lang))
+  .map((lang: string) => lang.trim());
+
+const filteredLocaleCodes = computed(() =>
+  localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode)),
+);
 
 const selectLocale = async (loc: Locale | string) => {
   try {
