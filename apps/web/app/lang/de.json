@@ -14,7 +14,7 @@
     "notifyMeUnsubscribeMessage": "Sie wurden erfolgreich von den Benachrichtigungen abgemeldet.",
     "notifyMeUnsubscribeMessageError": "Die Abmeldung von den Benachrichtigungen ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
     "outOfStock": "Der Artikel ist aktuell nicht auf Lager",
-    "readAndAccepted": "Ich habe die {privacyPolicy} gelesen und akzeptiert",
+    "readAndAccepted": "Ich habe die {privacyPolicy} gelesen und akzeptiert"
   },
   "account": {
     "accountSettings": {

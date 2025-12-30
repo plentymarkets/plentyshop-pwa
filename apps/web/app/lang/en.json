@@ -14,7 +14,7 @@
     "notifyMeUnsubscribeMessage": "You have been successfully unsubscribed from notifications.",
     "notifyMeUnsubscribeMessageError": "Failed to unsubscribe from notifications. Please try again or contact our support.",
     "outOfStock": "The product is currently out of stock",
-    "readAndAccepted": "I have read and accepted the {privacyPolicy}",
+    "readAndAccepted": "I have read and accepted the {privacyPolicy}"
   },
   "account": {
     "accountSettings": {
