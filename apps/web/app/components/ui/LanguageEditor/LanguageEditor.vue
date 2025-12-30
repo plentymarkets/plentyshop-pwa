@@ -2,6 +2,7 @@
   <div v-if="!loading" ref="root" class="relative flex items-center space-x-1 md:space-x-2">
     <SfTooltip :label="languageLabel" placement="left" :show-arrow="true">
       <button
+        data-testid="editor-language-select"
         type="button"
         class="flex items-center focus:outline-none"
         :aria-expanded="isOpen"
@@ -17,6 +18,7 @@
     </SfTooltip>
 
     <UiLanguageList
+      data-testid="editor-language-list"
       :is-open="isOpen"
       :active-index="activeIndex"
       @locale-selected="handleLocaleSelected"

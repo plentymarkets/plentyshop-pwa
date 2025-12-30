@@ -79,6 +79,14 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('editor-language-select');
   }
 
+  get languageList() {
+    return cy.getByTestId('editor-language-list');
+  }
+
+  get languageOptionGerman() {
+    return cy.getByTestId('language-option-de');
+  }
+
   get addBlockButton() {
     return cy.getByTestId('block-add-image-0');
   }
@@ -256,8 +264,10 @@ export class EditorObject extends PageObject {
     cy.intercept('/plentysystems/getSession').as('getSession');
 
     this.editPreviewButton.click();
-    this.languageSwitcher.should('exist');
-    this.languageSwitcher.select('de');
+    this.languageSwitcher.should('be.visible').click();
+    this.languageList.should('be.visible');
+    this.languageList.children().should('have.length', 2);
+    this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
     this.title.first().should('have.text', 'Ihr Sound');
   }
@@ -340,17 +350,11 @@ export class EditorObject extends PageObject {
 
   checkWrapperSpacings() {
     this.blockWrappers.each((el) => {
-      if (
-        this.blockIsBanner(el) ||
-        this.isMultiGrid(el) ||
-        this.isInnerBlock(el) ||
-        this.blockIsNewsletter(el) ||
-        this.blockIsFooter(el.get(0))
-      ) {
+      if (this.blockIsBanner(el) || this.isMultiGrid(el) || this.isInnerBlock(el) || this.blockIsFooter(el.get(0))) {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
       } else {
-        cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-6');
+        cy.wrap(el).should('have.class', 'p-4').and('have.class', 'md:px-6');
       }
     });
   }
