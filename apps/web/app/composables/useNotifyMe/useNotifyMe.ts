@@ -1,11 +1,4 @@
 import type { ApiError, NotifyMeSubscribeParams, NotifyMeRouteTokenParams } from '@plentymarkets/shop-api';
-import type {
-  UseNotifyMeState,
-  UseNotifyMeReturn,
-  Subscribe,
-  ConfirmNotifyMe,
-  UnsubscribeNotifyMe,
-} from '~/composables/useNotifyMe/types';
 
 /**
  * @description Composable for subscribing to the back in stock notifications.
@@ -15,15 +8,14 @@ import type {
  * const { loading, subscribe, confirmNotifyMe, unsubscribeNotifyMe } = useNotifyMe();
  * ```
  */
-export const useNotifyMe: UseNotifyMeReturn = () => {
-  const state = useState<UseNotifyMeState>('useNotifyMe', () => ({
+export const useNotifyMe = () => {
+  const state = useState('useNotifyMe', () => ({
     loading: false,
   }));
 
   /**
    * @description Function for subscribing to the back in stock notifications.
    * @param params { NotifyMeSubscribeParams }
-   * @return Subscribe
    * @example
    * ``` ts
    * const result = await subscribe({
@@ -34,7 +26,7 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
    * });
    * ```
    */
-  const subscribe: Subscribe = async (params: NotifyMeSubscribeParams) => {
+  const subscribe = async (params: NotifyMeSubscribeParams) => {
     try {
       state.value.loading = true;
 
@@ -42,6 +34,7 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
       return data;
     } catch (error) {
       useHandleError(error as ApiError);
+      return false;
     } finally {
       state.value.loading = false;
     }
@@ -56,14 +49,14 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
    * const result = await confirmNotifyMe({token: '[token]'});
    * ```
    */
-  const confirmNotifyMe: ConfirmNotifyMe = async (params: NotifyMeRouteTokenParams) => {
+  const confirmNotifyMe = async (params: NotifyMeRouteTokenParams) => {
     try {
       state.value.loading = true;
 
       const { data } = await useSdk().plentysystems.doConfirmNotifyMe(params);
       return data;
-    } catch (error) {
-      useHandleError(error as ApiError);
+    } catch {
+      return false;
     } finally {
       state.value.loading = false;
     }
@@ -78,14 +71,14 @@ export const useNotifyMe: UseNotifyMeReturn = () => {
    * const result = await unsubscribeNotifyMe({token: '[token]'});
    * ```
    */
-  const unsubscribeNotifyMe: UnsubscribeNotifyMe = async (params: NotifyMeRouteTokenParams) => {
+  const unsubscribeNotifyMe = async (params: NotifyMeRouteTokenParams) => {
     try {
       state.value.loading = true;
 
       const { data } = await useSdk().plentysystems.doUnsubscribeNotifyMe(params);
       return data;
-    } catch (error) {
-      useHandleError(error as ApiError);
+    } catch {
+      return false;
     } finally {
       state.value.loading = false;
     }

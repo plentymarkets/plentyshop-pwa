@@ -161,14 +161,14 @@ const handleSubmit = async () => {
     return;
   }
 
-  const result = await subscribe({
+  const data = await subscribe({
     lang: locale.value,
     email: email.value,
     variationId: props.variationId,
     'cf-turnstile-response': turnstileToken.value,
   });
 
-  if (result?.success) {
+  if (data) {
     send({
       type: 'positive',
       message: t('notifyMe.form.successCheckEmail'),
