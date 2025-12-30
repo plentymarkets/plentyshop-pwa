@@ -11,13 +11,10 @@ export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
     loading: false,
   }));
 
-  const toggleResetModal = (value: boolean, resetType?: ResetType) => {
-    if (resetType) {
-      state.value.resetType = resetType;
-    }
+  const toggleResetModal = (value: boolean, resetType: ResetType = '') => {
+    state.value.resetType = resetType;
     state.value.unlinkModalOpen = value;
   };
-
   const resetBlocks = async (identifier: number, type: ResetType) => {
     state.value.loading = true;
     const { send } = useNotification();
