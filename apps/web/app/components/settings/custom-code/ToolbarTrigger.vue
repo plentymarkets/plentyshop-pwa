@@ -28,10 +28,10 @@ defineProps({
 <i18n lang="json">
 {
   "en": {
-    "tooltip": "Checkout: Manage settings that affect the user experience and available options during the checkout process."
+    "tooltip": "Custom Code: Manage custom code snippets."
   },
   "de": {
-    "tooltip": "Checkout: Manage settings that affect the user experience and available options during the checkout process."
+    "tooltip": "Custom Code: Manage custom code snippets."
   }
 }
 </i18n>
