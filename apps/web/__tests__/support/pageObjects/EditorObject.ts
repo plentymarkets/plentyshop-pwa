@@ -408,5 +408,6 @@ export class EditorObject extends PageObject {
     this.deleteBlockButton.eq(column).should('exist').click();
     cy.wait(1000);
     this.inlineBlockButton.eq(column).should('exist');
+    this.inlineBlockButton.should('have.length', 2);
   }
 }
