@@ -44,4 +44,11 @@ describe('Blocks', () => {
   it('should ensure correct spacings', () => {
     editor.checkWrapperSpacings();
   });
+
+  it('should handle multi grid interactions', () => {
+    editor.addMultiGridTop();
+    editor.addBlockInGridColumn(0);
+    editor.closeEditor();
+    editor.deleteBlockInGridColumn(0);
+  });
 });
