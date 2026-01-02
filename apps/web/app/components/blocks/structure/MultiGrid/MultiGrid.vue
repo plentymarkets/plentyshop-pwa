@@ -29,7 +29,12 @@
             <div
               class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
             >
-              <UiBlockActions :block="row" :index="colIndex" :actions="getBlockActions()" />
+              <UiBlockActions
+                data-testid="multigrid-block-actions"
+                :block="row"
+                :index="colIndex"
+                :actions="getBlockActions()"
+              />
             </div>
           </template>
         </ClientOnly>
