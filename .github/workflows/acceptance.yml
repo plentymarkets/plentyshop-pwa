@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: read
@@ -45,14 +42,14 @@ jobs:
       - name: Build application
         run: npm run build
 
-      # - name: E2E Features
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     install: false
-      #     command: npm run test:cypress-feature
-      #   env:
-      #     NUXT_PUBLIC_CONFIG_ID: 1
-      #     MOLLIE_TEST_MODE: true
+      - name: E2E Features
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          command: npm run test:cypress-feature
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
+          MOLLIE_TEST_MODE: true
       
       - name: E2E Editor
         uses: cypress-io/github-action@v6
@@ -63,13 +60,13 @@ jobs:
           NUXT_PUBLIC_IS_PREVIEW: true
           NUXT_PUBLIC_CONFIG_ID: 1
 
-      # - name: E2E External
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     install: false
-      #     command: npm run test:cypress-external
-      #   env:
-      #     NUXT_PUBLIC_CONFIG_ID: 1
+      - name: E2E External
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          command: npm run test:cypress-external
+        env:
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - uses: actions/upload-artifact@v5
         if: failure()
@@ -78,62 +75,62 @@ jobs:
           path: apps/web/__tests__/report/screenshots
           if-no-files-found: ignore
 
-      # - name: Notify Google Chat on Failure
-      #   if: failure()
-      #   env:
-      #     WEBHOOK_URL: ${{ secrets.CHAT_WEBHOOK }}
-      #     WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      #     ACTOR: ${{ github.actor }}
-      #     COMMIT_MSG: ${{ github.event.head_commit.message }}
-      #     RUN_ID: ${{ github.run_id }}
-      #   run: |
-      #     jq -n \
-      #       --arg msg "$COMMIT_MSG" \
-      #       --arg url "$WORKFLOW_URL" \
-      #       --arg actor "$ACTOR" \
-      #       --arg run_id "$RUN_ID" \
-      #       '{
-      #         "cardsV2": [
-      #           {
-      #             "cardId": ("acceptance-failure-" + $run_id),
-      #             "card": {
-      #               "header": {
-      #                 "title": "❌ Acceptance Tests Failed",
-      #                 "subtitle": ("Triggered by " + $actor),
-      #                 "imageUrl": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-      #                 "imageType": "CIRCLE"
-      #               },
-      #               "sections": [
-      #                 {
-      #                   "header": "Details",
-      #                   "widgets": [
-      #                     {
-      #                       "textParagraph": {
-      #                         "text": ("<b>Commit:</b> " + $msg)
-      #                       }
-      #                     },
-      #                     {
-      #                       "buttonList": {
-      #                         "buttons": [
-      #                           {
-      #                             "text": "View Workflow Run",
-      #                             "onClick": {
-      #                               "openLink": {
-      #                                 "url": $url
-      #                               }
-      #                             }
-      #                           }
-      #                         ]
-      #                       }
-      #                     }
-      #                   ]
-      #                 }
-      #               ]
-      #             }
-      #           }
-      #         ]
-      #       }' > message.json
+      - name: Notify Google Chat on Failure
+        if: failure()
+        env:
+          WEBHOOK_URL: ${{ secrets.CHAT_WEBHOOK }}
+          WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          jq -n \
+            --arg msg "$COMMIT_MSG" \
+            --arg url "$WORKFLOW_URL" \
+            --arg actor "$ACTOR" \
+            --arg run_id "$RUN_ID" \
+            '{
+              "cardsV2": [
+                {
+                  "cardId": ("acceptance-failure-" + $run_id),
+                  "card": {
+                    "header": {
+                      "title": "❌ Acceptance Tests Failed",
+                      "subtitle": ("Triggered by " + $actor),
+                      "imageUrl": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                      "imageType": "CIRCLE"
+                    },
+                    "sections": [
+                      {
+                        "header": "Details",
+                        "widgets": [
+                          {
+                            "textParagraph": {
+                              "text": ("<b>Commit:</b> " + $msg)
+                            }
+                          },
+                          {
+                            "buttonList": {
+                              "buttons": [
+                                {
+                                  "text": "View Workflow Run",
+                                  "onClick": {
+                                    "openLink": {
+                                      "url": $url
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }' > message.json
 
-      #     curl --location --request POST "$WEBHOOK_URL" \
-      #     --header 'Content-Type: application/json' \
-      #     --data @message.json
+          curl --location --request POST "$WEBHOOK_URL" \
+          --header 'Content-Type: application/json' \
+          --data @message.json
