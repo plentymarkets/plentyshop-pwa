@@ -133,7 +133,7 @@ const props = defineProps<NotifyMeComponentProps>();
 
 const { isOpen, open, close } = useDisclosure();
 const { user } = useCustomer();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const { send } = useNotification();
 const { loading, subscribe } = useNotifyMe();
