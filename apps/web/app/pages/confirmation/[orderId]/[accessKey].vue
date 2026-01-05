@@ -6,16 +6,17 @@
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
     <template v-if="error">
-      <SoftLogin :error="error" @submit="loadOrder" />
+      <SoftLogin :error="error" @submit="tryLoadAfterSoftLogin" />
     </template>
   </NuxtLazyHydrate>
 </template>
 
 <script setup lang="ts">
 import type { Locale } from '#i18n';
+import type { OrderSearchParams } from '@plentymarkets/shop-api';
 
 const route = useRoute();
-const { data, error, fetchOrder } = useCustomerOrder('soft-login');
+const { data, error, fetchOrder, fetchOrderClient } = useCustomerOrder('soft-login');
 const { send } = useNotification();
 
 definePageMeta({
@@ -44,15 +45,29 @@ watch(
   },
 );
 
-const loadOrder = async (type?: string, value?: string) => {
-  const object = type === undefined || type === '' ? {} : { [type]: value };
-
-  await fetchOrder({
+const createParams = (type?: string, value?: string) => {
+  const params: OrderSearchParams = {
     orderId: route.params.orderId as string,
     accessKey: route.params.accessKey as string,
-    ...object,
-  });
+  };
+
+  if (type === 'name' && value) {
+    params.name = value;
+  } else if (type === 'postcode' && value) {
+    params.postcode = value;
+  }
+  return params;
 };
 
-await loadOrder();
+const tryLoadInitialOrder = async (type?: string, value?: string) => {
+  const params = createParams(type, value);
+  await fetchOrder(params);
+};
+
+const tryLoadAfterSoftLogin = async (type?: string, value?: string) => {
+  const params = createParams(type, value);
+  await fetchOrderClient(params);
+};
+
+await tryLoadInitialOrder();
 </script>
