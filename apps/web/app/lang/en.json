@@ -1,4 +1,29 @@
 {
+  "notifyMe": {
+    "notifyButtonTooltip": "We will notify you as soon as the product is available again.",
+    "notifyButton": "Notify me",
+    "form": {
+      "subTitle": "Enter your email address and we’ll let you know as soon as this item is back in stock.",
+      "emailLabel": "E-mail address",
+      "emailPlaceholder": "Your E-mail",
+      "turnstileFailed": "Turnstile validation failed",
+      "successCheckEmail": "Check your inbox! We've sent you a confirmation email."
+    },
+    "aria": {
+      "openForm": "Open notification subscription form",
+      "closeForm": "Close notification form",
+      "formLabel": "Back in stock notification form",
+      "privacyPolicyLink": "Privacy policy (opens in new tab)",
+      "securityVerification": "Security verification",
+      "subscribeButton": "Subscribe to back in stock notifications"
+    },
+    "notifyMeOptInMessage": "Your notification has been successfully confirmed. You will receive an email once the item is back in stock.",
+    "notifyMeOptInMessageError": "Failed to confirm your notification. Please try again or contact our support.",
+    "notifyMeUnsubscribeMessage": "You have been successfully unsubscribed from notifications.",
+    "notifyMeUnsubscribeMessageError": "Failed to unsubscribe from notifications. Please try again or contact our support.",
+    "outOfStock": "The product is currently out of stock",
+    "readAndAccepted": "I have read and accepted the {privacyPolicy}"
+  },
   "account": {
     "accountSettings": {
       "billingDetails": {
@@ -1233,6 +1258,9 @@
     "turnstile": {
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
+    },
+    "notifyMe":{
+      "alreadySubscribed": "You have already subscribed to this product"
     },
     "unknownError": "An unknown error has occurred."
   }
