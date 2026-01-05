@@ -112,6 +112,12 @@ const {
   reviewArea,
 } = useProductReviews(productId.value, productVariationId.value);
 
+watch([productId, productVariationId], async ([newId, newVariationId], [oldId, oldVariationId]) => {
+  if ((newId !== oldId || newVariationId !== oldVariationId) && newId > 0) {
+    await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
+  }
+});
+
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
 const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));

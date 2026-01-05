@@ -60,7 +60,14 @@ const productId = computed(() => {
   return id ? Number(id) : 0;
 });
 
-const { data: productReviews, openReviewModal } = useProductReviews(productId.value);
+const { data: productReviews, openReviewModal, fetchProductReviews } = useProductReviews(productId.value);
+
+watch(productId, async (newId, oldId) => {
+  if (newId !== oldId && newId > 0) {
+    await fetchProductReviews(newId);
+  }
+});
+
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 const reviewAverageText = computed(() => reviewGetters.getAverageRating(countsProductReviews.value, 'tenth'));
