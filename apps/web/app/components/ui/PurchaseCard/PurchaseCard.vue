@@ -129,8 +129,14 @@
                     class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
                     @change-quantity="changeQuantity"
                   />
+                  <div
+                    v-if="showNotifyMe && !productGetters.isSalable(product)"
+                    class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+                  >
+                    <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
+                  </div>
                   <SfTooltip
-                    v-if="productGetters.isSalable(product)"
+                    v-else
                     show-arrow
                     placement="top"
                     :label="isNotValidVariation || isSalableText"
@@ -154,9 +160,6 @@
                       </template>
                     </UiButton>
                   </SfTooltip>
-                  <div v-else-if="showNotifyMe" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
-                    <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
-                  </div>
                 </div>
 
                 <div class="mt-4 typography-text-xs flex gap-1">
