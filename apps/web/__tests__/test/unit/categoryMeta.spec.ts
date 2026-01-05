@@ -53,6 +53,28 @@ const defaultMetaDescription = 'Default Site Meta Description';
 const defaultMetaKeywords = 'default, keywords';
 const defaultOgTitle = 'Default OG Title';
 
+const getDefaultMetaTitle = () => defaultMetaTitle;
+const getDefaultMetaDescription = () => defaultMetaDescription;
+const getDefaultMetaKeywords = () => defaultMetaKeywords;
+const getDefaultOgTitleWithFallback = () => defaultOgTitle || defaultMetaTitle;
+
+const getEmptyOgTitleWithFallback = () => defaultMetaTitle;
+
+const createMetaWithCategoryFallback = (
+  categoryGetter: (category: Partial<Category>) => string,
+  defaultGetter: () => string,
+  isCategoryPage: boolean,
+  category: Partial<Category>,
+) => {
+  return () => {
+    if (isCategoryPage) {
+      const categoryValue = categoryGetter(category);
+      if (categoryValue) return categoryValue;
+    }
+    return defaultGetter();
+  };
+};
+
 describe('Category Meta Functions', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -60,50 +82,38 @@ describe('Category Meta Functions', () => {
 
   describe('getCategoryMetaTitle', () => {
     it('should return category meta title when on a category page with meta title', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaTitle.mockReturnValue('Category Meta Title');
-
-      const getCategoryMetaTitle = () => {
-        if (isCategoryPage) {
-          const categoryMetaTitle = mockCategoryGetters.getMetaTitle(category);
-          if (categoryMetaTitle) return categoryMetaTitle;
-        }
-        return defaultMetaTitle;
-      };
+      const getCategoryMetaTitle = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaTitle,
+        getDefaultMetaTitle,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryMetaTitle()).toBe('Category Meta Title');
-      expect(mockCategoryGetters.getMetaTitle).toHaveBeenCalledWith(category);
+      expect(mockCategoryGetters.getMetaTitle).toHaveBeenCalledWith(mockCategory);
     });
 
     it('should return default site meta title when category has no meta title', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaTitle.mockReturnValue('');
-
-      const getCategoryMetaTitle = () => {
-        if (isCategoryPage) {
-          const categoryMetaTitle = mockCategoryGetters.getMetaTitle(category);
-          if (categoryMetaTitle) return categoryMetaTitle;
-        }
-        return defaultMetaTitle;
-      };
+      const getCategoryMetaTitle = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaTitle,
+        getDefaultMetaTitle,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryMetaTitle()).toBe(defaultMetaTitle);
     });
 
     it('should return default site meta title when not on a category page', () => {
-      const isCategoryPage = false;
-      const category = mockCategory;
       mockCategoryGetters.getMetaTitle.mockReturnValue('Category Meta Title');
-
-      const getCategoryMetaTitle = () => {
-        if (isCategoryPage) {
-          const categoryMetaTitle = mockCategoryGetters.getMetaTitle(category);
-          if (categoryMetaTitle) return categoryMetaTitle;
-        }
-        return defaultMetaTitle;
-      };
+      const getCategoryMetaTitle = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaTitle,
+        getDefaultMetaTitle,
+        false,
+        mockCategory,
+      );
 
       expect(getCategoryMetaTitle()).toBe(defaultMetaTitle);
       expect(mockCategoryGetters.getMetaTitle).not.toHaveBeenCalled();
@@ -112,50 +122,38 @@ describe('Category Meta Functions', () => {
 
   describe('getCategoryMetaDescription', () => {
     it('should return category meta description when on a category page with meta description', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaDescription.mockReturnValue('Category Meta Description');
-
-      const getCategoryMetaDescription = () => {
-        if (isCategoryPage) {
-          const categoryMetaDescription = mockCategoryGetters.getMetaDescription(category);
-          if (categoryMetaDescription) return categoryMetaDescription;
-        }
-        return defaultMetaDescription;
-      };
+      const getCategoryMetaDescription = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaDescription,
+        getDefaultMetaDescription,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryMetaDescription()).toBe('Category Meta Description');
-      expect(mockCategoryGetters.getMetaDescription).toHaveBeenCalledWith(category);
+      expect(mockCategoryGetters.getMetaDescription).toHaveBeenCalledWith(mockCategory);
     });
 
     it('should return default site meta description when category has no meta description', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaDescription.mockReturnValue('');
-
-      const getCategoryMetaDescription = () => {
-        if (isCategoryPage) {
-          const categoryMetaDescription = mockCategoryGetters.getMetaDescription(category);
-          if (categoryMetaDescription) return categoryMetaDescription;
-        }
-        return defaultMetaDescription;
-      };
+      const getCategoryMetaDescription = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaDescription,
+        getDefaultMetaDescription,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryMetaDescription()).toBe(defaultMetaDescription);
     });
 
     it('should return default site meta description when not on a category page', () => {
-      const isCategoryPage = false;
-      const category = mockCategory;
       mockCategoryGetters.getMetaDescription.mockReturnValue('Category Meta Description');
-
-      const getCategoryMetaDescription = () => {
-        if (isCategoryPage) {
-          const categoryMetaDescription = mockCategoryGetters.getMetaDescription(category);
-          if (categoryMetaDescription) return categoryMetaDescription;
-        }
-        return defaultMetaDescription;
-      };
+      const getCategoryMetaDescription = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaDescription,
+        getDefaultMetaDescription,
+        false,
+        mockCategory,
+      );
 
       expect(getCategoryMetaDescription()).toBe(defaultMetaDescription);
       expect(mockCategoryGetters.getMetaDescription).not.toHaveBeenCalled();
@@ -164,50 +162,38 @@ describe('Category Meta Functions', () => {
 
   describe('getCategoryMetaKeywords', () => {
     it('should return category meta keywords when on a category page with meta keywords', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaKeywords.mockReturnValue('keyword1, keyword2');
-
-      const getCategoryMetaKeywords = () => {
-        if (isCategoryPage) {
-          const categoryMetaKeywords = mockCategoryGetters.getMetaKeywords(category);
-          if (categoryMetaKeywords) return categoryMetaKeywords;
-        }
-        return defaultMetaKeywords;
-      };
+      const getCategoryMetaKeywords = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaKeywords,
+        getDefaultMetaKeywords,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryMetaKeywords()).toBe('keyword1, keyword2');
-      expect(mockCategoryGetters.getMetaKeywords).toHaveBeenCalledWith(category);
+      expect(mockCategoryGetters.getMetaKeywords).toHaveBeenCalledWith(mockCategory);
     });
 
     it('should return default site meta keywords when category has no meta keywords', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaKeywords.mockReturnValue('');
-
-      const getCategoryMetaKeywords = () => {
-        if (isCategoryPage) {
-          const categoryMetaKeywords = mockCategoryGetters.getMetaKeywords(category);
-          if (categoryMetaKeywords) return categoryMetaKeywords;
-        }
-        return defaultMetaKeywords;
-      };
+      const getCategoryMetaKeywords = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaKeywords,
+        getDefaultMetaKeywords,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryMetaKeywords()).toBe(defaultMetaKeywords);
     });
 
     it('should return default site meta keywords when not on a category page', () => {
-      const isCategoryPage = false;
-      const category = mockCategory;
       mockCategoryGetters.getMetaKeywords.mockReturnValue('keyword1, keyword2');
-
-      const getCategoryMetaKeywords = () => {
-        if (isCategoryPage) {
-          const categoryMetaKeywords = mockCategoryGetters.getMetaKeywords(category);
-          if (categoryMetaKeywords) return categoryMetaKeywords;
-        }
-        return defaultMetaKeywords;
-      };
+      const getCategoryMetaKeywords = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaKeywords,
+        getDefaultMetaKeywords,
+        false,
+        mockCategory,
+      );
 
       expect(getCategoryMetaKeywords()).toBe(defaultMetaKeywords);
       expect(mockCategoryGetters.getMetaKeywords).not.toHaveBeenCalled();
@@ -216,50 +202,37 @@ describe('Category Meta Functions', () => {
 
   describe('getCategoryOgTitle', () => {
     it('should return category meta title for og:title when on a category page', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaTitle.mockReturnValue('Category Meta Title');
-
-      const getCategoryOgTitle = () => {
-        if (isCategoryPage) {
-          const categoryMetaTitle = mockCategoryGetters.getMetaTitle(category);
-          if (categoryMetaTitle) return categoryMetaTitle;
-        }
-        return defaultOgTitle || defaultMetaTitle;
-      };
+      const getCategoryOgTitle = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaTitle,
+        getDefaultOgTitleWithFallback,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryOgTitle()).toBe('Category Meta Title');
     });
 
     it('should return default og title when category has no meta title', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaTitle.mockReturnValue('');
-
-      const getCategoryOgTitle = () => {
-        if (isCategoryPage) {
-          const categoryMetaTitle = mockCategoryGetters.getMetaTitle(category);
-          if (categoryMetaTitle) return categoryMetaTitle;
-        }
-        return defaultOgTitle || defaultMetaTitle;
-      };
+      const getCategoryOgTitle = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaTitle,
+        getDefaultOgTitleWithFallback,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryOgTitle()).toBe(defaultOgTitle);
     });
 
     it('should fallback to meta title when og title is not set', () => {
-      const isCategoryPage = false;
-      const category = mockCategory;
-      const ogTitle = '';
       mockCategoryGetters.getMetaTitle.mockReturnValue('');
-
-      const getCategoryOgTitle = () => {
-        if (isCategoryPage) {
-          const categoryMetaTitle = mockCategoryGetters.getMetaTitle(category);
-          if (categoryMetaTitle) return categoryMetaTitle;
-        }
-        return ogTitle || defaultMetaTitle;
-      };
+      const getCategoryOgTitle = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaTitle,
+        getEmptyOgTitleWithFallback,
+        false,
+        mockCategory,
+      );
 
       expect(getCategoryOgTitle()).toBe(defaultMetaTitle);
     });
@@ -267,33 +240,25 @@ describe('Category Meta Functions', () => {
 
   describe('getCategoryOgDescription', () => {
     it('should return category meta description for og:description when on a category page', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaDescription.mockReturnValue('Category Meta Description');
-
-      const getCategoryOgDescription = () => {
-        if (isCategoryPage) {
-          const categoryMetaDescription = mockCategoryGetters.getMetaDescription(category);
-          if (categoryMetaDescription) return categoryMetaDescription;
-        }
-        return defaultMetaDescription;
-      };
+      const getCategoryOgDescription = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaDescription,
+        getDefaultMetaDescription,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryOgDescription()).toBe('Category Meta Description');
     });
 
     it('should return default meta description for og:description when category has no meta description', () => {
-      const isCategoryPage = true;
-      const category = mockCategory;
       mockCategoryGetters.getMetaDescription.mockReturnValue('');
-
-      const getCategoryOgDescription = () => {
-        if (isCategoryPage) {
-          const categoryMetaDescription = mockCategoryGetters.getMetaDescription(category);
-          if (categoryMetaDescription) return categoryMetaDescription;
-        }
-        return defaultMetaDescription;
-      };
+      const getCategoryOgDescription = createMetaWithCategoryFallback(
+        mockCategoryGetters.getMetaDescription,
+        getDefaultMetaDescription,
+        true,
+        mockCategory,
+      );
 
       expect(getCategoryOgDescription()).toBe(defaultMetaDescription);
     });
