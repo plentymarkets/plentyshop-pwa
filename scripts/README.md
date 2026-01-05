@@ -10,6 +10,7 @@ Enforces [Conventional Commits](https://www.conventionalcommits.org/) format for
 Automatically installed when you run `npm install` via the `postinstall` script.
 
 **Valid commit format:**
+
 ```
 <type>(<optional scope>): <description>
 ```
@@ -17,6 +18,7 @@ Automatically installed when you run `npm install` via the `postinstall` script.
 **Valid types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `revert`
 
 **Examples:**
+
 ```
 feat(auth): add login functionality
 fix(api)!: resolve timeout issue
