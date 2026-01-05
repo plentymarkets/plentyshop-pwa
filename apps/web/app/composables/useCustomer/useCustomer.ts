@@ -132,7 +132,6 @@ export const useCustomer = () => {
       return state.value.isAuthorized;
     } catch (error) {
       useHandleError(error as ApiError);
-      state.value.loading = false;
       return false;
     } finally {
       state.value.loading = false;
