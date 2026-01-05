@@ -130,7 +130,7 @@
                     @change-quantity="changeQuantity"
                   />
                   <SfTooltip
-                    v-if="productGetters.isSalable(product) || showNotifyMe"
+                    v-if="productGetters.isSalable(product)"
                     show-arrow
                     placement="top"
                     :label="isNotValidVariation || isSalableText"
@@ -154,7 +154,7 @@
                       </template>
                     </UiButton>
                   </SfTooltip>
-                  <div v-else class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
+                  <div v-else-if="showNotifyMe" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
                     <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
                   </div>
                 </div>
@@ -174,7 +174,7 @@
                     </template>
                   </i18n-t>
                 </div>
-                <template v-if="showPayPalButtons && productGetters.isSalable(product)">
+                <template v-if="showPayPalButtons">
                   <PayPalExpressButton
                     type="SingleItem"
                     location="itemPage"
