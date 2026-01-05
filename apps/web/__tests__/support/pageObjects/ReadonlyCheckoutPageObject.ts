@@ -40,8 +40,13 @@ export class ReadonlyCheckoutPageObject extends PageObject {
     return this;
   }
 
-  displayFullyPaid() {
+  displayFullyPaidEn() {
     this.orderPaymentStatus.contains('Paid');
+    return this;
+  }
+
+  displayFullyPaidDe() {
+    this.orderPaymentStatus.contains('Bezahlt');
     return this;
   }
 

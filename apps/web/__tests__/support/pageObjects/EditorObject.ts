@@ -31,6 +31,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('edit-block-actions');
   }
 
+  get multiGridBlockActions() {
+    return cy.getByTestId('multigrid-block-actions');
+  }
+
   get openEditorButton() {
     return cy.getByTestId('open-editor-button');
   }
@@ -40,11 +44,15 @@ export class EditorObject extends PageObject {
   }
 
   get exitEditorButton() {
-    return cy.get('#close');
+    return cy.getByTestId('close-editor-button');
   }
 
   get blockWrappers() {
     return cy.get('[data-testid*="block-wrapper"]');
+  }
+
+  get blocksAccordionLayout() {
+    return cy.get('[data-testid="block-category-layout"]');
   }
 
   get blocksAccordionImage() {
@@ -57,6 +65,10 @@ export class EditorObject extends PageObject {
 
   get bottomBlockButton() {
     return cy.getByTestId('bottom-add-block');
+  }
+
+  get inlineBlockButton() {
+    return cy.getByTestId('inactive-empty-multicolumn');
   }
 
   get deleteBlockButton() {
@@ -79,7 +91,23 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('editor-language-select');
   }
 
-  get addBlockButton() {
+  get languageList() {
+    return cy.getByTestId('editor-language-list');
+  }
+
+  get languageOptionGerman() {
+    return cy.getByTestId('language-option-de');
+  }
+
+  get multiGridColumns() {
+    return cy.getByTestId('multi-grid-column');
+  }
+
+  get addLayoutBlockButton() {
+    return cy.getByTestId('block-add-layout-0');
+  }
+
+  get addImageBlockButton() {
     return cy.getByTestId('block-add-image-0');
   }
 
@@ -256,8 +284,10 @@ export class EditorObject extends PageObject {
     cy.intercept('/plentysystems/getSession').as('getSession');
 
     this.editPreviewButton.click();
-    this.languageSwitcher.should('exist');
-    this.languageSwitcher.select('de');
+    this.languageSwitcher.should('be.visible').click();
+    this.languageList.should('be.visible');
+    this.languageList.children().should('have.length', 2);
+    this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
     this.title.first().should('have.text', 'Ihr Sound');
   }
@@ -270,7 +300,7 @@ export class EditorObject extends PageObject {
       cy.wait(1000);
       this.blocksAccordionImage.should('exist').click();
       cy.wait(1000);
-      this.addBlockButton.first().should('exist').click();
+      this.addImageBlockButton.first().should('exist').click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
     });
@@ -284,7 +314,7 @@ export class EditorObject extends PageObject {
       cy.wait(1000);
       this.blocksAccordionImage.should('exist').click();
       cy.wait(1000);
-      this.addBlockButton.click();
+      this.addImageBlockButton.click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
     });
@@ -340,18 +370,44 @@ export class EditorObject extends PageObject {
 
   checkWrapperSpacings() {
     this.blockWrappers.each((el) => {
-      if (
-        this.blockIsBanner(el) ||
-        this.isMultiGrid(el) ||
-        this.isInnerBlock(el) ||
-        this.blockIsNewsletter(el) ||
-        this.blockIsFooter(el.get(0))
-      ) {
+      if (this.blockIsBanner(el) || this.isMultiGrid(el) || this.isInnerBlock(el) || this.blockIsFooter(el.get(0))) {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
       } else {
-        cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-6');
+        cy.wrap(el).should('have.class', 'p-4').and('have.class', 'md:px-6');
       }
     });
+  }
+
+  addMultiGridTop() {
+    this.topBlockButton.first().should('exist').click();
+    cy.wait(1000);
+    this.blocksAccordionLayout.click();
+    cy.wait(1000);
+    this.addLayoutBlockButton.click();
+    cy.wait(1000);
+  }
+
+  addBlockInGridColumn(column: number) {
+    this.inlineBlockButton.eq(column).should('exist').click();
+    cy.wait(1000);
+    this.blocksAccordionImage.should('exist').click();
+    cy.wait(1000);
+    this.addImageBlockButton.click();
+    cy.wait(1000);
+  }
+
+  closeEditor() {
+    this.exitEditorButton.should('exist').click();
+  }
+
+  deleteBlockInGridColumn(column: number) {
+    this.multiGridColumns.eq(column).realHover();
+    this.multiGridBlockActions.eq(column).should('exist').click();
+    cy.wait(1000);
+    this.deleteBlockButton.eq(column).should('exist').click();
+    cy.wait(1000);
+    this.inlineBlockButton.eq(column).should('exist');
+    this.inlineBlockButton.should('have.length', 2);
   }
 }
