@@ -12,6 +12,16 @@ If you enable an experimental feature, you do so at your own risk.
 This page lists current experimental features and how to enable them.
 It doesn't include progress status, a release timeline, or similar information.
 
+## Notify Me about items back in stock
+
+This feature is currently only avilable to PlentyONE beta systems.
+
+Date addded: 5 January 2026 <br />
+Date removed: -
+
+- Enable with `ENABLE_NOTIFY_ME='true'`
+- Enables "Notify Me" functionality on out-of-stock items on product detail pages
+
 ## Blockified Item Details Page
 
 Date added: 21 October 2025 <br />
