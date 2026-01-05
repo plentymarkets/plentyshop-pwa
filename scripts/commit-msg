@@ -1,33 +1,46 @@
 #!/usr/bin/env bash
 
-# Commit message validation hook
-# Enforces Conventional Commits format: type(scope): description
-
+# Path to the commit message file (provided by Git).
 COMMIT_MSG_FILE=$1
-COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 
-# Allow merge commits
-if echo "$COMMIT_MSG" | grep -qE "^Merge |^Merge:| into "; then
+# Ignore automatic commit messages containing ' into ' or 'Merge'.
+if grep --quiet --extended-regexp " into |^Merge " "$COMMIT_MSG_FILE"; then
     exit 0
 fi
 
-# Conventional Commits regex (POSIX ERE compatible)
-REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?:[[:space:]]+.+$'
+# Read the commit message from the file.
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 
-if [[ ! $COMMIT_MSG =~ $REGEX ]]; then
-    echo "ERROR: Invalid commit message format."
-    echo ""
-    echo "Expected: <type>(<scope>): <description>"
-    echo ""
-    echo "Types: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert"
-    echo ""
+CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?:\s.*$'
+
+# Check if the commit message matches the regex.
+if ! [[ $COMMIT_MSG =~ $CONVENTIONAL_COMMIT_REGEX ]]; then
+    echo "ERROR: Commit message does not follow Conventional Commits format."
+    echo
+    echo "The commit message should be structured as follows:"
+    echo "<type>(<optional scope>): <description>"
+    echo "[optional body]"
+    echo "[optional footer(s)]"
+    echo
+    echo "Valid types are:"
+    echo "  feat:     A new feature."
+    echo "  fix:      A bug fix."
+    echo "  docs:     Documentation changes."
+    echo "  style:    Code style changes (formatting, missing semicolons, etc.)."
+    echo "  refactor: Code refactoring (neither fixes a bug nor adds a feature)."
+    echo "  test:     Adding or updating tests."
+    echo "  chore:    Routine tasks like updating dependencies or build tools."
+    echo "  build:    Changes affecting the build system or external dependencies."
+    echo "  ci:       Changes to CI configuration files or scripts."
+    echo "  perf:     Performance improvements."
+    echo "  revert:   Reverting a previous commit."
+    echo
     echo "Examples:"
-    echo "  feat(auth): add login"
-    echo "  fix(api): resolve bug"
-    echo "  docs: update readme"
-    echo ""
+    echo "  feat(auth): add login functionality"
+    echo "  fix(api)!: resolve timeout issue"
+    echo "  docs(readme): update installation instructions"
+    echo
     exit 1
 fi
 
 exit 0
-
