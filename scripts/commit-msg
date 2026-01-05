@@ -3,6 +3,7 @@
 # Path to the commit message file (provided by Git).
 COMMIT_MSG_FILE=$1
 
+
 # Ignore automatic commit messages containing ' into ' or 'Merge'.
 if grep --quiet --extended-regexp " into |^Merge " "$COMMIT_MSG_FILE"; then
     exit 0
@@ -11,7 +12,7 @@ fi
 # Read the commit message from the file.
 COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 
-CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?:\s.*$'
+CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?:[[:space:]].*$'
 
 # Check if the commit message matches the regex.
 if ! [[ $COMMIT_MSG =~ $CONVENTIONAL_COMMIT_REGEX ]]; then
