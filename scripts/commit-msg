@@ -4,8 +4,8 @@
 COMMIT_MSG_FILE=$1
 
 
-# Ignore automatic commit messages containing ' into ' or 'Merge'.
-if grep --quiet --extended-regexp " into |^Merge " "$COMMIT_MSG_FILE"; then
+# Ignore automatic Git merge commit messages (e.g. "Merge branch 'x' into 'y'").
+if grep --quiet --extended-regexp "^Merge (branch|remote-tracking branch|pull request)|^Merge .+ into " "$COMMIT_MSG_FILE"; then
     exit 0
 fi
 
