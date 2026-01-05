@@ -28,7 +28,7 @@
           </h2>
         </template>
 
-        <UiReviewStatistics :product="props.product" />
+        <UiReviewStatistics :product="product" />
 
         <UiReview v-for="(reviewItem, key) in authenticatedProductReviews" :key="key" :review-item="reviewItem" />
         <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
@@ -56,7 +56,7 @@
         {{ props.content.text.title }}
       </h2>
 
-      <UiReviewStatistics :product="props.product" />
+      <UiReviewStatistics :product="product" />
 
       <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
       <p
@@ -91,9 +91,17 @@ const reviewsOpen = ref(!props.content.layout.initiallyCollapsed);
 const route = useRoute();
 
 const config = useRuntimeConfig().public;
+const { currentProduct } = useProducts();
 
-const productId = Number(productGetters.getItemId(props.product));
-const productVariationId = productGetters.getVariationId(props.product);
+const product = computed(() => props.product || currentProduct.value);
+const productId = computed(() => {
+  const id = productGetters.getItemId(product.value);
+  return id ? Number(id) : 0;
+});
+const productVariationId = computed(() => {
+  const varId = productGetters.getVariationId(product.value);
+  return varId || 0;
+});
 
 const {
   data: productReviews,
@@ -102,7 +110,7 @@ const {
   fetchReviews,
   fetchAuthenticatedReviews,
   reviewArea,
-} = useProductReviews(productId, productVariationId);
+} = useProductReviews(productId.value, productVariationId.value);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
 const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
