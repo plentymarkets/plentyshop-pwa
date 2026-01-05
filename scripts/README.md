@@ -1,5 +1,31 @@
 # Scripts
 
+## Git Hooks
+
+### `commit-msg`
+
+Enforces [Conventional Commits](https://www.conventionalcommits.org/) format for all commit messages.
+
+**Installation:**
+Automatically installed when you run `npm install` via the `postinstall` script.
+
+**Valid commit format:**
+```
+<type>(<optional scope>): <description>
+```
+
+**Valid types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `revert`
+
+**Examples:**
+```
+feat(auth): add login functionality
+fix(api)!: resolve timeout issue
+docs(readme): update installation instructions
+refactor(app): extract category meta helper function
+```
+
+**Note:** Merge commits are automatically allowed.
+
 ## `spawn-worktree.sh`
 
 Creates one or more Git worktrees under `../pwa-worktree/` (folder name = branch name with `/` replaced by `-`), then bootstraps each worktree:
