@@ -134,6 +134,8 @@ export const useCustomer = () => {
       useHandleError(error as ApiError);
       state.value.loading = false;
       return false;
+    } finally {
+      state.value.loading = false;
     }
   };
 
