@@ -4,7 +4,7 @@
       data-testid="notify-me-button"
       size="lg"
       class="w-full h-full"
-      aria-label="Open notification subscription form"
+      :aria-label="t('notifyMe.aria.openForm')"
       @click="open"
     >
       <template #prefix>
@@ -30,7 +30,7 @@
           square
           variant="tertiary"
           class="absolute right-2 top-2"
-          aria-label="Close notification form"
+          :aria-label="t('notifyMe.aria.closeForm')"
           @click="close"
         >
           <SfIconClose aria-hidden="true" />
@@ -43,7 +43,7 @@
         </p>
       </header>
 
-      <form class="space-y-4" aria-label="Back in stock notification form" @submit.prevent="handleSubmit">
+      <form class="space-y-4" :aria-label="t('notifyMe.aria.formLabel')" @submit.prevent="handleSubmit">
         <div>
           <label for="email" class="block text-sm font-medium text-neutral-900 mb-2">
             {{ t('notifyMe.form.emailLabel') }}
@@ -75,7 +75,7 @@
                   :to="localePath(paths.privacyPolicy)"
                   class="text-primary-700 underline"
                   target="_blank"
-                  aria-label="Privacy policy (opens in new tab)"
+                  :aria-label="t('notifyMe.aria.privacyPolicyLink')"
                 >
                   {{ t('legal.privacyPolicy') }}
                 </NuxtLink>
@@ -91,7 +91,7 @@
           :site-key="turnstileSiteKey"
           :options="{ theme: 'light' }"
           class="flex justify-center"
-          aria-label="Security verification"
+          :aria-label="t('notifyMe.aria.securityVerification')"
         />
 
         <UiButton
@@ -100,7 +100,7 @@
           class="w-full"
           :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken) || loading"
           :aria-busy="loading"
-          aria-label="Subscribe to back in stock notifications"
+          :aria-label="t('notifyMe.aria.subscribeButton')"
         >
           <template v-if="loading" #prefix>
             <SfLoaderCircular size="sm" aria-hidden="true" />

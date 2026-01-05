@@ -9,6 +9,14 @@
       "turnstileFailed": "Turnstile Validierung Fehlgeschlagen",
       "successCheckEmail": "Prüfe dein Postfach! Wir haben Ihnen eine Bestätigungs E-Mail gesendet."
     },
+    "aria": {
+      "openForm": "Benachrichtigungsformular öffnen",
+      "closeForm": "Benachrichtigungsformular schließen",
+      "formLabel": "Formular für Verfügbarkeitsbenachrichtigung",
+      "privacyPolicyLink": "Datenschutzerklärung (öffnet in neuem Tab)",
+      "securityVerification": "Sicherheitsüberprüfung",
+      "subscribeButton": "Für Verfügbarkeitsbenachrichtigung anmelden"
+    },
     "notifyMeOptInMessage": "Ihre Benachrichtigung wurde erfolgreich bestätigt. Sie erhalten eine E-Mail, sobald der Artikel wieder verfügbar ist.",
     "notifyMeOptInMessageError": "Die Bestätigung Ihrer Benachrichtigung ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
     "notifyMeUnsubscribeMessage": "Sie wurden erfolgreich von den Benachrichtigungen abgemeldet.",
