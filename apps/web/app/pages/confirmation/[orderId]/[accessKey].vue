@@ -57,7 +57,7 @@ const createParams = (type?: string, value?: string) => {
     params.postcode = value;
   }
   return params;
-}
+};
 
 const tryLoadInitialOrder = async (type?: string, value?: string) => {
   const params = createParams(type, value);
