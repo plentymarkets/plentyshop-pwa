@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import type { Locale } from '#i18n';
-import { OrderSearchParams } from '@plentymarkets/shop-api';
+import type { OrderSearchParams } from '@plentymarkets/shop-api';
 
 const route = useRoute();
 const { data, error, fetchOrder, fetchOrderClient } = useCustomerOrder('soft-login');
