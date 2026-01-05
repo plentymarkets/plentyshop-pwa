@@ -11,6 +11,7 @@ if echo "$COMMIT_MSG" | grep -qE " into |^Merge "; then
     exit 0
 fi
 
+
 # Define the conventional commit regex pattern
 # Using [[:space:]] instead of \s for POSIX compatibility
 CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?:[[:space:]]+.+$'
