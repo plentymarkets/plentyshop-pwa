@@ -5,7 +5,7 @@ describe('Text Card Block Form', () => {
   const openSettingsForTextCardBlock = () => {
     cy.get('[data-testid="TextCard-open-editor-button"]').should('have.length.at.least', 2);
 
-    cy.get('[data-testid="TextCard-open-editor-button"]').eq(1).should('exist').click({ force: true });
+    cy.get('[data-testid="TextCard-open-editor-button"]').first().should('exist').click({ force: true });
     cy.wait(1000);
 
     cy.get('[data-testid="text-card-form"]').should('exist');
