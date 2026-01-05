@@ -299,4 +299,3 @@ describe('Category Meta Functions', () => {
     });
   });
 });
-
