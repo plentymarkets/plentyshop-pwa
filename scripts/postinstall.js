@@ -16,7 +16,6 @@ const commitMsgDest = path.join(gitHooksDir, 'commit-msg');
 
 try {
   if (fs.existsSync(gitHooksDir)) {
-
     fs.copyFileSync(commitMsgSource, commitMsgDest);
     fs.chmodSync(commitMsgDest, 0o755);
     // eslint-disable-next-line no-console
