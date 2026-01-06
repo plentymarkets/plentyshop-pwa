@@ -5,6 +5,7 @@ import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
 import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
+import { seoConfig } from './app/configuration/seo.config';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -135,6 +136,11 @@ export default defineNuxtConfig({
       robotsItemPage: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || 'ALL',
       robotsItemPageId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
       itemCanonicalId: process.env.NUXT_PUBLIC_ITEM_CANONICAL_ID || '',
+      googleSiteVerification:
+        seoConfig.googleSiteVerification ||
+        process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+        '',
+      enableGoogleSearchConsole: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_SEARCH_CONSOLE || 'false',
       seoRichSnippetBrand: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
       seoRichSnippetBrandId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '',
       seoRichSnippetManufacturer: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
