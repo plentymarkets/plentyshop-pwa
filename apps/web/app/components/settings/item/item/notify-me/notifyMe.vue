@@ -20,7 +20,7 @@ const { updateSetting, getSetting } = useSiteSettings('showNotifyMe');
 
 const showNotifyMeFeature = computed({
   get: () => !!getSetting(),
-  set: (value) => updateSetting((!value).toString()),
+  set: (value) => updateSetting(value.toString()),
 });
 </script>
 

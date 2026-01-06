@@ -303,7 +303,7 @@ const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
-const showNotifyMe = getNotifyMeSetting();
+const showNotifyMe = computed(() => getNotifyMeSetting().toString() === 'true');
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
