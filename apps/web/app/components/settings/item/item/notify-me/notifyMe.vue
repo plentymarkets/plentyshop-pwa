@@ -3,8 +3,17 @@
     <span class="mb-2">
       {{ getEditorTranslation('description') }}
     </span>
-    <div class="flex justify-between mb-2">
-      <UiFormLabel class="mb-1">{{ getEditorTranslation('label') }}</UiFormLabel>
+    <div class="flex justify-between items-center mb-2">
+      <div class="flex items-center gap-2">
+        <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+        <SfTooltip
+          :label="getEditorTranslation('tooltip')"
+          :placement="'right'"
+          class="z-[9999]"
+        >
+          <SfIconInfo :size="'sm'" />
+        </SfTooltip>
+      </div>
       <SfSwitch
         v-model="showNotifyMeFeature"
         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
@@ -14,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch } from '@storefront-ui/vue';
+import { SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('showNotifyMe');
 
@@ -27,12 +36,14 @@ const showNotifyMeFeature = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Enable notify me form",
-    "description": "Do you want to give customers the option to sign up for notifications when an item is back in stock?"
+    "label": "Enable notify me",
+    "description": "Allow customers to subscribe to back-in-stock notifications on item pages",
+    "tooltip": "Shows a subscription button on sold-out items so customers can be notified when available again."
   },
   "de": {
     "label": "Benachrichtigungs-Formular aktivieren",
-    "description": "Möchten Sie Kunden die Möglichkeit geben, sich für Benachrichtigungen anzumelden, sobald ein Artikel wieder verfügbar ist?"
+    "description": "Gibt Kunden die Möglichkeit, sich auf Artikelseiten für Benachrichtigungen über die Wiederverfügbarkeit einzuschreiben",
+    "tooltip": "Zeigt einen Abonnement-Button für ausverkaufte Artikel an, damit Kunden benachrichtigt werden können, wenn diese wieder verfügbar sind."
   }
 }
 </i18n>
