@@ -12,7 +12,7 @@
       :leave-from-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
       :leave-to-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
     >
-    <slot />
+      <slot />
     </transition>
   </div>
 </template>
@@ -20,7 +20,6 @@
 import type { OverlayProps } from '~/components/ui/Overlay/types';
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 const placement = ref<`${SfDrawerPlacement}`>('left');
-
 
 defineProps<OverlayProps>();
 </script>

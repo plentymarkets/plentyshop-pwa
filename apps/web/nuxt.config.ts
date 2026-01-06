@@ -137,9 +137,7 @@ export default defineNuxtConfig({
       robotsItemPageId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
       itemCanonicalId: process.env.NUXT_PUBLIC_ITEM_CANONICAL_ID || '',
       googleSiteVerification:
-        seoConfig.googleSiteVerification ||
-        process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
-        '',
+        seoConfig.googleSiteVerification || process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
       enableGoogleSearchConsole: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_SEARCH_CONSOLE || 'false',
       seoRichSnippetBrand: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
       seoRichSnippetBrandId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '',

@@ -1,10 +1,5 @@
 <template>
-  <UiButton
-    variant="primary"
-    square
-    :aria-label="title"
-    @click="open = true"
-  >
+  <UiButton variant="primary" square :aria-label="title" @click="open = true">
     {{ title }}
   </UiButton>
   <!-- Backdrop -->
@@ -33,39 +28,37 @@
       :placement="placement"
       :class="'bg-white h-[100vh] z-20 w-[100vw] md:w-[50vw] lg:w-[20vw]'"
     >
+      <header class="flex justify-between items-center p-4 bg-primary-500 text-white mb-5">
+        <h3 class="text-lg font-medium">{{ title }}</h3>
 
-        <header class="flex justify-between items-center p-4 bg-primary-500 text-white mb-5">
-          <h3 class="text-lg font-medium">{{ title }}</h3>
+        <UiButton
+          variant="tertiary"
+          square
+          :aria-label="t('closeMenu')"
+          class="absolute right-2 top-2 hover:bg-transparent active:bg-transparent"
+          @click="open = false"
+        >
+          <SfIconClose class="text-white" />
+        </UiButton>
+      </header>
 
-          <UiButton
-            variant="tertiary"
-            square
-            :aria-label="t('closeMenu')"
-            class="absolute right-2 top-2 hover:bg-transparent active:bg-transparent"
-            @click="open = false"
-          >
-            <SfIconClose class="text-white" />
-          </UiButton>
-        </header>
+      <section class="p-4">
+        <client-only>
+          <template v-if="loading">
+            <div class="flex justify-center py-10">
+              <SfLoaderCircular size="lg" />
+            </div>
+          </template>
 
-        <section class="p-4">
-          <client-only>
-            <template v-if="loading">
-              <div class="flex justify-center py-10">
-                <SfLoaderCircular size="lg" />
-              </div>
-            </template>
+          <template v-else-if="error">
+            <div class="text-red-600">{{ error }}</div>
+          </template>
 
-            <template v-else-if="error">
-              <div class="text-red-600">{{ error }}</div>
-            </template>
-
-            <template v-else>
-              <div v-html="content" />
-            </template>
-          </client-only>
-        </section>
-
+          <template v-else>
+            <div v-html="content" />
+          </template>
+        </client-only>
+      </section>
     </SfDrawer>
   </transition>
 </template>
@@ -85,13 +78,7 @@ const open = ref(false);
 useTrapFocus(drawerRef, { activeState: open });
 
 // Composable
-const {
-  content,
-  loading,
-  error,
-  hasLoaded,
-  loadContent,
-} = useLazyContent();
+const { content, loading, error, hasLoaded, loadContent } = useLazyContent();
 
 // Wenn Drawer geöffnet wird → Inhalt laden
 watch(open, (value) => {

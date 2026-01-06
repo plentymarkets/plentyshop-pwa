@@ -120,7 +120,7 @@ const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const { t } = useI18n();
 
 // const props = defineProps<FilterProps & FilterOpenState>();
-const props = withDefaults(defineProps<FilterProps &FilterOpenState>(), {
+const props = withDefaults(defineProps<FilterProps & FilterOpenState>(), {
   isopen: true,
 });
 const open = ref(props.isopen);

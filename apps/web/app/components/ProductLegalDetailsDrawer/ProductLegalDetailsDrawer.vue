@@ -8,71 +8,71 @@
       :leave-from-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
       :leave-to-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
     >
-    <SfDrawer
-      ref="productLegalDrawerRef"
-      v-model="open"
-      data-testid="product-legal-details-drawer"
-      :placement="placement"
-      :class="[
-        'lg:w-128',
-        'bg-neutral-50',
-        'border',
-        'border-gray-300',
-        'z-50',
-        { 'lg:min-w-[400px]': placement === 'left' || placement === 'right' },
-      ]"
-    >
-      <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
-        <div v-if="config.enableProductEditing" class="flex items-center text-white">{{ title }}</div>
-
-        <div v-else class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
-
-        <UiButton
-          square
-          variant="tertiary"
-          data-testid="product-legal-details-close"
-          class="text-white"
-          :aria-label="t('closeDrawer')"
-          @click="open = false"
-        >
-          <SfIconClose />
-        </UiButton>
-      </header>
-
-      <div
-        ref="tablistRef"
-        role="tablist"
-        aria-label="Select tab"
-        aria-orientation="horizontal"
-        class="flex gap-2 border-b border-b-neutral-200 p-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      <SfDrawer
+        ref="productLegalDrawerRef"
+        v-model="open"
+        data-testid="product-legal-details-drawer"
+        :placement="placement"
+        :class="[
+          'lg:w-128',
+          'bg-neutral-50',
+          'border',
+          'border-gray-300',
+          'z-50',
+          { 'lg:min-w-[400px]': placement === 'left' || placement === 'right' },
+        ]"
       >
-        <UiButton
+        <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
+          <div v-if="config.enableProductEditing" class="flex items-center text-white">{{ title }}</div>
+
+          <div v-else class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
+
+          <UiButton
+            square
+            variant="tertiary"
+            data-testid="product-legal-details-close"
+            class="text-white"
+            :aria-label="t('closeDrawer')"
+            @click="open = false"
+          >
+            <SfIconClose />
+          </UiButton>
+        </header>
+
+        <div
+          ref="tablistRef"
+          role="tablist"
+          aria-label="Select tab"
+          aria-orientation="horizontal"
+          class="flex gap-2 border-b border-b-neutral-200 p-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        >
+          <UiButton
+            v-for="(tab, index) in tabs"
+            :key="tab.label"
+            type="button"
+            role="tab"
+            :data-testid="tab.component.__name"
+            :variant="isActiveTab(index) ? 'primary' : 'secondary'"
+            :aria-selected="isActiveTab(index)"
+            :aria-controls="`tabpanel-${index}`"
+            :disabled="tab.disabled"
+            @click="setActiveTab(index)"
+          >
+            {{ tab.label }}
+          </UiButton>
+        </div>
+        <div
           v-for="(tab, index) in tabs"
+          v-show="isActiveTab(index)"
+          :id="`tabpanel-${index}`"
           :key="tab.label"
-          type="button"
-          role="tab"
-          :data-testid="tab.component.__name"
-          :variant="isActiveTab(index) ? 'primary' : 'secondary'"
-          :aria-selected="isActiveTab(index)"
-          :aria-controls="`tabpanel-${index}`"
-          :disabled="tab.disabled"
-          @click="setActiveTab(index)"
+          role="tabpanel"
+          :aria-labelledby="`tab-${index}`"
+          class="p-4"
         >
-          {{ tab.label }}
-        </UiButton>
-      </div>
-      <div
-        v-for="(tab, index) in tabs"
-        v-show="isActiveTab(index)"
-        :id="`tabpanel-${index}`"
-        :key="tab.label"
-        role="tabpanel"
-        :aria-labelledby="`tab-${index}`"
-        class="p-4"
-      >
-        <component :is="tab.component" :product="product" />
-      </div>
-    </SfDrawer>
+          <component :is="tab.component" :product="product" />
+        </div>
+      </SfDrawer>
     </transition>
   </UiOverlay>
 </template>

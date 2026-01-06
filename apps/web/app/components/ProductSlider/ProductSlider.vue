@@ -37,7 +37,6 @@ import { SfScrollable, SfLink } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 import { paths } from '~/utils/paths';
 
-
 const { showNetPrices } = useCart();
 const localePath = useLocalePath();
 const { t } = useI18n();
