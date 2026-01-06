@@ -14,11 +14,9 @@
         <section class="p-4 xl:p-6">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
-
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
                 {{ productGetters.getName(product) }}
               </h1>
-
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
@@ -70,13 +68,15 @@
                     {{ t('showAllReviews') }}
                   </UiButton>
                 </div>
-                <div class="text-xs text-righte">
-                  Artikelnummer {{ productGetters.getId(product) }}
-                </div>
+                <div class="text-xs text-righte">Artikelnummer {{ productGetters.getId(product) }}</div>
               </div>
             </template>
             <template v-if="key === 'bulletPoints' && configuration?.fields.bulletPoints">
-              <VariationBulletPoints :product="product" :language="'de'" :fallback="productGetters.getTechnicalData(product)" />
+              <VariationBulletPoints
+                :product="product"
+                :language="'de'"
+                :fallback="productGetters.getTechnicalData(product)"
+              />
             </template>
 
             <template v-if="key === 'previewText' && configuration?.fields.previewText">

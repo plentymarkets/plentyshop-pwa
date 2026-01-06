@@ -1,9 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
-export type CrossSellingRelation =
-  | "Similar"
-  | "Accessory"
-  | "Bundle"
-  | "ReplacementPart";
+export type CrossSellingRelation = 'Similar' | 'Accessory' | 'Bundle' | 'ReplacementPart';
 
 export type CrossSellingProps = {
   crossSellingRelation: CrossSellingRelation;

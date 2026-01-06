@@ -22,10 +22,7 @@
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
           />
           <div class="p-4 mb-6">
-            <UiLazyContentDrawer
-              :categoryid="725"
-              :title="'Zahlungsinformationen'"
-            />
+            <UiLazyContentDrawer :categoryid="725" :title="'Zahlungsinformationen'" />
           </div>
           <div class="p-4 flex">
             <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
@@ -38,10 +35,10 @@
 
       <section ref="recommendedSection" class="mx-4 mt-8 mb-8 hidden">
         <component
-        :is="RecommendedProductsAsync"
-        v-if="showRecommended"
-        :category-id="productGetters.getCategoryIds(product)[0] ?? ''"
-      />
+          :is="RecommendedProductsAsync"
+          v-if="showRecommended"
+          :category-id="productGetters.getCategoryIds(product)[0] ?? ''"
+        />
       </section>
       <section ref="crossellingProductsSimilar" class="mx-4 mt-8 mb-8">
         <component
@@ -49,17 +46,17 @@
           v-if="showCrosssellingSimilar"
           :cross-selling-relation="'Similar'"
           :product="product"
-          :show-title=true
+          :show-title="true"
         />
       </section>
-        <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
-          <component
-            :is="CrossellingProductsAsync"
-            v-if="showCrosssellingAccessory"
-            :cross-selling-relation="'Accessory'"
-            :product="product"
-            :show-title=true
-          />
+      <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
+        <component
+          :is="CrossellingProductsAsync"
+          v-if="showCrosssellingAccessory"
+          :cross-selling-relation="'Accessory'"
+          :product="product"
+          :show-title="true"
+        />
       </section>
       <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
         <component
@@ -67,7 +64,7 @@
           v-if="showCrosssellingAccessory"
           :cross-selling-relation="'Bundle'"
           :product="product"
-          :show-title=true
+          :show-title="true"
         />
       </section>
       <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
@@ -76,7 +73,7 @@
           v-if="showCrosssellingAccessory"
           :cross-selling-relation="'ReplacementPart'"
           :product="product"
-          :show-title=true
+          :show-title="true"
         />
       </section>
     </NarrowContainer>
@@ -125,7 +122,7 @@ const RecommendedProductsAsync = defineAsyncComponent(
 
 const CrossellingProductsAsync = defineAsyncComponent(
   async () => await import('~/components/ProductCrossselling/ProductCrossselling.vue'),
-)
+);
 
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);

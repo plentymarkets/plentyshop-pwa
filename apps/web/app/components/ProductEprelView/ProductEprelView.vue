@@ -1,10 +1,6 @@
 <template>
   <template v-if="labelUrl && datasheetUrl">
-      <img
-        :src="labelurl"
-        :alt="'EU-Energielabel'"
-        class="max-h-[50vh]"
-      />
+    <img :src="labelurl" :alt="'EU-Energielabel'" class="max-h-[50vh]" />
     <div class="mt-5">
       <a :href="datasheetUrl" target="_blank" rel="noopener noreferrer">
         <UiButton variant="secondary" :aria-label="'Produktdatenblatt'" class="w-full">
@@ -13,7 +9,6 @@
         </UiButton>
       </a>
     </div>
-
   </template>
 </template>
 
