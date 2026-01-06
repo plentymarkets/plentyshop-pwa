@@ -1,7 +1,7 @@
 <template>
   <div class="text-sm py-2">
     <div v-if="crossedPrice && differentPrices && discountPercent > 0" class="text-base font-normal text-red-600">
-      <span class="line-through">{{ format(crossedPrice) }}</span> {{ t('rrp') }}
+      <span class="line-through">{{ format(crossedPrice) }}</span> {{ t('product.rrp') }}
     </div>
     <span
       v-if="crossedPrice && differentPrices && discountPercent > 0"
@@ -11,7 +11,7 @@
     </span>
     <span class="mr-2 text-secondary-500 font-bold text-2xl" data-testid="price">
       <span>{{ format(price) }}</span>
-      <span>{{ t('asterisk') }} </span>
+      <span>{{ t('common.labels.asterisk') }} </span>
     </span>
   </div>
 </template>
@@ -22,7 +22,6 @@ import type { PriceProps } from '~/components/Price/types';
 const props = defineProps<PriceProps>();
 
 const { format } = usePriceFormatter();
-const { t } = useI18n();
 
 const differentPrices = computed(() => {
   return props.crossedPrice

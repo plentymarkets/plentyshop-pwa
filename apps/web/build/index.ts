@@ -2,10 +2,8 @@ import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SystemConfiguration } from './configurator/SystemConfiguration';
-import { AppConfigurator } from './configurator/AppConfigurator';
 import { AssetDownloader } from './configurator/AssetDownloader';
 import { CdnToFileWriter } from './writers/CdnToFileWriter';
-import { DataToFileWriter } from './writers/DataToFileWriter';
 import { BuildLoggerInstance } from './logs/Logger';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -36,11 +34,6 @@ const main = async () => {
   if (process.env.FETCH_REMOTE_CONFIG === '1') {
     BuildLoggerInstance.info('Configuring application...');
     const systemConfiguration = new SystemConfiguration(config);
-
-    const dataWriter = new DataToFileWriter(BuildLoggerInstance);
-    const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
-    appConfigurator.generateLanguageFiles(systemConfiguration.getLanguages());
-
     const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
     const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);
     assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());

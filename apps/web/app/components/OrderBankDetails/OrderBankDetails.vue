@@ -18,6 +18,5 @@
 import type { OrderBankDetailsProps } from '~/components/OrderBankDetails/types';
 import { orderGetters } from '@plentymarkets/shop-api';
 
-const { t } = useI18n();
 defineProps<OrderBankDetailsProps>();
 </script>

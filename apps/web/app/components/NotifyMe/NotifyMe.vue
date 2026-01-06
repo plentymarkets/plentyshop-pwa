@@ -1,0 +1,179 @@
+<template>
+  <SfTooltip show-arrow placement="top" :label="t('notifyMe.notifyButtonTooltip')" :middleware="[offset(24)]">
+    <UiButton
+      data-testid="notify-me-button"
+      size="lg"
+      class="w-full h-full"
+      :aria-label="t('notifyMe.aria.openForm')"
+      @click="open"
+    >
+      <template #prefix>
+        <SfIconEmail size="sm" aria-hidden="true" />
+      </template>
+      {{ t('notifyMe.notifyButton') }}
+    </UiButton>
+  </SfTooltip>
+
+  <Teleport to="body">
+    <UiModal
+      v-if="isOpen"
+      v-model="isOpen"
+      tag="section"
+      role="dialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      style="z-index: 9999"
+      aria-labelledby="notify-modal-title"
+      aria-describedby="notify-modal-description"
+    >
+      <header>
+        <UiButton
+          square
+          variant="tertiary"
+          class="absolute right-2 top-2"
+          :aria-label="t('notifyMe.aria.closeForm')"
+          @click="close"
+        >
+          <SfIconClose aria-hidden="true" />
+        </UiButton>
+        <h3 id="notify-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
+          {{ t('notifyMe.outOfStock') }}
+        </h3>
+        <p id="notify-modal-description" class="text-neutral-700 mb-6">
+          {{ t('notifyMe.form.subTitle') }}
+        </p>
+      </header>
+
+      <form class="space-y-4" :aria-label="t('notifyMe.aria.formLabel')" @submit.prevent="handleSubmit">
+        <div>
+          <label for="email" class="block text-sm font-medium text-neutral-900 mb-2">
+            {{ t('notifyMe.form.emailLabel') }}
+          </label>
+          <SfInput
+            id="email"
+            v-model="email"
+            type="email"
+            :placeholder="t('notifyMe.form.emailPlaceholder')"
+            required
+            class="w-full"
+            :disabled="loading"
+            @focus="formInteraction"
+          />
+        </div>
+
+        <div class="flex items-start gap-2">
+          <SfCheckbox
+            id="privacy-policy"
+            v-model="agreedToPolicy"
+            :disabled="loading"
+            required
+            @change="formInteraction"
+          />
+          <label for="privacy-policy" class="text-sm text-neutral-700">
+            <i18n-t keypath="notifyMe.readAndAccepted" tag="span">
+              <template #privacyPolicy>
+                <NuxtLink
+                  :to="localePath(paths.privacyPolicy)"
+                  class="text-primary-700 underline"
+                  target="_blank"
+                  :aria-label="t('notifyMe.aria.privacyPolicyLink')"
+                >
+                  {{ t('legal.privacyPolicy') }}
+                </NuxtLink>
+              </template>
+            </i18n-t>
+          </label>
+        </div>
+
+        <NuxtTurnstile
+          v-if="turnstileSiteKey && (email.length > 0 || turnstileLoad)"
+          ref="turnstileElement"
+          v-model="turnstileToken"
+          :site-key="turnstileSiteKey"
+          :options="{ theme: 'light' }"
+          class="flex justify-center"
+          :aria-label="t('notifyMe.aria.securityVerification')"
+        />
+
+        <UiButton
+          type="submit"
+          size="lg"
+          class="w-full"
+          :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken) || loading"
+          :aria-busy="loading"
+          :aria-label="t('notifyMe.aria.subscribeButton')"
+        >
+          <template v-if="loading" #prefix>
+            <SfLoaderCircular size="sm" aria-hidden="true" />
+          </template>
+          <template v-else #prefix>
+            <SfIconEmail size="sm" aria-hidden="true" />
+          </template>
+          {{ t('notifyMe.notifyButton') }}
+        </UiButton>
+      </form>
+    </UiModal>
+  </Teleport>
+</template>
+
+<script lang="ts" setup>
+import {
+  SfIconEmail,
+  SfIconClose,
+  SfTooltip,
+  SfInput,
+  SfCheckbox,
+  SfLoaderCircular,
+  useDisclosure,
+} from '@storefront-ui/vue';
+import { offset } from '@floating-ui/vue';
+import { ref } from 'vue';
+import type { NotifyMeComponentProps } from './types';
+
+const props = defineProps<NotifyMeComponentProps>();
+
+const { isOpen, open, close } = useDisclosure();
+const { user } = useCustomer();
+const { locale } = useI18n();
+const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+const { send } = useNotification();
+const { loading, subscribe } = useNotifyMe();
+const localePath = useLocalePath();
+
+const turnstileSiteKey = getSetting() ?? '';
+
+const email = ref(user.value?.email || user.value?.guestMail || '');
+const agreedToPolicy = ref(false);
+const turnstileLoad = ref(false);
+const turnstileToken = ref('');
+
+const formInteraction = () => {
+  if (!turnstileLoad.value) {
+    turnstileLoad.value = true;
+  }
+};
+
+const handleSubmit = async () => {
+  if (turnstileSiteKey && !turnstileToken.value) {
+    send({
+      type: 'negative',
+      message: t('notifyMe.form.turnstileFailed'),
+    });
+    return;
+  }
+
+  const data = await subscribe({
+    lang: locale.value,
+    email: email.value,
+    variationId: props.variationId,
+    'cf-turnstile-response': turnstileToken.value,
+  });
+
+  if (data) {
+    send({
+      type: 'positive',
+      message: t('notifyMe.form.successCheckEmail'),
+    });
+    close();
+  }
+};
+</script>

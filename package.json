@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "node ./scripts/postinstall.js",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
     "turbo:disable-telemetry": "turbo telemetry disable",
@@ -36,13 +37,15 @@
     "test:cypress": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress\" \"npm run start\"",
     "test:cypress-dev": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
-    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
+    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
+    "worktree:spawn": "./scripts/spawn-worktree.sh"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.13.7",
-    "@plentymarkets/shop-api": "^0.145.0",
+    "@plentymarkets/shop-core": "^1.16.2",
+    "@plentymarkets/shop-api": "^0.151.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
-    "@plentymarkets/shop-module-mollie": "^1.3.0",
+    "@plentymarkets/shop-module-mollie": "^1.4.0",
+    "@tanstack/vue-virtual": "^3.13.12",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.8",
@@ -52,9 +55,9 @@
     "country-flag-icons": "^1.5.21",
     "dotenv": "^16.6.1",
     "drift-zoom": "^1.5.1",
-    "vue-tel-input": "^9.5.0",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.4.0",
+    "vue-tel-input": "^9.5.0",
     "vue-tsc": "^3.0.6",
     "vuedraggable": "^4.1.0",
     "yup": "^1.7.1"

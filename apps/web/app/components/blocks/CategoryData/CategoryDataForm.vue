@@ -436,7 +436,7 @@
       <template #summary>
         <h2>{{ getEditorTranslation('layout-label') }}</h2>
       </template>
-
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       <div
         class="py-2"
         :class="
@@ -484,11 +484,6 @@
             />
           </div>
         </div>
-        <div class="px-4 py-3">
-          <span class="typography-text-xs text-neutral-700">
-            {{ getEditorTranslation('spacing-around') }}
-          </span>
-        </div>
       </div>
     </UiAccordionItem>
   </div>
@@ -514,7 +509,6 @@ import draggable from 'vuedraggable/src/vuedraggable';
 const layoutOpen = ref(true);
 const textOpen = ref(true);
 const imageOpen = ref(true);
-const { t } = useI18n();
 
 const {
   learnMoreUrl,
@@ -526,6 +520,9 @@ const {
   fieldsEmptyHintText,
   clampBrightness,
 } = useCategoryData();
+
+const { blockUuid } = useSiteConfiguration();
+const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 </script>
 
 <i18n lang="json">
@@ -543,7 +540,6 @@ const {
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",
@@ -605,7 +601,6 @@ const {
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",

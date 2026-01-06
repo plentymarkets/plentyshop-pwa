@@ -10,7 +10,7 @@ export class RecommendedProductsObject extends PageObject {
   clickOnRecommendedBlockEditButton = () => {
     cy.getByTestId('recommended-block')
       .closest('[data-testid="block-wrapper"]')
-      .find('[data-testid="open-editor-button"]')
+      .find('[data-testid="ProductRecommendedProducts-open-editor-button"]')
       .last()
       .click();
 

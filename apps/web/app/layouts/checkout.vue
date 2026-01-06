@@ -7,7 +7,7 @@
           <UiButton
             :class="[viewport.isLessThan('lg') ? 'flex lg:hidden whitespace-nowrap' : 'hidden lg:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
-            :aria-label="t('prevAriaLabel')"
+            :aria-label="t('common.navigation.previousAriaLabel')"
             data-testid="checkout-back-button"
             variant="tertiary"
             @click="goToPreviousRoute()"
@@ -31,7 +31,6 @@
 import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CheckoutLayoutProps } from './types';
 
-const { t } = useI18n();
 const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const { goToPreviousRoute } = useBrowserNavigation();

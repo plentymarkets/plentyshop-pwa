@@ -1,6 +1,5 @@
 import type { useCategorySettingsCollectionReturn, useCategorySettingsCollectionState } from './types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
-import { stripChildren } from '~/utils/stripChildren';
 
 export const useCategorySettingsCollection: useCategorySettingsCollectionReturn = () => {
   const state = useState<useCategorySettingsCollectionState>('categorySettingsCollection', () => ({
@@ -10,7 +9,6 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   }));
 
   const { send } = useNotification();
-  const { $i18n } = useNuxtApp();
   const { movePagesInTree } = useCategoriesSearch();
 
   const addCategorySettings = async (category: CategoryEntry) => {
@@ -108,8 +106,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
   };
 
   const save = async () => {
-    const successMessage = $i18n.t('errorMessages.editor.categories.success');
-    const errorMessage = $i18n.t('errorMessages.editor.categories.error');
+    const successMessage = getEditorUITranslation('success');
+    const errorMessage = getEditorUITranslation('error');
     const route = useRoute();
     const router = useRouter();
     const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
