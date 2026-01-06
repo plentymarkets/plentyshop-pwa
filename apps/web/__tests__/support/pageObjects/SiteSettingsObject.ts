@@ -105,7 +105,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   toggleFonts() {
-    this.fontSection.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.fontSection.should('be.visible').click();
     return this;
   }
 
@@ -125,8 +125,8 @@ export class SiteSettingsObject extends PageObject {
   }
 
   changeFont(fontColor: string) {
-    this.fontInput.click({ force: true }).type(fontColor, { force: true }); // force needed due to tooltip overlap
-    cy.get('.multiselect__element').contains(fontColor).click({ force: true }); // force needed due to tooltip overlap
+    this.fontInput.click().type(fontColor);
+    cy.get('.multiselect__element').contains(fontColor).click();
     return this;
   }
 

@@ -63,6 +63,3 @@ apps/web/reference/
 .vscode
 *.code-workspace
 *.tsbuildinfo
-
-# shop-cli config
-.plentyone/shop-cli.json

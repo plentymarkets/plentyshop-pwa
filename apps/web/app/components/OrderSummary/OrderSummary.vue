@@ -1,9 +1,9 @@
 <template>
   <div class="shadow-lg md:rounded-md md:border md:border-neutral-100" data-testid="order-summary">
     <div class="flex justify-between items-end py-2 px-4 md:px-6 md:pt-6 md:pb-4">
-      <h2 class="typography-headline-4 font-bold md:typography-headline-3">{{ t('common.labels.orderSummary') }}</h2>
+      <h2 class="typography-headline-4 font-bold md:typography-headline-3">{{ t('orderSummary') }}</h2>
       <p class="typography-text-base font-medium" data-testid="total-in-cart">
-        {{ t('cart.itemCount', { count: cartItemsCount }) }}
+        {{ t('itemsInCart', cartItemsCount) }}
       </p>
     </div>
 
@@ -26,16 +26,14 @@
       <div class="flex justify-between typography-text-base mb-4">
         <div class="flex flex-col gap-1 grow pr-2">
           <p data-testid="subtotal-label">
-            {{ t('common.labels.itemsSubtotal') }} <span v-if="showNetPrices">({{ t('common.labels.netPrice') }})</span>
+            {{ t('itemsSubtotal') }} <span v-if="showNetPrices">({{ t('netPrice') }})</span>
           </p>
           <p data-testid="shipping-label">
-            {{ t('common.labels.delivery') }} <span v-if="showNetPrices">({{ t('common.labels.netPrice') }})</span>
+            {{ t('delivery') }} <span v-if="showNetPrices">({{ t('netPrice') }})</span>
           </p>
           <p v-if="cartGetters.getCouponDiscount(props.cart)" data-testid="coupon-label">{{ t('coupon.name') }}</p>
           <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat-label">
-            {{ showNetPrices ? t('common.labels.excludedTax') : t('common.labels.includedTax') }} ({{
-              cartGetters.getTotalVatValue(vat)
-            }}%)
+            {{ showNetPrices ? t('excludedTax') : t('includedTax') }} ({{ cartGetters.getTotalVatValue(vat) }}%)
           </p>
         </div>
         <div v-if="showNetPrices" class="flex flex-col gap-1 text-right">
@@ -80,12 +78,12 @@
       </div>
 
       <div v-if="showNetPrices" class="flex justify-between typography-text-base mb-1">
-        <h2 data-testid="total-net-label">{{ t('common.labels.total') }} ({{ t('common.labels.netPrice') }})</h2>
+        <h2 data-testid="total-net-label">{{ t('total') }} ({{ t('netPrice') }})</h2>
         <h2 data-testid="total-net">{{ format(cartGetters.getBasketAmountNet(cart)) }}</h2>
       </div>
       <div class="flex justify-between typography-text-base font-bold pb-4 mb-4">
         <h2 data-testid="total-label">
-          {{ t('common.labels.total') }} <span v-if="showNetPrices">({{ t('common.labels.grossPrice') }})</span>
+          {{ t('total') }} <span v-if="showNetPrices">({{ t('grossPrice') }})</span>
         </h2>
         <h2 data-testid="total">{{ format(totals.total) }}</h2>
       </div>
@@ -100,6 +98,7 @@ import { cartGetters } from '@plentymarkets/shop-api';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
+const { t } = useI18n();
 const { showNetPrices } = useCart();
 const { format } = usePriceFormatter();
 
@@ -113,7 +112,7 @@ const totals = computed(() => {
 });
 
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shipping.method.free') : format(Number(amount));
+  return amount === 0 ? t('shippingMethod.free') : format(Number(amount));
 };
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);

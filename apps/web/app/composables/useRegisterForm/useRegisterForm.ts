@@ -5,6 +5,7 @@ import { useForm } from 'vee-validate';
 import type { UseRegisterFormReturn } from './types';
 
 export const useRegisterForm = (): UseRegisterFormReturn => {
+  const { $i18n } = useNuxtApp();
   const { send } = useNotification();
   const { data: cartData } = useCart();
   const { getCountryZipCodeRegex } = useAggregatedCountries();
@@ -43,20 +44,22 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     object({
       email: string()
         .trim()
-        .required(t('error.email.required'))
-        .test('is-valid-email', t('error.email.valid'), (mail: string) => userGetters.isValidEmailAddress(mail))
+        .required($i18n.t('errorMessages.email.required'))
+        .test('is-valid-email', $i18n.t('errorMessages.email.valid'), (mail: string) =>
+          userGetters.isValidEmailAddress(mail),
+        )
         .default(state.value.defaultFormValues.email),
       password: string()
-        .required(t('error.password.required'))
+        .required($i18n.t('errorMessages.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .min(passwordMinLength, t('error.password.minLength', { min: passwordMinLength }))
-        .max(passwordMaxLength, t('error.password.maxLength', { max: passwordMaxLength }))
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, t('error.password.valid'))
+        .min(passwordMinLength, $i18n.t('errorMessages.password.minLength', { min: passwordMinLength }))
+        .max(passwordMaxLength, $i18n.t('errorMessages.password.maxLength', { max: passwordMaxLength }))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)/, $i18n.t('errorMessages.password.valid'))
         .default(state.value.defaultFormValues.password),
       repeatPassword: string()
-        .required(t('error.password.required'))
+        .required($i18n.t('errorMessages.password.required'))
         .transform((value) => (value ? value.replace(/\s/g, '') : value))
-        .test('passwords-match', t('error.password.match'), function (value) {
+        .test('passwords-match', $i18n.t('errorMessages.password.match'), function (value) {
           const passwordValue = this.parent.password?.replace(/\s/g, '');
           return value === passwordValue;
         })
@@ -65,14 +68,16 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .trim()
         .when([], {
           is: () => !state.value.hasCompany,
-          then: (schema) => schema.required(t('error.requiredField')).default(state.value.defaultFormValues.firstName),
+          then: (schema) =>
+            schema.required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.firstName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.firstName),
         }),
       lastName: string()
         .trim()
         .when([], {
           is: () => !state.value.hasCompany,
-          then: (schema) => schema.required(t('error.requiredField')).default(state.value.defaultFormValues.lastName),
+          then: (schema) =>
+            schema.required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.lastName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.lastName),
         }),
       companyName: string()
@@ -80,7 +85,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         .when([], {
           is: () => state.value.hasCompany,
           then: (schema) =>
-            schema.required(t('error.requiredField')).default(state.value.defaultFormValues.companyName),
+            schema.required($i18n.t('errorMessages.requiredField')).default(state.value.defaultFormValues.companyName),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.companyName),
         }),
       vatNumber: string()
@@ -90,27 +95,39 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
           then: (schema) => schema.default(state.value.defaultFormValues.vatNumber),
           otherwise: (schema) => schema.optional().default(state.value.defaultFormValues.vatNumber),
         }),
-      streetName: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.streetName),
-      apartment: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.apartment),
-      city: string().trim().required(t('error.requiredField')).default(state.value.defaultFormValues.city),
+      streetName: string()
+        .trim()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(state.value.defaultFormValues.streetName),
+      apartment: string()
+        .trim()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(state.value.defaultFormValues.apartment),
+      city: string()
+        .trim()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(state.value.defaultFormValues.city),
       zipCode: string()
         .trim()
-        .required(t('error.requiredField'))
+        .required($i18n.t('errorMessages.requiredField'))
         .when('country', ([countryId], schema) => {
           const zipCodeRegex = getCountryZipCodeRegex(Number(countryId), AddressType.Shipping);
           return zipCodeRegex
-            ? schema.matches(zipCodeRegex, t('PreferredDelivery.packstation.zipcodeInvalid'))
+            ? schema.matches(zipCodeRegex, $i18n.t('PreferredDelivery.packstation.zipcodeInvalid'))
             : schema;
         })
         .default(state.value.defaultFormValues.zipCode),
       country: string()
         .trim()
-        .required(t('error.requiredField'))
+        .required($i18n.t('errorMessages.requiredField'))
         .default(state.value.defaultFormValues.country ?? cartGetters.getShippingCountryId(cartData.value).toString()),
-      privacyPolicy: boolean().isTrue(t('legal.privacyPolicyRequired')).required(t('legal.privacyPolicyRequired')),
+      privacyPolicy: boolean().isTrue($i18n.t('privacyPolicyRequired')).required($i18n.t('privacyPolicyRequired')),
       turnstile:
         turnstileSiteKey.length > 0
-          ? string().trim().required(t('error.turnstileRequired')).default(state.value.defaultFormValues.turnstile)
+          ? string()
+              .trim()
+              .required($i18n.t('errorMessages.turnstileRequired'))
+              .default(state.value.defaultFormValues.turnstile)
           : string().trim().optional().default(state.value.defaultFormValues.turnstile),
     }),
   );
@@ -188,13 +205,13 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
     const response = await register(getRegisterData());
 
     if (response?.data.code === 1) {
-      send({ message: t('authentication.signup.emailAlreadyExists'), type: 'negative' });
+      send({ message: $i18n.t('auth.signup.emailAlreadyExists'), type: 'negative' });
       clearTurnstile();
       return;
     }
 
     if (response?.data?.id) {
-      send({ message: t('authentication.signup.success'), type: 'positive' });
+      send({ message: $i18n.t('auth.signup.success'), type: 'positive' });
     }
 
     return response;

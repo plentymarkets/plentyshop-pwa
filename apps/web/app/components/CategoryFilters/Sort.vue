@@ -7,7 +7,7 @@
       :configuration="content"
       :render-key="renderKey"
       :isopen="index < 4 || props.forceOpen"
-      :index="index + 1"
+      :index="index +1"
       v-bind="customizedFiltersProps"
     />
   </div>
@@ -19,7 +19,7 @@
       @click="isExpanded = true"
     >
       <SfIconExpandMore class="shrink-0" />
-      {{ t('product.showAll') }}
+      {{ getEditorTranslation('show-all-filters') }}
     </button>
   </div>
 </template>
@@ -97,3 +97,14 @@ watch(
   },
 );
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "show-all-filters": "Show all"
+  },
+  "de": {
+    "show-all-filters": "Alle anzeigen"
+  }
+}
+</i18n>

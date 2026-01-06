@@ -19,6 +19,5 @@ export type ProductLegalInformationContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
-    fullWidth?: boolean;
   };
 };

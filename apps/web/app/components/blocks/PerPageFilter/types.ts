@@ -7,7 +7,6 @@ export type PerPageContent = {
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
-    fullWidth?: boolean;
   };
   settings: PerPageSettings;
 };

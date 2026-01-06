@@ -2,12 +2,12 @@
   <nav
     class="flex justify-between items-end border-t border-neutral-200"
     role="navigation"
-    :aria-label="t('common.labels.pagination')"
+    :aria-label="t('pagination')"
     data-testid="pagination"
   >
     <UiButton
       size="lg"
-      :aria-label="t('common.navigation.previousAriaLabel')"
+      :aria-label="t('prevAriaLabel')"
       :disabled="pagination.selectedPage <= 1 || disabled"
       variant="tertiary"
       class="gap-3"
@@ -17,7 +17,7 @@
       <template #prefix>
         <SfIconChevronLeft />
       </template>
-      <span class="hidden sm:inline-flex">{{ t('common.actions.previous') }}</span>
+      <span class="hidden sm:inline-flex">{{ t('prev') }}</span>
     </UiButton>
     <ul class="flex justify-center">
       <li v-if="!pagination.pages.includes(1)">
@@ -148,14 +148,14 @@
     </ul>
     <UiButton
       size="lg"
-      :aria-label="t('common.navigation.nextAriaLabel')"
+      :aria-label="t('nextAriaLabel')"
       :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
       variant="tertiary"
       class="gap-3"
       data-testid="pagination-next"
       @click="nextPage"
     >
-      <span class="hidden sm:inline-flex">{{ t('common.actions.next') }}</span>
+      <span class="hidden sm:inline-flex">{{ t('next') }}</span>
       <template #suffix>
         <SfIconChevronRight />
       </template>
@@ -168,6 +168,7 @@ import { SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefron
 import type { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();
+const { t } = useI18n();
 
 const {
   currentPage,
@@ -190,7 +191,7 @@ const pagination = computed(() =>
 );
 
 const getAriaLabel = (isCurrent: boolean, page: number) => {
-  return t(isCurrent ? 'common.navigation.currentPage' : 'common.navigation.goToPage', { page });
+  return t(isCurrent ? 'currentPage' : 'goToPage', { page });
 };
 
 const setPage = (page: number) => {

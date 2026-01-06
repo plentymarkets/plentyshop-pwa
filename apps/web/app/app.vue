@@ -32,7 +32,7 @@
     <div
       class="bg-white w-full relative"
       :class="{
-        'w-[calc(50vw-80px)] lg:w-[calc(75vw-80px)] xl:w-[calc(80vw-80px)]': drawerOpen,
+        'lg:w-3/4': drawerOpen,
         'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
         'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,
       }"
@@ -49,13 +49,13 @@
   <ClientOnly>
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
-    <component :is="ResetProductPageModal" v-if="clientPreview" />
+  </ClientOnly>
+  <ClientOnly>
+    <LazyReloadPWA hydrate-on-idle />
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { isCssUrl, isJsUrl } from '~/utils/assets';
-
 const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
@@ -75,11 +75,6 @@ const { getSetting: getMetaDescription } = useSiteSettings('metaDescription');
 const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
 const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
-const { getSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
-
-const { getAssetsOfType } = useCustomAssets();
-
-const isSafeMode = computed(() => customAssetsSafeMode());
 
 const title = ref(getMetaTitle());
 const ogTitle = ref(getOgTitle());
@@ -89,20 +84,6 @@ const keywords = ref(getMetaKeywords());
 const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
-
-const cssAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('css')));
-
-const jsAssets = computed(() =>
-  isSafeMode.value ? [] : getAssetsOfType('javascript').filter((asset) => asset.isActive),
-);
-
-const metaAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('meta').filter((asset) => asset.isActive)));
-const cssExternalAssets = computed(() =>
-  isSafeMode.value ? [] : getAssetsOfType('external').filter((asset) => isCssUrl(asset.content)),
-);
-const jsExternalAssets = computed(() =>
-  isSafeMode.value ? [] : getAssetsOfType('external').filter((asset) => asset.isActive && isJsUrl(asset.content)),
-);
 
 watchEffect(() => {
   title.value = getMetaTitle();
@@ -130,45 +111,8 @@ useHead({
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
-    ...cssExternalAssets.value.map((asset, index) => ({
-      key: `external-css-${asset.uuid ?? index}`,
-      rel: 'stylesheet',
-      media: asset.isActive ? 'all' : 'not all',
-      href: asset.content,
-    })),
   ],
-  meta: () =>
-    metaAssets.value
-      .filter((asset) => asset.name && asset.content)
-      .map((asset) => ({
-        key: `custom-meta-${asset.uuid}`,
-        name: asset.name,
-        content: asset.content,
-      })),
-  style: () =>
-    cssAssets.value.map((asset) => ({
-      key: `custom-css-${asset.uuid}-o${asset.order ?? 0}`,
-      textContent: asset.content,
-      media: asset.isActive ? 'all' : 'not all',
-      tagPriority: 100 + (asset.order ?? 0),
-    })),
 });
-
-if (import.meta.client) {
-  useHead({
-    script: () => [
-      ...jsAssets.value.map((asset) => ({
-        key: `custom-js-${asset.uuid}`,
-        innerHTML: asset.content,
-      })),
-      ...jsExternalAssets.value.map((asset) => ({
-        key: `external-js-${asset.uuid}`,
-        src: asset.content,
-        defer: true,
-      })),
-    ],
-  });
-}
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
@@ -185,9 +129,6 @@ const SiteConfigurationDrawer = defineAsyncComponent(
 const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
 const UnlinkCategoryModal = defineAsyncComponent(
   () => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'),
-);
-const ResetProductPageModal = defineAsyncComponent(
-  () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
 </script>
 

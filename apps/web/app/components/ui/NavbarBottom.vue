@@ -11,19 +11,19 @@
       size="sm"
       :tag="link ? NuxtLink : undefined"
       :to="link || undefined"
-      @click="label === t('common.labels.products') && open()"
+      @click="label === t('products') && open()"
     >
       <template #prefix>
         <div class="relative">
           <component :is="icon" />
           <SfBadge
-            v-if="label === t('common.labels.cart')"
+            v-if="label === t('cart')"
             :content="cartItemsCount"
             :max="99"
             class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
           />
           <SfBadge
-            v-if="label === t('common.labels.wishlist')"
+            v-if="label === t('wishlist')"
             :content="wishlistItemIds.length"
             :max="99"
             class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
@@ -42,6 +42,7 @@ import { useCustomer } from '~/composables/useCustomer';
 
 const localePath = useLocalePath();
 const route = useRoute();
+const { t } = useI18n();
 const { wishlistItemIds } = useWishlist();
 const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();
@@ -49,22 +50,22 @@ const { open } = useMegaMenu();
 
 const items = computed(() => [
   {
-    label: t('common.labels.home'),
+    label: t('home'),
     icon: SfIconHome,
     link: localePath(paths.home),
   },
   {
-    label: t('common.labels.products'),
+    label: t('products'),
     icon: SfIconMenu,
     link: '',
   },
   {
-    label: t('common.labels.wishlist'),
+    label: t('wishlist'),
     icon: SfIconFavorite,
     link: localePath(paths.wishlist),
   },
   {
-    label: t('common.labels.cart'),
+    label: t('cart'),
     icon: SfIconShoppingCart,
     link: localePath(paths.cart),
   },

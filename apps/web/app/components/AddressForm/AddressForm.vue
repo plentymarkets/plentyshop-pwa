@@ -89,12 +89,12 @@
         :disabled="isCartUpdateLoading"
         @click="clearInputs"
       >
-        {{ t('common.actions.clearAll') }}
+        {{ t('contactInfo.clearAll') }}
       </UiButton>
       <UiButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isCartUpdateLoading">
         <SfLoaderCircular v-if="isCartUpdateLoading" class="flex justify-center items-center" size="sm" />
         <span v-else>
-          {{ t('common.actions.save') }}
+          {{ t('contactInfo.save') }}
         </span>
       </UiButton>
     </div>
@@ -113,6 +113,7 @@ import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/
 import type { AddressFormProps } from '~/components/AddressForm/types';
 
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
+const { t } = useI18n();
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
 const { billingCountries, default: defaultCountries } = useAggregatedCountries();

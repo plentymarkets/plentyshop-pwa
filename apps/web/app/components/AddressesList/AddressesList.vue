@@ -64,6 +64,7 @@ import type { AddressesListProps } from './types';
 const { type, editAddressText, addAddressText } = defineProps<AddressesListProps>();
 
 const { isOpen, open, close } = useDisclosure();
+const { t } = useI18n();
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const {
   data: addresses,

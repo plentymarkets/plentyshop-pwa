@@ -36,7 +36,7 @@ const bundleSettingsOptions = ref([
 ]);
 
 const selectedBundleOption = computed({
-  get: () => getSetting().toString(),
+  get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
 </script>

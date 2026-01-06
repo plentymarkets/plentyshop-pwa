@@ -22,7 +22,7 @@
           <UiButton
             v-else
             class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-            :aria-label="t('common.navigation.languageSelector')"
+            :aria-label="t('languageSelector')"
             :style="{ color: isActive ? iconColor : '' }"
             variant="tertiary"
             square
@@ -38,7 +38,7 @@
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
           :style="{ color: iconColor }"
-          :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
+          :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
           variant="tertiary"
           square
           data-testid="wishlist-page-navigation"
@@ -60,7 +60,7 @@
           :tag="NuxtLink"
           :style="{ color: iconColor }"
           :to="localePath(paths.cart)"
-          :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
+          :aria-label="t('numberInCart', { count: cartItemsCount })"
           variant="tertiary"
           square
         >
@@ -117,7 +117,7 @@
           :style="{ color: iconColor }"
           class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
-          :aria-label="t('authentication.login.openLoginForm')"
+          :aria-label="t('auth.login.openLoginForm')"
           square
           @click="navigateToLogin"
         >
@@ -133,7 +133,7 @@
         square
         data-testid="open-languageselect-button"
         :style="{ color: iconColor }"
-        :aria-label="t('common.navigation.languageSelector')"
+        :aria-label="t('languageSelector')"
         :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
         @click="toggleLanguageSelect()"
       >
@@ -144,7 +144,7 @@
         class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
         :style="{ color: iconColor }"
-        :aria-label="t('common.navigation.openSearchModal')"
+        :aria-label="t('openSearchModalButtonLabel')"
         @click="searchModalOpen"
       >
         <SfIconSearch />
@@ -160,7 +160,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('common.navigation.closeDialog')"
+        :aria-label="t('closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -188,7 +188,7 @@
     >
       <header class="mb-4">
         <UiButton
-          :aria-label="t('common.navigation.closeDialog')"
+          :aria-label="t('closeDialog')"
           square
           variant="tertiary"
           class="absolute right-4 top-2"
@@ -197,7 +197,7 @@
           <SfIconClose class="text-neutral-500" />
         </UiButton>
         <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
-          {{ t('common.actions.search') }}
+          {{ t('search') }}
         </h3>
       </header>
       <UiSearch :close="searchModalClose" />
@@ -234,7 +234,7 @@ const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
+const { t, localeCodes } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();

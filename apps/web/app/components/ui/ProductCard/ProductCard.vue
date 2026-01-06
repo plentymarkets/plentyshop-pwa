@@ -20,6 +20,7 @@
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
       >
+
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
@@ -91,7 +92,7 @@
           </div>
         </template>
         <template v-if="key === 'rating' && configuration?.fields?.rating">
-          <div class="flex items-center pt-1 gap-1 mb-2">
+          <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !shortDescription }">
             <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
             <SfCounter size="xs">{{ ratingCount }}</SfCounter>
           </div>
@@ -113,7 +114,7 @@
             <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
               <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
-              <span>{{ t('common.labels.asterisk') }}</span>
+              <span>{{ t('asterisk') }}</span>
             </span>
             <span
               v-if="crossedPrice && differentPrices(price, crossedPrice)"
@@ -127,9 +128,9 @@
           <div
             class="flex flex-col w-full justify-between"
             :class="{
-              'flex-col': isFromSlider,
-              'lg:flex-row': !isFromSlider,
-            }"
+                  'flex-col': isFromSlider,
+                  'lg:flex-row': !isFromSlider
+                }"
           >
             <UiButton
               v-if="canAddFromCategory"
@@ -144,7 +145,7 @@
                 <SfIconShoppingCart size="sm" />
               </template>
               <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-              <span v-else>{{ t('common.actions.add') }}</span>
+              <span v-else>{{ t('addToCartShort') }}</span>
             </UiButton>
             <UiButton
               v-else
@@ -155,12 +156,16 @@
               size="sm"
               class="mb-2"
             >
-              <span>{{ t('common.actions.showOptions') }}</span>
+              <span>{{ t('showOptions') }}</span>
             </UiButton>
-            <UiProductPreview :product="product" />
+            <UiProductPreview
+              :product="product"
+            />
           </div>
+
         </template>
       </template>
+
     </div>
   </div>
 </template>
@@ -171,6 +176,7 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } fro
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
+
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({
@@ -195,9 +201,6 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
     itemCountPosition: 'center',
     fieldsDisabled: [],
     paginationPosition: 'bottom',
-    layout: {
-      fullWidth: false,
-    },
   }),
 });
 
@@ -208,6 +211,7 @@ const configuration = computed(() => props.configuration || ({} as ItemGridConte
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const { format } = usePriceFormatter();
+const { t } = useI18n();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product.value);
@@ -247,11 +251,8 @@ const unitName = computed(() => productGetters.getUnitName(product.value));
 const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
 
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const { isGlobalProductCategoryTemplate } = useProducts();
+
 const productPath = computed(() => {
-  if (isGlobalProductCategoryTemplate?.value) {
-    return paths.globalItemDetails;
-  }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
   const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product.value) === 1;
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
@@ -283,7 +284,7 @@ const addWithLoader = async (productId: number, quickCheckout = true) => {
     if (quickCheckout) {
       openQuickCheckout(product.value, 1);
     } else {
-      send({ message: t('cart.itemAdded'), type: 'positive' });
+      send({ message: t('addedToCart'), type: 'positive' });
     }
   } finally {
     loading.value = false;

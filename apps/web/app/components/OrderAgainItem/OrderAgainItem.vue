@@ -160,6 +160,7 @@ const props = defineProps<OrderAgainItemProps>();
 const { addModernImageExtension } = useModernImage();
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const { t } = useI18n();
 const { format } = usePriceFormatter();
 const { showNetPrices } = useCart();
 

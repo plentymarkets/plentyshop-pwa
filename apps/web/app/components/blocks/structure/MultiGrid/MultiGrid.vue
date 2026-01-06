@@ -4,7 +4,7 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      class="group/col relative z-[1]"
+      class="group/col relative"
       data-testid="multi-grid-column"
     >
       <div
@@ -29,12 +29,7 @@
             <div
               class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
             >
-              <UiBlockActions
-                data-testid="multigrid-block-actions"
-                :block="row"
-                :index="colIndex"
-                :actions="getBlockActions()"
-              />
+              <UiBlockActions :block="row" :index="colIndex" :actions="getBlockActions()" />
             </div>
           </template>
         </ClientOnly>
@@ -101,6 +96,8 @@ const gridInlineStyle = computed(() => ({
     configuration.layout?.marginBottom !== undefined
       ? `${configuration.layout.marginBottom}px`
       : `${defaultMarginBottom.value}px`,
+  marginLeft: configuration.layout?.marginLeft !== undefined ? `${configuration.layout.marginLeft}px` : '40px',
+  marginRight: configuration.layout?.marginRight !== undefined ? `${configuration.layout.marginRight}px` : '40px',
 }));
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);

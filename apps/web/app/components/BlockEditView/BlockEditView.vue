@@ -1,17 +1,17 @@
 <template>
-  <div class="site-settings-view sticky top-[52px]" data-testid="block-edit-view">
+  <div class="site-settings-view sticky top-[52px]">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getBlockTypeName(blockType) }}
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
-          <button data-testid="delete-block-button" @click="deleteBlock(blockUuid)">
+          <button @click="deleteBlock(blockUuid)">
             <SfIconDelete />
           </button>
           <div class="w-px h-4 bg-gray-300" />
         </div>
-        <button data-testid="close-editor-button" @click="drawerOpen = false">
+        <button @click="drawerOpen = false">
           <SfIconClose />
         </button>
       </div>
@@ -58,7 +58,6 @@ const blockTypeNames: Record<string, string> = {
   ItemText: 'Item Details',
   CategoryData: 'Category Data',
   TechnicalData: 'Technical Data',
-  ItemData: 'Item Data',
 };
 
 const getBlockTypeName = (blockType: string) => {

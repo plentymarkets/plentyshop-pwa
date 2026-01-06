@@ -23,14 +23,14 @@
             @edit="edit"
           />
 
-          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('address.edit')">
+          <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAddressSelection }" :label="t('editAddress')">
             <UiButton
               :disabled="!hasCheckoutAddress || saveAddressLoading || disabled"
               variant="secondary"
               :data-testid="'edit-address-' + type"
               @click="edit(checkoutAddress)"
             >
-              {{ t('common.actions.edit') }}
+              {{ t('contactInfo.edit') }}
             </UiButton>
           </SfTooltip>
         </div>
@@ -74,6 +74,7 @@ import { type Address, AddressType } from '@plentymarkets/shop-api';
 
 const { disabled = false, type } = defineProps<AddressContainerProps>();
 
+const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
@@ -107,7 +108,7 @@ const showEditAddressTooltip = computed(
 );
 
 const dynamicAddressText = computed(() =>
-  t(showSameAsShippingText.value ? 'address.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
+  t(showSameAsShippingText.value ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
 );
 
 const edit = (address: Address) => {

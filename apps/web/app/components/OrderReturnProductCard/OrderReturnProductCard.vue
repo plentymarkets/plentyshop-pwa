@@ -126,6 +126,7 @@ import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from '~/utils/debounce';
 
 const { format } = usePriceFormatter();
+const { t } = useI18n();
 const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();

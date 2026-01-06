@@ -9,7 +9,7 @@ import type { ValidationResult } from '../types/project-validation';
 /**
  * Validates that we're running from within a PlentyONE Shop PWA project
  */
-export function validateProjectStructure(basePath = process.cwd(), webAppPath = 'apps/web/app'): ValidationResult {
+export function validateProjectStructure(basePath = process.cwd()): ValidationResult {
   const errors: string[] = [];
 
   const requiredPaths = [
@@ -17,9 +17,9 @@ export function validateProjectStructure(basePath = process.cwd(), webAppPath = 
     'apps/server/middleware.config.ts',
     'turbo.json',
     'package.json',
-    join(webAppPath, 'components'),
-    join(webAppPath, 'composables'),
-    join(webAppPath, 'pages'),
+    'apps/web/app/components',
+    'apps/web/app/composables',
+    'apps/web/app/pages',
   ];
 
   for (const path of requiredPaths) {

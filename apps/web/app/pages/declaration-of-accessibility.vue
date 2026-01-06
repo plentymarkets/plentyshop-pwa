@@ -3,16 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
 const { data, getLegalTexts } = useLegalInformation();
+const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
 const icon = 'page';
-setPageMeta(t('legal.declarationOfAccessibility'), icon);
+setPageMeta(t('categories.legal.subcategories.declarationOfAccessibility'), icon);
 
 definePageMeta({
   pageType: 'static',

@@ -132,17 +132,6 @@
         </SfInput>
       </div>
     </UiAccordionItem>
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
-
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-    </UiAccordionItem>
   </div>
 </template>
 
@@ -154,7 +143,6 @@ import { initializeNewsletterContent } from './utils';
 const textGroup = ref(true);
 const buttonGroup = ref(true);
 const settingsGroup = ref(true);
-const layoutOpen = ref(true);
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -170,8 +158,6 @@ const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   return initializeNewsletterContent(rawContent as Partial<NewsletterSubscribeContent>);
 });
-
-const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
 </script>
 
 <i18n lang="json">
@@ -191,8 +177,7 @@ const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
     "button-text-placeholder": "label",
     "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color",
-    "layout-label": "Layout"
+    "background-color-label": "Background Color"
   },
   "de": {
     "text-group-label": "Text",
@@ -209,8 +194,7 @@ const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
     "button-text-placeholder": "label",
     "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color",
-    "layout-label": "Layout"
+    "background-color-label": "Background Color"
   }
 }
 </i18n>

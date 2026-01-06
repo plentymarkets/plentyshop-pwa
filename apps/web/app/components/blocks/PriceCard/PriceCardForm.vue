@@ -109,7 +109,7 @@
       <UiFormLabel>{{ getEditorTranslation('borders-label') }}</UiFormLabel>
       <SfSwitch v-model="priceCardBlock.borders" data-testid="price-card-borders" />
     </div>
-    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
 
@@ -125,6 +125,7 @@
         </template>
       </SfInput>
     </div>
+
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -206,8 +207,6 @@ const priceCardBlock = computed<PriceCardContent>(() => {
   const block = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
   return block?.content as PriceCardContent;
 });
-
-const { isFullWidth } = useFullWidthToggleForContent(priceCardBlock);
 
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';

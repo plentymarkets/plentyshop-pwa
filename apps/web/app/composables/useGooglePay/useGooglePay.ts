@@ -77,6 +77,7 @@ export const useGooglePay = () => {
     const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
       usePayPal();
     const { clearCartItems } = useCart();
+    const { $i18n } = useNuxtApp();
     const { processingOrder } = useProcessingOrder();
     const { emit } = usePlentyEvent();
 
@@ -92,7 +93,7 @@ export const useGooglePay = () => {
     });
     if (!transaction || !transaction.id) {
       await useCartStockReservation().unreserve();
-      showErrorNotification(t('storefrontError.order.createFailed'));
+      showErrorNotification($i18n.t('storefrontError.order.createFailed'));
       return;
     }
 
@@ -111,7 +112,7 @@ export const useGooglePay = () => {
       const order = await createPlentyOrder();
 
       if (!order || !order.order || !order.order.id) {
-        showErrorNotification(t('storefrontError.order.createFailed'));
+        showErrorNotification($i18n.t('storefrontError.order.createFailed'));
         return;
       }
 
@@ -128,7 +129,7 @@ export const useGooglePay = () => {
       return { transactionState: 'SUCCESS' };
     } else {
       await useCartStockReservation().unreserve();
-      showErrorNotification(t('error.paymentFailed'));
+      showErrorNotification($i18n.t('errorMessages.paymentFailed'));
       return { transactionState: 'ERROR' };
     }
   };

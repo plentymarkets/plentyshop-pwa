@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
 import type { BlockPosition } from '~/composables/useBlockManager/types';
+const { t } = useI18n();
 
 const { openDrawerWithView } = useSiteConfiguration();
 const { togglePlaceholder, multigridColumnUuid } = useBlockManager();

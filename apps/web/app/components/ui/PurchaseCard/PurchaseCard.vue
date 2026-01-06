@@ -14,9 +14,11 @@
         <section class="p-4 xl:p-6">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
+
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
                 {{ productGetters.getName(product) }}
               </h1>
+
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
@@ -26,7 +28,7 @@
                   class="m-auto"
                 >
                   <UiTag :size="'sm'" :variant="'secondary'">{{
-                    t('product.bundleSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+                    t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
                   }}</UiTag>
                 </div>
               </div>
@@ -65,18 +67,16 @@
                     data-testid="show-reviews"
                     @click="scrollToReviews"
                   >
-                    {{ t('product.showAllReviews') }}
+                    {{ t('showAllReviews') }}
                   </UiButton>
                 </div>
-                <div class="text-xs text-righte">Artikelnummer {{ productGetters.getId(product) }}</div>
+                <div class="text-xs text-righte">
+                  Artikelnummer {{ productGetters.getId(product) }}
+                </div>
               </div>
             </template>
             <template v-if="key === 'bulletPoints' && configuration?.fields.bulletPoints">
-              <VariationBulletPoints
-                :product="product"
-                :language="'de'"
-                :fallback="productGetters.getTechnicalData(product)"
-              />
+              <VariationBulletPoints :product="product" :language="'de'" :fallback="productGetters.getTechnicalData(product)" />
             </template>
 
             <template v-if="key === 'previewText' && configuration?.fields.previewText">
@@ -108,8 +108,8 @@
                   <div>
                     {{
                       !isWishlistItem(productGetters.getVariationId(product))
-                        ? t('common.actions.addToWishlist')
-                        : t('common.actions.removeFromWishlist')
+                        ? t('addToWishlist')
+                        : t('removeFromWishlist')
                     }}
                   </div>
                 </WishlistButton>
@@ -143,14 +143,7 @@
                     class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
                     @change-quantity="changeQuantity"
                   />
-                  <div
-                    v-if="showNotifyMe && !productGetters.isSalable(product)"
-                    class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-                  >
-                    <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
-                  </div>
                   <SfTooltip
-                    v-else
                     show-arrow
                     placement="top"
                     :label="isNotValidVariation || isSalableText"
@@ -166,7 +159,7 @@
                       <template #prefix>
                         <div v-if="!loading" class="flex row items-center">
                           <SfIconShoppingCart size="sm" />
-                          {{ t('common.actions.addToCart') }}
+                          {{ t('addToCart') }}
                         </div>
                         <div v-else>
                           <SfLoaderCircular size="sm" />
@@ -177,16 +170,16 @@
                 </div>
 
                 <div class="mt-4 typography-text-xs flex gap-1">
-                  <span>{{ t('common.labels.asterisk') }}</span>
-                  <span>{{ showNetPrices ? t('product.priceExclVAT') : t('product.priceInclVAT') }}</span>
-                  <i18n-t keypath="shipping.excludedLabel" scope="global">
+                  <span>{{ t('asterisk') }}</span>
+                  <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
+                  <i18n-t keypath="excludedShipping" scope="global">
                     <template #shipping>
                       <SfLink
                         :href="localePath(paths.shipping)"
                         target="_blank"
                         class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                       >
-                        {{ t('common.labels.delivery') }}
+                        {{ t('delivery') }}
                       </SfLink>
                     </template>
                   </i18n-t>
@@ -286,7 +279,6 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
       paddingBottom: 0,
       paddingRight: 0,
       paddingLeft: 0,
-      fullWidth: false,
     },
   }),
 });
@@ -313,13 +305,12 @@ const {
 } = useValidatorAggregator('attributes');
 const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
+const { t } = useI18n();
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(props?.product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
-const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
-const showNotifyMe = getNotifyMeSetting();
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
@@ -362,12 +353,12 @@ const basePriceSingleValue = computed(
 const handleValidationErrors = (): boolean => {
   send({
     message: [
-      t('error.missingOrWrongProperties'),
+      t('errorMessages.missingOrWrongProperties'),
       '',
       ...invalidAttributeFields.value.map((field) => field.name),
       ...invalidFields.value.map((field) => field.name),
       '',
-      t('error.pleaseFillOutAllFields'),
+      t('errorMessages.pleaseFillOutAllFields'),
     ],
     type: 'negative',
   });
@@ -384,7 +375,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   if (!getCombination()) {
-    send({ message: t('product.attributes.notValidVariation'), type: 'negative' });
+    send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
     return false;
   }
 
@@ -397,7 +388,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   if (addedToCart) {
     quickCheckout
       ? openQuickCheckout(props?.product, quantitySelectorValue.value)
-      : send({ message: t('cart.itemAdded'), type: 'positive' });
+      : send({ message: t('addedToCart'), type: 'positive' });
 
     if (getSetting() === '0') {
       send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' });
@@ -429,8 +420,8 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('product.notAvailable')));
-const isNotValidVariation = computed(() => (getCombination() ? '' : t('product.attributes.notValidVariation')));
+const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('itemNotAvailable')));
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
 
 const scrollToReviews = () => {

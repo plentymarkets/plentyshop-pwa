@@ -62,6 +62,7 @@ import { SfAccordionItem, SfIconChevronLeft, SfIconClose, SfInput, SfLoaderCircu
 const openedCoupon = ref(false);
 const couponCode = ref('');
 const { addCoupon, deleteCoupon, loading } = useCoupon();
+const { t } = useI18n();
 const { data: cart } = useCart();
 
 const handleDeleteCoupon = async () => {

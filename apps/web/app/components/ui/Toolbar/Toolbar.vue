@@ -73,7 +73,6 @@ import { deepEqual } from '~/utils/jsonHelper';
 const previewLabel = 'Switch to Preview mode to see how your site will appear to visitors.';
 const editLabel = 'Switch to Edit mode to modify your page content and layout.';
 
-const { hasChanges: localizationHasChanges } = useEditorLocalizationKeys();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
@@ -104,13 +103,10 @@ const cleanData = computed(() => initial.value.cleanData.value);
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
-const { assetsIsDirty } = useCustomAssets();
 
 const { save } = useToolbar();
 
-const isTouched = computed(
-  () => assetsIsDirty.value || settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value,
-);
+const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;

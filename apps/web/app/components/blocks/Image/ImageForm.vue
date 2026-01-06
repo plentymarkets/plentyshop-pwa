@@ -378,7 +378,6 @@
         </SfInput>
       </label>
     </div>
-    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div
       id="padding-form"
       class="py-2"
@@ -455,7 +454,6 @@ import {
 } from '@storefront-ui/vue';
 
 import type { ImageFormProps } from './types';
-import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
@@ -480,7 +478,7 @@ const DEFAULT_LAYOUT = {
 
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
-  const migrated = migrateImageContent(rawContent as ImageContent | OldContent);
+  const migrated = migrateImageContent(rawContent);
 
   if (!migrated.layout) {
     migrated.layout = { ...DEFAULT_LAYOUT };
@@ -493,8 +491,6 @@ const uiImageTextBlock = computed(() => {
   }
   return migrated;
 });
-
-const { isFullWidth } = useFullWidthToggleForContent(uiImageTextBlock);
 
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');

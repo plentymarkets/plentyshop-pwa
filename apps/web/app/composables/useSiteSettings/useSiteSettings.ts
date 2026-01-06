@@ -30,9 +30,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
 
   const getSetting: GetSetting = () => {
     return (
-      (state.value.data?.[setting as string] as string) ??
-      (state.value.initialData?.[setting as string] as string) ??
-      ''
+      (state.value.data?.[setting as string] as string) ?? (state.value.initialData?.[setting as string] as string)
     );
   };
 

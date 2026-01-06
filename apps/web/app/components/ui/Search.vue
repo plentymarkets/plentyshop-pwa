@@ -5,8 +5,8 @@
       ref="inputReference"
       v-model="inputModel"
       data-testid="search-bar-input"
-      :aria-label="t('common.actions.search')"
-      :placeholder="t('common.actions.search')"
+      :aria-label="t('search')"
+      :placeholder="t('search')"
       @focus="open"
     >
       <template #prefix>
@@ -17,7 +17,7 @@
         <button
           v-if="inputModel"
           type="button"
-          :aria-label="t('common.actions.resetSearch')"
+          :aria-label="t('resetSearch')"
           class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
           @click="handleReset"
         >
@@ -37,6 +37,7 @@ const props = defineProps<{
 }>();
 
 const localePath = useLocalePath();
+const { t } = useI18n();
 const router = useRouter();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();

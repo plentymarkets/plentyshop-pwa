@@ -198,7 +198,7 @@ export const fakeFacetCallEN = {
         values: [
           {
             id: 14,
-            name: 'Ready for immediate dispatch, delivery time 48h',
+            name: 'Sofort versandfertig, Lieferzeit 48h',
             cssClass: '',
             position: 1,
             count: 18,

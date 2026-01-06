@@ -29,7 +29,4 @@ export type ProductRecommendedProductsContent = {
     color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
-  layout?: {
-    fullWidth?: boolean;
-  };
 };

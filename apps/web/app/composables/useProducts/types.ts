@@ -17,7 +17,6 @@ export interface UseProducts {
   currentProduct: Readonly<Ref<UseProductsState['currentProduct']>>;
   fetchProducts: FetchProducts;
   setCurrentProduct: SetCurrentProduct;
-  isGlobalProductCategoryTemplate: Readonly<Ref<boolean>>;
 }
 
 export type UseProductsReturn = (category?: string) => UseProducts;

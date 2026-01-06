@@ -8,6 +8,7 @@
     <template #summary>
       <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
     </template>
+
     <div class="space-y-4">
       <div>
         <UiFormLabel class="flex justify-between">
@@ -52,7 +53,6 @@
         <SfSwitch v-model="uiItemGridBlock.showItemCount" data-testid="show-item-count" />
       </div>
 
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
       <div v-if="uiItemGridBlock.showItemCount">
         <UiFormLabel>{{ getEditorTranslation('item-count-position') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -263,8 +263,6 @@ const props = defineProps<ItemGridFormProps>();
 const uiItemGridBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ItemGridContent,
 );
-
-const { isFullWidth } = useFullWidthToggleForContent(uiItemGridBlock);
 
 const desktopOptions = [2, 3, 4, 5, 6, 7];
 const tabletOptions = [2, 3, 4, 5, 6];

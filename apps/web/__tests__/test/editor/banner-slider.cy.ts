@@ -11,7 +11,7 @@ describe('Banner Slider Block Form', () => {
   const cookieBar = new CookieBarObject();
 
   const openSettingsForBannerSliderBlock = () => {
-    cy.get('[data-testid="Carousel-open-editor-button"]').eq(0).should('exist').click();
+    cy.get('[data-testid="open-editor-button"]').eq(0).should('exist').click();
 
     cy.get('[data-testid="banner-carousel-form"]').should('exist');
   };

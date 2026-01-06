@@ -45,7 +45,7 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderDetailsProps } from './types';
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 defineProps<OrderDetailsProps>();
 </script>

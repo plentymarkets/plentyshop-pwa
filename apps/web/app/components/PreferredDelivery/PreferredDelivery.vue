@@ -190,6 +190,7 @@ const {
 } = usePreferredDelivery();
 const { defineField, errors, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
+const { t } = useI18n();
 
 onNuxtReady(() => getPreferredProfiles());
 

@@ -7,9 +7,6 @@ export type ImageGalleryContent = {
     thumbnailType?: string;
     enableHoverZoom?: boolean;
   };
-  layout: {
-    fullWidth?: boolean;
-  };
 };
 
 export type GalleryProps = {

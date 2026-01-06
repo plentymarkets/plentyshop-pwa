@@ -38,17 +38,17 @@
       </div>
       <div class="h-auto flex-shrink-0 block sm:flex gap-2 relative mt-3">
         <div class="typography-text-xs flex gap-1 mb-3 sm:mb-0">
-          <span>{{ t('common.labels.asterisk') }}</span>
-          <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
-          <span v-else>{{ t('product.priceInclVAT') }}</span>
-          <i18n-t keypath="shipping.excludedLabel" scope="global">
+          <span>{{ t('asterisk') }}</span>
+          <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+          <span v-else>{{ t('itemInclVAT') }}</span>
+          <i18n-t keypath="excludedShipping" scope="global">
             <template #shipping>
               <SfLink
                 :href="localePath(paths.shipping)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ t('common.labels.delivery') }}
+                {{ t('delivery') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -82,6 +82,7 @@ import { paths } from '~/utils/paths';
 const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
+const { t } = useI18n();
 const { showNetPrices } = useCart();
 
 const localePath = useLocalePath();
@@ -107,7 +108,7 @@ const addToCart = async () => {
   if (await addOrderToCart()) {
     send({
       type: 'positive',
-      message: t('cart.itemAdded'),
+      message: t('addedToCart'),
     });
     goToPage(paths.cart);
   }

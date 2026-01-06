@@ -7,7 +7,6 @@
 import type { NodePlopAPI } from 'plop';
 import type { GeneratorAction, GeneratorPrompt, PromptAnswers } from './types';
 import { defaultErrorHandler, type ErrorHandler } from '../index';
-import type { PathResolver } from '../path/PathResolver';
 
 /**
  * Abstract base class for all PlopJS generators
@@ -23,11 +22,7 @@ export abstract class BaseGenerator {
   /** Error handler for consistent error management */
   protected errorHandler: ErrorHandler;
 
-  /** Path resolver for dynamic path calculation */
-  protected pathResolver: PathResolver;
-
-  constructor(pathResolver: PathResolver, errorHandler?: ErrorHandler) {
-    this.pathResolver = pathResolver;
+  constructor(errorHandler?: ErrorHandler) {
     this.errorHandler = errorHandler || defaultErrorHandler;
   }
 

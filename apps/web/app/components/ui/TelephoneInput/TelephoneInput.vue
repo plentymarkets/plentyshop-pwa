@@ -47,6 +47,7 @@ const emit = defineEmits<{
   (e: 'validPhoneNumber', validation: PhoneValidationResult): void;
 }>();
 
+const { t } = useI18n();
 const localValue = ref(props.modelValue);
 
 watch(
@@ -63,7 +64,7 @@ const dropdownOptions = {
   showDialCodeInSelection: false,
   showFlags: true,
   showSearchBox: true,
-  searchBoxPlaceholder: t('checkout.payment.countrySearch'),
+  searchBoxPlaceholder: t('checkoutPayment.countrySearch'),
 };
 
 const inputOptions = {

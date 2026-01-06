@@ -9,7 +9,7 @@
         class="leading-5 text-sm text-zinc-900"
         for="unit-combination"
         data-testing="variation-select-unit-label"
-        >{{ t('common.labels.content') }}</label
+        >{{ t('content') }}</label
       >
       <SfSelect
         id="unit-combination"
@@ -41,6 +41,7 @@ const props = defineProps<{
 const route = useRoute();
 const { productParams } = createProductParams(route.params);
 const { buildProductLanguagePath } = useLocalization();
+const { t } = useI18n();
 
 const selectedUnit = ref(productParams?.variationId?.toString() || '');
 

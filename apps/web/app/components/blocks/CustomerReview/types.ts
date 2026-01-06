@@ -16,7 +16,6 @@ export type CustomerReviewContent = {
   layout: {
     collapsible: boolean;
     initiallyCollapsed: boolean;
-    fullWidth?: boolean;
     paddingTop: number;
     paddingBottom: number;
     paddingLeft: number;

@@ -1,8 +1,6 @@
 <template>
   <div v-if="!isForgotPassword">
-    <div class="text-lg font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">
-      {{ t('authentication.login.heading') }}
-    </div>
+    <div class="text-lg font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">{{ t('auth.login.heading') }}</div>
     <div class="flex flex-col items-center justify-center my-1">
       <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="loginUser">
         <label>
@@ -17,20 +15,20 @@
 
         <div class="text-end">
           <SfLink variant="primary" class="cursor-pointer" @click="changeToForgotPassword">
-            {{ t('authentication.login.forgotPasswordLabel') }}
+            {{ t('auth.login.forgotPasswordLabel') }}
           </SfLink>
         </div>
 
         <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="login-submit">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <span v-else>
-            {{ t('authentication.login.submitLabel') }}
+            {{ t('auth.login.submitLabel') }}
           </span>
         </UiButton>
         <div v-if="!isSoftLogin" class="text-center">
-          <div class="my-5 font-bold">{{ t('authentication.login.createAccount') }}</div>
+          <div class="my-5 font-bold">{{ t('auth.login.createAccount') }}</div>
           <SfLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
-            {{ t('authentication.login.createAccountLinkLabel') }}
+            {{ t('auth.login.createAccountLinkLabel') }}
           </SfLink>
         </div>
       </form>
@@ -51,6 +49,7 @@ import type { LoginProps } from './types';
 
 const { login, loading } = useCustomer();
 const { send } = useNotification();
+const { t } = useI18n();
 
 const { isSoftLogin = false, isModal = false } = defineProps<LoginProps>();
 const emits = defineEmits(['loggedIn', 'change-view', 'change-forgot-password']);
@@ -67,7 +66,7 @@ const changeToForgotPassword = () => {
 const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
-    send({ message: t('authentication.login.success'), type: 'positive' });
+    send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
   }
 };

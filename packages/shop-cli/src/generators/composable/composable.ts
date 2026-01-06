@@ -5,7 +5,7 @@
 
 import type { NodePlopAPI } from 'plop';
 import { BaseGenerator, ActionBuilder } from '../../core';
-import type { GeneratorAction, PromptAnswers, GeneratorPrompt, PathResolver } from '../../core';
+import type { GeneratorAction, PromptAnswers, GeneratorPrompt } from '../../core';
 import { composablePrompts } from './composable-prompts';
 import { validateComposableName } from '../../utils/validation';
 
@@ -21,7 +21,7 @@ class ComposableGenerator extends BaseGenerator {
   }
 
   createActions(_data: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('composable', _data.name, this.pathResolver)
+    return ActionBuilder.forGenerator('composable', _data.name)
       .withData(_data)
       .addMainFile()
       .addTypes()
@@ -35,7 +35,7 @@ class ComposableGenerator extends BaseGenerator {
   }
 }
 
-export default function composableGenerator(plop: NodePlopAPI, pathResolver: PathResolver): void {
-  const generator = new ComposableGenerator(pathResolver);
+export default function composableGenerator(plop: NodePlopAPI): void {
+  const generator = new ComposableGenerator();
   generator.register(plop);
 }

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { DryRunManager } from '../dry-run';
 
 describe('DryRunManager', () => {
@@ -106,15 +106,11 @@ describe('DryRunManager', () => {
       dryRunManager.disableDryRun();
       dryRunManager.logOperation('create', '/test/Component.vue', 'content');
 
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
       try {
         dryRunManager.execute();
       } catch (error) {
         expect(error).toBeDefined();
       }
-
-      consoleErrorSpy.mockRestore();
 
       expect(dryRunManager.operations).toEqual([]);
     });

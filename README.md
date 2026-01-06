@@ -113,24 +113,6 @@ npx plentyshop generate composable
 
 The generators will create all necessary files with proper TypeScript types, test stubs, and follow the project's established patterns.
 
-### Custom Configuration
-
-For custom project structures, configure the CLI in `.plentyone/shop-cli.json`:
-
-```json
-{
-  "webAppPath": "apps/web/app"
-}
-```
-
-Or use CLI flags to override:
-
-```bash
-npx plentyshop generate component --web-app-path=src/app
-```
-
-Configuration priority: CLI flags > Config file > Defaults
-
 ## Resources
 
 ### Documentation

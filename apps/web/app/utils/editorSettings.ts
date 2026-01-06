@@ -1,24 +1,24 @@
 export type SettingOption = { label: string; value: string };
 
 export const seoAvailabilities = [
-  { key: 'availabilities.availabilityNotSet', value: '' },
-  { key: 'availabilities.availabilityInStock', value: 'https://schema.org/InStock' },
-  { key: 'availabilities.availabilityOutOfStock', value: 'https://schema.org/OutOfStock' },
-  { key: 'availabilities.availabilityPreOrder', value: 'https://schema.org/PreOrder' },
-  { key: 'availabilities.availabilityDiscontinued', value: 'https://schema.org/Discontinued' },
-  { key: 'availabilities.availabilityInStoreOnly', value: 'https://schema.org/InStoreOnly' },
-  { key: 'availabilities.availabilityLimitedAvailability', value: 'https://schema.org/LimitedAvailability' },
-  { key: 'availabilities.availabilityOnlineOnly', value: 'https://schema.org/OnlineOnly' },
-  { key: 'availabilities.availabilityPreSale', value: 'https://schema.org/PreSale' },
-  { key: 'availabilities.availabilitySoldOut', value: 'https://schema.org/SoldOut' },
-  { key: 'availabilities.availabilityBackOrder', value: 'https://schema.org/BackOrder' },
+  { key: 'availabilitiesOptions.availabilityNotSet', value: '' },
+  { key: 'availabilitiesOptions.availabilityInStock', value: 'https://schema.org/InStock' },
+  { key: 'availabilitiesOptions.availabilityOutOfStock', value: 'https://schema.org/OutOfStock' },
+  { key: 'availabilitiesOptions.availabilityPreOrder', value: 'https://schema.org/PreOrder' },
+  { key: 'availabilitiesOptions.availabilityDiscontinued', value: 'https://schema.org/Discontinued' },
+  { key: 'availabilitiesOptions.availabilityInStoreOnly', value: 'https://schema.org/InStoreOnly' },
+  { key: 'availabilitiesOptions.availabilityLimitedAvailability', value: 'https://schema.org/LimitedAvailability' },
+  { key: 'availabilitiesOptions.availabilityOnlineOnly', value: 'https://schema.org/OnlineOnly' },
+  { key: 'availabilitiesOptions.availabilityPreSale', value: 'https://schema.org/PreSale' },
+  { key: 'availabilitiesOptions.availabilitySoldOut', value: 'https://schema.org/SoldOut' },
+  { key: 'availabilitiesOptions.availabilityBackOrder', value: 'https://schema.org/BackOrder' },
 ];
 
 export const cookieGroupOptions = [
-  { key: 'CookieBar.group.functional', value: 'CookieBar.functional.label' },
-  { key: 'CookieBar.group.externalMedia', value: 'CookieBar.externalMedia.label' },
-  { key: 'CookieBar.group.necessary', value: 'CookieBar.essentials.label' },
-  { key: 'CookieBar.group.marketing', value: 'CookieBar.marketing.label' },
+  { key: 'cookieGroup.functional', value: 'CookieBar.functional.label' },
+  { key: 'cookieGroup.externalMedia', value: 'CookieBar.externalMedia.label' },
+  { key: 'cookieGroup.necessary', value: 'CookieBar.essentials.label' },
+  { key: 'cookieGroup.marketing', value: 'CookieBar.marketing.label' },
 ];
 
 export const conditionOptions = [

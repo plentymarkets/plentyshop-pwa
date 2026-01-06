@@ -2,8 +2,8 @@
   <NuxtLayout name="auth" :heading="''">
     <div class="w-full max-w-full md:max-w-4xl lg:max-w-3xl xl:max-w-4xl mx-auto md:px-6 lg:px-8">
       <div class="text-center mb-8">
-        <div class="text-2xl font-semibold mb-2">{{ t('authentication.signup.heading') }}</div>
-        <div class="text-lg text-gray-600 mb-6">{{ t('authentication.signup.subheading') }}</div>
+        <div class="text-2xl font-semibold mb-2">{{ t('auth.signup.heading') }}</div>
+        <div class="text-lg text-gray-600 mb-6">{{ t('auth.signup.subheading') }}</div>
       </div>
 
       <form
@@ -29,7 +29,7 @@
             <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
             <UiFormPasswordInput
               v-model="formFields.password.value"
-              :title="t('authentication.signup.passwordValidation.invalidPassword')"
+              :title="t('invalidPassword')"
               name="password"
               autocomplete="current-password"
               v-bind="formFieldsAttributes.password"
@@ -43,7 +43,7 @@
             <UiFormLabel>{{ t('form.repeatPasswordLabel') }} {{ t('form.required') }}</UiFormLabel>
             <UiFormPasswordInput
               v-model="formFields.repeatPassword.value"
-              :title="t('authentication.signup.passwordValidation.invalidPassword')"
+              :title="t('invalidPassword')"
               name="password"
               autocomplete="current-password"
               v-bind="formFieldsAttributes.repeatPassword"
@@ -61,12 +61,7 @@
           >
             <SfIconCheck v-if="passwordValidationLength" size="sm" class="mr-2" />
             <SfIconClose v-else size="sm" class="mr-2" />
-            {{
-              t('authentication.signup.passwordValidation.characters', {
-                min: passwordMinLength,
-                max: passwordMaxLength,
-              })
-            }}
+            {{ t('auth.signup.passwordValidation.characters', { min: passwordMinLength, max: passwordMaxLength }) }}
           </div>
           <div
             class="flex items-center"
@@ -74,7 +69,7 @@
           >
             <SfIconCheck v-if="passwordValidationOneDigit" size="sm" class="mr-2" />
             <SfIconClose v-else size="sm" class="mr-2" />
-            {{ t('authentication.signup.passwordValidation.numbers') }}
+            {{ t('auth.signup.passwordValidation.numbers') }}
           </div>
           <div
             class="flex items-center"
@@ -85,7 +80,7 @@
           >
             <SfIconCheck v-if="passwordValidationOneLetter" size="sm" class="mr-2" />
             <SfIconClose v-else size="sm" class="mr-2" />
-            {{ t('authentication.signup.passwordValidation.letters') }}
+            {{ t('auth.signup.passwordValidation.letters') }}
           </div>
         </div>
 
@@ -262,7 +257,7 @@
                   target="_blank"
                   class="text-primary-600 hover:text-primary-700 underline focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
-                  {{ t('legal.privacyPolicy') }}
+                  {{ t('privacyPolicy') }}
                 </SfLink>
               </template>
             </i18n-t>
@@ -285,7 +280,7 @@
         <div class="grid grid-cols-1 gap-4">
           <UiButton type="submit" class="py-3 text-base font-medium" :disabled="loading">
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-            <template v-else>{{ t('authentication.signup.submitLabel') }}</template>
+            <template v-else>{{ t('auth.signup.submitLabel') }}</template>
           </UiButton>
         </div>
       </form>
@@ -299,20 +294,17 @@ import { paths } from '~/utils/paths';
 import { useRegisterForm } from '~/composables/useRegisterForm';
 import { SfLink, SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
 import { AddressType } from '@plentymarkets/shop-api';
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
 
 const { default: shippingCountries, fetchAggregatedCountries } = useAggregatedCountries();
 const localePath = useLocalePath();
 const { loading } = useCustomer();
+const { t } = useI18n();
 const { send: _send } = useNotification();
 const runtimeConfig = useRuntimeConfig();
 const passwordMinLength = runtimeConfig.public.passwordMinLength;
 const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 definePageMeta({ layout: false, middleware: ['guest-guard'] });
-usePageMeta().setPageMeta(t('authentication.signup.submitLabel'), 'page');
+usePageMeta().setPageMeta(t('auth.signup.submitLabel'), 'page');
 const turnstileLoad = ref(false);
 const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Shipping);
 const {

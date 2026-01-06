@@ -41,7 +41,7 @@
       <div v-else>
         <p class="font-medium text-sm">
           {{ productBundleGetters.getBundleItemQuantity(item) }} x
-          <span class="h-auto">[{{ t('product.attributes.productNameMissing') }}]</span>
+          <span class="h-auto">[{{ t('productAttributes.productNameMissing') }}]</span>
         </p>
       </div>
     </div>
@@ -52,6 +52,7 @@
 import { type ProductBundleComponent, productBundleGetters } from '@plentymarkets/shop-api';
 import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
 import { SfLink } from '@storefront-ui/vue';
+const { t } = useI18n();
 
 const { product } = defineProps<BundleOrderItemsProps>();
 const NuxtLink = resolveComponent('NuxtLink');

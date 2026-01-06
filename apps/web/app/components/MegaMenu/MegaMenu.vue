@@ -10,7 +10,7 @@
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
-          :aria-label="t('common.navigation.closeMenu')"
+          :aria-label="t('closeMenu')"
           class="mr-5 hover:!bg-header-400"
           :style="{ color: iconColor }"
           @click="openMenu([])"
@@ -20,7 +20,7 @@
 
         <NuxtLink
           :to="localePath(paths.home)"
-          :aria-label="t('common.actions.goToHomepage')"
+          :aria-label="t('goToHomepage')"
           class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
@@ -74,7 +74,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
+            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -97,7 +97,7 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
+                  class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
@@ -130,73 +130,70 @@
         :enter-to-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
         :leave-from-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
         :leave-to-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
-        ><SfDrawer
-          ref="drawerReference"
-          v-model="isOpen"
-          :placement="placement"
-          class="bg-white overflow-y-auto z-[1000] w-full"
-          :class="{ 'w-100': placement === 'left' || placement === 'right' }"
-        >
-          <nav>
-            <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-              <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
-              <UiButton variant="tertiary" square :aria-label="t('common.navigation.closeMenu')" class="ml-2" @click="close()">
-                <SfIconClose class="text-neutral-500" />
-              </UiButton>
-            </div>
-            <ul v-if="activeMenu" class="mt-2 mb-6">
-              <li v-if="activeMenu.id !== 0">
+      ><SfDrawer
+        ref="drawerReference"
+        v-model="isOpen"
+        :placement="placement"
+        class="bg-white overflow-y-auto z-[1000] w-full"
+        :class="{ 'w-100': placement === 'left' || placement === 'right' }"
+      >
+        <nav>
+          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
+            <p class="typography-text-base font-medium">{{ t('browseProducts') }}</p>
+            <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="ml-2" @click="close()">
+              <SfIconClose class="text-neutral-500" />
+            </UiButton>
+          </div>
+          <ul v-if="activeMenu" class="mt-2 mb-6">
+            <li v-if="activeMenu.id !== 0">
+              <SfListItem
+                size="lg"
+                tag="button"
+                type="button"
+                class="border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
+                @click="goBack()"
+              >
+                <div class="flex items-center">
+                  <SfIconArrowBack class="text-neutral-500" />
+                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
+                </div>
+              </SfListItem>
+            </li>
+            <template v-for="node in activeMenu.children" :key="node.id">
+              <li v-if="node.childCount === 0">
                 <SfListItem
                   size="lg"
-                  tag="button"
-                  type="button"
-                  class="border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
-                  @click="goBack()"
+                  :tag="NuxtLink"
+                  :href="localePath(generateCategoryLink(node))"
+                  class="hover:bg-secondary-100"
+                  @click="close()"
                 >
                   <div class="flex items-center">
-                    <SfIconArrowBack class="text-neutral-500" />
-                    <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
+                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                    <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                   </div>
                 </SfListItem>
               </li>
-              <template v-for="node in activeMenu.children" :key="node.id">
-                <li v-if="node.childCount === 0">
-                  <SfListItem
-                    size="lg"
-                    :tag="NuxtLink"
-                    :href="localePath(generateCategoryLink(node))"
-                    class="hover:bg-secondary-100"
-                    @click="close()"
-                  >
-                    <div class="flex items-center">
-                      <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                      <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                    </div>
-                  </SfListItem>
-                </li>
-                <li v-else>
-                  <SfListItem size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
-                    <div class="flex items-center w-100">
-                      <NuxtLink
-                        class="flex-1 m-0 p-4 pr-0"
-                        :to="localePath(generateCategoryLink(node))"
-                        @click="close()"
-                      >
-                        <div class="flex items-center">
-                          <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                          <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                        </div>
-                      </NuxtLink>
-                      <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
-                        <SfIconChevronRight class="text-neutral-500" />
+              <li v-else>
+                <SfListItem size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
+                  <div class="flex items-center w-100">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
+                      <div class="flex items-center">
+                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                       </div>
+                    </NuxtLink>
+                    <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
+                      <SfIconChevronRight class="text-neutral-500" />
                     </div>
-                  </SfListItem>
-                </li>
-              </template>
-            </ul>
-          </nav> </SfDrawer
-      ></transition>
+                  </div>
+                </SfListItem>
+              </li>
+            </template>
+          </ul>
+        </nav>
+      </SfDrawer></transition>
+
     </template>
   </header>
 </template>
@@ -213,7 +210,7 @@ import {
   useTrapFocus,
   useDropdown,
 } from '@storefront-ui/vue';
-import type { SfDrawerPlacement } from '@storefront-ui/vue';
+import type {SfDrawerPlacement} from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';

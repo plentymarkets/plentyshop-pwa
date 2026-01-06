@@ -9,7 +9,7 @@ describe('Newsletter Block Form', () => {
   const clickOnNewsletterBlockEditButton = () => {
     cy.getByTestId('newsletter-block')
       .closest('[data-testid="block-wrapper"]')
-      .find('[data-testid="NewsletterSubscribe-open-editor-button"]')
+      .find('[data-testid="open-editor-button"]')
       .click();
   };
 

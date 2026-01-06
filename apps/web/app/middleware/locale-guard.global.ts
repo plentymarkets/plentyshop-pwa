@@ -7,14 +7,40 @@
  */
 export default defineNuxtRouteMiddleware((to) => {
   const config = useRuntimeConfig();
-  const { availableLocales } = useNuxtApp().$i18n;
-  const allLocales = availableLocales as string[];
-  const activeLanguages = (config.public.activeLanguages as string)
-    .split(',')
-    .filter((lang) => (availableLocales as string[]).includes(lang))
-    .map((lang: string) => lang.trim());
+
+  const activeLanguages = (config.public.activeLanguages as string).split(',').map((lang: string) => lang.trim());
+
   const pathSegments = to.path.split('/').filter(Boolean);
   const pathLocale = pathSegments[0];
+
+  const allLocales = [
+    'bg',
+    'cs',
+    'da',
+    'de',
+    'en',
+    'es',
+    'et',
+    'fi',
+    'fr',
+    'ga',
+    'hr',
+    'hu',
+    'it',
+    'lt',
+    'lv',
+    'nl',
+    'no',
+    'pl',
+    'pt',
+    'ro',
+    'ru',
+    'sk',
+    'sv',
+    'tr',
+    'vi',
+    'zh',
+  ];
   const hasLocalePrefix = pathLocale ? allLocales.includes(pathLocale) : false;
 
   if (hasLocalePrefix && pathLocale && !activeLanguages.includes(pathLocale)) {

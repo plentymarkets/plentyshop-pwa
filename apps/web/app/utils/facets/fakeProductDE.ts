@@ -113,7 +113,7 @@ export const fakeProductDE = {
     },
     rebate: 0,
     salableVariationCount: 1,
-    customsTariffNumber: '3303001000',
+    customsTariffNumber: '',
     producingCountry: {
       names: [],
     },
@@ -172,8 +172,7 @@ export const fakeProductDE = {
     },
     id: 1007,
     availabilityUpdatedAt: '2018-02-28T11:49:53+01:00',
-    externalId: '54321',
-    model: 'Testmodel',
+    model: '',
   },
   filter: {
     isSalable: true,

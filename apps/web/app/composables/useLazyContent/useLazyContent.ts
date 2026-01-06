@@ -1,23 +1,23 @@
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 export function useLazyContent() {
   const { categoryTemplateData, fetchCategoryTemplate } = useCategoryTemplate();
 
   const loading = ref(false);
-  const error = ref('');
+  const error = ref("");
   const hasLoaded = ref(false);
 
-  const content = computed(() => categoryTemplateData.value?.data ?? '');
+  const content = computed(() => categoryTemplateData.value?.data ?? "");
 
   async function loadContent(categoryId: number) {
     loading.value = true;
-    error.value = '';
+    error.value = "";
 
     try {
       await fetchCategoryTemplate(categoryId);
       hasLoaded.value = true;
     } catch {
-      error.value = 'Der Inhalt konnte nicht geladen werden.';
+      error.value = "Der Inhalt konnte nicht geladen werden.";
     } finally {
       loading.value = false;
     }
@@ -28,6 +28,6 @@ export function useLazyContent() {
     loading,
     error,
     hasLoaded,
-    loadContent,
+    loadContent
   };
 }

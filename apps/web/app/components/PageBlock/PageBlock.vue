@@ -1,5 +1,6 @@
 <template>
-  <div v-if="shouldRenderBlock && block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
+
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
@@ -49,13 +50,7 @@
         />
       </ClientOnly>
 
-      <component
-        :is="getBlockComponent"
-        v-bind="contentProps"
-        :index="index"
-        @no-data="handleNoData"
-        @has-data="handleHasData"
-      >
+      <component :is="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
             :index="index"
@@ -146,32 +141,6 @@ const shouldShowBottomAddInGrid = computed(() =>
 );
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
-const hasRuntimeData = ref(true);
-
-const handleNoData = () => {
-  hasRuntimeData.value = false;
-};
-const handleHasData = () => {
-  hasRuntimeData.value = true;
-};
-
-const shouldRenderBlock = computed(() => {
-  if (!props.block?.meta) return false;
-
-  if (props.enableActions) {
-    return true;
-  }
-
-  if (!hasRuntimeData.value) {
-    return false;
-  }
-
-  if (props.blockHasData && !props.blockHasData(props.block)) {
-    return false;
-  }
-
-  return true;
-});
 
 const marginBottomClasses = computed(() => {
   if (props.block.name === 'MultiGrid') return '';

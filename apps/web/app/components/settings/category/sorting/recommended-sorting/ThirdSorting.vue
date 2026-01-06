@@ -9,7 +9,7 @@
       data-testid="recommended-third-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
-      :custom-label="(option) => getEditorUITranslation(option)"
+      :custom-label="(option) => $dynamicEditorTranslation(option)"
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
@@ -25,6 +25,7 @@ import Multiselect from 'vue-multiselect';
 const { updateSetting, getSetting } = useSiteSettings('recommendedThirdSortingOption');
 
 const sortingOptions = computed(() => sortingCategory);
+const { $dynamicEditorTranslation } = useNuxtApp();
 
 const recommendedThirdSortingOption = computed({
   get: () => {

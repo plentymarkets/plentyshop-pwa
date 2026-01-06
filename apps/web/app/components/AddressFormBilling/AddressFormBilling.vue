@@ -171,7 +171,7 @@
           variant="secondary"
           type="submit"
         >
-          {{ t('common.actions.saveAddress') }}
+          {{ t('saveAddress') }}
         </UiButton>
 
         <UiButton
@@ -180,7 +180,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Billing}`"
-          :aria-label="t('common.navigation.closeAddressForm')"
+          :aria-label="t('closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
@@ -214,6 +214,7 @@ const {
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Billing);
 const { invalidVAT, clearInvalidVAT, vatServerError } = useCreateAddress(AddressType.Billing);
+const { t } = useI18n();
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress, hasCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: billingSchema });

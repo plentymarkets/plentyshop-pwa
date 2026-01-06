@@ -16,10 +16,9 @@
 
 <script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
+
+const { t } = useI18n();
+
 definePageMeta({
   layout: 'account',
   pageType: 'static',

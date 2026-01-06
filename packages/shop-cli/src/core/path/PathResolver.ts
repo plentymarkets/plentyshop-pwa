@@ -13,23 +13,17 @@ import { ComponentPathStrategy, ComposablePathStrategy } from './PathStrategies'
  * Default path configuration
  */
 class DefaultPathConfig implements PathConfig {
-  readonly cliPackageRoot: string;
-
-  constructor(cliPackageRoot?: string) {
-    this.cliPackageRoot = cliPackageRoot ?? process.cwd();
-  }
-
   get projectRoot(): string {
-    // When CLI is at packages/shop-cli, go up two levels to reach project root
-    return resolve(this.cliPackageRoot, '../../');
+    // When run from packages/shop-cli, go up two levels to reach project root
+    return resolve(process.cwd(), '../../');
   }
 
   get webAppRoot(): string {
-    return join(this.projectRoot, 'apps/web/app');
+    return join(this.projectRoot, '/apps/web/app');
   }
 
   get templatesRoot(): string {
-    return join(this.cliPackageRoot, 'templates');
+    return join(process.cwd(), 'templates');
   }
 }
 
@@ -41,10 +35,9 @@ export class PathResolver {
   private readonly config: PathConfig;
 
   constructor(configOverrides?: Partial<PathConfig>) {
-    const defaultConfig = new DefaultPathConfig(configOverrides?.cliPackageRoot);
+    const defaultConfig = new DefaultPathConfig();
     this.config = configOverrides
       ? {
-          cliPackageRoot: configOverrides.cliPackageRoot ?? defaultConfig.cliPackageRoot,
           projectRoot: configOverrides.projectRoot ?? defaultConfig.projectRoot,
           webAppRoot: configOverrides.webAppRoot ?? defaultConfig.webAppRoot,
           templatesRoot: configOverrides.templatesRoot ?? defaultConfig.templatesRoot,

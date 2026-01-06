@@ -1,11 +1,22 @@
 <template>
-  <template v-if="showArrow">
-    <div data-testid="producteprel" class="flex items-center gap-2 absolute top-0 right-0" style="z-index: 1">
-      <SfButton v-if="showArrow" :size="'sm'" variant="tertiary" class="hover:bg-transparent" @click="open">
+  <template
+    v-if="showArrow"
+  >
+    <div
+      data-testid="producteprel"
+      class="flex items-center gap-2 absolute top-0 right-0"
+      style="z-index: 1"
+    >
+      <SfButton v-if="showArrow" :size="'sm'" variant="tertiary" class="hover:bg-transparent"  @click="open">
         <ArrowSvg :level="eprelValue" :size="size" class="transition-transform duration-200" />
       </SfButton>
+
+
     </div>
-    <div class="flex items-center gap-2 absolute top-0 right-0" style="z-index: 2">
+    <div
+      class="flex items-center gap-2 absolute top-0 right-0"
+      style="z-index: 2"
+    >
       <transition
         enter-active-class="transition duration-200 ease-out"
         leave-active-class="transition duration-200 ease-out"
@@ -33,13 +44,7 @@
           aria-describedby="productEprelContent"
         >
           <header>
-            <UiButton
-              variant="tertiary"
-              square
-              :aria-label="t('closeMenu')"
-              class="absolute right-2 top-2 hover:bg-transparent active:bg-transparent"
-              @click="close()"
-            >
+            <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="absolute right-2 top-2 hover:bg-transparent active:bg-transparent" @click="close()">
               <SfIconClose class="text-neutral-500" />
             </UiButton>
             <h3 id="productEprelTitle" class="font-bold typography-headline-4 md:typography-headline-3">
@@ -47,15 +52,19 @@
             </h3>
           </header>
 
-          <p id="productEprelContent" class="mt-2 max-h-[70vh]">
-            <nuxt-lazy-hydrate when-idle>
-              <ProductEprelView :labelurl="labelValue" :datasheeturl="datasheetValue" />
-            </nuxt-lazy-hydrate>
+            <p id="productEprelContent" class="mt-2 max-h-[70vh]">
+              <nuxt-lazy-hydrate when-idle>
+                <ProductEprelView
+                  :labelurl="labelValue"
+                  :datasheeturl="datasheetValue"
+                />
+              </nuxt-lazy-hydrate>
           </p>
         </SfModal>
       </transition>
     </div>
   </template>
+
 </template>
 
 <script setup lang="ts">
@@ -76,9 +85,7 @@ const props = defineProps<ProductEprelProps>();
 const propertyGroups = computed(() => props.product.variationProperties);
 const eprelProperty = computed(() => productPropertyGetters.getProperty(EPREL_PROPERTY_ID, propertyGroups.value || []));
 const labelProperty = computed(() => productPropertyGetters.getProperty(LABEL_PROPERTY_ID, propertyGroups.value || []));
-const datasheetProperty = computed(() =>
-  productPropertyGetters.getProperty(DATASHEET_PROPERTY_ID, propertyGroups.value || []),
-);
+const datasheetProperty = computed(() => productPropertyGetters.getProperty(DATASHEET_PROPERTY_ID, propertyGroups.value || []));
 
 const size = computed(() => props.size || 'base');
 
@@ -94,8 +101,10 @@ const datasheetValue = computed(() =>
   datasheetProperty.value ? productPropertyGetters.getPropertyValue(datasheetProperty.value) : '',
 );
 
+
+
 const showArrow = computed(
-  () => eprelValue.value !== null && ['A', 'B', 'C', 'D', 'E', 'F', 'G'].includes(eprelValue.value),
+  () => eprelValue.value !== null && ['A', 'B', 'C', 'D', 'E', 'F', 'G'].includes(eprelValue.value)
 );
 </script>
 

@@ -3,9 +3,9 @@
     <SfAccordionItem v-if="facet" v-model="open">
       <template #summary>
         <div class="flex justify-between py-1 px-4 mb-2 select-none bg-primary-50/50">
-          <div class="py-1 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none">
+          <h6 class="py-1 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none">
             {{ facetGetters.getName(facet) }}
-          </div>
+          </h6>
 
           <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
         </div>
@@ -42,14 +42,14 @@
       <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4 px-4" @submit.prevent="updatePriceFilter">
         <div class="mb-3">
           <label for="min">
-            <UiFormLabel class="text-start">{{ t('common.labels.min') }}</UiFormLabel>
-            <SfInput id="min" v-model="minPrice" :placeholder="t('common.labels.min')" />
+            <UiFormLabel class="text-start">{{ t('min') }}</UiFormLabel>
+            <SfInput id="min" v-model="minPrice" :placeholder="t('min')" />
           </label>
         </div>
         <div class="mb-3">
           <label for="max">
-            <UiFormLabel class="text-start">{{ t('common.labels.max') }}</UiFormLabel>
-            <SfInput id="max" v-model="maxPrice" :placeholder="t('common.labels.max')" />
+            <UiFormLabel class="text-start">{{ t('max') }}</UiFormLabel>
+            <SfInput id="max" v-model="maxPrice" :placeholder="t('max')" />
           </label>
         </div>
         <div class="flex">
@@ -62,15 +62,9 @@
             <template #prefix>
               <SfIconCheck />
             </template>
-            {{ t('common.actions.apply') }}
+            {{ t('apply') }}
           </UiButton>
-          <UiButton
-            type="reset"
-            class="h-10"
-            variant="secondary"
-            :aria-label="t('common.actions.clear')"
-            @click="resetPriceFilter"
-          >
+          <UiButton type="reset" class="h-10" variant="secondary" :aria-label="t('clear')" @click="resetPriceFilter">
             <SfIconClose />
           </UiButton>
         </div>
@@ -123,9 +117,10 @@ import type { Filters } from '~/composables';
 import type { SortFilterContent } from '~/components/blocks/SortFilter/types';
 import type { FilterOpenState } from './types';
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
+const { t } = useI18n();
 
 // const props = defineProps<FilterProps & FilterOpenState>();
-const props = withDefaults(defineProps<FilterProps & FilterOpenState>(), {
+const props = withDefaults(defineProps<FilterProps &FilterOpenState>(), {
   isopen: true,
 });
 const open = ref(props.isopen);

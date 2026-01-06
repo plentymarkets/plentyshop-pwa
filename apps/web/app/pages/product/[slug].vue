@@ -22,7 +22,10 @@
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
           />
           <div class="p-4 mb-6">
-            <UiLazyContentDrawer :categoryid="725" :title="'Zahlungsinformationen'" />
+            <UiLazyContentDrawer
+              :categoryid="725"
+              :title="'Zahlungsinformationen'"
+            />
           </div>
           <div class="p-4 flex">
             <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
@@ -35,10 +38,10 @@
 
       <section ref="recommendedSection" class="mx-4 mt-8 mb-8 hidden">
         <component
-          :is="RecommendedProductsAsync"
-          v-if="showRecommended"
-          :category-id="productGetters.getCategoryIds(product)[0] ?? ''"
-        />
+        :is="RecommendedProductsAsync"
+        v-if="showRecommended"
+        :category-id="productGetters.getCategoryIds(product)[0] ?? ''"
+      />
       </section>
       <section ref="crossellingProductsSimilar" class="mx-4 mt-8 mb-8">
         <component
@@ -46,17 +49,17 @@
           v-if="showCrosssellingSimilar"
           :cross-selling-relation="'Similar'"
           :product="product"
-          :show-title="true"
+          :show-title=true
         />
       </section>
-      <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
-        <component
-          :is="CrossellingProductsAsync"
-          v-if="showCrosssellingAccessory"
-          :cross-selling-relation="'Accessory'"
-          :product="product"
-          :show-title="true"
-        />
+        <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
+          <component
+            :is="CrossellingProductsAsync"
+            v-if="showCrosssellingAccessory"
+            :cross-selling-relation="'Accessory'"
+            :product="product"
+            :show-title=true
+          />
       </section>
       <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
         <component
@@ -64,7 +67,7 @@
           v-if="showCrosssellingAccessory"
           :cross-selling-relation="'Bundle'"
           :product="product"
-          :show-title="true"
+          :show-title=true
         />
       </section>
       <section ref="crossellingProductsAccessory" class="mx-4 mt-8 mb-8">
@@ -73,7 +76,7 @@
           v-if="showCrosssellingAccessory"
           :cross-selling-relation="'ReplacementPart'"
           :product="product"
-          :show-title="true"
+          :show-title=true
         />
       </section>
     </NarrowContainer>
@@ -84,28 +87,27 @@
 </template>
 
 <script setup lang="ts">
+import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
-import type { Locale } from '#i18n';
-import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
+import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 const route = useRoute();
+const { t } = useI18n();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
+const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
-const product = productForEditor;
+const product = ref(productForEditor);
 const { disableActions } = useEditor();
-const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
+const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
-const { open } = useProductLegalDetailsDrawer();
+const { open, openDrawer } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
-const { isAuthorized } = useCustomer();
+
+const config = useRuntimeConfig().public;
 
 definePageMeta({
   layout: false,
@@ -114,13 +116,16 @@ definePageMeta({
     return validateProductParams(route.params);
   },
   type: 'product',
-  isBlockified: true,
+  isBlockified: false,
   identifier: 0,
 });
+const RecommendedProductsAsync = defineAsyncComponent(
+  async () => await import('~/components/RecommendedProducts/RecommendedProducts.vue'),
+);
 
 const CrossellingProductsAsync = defineAsyncComponent(
   async () => await import('~/components/ProductCrossselling/ProductCrossselling.vue'),
-);
+)
 
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);
@@ -135,11 +140,14 @@ const productName = computed(() => productGetters.getName(product.value));
 const icon = 'sell';
 setPageMeta(productName.value, icon);
 
+const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
+
 await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
     product: product.value,
   });
 });
+
 if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
 
@@ -148,20 +156,7 @@ if (Object.keys(product.value).length === 0) {
     statusMessage: 'Product not found',
   });
 }
-
-setCurrentProduct(productForEditor.value || ({} as Product));
-setProductMeta();
-setBlocksListContext('product');
-setBreadcrumbs();
-
-async function fetchReviews() {
-  const productVariationId = productGetters.getVariationId(product.value);
-  await fetchProductReviews(Number(productId), productVariationId);
-  if (isAuthorized.value) {
-    await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
-  }
-}
-await fetchReviews();
+setCurrentProduct(product.value || ({} as Product));
 
 watch(
   disableActions,
@@ -170,6 +165,21 @@ watch(
   },
   { immediate: true },
 );
+
+setProductMeta();
+setBlocksListContext('product');
+
+onBeforeRouteLeave(() => {
+  setCurrentProduct({} as Product);
+});
+
+async function fetchReviews() {
+  const productVariationId = productGetters.getVariationId(product.value);
+  await fetchProductReviews(Number(productId), productVariationId);
+}
+await fetchReviews();
+
+setBreadcrumbs();
 
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.

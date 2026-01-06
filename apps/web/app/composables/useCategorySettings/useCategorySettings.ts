@@ -13,7 +13,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     initialData: {} as CategoryEntry,
     unlinkModalOpen: false,
   }));
-  const { locale, defaultLocale } = useI18n();
+  const { t, locale, defaultLocale } = useI18n();
   const { setCategoryId } = useCategoryIdHelper();
   const fetchCategorySettings = async (categoryId: number): Promise<CategoryEntry | null> => {
     const cacheKey = `${categoryId}-${locale.value}`;
@@ -63,7 +63,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         setCategoryId({});
         deletePageFromTree(id);
         send({
-          message: getEditorUITranslation('deleteSuccess', { pageName, id }),
+          message: t('errorMessages.editor.categories.deleteSuccess', { pageName: pageName, id: id }),
           type: 'positive',
         });
         const lang = locale.value;
@@ -77,7 +77,11 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
         }
       }
       send({
-        message: getEditorUITranslation('deleteError', { pageName, id, errorMessage }),
+        message: t('errorMessages.editor.categories.deleteError', {
+          pageName: pageName,
+          id: id,
+          errorMessage: errorMessage,
+        }),
         type: 'negative',
       });
     }

@@ -13,15 +13,7 @@ const command = process.argv[2];
 if (command === 'generate') {
   const plopfilePath = join(__dirname, '..', 'plopfile.ts');
 
-  // Parse --web-app-path flag and set environment variable
-  const webAppPathFlag = process.argv.find(arg => arg.startsWith('--web-app-path='));
-  if (webAppPathFlag) {
-    const webAppPath = webAppPathFlag.split('=')[1];
-    process.env.PLENTYSHOP_WEB_APP_PATH = webAppPath;
-  }
-
-  // Filter out --web-app-path flag from plop args (not a plop argument)
-  const plopArgs = process.argv.slice(3).filter(arg => !arg.startsWith('--web-app-path='));
+  const plopArgs = process.argv.slice(3);
 
   const plopProcess = spawn(
     'npx',
@@ -46,11 +38,7 @@ Available generators:
   - component       Generate a new Vue component
   - composable      Generate a new Vue composable
 
-Options:
-  --web-app-path=<path>  Set custom web app base path (default: apps/web/app)
-
 Examples:
   plentyshop generate component
-  plentyshop generate component --web-app-path=apps/web/modules/my-module
   `);
 }

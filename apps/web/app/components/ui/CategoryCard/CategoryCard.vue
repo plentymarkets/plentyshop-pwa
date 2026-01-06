@@ -37,6 +37,7 @@
 import type { CategoryCardProps } from '~/components/ui/CategoryCard/types';
 
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 defineProps<CategoryCardProps>();
 </script>

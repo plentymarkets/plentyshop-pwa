@@ -1,9 +1,4 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { flushPromises, mount } from '@vue/test-utils';
-
-mockNuxtImport('t', () => {
-  return () => 'Your account has been created successfully';
-});
 
 const { useCustomer } = vi.hoisted(() => {
   return {
@@ -74,8 +69,7 @@ const { useNuxtApp } = vi.hoisted(() => {
   return {
     useNuxtApp: vi.fn().mockReturnValue({
       $i18n: {
-        t: vi.fn(() => 'Your account has been created successfully'),
-        te: vi.fn(() => true),
+        t: vi.fn((key: string) => key),
       },
     }),
   };
@@ -115,10 +109,7 @@ describe('useRegisterForm', () => {
     vi.resetAllMocks();
 
     useNuxtApp.mockReturnValue({
-      $i18n: {
-        t: vi.fn((key: string) => key),
-        te: vi.fn((key: string) => !!key),
-      },
+      $i18n: { t: vi.fn((key: string) => key) },
     });
 
     useRuntimeConfig.mockReturnValue({
@@ -166,25 +157,15 @@ describe('useRegisterForm', () => {
 
   it('should initialize composable with proper structure', async () => {
     const { useRegisterForm } = await import('../useRegisterForm');
+    const composable = useRegisterForm();
 
-    let composable: ReturnType<typeof useRegisterForm> | undefined;
-
-    mount({
-      setup() {
-        composable = useRegisterForm();
-        return {};
-      },
-      template: '<div></div>',
-    });
-
-    expect(composable).toBeDefined();
-    expect(composable!.formFields).toBeDefined();
-    expect(composable!.formFieldsAttributes).toBeDefined();
-    expect(composable!.hasCompany).toBeDefined();
-    expect(composable!.onSubmit).toBeDefined();
-    expect(composable!.passwordValidationLength).toBeDefined();
-    expect(composable!.passwordValidationOneDigit).toBeDefined();
-    expect(composable!.passwordValidationOneLetter).toBeDefined();
+    expect(composable.formFields).toBeDefined();
+    expect(composable.formFieldsAttributes).toBeDefined();
+    expect(composable.hasCompany).toBeDefined();
+    expect(composable.onSubmit).toBeDefined();
+    expect(composable.passwordValidationLength).toBeDefined();
+    expect(composable.passwordValidationOneDigit).toBeDefined();
+    expect(composable.passwordValidationOneLetter).toBeDefined();
   });
 
   it('should handle form submission', async () => {
@@ -201,37 +182,26 @@ describe('useRegisterForm', () => {
     });
 
     const { useRegisterForm } = await import('../useRegisterForm');
+    const composable = useRegisterForm();
 
-    let composable: ReturnType<typeof useRegisterForm> | undefined;
+    composable.formFields.email.value = 'test@example.com';
+    composable.formFields.password.value = 'Password123';
+    composable.formFields.repeatPassword.value = 'Password123';
+    composable.formFields.firstName.value = 'John';
+    composable.formFields.lastName.value = 'Doe';
+    composable.formFields.streetName.value = 'Main Street';
+    composable.formFields.apartment.value = '1A';
+    composable.formFields.city.value = 'Test City';
+    composable.formFields.zipCode.value = '12345';
+    composable.formFields.country.value = '1';
+    composable.formFields.privacyPolicy.value = true;
+    composable.formFields.turnstile.value = 'token';
 
-    mount({
-      setup() {
-        composable = useRegisterForm();
-        return {};
-      },
-      template: '<div></div>',
-    });
-
-    composable!.formFields.email.value = 'test@example.com';
-    composable!.formFields.password.value = 'Password123';
-    composable!.formFields.repeatPassword.value = 'Password123';
-    composable!.formFields.firstName.value = 'John';
-    composable!.formFields.lastName.value = 'Doe';
-    composable!.formFields.streetName.value = 'Main Street';
-    composable!.formFields.apartment.value = '1A';
-    composable!.formFields.city.value = 'Test City';
-    composable!.formFields.zipCode.value = '12345';
-    composable!.formFields.country.value = '1';
-    composable!.formFields.privacyPolicy.value = true;
-    composable!.formFields.turnstile.value = 'token';
-
-    await flushPromises();
-
-    await composable!.onSubmit();
+    await composable.onSubmit();
 
     expect(mockRegister).toHaveBeenCalled();
     expect(mockSend).toHaveBeenCalledWith({
-      message: 'Your account has been created successfully',
+      message: 'auth.signup.success',
       type: 'positive',
     });
   });

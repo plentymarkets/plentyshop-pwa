@@ -14,17 +14,17 @@
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
-    <span>{{ t('common.labels.asterisk') }}</span>
-    <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
-    <span v-else>{{ t('product.priceInclVAT') }}</span>
-    <i18n-t keypath="shipping.excludedLabel" scope="global">
+    <span>{{ t('asterisk') }}</span>
+    <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+    <span v-else>{{ t('itemInclVAT') }}</span>
+    <i18n-t keypath="excludedShipping" scope="global">
       <template #shipping>
         <SfLink
           :href="localePath(paths.shipping)"
           target="_blank"
           class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
         >
-          {{ t('common.labels.delivery') }}
+          {{ t('delivery') }}
         </SfLink>
       </template>
     </i18n-t>
@@ -37,8 +37,10 @@ import { SfScrollable, SfLink } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 import { paths } from '~/utils/paths';
 
+
 const { showNetPrices } = useCart();
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 defineProps<ProductSliderProps>();
 </script>

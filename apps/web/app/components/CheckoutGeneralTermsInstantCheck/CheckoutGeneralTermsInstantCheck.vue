@@ -44,4 +44,5 @@ import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
 const { t } = useI18n();
+
 </script>

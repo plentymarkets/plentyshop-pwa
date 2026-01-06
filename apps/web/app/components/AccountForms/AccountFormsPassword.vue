@@ -38,7 +38,7 @@
     </label>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
       <UiButton type="reset" variant="secondary" @click="$emit('on-cancel')">
-        {{ t('common.actions.cancel') }}
+        {{ t('contactInfo.cancel') }}
       </UiButton>
       <UiButton type="submit" class="min-w-[120px]" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
@@ -55,6 +55,7 @@ import type { AccountFormsPasswordProps } from '~/components/AccountForms/types'
 
 const { send } = useNotification();
 const { loading, changePassword } = useCustomer();
+const { t } = useI18n();
 
 const props = defineProps<AccountFormsPasswordProps>();
 const { oldPassword, firstNewPassword, secondNewPassword } = toRefs(props);

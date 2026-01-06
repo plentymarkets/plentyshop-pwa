@@ -27,7 +27,7 @@
             >
               <SfTooltip
                 v-if="isSingleInstanceOnPage(variation.template.en.name)"
-                :label="getEditorTranslation('disabledOneInstancePerPage')"
+                :label="getEditorTranslation('errorMessages.editor.add.disabledOneInstancePerPage')"
                 placement="top"
                 :show-arrow="true"
               >
@@ -42,14 +42,16 @@
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{ getEditorTranslation('disabledTooDeeplyNested') }}</span>
+          <span class="italic">{{ getEditorTranslation('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
         </div>
         <div
           v-if="isForbiddenBlock(category, targetUuid)"
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{ getEditorTranslation('disabledNotCompatibleWithLayouts') }}</span>
+          <span class="italic">{{
+            getEditorTranslation('errorMessages.editor.add.disabledNotCompatibleWithLayouts')
+          }}</span>
         </div>
       </div>
     </UiAccordionItem>
@@ -93,18 +95,3 @@ const blockPosition = computed(() => {
   return visiblePlaceholder.value.position;
 });
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
-    "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page.",
-    "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead."
-  },
-  "de": {
-    "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
-    "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page.",
-    "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead."
-  }
-}
-</i18n>

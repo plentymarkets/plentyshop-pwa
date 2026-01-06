@@ -10,6 +10,7 @@ import type { LowestPriceProps } from '~/components/LowestPrice/types';
 
 const props = defineProps<LowestPriceProps>();
 const { format } = usePriceFormatter();
+const { t } = useI18n();
 
 const lowestPrice = computed(() => Number(productGetters.getLowestPrice(props.product)));
 

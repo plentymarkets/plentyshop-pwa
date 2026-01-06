@@ -109,7 +109,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ t('legal.privacyPolicy') }}
+                    {{ t('privacyPolicy') }}
                   </SfLink>
                 </template>
               </i18n-t>
@@ -158,15 +158,13 @@ import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { paths } from '~/utils/paths';
 import { userGetters } from '@plentymarkets/shop-api';
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
+
 definePageMeta({
   layout: false,
   pageType: 'static',
 });
 
+const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
@@ -178,19 +176,19 @@ const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('contact.label'), icon);
+setPageMeta(t('categories.contact.label'), icon);
 
 const validationSchema = toTypedSchema(
   object({
     email: string()
       .trim()
-      .required(t('error.email.required'))
+      .required(t('errorMessages.email.required'))
       .test('is-valid-email', t('storefrontError.contactMail.emailInvalid'), (mail: string) =>
         userGetters.isValidEmailAddress(mail),
       )
       .default(''),
     message: string()
-      .required(t('error.contact.messageRequired'))
+      .required(t('errorMessages.contact.messageRequired'))
       .test('min-clean-length', t('storefrontError.contactMail.messageInvalid'), (val: string | undefined) => {
         if (!val) return false;
         const cleaned = val.replace(/\n/g, '').trim();
@@ -207,7 +205,7 @@ const validationSchema = toTypedSchema(
       }),
     subject: string()
       .trim()
-      .required(t('error.contact.subjectRequired'))
+      .required(t('errorMessages.contact.subjectRequired'))
       .default('')
       .test('min-length', t('storefrontError.contactMail.subjectInvalid'), (val) => !!(val && val.length >= 3)),
     orderId: string()
@@ -219,10 +217,10 @@ const validationSchema = toTypedSchema(
         t('storefrontError.contactMail.orderIdInvalid'),
         (val) => !val || /^[1-9][0-9]*$/.test(val),
       ),
-    privacyPolicy: boolean().oneOf([true], t('error.contact.termsRequired')).default(false),
+    privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
-        ? string().required(t('error.contact.turnstileRequired')).default('')
+        ? string().required(t('errorMessages.contact.turnstileRequired')).default('')
         : string().optional().default(''),
   }),
 );

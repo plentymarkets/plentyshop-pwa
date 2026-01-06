@@ -16,7 +16,6 @@ export type TechnicalDataContent = {
   layout: {
     displayAsCollapsable: boolean;
     initiallyCollapsed: boolean;
-    fullWidth?: boolean;
     paddingTop?: number;
     paddingBottom?: number;
     paddingLeft?: number;

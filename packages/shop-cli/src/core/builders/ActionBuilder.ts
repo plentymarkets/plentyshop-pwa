@@ -21,7 +21,7 @@ export class ActionBuilder {
   constructor(
     name: string,
     generatorType: string,
-    private readonly pathResolver: PathResolver,
+    private readonly pathResolver: PathResolver = new PathResolver(),
   ) {
     this.name = name;
     this.generatorType = generatorType;
@@ -32,8 +32,8 @@ export class ActionBuilder {
   /**
    * Create a new ActionBuilder for a specific generator type
    */
-  static forGenerator(type: string, name: string, pathResolver: PathResolver): ActionBuilder {
-    return new ActionBuilder(name, type, pathResolver);
+  static forGenerator(type: string, name: string): ActionBuilder {
+    return new ActionBuilder(name, type);
   }
 
   /**
@@ -211,14 +211,13 @@ export class ActionBuilder {
 
 /**
  * Convenience functions for common patterns
- * Note: These presets require a PathResolver to be passed in
  */
 export class ActionBuilderPresets {
   /**
    * Standard Vue component with types and tests
    */
-  static vueComponent(name: string, pathResolver: PathResolver, data?: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('component', name, pathResolver)
+  static vueComponent(name: string, data?: PromptAnswers): GeneratorAction[] {
+    return ActionBuilder.forGenerator('component', name)
       .withData(data || { name })
       .addMainFile()
       .addTypes()
@@ -229,8 +228,8 @@ export class ActionBuilderPresets {
   /**
    * Composable with types, index, and tests
    */
-  static composable(name: string, pathResolver: PathResolver, data?: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('composable', name, pathResolver)
+  static composable(name: string, data?: PromptAnswers): GeneratorAction[] {
+    return ActionBuilder.forGenerator('composable', name)
       .withData(data || { name })
       .addMainFile()
       .addTypes()

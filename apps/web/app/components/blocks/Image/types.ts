@@ -40,7 +40,6 @@ export type ImageContent = {
     paddingLeft: number;
     paddingRight: number;
     backgroundColor?: string;
-    fullWidth?: boolean;
   };
 };
 

@@ -20,7 +20,7 @@
       data-testid="available-sorting-select"
       :options="sortingOptions"
       :placeholder="getEditorTranslation('placeholder')"
-      :custom-label="(option) => getEditorUITranslation(option)"
+      :custom-label="(option) => $dynamicEditorTranslation(option)"
       :allow-empty="false"
       class="cursor-pointer"
       select-label=""
@@ -43,6 +43,7 @@ const { updateSetting, getJsonSetting } = useSiteSettings('availableSortingOptio
 const { updateSetting: updateDefaultSorting, getSetting: getDefaultSortingOption } =
   useSiteSettings('defaultSortingOption');
 const { updateSorting } = useCategoryFilter();
+const { $dynamicEditorTranslation } = useNuxtApp();
 
 const sortingOptionValues = [
   'item.score',

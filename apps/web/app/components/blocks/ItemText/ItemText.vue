@@ -12,12 +12,7 @@
             {{ content.text.title }}
           </h2>
         </template>
-        <div
-          v-if="text"
-          data-testid="item-text-innertext"
-          class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0"
-          v-html="text"
-        />
+        <div v-if="text" data-testid="item-text-innertext" class="no-preflight" v-html="text" />
       </UiAccordionItem>
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
@@ -25,7 +20,7 @@
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
         {{ content.text.title }}
       </h2>
-      <div v-if="text" class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0" v-html="text" />
+      <div v-if="text" class="no-preflight" v-html="text" />
     </div>
   </div>
 </template>
@@ -48,21 +43,4 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
-const emit = defineEmits<{
-  'no-data': [];
-  'has-data': [];
-}>();
-const hasRealData = computed(() => text.value?.length > 0);
-
-watch(
-  () => hasRealData.value,
-  (hasData) => {
-    if (hasData) {
-      emit('has-data');
-    } else {
-      emit('no-data');
-    }
-  },
-  { immediate: true },
-);
 </script>

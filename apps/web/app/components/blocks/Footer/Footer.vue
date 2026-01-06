@@ -89,29 +89,14 @@
 
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
-import type { FooterProps, FooterSettings, FooterSettingsColumn } from './types';
-
+import type { FooterProps, FooterSettingsColumn } from './types';
+const { t } = useI18n();
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterSettings, footerCache } = useFooter();
-const resolvedContent = ref<FooterSettings | null>(null);
-let stopWatch: (() => void) | null = null;
 
-onMounted(() => {
-  stopWatch = watch(
-    [() => props.content, footerCache],
-    () => {
-      const content = props.content ?? getFooterSettings();
-      resolvedContent.value = mapFooterData(content);
-    },
-    { immediate: true, deep: true },
-  );
-});
-
-onBeforeUnmount(() => {
-  stopWatch?.();
-});
+const { getFooterSettings } = useFooter();
+const resolvedContent = computed(() => mapFooterData(props.content ?? getFooterSettings()));
 
 const getColumnSwitches = (column: FooterSettingsColumn) => {
   return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
@@ -128,7 +113,6 @@ const getColumnSwitches = (column: FooterSettingsColumn) => {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-
 ::v-deep(.custom-html li:hover) {
   text-decoration: underline;
 }

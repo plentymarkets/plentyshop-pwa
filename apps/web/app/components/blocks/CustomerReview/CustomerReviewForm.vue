@@ -62,8 +62,6 @@
         />
       </div>
 
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -150,7 +148,6 @@ const customerReview = computed<CustomerReviewContent>(() => {
       paddingRight: 0,
       collapsible: true,
       initiallyCollapsed: true,
-      fullWidth: false,
     };
   } else {
     if (content.layout.paddingTop === undefined) content.layout.paddingTop = 0;
@@ -159,13 +156,10 @@ const customerReview = computed<CustomerReviewContent>(() => {
     if (content.layout.paddingRight === undefined) content.layout.paddingRight = 0;
     if (content.layout.collapsible === undefined) content.layout.collapsible = true;
     if (content.layout.initiallyCollapsed === undefined) content.layout.initiallyCollapsed = true;
-    if (content.layout.fullWidth === undefined) content.layout.fullWidth = false;
   }
 
   return content as CustomerReviewContent;
 });
-
-const { isFullWidth } = useFullWidthToggleForContent(customerReview);
 
 const isCollapsibleInit = customerReview.value.layout.collapsible;
 const isCollapsible = ref(isCollapsibleInit);

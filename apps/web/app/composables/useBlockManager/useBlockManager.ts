@@ -240,8 +240,7 @@ export const useBlockManager = () => {
     if (parentInfo) {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
-      const layoutTemplateContent = layoutTemplate.content as Block[];
-      const newBlock = { ...layoutTemplateContent[0] } as Block;
+      const newBlock = { ...layoutTemplate };
 
       const blockToDelete = parent[index];
       if (!blockToDelete) return;

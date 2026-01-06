@@ -20,10 +20,10 @@ describe('PayPal Express Flows', () => {
   it('[feature] Guest Flow', () => {
     cy.intercept('/plentysystems/getPayPalMerchantAndClientIds').as('getPayPalMerchantAndClientIds');
     cy.intercept('/plentysystems/getSession').as('getSession');
-    cy.visitAndHydrate(`/de${paths.cart}`);
-    cy.wait(['@getSession']);
+    cy.visitAndHydrate(paths.cart);
+    cy.wait(['@getSession', '@getPayPalMerchantAndClientIds']);
     cy.paypalFlow(payPalEmail, payPalPassword);
-    readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaidDe();
+    readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaid();
   });
 
   it('[feature] User Flow', () => {
@@ -38,9 +38,9 @@ describe('PayPal Express Flows', () => {
     cy.wait('@getSession');
 
     cartPage.openCart();
-    cy.wait(['@getSession']);
+    cy.wait(['@getSession', '@getPayPalMerchantAndClientIds']);
     cy.paypalFlow(payPalEmail, payPalPassword);
 
-    readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaidEn();
+    readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaid();
   });
 });

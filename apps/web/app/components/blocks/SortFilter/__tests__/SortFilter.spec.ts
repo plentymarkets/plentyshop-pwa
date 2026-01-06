@@ -35,9 +35,6 @@ const mockProps: SortFilterProps = {
     filtersDisabled: [],
     showAllFiltersImmediately: true,
     numberOfFiltersToShowInitially: 0,
-    layout: {
-      fullWidth: false,
-    },
   },
   meta: {
     uuid: 'test-uuid',
@@ -51,17 +48,13 @@ describe('SortFilter', () => {
   });
 
   it('should not render CategoryFilters when not visible', () => {
-    const wrapper = mount(SortFilter, {
-      props: mockProps,
-    });
+    const wrapper = mount(SortFilter);
 
     expect(wrapper.find('[data-testid="category-filters"]').exists()).toBe(false);
   });
 
   it('should not render categories from CategoryTree', () => {
-    const wrapper = mount(SortFilter, {
-      props: mockProps,
-    });
+    const wrapper = mount(SortFilter);
 
     expect(wrapper.find('[data-testid="categories"]').exists()).toBe(false);
   });

@@ -7,11 +7,12 @@
     class="w-full mb-4 md:mb-0 cursor-pointer"
     @click="emits('click')"
   >
-    {{ t('common.actions.buy') }}
+    {{ t('buy') }}
   </UiButton>
 </template>
 <script lang="ts" setup>
 const emits = defineEmits(['click']);
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<{ disabled?: boolean }>(), {
   disabled: false,

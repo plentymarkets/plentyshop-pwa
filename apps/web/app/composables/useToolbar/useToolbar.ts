@@ -1,9 +1,9 @@
 export const useToolbar = () => {
   const { isEditingEnabled } = useEditor();
   const { send } = useNotification();
+  const { $i18n } = useNuxtApp();
 
   const { settingsIsDirty, dirtyKeys, saveSiteSettings } = useSiteSettings();
-  const { assetsIsDirty, saveCustomAssets } = useCustomAssets();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
   const route = useRoute();
@@ -11,6 +11,7 @@ export const useToolbar = () => {
     const messageList: string[] = [];
     let hasError = false;
     let saved = null;
+    const errorMessage = $i18n.t('errorMessages.editor.save.error');
 
     const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
       saved = await saveFunction();
@@ -28,22 +29,15 @@ export const useToolbar = () => {
       await handleSave(updatePageTemplate);
     }
 
-    const { hasChanges: localizationHasChanges, saveLocalizations } = useEditorLocalizationKeys();
-    if (localizationHasChanges.value) await saveLocalizations();
-
     if (settingsIsDirty.value) {
       const touchedFont = dirtyKeys.value.includes('font');
 
-      await handleSave(saveSiteSettings, touchedFont ? getEditorUITranslation('settings') : undefined);
-    }
-
-    if (assetsIsDirty.value) {
-      await handleSave(saveCustomAssets);
+      await handleSave(saveSiteSettings, touchedFont ? $i18n.t('errorMessages.editor.save.settings') : undefined);
     }
 
     if (saved && !hasError) {
       send({
-        message: [getEditorUITranslation('toolbarSuccess'), ...messageList],
+        message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
         type: 'positive',
       });
       if (import.meta.client) {
@@ -53,7 +47,7 @@ export const useToolbar = () => {
 
     if (hasError) {
       send({
-        message: getEditorUITranslation('toolbarError'),
+        message: errorMessage,
         type: 'negative',
       });
     }

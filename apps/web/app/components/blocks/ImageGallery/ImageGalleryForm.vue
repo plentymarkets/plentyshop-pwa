@@ -50,17 +50,6 @@
       </div>
     </div>
   </UiAccordionItem>
-  <UiAccordionItem
-    v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
-
-    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
@@ -83,10 +72,8 @@ const uiItemImageBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ImageGalleryContent,
 );
 
-const { isFullWidth } = useFullWidthToggleForContent(uiItemImageBlock);
-
 const thumbsOpen = ref(true);
-const layoutOpen = ref(true);
+
 const thumbnails: Thumbnails = [
   {
     type: 'left-vertical',
@@ -115,8 +102,7 @@ const thumbnails: Thumbnails = [
     "enable-zoom-on-hover": "Enable zoom on hover",
     "thumb-left-vertical": "Left vertical strip",
     "thumb-right-vertical": "Right vertical strip",
-    "thumb-bottom": "Bottom strip",
-    "layout-label": "Layout"
+    "thumb-bottom": "Bottom strip"
   },
   "de": {
     "item-image-label": "Item image",
@@ -125,8 +111,7 @@ const thumbnails: Thumbnails = [
     "enable-zoom-on-hover": "Enable zoom on hover",
     "thumb-left-vertical": "Left vertical strip",
     "thumb-right-vertical": "Right vertical strip",
-    "thumb-bottom": "Bottom strip",
-    "layout-label": "Layout"
+    "thumb-bottom": "Bottom strip"
   }
 }
 </i18n>

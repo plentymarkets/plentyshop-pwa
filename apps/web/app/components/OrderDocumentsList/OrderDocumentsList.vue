@@ -24,6 +24,7 @@ const props = defineProps<DocumentsListProps>();
 const documents = computed(() => orderGetters.getDocuments(props.order));
 const { data, getDocument, downloadFile, loading } = useOrderDocument();
 const downloadingDocument = ref<number | null>(null);
+const { t } = useI18n();
 
 const translations = {
   correction_document: t('documents.correctionDocuments'),

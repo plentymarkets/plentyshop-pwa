@@ -28,9 +28,6 @@ export type SortFilterContent = {
   filtersDisabled: SortFilterFieldKey[];
   showAllFiltersImmediately: boolean;
   numberOfFiltersToShowInitially?: number;
-  layout: {
-    fullWidth?: boolean;
-  };
 };
 
 export type SortFilterFormProps = {

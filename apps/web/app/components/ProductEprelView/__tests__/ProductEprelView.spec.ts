@@ -5,8 +5,8 @@ import type { ProductEprelViewProps } from '../types';
 
 describe('ProductEprelView', () => {
   const defaultProps: ProductEprelViewProps = {
-    labelurl: '',
-    datasheeturl: '',
+    labelurl: "",
+    datasheeturl: ""
   };
 
   it('renders correctly', () => {

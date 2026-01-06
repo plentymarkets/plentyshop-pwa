@@ -3,22 +3,14 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { PathResolver, pathResolver } from '../index';
 import type { PathConfig, PathOptions } from '../types';
 
 describe('PathResolver', () => {
   describe('Default Configuration', () => {
     it('should provide correct default paths', () => {
-      const projectRoot = pathResolver.getProjectRoot();
-      const rootPackageJsonPath = join(projectRoot, 'package.json');
-      expect(existsSync(rootPackageJsonPath)).toBe(true);
-
-      const rootPackageJson = JSON.parse(readFileSync(rootPackageJsonPath, 'utf8')) as { name?: string };
-      expect(rootPackageJson.name).toBe('@plentymarkets/plentyshop-pwa');
-
-      expect(pathResolver.getWebAppPath()).toBe(join(projectRoot, 'apps/web/app'));
+      expect(pathResolver.getProjectRoot()).toMatch(/.*plentyshop-pwa$/);
+      expect(pathResolver.getWebAppPath()).toMatch(/.*plentyshop-pwa\/apps\/web\/app$/);
       expect(pathResolver.getTemplatePath('component')).toMatch(/.*templates\/component$/);
     });
 
@@ -71,22 +63,21 @@ describe('PathResolver', () => {
 
     beforeEach(() => {
       const customConfig: Partial<PathConfig> = {
-        cliPackageRoot: '/test/cli',
-        webAppRoot: '/test/cli/apps/web/app',
+        webAppRoot: '/custom/web',
         templatesRoot: '/custom/templates',
       };
       customResolver = new PathResolver(customConfig);
     });
 
     it('should use custom configuration', () => {
-      expect(customResolver.getWebAppPath()).toBe('/test/cli/apps/web/app');
+      expect(customResolver.getWebAppPath()).toBe('/custom/web');
       expect(customResolver.getTemplatePath('component')).toBe('/custom/templates/component');
     });
 
     it('should resolve paths with custom config', () => {
       const result = customResolver.resolve('component', 'TestComponent');
 
-      expect(result.basePath).toBe('apps/web/app/components/TestComponent');
+      expect(result.basePath).toBe('../../apps/web/app/components/TestComponent');
     });
   });
 

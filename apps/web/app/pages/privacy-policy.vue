@@ -3,10 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
 const { data, getLegalTexts } = useLegalInformation();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
@@ -14,6 +10,7 @@ definePageMeta({
   pageType: 'static',
 });
 
+const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';

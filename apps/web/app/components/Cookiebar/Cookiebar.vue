@@ -11,10 +11,14 @@
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
         <i18n-t v-if="cookieJson.barDescription" :keypath="cookieJson.barDescription" scope="global">
           <template #legal
-            ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{ t('CookieBar.legalDisclosure') }}</SfLink></template
+            ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{
+              t('categories.legal.subcategories.legalDisclosure')
+            }}</SfLink></template
           >
           <template #policy
-            ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.privacyPolicy') }}</SfLink></template
+            ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{
+              t('categories.legal.subcategories.privacyPolicy')
+            }}</SfLink></template
           >
         </i18n-t>
       </div>
@@ -188,6 +192,8 @@ const {
 } = useCookieBar();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
+const { t } = useI18n();
+
 const furtherSettingsOn = ref(false);
 
 const privacyPolicy = computed(() => localePath(paths.privacyPolicy));

@@ -2,9 +2,9 @@
   <div class="px-4 md:px-0 flex items-center flex-col" data-testid="order-success-page">
     <div class="p-4 md:p-6 flex flex-col max-w-2xl mx-auto">
       <h1 class="mt-6 mb-1 text-2xl text-center" data-testid="success-header">
-        {{ !orderGetters.isReturn(order) ? t('order.successHeader') : t('order.successReturnHeader') }}
+        {{ !orderGetters.isReturn(order) ? t('successInfoOrderHeader') : t('successInfoReturnHeader') }}
       </h1>
-      <div v-if="!orderGetters.isReturn(order)" class="font-medium text-center">{{ t('order.successMessage') }}</div>
+      <div v-if="!orderGetters.isReturn(order)" class="font-medium text-center">{{ t('successInfoMessage') }}</div>
       <div v-if="order?.order?.deliveryAddress?.options?.length" class="font-medium text-center">
         {{ t('orderConfirmation.confirmationSendTo', { email: orderGetters.getOrderEmail(order) }) }}
       </div>
@@ -64,7 +64,7 @@
     </div>
 
     <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
-      {{ t('common.actions.continueShopping') }}
+      {{ t('continueShopping') }}
     </UiButton>
   </div>
 
@@ -77,7 +77,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('common.navigation.closeAuthentication')"
+        :aria-label="t('closeAuthentication')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -104,6 +104,7 @@ import { paths } from '~/utils/paths';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { order } = defineProps<ConfirmationPageContentProps>();
+const { t } = useI18n();
 const { isOpen: isAuthenticationOpen, toggle: closeAuthentication } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();

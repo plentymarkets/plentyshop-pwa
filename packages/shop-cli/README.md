@@ -30,32 +30,6 @@ npx plentyshop generate composable
 npx plentyshop --help
 ```
 
-## Configuration
-
-Customize the web app path for your project structure:
-
-### Config File
-
-Create `.plentyone/shop-cli.json` in your project root:
-
-```json
-{
-  "webAppPath": "apps/web/app"
-}
-```
-
-### CLI Flag Override
-
-```bash
-npx plentyshop generate component --web-app-path=src/app
-```
-
-### Priority Order
-
-1. CLI flags (`--web-app-path`)
-2. Config file (`.plentyone/shop-cli.json`)
-3. Defaults (`apps/web/app`)
-
 ## Available Generators
 
 ### ✅ Production Ready

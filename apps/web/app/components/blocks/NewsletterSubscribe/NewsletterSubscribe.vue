@@ -105,7 +105,7 @@
                   target="_blank"
                   class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
-                  {{ t('legal.privacyPolicy') }}
+                  {{ t('privacyPolicy') }}
                 </SfLink>
               </template>
             </i18n-t>
@@ -152,6 +152,7 @@ import type { NewsletterSubscribeProps } from './types';
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
+const { t } = useI18n();
 const props = defineProps<NewsletterSubscribeProps>();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const turnstileSiteKey = getSetting() ?? '';
@@ -163,16 +164,16 @@ const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 const validationSchema = toTypedSchema(
   object({
     firstName: props.content.input?.nameIsRequired
-      ? string().required(t('error.newsletter.firstNameRequired')).default('')
+      ? string().required(t('errorMessages.newsletter.firstNameRequired')).default('')
       : string().optional().default(''),
     lastName: props.content.input?.nameIsRequired
-      ? string().required(t('error.newsletter.lastNameRequired')).default('')
+      ? string().required(t('errorMessages.newsletter.lastNameRequired')).default('')
       : string().optional().default(''),
-    email: string().email(t('error.email.valid')).required(t('error.email.required')).default(''),
-    privacyPolicy: boolean().oneOf([true], t('error.newsletter.termsRequired')).default(false),
+    email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
+    privacyPolicy: boolean().oneOf([true], t('errorMessages.newsletter.termsRequired')).default(false),
     turnstile:
       turnstileSiteKey.length > 0
-        ? string().required(t('error.newsletter.turnstileRequired')).default('')
+        ? string().required(t('errorMessages.newsletter.turnstileRequired')).default('')
         : string().optional().default(''),
   }),
 );

@@ -26,6 +26,7 @@ const {
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
+const { t } = useI18n();
 
 const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
@@ -148,7 +149,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       async onCancel() {
         useNotification().send({
-          message: t('error.paymentCancelled'),
+          message: t('errorMessages.paymentCancelled'),
           type: 'negative',
         });
         await useCartStockReservation().unreserve();

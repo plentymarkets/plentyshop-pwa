@@ -29,6 +29,4 @@ export const paths = {
   declarationOfAccessibility: '/declaration-of-accessibility',
   contact: '/contact',
   register: '/register',
-  globalItemCategory: 'editor-layout-item-category',
-  globalItemDetails: 'editor-layout-item-details_0',
 };

@@ -13,6 +13,7 @@ import type { OrderReturnItemsProps } from './types';
 const props = defineProps<OrderReturnItemsProps>();
 
 const { isOpen: isReturnOpen, open: openReturnForm, close: closeReturn } = useDisclosure();
+const { t } = useI18n();
 const { setCurrentReturnOrder } = useReturnOrder();
 
 const openReturn = () => {

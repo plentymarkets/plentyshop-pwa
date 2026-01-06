@@ -15,6 +15,7 @@ export const useCartTotalChange = () => {
   }));
 
   const setInitialCartTotal = async () => {
+    const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const localePath = useLocalePath();
     const paypalOrder = await getOrder(route.query.orderId?.toString() || '');
@@ -32,7 +33,7 @@ export const useCartTotalChange = () => {
         cartGetters.getCurrency(cartData.value) !== state.value.initialCurrency;
     } else {
       send({
-        message: t('paypalPayment.invalidOrder'),
+        message: $i18n.t('paypal.invalidOrder'),
         type: 'warning',
       });
       await navigateTo(localePath(paths.home));

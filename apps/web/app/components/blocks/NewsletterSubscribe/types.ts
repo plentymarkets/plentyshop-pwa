@@ -23,7 +23,4 @@ export type NewsletterSubscribeContent = {
   settings: {
     emailFolderId: number;
   };
-  layout?: {
-    fullWidth?: boolean;
-  };
 };

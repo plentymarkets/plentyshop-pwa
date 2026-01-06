@@ -16,7 +16,7 @@
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
-      :allow-empty="false"
+      :allow-empty="true"
     />
   </div>
 </template>

@@ -20,7 +20,6 @@ export type ItemTextContent = {
     paddingBottom?: number;
     paddingLeft?: number;
     paddingRight?: number;
-    fullWidth?: boolean;
   };
 };
 

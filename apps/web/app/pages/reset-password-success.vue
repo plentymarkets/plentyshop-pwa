@@ -3,16 +3,16 @@
     <div class="mx-auto text-center rounded-md border border-neutral-200 p-4 md:p-6 mt-2">
       <NuxtImg
         src="/_nuxt-plenty/images/email-sent.png"
-        :alt="t('authentication.resetPassword.emailSent')"
+        :alt="t('auth.resetPassword.emailSent')"
         width="192"
         height="192"
         class="mx-auto mb-6"
         loading="lazy"
       />
-      <h1 class="typography-headline-3 font-bold">{{ t('authentication.resetPassword.heading') }}</h1>
+      <h1 class="typography-headline-3 font-bold">{{ t('auth.resetPassword.heading') }}</h1>
       <i18n-t
         tag="p"
-        keypath="authentication.resetPassword.thankYou"
+        keypath="auth.resetPassword.thankYou"
         scope="global"
         class="bg-neutral-100 text-left border border-neutral-200 p-4 rounded-md my-4"
       >
@@ -24,26 +24,23 @@
         variant="tertiary"
         data-testid="reset-password-page-reset-button"
       >
-        {{ t('authentication.resetPassword.anotherEmail') }}
+        {{ t('auth.resetPassword.anotherEmail') }}
       </UiButton>
     </div>
   </NuxtLayout>
 </template>
 <script setup lang="ts">
 import { paths } from '~/utils/paths';
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
 
 definePageMeta({
   layout: false,
 });
 
+const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
-setPageMeta(t('authentication.resetPassword.title'), icon);
+setPageMeta(t('auth.resetPassword.title'), icon);
 const localePath = useLocalePath();
 
 const email = ref('hieronim.anonim@gmail.com');
