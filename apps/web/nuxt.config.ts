@@ -180,6 +180,9 @@ export default defineNuxtConfig({
       seoAvailability8: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY8 || '',
       seoAvailability9: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY9 || '',
       seoAvailability10: process.env.NUXT_PUBLIC_ITEM_SEO_AVAILABILITY10 || '',
+      googleSiteVerification:
+        seoConfig.googleSiteVerification || process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+      enableGoogleSearchConsole: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_SEARCH_CONSOLE || 'false',
       enableGoogleAnalytics: process.env.NUXT_PUBLIC_ENABLE_GOOGLE_ANALITICS || 'false',
       googleAnalyticsTrackingId: process.env.NUXT_PUBLIC_GOOGLE_ANALITICS_TRACKING_ID || '',
       sendGrossPricesToGoogleAnalytics: process.env.NUXT_PUBLIC_SEND_GROSS_PRICES_TO_GOOGLE_ANALITICS || 'false',
