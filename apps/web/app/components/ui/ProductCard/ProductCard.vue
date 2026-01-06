@@ -20,7 +20,6 @@
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
       >
-
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
@@ -128,9 +127,9 @@
           <div
             class="flex flex-col w-full justify-between"
             :class="{
-                  'flex-col': isFromSlider,
-                  'lg:flex-row': !isFromSlider
-                }"
+              'flex-col': isFromSlider,
+              'lg:flex-row': !isFromSlider,
+            }"
           >
             <UiButton
               v-if="canAddFromCategory"
@@ -158,14 +157,10 @@
             >
               <span>{{ t('showOptions') }}</span>
             </UiButton>
-            <UiProductPreview
-              :product="product"
-            />
+            <UiProductPreview :product="product" />
           </div>
-
         </template>
       </template>
-
     </div>
   </div>
 </template>
@@ -176,7 +171,6 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } fro
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
-
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({

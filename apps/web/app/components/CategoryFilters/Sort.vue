@@ -7,7 +7,7 @@
       :configuration="content"
       :render-key="renderKey"
       :isopen="index < 4 || props.forceOpen"
-      :index="index +1"
+      :index="index + 1"
       v-bind="customizedFiltersProps"
     />
   </div>
