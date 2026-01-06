@@ -73,7 +73,7 @@
       <template #prefix>
         <SfIconTune />
       </template>
-      {{ t('listSettings') }}
+      {{ t('common.labels.listSettings') }}
     </UiButton>
   </div>
 

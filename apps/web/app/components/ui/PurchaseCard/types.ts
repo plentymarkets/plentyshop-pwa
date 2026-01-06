@@ -27,6 +27,7 @@ export type PriceCardPadding = {
   paddingBottom: number;
   paddingRight: number;
   paddingLeft: number;
+  fullWidth: boolean;
 };
 
 export interface PriceCardContent {

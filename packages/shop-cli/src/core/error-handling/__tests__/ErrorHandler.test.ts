@@ -139,13 +139,21 @@ describe('Error Handling System', () => {
       const failFastHandler = new ErrorHandler({ failFast: true });
       const operation = createFailingOperation('Test error');
 
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
       expect(() => failFastHandler.wrapValidation(operation)).toThrow('Test error');
+
+      consoleErrorSpy.mockRestore();
     });
 
     it('should not throw errors when failFast is false', () => {
       const operation = createFailingOperation('Test error');
 
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
       expect(() => errorHandler.wrapValidation(operation)).not.toThrow();
+
+      consoleErrorSpy.mockRestore();
     });
   });
 });

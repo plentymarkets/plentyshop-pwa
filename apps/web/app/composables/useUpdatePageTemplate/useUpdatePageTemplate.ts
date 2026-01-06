@@ -14,23 +14,20 @@ export const useUpdatePageTemplate = () => {
 
     try {
       const cleanedData = JSON.stringify(data.value);
-      const identifier = ref(route.meta.identifier as string | number);
 
-      if (dataProducts.value.category?.type === 'content') {
-        identifier.value = dataProducts.value.category?.id;
+      let identifier: string | number = route.meta.identifier as string | number;
+
+      if (dataProducts.value?.category?.type === 'content' && dataProducts.value.category.id) {
+        identifier = dataProducts.value.category.id;
       }
 
-      await saveBlocks(identifier.value, route.meta.type as string, cleanedData);
-
-      return true;
+      return await saveBlocks(identifier, route.meta.type as string, cleanedData);
     } catch (error) {
-      if (error) {
-        send({
-          message: error.toString(),
-          type: 'negative',
-        });
-        console.error(error);
-      }
+      send({
+        message: `Failed to update page template: ${error instanceof Error ? error.toString() : String(error)}`,
+        type: 'negative',
+      });
+      console.error(error);
       return false;
     } finally {
       isEditingEnabled.value = false;

@@ -9,19 +9,20 @@
       >
         <template #summary>
           <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 md:text-2xl">
-            {{ t('customerReviews') }}
+            {{ t('product.customerReviews') }}
           </h2>
         </template>
 
         <UiReviewStatistics :product="product" />
 
+        <UiReview v-for="(reviewItem, key) in authenticatedProductReviews" :key="key" :review-item="reviewItem" />
         <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
         <p
           v-if="paginatedProductReviews.length === 0"
           data-testid="no-review-text"
           class="font-bold leading-6 w-full py-2"
         >
-          {{ t('customerReviewsNone') }}
+          {{ t('product.noReviews') }}
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
@@ -44,8 +45,6 @@ import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/ty
 
 const { product } = defineProps<ProductAccordionPropsType>();
 
-const { t } = useI18n();
-
 const viewport = useViewport();
 const reviewsOpen = ref(true);
 const route = useRoute();
@@ -57,12 +56,15 @@ const productVariationId = productGetters.getVariationId(product);
 
 const {
   data: productReviews,
+  authenticatedData: productAuthenticatedReviews,
   loading: loadingReviews,
   fetchReviews,
+  fetchAuthenticatedReviews,
   reviewArea,
 } = useProductReviews(productId, productVariationId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
+const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviews.value));
 
@@ -71,7 +73,10 @@ const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value) fetchReviews();
+    if (value) {
+      fetchReviews();
+      fetchAuthenticatedReviews();
+    }
   },
 );
 

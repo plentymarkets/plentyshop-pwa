@@ -10,7 +10,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -38,7 +38,6 @@ import { productGetters } from '@plentymarkets/shop-api';
 import { SfIconClose } from '@storefront-ui/vue';
 import { defaults } from '~/composables';
 
-const { t } = useI18n();
 const { currentProduct } = useProducts();
 
 const productId = Number(productGetters.getItemId(currentProduct.value));

@@ -10,7 +10,7 @@
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
-          :aria-label="t('closeMenu')"
+          :aria-label="t('common.navigation.closeMenu')"
           class="mr-5 hover:!bg-header-400"
           :style="{ color: iconColor }"
           @click="openMenu([])"
@@ -20,7 +20,7 @@
 
         <NuxtLink
           :to="localePath(paths.home)"
-          :aria-label="t('goToHomepage')"
+          :aria-label="t('common.actions.goToHomepage')"
           class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
@@ -74,7 +74,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40"
+            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -97,7 +97,7 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded"
+                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
@@ -139,8 +139,8 @@
         >
           <nav>
             <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-              <p class="typography-text-base font-medium">{{ t('browseProducts') }}</p>
-              <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="ml-2" @click="close()">
+              <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
+              <UiButton variant="tertiary" square :aria-label="t('common.navigation.closeMenu')" class="ml-2" @click="close()">
                 <SfIconClose class="text-neutral-500" />
               </UiButton>
             </div>

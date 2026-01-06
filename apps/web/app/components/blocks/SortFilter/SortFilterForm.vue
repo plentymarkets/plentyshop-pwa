@@ -82,6 +82,18 @@
       </div>
     </div>
   </UiAccordionItem>
+
+  <UiAccordionItem
+    v-model="layoutOpen"
+    summary-active-class="bg-neutral-100"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+    </template>
+
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
@@ -101,7 +113,7 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const sortFilterOpen = ref(true);
-
+const layoutOpen = ref(true);
 const props = defineProps<SortFilterFormProps>();
 
 const sortFilterBlock = computed<SortFilterContent>(() => {
@@ -119,6 +131,8 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
 
   return content as SortFilterContent;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(sortFilterBlock);
 
 watch(
   () => sortFilterBlock.value.fields?.customizedFilters,
@@ -158,7 +172,8 @@ const fieldLabels: Record<string, string> = {
 
     "show-filters-immediately-label": "Show all customized filters immediately",
     "number-of-filters-label": "Number of customized filters to show initially",
-    "items-per-page-label": "Items per page"
+    "items-per-page-label": "Items per page",
+    "layout-label": "Layout"
   },
   "de": {
     "display-and-order-label": "Anzeige und Bestellung",
@@ -172,6 +187,7 @@ const fieldLabels: Record<string, string> = {
     "availability": "Verfügbarkeit",
     "customizedFilters": "Individuell angepasste Filter",
 
+    "layout-label": "Layout",
     "enable-filters-label": "Filter aktivieren",
     "show-filters-immediately-label": "Alle benutzerdefinierten Filter sofort anzeigen",
     "number-of-filters-label": "Anzahl der anpassbaren Filter, die zunächst angezeigt werden sollen",

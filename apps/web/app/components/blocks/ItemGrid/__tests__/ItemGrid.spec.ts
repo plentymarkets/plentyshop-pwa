@@ -170,7 +170,7 @@ describe('ItemGrid.vue', () => {
       props: { ...ItemGridMock },
     });
 
-    expect(wrapper.text()).toContain('itemInclVAT');
+    expect(wrapper.text()).toContain('Incl. VAT');
   });
 
   it('should render the correct number of products per row based on viewport', async () => {
@@ -213,7 +213,7 @@ describe('ItemGrid.vue', () => {
 
     const shippingInfo = wrapper.find('[data-testid="shipping-link"]');
     expect(shippingInfo.exists()).toBe(true);
-    expect(shippingInfo.text()).toContain('delivery');
+    expect(shippingInfo.text()).toContain('Shipping');
     expect(shippingInfo.attributes('href')).toBe('/shipping');
   });
 
@@ -229,6 +229,6 @@ describe('ItemGrid.vue', () => {
 
     const itemCount = wrapper.find('[data-testid="item-count"]');
     expect(itemCount.exists()).toBe(true);
-    expect(itemCount.text()).toContain(`numberOfProducts`);
+    expect(itemCount.text()).toContain(`items out of`);
   });
 });

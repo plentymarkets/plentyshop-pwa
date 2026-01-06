@@ -8,20 +8,23 @@
 import type { Block } from '@plentymarkets/shop-api';
 import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTemplateDataDe.json';
 import homepageTemplateDataEn from '~/composables/useCategoryTemplate/homepageTemplateDataEn.json';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 definePageMeta({
   pageType: 'static',
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
-  middleware: ['newsletter-confirmation-client'],
+  middleware: ['newsletter-confirmation-client', 'notify-me-interactions'],
 });
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 const { $i18n } = useNuxtApp();
-const { t } = useI18n();
 
 const { setPageMeta } = usePageMeta();
 const route = useRoute();

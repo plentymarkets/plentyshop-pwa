@@ -2,6 +2,8 @@ import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
+import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
+import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
 
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
@@ -21,6 +23,13 @@ export const useProducts: UseProductsReturn = (category = '') => {
     currentProduct: {} as Product,
   }));
 
+  const isGlobalProductCategoryTemplate = computed(() => {
+    const route = useRoute();
+    const slugParam = route.params.slug;
+    const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
+    return parts.join('/') === paths.globalItemCategory;
+  });
+
   /**
    * @description Function for fetching products.
    * @param params { FacetSearchCriteria }
@@ -38,16 +47,45 @@ export const useProducts: UseProductsReturn = (category = '') => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const route = useRoute();
-    const { $i18n } = useNuxtApp();
-    const { setupBlocks } = useCategoryTemplate(
-      route?.meta?.identifier as string,
-      route.meta.type as string,
-      $i18n.locale.value,
-    );
+    const { $i18n, $isPreview } = useNuxtApp();
+    const {
+      data: blockData,
+      setupBlocks,
+      getBlocksServer,
+    } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
 
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
+
+    if (isGlobalProductCategoryTemplate.value && $isPreview) {
+      const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
+
+      await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
+      const fakeBlocks = blockData.value ?? useCategoryTemplateData();
+
+      state.value.data = {
+        category: fakeFacet['data'].category,
+        products: [],
+        facets: [],
+        blocks: fakeBlocks,
+        languageUrls: {
+          'x-default': '',
+        },
+        pagination: {
+          totals: 8,
+          perPageOptions: defaults.PER_PAGE_STEPS,
+        },
+      } as Facet;
+
+      setupBlocks(fakeBlocks);
+
+      handlePreviewProducts(state, $i18n.locale.value);
+
+      state.value.loading = false;
+      return state.value.data;
+    }
+
     const identifier = category || params.categoryUrlPath || params.categoryId;
 
     const { data } = await useAsyncData(`useProducts-${identifier}-${JSON.stringify(params)}`, () =>
@@ -90,6 +128,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   return {
     fetchProducts,
     setCurrentProduct,
+    isGlobalProductCategoryTemplate,
     ...toRefs(state.value),
   };
 };

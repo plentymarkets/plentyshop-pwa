@@ -128,7 +128,6 @@ import { defaults } from '~/composables';
 import { penPath } from '~/assets/icons/paths/pen';
 
 const props = defineProps<ReviewProps>();
-const { t } = useI18n();
 const { reviewItem } = toRefs(props);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
@@ -150,6 +149,6 @@ const isAnswerEditable = (replyItem: ReviewItem) =>
   replyItem.sourceRelation?.[0]?.feedbackRelationSourceId === user.value?.id?.toString();
 
 const isEditable = computed(
-  () => reviewItem.value.sourceRelation?.[0]?.feedbackRelationSourceId === user.value?.id?.toString(),
+  () => reviewItem.value.sourceRelation?.[0]?.feedbackRelationSourceId?.toString() === user.value?.id?.toString(),
 );
 </script>
