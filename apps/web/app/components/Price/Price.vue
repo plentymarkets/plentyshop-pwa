@@ -1,7 +1,7 @@
 <template>
   <div class="text-sm py-2">
     <div v-if="crossedPrice && differentPrices && discountPercent > 0" class="text-base font-normal text-red-600">
-      <span class="line-through">{{ format(crossedPrice) }}</span> {{ t('rrp') }}
+      <span class="line-through">{{ format(crossedPrice) }}</span> {{ t('product.rrp') }}
     </div>
     <span
       v-if="crossedPrice && differentPrices && discountPercent > 0"
