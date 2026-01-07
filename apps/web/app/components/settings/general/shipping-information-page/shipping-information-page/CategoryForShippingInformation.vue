@@ -39,12 +39,23 @@ const baseCategoryParams = {
   sortBy: 'position_asc,name_asc',
 };
 
+const mapSearchResultsToOptions = (entries: CategoryEntry[]): void => {
+  categories.value = entries.map((category: CategoryEntry) => {
+    return {
+      id: (category.id ?? 0).toString(),
+      name: category.details[0]?.name ?? '',
+    };
+  });
+};
+
 const handleSearch = debounce(async (query: string) => {
   const q = query?.trim();
   await getCategories({
     ...baseCategoryParams,
     ...(q ? { name: `like:${q}` } : {}),
   });
+
+  mapSearchResultsToOptions(data.value.entries);
 }, 500);
 
 const categoryCustomLabel = (opt: CategoryOption) => `[${opt.id}] ${opt.name}`;
@@ -52,12 +63,7 @@ const categoryCustomLabel = (opt: CategoryOption) => `[${opt.id}] ${opt.name}`;
 onMounted(async () => {
   await getCategories(baseCategoryParams);
 
-  categories.value = data.value.entries.map((category: CategoryEntry) => {
-    return {
-      id: (category.id ?? 0).toString(),
-      name: category.details[0]?.name ?? '',
-    };
-  });
+  mapSearchResultsToOptions(data.value.entries);
 });
 
 const { updateSetting, getSetting } = useSiteSettings('shippingTextCategoryId');
