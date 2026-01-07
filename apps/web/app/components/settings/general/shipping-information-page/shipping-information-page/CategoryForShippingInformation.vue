@@ -23,7 +23,7 @@ const { updateSetting, getSetting } = useSiteSettings('shippingTextCategoryId');
 const shippingTextCategoryId = computed({
   get: () => getSetting()?.toString() ?? null,
   set: (value: string | null) => {
-    if (value) updateSetting(value);
+    value ? updateSetting(value) : updateSetting('');
   },
 });
 </script>
