@@ -5,6 +5,7 @@
     :placeholder="getEditorTranslation('placeholder')"
     :deselect-label="getEditorTranslation('deselect-label')"
     :data-testid="dataTestId"
+    :loading="isLoading"
     :searchable="true"
     :internal-search="false"
     :preserve-search="true"
