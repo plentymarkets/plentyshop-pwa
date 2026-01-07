@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2 flex flex-col">
+  <div v-if="enableNotifyMe" class="py-2 flex flex-col">
     <span class="mb-2">
       {{ getEditorTranslation('description') }}
     </span>
@@ -22,6 +22,7 @@
 import { SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('showNotifyMe');
+const enableNotifyMe = useRuntimeConfig().public.enableNotifyMe;
 
 const showNotifyMeFeature = computed({
   get: () => !!getSetting(),
