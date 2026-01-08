@@ -95,7 +95,11 @@ describe('createErrorHandler', () => {
       throw new Error('Test error');
     };
 
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
     expect(() => handler.wrapValidation(operation)).toThrow('Test error');
+
+    consoleErrorSpy.mockRestore();
   });
 
   it('should create error handler with default config when no config provided', () => {
