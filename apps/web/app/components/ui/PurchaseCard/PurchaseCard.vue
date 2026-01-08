@@ -129,7 +129,14 @@
                     class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
                     @change-quantity="changeQuantity"
                   />
+                  <div
+                    v-if="showNotifyMe && !productGetters.isSalable(product)"
+                    class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+                  >
+                    <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
+                  </div>
                   <SfTooltip
+                    v-else
                     show-arrow
                     placement="top"
                     :label="isNotValidVariation || isSalableText"
@@ -295,6 +302,8 @@ const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
+const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
+const showNotifyMe = getNotifyMeSetting();
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
