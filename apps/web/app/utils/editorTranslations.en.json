@@ -76,5 +76,7 @@
   "custom-js": "Custom JavaScript",
   "custom-meta-tags": "Custom Meta tags",
   "external-scripts": "External Scripts & Styles",
-  "custom-code": "Custom Code"
+  "custom-code": "Custom Code",
+  "block-reset-success": "Blocks reset successfully. Please refresh the page.",
+  "block-reset-error": "An error occurred while resetting the blocks. {error}"
 }
