@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
 import { isCssUrl, isJsUrl } from '~/utils/assets';
+import { categoryGetters } from '@plentymarkets/shop-api';
 
 const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
@@ -77,15 +78,61 @@ const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 const { getSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
 
+const { data: productsCatalog } = useProducts();
+
+const category = computed(() => productsCatalog.value?.category);
+const isCategoryPage = computed(() => route.meta?.type === 'category' && !!category.value);
+
 const { getAssetsOfType } = useCustomAssets();
 
 const isSafeMode = computed(() => customAssetsSafeMode());
 
-const title = ref(getMetaTitle());
-const ogTitle = ref(getOgTitle());
+const getCategoryMetaTitle = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaTitle = categoryGetters.getMetaTitle(category.value);
+    if (categoryMetaTitle) return categoryMetaTitle;
+  }
+  return getMetaTitle();
+};
+
+const getCategoryMetaDescription = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaDescription = categoryGetters.getMetaDescription(category.value);
+    if (categoryMetaDescription) return categoryMetaDescription;
+  }
+  return getMetaDescription();
+};
+
+const getCategoryMetaKeywords = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaKeywords = categoryGetters.getMetaKeywords(category.value);
+    if (categoryMetaKeywords) return categoryMetaKeywords;
+  }
+  return getMetaKeywords();
+};
+
+const getCategoryOgTitle = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaTitle = categoryGetters.getMetaTitle(category.value);
+    if (categoryMetaTitle) return categoryMetaTitle;
+  }
+  return getOgTitle() || getMetaTitle();
+};
+
+const getCategoryOgDescription = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaDescription = categoryGetters.getMetaDescription(category.value);
+    if (categoryMetaDescription) return categoryMetaDescription;
+  }
+  return getMetaDescription();
+};
+
+const title = ref(getCategoryMetaTitle());
+const ogTitle = ref(getCategoryOgTitle());
 const ogImage = ref(getOgImage());
-const description = ref(getMetaDescription());
-const keywords = ref(getMetaKeywords());
+const ogDescription = ref(getCategoryOgDescription());
+const description = ref(getCategoryMetaDescription());
+const keywords = ref(getCategoryMetaKeywords());
 const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
@@ -105,11 +152,12 @@ const jsExternalAssets = computed(() =>
 );
 
 watchEffect(() => {
-  title.value = getMetaTitle();
-  ogTitle.value = getOgTitle();
+  title.value = getCategoryMetaTitle();
+  ogTitle.value = getCategoryOgTitle();
   ogImage.value = getOgImage();
-  description.value = getMetaDescription();
-  keywords.value = getMetaKeywords();
+  ogDescription.value = getCategoryOgDescription();
+  description.value = getCategoryMetaDescription();
+  keywords.value = getCategoryMetaKeywords();
   robots.value = getRobots();
   fav.value = getFavicon();
   themeColor.value = getPrimaryColor();
@@ -119,6 +167,7 @@ useSeoMeta({
   title: () => title.value,
   ogTitle: () => ogTitle.value,
   ogImage: () => ogImage.value,
+  ogDescription: () => ogDescription.value,
   description: () => description.value,
   keywords: () => keywords.value,
   robots: () => robots.value,
