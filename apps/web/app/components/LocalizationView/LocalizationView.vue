@@ -11,12 +11,7 @@
         <button
           data-testid="pages-view-close"
           class="!p-0"
-          @click="
-            () => {
-              closeDrawer();
-              drawerOpen = false;
-            }
-          "
+          @click="closeDrawer(); drawerOpen = false"
         >
           <SfIconClose />
         </button>
