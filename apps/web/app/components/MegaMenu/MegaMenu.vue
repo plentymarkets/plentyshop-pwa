@@ -10,12 +10,12 @@
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
-          :aria-label="t('common.navigation.closeMenu')"
+          :aria-label="t('common.navigation.openMenu')"
           class="mr-5 hover:!bg-header-400"
           :style="{ color: iconColor }"
           @click="openMenu([])"
         >
-          <SfIconMenu />
+          <SfIconMenu aria-hidden="true" />
         </UiButton>
 
         <NuxtLink
@@ -44,24 +44,40 @@
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-          <div
+          <button
+            v-if="menuNode.childCount > 0"
             ref="triggerReference"
+            type="button"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer"
+            :class="categoryButtonClasses"
+            aria-haspopup="true"
+            :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
+            @touchstart="onTouchStart"
+            @mousedown="onMouseDown"
             @click="onCategoryTap(menuNode)"
+            @keydown.enter.space.prevent="onCategoryTap(menuNode)"
+            @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
+            @keydown.left="focusPreviousCategory(index)"
+            @keydown.right="focusNextCategory(index)"
           >
-            <template v-if="menuNode.childCount > 0">
-              <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              <SfIconChevronRight
-                class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
-              />
-            </template>
-            <template v-else>
-              <NuxtLink :to="localePath(generateCategoryLink(menuNode))" class="flex items-center gap-2 w-full">
-                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              </NuxtLink>
-            </template>
-          </div>
+            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+            <SfIconChevronRight
+              aria-hidden="true"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+            />
+          </button>
+
+          <NuxtLink
+            v-else
+            ref="triggerReference"
+            :to="localePath(generateCategoryLink(menuNode))"
+            data-testid="category-button"
+            :class="categoryButtonClasses"
+            @keydown.left="focusPreviousCategory(index)"
+            @keydown.right="focusNextCategory(index)"
+          >
+            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+          </NuxtLink>
 
           <div
             v-if="
@@ -75,7 +91,6 @@
             ref="megaMenuReference"
             :style="style"
             class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
-            tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
           >
@@ -139,7 +154,7 @@
               class="ml-2"
               @click="close()"
             >
-              <SfIconClose class="text-neutral-500" />
+              <SfIconClose aria-hidden="true" class="text-neutral-500" />
             </UiButton>
           </div>
           <ul v-if="activeMenu" class="mt-2 mb-6">
@@ -149,10 +164,11 @@
                 tag="button"
                 type="button"
                 class="border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
+                :aria-label="t('common.actions.back') + ' - ' + categoryTreeGetters.getName(activeMenu)"
                 @click="goBack()"
               >
                 <div class="flex items-center">
-                  <SfIconArrowBack class="text-neutral-500" />
+                  <SfIconArrowBack aria-hidden="true" class="text-neutral-500" />
                   <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
                 </div>
               </SfListItem>
@@ -173,19 +189,26 @@
                 </SfListItem>
               </li>
               <li v-else>
-                <SfListItem size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
-                  <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
-                      <div class="flex items-center">
-                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                      </div>
-                    </NuxtLink>
-                    <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
-                      <SfIconChevronRight class="text-neutral-500" />
+                <div class="flex items-center hover:bg-secondary-100">
+                  <NuxtLink
+                    class="flex-1 m-0 px-4 py-3 text-left"
+                    :to="localePath(generateCategoryLink(node))"
+                    @click="close()"
+                  >
+                    <div class="flex items-center">
+                      <p class="text-left typography-text-lg">{{ categoryTreeGetters.getName(node) }}</p>
+                      <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                     </div>
-                  </div>
-                </SfListItem>
+                  </NuxtLink>
+                  <button
+                    type="button"
+                    class="flex justify-center items-center h-full w-16 px-4"
+                    :aria-label="t('common.navigation.showSubcategories') + ' - ' + categoryTreeGetters.getName(node)"
+                    @click="goNext(node.id)"
+                  >
+                    <SfIconChevronRight aria-hidden="true" class="text-neutral-500" />
+                  </button>
+                </div>
               </li>
             </template>
           </ul>
@@ -233,7 +256,11 @@ const iconColor = computed(() => getIconColor());
 
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const isTouchDevice = ref(false);
+const categoryButtonClasses =
+  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900';
+
+const isUsingTouch = ref(false);
+const lastTouchTime = ref(0);
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const drawerReference = ref();
 const megaMenuReference = ref();
@@ -244,7 +271,7 @@ let removeHook: () => void;
 const trapFocusOptions = {
   activeState: isOpen,
   arrowKeysUpDown: true,
-  initialFocus: 'container',
+  initialFocus: 'autofocus',
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
@@ -278,7 +305,24 @@ const goNext = (key: number) => {
 };
 
 const focusTrigger = (index: number) => {
-  unrefElement(triggerReference.value[index]).focus();
+  unrefElement(triggerReference.value[index])?.focus();
+};
+
+const focusNextCategory = (currentIndex: number) => {
+  const nextIndex = (currentIndex + 1) % categoryTree.value.length;
+  focusTrigger(nextIndex);
+};
+
+const focusPreviousCategory = (currentIndex: number) => {
+  const prevIndex = currentIndex === 0 ? categoryTree.value.length - 1 : currentIndex - 1;
+  focusTrigger(prevIndex);
+};
+
+const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
+  if (menuNode.childCount > 0) {
+    onCategoryMouseEnter(menuNode);
+    // Focus will be managed by useTrapFocus with initialFocus: 'container'
+  }
 };
 
 const onMouseLeave = () => {
@@ -299,21 +343,32 @@ const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
   if (category.value !== null) category.value = null;
 };
 
+const onTouchStart = () => {
+  isUsingTouch.value = true;
+  lastTouchTime.value = Date.now();
+};
+
+const onMouseDown = () => {
+  if (Date.now() - lastTouchTime.value > 500) isUsingTouch.value = false;
+};
+
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
+  tappedCategories.value.clear();
   tappedCategories.value.set(menuNode.id, true);
   onCategoryMouseEnter(menuNode);
 };
 
 const onCategoryTap = (menuNode: CategoryTreeItem) => {
-  if (menuNode.childCount > 0 && isTouchDevice.value && !tappedCategories.value.get(menuNode.id)) {
+  if (isUsingTouch.value && menuNode.childCount > 0 && !tappedCategories.value.get(menuNode.id)) {
     return handleFirstTouch(menuNode);
   }
 
+  close();
+  tappedCategories.value.clear();
   router.push(localePath(generateCategoryLink(menuNode)));
 };
 
 onMounted(() => {
-  isTouchDevice.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   removeHook = router.afterEach(() => close());
 });
 
