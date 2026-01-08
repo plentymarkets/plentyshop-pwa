@@ -130,7 +130,7 @@
                     @change-quantity="changeQuantity"
                   />
                   <div
-                    v-if="showNotifyMe && enableNotifyMe && !productGetters.isSalable(product)"
+                    v-if="showNotifyMe && !productGetters.isSalable(product)"
                     class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
                   >
                     <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
