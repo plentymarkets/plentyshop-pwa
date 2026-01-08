@@ -98,10 +98,7 @@ const productId = computed(() => {
   const id = productGetters.getItemId(product.value);
   return id ? Number(id) : 0;
 });
-const productVariationId = computed(() => {
-  const varId = productGetters.getVariationId(product.value);
-  return varId || 0;
-});
+const productVariationId = computed(() => productGetters.getVariationId(product.value));
 
 const {
   data: productReviews,

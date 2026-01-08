@@ -57,10 +57,7 @@ const productId = computed(() => {
   const id = productGetters.getItemId(product.value);
   return id ? Number(id) : 0;
 });
-const productVariationId = computed(() => {
-  const varId = productGetters.getVariationId(product.value);
-  return varId || 0;
-});
+const productVariationId = computed(() => productGetters.getVariationId(product.value));
 
 const {
   data: productReviews,
@@ -71,12 +68,6 @@ const {
   reviewArea,
 } = useProductReviews(productId.value, productVariationId.value);
 
-watch([productId, productVariationId], async ([newId, newVariationId], [oldId, oldVariationId]) => {
-  if ((newId !== oldId || newVariationId !== oldVariationId) && newId > 0) {
-    await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
-  }
-});
-
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
 const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));
@@ -84,25 +75,23 @@ const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productRe
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
+watch([productId, productVariationId], async ([newId, newVariationId], [oldId, oldVariationId]) => {
+  if ((newId !== oldId || newVariationId !== oldVariationId) && newId > 0)
+    await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
+});
+
 watch(
   () => reviewsOpen.value,
-  (value) => {
-    if (value) {
-      fetchReviews();
-      fetchAuthenticatedReviews();
-    }
+  async (value) => {
+    if (value) await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
   },
 );
 
 watch(
   () => route.query.feedbackPage,
   async () => {
+    await fetchReviews();
     if (reviewArea.value) reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   },
-);
-
-watch(
-  () => route.query,
-  () => fetchReviews(),
 );
 </script>
