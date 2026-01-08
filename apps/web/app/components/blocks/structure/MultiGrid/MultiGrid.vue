@@ -111,7 +111,7 @@ const getColumnClasses = (colIndex: number) => {
   const classes = [`col-span-${columnWidth}`];
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
-    classes.push('md:sticky', 'md:top-40');
+    classes.push('md:sticky', 'md:top-5');
   }
 
   return classes;
