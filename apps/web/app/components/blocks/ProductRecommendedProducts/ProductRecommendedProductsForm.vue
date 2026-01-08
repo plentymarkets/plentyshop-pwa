@@ -175,20 +175,10 @@
       <div v-else class="py-4">
         <UiFormLabel>{{ getEditorTranslation('categories-label') }}</UiFormLabel>
 
-        <Multiselect
+        <EditorCategorySelect
           v-model="categoryIdModel"
-          data-testid="recommended-form-categories"
-          :options="categoryOptions"
-          :preserve-search="true"
-          label="name"
-          track-by="id"
-          placeholder="Search categories"
-          class="w-full"
-          select-label=""
-          deselect-label="Selected"
-          :internal-search="false"
-          :custom-label="categoryCustomLabel"
-          @search-change="handleSearch"
+          :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
+          data-test-id="recommended-form-categories"
         />
       </div>
     </UiAccordionItem>
@@ -211,7 +201,6 @@
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
-import type { Category } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
@@ -226,26 +215,7 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { currentProduct } = useProducts();
 const { data: categoryTree } = useCategoryTree();
-const { data: categoriesData, getCategories } = useCategoriesSearch();
 const layoutOpen = ref(true);
-
-const baseCategoryParams = {
-  type: 'in:item',
-  sortBy: 'position_asc,name_asc',
-  with: 'details,clients',
-};
-
-await getCategories(baseCategoryParams);
-
-const handleSearch = debounce(async (query: string) => {
-  const q = query?.trim();
-  await getCategories({
-    ...baseCategoryParams,
-    ...(q ? { name: `like:${q}` } : {}),
-  });
-}, 500);
-
-const categoryCustomLabel = (opt: Category) => `[${opt.id}] ${opt?.details?.[0]?.name}`;
 
 const recommendedBlock = computed(
   () =>
@@ -297,17 +267,13 @@ const crossSellingModel = computed({
   },
 });
 
-const categoryOptions = computed(() => categoriesData.value.entries.filter((cat) => cat.right !== 'customer'));
-
 const firstCategoryId = (categoryTree.value?.find((category) => category.type === 'item')?.id || '').toString();
 
 const categoryIdModel = computed({
   get() {
-    const id = recommendedBlock.value.source?.categoryId || firstCategoryId;
-
-    return categoryOptions.value.find((o) => o.id.toString() === id) ?? null;
+    return recommendedBlock.value.source?.categoryId || firstCategoryId;
   },
-  set(option: { id: number; name: string; path?: string } | null) {
+  set(value: string | null) {
     if (!recommendedBlock.value.source) {
       recommendedBlock.value.source = {
         type: 'cross_selling',
@@ -316,7 +282,7 @@ const categoryIdModel = computed({
         crossSellingRelation: 'Similar',
       };
     }
-    recommendedBlock.value.source.categoryId = option?.id.toString() || '';
+    recommendedBlock.value.source.categoryId = value || '';
   },
 });
 
