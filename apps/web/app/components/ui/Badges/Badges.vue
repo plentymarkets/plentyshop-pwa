@@ -1,7 +1,7 @@
 <template>
   <div v-if="haveBadges" data-testid="badges" class="z-[2]">
     <ul>
-      <template v-if="tagsEnabled && productTags.length > 0">
+      <template v-if="useTags && productTags.length > 0">
         <SfListItem
           v-for="(tag, index) in productTags"
           :key="index"
@@ -19,7 +19,7 @@
       </template>
 
       <SfListItem
-        v-if="availabilityEnabled && productGetters.getAvailabilityName(product)"
+        v-if="useAvailability && productGetters.getAvailabilityName(product)"
         size="sm"
         class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid mt-2"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
@@ -39,26 +39,23 @@ import type { BadgesProps } from '~/components/ui/Badges/types';
 const localePath = useLocalePath();
 
 const { product, useTags = true, useAvailability = false } = defineProps<BadgesProps>();
-const productTags = ref([] as ProductTag[]);
-const availabilityStyles = ref({});
 
-const availabilityEnabled = useAvailability;
-if (availabilityEnabled) {
-  availabilityStyles.value = {
+const productTags = computed(() => {
+  if (!useTags) return [];
+  return tagGetters.getTags(product);
+});
+
+const availabilityStyles = computed(() => {
+  if (!useAvailability) return {};
+
+  return {
     backgroundColor: productGetters.getAvailabilityBackgroundColor(product),
     color: productGetters.getAvailabilityTextColor(product),
   };
-}
-
-const tagsEnabled = useTags;
-if (tagsEnabled) {
-  productTags.value = tagGetters.getTags(product);
-}
+});
 
 const haveBadges = computed(
-  () =>
-    (tagsEnabled && productTags.value.length > 0) ||
-    (availabilityEnabled && productGetters.getAvailabilityName(product)),
+  () => (useTags && productTags.value.length > 0) || (useAvailability && productGetters.getAvailabilityName(product)),
 );
 
 const onTagClick = (tag: ProductTag) => {
