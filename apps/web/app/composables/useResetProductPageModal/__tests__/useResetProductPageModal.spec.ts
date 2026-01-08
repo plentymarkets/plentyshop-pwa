@@ -80,7 +80,7 @@ describe('useResetProductPageModal', () => {
       expect(deleteBlocksMock).toHaveBeenCalledWith({ identifier: 0, type: 'category' });
       expect(mockSend).toHaveBeenCalledWith({
         type: 'positive',
-        message: 'Blocks reseted successfully. Please refresh the page.',
+        message: expect.stringMatching(/.+/),
       });
 
       expect(unlinkModalOpen.value).toBe(false);
@@ -121,7 +121,7 @@ describe('useResetProductPageModal', () => {
       expect(mockSend).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'negative',
-          message: expect.stringContaining('An error occurred while resetting the blocks.'),
+          message: expect.stringMatching(/.+/),
         }),
       );
       expect(unlinkModalOpen.value).toBe(false);

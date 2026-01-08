@@ -21,10 +21,10 @@ export const useResetProductPageModal: UseResetProductPageModalReturn = () => {
 
     try {
       await useSdk().plentysystems.deleteBlocks({ identifier, type });
-      send({ type: 'positive', message: 'Blocks reseted successfully. Please refresh the page.' });
+      send({ type: 'positive', message: getEditorUITranslation('block-reset-success') });
       state.value.unlinkModalOpen = false;
     } catch (error) {
-      send({ type: 'negative', message: `An error occurred while resetting the blocks. ${error}` });
+      send({ type: 'negative', message: getEditorUITranslation('block-reset-error', { error: error as string }) });
     } finally {
       state.value.loading = false;
     }
