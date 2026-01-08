@@ -110,6 +110,7 @@ export * from './useGridSplits';
 export * from './useRegisterForm';
 export * from './useFormLabel';
 export * from './useBlockContentHelper';
+export * from './useNotifyMe';
 export * from './useCategoryData';
 export * from './useCustomAssets';
 export * from './useEditModeNotification';
