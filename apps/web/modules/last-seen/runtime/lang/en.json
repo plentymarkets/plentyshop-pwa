@@ -1,0 +1,6 @@
+{
+  "lastSeenProducts": {
+    "title": "Recently Viewed Products",
+    "pagination": "Page { page } of { totalPages }"
+  }
+}
