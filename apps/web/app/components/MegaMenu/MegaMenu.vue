@@ -55,7 +55,6 @@
             @touchstart="onTouchStart"
             @mousedown="onMouseDown"
             @click="onCategoryTap(menuNode)"
-            @keydown.enter.space.prevent="onCategoryTap(menuNode)"
             @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
             @keydown.left="focusPreviousCategory(index)"
             @keydown.right="focusNextCategory(index)"
