@@ -253,11 +253,7 @@ const { referenceRef, floatingRef, style } = useDropdown({
   middleware: [],
 });
 const iconColor = computed(() => getIconColor());
-
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
-
-const categoryButtonClasses =
-  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900';
 
 const isUsingTouch = ref(false);
 const lastTouchTime = ref(0);
@@ -266,6 +262,9 @@ const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
 const tappedCategories = ref<Map<number, boolean>>(new Map());
+const TOUCH_DETECTION_THRESHOLD = 500;
+const categoryButtonClasses =
+  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900';
 let removeHook: () => void;
 
 const trapFocusOptions = {
@@ -346,7 +345,7 @@ const onTouchStart = () => {
 };
 
 const onMouseDown = () => {
-  if (Date.now() - lastTouchTime.value > 500) isUsingTouch.value = false;
+  if (Date.now() - lastTouchTime.value > TOUCH_DETECTION_THRESHOLD) isUsingTouch.value = false;
 };
 
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
