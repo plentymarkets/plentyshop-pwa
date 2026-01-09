@@ -115,8 +115,8 @@ export const useLocalization = createSharedComposable(() => {
 
     const activeLanguages = (config.public.activeLanguages as string)
       .split(',')
-      .filter((lang) => (availableLocales as string[]).includes(lang))
-      .map((lang: string) => lang.trim());
+      .map((lang: string) => lang.trim())
+      .filter((lang) => (availableLocales as string[]).includes(lang));
     return localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode));
   };
 
