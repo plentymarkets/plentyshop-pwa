@@ -319,10 +319,7 @@ const focusPreviousCategory = (currentIndex: number) => {
 };
 
 const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
-  if (menuNode.childCount > 0) {
-    onCategoryMouseEnter(menuNode);
-    // Focus will be managed by useTrapFocus with initialFocus: 'container'
-  }
+  if (menuNode.childCount > 0) onCategoryMouseEnter(menuNode);
 };
 
 const onMouseLeave = () => {
