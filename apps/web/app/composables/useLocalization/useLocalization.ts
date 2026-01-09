@@ -105,6 +105,22 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
+   * @description Function for getting all available locales based on activeLanguages config.
+   * @returns array of available locales
+   * @example getAvailableLocales()
+   */
+  const getAvailableLocales = () => {
+    const { localeCodes, availableLocales } = useI18n();
+    const config = useRuntimeConfig();
+
+    const activeLanguages = (config.public.activeLanguages as string)
+      .split(',')
+      .filter((lang) => (availableLocales as string[]).includes(lang))
+      .map((lang: string) => lang.trim());
+    return localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode));
+  };
+
+  /**
    * @description Function for switching app locale.
    * @param language
    *
@@ -135,5 +151,6 @@ export const useLocalization = createSharedComposable(() => {
     toggle,
     switchLocale,
     createLocalePath,
+    getAvailableLocales,
   };
 });
