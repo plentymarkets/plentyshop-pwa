@@ -1124,7 +1124,8 @@
     "emptyStateImageAlt": "Image that describes that no items were found",
     "emptyStateText": "We no longer have items in this category.",
     "emptyStateText2": "Have not found what you are looking for?",
-    "numberOfProducts": "{count} items out of {total} items"
+    "numberOfProducts": "{count} items out of {total} items",
+    "searchResults": "Search results for \"{phrase}\""
   },
   "sessionLifetime": {
     "oneDay": "One day, even if the browser is closed",
