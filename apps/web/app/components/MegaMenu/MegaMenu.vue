@@ -44,17 +44,20 @@
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-          <button
+          <NuxtLink
             v-if="menuNode.childCount > 0"
             ref="triggerReference"
-            type="button"
+            :to="localePath(generateCategoryLink(menuNode))"
             data-testid="category-button"
             :class="categoryButtonClasses"
+            role="button"
             aria-haspopup="true"
             :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
             @touchstart="onTouchStart"
             @mousedown="onMouseDown"
-            @click="onCategoryTap(menuNode)"
+            @click.capture="onCategoryClickCapture($event, menuNode)"
+            @keydown.enter="onEnterKey"
+            @keydown.space.prevent="openMenuAndFocusFirst(menuNode)"
             @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
             @keydown.left="focusPreviousCategory(index)"
             @keydown.right="focusNextCategory(index)"
@@ -64,7 +67,7 @@
               aria-hidden="true"
               class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
             />
-          </button>
+          </NuxtLink>
 
           <NuxtLink
             v-else
@@ -92,6 +95,7 @@
             class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
+            @keydown.up.down.prevent
           >
             <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
@@ -317,7 +321,18 @@ const focusPreviousCategory = (currentIndex: number) => {
 };
 
 const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
-  if (menuNode.childCount > 0) onCategoryMouseEnter(menuNode);
+  if (menuNode.childCount > 0) {
+    onCategoryMouseEnter(menuNode);
+    nextTick(() => {
+      const firstLink = megaMenuReference.value?.[0]?.querySelector('a');
+      firstLink?.focus();
+    });
+  }
+};
+
+const onEnterKey = () => {
+  close();
+  tappedCategories.value.clear();
 };
 
 const onMouseLeave = () => {
@@ -344,7 +359,10 @@ const onTouchStart = () => {
 };
 
 const onMouseDown = () => {
-  if (Date.now() - lastTouchTime.value > TOUCH_DETECTION_THRESHOLD) isUsingTouch.value = false;
+  const timeDiff = Date.now() - lastTouchTime.value;
+  if (timeDiff > TOUCH_DETECTION_THRESHOLD) {
+    isUsingTouch.value = false;
+  }
 };
 
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
@@ -353,14 +371,16 @@ const handleFirstTouch = (menuNode: CategoryTreeItem) => {
   onCategoryMouseEnter(menuNode);
 };
 
-const onCategoryTap = (menuNode: CategoryTreeItem) => {
+const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) => {
   if (isUsingTouch.value && menuNode.childCount > 0 && !tappedCategories.value.get(menuNode.id)) {
-    return handleFirstTouch(menuNode);
+    event.stopPropagation();
+    event.preventDefault();
+    handleFirstTouch(menuNode);
+    return;
   }
 
   close();
   tappedCategories.value.clear();
-  router.push(localePath(generateCategoryLink(menuNode)));
 };
 
 onMounted(() => {
