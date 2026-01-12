@@ -115,7 +115,7 @@ const showNoTextMessage = computed(() => !enabledText.value);
 const { $isPreview } = useNuxtApp();
 const shouldShowTextBlock = computed(
   () =>
-    ($isPreview && disableActions.value) ||
+    (!!$isPreview && disableActions.value) ||
     (!disableActions.value && !showNoTextMessage.value) ||
     (!$isPreview && disableActions.value && !showNoTextMessage.value),
 );

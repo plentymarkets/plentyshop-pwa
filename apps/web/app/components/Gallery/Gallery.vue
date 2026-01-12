@@ -22,7 +22,7 @@
             :index="index"
             :active-index="activeIndex"
             :is-first-image="index === 0"
-            :disable-zoom="($isPreview && disableActions) || configuration.thumbnails.enableHoverZoom === false"
+            :disable-zoom="(!!$isPreview && disableActions) || configuration.thumbnails.enableHoverZoom === false"
           />
         </SwiperSlide>
       </Swiper>

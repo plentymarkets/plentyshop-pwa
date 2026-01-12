@@ -17,6 +17,7 @@
       <template #item="{ element: block, index }">
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+          v-if="shouldShowBlock(block, enabledActions)"
         >
           <PageBlock
             :index="index"
@@ -25,7 +26,6 @@
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
-            :block-has-data="blockHasData"
             :change-block-position="changeBlockPosition"
             :root="getBlockDepth(block.meta.uuid) === 0"
             class="group"
@@ -59,7 +59,7 @@ const { data, getBlocksServer, cleanData } = useCategoryTemplate(
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && $isPreview),
+  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && !!$isPreview),
 );
 
 const isContentEmptyInLive = computed(
@@ -81,7 +81,6 @@ const {
   isClicked,
   clickedBlockIndex,
   isTablet,
-  blockHasData,
   tabletEdit,
   changeBlockPosition,
   handleDragStart,
@@ -114,8 +113,11 @@ const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
+const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
-const enabledActions = computed(() => props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value);
+const enabledActions = computed(
+  () => !!$isPreview && props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value,
+);
 
 onMounted(async () => {
   isEditingEnabled.value = false;
@@ -124,9 +126,12 @@ onMounted(async () => {
   if ($isPreview) {
     await import('./draggable.css');
   }
+
+  isHydrationComplete.value = true;
 });
 
 onBeforeUnmount(() => {
+  clearRegistry();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
 
