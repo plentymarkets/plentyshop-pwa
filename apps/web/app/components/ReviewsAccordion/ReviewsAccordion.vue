@@ -43,7 +43,8 @@ import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 
-const { product } = defineProps<ProductAccordionPropsType>();
+const props = defineProps<ProductAccordionPropsType>();
+const { currentProduct } = useProducts();
 
 const viewport = useViewport();
 const reviewsOpen = ref(true);
@@ -51,8 +52,12 @@ const route = useRoute();
 
 const config = useRuntimeConfig().public;
 
-const productId = Number(productGetters.getItemId(product));
-const productVariationId = productGetters.getVariationId(product);
+const product = computed(() => props.product || currentProduct.value);
+const productId = computed(() => {
+  const id = productGetters.getItemId(product.value);
+  return id ? Number(id) : 0;
+});
+const productVariationId = computed(() => productGetters.getVariationId(product.value));
 
 const {
   data: productReviews,
@@ -61,7 +66,7 @@ const {
   fetchReviews,
   fetchAuthenticatedReviews,
   reviewArea,
-} = useProductReviews(productId, productVariationId);
+} = useProductReviews(productId.value, productVariationId.value);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
 const authenticatedProductReviews = computed(() => reviewGetters.getReviewItems(productAuthenticatedReviews.value));
@@ -70,25 +75,23 @@ const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productRe
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
+watch([productId, productVariationId], async ([newId, newVariationId], [oldId, oldVariationId]) => {
+  if ((newId !== oldId || newVariationId !== oldVariationId) && newId > 0)
+    await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
+});
+
 watch(
   () => reviewsOpen.value,
-  (value) => {
-    if (value) {
-      fetchReviews();
-      fetchAuthenticatedReviews();
-    }
+  async (value) => {
+    if (value) await Promise.all([fetchReviews(), fetchAuthenticatedReviews()]);
   },
 );
 
 watch(
   () => route.query.feedbackPage,
   async () => {
+    await fetchReviews();
     if (reviewArea.value) reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   },
-);
-
-watch(
-  () => route.query,
-  () => fetchReviews(),
 );
 </script>
