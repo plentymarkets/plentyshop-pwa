@@ -8,7 +8,6 @@ export interface PageBlockProps {
   isClicked: boolean;
   clickedBlockIndex: number | null;
   isTablet: boolean;
-  blockHasData?: (block: Block) => boolean;
   columnLength?: number;
   isRowHovered?: boolean;
   changeBlockPosition: (index: number, position: number) => void;

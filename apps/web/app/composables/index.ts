@@ -19,6 +19,7 @@ export * from './useAgreementCheckbox';
 export * from './useApplePay';
 export * from './useBlockManager';
 export * from './useBlocksList';
+export * from './useBlocksVisibility';
 export * from './useCanonical';
 export * from './useCarousel';
 export * from './useCart';

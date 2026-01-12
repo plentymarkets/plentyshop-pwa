@@ -21,7 +21,7 @@ When reviewing code changes, please adhere to the following guidelines:
 
 ## Vue / Nuxt
 
-- Components should be presentational where possible. Avoid embedding business logic directly within components.
+- Components should be presentational where possible. Avoid embedding business logic directly within components. See `/docs/styleguide/design.guide.md` for additional guidance.
 - Business logic should be abstracted into composables or modules.
 - Composables should contain stateful logic and functionality that requires access to the Vue or Nuxt lifecycle or the Nuxt app.
 - Modules should contain stateless logic and pure functions that do not depend on Vue or Nuxt lifecycle or app context.

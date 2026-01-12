@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
 import type { ItemTextProps } from './types';
+
 const props = defineProps<ItemTextProps>();
 const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
 const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
@@ -48,20 +49,13 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
-const emit = defineEmits<{
-  'no-data': [];
-  'has-data': [];
-}>();
-const hasRealData = computed(() => text.value?.length > 0);
+
+const { registerBlockVisibility } = useBlocksVisibility();
 
 watch(
-  () => hasRealData.value,
-  (hasData) => {
-    if (hasData) {
-      emit('has-data');
-    } else {
-      emit('no-data');
-    }
+  text,
+  (newText) => {
+    registerBlockVisibility(props.meta.uuid, newText?.length > 0);
   },
   { immediate: true },
 );
