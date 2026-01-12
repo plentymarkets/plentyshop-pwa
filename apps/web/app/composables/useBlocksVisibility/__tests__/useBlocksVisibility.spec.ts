@@ -85,6 +85,21 @@ describe('useBlocksVisibility', () => {
 
       expect(shouldShowBlock(block, true)).toBe(true);
     });
+
+    it('should ignore registry when hydration is incomplete and return based on static content', () => {
+      const visibility = useBlocksVisibility();
+      const { shouldShowBlock, registerBlockVisibility, isHydrationComplete } = visibility;
+      const blockWithContent = createMockBlock();
+      const emptyBlock = createEmptyBlock();
+
+      isHydrationComplete.value = false;
+
+      registerBlockVisibility(blockWithContent.meta.uuid, false);
+      registerBlockVisibility(emptyBlock.meta.uuid, false);
+
+      expect(shouldShowBlock(blockWithContent, false)).toBe(true);
+      expect(shouldShowBlock(emptyBlock, false)).toBe(false);
+    });
   });
 
   describe('registerBlockVisibility', () => {
