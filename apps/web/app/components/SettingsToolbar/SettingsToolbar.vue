@@ -46,11 +46,15 @@ import pagesWhite from '~/assets/icons/paths/pages-white.svg';
 import pagesBlack from '~/assets/icons/paths/pages-black.svg';
 
 const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
 
 function toggleDrawerView(view: DrawerView) {
+  if (drawerView.value === 'LocalizationView') {
+    localizationDrawerOpen.value = false;
+  }
   if (drawerView.value === view) {
     closeDrawer();
   } else {
