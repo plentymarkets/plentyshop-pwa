@@ -53,10 +53,11 @@ describe('useBlocksVisibility', () => {
 
     it('should use registered runtime visibility state when hasData is false', () => {
       const visibility = useBlocksVisibility();
-      const { shouldShowBlock, registerBlockVisibility } = visibility;
+      const { shouldShowBlock, registerBlockVisibility, isHydrationComplete } = visibility;
       const block = createMockBlock();
       const hasData = ref(false);
 
+      isHydrationComplete.value = true;
       registerBlockVisibility(block.meta.uuid, hasData.value);
 
       expect(shouldShowBlock(block, false)).toBe(false);
@@ -64,10 +65,11 @@ describe('useBlocksVisibility', () => {
 
     it('should use registered runtime visibility state when hasData is true', () => {
       const visibility = useBlocksVisibility();
-      const { shouldShowBlock, registerBlockVisibility } = visibility;
+      const { shouldShowBlock, registerBlockVisibility, isHydrationComplete } = visibility;
       const block = createMockBlock();
       const hasData = ref(true);
 
+      isHydrationComplete.value = true;
       registerBlockVisibility(block.meta.uuid, hasData.value);
 
       expect(shouldShowBlock(block, false)).toBe(true);
@@ -96,12 +98,13 @@ describe('useBlocksVisibility', () => {
 
     it('should register block visibility', () => {
       const visibility = useBlocksVisibility();
-      const { shouldShowBlock, registerBlockVisibility } = visibility;
+      const { shouldShowBlock, registerBlockVisibility, isHydrationComplete } = visibility;
       const block = createMockBlock();
       const hasData = ref(true);
 
       expect(shouldShowBlock(block, false)).toBe(true);
 
+      isHydrationComplete.value = true;
       registerBlockVisibility(block.meta.uuid, hasData.value);
       expect(shouldShowBlock(block, false)).toBe(true);
 
@@ -112,12 +115,13 @@ describe('useBlocksVisibility', () => {
 
     it('should handle multiple blocks independently', () => {
       const visibility = useBlocksVisibility();
-      const { shouldShowBlock, registerBlockVisibility } = visibility;
+      const { shouldShowBlock, registerBlockVisibility, isHydrationComplete } = visibility;
       const block1 = createMockBlock();
       const block2 = createMockBlock();
       const hasData1 = ref(true);
       const hasData2 = ref(false);
 
+      isHydrationComplete.value = true;
       registerBlockVisibility(block1.meta.uuid, hasData1.value);
       registerBlockVisibility(block2.meta.uuid, hasData2.value);
 
@@ -138,10 +142,11 @@ describe('useBlocksVisibility', () => {
   describe('clearRegistry', () => {
     it('should clear all registered block visibilities', () => {
       const visibility = useBlocksVisibility();
-      const { shouldShowBlock, registerBlockVisibility, clearRegistry } = visibility;
+      const { shouldShowBlock, registerBlockVisibility, clearRegistry, isHydrationComplete } = visibility;
       const block = createMockBlock();
       const hasData = ref(false);
 
+      isHydrationComplete.value = true;
       registerBlockVisibility(block.meta.uuid, hasData.value);
       expect(shouldShowBlock(block, false)).toBe(false);
 

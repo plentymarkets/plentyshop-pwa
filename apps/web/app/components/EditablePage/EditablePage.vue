@@ -59,7 +59,7 @@ const { data, getBlocksServer, cleanData } = useCategoryTemplate(
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && $isPreview),
+  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && !!$isPreview),
 );
 
 const isContentEmptyInLive = computed(
@@ -113,10 +113,10 @@ const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled, disableActions } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const { shouldShowBlock, clearRegistry } = useBlocksVisibility();
+const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const enabledActions = computed(
-  () => $isPreview && props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value,
+  () => !!$isPreview && props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value,
 );
 
 onMounted(async () => {
@@ -126,6 +126,8 @@ onMounted(async () => {
   if ($isPreview) {
     await import('./draggable.css');
   }
+
+  isHydrationComplete.value = true;
 });
 
 onBeforeUnmount(() => {
