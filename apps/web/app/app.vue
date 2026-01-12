@@ -66,8 +66,6 @@ const { setStaticPageMeta } = useCanonical();
 
 const clientPreview = ref(false);
 
-console.log('set-cookie test');
-
 onNuxtReady(() => (clientPreview.value = !!$isPreview));
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
