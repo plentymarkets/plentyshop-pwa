@@ -22,17 +22,17 @@ graph LR
 When fetching data from the server:
 
 - Encapsulate the API call in a composable.
-Store the response data in the composable's state.
+  Store the response data in the composable's state.
 
 - Trigger the call in a container component.
-Note that `pages` are also components.
-A page is the highest-level container.
-The default assumption is that a page is responsible for triggering fetch calls for data needed on that page.
+  Note that `pages` are also components.
+  A page is the highest-level container.
+  The default assumption is that a page is responsible for triggering fetch calls for data needed on that page.
 
 - Access the data in a presentational component.
-The default assumption is that presentational components use the state `data` of a composable.
-Direct parent/child components may use props instead.
-However, avoid props drilling, that is passing props through multiple layers.
+  The default assumption is that presentational components use the state `data` of a composable.
+  Direct parent/child components may use props instead.
+  However, avoid props drilling, that is passing props through multiple layers.
 
 **Example: Product page**
 
