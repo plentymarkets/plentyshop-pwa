@@ -32,6 +32,11 @@ export interface UseBlocksVisibility {
    * Should be called when the page unmounts
    */
   clearRegistry: () => void;
+
+  /**
+   * Ref tracking when hydration is complete and runtime registry can be used
+   */
+  isHydrationComplete: Ref<boolean>;
 }
 
 export type UseBlocksVisibilityReturn = () => UseBlocksVisibility;

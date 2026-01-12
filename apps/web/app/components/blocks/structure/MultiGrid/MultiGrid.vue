@@ -135,7 +135,7 @@ const enableActions = computed(() => attrs.enableActions === true);
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) => enableActions.value && $isPreview && !isDragging.value && blockHasData(block),
+  () => (block: Block) => enableActions.value && !!$isPreview && !isDragging.value && blockHasData(block),
 );
 
 const isAlignable = (b: Block): b is AlignableBlock =>
