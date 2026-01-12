@@ -95,7 +95,8 @@
             class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
-            @keydown.up.down.prevent
+            @keydown.up="navigateDropdownItems($event, 'up')"
+            @keydown.down="navigateDropdownItems($event, 'down')"
           >
             <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
@@ -272,8 +273,8 @@ let removeHook: () => void;
 
 const trapFocusOptions = {
   activeState: isOpen,
-  arrowKeysUpDown: true,
-  initialFocus: 'autofocus',
+  arrowKeysUpDown: false,
+  initialFocus: false,
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
@@ -333,6 +334,26 @@ const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
 const onEnterKey = () => {
   close();
   tappedCategories.value.clear();
+};
+
+const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') => {
+  event.preventDefault();
+  const dropdown = megaMenuReference.value?.[0];
+  if (!dropdown) return;
+
+  const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
+  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+
+  const nextIndex =
+    direction === 'down'
+      ? currentIndex < focusableItems.length - 1
+        ? currentIndex + 1
+        : 0
+      : currentIndex > 0
+        ? currentIndex - 1
+        : focusableItems.length - 1;
+
+  focusableItems[nextIndex]?.focus();
 };
 
 const onMouseLeave = () => {
