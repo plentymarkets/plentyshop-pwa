@@ -102,16 +102,18 @@
           >
             <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
-                <li>
-                  <SfListItem
-                    :tag="NuxtLink"
-                    size="sm"
-                    :href="localePath(generateCategoryLink(node))"
-                    class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
-                  >
-                    {{ categoryTreeGetters.getName(node) }}
-                  </SfListItem>
-                </li>
+                <ul>
+                  <li>
+                    <SfListItem
+                      :tag="NuxtLink"
+                      size="sm"
+                      :href="localePath(generateCategoryLink(node))"
+                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                    >
+                      {{ categoryTreeGetters.getName(node) }}
+                    </SfListItem>
+                  </li>
+                </ul>
               </template>
               <div v-else>
                 <SfListItem
