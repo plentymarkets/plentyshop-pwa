@@ -50,7 +50,7 @@
             :to="localePath(generateCategoryLink(menuNode))"
             data-testid="category-button"
             :class="categoryButtonClasses"
-            role="button"
+            tabindex="0"
             aria-haspopup="true"
             :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
             @touchstart="onTouchStart"
@@ -75,6 +75,7 @@
             :to="localePath(generateCategoryLink(menuNode))"
             data-testid="category-button"
             :class="categoryButtonClasses"
+            tabindex="0"
             @keydown.left="focusPreviousCategory(index)"
             @keydown.right="focusNextCategory(index)"
           >
@@ -97,10 +98,11 @@
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
             @keydown.down="navigateDropdownItems($event, 'down')"
+            @keydown.tab="handleTabInDropdown($event)"
           >
             <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
-                <ul>
+                <li>
                   <SfListItem
                     :tag="NuxtLink"
                     size="sm"
@@ -109,7 +111,7 @@
                   >
                     {{ categoryTreeGetters.getName(node) }}
                   </SfListItem>
-                </ul>
+                </li>
               </template>
               <div v-else>
                 <SfListItem
@@ -356,6 +358,26 @@ const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') =
   focusableItems[nextIndex]?.focus();
 };
 
+const handleTabInDropdown = (event: KeyboardEvent) => {
+  const dropdown = megaMenuReference.value?.[0];
+  if (!dropdown) return;
+
+  const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
+  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+
+  event.preventDefault();
+
+  const nextIndex = event.shiftKey
+    ? currentIndex > 0
+      ? currentIndex - 1
+      : focusableItems.length - 1
+    : currentIndex < focusableItems.length - 1
+      ? currentIndex + 1
+      : 0;
+
+  focusableItems[nextIndex]?.focus();
+};
+
 const onMouseLeave = () => {
   close();
   tappedCategories.value.clear();
@@ -419,11 +441,6 @@ watch(
 );
 
 setCategory(categoryTree.value);
-
-useTrapFocus(
-  computed(() => megaMenuReference.value?.[0]),
-  trapFocusOptions,
-);
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
