@@ -25,6 +25,9 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
   // Reactive registry where blocks can opt-in to register their runtime visibility state
   const visibilityRegistry = useState<BlockVisibilityRegistry>('block-visibility-registry', () => ({}));
 
+  // Track when hydration is complete and registry can be safely used
+  const isHydrationComplete = useState<boolean>('block-visibility-hydration-complete', () => false);
+
   /**
    * Check if a block has static content (non-empty configuration)
    */
@@ -69,9 +72,11 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
       return false;
     }
 
-    const runtimeVisibility = visibilityRegistry.value[block.meta.uuid];
-    if (runtimeVisibility !== undefined) {
-      return runtimeVisibility;
+    if (isHydrationComplete.value) {
+      const runtimeVisibility = visibilityRegistry.value[block.meta.uuid];
+      if (runtimeVisibility !== undefined) {
+        return runtimeVisibility;
+      }
     }
 
     return true;
@@ -81,5 +86,6 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
     shouldShowBlock,
     registerBlockVisibility,
     clearRegistry,
+    isHydrationComplete,
   };
 };

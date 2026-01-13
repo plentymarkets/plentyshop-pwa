@@ -106,7 +106,9 @@ import type { BlockPosition } from '~/composables/useBlockManager/types';
 import type { PageBlockProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const props = defineProps<PageBlockProps>();
+const props = withDefaults(defineProps<PageBlockProps>(), {
+  enableActions: false,
+});
 
 const { $isPreview } = useNuxtApp();
 const { locale, defaultLocale } = useI18n();

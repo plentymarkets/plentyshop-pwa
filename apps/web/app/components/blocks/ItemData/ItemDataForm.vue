@@ -148,7 +148,7 @@ import {
   SfIconArrowForward,
   SfIconArrowBack,
 } from '@storefront-ui/vue';
-import dragIcon from 'assets/icons/paths/drag.svg';
+import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
 
 const route = useRoute();

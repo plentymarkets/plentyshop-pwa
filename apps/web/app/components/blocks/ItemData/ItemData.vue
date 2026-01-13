@@ -108,7 +108,7 @@ const noFieldsSelected = computed(() => {
 });
 
 const showNoDataMessage = computed(
-  () => $isPreview && disableActions.value && !hasTitle.value && noFieldsSelected.value,
+  () => !!$isPreview && disableActions.value && !hasTitle.value && noFieldsSelected.value,
 );
 
 const visibleRows = computed(() => {
