@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async ({ query }) => {
-  if (query.ActionCall === 'WebActionConfirmNewsletter' && import.meta.client) {
+  if (query.ActionCall === 'WebActionConfirmNewsletter') {
     const { confirmEmail } = useNewsletterConfirmation();
     const { send } = useNotification();
 
