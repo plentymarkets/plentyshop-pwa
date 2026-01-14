@@ -25,6 +25,7 @@ const {
   payLaterVisibility,
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
+const { fetchSession } = useFetchSession();
 const { emit } = usePlentyEvent();
 
 const currency = computed(
@@ -85,8 +86,10 @@ const onValidationCallback = async () => {
 const onApprove = async (data: OnApproveData) => {
   emits('on-approved');
 
-  if (props.type === TypeCartPreview || props.type === TypeSingleItem)
+  if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
+    await fetchSession();
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
+  }
 
   if (props.type === TypeCheckout) {
     useProcessingOrder().processingOrder.value = true;
@@ -151,6 +154,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
           message: t('error.paymentCancelled'),
           type: 'negative',
         });
+        await fetchSession();
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
