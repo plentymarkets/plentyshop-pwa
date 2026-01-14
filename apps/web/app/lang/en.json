@@ -426,6 +426,8 @@
       "closeDrawer": "Close Drawer",
       "closeListSettings": "Close list settings",
       "closeMenu": "Close Menu",
+      "openMenu": "Open Menu",
+      "showSubcategories": "Show subcategories",
       "closeNeutralAlert": "Close neutral alert",
       "closePickSavedAddress": "Close addresses picker",
       "currentPage": "Current Page is {page}",
@@ -1124,7 +1126,8 @@
     "emptyStateImageAlt": "Image that describes that no items were found",
     "emptyStateText": "We no longer have items in this category.",
     "emptyStateText2": "Have not found what you are looking for?",
-    "numberOfProducts": "{count} items out of {total} items"
+    "numberOfProducts": "{count} items out of {total} items",
+    "searchResults": "Search results for \"{phrase}\""
   },
   "sessionLifetime": {
     "oneDay": "One day, even if the browser is closed",
@@ -1259,7 +1262,7 @@
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
-    "notifyMe":{
+    "notifyMe": {
       "alreadySubscribed": "You have already subscribed to this product"
     },
     "unknownError": "An unknown error has occurred."

@@ -11,7 +11,7 @@
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold md:text-lg">
             {{
-              t('numberOfProducts', {
+              t('search.numberOfProducts', {
                 count: products?.length ?? 0,
                 total: totalProducts,
               })
