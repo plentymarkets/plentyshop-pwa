@@ -2,8 +2,11 @@ import { getPaletteFromColor } from '../utils/tailwindHelper';
 import type { Shade } from '../utils/tailwindHelper';
 
 const paletteCache = new Map<string, Array<Shade & { type: string }>>();
+const MAX_CACHE_SIZE = 50;
 
 export default defineNuxtPlugin({
+  name: 'generate-color-palette',
+  dependsOn: ['init-initial-data'],
   enforce: 'post',
   async setup() {
     const buildPalette = (colorType: string, baseColor?: string): Array<Shade & { type: string }> => {
@@ -17,6 +20,11 @@ export default defineNuxtPlugin({
         ...item,
         type: colorType,
       }));
+
+      if (paletteCache.size >= MAX_CACHE_SIZE) {
+        const firstKey = paletteCache.keys().next().value;
+        if (firstKey) paletteCache.delete(firstKey);
+      }
 
       paletteCache.set(cacheKey, palette);
       return palette;

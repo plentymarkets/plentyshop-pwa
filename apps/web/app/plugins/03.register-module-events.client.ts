@@ -1,4 +1,5 @@
 export default defineNuxtPlugin({
+  name: 'register-module-events',
   parallel: true,
   setup() {
     const { on: onPlentyEvent } = usePlentyEvent();

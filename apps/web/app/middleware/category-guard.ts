@@ -6,12 +6,18 @@
 import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
 
 const pathCategoryCache = new Map<string, CategoryTreeItem>();
+let cachedTreeReference: CategoryTreeItem[] | null = null;
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const { data: categoryTree } = useCategoryTree();
   const localePath = useLocalePath();
   const { buildCategoryMenuLink } = useLocalization();
   const { isAuthorized } = useCustomer();
+
+  if (cachedTreeReference !== categoryTree.value) {
+    pathCategoryCache.clear();
+    cachedTreeReference = categoryTree.value;
+  }
 
   const findCategoryByPath = (items: CategoryTreeItem[], targetPath: string): CategoryTreeItem => {
     const cached = pathCategoryCache.get(targetPath);

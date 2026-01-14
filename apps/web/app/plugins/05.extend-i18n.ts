@@ -1,4 +1,5 @@
 export default defineNuxtPlugin({
+  name: 'extend-i18n',
   parallel: true,
   setup() {
     const { $i18n } = useNuxtApp();
