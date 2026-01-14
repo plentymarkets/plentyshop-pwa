@@ -10,24 +10,27 @@
  * @see https://github.com/nuxt/nuxt/issues/12822#issuecomment-1397285993
  */
 
-export default defineNuxtPlugin(() => {
-  const pwaCookie = useCookie('pwa');
+export default defineNuxtPlugin({
+  parallel: true,
+  setup() {
+    const pwaCookie = useCookie('pwa');
 
-  if (import.meta.dev) {
-    if (import.meta.server) {
-      return;
-    } else {
-      return {
-        provide: {
-          isPreview: !!pwaCookie.value || useRuntimeConfig().public.isPreview,
-        },
-      };
+    if (import.meta.dev) {
+      if (import.meta.server) {
+        return;
+      } else {
+        return {
+          provide: {
+            isPreview: !!pwaCookie.value || useRuntimeConfig().public.isPreview,
+          },
+        };
+      }
     }
-  }
 
-  return {
-    provide: {
-      isPreview: !!pwaCookie.value || useRuntimeConfig().public.isPreview,
-    },
-  };
+    return {
+      provide: {
+        isPreview: !!pwaCookie.value || useRuntimeConfig().public.isPreview,
+      },
+    };
+  },
 });
