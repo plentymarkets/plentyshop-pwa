@@ -4,11 +4,7 @@ export class NotifyMeObject {
   }
 
   get notifyMeModal() {
-    return cy.get('[role="dialog"]').closest('[role="dialog"]');
-  }
-
-  get notifyMeModalTitle() {
-    return cy.get('#notify-modal-title');
+    return cy.getByTestId('notify-me-modal');
   }
 
   get notifyMeEmailInput() {
@@ -20,15 +16,17 @@ export class NotifyMeObject {
   }
 
   get notifyMeSubmitButton() {
-    return this.notifyMeModal.find('button[type="submit"]');
+    return this.notifyMeModal.getByTestId('notify-me-submit');
   }
 
   get notifyMeCloseButton() {
-    return this.notifyMeModal.find('button').first(); // Der X-Button ist der erste Button
+    return this.notifyMeModal.getByTestId('notify-me-modal-close');
   }
 
   openModal() {
     this.notifyMeButton.should('be.visible').click();
+
+    cy.get('[role="dialog"]').debug();
     this.notifyMeModal.should('be.visible');
   }
 
