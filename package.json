@@ -43,6 +43,8 @@
   "dependencies": {
     "@plentymarkets/shop-api": "^0.151.2",
     "@plentymarkets/shop-core": "^1.16.7",
+    "@grafana/faro-web-sdk": "^2.1.0",
+    "@grafana/faro-web-tracing": "^2.1.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.4.0",
     "@tanstack/vue-virtual": "^3.13.12",
