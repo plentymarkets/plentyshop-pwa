@@ -161,6 +161,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
         const order = await createTransaction({
           type: transactionType,
+          withShippingCallback: props.type !== TypeOrderAlreadyExisting && !isCommit,
           ...(props.type === TypeOrderAlreadyExisting && { plentyOrderId: props.plentyOrderId }),
         });
 
