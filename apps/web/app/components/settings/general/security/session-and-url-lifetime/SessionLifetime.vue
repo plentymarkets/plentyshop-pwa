@@ -41,7 +41,7 @@ const options = computed(() => getSessionLifetimeOptions());
 
 const sessionLifetime = computed({
   get: () => {
-    return options.value.find((o: SettingOption) => o.value === getSetting());
+    return options.value.find((o: SettingOption) => o.value === getSetting().toString());
   },
   set: (option) => {
     updateSetting(option?.value ?? '');

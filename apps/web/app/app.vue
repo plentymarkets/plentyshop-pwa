@@ -1,5 +1,6 @@
 <template>
   <ClientOnly>
+    <component :is="SafeModeBanner" v-if="clientPreview && isSafeMode" />
     <component :is="Toolbar" v-if="clientPreview" />
   </ClientOnly>
   <div
@@ -226,6 +227,7 @@ onMounted(() => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
+const SafeModeBanner = defineAsyncComponent(() => import('~/components/SafeModeBanner/SafeModeBanner.vue'));
 const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
 const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
 const SiteConfigurationDrawer = defineAsyncComponent(
