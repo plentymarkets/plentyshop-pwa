@@ -1,6 +1,5 @@
 import type { UseCanonicalReturn, StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
-import type { LocaleObject } from '@nuxtjs/i18n';
 import type { Locale } from '#i18n';
 
 /**
@@ -66,13 +65,14 @@ export const useCanonical: UseCanonicalReturn = () => {
     const route = useNuxtApp().$router.currentRoute.value;
     const runtimeConfig = useRuntimeConfig();
     const localePath = useLocalePath();
-    const { locales, defaultLocale } = useI18n();
+    const { defaultLocale } = useI18n();
+    const { getAvailableLocales } = useLocalization();
 
-    const alternateLocales = locales.value.map((item: LocaleObject) => {
+    const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
         rel: 'alternate',
-        hreflang: item.code,
-        href: `${runtimeConfig.public.domain}${localePath(route.fullPath, item.code)}`,
+        hreflang: locale,
+        href: `${runtimeConfig.public.domain}${localePath(route.fullPath, locale)}`,
       };
     });
 

@@ -426,6 +426,8 @@
       "closeDrawer": "Close Drawer",
       "closeListSettings": "Close list settings",
       "closeMenu": "Close Menu",
+      "openMenu": "Open Menu",
+      "showSubcategories": "Show subcategories",
       "closeNeutralAlert": "Close neutral alert",
       "closePickSavedAddress": "Close addresses picker",
       "currentPage": "Current Page is {page}",
@@ -1260,7 +1262,7 @@
       "invalid": "Verification failed. Please try again in a few moments.",
       "misConfigured": "Verification service is currently unavailable. Please contact the site administrator."
     },
-    "notifyMe":{
+    "notifyMe": {
       "alreadySubscribed": "You have already subscribed to this product"
     },
     "unknownError": "An unknown error has occurred."
