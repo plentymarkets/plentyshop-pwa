@@ -14,7 +14,11 @@ export default defineNuxtPlugin({
 
       const cacheKey = `${colorType}:${baseColor}`;
       const cached = paletteCache.get(cacheKey);
-      if (cached) return cached;
+      if (cached) {
+        paletteCache.delete(cacheKey);
+        paletteCache.set(cacheKey, cached);
+        return cached;
+      }
 
       const palette = getPaletteFromColor(colorType, baseColor).map((item: Shade) => ({
         ...item,
