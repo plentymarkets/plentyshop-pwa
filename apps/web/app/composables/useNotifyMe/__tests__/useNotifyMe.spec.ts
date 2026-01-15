@@ -98,7 +98,6 @@ describe('useNotifyMe', () => {
         () => new Promise((resolve) => setTimeout(() => resolve({ data: mockResponse }), 50)),
       );
 
-      const { useNotifyMe } = await import('../useNotifyMe');
       const { unsubscribeNotifyMe, loading } = useNotifyMe();
       expect(loading.value).toBe(false);
 
