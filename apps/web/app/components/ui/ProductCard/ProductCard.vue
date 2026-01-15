@@ -161,6 +161,7 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } fro
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
+import type { BasketItemOrderParamsProperty, Product, DoAddItemParams } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({
@@ -205,13 +206,21 @@ const { send } = useNotification();
 const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
-
 const name = computed(() => productGetters.getName(product.value) ?? '');
 const manufacturer = computed(() => productGetters.getManufacturer(product.value));
 const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
 const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
 const shortDescription = computed(() => productGetters.getShortDescription(product.value) || '');
-const canAddFromCategory = computed(() => productGetters.canBeAddedToCartFromCategoryPage(product.value));
+const autoOrderParams = computed(() => {
+  return productGetters.hasOrderPropertiesRequiredAndPreselected(product.value)
+    ? buildAutoBasketItemOrderParams(product.value)
+    : undefined;
+});
+const canAddFromCategory = computed(
+  () =>
+    productGetters.canBeAddedToCartFromCategoryPage(product.value) ||
+    productGetters.hasOrderPropertiesRequiredAndPreselected(product.value),
+);
 const showFromText = computed(() => productGetters.showFromText(product.value));
 
 const cover = computed(() => productGetters.getCoverImage(product.value));
@@ -265,16 +274,43 @@ const getHeight = () => {
   }
   return '';
 };
+const buildAutoBasketItemOrderParams = (product: Product): BasketItemOrderParamsProperty[] | undefined =>
+  product.properties
+    ?.filter((p) => p?.property?.isOderProperty && p.property.isRequired)
+    .map((p) => {
+      const pr = p.property;
+
+      return {
+        property: {
+          id: p.propertyId ?? pr.id,
+          names: { name: pr.names?.name ?? '' },
+          valueType: pr.valueType,
+          value: '1',
+        },
+      };
+    }) || undefined;
 
 const addWithLoader = async (productId: number, quickCheckout = true) => {
   loading.value = true;
   try {
-    await addToCart({ productId, quantity: 1 });
-    if (quickCheckout) {
-      openQuickCheckout(product.value, 1);
-    } else {
-      send({ message: t('cart.itemAdded'), type: 'positive' });
+    const isRequiredAndPreselected = productGetters.hasOrderPropertiesRequiredAndPreselected(product.value);
+    const params = isRequiredAndPreselected ? autoOrderParams.value : undefined;
+
+    if (isRequiredAndPreselected && !params) {
+      await navigateTo(productPath.value);
+      return;
     }
+
+    const addToCartObject: DoAddItemParams = {
+      productId,
+      quantity: 1,
+      ...(params ? { basketItemOrderParams: params } : {}),
+    };
+
+    await addToCart(addToCartObject);
+
+    if (quickCheckout) openQuickCheckout(product.value, 1);
+    else send({ message: t('cart.itemAdded'), type: 'positive' });
   } finally {
     loading.value = false;
   }
