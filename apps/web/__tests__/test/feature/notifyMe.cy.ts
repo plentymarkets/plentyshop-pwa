@@ -16,12 +16,12 @@ describe('Smoke: Notify Me', () => {
     cy.intercept('POST', '**/plentysystems/doSubscribeNotifyMe', {
       statusCode: 200,
       body: { data: { success: true } },
-    }).as('subscribeApi');
+    }).as('subscribeNotifyMe');
 
     notifyMeObject.openModal();
     notifyMeObject.fillAndSubmitModal(testEmail);
 
-    cy.wait('@subscribeApi');
+    cy.wait('@subscribeNotifyMe');
 
     notifyMeObject.checkModalClosed();
     cy.getByTestId('notifications').should('exist');
