@@ -31,11 +31,11 @@ export class NotifyMeObject {
   }
 
   checkModalClosed() {
-    cy.get('[role="dialog"]').should('not.exist');
+    cy.getByTestId('notify-me-modal').should('not.exist');
   }
 
   checkModalOpen() {
-    cy.get('[role="dialog"]').should('exist');
+    cy.getByTestId('notify-me-modal').should('exist');
   }
 
   fillAndSubmitModal(email: string) {
