@@ -25,8 +25,6 @@ export class NotifyMeObject {
 
   openModal() {
     this.notifyMeButton.should('be.visible').click();
-
-    cy.get('[role="dialog"]').debug();
     this.notifyMeModal.should('be.visible');
   }
 
