@@ -1,41 +1,30 @@
 export default defineNuxtRouteMiddleware(async ({ query }) => {
-  const { send } = useNotification();
+  const actionCall = query.ActionCall;
+  const token = query.token?.toString();
 
-  if (query.ActionCall === 'WebActionConfirmNotifyMe' && query.token) {
+  if (!actionCall || !token) return;
+
+  if (actionCall === 'WebActionConfirmNotifyMe') {
     const { confirmNotifyMe } = useNotifyMe();
+    const { send } = useNotification();
 
-    const data = await confirmNotifyMe({ token: query.token.toString() });
+    const data = await confirmNotifyMe({ token });
 
-    if (data) {
-      send({
-        message: t('notifyMe.notifyMeOptInMessage'),
-        type: 'positive',
-        persist: true,
-      });
-    } else {
-      send({
-        message: t('notifyMe.notifyMeOptInMessageError'),
-        type: 'negative',
-      });
-    }
-  }
-
-  if (query.ActionCall === 'WebActionUnsubscribeNotifyMe' && query.token) {
+    send({
+      message: t(data ? 'notifyMe.notifyMeOptInMessage' : 'notifyMe.notifyMeOptInMessageError'),
+      type: data ? 'positive' : 'negative',
+      persist: data ? true : undefined,
+    });
+  } else if (actionCall === 'WebActionUnsubscribeNotifyMe') {
     const { unsubscribeNotifyMe } = useNotifyMe();
+    const { send } = useNotification();
 
-    const data = await unsubscribeNotifyMe({ token: query.token.toString() });
+    const data = await unsubscribeNotifyMe({ token });
 
-    if (data) {
-      send({
-        message: t('notifyMe.notifyMeUnsubscribeMessage'),
-        type: 'positive',
-        persist: true,
-      });
-    } else {
-      send({
-        message: t('notifyMe.notifyMeUnsubscribeMessageError'),
-        type: 'negative',
-      });
-    }
+    send({
+      message: t(data ? 'notifyMe.notifyMeUnsubscribeMessage' : 'notifyMe.notifyMeUnsubscribeMessageError'),
+      type: data ? 'positive' : 'negative',
+      persist: data ? true : undefined,
+    });
   }
 });
