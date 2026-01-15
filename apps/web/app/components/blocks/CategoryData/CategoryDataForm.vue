@@ -58,7 +58,7 @@
             {{ fieldsEmptyHintText }}
             (
             <a :href="learnMoreTextUrl" target="_blank" rel="noopener noreferrer" class="underline">
-              {{ t('learn-more') }}
+              {{ getEditorTranslation('learn-more') }}
             </a>
             ).
           </span>
@@ -126,8 +126,9 @@
       >
         <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
         <span class="italic">
-          {{ t('image-slot-empty-hint-prefix') }}
-          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline"> {{ t('learn-more') }} </a
+          {{ getEditorTranslation('image-slot-empty-hint-prefix') }}
+          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline">
+            {{ getEditorTranslation('learn-more') }} </a
           >.
         </span>
       </div>
@@ -532,7 +533,7 @@ const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 
     "item-card-label": "Category text",
     "item-card-text": "Text display and order",
-    "item-card-tooltip": "You can manage the description texts in the backend under Images/Categories.",
+    "item-card-tooltip": "You can manage the descriptions of categories inside the PlentyONE Backend UI found under Item » Category.",
     "category-placeholder": "Category name",
     "category-name": "Category name",
     "category-description-1": "Category description 1",
@@ -594,6 +595,8 @@ const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
     "layout-label": "Layout",
 
     "item-card-label": "Category text",
+    "item-card-text": "Text display and order",
+    "item-card-tooltip": "You can manage the descriptions of categories inside the PlentyONE Backend UI found under Item » Category.",
     "category-placeholder": "Category name",
     "category-name": "Category name",
     "category-description-1": "Category description 1",
