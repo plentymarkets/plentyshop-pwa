@@ -41,8 +41,8 @@
     "worktree:spawn": "./scripts/spawn-worktree.sh"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.151.0",
-    "@plentymarkets/shop-core": "^1.16.3",
+    "@plentymarkets/shop-api": "^0.152.0",
+    "@plentymarkets/shop-core": "^1.17.0",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.4.0",
     "@tanstack/vue-virtual": "^3.13.12",

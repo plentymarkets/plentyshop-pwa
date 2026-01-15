@@ -3,12 +3,11 @@ import type { Block } from '@plentymarkets/shop-api';
 export interface PageBlockProps {
   index: number;
   block: Block;
-  enableActions: boolean;
+  enableActions?: boolean;
   root: boolean;
   isClicked: boolean;
   clickedBlockIndex: number | null;
   isTablet: boolean;
-  blockHasData?: (block: Block) => boolean;
   columnLength?: number;
   isRowHovered?: boolean;
   changeBlockPosition: (index: number, position: number) => void;

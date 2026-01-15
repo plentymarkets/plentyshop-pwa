@@ -1,6 +1,6 @@
 <template>
   <div v-if="showLowestPrice" class="text-sm mb-2">
-    {{ t('lowestPrice', { price: format(lowestPrice) }) }}
+    {{ t('product.lowestPrice', { price: format(lowestPrice) }) }}
   </div>
 </template>
 

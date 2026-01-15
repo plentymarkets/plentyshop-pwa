@@ -187,7 +187,7 @@ import {
   SfIconInfo,
   SfTooltip,
 } from '@storefront-ui/vue';
-import dragIcon from 'assets/icons/paths/drag.svg';
+import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
