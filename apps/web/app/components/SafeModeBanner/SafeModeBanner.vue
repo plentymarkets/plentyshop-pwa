@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
 
-const isHidden = useState<boolean>('safe-mode-banner-hidden', () => false);
+const isHidden = ref(false);
 
 const close = () => {
   isHidden.value = true;
