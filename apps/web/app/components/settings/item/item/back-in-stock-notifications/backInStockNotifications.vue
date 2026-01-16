@@ -34,12 +34,12 @@ const showNotifyMeFeature = computed({
   "en": {
     "label": "Enable notify me",
     "description": "Allow customers to subscribe to back-in-stock notifications on item pages",
-    "tooltip": "Shows a subscription button on sold-out items so customers can be notified when available again."
+    "tooltip": "Displays a subscription button for sold-out items so that customers can be notified when they become available again. This requires that email templates are set up correctly and an email account is stored. For more information, see the documentation."
   },
   "de": {
     "label": "Benachrichtigungs-Formular aktivieren",
     "description": "Gibt Kunden die Möglichkeit, sich auf Artikelseiten für Benachrichtigungen über die Wiederverfügbarkeit einzuschreiben",
-    "tooltip": "Zeigt einen Abonnement-Button für ausverkaufte Artikel an, damit Kunden benachrichtigt werden können, wenn diese wieder verfügbar sind."
+    "tooltip": "Zeigt einen Abonnement-Button für ausverkaufte Artikel an, damit Kunden benachrichtigt werden können, wenn diese wieder verfügbar sind. Voraussetzung ist, dass E-Mail-Vorlagen korrekt eingerichtet sind und ein E-Mail-Konto hinterlegt ist. Weitere Informationen sind der Dokumentation zu entnehmen."
   }
 }
 </i18n>
