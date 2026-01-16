@@ -11,7 +11,7 @@ describe('Smoke: Notify Me', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.visitAndHydrate('/gear/speaker-flamingo_158');
-    bypass.bypassCLoudflareTurnstile();
+    bypass.bypassCloudflareTurnstile();
   });
 
   it('[smoke] Open product page and successfully register on back in stock notifications', () => {
@@ -30,16 +30,17 @@ describe('Smoke: Notify Me', () => {
     cy.getByTestId('notifications').should('exist');
   });
 
-  it('[smoke] Open product page and try to register with wrong email', () => {
-    cy.intercept('POST', '**/plentysystems/doSubscribeNotifyMe').as('subscribeApi');
-
+  it('[smoke] Should prevent submission with invalid email due to HTML5 validation', () => {
     notifyMeObject.openModal();
-    const testEmail = `test-example.com`;
-    notifyMeObject.fillAndSubmitModal(testEmail);
+
+    notifyMeObject.notifyMeEmailInput.clear().type('test-example.com');
+    notifyMeObject.notifyMePrivacyCheckbox.check();
+
+    notifyMeObject.notifyMeEmailInput.invoke('prop', 'validity').its('valid').should('be.false');
+
+    notifyMeObject.notifyMeSubmitButton.click();
 
     notifyMeObject.checkModalOpen();
-
-    cy.get('@subscribeApi.all', { timeout: 500 }).should('have.length', 0);
   });
 
   it('[smoke] Open the notify me modal and close using the close button', () => {

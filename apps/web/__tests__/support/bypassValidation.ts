@@ -1,5 +1,5 @@
 export class BypassValidation {
-  bypassCLoudflareTurnstile() {
+  bypassCloudflareTurnstile() {
     cy.intercept('GET', '**/turnstile/v0/api.js*', (req) => {
       req.reply({
         statusCode: 200,
