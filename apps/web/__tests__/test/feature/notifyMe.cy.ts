@@ -1,17 +1,17 @@
 import { NotifyMeObject } from '../../support/pageObjects/NotifyMeObject';
-import { bypassValidation } from '../../support/bypassValidation';
+import { BypassValidation } from '../../support/bypassValidation';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 import { paths } from '../../../app/utils/paths';
 
 const notifyMeObject = new NotifyMeObject();
-const bypass = new bypassValidation();
+const bypass = new BypassValidation();
 const myAccount = new MyAccountPageObject();
 
 describe('Smoke: Notify Me', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.visitAndHydrate('/gear/speaker-flamingo_158');
-    bypass.byPassCLoudflareTurnstile();
+    bypass.bypassCLoudflareTurnstile();
   });
 
   it('[smoke] Open product page and successfully register on back in stock notifications', () => {
@@ -38,8 +38,8 @@ describe('Smoke: Notify Me', () => {
     notifyMeObject.fillAndSubmitModal(testEmail);
 
     notifyMeObject.checkModalOpen();
-    cy.wait(500);
-    cy.get('@subscribeApi.all').should('have.length', 0);
+
+    cy.get('@subscribeApi.all', { timeout: 500 }).should('have.length', 0);
   });
 
   it('[smoke] Open the notify me modal and close using the close button', () => {
