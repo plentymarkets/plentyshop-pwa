@@ -17,7 +17,7 @@ It doesn't include progress status, a release timeline, or similar information.
 This feature is currently only avilable to PlentyONE beta systems.
 
 Date addded: 5 January 2026 <br />
-Date removed: -
+Date removed: 14 January 2026
 
 - Enable with `ENABLE_NOTIFY_ME='true'`
 - Enables "Notify Me" functionality on out-of-stock items on product detail pages
