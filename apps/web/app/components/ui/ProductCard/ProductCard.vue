@@ -274,6 +274,22 @@ const getHeight = () => {
   }
   return '';
 };
+
+/**
+ * Builds basket order parameters for products that have
+ * required and preselected order properties.
+ *
+ * This helper extracts only order properties that are marked as required
+ * and converts them into the structure expected by the basket API.
+ *
+ * It is intended to be used only when the product is already validated
+ * by `hasOrderPropertiesRequiredAndPreselected`, meaning no user input
+ * is needed before adding the product to the basket.
+ *
+ * @param product - The product from which order properties are extracted.
+ * @returns An array of basket order parameter objects if required order
+ *          properties exist, otherwise `undefined`.
+ */
 const buildAutoBasketItemOrderParams = (product: Product): BasketItemOrderParamsProperty[] | undefined =>
   product.properties
     ?.filter((p) => p?.property?.isOderProperty && p.property.isRequired)
