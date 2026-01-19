@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: [
-        'cookie',
+        '@floating-ui/vue',
         '@intlify/core-base',
         '@intlify/shared',
         '@paypal/paypal-js',
@@ -49,6 +49,7 @@ export default defineNuxtConfig({
         '@vue/devtools-kit',
         '@vueuse/core',
         '@vueuse/shared',
+        'cookie',
         'country-flag-icons/string/3x2',
         'dotenv',
         'drift-zoom',
