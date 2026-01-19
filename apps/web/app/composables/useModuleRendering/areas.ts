@@ -1,1 +1,1 @@
-export const ModuleRenderingAreas = ['checkout.afterBuyButton'];
+export const ModuleRenderingAreas = ['checkout.afterBuyButton', 'cart.empty'];
