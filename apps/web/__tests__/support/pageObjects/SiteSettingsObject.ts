@@ -49,6 +49,10 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('block-wrapper');
   }
 
+  get blocks() {
+    return cy.get('.block-wrapper');
+  }
+
   get saveButton() {
     return cy.getByTestId('edit-save-button');
   }
@@ -61,8 +65,12 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('secondary-color-select');
   }
 
-  get blockSpacingButton() {
-    return cy.getByTestId(`block-spacing-btn`);
+  get blockHorizontalSpacingButton() {
+    return cy.getByTestId(`block-horizontal-spacing-btn`);
+  }
+
+  get blockVerticalSpacingButton() {
+    return cy.getByTestId(`block-vertical-spacing-btn`);
   }
 
   get itemBundlesSelect() {
@@ -136,8 +144,13 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  changeBlockSpacing(blockSpacing: string) {
-    this.blockSpacingButton.should('be.visible').contains(blockSpacing).click();
+  changeBlockHorizontalSpacing(value: string) {
+    this.blockHorizontalSpacingButton.should('be.visible').contains(value).click();
+    return this;
+  }
+
+  changeBlockVerticalSpacing(value: string) {
+    this.blockVerticalSpacingButton.should('be.visible').contains(value).click();
     return this;
   }
 
@@ -151,8 +164,13 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  checkBlockSpacingPreview(blockSpacingMargin: string) {
-    this.block.first().should('have.attr', { 'margin-bottom': `${blockSpacingMargin}px` });
+  checkBlockHorizontalSpacingPreview(value: string) {
+    this.block.eq(1).should('have.class', value);
+    return this;
+  }
+
+  checkBlockVerticalSpacingPreview(value: string) {
+    this.blocks.first().should('have.class', `mb-${value}`);
     return this;
   }
 

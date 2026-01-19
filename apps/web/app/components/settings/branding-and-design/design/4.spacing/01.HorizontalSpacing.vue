@@ -6,7 +6,7 @@
         v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
         :key="key"
         type="button"
-        data-testid="block-spacing-btn"
+        data-testid="block-horizontal-spacing-btn"
         :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
         @click="updateSetting(blocksSpacingSize)"
       >
