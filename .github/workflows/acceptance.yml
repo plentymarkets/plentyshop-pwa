@@ -1,5 +1,6 @@
 name: Acceptance Gates
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -8,7 +9,7 @@ permissions:
   contents: read
   packages: read
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
@@ -48,9 +49,10 @@ jobs:
           install: false
           command: npm run test:cypress-feature
         env:
+          NUXT_PUBLIC_SHOW_NOTIFY_ME: 'true'
           NUXT_PUBLIC_CONFIG_ID: 1
           MOLLIE_TEST_MODE: true
-      
+
       - name: E2E Editor
         uses: cypress-io/github-action@v6
         with:
