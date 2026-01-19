@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: [
-        'cookie',
+        '@floating-ui/vue',
         '@intlify/core-base',
         '@intlify/shared',
         '@paypal/paypal-js',
@@ -49,6 +49,7 @@ export default defineNuxtConfig({
         '@vue/devtools-kit',
         '@vueuse/core',
         '@vueuse/shared',
+        'cookie',
         'country-flag-icons/string/3x2',
         'dotenv',
         'drift-zoom',
@@ -216,7 +217,7 @@ export default defineNuxtConfig({
       showCustomerReferenceComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_REFERENCE_COMPONENT === 'true',
       bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
       externalVatCheckInactive: process.env.NUXT_PUBLIC_EXTERNAL_VAT_CHECK_INACTIVE === 'true',
-      showNotifyMe: process.env.NUXT_PUBLIC_SHOW_NOTIFY_ME ? process.env.NUXT_PUBLIC_SHOW_NOTIFY_ME === 'true' : true,
+      showNotifyMe: process.env.NUXT_PUBLIC_SHOW_NOTIFY_ME === 'true',
       itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
       defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
       defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
