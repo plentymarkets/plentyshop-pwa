@@ -70,7 +70,7 @@ const { $isPreview } = useNuxtApp();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
-const blockSize = computed(() => getBlockSize() || 'm');
+const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',

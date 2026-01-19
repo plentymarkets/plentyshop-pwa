@@ -159,7 +159,7 @@ const marginBottomClasses = computed(() => {
   }
 });
 
-const blockSize = computed(() => getBlockSize() || 'm');
+const blockSize = computed(() => getBlockSize());
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;

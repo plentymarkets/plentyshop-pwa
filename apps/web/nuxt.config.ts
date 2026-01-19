@@ -196,6 +196,8 @@ export default defineNuxtConfig({
       configId: process.env.CONFIG_ID || '',
       isHero: true,
       font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
+      verticalBlockSize: process.env.NUXT_PUBLIC_VERTICAL_BLOCK_SIZE || 'm',
+      horizontalBlockSize: process.env.NUXT_PUBLIC_HORIZONTAL_BLOCK_SIZE || 's',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       defaultSortingOption: process.env.NUXT_PUBLIC_DEFAULT_SORTING_OPTION ?? 'texts.name1_asc',
       defaultSortingSearch: process.env.NUXT_PUBLIC_DEFAULT_SORTING_SEARCH ?? 'item.score',

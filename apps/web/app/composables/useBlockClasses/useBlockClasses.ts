@@ -21,7 +21,7 @@ export const useBlockClasses = (block: Block): ComputedRef<Record<string, boolea
   return computed(() => {
     const fullWidth = hasFullWidth(block);
     const rule = resolveBlockLayoutRule(block.name);
-    const horizontalSpacing = getSetting() || 's';
+    const horizontalSpacing = getSetting();
 
     return buildBlockClasses(block, {
       fullWidth,

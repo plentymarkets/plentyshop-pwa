@@ -31,7 +31,7 @@ const btnClasses = ref(
 const blocksSpacingSizes = ['s', 'm', 'l'];
 
 const blockSize = computed({
-  get: () => getSetting() || 's',
+  get: () => getSetting(),
   set: (value) => updateSetting(value),
 });
 

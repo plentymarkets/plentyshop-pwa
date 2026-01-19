@@ -144,7 +144,7 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
-const blockSize = computed(() => getBlockSize() || 'm');
+const blockSize = computed(() => getBlockSize());
 
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
