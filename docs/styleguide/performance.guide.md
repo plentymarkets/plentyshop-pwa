@@ -1,8 +1,10 @@
-# Lazy Loading Blocks Guide
+# Performance guide
+
+## Lazy Loading Blocks
 
 This guide explains how to add lazy-loading support to new block components in the PlentyONE Shop PWA.
 
-## How Lazy Loading Works
+### How Lazy Loading Works
 
 The lazy-loading system uses IntersectionObserver to detect when a block comes into the viewport. The system is fully automated:
 
@@ -12,9 +14,9 @@ The lazy-loading system uses IntersectionObserver to detect when a block comes i
 4. **Prop Injection**: When the block becomes visible, the configured prop is automatically passed to the component
 5. **Unique Tracking**: Each block instance is tracked with a unique key based on block name and UUID
 
-## Adding a New Lazy-Loadable Block
+### Adding a New Lazy-Loadable Block
 
-### Step 1: Configure the Block
+#### Step 1: Configure the Block
 
 Add your block to the `LAZY_LOAD_BLOCKS` configuration in `composables/useBlockManager/useBlockManager.ts`:
 
@@ -35,7 +37,7 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 };
 ```
 
-### Step 2: Update Component Props
+#### Step 2: Update Component Props
 
 In your block component, add the lazy-loading prop to your types and props:
 
@@ -51,7 +53,7 @@ const props = withDefaults(defineProps<MyNewLazyBlockProps>(), {
 });
 ```
 
-### Step 3: Implement Lazy Loading Logic
+#### Step 3: Implement Lazy Loading Logic
 
 In your component, implement the loading logic based on the prop. The system automatically handles the IntersectionObserver setup and prop injection:
 
@@ -87,9 +89,9 @@ watch(
 </script>
 ```
 
-## How the System Works Internally
+### How the System Works Internally
 
-### Automatic Setup
+#### Automatic Setup
 
 The `PageBlock` component automatically:
 
@@ -99,7 +101,7 @@ The `PageBlock` component automatically:
 4. **Configures observers**: Sets up IntersectionObserver with the configured thresholds
 5. **Injects props**: Automatically passes the lazy load state as a prop to your component
 
-### Unique Instance Tracking
+#### Unique Instance Tracking
 
 Each block instance is tracked individually using a unique key pattern: `blockName-blockUuid`. This ensures that:
 
@@ -107,15 +109,15 @@ Each block instance is tracked individually using a unique key pattern: `blockNa
 - Each block's lazy load state is independent
 - The system can handle complex nested block structures
 
-## Configuration Options
+### Configuration Options
 
-### LazyLoadConfig Properties
+#### LazyLoadConfig Properties
 
 - **propName**: The name of the prop that will be passed to your component
 - **rootMargin**: How much margin to add around the viewport for intersection detection
 - **threshold**: What percentage of the element must be visible to trigger loading
 
-### Common Patterns
+#### Common Patterns
 
 ```typescript
 // Load immediately when any part enters viewport

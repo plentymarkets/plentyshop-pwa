@@ -426,6 +426,8 @@
       "closeDrawer": "Drawer schließen",
       "closeListSettings": "Listeneinstellungen schließen",
       "closeMenu": "Menü schließen",
+      "openMenu": "Menü öffnen",
+      "showSubcategories": "Unterkategorien anzeigen",
       "closeNeutralAlert": "Benachrichtigung schließen",
       "closePickSavedAddress": "Adressauswahl schließen",
       "currentPage": "Die aktuelle Seite ist {page}",
@@ -1124,7 +1126,8 @@
     "emptyStateImageAlt": "Bild, das beschreibt, dass keine Artikel gefunden wurden",
     "emptyStateText": "Wir haben keine Artikel mehr in dieser Kategorie.",
     "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
-    "numberOfProducts": "{count} Artikel von {total} Artikeln"
+    "numberOfProducts": "{count} Artikel von {total} Artikeln",
+    "searchResults": "Suchergebnisse für \"{phrase}\""
   },
   "sessionLifetime": {
     "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",

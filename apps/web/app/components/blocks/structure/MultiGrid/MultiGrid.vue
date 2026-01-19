@@ -55,6 +55,7 @@ import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structu
 import type { Block } from '@plentymarkets/shop-api';
 
 const { content, configuration } = defineProps<MultiGridProps>();
+const route = useRoute();
 
 const hoveredRowUuid = ref<string | null>(null);
 const onRowEnter = (row: Block) => {
@@ -111,7 +112,10 @@ const getColumnClasses = (colIndex: number) => {
   const classes = [`col-span-${columnWidth}`];
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
-    classes.push('md:sticky', 'md:top-40');
+    classes.push('md:sticky');
+
+    const topValue = route.meta?.type === 'product' ? 'md:top-40' : 'md:top-5';
+    classes.push(topValue);
   }
 
   return classes;
@@ -131,7 +135,7 @@ const enableActions = computed(() => attrs.enableActions === true);
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) => enableActions.value && $isPreview && !isDragging.value && blockHasData(block),
+  () => (block: Block) => enableActions.value && !!$isPreview && !isDragging.value && blockHasData(block),
 );
 
 const isAlignable = (b: Block): b is AlignableBlock =>

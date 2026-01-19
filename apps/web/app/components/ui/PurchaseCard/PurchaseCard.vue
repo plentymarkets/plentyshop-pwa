@@ -130,7 +130,7 @@
                     @change-quantity="changeQuantity"
                   />
                   <div
-                    v-if="showNotifyMe && enableNotifyMe && !productGetters.isSalable(product)"
+                    v-if="showNotifyMe && !productGetters.isSalable(product)"
                     class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
                   >
                     <NotifyMe :variation-id="Number(productGetters.getVariationId(product))" />
@@ -303,8 +303,7 @@ const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
-const showNotifyMe = getNotifyMeSetting();
-const enableNotifyMe = useRuntimeConfig().public.enableNotifyMe;
+const showNotifyMe = computed(() => getNotifyMeSetting().toString() === 'true');
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
