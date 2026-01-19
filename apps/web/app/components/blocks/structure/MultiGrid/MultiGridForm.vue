@@ -143,8 +143,8 @@ const { data } = useCategoryTemplate(
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { getSetting: getBlockSize } = useSiteSettings('blockSize');
-const blockSize = computed(() => getBlockSize());
+const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
+const blockSize = computed(() => getBlockSize() || 'm');
 
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;

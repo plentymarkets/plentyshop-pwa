@@ -31,13 +31,12 @@ const btnClasses = ref(
 const blocksSpacingSizes = ['s', 'm', 'l'];
 
 const blockSize = computed({
-  get: () => getSetting(),
+  get: () => getSetting() || 's',
   set: (value) => updateSetting(value),
 });
 
 const horizontalSpacingDescription = computed(() => {
   const key = blockSize.value ?? 's';
-
   const map: Record<string, { bp: string; class: string }> = {
     s: { bp: '3xl', class: 'max-w-screen-3xl' },
     m: { bp: '2xl', class: 'max-w-screen-2xl' },

@@ -33,13 +33,11 @@ const btnClasses = ref(
 const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
 
 const blockSize = computed({
-  get: () => getSetting(),
+  get: () => getSetting() || 'm',
   set: (value) => updateSetting(value),
 });
 
 const spacingInPx = computed(() => {
-  if (!blockSize.value) return '0';
-
   const sizeMap: Record<string, string> = {
     s: _s,
     m: _m,

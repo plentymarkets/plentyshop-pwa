@@ -114,7 +114,7 @@ const { $isPreview } = useNuxtApp();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
-const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const attrs = useAttrs();
 const {
   visiblePlaceholder,
@@ -159,7 +159,7 @@ const marginBottomClasses = computed(() => {
   }
 });
 
-const blockSize = computed(() => getBlockSize());
+const blockSize = computed(() => getBlockSize() || 'm');
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
