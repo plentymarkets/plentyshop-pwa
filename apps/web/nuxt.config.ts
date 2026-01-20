@@ -107,7 +107,7 @@ export default defineNuxtConfig({
     public: {
       ...settingsConfig,
       ...featureFlagsConfig,
-    }
+    },
   },
   modules: [
     '@plentymarkets/shop-core',
