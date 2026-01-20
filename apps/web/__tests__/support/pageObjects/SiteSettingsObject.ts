@@ -8,13 +8,52 @@ export class SiteSettingsObject extends PageObject {
   get closeButton() {
     return cy.getByTestId('view-close');
   }
-
   get settingsDrawer() {
     return cy.getByTestId('site-settings-drawer');
   }
 
   get designSubcategory() {
     return cy.getByTestId('site-settings-sub-category-design');
+  }
+
+  get customScriptsSubCategory() {
+    return cy.getByTestId('custom-scripts-sub-category');
+  }
+
+  get customScriptsForm() {
+    return cy.getByTestId('custom-scripts-form');
+  }
+
+  get positionSelect() {
+    return cy.getByTestId('script-placement-select');
+  }
+
+  get customJsAccordion() {
+    return cy.getByTestId('site-settings-sub-category-custom-js');
+  }
+
+  get addSnippetButtonEmpty() {
+    return cy.getByTestId('add-code-snippet-empty');
+  }
+
+  get assetsDrawer() {
+    return cy.getByTestId('assets-drawer');
+  }
+
+  get snippetOverview() {
+    return cy.getByTestId('code-snippet-overview');
+  } 
+
+  get addSnippetButton() {
+    return cy.getByTestId('add-code-snippet');
+  }
+
+  get codeEditor() {
+    return cy.getByTestId('code-editor');
+  }
+
+  get customSettingsSection() {
+    return cy.getByTestId('custom-js-settings-section');
   }
 
   get fontSection() {
@@ -103,6 +142,45 @@ export class SiteSettingsObject extends PageObject {
     this.designSubcategory.should('be.visible').click();
     return this;
   }
+
+  checkCustomCodeHeader() {
+    this.settingsDrawer.should('be.visible');
+    this.settingsDrawer.find('div.text-xl.font-bold').should('contain.text', 'Custom Code');
+    return this;
+  }
+
+  changeCustomScript() {
+    this.customJsAccordion.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.addSnippetButtonEmpty.should('be.visible').scrollIntoView().click({ force: true });
+    cy.wait(500);
+    this.positionSelect.should('be.visible').should('have.value', 'head_end');
+    cy.wait(500);
+    this.codeEditor.should('be.visible').click().type('// Custom JavaScript Code');
+    return this;
+  }
+
+  openCustomScriptsSubCategory() {
+    this.customScriptsSubCategory.should('be.visible').click();
+    return this;
+  }
+
+  checkScriptPlacementFooter() {
+    this.positionSelect.should('be.visible').should('have.value', 'head_end');
+    this.positionSelect.select('body_end');
+    this.positionSelect.should('have.value', 'body_end');
+    // this.customJsAccordion.scrollIntoView().click({force: true}); // force needed due to tooltip overlap
+   // this.snippetOverview.should('be.visible');
+    //  cy.get('body').trigger('mousemove', 110, 0); // to close the tooltip
+    // cy.wait(100);
+   this.customSettingsSection.should('be.visible').click();
+   this.snippetOverview.should('be.visible');
+    cy.get('body')
+      .children()
+      .last()
+      .should('match', 'script')
+    return this;
+  }
+
 
   toggleFonts() {
     this.fontSection.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
@@ -209,7 +287,7 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  visibleBundleComponents(list) {
+  visibleBundleComponents(list: string) {
     const options = [
       'Only list the components of the item bundle and replace the item bundle with the basic items in the order process',
       'List both the item bundle and its individual components',
@@ -220,7 +298,7 @@ export class SiteSettingsObject extends PageObject {
     });
   }
 
-  notVisibleBundleComponents(list) {
+  notVisibleBundleComponents(list: string) {
     this.itemBundlesSelect.select(
       'Only show item bundle without individual components and do not split the item bundle in the order process',
     );

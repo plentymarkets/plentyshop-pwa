@@ -1,6 +1,7 @@
 <template>
   <SfDrawer
     v-model="open"
+    data-testid="assets-drawer"
     class="asset-drawer h-screen bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[630px] min-w-[500px]"
     :placement="placement"
     :disable-click-away="true"
@@ -35,7 +36,12 @@
         <UiFormLabel class="mb-1">
           {{ getEditorTranslation('placement') }}
         </UiFormLabel>
-        <SfSelect v-model="currentAsset.placement" size="base" @update:model-value="() => addOrUpdate(currentAsset)">
+        <SfSelect
+          v-model="currentAsset.placement"
+          size="base"
+          data-testid="script-placement-select"
+          @update:model-value="() => addOrUpdate(currentAsset)"
+        >
           <option v-for="{ value, label } in scriptPlacement" :key="value" :value="value">
             {{ label }}
           </option>
