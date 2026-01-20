@@ -241,7 +241,6 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
   multigridColumnUuid.value = null;
 };
 
-const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 
 const isEditDisabled = computed(() => {
