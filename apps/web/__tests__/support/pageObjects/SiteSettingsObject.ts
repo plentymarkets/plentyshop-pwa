@@ -49,10 +49,6 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('block-wrapper');
   }
 
-  get blocks() {
-    return cy.get('.block-wrapper');
-  }
-
   get saveButton() {
     return cy.getByTestId('edit-save-button');
   }
@@ -170,7 +166,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   checkBlockVerticalSpacingPreview(value: string) {
-    this.blocks.first().should('have.class', `mb-${value}`);
+    this.block.first().should('have.class', `mb-${value}`);
     return this;
   }
 

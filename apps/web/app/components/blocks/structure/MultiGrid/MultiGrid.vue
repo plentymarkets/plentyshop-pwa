@@ -79,21 +79,7 @@ const gapClassMap: Record<string, string> = {
   XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
 const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
-
-const defaultMarginBottom = computed(() => {
-  switch (blockSize.value) {
-    case 's':
-      return 30;
-    case 'm':
-      return 40;
-    case 'l':
-      return 50;
-    case 'xl':
-      return 60;
-    default:
-      return 0;
-  }
-});
+const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 
 const gridInlineStyle = computed(() => ({
   backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',

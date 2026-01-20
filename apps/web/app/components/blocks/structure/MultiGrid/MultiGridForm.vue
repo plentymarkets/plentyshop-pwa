@@ -145,24 +145,9 @@ const { data } = useCategoryTemplate(
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
-
+const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
-});
-
-const defaultMarginBottom = computed(() => {
-  switch (blockSize.value) {
-    case 's':
-      return 30;
-    case 'm':
-      return 40;
-    case 'l':
-      return 50;
-    case 'xl':
-      return 60;
-    default:
-      return 0;
-  }
 });
 
 const multiGridStructure = computed(() => {
