@@ -19,16 +19,18 @@ export const buildBlockClasses = (
     verticalSpacing?: string | undefined;
   },
 ): Record<string, boolean> => {
+  const { getBlockDepth } = useBlockManager();
   const { fullWidth, rule, horizontalSpacing, verticalSpacing } = opts;
   const isContainerExcluded = rule.container === false;
   const isPaddingExcluded = rule.padding === false;
+  const isRootNonFooter = getBlockDepth(block.meta.uuid) === 0 && block.name !== 'Footer';
 
   const horizontalClass = getHorizontalClass(!fullWidth && !isContainerExcluded ? horizontalSpacing : undefined);
   const verticalClass = getVerticalClass(verticalSpacing);
 
   return {
     [horizontalClass]: !fullWidth && !isContainerExcluded,
-    [verticalClass]: block.name !== 'MultiGrid' && block.name !== 'Footer',
+    [verticalClass]: block.name !== 'MultiGrid' && isRootNonFooter,
     'mx-auto': !isContainerExcluded,
     'p-4 md:px-6 lg:px-10': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
   };
