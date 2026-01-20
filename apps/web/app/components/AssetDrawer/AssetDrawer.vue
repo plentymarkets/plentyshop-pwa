@@ -31,6 +31,16 @@
           />
         </label>
       </div>
+      <div class="mb-4">
+        <UiFormLabel class="mb-1">
+          {{ getEditorTranslation('placement') }}
+        </UiFormLabel>
+        <SfSelect v-model="currentAsset.placement" size="base" @update:model-value="() => addOrUpdate(currentAsset)">
+          <option v-for="{ value, label } in scriptPlacement" :key="value" :value="value">
+            {{ label }}
+          </option>
+        </SfSelect>
+      </div>
       <div class="flex justify-between items-center mb-1">
         <UiFormLabel v-if="currentAsset.type === 'css'">
           {{ getEditorTranslation('custom-css') }}
@@ -88,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconDelete, SfIconChevronLeft, SfInput } from '@storefront-ui/vue';
+import { SfDrawer, SfIconDelete, SfIconChevronLeft, SfInput, SfSelect } from '@storefront-ui/vue';
 import type { Asset, AssetType } from '@plentymarkets/shop-api';
 import type { CodeEditorExposed } from '~/components/AssetDrawer/types';
 
@@ -97,9 +107,24 @@ const { currentAsset, selectAsset, addOrUpdate, deleteAsset } = useCustomAssets(
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 
+const scriptPlacement = [
+  { label: 'Header', value: 'head_end' },
+  { label: 'Footer', value: 'body_end' },
+];
+
 const codeEditorRef = ref<CodeEditorExposed | null>(null);
 
 const isCodeAsset = computed(() => currentAsset.value.type === 'css' || currentAsset.value.type === 'javascript');
+
+// watch(
+//   () => currentAsset.value,
+//   (asset) => {
+//     if (asset?.type === 'javascript' && !asset.placement) {
+//       asset.placement = 'head_end'; // default = Header
+//     }
+//   },
+//   { immediate: true },
+// );
 
 const handleFormatCode = () => {
   if (codeEditorRef.value) {
