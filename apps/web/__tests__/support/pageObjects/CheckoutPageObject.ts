@@ -348,7 +348,7 @@ export class CheckoutPageObject extends PageObject {
     cy.intercept('/plentysystems/getSession').as('getSession');
     cy.intercept('/plentysystems/getShippingProvider').as('getShippingProvider');
     cy.getByTestId('payment-method-6001').check({ force: true });
-    cy.wait('@setPaymentProvider').wait('@getSession').wait('@getShippingProvider');
+    cy.wait(['@setPaymentProvider', '@getSession', '@getShippingProvider']);
     return this;
   }
 
