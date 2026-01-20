@@ -2,6 +2,7 @@
 import { validateApiUrl } from './app/utils/pathHelper';
 import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
+import cookieConfig from './app/configuration/cookie.config';
 import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 import settingsConfig from './app/configuration/settings.config';
@@ -105,6 +106,14 @@ export default defineNuxtConfig({
   pages: true,
   runtimeConfig: {
     public: {
+      domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
+      apiEndpoint: process.env.API_ENDPOINT,
+      activeLanguages: process.env.LANGUAGELIST || 'en,de',
+      disabledEditorSettings: process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1' ? [] : ['shop-search'],
+      cookieGroups: cookieConfig,
+      turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
+      noCache: process.env.NO_CACHE || '',
+      configId: process.env.CONFIG_ID || '',
       ...settingsConfig,
       ...featureFlagsConfig,
     },

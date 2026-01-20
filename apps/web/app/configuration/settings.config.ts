@@ -1,13 +1,4 @@
-import cookieConfig from './cookie.config';
-import { validateApiUrl } from '../utils/pathHelper';
-
 export default {
-  domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
-  apiEndpoint: process.env.API_ENDPOINT,
-  activeLanguages: process.env.LANGUAGELIST || 'en,de',
-  disabledEditorSettings: process.env?.ENABLE_ALL_EDITOR_SETTINGS === '1' ? [] : ['shop-search'],
-  cookieGroups: cookieConfig,
-  turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
   useAvif: process.env?.IMAGEAVIF === 'true' || process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
   useWebp: process.env?.IMAGEWEBP === 'true' || process.env?.NUXT_PUBLIC_USE_WEBP === 'true',
   validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
@@ -87,8 +78,6 @@ export default {
     'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
   homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
   storename: process.env.NAME || 'PlentyONE GmbH',
-  noCache: process.env.NO_CACHE || '',
-  configId: process.env.CONFIG_ID || '',
   isHero: true,
   font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
   verticalBlockSize: process.env.NUXT_PUBLIC_VERTICAL_BLOCK_SIZE || 'm',
