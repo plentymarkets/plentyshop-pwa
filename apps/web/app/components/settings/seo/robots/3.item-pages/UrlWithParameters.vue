@@ -5,8 +5,8 @@
         {{ getEditorTranslation('label') }}
       </UiFormLabel>
       <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="mr-6 z-10">
-          <SfIconInfo :size="'sm'" />
-        </SfTooltip>
+        <SfIconInfo :size="'sm'" />
+      </SfTooltip>
       <SfSwitch
         v-model="robotsUrlWithParameters"
         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"

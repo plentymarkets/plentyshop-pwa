@@ -18,7 +18,7 @@
       deselect-label="Selected"
     >
       <template #singleLabel="{ option }">
-        {{ getEditorTranslation('robotsItemPage-' + (option.toLowerCase())) }}
+        {{ getEditorTranslation('robotsItemPage-' + option.toLowerCase()) }}
       </template>
       <template #option="props">
         {{ getEditorTranslation('robotsItemPage-' + props.option) }}

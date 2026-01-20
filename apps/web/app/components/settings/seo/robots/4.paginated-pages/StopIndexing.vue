@@ -7,11 +7,7 @@
       </SfTooltip>
     </div>
     <label>
-      <SfInput
-        v-model="robots"
-        type="text"
-        data-testid="seo-robots-stop-indexing"
-      />
+      <SfInput v-model="robots" type="text" data-testid="seo-robots-stop-indexing" />
     </label>
   </div>
 </template>
