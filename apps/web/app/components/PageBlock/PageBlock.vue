@@ -6,7 +6,6 @@
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
         'relative block-wrapper',
-        marginBottomClasses,
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
@@ -114,7 +113,6 @@ const { $isPreview } = useNuxtApp();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
-const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const attrs = useAttrs();
 const {
   visiblePlaceholder,
@@ -141,25 +139,6 @@ const shouldShowBottomAddInGrid = computed(() =>
 );
 const clientPreview = ref(false);
 const buttonLabel = 'Insert a new block at this position.';
-
-const marginBottomClasses = computed(() => {
-  if (props.block.name === 'MultiGrid') return '';
-  if (!isRootNonFooter.value) return '';
-  switch (blockSize.value) {
-    case 's':
-      return 'mb-s';
-    case 'm':
-      return 'mb-m';
-    case 'l':
-      return 'mb-l';
-    case 'xl':
-      return 'mb-xl';
-    default:
-      return '';
-  }
-});
-
-const blockSize = computed(() => getBlockSize());
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
@@ -262,7 +241,6 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
   multigridColumnUuid.value = null;
 };
 
-const isRootNonFooter = computed(() => props.root && props.block.name !== 'Footer');
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 
 const isEditDisabled = computed(() => {
