@@ -31,7 +31,7 @@
           />
         </label>
       </div>
-      <div class="mb-4">
+      <div v-if="currentAsset.type === 'javascript'" class="mb-4">
         <UiFormLabel class="mb-1">
           {{ getEditorTranslation('placement') }}
         </UiFormLabel>
@@ -115,16 +115,6 @@ const scriptPlacement = [
 const codeEditorRef = ref<CodeEditorExposed | null>(null);
 
 const isCodeAsset = computed(() => currentAsset.value.type === 'css' || currentAsset.value.type === 'javascript');
-
-// watch(
-//   () => currentAsset.value,
-//   (asset) => {
-//     if (asset?.type === 'javascript' && !asset.placement) {
-//       asset.placement = 'head_end'; // default = Header
-//     }
-//   },
-//   { immediate: true },
-// );
 
 const handleFormatCode = () => {
   if (codeEditorRef.value) {
