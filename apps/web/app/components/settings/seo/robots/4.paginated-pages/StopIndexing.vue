@@ -6,7 +6,6 @@
     <label>
       <SfInput
         v-model="robots"
-        :placeholder="getEditorTranslation('placeholder')"
         type="text"
         data-testid="seo-robots-stop-indexing"
       />
@@ -27,10 +26,10 @@ const robots = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "At which page should robots stop indexing your category pages?"
+    "label": "After which page should robots stop indexing your category pages? Default = 0"
   },
   "de": {
-    "label": "At which page should robots stop indexing your category pages?"
+    "label": "After which page should robots stop indexing your category pages? Default = 0"
   }
 }
 </i18n>
