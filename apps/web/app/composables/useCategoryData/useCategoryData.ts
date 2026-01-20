@@ -101,33 +101,19 @@ export const useCategoryData = () => {
     if (type === 'text') categoryDataBlock.value.text.bgOpacity = clamp(nextValue, 0, 1);
   };
 
-  const changeCategoryImageWidth = (fullWidth: boolean) => {
-    categoryDataBlock.value.layout.narrowContainer = !fullWidth;
-    setTimeout(() => {
-      const el = document.querySelector(`[data-uuid="${blockUuid.value}"]`);
-      if (!el) return;
-      if (fullWidth) el.classList.remove('max-w-screen-3xl', 'px-4', 'md:px-6');
-      else el.classList.add('max-w-screen-3xl');
-    }, 100);
-  };
-  onMounted(() => {
-    watch(
-      () => categoryDataBlock.value.image?.fillMode,
-      (newMode) => {
-        const display = categoryDataBlock.value.displayCategoryImage;
-        if (newMode === 'fill' && display !== 'off') {
-          categoryDataBlock.value.layout.paddingTop = 0;
-          categoryDataBlock.value.layout.paddingBottom = 0;
-          categoryDataBlock.value.layout.paddingLeft = 0;
-          categoryDataBlock.value.layout.paddingRight = 0;
-          changeCategoryImageWidth(true);
-        } else if (newMode === 'fit') {
-          changeCategoryImageWidth(false);
-        }
-      },
-      { immediate: true, flush: 'post' },
-    );
-  });
+  watch(
+    () => [categoryDataBlock.value.image?.fillMode, categoryDataBlock.value.displayCategoryImage] as const,
+    ([fillMode, display]) => {
+      if (fillMode === 'fill' && display !== 'off') {
+        categoryDataBlock.value.layout.fullWidth = true;
+        categoryDataBlock.value.layout.paddingTop = 0;
+        categoryDataBlock.value.layout.paddingBottom = 0;
+        categoryDataBlock.value.layout.paddingLeft = 0;
+        categoryDataBlock.value.layout.paddingRight = 0;
+      }
+    },
+    { immediate: true },
+  );
 
   return {
     learnMoreUrl,
