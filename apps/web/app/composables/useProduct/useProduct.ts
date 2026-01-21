@@ -64,7 +64,7 @@ export const useProduct: UseProductReturn = (slug) => {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const blocks = blockData.value ?? useProductTemplateData();
+      const blocks = blockData.value.length ? blockData.value : useProductTemplateData();
 
       state.value.data = {
         blocks: blocks,
