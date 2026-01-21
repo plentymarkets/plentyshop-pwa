@@ -27,7 +27,9 @@ const validateApiUrl = (url: string | undefined): string | undefined => {
     {
       cors: {
         credentials: true,
-        origin: validateApiUrl(process.env.API_URL) ?? 'http://localhost:3000',
+        origin: validateApiUrl(process.env.API_URL) 
+        ? `${validateApiUrl(process.env.API_URL)}, https://plentyshop.plentymarkets.com`  
+        : 'http://localhost:3000',
       },
       bodyParser: {
         limit: '50mb',
