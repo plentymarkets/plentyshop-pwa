@@ -16,6 +16,7 @@
     class="w-full cursor-pointer"
     @update:model-value="onCategorySelected"
     @search-change="handleSearch"
+    @open="handleOpen"
   />
 </template>
 
@@ -33,12 +34,15 @@ const emit = defineEmits<{
 
 const categories = ref<CategoryOption[]>([]);
 const isLoading = ref(false);
+const currentPage = ref(1);
+const hasMorePages = ref(true);
+const currentSearchQuery = ref('');
 
 const { data, getCategories } = useCategoriesSearch();
 const { send } = useNotification();
 
-const mapSearchResultsToOptions = (entries: CategoryEntry[]): void => {
-  categories.value = entries
+const mapSearchResultsToOptions = (entries: CategoryEntry[]): CategoryOption[] => {
+  return entries
     .filter((category) => category.right !== 'customer')
     .map((category) => ({
       id: category.id.toString(),
@@ -46,17 +50,29 @@ const mapSearchResultsToOptions = (entries: CategoryEntry[]): void => {
     }));
 };
 
-const handleSearch = debounce(async (query: string) => {
-  const q = query?.trim();
+const loadCategories = async (query: string, page: number, append: boolean = false) => {
   isLoading.value = true;
 
   try {
     await getCategories({
       ...props.baseSearchParams,
-      ...(q ? { name: `like:${q}` } : {}),
+      page,
+      itemsPerPage: 50,
+      ...(query ? { name: `like:${query}` } : {}),
+      ...(props.modelValue ? { pinnedId: props.modelValue } : {}),
     });
 
-    mapSearchResultsToOptions(data.value.entries);
+    const newOptions = mapSearchResultsToOptions(data.value.entries);
+
+    if (append) {
+      const existingIds = new Set(categories.value.map((c) => c.id));
+      const uniqueNewOptions = newOptions.filter((c) => !existingIds.has(c.id));
+      categories.value = [...categories.value, ...uniqueNewOptions];
+    } else {
+      categories.value = newOptions;
+    }
+
+    hasMorePages.value = !data.value.isLastPage;
   } catch {
     categories.value = [];
     send({
@@ -66,7 +82,23 @@ const handleSearch = debounce(async (query: string) => {
   } finally {
     isLoading.value = false;
   }
+};
+
+const handleSearch = debounce(async (query: string) => {
+  const q = query?.trim();
+  currentSearchQuery.value = q;
+  currentPage.value = 1;
+  hasMorePages.value = true;
+
+  await loadCategories(q, 1, false);
 }, 500);
+
+const handleOpen = async () => {
+  if (hasMorePages.value && categories.value.length > 0) {
+    currentPage.value++;
+    await loadCategories(currentSearchQuery.value, currentPage.value, true);
+  }
+};
 
 const categoryCustomLabel = (option: CategoryOption) => `[${option.id}] ${option.name}`;
 
@@ -79,9 +111,7 @@ const onCategorySelected = (category: CategoryOption | null) => {
   emit('update:modelValue', category?.id ?? null);
 };
 
-onMounted(async () => {
-  await handleSearch('');
-});
+onMounted(() => handleSearch(''));
 </script>
 
 <i18n lang="json">
