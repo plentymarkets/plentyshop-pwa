@@ -37,7 +37,6 @@ export * from './useCategoryTree';
 export * from './useCheckout';
 export * from './useCheckoutPagePaymentAndShipping';
 export * from './useCoupon';
-export * from './useCsrfToken';
 export * from './useCustomer';
 export * from './useCustomerContact';
 export * from './useCustomerOrder';
