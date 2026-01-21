@@ -29,12 +29,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }),
   );
 
-  // Initialize footer composable once at composable level to ensure it's available
-  // in synchronous context for all functions that need it
-  const footer = useFooter();
-
   const ensureFooterBlock = async () => {
-    const { fetchFooterSettings } = footer;
+    const { fetchFooterSettings } = useFooter();
 
     try {
       await fetchFooterSettings();
@@ -62,9 +58,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
     const { $i18n } = useNuxtApp();
 
-    // Ensure footer is loaded before fetching blocks
-    await ensureFooterBlock();
-
     const { data, error } = await useAsyncData(`${$i18n.locale.value}-${type}-${identifier}-${blocks}`, () =>
       useSdk().plentysystems.getBlocks({ identifier, type, blocks }),
     );
@@ -78,6 +71,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
 
     setupBlocks(data?.value?.data ?? []);
+
+    await ensureFooterBlock();
   };
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
@@ -144,7 +139,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = footer;
+        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = useFooter();
 
         const footerSettings = extractFooterFromBlocks(content);
         if (footerSettings) {
