@@ -44,7 +44,7 @@
     "@plentymarkets/shop-api": "^0.152.2",
     "@plentymarkets/shop-core": "^1.18.1",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
-    "@plentymarkets/shop-module-mollie": "^1.4.0",
+    "@plentymarkets/shop-module-mollie": "^1.4.2",
     "@tanstack/vue-virtual": "^3.13.18",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
