@@ -24,6 +24,10 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('custom-scripts-form');
   }
 
+  get brandingAndDesignTooltip() {
+    return cy.getByTestId('branding-tooltip');
+  }
+
   get positionSelect() {
     return cy.getByTestId('script-placement-select');
   }
@@ -42,7 +46,7 @@ export class SiteSettingsObject extends PageObject {
 
   get snippetOverview() {
     return cy.getByTestId('code-snippet-overview');
-  } 
+  }
 
   get addSnippetButton() {
     return cy.getByTestId('add-code-snippet');
@@ -50,6 +54,10 @@ export class SiteSettingsObject extends PageObject {
 
   get codeEditor() {
     return cy.getByTestId('code-editor');
+  }
+
+  get snippetSwitch() {
+    return cy.getByTestId('activate-snippet');
   }
 
   get customSettingsSection() {
@@ -168,19 +176,18 @@ export class SiteSettingsObject extends PageObject {
     this.positionSelect.should('be.visible').should('have.value', 'head_end');
     this.positionSelect.select('body_end');
     this.positionSelect.should('have.value', 'body_end');
-    // this.customJsAccordion.scrollIntoView().click({force: true}); // force needed due to tooltip overlap
-   // this.snippetOverview.should('be.visible');
-    //  cy.get('body').trigger('mousemove', 110, 0); // to close the tooltip
-    // cy.wait(100);
-   this.customSettingsSection.should('be.visible').click();
-   this.snippetOverview.should('be.visible');
+    this.brandingAndDesignTooltip.invoke('css', 'display', 'none');
+    this.customSettingsSection.should('be.visible').click();
+    this.snippetOverview.should('be.visible');
+    this.snippetSwitch.should('be.visible').click();
     cy.get('body')
       .children()
       .last()
       .should('match', 'script')
+      .and('have.attr', 'data-hid')
+      .and('match', /^custom-js-.*-footer$/);
     return this;
   }
-
 
   toggleFonts() {
     this.fontSection.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
