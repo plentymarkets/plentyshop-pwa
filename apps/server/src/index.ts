@@ -20,11 +20,10 @@ const checkEnvironments = (integrations: any) => {
 const validateApiUrl = (url: string | undefined): string | undefined => {
   return url?.replace(/[/\\]+$/, '');
 };
-
+const allowedOrginsEnv = process.env.ALLOWED_ORIGINS as string ? process.env.ALLOWED_ORIGINS?.split(',') : [];
 const allowedOrigins = new Set([
-  validateApiUrl(process.env.API_URL),
-  validateApiUrl('https://plentyshop.plentymarkets.com'),
-  'http://localhost:3000'
+  validateApiUrl(process.env.API_URL) ?? 'http://localhost:3000',
+  ...allowedOrginsEnv?.map((origin) => validateApiUrl(origin) ?? '') ?? [],
 ]);
 
 (async () => {
