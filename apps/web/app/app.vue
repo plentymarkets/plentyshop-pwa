@@ -140,8 +140,18 @@ const themeColor = ref(getPrimaryColor());
 
 const cssAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('css')));
 
-const jsAssets = computed(() =>
-  isSafeMode.value ? [] : getAssetsOfType('javascript').filter((asset) => asset.isActive),
+const jsHeadAssets = computed(() =>
+  isSafeMode.value
+    ? []
+    : getAssetsOfType('javascript').filter(
+        (asset) => asset.isActive && (asset.placement === 'head_end' || !asset.placement),
+      ),
+);
+
+const jsFooterAssets = computed(() =>
+  isSafeMode.value
+    ? []
+    : getAssetsOfType('javascript').filter((asset) => asset.isActive && asset.placement === 'body_end'),
 );
 
 const metaAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('meta').filter((asset) => asset.isActive)));
@@ -207,9 +217,14 @@ useHead({
 if (import.meta.client) {
   useHead({
     script: () => [
-      ...jsAssets.value.map((asset) => ({
+      ...jsHeadAssets.value.map((asset) => ({
         key: `custom-js-${asset.uuid}`,
         innerHTML: asset.content,
+      })),
+      ...jsFooterAssets.value.map((asset) => ({
+        key: `custom-js-${asset.uuid}-footer`,
+        innerHTML: asset.content,
+        tagPosition: 'bodyClose',
       })),
       ...jsExternalAssets.value.map((asset) => ({
         key: `external-js-${asset.uuid}`,
