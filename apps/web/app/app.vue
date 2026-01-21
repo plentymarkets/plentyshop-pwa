@@ -143,7 +143,9 @@ const cssAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('css')
 const jsHeadAssets = computed(() =>
   isSafeMode.value
     ? []
-    : getAssetsOfType('javascript').filter((asset) => asset.isActive && asset.placement === 'head_end'),
+    : getAssetsOfType('javascript').filter(
+        (asset) => asset.isActive && (asset.placement === 'head_end' || !asset.placement),
+      ),
 );
 
 const jsFooterAssets = computed(() =>
