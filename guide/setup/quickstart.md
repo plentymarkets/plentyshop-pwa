@@ -149,6 +149,10 @@ The app will be served with hot reload at [localhost:3000](http://localhost:3000
 
 ## Deployment
 
+::: warning :warning: SSL Certificate
+To build and deploy a PlentyONE shop and to use the shop editor, you need a [valid SSL certificate](https://knowledge.plentyone.com/en-gb/manual/main/business-decisions/ssl-certificate.html).
+:::
+
 ### Activate preview
 
 This step builds your application and deploys it to a private preview URL.
