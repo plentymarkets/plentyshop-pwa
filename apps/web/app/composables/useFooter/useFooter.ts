@@ -26,7 +26,6 @@ export const useFooter = () => {
       return footerCache.value;
     }
 
-    // Capture Nuxt context to use throughout async operations
     const nuxtApp = useNuxtApp();
 
     return callWithNuxt(nuxtApp, async () => {
