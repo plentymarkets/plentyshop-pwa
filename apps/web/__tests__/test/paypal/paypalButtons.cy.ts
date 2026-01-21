@@ -21,8 +21,6 @@ describe('Feature: PayPal button rendering', () => {
 
     cy.addToCart();
     checkout.goToCheckoutPath().checkPayPal();
-
-    cy.reload();
     cy.wait('@getPaymentProviders');
 
     checkout.payPalButton.should('exist');
