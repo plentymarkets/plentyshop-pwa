@@ -21,15 +21,28 @@ const validateApiUrl = (url: string | undefined): string | undefined => {
   return url?.replace(/[/\\]+$/, '');
 };
 
+const allowedOrigins = new Set([
+  validateApiUrl(process.env.API_URL),
+  validateApiUrl('https://plentyshop.plentymarkets.com'),
+  'http://localhost:3000'
+]);
+
 (async () => {
   const app = await createServer(
     { integrations: config.integrations },
     {
       cors: {
         credentials: true,
-        origin: validateApiUrl(process.env.API_URL) 
-        ? `${validateApiUrl(process.env.API_URL)}, https://plentyshop.plentymarkets.com`  
-        : 'http://localhost:3000',
+        origin: function (origin, callback) {
+          // allow requests with no origin (like mobile apps or curl requests)
+          if (!origin) return callback(null, true);
+
+          if (!allowedOrigins.has(origin)) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+          }
+          return callback(null, true);
+        },
       },
       bodyParser: {
         limit: '50mb',
