@@ -6,7 +6,7 @@
         v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
         :key="key"
         type="button"
-        data-testid="block-spacing-btn"
+        data-testid="block-vertical-spacing-btn"
         :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
         @click="updateSetting(blocksSpacingSize)"
       >
@@ -38,8 +38,6 @@ const blockSize = computed({
 });
 
 const spacingInPx = computed(() => {
-  if (!blockSize.value) return '0';
-
   const sizeMap: Record<string, string> = {
     s: _s,
     m: _m,
