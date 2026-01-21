@@ -72,13 +72,8 @@ export default {
   sortingDynamicPrio1: process.env.NUXT_PUBLIC_SORTING_DYNAMIC_PRIO1 || 'filter.prices.price_asc',
   sortingDynamicPrio2: process.env.NUXT_PUBLIC_SORTING_DYNAMIC_PRIO2 || 'filter.prices.price_asc',
   themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
-  headerLogo:
-    process.env.NUXT_PUBLIC_HEADER_LOGO ||
-    process.env.LOGO ||
-    'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
   homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
   storename: process.env.NAME || 'PlentyONE GmbH',
-  isHero: true,
   font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
   verticalBlockSize: process.env.NUXT_PUBLIC_VERTICAL_BLOCK_SIZE || 'm',
   horizontalBlockSize: process.env.NUXT_PUBLIC_HORIZONTAL_BLOCK_SIZE || 's',
