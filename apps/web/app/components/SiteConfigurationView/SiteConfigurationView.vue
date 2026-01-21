@@ -3,15 +3,15 @@
     <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
       <header class="border-b">
         <div class="flex items-center justify-between px-4 py-5">
-          <div class="flex items-center">
+          <div class="flex items-center w-full">
             <div class="flex items-center">
               <slot name="setting-breadcrumbs" />
             </div>
-            <div class="text-xl font-bold">
+            <div class="text-xl font-bold w-full">
               <slot name="setting-title" />
             </div>
           </div>
-          <button data-testid="view-close" class="!p-0" @click="closeDrawer">
+          <button data-testid="view-close" class="!p-0 flex-shrink-0" @click="closeDrawer">
             <SfIconClose />
           </button>
         </div>
