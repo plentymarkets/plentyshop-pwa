@@ -31,6 +31,23 @@
           />
         </label>
       </div>
+      <div v-if="currentAsset.type === 'javascript'" class="mb-4">
+        <div class="flex items-center gap-2 mb-1">
+          <UiFormLabel class="m-0">
+            {{ getEditorTranslation('placement') }}
+          </UiFormLabel>
+          <SfTooltip class="z-50" :label="getEditorTranslation('tooltip-text')" placement="right">
+            <span class="flex items-center">
+              <SfIconInfo size="sm" />
+            </span>
+          </SfTooltip>
+        </div>
+        <SfSelect v-model="currentAsset.placement" size="base" @update:model-value="() => addOrUpdate(currentAsset)">
+          <option v-for="{ value, label } in scriptPlacement" :key="value" :value="value">
+            {{ label }}
+          </option>
+        </SfSelect>
+      </div>
       <div class="flex justify-between items-center mb-1">
         <UiFormLabel v-if="currentAsset.type === 'css'">
           {{ getEditorTranslation('custom-css') }}
@@ -88,7 +105,15 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconDelete, SfIconChevronLeft, SfInput } from '@storefront-ui/vue';
+import {
+  SfDrawer,
+  SfIconDelete,
+  SfIconChevronLeft,
+  SfInput,
+  SfSelect,
+  SfTooltip,
+  SfIconInfo,
+} from '@storefront-ui/vue';
 import type { Asset, AssetType } from '@plentymarkets/shop-api';
 import type { CodeEditorExposed } from '~/components/AssetDrawer/types';
 
@@ -96,6 +121,11 @@ const { currentAsset, selectAsset, addOrUpdate, deleteAsset } = useCustomAssets(
 
 const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
+
+const scriptPlacement = [
+  { label: 'Header', value: 'head_end' },
+  { label: 'Footer', value: 'body_end' },
+];
 
 const codeEditorRef = ref<CodeEditorExposed | null>(null);
 
@@ -115,9 +145,11 @@ const handleFormatCode = () => {
     "name": "Name",
     "button-text-placeholder": "label",
     "delete": "Delete",
+    "placement": "Where to load",
     "custom-css": "Custom CSS",
     "custom-js": "Custom JS",
     "content": "Content",
+    "tooltip-text": "Choose where to load the JavaScript snippet:\nHeader: Runs before the page is fully loaded. Use for scripts that must load early.\nFooter: Runs after the page is fully loaded. Safer for scripts that interact with page elements.",
     "source-url": "Source URL",
     "format-code": "Format Code",
     "formatting": "Formatting..."
@@ -127,9 +159,11 @@ const handleFormatCode = () => {
     "name": "Name",
     "button-text-placeholder": "label",
     "delete": "Löschen",
+    "placement": "Where to load",
     "custom-css": "Custom CSS",
     "custom-js": "Custom JS",
     "content": "Inhalt",
+    "tooltip-text": "Choose where to load the JavaScript snippet:\nHeader: Runs before the page is fully loaded. Use for scripts that must load early.\nFooter: Runs after the page is fully loaded. Safer for scripts that interact with page elements.",
     "source-url": "Quell-URL",
     "format-code": "Code formatieren",
     "formatting": "Formatierung läuft..."
