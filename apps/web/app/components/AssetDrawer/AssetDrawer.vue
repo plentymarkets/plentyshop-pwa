@@ -46,7 +46,12 @@
             </span>
           </SfTooltip>
         </div>
-        <SfSelect v-model="currentAsset.placement" size="base" @update:model-value="() => addOrUpdate(currentAsset)">
+        <SfSelect
+          v-model="currentAsset.placement"
+          data-testid="script-placement-select"
+          size="base"
+          @update:model-value="() => addOrUpdate(currentAsset)"
+        >
           <option v-for="{ value, label } in scriptPlacement" :key="value" :value="value">
             {{ label }}
           </option>
