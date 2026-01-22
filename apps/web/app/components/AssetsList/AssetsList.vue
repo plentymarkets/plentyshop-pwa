@@ -14,7 +14,7 @@
     </div>
 
     <div v-else class="space-y-3">
-      <p>{{ getEditorTranslation('js-disable-warning') }}</p>
+      <p v-if="props.type === 'javascript'">{{ getEditorTranslation('js-disable-warning') }}</p>
       <draggable
         v-model="snippets"
         item-key="uuid"
@@ -156,14 +156,14 @@ const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isAct
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
     "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
-    "js-disable-warning": "If you disable JavaScript, you’ll also need to refresh the page for the changes to fully revert, otherwise some updates may still appear until reload.",
+    "js-disable-warning": "⚠️ JavaScript snippets are executed immediately when added. Disabling them does not automatically revert already executed scripts, so a page reload is required to fully reset the state.",
     "drag-reorder-aria": "Drag to reorder"
   },
   "de": {
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
     "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
-    "js-disable-warning": "If you disable JavaScript, you’ll also need to refresh the page for the changes to fully revert, otherwise some updates may still appear until reload.",
+    "js-disable-warning": "⚠️ JavaScript snippets are executed immediately when added. Disabling them does not automatically revert already executed scripts, so a page reload is required to fully reset the state.",
     "drag-reorder-aria": "Drag to reorder"
   }
 }
