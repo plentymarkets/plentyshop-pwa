@@ -26,7 +26,13 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const isGlobalProductCategoryTemplate = computed(() => {
     const route = useRoute();
     const slugParam = route.params.slug;
-    return `/${slugParam}` === paths.globalItemCategory;
+
+    if (slugParam === undefined) {
+      return false;
+    }
+
+    const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
+    return `/${slug}` === paths.globalItemCategory;
   });
 
   /**
