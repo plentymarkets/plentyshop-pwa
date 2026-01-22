@@ -29,8 +29,7 @@ export const useProduct: UseProductReturn = (slug) => {
   const isGlobalProductDetailsTemplate = computed(() => {
     const route = useRoute();
     const slugParam = `${route.params.slug}_${route.params.itemId}`;
-    const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
-    return parts.join('/') === paths.globalItemDetails;
+    return `/${slugParam}` === paths.globalItemDetails;
   });
 
   /** Function for fetching product data.
