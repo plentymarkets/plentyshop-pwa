@@ -4,7 +4,7 @@
       <p class="mb-4">No snippets added yet</p>
       <button
         type="button"
-        data-testid="add-page-btn"
+        data-testid="add-code-snippet-empty"
         class="border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
         @click="onAdd"
       >
@@ -46,6 +46,7 @@
                   </SfIconBase>
                 </button>
                 <SfSwitch
+                  data-testid="activate-snippet"
                   :model-value="asset.isActive"
                   class="checked:bg-editor-button checked:before:hover:bg-editor-button"
                   @update:model-value="onToggle(asset, !asset.isActive)"
@@ -53,7 +54,10 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-[auto,1fr] border rounded-lg max-h-24 overflow-scroll">
+            <div
+              class="grid grid-cols-[auto,1fr] border rounded-lg max-h-24 overflow-scroll"
+              data-testid="code-snippet-overview"
+            >
               <pre
                 class="m-0 py-3 pl-3 pr-2 text-right select-none text-gray-500 bg-gray-50 font-mono text-sm leading-5 whitespace-pre"
                 >{{ lineNumbers[asset.uuid] }}</pre
@@ -73,7 +77,7 @@
 
       <button
         type="button"
-        data-testid="add-page-btn"
+        data-testid="add-code-snippet"
         class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
         @click="onAdd"
       >

@@ -79,4 +79,22 @@ describe('SiteSettings', () => {
 
     siteSettings.checkDrawerNotVisible();
   });
+
+  it('should change custom scripts', () => {
+    editor.isToolbarVisible();
+    siteSettings
+      .toggleCustomScriptsSettings()
+      .checkDrawerVisible()
+      .checkSaveButtonDisabled()
+      .delay(500)
+      .checkCustomCodeHeader()
+      .changeCustomScript()
+      .checkScriptPlacementFooter()
+      .checkSaveButtonEnabled()
+      .checkScriptPlacementHeader()
+      .back()
+      .closeDrawer();
+
+    siteSettings.checkDrawerNotVisible();
+  });
 });
