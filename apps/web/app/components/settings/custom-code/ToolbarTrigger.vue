@@ -10,7 +10,7 @@
       class="editor-button relative py-2 flex justify-center"
       :class="{ 'bg-editor-button text-white rounded-md': active }"
       aria-label="Open custom code drawer"
-      data-testid="custom-scripts-sub-category"
+      data-testid="custom-scripts-category"
     >
       <SfIconUnfoldMore class="rotate-90" width="24" height="24px" />
     </button>

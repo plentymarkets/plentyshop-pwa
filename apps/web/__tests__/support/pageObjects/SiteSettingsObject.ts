@@ -13,11 +13,11 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get designSubcategory() {
-    return cy.getByTestId('site-settings-sub-category-design');
+    return cy.getByTestId('site-settings-category-design');
   }
 
   get customScriptsCategory() {
-    return cy.getByTestId('custom-scripts-sub-category');
+    return cy.getByTestId('custom-scripts-category');
   }
 
   get positionSelect() {
@@ -25,7 +25,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get customJsAccordion() {
-    return cy.getByTestId('site-settings-sub-category-custom-js');
+    return cy.getByTestId('site-settings-category-custom-js');
   }
 
   get addSnippetButtonEmpty() {
