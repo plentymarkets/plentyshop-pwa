@@ -21,10 +21,10 @@
     @close="handleDropdownClose"
   >
     <template #afterList>
-      <div v-if="hasMorePages" ref="loadMoreTrigger" class="p-2 text-center text-sm text-gray-500">
+      <div v-if="hasMorePages" ref="loadMoreTrigger" :class="infoMessageClasses">
         {{ isLoading ? getEditorTranslation('loading') : getEditorTranslation('scroll-for-more') }}
       </div>
-      <div v-else-if="categories.length > 0" class="p-2 text-center text-xs text-gray-400">
+      <div v-else-if="categories.length > 0" :class="infoMessageClasses">
         {{ getEditorTranslation('all-loaded') }}
       </div>
     </template>
@@ -55,6 +55,8 @@ let observer: IntersectionObserver | null = null;
 const { data, getCategories } = useCategoriesSearch();
 const { send } = useNotification();
 
+const infoMessageClasses = 'py-2 px-4 text-left text-sm text-gray-400 font-semibold select-none cursor-default';
+
 const mapSearchResultsToOptions = (entries: CategoryEntry[]): CategoryOption[] => {
   return entries
     .filter((category) => category.right !== 'customer')
@@ -71,7 +73,7 @@ const loadCategories = async (query: string, page: number, append: boolean = fal
     await getCategories({
       ...props.baseSearchParams,
       page,
-      itemsPerPage: 50,
+      itemsPerPage: 10,
       ...(query ? { name: `like:${query}` } : {}),
       ...(props.modelValue && page === 1 ? { pinnedId: props.modelValue } : {}),
     });
@@ -182,7 +184,7 @@ onBeforeUnmount(() => {
     "error-loading": "Failed to load categories",
     "loading": "Loading more...",
     "scroll-for-more": "Scroll for more",
-    "all-loaded": "All categories loaded"
+    "all-loaded": "Categories fully loaded"
   },
   "de": {
     "placeholder": "Search categories...",
@@ -190,7 +192,7 @@ onBeforeUnmount(() => {
     "error-loading": "Failed to load categories",
     "loading": "Loading more...",
     "scroll-for-more": "Scroll for more",
-    "all-loaded": "All categories loaded"
+    "all-loaded": "Categories fully loaded"
   }
 }
 </i18n>
