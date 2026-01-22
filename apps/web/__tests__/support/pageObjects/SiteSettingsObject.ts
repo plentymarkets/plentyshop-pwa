@@ -20,10 +20,6 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('custom-scripts-sub-category');
   }
 
-  get customScriptsForm() {
-    return cy.getByTestId('custom-scripts-form');
-  }
-
   get positionSelect() {
     return cy.getByTestId('script-placement-select');
   }
@@ -34,10 +30,6 @@ export class SiteSettingsObject extends PageObject {
 
   get addSnippetButtonEmpty() {
     return cy.getByTestId('add-code-snippet-empty');
-  }
-
-  get assetsDrawer() {
-    return cy.getByTestId('assets-drawer');
   }
 
   get snippetOverview() {
@@ -57,7 +49,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get customSettingsSection() {
-    return cy.getByTestId('custom-js-settings-section');
+    return cy.getByTestId('saved-snippets-section');
   }
 
   get fontSection() {

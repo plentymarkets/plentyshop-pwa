@@ -1,7 +1,6 @@
 <template>
   <SfDrawer
     v-model="open"
-    data-testid="assets-drawer"
     class="asset-drawer h-screen bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[630px] min-w-[500px]"
     :placement="placement"
     :disable-click-away="true"
