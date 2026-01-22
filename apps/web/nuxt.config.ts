@@ -59,7 +59,6 @@ export default defineNuxtConfig({
         'swiper/modules',
         'swiper/vue',
         'uuid',
-        'validator',
         'vue-multiselect',
         'vue3-lazy-hydration',
         'vue-tel-input',
