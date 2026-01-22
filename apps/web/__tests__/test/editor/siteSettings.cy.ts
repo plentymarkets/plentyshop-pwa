@@ -82,18 +82,16 @@ describe('SiteSettings', () => {
 
   it('should change custom scripts', () => {
     editor.isToolbarVisible();
-    editor.toggleDesignSettings();
-
     siteSettings
+      .toggleCustomScriptsSettings()
       .checkDrawerVisible()
       .checkSaveButtonDisabled()
       .delay(500)
-      .openCustomScriptsSubCategory()
       .checkCustomCodeHeader()
       .changeCustomScript()
       .checkScriptPlacementFooter()
       .checkSaveButtonEnabled()
-      // .checkScriptPlacementHeader() TO BE ADDED
+      .checkScriptPlacementHeader()
       .back()
       .closeDrawer();
 

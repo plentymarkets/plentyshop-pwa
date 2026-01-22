@@ -16,16 +16,12 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('site-settings-sub-category-design');
   }
 
-  get customScriptsSubCategory() {
+  get customScriptsCategory() {
     return cy.getByTestId('custom-scripts-sub-category');
   }
 
   get customScriptsForm() {
     return cy.getByTestId('custom-scripts-form');
-  }
-
-  get brandingAndDesignTooltip() {
-    return cy.getByTestId('branding-tooltip');
   }
 
   get positionSelect() {
@@ -171,8 +167,8 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  openCustomScriptsSubCategory() {
-    this.customScriptsSubCategory.should('be.visible').click();
+  toggleCustomScriptsSettings() {
+    this.customScriptsCategory.should('be.visible').click();
     return this;
   }
 
@@ -180,7 +176,6 @@ export class SiteSettingsObject extends PageObject {
     this.positionSelect.should('be.visible').should('have.value', 'head_end');
     this.positionSelect.select('body_end');
     this.positionSelect.should('have.value', 'body_end');
-    this.brandingAndDesignTooltip.invoke('css', 'display', 'none');
     this.customSettingsSection.should('be.visible').click();
     this.snippetOverview.should('be.visible');
     this.snippetSwitch.should('be.visible').click();
@@ -190,6 +185,20 @@ export class SiteSettingsObject extends PageObject {
       .should('match', 'script')
       .and('have.attr', 'data-hid')
       .and('match', /^custom-js-.*-footer$/);
+    return this;
+  }
+
+  checkScriptPlacementHeader() {
+    this.positionSelect.should('be.visible').should('have.value', 'body_end');
+    this.positionSelect.select('head_end');
+    this.positionSelect.should('have.value', 'head_end');
+    this.customSettingsSection.should('be.visible').click();
+    this.snippetOverview.should('be.visible');
+    cy.get('head')
+      .children('script')
+      .last()
+      .should('have.attr', 'data-hid')
+      .and('match', /^custom-js-/);
     return this;
   }
 
