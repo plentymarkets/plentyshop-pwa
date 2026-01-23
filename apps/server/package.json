@@ -14,7 +14,7 @@
     "@types/cors": "^2.8.17",
     "@vue-storefront/middleware": "5.4.1",
     "consola": "^3.2.3",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "dotenv": "^16.6.1"
   },
   "devDependencies": {
