@@ -26,8 +26,13 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const isGlobalProductCategoryTemplate = computed(() => {
     const route = useRoute();
     const slugParam = route.params.slug;
-    const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
-    return parts.join('/') === paths.globalItemCategory;
+
+    if (slugParam === undefined) {
+      return false;
+    }
+
+    const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
+    return `/${slug}` === paths.globalItemCategory;
   });
 
   /**
@@ -62,7 +67,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const fakeBlocks = blockData.value ?? useCategoryTemplateData();
+      const fakeBlocks = blockData.value?.length ? blockData.value : useCategoryTemplateData();
 
       state.value.data = {
         category: fakeFacet['data'].category,
