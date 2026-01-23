@@ -33,12 +33,12 @@ const robotOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 {
   "en": {
     "label": "Robots",
-    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "description": "Sets the default search engine behavior for all pages on your shop. By default, all pages should be indexed (“all”) to ensure your products and content are discoverable. Changing this setting will affect all pages unless overridden individually, so only modify it if you have a clear reason to limit indexing sitewide, such as for a staging or private version of your shop.",
     "placeholder": "Select robots meta tag"
   },
   "de": {
     "label": "Robots",
-    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "description": "Sets the default search engine behavior for all pages on your shop. By default, all pages should be indexed (“all”) to ensure your products and content are discoverable. Changing this setting will affect all pages unless overridden individually, so only modify it if you have a clear reason to limit indexing sitewide, such as for a staging or private version of your shop.",
     "placeholder": "Select robots meta tag"
   }
 }
