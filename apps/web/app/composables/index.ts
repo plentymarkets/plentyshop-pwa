@@ -44,6 +44,7 @@ export * from './useCustomerOrders';
 export * from './useCustomerReturns';
 export * from './useDrawerState';
 export * from './useEditor';
+export * from './useEditorState';
 export * from './useGooglePay';
 export * from './useInitialSetup';
 export * from './useImageZoom';

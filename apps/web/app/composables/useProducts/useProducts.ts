@@ -52,7 +52,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const route = useRoute();
-    const { $i18n, $isPreview } = useNuxtApp();
+    const { $i18n } = useNuxtApp();
+    const { isInEditor } = useEditorState();
     const {
       data: blockData,
       setupBlocks,
@@ -63,7 +64,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 
-    if (isGlobalProductCategoryTemplate.value && $isPreview) {
+    if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);

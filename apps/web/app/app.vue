@@ -58,16 +58,14 @@
 import { isCssUrl, isJsUrl } from '~/utils/assets';
 import { categoryGetters } from '@plentymarkets/shop-api';
 
-const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { setStaticPageMeta } = useCanonical();
+const { isInEditorClient } = useEditorState();
 
-const clientPreview = ref(false);
-
-onNuxtReady(() => (clientPreview.value = !!$isPreview));
+const clientPreview = computed(() => isInEditorClient.value);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');

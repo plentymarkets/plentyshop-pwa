@@ -102,7 +102,6 @@ const runtimeConfig = useRuntimeConfig();
 const props = defineProps<CategoryDataProps>();
 const { hexToRgba, getTextAlignment, getContentPosition, isMobile } = useBlockContentHelper();
 const { data: productsCatalog } = useProducts();
-const { disableActions } = useEditor();
 const category = computed(() => productsCatalog.value.category || ({} as Category));
 const enabledText = computed(
   () =>
@@ -112,12 +111,12 @@ const enabledText = computed(
     (props.content.fields.shortDescription && details.value.shortDescription),
 );
 const showNoTextMessage = computed(() => !enabledText.value);
-const { $isPreview } = useNuxtApp();
+const { isEditMode, isPreviewMode, isLiveMode } = useEditorState();
 const shouldShowTextBlock = computed(
   () =>
-    (!!$isPreview && disableActions.value) ||
-    (!disableActions.value && !showNoTextMessage.value) ||
-    (!$isPreview && disableActions.value && !showNoTextMessage.value),
+    isEditMode.value ||
+    (isPreviewMode.value && !showNoTextMessage.value) ||
+    (isLiveMode.value && !showNoTextMessage.value),
 );
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
