@@ -191,7 +191,6 @@ const editor = useEditor({
     StarterKit,
     Underline,
 
-    // Link should be a mark extension
     Link.configure({
       openOnClick: false,
       autolink: true,
@@ -208,6 +207,8 @@ const editor = useEditor({
     }),
   ],
   onUpdate: ({ editor }: { editor: Editor }) => {
+    const html = editor.getHTML();
+    console.log(html);
     emit('update:modelValue', editor.getHTML());
   },
 });
@@ -507,5 +508,30 @@ defineExpose({
   font-size: 14px;
   line-height: 1.5;
 }
+.rte__content :deep(.ProseMirror blockquote) {
+  border-left: 3px solid #dee2e6;
+  padding-left: 12px;
+  margin: 10px 0;
+  color: #495057;
+}
+
+.rte__content :deep(.ProseMirror ul),
+.rte__content :deep(.ProseMirror ol) {
+  padding-left: 1.25rem;
+  margin: 8px 0;
+}
+
+.rte__content :deep(.ProseMirror li) {
+  margin: 4px 0;
+}
+
+.rte__content :deep(.ProseMirror ul) {
+  list-style: disc;
+}
+
+.rte__content :deep(.ProseMirror ol) {
+  list-style: decimal;
+}
+
 
 </style>
