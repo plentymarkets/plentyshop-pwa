@@ -113,10 +113,7 @@ const enabledText = computed(
 const showNoTextMessage = computed(() => !enabledText.value);
 const { isEditMode, isPreviewMode, isLiveMode } = useEditorState();
 const shouldShowTextBlock = computed(
-  () =>
-    isEditMode.value ||
-    (isPreviewMode.value && !showNoTextMessage.value) ||
-    (isLiveMode.value && !showNoTextMessage.value),
+  () => isEditMode.value || ((isPreviewMode.value || isLiveMode.value) && !showNoTextMessage.value),
 );
 
 const details = computed(() => categoryGetters.getCategoryDetails(category.value) || ({} as CategoryDetails));
