@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { ref } from 'vue';
 import { useEditorState } from '../useEditorState';
 
 const $isPreview = ref(false);
