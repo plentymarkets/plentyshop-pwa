@@ -12,7 +12,7 @@ permissions:
   packages: read
   pull-requests: write
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -169,4 +169,4 @@ jobs:
           install: false
           command: npm run test:cypress
         env:
-          NUXT_PUBLIC_CONFIG_ID: 1
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
