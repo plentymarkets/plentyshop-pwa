@@ -55,7 +55,8 @@ export const useProduct: UseProductReturn = (slug) => {
 
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     const route = useRoute();
-    const { $i18n, $isPreview } = useNuxtApp();
+    const { $i18n } = useNuxtApp();
+    const { isInEditor } = useEditorState();
     const {
       data: blockData,
       setupBlocks,
@@ -68,7 +69,7 @@ export const useProduct: UseProductReturn = (slug) => {
 
     state.value.loading = true;
 
-    if (isGlobalProductDetailsTemplate.value && $isPreview) {
+    if (isGlobalProductDetailsTemplate.value && isInEditor.value) {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
@@ -137,12 +138,10 @@ export const useProduct: UseProductReturn = (slug) => {
       ],
     });
   };
-  const { disableActions } = useEditor();
-  const { $isPreview } = useNuxtApp();
 
-  const productForEditor = computed(() =>
-    $isPreview && disableActions.value ? state.value.fakeData : state.value.data,
-  );
+  const { shouldUseFakeData } = useEditorState();
+
+  const productForEditor = computed(() => (shouldUseFakeData.value ? state.value.fakeData : state.value.data));
 
   return {
     setProductMeta,
