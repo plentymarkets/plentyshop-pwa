@@ -2,7 +2,7 @@
   <div data-testid="text-content" class="space-y-4 w-full" :style="{ color: props.text?.color }">
     <!-- V2: single rich text -->
     <div
-      v-if="isV2 && props.text?.htmlDescription"
+      v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription"
       data-testid="text-rich"
       class="rte-prose"
       v-html="props.text.htmlDescription"
@@ -64,16 +64,10 @@
 import type { TextContentProps } from '~/components/TextContent/types';
 
 const props = defineProps<TextContentProps>();
+const config = useRuntimeConfig().public;
 
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 
-const hasLegacyFields = computed(() => {
-  const t = props.text;
-  return Boolean(t?.pretitle?.trim() || t?.title?.trim() || t?.subtitle?.trim());
-});
 
-const hasRich = computed(() => Boolean(props.text?.htmlDescription?.trim()));
-
-const isV2 = computed(() => hasRich.value && hasLegacyFields.value);
 </script>

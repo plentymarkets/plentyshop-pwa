@@ -11,9 +11,8 @@
     </template>
 
     <!-- v2 (Single RichText) -->
-    <div v-if="isTextCardFormV2Enabled" data-testid="text-card-form-v2" class="px-4 py-3">
+    <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
       <div class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('content-label') }}</UiFormLabel>
 
         <RichTextEditor
           v-model="contentModel"
@@ -350,7 +349,7 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<TextCardFormProps & { textCardFormV2Enabled?: boolean }>();
 
-const isTextCardFormV2Enabled = computed(() => true);
+const config = useRuntimeConfig().public;
 
 
 const expandedToolbars = ref({
@@ -395,33 +394,7 @@ const textCardBlock = computed<TextCardContent>(() => {
 
   return content as TextCardContent;
 });
-const pretitleModel = computed<string>({
-  get: () => textCardBlock.value.text.pretitle ?? '',
-  set: (v) => {
-    textCardBlock.value.text.pretitle = v;
-  },
-});
 
-const titleModel = computed<string>({
-  get: () => textCardBlock.value.text.title ?? '',
-  set: (v) => {
-    textCardBlock.value.text.title = v;
-  },
-});
-
-const subtitleModel = computed<string>({
-  get: () => textCardBlock.value.text.subtitle ?? '',
-  set: (v) => {
-    textCardBlock.value.text.subtitle = v;
-  },
-});
-
-const descriptionModel = computed<string>({
-  get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (v) => {
-    textCardBlock.value.text.htmlDescription = v;
-  },
-});
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
 const textSettings = ref(false);
