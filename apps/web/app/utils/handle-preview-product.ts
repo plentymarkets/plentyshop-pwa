@@ -1,7 +1,7 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
-import { toRaw, type Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
 import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
