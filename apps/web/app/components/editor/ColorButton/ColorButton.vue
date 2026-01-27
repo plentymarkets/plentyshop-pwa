@@ -1,42 +1,3 @@
-<script setup lang="ts">
-import { ref, computed, onBeforeUnmount } from 'vue';
-
-const props = defineProps<{
-  modelValue: string;
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void;
-}>();
-
-const open = ref(false);
-const root = ref<HTMLElement | null>(null);
-const activeTab = ref<'shop' | 'picker'>('picker');
-
-const style = computed(() => ({
-  backgroundColor: props.modelValue || '#000000',
-}));
-
-function toggle() {
-  open.value = !open.value;
-}
-
-function close() {
-  open.value = false;
-}
-
-function onDocClick(e: MouseEvent) {
-  if (!root.value?.contains(e.target as Node)) {
-    close();
-  }
-}
-
-document.addEventListener('mousedown', onDocClick);
-onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', onDocClick);
-});
-</script>
-
 <template>
   <div ref="root" class="relative inline-block">
     <div class="rte__color cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
@@ -75,12 +36,80 @@ onBeforeUnmount(() => {
           />
         </div>
         <div v-else>
-          <p>test</p>
+          <div class="flex gap-2">
+            <button
+              type="button"
+              class="h-8 w-8 rounded-md border border-slate-200"
+              :style="{ backgroundColor: primaryColor }"
+              @click="emit('update:modelValue', primaryColor)"
+            />
+            <button
+              type="button"
+              class="h-8 w-8 rounded-md border border-slate-200"
+              :style="{ backgroundColor: secondaryColor }"
+              @click="emit('update:modelValue', secondaryColor)"
+            />
+          </div>
+
+          <div class="mt-3">
+            <SfInput v-model="hexValue" type="text" size="sm" placeholder="#000000" />
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, computed, onBeforeUnmount } from 'vue';
+import { SfInput } from '@storefront-ui/vue';
+
+const props = defineProps<{
+  modelValue: string;
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', v: string): void;
+}>();
+
+const open = ref(false);
+const root = ref<HTMLElement | null>(null);
+const activeTab = ref<'shop' | 'picker'>('picker');
+
+const style = computed(() => ({
+  backgroundColor: props.modelValue || '#000000',
+}));
+
+const hexValue = computed({
+  get: () => props.modelValue || '',
+  set: (value: string) => emit('update:modelValue', value),
+});
+
+const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');
+const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor');
+
+const primaryColor = computed(() => getPrimaryColorSetting());
+const secondaryColor = computed(() => getSecondaryColorSetting());
+
+function toggle() {
+  open.value = !open.value;
+}
+
+function close() {
+  open.value = false;
+}
+
+function onDocClick(e: MouseEvent) {
+  if (!root.value?.contains(e.target as Node)) {
+    close();
+  }
+}
+
+document.addEventListener('mousedown', onDocClick);
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', onDocClick);
+});
+</script>
 
 <style scoped>
 .rte__color {
