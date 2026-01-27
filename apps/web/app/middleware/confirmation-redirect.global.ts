@@ -21,6 +21,7 @@ export function matchOldConfirmationUrl(
 }
 
 export default defineNuxtRouteMiddleware((to) => {
+  if (import.meta.client) return;
   const path = to.path;
 
   if (path !== '/' && !path.includes('akQQ')) return;
