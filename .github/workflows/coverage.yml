@@ -63,7 +63,6 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
-          working-directory: './apps/web'
           threshold-icons: "{0: '🔴', 80: '🟠', 90: '🟢'}"
           json-summary-compare-path: coverage-main/coverage-summary.json
 
