@@ -49,7 +49,7 @@ jobs:
           command: npm run test:cypress-feature
         env:
           NUXT_PUBLIC_SHOW_NOTIFY_ME: 'true'
-          NUXT_PUBLIC_CONFIG_ID: 1
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
           MOLLIE_TEST_MODE: true
 
       - name: E2E Editor
@@ -59,7 +59,7 @@ jobs:
           command: npm run test:cypress-editor
         env:
           NUXT_PUBLIC_IS_PREVIEW: true
-          NUXT_PUBLIC_CONFIG_ID: 1
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
       - name: E2E External
         uses: cypress-io/github-action@v6
@@ -67,7 +67,7 @@ jobs:
           install: false
           command: npm run test:cypress-external
         env:
-          NUXT_PUBLIC_CONFIG_ID: 1
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
       - uses: actions/upload-artifact@v5
         if: failure()

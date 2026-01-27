@@ -18,7 +18,7 @@
       deselect-label="Selected"
     >
       <template #singleLabel="{ option }">
-        {{ getEditorTranslation('robotsItemPage-' + option) }}
+        {{ getEditorTranslation('robotsItemPage-' + option.toLowerCase()) }}
       </template>
       <template #option="props">
         {{ getEditorTranslation('robotsItemPage-' + props.option) }}
@@ -55,7 +55,7 @@ const robotsItemPageId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select Robots for single item views",
+    "label": "Robots for item pages",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
     "placeholder": "Select robots",
     "conditionalLabel": "ID from property of type 'Text'",
@@ -66,7 +66,7 @@ const robotsItemPageId = computed({
     "robotsItemPage-varProp": "Selection via variation property of the type 'Text'. Default value = 'all'"
   },
   "de": {
-    "label": "Select Robots for single item views",
+    "label": "Robots for item pages",
     "tooltip": "Define the default values for the robots meta value of your item pages. You can use a variation property of the type Text to define a custom value on the level of the variation.",
     "placeholder": "Select robots",
     "conditionalLabel": "ID from property of type 'Text'",

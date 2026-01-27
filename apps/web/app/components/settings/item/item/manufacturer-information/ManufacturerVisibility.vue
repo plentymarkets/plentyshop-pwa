@@ -1,8 +1,10 @@
 <template>
   <div class="py-2 space-y-3">
-    <p class="mb-4">{{ getEditorTranslation('description') }}</p>
-    <div class="flex justify-between mb-2">
+    <div class="flex justify-between items-center mb-2 gap-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'left'" class="z-[9999]">
+        <SfIconInfo :size="'sm'" />
+      </SfTooltip>
     </div>
     <div v-for="setting in settings" :key="setting" class="flex items-center justify-between">
       <UiFormLabel class="mb-0">
@@ -17,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch } from '@storefront-ui/vue';
+import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 
 const settings = [
   'manufacturerName',
@@ -55,8 +57,8 @@ settings.forEach((key) => {
 <i18n lang="json">
 {
   "en": {
-    "label": "Check the boxes of the manufacturer information you want to display on the item view.",
-    "description": "Control how item information is presented.",
+    "label": "Use the toggles to enable which manufacturer information should be shown on item pages.",
+    "tooltip": "Control which manufacturer details are visible to customers when they access the legal information drawer on the item page.",
     "manufacturerName.label": "Manufacturer Name",
     "manufacturerExternalName.label": "Manufacturer External Name",
     "manufacturerLegalName.label": "Manufacturer Legal Name",
@@ -73,8 +75,8 @@ settings.forEach((key) => {
     "manufacturerContactUrl.label": "Manufacturer Contact URL"
   },
   "de": {
-    "label": "Check the boxes of the manufacturer information you want to display on the item view.",
-    "description": "Control how item information is presented.",
+    "label": "Use the toggles to enable which manufacturer information should be shown on item pages.",
+    "tooltip": "Control which manufacturer details are visible to customers when they access the legal information drawer on the item page.",
     "manufacturerName.label": "Manufacturer Name",
     "manufacturerExternalName.label": "Manufacturer External Name",
     "manufacturerLegalName.label": "Manufacturer Legal Name",
