@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: coverage-${{ matrix.artifact }}
-          path: coverage
+          path: apps/web/coverage
 
   coverage-report:
     needs: coverage-test
