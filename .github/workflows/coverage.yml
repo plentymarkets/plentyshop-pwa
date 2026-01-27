@@ -34,9 +34,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Prepare & Prepack
-        run: npm run go
-
       - name: "Test"
         continue-on-error: true
         run: npm run test:coverage
