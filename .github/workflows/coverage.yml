@@ -63,6 +63,7 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
+          vite-config-path: 'apps/web/vitest.config.ts'
           threshold-icons: "{0: '🔴', 80: '🟠', 90: '🟢'}"
           json-summary-compare-path: coverage-main/coverage-summary.json
 
