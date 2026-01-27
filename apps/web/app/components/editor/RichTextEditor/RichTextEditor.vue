@@ -15,17 +15,7 @@
       <option value="h3">H3</option>
     </select>
 
-    <!-- Font color -->
-    <label class="rte__color-wrap" @mousedown.stop @click.stop>
-      <span class="sr-only">Font color</span>
-      <input
-        type="color"
-        class="rte__color"
-        data-testid="rte-font-color"
-        :value="textColor"
-        @input="setFontColor(($event.target as HTMLInputElement).value)"
-      />
-    </label>
+    <ColorButton :model-value="textColor" @update:model-value="setFontColor($event)" />
 
     <button
       type="button"
@@ -57,13 +47,7 @@
       <span style="text-decoration: underline">U</span>
     </button>
 
-    <button
-      type="button"
-      class="rte__btn"
-      :class="{ active: isActive('link') }"
-      @mousedown.prevent
-      @click="toggleLink"
-    >
+    <button type="button" class="rte__btn" :class="{ active: isActive('link') }" @mousedown.prevent @click="toggleLink">
       🔗
     </button>
 
@@ -119,15 +103,63 @@
 
     <span class="rte__split" />
 
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('left') }" @mousedown.prevent @click="setAlign('left')">⬅</button>
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('center') }" @mousedown.prevent @click="setAlign('center')">⬌</button>
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('right') }" @mousedown.prevent @click="setAlign('right')">➡</button>
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('justify') }" @mousedown.prevent @click="setAlign('justify')">☰</button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('left') }"
+      @mousedown.prevent
+      @click="setAlign('left')"
+    >
+      ⬅
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('center') }"
+      @mousedown.prevent
+      @click="setAlign('center')"
+    >
+      ⬌
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('right') }"
+      @mousedown.prevent
+      @click="setAlign('right')"
+    >
+      ➡
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('justify') }"
+      @mousedown.prevent
+      @click="setAlign('justify')"
+    >
+      ☰
+    </button>
 
     <span class="rte__split" />
 
-    <button type="button" class="rte__btn" :class="{ active: isActive('bulletList') }" @mousedown.prevent @click="cmd('toggleBulletList')">••</button>
-    <button type="button" class="rte__btn" :class="{ active: isActive('orderedList') }" @mousedown.prevent @click="cmd('toggleOrderedList')">1.</button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActive('bulletList') }"
+      @mousedown.prevent
+      @click="cmd('toggleBulletList')"
+    >
+      ••
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActive('orderedList') }"
+      @mousedown.prevent
+      @click="cmd('toggleOrderedList')"
+    >
+      1.
+    </button>
     <button type="button" class="rte__btn" @mousedown.prevent @click="cmd('setHorizontalRule')">─</button>
 
     <span class="rte__split" />
@@ -142,7 +174,6 @@
   <div class="rte__body" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
     <EditorContent :editor="editor" class="rte__content" :style="{ minHeight: `${minHeight}px` }" />
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -157,6 +188,8 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
+import ColorButton from '../ColorButton/ColorButton.vue';
+const showColor = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -179,6 +212,7 @@ const emit = defineEmits<{
 }>();
 
 const expandedLocal = ref(props.expanded);
+const refVariable = ref('#000');
 watch(
   () => props.expanded,
   (v) => (expandedLocal.value = v),
@@ -229,15 +263,16 @@ function focusChain() {
   return editor.value?.chain().focus();
 }
 
-function cmd(name:
-               | 'toggleBold'
-               | 'toggleItalic'
-               | 'toggleUnderline'
-               | 'toggleBlockquote'
-               | 'toggleStrike'
-               | 'toggleBulletList'
-               | 'toggleOrderedList'
-               | 'setHorizontalRule'
+function cmd(
+  name:
+    | 'toggleBold'
+    | 'toggleItalic'
+    | 'toggleUnderline'
+    | 'toggleBlockquote'
+    | 'toggleStrike'
+    | 'toggleBulletList'
+    | 'toggleOrderedList'
+    | 'setHorizontalRule',
 ) {
   const chain = focusChain();
   if (!chain) return;
@@ -268,7 +303,6 @@ function onFontSizeChange(v: string) {
   else if (v === 'h3') chain.toggleHeading({ level: 3 }).run();
   else chain.setParagraph().run();
 }
-
 
 /** --- Colors --- */
 const textColor = ref('#000000');
@@ -532,6 +566,4 @@ defineExpose({
 .rte__content :deep(.ProseMirror ol) {
   list-style: decimal;
 }
-
-
 </style>
