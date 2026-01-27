@@ -57,13 +57,7 @@
       <span style="text-decoration: underline">U</span>
     </button>
 
-    <button
-      type="button"
-      class="rte__btn"
-      :class="{ active: isActive('link') }"
-      @mousedown.prevent
-      @click="toggleLink"
-    >
+    <button type="button" class="rte__btn" :class="{ active: isActive('link') }" @mousedown.prevent @click="toggleLink">
       🔗
     </button>
 
@@ -119,15 +113,63 @@
 
     <span class="rte__split" />
 
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('left') }" @mousedown.prevent @click="setAlign('left')">⬅</button>
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('center') }" @mousedown.prevent @click="setAlign('center')">⬌</button>
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('right') }" @mousedown.prevent @click="setAlign('right')">➡</button>
-    <button type="button" class="rte__btn" :class="{ active: isActiveAlign('justify') }" @mousedown.prevent @click="setAlign('justify')">☰</button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('left') }"
+      @mousedown.prevent
+      @click="setAlign('left')"
+    >
+      ⬅
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('center') }"
+      @mousedown.prevent
+      @click="setAlign('center')"
+    >
+      ⬌
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('right') }"
+      @mousedown.prevent
+      @click="setAlign('right')"
+    >
+      ➡
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActiveAlign('justify') }"
+      @mousedown.prevent
+      @click="setAlign('justify')"
+    >
+      ☰
+    </button>
 
     <span class="rte__split" />
 
-    <button type="button" class="rte__btn" :class="{ active: isActive('bulletList') }" @mousedown.prevent @click="cmd('toggleBulletList')">••</button>
-    <button type="button" class="rte__btn" :class="{ active: isActive('orderedList') }" @mousedown.prevent @click="cmd('toggleOrderedList')">1.</button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActive('bulletList') }"
+      @mousedown.prevent
+      @click="cmd('toggleBulletList')"
+    >
+      ••
+    </button>
+    <button
+      type="button"
+      class="rte__btn"
+      :class="{ active: isActive('orderedList') }"
+      @mousedown.prevent
+      @click="cmd('toggleOrderedList')"
+    >
+      1.
+    </button>
     <button type="button" class="rte__btn" @mousedown.prevent @click="cmd('setHorizontalRule')">─</button>
 
     <span class="rte__split" />
@@ -140,9 +182,8 @@
 
   <!-- Editor -->
   <div class="rte__body" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
-    <EditorContent :editor="editor" class="rte__content" :style="{ minHeight: `${minHeight}px` }" />
+    <EditorContent :editor="editor" class="rte__content rte-prose" :style="{ minHeight: `${minHeight}px` }" />
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -229,15 +270,16 @@ function focusChain() {
   return editor.value?.chain().focus();
 }
 
-function cmd(name:
-               | 'toggleBold'
-               | 'toggleItalic'
-               | 'toggleUnderline'
-               | 'toggleBlockquote'
-               | 'toggleStrike'
-               | 'toggleBulletList'
-               | 'toggleOrderedList'
-               | 'setHorizontalRule'
+function cmd(
+  name:
+    | 'toggleBold'
+    | 'toggleItalic'
+    | 'toggleUnderline'
+    | 'toggleBlockquote'
+    | 'toggleStrike'
+    | 'toggleBulletList'
+    | 'toggleOrderedList'
+    | 'setHorizontalRule',
 ) {
   const chain = focusChain();
   if (!chain) return;
@@ -268,7 +310,6 @@ function onFontSizeChange(v: string) {
   else if (v === 'h3') chain.toggleHeading({ level: 3 }).run();
   else chain.setParagraph().run();
 }
-
 
 /** --- Colors --- */
 const textColor = ref('#000000');
@@ -441,17 +482,6 @@ defineExpose({
   padding: 8px 10px;
 }
 
-.rte__content :deep(.ProseMirror) {
-  outline: none;
-  font-size: 14px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.rte__content :deep(.ProseMirror p) {
-  margin: 6px 0;
-}
 
 .ml-auto {
   margin-left: auto;
@@ -483,55 +513,5 @@ defineExpose({
   white-space: nowrap;
   border-width: 0;
 }
-.rte__content :deep(.ProseMirror h1) {
-  font-size: 1.75rem;
-  line-height: 2.1rem;
-  margin: 10px 0;
-  font-weight: 700;
-}
-
-.rte__content :deep(.ProseMirror h2) {
-  font-size: 1.5rem;
-  line-height: 1.9rem;
-  margin: 10px 0;
-  font-weight: 700;
-}
-
-.rte__content :deep(.ProseMirror h3) {
-  font-size: 1.25rem;
-  line-height: 1.65rem;
-  margin: 8px 0;
-  font-weight: 600;
-}
-
-.rte__content :deep(.ProseMirror p) {
-  font-size: 14px;
-  line-height: 1.5;
-}
-.rte__content :deep(.ProseMirror blockquote) {
-  border-left: 3px solid #dee2e6;
-  padding-left: 12px;
-  margin: 10px 0;
-  color: #495057;
-}
-
-.rte__content :deep(.ProseMirror ul),
-.rte__content :deep(.ProseMirror ol) {
-  padding-left: 1.25rem;
-  margin: 8px 0;
-}
-
-.rte__content :deep(.ProseMirror li) {
-  margin: 4px 0;
-}
-
-.rte__content :deep(.ProseMirror ul) {
-  list-style: disc;
-}
-
-.rte__content :deep(.ProseMirror ol) {
-  list-style: decimal;
-}
-
 
 </style>

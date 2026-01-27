@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   srcDir: 'app/',
   telemetry: false,
   devtools: { enabled: true },
+  css: ['~/assets/richtext.css'],
   typescript: {
     typeCheck: true,
   },
