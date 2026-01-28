@@ -112,8 +112,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     try {
       await useSdk().plentysystems.doReview(params);
       send({ type: 'positive', message: t('review.notification.success') });
-      await fetchReviews();
-      await fetchAuthenticatedReviews();
+
+      try {
+        await fetchReviews();
+        await fetchAuthenticatedReviews();
+      } catch (fetchError) {
+        console.error('Failed to refresh reviews after creation:', fetchError);
+      }
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
@@ -129,8 +134,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
 
       await useSdk().plentysystems.deleteReview({ feedbackId });
-      await fetchReviews();
-      await fetchAuthenticatedReviews();
+
+      try {
+        await fetchReviews();
+        await fetchAuthenticatedReviews();
+      } catch (fetchError) {
+        console.error('Failed to refresh reviews after deletion:', fetchError);
+      }
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
@@ -147,8 +157,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     try {
       await useSdk().plentysystems.setReview(params);
       send({ type: 'positive', message: t('review.notification.success') });
-      await fetchReviews();
-      await fetchAuthenticatedReviews();
+
+      try {
+        await fetchReviews();
+        await fetchAuthenticatedReviews();
+      } catch (fetchError) {
+        console.error('Failed to refresh reviews after update:', fetchError);
+      }
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
