@@ -13,7 +13,6 @@ import type { TextCardProps } from './types';
 
 const props = defineProps<TextCardProps>();
 
-
 const textAlignmentClass = computed(() => {
   switch (props.content.text?.textAlignment) {
     case 'center':
