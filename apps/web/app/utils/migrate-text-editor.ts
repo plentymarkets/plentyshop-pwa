@@ -25,9 +25,7 @@ function escapeHtml(text: string): string {
 }
 
 export function migrateTextCardContent(content: Partial<TextCardContent>): Partial<TextCardContent> {
-  if (!hasOldStructure(content)) {
-    return content;
-  }
+  if (!hasOldStructure(content)) return content;
 
   const migrated = {
     ...content,
