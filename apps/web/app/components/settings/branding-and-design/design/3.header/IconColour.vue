@@ -6,23 +6,43 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <SfInput v-model="iconColor" type="text" data-testid="icon-color">
-        <template #suffix>
-          <label
-            for="icon-color"
-            :style="{ backgroundColor: iconColor }"
-            class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-          >
-            <input id="icon-color" v-model="iconColor" type="color" class="invisible w-8" />
-          </label>
-        </template>
-      </SfInput>
-    </label>
+    <div v-if="runtimeConfig.public.enableColorPicker">
+      <label>
+        <SfInput v-model="iconColor" type="text" data-testid="icon-color">
+          <template #suffix>
+            <label
+              for="icon-color"
+              :style="{ backgroundColor: iconColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input id="icon-color" v-model="iconColor" type="color" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+    <EditorColorPicker v-else v-model="iconColor" class="w-full">
+      <template #trigger="{ color, toggle }">
+        <label>
+          <SfInput v-model="iconColor" type="text" data-testid="icon-color">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
+        </label>
+      </template>
+    </EditorColorPicker>
   </div>
 </template>
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
+const runtimeConfig = useRuntimeConfig();
 
 const { updateSetting, getSetting } = useSiteSettings('iconColor');
 
