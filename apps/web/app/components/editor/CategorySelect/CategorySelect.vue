@@ -55,7 +55,7 @@ let observer: IntersectionObserver | null = null;
 const { data, getCategories } = useCategoriesSearch();
 const { send } = useNotification();
 
-const infoMessageClasses = 'py-2 px-4 text-left text-sm text-gray-400 font-semibold select-none cursor-default';
+const infoMessageClasses = 'py-2 px-4 text-left text-sm text-gray-400 select-none cursor-default';
 
 const mapSearchResultsToOptions = (entries: CategoryEntry[]): CategoryOption[] => {
   return entries
