@@ -15,7 +15,7 @@
       <option value="h3">H3</option>
     </select>
 
-    <ColorButton :model-value="textColor" @update:model-value="setFontColor($event)" />
+    <EditorColorPicker :model-value="textColor" @update:model-value="setFontColor($event)" />
 
     <button
       type="button"
@@ -187,8 +187,6 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
-import ColorButton from '../ColorButton/ColorButton.vue';
-
 const props = withDefaults(
   defineProps<{
     modelValue: string;

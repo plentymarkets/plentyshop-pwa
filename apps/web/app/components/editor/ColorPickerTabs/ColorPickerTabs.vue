@@ -1,18 +1,3 @@
-<script setup lang="ts">
-const props = defineProps<{
-  activeTab: 'shop' | 'picker';
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:activeTab', v: 'shop' | 'picker'): void;
-}>();
-
-const setTab = (tab: 'shop' | 'picker') => {
-  if (props.activeTab === tab) return;
-  emit('update:activeTab', tab);
-};
-</script>
-
 <template>
   <fieldset class="mb-3">
     <legend class="sr-only">Color source</legend>
@@ -40,3 +25,18 @@ const setTab = (tab: 'shop' | 'picker') => {
     </div>
   </fieldset>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  activeTab: 'shop' | 'picker';
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:activeTab', v: 'shop' | 'picker'): void;
+}>();
+
+const setTab = (tab: 'shop' | 'picker') => {
+  if (props.activeTab === tab) return;
+  emit('update:activeTab', tab);
+};
+</script>

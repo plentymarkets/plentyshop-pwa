@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import ColorButtonTabs from './ColorButtonTabs.vue';
-
 const props = defineProps<{
   modelValue: string;
   activeTab: 'shop' | 'picker';
@@ -16,7 +14,7 @@ const emit = defineEmits<{
 
 <template>
   <div class="rounded-md border bg-white shadow-md p-3 min-w-[220px]">
-    <ColorButtonTabs :active-tab="props.activeTab" @update:active-tab="emit('update:activeTab', $event)" />
+    <EditorColorPickerTabs :active-tab="props.activeTab" @update:active-tab="emit('update:activeTab', $event)" />
 
     <div v-if="props.activeTab === 'picker'">
       <color-picker-block
