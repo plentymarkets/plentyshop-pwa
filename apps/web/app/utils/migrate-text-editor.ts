@@ -1,7 +1,5 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
 
-const config = useRuntimeConfig().public;
-
 function hasHtmlTags(text: string): boolean {
   if (!text) return false;
   return /<\/?[a-z][\s\S]*>/i.test(text);
@@ -19,7 +17,7 @@ function escapeHtml(text: string): string {
 }
 
 export function migrateTextCardContent(content: Partial<TextCardContent>): Partial<TextCardContent> {
-  if (config.enableRichTextEditorV2 === false) {
+  if (false) {
     return content;
   }
 
@@ -34,15 +32,15 @@ export function migrateTextCardContent(content: Partial<TextCardContent>): Parti
   const parts: string[] = [];
 
   if (pretitle?.trim()) {
-    parts.push(`<p class="pretitle"><strong>${escapeHtml(pretitle.trim())}</strong></p>`);
+    parts.push(`<h2>${escapeHtml(pretitle.trim())}</h2>`);
   }
 
   if (title?.trim()) {
-    parts.push(`<h2 class="title">${escapeHtml(title.trim())}</h2>`);
+    parts.push(`<h1>${escapeHtml(title.trim())}</h1>`);
   }
 
   if (subtitle?.trim()) {
-    parts.push(`<p class="subtitle"><strong>${escapeHtml(subtitle.trim())}</strong></p>`);
+    parts.push(`<h3>${escapeHtml(subtitle.trim())}</h3>`);
   }
 
   if (htmlDescription?.trim()) {
