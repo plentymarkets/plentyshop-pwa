@@ -1,5 +1,7 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
 
+const config = useRuntimeConfig().public;
+
 function hasHtmlTags(text: string): boolean {
   if (!text) return false;
   return /<\/?[a-z][\s\S]*>/i.test(text);
@@ -16,18 +18,8 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (m) => map[m] || m);
 }
 
-function isOldFormat(content: Partial<TextCardContent>): boolean {
-  if (!content.text) return false;
-
-  const { pretitle, title, subtitle, htmlDescription } = content.text;
-  const hasSeparateFields = !!(pretitle?.trim() || title?.trim() || subtitle?.trim());
-  const descIsPlainOrEmpty = !htmlDescription?.trim() || !hasHtmlTags(htmlDescription);
-
-  return hasSeparateFields && descIsPlainOrEmpty;
-}
-
 export function migrateTextCardContent(content: Partial<TextCardContent>): Partial<TextCardContent> {
-  if (!isOldFormat(content)) {
+  if (config.enableRichTextEditorV2 === false) {
     return content;
   }
 

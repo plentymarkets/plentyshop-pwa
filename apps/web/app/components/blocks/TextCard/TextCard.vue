@@ -4,7 +4,7 @@
     :class="['w-full', 'flex', 'flex-col', 'space-y-4', textAlignmentClass]"
     :style="inlineStyle"
   >
-    <TextContent :text="migratedContent.text" :button="props.content.button" :index="props.index" />
+    <TextContent :text="props.content.text" :button="props.content.button" :index="props.index" />
   </div>
 </template>
 
@@ -12,7 +12,6 @@
 import type { TextCardProps } from './types';
 
 const props = defineProps<TextCardProps>();
-const migratedContent = migrateTextCardContent(props.content);
 
 
 const textAlignmentClass = computed(() => {

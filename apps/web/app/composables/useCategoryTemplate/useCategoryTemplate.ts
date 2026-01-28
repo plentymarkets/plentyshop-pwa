@@ -11,6 +11,7 @@ import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { OldContent } from '~/utils/migrate-recommended-content';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
+import { migrateTextCardContent } from '~/utils/migrate-text-editor';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
   identifier: string = 'unknown',
@@ -40,12 +41,17 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   };
 
   const migrateAllImageBlocks = (blocks: Block[]) => {
+    const config = useRuntimeConfig().public;
+
     for (const block of blocks) {
       if (block.name === 'Image' && block.content) {
         block.content = migrateImageContent(block.content);
       }
       if (block.name === 'ProductRecommendedProducts' && block.content) {
         block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
+      }
+      if (block.name === 'TextCard' && block.content && config.enableRichTextEditorV2) {
+        block.content = migrateTextCardContent(block.content);
       }
       if (Array.isArray(block.content)) {
         migrateAllImageBlocks(block.content);
