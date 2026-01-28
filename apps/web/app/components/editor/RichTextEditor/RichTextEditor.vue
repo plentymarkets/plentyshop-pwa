@@ -177,7 +177,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { useEditor, EditorContent } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
 
@@ -189,7 +188,6 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
 import ColorButton from '../ColorButton/ColorButton.vue';
-const showColor = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -212,7 +210,6 @@ const emit = defineEmits<{
 }>();
 
 const expandedLocal = ref(props.expanded);
-const refVariable = ref('#000');
 watch(
   () => props.expanded,
   (v) => (expandedLocal.value = v),
@@ -241,8 +238,6 @@ const editor = useEditor({
     }),
   ],
   onUpdate: ({ editor }: { editor: Editor }) => {
-    const html = editor.getHTML();
-    console.log(html);
     emit('update:modelValue', editor.getHTML());
   },
 });
@@ -327,16 +322,16 @@ watch(editor, (ed) => {
 });
 
 function setFontColor(color: string) {
-  const chain = focusChain();
-  if (!chain) return;
-  chain.setColor(color).run();
+  const ed = editor.value;
+  if (!ed) return;
+  ed.chain().setColor(color).run();
   textColor.value = color;
 }
 
 function setHighlightColor(color: string) {
-  const chain = focusChain();
-  if (!chain) return;
-  chain.setHighlight({ color }).run();
+  const ed = editor.value;
+  if (!ed) return;
+  ed.chain().setHighlight({ color }).run();
   highlightColor.value = color;
 }
 

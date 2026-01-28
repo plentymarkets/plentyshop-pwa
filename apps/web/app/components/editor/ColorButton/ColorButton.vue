@@ -32,6 +32,10 @@
             :model-value="modelValue"
             with-hex-input
             with-rgb-input
+            with-alpha
+            with-initial-color
+            with-eye-dropper
+            with-colors-history
             @update:model-value="emit('update:modelValue', $event)"
           />
         </div>
@@ -50,9 +54,8 @@
               @click="emit('update:modelValue', secondaryColor)"
             />
           </div>
-
           <div class="mt-3">
-            <SfInput v-model="hexValue" type="text" size="sm" placeholder="#000000" />
+            <p>These are your primary shop colors</p>
           </div>
         </div>
       </div>
@@ -61,9 +64,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeUnmount } from 'vue';
-import { SfInput } from '@storefront-ui/vue';
-
 const props = defineProps<{
   modelValue: string;
 }>();
@@ -80,30 +80,25 @@ const style = computed(() => ({
   backgroundColor: props.modelValue || '#000000',
 }));
 
-const hexValue = computed({
-  get: () => props.modelValue || '',
-  set: (value: string) => emit('update:modelValue', value),
-});
-
 const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');
 const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor');
 
 const primaryColor = computed(() => getPrimaryColorSetting());
 const secondaryColor = computed(() => getSecondaryColorSetting());
 
-function toggle() {
+const toggle = () => {
   open.value = !open.value;
-}
+};
 
-function close() {
+const close = () => {
   open.value = false;
-}
+};
 
-function onDocClick(e: MouseEvent) {
+const onDocClick = (e: MouseEvent) => {
   if (!root.value?.contains(e.target as Node)) {
     close();
   }
-}
+};
 
 document.addEventListener('mousedown', onDocClick);
 onBeforeUnmount(() => {
