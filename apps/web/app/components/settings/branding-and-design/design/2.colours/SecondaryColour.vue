@@ -6,25 +6,45 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
-        <template #suffix>
-          <label
-            for="secondary-color"
-            :style="{ backgroundColor: secondaryColor }"
-            class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-          >
-            <input id="secondary-color" v-model="secondaryColor" type="color" class="invisible w-8" />
-          </label>
-        </template>
-      </SfInput>
-    </label>
+
+    <div v-if="runtimeConfig.public.enableColorPicker">
+      <label>
+        <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
+          <template #suffix>
+            <label
+              for="secondary-color"
+              :style="{ backgroundColor: secondaryColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input id="secondary-color" v-model="secondaryColor" type="color" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </label>
+    </div>
+    <EditorColorPicker v-else v-model="secondaryColor" class="w-full">
+      <template #trigger="{ color, toggle }">
+        <label>
+          <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-8 h-8"
+                :style="{ backgroundColor: color }"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
+        </label>
+      </template>
+    </EditorColorPicker>
   </div>
 </template>
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
-
+const runtimeConfig = useRuntimeConfig();
 const { updateSetting, getSetting } = useSiteSettings('secondaryColor');
 
 const updateSecondaryColor = (hexColor: string) => {

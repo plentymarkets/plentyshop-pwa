@@ -240,6 +240,8 @@ export default defineNuxtConfig({
       manufacturerEmail: process.env.NUXT_PUBLIC_MANUFACTURER_EMAIL || '0',
       manufacturerContactUrl: process.env.NUXT_PUBLIC_MANUFACTURER_CONTACT_URL || '0',
       customAssetsSafeMode: process.env.NUXT_PUBLIC_CUSTOM_ASSETS_SAFE_MODE === 'true',
+      enableColorPicker: process.env?.ENABLE_COLOR_PICKER === '1',
+
     },
   },
   modules: [

@@ -1,6 +1,21 @@
 <template>
   <div ref="root" class="relative inline-block">
-    <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
+    <slot
+      name="trigger"
+      :value="modelValue"
+      :color="previewColor"
+      :is-open="open"
+      :toggle="toggle"
+      :open="openDropdown"
+      :close="close"
+    >
+      <div
+        class="h-8 w-8 border border-[#dee2e6] cursor-pointer"
+        :style="style"
+        @mousedown.stop
+        @click.stop="toggle"
+      />
+    </slot>
 
     <div v-if="open" class="absolute left-0 top-full z-50 mt-2" @mousedown.stop @click.stop>
       <EditorColorPickerPanel
@@ -32,18 +47,24 @@ const style = computed(() => ({
   backgroundColor: props.modelValue || '#000000',
 }));
 
+const previewColor = computed(() => style.value.backgroundColor as string);
+
 const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');
 const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor');
 
 const primaryColor = computed(() => getPrimaryColorSetting());
 const secondaryColor = computed(() => getSecondaryColorSetting());
 
-const toggle = () => {
-  open.value = !open.value;
+const openDropdown = () => {
+  open.value = true;
 };
 
 const close = () => {
   open.value = false;
+};
+
+const toggle = () => {
+  open.value = !open.value;
 };
 
 const onDocClick = (e: MouseEvent) => {
