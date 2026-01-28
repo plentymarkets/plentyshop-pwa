@@ -297,16 +297,33 @@ function onFontSizeChange(v: string) {
   else chain.setParagraph().run();
 }
 
-/** --- Colors --- */
+const THEME_PRIMARY_TOKEN = '__theme_primary__';
+const THEME_SECONDARY_TOKEN = '__theme_secondary__';
+const THEME_PRIMARY_COLOR = 'rgb(var(--colors-2-primary-500))';
+const THEME_SECONDARY_COLOR = 'rgb(var(--colors-2-secondary-500))';
+
 const textColor = ref('#000000');
 const highlightColor = ref('#ffff00');
+
+const { getSetting: getPrimaryColorSetting } = useSiteSettings('primaryColor');
+const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor');
+
+const primaryHexColor = computed(() => (getPrimaryColorSetting() as string) || '#000000');
+const secondaryHexColor = computed(() => (getSecondaryColorSetting() as string) || '#000000');
+
+function mapEditorColorToUi(color: string | undefined): string {
+  if (!color) return '#000000';
+  if (color === THEME_PRIMARY_COLOR) return primaryHexColor.value;
+  if (color === THEME_SECONDARY_COLOR) return secondaryHexColor.value;
+  return color;
+}
 
 function syncColors() {
   const ed = editor.value;
   if (!ed) return;
 
   const c = ed.getAttributes('textStyle')?.color as string | undefined;
-  textColor.value = c ?? '#000000';
+  textColor.value = mapEditorColorToUi(c);
 
   const h = ed.getAttributes('highlight')?.color as string | undefined;
   highlightColor.value = h ?? '#ffff00';
@@ -322,6 +339,19 @@ watch(editor, (ed) => {
 function setFontColor(color: string) {
   const ed = editor.value;
   if (!ed) return;
+
+  if (color === THEME_PRIMARY_TOKEN) {
+    ed.chain().setColor(THEME_PRIMARY_COLOR).run();
+    textColor.value = primaryHexColor.value;
+    return;
+  }
+
+  if (color === THEME_SECONDARY_TOKEN) {
+    ed.chain().setColor(THEME_SECONDARY_COLOR).run();
+    textColor.value = secondaryHexColor.value;
+    return;
+  }
+
   ed.chain().setColor(color).run();
   textColor.value = color;
 }

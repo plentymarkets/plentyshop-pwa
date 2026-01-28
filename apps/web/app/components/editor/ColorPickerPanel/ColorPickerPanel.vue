@@ -1,17 +1,3 @@
-<script setup lang="ts">
-const props = defineProps<{
-  modelValue: string;
-  activeTab: 'shop' | 'picker';
-  primaryColor: string | null;
-  secondaryColor: string | null;
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void;
-  (e: 'update:activeTab', v: 'shop' | 'picker'): void;
-}>();
-</script>
-
 <template>
   <div class="rounded-md border bg-white shadow-md p-3 min-w-[220px]">
     <EditorColorPickerTabs :active-tab="props.activeTab" @update:active-tab="emit('update:activeTab', $event)" />
@@ -34,13 +20,13 @@ const emit = defineEmits<{
           type="button"
           class="h-8 w-8 rounded-md border border-slate-200"
           :style="{ backgroundColor: props.primaryColor || '#000000' }"
-          @click="emit('update:modelValue', props.primaryColor || '#000000')"
+          @click="emit('update:modelValue', '__theme_primary__')"
         />
         <button
           type="button"
           class="h-8 w-8 rounded-md border border-slate-200"
           :style="{ backgroundColor: props.secondaryColor || '#000000' }"
-          @click="emit('update:modelValue', props.secondaryColor || '#000000')"
+          @click="emit('update:modelValue', '__theme_secondary__')"
         />
       </div>
       <div class="mt-3">
@@ -49,3 +35,17 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  modelValue: string;
+  activeTab: 'shop' | 'picker';
+  primaryColor: string | null;
+  secondaryColor: string | null;
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', v: string): void;
+  (e: 'update:activeTab', v: 'shop' | 'picker'): void;
+}>();
+</script>
