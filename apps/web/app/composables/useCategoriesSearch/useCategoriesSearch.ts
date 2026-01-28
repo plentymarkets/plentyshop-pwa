@@ -126,7 +126,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     try {
       const { data } = await useAsyncData(`categories-search-${categoryType}`, () =>
         useSdk().plentysystems.getCategoriesSearch({
-          level: 1,
           type: categoryType,
           page: state.value[pageKey],
           itemsPerPage: 30,
