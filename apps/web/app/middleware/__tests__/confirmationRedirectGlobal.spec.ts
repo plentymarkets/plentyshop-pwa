@@ -1,4 +1,4 @@
-import { matchOldConfirmationUrl } from '~/middleware/confirmation-redirect.global.server';
+import { matchOldConfirmationUrl } from '~/middleware/confirmation-redirect.global';
 
 describe('matchOldConfirmationUrl', () => {
   const testCases = [
