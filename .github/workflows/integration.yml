@@ -149,7 +149,7 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: E2E Smoke
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           install: false
           command: npm run test:cypress
