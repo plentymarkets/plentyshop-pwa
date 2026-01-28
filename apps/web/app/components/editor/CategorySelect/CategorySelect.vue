@@ -46,6 +46,7 @@ const emit = defineEmits<{
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
 const loadMoreTrigger = ref<HTMLElement | null>(null);
 const categories = ref<CategoryOption[]>([]);
+const categoryMap = ref<Map<string, CategoryOption>>(new Map());
 const isLoading = ref(false);
 const currentPage = ref(1);
 const hasMorePages = ref(true);
@@ -81,18 +82,26 @@ const loadCategories = async (query: string, page: number, append: boolean = fal
     const newOptions = mapSearchResultsToOptions(data.value.entries);
 
     if (append) {
-      const existingIds = new Set(categories.value.map((c) => c.id));
-      const uniqueNewOptions = newOptions.filter((c) => !existingIds.has(c.id));
-      categories.value = [...categories.value, ...uniqueNewOptions];
+      newOptions.forEach((option) => {
+        if (!categoryMap.value.has(option.id)) {
+          categoryMap.value.set(option.id, option);
+          categories.value.push(option);
+        }
+      });
     } else {
+      categoryMap.value.clear();
       categories.value = newOptions;
+      newOptions.forEach((option) => categoryMap.value.set(option.id, option));
     }
 
     hasMorePages.value = !data.value.isLastPage;
 
     return true;
   } catch {
-    if (!append) categories.value = [];
+    if (!append) {
+      categories.value = [];
+      categoryMap.value.clear();
+    }
     send({ type: 'negative', message: getEditorTranslation('error-loading') });
     return false;
   } finally {
@@ -120,7 +129,7 @@ const setupIntersectionObserver = () => {
 
     observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && hasMorePages.value && !isLoading.value) loadNextPage();
+        if (entries[0]?.isIntersecting) loadNextPage();
       },
       {
         root: null,
