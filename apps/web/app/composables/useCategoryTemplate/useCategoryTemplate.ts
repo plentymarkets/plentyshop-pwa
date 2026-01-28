@@ -48,7 +48,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       if (block.name === 'ProductRecommendedProducts' && block.content) {
         block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
       }
-      if (block.name === 'TextCard' && block.content && true) {
+      if (block.name === 'TextCard' && block.content) {
         block.content = migrateTextCardContent(block.content);
       }
       if (Array.isArray(block.content)) {

@@ -1,5 +1,13 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
 
+function hasOldStructure(content: Partial<TextCardContent>): boolean {
+  if (!content.text) return false;
+
+  const { pretitle, title, subtitle } = content.text;
+
+  return !!(pretitle?.trim() || title?.trim() || subtitle?.trim());
+}
+
 function hasHtmlTags(text: string): boolean {
   if (!text) return false;
   return /<\/?[a-z][\s\S]*>/i.test(text);
@@ -17,7 +25,7 @@ function escapeHtml(text: string): string {
 }
 
 export function migrateTextCardContent(content: Partial<TextCardContent>): Partial<TextCardContent> {
-  if (false) {
+  if (!hasOldStructure(content)) {
     return content;
   }
 
