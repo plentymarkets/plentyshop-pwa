@@ -38,6 +38,7 @@
     </div>
     <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
       <h2 class="mt-8 typography-headline-3 font-bold">{{ t('cart.empty') }}</h2>
+      <ModuleComponentRendering area="cart.empty" class="mt-6" />
     </div>
   </NuxtLayout>
 </template>
@@ -46,6 +47,7 @@
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
+import Module from 'module';
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
