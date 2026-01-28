@@ -109,7 +109,7 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
 });
 
-const { $isPreview } = useNuxtApp();
+const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
 const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
@@ -199,7 +199,7 @@ const observeLazyLoadSection = (blockName: string) => {
 };
 
 onNuxtReady(() => {
-  clientPreview.value = !!$isPreview;
+  clientPreview.value = isInEditorClient.value;
   if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 

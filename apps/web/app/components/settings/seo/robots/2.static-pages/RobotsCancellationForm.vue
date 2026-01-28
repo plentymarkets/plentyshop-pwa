@@ -32,12 +32,12 @@ const robots = computed({
 {
   "en": {
     "label": "Robots for cancellation form",
-    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "description": "Controls how search engines treat your shop’s built-in pages. By default, these pages should be indexed (“all”) to ensure they are discoverable. Only restrict indexing if there is a specific reason, such as temporary content, duplicate pages, or private pages.",
     "placeholder": "Select robots"
   },
   "de": {
     "label": "Robots for cancellation form",
-    "description": "Controls how search engines should treat pages that are automatically generated. Choose \"all\" to allow indexing and following links, or select other options to restrict them.",
+    "description": "Controls how search engines treat your shop’s built-in pages. By default, these pages should be indexed (“all”) to ensure they are discoverable. Only restrict indexing if there is a specific reason, such as temporary content, duplicate pages, or private pages.",
     "placeholder": "Select robots"
   }
 }

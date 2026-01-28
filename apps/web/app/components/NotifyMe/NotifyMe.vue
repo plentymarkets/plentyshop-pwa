@@ -128,7 +128,6 @@ import {
   useDisclosure,
 } from '@storefront-ui/vue';
 import { offset } from '@floating-ui/vue';
-import { ref } from 'vue';
 import type { NotifyMeComponentProps } from './types';
 
 const props = defineProps<NotifyMeComponentProps>();
