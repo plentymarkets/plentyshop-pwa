@@ -239,8 +239,8 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void;
-  (e: 'update:expanded', v: boolean): void;
+  (e: 'update:modelValue', value: string): void;
+  (e: 'update:expanded', value: boolean): void;
 }>();
 
 const {
