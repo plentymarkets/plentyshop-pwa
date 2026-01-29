@@ -1,4 +1,5 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
+import featureFlagsConfig from '~/configuration/feature-flags.config';
 
 function hasOldStructure(content: Partial<TextCardContent>): boolean {
   if (!content.text) return false;
@@ -25,6 +26,7 @@ function escapeHtml(text: string): string {
 }
 
 export function migrateTextCardContent(content: Partial<TextCardContent>): Partial<TextCardContent> {
+  if (!featureFlagsConfig.enableRichTextEditorV2) return content;
   if (!hasOldStructure(content)) return content;
 
   const migrated = {
