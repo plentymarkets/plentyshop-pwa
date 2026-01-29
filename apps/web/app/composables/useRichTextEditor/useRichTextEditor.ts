@@ -1,6 +1,5 @@
 import { useEditor } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
-
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
@@ -8,16 +7,7 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
-
-type UseRichTextEditorArgs = {
-  modelValue: Ref<string | undefined>;
-  onUpdateModelValue: (html: string) => void;
-
-  expanded?: Ref<boolean | undefined>;
-  onUpdateExpanded?: (v: boolean) => void;
-
-  textAlign?: Ref<RteAlign | undefined>;
-};
+import type { UseRichTextEditorArgs } from '~/composables/useRichTextEditor/types';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const expandedLocal = ref<boolean>(args.expanded?.value ?? false);
@@ -49,7 +39,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     },
   });
 
-  // Keep editor in sync when v-model changes from outside
   watch(args.modelValue, (next) => {
     if (!editor.value) return;
     const wanted = next ?? '';
@@ -81,7 +70,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const isActive = (name: string) => editor.value?.isActive(name) ?? false;
 
-  /** --- Block type (H1/H2/H3/Paragraph) --- */
   const currentBlockType = computed<RteBlockType>(() => {
     const ed = editor.value;
     if (!ed) return 'paragraph';
@@ -101,7 +89,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     else chain.setParagraph().run();
   };
 
-  /** --- Colors --- */
   const textColor = ref('#000000');
   const highlightColor = ref('#ffff00');
 
@@ -137,7 +124,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     highlightColor.value = color;
   };
 
-  /** --- Align --- */
   const setAlign = (a: RteAlign) => {
     const chain = focusChain();
     if (!chain) return;
@@ -146,7 +132,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const isActiveAlign = (a: RteAlign) => editor.value?.isActive({ textAlign: a }) ?? false;
 
-  /** --- History --- */
   const canUndo = ref(false);
   const canRedo = ref(false);
 
@@ -173,7 +158,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     editor.value?.chain().focus().redo().run();
   };
 
-  /** --- Link --- */
   const toggleLink = () => {
     const ed = editor.value;
     if (!ed) return;
@@ -189,14 +173,12 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     ed.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   };
 
-  /** --- Clear --- */
   const clearFormatting = () => {
     const ed = editor.value;
     if (!ed) return;
     ed.chain().focus().unsetAllMarks().clearNodes().run();
   };
 
-  /** --- Convenience --- */
   const textAlignStyle = computed(() => ({
     textAlign: args.textAlign?.value ?? 'left',
   }));
@@ -206,30 +188,23 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   return {
     editor,
     expandedLocal,
-
     cmd,
     isActive,
-
     currentBlockType,
     onFontSizeChange,
-
     textColor,
     highlightColor,
     setFontColor,
     setHighlightColor,
-
     setAlign,
     isActiveAlign,
     textAlignStyle,
-
     canUndo,
     canRedo,
     undo,
     redo,
-
     toggleLink,
     clearFormatting,
-
     focus,
   };
 }
