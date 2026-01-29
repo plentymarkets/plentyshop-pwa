@@ -10,6 +10,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { OldContent } from '~/utils/migrate-recommended-content';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
+import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
@@ -49,7 +50,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
       }
       if (block.name === 'TextCard' && block.content) {
-        block.content = migrateTextCardContent(block.content);
+        block.content = migrateTextCardContent(block.content as Partial<TextCardContent>);
       }
       if (Array.isArray(block.content)) {
         migrateAllBlocks(block.content);
