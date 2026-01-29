@@ -1,0 +1,48 @@
+.rte-prose h1 {
+  font-size: 1.75rem;
+  line-height: 2.1rem;
+  font-weight: 700;
+  margin: 10px 0;
+}
+.rte-prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.9rem;
+  font-weight: 700;
+  margin: 10px 0;
+}
+.rte-prose h3 {
+  font-size: 1.25rem;
+  line-height: 1.65rem;
+  font-weight: 600;
+  margin: 8px 0;
+}
+.rte-prose p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 6px 0;
+}
+.rte-prose blockquote {
+  border-left: 3px solid #dee2e6;
+  padding-left: 12px;
+  margin: 10px 0;
+  color: #495057;
+}
+.rte-prose.rte-prose ul,
+.rte-prose.rte-prose ol {
+  list-style-position: outside;
+  padding-left: 1.25rem;
+  margin: 8px 0;
+}
+.rte-prose.rte-prose ul {
+  list-style-type: disc;
+}
+.rte-prose.rte-prose ol {
+  list-style-type: decimal;
+}
+.rte-prose.rte-prose li {
+  display: list-item;
+}
+
+.rte-prose li > p {
+  margin: 0;
+}
