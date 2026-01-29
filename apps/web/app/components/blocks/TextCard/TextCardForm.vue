@@ -340,7 +340,7 @@ const { data } = useCategoryTemplate(
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const props = defineProps<TextCardFormProps & { textCardFormV2Enabled?: boolean }>();
+const props = defineProps<TextCardFormProps>();
 
 const config = useRuntimeConfig().public;
 
