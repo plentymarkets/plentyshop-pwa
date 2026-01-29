@@ -112,18 +112,34 @@
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
-
-      <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
-        <template #suffix>
-          <label
-            for="border-color"
-            :style="{ backgroundColor: priceCardBlock.borderColor }"
-            class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-          >
-            <input id="border-color" v-model="priceCardBlock.borderColor" type="color" class="invisible w-8" />
-          </label>
+      <div v-if="runtimeConfig.public.enableColorPicker">
+        <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
+          <template #suffix>
+            <label
+              for="border-color"
+              :style="{ backgroundColor: priceCardBlock.borderColor }"
+              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+            >
+              <input id="border-color" v-model="priceCardBlock.borderColor" type="color" class="invisible w-8" />
+            </label>
+          </template>
+        </SfInput>
+      </div>
+      <EditorColorPicker v-else v-model="priceCardBlock.borderColor" class="w-full">
+        <template #trigger="{ color, toggle }">
+          <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
         </template>
-      </SfInput>
+      </EditorColorPicker>
     </div>
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
@@ -190,6 +206,8 @@ import {
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
+
+const runtimeConfig = useRuntimeConfig();
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
