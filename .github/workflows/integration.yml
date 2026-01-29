@@ -12,7 +12,7 @@ permissions:
   packages: read
   pull-requests: write
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -82,21 +82,6 @@ jobs:
 
       - name: Run linter
         run: npm run lint
-  test-coverage:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v6
-      - name: Setup Node
-        uses: ./.github/actions/setup
-
-      - name: Unit test coverage
-        run: npm run test:coverage
-      - name: 'Report Coverage'
-        if: always()
-        uses: davelosert/vitest-coverage-report-action@v2
-        with:
-          working-directory: './apps/web'
   test-unit:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -164,9 +149,9 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: E2E Smoke
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           install: false
           command: npm run test:cypress
         env:
-          NUXT_PUBLIC_CONFIG_ID: 1
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}

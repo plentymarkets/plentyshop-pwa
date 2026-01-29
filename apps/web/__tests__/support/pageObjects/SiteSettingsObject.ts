@@ -8,13 +8,48 @@ export class SiteSettingsObject extends PageObject {
   get closeButton() {
     return cy.getByTestId('view-close');
   }
-
   get settingsDrawer() {
     return cy.getByTestId('site-settings-drawer');
   }
 
   get designSubcategory() {
-    return cy.getByTestId('site-settings-sub-category-design');
+    return cy.getByTestId('site-settings-category-design');
+  }
+
+  get customScriptsCategory() {
+    return cy.getByTestId('custom-scripts-category');
+  }
+
+  get positionSelect() {
+    return cy.getByTestId('script-placement-select');
+  }
+
+  get customJsAccordion() {
+    return cy.getByTestId('site-settings-category-custom-js');
+  }
+
+  get addSnippetButtonEmpty() {
+    return cy.getByTestId('add-code-snippet-empty');
+  }
+
+  get snippetOverview() {
+    return cy.getByTestId('code-snippet-overview');
+  }
+
+  get addSnippetButton() {
+    return cy.getByTestId('add-code-snippet');
+  }
+
+  get codeEditor() {
+    return cy.getByTestId('code-editor');
+  }
+
+  get snippetSwitch() {
+    return cy.getByTestId('activate-snippet');
+  }
+
+  get customSettingsSection() {
+    return cy.getByTestId('saved-snippets-section');
   }
 
   get fontSection() {
@@ -105,6 +140,57 @@ export class SiteSettingsObject extends PageObject {
 
   openDesignSubcategory() {
     this.designSubcategory.should('be.visible').click();
+    return this;
+  }
+
+  checkCustomCodeHeader() {
+    this.settingsDrawer.should('be.visible');
+    this.settingsDrawer.find('div.text-xl.font-bold').should('contain.text', 'Custom Code');
+    return this;
+  }
+
+  changeCustomScript() {
+    this.customJsAccordion.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.addSnippetButtonEmpty.should('be.visible').scrollIntoView().click({ force: true });
+    cy.wait(500);
+    this.positionSelect.should('be.visible').should('have.value', 'head_end');
+    cy.wait(500);
+    this.codeEditor.should('be.visible').click().type('// Custom JavaScript Code');
+    return this;
+  }
+
+  toggleCustomScriptsSettings() {
+    this.customScriptsCategory.should('be.visible').click();
+    return this;
+  }
+
+  checkScriptPlacementFooter() {
+    this.positionSelect.should('be.visible').should('have.value', 'head_end');
+    this.positionSelect.select('body_end');
+    this.positionSelect.should('have.value', 'body_end');
+    this.customSettingsSection.should('be.visible').click();
+    this.snippetOverview.should('be.visible');
+    this.snippetSwitch.should('be.visible').click();
+    cy.get('body')
+      .children()
+      .last()
+      .should('match', 'script')
+      .and('have.attr', 'data-hid')
+      .and('match', /^custom-js-.*-footer$/);
+    return this;
+  }
+
+  checkScriptPlacementHeader() {
+    this.positionSelect.should('be.visible').should('have.value', 'body_end');
+    this.positionSelect.select('head_end');
+    this.positionSelect.should('have.value', 'head_end');
+    this.customSettingsSection.should('be.visible').click();
+    this.snippetOverview.should('be.visible');
+    cy.get('head')
+      .children('script')
+      .last()
+      .should('have.attr', 'data-hid')
+      .and('match', /^custom-js-/);
     return this;
   }
 
@@ -223,7 +309,7 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  visibleBundleComponents(list) {
+  visibleBundleComponents(list: string) {
     const options = [
       'Only list the components of the item bundle and replace the item bundle with the basic items in the order process',
       'List both the item bundle and its individual components',
@@ -234,7 +320,7 @@ export class SiteSettingsObject extends PageObject {
     });
   }
 
-  notVisibleBundleComponents(list) {
+  notVisibleBundleComponents(list: string) {
     this.itemBundlesSelect.select(
       'Only show item bundle without individual components and do not split the item bundle in the order process',
     );
