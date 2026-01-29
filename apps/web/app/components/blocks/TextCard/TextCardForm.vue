@@ -1,5 +1,4 @@
 <template>
-  <!-- TEXT -->
   <UiAccordionItem
     v-model="textSettings"
     data-testid="open-text-settings"
@@ -10,10 +9,9 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <!-- v2 (Single RichText) -->
     <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
       <div class="py-2">
-        <RichTextEditor
+        <EditorRichTextEditor
           v-model="contentModel"
           v-model:expanded="expandedToolbars.content"
           :min-height="232"
@@ -27,7 +25,6 @@
         </p>
       </div>
     </div>
-    <!-- v1  -->
     <div v-else data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -333,7 +330,6 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
-import RichTextEditor from '~/components/editor/RichTextEditor/RichTextEditor.vue';
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -354,8 +350,8 @@ const expandedToolbars = ref({
 
 const contentModel = computed<string>({
   get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (v) => {
-    textCardBlock.value.text.htmlDescription = v;
+  set: (val) => {
+    textCardBlock.value.text.htmlDescription = val;
   },
 });
 const textCardBlock = computed<TextCardContent>(() => {

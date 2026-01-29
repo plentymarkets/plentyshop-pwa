@@ -1,6 +1,5 @@
 <template>
   <div data-testid="text-content" class="space-y-4 w-full" :style="{ color: props.text?.color }">
-    <!-- V2: single rich text -->
     <div
       v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription"
       class="rte-prose rte-prose--render"
@@ -8,7 +7,6 @@
       v-html="props.text.htmlDescription"
     />
 
-    <!-- V1: legacy -->
     <template v-else>
       <div
         v-if="props.text?.pretitle"
@@ -46,7 +44,6 @@
       />
     </template>
 
-    <!-- Button (same for both) -->
     <UiButton
       v-if="props.button?.label && props.button?.link"
       :tag="NuxtLink"

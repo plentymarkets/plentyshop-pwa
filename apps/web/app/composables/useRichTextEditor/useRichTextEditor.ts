@@ -9,8 +9,7 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
 
-export type RteAlign = 'left' | 'center' | 'right' | 'justify';
-export type RteBlockType = 'paragraph' | 'h1' | 'h2' | 'h3';
+
 
 type UseRichTextEditorArgs = {
   modelValue: Ref<string | undefined>;
