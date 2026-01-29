@@ -3,8 +3,8 @@
     <!-- V2: single rich text -->
     <div
       v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription"
-      data-testid="text-rich"
-      class="rte-prose"
+      class="rte-prose rte-prose--render"
+      :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
       v-html="props.text.htmlDescription"
     />
 

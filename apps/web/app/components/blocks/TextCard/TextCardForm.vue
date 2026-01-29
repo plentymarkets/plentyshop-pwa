@@ -19,8 +19,10 @@
           v-model:expanded="expandedToolbars.content"
           :min-height="232"
           :expandable="true"
+          :text-align="textCardBlock.text.textAlignment"
           data-testid="rte-content"
         />
+
 
         <p class="typography-text-xs text-neutral-600 mt-2">
           {{ getEditorTranslation('content-hint') }}

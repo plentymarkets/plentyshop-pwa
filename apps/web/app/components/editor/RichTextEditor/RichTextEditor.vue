@@ -182,12 +182,17 @@
 
   <!-- Editor -->
   <div class="rte__body" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
-    <EditorContent :editor="editor" class="rte__content rte-prose" :style="{ minHeight: `${minHeight}px` }" />
+    <EditorContent
+      :editor="editor"
+      class="rte__content rte-prose"
+      :style="{ minHeight: `${minHeight}px`, textAlign: props.textAlign }"
+    />
   </div>
+
+
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { useEditor, EditorContent } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
 
@@ -201,16 +206,19 @@ import TextAlign from '@tiptap/extension-text-align';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
+    modelValue?: string;
     minHeight?: number;
     expandable?: boolean;
     expanded?: boolean;
+    textAlign?: 'left' | 'center' | 'right' | 'justify';
+
   }>(),
   {
     modelValue: '',
     minHeight: 120,
     expandable: true,
     expanded: false,
+    textAlign: 'left',
   },
 );
 
@@ -248,8 +256,6 @@ const editor = useEditor({
     }),
   ],
   onUpdate: ({ editor }: { editor: Editor }) => {
-    const html = editor.getHTML();
-    console.log(html);
     emit('update:modelValue', editor.getHTML());
   },
 });
@@ -482,7 +488,6 @@ defineExpose({
   padding: 8px 10px;
 }
 
-
 .ml-auto {
   margin-left: auto;
 }
@@ -513,5 +518,4 @@ defineExpose({
   white-space: nowrap;
   border-width: 0;
 }
-
 </style>

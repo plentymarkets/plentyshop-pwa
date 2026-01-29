@@ -16,7 +16,13 @@
     padding-left: 1.25rem !important;
     margin: 8px 0 !important;
 }
-
+.rte-prose[style*="text-align: center"] ul,
+.rte-prose[style*="text-align: center"] ol,
+.rte-prose[style*="text-align: right"] ul,
+.rte-prose[style*="text-align: right"] ol {
+    list-style-position: inside !important;
+    padding-left: 0 !important;
+}
 .rte-prose ul { list-style-type: disc !important; }
 .rte-prose ol { list-style-type: decimal !important; }
 
