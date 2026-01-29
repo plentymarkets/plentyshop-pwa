@@ -1,6 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { migrateTextCardContent } from '../migrate-text-editor';
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
+
+vi.mock('~/configuration/feature-flags.config', () => ({
+  default: {
+    enableRichTextEditorV2: true,
+  },
+}));
 
 function createOldTextCard(overrides?: Partial<TextCardContent>): Partial<TextCardContent> {
   return {
