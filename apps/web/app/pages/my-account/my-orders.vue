@@ -127,7 +127,7 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="lg:p-4 p-2 text-right">
-                <div class="flex items-center justify-end gap-0">
+                <div class="flex items-center justify-end">
                   <UiButton
                     :tag="NuxtLink"
                     size="sm"
@@ -219,7 +219,7 @@ watch(isDesktop, (value) => setMaxVisiblePages(value));
 
 watch(
   () => route.query.page,
-  () => fetchCustomerOrders({ page: Number(route.query.page as string) || defaults.DEFAULT_PAGE }),
+  (page) => fetchCustomerOrders({ page: Number(page) || defaults.DEFAULT_PAGE }),
   { immediate: true },
 );
 </script>
