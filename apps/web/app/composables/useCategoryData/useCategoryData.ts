@@ -2,8 +2,6 @@ import { clamp } from '@storefront-ui/shared';
 import { categoryGetters, type Category, type CategoryDetails } from '@plentymarkets/shop-api';
 import type { CategoryDataContent, CategoryDataFieldKey } from '~/components/blocks/CategoryData/types';
 
-declare const getEditorTranslation: (key: string) => string;
-
 export const useCategoryData = () => {
   const route = useRoute();
   const { data } = useCategoryTemplate(
@@ -91,9 +89,9 @@ export const useCategoryData = () => {
     if (count === 1) {
       const onlyKey = missingTextFieldKeys.value[0]!;
       const onlyLabel = (fieldLabels as Record<CategoryDataFieldKey, string>)[onlyKey];
-      return t('field-empty-hint-prefix', { field: onlyLabel });
+      return getEditorTranslation('field-empty-hint-prefix', { field: onlyLabel });
     }
-    return t('fields-empty-hint-prefix', { fields: missingTextLabels.value });
+    return getEditorTranslation('fields-empty-hint-prefix', { fields: missingTextLabels.value });
   });
 
   const clampBrightness = (event: Event, type: 'image' | 'text') => {

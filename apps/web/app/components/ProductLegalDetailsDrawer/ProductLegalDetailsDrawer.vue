@@ -15,9 +15,7 @@
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
-        <div v-if="config.enableProductEditing" class="flex items-center text-white">{{ title }}</div>
-
-        <div v-else class="flex items-center text-white">{{ t('product.legalDetails') }}</div>
+        <div class="flex items-center text-white">{{ title }}</div>
 
         <UiButton
           square
@@ -83,8 +81,6 @@ const tabs = [
   { label: t('manufacturer.manufacturerTabName'), component: ManufacturerInformation, disabled: false },
 ];
 
-const config = useRuntimeConfig().public;
-
 const activeTabIndex = ref(0);
 
 const isActiveTab = (index: number) => activeTabIndex.value === index;
@@ -110,5 +106,5 @@ const productLegalBlock = computed(() => {
     .find((block) => block.meta?.uuid === openedBlockUuid.value);
 });
 
-const title = computed(() => productLegalBlock.value?.content?.text?.title || '');
+const title = computed(() => productLegalBlock.value?.content?.text?.title || t('product.legalDetails'));
 </script>

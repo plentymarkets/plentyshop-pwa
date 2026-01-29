@@ -1,7 +1,7 @@
 import { fakeProductDE } from './facets/fakeProductDE';
 import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
-import { toRaw, type Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
 import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
 import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
@@ -42,8 +42,8 @@ const getFakeProductForLanguage = (lang: string, variationId?: number): Product 
 };
 
 export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, shouldComplement: boolean) => {
-  const { $isPreview } = useNuxtApp();
-  if (!$isPreview) return;
+  const { isInEditor } = useEditorState();
+  if (!isInEditor.value) return;
 
   const variationId = state.value.data?.variation?.id;
   const fakeProduct = getFakeProductForLanguage(lang, variationId ? Number(variationId) : undefined);

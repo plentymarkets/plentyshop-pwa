@@ -3,11 +3,6 @@ import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './t
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
-const isEmptyBlock = (block: Block): boolean => {
-  const options = block?.content;
-  return !options || (typeof options === 'object' && Object.keys(options).length === 0);
-};
-const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
   position: 'top',
@@ -240,7 +235,8 @@ export const useBlockManager = () => {
     if (parentInfo) {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
-      const newBlock = { ...layoutTemplate };
+      const layoutTemplateContent = layoutTemplate.content as Block[];
+      const newBlock = { ...layoutTemplateContent[0] } as Block;
 
       const blockToDelete = parent[index];
       if (!blockToDelete) return;
@@ -338,7 +334,6 @@ export const useBlockManager = () => {
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,
-    blockHasData,
     tabletEdit,
     deleteBlock,
     updateBlock,

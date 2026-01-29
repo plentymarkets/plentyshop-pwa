@@ -1,4 +1,8 @@
-export default defineNuxtPlugin(() => {
-  const { initializeCookies } = useCookieBar();
-  initializeCookies();
+export default defineNuxtPlugin({
+  name: 'init-cookie-bar',
+  parallel: true,
+  setup() {
+    const { initializeCookies } = useCookieBar();
+    initializeCookies();
+  },
 });

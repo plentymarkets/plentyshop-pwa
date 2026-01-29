@@ -3,6 +3,13 @@ import { UiPurchaseCard } from '#components';
 import type { ReviewCounts } from '@plentymarkets/shop-api';
 import { ProductMock } from '../../../../../__tests__/__mocks__/product.mock';
 
+vi.mock('vue-router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+  onBeforeRouteLeave: vi.fn(),
+}));
+
 describe('<PurchaseCard />', () => {
   it('should render component', () => {
     const wrapper = mount(UiPurchaseCard, {

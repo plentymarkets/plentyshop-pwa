@@ -1,4 +1,29 @@
 {
+  "notifyMe": {
+    "notifyButtonTooltip": "Wir benachrichtigen Sie, sobald das Produkt wieder verfügbar ist",
+    "notifyButton": "Benachrichtige mich",
+    "form": {
+      "subTitle": "Geben Sie Ihre E-Mail-Adresse ein und wir benachrichtigen Sie, sobald dieser Artikel wieder vorrätig ist.",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "Ihre E-Mail",
+      "turnstileFailed": "Turnstile Validierung Fehlgeschlagen",
+      "successCheckEmail": "Prüfe dein Postfach! Wir haben Ihnen eine Bestätigungs E-Mail gesendet."
+    },
+    "aria": {
+      "openForm": "Benachrichtigungsformular öffnen",
+      "closeForm": "Benachrichtigungsformular schließen",
+      "formLabel": "Formular für Verfügbarkeitsbenachrichtigung",
+      "privacyPolicyLink": "Datenschutzerklärung (öffnet in neuem Tab)",
+      "securityVerification": "Sicherheitsüberprüfung",
+      "subscribeButton": "Für Verfügbarkeitsbenachrichtigung anmelden"
+    },
+    "notifyMeOptInMessage": "Ihre Benachrichtigung wurde erfolgreich bestätigt. Sie erhalten eine E-Mail, sobald der Artikel wieder verfügbar ist.",
+    "notifyMeOptInMessageError": "Die Bestätigung Ihrer Benachrichtigung ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
+    "notifyMeUnsubscribeMessage": "Sie wurden erfolgreich von den Benachrichtigungen abgemeldet.",
+    "notifyMeUnsubscribeMessageError": "Die Abmeldung von den Benachrichtigungen ist fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support.",
+    "outOfStock": "Der Artikel ist aktuell nicht auf Lager",
+    "readAndAccepted": "Ich habe die {privacyPolicy} gelesen und akzeptiert"
+  },
   "account": {
     "accountSettings": {
       "billingDetails": {
@@ -401,6 +426,8 @@
       "closeDrawer": "Drawer schließen",
       "closeListSettings": "Listeneinstellungen schließen",
       "closeMenu": "Menü schließen",
+      "openMenu": "Menü öffnen",
+      "showSubcategories": "Unterkategorien anzeigen",
       "closeNeutralAlert": "Benachrichtigung schließen",
       "closePickSavedAddress": "Adressauswahl schließen",
       "currentPage": "Die aktuelle Seite ist {page}",
@@ -1099,7 +1126,8 @@
     "emptyStateImageAlt": "Bild, das beschreibt, dass keine Artikel gefunden wurden",
     "emptyStateText": "Wir haben keine Artikel mehr in dieser Kategorie.",
     "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
-    "numberOfProducts": "{count} Artikel von {total} Artikeln"
+    "numberOfProducts": "{count} Artikel von {total} Artikeln",
+    "searchResults": "Suchergebnisse für \"{phrase}\""
   },
   "sessionLifetime": {
     "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
@@ -1201,6 +1229,9 @@
     "coupon": {
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
     },
+    "feedback": {
+      "notAllowedWithoutPurchase": "Sie müssen diesen Artikel kaufen, bevor Sie eine Bewertung abgeben können."
+    },
     "login": {
       "loginFailed": "Zugangsdaten ungültig",
       "userIsBlocked": "Nutzer ist gesperrt"
@@ -1233,6 +1264,9 @@
     "turnstile": {
       "invalid": "Verifizierung fehlgeschlagen. Bitte versuchen Sie es in ein paar Minuten erneut.",
       "misConfigured": "Die Verifizierung ist derzeit nicht verfügbar. Bitte wenden Sie sich an den Website-Administrator."
+    },
+    "notifyMe": {
+      "alreadySubscribed": "Sie haben sich bereits für diesen Artikel registriert"
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   }

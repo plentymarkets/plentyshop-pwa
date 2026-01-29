@@ -85,14 +85,19 @@
           @scroll="(e: Event) => handleScroll(e, 'content')"
         >
           <ul class="rounded-lg">
-            <PagesItem
+            <PagesViewPagesItem
               :key="locale"
               :item="homepageItem"
               :parent-id="undefined"
               :icon="SfIconHome"
               :hide-settings="true"
             />
-            <PagesItem v-for="item in contentItems" :key="`${item.id}-${locale}`" :item="item" :parent-id="item.id" />
+            <PagesViewPagesItem
+              v-for="item in contentItems"
+              :key="`${item.id}-${locale}`"
+              :item="item"
+              :parent-id="item.id"
+            />
             <li v-if="loadingContent" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -115,7 +120,7 @@
           @scroll="(e: Event) => handleScroll(e, 'item')"
         >
           <ul class="rounded-lg">
-            <PagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
+            <PagesViewPagesItem v-for="item in itemItems" :key="item.id" :item="item" :parent-id="item.id" />
             <li v-if="loadingItem" class="flex justify-center items-center py-4">
               <SfLoaderCircular size="sm" />
             </li>
@@ -123,59 +128,13 @@
         </div>
       </UiAccordionItem>
 
-      <UiAccordionItem
-        v-if="config.enableTemplateReset"
-        v-model="globalPagesOpen"
-        data-testid="global-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
-      >
-        <template #summary>
-          <h2>{{ getEditorTranslation('global-pages-label') }}</h2>
-        </template>
-
-        <div class="mt-4">
-          <p class="mb-4">{{ getEditorTranslation('global-pages-description') }}</p>
-        </div>
-
-        <div class="border-b border-neutral-200 my-4" />
-
-        <template v-for="(pageSection, index) in globalPagesButtons" :key="pageSection.type">
-          <p class="mb-4 font-medium">{{ getEditorTranslation(pageSection.labelKey) }}</p>
-          <div class="mt-3 flex flex-col gap-2">
-            <button
-              type="button"
-              class="flex-[10] border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-              @click="pageSection.onEdit"
-            >
-              <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer mr-2">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path :d="editPath" fill="black" />
-                </svg>
-              </SfIconBase>
-              {{ getEditorTranslation('global-pages-edit-label') }}
-            </button>
-            <button
-              v-if="config.enableTemplateReset"
-              type="button"
-              class="border border-slate-900 text-slate-900 h-[40px] px-3 py-1.5 rounded-md hover:bg-gray-100 flex items-center justify-center"
-              @click="pageSection.onReset"
-            >
-              <SfIconUndo class="fill-primary-900 cursor-pointer mr-2" />
-              {{ getEditorTranslation('global-pages-reset-label') }}
-            </button>
-          </div>
-
-          <div v-if="index < globalPagesButtons.length - 1" class="border-b border-neutral-200 my-4" />
-        </template>
-      </UiAccordionItem>
+      <PagesViewGlobalPagesSection />
     </div>
   </div>
   <CategorySettingsDrawer v-if="settingsCategory" />
 </template>
 
 <script setup lang="ts">
-import PagesItem from '~/components/PagesView/PagesItem.vue';
 import {
   SfIconClose,
   SfIconHelp,
@@ -184,15 +143,9 @@ import {
   SfIconHome,
   SfLoaderCircular,
   SfIconWarning,
-  SfIconBase,
-  SfIconUndo,
 } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
-import { editPath } from '~/assets/icons/paths/edit';
 const { locale, defaultLocale } = useI18n();
-const config = useRuntimeConfig().public;
-
-const router = useRouter();
 const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
@@ -202,7 +155,6 @@ const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, r
 const contentPagesOpen = ref(false);
 const productPagesOpen = ref(false);
 const globalPagesOpen = ref(false);
-const { toggleResetModal } = useResetProductPageModal();
 
 const isDefaultLocale = computed(() => locale.value === defaultLocale);
 
@@ -295,21 +247,6 @@ const homepageItem = computed<CategoryEntry>(() => ({
   type: 'immutable',
   isLinkedToWebstore: true,
 }));
-
-const globalPagesButtons = [
-  {
-    type: 'category',
-    labelKey: 'global-pages-product-category',
-    onEdit: () => router.push(paths.globalItemCategory),
-    onReset: () => toggleResetModal(true, 'category'),
-  },
-  {
-    type: 'detail',
-    labelKey: 'global-pages-product-detail',
-    onEdit: () => router.push(paths.globalItemDetails),
-    onReset: () => toggleResetModal(true, 'detail'),
-  },
-];
 </script>
 
 <i18n lang="json">
