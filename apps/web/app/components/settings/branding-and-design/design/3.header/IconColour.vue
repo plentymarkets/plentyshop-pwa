@@ -7,6 +7,25 @@
       </SfTooltip>
     </div>
     <div v-if="runtimeConfig.enableColorPicker">
+      <EditorColorPicker v-model="iconColor" class="w-full">
+        <template #trigger="{ color, toggle }">
+          <label>
+            <SfInput v-model="iconColor" type="text" data-testid="icon-color">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
+          </label>
+        </template>
+      </EditorColorPicker>
+    </div>
+    <div v-else>
       <label>
         <SfInput v-model="iconColor" type="text" data-testid="icon-color">
           <template #suffix>
@@ -21,23 +40,6 @@
         </SfInput>
       </label>
     </div>
-    <EditorColorPicker v-else v-model="iconColor" class="w-full">
-      <template #trigger="{ color, toggle }">
-        <label>
-          <SfInput v-model="iconColor" type="text" data-testid="icon-color">
-            <template #suffix>
-              <button
-                type="button"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                :style="{ backgroundColor: color }"
-                @mousedown.stop
-                @click.stop="toggle"
-              />
-            </template>
-          </SfInput>
-        </label>
-      </template>
-    </EditorColorPicker>
   </div>
 </template>
 <script setup lang="ts">

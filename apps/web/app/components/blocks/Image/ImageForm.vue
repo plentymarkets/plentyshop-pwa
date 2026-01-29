@@ -149,6 +149,29 @@
         <UiFormLabel>{{ getEditorTranslation('text-overlay-color-label') }}</UiFormLabel>
       </div>
       <div v-if="runtimeConfig.enableColorPicker">
+        <EditorColorPicker v-model="uiImageTextBlock.text.textOverlayColor!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput
+                v-model="uiImageTextBlock.text.textOverlayColor"
+                type="text"
+                data-testid="text-overlay-color-input"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
+      </div>
+      <div v-else>
         <label>
           <SfInput
             v-model="uiImageTextBlock.text.textOverlayColor"
@@ -173,23 +196,6 @@
           </SfInput>
         </label>
       </div>
-      <EditorColorPicker v-else v-model="uiImageTextBlock.text.textOverlayColor!" class="w-full">
-        <template #trigger="{ color, toggle }">
-          <label>
-            <SfInput v-model="uiImageTextBlock.text.textOverlayColor" type="text" data-testid="text-overlay-color-input">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </label>
-        </template>
-      </EditorColorPicker>
     </div>
 
     <fieldset class="py-2">
@@ -382,6 +388,25 @@
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
       <div v-if="runtimeConfig.enableColorPicker">
+        <EditorColorPicker v-model="backgroundColor!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
+      </div>
+      <div v-else>
         <label>
           <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
             <template #suffix>
@@ -402,23 +427,6 @@
           </SfInput>
         </label>
       </div>
-      <EditorColorPicker v-else v-model="backgroundColor!" class="w-full">
-        <template #trigger="{ color, toggle }">
-          <label>
-            <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </label>
-        </template>
-      </EditorColorPicker>
     </div>
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div

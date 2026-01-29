@@ -160,6 +160,23 @@
           <div class="mb-6 mt-4">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
             <div v-if="runtimeConfig.enableColorPicker">
+              <EditorColorPicker v-model="controls.color" class="w-full">
+                <template #trigger="{ color, toggle }">
+                  <SfInput v-model="controls.color" type="text">
+                    <template #suffix>
+                      <button
+                        type="button"
+                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                        :style="{ backgroundColor: color }"
+                        @mousedown.stop
+                        @click.stop="toggle"
+                      />
+                    </template>
+                  </SfInput>
+                </template>
+              </EditorColorPicker>
+            </div>
+            <div v-else>
               <SfInput v-model="controls.color" type="text">
                 <template #suffix>
                   <label
@@ -172,21 +189,6 @@
                 </template>
               </SfInput>
             </div>
-            <EditorColorPicker v-else v-model="controls.color" class="w-full">
-              <template #trigger="{ color, toggle }">
-                <SfInput v-model="controls.color" type="text">
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </template>
-            </EditorColorPicker>
           </div>
         </div>
       </UiAccordionItem>

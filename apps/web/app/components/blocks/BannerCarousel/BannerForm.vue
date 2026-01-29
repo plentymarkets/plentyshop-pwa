@@ -117,7 +117,25 @@
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
+
             <div v-if="runtimeConfig.enableColorPicker">
+              <EditorColorPicker v-model="banner.content.text.color!" class="w-full">
+                <template #trigger="{ color, toggle }">
+                  <SfInput v-model="banner.content.text.color" type="text">
+                    <template #suffix>
+                      <button
+                        type="button"
+                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                        :style="{ backgroundColor: color }"
+                        @mousedown.stop
+                        @click.stop="toggle"
+                      />
+                    </template>
+                  </SfInput>
+                </template>
+              </EditorColorPicker>
+            </div>
+            <div v-else>
               <SfInput v-model="banner.content.text.color" type="text">
                 <template #suffix>
                   <label
@@ -130,21 +148,7 @@
                 </template>
               </SfInput>
             </div>
-            <EditorColorPicker v-else v-model="banner.content.text.color!" class="w-full">
-              <template #trigger="{ color, toggle }">
-                <SfInput v-model="banner.content.text.color" type="text">
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </template>
-            </EditorColorPicker>
+
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>
@@ -156,6 +160,23 @@
           <div v-if="banner.content.text.background" class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
             <div v-if="runtimeConfig.enableColorPicker">
+              <EditorColorPicker v-model="banner.content.text.bgcolor!" class="w-full">
+                <template #trigger="{ color, toggle }">
+                  <SfInput v-model="banner.content.text.bgcolor" type="text">
+                    <template #suffix>
+                      <button
+                        type="button"
+                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                        :style="{ backgroundColor: color }"
+                        @mousedown.stop
+                        @click.stop="toggle"
+                      />
+                    </template>
+                  </SfInput>
+                </template>
+              </EditorColorPicker>
+            </div>
+            <div v-else>
               <SfInput v-model="banner.content.text.bgcolor" type="text">
                 <template #suffix>
                   <label
@@ -173,21 +194,6 @@
                 </template>
               </SfInput>
             </div>
-            <EditorColorPicker v-else v-model="banner.content.text.bgcolor!" class="w-full">
-              <template #trigger="{ color, toggle }">
-                <SfInput v-model="banner.content.text.bgcolor" type="text">
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </template>
-            </EditorColorPicker>
           </div>
           <div v-if="banner.content.text.background" class="mb-6">
             <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('textbox-opacity-label') }}</label>

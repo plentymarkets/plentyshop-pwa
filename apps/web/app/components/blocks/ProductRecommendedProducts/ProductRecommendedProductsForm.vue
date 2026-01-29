@@ -54,6 +54,23 @@
       <div v-if="recommendedBlock.text" class="p-2">
         <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="recommendedBlock.text.color!" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
           <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
             <template #suffix>
               <label
@@ -66,21 +83,6 @@
             </template>
           </SfInput>
         </div>
-        <EditorColorPicker v-else v-model="recommendedBlock.text.color!" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </template>
-        </EditorColorPicker>
       </div>
       <div v-if="recommendedBlock.text" class="p-2">
         <UiFormLabel>{{ getEditorTranslation('text-align-label') }}</UiFormLabel>

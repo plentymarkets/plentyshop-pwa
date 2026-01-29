@@ -113,6 +113,23 @@
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
       <div v-if="runtimeConfig.enableColorPicker">
+        <EditorColorPicker v-model="priceCardBlock.borderColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
+          </template>
+        </EditorColorPicker>
+      </div>
+      <div v-else>
         <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
           <template #suffix>
             <label
@@ -125,21 +142,6 @@
           </template>
         </SfInput>
       </div>
-      <EditorColorPicker v-else v-model="priceCardBlock.borderColor" class="w-full">
-        <template #trigger="{ color, toggle }">
-          <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
-            <template #suffix>
-              <button
-                type="button"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                :style="{ backgroundColor: color }"
-                @mousedown.stop
-                @click.stop="toggle"
-              />
-            </template>
-          </SfInput>
-        </template>
-      </EditorColorPicker>
     </div>
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>

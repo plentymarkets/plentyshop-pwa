@@ -119,6 +119,27 @@
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="newsletterBlock.text.bgColor!" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput
+                v-model="newsletterBlock.text.bgColor"
+                type="text"
+                data-testid="newsletter-form-background-color"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
           <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
             <template #suffix>
               <label
@@ -136,25 +157,6 @@
             </template>
           </SfInput>
         </div>
-        <EditorColorPicker v-else v-model="newsletterBlock.text.bgColor!" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <SfInput
-              v-model="newsletterBlock.text.bgColor"
-              type="text"
-              data-testid="newsletter-form-background-color"
-            >
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </template>
-        </EditorColorPicker>
       </div>
     </UiAccordionItem>
     <UiAccordionItem
