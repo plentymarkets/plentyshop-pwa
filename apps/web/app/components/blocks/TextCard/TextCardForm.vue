@@ -60,25 +60,44 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
-            <template #suffix>
-              <label
-                for="primary-color"
-                :style="{ backgroundColor: textCardBlock.text.color }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="primary-color"
-                  v-model="textCardBlock.text.color"
-                  data-testid="color-input"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <label>
+            <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
+              <template #suffix>
+                <label
+                  for="primary-color"
+                  :style="{ backgroundColor: textCardBlock.text.color }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="primary-color"
+                    v-model="textCardBlock.text.color"
+                    data-testid="color-input"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <EditorColorPicker v-else v-model="textCardBlock.text.color!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
 
       <fieldset class="py-2">
@@ -187,25 +206,44 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
-            <template #suffix>
-              <label
-                for="primary-color"
-                :style="{ backgroundColor: textCardBlock.text.color }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="primary-color"
-                  v-model="textCardBlock.text.color"
-                  data-testid="color-input"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <label>
+            <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
+              <template #suffix>
+                <label
+                  for="primary-color"
+                  :style="{ backgroundColor: textCardBlock.text.color }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="primary-color"
+                    v-model="textCardBlock.text.color"
+                    data-testid="color-input"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <EditorColorPicker v-else v-model="textCardBlock.text.color!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
 
       <fieldset class="py-2">

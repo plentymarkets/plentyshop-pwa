@@ -53,17 +53,39 @@
       </div>
       <div v-if="recommendedBlock.text" class="p-2">
         <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-        <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
-          <template #suffix>
-            <label
-              for="text-color"
-              :style="{ backgroundColor: recommendedBlock.text.color }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input id="text-color" v-model="recommendedBlock.text.color" type="color" class="invisible w-8" />
-            </label>
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
+            <template #suffix>
+              <label
+                for="text-color"
+                :style="{ backgroundColor: recommendedBlock.text.color }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="text-color"
+                  v-model="recommendedBlock.text.color"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </div>
+        <EditorColorPicker v-else v-model="recommendedBlock.text.color!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
           </template>
-        </SfInput>
+        </EditorColorPicker>
       </div>
       <div v-if="recommendedBlock.text" class="p-2">
         <UiFormLabel>{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
@@ -204,6 +226,8 @@ import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
+
+const runtimeConfig = useRuntimeConfig();
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
