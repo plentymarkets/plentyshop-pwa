@@ -28,7 +28,6 @@ export const migrateTextCardContent = (
   content: Partial<TextCardContent>,
   enableRichTextEditorV2: boolean,
 ): Partial<TextCardContent> => {
-  console.log('ENABLE_RICH_TEXT_EDITOR_V2:', enableRichTextEditorV2);
   if (!enableRichTextEditorV2) return content;
   if (!hasOldStructure(content)) return content;
 
