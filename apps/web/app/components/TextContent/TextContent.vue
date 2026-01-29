@@ -1,7 +1,7 @@
 <template>
   <div
     data-testid="text-content"
-    class="space-y-4 w-full"
+    class="w-full"
     :style="{ color: props.text?.color }"
     :class="['space-y-4', textAlignmentClass]"
   >
