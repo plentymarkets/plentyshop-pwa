@@ -264,24 +264,43 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-background-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
-            <template #suffix>
-              <label
-                for="bg-footer-color"
-                :style="{ backgroundColor: footerBlock.colors.background }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="bg-footer-color"
-                  v-model="footerBlock.colors.background"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <label>
+            <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
+              <template #suffix>
+                <label
+                  for="bg-footer-color"
+                  :style="{ backgroundColor: footerBlock.colors.background }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="bg-footer-color"
+                    v-model="footerBlock.colors.background"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <EditorColorPicker v-else v-model="footerBlock.colors.background" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -310,24 +329,51 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-footnote-background-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput v-model="footerBlock.colors.footnoteBackground" type="text" data-testid="footnote-bg-color-select">
-            <template #suffix>
-              <label
-                for="footnote-bg-color"
-                :style="{ backgroundColor: footerBlock.colors.footnoteBackground }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <label>
+            <SfInput
+              v-model="footerBlock.colors.footnoteBackground"
+              type="text"
+              data-testid="footnote-bg-color-select"
+            >
+              <template #suffix>
+                <label
+                  for="footnote-bg-color"
+                  :style="{ backgroundColor: footerBlock.colors.footnoteBackground }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="footnote-bg-color"
+                    v-model="footerBlock.colors.footnoteBackground"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <EditorColorPicker v-else v-model="footerBlock.colors.footnoteBackground" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput
+                v-model="footerBlock.colors.footnoteBackground"
+                type="text"
+                data-testid="footnote-bg-color-select"
               >
-                <input
-                  id="footnote-bg-color"
-                  v-model="footerBlock.colors.footnoteBackground"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
     </UiAccordionItem>
   </div>
@@ -345,6 +391,8 @@ const { data } = useCategoryTemplate(
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const props = defineProps<{ uuid?: string }>();
+
+const runtimeConfig = useRuntimeConfig();
 
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);

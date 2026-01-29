@@ -211,23 +211,39 @@
 
       <div class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-
-        <SfInput v-model="categoryDataBlock.text.color" type="text">
-          <template #suffix>
-            <label
-              for="category-text-color"
-              :style="{ backgroundColor: categoryDataBlock.text.color }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input
-                id="category-text-color"
-                v-model="categoryDataBlock.text.color"
-                type="color"
-                class="invisible w-8"
-              />
-            </label>
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <SfInput v-model="categoryDataBlock.text.color" type="text">
+            <template #suffix>
+              <label
+                for="category-text-color"
+                :style="{ backgroundColor: categoryDataBlock.text.color }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="category-text-color"
+                  v-model="categoryDataBlock.text.color"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </div>
+        <EditorColorPicker v-else v-model="categoryDataBlock.text.color!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <SfInput v-model="categoryDataBlock.text.color" type="text">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
           </template>
-        </SfInput>
+        </EditorColorPicker>
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
