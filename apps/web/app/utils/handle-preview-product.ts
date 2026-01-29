@@ -1,104 +1,59 @@
-import { fakeProduct } from './facets/fakeProduct';
+import { fakeProductDE } from './facets/fakeProductDE';
+import { fakeProductEN } from './facets/fakeProductEN';
 import type { Product } from '@plentymarkets/shop-api';
-import { toRaw, type Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { UseProductState } from '~/composables/useProduct/types';
+import { variationAttributeMapEN } from './facets/variationAttributeMapEN';
+import { variationAttributeMapDE } from './facets/variationAttributeMapDE';
+import { variationPropertiesEN } from './facets/variationPropertiesEN';
+import { variationPropertiesDE } from './facets/variationPropertiesDE';
+import { bundleComponentsDE } from './facets/bundleComponentsDE';
+import { bundleComponentsEN } from './facets/bundleComponentsEN';
+import { propertiesEN } from './facets/propertiesEN';
+import { propertiesDE } from './facets/propertiesDE';
+import { fillMissingFields } from './fill-missing-fields';
 
-type ComplementOptions = {
-  deep?: boolean;
-  treatEmptyStringAsMissing?: boolean;
+const DIMENSION_FIELDS_WITH_ZERO_DEFAULT = new Set([
+  'variation.weightG',
+  'variation.weightNetG',
+  'variation.lengthMM',
+  'variation.widthMM',
+  'variation.heightMM',
+]);
+
+const isDimensionFieldWithZero = (path: string, value: unknown): boolean =>
+  DIMENSION_FIELDS_WITH_ZERO_DEFAULT.has(path) && value === 0;
+
+const getFakeProductForLanguage = (lang: string, variationId?: number): Product => {
+  const baseFakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
+
+  const getVariationAttributeMap = () => {
+    if (!variationId) return undefined;
+    return lang === 'de' ? variationAttributeMapDE(variationId) : variationAttributeMapEN(variationId);
+  };
+
+  return {
+    ...baseFakeProduct,
+    variationAttributeMap: getVariationAttributeMap(),
+    variationProperties: lang === 'de' ? variationPropertiesDE : variationPropertiesEN,
+    bundleComponents: lang === 'de' ? bundleComponentsDE : bundleComponentsEN,
+    properties: lang === 'de' ? propertiesDE : propertiesEN,
+  };
 };
 
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+export const handlePreviewProduct = (state: Ref<UseProductState>, lang: string, shouldComplement: boolean) => {
+  const { isInEditor } = useEditorState();
+  if (!isInEditor.value) return;
 
-const isPlainObject = (x: unknown): x is object => {
-  return Object.prototype.toString.call(x) === '[object Object]';
-};
+  const variationId = state.value.data?.variation?.id;
+  const fakeProduct = getFakeProductForLanguage(lang, variationId ? Number(variationId) : undefined);
+  const realProduct = toRaw(state.value.data);
 
-const isEmptyObject = (x: unknown): boolean => {
-  return isPlainObject(x) && Object.keys(x as object).length === 0;
-};
-
-const isEmptyArray = (x: unknown): x is unknown[] => {
-  return Array.isArray(x) && x.length === 0;
-};
-
-const isMissing = (value: unknown, treatEmptyStringAsMissing: boolean): boolean => {
-  if (value === undefined || value === null) return true;
-  if (typeof value === 'number' && Number.isNaN(value)) return true;
-  if (isEmptyArray(value)) return true;
-  if (isEmptyObject(value)) return true;
-  if (treatEmptyStringAsMissing && typeof value === 'string' && value.trim() === '') return true;
-  return false;
-};
-
-const cloneDeepPlain = <T>(input: T): T => {
-  if (Array.isArray(input)) {
-    return input.map(cloneDeepPlain) as unknown as T;
-  }
-  if (isPlainObject(input)) {
-    const out: Record<string, unknown> = {};
-    const obj = input as Record<string, unknown>;
-    for (const k of Object.keys(obj)) {
-      out[k] = cloneDeepPlain(obj[k]);
-    }
-    return out as unknown as T;
-  }
-  return input;
-};
-
-const complementInPlace = <T extends object>(target: T, source: T, opts: ComplementOptions = {}): T => {
-  if (!isPlainObject(source)) return target;
-
-  const { deep = false, treatEmptyStringAsMissing = false } = opts;
-
-  const tgt = target as unknown as Mutable<T>;
-  const src = source as unknown as T;
-
-  for (const key of Object.keys(target) as Array<keyof T>) {
-    const pk = key as unknown as PropertyKey;
-
-    if (!Object.prototype.hasOwnProperty.call(src, pk)) continue;
-
-    const tVal = tgt[key] as unknown;
-    const sVal = src[key] as unknown;
-
-    if (deep && isPlainObject(tVal) && isPlainObject(sVal)) {
-      if (isEmptyObject(tVal)) {
-        tgt[key] = sVal as unknown as Mutable<T>[typeof key];
-      } else {
-        complementInPlace(tVal as object, sVal as object, { deep, treatEmptyStringAsMissing });
-      }
-      continue;
-    }
-
-    if (isEmptyArray(tVal)) {
-      tgt[key] = sVal as unknown as Mutable<T>[typeof key];
-      continue;
-    }
-
-    if (isMissing(tVal, treatEmptyStringAsMissing)) {
-      tgt[key] = sVal as unknown as Mutable<T>[typeof key];
-    }
-  }
-
-  return target;
-};
-
-const complement = <T extends object>(a: T, b: T, opts: ComplementOptions = {}): T => {
-  const clone = cloneDeepPlain(a);
-  return complementInPlace(clone, b, opts);
-};
-
-export const handlePreviewProduct = (state: Ref<UseProductState>) => {
-  const { $isPreview } = useNuxtApp();
-
-  if ($isPreview) {
-    const rawA = toRaw(state.value.data) as Product;
-    const rawB = fakeProduct as Product;
-
-    state.value.data = complement<Product>(rawA, rawB, {
-      deep: true,
-      treatEmptyStringAsMissing: true,
-    });
-  }
+  state.value.fakeData = shouldComplement
+    ? fillMissingFields<Product>(realProduct, fakeProduct, {
+        forcedKeys: ['prices.graduatedPrices'],
+        ignoredKeys: ['images'],
+        treatAsEmpty: isDimensionFieldWithZero,
+      })
+    : fakeProduct;
 };

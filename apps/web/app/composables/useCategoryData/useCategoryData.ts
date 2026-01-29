@@ -2,16 +2,17 @@ import { clamp } from '@storefront-ui/shared';
 import { categoryGetters, type Category, type CategoryDetails } from '@plentymarkets/shop-api';
 import type { CategoryDataContent, CategoryDataFieldKey } from '~/components/blocks/CategoryData/types';
 
-declare const getEditorTranslation: (key: string) => string;
-
 export const useCategoryData = () => {
   const route = useRoute();
-  const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+  const { data } = useCategoryTemplate(
+    route?.meta?.identifier as string,
+    route.meta.type as string,
+    useNuxtApp().$i18n.locale.value,
+  );
 
   const { blockUuid } = useSiteConfiguration();
   const { findOrDeleteBlockByUuid } = useBlockManager();
   const { data: productsCatalog } = useProducts();
-  const { t } = useI18n();
 
   const learnMoreUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#900';
   const learnMoreTextUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#800';
@@ -88,9 +89,9 @@ export const useCategoryData = () => {
     if (count === 1) {
       const onlyKey = missingTextFieldKeys.value[0]!;
       const onlyLabel = (fieldLabels as Record<CategoryDataFieldKey, string>)[onlyKey];
-      return t('field-empty-hint-prefix', { field: onlyLabel });
+      return getEditorTranslation('field-empty-hint-prefix', { field: onlyLabel });
     }
-    return t('fields-empty-hint-prefix', { fields: missingTextLabels.value });
+    return getEditorTranslation('fields-empty-hint-prefix', { fields: missingTextLabels.value });
   });
 
   const clampBrightness = (event: Event, type: 'image' | 'text') => {
@@ -109,12 +110,12 @@ export const useCategoryData = () => {
       else el.classList.add('max-w-screen-3xl');
     }, 100);
   };
-
   onMounted(() => {
     watch(
       () => categoryDataBlock.value.image?.fillMode,
       (newMode) => {
-        if (newMode === 'fill') {
+        const display = categoryDataBlock.value.displayCategoryImage;
+        if (newMode === 'fill' && display !== 'off') {
           categoryDataBlock.value.layout.paddingTop = 0;
           categoryDataBlock.value.layout.paddingBottom = 0;
           categoryDataBlock.value.layout.paddingLeft = 0;

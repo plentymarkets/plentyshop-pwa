@@ -2,6 +2,7 @@
   <div :style="inlineStyle" data-testid="technical-data-block">
     <div v-if="displayAsCollapsable">
       <UiAccordionItem
+        v-if="text"
         v-model="initiallyCollapsed"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
         data-testid="technical-data"
@@ -27,13 +28,14 @@
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
 import type { TechnicalDataProps } from './types';
+
 const props = defineProps<TechnicalDataProps>();
+
 const content = computed(() => props.content);
 const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
 const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
 const text = computed(() => productGetters.getTechnicalData(currentProduct.value));
-
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
   return {
@@ -43,4 +45,14 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
+
+const { registerBlockVisibility } = useBlocksVisibility();
+
+watch(
+  text,
+  (newText) => {
+    registerBlockVisibility(props.meta.uuid, newText?.length > 0);
+  },
+  { immediate: true },
+);
 </script>

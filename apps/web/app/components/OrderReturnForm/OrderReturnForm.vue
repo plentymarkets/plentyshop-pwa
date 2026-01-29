@@ -8,7 +8,7 @@
   >
     <header class="mb-4">
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -73,7 +73,7 @@ const emit = defineEmits(['close']);
 
 const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
   useReturnOrder();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 const runtimeConfig = useRuntimeConfig();

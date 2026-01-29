@@ -13,18 +13,20 @@ const paypalScript = ref<PayPalNamespace | null>(null);
 
 const {
   order: paypalOrder,
+  isAvailable,
   getScript,
   loadConfig,
   createTransaction,
   captureOrder,
   createPlentyOrder,
   createPlentyPaymentFromPayPalOrder,
+  config,
   payPalVisibility,
   payLaterVisibility,
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
+const { fetchSession } = useFetchSession();
 const { emit } = usePlentyEvent();
-const { t } = useI18n();
 
 const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
@@ -84,8 +86,10 @@ const onValidationCallback = async () => {
 const onApprove = async (data: OnApproveData) => {
   emits('on-approved');
 
-  if (props.type === TypeCartPreview || props.type === TypeSingleItem)
+  if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
+    await fetchSession();
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
+  }
 
   if (props.type === TypeCheckout) {
     useProcessingOrder().processingOrder.value = true;
@@ -147,15 +151,17 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       async onCancel() {
         useNotification().send({
-          message: t('errorMessages.paymentCancelled'),
+          message: t('error.paymentCancelled'),
           type: 'negative',
         });
+        await fetchSession();
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
         const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
         const order = await createTransaction({
           type: transactionType,
+          withShippingCallback: props.type !== TypeOrderAlreadyExisting && !isCommit,
           ...(props.type === TypeOrderAlreadyExisting && { plentyOrderId: props.plentyOrderId }),
         });
 
@@ -184,10 +190,10 @@ const createButton = () => {
     if (paypalScript.value.FUNDING) {
       const FUNDING_SOURCES: Array<string> = [];
 
-      if (payPalVisibility.getVisibility(props.location)) {
+      if (payPalVisibility.getVisibility(props.location ?? 'checkoutPage')) {
         FUNDING_SOURCES.push(paypalScript.value.FUNDING.PAYPAL as string);
       }
-      if (payLaterVisibility.getVisibility(props.location)) {
+      if (payLaterVisibility.getVisibility(props.location ?? 'checkoutPage')) {
         FUNDING_SOURCES.push(paypalScript.value.FUNDING.PAYLATER as string);
       }
 
@@ -198,12 +204,12 @@ const createButton = () => {
 
 onNuxtReady(async () => {
   await loadConfig();
-  if (!loadScript.value) return;
+  if (!config.value || !isAvailable(props.location ?? 'checkoutPage').value) return;
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
 
   watch([currency, loadScript], async () => {
-    if (!loadScript.value) return;
+    if (!loadScript.value || !config.value || !isAvailable(props.location ?? 'checkoutPage').value) return;
     paypalScript.value = await getScript(currency.value, isCommit);
     createButton();
   });

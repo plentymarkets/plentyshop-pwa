@@ -17,6 +17,7 @@
       <template #item="{ element: block, index }">
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+          v-if="shouldShowBlock(block, enabledActions)"
         >
           <PageBlock
             :index="index"
@@ -25,7 +26,6 @@
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
-            :block-has-data="blockHasData"
             :change-block-position="changeBlockPosition"
             :root="getBlockDepth(block.meta.uuid) === 0"
             class="group"
@@ -42,21 +42,24 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
-import type { Block } from '@plentymarkets/shop-api';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
-const { $isPreview } = useNuxtApp();
+const { isInEditor, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditablePageProps>(), {
   hasEnabledActions: true,
   preventBlocksRequest: false,
 });
 
-const { data, getBlocksServer, cleanData } = useCategoryTemplate(props.identifier.toString(), props.type.toString());
+const { data, getBlocksServer, cleanData } = useCategoryTemplate(
+  props.identifier.toString(),
+  props.type.toString(),
+  useNuxtApp().$i18n.locale.value,
+);
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && $isPreview),
+  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && isInEditor.value),
 );
 
 const isContentEmptyInLive = computed(
@@ -78,7 +81,6 @@ const {
   isClicked,
   clickedBlockIndex,
   isTablet,
-  blockHasData,
   tabletEdit,
   changeBlockPosition,
   handleDragStart,
@@ -109,22 +111,27 @@ const scrollToBlock = (evt: DragEvent) => {
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
-const { isEditingEnabled, disableActions } = useEditor();
+const { isEditingEnabled } = useEditor();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
+const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
-const enabledActions = computed(() => props.hasEnabledActions && disableActions.value);
-
-onMounted(() => {
-  isEditingEnabled.value = false;
-  window.addEventListener('beforeunload', handleBeforeUnload);
-});
+const enabledActions = computed(
+  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
+);
 
 onMounted(async () => {
-  if ($isPreview) {
+  isEditingEnabled.value = false;
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
+  if (isInEditor.value) {
     await import('./draggable.css');
   }
+
+  isHydrationComplete.value = true;
 });
 
 onBeforeUnmount(() => {
+  clearRegistry();
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
 
@@ -150,24 +157,4 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
-
-const containerExcludedBlockSet = new Set(['Banner', 'Carousel', 'Footer', 'MultiGrid', 'CategoryData']);
-const paddingExcludedBlockSet = new Set([
-  'Banner',
-  'Carousel',
-  'NewsletterSubscribe',
-  'Footer',
-  'MultiGrid',
-  'CategoryData',
-]);
-
-const isExcluded = (blockName: string, excludedSet: Set<string>) => {
-  return excludedSet.has(blockName);
-};
-
-const getBlockClass = (block: Block) =>
-  computed(() => ({
-    'max-w-screen-3xl mx-auto mt-3': !isExcluded(block.name, containerExcludedBlockSet),
-    'px-4 md:px-6': !isExcluded(block.name, paddingExcludedBlockSet),
-  }));
 </script>

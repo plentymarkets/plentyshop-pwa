@@ -4,7 +4,7 @@
       v-model="textsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="recommended-form-source"
+      data-testid="open-recommended-products-form-texts"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
@@ -106,7 +106,7 @@
       v-model="sourceOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="recommended-form-source"
+      data-testid="open-recommended-products-form-source"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('source-label') }}</h2>
@@ -175,22 +175,24 @@
       <div v-else class="py-4">
         <UiFormLabel>{{ getEditorTranslation('categories-label') }}</UiFormLabel>
 
-        <Multiselect
+        <EditorCategorySelect
           v-model="categoryIdModel"
-          data-testid="recommended-form-categories"
-          :options="categoryOptions"
-          :preserve-search="true"
-          label="name"
-          track-by="id"
-          placeholder="Search categories"
-          class="w-full"
-          select-label=""
-          deselect-label="Selected"
-          :internal-search="false"
-          :custom-label="categoryCustomLabel"
-          @search-change="handleSearch"
+          :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
+          data-test-id="recommended-form-categories"
         />
       </div>
+    </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+      </template>
+
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     </UiAccordionItem>
   </div>
 </template>
@@ -199,36 +201,21 @@
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
-import type { Category } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { currentProduct } = useProducts();
 const { data: categoryTree } = useCategoryTree();
-const { data: categoriesData, getCategories } = useCategoriesSearch();
-
-const baseCategoryParams = {
-  type: 'in:item',
-  sortBy: 'position_asc,name_asc',
-  with: 'details,clients',
-};
-
-await getCategories(baseCategoryParams);
-
-const handleSearch = debounce(async (query: string) => {
-  const q = query?.trim();
-  await getCategories({
-    ...baseCategoryParams,
-    ...(q ? { name: `like:${q}` } : {}),
-  });
-}, 500);
-
-const categoryCustomLabel = (opt: Category) => `[${opt.id}] ${opt?.details?.[0]?.name}`;
+const layoutOpen = ref(true);
 
 const recommendedBlock = computed(
   () =>
@@ -280,17 +267,13 @@ const crossSellingModel = computed({
   },
 });
 
-const categoryOptions = computed(() => categoriesData.value.entries.filter((cat) => cat.right !== 'customer'));
-
 const firstCategoryId = (categoryTree.value?.find((category) => category.type === 'item')?.id || '').toString();
 
 const categoryIdModel = computed({
   get() {
-    const id = recommendedBlock.value.source?.categoryId || firstCategoryId;
-
-    return categoryOptions.value.find((o) => o.id.toString() === id) ?? null;
+    return recommendedBlock.value.source?.categoryId || firstCategoryId;
   },
-  set(option: { id: number; name: string; path?: string } | null) {
+  set(value: string | null) {
     if (!recommendedBlock.value.source) {
       recommendedBlock.value.source = {
         type: 'cross_selling',
@@ -299,9 +282,13 @@ const categoryIdModel = computed({
         crossSellingRelation: 'Similar',
       };
     }
-    recommendedBlock.value.source.categoryId = option?.id.toString() || '';
+    recommendedBlock.value.source.categoryId = value || '';
   },
 });
+
+const recommendedBlockRef = ref(recommendedBlock.value);
+
+const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
 
 const selectCategoryTab = async () => {
   recommendedBlock.value.source.type = 'category';
@@ -341,7 +328,7 @@ const selectCategoryTab = async () => {
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
-
+    "layout-label": "Layout",
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
     "cross-selling-relation-replacement": "Replacement part",
@@ -365,7 +352,7 @@ const selectCategoryTab = async () => {
     "category-id-placeholder": "Enter Category Id",
 
     "text-color-label": "Text Colour",
-
+    "layout-label": "Layout",
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",

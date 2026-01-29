@@ -16,8 +16,9 @@ export const ItemGridMock: ItemGridProps = {
       previewText: true,
       price: true,
       addToCart: true,
+      manufacturer: false,
     },
-    fieldsOrder: ['title', 'rating', 'previewText', 'price', 'addToCart'],
+    fieldsOrder: ['title', 'rating', 'previewText', 'price', 'addToCart', 'manufacturer'],
     fieldsDisabled: [],
     contentAlignment: 'left',
     cardBorders: false,
@@ -25,6 +26,9 @@ export const ItemGridMock: ItemGridProps = {
     showWishlistButton: false,
     addToCartStyle: 'primary',
     paginationPosition: 'bottom',
+    layout: {
+      fullWidth: false,
+    },
   },
   meta: {
     uuid: 'mock-item-grid-uuid',

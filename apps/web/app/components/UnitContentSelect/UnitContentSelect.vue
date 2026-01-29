@@ -5,7 +5,12 @@
     data-testing="variation-select-unit-wrapper"
   >
     <div class="input-unit w-full">
-      <label for="unit-combination" data-testing="variation-select-unit-label">{{ t('content') }}</label>
+      <label
+        class="leading-5 text-sm text-zinc-900"
+        for="unit-combination"
+        data-testing="variation-select-unit-label"
+        >{{ t('common.labels.content') }}</label
+      >
       <SfSelect
         id="unit-combination"
         class="custom-select w-full"
@@ -36,7 +41,6 @@ const props = defineProps<{
 const route = useRoute();
 const { productParams } = createProductParams(route.params);
 const { buildProductLanguagePath } = useLocalization();
-const { t } = useI18n();
 
 const selectedUnit = ref(productParams?.variationId?.toString() || '');
 

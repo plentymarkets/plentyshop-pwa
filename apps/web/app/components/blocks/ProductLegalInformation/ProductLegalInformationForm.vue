@@ -61,6 +61,8 @@
         <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
       </template>
 
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
         <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -129,7 +131,12 @@ const layoutOpen = ref(true);
 const props = defineProps<ProductLegalInformationProps>();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 
 const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;
@@ -152,15 +159,19 @@ const productLegalInformation = computed<ProductLegalInformationContent>(() => {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      fullWidth: false,
     };
   } else {
     if (content.layout.paddingTop === undefined) content.layout.paddingTop = 0;
     if (content.layout.paddingBottom === undefined) content.layout.paddingBottom = 0;
     if (content.layout.paddingLeft === undefined) content.layout.paddingLeft = 0;
     if (content.layout.paddingRight === undefined) content.layout.paddingRight = 0;
+    if (content.layout.fullWidth === undefined) content.layout.fullWidth = false;
   }
   return content as ProductLegalInformationContent;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(productLegalInformation);
 </script>
 
 <i18n lang="json">

@@ -2,10 +2,17 @@ import { mount } from '@vue/test-utils';
 import ProductRecommendedProducts from '../../../../components/blocks/ProductRecommendedProducts/ProductRecommendedProducts.vue';
 import type { ProductRecommendedProductsProps } from '../types';
 
-vi.mock('@/composables/useProductRecommended', () => ({
+// Mock shop-core to prevent window undefined errors
+vi.mock('@plentymarkets/shop-core', () => ({
+  t: vi.fn((key: string) => key),
+  useHandleError: vi.fn(),
+}));
+
+// Mock useProductRecommended to prevent async errors after test teardown
+vi.mock('~/composables/useProductRecommended/useProductRecommended', () => ({
   useProductRecommended: vi.fn(() => ({
     data: ref([]),
-    fetchProductRecommended: vi.fn(),
+    fetchProductRecommended: vi.fn().mockResolvedValue([]),
   })),
 }));
 

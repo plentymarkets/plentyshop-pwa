@@ -11,8 +11,6 @@
       "sticky": [1],
       "layout": {
         "marginTop": "0",
-        "marginLeft": "0",
-        "marginRight": "0",
         "marginBottom": "0"
       }
     },
@@ -34,39 +32,6 @@
             "showThumbnails": true,
             "thumbnailType": "left-vertical",
             "enableHoverZoom": true
-          }
-        }
-      },
-      {
-        "name": "CustomerReview",
-        "type": "content",
-        "meta": {
-          "uuid": "c1a2c3d3-5e6q-4a7b-8c9j-0e1f2a3b4c5l",
-          "isGlobalTemplate": false
-        },
-        "parent_slot": 0,
-        "content": {
-          "text": {
-            "title": "Customer Reviews"
-          },
-          "layout": {
-            "collapsible": true,
-            "initiallyCollapsed": false
-          }
-        }
-      },
-      {
-        "name": "ProductLegalInformation",
-        "type": "content",
-        "meta": {
-          "uuid": "c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l",
-          "isGlobalTemplate": false
-        },
-        "parent_slot": 0,
-        "content": {
-          "text": {
-            "title": "Item legal details",
-            "linkText": "EU Responsible Person - click for details"
           }
         }
       },
@@ -136,14 +101,13 @@
       "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c522",
       "isGlobalTemplate": false
     },
-    "parent_slot": 0,
     "content": {
-      "text" : {
-        "title":"Item details"
+      "text": {
+        "title": "Item details"
       },
       "layout": {
         "displayAsCollapsable": true,
-        "initiallyCollapsed": true,
+        "initiallyCollapsed": false,
         "paddingTop": 0,
         "paddingBottom": 0,
         "paddingLeft": 0,
@@ -158,17 +122,51 @@
       "uuid": "b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c523",
       "isGlobalTemplate": false
     },
-    "parent_slot": 0,
     "content": {
-      "text" : {
-        "title":"Technical Data"
+      "text": {
+        "title": "Technical Data"
       },
       "layout": {
         "displayAsCollapsable": true,
-        "initiallyCollapsed": true,
+        "initiallyCollapsed": false,
         "paddingTop": 0,
         "paddingBottom": 0,
         "paddingLeft": 0,
+        "paddingRight": 0
+      }
+    }
+  },
+  {
+    "name": "CustomerReview",
+    "type": "content",
+    "meta": {
+      "uuid": "c1a2c3d3-5e6q-4a7b-8c9j-0e1f2a3b4c5l",
+      "isGlobalTemplate": false
+    },
+    "content": {
+      "text": {
+        "title": "Customer Reviews"
+      },
+      "layout": {
+        "collapsible": true,
+        "initiallyCollapsed": false
+      }
+    }
+  },
+  {
+    "name": "ProductLegalInformation",
+    "type": "content",
+    "meta": {
+      "uuid": "c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l",
+      "isGlobalTemplate": false
+    },
+    "content": {
+      "text": {
+        "title": "Item legal details",
+        "linkText": "EU Responsible Person - click for details",
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 15,
         "paddingRight": 0
       }
     }
@@ -181,9 +179,8 @@
       "isGlobalTemplate": false
     },
     "content": {
-      "text": {},
       "source": {
-        "type": "cross_selling",
+        "type": "category",
         "itemId": "",
         "categoryId": "",
         "crossSellingRelation": "Similar"

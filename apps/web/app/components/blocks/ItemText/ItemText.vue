@@ -2,6 +2,7 @@
   <div :style="inlineStyle" data-testid="item-text-block">
     <div v-if="displayAsCollapsable">
       <UiAccordionItem
+        v-if="text"
         v-model="initiallyCollapsed"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
         data-testid="item-text"
@@ -11,7 +12,12 @@
             {{ content.text.title }}
           </h2>
         </template>
-        <div v-if="text" data-testid="item-text-innertext" class="no-preflight" v-html="text" />
+        <div
+          v-if="text"
+          data-testid="item-text-innertext"
+          class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0"
+          v-html="text"
+        />
       </UiAccordionItem>
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
@@ -19,7 +25,7 @@
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
         {{ content.text.title }}
       </h2>
-      <div v-if="text" class="no-preflight" v-html="text" />
+      <div v-if="text" class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0" v-html="text" />
     </div>
   </div>
 </template>
@@ -27,6 +33,7 @@
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
 import type { ItemTextProps } from './types';
+
 const props = defineProps<ItemTextProps>();
 const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
 const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
@@ -42,4 +49,14 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
+
+const { registerBlockVisibility } = useBlocksVisibility();
+
+watch(
+  text,
+  (newText) => {
+    registerBlockVisibility(props.meta.uuid, newText?.length > 0);
+  },
+  { immediate: true },
+);
 </script>

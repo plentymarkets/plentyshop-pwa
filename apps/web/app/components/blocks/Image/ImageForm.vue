@@ -378,6 +378,7 @@
         </SfInput>
       </label>
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div
       id="padding-form"
       class="py-2"
@@ -454,12 +455,17 @@ import {
 } from '@storefront-ui/vue';
 
 import type { ImageFormProps } from './types';
+import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -474,7 +480,7 @@ const DEFAULT_LAYOUT = {
 
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
-  const migrated = migrateImageContent(rawContent);
+  const migrated = migrateImageContent(rawContent as ImageContent | OldContent);
 
   if (!migrated.layout) {
     migrated.layout = { ...DEFAULT_LAYOUT };
@@ -487,6 +493,8 @@ const uiImageTextBlock = computed(() => {
   }
   return migrated;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(uiImageTextBlock);
 
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');

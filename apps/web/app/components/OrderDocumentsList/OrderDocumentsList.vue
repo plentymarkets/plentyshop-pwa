@@ -3,11 +3,13 @@
     <UiButton
       v-for="(document, key) in documents"
       :key="key"
+      :disabled="loading"
       class="mt-4 w-full cursor-pointer"
       variant="secondary"
-      @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
+      @click="downloadPDF(document, orderGetters.getAccessKey(props.order), key)"
     >
-      {{ getDocumentName(document) }}
+      <SfLoaderCircular v-if="downloadingDocument === key" class="mr-2" />
+      <span>{{ getDocumentName(document) }}</span>
     </UiButton>
   </div>
 </template>
@@ -16,14 +18,12 @@
 import type { OrderDocument } from '@plentymarkets/shop-api';
 import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-api';
 import type { DocumentsListProps } from './types';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const props = defineProps<DocumentsListProps>();
-
 const documents = computed(() => orderGetters.getDocuments(props.order));
-
-const { data, getDocument, downloadFile } = useOrderDocument();
-
-const { t } = useI18n();
+const { data, getDocument, downloadFile, loading } = useOrderDocument();
+const downloadingDocument = ref<number | null>(null);
 
 const translations = {
   correction_document: t('documents.correctionDocuments'),
@@ -50,11 +50,20 @@ const getDocumentName = (document: OrderDocument) => {
   return getTypeName(orderDocumentGetters.getType(document)) || orderDocumentGetters.getNumberWithPrefix(document);
 };
 
-const downloadPDF = async (document: OrderDocument, accessKey: string) => {
-  await getDocument(document, accessKey);
+const downloadPDF = async (document: OrderDocument, accessKey: string, key: number) => {
+  downloadingDocument.value = key;
+  try {
+    await getDocument(document, accessKey);
+    const name = document.path.split('/').join('_');
 
-  const name = document.path.split('/').join('_');
-
-  downloadFile(data.value, name, 'application/pdf');
+    downloadFile(data.value, name, 'application/pdf');
+  } catch {
+    useNotification().send({
+      type: 'negative',
+      message: t('documents.downloadFailed'),
+    });
+  } finally {
+    downloadingDocument.value = null;
+  }
 };
 </script>

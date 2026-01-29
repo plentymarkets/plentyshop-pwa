@@ -7,6 +7,7 @@
     <template #summary>
       <h2 data-testid="per-page-form-layout-label">{{ getEditorTranslation('layout-label') }}</h2>
     </template>
+
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
         {{ getEditorTranslation('show-selectionModeCompact-label') }}
@@ -17,6 +18,7 @@
         data-testid="switch-per-page-placeholder"
       />
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div id="per-page-form-padding-form" class="py-2">
       <div class="flex items-center gap-2 mb-2">
         <UiFormLabel class="m-0">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
@@ -76,7 +78,13 @@ import type { PerPageContent, PerPageProps } from '~/components/blocks/PerPageFi
 
 const props = defineProps<PerPageProps>();
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -94,12 +102,14 @@ const perPageBlock = computed<PerPageContent>(() => {
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      fullWidth: false,
     };
   }
 
   return content as PerPageContent;
 });
 
+const { isFullWidth } = useFullWidthToggleForContent(perPageBlock);
 const layoutOpen = ref(false);
 </script>
 

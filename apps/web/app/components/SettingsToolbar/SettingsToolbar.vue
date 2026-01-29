@@ -17,6 +17,18 @@
           <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
         </button>
       </SfTooltip>
+      <SfTooltip :label="localizationLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
+        <button
+          type="button"
+          class="editor-button relative py-2 flex justify-center"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'LocalizationView' }"
+          aria-label="Open pages drawer"
+          data-testid="open-pages-drawer"
+          @click="toggleDrawerView('LocalizationView')"
+        >
+          <SfIconLanguage width="24" height="24px" />
+        </button>
+      </SfTooltip>
       <component
         :is="trigger.component"
         v-for="trigger in triggersModules"
@@ -29,15 +41,20 @@
 </template>
 
 <script setup lang="ts">
-import { SfTooltip } from '@storefront-ui/vue';
+import { SfIconLanguage, SfTooltip } from '@storefront-ui/vue';
 import pagesWhite from '~/assets/icons/paths/pages-white.svg';
 import pagesBlack from '~/assets/icons/paths/pages-black.svg';
 
 const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
+const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
 
 function toggleDrawerView(view: DrawerView) {
+  if (drawerView.value === 'LocalizationView') {
+    localizationDrawerOpen.value = false;
+  }
   if (drawerView.value === view) {
     closeDrawer();
   } else {

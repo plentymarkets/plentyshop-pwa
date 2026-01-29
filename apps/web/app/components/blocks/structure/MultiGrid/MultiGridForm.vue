@@ -21,7 +21,7 @@
 
         <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
-          <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
               <input
@@ -38,24 +38,6 @@
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="margin-bottom"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowBack /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginLeft"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-left"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-              <span><SfIconArrowForward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginRight"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-right"
               />
             </div>
           </div>
@@ -83,6 +65,27 @@
           </div>
         </div>
       </div>
+      <div v-if="multiGridStructure.configuration.columnWidths?.length" class="py-4">
+        <UiFormLabel>{{ getEditorTranslation('sticky-columns') }}</UiFormLabel>
+
+        <div class="grid grid-cols-3 gap-2 mt-2">
+          <button
+            v-for="i in numColumns"
+            :key="`sticky-col-${i}`"
+            type="button"
+            class="px-3 py-2 rounded-md border text-sm"
+            :class="
+              isSticky(i - 1)
+                ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
+                : 'border-neutral-300 hover:border-neutral-400'
+            "
+            @click="toggleSticky(i - 1)"
+          >
+            {{ getEditorTranslation('column') }} {{ i }}
+          </button>
+        </div>
+      </div>
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -129,39 +132,22 @@
 
 <script setup lang="ts">
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
-import {
-  SfInput,
-  SfIconArrowUpward,
-  SfIconArrowDownward,
-  SfIconArrowBack,
-  SfIconArrowForward,
-} from '@storefront-ui/vue';
+import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
-
+const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
-});
-
-const defaultMarginBottom = computed(() => {
-  switch (blockSize.value) {
-    case 's':
-      return 30;
-    case 'm':
-      return 40;
-    case 'l':
-      return 50;
-    case 'xl':
-      return 60;
-    default:
-      return 0;
-  }
 });
 
 const multiGridStructure = computed(() => {
@@ -170,8 +156,6 @@ const multiGridStructure = computed(() => {
     block.configuration.layout = {
       marginTop: 0,
       marginBottom: defaultMarginBottom.value,
-      marginLeft: 40,
-      marginRight: 40,
       backgroundColor: '#ffffff',
       gap: 'M',
     };
@@ -184,6 +168,8 @@ const multiGridStructure = computed(() => {
   }
   return block;
 });
+
+const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
@@ -200,6 +186,31 @@ const gapPxMap: Record<GapSize, number> = {
 const getGapPx = (gap: string | undefined): number => {
   const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
   return gapPxMap[validGap as GapSize];
+};
+
+if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
+
+const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
+
+const isSticky = (columnIndex: number) => {
+  const sticky = multiGridStructure.value.configuration?.sticky || [];
+  return sticky.includes(columnIndex);
+};
+
+const toggleSticky = (columnIndex: number) => {
+  const configuration = multiGridStructure.value.configuration;
+
+  if (!Array.isArray(configuration?.sticky)) {
+    configuration.sticky = [];
+  }
+
+  const position = configuration?.sticky.indexOf(columnIndex);
+
+  if (position === -1) {
+    configuration?.sticky.push(columnIndex);
+  } else {
+    configuration?.sticky.splice(position, 1);
+  }
 };
 
 const textSettings = ref(false);
@@ -221,22 +232,26 @@ const layoutBackground = ref(false);
     "spacing-around": "Spacing around",
     "spacing-between": "Spacing between Blocks:",
     "layout-background": "Layout Background",
-    "column-size": "Column Size"
+    "sticky-columns": "Sticky columns",
+    "column-size": "Column Size",
+    "column": "Column"
   },
   "de": {
-    "layout-settings": "Layout Einstellungen",
+    "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
-    "background-color-label": "Hintergrundfarbe",
-    "gap-label": "Abstand",
-    "gap-size-none": "Keiner",
+    "background-color-label": "Background Color",
+    "gap-label": "Gap",
+    "gap-size-none": "None",
     "gap-size-s": "S",
     "gap-size-m": "M",
     "gap-size-l": "L",
     "gap-size-xl": "XL",
-    "spacing-around": "Abstand um",
-    "spacing-between": "Abstand zwischen Blöcken:",
-    "layout-background": "Layout Hintergrund",
-    "column-size": "Spaltengröße"
+    "spacing-around": "Spacing around",
+    "spacing-between": "Spacing between Blocks:",
+    "layout-background": "Layout Background",
+    "sticky-columns": "Sticky columns",
+    "column-size": "Column Size",
+    "column": "Column"
   }
 }
 </i18n>

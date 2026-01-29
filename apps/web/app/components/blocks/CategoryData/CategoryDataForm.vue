@@ -1,64 +1,6 @@
 <template>
   <div>
     <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-card"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
-
-      <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
-        <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowUpward /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingTop"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-top"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowDownward /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingBottom"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-bottom"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowBack /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingLeft"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-left"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-            <span><SfIconArrowForward /></span>
-            <input
-              v-model.number="categoryDataBlock.layout.paddingRight"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="padding-right"
-            />
-          </div>
-        </div>
-        <div class="px-4 py-3">
-          <span class="typography-text-xs text-neutral-700">
-            {{ getEditorTranslation('spacing-around') }}
-          </span>
-        </div>
-      </div>
-    </UiAccordionItem>
-
-    <UiAccordionItem
       v-model="textOpen"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -116,7 +58,7 @@
             {{ fieldsEmptyHintText }}
             (
             <a :href="learnMoreTextUrl" target="_blank" rel="noopener noreferrer" class="underline">
-              {{ t('learn-more') }}
+              {{ getEditorTranslation('learn-more') }}
             </a>
             ).
           </span>
@@ -184,8 +126,9 @@
       >
         <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
         <span class="italic">
-          {{ t('image-slot-empty-hint-prefix') }}
-          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline"> {{ t('learn-more') }} </a
+          {{ getEditorTranslation('image-slot-empty-hint-prefix') }}
+          <a :href="learnMoreUrl" target="_blank" rel="noopener noreferrer" class="underline">
+            {{ getEditorTranslation('learn-more') }} </a
           >.
         </span>
       </div>
@@ -485,6 +428,65 @@
         </div>
       </div>
     </UiAccordionItem>
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      data-testid="item-grid-card"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('layout-label') }}</h2>
+      </template>
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+      <div
+        class="py-2"
+        :class="
+          categoryDataBlock.image.fillMode !== 'fit' && categoryDataBlock.displayCategoryImage !== 'off'
+            ? 'opacity-60  cursor-not-allowed'
+            : ''
+        "
+      >
+        <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+        <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowUpward /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingTop"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-top"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowDownward /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingBottom"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-bottom"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowBack /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingLeft"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-left"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+            <span><SfIconArrowForward /></span>
+            <input
+              v-model.number="categoryDataBlock.layout.paddingRight"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-right"
+            />
+          </div>
+        </div>
+      </div>
+    </UiAccordionItem>
   </div>
 </template>
 
@@ -508,7 +510,6 @@ import draggable from 'vuedraggable/src/vuedraggable';
 const layoutOpen = ref(true);
 const textOpen = ref(true);
 const imageOpen = ref(true);
-const { t } = useI18n();
 
 const {
   learnMoreUrl,
@@ -520,6 +521,9 @@ const {
   fieldsEmptyHintText,
   clampBrightness,
 } = useCategoryData();
+
+const { blockUuid } = useSiteConfiguration();
+const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 </script>
 
 <i18n lang="json">
@@ -529,7 +533,7 @@ const {
 
     "item-card-label": "Category text",
     "item-card-text": "Text display and order",
-    "item-card-tooltip": "You can manage the description texts in the backend under Images/Categories.",
+    "item-card-tooltip": "You can manage the descriptions of categories inside the PlentyONE Backend UI found under Item » Category.",
     "category-placeholder": "Category name",
     "category-name": "Category name",
     "category-description-1": "Category description 1",
@@ -537,7 +541,6 @@ const {
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",
@@ -592,6 +595,8 @@ const {
     "layout-label": "Layout",
 
     "item-card-label": "Category text",
+    "item-card-text": "Text display and order",
+    "item-card-tooltip": "You can manage the descriptions of categories inside the PlentyONE Backend UI found under Item » Category.",
     "category-placeholder": "Category name",
     "category-name": "Category name",
     "category-description-1": "Category description 1",
@@ -599,7 +604,6 @@ const {
     "short-description": "Short description",
     "drag-reorder-aria": "Drag to reorder",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
 
     "image-label": "Image",
     "display-category-image-label": "Display category image",

@@ -109,7 +109,7 @@
       <UiFormLabel>{{ getEditorTranslation('borders-label') }}</UiFormLabel>
       <SfSwitch v-model="priceCardBlock.borders" data-testid="price-card-borders" />
     </div>
-
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
 
@@ -125,7 +125,6 @@
         </template>
       </SfInput>
     </div>
-
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -188,12 +187,16 @@ import {
   SfIconInfo,
   SfTooltip,
 } from '@storefront-ui/vue';
-import dragIcon from 'assets/icons/paths/drag.svg';
+import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string);
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -203,6 +206,8 @@ const priceCardBlock = computed<PriceCardContent>(() => {
   const block = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
   return block?.content as PriceCardContent;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(priceCardBlock);
 
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';

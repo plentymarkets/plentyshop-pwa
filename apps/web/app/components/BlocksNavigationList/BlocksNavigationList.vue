@@ -27,7 +27,7 @@
             >
               <SfTooltip
                 v-if="isSingleInstanceOnPage(variation.template.en.name)"
-                :label="getEditorTranslation('errorMessages.editor.add.disabledOneInstancePerPage')"
+                :label="getEditorTranslation('disabledOneInstancePerPage')"
                 placement="top"
                 :show-arrow="true"
               >
@@ -42,16 +42,14 @@
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{ getEditorTranslation('errorMessages.editor.add.disabledTooDeeplyNested') }}</span>
+          <span class="italic">{{ getEditorTranslation('disabledTooDeeplyNested') }}</span>
         </div>
         <div
           v-if="isForbiddenBlock(category, targetUuid)"
           class="mx-4 mt-4 mb-4 flex items-start gap-2 text-sm text-neutral-600"
         >
           <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" />
-          <span class="italic">{{
-            getEditorTranslation('errorMessages.editor.add.disabledNotCompatibleWithLayouts')
-          }}</span>
+          <span class="italic">{{ getEditorTranslation('disabledNotCompatibleWithLayouts') }}</span>
         </div>
       </div>
     </UiAccordionItem>
@@ -60,19 +58,20 @@
 
 <script setup lang="ts">
 import { SfIconAdd, SfIconWarning, SfTooltip } from '@storefront-ui/vue';
-import type { Category, Variation } from '~/components/BlocksNavigationList/types';
-const { blocksLists, blocksListContext, visiblePlaceholder, addNewBlock, getBlockDepth, getBlocksLists } =
-  useBlockManager();
-getBlocksLists();
+import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
+
+const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList();
+
+await getBlocksLists();
+
 const { drawerOpen } = useSiteConfiguration();
-const { multigridColumnUuid, blockExistsOnPage } = useBlockManager();
-const runtimeConfig = useRuntimeConfig();
+const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
-const isNestedMultigrid = (category: Category, uuid: string) => {
+const isNestedMultigrid = (category: BlockListCategory, uuid: string) => {
   return category.blockName === 'MultiGrid' && getBlockDepth(uuid) > 0;
 };
-const isForbiddenBlock = (category: Category, uuid: string) => {
+const isForbiddenBlock = (category: BlockListCategory, uuid: string) => {
   return ['BannerCarousel', 'ImageText'].includes(category.blockName) && getBlockDepth(uuid) > 0;
 };
 const isSingleInstanceBlock = (blockName: string) => {
@@ -81,7 +80,7 @@ const isSingleInstanceBlock = (blockName: string) => {
 const isSingleInstanceOnPage = (blockName: string) => {
   return isSingleInstanceBlock(blockName) && blockExistsOnPage(blockName);
 };
-const isAddDisabled = (category: Category, variation: Variation, uuid: string): boolean => {
+const isAddDisabled = (category: BlockListCategory, variation: BlockTemplateVariation, uuid: string): boolean => {
   const blockName = variation.template.en.name;
   const isNested = isNestedMultigrid(category, uuid);
   const isForbidden = isForbiddenBlock(category, uuid);
@@ -93,15 +92,19 @@ const blockPosition = computed(() => {
   if (multigridColumnUuid.value) return 'inside';
   return visiblePlaceholder.value.position;
 });
-
-const pageHasAccessToCategory = (category: Category) => {
-  if (runtimeConfig.public.isDev) {
-    return true;
-  }
-
-  if (blocksListContext.value) {
-    const accessControl = category.accessControl || null;
-    return accessControl?.includes(blocksListContext.value);
-  }
-};
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
+    "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page.",
+    "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead."
+  },
+  "de": {
+    "disabledNotCompatibleWithLayouts": "This block can't be placed inside a layout.",
+    "disabledOneInstancePerPage": "You can only have 1 instance of this block type on a page.",
+    "disabledTooDeeplyNested": "Layouts support a maximum of two levels. Select a content block instead."
+  }
+}
+</i18n>

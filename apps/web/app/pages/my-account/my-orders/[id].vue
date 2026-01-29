@@ -15,7 +15,7 @@
           square
           variant="tertiary"
           :tag="NuxtLink"
-          :aria-label="t('closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           :to="localePath(paths.accountMyOrders)"
           class="md:absolute md:top-2 md:right-2"
         >
@@ -156,10 +156,13 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
-
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 const route = useRoute();
 const localePath = useLocalePath();
-const { locale, t } = useI18n();
+const { locale } = useI18n();
 const { format } = usePriceFormatter();
 const { isOpen } = useDisclosure({ initialValue: true });
 const { fetchOrder, data } = useCustomerOrder(route.params.id as string);

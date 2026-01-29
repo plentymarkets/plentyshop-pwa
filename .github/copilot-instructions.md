@@ -28,6 +28,10 @@ npm run lint:fix     # Auto-fix linting issues
 - The middleware reads web app's `.env` file (see `middleware.config.ts`)
 - **Production caveat**: `apps/web/.env` is only available at build time, not runtime. You cannot use Nuxt's auto-substitution in `nuxt.config.ts` for production builds
 
+### Terminal Setup
+
+- Run `nvm install` once per new terminal session to ensure the correct Node.js version is active
+
 ## Key Patterns & Conventions
 
 ### Component Architecture
@@ -54,8 +58,10 @@ npm run lint:fix     # Auto-fix linting issues
 ### Routing & i18n
 
 - **File-based routing**: Pages in `pages/` directory
-- **Nuxt-i18n**: Multi-language support with configuration in `configuration/i18n.config.ts`
 - **Dynamic routes**: Product/category pages use PlentyONE item/category IDs
+- **Nuxt-i18n**: Multi-language support with configuration in `configuration/i18n.config.ts`
+- **Auto-import**: The `t` function is auto-imported from a custom wrapper composable in the `@plentymarkets/shop-core` package
+- **Admin views translations**: Components in `components/settings/` and `components/blocks/**/*Form.vue` use `getEditorTranslation()` for admin panel translations and are always in English, even if the shop frontend is in another language.
 
 ### Dynamic Component System
 

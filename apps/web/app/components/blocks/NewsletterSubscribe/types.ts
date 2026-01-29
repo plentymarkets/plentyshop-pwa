@@ -19,4 +19,11 @@ export type NewsletterSubscribeContent = {
   button: {
     label?: string;
   };
+
+  settings: {
+    emailFolderId: number;
+  };
+  layout?: {
+    fullWidth?: boolean;
+  };
 };
