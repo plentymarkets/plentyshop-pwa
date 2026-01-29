@@ -1,5 +1,4 @@
 <template>
-  <!-- TEXT -->
   <UiAccordionItem
     v-model="textSettings"
     data-testid="open-text-settings"
@@ -10,140 +9,22 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <!-- v2 (RichText everywhere) -->
-    <div v-if="isTextCardFormV2Enabled" data-testid="text-card-form-v2">
+    <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
       <div class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
-        <RichTextEditor
-          v-model="pretitleModel"
-          v-model:expanded="expandedToolbars.pretitle"
-          :min-height="88"
-          :expandable="true"
-          data-testid="rte-pretitle"
-        />
-      </div>
-
-      <div class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-        <RichTextEditor
-          v-model="titleModel"
-          v-model:expanded="expandedToolbars.title"
-          :min-height="88"
-          :expandable="true"
-          data-testid="rte-title"
-        />
-      </div>
-
-      <div class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
-        <RichTextEditor
-          v-model="subtitleModel"
-          v-model:expanded="expandedToolbars.subtitle"
-          :min-height="88"
-          :expandable="true"
-          data-testid="rte-subtitle"
-        />
-      </div>
-
-      <div class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
-        <RichTextEditor
-          v-model="descriptionModel"
-          v-model:expanded="expandedToolbars.description"
+        <EditorRichTextEditor
+          v-model="contentModel"
+          v-model:expanded="expandedToolbars.content"
           :min-height="232"
           :expandable="true"
-          data-testid="rte-description"
+          :text-align="textCardBlock.text.textAlignment"
+          data-testid="rte-content"
         />
+
+        <p class="typography-text-xs text-neutral-600 mt-2">
+          {{ getEditorTranslation('content-hint') }}
+        </p>
       </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-        </div>
-        <div v-if="runtimeConfig.enableColorPicker">
-          <label>
-            <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
-              <template #suffix>
-                <label
-                  for="primary-color"
-                  :style="{ backgroundColor: textCardBlock.text.color }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input
-                    id="primary-color"
-                    v-model="textCardBlock.text.color"
-                    data-testid="color-input"
-                    type="color"
-                    class="invisible w-8"
-                  />
-                </label>
-              </template>
-            </SfInput>
-          </label>
-        </div>
-        <EditorColorPicker v-else v-model="textCardBlock.text.color!" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <label>
-              <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
-                <template #suffix>
-                  <button
-                    type="button"
-                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                    :style="{ backgroundColor: color }"
-                    @mousedown.stop
-                    @click.stop="toggle"
-                  />
-                </template>
-              </SfInput>
-            </label>
-          </template>
-        </EditorColorPicker>
-      </div>
-
-      <fieldset class="py-2">
-        <legend class="text-sm font-medium text-black">{{ getEditorTranslation('text-align-label') }}</legend>
-
-        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="text-align-left"
-            data-testid="text-align-left"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'left' }"
-            @click="textCardBlock.text.textAlignment = 'left'"
-          >
-            <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-left-label') }}
-          </div>
-
-          <div
-            for="text-align-center"
-            data-testid="text-align-center"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'center' }"
-            @click="textCardBlock.text.textAlignment = 'center'"
-          >
-            <SfIconCheck
-              :class="{ invisible: textCardBlock.text.textAlignment !== 'center' }"
-              class="mr-1 w-[1.1rem]"
-            />
-            {{ getEditorTranslation('text-align-option-center-label') }}
-          </div>
-
-          <div
-            for="text-align-right"
-            data-testid="text-align-right"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'right' }"
-            @click="textCardBlock.text.textAlignment = 'right'"
-          >
-            <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-right-label') }}
-          </div>
-        </div>
-      </fieldset>
     </div>
-
-    <!-- v1  -->
     <div v-else data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -487,9 +368,6 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
-import RichTextEditor from '~/components/editor/RichTextEditor/RichTextEditor.vue';
-
-const runtimeConfig = useRuntimeConfig().public;
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -500,30 +378,26 @@ const { data } = useCategoryTemplate(
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const props = defineProps<TextCardFormProps & { textCardFormV2Enabled?: boolean }>();
+const props = defineProps<TextCardFormProps>();
 
-const isTextCardFormV2Enabled = computed(() => true);
+const config = useRuntimeConfig().public;
 
 const expandedToolbars = ref({
-  pretitle: false,
-  title: false,
-  subtitle: false,
-  description: true,
+  content: true,
 });
 
+const contentModel = computed<string>({
+  get: () => textCardBlock.value.text.htmlDescription ?? '',
+  set: (val) => {
+    textCardBlock.value.text.htmlDescription = val;
+  },
+});
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
   const content = rawContent as Partial<TextCardContent>;
 
   if (!content.text) content.text = {};
-  content.text.pretitle = content.text.pretitle ?? '';
-  content.text.title = content.text.title ?? '';
-  content.text.subtitle = content.text.subtitle ?? '';
-  content.text.htmlDescription = content.text.htmlDescription ?? '';
-  content.text.color = content.text.color ?? '';
-  content.text.textAlignment = content.text.textAlignment ?? 'left';
-
   if (!content.button) content.button = {};
   if (!content.layout) {
     content.layout = {
@@ -543,33 +417,7 @@ const textCardBlock = computed<TextCardContent>(() => {
 
   return content as TextCardContent;
 });
-const pretitleModel = computed<string>({
-  get: () => textCardBlock.value.text.pretitle ?? '',
-  set: (v) => {
-    textCardBlock.value.text.pretitle = v;
-  },
-});
 
-const titleModel = computed<string>({
-  get: () => textCardBlock.value.text.title ?? '',
-  set: (v) => {
-    textCardBlock.value.text.title = v;
-  },
-});
-
-const subtitleModel = computed<string>({
-  get: () => textCardBlock.value.text.subtitle ?? '',
-  set: (v) => {
-    textCardBlock.value.text.subtitle = v;
-  },
-});
-
-const descriptionModel = computed<string>({
-  get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (v) => {
-    textCardBlock.value.text.htmlDescription = v;
-  },
-});
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
 const textSettings = ref(false);
@@ -609,7 +457,9 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "Keep background transparent"
+    "keep-transparent-label": "Keep background transparent",
+    "content-label": "Content",
+    "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
   },
   "de": {
     "text-group-label": "Text",
@@ -634,7 +484,9 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "or keep transparent"
+    "keep-transparent-label": "or keep transparent",
+    "content-label": "Content",
+    "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
   }
 }
 </i18n>
