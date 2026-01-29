@@ -1,31 +1,47 @@
-.rte-prose h1 { font-size: 1.75rem; line-height: 2.1rem; font-weight: 700; margin: 10px 0; }
-.rte-prose h2 { font-size: 1.5rem;  line-height: 1.9rem; font-weight: 700; margin: 10px 0; }
-.rte-prose h3 { font-size: 1.25rem; line-height: 1.65rem; font-weight: 600; margin: 8px 0; }
-.rte-prose p  { font-size: 14px; line-height: 1.5; margin: 6px 0; }
-
-.rte-prose blockquote {
-    border-left: 3px solid #dee2e6;
-    padding-left: 12px;
-    margin: 10px 0;
-    color: #495057;
+.rte-prose h1 {
+  font-size: 1.75rem;
+  line-height: 2.1rem;
+  font-weight: 700;
+  margin: 10px 0;
 }
-
+.rte-prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.9rem;
+  font-weight: 700;
+  margin: 10px 0;
+}
+.rte-prose h3 {
+  font-size: 1.25rem;
+  line-height: 1.65rem;
+  font-weight: 600;
+  margin: 8px 0;
+}
+.rte-prose p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 6px 0;
+}
+.rte-prose blockquote {
+  border-left: 3px solid #dee2e6;
+  padding-left: 12px;
+  margin: 10px 0;
+  color: #495057;
+}
 .rte-prose ul,
 .rte-prose ol {
-    list-style-position: outside !important;
-    padding-left: 1.25rem !important;
-    margin: 8px 0 !important;
+  list-style-position: outside !important;
+  padding-left: 1.25rem !important;
+  margin: 8px 0 !important;
 }
-.rte-prose[style*="text-align: center"] ul,
-.rte-prose[style*="text-align: center"] ol,
-.rte-prose[style*="text-align: right"] ul,
-.rte-prose[style*="text-align: right"] ol {
-    list-style-position: inside !important;
-    padding-left: 0 !important;
+.rte-prose ul {
+  list-style-type: disc !important;
 }
-.rte-prose ul { list-style-type: disc !important; }
-.rte-prose ol { list-style-type: decimal !important; }
-
-.rte-prose li { display: list-item !important; }
-.rte-prose li > p { margin: 0; }
-
+.rte-prose ol {
+  list-style-type: decimal !important;
+}
+.rte-prose li {
+  display: list-item !important;
+}
+.rte-prose li > p {
+  margin: 0;
+}

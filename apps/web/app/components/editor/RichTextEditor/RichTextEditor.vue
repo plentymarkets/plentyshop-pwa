@@ -182,27 +182,15 @@
 
   <!-- Editor -->
   <div class="rte__body" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
-    <EditorContent
-      :editor="editor"
-      class="rte__content rte-prose"
-      :style="{ minHeight: `${minHeight}px`, textAlign: props.textAlign }"
-    />
+    <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
   </div>
 
 
 </template>
 
 <script setup lang="ts">
-import { useEditor, EditorContent } from '@tiptap/vue-3';
-import type { Editor } from '@tiptap/core';
-
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import Link from '@tiptap/extension-link';
-import { TextStyle } from '@tiptap/extension-text-style';
-import Color from '@tiptap/extension-color';
-import Highlight from '@tiptap/extension-highlight';
-import TextAlign from '@tiptap/extension-text-align';
+import { EditorContent } from '@tiptap/vue-3';
+import { useRichTextEditor, type RteAlign } from '~/composables/useRichTextEditor';
 
 const props = withDefaults(
   defineProps<{
@@ -210,8 +198,7 @@ const props = withDefaults(
     minHeight?: number;
     expandable?: boolean;
     expanded?: boolean;
-    textAlign?: 'left' | 'center' | 'right' | 'justify';
-
+    textAlign?: RteAlign;
   }>(),
   {
     modelValue: '',
@@ -227,198 +214,51 @@ const emit = defineEmits<{
   (e: 'update:expanded', v: boolean): void;
 }>();
 
-const expandedLocal = ref(props.expanded);
-watch(
-  () => props.expanded,
-  (v) => (expandedLocal.value = v),
-);
-watch(expandedLocal, (v) => emit('update:expanded', v));
-
-const editor = useEditor({
-  content: props.modelValue ?? '',
-  extensions: [
-    StarterKit,
-    Underline,
-
-    Link.configure({
-      openOnClick: false,
-      autolink: true,
-      linkOnPaste: true,
-    }),
-
-    TextStyle,
-    Color,
-
-    Highlight.configure({ multicolor: true }),
-
-    TextAlign.configure({
-      types: ['heading', 'paragraph'],
-    }),
-  ],
-  onUpdate: ({ editor }: { editor: Editor }) => {
-    emit('update:modelValue', editor.getHTML());
-  },
-});
-
-watch(
-  () => props.modelValue,
-  (next) => {
-    if (!editor.value) return;
-    const wanted = next ?? '';
-    const current = editor.value.getHTML();
-    if (current !== wanted) editor.value.commands.setContent(wanted, { emitUpdate: false });
-  },
-);
-
-onBeforeUnmount(() => editor.value?.destroy());
-
-function focusChain() {
-  return editor.value?.chain().focus();
-}
-
-function cmd(
-  name:
-    | 'toggleBold'
-    | 'toggleItalic'
-    | 'toggleUnderline'
-    | 'toggleBlockquote'
-    | 'toggleStrike'
-    | 'toggleBulletList'
-    | 'toggleOrderedList'
-    | 'setHorizontalRule',
-) {
-  const chain = focusChain();
-  if (!chain) return;
-
-  chain[name]().run();
-}
-
-function isActive(name: string) {
-  return editor.value?.isActive(name) ?? false;
-}
-
-/** --- Font size --- */
-const currentBlockType = computed<'paragraph' | 'h1' | 'h2' | 'h3'>(() => {
-  const ed = editor.value;
-  if (!ed) return 'paragraph';
-  if (ed.isActive('heading', { level: 1 })) return 'h1';
-  if (ed.isActive('heading', { level: 2 })) return 'h2';
-  if (ed.isActive('heading', { level: 3 })) return 'h3';
-  return 'paragraph';
-});
-
-function onFontSizeChange(v: string) {
-  const chain = focusChain();
-  if (!chain) return;
-
-  if (v === 'h1') chain.toggleHeading({ level: 1 }).run();
-  else if (v === 'h2') chain.toggleHeading({ level: 2 }).run();
-  else if (v === 'h3') chain.toggleHeading({ level: 3 }).run();
-  else chain.setParagraph().run();
-}
-
-/** --- Colors --- */
-const textColor = ref('#000000');
-const highlightColor = ref('#ffff00');
-
-function syncColors() {
-  const ed = editor.value;
-  if (!ed) return;
-
-  const c = ed.getAttributes('textStyle')?.color as string | undefined;
-  textColor.value = c ?? '#000000';
-
-  const h = ed.getAttributes('highlight')?.color as string | undefined;
-  highlightColor.value = h ?? '#ffff00';
-}
-
-watch(editor, (ed) => {
-  if (!ed) return;
-  ed.on('selectionUpdate', syncColors);
-  ed.on('transaction', syncColors);
-  syncColors();
-});
-
-function setFontColor(color: string) {
-  const chain = focusChain();
-  if (!chain) return;
-  chain.setColor(color).run();
-  textColor.value = color;
-}
-
-function setHighlightColor(color: string) {
-  const chain = focusChain();
-  if (!chain) return;
-  chain.setHighlight({ color }).run();
-  highlightColor.value = color;
-}
-
-/** --- Align --- */
-type Align = 'left' | 'center' | 'right' | 'justify';
-
-function setAlign(a: Align) {
-  const chain = focusChain();
-  if (!chain) return;
-  chain.setTextAlign(a).run();
-}
-
-function isActiveAlign(a: Align) {
-  return editor.value?.isActive({ textAlign: a }) ?? false;
-}
-
-/** --- History --- */
-const canUndo = computed(() => editor.value?.can().chain().focus().undo().run() ?? false);
-const canRedo = computed(() => editor.value?.can().chain().focus().redo().run() ?? false);
-
-function undo() {
-  editor.value?.chain().focus().undo().run();
-}
-function redo() {
-  editor.value?.chain().focus().redo().run();
-}
-
-/** --- Link --- */
-function toggleLink() {
-  const ed = editor.value;
-  if (!ed) return;
-
-  // if active, remove
-  if (ed.isActive('link')) {
-    ed.chain().focus().unsetLink().run();
-    return;
-  }
-
-  // selection required
-  const url = window.prompt('Enter URL', 'https://');
-  if (!url) return;
-
-  ed.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-}
-
-/** --- Clear --- */
-function clearFormatting() {
-  const ed = editor.value;
-  if (!ed) return;
-  ed.chain().focus().unsetAllMarks().clearNodes().run();
-}
-
-defineExpose({
+const {
   editor,
-  focus: () => editor.value?.commands.focus(),
-  clearFormatting,
+  expandedLocal,
+
+  cmd,
+  isActive,
+
+  currentBlockType,
+  onFontSizeChange,
+
+  textColor,
+  highlightColor,
+  setFontColor,
+  setHighlightColor,
+
+  setAlign,
+  isActiveAlign,
+  textAlignStyle,
+
+  canUndo,
+  canRedo,
   undo,
   redo,
+
+  toggleLink,
+  clearFormatting,
+  focus,
+} = useRichTextEditor({
+  modelValue: toRef(props, 'modelValue'),
+  onUpdateModelValue: (v) => emit('update:modelValue', v),
+
+  expanded: toRef(props, 'expanded'),
+  onUpdateExpanded: (v) => emit('update:expanded', v),
+
+  textAlign: toRef(props, 'textAlign'),
 });
+
+defineExpose({ editor, focus, clearFormatting, undo, redo });
+
+const editorStyle = computed(() => ({
+  minHeight: `${props.minHeight}px`,
+  ...textAlignStyle.value,
+}));
 </script>
-
 <style scoped>
-.rte {
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  overflow: hidden;
-  background: white;
-}
-
 .rte__toolbar {
   display: flex;
   align-items: center;
@@ -426,11 +266,6 @@ defineExpose({
   padding: 8px;
   background: #f8f9fa;
   border-bottom: 1px solid #dee2e6;
-}
-
-.rte__toolbar--expanded {
-  border-top: 1px solid #dee2e6;
-  border-bottom: 0;
 }
 
 .rte__select {
@@ -503,6 +338,7 @@ defineExpose({
   display: inline-block;
   transition: transform 150ms ease;
 }
+
 .chev.up {
   transform: rotate(180deg);
 }
