@@ -13,8 +13,8 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const expandedLocal = ref<boolean>(args.expanded?.value ?? false);
 
   if (args.expanded && args.onUpdateExpanded) {
-    watch(args.expanded, (v) => (expandedLocal.value = !!v));
-    watch(expandedLocal, (v) => args.onUpdateExpanded?.(v));
+    watch(args.expanded, (val) => (expandedLocal.value = !!val));
+    watch(expandedLocal, (val) => args.onUpdateExpanded?.(val));
   }
 
   const editor = useEditor({
@@ -71,21 +71,21 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const isActive = (name: string) => editor.value?.isActive(name) ?? false;
 
   const currentBlockType = computed<RteBlockType>(() => {
-    const ed = editor.value;
-    if (!ed) return 'paragraph';
-    if (ed.isActive('heading', { level: 1 })) return 'h1';
-    if (ed.isActive('heading', { level: 2 })) return 'h2';
-    if (ed.isActive('heading', { level: 3 })) return 'h3';
+    const editorVal = editor.value;
+    if (!editorVal) return 'paragraph';
+    if (editorVal.isActive('heading', { level: 1 })) return 'h1';
+    if (editorVal.isActive('heading', { level: 2 })) return 'h2';
+    if (editorVal.isActive('heading', { level: 3 })) return 'h3';
     return 'paragraph';
   });
 
-  const onFontSizeChange = (v: string) => {
+  const onFontSizeChange = (value: string) => {
     const chain = focusChain();
     if (!chain) return;
 
-    if (v === 'h1') chain.toggleHeading({ level: 1 }).run();
-    else if (v === 'h2') chain.toggleHeading({ level: 2 }).run();
-    else if (v === 'h3') chain.toggleHeading({ level: 3 }).run();
+    if (value === 'h1') chain.toggleHeading({ level: 1 }).run();
+    else if (value === 'h2') chain.toggleHeading({ level: 2 }).run();
+    else if (value === 'h3') chain.toggleHeading({ level: 3 }).run();
     else chain.setParagraph().run();
   };
 
@@ -93,20 +93,20 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const highlightColor = ref('#ffff00');
 
   const syncColors = () => {
-    const ed = editor.value;
-    if (!ed) return;
+    const editorVal = editor.value;
+    if (!editorVal) return;
 
-    const c = ed.getAttributes('textStyle')?.color as string | undefined;
-    textColor.value = c ?? '#000000';
+    const color = editorVal.getAttributes('textStyle')?.color as string | undefined;
+    textColor.value = color ?? '#000000';
 
-    const h = ed.getAttributes('highlight')?.color as string | undefined;
-    highlightColor.value = h ?? '#ffff00';
+    const highlight = editorVal.getAttributes('highlight')?.color as string | undefined;
+    highlightColor.value = highlight ?? '#ffff00';
   };
 
-  watch(editor, (ed) => {
-    if (!ed) return;
-    ed.on('selectionUpdate', syncColors);
-    ed.on('transaction', syncColors);
+  watch(editor, (editorVal) => {
+    if (!editorVal) return;
+    editorVal.on('selectionUpdate', syncColors);
+    editorVal.on('transaction', syncColors);
     syncColors();
   });
 
@@ -124,29 +124,29 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     highlightColor.value = color;
   };
 
-  const setAlign = (a: RteAlign) => {
+  const setAlign = (align: RteAlign) => {
     const chain = focusChain();
     if (!chain) return;
-    chain.setTextAlign(a).run();
+    chain.setTextAlign(align).run();
   };
 
-  const isActiveAlign = (a: RteAlign) => editor.value?.isActive({ textAlign: a }) ?? false;
+  const isActiveAlign = (activeAlign: RteAlign) => editor.value?.isActive({ textAlign: activeAlign }) ?? false;
 
   const canUndo = ref(false);
   const canRedo = ref(false);
 
   const syncHistory = () => {
-    const ed = editor.value;
-    if (!ed) return;
+    const editorVal = editor.value;
+    if (!editorVal) return;
 
-    const can = ed.can();
+    const can = editorVal.can();
     canUndo.value = typeof can.undo === 'function' ? can.undo() : can.chain().undo().run();
     canRedo.value = typeof can.redo === 'function' ? can.redo() : can.chain().redo().run();
   };
 
-  watch(editor, (ed) => {
-    if (!ed) return;
-    ed.on('transaction', syncHistory);
+  watch(editor, (editorVal) => {
+    if (!editorVal) return;
+    editorVal.on('transaction', syncHistory);
     syncHistory();
   });
 
@@ -159,24 +159,24 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   };
 
   const toggleLink = () => {
-    const ed = editor.value;
-    if (!ed) return;
+    const editorVal = editor.value;
+    if (!editorVal) return;
 
-    if (ed.isActive('link')) {
-      ed.chain().focus().unsetLink().run();
+    if (editorVal.isActive('link')) {
+      editorVal.chain().focus().unsetLink().run();
       return;
     }
 
     const url = window.prompt('Enter URL', 'https://');
     if (!url) return;
 
-    ed.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+    editorVal.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   };
 
   const clearFormatting = () => {
-    const ed = editor.value;
-    if (!ed) return;
-    ed.chain().focus().unsetAllMarks().clearNodes().run();
+    const editorVal = editor.value;
+    if (!editorVal) return;
+    editorVal.chain().focus().unsetAllMarks().clearNodes().run();
   };
 
   const textAlignStyle = computed(() => ({
