@@ -240,18 +240,39 @@
 
       <div v-if="categoryDataBlock.text.background" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
-
-        <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
-          <template #suffix>
-            <label
-              for="text-bg-color"
-              :style="{ backgroundColor: categoryDataBlock.text.bgColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input id="text-bg-color" v-model="categoryDataBlock.text.bgColor" type="color" class="invisible w-8" />
-            </label>
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
+            <template #suffix>
+              <label
+                for="text-bg-color"
+                :style="{ backgroundColor: categoryDataBlock.text.bgColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="text-bg-color"
+                  v-model="categoryDataBlock.text.bgColor"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </div>
+        <EditorColorPicker v-else v-model="categoryDataBlock.text.bgColor!" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
           </template>
-        </SfInput>
+        </EditorColorPicker>
       </div>
 
       <div v-if="categoryDataBlock.text.background && categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
@@ -506,6 +527,8 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
+
+const runtimeConfig = useRuntimeConfig();
 
 const layoutOpen = ref(true);
 const textOpen = ref(true);

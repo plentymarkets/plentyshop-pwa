@@ -252,7 +252,6 @@
     </div>
   </UiAccordionItem>
 
-
   <UiAccordionItem
     v-model="buttonSettings"
     data-testid="button-settings"
@@ -320,7 +319,6 @@
     </fieldset>
   </UiAccordionItem>
 
-
   <UiAccordionItem
     v-model="layoutSettings"
     data-testid="layout-settings"
@@ -348,25 +346,44 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
-          <template #suffix>
-            <label
-              for="background-color"
-              :style="{ backgroundColor: backgroundColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input
-                id="background-color"
-                v-model="backgroundColor"
-                data-testid="color-input-background"
-                type="color"
-                class="invisible w-8"
-              />
-            </label>
-          </template>
-        </SfInput>
-      </label>
+      <div v-if="runtimeConfig.public.enableColorPicker">
+        <label>
+          <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+            <template #suffix>
+              <label
+                for="background-color"
+                :style="{ backgroundColor: backgroundColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="background-color"
+                  v-model="backgroundColor"
+                  data-testid="color-input-background"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
+      <EditorColorPicker v-else v-model="backgroundColor!" class="w-full">
+        <template #trigger="{ color, toggle }">
+          <label>
+            <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
+          </label>
+        </template>
+      </EditorColorPicker>
     </div>
 
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
@@ -434,6 +451,7 @@ import {
 import type { TextCardFormProps, TextCardContent } from './types';
 import RichTextEditor from '~/components/editor/RichTextEditor/RichTextEditor.vue';
 
+const runtimeConfig = useRuntimeConfig();
 
 const route = useRoute();
 const { data } = useCategoryTemplate(

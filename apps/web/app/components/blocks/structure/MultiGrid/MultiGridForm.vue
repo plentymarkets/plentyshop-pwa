@@ -102,29 +102,56 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput
-            v-model="multiGridStructure.configuration.layout.backgroundColor"
-            type="text"
-            data-testid="input-background-color"
-          >
-            <template #suffix>
-              <label
-                for="background-color"
-                :style="{ backgroundColor: multiGridStructure.configuration.layout.backgroundColor || '#ffffff' }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+        <div v-if="runtimeConfig.public.enableColorPicker">
+          <label>
+            <SfInput
+              v-model="multiGridStructure.configuration.layout.backgroundColor"
+              type="text"
+              data-testid="input-background-color"
+            >
+              <template #suffix>
+                <label
+                  for="background-color"
+                  :style="{ backgroundColor: multiGridStructure.configuration.layout.backgroundColor || '#ffffff' }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="background-color"
+                    v-model="multiGridStructure.configuration.layout.backgroundColor"
+                    data-testid="color-input-background"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
+        <EditorColorPicker
+          v-else
+          v-model="multiGridStructure.configuration.layout.backgroundColor!"
+          class="w-full"
+        >
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput
+                v-model="multiGridStructure.configuration.layout.backgroundColor"
+                type="text"
+                data-testid="input-background-color"
               >
-                <input
-                  id="background-color"
-                  v-model="multiGridStructure.configuration.layout.backgroundColor"
-                  data-testid="color-input-background"
-                  type="color"
-                  class="invisible w-8"
-                />
-              </label>
-            </template>
-          </SfInput>
-        </label>
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
     </UiAccordionItem>
   </div>
@@ -134,6 +161,8 @@
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
+
+const runtimeConfig = useRuntimeConfig();
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
