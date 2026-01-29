@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { migrateTextCardContent } from '../migrate-text-editor';
+import { createOldTextCard, createMigratedTextCard } from './__fixtures__/TextCard';
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
 
 vi.mock('~/configuration/feature-flags.config', () => ({
@@ -7,34 +8,6 @@ vi.mock('~/configuration/feature-flags.config', () => ({
     enableRichTextEditorV2: true,
   },
 }));
-
-function createOldTextCard(overrides?: Partial<TextCardContent>): Partial<TextCardContent> {
-  return {
-    text: {
-      pretitle: 'Pretitle',
-      title: 'Title',
-      subtitle: 'Subtitle',
-      htmlDescription: 'Some description',
-      textAlignment: 'center',
-      color: '#fff',
-      ...overrides?.text,
-    },
-  };
-}
-
-function createMigratedTextCard(overrides?: Partial<TextCardContent>): Partial<TextCardContent> {
-  return {
-    text: {
-      pretitle: '',
-      title: '',
-      subtitle: '',
-      htmlDescription: '<h2>Pretitle</h2>\n<h1>Title</h1>\n<h3>Subtitle</h3>\n<p>Some description</p>',
-      textAlignment: 'center',
-      color: '#fff',
-      ...overrides?.text,
-    },
-  };
-}
 
 describe('migrateTextCardContent', () => {
   it('migrates old structure with all fields', () => {

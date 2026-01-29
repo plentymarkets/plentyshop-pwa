@@ -1,20 +1,20 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
 import featureFlagsConfig from '~/configuration/feature-flags.config';
 
-function hasOldStructure(content: Partial<TextCardContent>): boolean {
+const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
   if (!content.text) return false;
 
   const { pretitle, title, subtitle } = content.text;
 
   return !!(pretitle?.trim() || title?.trim() || subtitle?.trim());
-}
+};
 
-function hasHtmlTags(text: string): boolean {
+const hasHtmlTags = (text: string): boolean => {
   if (!text) return false;
   return /<\/?[a-z][\s\S]*>/i.test(text);
-}
+};
 
-function escapeHtml(text: string): string {
+const escapeHtml = (text: string): string => {
   const map: Record<string, string> = {
     '&': '&amp;',
     '<': '&lt;',
@@ -23,9 +23,9 @@ function escapeHtml(text: string): string {
     "'": '&#039;',
   };
   return text.replace(/[&<>"']/g, (m) => map[m] || m);
-}
+};
 
-export function migrateTextCardContent(content: Partial<TextCardContent>): Partial<TextCardContent> {
+export const migrateTextCardContent = (content: Partial<TextCardContent>): Partial<TextCardContent> => {
   if (!featureFlagsConfig.enableRichTextEditorV2) return content;
   if (!hasOldStructure(content)) return content;
 
@@ -63,4 +63,4 @@ export function migrateTextCardContent(content: Partial<TextCardContent>): Parti
   migrated.text.subtitle = '';
 
   return migrated;
-}
+};
