@@ -4,7 +4,12 @@
     :class="['w-full', 'flex', 'flex-col', 'space-y-4', textAlignmentClass]"
     :style="inlineStyle"
   >
-    <TextContent :text="props.content.text" :button="props.content.button" :index="props.index" />
+    <TextContent
+      :text="props.content.text"
+      :button="props.content.button"
+      :class="textAlignmentClass"
+      :index="props.index"
+    />
   </div>
 </template>
 
