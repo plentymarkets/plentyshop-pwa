@@ -37,7 +37,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   };
 
   const migrateAllBlocks = (blocks: Block[]) => {
-    const config = useRuntimeConfig();
+    const config = useRuntimeConfig().public;
 
     for (const block of blocks) {
       if (block.name === 'Image' && block.content) {
@@ -49,7 +49,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       if (block.name === 'TextCard' && block.content) {
         block.content = migrateTextCardContent(
           block.content as Partial<TextCardContent>,
-          config.public.enableRichTextEditorV2,
+          config.enableRichTextEditorV2,
         );
       }
       if (Array.isArray(block.content)) {
