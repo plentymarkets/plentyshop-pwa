@@ -184,8 +184,6 @@
   <div class="rte__body" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
     <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
   </div>
-
-
 </template>
 
 <script setup lang="ts">

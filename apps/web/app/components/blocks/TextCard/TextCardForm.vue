@@ -13,7 +13,6 @@
     <!-- v2 (Single RichText) -->
     <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
       <div class="py-2">
-
         <RichTextEditor
           v-model="contentModel"
           v-model:expanded="expandedToolbars.content"
@@ -22,7 +21,6 @@
           :text-align="textCardBlock.text.textAlignment"
           data-testid="rte-content"
         />
-
 
         <p class="typography-text-xs text-neutral-600 mt-2">
           {{ getEditorTranslation('content-hint') }}
@@ -157,7 +155,6 @@
     </div>
   </UiAccordionItem>
 
-
   <UiAccordionItem
     v-model="buttonSettings"
     data-testid="button-settings"
@@ -224,7 +221,6 @@
       </div>
     </fieldset>
   </UiAccordionItem>
-
 
   <UiAccordionItem
     v-model="layoutSettings"
@@ -339,7 +335,6 @@ import {
 import type { TextCardFormProps, TextCardContent } from './types';
 import RichTextEditor from '~/components/editor/RichTextEditor/RichTextEditor.vue';
 
-
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
@@ -352,7 +347,6 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 const props = defineProps<TextCardFormProps & { textCardFormV2Enabled?: boolean }>();
 
 const config = useRuntimeConfig().public;
-
 
 const expandedToolbars = ref({
   content: true,
@@ -439,7 +433,6 @@ watch([isTransparent, backgroundColor], () => {
     "keep-transparent-label": "Keep background transparent",
     "content-label": "Content",
     "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
-
   },
   "de": {
     "text-group-label": "Text",

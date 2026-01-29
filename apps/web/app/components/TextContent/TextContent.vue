@@ -68,6 +68,4 @@ const config = useRuntimeConfig().public;
 
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-
-
 </script>
