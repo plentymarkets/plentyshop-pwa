@@ -9,8 +9,6 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
 
-
-
 type UseRichTextEditorArgs = {
   modelValue: Ref<string | undefined>;
   onUpdateModelValue: (html: string) => void;
