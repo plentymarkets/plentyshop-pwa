@@ -1229,6 +1229,9 @@
     "coupon": {
       "applyFailed": "The coupon could not be redeemed."
     },
+    "feedback": {
+      "notAllowedWithoutPurchase": "You must purchase this item before leaving a review."
+    },
     "login": {
       "loginFailed": "Invalid login data",
       "userIsBlocked": "User is blocked"
