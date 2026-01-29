@@ -89,78 +89,55 @@ npm run lint:fix     # Auto-fix linting issues
 
 ## Code Generation & CLI Tools
 
-### PlentyONE Shop CLI
+### Code Generation Skill
 
-The project includes `@plentymarkets/shop-cli` for automated code generation. **Always use the CLI generators** when asked to create components, composables, or other standardized files.
+**IMPORTANT: When users request to generate components or composables, always reference the Code Generation Skill documentation.**
 
-#### Available Generators
+📋 **Skill Location:** `.github/skills/code-generation/SKILL.md`
 
-- **Components**: `npx plentyshop generate component` - Generate Vue 3 components with TypeScript, tests, and proper structure
-- **Composables**: `npx plentyshop generate composable` - Generate Vue 3 composables with TypeScript, tests, and index files
-
-#### When to Use Generators
-
-**Always use generators for:**
-
-- Creating new Vue components in `apps/web/app/components/`
-- Creating new composables in `apps/web/app/composables/`
-- Any standardized file structures that follow project patterns
-
-**Generator workflow:**
-
-1. Use `run_in_terminal` to execute the appropriate generator command
-2. The generator will prompt for required information interactively
-3. Generated files will include proper TypeScript types, tests, and follow naming conventions
-4. Verify the generated structure matches project standards
-
-**Example usage:**
+**Quick Commands:**
 
 ```bash
-# Generate a new component
-npx plentyshop generate component
-
-# Generate a composable
-npx plentyshop generate composable
+npm run generate:component ComponentName
+npm run generate:composable useFeatureName
+npm run generate:block ImageBlock
+npm run generate:settings MySettings
 ```
 
-#### CLI Features
+**When to use:**
 
-- **Input Validation**: Enforces PlentyONE naming conventions
-- **Conflict Detection**: Prevents overwriting existing files
-- **TypeScript Support**: Generates proper types and interfaces
-- **Test Generation**: Creates test files with basic structure
-- **Consistent Structure**: Follows established project patterns
+- User says: "generate", "create", "scaffold" + "component" or "composable"
+- Creating new Vue components or composables
+- Setting up blocks (CMS content blocks)
+- Creating settings components (admin configuration)
 
-#### Generated File Structure
+**Interactive workflow:**
 
-**Components:**
+- Ask for clarification when type/path is ambiguous
+- Validate naming conventions (PascalCase for components, camelCase with `use` prefix for composables)
+- Check for conflicts before generating
+- Support optional flags: `--skip-tests`, `--skip-types`, `--with-form`, `--with-view`, `--with-toolbar`
 
+**Full documentation:** See [Code Generation Skill](skills/code-generation/SKILL.md) for:
+
+- Complete trigger patterns and examples
+- Interactive workflow guidelines
+- Path validation rules and security
+- Naming conventions and error handling
+- Block and settings component workflows
+
+### PlentyONE Shop CLI (Legacy)
+
+The project includes `@plentymarkets/shop-cli` for automated code generation. The Code Generation Skill wraps this CLI for non-interactive use.
+
+**Direct CLI usage (interactive mode):**
+
+```bash
+npx plentyshop generate component   # Interactive prompts
+npx plentyshop generate composable  # Interactive prompts
 ```
-components/ComponentName/
-├── ComponentName.vue      # Main component
-├── types.ts              # TypeScript interfaces
-└── __tests__/
-    └── ComponentName.spec.ts
-```
 
-**Composables:**
-
-```
-composables/useFeatureName/
-├── useFeatureName.ts     # Main composable
-├── types.ts             # TypeScript interfaces
-├── index.ts             # Clean exports
-└── __tests__/
-    └── useFeatureName.spec.ts
-```
-
-#### CLI Integration Rules
-
-1. **Before creating files manually**, check if a generator exists
-2. **Use generators as the first option** for any standardized code creation
-3. **Run from the project root** for proper path resolution
-4. **Follow prompts carefully** to ensure proper naming and structure
-5. **Verify generated files** match the expected structure and conventions
+**Prefer the npm shortcuts above for non-interactive generation with Copilot.**
 
 ## Common Gotchas
 
