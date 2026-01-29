@@ -159,7 +159,7 @@
         <div class="controls">
           <div class="mb-6 mt-4">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
-            <div v-if="runtimeConfig.public.enableColorPicker">
+            <div v-if="runtimeConfig.enableColorPicker">
               <SfInput v-model="controls.color" type="text">
                 <template #suffix>
                   <label
@@ -224,7 +224,7 @@ import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();

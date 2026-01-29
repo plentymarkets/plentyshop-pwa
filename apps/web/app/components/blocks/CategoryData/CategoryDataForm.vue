@@ -211,7 +211,7 @@
 
       <div class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <SfInput v-model="categoryDataBlock.text.color" type="text">
             <template #suffix>
               <label
@@ -256,7 +256,7 @@
 
       <div v-if="categoryDataBlock.text.background" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
             <template #suffix>
               <label
@@ -544,7 +544,7 @@ import {
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const layoutOpen = ref(true);
 const textOpen = ref(true);

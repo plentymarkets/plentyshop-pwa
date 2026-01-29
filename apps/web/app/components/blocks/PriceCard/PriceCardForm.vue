@@ -112,7 +112,7 @@
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
-      <div v-if="runtimeConfig.public.enableColorPicker">
+      <div v-if="runtimeConfig.enableColorPicker">
         <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
           <template #suffix>
             <label
@@ -207,7 +207,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const route = useRoute();
 const { data } = useCategoryTemplate(

@@ -117,7 +117,7 @@
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-            <div v-if="runtimeConfig.public.enableColorPicker">
+            <div v-if="runtimeConfig.enableColorPicker">
               <SfInput v-model="banner.content.text.color" type="text">
                 <template #suffix>
                   <label
@@ -155,7 +155,7 @@
           </div>
           <div v-if="banner.content.text.background" class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
-            <div v-if="runtimeConfig.public.enableColorPicker">
+            <div v-if="runtimeConfig.enableColorPicker">
               <SfInput v-model="banner.content.text.bgcolor" type="text">
                 <template #suffix>
                   <label
@@ -450,7 +450,7 @@ import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();

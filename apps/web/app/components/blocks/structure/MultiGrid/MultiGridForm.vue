@@ -102,7 +102,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput
               v-model="multiGridStructure.configuration.layout.backgroundColor"
@@ -162,7 +162,7 @@ import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types'
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();

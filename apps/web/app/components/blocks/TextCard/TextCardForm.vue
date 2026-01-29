@@ -60,7 +60,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
               <template #suffix>
@@ -206,7 +206,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
               <template #suffix>
@@ -384,7 +384,7 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
-      <div v-if="runtimeConfig.public.enableColorPicker">
+      <div v-if="runtimeConfig.enableColorPicker">
         <label>
           <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
             <template #suffix>
@@ -489,7 +489,7 @@ import {
 import type { TextCardFormProps, TextCardContent } from './types';
 import RichTextEditor from '~/components/editor/RichTextEditor/RichTextEditor.vue';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const route = useRoute();
 const { data } = useCategoryTemplate(

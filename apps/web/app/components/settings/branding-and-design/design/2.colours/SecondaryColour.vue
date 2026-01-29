@@ -7,7 +7,7 @@
       </SfTooltip>
     </div>
 
-    <div v-if="runtimeConfig.public.enableColorPicker">
+    <div v-if="runtimeConfig.enableColorPicker">
       <label>
         <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
           <template #suffix>
@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 const { updateSetting, getSetting } = useSiteSettings('secondaryColor');
 
 const updateSecondaryColor = (hexColor: string) => {

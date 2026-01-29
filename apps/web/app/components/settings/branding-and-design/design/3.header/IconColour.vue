@@ -6,7 +6,7 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <div v-if="runtimeConfig.public.enableColorPicker">
+    <div v-if="runtimeConfig.enableColorPicker">
       <label>
         <SfInput v-model="iconColor" type="text" data-testid="icon-color">
           <template #suffix>
@@ -42,7 +42,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const { updateSetting, getSetting } = useSiteSettings('iconColor');
 

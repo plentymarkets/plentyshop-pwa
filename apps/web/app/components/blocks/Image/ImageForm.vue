@@ -148,7 +148,7 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('text-overlay-color-label') }}</UiFormLabel>
       </div>
-      <div v-if="runtimeConfig.public.enableColorPicker">
+      <div v-if="runtimeConfig.enableColorPicker">
         <label>
           <SfInput
             v-model="uiImageTextBlock.text.textOverlayColor"
@@ -381,7 +381,7 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
-      <div v-if="runtimeConfig.public.enableColorPicker">
+      <div v-if="runtimeConfig.enableColorPicker">
         <label>
           <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
             <template #suffix>
@@ -501,7 +501,7 @@ import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 const route = useRoute();

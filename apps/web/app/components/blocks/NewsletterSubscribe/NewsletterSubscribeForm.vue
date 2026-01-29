@@ -118,7 +118,7 @@
       </div>
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
             <template #suffix>
               <label
@@ -176,7 +176,7 @@ import { SfInput, SfTextarea, SfSwitch, SfTooltip, SfIconInfo } from '@storefron
 import type { NewsletterSubscribeContent } from './types';
 import { initializeNewsletterContent } from './utils';
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);

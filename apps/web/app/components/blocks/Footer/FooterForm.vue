@@ -246,7 +246,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-text-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput v-model="footerBlock.colors.text" type="text" data-testid="text-color-select">
               <template #suffix>
@@ -288,7 +288,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-background-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
               <template #suffix>
@@ -330,7 +330,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-footnote-text-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput v-model="footerBlock.colors.footnoteText" type="text" data-testid="footnote-text-color-select">
               <template #suffix>
@@ -372,7 +372,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-footnote-background-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.public.enableColorPicker">
+        <div v-if="runtimeConfig.enableColorPicker">
           <label>
             <SfInput
               v-model="footerBlock.colors.footnoteBackground"
@@ -435,7 +435,7 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const props = defineProps<{ uuid?: string }>();
 
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig().public;
 
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
