@@ -9,7 +9,7 @@
     </h2>
 
     <div v-if="loading">
-      <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
+      <SfLoaderCircular class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
     </div>
 
     <div
@@ -22,10 +22,11 @@
         {{ t('account.ordersAndReturns.continue') }}
       </UiButton>
     </div>
+
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
         <template v-if="viewport.isLessThan('md')">
-          <ul v-for="(order, index) in data.data.entries" :key="index" class="my-4 last-of-type:mb-0">
+          <ul v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="my-4 last-of-type:mb-0">
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.orderId') }}</p>
               <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>
@@ -38,28 +39,28 @@
             </li>
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.amount') }}</p>
-              <span v-if="order.totals.isNet" class="block typography-text-sm mb-2">{{
-                formatWithSymbol(orderGetters.getTotalNet(orderGetters.getTotals(order)), order.totals.currency)
-              }}</span>
-              <span v-else class="block typography-text-sm mb-2">{{
-                formatWithSymbol(orderGetters.getPrice(order), order.totals.currency)
-              }}</span>
+              <span v-if="order.totals.isNet" class="block typography-text-sm mb-2">
+                {{ formatWithSymbol(orderGetters.getTotalNet(orderGetters.getTotals(order)), order.totals.currency) }}
+              </span>
+              <span v-else class="block typography-text-sm mb-2">
+                {{ formatWithSymbol(orderGetters.getPrice(order), order.totals.currency) }}
+              </span>
             </li>
             <li v-if="orderGetters.getShippingDate(order, locale)">
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</p>
               <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order, locale) }}</span>
             </li>
             <li class="flex flex-wrap items-center mb-2">
-              <p class="block typography-text-sm -mb-1.5 font-medium flex-[100%]">
+              <p class="block typography-text-sm font-medium flex-[100%]">
                 {{ t('account.ordersAndReturns.status') }}
               </p>
-              <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
+              <span class="typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
               <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
                 {{ t('account.ordersAndReturns.details') }}
               </UiButton>
               <UiDropdown class="relative">
                 <template #trigger>
-                  <UiButton :aria-label="t('account.ordersAndReturns.more')" variant="tertiary">
+                  <UiButton :aria-label="t('account.ordersAndReturns.more')" size="sm" variant="tertiary">
                     <SfIconMoreHoriz size="sm" />
                   </UiButton>
                 </template>
@@ -71,9 +72,9 @@
                       {{ t('account.ordersAndReturns.orderAgain.heading') }}
                     </SfListItem>
                   </li>
-                  <li>
+                  <li v-if="orderGetters.isReturnable(order)">
                     <NuxtLink :to="localePath(generateNewReturnLink(order))">
-                      <SfListItem v-if="orderGetters.isReturnable(order)" tag="button" class="text-left">
+                      <SfListItem tag="button" class="text-left">
                         {{ t('returns.return') }}
                       </SfListItem>
                     </NuxtLink>
@@ -84,6 +85,7 @@
             <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
           </ul>
         </template>
+
         <table v-else class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
           <caption class="hidden">
             {{
@@ -103,7 +105,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(order, index) in data.data.entries" :key="index" class="border-b border-neutral-200">
+            <tr v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="border-b border-neutral-200">
               <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
               <td v-if="orderGetters.getTotals(order).isNet" class="lg:p-4 p-2">
@@ -124,38 +126,40 @@
               </td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
-                <UiButton
-                  :tag="NuxtLink"
-                  size="sm"
-                  variant="tertiary"
-                  :to="localePath(generateOrderDetailsLink(order))"
-                >
-                  {{ t('account.ordersAndReturns.details') }}
-                </UiButton>
-                <UiDropdown class="relative">
-                  <template #trigger>
-                    <UiButton variant="tertiary">
-                      <SfIconMoreHoriz size="sm" />
-                    </UiButton>
-                  </template>
-                  <ul
-                    class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
+              <td class="lg:p-4 p-2 text-right">
+                <div class="flex items-center justify-end gap-0">
+                  <UiButton
+                    :tag="NuxtLink"
+                    size="sm"
+                    variant="tertiary"
+                    :to="localePath(generateOrderDetailsLink(order))"
                   >
-                    <li>
-                      <SfListItem tag="button" class="text-left" @click="openOrderAgainModal(order)">
-                        {{ t('account.ordersAndReturns.orderAgain.heading') }}
-                      </SfListItem>
-                    </li>
-                    <li>
-                      <NuxtLink :to="localePath(generateNewReturnLink(order))">
-                        <SfListItem v-if="orderGetters.isReturnable(order)" tag="button" class="text-left">
-                          {{ t('returns.return') }}
+                    {{ t('account.ordersAndReturns.details') }}
+                  </UiButton>
+                  <UiDropdown class="relative">
+                    <template #trigger>
+                      <UiButton size="sm" variant="tertiary">
+                        <SfIconMoreHoriz size="sm" />
+                      </UiButton>
+                    </template>
+                    <ul
+                      class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
+                    >
+                      <li>
+                        <SfListItem tag="button" class="text-left" @click="openOrderAgainModal(order)">
+                          {{ t('account.ordersAndReturns.orderAgain.heading') }}
                         </SfListItem>
-                      </NuxtLink>
-                    </li>
-                  </ul>
-                </UiDropdown>
+                      </li>
+                      <li v-if="orderGetters.isReturnable(order)">
+                        <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                          <SfListItem tag="button" class="text-left">
+                            {{ t('returns.return') }}
+                          </SfListItem>
+                        </NuxtLink>
+                      </li>
+                    </ul>
+                  </UiDropdown>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -210,18 +214,12 @@ const generateOrderDetailsLink = (order: Order) => {
 const generateNewReturnLink = (order: Order) => {
   return `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
 };
-const handleQueryUpdate = async () => {
-  await fetchCustomerOrders({
-    page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
-  });
-};
-handleQueryUpdate();
 
 watch(isDesktop, (value) => setMaxVisiblePages(value));
+
 watch(
-  () => route.query,
-  () => {
-    handleQueryUpdate();
-  },
+  () => route.query.page,
+  () => fetchCustomerOrders({ page: Number(route.query.page as string) || defaults.DEFAULT_PAGE }),
+  { immediate: true },
 );
 </script>
