@@ -1,5 +1,10 @@
 <template>
-  <div data-testid="text-content" class="space-y-4 w-full" :style="{ color: props.text?.color }">
+  <div
+    data-testid="text-content"
+    class="space-y-4 w-full"
+    :style="{ color: props.text?.color }"
+    :class="['space-y-4', textAlignmentClass]"
+  >
     <div
       v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription"
       class="rte-prose rte-prose--render"
@@ -61,6 +66,17 @@
 import type { TextContentProps } from '~/components/TextContent/types';
 
 const props = defineProps<TextContentProps>();
+
+const textAlignmentClass = computed(() => {
+  switch (props.text?.textAlignment) {
+    case 'center':
+      return 'text-center items-center';
+    case 'right':
+      return 'text-right items-end';
+    default:
+      return 'text-left items-start';
+  }
+});
 const config = useRuntimeConfig().public;
 
 const localePath = useLocalePath();
