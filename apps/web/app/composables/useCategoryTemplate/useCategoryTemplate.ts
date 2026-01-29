@@ -37,6 +37,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   };
 
   const migrateAllBlocks = (blocks: Block[]) => {
+    const config = useRuntimeConfig();
+
     for (const block of blocks) {
       if (block.name === 'Image' && block.content) {
         block.content = migrateImageContent(block.content);
@@ -45,7 +47,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
       }
       if (block.name === 'TextCard' && block.content) {
-        block.content = migrateTextCardContent(block.content as Partial<TextCardContent>);
+        block.content = migrateTextCardContent(
+          block.content as Partial<TextCardContent>,
+          config.public.enableRichTextEditorV2,
+        );
       }
       if (Array.isArray(block.content)) {
         migrateAllBlocks(block.content);

@@ -1,23 +1,23 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { migrateTextCardContent } from '../migrate-text-editor';
 import { createOldTextCard, createMigratedTextCard } from './__fixtures__/TextCard';
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
 
-vi.mock('~/configuration/feature-flags.config', () => ({
-  default: {
-    enableRichTextEditorV2: true,
-  },
-}));
-
 describe('migrateTextCardContent', () => {
   it('migrates old structure with all fields', () => {
-    const result = migrateTextCardContent(createOldTextCard());
+    const result = migrateTextCardContent(createOldTextCard(), true);
     expect(result).toEqual(createMigratedTextCard());
+  });
+
+  it('does not migrate if feature flag is disabled', () => {
+    const content = createOldTextCard();
+    const result = migrateTextCardContent(content, false);
+    expect(result).toEqual(content);
   });
 
   it('does not migrate if pretitle, title, subtitle are empty', () => {
     const content = createMigratedTextCard();
-    expect(migrateTextCardContent(content)).toEqual(content);
+    expect(migrateTextCardContent(content, true)).toEqual(content);
   });
 
   it('escapes HTML in pretitle, title, subtitle', () => {
@@ -30,7 +30,7 @@ describe('migrateTextCardContent', () => {
       },
     });
 
-    const result = migrateTextCardContent(content);
+    const result = migrateTextCardContent(content, true);
     expect(result.text?.htmlDescription).toContain('&lt;b&gt;Pretitle&lt;/b&gt;');
     expect(result.text?.htmlDescription).toContain('Title &amp; &quot;Special&quot;');
     expect(result.text?.htmlDescription).toContain('Subtitle&#039;s');
@@ -38,7 +38,7 @@ describe('migrateTextCardContent', () => {
 
   it('wraps htmlDescription in <p> if no HTML tags', () => {
     const content = createOldTextCard();
-    const result = migrateTextCardContent(content);
+    const result = migrateTextCardContent(content, true);
     expect(result.text?.htmlDescription).toMatch(/<p>Some description<\/p>$/);
   });
 
@@ -49,7 +49,7 @@ describe('migrateTextCardContent', () => {
       },
     });
 
-    const result = migrateTextCardContent(content);
+    const result = migrateTextCardContent(content, true);
     expect(result.text?.htmlDescription).toMatch(/<ul><li>Item<\/li><\/ul>$/);
   });
 
@@ -62,13 +62,13 @@ describe('migrateTextCardContent', () => {
       },
     };
 
-    const result = migrateTextCardContent(content);
+    const result = migrateTextCardContent(content, true);
     expect(result.text?.htmlDescription).toBe('<h2>P</h2>\n<h1>T</h1>\n<h3>S</h3>');
   });
 
   it('handles missing text object', () => {
     const content = {};
-    expect(migrateTextCardContent(content)).toEqual(content);
+    expect(migrateTextCardContent(content, true)).toEqual(content);
   });
 
   it('handles partial text object', () => {
@@ -78,7 +78,7 @@ describe('migrateTextCardContent', () => {
       },
     };
 
-    const result = migrateTextCardContent(content);
+    const result = migrateTextCardContent(content, true);
     expect(result.text?.htmlDescription).toBe('<h2>Only pretitle</h2>');
     expect(result.text?.pretitle).toBe('');
   });
