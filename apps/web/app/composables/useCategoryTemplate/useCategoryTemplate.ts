@@ -10,6 +10,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { OldContent } from '~/utils/migrate-recommended-content';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
+import { migrateTextCardContent } from '~/utils/migrate-text-editor';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
@@ -39,7 +40,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
-  const migrateAllImageBlocks = (blocks: Block[]) => {
+  const migrateAllBlocks = (blocks: Block[]) => {
     for (const block of blocks) {
       if (block.name === 'Image' && block.content) {
         block.content = migrateImageContent(block.content);
@@ -47,8 +48,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       if (block.name === 'ProductRecommendedProducts' && block.content) {
         block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
       }
+      if (block.name === 'TextCard' && block.content) {
+        block.content = migrateTextCardContent(block.content);
+      }
       if (Array.isArray(block.content)) {
-        migrateAllImageBlocks(block.content);
+        migrateAllBlocks(block.content);
       }
     }
   };
@@ -90,7 +94,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
 
     if (Array.isArray(blocks)) {
-      migrateAllImageBlocks(blocks);
+      migrateAllBlocks(blocks);
     }
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
