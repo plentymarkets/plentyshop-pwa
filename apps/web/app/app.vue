@@ -1,5 +1,6 @@
 <template>
   <ClientOnly>
+    <component :is="SafeModeBanner" v-if="clientPreview && isSafeMode" />
     <component :is="Toolbar" v-if="clientPreview" />
   </ClientOnly>
   <div
@@ -55,17 +56,16 @@
 
 <script setup lang="ts">
 import { isCssUrl, isJsUrl } from '~/utils/assets';
+import { categoryGetters } from '@plentymarkets/shop-api';
 
-const { $isPreview } = useNuxtApp();
 const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 const { setStaticPageMeta } = useCanonical();
+const { isInEditorClient } = useEditorState();
 
-const clientPreview = ref(false);
-
-onNuxtReady(() => (clientPreview.value = !!$isPreview));
+const clientPreview = computed(() => isInEditorClient.value);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
@@ -77,23 +77,79 @@ const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 const { getSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
 
+const { data: productsCatalog } = useProducts();
+
+const category = computed(() => productsCatalog.value?.category);
+const isCategoryPage = computed(() => route.meta?.type === 'category' && !!category.value);
+
 const { getAssetsOfType } = useCustomAssets();
 
 const isSafeMode = computed(() => customAssetsSafeMode());
 
-const title = ref(getMetaTitle());
-const ogTitle = ref(getOgTitle());
+const getCategoryMetaTitle = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaTitle = categoryGetters.getMetaTitle(category.value);
+    if (categoryMetaTitle) return categoryMetaTitle;
+  }
+  return getMetaTitle();
+};
+
+const getCategoryMetaDescription = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaDescription = categoryGetters.getMetaDescription(category.value);
+    if (categoryMetaDescription) return categoryMetaDescription;
+  }
+  return getMetaDescription();
+};
+
+const getCategoryMetaKeywords = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaKeywords = categoryGetters.getMetaKeywords(category.value);
+    if (categoryMetaKeywords) return categoryMetaKeywords;
+  }
+  return getMetaKeywords();
+};
+
+const getCategoryOgTitle = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaTitle = categoryGetters.getMetaTitle(category.value);
+    if (categoryMetaTitle) return categoryMetaTitle;
+  }
+  return getOgTitle() || getMetaTitle();
+};
+
+const getCategoryOgDescription = () => {
+  if (isCategoryPage.value) {
+    const categoryMetaDescription = categoryGetters.getMetaDescription(category.value);
+    if (categoryMetaDescription) return categoryMetaDescription;
+  }
+  return getMetaDescription();
+};
+
+const title = ref(getCategoryMetaTitle());
+const ogTitle = ref(getCategoryOgTitle());
 const ogImage = ref(getOgImage());
-const description = ref(getMetaDescription());
-const keywords = ref(getMetaKeywords());
+const ogDescription = ref(getCategoryOgDescription());
+const description = ref(getCategoryMetaDescription());
+const keywords = ref(getCategoryMetaKeywords());
 const robots = ref(getRobots());
 const fav = ref(getFavicon());
 const themeColor = ref(getPrimaryColor());
 
 const cssAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('css')));
 
-const jsAssets = computed(() =>
-  isSafeMode.value ? [] : getAssetsOfType('javascript').filter((asset) => asset.isActive),
+const jsHeadAssets = computed(() =>
+  isSafeMode.value
+    ? []
+    : getAssetsOfType('javascript').filter(
+        (asset) => asset.isActive && (asset.placement === 'head_end' || !asset.placement),
+      ),
+);
+
+const jsFooterAssets = computed(() =>
+  isSafeMode.value
+    ? []
+    : getAssetsOfType('javascript').filter((asset) => asset.isActive && asset.placement === 'body_end'),
 );
 
 const metaAssets = computed(() => (isSafeMode.value ? [] : getAssetsOfType('meta').filter((asset) => asset.isActive)));
@@ -105,11 +161,12 @@ const jsExternalAssets = computed(() =>
 );
 
 watchEffect(() => {
-  title.value = getMetaTitle();
-  ogTitle.value = getOgTitle();
+  title.value = getCategoryMetaTitle();
+  ogTitle.value = getCategoryOgTitle();
   ogImage.value = getOgImage();
-  description.value = getMetaDescription();
-  keywords.value = getMetaKeywords();
+  ogDescription.value = getCategoryOgDescription();
+  description.value = getCategoryMetaDescription();
+  keywords.value = getCategoryMetaKeywords();
   robots.value = getRobots();
   fav.value = getFavicon();
   themeColor.value = getPrimaryColor();
@@ -119,6 +176,7 @@ useSeoMeta({
   title: () => title.value,
   ogTitle: () => ogTitle.value,
   ogImage: () => ogImage.value,
+  ogDescription: () => ogDescription.value,
   description: () => description.value,
   keywords: () => keywords.value,
   robots: () => robots.value,
@@ -157,9 +215,14 @@ useHead({
 if (import.meta.client) {
   useHead({
     script: () => [
-      ...jsAssets.value.map((asset) => ({
+      ...jsHeadAssets.value.map((asset) => ({
         key: `custom-js-${asset.uuid}`,
         innerHTML: asset.content,
+      })),
+      ...jsFooterAssets.value.map((asset) => ({
+        key: `custom-js-${asset.uuid}-footer`,
+        innerHTML: asset.content,
+        tagPosition: 'bodyClose',
       })),
       ...jsExternalAssets.value.map((asset) => ({
         key: `external-js-${asset.uuid}`,
@@ -177,6 +240,7 @@ onMounted(() => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
+const SafeModeBanner = defineAsyncComponent(() => import('~/components/SafeModeBanner/SafeModeBanner.vue'));
 const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
 const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
 const SiteConfigurationDrawer = defineAsyncComponent(

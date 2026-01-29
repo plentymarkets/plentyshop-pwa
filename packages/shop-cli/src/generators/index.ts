@@ -3,15 +3,16 @@
  */
 
 import type { NodePlopAPI } from 'plop';
+import type { PathResolver } from '../core';
 import componentGenerator from './component';
 import composableGenerator from './composable';
 
-export default function (plop: NodePlopAPI): void {
+export default function (plop: NodePlopAPI, pathResolver: PathResolver): void {
   console.log('✅ Loading PlentyONE Shop generators...');
 
-  componentGenerator(plop);
+  componentGenerator(plop, pathResolver);
   console.log('🎉 Component generator loaded successfully!');
 
-  composableGenerator(plop);
+  composableGenerator(plop, pathResolver);
   console.log('⚡ Composables generator loaded successfully!');
 }

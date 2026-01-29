@@ -9,8 +9,8 @@
       type="button"
       class="editor-button relative py-2 flex justify-center"
       :class="{ 'bg-editor-button text-white rounded-md': active }"
-      aria-label="Open general settings drawer"
-      data-testid="open-checkout-settings-drawer"
+      aria-label="Open custom code drawer"
+      data-testid="custom-scripts-category"
     >
       <SfIconUnfoldMore class="rotate-90" width="24" height="24px" />
     </button>
@@ -28,10 +28,10 @@ defineProps({
 <i18n lang="json">
 {
   "en": {
-    "tooltip": "Checkout: Manage settings that affect the user experience and available options during the checkout process."
+    "tooltip": "Custom Code: Manage custom code snippets."
   },
   "de": {
-    "tooltip": "Checkout: Manage settings that affect the user experience and available options during the checkout process."
+    "tooltip": "Custom Code: Manage custom code snippets."
   }
 }
 </i18n>

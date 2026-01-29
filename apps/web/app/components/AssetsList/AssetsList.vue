@@ -4,7 +4,7 @@
       <p class="mb-4">No snippets added yet</p>
       <button
         type="button"
-        data-testid="add-page-btn"
+        data-testid="add-code-snippet-empty"
         class="border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
         @click="onAdd"
       >
@@ -14,7 +14,7 @@
     </div>
 
     <div v-else class="space-y-3">
-      <p>{{ getEditorTranslation('js-disable-warning') }}</p>
+      <p v-if="props.type === 'javascript'">{{ getEditorTranslation('js-disable-warning') }}</p>
       <draggable
         v-model="snippets"
         item-key="uuid"
@@ -46,6 +46,7 @@
                   </SfIconBase>
                 </button>
                 <SfSwitch
+                  data-testid="activate-snippet"
                   :model-value="asset.isActive"
                   class="checked:bg-editor-button checked:before:hover:bg-editor-button"
                   @update:model-value="onToggle(asset, !asset.isActive)"
@@ -53,7 +54,10 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-[auto,1fr] border rounded-lg max-h-24 overflow-scroll">
+            <div
+              class="grid grid-cols-[auto,1fr] border rounded-lg max-h-24 overflow-scroll"
+              data-testid="code-snippet-overview"
+            >
               <pre
                 class="m-0 py-3 pl-3 pr-2 text-right select-none text-gray-500 bg-gray-50 font-mono text-sm leading-5 whitespace-pre"
                 >{{ lineNumbers[asset.uuid] }}</pre
@@ -73,7 +77,7 @@
 
       <button
         type="button"
-        data-testid="add-page-btn"
+        data-testid="add-code-snippet"
         class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
         @click="onAdd"
       >
@@ -152,14 +156,14 @@ const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isAct
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
     "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
-    "js-disable-warning": "If you disable JavaScript, you’ll also need to refresh the page for the changes to fully revert, otherwise some updates may still appear until reload.",
+    "js-disable-warning": "⚠️ JavaScript snippets are executed immediately when added. Disabling them does not automatically revert already executed scripts, so a page reload is required to fully reset the state.",
     "drag-reorder-aria": "Drag to reorder"
   },
   "de": {
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
     "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
-    "js-disable-warning": "If you disable JavaScript, you’ll also need to refresh the page for the changes to fully revert, otherwise some updates may still appear until reload.",
+    "js-disable-warning": "⚠️ JavaScript snippets are executed immediately when added. Disabling them does not automatically revert already executed scripts, so a page reload is required to fully reset the state.",
     "drag-reorder-aria": "Drag to reorder"
   }
 }

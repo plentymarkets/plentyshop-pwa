@@ -29,6 +29,10 @@ export class HomePageObject extends PageObject {
     return cy.getByTestId('button').contains('Browse products');
   }
 
+  get safeModeBanner() {
+    return cy.getByTestId('safe-mode-banner');
+  }
+
   get topToolbar() {
     return cy.getByTestId('edit-mode-toolbar');
   }
@@ -92,6 +96,11 @@ export class HomePageObject extends PageObject {
     cy.getByTestId('category-button').first().click();
     cy.wait('@getFacet');
     cy.getByTestId('category-page-content').should('be.visible');
+    return this;
+  }
+
+  safeModeBannerShouldNotExist() {
+    this.safeModeBanner.should('not.exist');
     return this;
   }
 
