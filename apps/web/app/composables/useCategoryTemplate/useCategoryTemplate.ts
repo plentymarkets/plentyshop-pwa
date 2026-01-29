@@ -6,12 +6,7 @@ import type {
   SaveBlocks,
 } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-
-import { migrateImageContent } from '~/utils/migrate-image-content';
-import type { OldContent } from '~/utils/migrate-recommended-content';
-import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
-import { migrateTextCardContent } from '~/utils/migrate-text-editor';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
