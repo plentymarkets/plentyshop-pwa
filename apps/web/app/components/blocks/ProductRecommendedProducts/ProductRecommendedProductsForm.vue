@@ -61,12 +61,7 @@
                 :style="{ backgroundColor: recommendedBlock.text.color }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input
-                  id="text-color"
-                  v-model="recommendedBlock.text.color"
-                  type="color"
-                  class="invisible w-8"
-                />
+                <input id="text-color" v-model="recommendedBlock.text.color" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
