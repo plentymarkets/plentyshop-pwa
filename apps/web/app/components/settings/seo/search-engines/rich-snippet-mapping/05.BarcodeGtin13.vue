@@ -57,8 +57,8 @@ const seoRichSnippetBarcodeGtin13Id = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
+    "label": "GTIN-13 barcode",
+    "tooltip": "Select a source for the GTIN-13 barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
@@ -66,8 +66,8 @@ const seoRichSnippetBarcodeGtin13Id = computed({
     "seoRichSnippetBarcodeGtin13-3": "Use specific GTIN-13 barcode by ID"
   },
   "de": {
-    "label": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for GTIN-13 barcode in Rich Snippets of the item page",
+    "label": "GTIN-13 barcode",
+    "tooltip": "Select a source for the GTIN-13 barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeGtin13-1": "Do not display",
