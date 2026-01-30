@@ -9,12 +9,7 @@
       :open="openDropdown"
       :close="close"
     >
-      <div
-        class="h-8 w-8 border border-[#dee2e6] cursor-pointer"
-        :style="style"
-        @mousedown.stop
-        @click.stop="toggle"
-      />
+      <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
     <div v-if="open" class="absolute left-0 top-full z-50 mt-2" @mousedown.stop @click.stop>

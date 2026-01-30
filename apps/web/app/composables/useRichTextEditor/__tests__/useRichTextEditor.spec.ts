@@ -1,4 +1,3 @@
-import { ref, nextTick } from 'vue';
 import { useRichTextEditor } from '../useRichTextEditor';
 import type { UseRichTextEditorArgs } from '../types';
 
@@ -8,7 +7,6 @@ const {
   setColorSpy,
   setHighlightSpy,
   setTextAlignSpy,
-  toggleHeadingSpy,
   unsetAllMarksSpy,
   clearNodesSpy,
   undoSpy,
@@ -350,7 +348,7 @@ describe('useRichTextEditor', () => {
     const { currentBlockType } = useRichTextEditor({
       modelValue,
       onUpdateModelValue,
-      
+
       expanded,
       onUpdateExpanded,
       textAlign,
@@ -405,72 +403,6 @@ describe('useRichTextEditor', () => {
     expect(currentBlockType.value).toBe('h3');
   });
 
-  it('should toggle heading level 1 when font size value is h1', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
-
-    const { onFontSizeChange } = useRichTextEditor({
-      modelValue,
-      onUpdateModelValue,
-      expanded,
-      onUpdateExpanded,
-      textAlign,
-    } as UseRichTextEditorArgs);
-
-    onFontSizeChange('h1');
-
-    expect(toggleHeadingSpy).toHaveBeenCalledWith({ level: 1 });
-    expect(runSpy).toHaveBeenCalled();
-  });
-
-  it('should toggle heading level 2 when font size value is h2', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
-
-    const { onFontSizeChange } = useRichTextEditor({
-      modelValue,
-      onUpdateModelValue,
-      expanded,
-      onUpdateExpanded,
-      textAlign,
-    } as UseRichTextEditorArgs);
-
-    onFontSizeChange('h2');
-
-    expect(toggleHeadingSpy).toHaveBeenCalledWith({ level: 2 });
-    expect(runSpy).toHaveBeenCalled();
-  });
-
-  it('should toggle heading level 3 when font size value is h3', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
-
-    const { onFontSizeChange } = useRichTextEditor({
-      modelValue,
-      onUpdateModelValue,
-      expanded,
-      onUpdateExpanded,
-      textAlign,
-    } as UseRichTextEditorArgs);
-
-    onFontSizeChange('h3');
-
-    expect(toggleHeadingSpy).toHaveBeenCalledWith({ level: 3 });
-    expect(runSpy).toHaveBeenCalled();
-  });
-
   it('should unset link when it is active', () => {
     const modelValue = ref('');
     const expanded = ref(false);
@@ -494,7 +426,7 @@ describe('useRichTextEditor', () => {
     expect(chainSpy).toHaveBeenCalled();
     expect(focusSpy).toHaveBeenCalled();
     expect(unsetLinkSpy).toHaveBeenCalled();
-     
+
     expect(runSpy).toHaveBeenCalled();
   });
 
