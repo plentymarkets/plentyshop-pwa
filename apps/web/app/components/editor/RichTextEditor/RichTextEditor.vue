@@ -234,7 +234,6 @@ const emit = defineEmits<{
   (e: 'update:expanded', value: boolean): void;
 }>();
 
-
 const {
   editor,
   expandedLocal,

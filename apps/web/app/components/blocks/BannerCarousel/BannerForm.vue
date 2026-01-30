@@ -148,7 +148,6 @@
                 </template>
               </SfInput>
             </div>
-
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>

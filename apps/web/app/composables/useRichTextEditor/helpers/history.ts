@@ -42,4 +42,4 @@ export const setupRichTextEditorHistory = (
     undo,
     redo,
   };
-}
+};

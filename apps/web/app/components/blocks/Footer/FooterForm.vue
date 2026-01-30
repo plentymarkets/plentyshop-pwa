@@ -274,12 +274,7 @@
                   :style="{ backgroundColor: footerBlock.colors.text }"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
-                  <input
-                    id="footer-text-color"
-                    v-model="footerBlock.colors.text"
-                    type="color"
-                    class="invisible w-8"
-                  />
+                  <input id="footer-text-color" v-model="footerBlock.colors.text" type="color" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -403,11 +398,7 @@
         </div>
         <div v-else>
           <label>
-            <SfInput
-              v-model="footerBlock.colors.footnoteBackground"
-              type="text"
-              data-testid="footnote-bg-color-select"
-            >
+            <SfInput v-model="footerBlock.colors.footnoteBackground" type="text" data-testid="footnote-bg-color-select">
               <template #suffix>
                 <label
                   for="footnote-bg-color"

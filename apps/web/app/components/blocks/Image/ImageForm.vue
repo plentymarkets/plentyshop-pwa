@@ -173,11 +173,7 @@
       </div>
       <div v-else>
         <label>
-          <SfInput
-            v-model="uiImageTextBlock.text.textOverlayColor"
-            type="text"
-            data-testid="text-overlay-color-input"
-          >
+          <SfInput v-model="uiImageTextBlock.text.textOverlayColor" type="text" data-testid="text-overlay-color-input">
             <template #suffix>
               <label
                 for="text-overlay-color"
