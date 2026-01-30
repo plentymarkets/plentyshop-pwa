@@ -93,7 +93,6 @@ export * from './useToolbar';
 export * from './useUpdatePageTemplate';
 export * from './useValidatorAggregator';
 export * from './useWishlist';
-export * from './useModuleRendering';
 export * from './useRobots';
 export * from './useAddPage';
 export * from './useTranslations';
