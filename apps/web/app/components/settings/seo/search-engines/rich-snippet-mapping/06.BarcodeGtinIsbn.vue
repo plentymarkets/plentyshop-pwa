@@ -55,8 +55,8 @@ const seoRichSnippetBarcodeIsbnId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for ISBN barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for ISBN barcode in Rich Snippets of the item page",
+    "label": "ISBN barcode",
+    "tooltip": "Select a source for the ISBN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeIsbn-1": "Do not display",
@@ -64,8 +64,8 @@ const seoRichSnippetBarcodeIsbnId = computed({
     "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
   },
   "de": {
-    "label": "Select source for ISBN barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for ISBN barcode in Rich Snippets of the item page",
+    "label": "ISBN barcode",
+    "tooltip": "Select a source for the ISBN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the barcode ID variation",
     "seoRichSnippetBarcodeIsbn-1": "Do not display",
