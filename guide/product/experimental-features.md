@@ -9,44 +9,21 @@ However, note that the functionality is likely still in development and may be i
 If you enable an experimental feature, you do so at your own risk.
 :::
 
-This page lists current experimental features and how to enable them.
-It doesn't include progress status, a release timeline, or similar information.
+## New experimental feature
 
-## Notify Me about items back in stock
+To create a new experimental feature, carry out the following steps:
 
-This feature is currently only avilable to PlentyONE beta systems.
+1. Open [feature-flags.config](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/configuration/feature-flags.config.ts).
+1. Add a new flag.
+   Each flag should use an environment variable to determine whether or not it's active.
+   Example: `myFlag: process.env?.MY_FLAG === '1'`
+1. Add the flag as a condition to the code you want to guard.
+   The flag is accessible via `useRuntimeConfig().public.<myFlag>`.
 
-Date addded: 5 January 2026 <br />
-Date removed: 14 January 2026
+::: tip :bulb: Opt-in
+If you want to allow users to opt in to the feature, create a [site setting](../how-to/editor/site-settings.md) for it.
+:::
 
-- Enable with `ENABLE_NOTIFY_ME='true'`
-- Enables "Notify Me" functionality on out-of-stock items on product detail pages
+## Further reading
 
-## Blockified Item Details Page
-
-Date added: 21 October 2025 <br />
-Date removed: -
-
-- Enable with `ENABLE_PRODUCT_EDITING=1`
-- Controls content on `product/[slug].vue`
-- Shifts item details from rendering static content to rendering blocks
-
-## Additional editor settings
-
-Date added: 09 October 2025 <br />
-Date removed: -
-
-- Enable with `ENABLE_ALL_EDITOR_SETTINGS=1`
-- Controls content in `SiteConfigurationDrawer.vue`
-- Adds additional settings; refer to `editorSettingsDevFlag` in `nuxt.config.ts` for a complete list
-
-## History
-
-### Blockified Item Category Page
-
-Date added: 02 October 2025 <br />
-Date removed: 20 November 2025
-
-- Enable with `ENABLE_CATEGORY_EDITING=1`
-- Controls content on `[...slug].vue`
-- Shifts item categories from rendering static content to rendering blocks
+- [Current experimental features](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/configuration/feature-flags.config.ts)
