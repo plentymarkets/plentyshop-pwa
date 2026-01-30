@@ -9,7 +9,23 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <div data-testid="text-card-form">
+    <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
+      <div class="py-2">
+        <EditorRichTextEditor
+          v-model="contentModel"
+          v-model:expanded="expandedToolbars.content"
+          :min-height="232"
+          :expandable="true"
+          :text-align="textCardBlock.text.textAlignment"
+          data-testid="rte-content"
+        />
+
+        <p class="typography-text-xs text-neutral-600 mt-2">
+          {{ getEditorTranslation('content-hint') }}
+        </p>
+      </div>
+    </div>
+    <div v-else data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
@@ -66,6 +82,7 @@
           class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
         />
       </div>
+
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
@@ -201,6 +218,7 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+
   <UiAccordionItem
     v-model="layoutSettings"
     data-testid="layout-settings"
@@ -248,6 +266,7 @@
         </SfInput>
       </label>
     </div>
+
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
 
     <div class="py-2">
@@ -323,12 +342,31 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<TextCardFormProps>();
 
+const config = useRuntimeConfig().public;
+
+const expandedToolbars = ref({
+  content: true,
+});
+
+const contentModel = computed<string>({
+  get: () => textCardBlock.value.text.htmlDescription ?? '',
+  set: (val) => {
+    textCardBlock.value.text.htmlDescription = val;
+  },
+});
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
   const content = rawContent as Partial<TextCardContent>;
 
   if (!content.text) content.text = {};
+  content.text.pretitle = content.text.pretitle ?? '';
+  content.text.title = content.text.title ?? '';
+  content.text.subtitle = content.text.subtitle ?? '';
+  content.text.htmlDescription = content.text.htmlDescription ?? '';
+  content.text.color = content.text.color ?? '';
+  content.text.textAlignment = content.text.textAlignment ?? 'left';
+
   if (!content.button) content.button = {};
   if (!content.layout) {
     content.layout = {
@@ -341,8 +379,14 @@ const textCardBlock = computed<TextCardContent>(() => {
     };
   }
 
+  content.text.pretitle ??= '';
+  content.text.title ??= '';
+  content.text.subtitle ??= '';
+  content.text.htmlDescription ??= '';
+
   return content as TextCardContent;
 });
+
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
 const textSettings = ref(false);
@@ -357,7 +401,6 @@ watch([isTransparent, backgroundColor], () => {
   textCardBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
 });
 </script>
-
 <i18n lang="json">
 {
   "en": {
@@ -383,7 +426,9 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "Keep background transparent"
+    "keep-transparent-label": "Keep background transparent",
+    "content-label": "Content",
+    "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
   },
   "de": {
     "text-group-label": "Text",
@@ -408,7 +453,9 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "or keep transparent"
+    "keep-transparent-label": "or keep transparent",
+    "content-label": "Content",
+    "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
   }
 }
 </i18n>

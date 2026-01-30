@@ -18,7 +18,7 @@ definePageMeta({
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
-  middleware: ['newsletter-confirmation-client'],
+  middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
 });
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>

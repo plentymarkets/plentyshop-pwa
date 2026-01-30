@@ -52,10 +52,22 @@ import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
 const props = defineProps<ReviewStatisticsProps>();
+const { currentProduct } = useProducts();
 
-const productId = Number(productGetters.getItemId(props.product));
+const product = computed(() => props.product || currentProduct.value);
+const productId = computed(() => {
+  const id = productGetters.getItemId(product.value);
+  return id ? Number(id) : 0;
+});
 
-const { data: productReviews, openReviewModal } = useProductReviews(productId);
+const { data: productReviews, openReviewModal, fetchProductReviews } = useProductReviews(productId.value);
+
+watch(productId, async (newId, oldId) => {
+  if (newId !== oldId && newId > 0) {
+    await fetchProductReviews(newId);
+  }
+});
+
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 const reviewAverageText = computed(() => reviewGetters.getAverageRating(countsProductReviews.value, 'tenth'));

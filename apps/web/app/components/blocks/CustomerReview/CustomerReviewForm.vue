@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomerReviewProps, CustomerReviewContent } from './types';
+import type { CustomerReviewContent } from './types';
 import {
   SfInput,
   SfIconArrowUpward,
@@ -122,8 +122,6 @@ import {
 
 const reviewsOpen = ref(true);
 const layoutOpen = ref(true);
-const props = defineProps<CustomerReviewProps>();
-
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
@@ -134,7 +132,7 @@ const { data } = useCategoryTemplate(
 );
 
 const customerReview = computed<CustomerReviewContent>(() => {
-  const uuid = props.meta?.uuid || blockUuid.value;
+  const uuid = blockUuid.value;
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   const content = rawContent as Partial<CustomerReviewContent>;
 

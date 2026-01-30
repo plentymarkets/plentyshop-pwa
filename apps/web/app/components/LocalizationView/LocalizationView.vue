@@ -8,7 +8,14 @@
         <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" :show-arrow="true" class="flex">
           <SfIconHelp class="cursor-pointer" />
         </SfTooltip>
-        <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
+        <button
+          data-testid="pages-view-close"
+          class="!p-0"
+          @click="
+            closeDrawer();
+            drawerOpen = false;
+          "
+        >
           <SfIconClose />
         </button>
       </div>

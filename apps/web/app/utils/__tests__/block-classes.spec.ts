@@ -3,7 +3,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import { buildBlockClasses } from '../block-classes';
 
 const fakeBlock = (name = 'Any', type: 'content' | 'structure' = 'content'): Block =>
-  ({ name, type }) as unknown as Block;
+  ({ name, type, meta: { uuid: 'test' } }) as unknown as Block;
 
 describe('utils/buildBlockClasses', () => {
   it('should apply container max-width when fullWidth=false and container is enabled', () => {

@@ -4,7 +4,7 @@
       <div class="text-lg text-center mt-2 font-medium">
         {{ t('orderConfirmation.softLogin.titleLogin') }}
       </div>
-      <LoginComponent :is-soft-login="true" @logged-in="$emit('submit', 'login')" />
+      <LoginComponent :is-soft-login="true" @logged-in="submitToParent" />
     </div>
 
     <div v-if="errorType === TYPE_POSTCODE" class="flex items-center justify-center flex-col">
@@ -34,7 +34,7 @@ const TYPE_LOGIN = 'login';
 const TYPE_POSTCODE = 'postcode';
 const TYPE_FULL_NAME = 'name';
 
-const submitToParent = (type: string, value?: string) => {
-  emits('submit', type, value);
+const submitToParent = (type?: string, value?: string) => {
+  emits('submit', type ?? TYPE_LOGIN, value);
 };
 </script>
