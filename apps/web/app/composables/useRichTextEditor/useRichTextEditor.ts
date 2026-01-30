@@ -111,9 +111,9 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   });
 
   const setFontColor = (color: string) => {
-    const chain = focusChain();
-    if (!chain) return;
-    chain.setColor(color).run();
+    const editorVal = editor.value;
+    if (!editorVal) return;
+    editorVal.chain().setColor(color).run();
     textColor.value = color;
   };
 
