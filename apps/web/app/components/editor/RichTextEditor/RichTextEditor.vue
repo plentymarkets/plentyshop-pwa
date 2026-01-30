@@ -14,16 +14,7 @@
       <option value="h3">H3</option>
     </select>
 
-    <label class="inline-flex items-center" @mousedown.stop @click.stop>
-      <span class="sr-only">Font color</span>
-      <input
-        type="color"
-        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
-        data-testid="rte-font-color"
-        :value="textColor"
-        @input="setFontColor(($event.target as HTMLInputElement).value)"
-      />
-    </label>
+    <EditorColorPicker :model-value="textColor" @update:model-value="setFontColor($event)" />
 
     <button
       type="button"
