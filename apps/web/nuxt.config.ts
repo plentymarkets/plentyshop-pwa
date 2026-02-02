@@ -46,12 +46,12 @@ export default defineNuxtConfig({
             if (chunk.type === 'chunk' && chunk.code.length > LIMIT) {
               throw new Error(
                 `❌ Chunk "${fileName}" is too large (${(chunk.code.length / 1024).toFixed(2)} KB). ` +
-                `Limit is ${LIMIT / 1024} KB.`
+                  `Limit is ${LIMIT / 1024} KB.`,
               );
             }
           }
         },
-      }
+      },
     ],
     optimizeDeps: {
       include: [
