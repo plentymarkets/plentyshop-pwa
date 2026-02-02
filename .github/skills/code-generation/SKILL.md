@@ -25,6 +25,13 @@ When the user requests code generation, determine:
    - Standard locations are automatic
    - For blocks/settings, use `--output-path` or shortcuts
 
+## Naming Conventions
+
+**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`)
+**Composables:** camelCase with `use` prefix (e.g., `useCart`, `useWishlist`)
+
+Validation is handled by shop-cli - invalid names will be rejected with clear error messages.
+
 ## Commands
 
 ```bash
@@ -111,10 +118,3 @@ useFeatureName/
 ├── index.ts
 └── __tests__/useFeatureName.spec.ts
 ```
-
-## Naming Conventions
-
-**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`)
-**Composables:** camelCase with `use` prefix (e.g., `useCart`, `useWishlist`)
-
-Validation is handled by shop-cli - invalid names will be rejected with clear error messages.

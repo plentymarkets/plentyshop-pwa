@@ -28,6 +28,11 @@ Use `--` to pass flags through npm:
 npm run generate:component -- ProductCard --skip-tests --with-form
 ```
 
+## Naming Conventions
+
+**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`)
+**Composables:** camelCase with `use` prefix (e.g., `useCart`, `useWishlist`)
+
 ## Available Flags
 
 | Flag                 | Description                      | Example                           |
@@ -70,11 +75,6 @@ npm run generate:settings LanguagePreferences --with-view --with-toolbar
 npm run generate:composable useProductSearch
 # Result: apps/web/app/composables/useProductSearch/
 ```
-
-## Naming Conventions
-
-**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`)
-**Composables:** camelCase with `use` prefix (e.g., `useCart`, `useWishlist`)
 
 ## Generated Structure
 
