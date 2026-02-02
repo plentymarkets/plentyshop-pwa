@@ -119,7 +119,7 @@
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="newsletterBlock.text.bgColor!" class="w-full">
+          <EditorColorPicker v-model="newsletterBlock.text.bgColor" class="w-full">
             <template #trigger="{ color, toggle }">
               <SfInput
                 v-model="newsletterBlock.text.bgColor"

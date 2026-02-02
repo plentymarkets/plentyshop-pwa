@@ -54,7 +54,7 @@
       <div v-if="recommendedBlock.text" class="p-2">
         <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="recommendedBlock.text.color!" class="w-full">
+          <EditorColorPicker v-model="recommendedBlock.text.color" class="w-full">
             <template #trigger="{ color, toggle }">
               <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
                 <template #suffix>

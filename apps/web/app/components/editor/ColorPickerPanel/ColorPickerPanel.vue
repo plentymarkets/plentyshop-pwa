@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: string;
+  modelValue: string | undefined;
   activeTab: 'shop' | 'picker';
   primaryColor: string | null;
   secondaryColor: string | null;

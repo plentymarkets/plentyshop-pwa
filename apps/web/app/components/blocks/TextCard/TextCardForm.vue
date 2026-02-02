@@ -88,7 +88,7 @@
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
         <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="textCardBlock.text.color!" class="w-full">
+          <EditorColorPicker v-model="textCardBlock.text.color" class="w-full">
             <template #trigger="{ color, toggle }">
               <label>
                 <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">

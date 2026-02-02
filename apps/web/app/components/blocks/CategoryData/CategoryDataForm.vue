@@ -212,7 +212,7 @@
       <div class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="categoryDataBlock.text.color!" class="w-full">
+          <EditorColorPicker v-model="categoryDataBlock.text.color" class="w-full">
             <template #trigger="{ color, toggle }">
               <SfInput v-model="categoryDataBlock.text.color" type="text">
                 <template #suffix>
@@ -259,7 +259,7 @@
       <div v-if="categoryDataBlock.text.background" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
         <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="categoryDataBlock.text.bgColor!" class="w-full">
+          <EditorColorPicker v-model="categoryDataBlock.text.bgColor" class="w-full">
             <template #trigger="{ color, toggle }">
               <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
                 <template #suffix>
