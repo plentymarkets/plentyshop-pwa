@@ -82,6 +82,16 @@ jobs:
 
       - name: Run linter
         run: npm run lint
+  test-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Unit tests
+        run: npm run test
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -113,29 +123,6 @@ jobs:
         with:
           name: build
           path: build.tar.gz
-
-  test-unit:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v6
-      - name: Setup Node
-        uses: ./.github/actions/setup
-      - name: Download build
-        uses: actions/download-artifact@v7
-        with:
-          name: build
-
-      - name: Extract build
-        run: tar -xzf build.tar.gz
-
-      - name: 'log'
-        run: ls -la apps/web
-      - name: 'log dir'
-        run: 'pwd'
-      - name: Unit tests
-        run: npm run test
   smoke:
     if: github.repository == 'plentymarkets/plentyshop-pwa'
     needs: build
