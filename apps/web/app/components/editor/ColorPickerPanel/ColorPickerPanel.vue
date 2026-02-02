@@ -30,7 +30,10 @@
         />
       </div>
       <div class="mt-3">
-        <p>These are your primary shop colors</p>
+        <span class="italic"
+          >These are your primary shop colors. You can customize them in your site settings from Branding % Design /
+          Colours.</span
+        >
       </div>
     </div>
   </div>

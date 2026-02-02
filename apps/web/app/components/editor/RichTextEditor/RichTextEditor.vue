@@ -14,7 +14,7 @@
       <option value="h3">H3</option>
     </select>
 
-    <EditorColorPicker :model-value="textColor" @update:model-value="setFontColor($event)" />
+    <EditorColorPicker :model-value="textColor" dropdown-align="rte" @update:model-value="setFontColor($event)" />
 
     <button
       type="button"
@@ -94,16 +94,11 @@
       S
     </button>
 
-    <label class="inline-flex items-center" @mousedown.stop @click.stop>
-      <span class="sr-only">Highlight color</span>
-      <input
-        type="color"
-        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
-        data-testid="rte-highlight-color"
-        :value="highlightColor"
-        @input="setHighlightColor(($event.target as HTMLInputElement).value)"
-      />
-    </label>
+    <EditorColorPicker
+      :model-value="highlightColor"
+      dropdown-align="ctr"
+      @update:model-value="setHighlightColor($event)"
+    />
 
     <span class="w-px h-5 bg-gray-200 mx-0.5" />
 

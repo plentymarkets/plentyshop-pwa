@@ -12,7 +12,7 @@
       <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
-    <div v-if="open" class="absolute left-0 top-full z-50 mt-2" @mousedown.stop @click.stop>
+    <div v-if="open" :class="['absolute top-full z-50 mt-2', dropdownPositionClass]" @mousedown.stop @click.stop>
       <EditorColorPickerPanel
         :model-value="modelValue"
         :active-tab="activeTab"
@@ -28,6 +28,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   modelValue: string | undefined;
+  dropdownAlign?: 'default' | 'rte' | 'ctr';
 }>();
 
 const emit = defineEmits<{
@@ -37,6 +38,18 @@ const emit = defineEmits<{
 const open = ref(false);
 const root = ref<HTMLElement | null>(null);
 const activeTab = ref<'shop' | 'picker'>('picker');
+
+const dropdownPositionClass = computed(() => {
+  switch (props.dropdownAlign) {
+    case 'rte':
+      return 'right-0 translate-x-1/2';
+    case 'ctr':
+      return '';
+    case 'default':
+    default:
+      return '-translate-x-[5%]';
+  }
+});
 
 const style = computed(() => ({
   backgroundColor: props.modelValue || '#000000',
