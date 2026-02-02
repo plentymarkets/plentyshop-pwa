@@ -36,6 +36,23 @@ export default defineNuxtConfig({
         usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
+    plugins: [
+      {
+        name: 'fail-on-large-chunks',
+        generateBundle(_, bundle) {
+          if (!process.env.CI) return;
+          const LIMIT = 720 * 1024; // 720 KB
+          for (const [fileName, chunk] of Object.entries(bundle)) {
+            if (chunk.type === 'chunk' && chunk.code.length > LIMIT) {
+              throw new Error(
+                `❌ Chunk "${fileName}" is too large (${(chunk.code.length / 1024).toFixed(2)} KB). ` +
+                `Limit is ${LIMIT / 1024} KB.`
+              );
+            }
+          }
+        },
+      }
+    ],
     optimizeDeps: {
       include: [
         '@floating-ui/vue',
