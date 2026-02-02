@@ -20,13 +20,13 @@
           type="button"
           class="h-8 w-8 rounded-md border border-slate-200"
           :style="{ backgroundColor: props.primaryColor || '#000000' }"
-          @click="emit('update:modelValue', '__theme_primary__')"
+          @click="emit('update:modelValue', 'rgb(var(--colors-2-primary-500))')"
         />
         <button
           type="button"
           class="h-8 w-8 rounded-md border border-slate-200"
           :style="{ backgroundColor: props.secondaryColor || '#000000' }"
-          @click="emit('update:modelValue', '__theme_secondary__')"
+          @click="emit('update:modelValue', 'rgb(var(--colors-2-secondary-500))')"
         />
       </div>
       <div class="mt-3">

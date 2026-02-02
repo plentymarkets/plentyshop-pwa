@@ -103,7 +103,7 @@ describe('ColorPickerPanel', () => {
     await primaryButton.trigger('click');
     await secondaryButton.trigger('click');
 
-    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['__theme_primary__']);
-    expect(wrapper.emitted('update:modelValue')?.[1]).toEqual(['__theme_secondary__']);
+    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['rgb(var(--colors-2-primary-500))']);
+    expect(wrapper.emitted('update:modelValue')?.[1]).toEqual(['rgb(var(--colors-2-secondary-500))']);
   });
 });
