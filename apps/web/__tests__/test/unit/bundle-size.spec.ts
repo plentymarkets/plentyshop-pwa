@@ -11,6 +11,9 @@ const BUDGETS = {
 };
 
 const OUTPUT_DIR = path.resolve(__dirname, '../../../.output/public/_nuxt');
+
+console.log('Dir Name', __dirname);
+console.log('Bundle size audit - checking files in:', OUTPUT_DIR);
 const BUILD_EXISTS = fs.existsSync(OUTPUT_DIR);
 
 describe('Production Bundle Size Audit', () => {
