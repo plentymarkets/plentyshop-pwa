@@ -131,7 +131,7 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: 'log'
-        run: ls -la
+        run: ls -la apps/web
       - name: Unit tests
         run: npm run test
   smoke:
