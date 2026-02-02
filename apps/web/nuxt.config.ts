@@ -7,6 +7,7 @@ import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
+import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -36,6 +37,7 @@ export default defineNuxtConfig({
         usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
+    plugins: [FailOnLargeChunksPlugin],
     optimizeDeps: {
       include: [
         '@floating-ui/vue',
