@@ -8,7 +8,7 @@
       @click.stop
       @change="onFontSizeChange(($event.target as HTMLSelectElement).value)"
     >
-      <option value="paragraph" class="font-bold">Aa</option>
+      <option value="paragraph" class="font-bold">normal</option>
       <option value="h1">H1</option>
       <option value="h2">H2</option>
       <option value="h3">H3</option>
@@ -187,7 +187,7 @@
 
     <span class="w-px h-5 bg-gray-200 mx-0.5" />
 
-    <EditorRichTextEditorMenuButton :disabled="!canUndo" @click="cmd('setHorizontalRule')">
+    <EditorRichTextEditorMenuButton @click="cmd('setHorizontalRule')">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
         <path d="M160-440v-80h640v80H160Z" />
       </svg>
