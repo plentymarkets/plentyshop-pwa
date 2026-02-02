@@ -1,4 +1,4 @@
-import { NormalizedOutputOptions, OutputBundle } from 'rollup';
+import type { NormalizedOutputOptions, OutputBundle } from 'rollup';
 
 export const FailOnLargeChunksPlugin = {
   name: 'fail-on-large-chunks',
