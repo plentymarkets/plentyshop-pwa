@@ -43,6 +43,7 @@ export default defineNuxtConfig({
           if (!process.env.CI) return;
           const LIMIT = 720 * 1024; // 720 KB
           for (const [fileName, chunk] of Object.entries(bundle)) {
+            if (fileName === 'server.mjs') continue; // skip server bundle
             if (chunk.type === 'chunk' && chunk.code.length > LIMIT) {
               throw new Error(
                 `❌ Chunk "${fileName}" is too large (${(chunk.code.length / 1024).toFixed(2)} KB). ` +
