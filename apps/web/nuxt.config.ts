@@ -89,6 +89,17 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
+            tiptap: [
+              '@tiptap/vue-3',
+              '@tiptap/core',
+              '@tiptap/starter-kit',
+              '@tiptap/extension-link',
+              '@tiptap/extension-underline',
+              '@tiptap/extension-text-style',
+              '@tiptap/extension-color',
+              '@tiptap/extension-highlight',
+              '@tiptap/extension-text-align',
+            ],
             vuetify: ['vuetify', '@mdi/js'],
             cmmain: ['codemirror'],
             cmplugins: [
