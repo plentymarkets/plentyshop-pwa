@@ -32,7 +32,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void;
+  (event: 'update:modelValue', value: string): void;
 }>();
 
 const open = ref(false);
