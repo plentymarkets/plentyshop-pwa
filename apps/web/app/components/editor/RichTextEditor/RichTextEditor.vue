@@ -14,11 +14,21 @@
       <option value="h3">H3</option>
     </select>
 
-    <label class="inline-flex items-center" @mousedown.stop @click.stop>
+    <label class="relative inline-flex items-center cursor-pointer" @mousedown.stop @click.stop>
       <span class="sr-only">Font color</span>
+      <button
+        type="button"
+        class="w-8 h-8 rounded border border-transparent bg-transparent hover:bg-gray-100 inline-flex flex-col items-center justify-center text-sm cursor-pointer relative overflow-hidden"
+        @mousedown.prevent
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
+          <path d="m246-160 176-464h116l176 464h-117l-38-112H401l-38 112H246Zm176-203h116l-56-166h-4l-56 166Z"/>
+        </svg>
+        <span class="absolute bottom-0.5 left-1 right-1 h-1 rounded-sm" :style="{ backgroundColor: textColor }" />
+      </button>
       <input
         type="color"
-        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
+        class="absolute inset-0 opacity-0 cursor-pointer"
         data-testid="rte-font-color"
         :value="textColor"
         @input="setFontColor(($event.target as HTMLInputElement).value)"
@@ -120,11 +130,19 @@
       </svg>
     </button>
 
-    <label class="inline-flex items-center" @mousedown.stop @click.stop>
+    <label class="relative inline-flex items-center cursor-pointer" @mousedown.stop @click.stop>
       <span class="sr-only">Highlight color</span>
+      <button
+        type="button"
+        class="w-8 h-8 rounded border border-transparent bg-transparent hover:bg-gray-100 inline-flex flex-col items-center justify-center text-sm cursor-pointer relative overflow-hidden"
+        @mousedown.prevent
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#062633"><path d="M544-400 440-504 240-304l104 104 200-200Zm-47-161 104 104 199-199-104-104-199 199Zm-84-28 216 216-229 229q-24 24-56 24t-56-24l-2-2-26 26H60l126-126-2-2q-24-24-24-56t24-56l229-229Zm0 0 227-227q24-24 56-24t56 24l104 104q24 24 24 56t-24 56L629-373 413-589Z"/></svg>
+        <span class="absolute bottom-0.5 left-1 right-1 h-1 rounded-sm" :style="{ backgroundColor: highlightColor }" />
+      </button>
       <input
         type="color"
-        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
+        class="absolute inset-0 opacity-0 cursor-pointer"
         data-testid="rte-highlight-color"
         :value="highlightColor"
         @input="setHighlightColor(($event.target as HTMLInputElement).value)"
