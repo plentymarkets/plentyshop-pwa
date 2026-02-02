@@ -1,39 +1,18 @@
 <template>
   <div class="flex items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200" data-testid="rte-toolbar">
     <select
-      class="h-8 border border-gray-200 rounded px-2 bg-white text-sm"
+      class="h-8 pl-2 rounded bg-transparent hover:bg-gray-100 text-sm cursor-pointer font-bold"
       :value="currentBlockType"
       data-testid="rte-font-size"
       @mousedown.stop
       @click.stop
       @change="onFontSizeChange(($event.target as HTMLSelectElement).value)"
     >
-      <option value="paragraph">Normal</option>
+      <option value="paragraph" class="font-bold">Aa</option>
       <option value="h1">H1</option>
       <option value="h2">H2</option>
       <option value="h3">H3</option>
     </select>
-
-    <label class="relative inline-flex items-center cursor-pointer" @mousedown.stop @click.stop>
-      <span class="sr-only">Font color</span>
-      <button
-        type="button"
-        class="w-8 h-8 rounded border border-transparent bg-transparent hover:bg-gray-100 inline-flex flex-col items-center justify-center text-sm cursor-pointer relative overflow-hidden"
-        @mousedown.prevent
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
-          <path d="m246-160 176-464h116l176 464h-117l-38-112H401l-38 112H246Zm176-203h116l-56-166h-4l-56 166Z" />
-        </svg>
-        <span class="absolute bottom-0.5 left-1 right-1 h-1 rounded-sm" :style="{ backgroundColor: textColor }" />
-      </button>
-      <input
-        type="color"
-        class="absolute inset-0 opacity-0 cursor-pointer"
-        data-testid="rte-font-color"
-        :value="textColor"
-        @input="setFontColor(($event.target as HTMLInputElement).value)"
-      />
-    </label>
 
     <button
       type="button"
@@ -88,6 +67,27 @@
         />
       </svg>
     </button>
+
+    <label class="relative inline-flex items-center cursor-pointer" @mousedown.stop @click.stop>
+      <span class="sr-only">Font color</span>
+      <button
+        type="button"
+        class="w-8 h-8 rounded border border-transparent bg-transparent hover:bg-gray-100 inline-flex flex-col items-center justify-center text-sm cursor-pointer relative overflow-hidden"
+        @mousedown.prevent
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
+          <path d="m246-160 176-464h116l176 464h-117l-38-112H401l-38 112H246Zm176-203h116l-56-166h-4l-56 166Z" />
+        </svg>
+        <span class="absolute bottom-0.5 left-1 right-1 h-1 rounded-sm" :style="{ backgroundColor: textColor }" />
+      </button>
+      <input
+        type="color"
+        class="absolute inset-0 opacity-0 cursor-pointer"
+        data-testid="rte-font-color"
+        :value="textColor"
+        @input="setFontColor(($event.target as HTMLInputElement).value)"
+      />
+    </label>
 
     <button
       v-if="expandable"
