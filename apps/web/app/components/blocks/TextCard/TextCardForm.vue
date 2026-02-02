@@ -268,7 +268,7 @@
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
       <div v-if="runtimeConfig.enableColorPicker">
-        <EditorColorPicker v-model="backgroundColor!" class="w-full">
+        <EditorColorPicker v-model="backgroundColor" class="w-full">
           <template #trigger="{ color, toggle }">
             <label>
               <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">

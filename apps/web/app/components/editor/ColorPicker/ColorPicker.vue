@@ -49,7 +49,7 @@ const dropdownPositionClass = computed(() => {
   return '';
 });
 const style = computed(() => ({
-  backgroundColor: props.modelValue || '#000000',
+  backgroundColor: props.modelValue || '#ffffff',
 }));
 
 const previewColor = computed(() => style.value.backgroundColor as string);
