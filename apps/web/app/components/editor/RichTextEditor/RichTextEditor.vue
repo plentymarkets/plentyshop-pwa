@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200" data-testid="rte-toolbar">
+  <div class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200" data-testid="rte-toolbar">
     <select
       class="h-8 pl-2 rounded bg-transparent hover:bg-gray-100 text-sm cursor-pointer font-bold"
       :value="currentBlockType"
@@ -84,7 +84,7 @@
 
   <div
     v-if="expandable && expandedLocal"
-    class="flex items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200"
+    class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200"
     data-testid="rte-toolbar-expanded"
   >
     <EditorRichTextEditorMenuButton :active="isActive('blockquote')" @click="cmd('toggleBlockquote')">
