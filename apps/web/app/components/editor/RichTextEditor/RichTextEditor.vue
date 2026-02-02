@@ -8,7 +8,7 @@
       @click.stop
       @change="onFontSizeChange(($event.target as HTMLSelectElement).value)"
     >
-      <option value="paragraph" class="font-bold">normal</option>
+      <option value="paragraph" class="font-bold">Normal</option>
       <option value="h1">H1</option>
       <option value="h2">H2</option>
       <option value="h3">H3</option>
