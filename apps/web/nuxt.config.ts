@@ -37,6 +37,19 @@ export default defineNuxtConfig({
       },
     },
     plugins: [
+      /**
+       * Vite plugin that enforces a hard size limit on generated client chunks during CI builds.
+       *
+       * @remarks
+       * - The plugin runs only when {@link process.env.CI} is truthy so that local development
+       *   and ad‑hoc builds are not affected by bundle size failures.
+       * - The limit is set to 600 KB to catch accidental bundle bloat (for example, adding
+       *   large dependencies or disabling code-splitting) while still allowing Nuxt's
+       *   default chunking strategy and typical application growth.
+       * - The `server.mjs` bundle is explicitly excluded because it is not served to browsers
+       *   and can legitimately be larger than client-facing chunks without impacting
+       *   user-perceived performance.
+       */
       {
         name: 'fail-on-large-chunks',
         generateBundle(_, bundle) {
