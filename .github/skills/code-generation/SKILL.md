@@ -6,19 +6,13 @@ triggers: [generate, create, scaffold, new component, new composable]
 
 # Code Generation Skill
 
-## Description
-
-Automates component, composable, and CMS block scaffolding using the PlentyONE Shop CLI. **Use this skill when creating new code structures** instead of manually copying existing files. Ensures consistent conventions, TypeScript types, test stubs, and proper organization.
-
-**Triggers:** "generate", "create", "scaffold" + "component"/"composable"/"block"/"settings"
-
 ## Required Input
 
 When the user requests code generation, determine:
 
 1. **Type**: component or composable?
    - If unclear, ask: "Should I generate [Name] as a component or composable?"
-   - Infer from context when possible (e.g., "use*" prefix = composable)
+   - Infer from context when possible (e.g., "use\*" prefix = composable)
 
 2. **Name**: What should it be called?
    - Auto-correct naming conventions gracefully:
@@ -47,14 +41,14 @@ npm run generate:settings SettingsName [--options]   # outputs to components/set
 
 ## Available Options
 
-| Option | Description | Example |
-|--------|-------------|---------|
-| `--output-path=path` | Custom output location | `--output-path=components/blocks` |
-| `--skip-tests` | Don't generate test files | `--skip-tests` |
-| `--skip-types` | Don't generate types.ts | `--skip-types` |
-| `--with-form` | Add *Form.vue (for CMS editor blocks) | `--with-form` |
-| `--with-view` | Add View.vue (for settings panels) | `--with-view` |
-| `--with-toolbar` | Add ToolbarTrigger.vue (for settings) | `--with-toolbar` |
+| Option               | Description                            | Example                           |
+| -------------------- | -------------------------------------- | --------------------------------- |
+| `--output-path=path` | Custom output location                 | `--output-path=components/blocks` |
+| `--skip-tests`       | Don't generate test files              | `--skip-tests`                    |
+| `--skip-types`       | Don't generate types.ts                | `--skip-types`                    |
+| `--with-form`        | Add \*Form.vue (for CMS editor blocks) | `--with-form`                     |
+| `--with-view`        | Add View.vue (for settings panels)     | `--with-view`                     |
+| `--with-toolbar`     | Add ToolbarTrigger.vue (for settings)  | `--with-toolbar`                  |
 
 ## Examples
 
@@ -78,6 +72,7 @@ npm run generate:component MyWidget --output-path=components/custom --skip-tests
 ## Output Format
 
 **Success:**
+
 ```json
 {
   "success": true,
@@ -88,6 +83,7 @@ npm run generate:component MyWidget --output-path=components/custom --skip-tests
 ```
 
 **Error:**
+
 ```json
 {
   "success": false,
@@ -98,6 +94,7 @@ npm run generate:component MyWidget --output-path=components/custom --skip-tests
 ## Generated Structure
 
 **Component:**
+
 ```
 ComponentName/
 ├── ComponentName.vue
@@ -106,6 +103,7 @@ ComponentName/
 ```
 
 **Composable:**
+
 ```
 useFeatureName/
 ├── useFeatureName.ts
@@ -116,15 +114,7 @@ useFeatureName/
 
 ## Naming Conventions
 
-**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`)  
+**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`)
 **Composables:** camelCase with `use` prefix (e.g., `useCart`, `useWishlist`)
 
 Validation is handled by shop-cli - invalid names will be rejected with clear error messages.
-
-## Implementation Details
-
-**Script location:** `.github/skills/code-generation/generate.sh`  
-**Wrapper for:** `npx plentyshop generate` (non-interactive)  
-**Validation:** Delegated to shop-cli  
-**Features:** Custom output paths, optional file skipping, template generation  
-**Performance:** ~1-2 seconds generation time
