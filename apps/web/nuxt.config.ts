@@ -37,9 +37,7 @@ export default defineNuxtConfig({
         usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
-    plugins: [
-      FailOnLargeChunksPlugin
-    ],
+    plugins: [FailOnLargeChunksPlugin],
     optimizeDeps: {
       include: [
         '@floating-ui/vue',
