@@ -41,7 +41,7 @@ export default defineNuxtConfig({
         name: 'fail-on-large-chunks',
         generateBundle(_, bundle) {
           if (!process.env.CI) return;
-          const LIMIT = 720 * 1024; // 720 KB
+          const LIMIT = 600 * 1024; // 600 KB
           for (const [fileName, chunk] of Object.entries(bundle)) {
             if (fileName === 'server.mjs') continue; // skip server bundle
             if (chunk.type === 'chunk' && chunk.code.length > LIMIT) {
