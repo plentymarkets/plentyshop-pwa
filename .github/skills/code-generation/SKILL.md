@@ -1,3 +1,9 @@
+---
+description: Automates component, composable, and CMS block scaffolding using the PlentyONE Shop CLI. Use this skill when creating new code structures instead of manually copying existing files.
+tags: [code-generation, scaffolding, component, composable, vue, typescript]
+triggers: [generate, create, scaffold, new component, new composable]
+---
+
 # Code Generation Skill
 
 ## Description
@@ -190,59 +196,30 @@ cd .github/skills/code-generation
 | `--web-app-path` | Override default web app path                                              | No       | `--web-app-path=src/app`          | Must be valid directory path                                                |
 | `--output-path`  | Custom output subdirectory (relative to web app path)                      | No       | `--output-path=components/blocks` | Must start with whitelisted prefix, see [Path Validation](#path-validation) |
 
-### Path Validation
-
-**Allowed prefixes:** `components/`, `composables/`, `pages/`, `layouts/`, `middleware/`, `plugins/`, `utils/`, `server/`
-
-**Security:** ❌ No `..`, ❌ No absolute paths, ❌ Only alphanumeric/dash/underscore/slash, ❌ Must use whitelisted prefix
-
-**Examples:** ✅ `components/blocks`, ✅ `components/settings/general` | ❌ `../../etc`, ❌ `/tmp/bad`, ❌ `node_modules/evil`
-
 ### Output Format
 
 Success: `{"success": true, "generator": "component", "name": "ProductCard", "files": [...]}`
-Error: `{"success": false, "error": "Component ProductCard already exists"}`
+Error: `{"success": false, "error": "Generator failed"}`
+
+**Note:** The script wraps `npx plentyshop generate` - validation is handled by the shop-cli.
 
 ## Naming Conventions
 
-### Components (PascalCase)
+**Components:** PascalCase (e.g., `ProductCard`, `ShoppingCart`, `AddressForm`)
+**Composables:** camelCase with `use` prefix (e.g., `useShoppingCart`, `useProduct`)
 
-Components must start with an uppercase letter and use PascalCase:
-
-- ✅ `ProductCard`, `ShoppingCart`, `AddressForm`, `VideoBlock`
-- ❌ `productCard` (lowercase start)
-- ❌ `product-card` (kebab-case)
-- ❌ `PRODUCTCARD` (all caps)
-- ❌ `Product_Card` (underscores)
-
-**Validation:** Must match `^[A-Z][a-zA-Z0-9]*$`
-
-### Composables (camelCase with `use` prefix)
-
-Composables must start with `use` followed by PascalCase:
-
-- ✅ `useShoppingCart`, `useProduct`, `useWishlist`, `useEditor`
-- ❌ `UseShoppingCart` (PascalCase)
-- ❌ `shopping-cart` (no `use` prefix)
-- ❌ `shoppingCart` (no `use` prefix)
-- ❌ `useproduct` (lowercase after `use`)
-
-**Validation:** Must match `^use[A-Z][a-zA-Z0-9]*$`
+**Validation handled by shop-cli** - invalid names will be rejected during generation.
 
 ## Error Handling
 
-| Error                                             | Cause                      | Solution                                             |
-| ------------------------------------------------- | -------------------------- | ---------------------------------------------------- |
-| `File already exists`                             | Name conflict              | Choose different name or remove existing files       |
-| `Invalid component name: must be PascalCase`      | Wrong naming convention    | Use PascalCase starting with uppercase letter        |
-| `Invalid composable name: must start with 'use'`  | Missing or wrong prefix    | Start with `use` followed by PascalCase              |
-| `Invalid name format`                             | Special characters in name | Use only alphanumeric characters                     |
-| `Invalid output path: directory traversal`        | Path contains `..`         | Use relative paths without directory traversal       |
-| `Invalid output path: absolute paths not allowed` | Path starts with `/`       | Use relative paths only                              |
-| `Invalid output path: must start with one of`     | Non-whitelisted prefix     | Use allowed prefixes (components, composables, etc.) |
-| `Invalid output path: only alphanumeric...`       | Special characters in path | Use only alphanumeric, dash, underscore, and `/`     |
-| `npx: command not found`                          | Node.js not installed      | Ensure Node.js is installed and in PATH              |
-| `Generator not found`                             | Invalid generator type     | Use `component` or `composable`                      |
+Errors are reported via JSON output: `{"success": false, "error": "message"}`
+
+Common issues:
+
+- **Generator failed** - Invalid name format or shop-cli not installed
+- **Failed to move files** - Custom output path issue
+
+Most validation (naming, paths, conflicts) is handled by shop-cli.
 
 ## Example Workflows
 
@@ -298,25 +275,11 @@ Composables must start with `use` followed by PascalCase:
 
 **Components** (`components/`) - Standard Vue components, frontend shop, regular i18n via auto-imported `t()`, follow Nuxt auto-import
 
-## CI/CD Integration
+## Implementation Details
 
-Script validated via `.github/workflows/integration.yml`:
+**Script:** Thin wrapper around `npx plentyshop generate`
+**Validation:** Delegated to shop-cli
+**Features:** Non-interactive input, custom output paths, optional files, template generation
+**CI/CD:** Shellcheck validated on every PR
 
-- Shellcheck linting on every PR
-- Validates syntax and security
-- Ignores SC2312, SC1091
-
-**Run locally:** `shellcheck -e SC2312 -e SC1091 .github/skills/code-generation/generate.sh`
-
-## Security & Best Practices
-
-✅ Input validation (regex, whitelist, character check)
-✅ No command injection (direct npx, no eval)
-✅ Path traversal protection (blocks `..`, absolute paths)
-✅ Directory whitelist (allowed prefixes only)
-✅ Template injection prevention (name validation)
-✅ Error cleanup (trap removes partial files)
-✅ Least privilege (no sudo, whitelisted paths)
-✅ Shellcheck validated
-
-**Performance:** ~1-2 seconds generation, minimal memory, optimized I/O
+**Performance:** ~1-2 seconds generation
