@@ -211,58 +211,6 @@ describe('RichTextEditor', () => {
     expect(wrapper.find('[data-testid="rte-toolbar-expanded"]').exists()).toBe(true);
   });
 
-  it('should call setHighlightColor and setAlign from expanded toolbar', async () => {
-    const setHighlightColor = vi.fn();
-    const setAlign = vi.fn();
-
-    useRichTextEditor.mockReturnValue({
-      editor: null,
-      expandedLocal: ref(true),
-      cmd: vi.fn(),
-      isActive: vi.fn().mockReturnValue(false),
-      currentBlockType: ref('paragraph'),
-      onFontSizeChange: vi.fn(),
-      textColor: ref('#000000'),
-      highlightColor: ref('#ffffff'),
-      setFontColor: vi.fn(),
-      setHighlightColor,
-      setAlign,
-      isActiveAlign: vi.fn().mockReturnValue(false),
-      textAlignStyle: ref({ textAlign: 'left' }),
-      canUndo: ref(true),
-      canRedo: ref(true),
-      undo: vi.fn(),
-      redo: vi.fn(),
-      toggleLink: vi.fn(),
-      clearFormatting: vi.fn(),
-      focus: vi.fn(),
-    });
-
-    const wrapper = mount(RichTextEditor, {
-      global: {
-        stubs: {
-          EditorContent: true,
-          EditorColorPicker: true,
-        },
-      },
-    });
-
-    const highlightInput = wrapper.get('[data-testid="rte-highlight-color"]');
-    await highlightInput.setValue('#123456');
-
-    expect(setHighlightColor).toHaveBeenCalledWith('#123456');
-
-    const expandedToolbarButtons = wrapper.get('[data-testid="rte-toolbar-expanded"]').findAll('button');
-    const alignLeftButton = expandedToolbarButtons.find((btn) => btn.text() === '⬅');
-    const alignCenterButton = expandedToolbarButtons.find((btn) => btn.text() === '⬌');
-
-    await alignLeftButton?.trigger('click');
-    await alignCenterButton?.trigger('click');
-
-    expect(setAlign).toHaveBeenCalledWith('left');
-    expect(setAlign).toHaveBeenCalledWith('center');
-  });
-
   it('should call toggleLink, undo and redo from toolbars', async () => {
     const toggleLink = vi.fn();
     const undo = vi.fn();

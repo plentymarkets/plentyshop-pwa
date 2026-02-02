@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="runtimeConfig.enableColorPicker">
-      <EditorColorPicker v-model="secondaryColor" class="w-full">
+      <EditorColorPicker v-model="secondaryColor" class="w-full" :show-shop-colors="false">
         <template #trigger="{ color, toggle }">
           <label>
             <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">

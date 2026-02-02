@@ -18,6 +18,7 @@
         :active-tab="activeTab"
         :primary-color="primaryColor"
         :secondary-color="secondaryColor"
+        :show-shop-colors="props.showShopColors"
         @update:model-value="emit('update:modelValue', $event)"
         @update:active-tab="activeTab = $event"
       />
@@ -26,10 +27,17 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  modelValue: string | undefined;
-  dropdownAlign?: 'default' | 'rte' | 'ctr';
-}>();
+const props = withDefaults(
+  defineProps<{
+    modelValue: string | undefined;
+    dropdownAlign?: 'default' | 'rte' | 'ctr';
+    showShopColors?: boolean;
+  }>(),
+  {
+    dropdownAlign: 'default',
+    showShopColors: true,
+  },
+);
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void;

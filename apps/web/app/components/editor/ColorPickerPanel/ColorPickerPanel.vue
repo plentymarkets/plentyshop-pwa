@@ -1,8 +1,12 @@
 <template>
   <div class="rounded-md border bg-white shadow-md p-3 min-w-[220px]">
-    <EditorColorPickerTabs :active-tab="props.activeTab" @update:active-tab="emit('update:activeTab', $event)" />
+    <EditorColorPickerTabs
+      v-if="props.showShopColors"
+      :active-tab="props.activeTab"
+      @update:active-tab="emit('update:activeTab', $event)"
+    />
 
-    <div v-if="props.activeTab === 'picker'">
+    <div v-if="!props.showShopColors || props.activeTab === 'picker'">
       <color-picker-block
         :model-value="props.modelValue"
         with-hex-input
@@ -37,12 +41,18 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  modelValue: string | undefined;
-  activeTab: 'shop' | 'picker';
-  primaryColor: string | null;
-  secondaryColor: string | null;
-}>();
+const props = withDefaults(
+  defineProps<{
+    modelValue: string | undefined;
+    activeTab: 'shop' | 'picker';
+    primaryColor: string | null;
+    secondaryColor: string | null;
+    showShopColors?: boolean;
+  }>(),
+  {
+    showShopColors: true,
+  },
+);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void;
