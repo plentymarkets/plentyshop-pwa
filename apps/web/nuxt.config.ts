@@ -40,7 +40,10 @@ export default defineNuxtConfig({
       {
         name: 'fail-on-large-chunks',
         generateBundle(_, bundle) {
-          if (!process.env.FAIL_BUILD_ON_LARGE_CHUNKS) return;
+          if (!process.env.FAIL_BUILD_ON_LARGE_CHUNKS){
+            console.warn('Skipping chunk size check as FAIL_BUILD_ON_LARGE_CHUNKS is not set.');
+            return;
+          };
           const LIMIT = 600 * 1024; // 600 KB
           for (const [fileName, chunk] of Object.entries(bundle)) {
             if (fileName === 'server.mjs') continue; // skip server bundle
