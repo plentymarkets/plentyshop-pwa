@@ -30,10 +30,7 @@
         />
       </div>
       <div class="mt-3">
-        <span class="italic"
-          >These are your primary shop colors. You can customize them in your site settings from Branding % Design /
-          Colours.</span
-        >
+        <span class="italic text-xs">{{ getEditorTranslation('primary-shop') }}</span>
       </div>
     </div>
   </div>
@@ -52,3 +49,14 @@ const emit = defineEmits<{
   (e: 'update:activeTab', v: 'shop' | 'picker'): void;
 }>();
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "primary-shop": "These are your primary shop colors. You can customize them in your site settings from Branding & Design"
+  },
+  "de": {
+    "primary-shop": "These are your primary shop colors. You can customize them in your site settings from Branding & Design"
+  }
+}
+</i18n>

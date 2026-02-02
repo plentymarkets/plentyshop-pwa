@@ -39,18 +39,15 @@ const open = ref(false);
 const root = ref<HTMLElement | null>(null);
 const activeTab = ref<'shop' | 'picker'>('picker');
 
-const dropdownPositionClass = computed(() => {
-  switch (props.dropdownAlign) {
-    case 'rte':
-      return 'right-0 translate-x-1/2';
-    case 'ctr':
-      return '';
-    case 'default':
-    default:
-      return '-translate-x-[5%]';
-  }
-});
+const instanceId = `color-picker-${Math.random().toString(36).slice(2)}`;
+const activeId = useState<string | null>('editorColorPickerActiveId', () => null);
 
+const dropdownPositionClass = computed(() => {
+  if (props.dropdownAlign === 'rte') {
+    return 'right-0 translate-x-1/2';
+  }
+  return '';
+});
 const style = computed(() => ({
   backgroundColor: props.modelValue || '#000000',
 }));
@@ -63,16 +60,30 @@ const { getSetting: getSecondaryColorSetting } = useSiteSettings('secondaryColor
 const primaryColor = computed(() => getPrimaryColorSetting());
 const secondaryColor = computed(() => getSecondaryColorSetting());
 
+watch(
+  activeId,
+  (newId) => {
+    open.value = newId === instanceId;
+  },
+  { immediate: true },
+);
+
 const openDropdown = () => {
-  open.value = true;
+  activeId.value = instanceId;
 };
 
 const close = () => {
-  open.value = false;
+  if (activeId.value === instanceId) {
+    activeId.value = null;
+  }
 };
 
 const toggle = () => {
-  open.value = !open.value;
+  if (open.value) {
+    close();
+  } else {
+    openDropdown();
+  }
 };
 
 const onDocClick = (e: MouseEvent) => {

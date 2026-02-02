@@ -1,6 +1,6 @@
 <template>
   <fieldset class="mb-3">
-    <legend class="sr-only">Color source</legend>
+    <legend class="sr-only">{{ getEditorTranslation('colour-source') }}</legend>
     <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
       <button
         type="button"
@@ -10,7 +10,7 @@
         }"
         @click="setTab('shop')"
       >
-        Shop colors
+        {{ getEditorTranslation('shop-colors') }}
       </button>
       <button
         type="button"
@@ -20,7 +20,7 @@
         }"
         @click="setTab('picker')"
       >
-        Color Picker
+        {{ getEditorTranslation('color-picker') }}
       </button>
     </div>
   </fieldset>
@@ -40,3 +40,18 @@ const setTab = (tab: 'shop' | 'picker') => {
   emit('update:activeTab', tab);
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "colour-source": "Color source",
+    "shop-colors": "Shop colors",
+    "color-picker": "Color Picker"
+  },
+  "de": {
+    "colour-source": "Color source",
+    "shop-colors": "Shop colors",
+    "color-picker": "Color Picker"
+  }
+}
+</i18n>
