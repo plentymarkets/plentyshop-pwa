@@ -132,6 +132,8 @@ jobs:
 
       - name: 'log'
         run: ls -la apps/web
+      - name: 'log dir'
+        run: 'pwd'
       - name: Unit tests
         run: npm run test
   smoke:
