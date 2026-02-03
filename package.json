@@ -67,6 +67,7 @@
     "country-flag-icons": "^1.6.9",
     "dotenv": "^16.6.1",
     "drift-zoom": "^1.5.1",
+    "nuxt-color-picker": "^1.2.8",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.4.0",
     "vue-tel-input": "^9.6.0",
