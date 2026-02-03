@@ -38,7 +38,11 @@
     "test:cypress-dev": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
-    "worktree:spawn": "./scripts/spawn-worktree.sh"
+    "worktree:spawn": "./scripts/spawn-worktree.sh",
+    "generate:component": "./.github/skills/code-generation/generate.sh component",
+    "generate:composable": "./.github/skills/code-generation/generate.sh composable",
+    "generate:block": "./.github/skills/code-generation/generate.sh component --with-form",
+    "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
     "@plentymarkets/shop-api": "^0.153.0",
