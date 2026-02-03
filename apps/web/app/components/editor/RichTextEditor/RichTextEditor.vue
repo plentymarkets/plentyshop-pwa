@@ -87,46 +87,31 @@
     class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200"
     data-testid="rte-toolbar-expanded"
   >
-    <EditorRichTextEditorMenuButton :active="isActive('blockquote')" @click="cmd('toggleBlockquote')">
-      <svg width="24px" height="24px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M18.8533 9.11599C11.3227 13.9523 7.13913 19.5812 6.30256 26.0029C5.00021 36 13.9404 40.8933 18.4703 36.4967C23.0002 32.1002 20.2848 26.5196 17.0047 24.9942C13.7246 23.4687 11.7187 24 12.0686 21.9616C12.4185 19.9231 17.0851 14.2713 21.1849 11.6392C21.4569 11.4079 21.5604 10.9591 21.2985 10.6187C21.1262 10.3947 20.7883 9.95557 20.2848 9.30114C19.8445 8.72888 19.4227 8.75029 18.8533 9.11599Z"
-        />
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M38.6789 9.11599C31.1484 13.9523 26.9648 19.5812 26.1282 26.0029C24.8259 36 33.7661 40.8933 38.296 36.4967C42.8259 32.1002 40.1105 26.5196 36.8304 24.9942C33.5503 23.4687 31.5443 24 31.8943 21.9616C32.2442 19.9231 36.9108 14.2713 41.0106 11.6392C41.2826 11.4079 41.3861 10.9591 41.1241 10.6187C40.9519 10.3947 40.614 9.95557 40.1105 9.30114C39.6702 8.72888 39.2484 8.75029 38.6789 9.11599Z"
-        />
-      </svg>
-    </EditorRichTextEditorMenuButton>
+    <button
+      type="button"
+      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+      :class="{ 'bg-gray-200 border-gray-300': isActive('blockquote') }"
+      @mousedown.prevent
+      @click="cmd('toggleBlockquote')"
+    >
+      ❝
+    </button>
 
-    <EditorRichTextEditorMenuButton :active="isActive('strike')" @click="cmd('toggleStrike')">
-      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-        <path
-          d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"
-        />
-      </svg>
-    </EditorRichTextEditorMenuButton>
+    <button
+      type="button"
+      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+      :class="{ 'bg-gray-200 border-gray-300': isActive('strike') }"
+      @mousedown.prevent
+      @click="cmd('toggleStrike')"
+    >
+      S
+    </button>
 
-    <label class="relative inline-flex items-center cursor-pointer" @mousedown.stop @click.stop>
+    <label class="inline-flex items-center" @mousedown.stop @click.stop>
       <span class="sr-only">Highlight color</span>
-      <button
-        type="button"
-        class="w-8 h-8 rounded border border-transparent bg-transparent hover:bg-gray-100 inline-flex flex-col items-center justify-center text-sm cursor-pointer relative overflow-hidden"
-        @mousedown.prevent
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#062633">
-          <path
-            d="M544-400 440-504 240-304l104 104 200-200Zm-47-161 104 104 199-199-104-104-199 199Zm-84-28 216 216-229 229q-24 24-56 24t-56-24l-2-2-26 26H60l126-126-2-2q-24-24-24-56t24-56l229-229Zm0 0 227-227q24-24 56-24t56 24l104 104q24 24 24 56t-24 56L629-373 413-589Z"
-          />
-        </svg>
-        <span class="absolute bottom-0.5 left-1 right-1 h-1 rounded-sm" :style="{ backgroundColor: highlightColor }" />
-      </button>
       <input
         type="color"
-        class="absolute inset-0 opacity-0 cursor-pointer"
+        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
         data-testid="rte-highlight-color"
         :value="highlightColor"
         @input="setHighlightColor(($event.target as HTMLInputElement).value)"

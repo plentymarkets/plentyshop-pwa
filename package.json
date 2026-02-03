@@ -38,10 +38,14 @@
     "test:cypress-dev": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
-    "worktree:spawn": "./scripts/spawn-worktree.sh"
+    "worktree:spawn": "./scripts/spawn-worktree.sh",
+    "generate:component": "./.github/skills/code-generation/generate.sh component",
+    "generate:composable": "./.github/skills/code-generation/generate.sh composable",
+    "generate:block": "./.github/skills/code-generation/generate.sh component --with-form",
+    "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.153.0",
+    "@plentymarkets/shop-api": "^0.153.1",
     "@plentymarkets/shop-core": "^1.19.1",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.4.2",
@@ -63,6 +67,7 @@
     "country-flag-icons": "^1.6.9",
     "dotenv": "^16.6.1",
     "drift-zoom": "^1.5.1",
+    "nuxt-color-picker": "^1.2.8",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.4.0",
     "vue-tel-input": "^9.6.0",

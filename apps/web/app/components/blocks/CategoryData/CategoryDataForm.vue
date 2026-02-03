@@ -211,23 +211,41 @@
 
       <div class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-
-        <SfInput v-model="categoryDataBlock.text.color" type="text">
-          <template #suffix>
-            <label
-              for="category-text-color"
-              :style="{ backgroundColor: categoryDataBlock.text.color }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input
-                id="category-text-color"
-                v-model="categoryDataBlock.text.color"
-                type="color"
-                class="invisible w-8"
-              />
-            </label>
-          </template>
-        </SfInput>
+        <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="categoryDataBlock.text.color" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput v-model="categoryDataBlock.text.color" type="text">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
+          <SfInput v-model="categoryDataBlock.text.color" type="text">
+            <template #suffix>
+              <label
+                for="category-text-color"
+                :style="{ backgroundColor: categoryDataBlock.text.color }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="category-text-color"
+                  v-model="categoryDataBlock.text.color"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </div>
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
@@ -240,18 +258,36 @@
 
       <div v-if="categoryDataBlock.text.background" class="py-2">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
-
-        <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
-          <template #suffix>
-            <label
-              for="text-bg-color"
-              :style="{ backgroundColor: categoryDataBlock.text.bgColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input id="text-bg-color" v-model="categoryDataBlock.text.bgColor" type="color" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
+        <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="categoryDataBlock.text.bgColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
+          <SfInput v-model="categoryDataBlock.text.bgColor" type="text">
+            <template #suffix>
+              <label
+                for="text-bg-color"
+                :style="{ backgroundColor: categoryDataBlock.text.bgColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input id="text-bg-color" v-model="categoryDataBlock.text.bgColor" type="color" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </div>
       </div>
 
       <div v-if="categoryDataBlock.text.background && categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
@@ -506,6 +542,8 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
+
+const runtimeConfig = useRuntimeConfig().public;
 
 const layoutOpen = ref(true);
 const textOpen = ref(true);
