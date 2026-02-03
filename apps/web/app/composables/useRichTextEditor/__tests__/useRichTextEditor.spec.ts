@@ -162,8 +162,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should set the font color', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { setFontColor, textColor } = useRichTextEditor({
       modelValue,
@@ -183,8 +182,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should sync expandedLocal with expanded and emit updates', async () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { expandedLocal } = useRichTextEditor({
       modelValue,
@@ -208,8 +206,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should set the highlight color', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { setHighlightColor, highlightColor } = useRichTextEditor({
       modelValue,
@@ -229,8 +226,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should focus the editor and set alignment', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { setAlign } = useRichTextEditor({
       modelValue,
@@ -249,8 +245,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should undo and redo history commands', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { undo, redo } = useRichTextEditor({
       modelValue,
@@ -271,8 +266,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should clear marks and nodes', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { clearFormatting } = useRichTextEditor({
       modelValue,
@@ -292,8 +286,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should return paragraph as default block type', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -311,8 +304,7 @@ describe('useRichTextEditor', () => {
       return name === 'heading' && attrs?.level === 1;
     });
 
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -331,8 +323,7 @@ describe('useRichTextEditor', () => {
       return name === 'heading' && attrs?.level === 2;
     });
 
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -350,8 +341,7 @@ describe('useRichTextEditor', () => {
       return name === 'heading' && attrs?.level === 3;
     });
 
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -365,8 +355,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should unset link when it is active', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     isActiveSpy.mockReturnValueOnce(true);
 
@@ -388,8 +377,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should prompt for url and set link when not active', () => {
-    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } =
-      createRichTextEditorTestArgs();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
 
     isActiveSpy.mockReturnValue(false);
 
