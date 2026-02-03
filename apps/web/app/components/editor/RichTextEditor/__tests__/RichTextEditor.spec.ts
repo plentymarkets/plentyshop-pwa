@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import RichTextEditor from '../RichTextEditor.vue';
+import EditorRichTextEditorMenuButton from '../RichTextEditorMenuButton.vue';
 import { createMockUseRichTextEditor } from './test-utils';
 
 const { useRichTextEditor } = vi.hoisted(() => {
@@ -97,11 +98,11 @@ describe('RichTextEditor', () => {
       },
     });
 
-    const toolbarButtons = wrapper.get('[data-testid="rte-toolbar"]').findAll('button');
+    const toolbarButtons = wrapper.get('[data-testid="rte-toolbar"]').findAllComponents(EditorRichTextEditorMenuButton);
 
-    toolbarButtons[0]?.trigger('click');
-    toolbarButtons[1]?.trigger('click');
-    toolbarButtons[2]?.trigger('click');
+    await toolbarButtons[0].trigger('click');
+    await toolbarButtons[1].trigger('click');
+    await toolbarButtons[2].trigger('click');
 
     expect(cmd).toHaveBeenCalledWith('toggleBold');
     expect(cmd).toHaveBeenCalledWith('toggleItalic');
@@ -159,18 +160,15 @@ describe('RichTextEditor', () => {
       },
     });
 
-    const toolbarButtons = wrapper.get('[data-testid="rte-toolbar"]').findAll('button');
-    const linkButton = toolbarButtons.find((btn) => btn.text() === '🔗');
-
-    await linkButton?.trigger('click');
+    const linkButton = wrapper.get('[data-testid="rte-link-button"]');
+    await linkButton.trigger('click');
     expect(toggleLink).toHaveBeenCalledTimes(1);
 
-    const expandedToolbarButtons = wrapper.get('[data-testid="rte-toolbar-expanded"]').findAll('button');
-    const undoButton = expandedToolbarButtons.find((btn) => btn.text() === '↶');
-    const redoButton = expandedToolbarButtons.find((btn) => btn.text() === '↷');
+    const undoButton = wrapper.get('[data-testid="rte-undo-button"]');
+    const redoButton = wrapper.get('[data-testid="rte-redo-button"]');
 
-    await undoButton?.trigger('click');
-    await redoButton?.trigger('click');
+    await undoButton.trigger('click');
+    await redoButton.trigger('click');
 
     expect(undo).toHaveBeenCalledTimes(1);
     expect(redo).toHaveBeenCalledTimes(1);

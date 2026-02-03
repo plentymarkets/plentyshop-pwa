@@ -36,7 +36,7 @@
       </svg>
     </EditorRichTextEditorMenuButton>
 
-    <EditorRichTextEditorMenuButton :active="isActive('link')" @click="toggleLink">
+    <EditorRichTextEditorMenuButton data-testid="rte-link-button" :active="isActive('link')" @click="toggleLink">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
         <path
           d="M318-120q-82 0-140-58t-58-140q0-40 15-76t43-64l134-133 56 56-134 134q-17 17-25.5 38.5T200-318q0 49 34.5 83.5T318-200q23 0 45-8.5t39-25.5l133-134 57 57-134 133q-28 28-64 43t-76 15Zm79-220-57-57 223-223 57 57-223 223Zm251-28-56-57 134-133q17-17 25-38t8-44q0-50-34-85t-84-35q-23 0-44.5 8.5T558-726L425-592l-57-56 134-134q28-28 64-43t76-15q82 0 139.5 58T839-641q0 39-14.5 75T782-502L648-368Z"
@@ -196,7 +196,7 @@
       </svg>
     </EditorRichTextEditorMenuButton>
 
-    <EditorRichTextEditorMenuButton :disabled="!canUndo" @click="undo">
+    <EditorRichTextEditorMenuButton data-testid="rte-undo-button" :disabled="!canUndo" @click="undo">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
         <path
           d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"
@@ -204,7 +204,7 @@
       </svg>
     </EditorRichTextEditorMenuButton>
 
-    <EditorRichTextEditorMenuButton :disabled="!canRedo" @click="redo">
+    <EditorRichTextEditorMenuButton data-testid="rte-redo-button" :disabled="!canRedo" @click="redo">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
         <path
           d="M396-200q-97 0-166.5-63T160-420q0-94 69.5-157T396-640h252L544-744l56-56 200 200-200 200-56-56 104-104H396q-63 0-109.5 40T240-420q0 60 46.5 100T396-280h284v80H396Z"
