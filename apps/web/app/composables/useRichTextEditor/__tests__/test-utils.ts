@@ -1,6 +1,6 @@
 import type { UseRichTextEditorArgs, RteAlign } from '../types';
 
-export const createTestArgs = (): UseRichTextEditorArgs => ({
+export const createRichTextEditorTestArgs = (): UseRichTextEditorArgs => ({
   modelValue: ref(''),
   onUpdateModelValue: vi.fn(),
   expanded: ref(false),

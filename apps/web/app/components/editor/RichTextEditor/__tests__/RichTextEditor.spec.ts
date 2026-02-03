@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import RichTextEditor from '../RichTextEditor.vue';
+import { createMockUseRichTextEditor } from './test-utils';
 
 const { useRichTextEditor } = vi.hoisted(() => {
   return {
@@ -16,28 +17,7 @@ describe('RichTextEditor', () => {
   });
 
   it('should initialize with correct default props', () => {
-    useRichTextEditor.mockReturnValue({
-      editor: null,
-      expandedLocal: ref(false),
-      cmd: vi.fn(),
-      isActive: vi.fn().mockReturnValue(false),
-      currentBlockType: ref('paragraph'),
-      onFontSizeChange: vi.fn(),
-      textColor: ref('#000000'),
-      highlightColor: ref('#ffffff'),
-      setFontColor: vi.fn(),
-      setHighlightColor: vi.fn(),
-      setAlign: vi.fn(),
-      isActiveAlign: vi.fn().mockReturnValue(false),
-      textAlignStyle: ref({ textAlign: 'left' }),
-      canUndo: ref(false),
-      canRedo: ref(false),
-      undo: vi.fn(),
-      redo: vi.fn(),
-      toggleLink: vi.fn(),
-      clearFormatting: vi.fn(),
-      focus: vi.fn(),
-    });
+    useRichTextEditor.mockReturnValue(createMockUseRichTextEditor());
 
     const wrapper = mount(RichTextEditor, {
       global: {
@@ -65,28 +45,12 @@ describe('RichTextEditor', () => {
   });
 
   it('should initialize with provided props', () => {
-    useRichTextEditor.mockReturnValue({
-      editor: null,
-      expandedLocal: ref(true),
-      cmd: vi.fn(),
-      isActive: vi.fn().mockReturnValue(false),
-      currentBlockType: ref('paragraph'),
-      onFontSizeChange: vi.fn(),
-      textColor: ref('#000000'),
-      highlightColor: ref('#ffffff'),
-      setFontColor: vi.fn(),
-      setHighlightColor: vi.fn(),
-      setAlign: vi.fn(),
-      isActiveAlign: vi.fn().mockReturnValue(false),
-      textAlignStyle: ref({ textAlign: 'center' }),
-      canUndo: ref(false),
-      canRedo: ref(false),
-      undo: vi.fn(),
-      redo: vi.fn(),
-      toggleLink: vi.fn(),
-      clearFormatting: vi.fn(),
-      focus: vi.fn(),
-    });
+    useRichTextEditor.mockReturnValue(
+      createMockUseRichTextEditor({
+        expandedLocal: ref(true),
+        textAlignStyle: ref({ textAlign: 'center' }),
+      }),
+    );
 
     const wrapper = mount(RichTextEditor, {
       props: {
@@ -122,28 +86,7 @@ describe('RichTextEditor', () => {
   it('should call cmd with correct commands when basic formatting buttons are clicked', () => {
     const cmd = vi.fn();
 
-    useRichTextEditor.mockReturnValue({
-      editor: null,
-      expandedLocal: ref(false),
-      cmd,
-      isActive: vi.fn().mockReturnValue(false),
-      currentBlockType: ref('paragraph'),
-      onFontSizeChange: vi.fn(),
-      textColor: ref('#000000'),
-      highlightColor: ref('#ffffff'),
-      setFontColor: vi.fn(),
-      setHighlightColor: vi.fn(),
-      setAlign: vi.fn(),
-      isActiveAlign: vi.fn().mockReturnValue(false),
-      textAlignStyle: ref({ textAlign: 'left' }),
-      canUndo: ref(false),
-      canRedo: ref(false),
-      undo: vi.fn(),
-      redo: vi.fn(),
-      toggleLink: vi.fn(),
-      clearFormatting: vi.fn(),
-      focus: vi.fn(),
-    });
+    useRichTextEditor.mockReturnValue(createMockUseRichTextEditor({ cmd }));
 
     const wrapper = mount(RichTextEditor, {
       global: {
@@ -168,28 +111,7 @@ describe('RichTextEditor', () => {
   it('should toggle expandedLocal when expand button is clicked', async () => {
     const expandedLocal = ref(false);
 
-    useRichTextEditor.mockReturnValue({
-      editor: null,
-      expandedLocal,
-      cmd: vi.fn(),
-      isActive: vi.fn().mockReturnValue(false),
-      currentBlockType: ref('paragraph'),
-      onFontSizeChange: vi.fn(),
-      textColor: ref('#000000'),
-      highlightColor: ref('#ffffff'),
-      setFontColor: vi.fn(),
-      setHighlightColor: vi.fn(),
-      setAlign: vi.fn(),
-      isActiveAlign: vi.fn().mockReturnValue(false),
-      textAlignStyle: ref({ textAlign: 'left' }),
-      canUndo: ref(false),
-      canRedo: ref(false),
-      undo: vi.fn(),
-      redo: vi.fn(),
-      toggleLink: vi.fn(),
-      clearFormatting: vi.fn(),
-      focus: vi.fn(),
-    });
+    useRichTextEditor.mockReturnValue(createMockUseRichTextEditor({ expandedLocal }));
 
     const wrapper = mount(RichTextEditor, {
       global: {
@@ -216,28 +138,17 @@ describe('RichTextEditor', () => {
     const undo = vi.fn();
     const redo = vi.fn();
 
-    useRichTextEditor.mockReturnValue({
-      editor: null,
-      expandedLocal: ref(true),
-      cmd: vi.fn(),
-      isActive: vi.fn().mockReturnValue(false),
-      currentBlockType: ref('paragraph'),
-      onFontSizeChange: vi.fn(),
-      textColor: ref('#000000'),
-      highlightColor: ref('#ffffff'),
-      setFontColor: vi.fn(),
-      setHighlightColor: vi.fn(),
-      setAlign: vi.fn(),
-      isActiveAlign: vi.fn().mockReturnValue(false),
-      textAlignStyle: ref({ textAlign: 'left' }),
-      canUndo: ref(true),
-      canRedo: ref(true),
-      undo,
-      redo,
-      toggleLink,
-      clearFormatting: vi.fn(),
-      focus: vi.fn(),
-    });
+    useRichTextEditor.mockReturnValue(
+      createMockUseRichTextEditor({
+        expandedLocal: ref(true),
+        textAlignStyle: ref({ textAlign: 'left' }),
+        canUndo: ref(true),
+        canRedo: ref(true),
+        undo,
+        redo,
+        toggleLink,
+      }),
+    );
 
     const wrapper = mount(RichTextEditor, {
       global: {

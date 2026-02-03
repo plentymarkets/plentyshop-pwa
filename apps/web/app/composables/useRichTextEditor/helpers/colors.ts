@@ -28,6 +28,7 @@ export const setupRichTextEditorColors = (
   }
 
   const setFontColor = (color: string) => {
+    // Chain modified to fix hex input typing glitch
     const editorVal = editor?.value;
     if (!editorVal) return;
     editorVal.chain().setColor(color).run();
