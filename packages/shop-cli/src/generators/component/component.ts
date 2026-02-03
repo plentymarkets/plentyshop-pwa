@@ -20,16 +20,18 @@ class ComponentGenerator extends BaseGenerator {
     return componentPrompts as GeneratorPrompt[];
   }
 
-  createActions(data: PromptAnswers): GeneratorAction[] {
-    // Use environment variables as defaults if not provided by prompts
-    const options = {
+  private resolveOptions(data: PromptAnswers) {
+    return {
       skipTests: data.skipTests ?? process.env.PLENTYSHOP_SKIP_TESTS === 'true',
       skipTypes: data.skipTypes ?? process.env.PLENTYSHOP_SKIP_TYPES === 'true',
       withForm: data.withForm ?? process.env.PLENTYSHOP_WITH_FORM === 'true',
       withView: data.withView ?? process.env.PLENTYSHOP_WITH_VIEW === 'true',
       withToolbar: data.withToolbar ?? process.env.PLENTYSHOP_WITH_TOOLBAR === 'true',
     };
+  }
 
+  createActions(data: PromptAnswers): GeneratorAction[] {
+    const options = this.resolveOptions(data);
     const builder = ActionBuilder.forGenerator('component', data.name, this.pathResolver).withData(data).addMainFile();
 
     if (!options.skipTypes) builder.addTypes();
