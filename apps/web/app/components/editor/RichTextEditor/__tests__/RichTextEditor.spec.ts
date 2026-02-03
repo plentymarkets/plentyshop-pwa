@@ -84,7 +84,7 @@ describe('RichTextEditor', () => {
     expect(editorContent.attributes('style') || '').toContain('min-height: 200px');
   });
 
-  it('should call cmd with correct commands when basic formatting buttons are clicked', () => {
+  it('should call cmd with correct commands when basic formatting buttons are clicked', async () => {
     const cmd = vi.fn();
 
     useRichTextEditor.mockReturnValue(createMockUseRichTextEditor({ cmd }));
