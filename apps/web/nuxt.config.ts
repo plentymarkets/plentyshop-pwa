@@ -148,6 +148,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     'vuetify-nuxt-module',
+    'nuxt-color-picker',
   ],
   vuetify: {
     moduleOptions: {
