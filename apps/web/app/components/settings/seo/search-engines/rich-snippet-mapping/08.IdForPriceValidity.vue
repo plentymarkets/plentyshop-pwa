@@ -24,12 +24,14 @@ const seoRichSnippetIdForPriceValidity = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for price validity in Rich Snippets of the item page",
-    "placeholder": "Enter ID from variation property of the type text for price validity"
+    "label": "Price Validity ID",
+    "tooltip": "Enter the ID of the Price Validity variation property in your system.",
+    "placeholder": "Enter Price Validity ID"
   },
   "de": {
-    "label": "Select source for price validity in Rich Snippets of the item page",
-    "placeholder": "Enter ID from variation property of the type text for price validity"
+    "label": "Price Validity ID",
+    "tooltip": "Enter the ID of the Price Validity variation property in your system.",
+    "placeholder": "Enter Price Validity ID"
   }
 }
 </i18n>

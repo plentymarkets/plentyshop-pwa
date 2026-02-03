@@ -67,7 +67,7 @@ const seoRichSnippetMpnBarcodeId = computed({
     "label": "MPN barcode",
     "tooltip": "Select source for the MPN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
-    "conditionalLabel": "ID aus Varianteneigenschaft vom Typ Text",
+    "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetMpnBarcode-1": "Do not display",
     "seoRichSnippetMpnBarcode-2": "Show external variation ID",
     "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"

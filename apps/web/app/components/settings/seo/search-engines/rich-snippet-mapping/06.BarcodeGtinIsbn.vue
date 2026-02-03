@@ -58,7 +58,7 @@ const seoRichSnippetBarcodeIsbnId = computed({
     "label": "ISBN barcode",
     "tooltip": "Select a source for the ISBN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the barcode ID variation",
+    "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeIsbn-1": "Do not display",
     "seoRichSnippetBarcodeIsbn-2": "Use first ISBN barcode from variation",
     "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
@@ -67,7 +67,7 @@ const seoRichSnippetBarcodeIsbnId = computed({
     "label": "ISBN barcode",
     "tooltip": "Select a source for the ISBN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
-    "conditionalLabel": "Enter the barcode ID variation",
+    "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBarcodeIsbn-1": "Do not display",
     "seoRichSnippetBarcodeIsbn-2": "Use first ISBN barcode from variation",
     "seoRichSnippetBarcodeIsbn-3": "Use specific ISBN barcode by ID"
