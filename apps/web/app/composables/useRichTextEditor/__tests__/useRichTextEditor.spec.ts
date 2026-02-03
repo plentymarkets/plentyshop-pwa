@@ -1,5 +1,6 @@
 import { useRichTextEditor } from '../useRichTextEditor';
 import type { UseRichTextEditorArgs } from '../types';
+import { createTestArgs } from './test-utils';
 
 const {
   editorMock,
@@ -154,8 +155,6 @@ vi.mock('@tiptap/vue-3', () => {
   };
 });
 
-type RteAlign = 'left' | 'center' | 'right' | 'justify';
-
 describe('useRichTextEditor', () => {
   beforeEach(() => {
     isActiveSpy.mockReset();
@@ -163,12 +162,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should set the font color', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { setFontColor, textColor } = useRichTextEditor({
       modelValue,
@@ -188,12 +182,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should sync expandedLocal with expanded and emit updates', async () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { expandedLocal } = useRichTextEditor({
       modelValue,
@@ -205,7 +194,9 @@ describe('useRichTextEditor', () => {
 
     expect(expandedLocal.value).toBe(false);
 
-    expanded.value = true;
+    if (expanded) {
+      expanded.value = true;
+    }
     await nextTick();
     expect(expandedLocal.value).toBe(true);
 
@@ -215,12 +206,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should set the highlight color', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { setHighlightColor, highlightColor } = useRichTextEditor({
       modelValue,
@@ -240,12 +226,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should focus the editor and set alignment', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { setAlign } = useRichTextEditor({
       modelValue,
@@ -264,12 +245,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should undo and redo history commands', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { undo, redo } = useRichTextEditor({
       modelValue,
@@ -290,12 +266,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should clear marks and nodes', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { clearFormatting } = useRichTextEditor({
       modelValue,
@@ -315,12 +286,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should return paragraph as default block type', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -338,12 +304,7 @@ describe('useRichTextEditor', () => {
       return name === 'heading' && attrs?.level === 1;
     });
 
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -362,12 +323,7 @@ describe('useRichTextEditor', () => {
       return name === 'heading' && attrs?.level === 2;
     });
 
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -385,12 +341,7 @@ describe('useRichTextEditor', () => {
       return name === 'heading' && attrs?.level === 3;
     });
 
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     const { currentBlockType } = useRichTextEditor({
       modelValue,
@@ -404,12 +355,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should unset link when it is active', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     isActiveSpy.mockReturnValueOnce(true);
 
@@ -431,12 +377,7 @@ describe('useRichTextEditor', () => {
   });
 
   it('should prompt for url and set link when not active', () => {
-    const modelValue = ref('');
-    const expanded = ref(false);
-    const textAlign = ref<RteAlign>('left');
-
-    const onUpdateModelValue = vi.fn();
-    const onUpdateExpanded = vi.fn();
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createTestArgs();
 
     isActiveSpy.mockReturnValue(false);
 

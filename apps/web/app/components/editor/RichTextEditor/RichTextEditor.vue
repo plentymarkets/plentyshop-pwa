@@ -14,7 +14,12 @@
       <option value="h3">H3</option>
     </select>
 
-    <EditorColorPicker :model-value="textColor" dropdown-align="rte" @update:model-value="setFontColor($event)" />
+    <EditorColorPicker
+      data-testid="rte-font-color"
+      :model-value="textColor"
+      dropdown-align="rte"
+      @update:model-value="setFontColor($event)"
+    />
 
     <button
       type="button"
@@ -95,6 +100,7 @@
     </button>
 
     <EditorColorPicker
+      data-testid="rte-highlight-color"
       :model-value="highlightColor"
       dropdown-align="ctr"
       @update:model-value="setHighlightColor($event)"
