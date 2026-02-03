@@ -45,7 +45,7 @@
     "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.153.0",
+    "@plentymarkets/shop-api": "^0.153.1",
     "@plentymarkets/shop-core": "^1.19.1",
     "@plentymarkets/shop-module-gtag": "^1.1.2",
     "@plentymarkets/shop-module-mollie": "^1.4.2",
