@@ -403,6 +403,13 @@ const textCardBlock = computed<TextCardContent>(() => {
   const content = rawContent as Partial<TextCardContent>;
 
   if (!content.text) content.text = {};
+  content.text.pretitle = content.text.pretitle ?? '';
+  content.text.title = content.text.title ?? '';
+  content.text.subtitle = content.text.subtitle ?? '';
+  content.text.htmlDescription = content.text.htmlDescription ?? '';
+  content.text.color = content.text.color ?? '';
+  content.text.textAlignment = content.text.textAlignment ?? 'left';
+
   if (!content.button) content.button = {};
   if (!content.layout) {
     content.layout = {

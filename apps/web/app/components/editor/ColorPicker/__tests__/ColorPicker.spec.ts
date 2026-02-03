@@ -10,7 +10,13 @@ const { useSiteSettings } = vi.hoisted(() => {
 
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
 
-const createWrapper = (props?: Partial<{ modelValue: string }>) => {
+const createWrapper = (
+  props?: Partial<{
+    modelValue: string | undefined;
+    dropdownAlign?: 'default' | 'rte' | 'ctr';
+    showShopColors?: boolean;
+  }>,
+) => {
   return mount(ColorPicker, {
     props: {
       modelValue: '',
@@ -37,6 +43,10 @@ describe('ColorPicker', () => {
     const style = trigger.attributes('style') ?? '';
 
     expect(style).toContain('background-color: #ff0000');
+
+    const props = wrapper.props();
+    expect(props.dropdownAlign).toBe('default');
+    expect(props.showShopColors).toBe(true);
   });
 
   it('should toggle dropdown open and closed when trigger is clicked', async () => {
@@ -89,7 +99,7 @@ describe('ColorPicker', () => {
         stubs: {
           'color-picker-block': true,
           EditorColorPickerPanel: {
-            props: ['modelValue', 'activeTab', 'primaryColor', 'secondaryColor'],
+            props: ['modelValue', 'activeTab', 'primaryColor', 'secondaryColor', 'showShopColors'],
             template:
               '<div><span data-testid="active-tab">{{ activeTab }}</span><button type="button" data-testid="tab-button" @click="$emit(\'update:activeTab\', \'shop\')" /></div>',
           },

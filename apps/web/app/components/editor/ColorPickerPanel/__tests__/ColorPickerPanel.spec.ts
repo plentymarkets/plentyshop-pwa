@@ -4,7 +4,7 @@ import ColorPickerPanel from '../ColorPickerPanel.vue';
 describe('ColorPickerPanel', () => {
   const createWrapper = (
     props?: Partial<{
-      modelValue: string;
+      modelValue: string | undefined;
       activeTab: 'shop' | 'picker';
       primaryColor: string | null;
       secondaryColor: string | null;

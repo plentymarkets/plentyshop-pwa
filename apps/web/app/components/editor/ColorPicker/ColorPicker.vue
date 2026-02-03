@@ -100,7 +100,10 @@ const onDocClick = (e: MouseEvent) => {
   }
 };
 
-document.addEventListener('mousedown', onDocClick);
+onMounted(() => {
+  document.addEventListener('mousedown', onDocClick);
+});
+
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onDocClick);
 });
