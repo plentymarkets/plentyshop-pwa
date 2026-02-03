@@ -24,7 +24,7 @@ set -euo pipefail
 
 # Validate minimum arguments
 if [ $# -lt 2 ]; then
-    echo '{"success": false, "error": "Usage: ./generate.sh <generator-type> <name> [options]"}' >&2
+    echo "Error: Usage: ./generate.sh <generator-type> <name> [options]" >&2
     exit 1
 fi
 
