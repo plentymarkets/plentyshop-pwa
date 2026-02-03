@@ -73,7 +73,7 @@ npm run generate:block ImageCarousel
 npm run generate:settings ShippingOptions
 
 # Custom path without tests
-npm run generate:component MyWidget --output-path=components/custom --skip-tests
+npm run generate:component -- MyWidget --output-path=components/custom --skip-tests
 ```
 
 ## Output Format
