@@ -7,6 +7,7 @@ This guide shows you how to insert additional components into predefined areas o
 ## Prerequisites
 
 - You need at least one Vue component that you want to render in the shop.
+- Check out our complete interactive example below [StackBlitz Demo](#interactive-example)!
 
 ::: info
 In order for your component to be rendered in a shop area, it must be registered globally.
@@ -27,7 +28,48 @@ await addComponent({
 
 ## Areas
 
-### Available predefined areas
+- create a file `shop-core.config.ts` in the root of your project.
+
+```ts
+// shop-core.config.ts
+export default defineShopCoreConfig({
+  renderingAreas: ["checkout.afterBuyButton", "cart.empty"] as const,
+});
+```
+
+In this file you can specify which areas your project should offer for component injection.
+
+In your vue templates, you can then use the `<ModuleComponentRendering>` component to render the components injected into these areas.
+
+Use `addComponent` from the `useModuleRendering` composable to inject components into these areas.
+
+### Example:
+
+```vue
+<template>
+  <ModuleComponentRendering area="checkout.afterBuyButton" />
+</template>
+```
+
+```ts
+const { addComponent } = useModuleRendering("checkout.afterBuyButton");
+addComponent("MyInjectedComponent");
+```
+
+### Interactive Example:
+
+<br>
+
+<StackBlitzDemo 
+  projectId="nuxt-starter-hauvhnkm"
+  :height="600"
+/>
+
+::: tip
+You can edit the code directly in the playground above to see how component injection works in real-time!
+:::
+
+#### Versions lower than shop version v.2.16.0 and shop-core v.1.20.0:
 
 All existing predefined areas are listed in the [`apps/web/app/composables/useModuleRendering/areas.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/composables/useModuleRendering/areas.ts) file within your shop repository.
 
