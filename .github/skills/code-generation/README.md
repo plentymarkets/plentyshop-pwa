@@ -56,16 +56,19 @@ npm run generate:component ProductCard
 **Block component for CMS:**
 
 ```bash
-npm run generate:block VideoPlayer --with-form
-# Result: apps/web/app/components/blocks/VideoPlayer/
+npm run generate:block VideoPlayer
+# Result: apps/web/app/components/VideoPlayer/
+# Includes VideoPlayerForm.vue automatically (--with-form flag)
 # Remember to register in utils/blocks-imports.ts
 ```
 
 **Settings component:**
 
 ```bash
-npm run generate:settings LanguagePreferences --with-view --with-toolbar
-# Result: apps/web/app/components/settings/general/LanguagePreferences/
+npm run generate:settings LanguagePreferences
+# Result: apps/web/app/components/LanguagePreferences/
+# Includes View.vue and ToolbarTrigger.vue automatically
+# Move to components/settings/<group>/ if needed
 # Remember to register in utils/settings-groups-imports.ts
 ```
 

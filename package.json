@@ -39,11 +39,10 @@
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
     "worktree:spawn": "./scripts/spawn-worktree.sh",
-    "generate": "./.github/skills/code-generation/generate.sh",
     "generate:component": "./.github/skills/code-generation/generate.sh component",
     "generate:composable": "./.github/skills/code-generation/generate.sh composable",
-    "generate:block": "./.github/skills/code-generation/generate.sh component",
-    "generate:settings": "./.github/skills/code-generation/generate.sh component"
+    "generate:block": "./.github/skills/code-generation/generate.sh component --with-form",
+    "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
     "@plentymarkets/shop-api": "^0.153.0",

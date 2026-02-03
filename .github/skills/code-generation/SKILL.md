@@ -22,8 +22,8 @@ When the user requests code generation, determine:
    - If unsure about correction, ask for confirmation
 
 3. **Optional**: Custom location?
-   - Standard locations are automatic
-   - For blocks/settings, use `--output-path` or shortcuts
+   - Standard locations: `components/` for components, `composables/` for composables
+   - Use `--output-path` to specify a custom output path
 
 ## Naming Conventions
 
@@ -40,8 +40,8 @@ npm run generate:component ComponentName [--options]
 npm run generate:composable useFeatureName [--options]
 
 # Shortcuts for common patterns
-npm run generate:block BlockName [--options]         # outputs to components/blocks
-npm run generate:settings SettingsName [--options]   # outputs to components/settings
+npm run generate:block BlockName [--options]         # component with --with-form
+npm run generate:settings SettingsName [--options]   # component with --with-view --with-toolbar
 ```
 
 **Passing options:** Use `--` separator: `npm run generate:component -- Name --skip-tests`
@@ -66,11 +66,11 @@ npm run generate:component ProductCard
 # Composable
 npm run generate:composable useShoppingCart
 
-# Block for CMS editor with form
-npm run generate:block ImageCarousel --with-form
+# Block for CMS editor (includes --with-form automatically)
+npm run generate:block ImageCarousel
 
-# Settings with view and toolbar
-npm run generate:settings ShippingOptions --with-view --with-toolbar
+# Settings component (includes --with-view --with-toolbar automatically)
+npm run generate:settings ShippingOptions
 
 # Custom path without tests
 npm run generate:component MyWidget --output-path=components/custom --skip-tests
