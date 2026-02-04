@@ -17,38 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  meta:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Assign author to PR
-        if: github.event.action == 'opened'
-        uses: toshimaru/auto-author-assign@v3.0.1
-
-      - name: Validate PR title
-        uses: amannn/action-semantic-pull-request@v6
-        with:
-          requireScope: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Assign labels to PR
-        uses: mauroalderete/action-assign-labels@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          conventional-commits: |
-            conventional-commits:
-              - type: 'fix'
-                nouns: ['FIX', 'Fix', 'fix', 'FIXED', 'Fixed', 'fixed']
-                labels: ['fix']
-              - type: 'feature'
-                nouns: ['FEATURE', 'Feature', 'feature', 'FEAT', 'Feat', 'feat']
-                labels: ['feature']
-          maintain-labels-not-matched: false
-          apply-changes: true
   fitness-compliance:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
@@ -70,7 +40,7 @@ jobs:
           --severity ERROR
           .
   fitness-code-quality:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
@@ -93,7 +63,7 @@ jobs:
         env:
           SHELLCHECK_OPTS: -e SC2312 -e SC1091
   test-unit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
