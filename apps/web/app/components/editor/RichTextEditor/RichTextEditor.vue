@@ -153,6 +153,9 @@
     <EditorRichTextEditorMenuButton data-testid="rte-redo-button" :disabled="!canRedo" icon-name="redo" @click="redo" />
 
     <EditorRichTextEditorMenuButton icon-name="backspace" @click="clearFormatting" />
+
+    <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="toggleModal" />
+
   </div>
 
   <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
