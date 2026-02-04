@@ -219,15 +219,23 @@
         />
       </svg>
     </EditorRichTextEditorMenuButton>
+
+    <EditorRichTextEditorMenuButton @click="toggleModal">
+      open
+    </EditorRichTextEditorMenuButton>
   </div>
 
   <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
     <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
   </div>
+
+  <EditorRichTextEditorRichtextEditorModal v-if="modalOpen" :model-value="modelValue" :text-align="textAlign" @close="toggleModal" />
 </template>
 
 <script setup lang="ts">
 import { EditorContent } from '@tiptap/vue-3';
+
+const modalOpen = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -288,4 +296,8 @@ const editorStyle = computed(() => ({
   minHeight: `${props.minHeight}px`,
   ...textAlignStyle.value,
 }));
+
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value;
+};
 </script>
