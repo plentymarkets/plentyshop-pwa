@@ -10,16 +10,14 @@
     @mousedown.prevent
   >
     <svg
+      v-if="paths.length > 0"
       xmlns="http://www.w3.org/2000/svg"
       height="24px"
       width="24px"
-      :viewBox="getViewBox()"
+      :viewBox="viewBox"
       fill="currentColor"
     >
-      <template v-if="getPaths()">
-        <path v-if="typeof getPaths() === 'string'" :d="getPaths() as string" />
-        <path v-for="(path, index) in getPaths()" v-else :key="index" :d="path" />
-      </template>
+      <path v-for="(path, index) in paths" :key="index" :d="path" />
     </svg>
     <slot />
   </button>
@@ -39,23 +37,22 @@ const props = withDefaults(
   },
 );
 
-const getViewBox = () => {
+const viewBox = computed(() => {
   const icon = icons[props.iconName];
   if (!icon) return '0 -960 960 960';
 
-  if (typeof icon === 'object' && 'viewBox' in icon) {
-    return icon.viewBox;
-  }
-  return '0 -960 960 960';
-};
+  return typeof icon === 'object' && 'viewBox' in icon
+    ? icon.viewBox
+    : '0 -960 960 960';
+});
 
-const getPaths = () => {
+const paths = computed(() => {
   const icon = icons[props.iconName];
-  if (!icon) return null;
+  if (!icon) return [];
 
-  if (typeof icon === 'string' || Array.isArray(icon)) {
-    return icon;
-  }
-  return icon.paths;
-};
+  if (typeof icon === 'string') return [icon];
+  if (Array.isArray(icon)) return icon;
+
+  return Array.isArray(icon.paths) ? icon.paths : [icon.paths];
+});
 </script>
