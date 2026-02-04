@@ -41,9 +41,7 @@ const viewBox = computed(() => {
   const icon = icons[props.iconName];
   if (!icon) return '0 -960 960 960';
 
-  return typeof icon === 'object' && 'viewBox' in icon
-    ? icon.viewBox
-    : '0 -960 960 960';
+  return typeof icon === 'object' && 'viewBox' in icon ? icon.viewBox : '0 -960 960 960';
 });
 
 const paths = computed(() => {
