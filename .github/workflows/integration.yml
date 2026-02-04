@@ -63,7 +63,7 @@ jobs:
         env:
           SHELLCHECK_OPTS: -e SC2312 -e SC1091
   test-unit:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
