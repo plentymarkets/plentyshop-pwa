@@ -15,56 +15,137 @@
         </header>
 
         <main class="flex-1 overflow-hidden flex flex-col">
-          <EditorRichTextEditorMenuButton :active="isActive('bold')" @click="cmd('toggleBold')">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-              <path
-                d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"
-              />
-            </svg>
-          </EditorRichTextEditorMenuButton>
+          <div class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200">
+            <select
+              class="h-8 pl-2 rounded bg-transparent hover:bg-gray-100 text-sm cursor-pointer font-bold"
+              :value="currentBlockType"
+              data-testid="rte-font-size"
+              @mousedown.stop
+              @click.stop
+              @change="onFontSizeChange(($event.target as HTMLSelectElement).value)"
+            >
+              <option value="paragraph" class="font-bold">Normal</option>
+              <option value="h1">H1</option>
+              <option value="h2">H2</option>
+              <option value="h3">H3</option>
+            </select>
 
-          <EditorRichTextEditorMenuButton :active="isActive('italic')" @click="cmd('toggleItalic')">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-              <path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z" />
-            </svg>
-          </EditorRichTextEditorMenuButton>
+            <EditorRichTextEditorMenuButton :active="isActive('bold')" icon-name="bold" @click="cmd('toggleBold')" />
 
-          <EditorRichTextEditorMenuButton :active="isActive('underline')" @click="cmd('toggleUnderline')">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-              <path
-                d="M200-120v-80h560v80H200Zm280-160q-101 0-157-63t-56-167v-330h103v336q0 56 28 91t82 35q54 0 82-35t28-91v-336h103v330q0 104-56 167t-157 63Z"
-              />
-            </svg>
-          </EditorRichTextEditorMenuButton>
+            <EditorRichTextEditorMenuButton :active="isActive('italic')" icon-name="italic" @click="cmd('toggleItalic')" />
 
-          <EditorRichTextEditorMenuButton data-testid="rte-link-button" :active="isActive('link')" @click="toggleLink">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-              <path
-                d="M318-120q-82 0-140-58t-58-140q0-40 15-76t43-64l134-133 56 56-134 134q-17 17-25.5 38.5T200-318q0 49 34.5 83.5T318-200q23 0 45-8.5t39-25.5l133-134 57 57-134 133q-28 28-64 43t-76 15Zm79-220-57-57 223-223 57 57-223 223Zm251-28-56-57 134-133q17-17 25-38t8-44q0-50-34-85t-84-35q-23 0-44.5 8.5T558-726L425-592l-57-56 134-134q28-28 64-43t76-15q82 0 139.5 58T839-641q0 39-14.5 75T782-502L648-368Z"
-              />
-            </svg>
-          </EditorRichTextEditorMenuButton>
+            <EditorRichTextEditorMenuButton
+              :active="isActive('underline')"
+              icon-name="underline"
+              @click="cmd('toggleUnderline')"
+            />
 
-          <EditorColorPicker
-            data-testid="rte-font-color"
-            :model-value="textColor"
-            dropdown-align="rte"
-            @update:model-value="setFontColor($event)"
-          >
-            <template #trigger="{ color, toggle }">
-              <button
-                type="button"
-                class="flex flex-col items-center gap-1 cursor-pointer p-1 hover:bg-gray-100 rounded"
-                @click="toggle"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
-                  <path d="m246-160 176-464h116l176 464h-117l-38-112H401l-38 112H246Zm176-203h116l-56-166h-4l-56 166Z" />
-                </svg>
+            <EditorRichTextEditorMenuButton
+              data-testid="rte-link-button"
+              :active="isActive('link')"
+              icon-name="link"
+              @click="toggleLink"
+            />
 
-                <div class="w-6 h-1 rounded" :style="{ backgroundColor: color }" />
-              </button>
-            </template>
-          </EditorColorPicker>
+            <EditorColorPicker
+              data-testid="rte-font-color"
+              :model-value="textColor"
+              dropdown-align="rte"
+              @update:model-value="setFontColor($event)"
+            >
+              <template #trigger="{ color, toggle }">
+                <button
+                  type="button"
+                  class="flex flex-col items-center gap-1 cursor-pointer p-1 hover:bg-gray-100 rounded"
+                  @click="toggle"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
+                    <path d="m246-160 176-464h116l176 464h-117l-38-112H401l-38 112H246Zm176-203h116l-56-166h-4l-56 166Z" />
+                  </svg>
+                  <div class="w-6 h-1 rounded" :style="{ backgroundColor: color }" />
+                </button>
+              </template>
+            </EditorColorPicker>
+
+            <EditorRichTextEditorMenuButton
+              :active="isActive('blockquote')"
+              icon-name="quote"
+              @click="cmd('toggleBlockquote')"
+            />
+
+            <EditorRichTextEditorMenuButton :active="isActive('strike')" icon-name="strike" @click="cmd('toggleStrike')" />
+
+            <EditorColorPicker
+              data-testid="rte-highlight-color"
+              :model-value="highlightColor"
+              dropdown-align="ctr"
+              @update:model-value="setHighlightColor($event)"
+            >
+              <template #trigger="{ color, toggle }">
+                <button
+                  type="button"
+                  class="flex flex-col items-center gap-1 cursor-pointer p-1 hover:bg-gray-100 rounded"
+                  @click="toggle"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="20px"
+                    viewBox="0 -960 960 960"
+                    width="20px"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M544-400 440-504 240-304l104 104 200-200Zm-47-161 104 104 199-199-104-104-199 199Zm-84-28 216 216-229 229q-24 24-56 24t-56-24l-2-2-26 26H60l126-126-2-2q-24-24-24-56t24-56l229-229Zm0 0 227-227q24-24 56-24t56 24l104 104q24 24 24 56t-24 56L629-373 413-589Z"
+                    />
+                  </svg>
+
+                  <div class="w-6 h-1 rounded" :style="{ backgroundColor: color }" />
+                </button>
+              </template>
+            </EditorColorPicker>
+
+            <span class="w-px h-5 bg-gray-200 mx-0.5" />
+
+            <EditorRichTextEditorMenuButton :active="isActiveAlign('left')" icon-name="alignLeft" @click="setAlign('left')" />
+
+            <EditorRichTextEditorMenuButton
+              :active="isActiveAlign('center')"
+              icon-name="alignCenter"
+              @click="setAlign('center')"
+            />
+
+            <EditorRichTextEditorMenuButton
+              :active="isActiveAlign('right')"
+              icon-name="alignRight"
+              @click="setAlign('right')"
+            />
+
+            <EditorRichTextEditorMenuButton :active="isActiveAlign('justify')" icon-name="block" @click="setAlign('justify')" />
+
+            <span class="w-px h-5 bg-gray-200 mx-0.5" />
+
+            <EditorRichTextEditorMenuButton
+              :active="isActive('bulletList')"
+              icon-name="bulletList"
+              @click="cmd('toggleBulletList')"
+            />
+
+            <EditorRichTextEditorMenuButton
+              :active="isActive('orderedList')"
+              icon-name="numberList"
+              @click="cmd('toggleOrderedList')"
+            />
+
+            <span class="w-px h-5 bg-gray-200 mx-0.5" />
+
+            <EditorRichTextEditorMenuButton icon-name="horizontalRule" @click="cmd('setHorizontalRule')" />
+
+            <EditorRichTextEditorMenuButton data-testid="rte-undo-button" :disabled="!canUndo" icon-name="undo" @click="undo" />
+
+            <EditorRichTextEditorMenuButton data-testid="rte-redo-button" :disabled="!canRedo" icon-name="redo" @click="redo" />
+
+            <EditorRichTextEditorMenuButton icon-name="backspace" @click="clearFormatting" />
+          </div>
 
 
           <div class="flex-1 overflow-y-auto p-4">
@@ -112,11 +193,20 @@ const {
   isActive,
   textColor,
   setFontColor,
-  toggleLink
+  toggleLink,
+  currentBlockType,
+  onFontSizeChange,
+  highlightColor,
+  setHighlightColor,
+  setAlign,
+  isActiveAlign,
+  canUndo,
+  canRedo,
+  undo,
+  redo,
+  clearFormatting
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
   onUpdateModelValue: (v) => emit('update:modelValue', v),
-
-  textAlign: toRef(props, 'textAlign'),
 });
 </script>

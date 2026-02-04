@@ -160,7 +160,7 @@
     <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
   </div>
 
-  <EditorRichTextEditorRichtextEditorModal v-if="modalOpen" :model-value="modelValue" :text-align="textAlign" @close="toggleModal" />
+  <EditorRichTextEditorRichtextEditorModal v-if="modalOpen" :model-value="modelValue" :style="editorStyle" @close="toggleModal" />
 </template>
 
 <script setup lang="ts">
