@@ -47,11 +47,7 @@
             />
             <EditorRichTextEditorMenuButton :active="isActive('link')" icon-name="link" @click="toggleLink" />
 
-            <EditorColorPicker
-              :model-value="textColor"
-              dropdown-align="rte"
-              @update:model-value="setFontColor($event)"
-            >
+            <EditorColorPicker :model-value="textColor" dropdown-align="rte" @update:model-value="setFontColor($event)">
               <template #trigger="{ color, toggle }">
                 <button
                   type="button"
