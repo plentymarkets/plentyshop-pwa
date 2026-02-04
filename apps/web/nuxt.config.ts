@@ -127,6 +127,7 @@ export default defineNuxtConfig({
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
+      blockifiedHeaderPrototype: process.env.BLOCKIFIED_HEADER_PROTOTYPE || 'off',
       ...settingsConfig,
       ...featureFlagsConfig,
     },

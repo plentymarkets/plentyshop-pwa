@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiHeader />
+    <AppHeader />
     <main
       :class="[
         'mx-auto px-4 pt-4 md:px-0 md:mt-4',
