@@ -9,7 +9,6 @@
       @change="onFontSizeChange(($event.target as HTMLSelectElement).value)"
     >
       <option value="paragraph" class="font-bold">Normal</option>
-      <option value="paragraph" class="font-bold">Normal</option>
       <option value="h1">H1</option>
       <option value="h2">H2</option>
       <option value="h3">H3</option>
@@ -157,7 +156,7 @@
 
   </div>
 
-  <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
+  <div v-if="!modalOpen" class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
     <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
   </div>
 
