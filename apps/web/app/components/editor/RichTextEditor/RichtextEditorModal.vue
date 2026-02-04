@@ -48,7 +48,7 @@
             <EditorRichTextEditorMenuButton :active="isActive('link')" icon-name="link" @click="toggleLink" />
 
             <EditorColorPicker
-              :model-value="textColor.value"
+              :model-value="textColor"
               dropdown-align="rte"
               @update:model-value="setFontColor($event)"
             >
@@ -86,7 +86,7 @@
             />
 
             <EditorColorPicker
-              :model-value="highlightColor.value"
+              :model-value="highlightColor"
               dropdown-align="ctr"
               @update:model-value="setHighlightColor($event)"
             >
@@ -167,6 +167,7 @@
 
 <script setup lang="ts">
 import type { Editor } from '@tiptap/vue-3';
+import type { RteCommand } from '~/composables/useRichTextEditor/types';
 import { EditorContent } from '@tiptap/vue-3';
 
 defineProps<{
@@ -175,19 +176,18 @@ defineProps<{
     textAlign: globalThis.RteAlign;
     minHeight: string;
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  cmd: (name: any) => void;
+  cmd: (name: RteCommand) => void;
   isActive: (name: string) => boolean;
   currentBlockType: RteBlockType;
   onFontSizeChange: (value: string) => void;
-  textColor: Ref<string>;
-  highlightColor: Ref<string>;
+  textColor: string;
+  highlightColor: string;
   setFontColor: (color: string) => void;
   setHighlightColor: (color: string) => void;
   setAlign: (align: RteAlign) => void;
   isActiveAlign: (align: RteAlign) => boolean;
-  canUndo: Ref<boolean>;
-  canRedo: Ref<boolean>;
+  canUndo: boolean;
+  canRedo: boolean;
   undo: () => void;
   redo: () => void;
   toggleLink: () => void;
