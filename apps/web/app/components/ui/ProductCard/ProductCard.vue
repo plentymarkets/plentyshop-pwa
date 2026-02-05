@@ -206,7 +206,9 @@ const { send } = useNotification();
 const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
-const name = computed(() => productGetters.getName(product.value) + productGetters.getGroupedAttributesString(product.value));
+const name = computed(
+  () => productGetters.getName(product.value) + productGetters.getGroupedAttributesString(product.value),
+);
 const manufacturer = computed(() => productGetters.getManufacturer(product.value));
 const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
 const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
