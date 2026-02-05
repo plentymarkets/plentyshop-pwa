@@ -4,9 +4,9 @@
       <div class="bg-white w-auto m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
         <header class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold">Editor</h2>
-          <button class="!p-0" @click="emit('close')">
+          <UiButton variant="tertiary" class="!p-0" @click="emit('close')">
               <SfIconClose />
-          </button>
+          </UiButton>
         </header>
 
         <main class="flex-1 overflow-hidden flex flex-col">

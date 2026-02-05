@@ -1,31 +1,38 @@
 <template>
   <div v-if="!modalOpen">
-    <div class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200" data-testid="rte-toolbar">
-      <EditorRichTextEditorBasicButtons
-        :cmd="cmd"
-        :is-active="isActive"
-        :current-block-type="currentBlockType"
-        :on-font-size-change="onFontSizeChange"
-        :text-color="textColor"
-        :set-font-color="setFontColor"
-        :toggle-link="toggleLink"
-      />
+    <div class="flex items-stretch gap-1.5 p-2 bg-gray-50 border-b border-gray-200 relative" data-testid="rte-toolbar">
+      <div class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
+        <EditorRichTextEditorBasicButtons
+          :cmd="cmd"
+          :is-active="isActive"
+          :current-block-type="currentBlockType"
+          :on-font-size-change="onFontSizeChange"
+          :text-color="textColor"
+          :set-font-color="setFontColor"
+          :toggle-link="toggleLink"
+        />
+      </div>
 
-      <button
-        v-if="expandable"
-        type="button"
-        class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100 ml-auto"
-        :aria-expanded="expandedLocal"
-        data-testid="rte-expand"
-        @mousedown.prevent
-        @click="expandedLocal = !expandedLocal"
-      >
-        <span class="inline-block transition-transform duration-150" :class="{ 'rotate-180': expandedLocal }">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
-            <path d="M480-360 280-560h400L480-360Z" />
-          </svg>
-        </span>
-      </button>
+      <div class="flex items-center gap-1.5 flex-shrink-0">
+        <span class="w-px self-stretch bg-gray-300" />
+
+        <UiButton
+          v-if="expandable"
+          variant="tertiary"
+          type="button"
+          class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+          :aria-expanded="expandedLocal"
+          data-testid="rte-expand"
+          @mousedown.prevent
+          @click="expandedLocal = !expandedLocal"
+        >
+          <span class="inline-block transition-transform duration-150" :class="{ 'rotate-180': expandedLocal }">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
+              <path d="M480-360 280-560h400L480-360Z" />
+            </svg>
+          </span>
+        </UiButton>
+      </div>
     </div>
 
     <div
