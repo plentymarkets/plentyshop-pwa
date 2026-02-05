@@ -19,10 +19,6 @@
           :text-align="textCardBlock.text.textAlignment"
           data-testid="rte-content"
         />
-
-        <p class="typography-text-xs text-neutral-600 mt-2">
-          {{ getEditorTranslation('content-hint') }}
-        </p>
       </div>
     </div>
     <div v-else data-testid="text-card-form">
@@ -470,8 +466,7 @@ watch([isTransparent, backgroundColor], () => {
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "Keep background transparent",
-    "content-label": "Content",
-    "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
+    "content-label": "Content"
   },
   "de": {
     "text-group-label": "Text",
@@ -497,8 +492,7 @@ watch([isTransparent, backgroundColor], () => {
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "or keep transparent",
-    "content-label": "Content",
-    "content-hint": "Use headings (H1–H3) and paragraphs to structure your text."
+    "content-label": "Content"
   }
 }
 </i18n>

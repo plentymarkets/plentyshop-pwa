@@ -7,7 +7,7 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
-import type { UseRichTextEditorArgs } from '~/composables/useRichTextEditor/types';
+import type { UseRichTextEditorArgs, RteCommand } from '~/composables/useRichTextEditor/types';
 import { setupRichTextEditorExpansion } from './helpers/expansion';
 import { setupRichTextEditorBlocks } from './helpers/blocks';
 import { setupRichTextEditorColors } from './helpers/colors';
@@ -53,17 +53,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const focusChain = () => editor.value?.chain().focus();
 
-  const cmd = (
-    name:
-      | 'toggleBold'
-      | 'toggleItalic'
-      | 'toggleUnderline'
-      | 'toggleBlockquote'
-      | 'toggleStrike'
-      | 'toggleBulletList'
-      | 'toggleOrderedList'
-      | 'setHorizontalRule',
-  ) => {
+  const cmd = (name: RteCommand) => {
     const chain = focusChain();
     if (!chain) return;
     chain[name]().run();
