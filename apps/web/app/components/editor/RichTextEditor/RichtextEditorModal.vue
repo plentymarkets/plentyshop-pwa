@@ -7,7 +7,7 @@
       <div class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
         <header class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
-          <UiButton variant="tertiary" class="!p-0" @click="emit('close')">
+          <UiButton variant="tertiary" class="!p-2" @click="emit('close')">
             <SfIconClose />
           </UiButton>
         </header>
