@@ -5,7 +5,7 @@
         <header class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold">Editor</h2>
           <UiButton variant="tertiary" class="!p-0" @click="emit('close')">
-              <SfIconClose />
+            <SfIconClose />
           </UiButton>
         </header>
 
