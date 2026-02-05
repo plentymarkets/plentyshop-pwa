@@ -1,16 +1,26 @@
 <template>
   <Teleport to="body">
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="emit('close')">
-      <div class="bg-white w-auto m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      @click.self="emit('close')"
+    >
+      <div class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
         <header class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold">Editor</h2>
-          <UiButton variant="tertiary" class="!p-0" @click="emit('close')">
+          <h2 id="modal-title" class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
+          <UiButton variant="tertiary" class="!p-0" :aria-label="getEditorTranslation('close')" @click="emit('close')">
             <SfIconClose />
           </UiButton>
         </header>
 
         <main class="flex-1 overflow-hidden flex flex-col">
-          <div class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200">
+          <div
+            class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200"
+            role="toolbar"
+            aria-label="Text formatting"
+          >
             <EditorRichTextEditorBasicButtons
               :cmd="cmd"
               :is-active="isActive"
@@ -36,7 +46,7 @@
             />
           </div>
 
-          <div class="flex-1 overflow-y-auto p-4">
+          <div class="flex-1 overflow-y-auto p-4" role="textbox" aria-multiline="true">
             <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
           </div>
         </main>
@@ -79,3 +89,14 @@ const emit = defineEmits<{
   (e: 'close'): void;
 }>();
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "heading": "Editor"
+  },
+  "de": {
+    "heading": "Editor"
+  }
+}
+</i18n>
