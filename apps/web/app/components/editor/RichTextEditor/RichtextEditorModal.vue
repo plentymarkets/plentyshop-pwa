@@ -10,7 +10,7 @@
       <div class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
         <header class="flex items-center justify-between mb-4">
           <h2 id="modal-title" class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
-          <UiButton variant="tertiary" class="!p-0" :aria-label="getEditorTranslation('close')" @click="emit('close')">
+          <UiButton variant="tertiary" class="!p-0" aria-label="close modal" @click="emit('close')">
             <SfIconClose />
           </UiButton>
         </header>
