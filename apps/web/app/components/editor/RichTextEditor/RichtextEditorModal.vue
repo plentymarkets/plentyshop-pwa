@@ -1,21 +1,11 @@
 <template>
   <Teleport to="body">
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="emit('close')">
-      <div class="bg-white w-[1500px] h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
+      <div class="bg-white w-auto m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
         <header class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold">Editor</h2>
           <button class="!p-0" @click="emit('close')">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="currentColor"
-            >
-              <path
-                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-              />
-            </svg>
+              <SfIconClose />
           </button>
         </header>
 
@@ -59,6 +49,7 @@
 import type { Editor } from '@tiptap/vue-3';
 import type { RteCommand } from '~/composables/useRichTextEditor/types';
 import { EditorContent } from '@tiptap/vue-3';
+import { SfIconClose } from '@storefront-ui/vue';
 
 defineProps<{
   editor: Editor | undefined;
