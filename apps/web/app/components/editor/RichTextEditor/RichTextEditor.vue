@@ -53,7 +53,7 @@
         :redo="redo"
         :clear-formatting="clearFormatting"
       />
-      <EditorRichTextEditorMenuButton icon-name="fullscreen" aria-label="Open fullscreen editor" @click="toggleModal" />
+      <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="toggleModal" />
     </div>
 
     <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
