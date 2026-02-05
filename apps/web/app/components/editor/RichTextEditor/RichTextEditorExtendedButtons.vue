@@ -1,9 +1,5 @@
 <template>
-  <EditorRichTextEditorMenuButton
-    :active="isActive('blockquote')"
-    icon-name="quote"
-    @click="cmd('toggleBlockquote')"
-  />
+  <EditorRichTextEditorMenuButton :active="isActive('blockquote')" icon-name="quote" @click="cmd('toggleBlockquote')" />
   <EditorRichTextEditorMenuButton :active="isActive('strike')" icon-name="strike" @click="cmd('toggleStrike')" />
 
   <EditorColorPicker
@@ -18,13 +14,7 @@
         class="flex flex-col items-center gap-1 cursor-pointer p-1 hover:bg-gray-100 rounded"
         @click="toggle"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="20px"
-          viewBox="0 -960 960 960"
-          width="20px"
-          fill="currentColor"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
           <path
             d="M544-400 440-504 240-304l104 104 200-200Zm-47-161 104 104 199-199-104-104-199 199Zm-84-28 216 216-229 229q-24 24-56 24t-56-24l-2-2-26 26H60l126-126-2-2q-24-24-24-56t24-56l229-229Zm0 0 227-227q24-24 56-24t56 24l104 104q24 24 24 56t-24 56L629-373 413-589Z"
           />
@@ -42,16 +32,8 @@
     icon-name="alignCenter"
     @click="setAlign('center')"
   />
-  <EditorRichTextEditorMenuButton
-    :active="isActiveAlign('right')"
-    icon-name="alignRight"
-    @click="setAlign('right')"
-  />
-  <EditorRichTextEditorMenuButton
-    :active="isActiveAlign('justify')"
-    icon-name="block"
-    @click="setAlign('justify')"
-  />
+  <EditorRichTextEditorMenuButton :active="isActiveAlign('right')" icon-name="alignRight" @click="setAlign('right')" />
+  <EditorRichTextEditorMenuButton :active="isActiveAlign('justify')" icon-name="block" @click="setAlign('justify')" />
 
   <span class="w-px h-5 bg-gray-200 mx-0.5" />
 
@@ -69,18 +51,8 @@
   <span class="w-px h-5 bg-gray-200 mx-0.5" />
 
   <EditorRichTextEditorMenuButton icon-name="horizontalRule" @click="cmd('setHorizontalRule')" />
-  <EditorRichTextEditorMenuButton
-    data-testid="rte-undo-button"
-    :disabled="!canUndo"
-    icon-name="undo"
-    @click="undo"
-  />
-  <EditorRichTextEditorMenuButton
-    data-testid="rte-redo-button"
-    :disabled="!canRedo"
-    icon-name="redo"
-    @click="redo"
-  />
+  <EditorRichTextEditorMenuButton data-testid="rte-undo-button" :disabled="!canUndo" icon-name="undo" @click="undo" />
+  <EditorRichTextEditorMenuButton data-testid="rte-redo-button" :disabled="!canRedo" icon-name="redo" @click="redo" />
   <EditorRichTextEditorMenuButton icon-name="backspace" @click="clearFormatting" />
 </template>
 
