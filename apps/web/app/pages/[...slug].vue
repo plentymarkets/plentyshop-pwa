@@ -139,7 +139,6 @@ watchEffect(() => {
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
 
-// Watch identifier changes to refetch blocks when navigating between categories
 watch(
   () => identifier.value,
   async (newIdentifier) => {

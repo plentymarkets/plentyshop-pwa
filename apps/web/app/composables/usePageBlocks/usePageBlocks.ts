@@ -21,9 +21,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
     header: [],
     main: [],
     footer: [],
-    cleanHeader: [],
-    cleanMain: [],
-    cleanFooter: [],
     defaultTemplateData: [],
     loading: false,
   }));
@@ -139,10 +136,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
       state.value.header = finalHeader;
       state.value.main = main;
       state.value.footer = finalFooter;
-
-      state.value.cleanHeader = markRaw(JSON.parse(JSON.stringify(finalHeader)));
-      state.value.cleanMain = markRaw(JSON.parse(JSON.stringify(main)));
-      state.value.cleanFooter = markRaw(JSON.parse(JSON.stringify(finalFooter)));
     } catch (error) {
       state.value.loading = false;
       console.error('Failed to fetch page blocks:', error);
@@ -161,10 +154,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
         entityType: type,
         blocks: content,
       });
-
-      state.value.cleanHeader = markRaw(JSON.parse(JSON.stringify(state.value.header)));
-      state.value.cleanMain = markRaw(JSON.parse(JSON.stringify(state.value.main)));
-      state.value.cleanFooter = markRaw(JSON.parse(JSON.stringify(state.value.footer)));
 
       return true;
     } catch (error) {
@@ -195,9 +184,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
     header: computed(() => state.value.header),
     main: computed(() => state.value.main),
     footer: computed(() => state.value.footer),
-    cleanHeader: computed(() => state.value.cleanHeader),
-    cleanMain: computed(() => state.value.cleanMain),
-    cleanFooter: computed(() => state.value.cleanFooter),
     loading: computed(() => state.value.loading),
     fetchPageBlocks,
     savePageBlocks,

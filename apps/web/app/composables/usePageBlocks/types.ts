@@ -4,9 +4,6 @@ export interface UsePageBlocksState {
   header: Block[];
   main: Block[];
   footer: Block[];
-  cleanHeader: Block[];
-  cleanMain: Block[];
-  cleanFooter: Block[];
   defaultTemplateData: Block[];
   loading: boolean;
 }
@@ -22,9 +19,6 @@ export interface UsePageBlocks {
   header: Readonly<Ref<Block[]>>;
   main: Readonly<Ref<Block[]>>;
   footer: Readonly<Ref<Block[]>>;
-  cleanHeader: Readonly<Ref<Block[]>>;
-  cleanMain: Readonly<Ref<Block[]>>;
-  cleanFooter: Readonly<Ref<Block[]>>;
   loading: Readonly<Ref<boolean>>;
   fetchPageBlocks: FetchPageBlocks;
   setDefaultTemplate: SetPageBlocksDefaultTemplate;
