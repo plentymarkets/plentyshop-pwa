@@ -5,8 +5,10 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
+    <template #header>
+      <EditableHeader :header="header" />
+    </template>
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-
     <EditableMain :main="main" data-testid="category-page-content" />
     <EditableFooter :footer="footer" />
   </NuxtLayout>
@@ -48,6 +50,7 @@ definePageMeta({
 
 let pageBlocksComposable: ReturnType<typeof usePageBlocks> | null = null;
 
+const header = computed(() => (pageBlocksComposable?.header?.value as Block[] | undefined) ?? []);
 const main = computed(() => (pageBlocksComposable?.main?.value as Block[] | undefined) ?? []);
 const footer = computed(() => (pageBlocksComposable?.footer?.value as Block[] | undefined) ?? []);
 

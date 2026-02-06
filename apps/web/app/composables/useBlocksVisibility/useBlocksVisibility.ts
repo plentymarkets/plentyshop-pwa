@@ -9,10 +9,8 @@ import type { BlockVisibilityRegistry, UseBlocksVisibilityReturn } from './types
  * ``` ts
  * const { shouldShowBlock, registerBlockVisibility, unregisterBlockVisibility } = useBlocksVisibility();
  *
- * // In a block component that needs runtime visibility:
  * registerBlockVisibility(block.meta.uuid, hasRealData);
  *
- * // In EditablePage.vue:
  * v-if="shouldShowBlock(block, enableActions)"
  *
  * onBeforeUnmount(() => {

@@ -28,6 +28,28 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
     loading: false,
   }));
 
+  const injectGlobalHeader = (): Block[] => {
+    const headerBlock: Block = {
+      name: 'Header',
+      type: 'content',
+      meta: {
+        uuid: uuid(),
+        isGlobalTemplate: true,
+      },
+      content: {
+        meta: {
+          uuid: uuid(),
+          isGlobalTemplate: true,
+        },
+      },
+    };
+
+    // eslint-disable-next-line no-console
+    console.log('📦 usePageBlocks - Injected global header');
+
+    return [headerBlock];
+  };
+
   const injectGlobalFooter = async (): Promise<Block[]> => {
     const { footerCache, fetchFooterSettings } = useFooter();
 
@@ -128,19 +150,20 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
 
       const { header, main, footer } = splitBlocksByArea(blocksToUse);
 
+      const finalHeader = header.length > 0 ? header : injectGlobalHeader();
       const finalFooter = footer.length > 0 ? footer : await injectGlobalFooter();
 
-      state.value.header = header;
+      state.value.header = finalHeader;
       state.value.main = main;
       state.value.footer = finalFooter;
 
-      state.value.cleanHeader = markRaw(JSON.parse(JSON.stringify(header)));
+      state.value.cleanHeader = markRaw(JSON.parse(JSON.stringify(finalHeader)));
       state.value.cleanMain = markRaw(JSON.parse(JSON.stringify(main)));
       state.value.cleanFooter = markRaw(JSON.parse(JSON.stringify(finalFooter)));
 
       // eslint-disable-next-line no-console
       console.log('📦 usePageBlocks - Split result:', {
-        header: header.length,
+        header: finalHeader.length,
         main: main.length,
         footer: finalFooter.length,
       });

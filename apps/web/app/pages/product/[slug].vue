@@ -1,6 +1,8 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <!-- Product pages: Main content from product template, Footer from global cache -->
+    <template #header>
+      <EditableHeader :header="header" />
+    </template>
     <EditableMain :main="main" />
     <EditableFooter :footer="footer" />
     <UiReviewModal />
@@ -36,7 +38,7 @@ const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
 
 // New composable for product pages - use product template as default
-const { main, footer, fetchPageBlocks, setDefaultTemplate } = usePageBlocks('0', 'product', $i18n.locale.value);
+const { header, main, footer, fetchPageBlocks, setDefaultTemplate } = usePageBlocks('0', 'product', $i18n.locale.value);
 
 // Set product template as default (contains ImageGallery, PriceCard, etc.)
 setDefaultTemplate(productTemplateData as Block[]);

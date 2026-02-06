@@ -34,7 +34,16 @@ const { data: recommendedProducts, fetchProductRecommended } = useProductRecomme
 const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
-const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
+
+const hasExplicitCategoryId = computed(() => {
+  return Boolean(props.content.source?.categoryId);
+});
+
+const shouldFetch = computed(() => {
+  if (!shouldRender.value) return false;
+  if (isCategory.value && !hasExplicitCategoryId.value) return false;
+  return isCategory.value || isProduct.value;
+});
 
 const getContentSource = () => {
   return {
