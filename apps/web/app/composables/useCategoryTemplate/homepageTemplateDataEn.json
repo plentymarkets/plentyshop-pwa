@@ -5,6 +5,9 @@
     "meta": {
       "uuid": "3e1f8c9a-d2b4-4f8d-9c2b-8e1f3a7d5c9b"
     },
+    "layout": {
+      "narrowContainer": false
+    },
     "configuration": {
       "controls": {
         "displayArrows": true,

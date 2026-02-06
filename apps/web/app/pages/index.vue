@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- New architecture: Split rendering -->
     <EditableHeader :header="header" />
     <EditableMain :main="main" />
     <EditableFooter :footer="footer" />
@@ -28,22 +27,18 @@ definePageMeta({
 const { $i18n } = useNuxtApp();
 const route = useRoute();
 
-// New composable replaces useCategoryTemplate
 const { header, main, footer, fetchPageBlocks, setDefaultTemplate } = usePageBlocks(
   route?.meta?.identifier as string,
   route.meta.type as string,
   $i18n.locale.value,
 );
 
-// Fallback handling: If no data from API, use JSON templates
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
-// Set default template (for fallback when DB is empty)
 const defaultTemplate = useLocaleSpecificHomepageTemplate($i18n.locale.value);
 setDefaultTemplate(defaultTemplate);
 
-// Fetch blocks from API (will use defaults if DB is empty)
 await fetchPageBlocks('index', 'immutable');
 
 const { setPageMeta } = usePageMeta();
