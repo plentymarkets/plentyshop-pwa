@@ -69,7 +69,4 @@ onMounted(async () => {
     await import('./draggable.css');
   }
 });
-
-// eslint-disable-next-line no-console
-console.log('📄 EditableMain - Rendering main blocks:', props.main?.length ?? 0);
 </script>

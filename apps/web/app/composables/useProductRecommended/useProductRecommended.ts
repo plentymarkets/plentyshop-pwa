@@ -44,30 +44,10 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       categoryId: params.categoryId,
     };
 
-    const wasCached = state.value.data.length > 0;
-    // eslint-disable-next-line no-console
-    console.log('🛒 useProductRecommended - fetchProductRecommended:', {
-      categoryId: params.categoryId,
-      payload,
-      IS_CACHED: wasCached,
-      currentDataLength: state.value.data.length,
-    });
-
     try {
       const response = await useSdk().plentysystems.getFacet(payload);
       state.value.data = response?.data?.products ?? [];
-      // eslint-disable-next-line no-console
-      console.log('✅ useProductRecommended - fetch success:', {
-        categoryId: params.categoryId,
-        productsCount: state.value.data.length,
-        WAS_CACHED_BEFORE_FETCH: wasCached,
-      });
     } catch (error) {
-      console.error('❌ useProductRecommended - fetch failed:', {
-        categoryId: params.categoryId,
-        payload,
-        error,
-      });
       useHandleError(error as ApiError);
       state.value.data = [];
     }

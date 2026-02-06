@@ -13,9 +13,6 @@ import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTe
 import homepageTemplateDataEn from '~/composables/useCategoryTemplate/homepageTemplateDataEn.json';
 import type { Locale } from '#i18n';
 
-// eslint-disable-next-line no-console
-console.log('🏠 Homepage - Using NEW architecture with usePageBlocks');
-
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });

@@ -44,9 +44,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
       },
     };
 
-    // eslint-disable-next-line no-console
-    console.log('📦 usePageBlocks - Injected global header');
-
     return [headerBlock];
   };
 
@@ -66,9 +63,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
       },
       content: footerContent,
     };
-
-    // eslint-disable-next-line no-console
-    console.log('📦 usePageBlocks - Injected global footer from cache');
 
     return [footerBlock];
   };
@@ -133,18 +127,7 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
       }
 
       const blocks = data?.value?.data ?? [];
-
-      // eslint-disable-next-line no-console
-      console.log('📦 usePageBlocks - API response:', { identifier, type, totalBlocks: blocks.length, blocks });
-
       const blocksToUse = blocks.length ? blocks : state.value.defaultTemplateData;
-
-      // eslint-disable-next-line no-console
-      console.log('📦 usePageBlocks - Using blocks:', {
-        fromAPI: blocks.length,
-        fromDefaults: state.value.defaultTemplateData.length,
-        actuallyUsing: blocksToUse.length,
-      });
 
       if (Array.isArray(blocksToUse)) migrateAllBlocks(blocksToUse);
 
@@ -160,13 +143,6 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
       state.value.cleanHeader = markRaw(JSON.parse(JSON.stringify(finalHeader)));
       state.value.cleanMain = markRaw(JSON.parse(JSON.stringify(main)));
       state.value.cleanFooter = markRaw(JSON.parse(JSON.stringify(finalFooter)));
-
-      // eslint-disable-next-line no-console
-      console.log('📦 usePageBlocks - Split result:', {
-        header: finalHeader.length,
-        main: main.length,
-        footer: finalFooter.length,
-      });
     } catch (error) {
       state.value.loading = false;
       console.error('Failed to fetch page blocks:', error);

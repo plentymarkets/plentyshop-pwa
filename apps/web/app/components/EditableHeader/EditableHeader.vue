@@ -33,7 +33,4 @@ const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { isClicked, clickedBlockIndex, isTablet, tabletEdit, changeBlockPosition } = useBlockManager();
 
 const enabledActions = computed(() => shouldShowEditorUI.value && !localizationDrawerOpen.value);
-
-// eslint-disable-next-line no-console
-console.log('🎯 EditableHeader - Header blocks:', props.header?.length ?? 0);
 </script>
