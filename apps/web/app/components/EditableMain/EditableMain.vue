@@ -14,9 +14,10 @@
       <template #item="{ element: block, index }">
         <component
           :is="
-            (block?.content as any)?.layout?.narrowContainer || (block as any)?.layout?.narrowContainer
-              ? NarrowContainer
-              : 'div'
+            (block?.content as any)?.layout?.narrowContainer === false ||
+            (block as any)?.layout?.narrowContainer === false
+              ? 'div'
+              : NarrowContainer
           "
         >
           <PageBlock
@@ -65,7 +66,7 @@ const enabledActions = computed(() => shouldShowEditorUI.value && !localizationD
 
 onMounted(async () => {
   if (isInEditor.value) {
-    await import('~/components/EditablePage/draggable.css');
+    await import('./draggable.css');
   }
 });
 
