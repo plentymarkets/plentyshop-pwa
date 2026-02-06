@@ -1,20 +1,25 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <!-- Product pages: Main content from product template, Footer from global cache -->
+    <EditableMain :main="main" />
+    <EditableFooter :footer="footer" />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, Block } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 const route = useRoute();
+const { $i18n } = useNuxtApp();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
@@ -29,6 +34,12 @@ const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
+
+// New composable for product pages - use product template as default
+const { main, footer, fetchPageBlocks, setDefaultTemplate } = usePageBlocks('0', 'product', $i18n.locale.value);
+
+// Set product template as default (contains ImageGallery, PriceCard, etc.)
+setDefaultTemplate(productTemplateData as Block[]);
 
 definePageMeta({
   layout: false,
@@ -65,6 +76,9 @@ setCurrentProduct(productForEditor.value || ({} as Product));
 setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
+
+// Fetch blocks (uses product template as fallback when API returns empty)
+await fetchPageBlocks('0', 'product');
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);

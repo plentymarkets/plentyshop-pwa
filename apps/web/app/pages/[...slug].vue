@@ -7,23 +7,24 @@
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <EditablePage
-      :identifier="identifier"
-      :type="'category'"
-      data-testid="category-page-content"
-      :prevent-blocks-request="productsCatalog.category?.type === 'item'"
-    />
+    <EditableMain :main="main" data-testid="category-page-content" />
+    <EditableFooter :footer="footer" />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Block } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
+import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
+
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 const { locale } = useI18n();
+const { $i18n } = useNuxtApp();
 const route = useRoute();
 const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
@@ -44,6 +45,11 @@ definePageMeta({
   isBlockified: true,
   identifier: 0,
 });
+
+let pageBlocksComposable: ReturnType<typeof usePageBlocks> | null = null;
+
+const main = computed(() => (pageBlocksComposable?.main?.value as Block[] | undefined) ?? []);
+const footer = computed(() => (pageBlocksComposable?.footer?.value as Block[] | undefined) ?? []);
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -76,6 +82,11 @@ await handleQueryUpdate().then(() => {
   setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
   setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
 });
+
+pageBlocksComposable = usePageBlocks(identifier.value.toString(), 'category', $i18n.locale.value);
+pageBlocksComposable.setDefaultTemplate(categoryTemplateData as Block[]);
+
+await pageBlocksComposable.fetchPageBlocks(identifier.value.toString(), 'category');
 
 const { setPageMeta } = usePageMeta();
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
@@ -124,6 +135,16 @@ watch(
 watchEffect(() => {
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
+
+// Watch identifier changes to refetch blocks when navigating between categories
+watch(
+  () => identifier.value,
+  async (newIdentifier) => {
+    pageBlocksComposable = usePageBlocks(newIdentifier.toString(), 'category', $i18n.locale.value);
+    pageBlocksComposable.setDefaultTemplate(categoryTemplateData as Block[]);
+    await pageBlocksComposable.fetchPageBlocks(newIdentifier.toString(), 'category');
+  },
+);
 
 useHead({
   title: headTitle,

@@ -75,6 +75,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       return;
     }
 
+    // eslint-disable-next-line no-console
+    console.log('🔍 getBlocks() API response:', { identifier, type, blocks, response: data?.value });
+
     setupBlocks(data?.value?.data ?? []);
 
     await ensureFooterBlock();
