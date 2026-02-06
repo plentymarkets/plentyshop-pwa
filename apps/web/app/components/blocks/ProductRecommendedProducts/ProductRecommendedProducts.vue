@@ -34,16 +34,7 @@ const { data: recommendedProducts, fetchProductRecommended } = useProductRecomme
 const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
-
-const hasExplicitCategoryId = computed(() => {
-  return Boolean(props.content.source?.categoryId);
-});
-
-const shouldFetch = computed(() => {
-  if (!shouldRender.value) return false;
-  if (isCategory.value && !hasExplicitCategoryId.value) return false;
-  return isCategory.value || isProduct.value;
-});
+const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
 
 const getContentSource = () => {
   return {
@@ -58,7 +49,12 @@ const getContentSource = () => {
 watch(
   shouldFetch,
   (visible) => {
-    if (visible) fetchProductRecommended(getContentSource());
+    if (visible) {
+      const source = getContentSource();
+      if (isCategory.value && !source.categoryId) return;
+      if (isProduct.value && !source.itemId) return;
+      fetchProductRecommended(source);
+    }
     shouldRenderAfterUpdate.value = true;
   },
   { immediate: true },
@@ -78,7 +74,10 @@ watch(
       ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
         (props.content.source?.categoryId && props.content.source?.type === 'category'))
     ) {
-      fetchProductRecommended(getContentSource());
+      const source = getContentSource();
+      if (isCategory.value && !source.categoryId) return;
+      if (isProduct.value && !source.itemId) return;
+      fetchProductRecommended(source);
     }
     shouldRenderAfterUpdate.value = true;
   },

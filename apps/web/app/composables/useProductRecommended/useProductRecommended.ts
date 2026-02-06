@@ -3,7 +3,7 @@ import type {
   UseProductRecommendedState,
   FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
-import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria, ApiError } from '@plentymarkets/shop-api';
 
 /**
  * Composable for managing recommended products data
@@ -44,15 +44,34 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       categoryId: params.categoryId,
     };
 
-    const idForKey = params.type === 'cross_selling' ? params.itemId : params.categoryId;
+    const wasCached = state.value.data.length > 0;
+    // eslint-disable-next-line no-console
+    console.log('🛒 useProductRecommended - fetchProductRecommended:', {
+      categoryId: params.categoryId,
+      payload,
+      IS_CACHED: wasCached,
+      currentDataLength: state.value.data.length,
+    });
 
-    const { data, error } = await useAsyncData(
-      `useProductRecommended-${params.type}-${idForKey}-${params.crossSellingRelation}`,
-      () => useSdk().plentysystems.getFacet(payload),
-    );
+    try {
+      const response = await useSdk().plentysystems.getFacet(payload);
+      state.value.data = response?.data?.products ?? [];
+      // eslint-disable-next-line no-console
+      console.log('✅ useProductRecommended - fetch success:', {
+        categoryId: params.categoryId,
+        productsCount: state.value.data.length,
+        WAS_CACHED_BEFORE_FETCH: wasCached,
+      });
+    } catch (error) {
+      console.error('❌ useProductRecommended - fetch failed:', {
+        categoryId: params.categoryId,
+        payload,
+        error,
+      });
+      useHandleError(error as ApiError);
+      state.value.data = [];
+    }
 
-    useHandleError(error.value ?? null);
-    state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;
     return state.value.data;
   };
