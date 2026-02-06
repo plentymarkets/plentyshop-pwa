@@ -77,7 +77,6 @@ setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
 
-// Fetch blocks (uses product template as fallback when API returns empty)
 await fetchPageBlocks('0', 'product');
 
 async function fetchReviews() {
