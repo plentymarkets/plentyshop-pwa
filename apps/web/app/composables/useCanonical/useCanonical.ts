@@ -68,6 +68,8 @@ export const useCanonical: UseCanonicalReturn = () => {
     const { defaultLocale } = useI18n();
     const { getAvailableLocales } = useLocalization();
 
+    const canonicalUrl = `${runtimeConfig.public.domain}${localePath(route.fullPath)}`;
+
     const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
         rel: 'alternate',
@@ -86,6 +88,10 @@ export const useCanonical: UseCanonicalReturn = () => {
         },
         ...alternateLocales,
       ],
+    });
+
+    useSeoMeta({
+      ogUrl: canonicalUrl,
     });
 
     state.value.loading = false;
@@ -122,6 +128,10 @@ export const useCanonical: UseCanonicalReturn = () => {
           href: canonicalLink,
         },
       ],
+    });
+
+    useSeoMeta({
+      ogUrl: canonicalLink,
     });
 
     if (productsCatalog.languageUrls) {
