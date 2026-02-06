@@ -1,10 +1,10 @@
 <template>
   <div class="address-display">
-    <p>
-      {{
-        userAddressGetters.getCompanyName(address) ||
-        `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}`
-      }}
+    <p v-if="userAddressGetters.getCompanyName(address)">
+      {{ userAddressGetters.getCompanyName(address) }}
+    </p>
+    <p v-if="userAddressGetters.getFirstName(address) || userAddressGetters.getLastName(address)">
+      {{ `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}` }}
     </p>
     <p>{{ userAddressGetters.getPhone(address) }}</p>
     <p>
@@ -27,7 +27,6 @@ import type { AddressProps } from './types';
 
 const { address } = defineProps<AddressProps>();
 
-const { t } = useI18n();
 const countryName = computed(() =>
   address?.country ? useAggregatedCountries().localeCountryName(address.country) : '',
 );

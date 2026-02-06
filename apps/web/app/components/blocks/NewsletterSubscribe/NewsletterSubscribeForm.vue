@@ -96,43 +96,111 @@
       <template #summary>
         <h2>{{ getEditorTranslation('settings-group-label') }}</h2>
       </template>
-
-      <div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
-
+      <div class="mb-6">
+        <div class="mb-2 flex items-center gap-2">
+          <div class="flex items-center">
+            <UiFormLabel class="mb-0 mr-2 inline-block">{{
+              getEditorTranslation('email-folder-id-label')
+            }}</UiFormLabel>
+            <SfTooltip :label="getEditorTranslation('newsletter-form-email-folder-id-tooltip')" class="inline-flex">
+              <SfIconInfo size="sm" />
+            </SfTooltip>
+          </div>
+        </div>
+        <SfInput
+          v-model="newsletterBlock.settings.emailFolderId"
+          name="emailFolderId"
+          type="number"
+          :placeholder="getEditorTranslation('email-folder-id-label')"
+          data-testid="newsletter-form-email-folder-id"
+          min="1"
+        />
+      </div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+        <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="newsletterBlock.text.bgColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput
+                v-model="newsletterBlock.text.bgColor"
+                type="text"
+                data-testid="newsletter-form-background-color"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
           <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
             <template #suffix>
               <label
-                for="text-color"
+                for="newsletter-bg-color"
                 :style="{ backgroundColor: newsletterBlock.text.bgColor }"
                 class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
-                <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
+                <input
+                  id="newsletter-bg-color"
+                  v-model="newsletterBlock.text.bgColor"
+                  type="color"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
         </div>
       </div>
     </UiAccordionItem>
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+      </template>
+
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+    </UiAccordionItem>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { NewsletterSubscribeContent } from './types';
+import { initializeNewsletterContent } from './utils';
+
+const runtimeConfig = useRuntimeConfig().public;
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);
 const settingsGroup = ref(true);
+const layoutOpen = ref(true);
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const newsletterBlock = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {}) as NewsletterSubscribeContent,
-);
+const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
+  const uuid = blockUuid.value;
+  const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
+  return initializeNewsletterContent(rawContent as Partial<NewsletterSubscribeContent>);
+});
+
+const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
 </script>
 
 <i18n lang="json">
@@ -146,13 +214,14 @@ const newsletterBlock = computed(
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
-
+    "email-folder-id-label": "Email folder ID",
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
-
+    "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "layout-label": "Layout"
   },
   "de": {
     "text-group-label": "Text",
@@ -163,13 +232,14 @@ const newsletterBlock = computed(
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
-
+    "email-folder-id-label": "Email folder ID",
     "button-group-label": "Button",
     "button-text-label": "Text",
     "button-text-placeholder": "label",
-
+    "newsletter-form-email-folder-id-tooltip": "Find the ID of the email folder in your PlentyONE system under Setup » CRM » Newsletter » Recipient lists.",
     "settings-group-label": "Settings",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "layout-label": "Layout"
   }
 }
 </i18n>

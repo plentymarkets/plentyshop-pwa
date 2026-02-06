@@ -14,7 +14,7 @@
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
         <UiButton
-          :aria-label="t('closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           data-testid="quick-checkout-close"
           square
           variant="tertiary"
@@ -60,17 +60,17 @@
         />
 
         <div class="mt-4 typography-text-xs flex gap-1">
-          <span>{{ t('asterisk') }}</span>
-          <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
-          <span v-else>{{ t('itemInclVAT') }}</span>
-          <i18n-t keypath="excludedShipping" scope="global">
+          <span>{{ t('common.labels.asterisk') }}</span>
+          <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
+          <span v-else>{{ t('product.priceInclVAT') }}</span>
+          <i18n-t keypath="shipping.excludedLabel" scope="global">
             <template #shipping>
               <SfLink
                 :href="localePath(paths.shipping)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ t('delivery') }}
+                {{ t('common.labels.delivery') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -80,7 +80,7 @@
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
-          <p class="font-medium text-base">{{ t('quickCheckout.cartContains', cartItemsCount) }}</p>
+          <p class="font-medium text-base">{{ t('quickCheckout.cartContains', { count: cartItemsCount }) }}</p>
           <div class="grid grid-cols-2">
             <p class="text-base">{{ t('quickCheckout.subTotal') }}:</p>
             <p v-if="showNetPrices" data-testid="subtotal" class="font-medium text-right">
@@ -106,11 +106,16 @@
           class="w-full mb-4 md:mb-0"
           @click="goToCheckout()"
         >
-          {{ t('goToCheckout') }}
+          {{ t('common.actions.goToCheckout') }}
         </UiButton>
-        <OrDivider v-if="isPaypalAvailable" class="my-4" />
-        <PayPalExpressButton class="w-full text-center" type="CartPreview" @on-approved="isOpen = false" />
-        <PayPalPayLaterBanner placement="payment" :amount="totals.total" />
+        <OrDivider v-if="isPaypalAvailable('quickCheckout').value" class="my-4" />
+        <PayPalExpressButton
+          class="w-full text-center"
+          location="quickCheckout"
+          type="CartPreview"
+          @on-approved="isOpen = false"
+        />
+        <PayPalPayLaterBanner placement="payment" location="quickCheckout" :amount="totals.total" />
       </div>
     </div>
   </UiModal>
@@ -126,11 +131,8 @@ import { paths } from '~/utils/paths';
 
 const props = defineProps<QuickCheckoutProps>();
 
-const { t } = useI18n();
 const { format } = usePriceFormatter();
-
 const { showNetPrices } = useCart();
-
 const localePath = useLocalePath();
 const { data: cart, lastUpdatedCartItem } = useCart();
 const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();

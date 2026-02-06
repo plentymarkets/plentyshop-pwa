@@ -7,20 +7,45 @@
   <p v-if="sameAsShippingAddress">{{ t('orderConfirmation.sameAsShippingAddress') }}</p>
   <OrderAddressData v-if="billingAddress && !sameAsShippingAddress" :address="billingAddress" />
 
-  <h2 class="font-medium text-base mt-4">{{ t('checkoutPayment.heading') }}</h2>
+  <h2 class="font-medium text-base mt-4">{{ t('checkout.payment.heading') }}</h2>
   <p>{{ orderGetters.getPaymentMethodName(order) }}</p>
 
   <h2 class="font-medium text-base mt-4">{{ t('account.ordersAndReturns.paymentSummary.paymentStatus') }}</h2>
   <p data-testid="order-payment-status">{{ t(orderGetters.getPaymentStatusKey(order)) }}</p>
+
+  <div v-if="showPaymentButton" class="mt-4">
+    <PayPalExpressButton
+      v-if="paymentKey === 'PAYPAL'"
+      type="OrderAlreadyExisting"
+      :currency="currency"
+      :plenty-order-id="Number(orderGetters.getId(order))"
+      @on-payed="refetchOrder()"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-api';
+import { orderConfirmationGetters, orderGetters } from '@plentymarkets/shop-api';
 import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();
-const { t } = useI18n();
+const { fetchOrderClient } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
+const isUnpaid = computed(() => !orderConfirmationGetters.isOrderPaid(props.order));
+const validOrderPaymentStatus = computed(() => orderConfirmationGetters.orderStatusValidForPayment(props.order));
+const showPaymentButton = computed(() => isUnpaid.value && validOrderPaymentStatus.value);
+const currency = orderGetters.getCurrency(props.order);
+const paymentKey = props.order.paymentMethodKey;
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
+
+const refetchOrder = async () => {
+  const shippingAddress = orderGetters.getShippingAddress(props.order);
+  await fetchOrderClient({
+    orderId: orderGetters.getId(props.order),
+    accessKey: orderGetters.getAccessKey(props.order),
+    postcode: shippingAddress?.postalCode,
+    name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
+  });
+};
 </script>

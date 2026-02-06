@@ -1,8 +1,9 @@
 <template>
   <SfTooltip
-    :label="getEditorTranslation('tooltip')"
+    :label="getEditorUITranslation('branding-and-design-tooltip')"
     placement="right"
     class="inline-grid font-editor"
+    data-testid="branding-tooltip"
     :show-arrow="true"
   >
     <button
@@ -27,14 +28,3 @@ defineProps({
   active: Boolean,
 });
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "tooltip": "Branding & design: Manage your logo, customize colors, typography, and more."
-  },
-  "de": {
-    "tooltip": "Branding & design: Manage your logo, customize colors, typography, and more."
-  }
-}
-</i18n>

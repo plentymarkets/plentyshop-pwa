@@ -2,9 +2,9 @@
   <NuxtLayout
     name="checkout"
     page-type="static"
-    :back-label-desktop="t('back')"
-    :back-label-mobile="t('back')"
-    :heading="t('checkout')"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
+    :heading="t('common.labels.checkout')"
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
@@ -40,12 +40,16 @@
               </UiButton>
             </div>
             <div v-else-if="payPalAvailable">
-              <PayPalExpressButton
-                v-if="changedTotal"
-                :disabled="interactionDisabled"
-                type="Checkout"
-                @validation-callback="payPalValidateCallback"
-              />
+              <template v-if="changedTotal">
+                <PayPalExpressButton
+                  v-if="changedTotal"
+                  :disabled="interactionDisabled"
+                  type="Checkout"
+                  location="checkoutPage"
+                  @validation-callback="payPalValidateCallback"
+                />
+                <PayPalPayLaterBanner placement="payment" location="checkoutPage" :amount="initialTotal" />
+              </template>
 
               <UiButton
                 v-else
@@ -57,7 +61,7 @@
                 @click="buy"
               >
                 <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
-                <template v-else>{{ t('buy') }}</template>
+                <template v-else>{{ t('common.actions.buy') }}</template>
               </UiButton>
             </div>
             <div v-else>
@@ -66,11 +70,11 @@
               >
                 <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
                 <div class="py-2 mr-2">
-                  {{ t('paypal.expressNotAvailable') }}
+                  {{ t('paypalPayment.expressNotAvailable') }}
                 </div>
               </div>
               <NuxtLink :to="localePath(paths.checkout)">
-                <UiButton class="w-full">{{ t('goToCheckout') }}</UiButton>
+                <UiButton class="w-full">{{ t('common.actions.goToCheckout') }}</UiButton>
               </NuxtLink>
             </div>
             <UiButton
@@ -83,7 +87,7 @@
               @click="cancelOrder"
             >
               <SfLoaderCircular v-if="unreserveLoading" class="flex justify-center items-center" size="sm" />
-              <template v-else>{{ t('cancelOrder') }}</template>
+              <template v-else>{{ t('common.actions.cancelOrder') }}</template>
             </UiButton>
           </OrderSummary>
         </div>
@@ -95,14 +99,16 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
-import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 const ID_CHECKBOX = '#terms-checkbox';
 const localePath = useLocalePath();
 const route = useRoute();
 const { send } = useNotification();
-const { t } = useI18n();
 const { loginAsGuest, user } = useCustomer();
 const { fetchSession } = useFetchSession();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
@@ -118,7 +124,7 @@ const {
   setAddressesFromPayPal,
 } = usePayPal();
 const { processingOrder } = useProcessingOrder();
-const { setInitialCartTotal, changedTotal } = useCartTotalChange();
+const { setInitialCartTotal, changedTotal, initialTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
 const { unreserve, loading: unreserveLoading } = useCartStockReservation();
@@ -171,17 +177,15 @@ const handle = async () => {
   await setAddressesFromPayPal(paypalOrderId);
   await fetchSession();
 
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetch()
     .then(() => persistShippingAddress())
-    .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddress(AddressType.Billing)
-    .fetch()
     .then(() => persistBillingAddress())
-    .then(() => setBillingSkeleton(false))
-    .catch((error) => useHandleError(error));
+    .catch((error) => useHandleError(error))
+    .finally(() => {
+      setBillingSkeleton(false);
+      setShippingSkeleton(false);
+    });
 
   if (user.value === null && (billingAddress.value?.email || shippingAddress.value?.email)) {
     await loginAsGuest(billingAddress.value?.email || shippingAddress.value?.email || '');
@@ -218,24 +222,24 @@ const validateFields = async () => {
   if (interactionDisabled.value) return false;
 
   if (cartIsEmpty.value) {
-    send({ type: 'neutral', message: t('emptyCartNotification') });
+    send({ type: 'neutral', message: t('cart.emptyNotification') });
     await navigateTo(localePath(paths.cart));
     return false;
   }
 
   if (anyAddressFormIsOpen.value) {
-    send({ type: 'secondary', message: t('unsavedAddress') });
+    send({ type: 'secondary', message: t('address.unsavedWarning') });
     return backToFormEditing();
   }
 
   if (!hasShippingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToShippingAddress();
     return false;
   }
 
   if (!hasBillingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingBillingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingBillingAddress') });
     scrollToBillingAddress();
     return false;
   }
@@ -274,7 +278,7 @@ const buy = async () => {
         navigateTo(localePath(`${paths.confirmation}/${order.order.id}/${order.order.accessKey}`));
       }
     } else {
-      send({ type: 'negative', message: t('paypal.invalidOrder') });
+      send({ type: 'negative', message: t('paypalPayment.invalidOrder') });
       navigateTo(localePath(paths.cart));
     }
   }

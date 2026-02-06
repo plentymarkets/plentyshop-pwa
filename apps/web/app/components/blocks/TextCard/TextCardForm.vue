@@ -9,7 +9,19 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <div data-testid="text-card-form">
+    <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
+      <div class="py-2">
+        <EditorRichTextEditor
+          v-model="contentModel"
+          v-model:expanded="expandedToolbars.content"
+          :min-height="232"
+          :expandable="true"
+          :text-align="textCardBlock.text.textAlignment"
+          data-testid="rte-content"
+        />
+      </div>
+    </div>
+    <div v-else data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
@@ -66,29 +78,51 @@
           class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
         />
       </div>
+
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
-            <template #suffix>
-              <label
-                for="primary-color"
-                :style="{ backgroundColor: textCardBlock.text.color }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="primary-color"
-                  v-model="textCardBlock.text.color"
-                  data-testid="color-input"
-                  type="color"
-                  class="invisible w-8"
-                />
+        <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="textCardBlock.text.color" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <label>
+                <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
               </label>
             </template>
-          </SfInput>
-        </label>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
+          <label>
+            <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
+              <template #suffix>
+                <label
+                  for="primary-color"
+                  :style="{ backgroundColor: textCardBlock.text.color }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="primary-color"
+                    v-model="textCardBlock.text.color"
+                    data-testid="color-input"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
       </div>
 
       <fieldset class="py-2">
@@ -201,6 +235,7 @@
       </div>
     </fieldset>
   </UiAccordionItem>
+
   <UiAccordionItem
     v-model="layoutSettings"
     data-testid="layout-settings"
@@ -228,26 +263,50 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
-          <template #suffix>
-            <label
-              for="background-color"
-              :style="{ backgroundColor: backgroundColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input
-                id="background-color"
-                v-model="backgroundColor"
-                data-testid="color-input-background"
-                type="color"
-                class="invisible w-8"
-              />
+      <div v-if="runtimeConfig.enableColorPicker">
+        <EditorColorPicker v-model="backgroundColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
             </label>
           </template>
-        </SfInput>
-      </label>
+        </EditorColorPicker>
+      </div>
+      <div v-else>
+        <label>
+          <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+            <template #suffix>
+              <label
+                for="background-color"
+                :style="{ backgroundColor: backgroundColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="background-color"
+                  v-model="backgroundColor"
+                  data-testid="color-input-background"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
     </div>
+
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -309,19 +368,44 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
+const runtimeConfig = useRuntimeConfig().public;
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<TextCardFormProps>();
 
+const config = useRuntimeConfig().public;
+
+const expandedToolbars = ref({
+  content: true,
+});
+
+const contentModel = computed<string>({
+  get: () => textCardBlock.value.text.htmlDescription ?? '',
+  set: (val) => {
+    textCardBlock.value.text.htmlDescription = val;
+  },
+});
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
 
   const content = rawContent as Partial<TextCardContent>;
 
   if (!content.text) content.text = {};
+  content.text.pretitle = content.text.pretitle ?? '';
+  content.text.title = content.text.title ?? '';
+  content.text.subtitle = content.text.subtitle ?? '';
+  content.text.htmlDescription = content.text.htmlDescription ?? '';
+  content.text.color = content.text.color ?? '';
+  content.text.textAlignment = content.text.textAlignment ?? 'left';
+
   if (!content.button) content.button = {};
   if (!content.layout) {
     content.layout = {
@@ -330,11 +414,19 @@ const textCardBlock = computed<TextCardContent>(() => {
       paddingBottom: '0',
       paddingLeft: '0',
       paddingRight: '0',
+      fullWidth: false,
     };
   }
 
+  content.text.pretitle ??= '';
+  content.text.title ??= '';
+  content.text.subtitle ??= '';
+  content.text.htmlDescription ??= '';
+
   return content as TextCardContent;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
 const textSettings = ref(false);
 const buttonSettings = ref(false);
@@ -348,7 +440,6 @@ watch([isTransparent, backgroundColor], () => {
   textCardBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
 });
 </script>
-
 <i18n lang="json">
 {
   "en": {
@@ -374,7 +465,8 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "Keep background transparent"
+    "keep-transparent-label": "Keep background transparent",
+    "content-label": "Content"
   },
   "de": {
     "text-group-label": "Text",
@@ -399,7 +491,8 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "or keep transparent"
+    "keep-transparent-label": "or keep transparent",
+    "content-label": "Content"
   }
 }
 </i18n>

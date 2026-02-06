@@ -1,5 +1,6 @@
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 import { createDefaultFooterSettings, extractFooterFromBlocks, addFooterBlock } from '~/utils/footerHelper';
+import { callWithNuxt } from '#app';
 
 /**
  * Composable for accessing global footer settings
@@ -25,27 +26,31 @@ export const useFooter = () => {
       return footerCache.value;
     }
 
-    try {
-      const { data } = await useAsyncData('footer-settings', () =>
-        useSdk().plentysystems.getBlocks({
-          identifier: 'index',
-          type: 'immutable',
-          blocks: 'Footer',
-        }),
-      );
+    const nuxtApp = useNuxtApp();
 
-      const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
+    return callWithNuxt(nuxtApp, async () => {
+      try {
+        const { data } = await useAsyncData(`footer-settings-${nuxtApp.$i18n.locale}`, () =>
+          useSdk().plentysystems.getBlocks({
+            identifier: 'index',
+            type: 'immutable',
+            blocks: 'Footer',
+          }),
+        );
 
-      if (footerBlock?.content) {
-        footerCache.value = footerBlock.content as FooterSettings;
-        return footerCache.value;
+        const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
+
+        if (footerBlock?.content) {
+          footerCache.value = footerBlock.content as FooterSettings;
+          return footerCache.value;
+        }
+      } catch (error) {
+        console.warn('Failed to fetch footer settings, using defaults:', error);
       }
-    } catch (error) {
-      console.warn('Failed to fetch footer settings, using defaults:', error);
-    }
 
-    footerCache.value = getFooterSettings();
-    return footerCache.value;
+      footerCache.value = getFooterSettings();
+      return footerCache.value;
+    });
   };
 
   return {

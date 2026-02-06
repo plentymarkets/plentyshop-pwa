@@ -1,10 +1,10 @@
 <template>
   <div data-testid="contact-information" class="md:px-4 py-6">
     <h2 class="w-full text-neutral-900 text-lg font-bold mb-4">
-      {{ t('contactInfo.heading') }}
+      {{ t('contact.info.heading') }}
     </h2>
 
-    <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contactInfo.email') }}: {{ customerEmail }}</div>
+    <div v-if="customerEmail && isAuthorized" class="w-full">{{ t('contact.info.email') }}: {{ customerEmail }}</div>
 
     <form
       v-if="(!isAuthorized && !isGuest) || isGuest"
@@ -13,7 +13,7 @@
       @submit.prevent="validateAndSubmitEmail"
     >
       <label for="customerEmail">
-        <UiFormLabel>{{ t('contactInfo.email') }} {{ t('form.required') }}</UiFormLabel>
+        <UiFormLabel>{{ t('contact.info.email') }} {{ t('form.required') }}</UiFormLabel>
       </label>
       <div class="relative">
         <SfInput
@@ -43,9 +43,9 @@
     </form>
 
     <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mt-4">
-      <div>{{ t('auth.signup.alreadyHaveAccount') }}</div>
+      <div>{{ t('authentication.signup.alreadyHaveAccount') }}</div>
       <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
-        {{ t('auth.signup.logInLinkLabel') }}
+        {{ t('authentication.signup.logInLinkLabel') }}
       </SfLink>
     </div>
 
@@ -57,7 +57,7 @@
     >
       <header>
         <UiButton
-          :aria-label="t('closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           square
           variant="tertiary"
           class="absolute right-2 top-2"
@@ -78,8 +78,6 @@ import { ErrorMessage, useForm } from 'vee-validate';
 import type { ContactInformationProps } from './types';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
-
-const { t } = useI18n();
 const {
   user,
   loginAsGuest,
@@ -131,12 +129,9 @@ const handleGuestEmailChange = async (updatedEmail: string) => {
   useCheckoutAddress(AddressType.Shipping).clear();
   useCheckoutAddress(AddressType.Billing).clear();
 
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
-    .then(() => persistShippingAddress());
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
+    .then(() => persistShippingAddress())
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
 
@@ -159,12 +154,9 @@ const checkPayPalPaymentsEligible = async () => {
 };
 
 const handleSuccessfulLogin = async () => {
-  await useFetchAddress(AddressType.Shipping)
+  await useFetchAddressesData()
     .fetchServer()
-    .then(() => persistShippingAddress());
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
+    .then(() => persistShippingAddress())
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
 

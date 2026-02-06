@@ -1,5 +1,10 @@
 <template>
-  <NuxtLayout name="checkout" :back-label-desktop="t('back')" :back-label-mobile="t('back')" :heading="t('checkout')">
+  <NuxtLayout
+    name="checkout"
+    :back-label-desktop="t('common.actions.back')"
+    :back-label-mobile="t('common.actions.back')"
+    :heading="t('common.labels.checkout')"
+  >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider id="top-contact-information-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -54,7 +59,12 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType, cartGetters } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -63,10 +73,9 @@ definePageMeta({
 });
 
 const { send } = useNotification();
-const { t } = useI18n();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
-const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
+const { countryHasDelivery, hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const checkoutReady = ref(false);
 const {
   cart,
@@ -80,6 +89,7 @@ const {
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
+const { getScript } = usePayPal();
 const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
@@ -90,32 +100,29 @@ const checkPayPalPaymentsEligible = async () => {
     const { data: cart } = useCart();
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    await Promise.all([
-      useGooglePay().checkIsEligible(),
-      useApplePay().checkIsEligible(),
-      usePayPal().updateAvailableAPMs(currency.value, true),
-    ]);
-    await fetchPaymentMethods();
+    await getScript(currency.value, true);
   }
 };
 await callOnce(async () => {
-  await Promise.all([fetchPaymentMethods(), useAggregatedCountries().fetchAggregatedCountries()]);
+  await fetchPaymentMethods();
 });
 
 onNuxtReady(async () => {
-  await useFetchAddress(AddressType.Shipping)
-    .fetchServer()
+  await useFetchAddressesData()
+    .fetch()
     .then(() => persistShippingAddress())
-    .then(() => setShippingSkeleton(false))
-    .catch((error) => useHandleError(error));
-
-  await useFetchAddress(AddressType.Billing)
-    .fetchServer()
     .then(() => persistBillingAddress())
-    .then(() => setBillingSkeleton(false))
-    .catch((error) => useHandleError(error));
+    .catch((error: ApiError) => useHandleError(error))
+    .finally(() => {
+      setBillingSkeleton(false);
+      setShippingSkeleton(false);
+    });
 
-  await Promise.all([useCartShippingMethods().getShippingMethods(), checkPayPalPaymentsEligible()]);
+  await Promise.all([
+    checkPayPalPaymentsEligible(),
+    ...(hasCheckoutAddress.value ? [useCartShippingMethods().getShippingMethods()] : []),
+  ]);
+
   checkoutReady.value = true;
 });
 
@@ -125,7 +132,7 @@ const { processingOrder } = useProcessingOrder();
 
 watch(cartIsEmpty, async () => {
   if (!processingOrder.value) {
-    send({ type: 'neutral', message: t('emptyCartNotification') });
+    send({ type: 'neutral', message: t('cart.emptyNotification') });
     await navigateTo(localePath(paths.cart));
   }
 });

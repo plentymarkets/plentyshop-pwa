@@ -48,7 +48,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         type="button"
         square
         variant="tertiary"
@@ -69,6 +69,10 @@
 <script setup lang="ts">
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
+import type { Locale } from '#i18n';
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 definePageMeta({
   layout: 'account',
@@ -76,7 +80,6 @@ definePageMeta({
   middleware: ['auth-guard'],
 });
 const { isOpen, open, close } = useDisclosure();
-const { t } = useI18n();
 const lastActiveElement = ref();
 const modalElement = ref();
 const openedForm = ref('');

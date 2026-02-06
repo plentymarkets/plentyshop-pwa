@@ -159,20 +159,48 @@
         <div class="controls">
           <div class="mb-6 mt-4">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
-
-            <SfInput v-model="controls.color" type="text">
-              <template #suffix>
-                <label
-                  for="controls-color"
-                  :style="{ backgroundColor: controls.color }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
+            <div v-if="runtimeConfig.enableColorPicker">
+              <EditorColorPicker v-model="controls.color" class="w-full">
+                <template #trigger="{ color, toggle }">
+                  <SfInput v-model="controls.color" type="text">
+                    <template #suffix>
+                      <button
+                        type="button"
+                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                        :style="{ backgroundColor: color }"
+                        @mousedown.stop
+                        @click.stop="toggle"
+                      />
+                    </template>
+                  </SfInput>
+                </template>
+              </EditorColorPicker>
+            </div>
+            <div v-else>
+              <SfInput v-model="controls.color" type="text">
+                <template #suffix>
+                  <label
+                    for="controls-color"
+                    :style="{ backgroundColor: controls.color }"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                  >
+                    <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
+                  </label>
+                </template>
+              </SfInput>
+            </div>
           </div>
         </div>
+      </UiAccordionItem>
+      <UiAccordionItem
+        v-model="layoutOpen"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+        </template>
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       </UiAccordionItem>
     </div>
   </div>
@@ -198,16 +226,27 @@ import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 
+const runtimeConfig = useRuntimeConfig().public;
+
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 setIndex(blockUuid.value, 0);
-
+const layoutOpen = ref(true);
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
+);
+const { isFullWidth } = useFullWidthToggleForConfig(
+  computed(() => carouselStructure.value.configuration),
+  { fullWidth: true },
 );
 const controls = computed(() => carouselStructure.value.configuration.controls);
 
@@ -330,7 +369,7 @@ input[type='number'] {
     "slide-label": "Slide",
     "add-slide-label": "Add Slide",
     "drag-reorder-aria": "Drag to reorder slide",
-
+    "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour"
   },
@@ -339,7 +378,7 @@ input[type='number'] {
     "slide-label": "Slide",
     "add-slide-label": "Add Slide",
     "drag-reorder-aria": "Drag to reorder slide",
-
+    "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour"
   }

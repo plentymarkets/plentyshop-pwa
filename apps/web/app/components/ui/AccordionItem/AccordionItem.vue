@@ -6,9 +6,7 @@
       </slot>
       <SfIconChevronLeft :class="['text-neutral-500', internalModelValue ? 'rotate-90' : '-rotate-90']" />
     </template>
-    <div class="py-2 px-4">
-      <slot />
-    </div>
+    <div class="py-2 px-4"><slot /></div>
   </SfAccordionItem>
 </template>
 

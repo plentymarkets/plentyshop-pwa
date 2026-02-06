@@ -42,7 +42,7 @@
         </draggable>
       </div>
 
-      <div class="py-2">
+      <div v-if="sortFilterBlock.fields.customizedFilters" class="py-2">
         <div class="flex items-center justify-between gap-3">
           <UiFormLabel for="keep-transparent" class="m-0">
             {{ getEditorTranslation('show-filters-immediately-label') }}
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div v-if="!sortFilterBlock.showAllFiltersImmediately" class="py-2">
+      <div v-if="sortFilterBlock.fields.customizedFilters && !sortFilterBlock.showAllFiltersImmediately" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('number-of-filters-label') }}</UiFormLabel>
         </div>
@@ -82,6 +82,18 @@
       </div>
     </div>
   </UiAccordionItem>
+
+  <UiAccordionItem
+    v-model="layoutOpen"
+    summary-active-class="bg-neutral-100"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+  >
+    <template #summary>
+      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+    </template>
+
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+  </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
@@ -90,12 +102,18 @@ import type { SortFilterFormProps, SortFilterContent, SortFilterFieldKey } from 
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const sortFilterOpen = ref(true);
-
+const layoutOpen = ref(true);
 const props = defineProps<SortFilterFormProps>();
 
 const sortFilterBlock = computed<SortFilterContent>(() => {
@@ -103,11 +121,27 @@ const sortFilterBlock = computed<SortFilterContent>(() => {
 
   const content = rawContent as Partial<SortFilterContent>;
 
-  if (!content.showAllFiltersImmediately) content.showAllFiltersImmediately = false;
-  if (!content.numberOfFiltersToShowInitially) content.numberOfFiltersToShowInitially = 0;
+  if (typeof content.showAllFiltersImmediately === 'undefined') {
+    content.showAllFiltersImmediately = true;
+  }
+
+  if (typeof content.numberOfFiltersToShowInitially === 'undefined') {
+    content.numberOfFiltersToShowInitially = 0;
+  }
 
   return content as SortFilterContent;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(sortFilterBlock);
+
+watch(
+  () => sortFilterBlock.value.fields?.customizedFilters,
+  (isOn) => {
+    if (!isOn) {
+      sortFilterBlock.value.numberOfFiltersToShowInitially = 0;
+    }
+  },
+);
 
 const fieldLabels: Record<string, string> = {
   category: getEditorTranslation('category'),
@@ -136,9 +170,10 @@ const fieldLabels: Record<string, string> = {
     "availability": "Availability",
     "customizedFilters": "Customized filters",
 
-    "show-filters-immediately-label": "Show all filters immediately",
-    "number-of-filters-label": "Number of filters to show initially",
-    "items-per-page-label": "Items per page"
+    "show-filters-immediately-label": "Show all customized filters immediately",
+    "number-of-filters-label": "Number of customized filters to show initially",
+    "items-per-page-label": "Items per page",
+    "layout-label": "Layout"
   },
   "de": {
     "display-and-order-label": "Display and order",
@@ -153,9 +188,10 @@ const fieldLabels: Record<string, string> = {
     "customizedFilters": "Customized filters",
 
     "enable-filters-label": "Enable filters",
-    "show-filters-immediately-label": "Show all filters immediately",
-    "number-of-filters-label": "Number of filters to show initially",
-    "items-per-page-label": "Items per page"
+    "show-filters-immediately-label": "Show all customized filters immediately",
+    "number-of-filters-label": "Number of customized filters to show initially",
+    "items-per-page-label": "Items per page",
+    "layout-label": "Layout"
   }
 }
 </i18n>

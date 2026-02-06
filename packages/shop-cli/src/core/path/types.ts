@@ -51,6 +51,7 @@ export interface PathStrategy {
  * Configuration interface for path resolution
  */
 export interface PathConfig {
+  readonly cliPackageRoot: string;
   readonly projectRoot: string;
   readonly webAppRoot: string;
   readonly templatesRoot: string;

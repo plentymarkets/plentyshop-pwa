@@ -1,17 +1,8 @@
-import type { BlocksList, BlocksListContext } from '~/components/BlocksNavigationList/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 
-const blocksLists = ref<BlocksList>({});
-const blocksListContext = ref<BlocksListContext>('');
-
-const isEmptyBlock = (block: Block): boolean => {
-  const options = block?.content;
-  return !options || (typeof options === 'object' && Object.keys(options).length === 0);
-};
-const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
   position: 'top',
@@ -34,8 +25,16 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
-  const { data, cleanData, updateBlocks } = useCategoryTemplate();
+
+  const route = useRoute();
+  const { data, cleanData, updateBlocks } = useCategoryTemplate(
+    route?.meta?.identifier as string,
+    route.meta.type as string,
+    useNuxtApp().$i18n.locale.value,
+  );
+
   const { isEditingEnabled } = useEditor();
+  const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
 
@@ -53,46 +52,16 @@ export const useBlockManager = () => {
     multigridColumnUuid.value = uuid;
   };
 
-  const setBlocksListContext = (context: BlocksListContext) => {
-    blocksListContext.value = context;
-  };
-
-  const getBlocksLists = async () => {
-    try {
-      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      blocksLists.value = await response.json();
-    } catch (error) {
-      throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  };
-
-  const getTemplateByLanguage = async (category: string, variationIndex: number, lang: string) => {
-    if (!blocksLists.value[category]) {
-      await getBlocksLists();
-    }
-    const variationsInCategory = blocksLists.value[category];
-    if (!variationsInCategory) throw new Error(`Category ${category} not found in blocksLists`);
-    const variationToAdd = variationsInCategory.variations[variationIndex];
-    if (!variationToAdd) throw new Error(`Variation ${variationIndex} not found in category ${category}`);
-    const variationTemplate = variationToAdd.template;
-
-    return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
-  };
-
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!data.value) return;
 
-    const newBlock = await getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
     const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
     if (nonFooterBlocks.length === 0) {
       updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
       openDrawerWithView('blocksSettings', newBlock);
-
       return;
     }
 
@@ -122,6 +91,7 @@ export const useBlockManager = () => {
 
     updateBlocks(copiedData);
     openDrawerWithView('blocksSettings', newBlock);
+
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
@@ -264,8 +234,9 @@ export const useBlockManager = () => {
     const parentInfo = findBlockParent(data.value, blockUuid);
     if (parentInfo) {
       const { parent, index } = parentInfo;
-      const layoutTemplate = await getTemplateByLanguage('layout', 0, $i18n.locale.value);
-      const newBlock = { ...layoutTemplate.content[0] };
+      const layoutTemplate = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
+      const layoutTemplateContent = layoutTemplate.content as Block[];
+      const newBlock = { ...layoutTemplateContent[0] } as Block;
 
       const blockToDelete = parent[index];
       if (!blockToDelete) return;
@@ -336,18 +307,21 @@ export const useBlockManager = () => {
 
   const showBottomAddInGrid = ({
     blockMetaUuid,
-    columnLength = 0,
     blockName,
     isRowHovered,
     getBlockDepth,
   }: ShowBottomAddInGridOptions) => {
     const isInsideMultiGrid = getBlockDepth(blockMetaUuid) > 0;
-    return isInsideMultiGrid && columnLength === 1 && blockName !== 'EmptyGridBlock' && isRowHovered;
+    return isInsideMultiGrid && blockName !== 'EmptyGridBlock' && isRowHovered;
+  };
+
+  const blockExistsOnPage = (blockName: string): boolean => {
+    const checkBlocks = (blocks: Block[]): boolean =>
+      blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
+    return checkBlocks(data.value);
   };
 
   return {
-    blocksLists,
-    blocksListContext,
     currentBlock,
     currentBlockUuid,
     isClicked,
@@ -360,8 +334,6 @@ export const useBlockManager = () => {
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,
-    getBlocksLists,
-    blockHasData,
     tabletEdit,
     deleteBlock,
     updateBlock,
@@ -377,7 +349,7 @@ export const useBlockManager = () => {
     getLazyLoadKey,
     getLazyLoadConfig,
     getLazyLoadRef,
-    setBlocksListContext,
     showBottomAddInGrid,
+    blockExistsOnPage,
   };
 };

@@ -1,0 +1,16 @@
+export interface SortSettings {
+  selectionModeCompact: boolean;
+}
+export type SortContent = {
+  layout: {
+    paddingTop: number;
+    paddingBottom: number;
+    paddingLeft: number;
+    paddingRight: number;
+    fullWidth?: boolean;
+  };
+  settings: SortSettings;
+};
+export interface SortFormProps {
+  uuid?: string;
+}

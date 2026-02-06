@@ -1,16 +1,17 @@
 <template>
   <VCard flat>
-    <v-text-field
-      v-model="search"
-      density="compact"
-      label="Search"
-      prepend-inner-icon="fa-solid fa-magnifying-glass"
-      variant="solo-filled"
-      class="mb-5 border border-gray-300 rounded"
-      flat
-      hide-details
-      single-line
-    />
+    <div class="flex items-center gap-2 mb-5 bg-gray-100 border border-gray-300 rounded pl-2">
+      <SfIconSearch />
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search file or path..."
+        variant="solo"
+        flat
+        hide-details
+        single-line
+      />
+    </div>
 
     <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
       <SfLoaderCircular size="2xl" class="text-gray-400" />
@@ -50,7 +51,7 @@
 <script setup lang="ts">
 import { VCard, VTextField, VDataTable } from 'vuetify/components';
 import type { StorageObject } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconSearch } from '@storefront-ui/vue';
 
 const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 
@@ -79,14 +80,16 @@ watch(
 const search = ref('');
 
 const itemsWithPath = computed(() =>
-  items.value.map((item: StorageObject) => {
-    const lastSlash = item.key.lastIndexOf('/');
-    return {
-      ...item,
-      fileName: lastSlash >= 0 ? item.key.slice(lastSlash + 1) : item.key,
-      path: lastSlash >= 0 ? item.key.slice(0, lastSlash + 1) : '',
-    };
-  }),
+  items.value
+    .filter((item: StorageObject) => !item.key.endsWith('/'))
+    .map((item: StorageObject) => {
+      const lastSlash = item.key.lastIndexOf('/');
+      return {
+        ...item,
+        fileName: lastSlash >= 0 ? item.key.slice(lastSlash + 1) : item.key,
+        path: lastSlash >= 0 ? item.key.slice(0, lastSlash + 1) : '',
+      };
+    }),
 );
 
 const filteredItems = computed(() => {
@@ -134,14 +137,6 @@ const handleRowClick = (item: StorageObject) => {
 
 .v-data-table-footer__info {
   display: none !important;
-}
-
-.v-icon {
-  --v-icon-size-multiplier: 0.55;
-}
-
-.v-btn--icon .v-icon {
-  --v-icon-size-multiplier: 0.55;
 }
 
 .v-ripple__container {

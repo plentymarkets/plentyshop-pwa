@@ -22,7 +22,7 @@
             :index="index"
             :active-index="activeIndex"
             :is-first-image="index === 0"
-            :disable-zoom="configuration.thumbnails.enableHoverZoom === false"
+            :disable-zoom="shouldEnableEditorFeatures || configuration.thumbnails.enableHoverZoom === false"
           />
         </SwiperSlide>
       </Swiper>
@@ -54,7 +54,7 @@
             <NuxtImg
               :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
               :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"
-              class="rounded h-full w-full"
+              class="rounded h-full w-full object-contain"
               :class="activeIndex === index ? 'border-primary-500' : ''"
               :width="productImageGetters.getImageWidth(image) ?? 80"
               :height="productImageGetters.getImageHeight(image) ?? 80"
@@ -65,27 +65,29 @@
           </SwiperSlide>
         </Swiper>
 
-        <button
-          v-if="showNav && mainSwiper"
-          :disabled="atStart"
-          :class="prevThumbBtnClass"
-          aria-label="Previous"
-          @click="mainSwiper?.slidePrev()"
-        >
-          <SfIconChevronLeft />
-        </button>
-        <button
-          v-if="showNav && mainSwiper"
-          :disabled="atEnd"
-          :class="nextThumbBtnClass"
-          aria-label="Next"
-          @click="mainSwiper?.slideNext()"
-        >
-          <SfIconChevronRight />
-        </button>
+        <template v-if="hasMoreImages">
+          <button
+            v-if="showNav && mainSwiper"
+            :disabled="atStart"
+            :class="prevThumbBtnClass"
+            aria-label="Previous"
+            @click="mainSwiper?.slidePrev()"
+          >
+            <SfIconChevronLeft />
+          </button>
+          <button
+            v-if="showNav && mainSwiper"
+            :disabled="atEnd"
+            :class="nextThumbBtnClass"
+            aria-label="Next"
+            @click="mainSwiper?.slideNext()"
+          >
+            <SfIconChevronRight />
+          </button>
+        </template>
       </div>
 
-      <div class="flex md:hidden gap-0.5" role="group">
+      <div v-if="hasMoreImages" class="flex md:hidden gap-0.5" v-bind="carouselProps">
         <button
           v-for="(image, index) in images"
           :key="productImageGetters.getImageUrl(image)"
@@ -113,10 +115,15 @@ const props = withDefaults(defineProps<GalleryProps>(), {
     thumbnails: {
       showThumbnails: true,
       thumbnailType: 'left-vertical',
-      enableHoverZoom: false,
+      enableHoverZoom: true,
+    },
+    layout: {
+      fullWidth: false,
     },
   }),
 });
+
+const { shouldEnableEditorFeatures } = useEditorState();
 
 const configuration = computed(() => props.configuration);
 const { images } = toRefs(props);
@@ -132,6 +139,7 @@ const isLeft = computed(() => type.value === 'left-vertical');
 const galleryDirClass = computed(() => (isSide.value ? 'flex-col md:flex-row' : 'flex-col md:flex-col'));
 const galleryGapClass = computed(() => (isSide.value ? 'md:gap-4' : 'md:gap-2'));
 const thumbContainerClass = computed(() => [isLeft.value ? 'md:order-first' : 'md:order-last']);
+const hasMoreImages = computed(() => images.value.length > 1);
 
 const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
 const thumbsSlidesPerView = computed(() => (isSide.value ? 'auto' : Math.min(images.value.length, 6)));
@@ -152,14 +160,14 @@ const thumbSlideClass = (index: number) =>
 
 const prevThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
 
 const nextThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-30 rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
@@ -196,6 +204,10 @@ const slideTo = (index: number) => {
 
 const atStart = computed(() => activeIndex.value === 0);
 const atEnd = computed(() => activeIndex.value === images.value.length - 1);
+
+const carouselProps = computed(() => {
+  return hasMoreImages.value ? { role: 'group' } : {};
+});
 
 onMounted(() => {
   if (!mainBox.value) return;

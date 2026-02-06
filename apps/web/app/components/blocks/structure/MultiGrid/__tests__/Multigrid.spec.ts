@@ -11,8 +11,6 @@ describe('MultiGrid block', () => {
         layout: {
           marginTop: 10,
           marginBottom: 10,
-          marginLeft: 5,
-          marginRight: 5,
           backgroundColor: '#fff',
           gap: 'M',
         },
@@ -56,8 +54,6 @@ describe('MultiGrid block', () => {
         layout: {
           marginTop: 10,
           marginBottom: 10,
-          marginLeft: 5,
-          marginRight: 5,
           backgroundColor: '#fff',
           gap: 'M',
         },
@@ -84,7 +80,10 @@ describe('MultiGrid block', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,
-        layout: { ...mockMultiGridProps.layout, gap: 'XL' },
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, gap: 'XL' },
+        },
       },
     });
     expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-x-5');
@@ -94,13 +93,14 @@ describe('MultiGrid block', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,
-        layout: {
-          marginTop: 20,
-          marginBottom: 10,
-          marginLeft: 5,
-          marginRight: 15,
-          backgroundColor: '#ABCDEF',
-          gap: 'M',
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: {
+            marginTop: 20,
+            marginBottom: 10,
+            backgroundColor: '#ABCDEF',
+            gap: 'M',
+          },
         },
       },
     });
@@ -108,7 +108,8 @@ describe('MultiGrid block', () => {
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const style = grid.attributes('style');
     expect(style).toContain('background-color: #ABCDEF');
-    expect(style).toContain('margin: 20px 15px 10px 5px');
+    expect(style).toContain('margin-top: 20px');
+    expect(style).toContain('margin-bottom: 10px');
   });
 
   it('should apply responsive grid classes for a two-column grid', () => {
@@ -162,7 +163,7 @@ describe('MultiGrid block', () => {
         type: 'structure',
         content: blocks,
         configuration: { columnWidths: [6, 6] },
-        layout: { marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, backgroundColor: '#fff', gap: 'M' },
+        layout: { marginTop: 0, marginBottom: 0, backgroundColor: '#fff', gap: 'M' },
         meta: { uuid: 'test-multigrid' },
       },
     });

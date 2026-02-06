@@ -21,7 +21,7 @@
     >
       <button
         class="text-black hover:bg-gray-100 rounded no-drag p-1"
-        data-testid="open-editor-button"
+        :data-testid="`${props.block.name}-open-editor-button`"
         aria-label="editor button"
         :disabled="!props.actions.isEditable"
         :class="{ 'opacity-40 cursor-not-allowed': !props.actions.isEditable }"
@@ -37,7 +37,7 @@
     <SfTooltip v-else :label="editLabel" placement="left" :show-arrow="true">
       <button
         :class="['text-black', 'p-1', 'rounded', 'no-drag', ...(props.actions?.hoverBackground || [])]"
-        data-testid="open-editor-button"
+        :data-testid="`${props.block.name}-open-editor-button`"
         aria-label="editor button"
         @click.stop="triggerEdit"
       >

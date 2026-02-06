@@ -5,7 +5,7 @@
     v-if="processingOrder"
     class="fixed top-0 left-0 bg-black bg-opacity-75 bottom-0 right-0 !z-50 flex items-center justify-center flex-col"
   >
-    <div class="text-white mb-4">{{ t('googlePay.paymentInProgress') }}</div>
+    <div class="text-white mb-4">{{ t('checkout.googlePay.paymentInProgress') }}</div>
     <SfLoaderCircular class="flex justify-center items-center" size="lg" />
   </div>
 </template>
@@ -13,15 +13,13 @@
 <script setup lang="ts">
 import { cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalAPMPropsType } from '~/components/PayPal/types';
 import { PayPalAlternativeFundingSourceMapper } from '~/composables';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const paypalUuid = ref(uuid());
+const paypalUuid = ref(useId());
 const paypalScript = ref<PayPalNamespace | null>(null);
-const { t } = useI18n();
 
 const { processingOrder } = useProcessingOrder();
 const {
@@ -109,14 +107,14 @@ const onApprove = async (data: OnApproveData) => {
     } else {
       processingOrder.value = false;
       useNotification().send({
-        message: t('errorMessages.paymentFailed'),
+        message: t('error.paymentFailed'),
         type: 'negative',
       });
     }
   } else {
     processingOrder.value = false;
     useNotification().send({
-      message: t('errorMessages.paymentFailed'),
+      message: t('error.paymentFailed'),
       type: 'negative',
     });
   }
@@ -142,7 +140,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       async onError(error) {
         if (showError.value) {
           useNotification().send({
-            message: error?.toString() || t('errorMessages.paymentFailed'),
+            message: error?.toString() || t('error.paymentFailed'),
             type: 'negative',
           });
           await useCartStockReservation().unreserve();
@@ -150,7 +148,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       async onCancel() {
         useNotification().send({
-          message: t('errorMessages.paymentCancelled'),
+          message: t('error.paymentCancelled'),
           type: 'negative',
         });
         await useCartStockReservation().unreserve();

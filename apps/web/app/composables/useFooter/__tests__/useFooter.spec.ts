@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useFooter } from '../useFooter';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
@@ -187,10 +188,11 @@ describe('useFooter', () => {
         setupApiResponse(apiResponse);
 
         const { fetchFooterSettings } = useFooter();
+        const { $i18n } = useNuxtApp();
 
         const result = await fetchFooterSettings();
 
-        expect(useAsyncData).toHaveBeenCalledWith('footer-settings', expect.any(Function));
+        expect(useAsyncData).toHaveBeenCalledWith(`footer-settings-${$i18n.locale}`, expect.any(Function));
         expect(result).toEqual(mockFooterData);
         expect(mockStateRef.value).toBe(mockFooterData);
       });

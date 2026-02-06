@@ -12,6 +12,7 @@ vi.mock('@plentymarkets/shop-api', () => {
       getCategoryDescription1: (category: CategoryDetails) => category?.description ?? '',
       getCategoryDescription2: (category: CategoryDetails) => category?.description2 ?? '',
       getCategoryShortDescription: (category: CategoryDetails) => category?.shortDescription ?? '',
+      getCategoryDetails: (category: CategoryDetails) => category,
     },
   };
 });
@@ -70,6 +71,6 @@ describe('CategoryData', () => {
       },
     });
 
-    expect(wrapper.find('[data-testid="category-name"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="category-data"]').exists()).toBe(true);
   });
 });

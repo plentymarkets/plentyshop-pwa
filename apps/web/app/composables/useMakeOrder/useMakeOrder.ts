@@ -40,7 +40,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ```
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
-    const { $i18n } = useNuxtApp();
     state.value.loading = true;
     state.value.data = null;
 
@@ -94,14 +93,14 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       case 'errorCode': {
         handleMakeOrderError(
-          new ApiError({ key: 'null', message: paymentValue.value, code: '400', cause: paymentValue.value }),
+          new ApiError({ key: '', message: paymentValue.value, code: '400', cause: paymentValue.value }),
         );
         break;
       }
 
       default: {
         useNotification().send({
-          message: $i18n.t('orderErrorProvider', { paymentType: paymentType.value }),
+          message: t('orderErrorProvider', { paymentType: paymentType.value }),
           type: 'negative',
         });
         break;

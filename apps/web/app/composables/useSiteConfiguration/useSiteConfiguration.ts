@@ -96,6 +96,19 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.placement = 'left';
     state.value.drawerView = null;
   };
+  if (import.meta.client) {
+    const route = useRoute();
+    watch(
+      () => route.fullPath,
+      () => {
+        if (state.value.drawerView === 'blocksSettings') {
+          state.value.drawerOpen = false;
+          state.value.drawerView = null;
+          state.value.activeSetting = '';
+        }
+      },
+    );
+  }
 
   return {
     ...toRefs(state.value),

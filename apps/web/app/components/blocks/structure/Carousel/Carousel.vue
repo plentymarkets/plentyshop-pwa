@@ -1,11 +1,13 @@
 <template>
   <NuxtErrorBoundary>
     <Swiper
+      :id="`carousel-${index}`"
       :key="content.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
-      role="group"
+      v-bind="carouselProps"
       :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
+      :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
       :loop="true"
       :pagination="paginationConfig"
       :navigation="navigationConfig"
@@ -16,8 +18,13 @@
       <SwiperSlide
         v-for="(banner, slideIndex) in content"
         :key="slideIndex"
-        :aria-labelledby="`carousel_item-${slideIndex}_heading`"
-        role="group"
+        :aria-labelledby="content.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
+        :aria-label="
+          content.length > 1
+            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: content.length })
+            : null
+        "
+        v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
       >
         <slot
@@ -30,25 +37,25 @@
       </SwiperSlide>
       <div
         v-if="enableModules"
-        role="group"
-        :aria-label="t('homepage.banner.ariaLabelSlideControls')"
         :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
       />
     </Swiper>
 
-    <div
+    <button
       v-if="enableModules && handleArrows()"
       :key="`prev-${index}`"
+      type="button"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
-      aria-controls="carousel-{{index}}"
+      :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
-    <div
+    <button
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
+      type="button"
       :class="`swiper-button-next swiper-button-next-${index}`"
-      aria-controls="carousel-{{index}}"
+      :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelNextSlide')"
       :style="{ color: configuration.controls.color + ' !important' }"
     />
@@ -60,7 +67,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
-const { t } = useI18n();
+
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
@@ -95,6 +102,10 @@ const navigationConfig = computed(() => {
     : false;
 });
 
+const carouselProps = computed(() => {
+  return content.length > 1 ? { role: 'group' } : {};
+});
+
 const onSwiperInit = async (swiper: SwiperType) => {
   slider = swiper;
 
@@ -102,6 +113,7 @@ const onSwiperInit = async (swiper: SwiperType) => {
     setIndex(meta.uuid, swiper.realIndex);
   }
 };
+
 const reinitializeSwiper = async () => {
   if (!slider || slider.destroyed) return;
 

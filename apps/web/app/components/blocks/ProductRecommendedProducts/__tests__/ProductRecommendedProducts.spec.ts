@@ -2,10 +2,17 @@ import { mount } from '@vue/test-utils';
 import ProductRecommendedProducts from '../../../../components/blocks/ProductRecommendedProducts/ProductRecommendedProducts.vue';
 import type { ProductRecommendedProductsProps } from '../types';
 
-vi.mock('@/composables/useProductRecommended', () => ({
+// Mock shop-core to prevent window undefined errors
+vi.mock('@plentymarkets/shop-core', () => ({
+  t: vi.fn((key: string) => key),
+  useHandleError: vi.fn(),
+}));
+
+// Mock useProductRecommended to prevent async errors after test teardown
+vi.mock('~/composables/useProductRecommended/useProductRecommended', () => ({
   useProductRecommended: vi.fn(() => ({
     data: ref([]),
-    fetchProductRecommended: vi.fn(),
+    fetchProductRecommended: vi.fn().mockResolvedValue([]),
   })),
 }));
 
@@ -33,11 +40,16 @@ const mockProps: ProductRecommendedProductsProps = {
   name: 'ProductRecommendedProducts',
   type: 'content',
   content: {
-    categoryId: '123',
     cacheKey: 'test-cache',
     text: {
       title: 'Recommended Products',
       subtitle: 'You might also like',
+    },
+    source: {
+      type: 'category',
+      categoryId: '123',
+      itemId: '',
+      crossSellingRelation: 'Similar',
     },
   },
   meta: {

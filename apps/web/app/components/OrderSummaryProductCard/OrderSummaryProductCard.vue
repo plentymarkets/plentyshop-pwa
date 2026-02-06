@@ -54,7 +54,7 @@
           <li v-for="(property, index) in orderGetters.getItemOrderProperties(props.orderItem)" :key="index">
             <span class="mr-1 font-bold">
               <span>{{ orderGetters.getItemOrderPropertyName(property) }}</span>
-              <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
+              <span v-if="orderGetters.showItemOrderPropertyValue(property)">:</span>
             </span>
             <span v-if="orderGetters.isItemOrderPropertyFile(property)" class="font-medium">
               <a
@@ -67,7 +67,7 @@
                 <SfIconOpenInNew class="ml-1" size="sm" />
               </a>
             </span>
-            <span v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0" class="font-medium">
+            <span v-else-if="orderGetters.showItemOrderPropertyValue(property)" class="font-medium">
               {{ orderGetters.getItemOrderPropertyValue(property) }}
             </span>
           </li>
@@ -127,7 +127,6 @@ import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
 const { formatWithSymbol } = usePriceFormatter();
-const { t } = useI18n();
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

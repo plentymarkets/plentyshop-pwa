@@ -148,25 +148,50 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('text-overlay-color-label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.text.textOverlayColor" type="text" data-testid="text-overlay-color-input">
-          <template #suffix>
-            <label
-              for="text-overlay-color"
-              :style="{ backgroundColor: uiImageTextBlock.text.textOverlayColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input
-                id="text-overlay-color"
+      <div v-if="runtimeConfig.enableColorPicker">
+        <EditorColorPicker v-model="uiImageTextBlock.text.textOverlayColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput
                 v-model="uiImageTextBlock.text.textOverlayColor"
-                data-testid="text-overlay-color-picker"
-                type="color"
-                class="invisible w-8"
-              />
+                type="text"
+                data-testid="text-overlay-color-input"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
             </label>
           </template>
-        </SfInput>
-      </label>
+        </EditorColorPicker>
+      </div>
+      <div v-else>
+        <label>
+          <SfInput v-model="uiImageTextBlock.text.textOverlayColor" type="text" data-testid="text-overlay-color-input">
+            <template #suffix>
+              <label
+                for="text-overlay-color"
+                :style="{ backgroundColor: uiImageTextBlock.text.textOverlayColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="text-overlay-color"
+                  v-model="uiImageTextBlock.text.textOverlayColor"
+                  data-testid="text-overlay-color-picker"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
     </div>
 
     <fieldset class="py-2">
@@ -358,26 +383,48 @@
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
-          <template #suffix>
-            <label
-              for="background-color"
-              :style="{ backgroundColor: backgroundColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input
-                id="background-color"
-                v-model="backgroundColor"
-                data-testid="color-input-background"
-                type="color"
-                class="invisible w-8"
-              />
+      <div v-if="runtimeConfig.enableColorPicker">
+        <EditorColorPicker v-model="backgroundColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
             </label>
           </template>
-        </SfInput>
-      </label>
+        </EditorColorPicker>
+      </div>
+      <div v-else>
+        <label>
+          <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+            <template #suffix>
+              <label
+                for="background-color"
+                :style="{ backgroundColor: backgroundColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="background-color"
+                  v-model="backgroundColor"
+                  data-testid="color-input-background"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
     </div>
+    <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div
       id="padding-form"
       class="py-2"
@@ -454,11 +501,19 @@ import {
 } from '@storefront-ui/vue';
 
 import type { ImageFormProps } from './types';
+import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
+const runtimeConfig = useRuntimeConfig().public;
+
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -473,7 +528,7 @@ const DEFAULT_LAYOUT = {
 
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
-  const migrated = migrateImageContent(rawContent);
+  const migrated = migrateImageContent(rawContent as ImageContent | OldContent);
 
   if (!migrated.layout) {
     migrated.layout = { ...DEFAULT_LAYOUT };
@@ -486,6 +541,8 @@ const uiImageTextBlock = computed(() => {
   }
   return migrated;
 });
+
+const { isFullWidth } = useFullWidthToggleForContent(uiImageTextBlock);
 
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');

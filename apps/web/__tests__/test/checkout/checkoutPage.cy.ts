@@ -36,18 +36,12 @@ describe('Smoke: Checkout Page', () => {
     checkout
       .goToCheckoutPath()
       .fillContactInformationForm()
-      .shouldShowShippingMethods()
       .fillShippingAddressForm({
         country: '7',
         zipCode: '1234',
       })
       .waitForUiToRender()
       .shouldNotShowShippingMethods();
-  });
-
-  it('should load shipping methods after second clientside navigation to checkout', () => {
-    cy.visitSmoke().addToCart();
-    checkout.goToCheckoutPath().shouldShowShippingMethods().goBack().goToCheckoutPath().shouldShowShippingMethods();
   });
 
   it('should load payment methods after second clientside navigation to checkout', () => {

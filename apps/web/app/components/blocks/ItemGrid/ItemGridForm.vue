@@ -8,7 +8,6 @@
     <template #summary>
       <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
     </template>
-
     <div class="space-y-4">
       <div>
         <UiFormLabel class="flex justify-between">
@@ -53,6 +52,7 @@
         <SfSwitch v-model="uiItemGridBlock.showItemCount" data-testid="show-item-count" />
       </div>
 
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
       <div v-if="uiItemGridBlock.showItemCount">
         <UiFormLabel>{{ getEditorTranslation('item-count-position') }}</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -244,7 +244,13 @@ import type { ItemGridFormProps, ItemGridContent, ItemGridFieldKey } from './typ
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 
-const { data } = useCategoryTemplate();
+const route = useRoute();
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route.meta.type as string,
+  useNuxtApp().$i18n.locale.value,
+);
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -257,6 +263,8 @@ const props = defineProps<ItemGridFormProps>();
 const uiItemGridBlock = computed(
   () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content as ItemGridContent,
 );
+
+const { isFullWidth } = useFullWidthToggleForContent(uiItemGridBlock);
 
 const desktopOptions = [2, 3, 4, 5, 6, 7];
 const tabletOptions = [2, 3, 4, 5, 6];
@@ -306,7 +314,8 @@ const fieldLabels: Record<string, string> = {
     "button-primary": "Primary",
     "button-secondary": "Secondary",
     "pagination-label": "Pagination",
-    "pagination-position": "Pagination position"
+    "pagination-position": "Pagination position",
+    "drag-reorder-aria": "Drag to reorder"
   },
   "de": {
     "layout-settings-label": "Layout settings",
@@ -337,6 +346,7 @@ const fieldLabels: Record<string, string> = {
     "add-to-cart-button-style": "“Add to cart” button",
     "button-primary": "Primary",
     "button-secondary": "Secondary",
+    "drag-reorder-aria": "Drag to reorder",
 
     "pagination-label": "Pagination",
     "pagination-position": "Pagination position"

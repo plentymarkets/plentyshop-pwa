@@ -1,19 +1,35 @@
-import { facetMock } from './facets/fakeFacetCall';
-import { fakeProduct } from './facets/fakeProduct';
+import { fakeFacetCallEN } from './facets/fakeFacetCallEN';
+import { fakeFacetCallDE } from './facets/fakeFacetCallDE';
+import { fakeProductEN } from './facets/fakeProductEN';
+import { fakeProductDE } from './facets/fakeProductDE';
 
 import type { UseProductsState } from '~/composables/useProducts/types';
 
-export const handlePreviewProducts = (state: Ref<UseProductsState>) => {
-  const { $isPreview } = useNuxtApp();
+export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string) => {
+  const { isInEditor } = useEditorState();
+  if (!isInEditor.value || state.value.data.products.length > 0) return;
 
-  if ($isPreview && state.value.data.products.length === 0) {
-    state.value.data = facetMock.data;
+  if (state.value.data.category.type === 'item') {
+    const fakeFacetCall = lang === 'de' ? fakeFacetCallDE.data : fakeFacetCallEN.data;
+
+    state.value.data = {
+      ...state.value.data,
+      category: fakeFacetCall.category,
+      facets: fakeFacetCall.facets,
+      pagination: fakeFacetCall.pagination,
+      languageUrls: fakeFacetCall.languageUrls,
+    };
+    const fakeProduct = lang === 'de' ? fakeProductDE : fakeProductEN;
+    const exampleProductName = lang === 'de' ? 'Beispielprodukt ' : 'Example Product ';
+
     state.value.data.products = Array.from({ length: 8 }, (_, ind) => ({
       ...fakeProduct,
       texts: {
         ...(fakeProduct.texts ?? {}),
-        name1: 'Example Product ' + (ind + 1),
+        name1: exampleProductName + (ind + 1),
       },
     }));
+
+    sendFakeDataNotification();
   }
 };

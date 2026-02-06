@@ -1,4 +1,9 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { flushPromises, mount } from '@vue/test-utils';
+
+mockNuxtImport('t', () => {
+  return () => 'Your account has been created successfully';
+});
 
 const { useCustomer } = vi.hoisted(() => {
   return {
@@ -22,6 +27,8 @@ const { useRuntimeConfig } = vi.hoisted(() => {
     useRuntimeConfig: vi.fn().mockReturnValue({
       public: {
         turnstileSiteKey: 'test-turnstile-key',
+        passwordMinLength: 8,
+        passwordMaxLength: 64,
       },
     }),
   };
@@ -67,7 +74,8 @@ const { useNuxtApp } = vi.hoisted(() => {
   return {
     useNuxtApp: vi.fn().mockReturnValue({
       $i18n: {
-        t: vi.fn((key: string) => key),
+        t: vi.fn(() => 'Your account has been created successfully'),
+        te: vi.fn(() => true),
       },
     }),
   };
@@ -82,6 +90,14 @@ const { useState } = vi.hoisted(() => {
   };
 });
 
+const { useSiteSettings } = vi.hoisted(() => {
+  return {
+    useSiteSettings: vi.fn().mockReturnValue({
+      getSetting: vi.fn(() => 'test-turnstile-key'),
+    }),
+  };
+});
+
 mockNuxtImport('useCustomer', () => useCustomer);
 mockNuxtImport('useNotification', () => useNotification);
 mockNuxtImport('useRuntimeConfig', () => useRuntimeConfig);
@@ -92,17 +108,25 @@ mockNuxtImport('useLocalePath', () => useLocalePath);
 mockNuxtImport('navigateTo', () => navigateTo);
 mockNuxtImport('useNuxtApp', () => useNuxtApp);
 mockNuxtImport('useState', () => useState);
+mockNuxtImport('useSiteSettings', () => useSiteSettings);
 
 describe('useRegisterForm', () => {
   beforeEach(() => {
     vi.resetAllMocks();
 
     useNuxtApp.mockReturnValue({
-      $i18n: { t: vi.fn((key: string) => key) },
+      $i18n: {
+        t: vi.fn((key: string) => key),
+        te: vi.fn((key: string) => !!key),
+      },
     });
 
     useRuntimeConfig.mockReturnValue({
-      public: { turnstileSiteKey: 'test-key' },
+      public: {
+        turnstileSiteKey: 'test-key',
+        passwordMinLength: 8,
+        passwordMaxLength: 64,
+      },
     });
 
     useNotification.mockReturnValue({
@@ -134,19 +158,33 @@ describe('useRegisterForm', () => {
       const state = init ? init() : {};
       return { value: state };
     });
+
+    useSiteSettings.mockReturnValue({
+      getSetting: vi.fn(() => 'test-turnstile-key'),
+    });
   });
 
   it('should initialize composable with proper structure', async () => {
     const { useRegisterForm } = await import('../useRegisterForm');
-    const composable = useRegisterForm();
 
-    expect(composable.formFields).toBeDefined();
-    expect(composable.formFieldsAttributes).toBeDefined();
-    expect(composable.hasCompany).toBeDefined();
-    expect(composable.onSubmit).toBeDefined();
-    expect(composable.passwordValidationLength).toBeDefined();
-    expect(composable.passwordValidationOneDigit).toBeDefined();
-    expect(composable.passwordValidationOneLetter).toBeDefined();
+    let composable: ReturnType<typeof useRegisterForm> | undefined;
+
+    mount({
+      setup() {
+        composable = useRegisterForm();
+        return {};
+      },
+      template: '<div></div>',
+    });
+
+    expect(composable).toBeDefined();
+    expect(composable!.formFields).toBeDefined();
+    expect(composable!.formFieldsAttributes).toBeDefined();
+    expect(composable!.hasCompany).toBeDefined();
+    expect(composable!.onSubmit).toBeDefined();
+    expect(composable!.passwordValidationLength).toBeDefined();
+    expect(composable!.passwordValidationOneDigit).toBeDefined();
+    expect(composable!.passwordValidationOneLetter).toBeDefined();
   });
 
   it('should handle form submission', async () => {
@@ -163,26 +201,37 @@ describe('useRegisterForm', () => {
     });
 
     const { useRegisterForm } = await import('../useRegisterForm');
-    const composable = useRegisterForm();
 
-    composable.formFields.email.value = 'test@example.com';
-    composable.formFields.password.value = 'Password123';
-    composable.formFields.repeatPassword.value = 'Password123';
-    composable.formFields.firstName.value = 'John';
-    composable.formFields.lastName.value = 'Doe';
-    composable.formFields.streetName.value = 'Main Street';
-    composable.formFields.apartment.value = '1A';
-    composable.formFields.city.value = 'Test City';
-    composable.formFields.zipCode.value = '12345';
-    composable.formFields.country.value = '1';
-    composable.formFields.privacyPolicy.value = true;
-    composable.formFields.turnstile.value = 'token';
+    let composable: ReturnType<typeof useRegisterForm> | undefined;
 
-    await composable.onSubmit();
+    mount({
+      setup() {
+        composable = useRegisterForm();
+        return {};
+      },
+      template: '<div></div>',
+    });
+
+    composable!.formFields.email.value = 'test@example.com';
+    composable!.formFields.password.value = 'Password123';
+    composable!.formFields.repeatPassword.value = 'Password123';
+    composable!.formFields.firstName.value = 'John';
+    composable!.formFields.lastName.value = 'Doe';
+    composable!.formFields.streetName.value = 'Main Street';
+    composable!.formFields.apartment.value = '1A';
+    composable!.formFields.city.value = 'Test City';
+    composable!.formFields.zipCode.value = '12345';
+    composable!.formFields.country.value = '1';
+    composable!.formFields.privacyPolicy.value = true;
+    composable!.formFields.turnstile.value = 'token';
+
+    await flushPromises();
+
+    await composable!.onSubmit();
 
     expect(mockRegister).toHaveBeenCalled();
     expect(mockSend).toHaveBeenCalledWith({
-      message: 'auth.signup.success',
+      message: 'Your account has been created successfully',
       type: 'positive',
     });
   });
