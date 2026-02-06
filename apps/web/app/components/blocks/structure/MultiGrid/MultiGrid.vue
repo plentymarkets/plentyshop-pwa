@@ -66,10 +66,10 @@ const onRowLeave = () => {
 };
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
-const { $isPreview } = useNuxtApp();
+const { shouldEnableEditorFeatures } = useEditorState();
 const { isDragging } = useBlockManager();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
-const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
@@ -79,21 +79,7 @@ const gapClassMap: Record<string, string> = {
   XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
 const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
-
-const defaultMarginBottom = computed(() => {
-  switch (blockSize.value) {
-    case 's':
-      return 30;
-    case 'm':
-      return 40;
-    case 'l':
-      return 50;
-    case 'xl':
-      return 60;
-    default:
-      return 0;
-  }
-});
+const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 
 const gridInlineStyle = computed(() => ({
   backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
@@ -135,7 +121,8 @@ const enableActions = computed(() => attrs.enableActions === true);
 const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
 
 const showOverlay = computed(
-  () => (block: Block) => enableActions.value && !!$isPreview && !isDragging.value && blockHasData(block),
+  () => (block: Block) =>
+    enableActions.value && shouldEnableEditorFeatures.value && !isDragging.value && blockHasData(block),
 );
 
 const isAlignable = (b: Block): b is AlignableBlock =>

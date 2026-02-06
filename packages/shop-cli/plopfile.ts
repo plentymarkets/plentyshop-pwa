@@ -27,7 +27,7 @@ export default function (plop: NodePlopAPI): void {
     plop.setPartial(partialName, partialContent);
   }
 
-  const cliFlag = process.env.PLENTYSHOP_WEB_APP_PATH ? { webAppPath: process.env.PLENTYSHOP_WEB_APP_PATH } : undefined;
+  const cliFlag = process.env.PLENTYSHOP_OUTPUT_PATH ? { webAppPath: process.env.PLENTYSHOP_OUTPUT_PATH } : undefined;
   const config = resolveConfig(cliFlag);
 
   if (!validatePath(projectRoot, config.webAppPath)) {

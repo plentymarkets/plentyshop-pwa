@@ -102,29 +102,54 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
         </div>
-        <label>
-          <SfInput
-            v-model="multiGridStructure.configuration.layout.backgroundColor"
-            type="text"
-            data-testid="input-background-color"
-          >
-            <template #suffix>
-              <label
-                for="background-color"
-                :style="{ backgroundColor: multiGridStructure.configuration.layout.backgroundColor || '#ffffff' }"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-              >
-                <input
-                  id="background-color"
+        <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <label>
+                <SfInput
                   v-model="multiGridStructure.configuration.layout.backgroundColor"
-                  data-testid="color-input-background"
-                  type="color"
-                  class="invisible w-8"
-                />
+                  type="text"
+                  data-testid="input-background-color"
+                >
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
               </label>
             </template>
-          </SfInput>
-        </label>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
+          <label>
+            <SfInput
+              v-model="multiGridStructure.configuration.layout.backgroundColor"
+              type="text"
+              data-testid="input-background-color"
+            >
+              <template #suffix>
+                <label
+                  for="background-color"
+                  :style="{ backgroundColor: multiGridStructure.configuration.layout.backgroundColor || '#ffffff' }"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="background-color"
+                    v-model="multiGridStructure.configuration.layout.backgroundColor"
+                    data-testid="color-input-background"
+                    type="color"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+          </label>
+        </div>
       </div>
     </UiAccordionItem>
   </div>
@@ -135,6 +160,8 @@ import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types'
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
+const runtimeConfig = useRuntimeConfig().public;
+
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -143,26 +170,11 @@ const { data } = useCategoryTemplate(
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { getSetting: getBlockSize } = useSiteSettings('blockSize');
+const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
-
+const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 const isTwoColumnMultigrid = computed(() => {
   return multiGridStructure.value.configuration?.columnWidths?.length === 2;
-});
-
-const defaultMarginBottom = computed(() => {
-  switch (blockSize.value) {
-    case 's':
-      return 30;
-    case 'm':
-      return 40;
-    case 'l':
-      return 50;
-    case 'xl':
-      return 60;
-    default:
-      return 0;
-  }
 });
 
 const multiGridStructure = computed(() => {

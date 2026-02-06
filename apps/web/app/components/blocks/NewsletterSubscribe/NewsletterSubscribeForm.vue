@@ -118,18 +118,45 @@
       </div>
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
-
-        <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
-          <template #suffix>
-            <label
-              for="text-color"
-              :style="{ backgroundColor: newsletterBlock.text.bgColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
+        <div v-if="runtimeConfig.enableColorPicker">
+          <EditorColorPicker v-model="newsletterBlock.text.bgColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput
+                v-model="newsletterBlock.text.bgColor"
+                type="text"
+                data-testid="newsletter-form-background-color"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-else>
+          <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
+            <template #suffix>
+              <label
+                for="newsletter-bg-color"
+                :style="{ backgroundColor: newsletterBlock.text.bgColor }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+              >
+                <input
+                  id="newsletter-bg-color"
+                  v-model="newsletterBlock.text.bgColor"
+                  type="color"
+                  class="invisible w-8"
+                />
+              </label>
+            </template>
+          </SfInput>
+        </div>
       </div>
     </UiAccordionItem>
     <UiAccordionItem
@@ -150,6 +177,8 @@
 import { SfInput, SfTextarea, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { NewsletterSubscribeContent } from './types';
 import { initializeNewsletterContent } from './utils';
+
+const runtimeConfig = useRuntimeConfig().public;
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);

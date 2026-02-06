@@ -1229,6 +1229,9 @@
     "coupon": {
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
     },
+    "feedback": {
+      "notAllowedWithoutPurchase": "Sie müssen diesen Artikel kaufen, bevor Sie eine Bewertung abgeben können."
+    },
     "login": {
       "loginFailed": "Zugangsdaten ungültig",
       "userIsBlocked": "Nutzer ist gesperrt"

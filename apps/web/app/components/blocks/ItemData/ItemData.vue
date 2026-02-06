@@ -65,9 +65,7 @@ const props = defineProps<{
 const { t } = useI18n();
 const { currentProduct } = useProducts();
 
-const { $isPreview } = useNuxtApp();
-
-const { disableActions } = useEditor();
+const { isEditMode } = useEditorState();
 
 const { fieldValues } = useItemDataTable(currentProduct as Ref<Product | null>, {
   t,
@@ -107,9 +105,7 @@ const noFieldsSelected = computed(() => {
   return values.every((v) => !v);
 });
 
-const showNoDataMessage = computed(
-  () => !!$isPreview && disableActions.value && !hasTitle.value && noFieldsSelected.value,
-);
+const showNoDataMessage = computed(() => isEditMode.value && !hasTitle.value && noFieldsSelected.value);
 
 const visibleRows = computed(() => {
   const order =

@@ -1,0 +1,35 @@
+<template>
+  <UiAccordionItem
+    v-model="isOpen"
+    summary-active-class="bg-neutral-100 border-t-0"
+    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    data-testid="{{kebabCase name}}-form"
+  >
+    <template #summary>
+      <h2>{{curly}} getEditorTranslation('form-title') {{curly}}</h2>
+    </template>
+
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{curly}} getEditorTranslation('label') {{curly}}</UiFormLabel>
+      </div>
+      <SfInput v-model="formData.value" type="text" data-testid="{{kebabCase name}}-input" />
+    </div>
+  </UiAccordionItem>
+</template>
+
+<script setup lang="ts">
+import { SfInput } from '@storefront-ui/vue';
+
+const isOpen = ref(true);
+const formData = ref({ value: '' });
+</script>
+
+<i18n lang="json">
+{
+  "en": {
+    "form-title": "{{pascalCase name}} Settings",
+    "label": "Configuration"
+  }
+}
+</i18n>
