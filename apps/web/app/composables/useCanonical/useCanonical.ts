@@ -80,7 +80,7 @@ export const useCanonical: UseCanonicalReturn = () => {
 
     useHead({
       link: [
-        { rel: 'canonical', href: `${runtimeConfig.public.domain}${localePath(route.fullPath)}` },
+        { rel: 'canonical', href: canonicalUrl },
         {
           rel: 'alternate',
           hreflang: 'x-default',
