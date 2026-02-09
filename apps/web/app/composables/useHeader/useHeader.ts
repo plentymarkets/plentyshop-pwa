@@ -1,5 +1,4 @@
 import type { Block } from '@plentymarkets/shop-api';
-import { callWithNuxt } from '#app';
 
 export const useHeader = () => {
   const headerCache = useState<Block[] | null>('header-blocks-cache', () => null);
@@ -18,34 +17,15 @@ export const useHeader = () => {
 
   const fetchHeaderBlocks = async (): Promise<Block[]> => {
     if (headerCache.value) {
+      console.warn('[useHeader] Returning cached header blocks');
       return headerCache.value;
     }
 
-    const nuxtApp = useNuxtApp();
+    console.warn('[useHeader] Cache miss, delegating to global blocks fetch');
+    const { fetchGlobalBlocks } = useGlobalBlocks();
+    await fetchGlobalBlocks();
 
-    return callWithNuxt(nuxtApp, async () => {
-      try {
-        const { data } = await useAsyncData(`header-blocks-${nuxtApp.$i18n.locale}`, () =>
-          useSdk().plentysystems.getBlocks({
-            identifier: 'index',
-            type: 'immutable',
-            blocks: 'Header',
-          }),
-        );
-
-        const headerBlocks = data.value?.data?.filter((block) => block.name === 'Header') ?? [];
-
-        if (headerBlocks.length > 0) {
-          headerCache.value = headerBlocks;
-          return headerCache.value;
-        }
-      } catch (error) {
-        console.warn('Failed to fetch header blocks, using empty array:', error);
-      }
-
-      headerCache.value = [];
-      return headerCache.value;
-    });
+    return headerCache.value ?? [];
   };
 
   return {

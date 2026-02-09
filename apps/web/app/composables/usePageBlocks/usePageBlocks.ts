@@ -163,25 +163,17 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
         blocks: content,
       });
 
-      // Refresh header cache if header blocks were saved
-      if (content.includes('"name":"Header"')) {
-        const { clearHeaderCache, fetchHeaderBlocks } = useHeader();
-        clearHeaderCache();
-        try {
-          await fetchHeaderBlocks();
-        } catch (error) {
-          console.warn('Failed to refresh header blocks after save:', error);
-        }
-      }
+      if (content.includes('"name":"Header"') || content.includes('"name":"Footer"')) {
+        const { clearGlobalBlocksCache } = useGlobalBlocks();
+        const { fetchHeaderBlocks } = useHeader();
+        const { fetchFooterSettings } = useFooter();
 
-      // Refresh footer cache if footer blocks were saved
-      if (content.includes('"name":"Footer"')) {
-        const { clearFooterCache, fetchFooterSettings } = useFooter();
-        clearFooterCache();
+        clearGlobalBlocksCache();
+
         try {
-          await fetchFooterSettings();
+          await Promise.all([fetchHeaderBlocks(), fetchFooterSettings()]);
         } catch (error) {
-          console.warn('Failed to refresh footer settings after save:', error);
+          console.warn('Failed to refresh global blocks after save:', error);
         }
       }
 

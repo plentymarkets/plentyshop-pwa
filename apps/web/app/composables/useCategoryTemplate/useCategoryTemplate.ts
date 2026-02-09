@@ -143,30 +143,17 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
-      if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = useFooter();
+      if (typeof content === 'string' && (content.includes('"name":"Footer"') || content.includes('"name":"Header"'))) {
+        const { clearGlobalBlocksCache } = useGlobalBlocks();
+        const { fetchHeaderBlocks } = useHeader();
+        const { fetchFooterSettings } = useFooter();
 
-        const footerSettings = extractFooterFromBlocks(content);
-        if (footerSettings) {
-          updateFooterCache(footerSettings);
-        } else {
-          clearFooterCache();
-          try {
-            await fetchFooterSettings();
-          } catch (error) {
-            console.warn('Failed to refresh footer settings after save:', error);
-          }
-        }
-      }
+        clearGlobalBlocksCache();
 
-      if (typeof content === 'string' && content.includes('"name":"Header"')) {
-        const { clearHeaderCache, fetchHeaderBlocks } = useHeader();
-
-        clearHeaderCache();
         try {
-          await fetchHeaderBlocks();
+          await Promise.all([fetchHeaderBlocks(), fetchFooterSettings()]);
         } catch (error) {
-          console.warn('Failed to refresh header blocks after save:', error);
+          console.warn('Failed to refresh global blocks after save:', error);
         }
       }
 
