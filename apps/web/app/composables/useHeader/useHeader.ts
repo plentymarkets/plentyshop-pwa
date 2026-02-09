@@ -16,15 +16,6 @@ export const useHeader = () => {
   };
 
   const fetchHeaderBlocks = async (): Promise<Block[]> => {
-    if (headerCache.value) {
-      console.warn('[useHeader] Returning cached header blocks');
-      return headerCache.value;
-    }
-
-    console.warn('[useHeader] Cache miss, delegating to global blocks fetch');
-    const { fetchGlobalBlocks } = useGlobalBlocks();
-    await fetchGlobalBlocks();
-
     return headerCache.value ?? [];
   };
 

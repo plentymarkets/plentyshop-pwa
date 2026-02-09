@@ -8,12 +8,8 @@ export const useGlobalBlocks = () => {
   const isFetching = useState<boolean>('global-blocks-fetching', () => false);
 
   const fetchGlobalBlocks = async (): Promise<void> => {
-    if (isFetching.value || globalBlocksCache.value) {
-      console.warn('[useGlobalBlocks] Cache already exists or fetch in progress, skipping');
-      return;
-    }
+    if (isFetching.value || globalBlocksCache.value) return;
 
-    console.warn('[useGlobalBlocks] Making API call to fetch all global blocks');
     isFetching.value = true;
     const nuxtApp = useNuxtApp();
 
@@ -28,7 +24,6 @@ export const useGlobalBlocks = () => {
 
         const allBlocks = data.value?.data ?? [];
         globalBlocksCache.value = allBlocks;
-        console.warn(`[useGlobalBlocks] Fetched ${allBlocks.length} blocks, distributing to caches`);
 
         distributeBlocks(allBlocks);
       } catch (error) {
@@ -45,11 +40,9 @@ export const useGlobalBlocks = () => {
     const { updateFooterCache } = useFooter();
 
     const headerBlocks = blocks.filter((block) => block.name === 'Header');
-    console.warn(`[useGlobalBlocks] Distributing ${headerBlocks.length} header block(s) to cache`);
     updateHeaderCache(headerBlocks);
 
     const footerBlock = blocks.find((block) => block.name === 'Footer');
-    console.warn(`[useGlobalBlocks] Distributing footer block to cache`);
     updateFooterCache((footerBlock?.content as FooterSettings) ?? createDefaultFooterSettings());
   };
 

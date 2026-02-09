@@ -21,15 +21,6 @@ export const useFooter = () => {
   };
 
   const fetchFooterSettings = async (): Promise<FooterSettings> => {
-    if (footerCache.value) {
-      console.warn('[useFooter] Returning cached footer settings');
-      return footerCache.value;
-    }
-
-    console.warn('[useFooter] Cache miss, delegating to global blocks fetch');
-    const { fetchGlobalBlocks } = useGlobalBlocks();
-    await fetchGlobalBlocks();
-
     return footerCache.value ?? getFooterSettings();
   };
 
