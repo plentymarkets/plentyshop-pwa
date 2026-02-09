@@ -6,11 +6,11 @@ next: false
 # Shop Core
 
 A Nuxt module for managing core shop functionality, shop events, and cookie consent.  
-The Shop Core module acts as a bridge between other modules and the base PWA application.
+The Shop Core module acts as a bridge between other modules and the base app.
 
 ## Installation
 
-The Shop Core module is preinstalled in the base PWA application.  
+The Shop Core module is preinstalled in the base app.
 If you want to use it in a custom module, install it with your preferred package manager:
 
 ::: tabs

@@ -5,7 +5,7 @@ next: false
 
 # Event Bus
 
-The Shop Core module provides a powerful event bus system for emitting and listening to shop-related events. This enables different parts of your application to communicate in a decoupled way, making your codebase more modular and maintainable.
+The Shop Core module provides a powerful event bus system for emitting and listening to shop-related events. This enables different parts of your app to communicate in a decoupled way, making your codebase more modular and maintainable.
 
 ## Why Use an Event Bus?
 
@@ -36,7 +36,7 @@ emit("frontend:addToCart", { productId: 123 });
 
 ## Common Events
 
-Here are some common events you might use in your shop application:
+Here are some common events you might use in your app:
 
 - `'frontend:addToCart': { addItemParams: DoAddItemParams; cart: Cart; item: CartItem };`
 - `'frontend:removeFromCart': { deleteItemParams: DeleteCartItemParams; cart: Cart; item?: CartItem };`

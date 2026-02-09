@@ -7,7 +7,7 @@ next: false
 
 ## useHandleError
 
-The `useHandleError` composable provides a streamlined way to handle and display translated error messages throughout your application.
+The `useHandleError` composable provides a streamlined way to handle and display translated error messages throughout your app.
 
 ### Example
 

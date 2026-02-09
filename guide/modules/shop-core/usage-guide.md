@@ -5,7 +5,7 @@ next: false
 
 # Usage Guide
 
-This guide provides detailed usage examples and explanations for the Shop Core module composables. Shop Core is designed to help you manage cookie consent, shop events, and other core functionalities in your Nuxt application with ease and flexibility.
+This guide provides detailed usage examples and explanations for the Shop Core module composables. Shop Core is designed to help you manage cookie consent, shop events, and other core functionalities in your Nuxt app with ease and flexibility.
 
 ## useCookieBar
 
@@ -33,7 +33,7 @@ const { consent } = useCookieConsent("cookieName");
 
 ## usePlentyEvent
 
-The `usePlentyEvent` composable offers an event bus for emitting and listening to custom shop events. This enables decoupled communication between different parts of your application, such as reacting to cart changes or user actions.
+The `usePlentyEvent` composable offers an event bus for emitting and listening to custom shop events. This enables decoupled communication between different parts of your app, such as reacting to cart changes or user actions.
 
 ```ts
 const { on, emit } = usePlentyEvent();

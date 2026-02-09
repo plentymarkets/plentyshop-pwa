@@ -19,7 +19,7 @@ flowchart LR
 ```
 
 Site settings use the [Nuxt runtime configuration](https://nuxt.com/docs/guide/going-further/runtime-config).
-When building the application, the runtime configuration is populated from environment variables written in the `.env` file.
+When building the shop, the runtime configuration is populated from environment variables written in the `.env` file.
 Environment variables are written in one of two ways:
 
 - :white*check_mark: [Build via Plenty](https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop.html#shop-build): The build pipeline reads the system database. <br />
@@ -30,7 +30,7 @@ Environment variables are written in one of two ways:
 `useSiteConfiguration` holds a [state](https://nuxt.com/docs/getting-started/state-management).
 This way, it serves as the central touchpoint for settings within the editor.
 
-- Settings views connect to it to bind user input to the application state.
+- Settings views connect to it to bind user input to the app state.
 - It maps the settings, so that they can be saved to the Plenty system.
 
 The state is initialised by the runtime configuration and enables the app to react to changes made by the user in real time.

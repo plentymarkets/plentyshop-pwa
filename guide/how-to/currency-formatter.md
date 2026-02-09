@@ -2,7 +2,7 @@
 
 :::warning
 Do not use `$n(value, 'currency')` or `n(value, 'currency')`!
-These functions do not take our custom currency settings into account (e.g. correct locale, currency code, symbol placement, rounding logic). They may result in inconsistent formatting across the application.
+These functions do not take our custom currency settings into account (e.g. correct locale, currency code, symbol placement, rounding logic). They may result in inconsistent formatting across the shop.
 :::
 
 Use the `usePriceFormatter` composable to format numbers as currency values. This utility ensures that all prices are consistently displayed according to our locale settings, including the correct currency symbol, thousands separators, and decimal precision.

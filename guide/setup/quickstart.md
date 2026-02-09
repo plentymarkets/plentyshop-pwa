@@ -7,7 +7,7 @@ For details, refer to the **Next steps** section at the end.
 
 By the end of this guide, you will have:
 
-- A running local application
+- A running local shop
 - Deployed your first shop inside PlentyONE
 
 Before you begin, you need a PlentyONE system.
@@ -15,11 +15,11 @@ If you don't have one yet, you can book a 30-day trial [on our website](https://
 
 ## GitHub setup
 
-First, you'll prepare your code by creating a personal copy of the application repository.
+First, you'll prepare your code by creating a personal copy of the shop repository.
 
 ### Fork
 
-We recommend working with a fork of the [app repository](https://github.com/plentymarkets/plentyshop-pwa). A fork allows you to easily incorporate updates from this boilerplate into your own codebase.
+We recommend working with a fork of the [shop repository](https://github.com/plentymarkets/plentyshop-pwa). A fork allows you to easily incorporate updates from this boilerplate into your own codebase.
 
 1. [Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
@@ -38,25 +38,25 @@ You need this token to authenticate your repository in PlentyONE.
 
 Now that your GitHub repository is ready, you'll connect it to PlentyONE.
 
-### Create application
+### Create shop
 
 1. Log into your PlentyONE system.
 1. Go to **Shop » Management**.
-1. Click on (:heavy_plus_sign:) **Add application**.
+1. Click on (:heavy_plus_sign:) **Add shop**.
 1. Enter the information according to the table below.
 1. Click on **Create**.
 
-| Input             | Value                                                 |
-| ----------------- | ----------------------------------------------------- |
-| Application name  | Display name of the app in PlentyONE                  |
-| Select client     | Client to connect to the app                          |
-| Select app source | GitHub Integration                                    |
-| GitHub HTTPS URL  | URL of your repository                                |
-| GitHub token      | Your Personal Access Token                            |
-| GitHub branch     | Name of the branch you want to deploy, usually `main` |
+| Input              | Value                                                 |
+| ------------------ | ----------------------------------------------------- |
+| Shop name          | Display name of the shop in PlentyONE                 |
+| Select client      | Client to connect to the shop                         |
+| Select shop source | GitHub Integration                                    |
+| GitHub HTTPS URL   | URL of your repository                                |
+| GitHub token       | Your Personal Access Token                            |
+| GitHub branch      | Name of the branch you want to deploy, usually `main` |
 
-::: tip :bulb: Edit application
-You can edit application details by opening the additional actions in the **Actions** column and clicking on :pen: **Edit Application**.
+::: tip :bulb: Edit shop
+You can edit shop details by opening the additional actions in the **Actions** column and clicking on :pen: **Edit shop**.
 :::
 
 ### Retrieve API credentials
@@ -66,7 +66,7 @@ You can edit application details by opening the additional actions in the **Acti
 1. In the **Development environment** section, click on **Copy to clipboard**.
 
 You need the environment information to set up your local development environment.
-This information, including your API endpoint and security token, allows your local application to communicate with your PlentyONE system.
+This information, including your API endpoint and security token, allows your local shop to communicate with your PlentyONE system.
 
 ## Local development
 
@@ -137,7 +137,7 @@ Run the following command in the project's root directory to install all necessa
 npm install
 ```
 
-### Start the app
+### Start the shop
 
 To start the development server run the following command:
 
@@ -145,7 +145,7 @@ To start the development server run the following command:
 npm run dev
 ```
 
-The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+The shop will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ## Deployment
 
@@ -155,28 +155,28 @@ To build and deploy a PlentyONE shop and to use the shop editor, you need a [val
 
 ### Activate preview
 
-This step builds your application and deploys it to a private preview URL.
+This step builds your shop and deploys it to a private preview URL.
 This allows you to review your changes and use the shop editor before making the site public.
 
 1. Log into your PlentyONE system.
 1. Go to **Shop » Management**.
-1. Click on :arrow_forward: **Build and activate application**.
+1. Click on :arrow_forward: **Deploy the shop and activate preview mode**.
 
 The build process downloads your GitHub repository, using the Personal Access Token you provided during setup.
-If the build is successful, the application becomes available on your client's domain in preview mode.
+If the build is successful, the shop becomes available on your client's domain in preview mode.
 
 To access the preview and shop editor, click on (:straight_ruler:) **Open editor**.
 
 ### Go live
 
-For the go-live option to become available, the application has to run in preview mode.
+For the go-live option to become available, the shop has to run in preview mode.
 
 1. In the **Actions** column, open the additional actions.
 1. Click on :eye_speech_bubble: **Activate live mode**.
 
 ## Next steps
 
-Once you have your application running, you can begin customizing it.
+Once you have your shop running, you can begin customising it.
 Here are a few places to start:
 
 - **Theme customization**: Customize the look and feel [look and feel](/guide/how-to/theme.md) of your shop.

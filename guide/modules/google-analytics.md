@@ -19,17 +19,7 @@ When using Google Analytics, you are obliged to inform visitors about the type o
 
 ## Settings
 
-You can manage Google Analytics settings in the backend, go to:
-
-**Shop » Management** → Select your application → Click on **Settings**.
-
-In the left sidebar, navigate to the **SEO** tab, where you'll find the Google Analytics settings.
-
-- **Enable Google Analytics** – Activate or deactivate Google Analytics for your shop.
-- **Tracking ID** – Enter your Google Analytics Tracking ID (e.g., `UA-12345678-9`). Without this, tracking won't work.
-- **Send Gross Prices** – Choose whether to send gross prices to Google Analytics (default is net prices).
-- **Cookie Group** – Assign a cookie group for Google Analytics. We recommend using the Marketing group.
-- **Register Cookie as Opt-Out** – Mark the Google Analytics cookie as an opt-out option. (_Only available if the cookie group is not set to `Necessary`._)
+For setup information, refer to the [PlentyONE manual](https://knowledge.plentyone.com/en-gb/manual/main/online-store/shop.html#google-analytics)
 
 ## How it works
 

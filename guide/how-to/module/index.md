@@ -8,10 +8,10 @@ next: false
 How-to guides are step-by-step instructions that help you create specific modules for the shop.
 
 ::: info
-Modules already serve as a useful way to separate your custom code from the main application.
+Modules already serve as a useful way to separate your custom code from the main app.
 This makes it easier to keep your fork or mirror up-to-date by reducing the number of potential merge conflicts.
 
-However, PlentyONE doesn't offer a way to install packaged modules in a base application yet.
+However, PlentyONE doesn't offer a way to install packaged modules in a base app yet.
 Instead, you have to register your module as a local module.
 To register a local module, place it in the `apps/web/modules` directory.
 For further information, refer to the [Nuxt documentation](https://nuxt.com/docs/guide/directory-structure/modules).

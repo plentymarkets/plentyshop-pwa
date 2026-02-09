@@ -11,7 +11,7 @@ For further information, you can also refer to the [Storefront UI Documentation]
 To add a new icon to your shop, follow these steps:
 
 1. **Choose an icon**: Select an SVG icon file and obtain the SVG path.
-2. **Insert the icon**: To display the new icon in your application, add or adjust the following code at the desired location:
+2. **Insert the icon**: To display the new icon in your shop, add or adjust the following code at the desired location:
 
    ```html
    <SfIconBase

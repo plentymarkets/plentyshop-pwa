@@ -103,4 +103,4 @@ export default defineNuxtPlugin((nuxtApp) => {
 - `AreaName` is the identifier for the shop area in which you want your component to appear.
 - `ComponentName` corresponds to the name you provided when registering the component.
 
-When your application runs, `ComponentName` will be rendered in the designated `AreaName` area of your Shop.
+When your app runs, `ComponentName` will be rendered in the designated `AreaName` area of your shop.

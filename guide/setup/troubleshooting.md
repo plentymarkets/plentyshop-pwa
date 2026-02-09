@@ -40,7 +40,7 @@ New major versions may require other changes as well. Below you can find a refer
 
 ### The build failed. How can I tell what went wrong?
 
-The build in PlentyONE uses the standard application script.
+The build in PlentyONE uses the standard app script.
 If you `npm run build` locally, you should get the same output.
 
 :::tip :bulb: Automatic build checks
