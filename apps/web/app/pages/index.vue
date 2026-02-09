@@ -37,7 +37,9 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 const defaultTemplate = useLocaleSpecificHomepageTemplate($i18n.locale.value);
-setDefaultTemplate(defaultTemplate);
+
+const mainOnlyTemplate = defaultTemplate.filter((block) => block.name !== 'Header' && block.name !== 'Footer');
+setDefaultTemplate(mainOnlyTemplate);
 
 await fetchPageBlocks('index', 'immutable');
 

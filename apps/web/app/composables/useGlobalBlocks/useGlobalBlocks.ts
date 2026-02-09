@@ -24,7 +24,6 @@ export const useGlobalBlocks = () => {
 
         const allBlocks = data.value?.data ?? [];
         globalBlocksCache.value = allBlocks;
-
         distributeBlocks(allBlocks);
       } catch (error) {
         console.warn('Failed to fetch global blocks:', error);
