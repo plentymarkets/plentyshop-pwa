@@ -40,10 +40,21 @@ export const useGlobalBlocks = () => {
     const { updateFooterCache } = useFooter();
 
     const headerBlocks = blocks.filter((block) => block.name === 'Header');
-    updateHeaderCache(headerBlocks);
+    const footerBlocks = blocks.filter((block) => block.name === 'Footer');
+    const mainBlocks = blocks.filter((block) => block.name !== 'Header' && block.name !== 'Footer');
 
-    const footerBlock = blocks.find((block) => block.name === 'Footer');
-    updateFooterCache((footerBlock?.content as FooterSettings) ?? createDefaultFooterSettings());
+    updateHeaderCache(headerBlocks);
+    updateFooterCache((footerBlocks[0]?.content as FooterSettings) ?? createDefaultFooterSettings());
+
+    const nuxtApp = useNuxtApp();
+    const pageBlocks = usePageBlocks('index', 'immutable', nuxtApp.$i18n.locale.value);
+
+    pageBlocks.updateHeader(headerBlocks);
+    pageBlocks.updateMain(mainBlocks);
+    pageBlocks.updateFooter(footerBlocks);
+
+    const state = useState<{ isCachePopulated?: boolean }>(`pageBlocks-index-immutable-${nuxtApp.$i18n.locale.value}`);
+    if (state.value) state.value.isCachePopulated = true;
   };
 
   const clearGlobalBlocksCache = () => {

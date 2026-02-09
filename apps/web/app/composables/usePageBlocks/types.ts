@@ -6,6 +6,7 @@ export interface UsePageBlocksState {
   footer: Block[];
   defaultTemplateData: Block[];
   loading: boolean;
+  isCachePopulated: boolean;
 }
 
 export type FetchPageBlocks = (identifier: number | string, type: string) => Promise<void>;

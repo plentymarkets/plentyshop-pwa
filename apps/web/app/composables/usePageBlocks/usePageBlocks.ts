@@ -23,6 +23,7 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
     footer: [],
     defaultTemplateData: [],
     loading: false,
+    isCachePopulated: false,
   }));
 
   const injectGlobalHeader = async (): Promise<Block[]> => {
@@ -114,6 +115,16 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
   };
 
   const fetchPageBlocks: FetchPageBlocks = async (identifier, type) => {
+    if (state.value.isCachePopulated) {
+      if (state.value.header.length === 0) state.value.header = await injectGlobalHeader();
+      if (state.value.main.length === 0 && state.value.defaultTemplateData.length > 0) {
+        state.value.main = state.value.defaultTemplateData;
+      }
+      if (state.value.footer.length === 0) state.value.footer = await injectGlobalFooter();
+
+      return;
+    }
+
     state.value.loading = true;
 
     const { $i18n } = useNuxtApp();
@@ -144,6 +155,7 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
       state.value.header = finalHeader;
       state.value.main = main;
       state.value.footer = finalFooter;
+      state.value.isCachePopulated = true;
     } catch (error) {
       state.value.loading = false;
       console.error('Failed to fetch page blocks:', error);
