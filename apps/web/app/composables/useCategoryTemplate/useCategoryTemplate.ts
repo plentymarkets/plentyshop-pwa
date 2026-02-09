@@ -158,6 +158,18 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
           }
         }
       }
+
+      if (typeof content === 'string' && content.includes('"name":"Header"')) {
+        const { clearHeaderCache, fetchHeaderBlocks } = useHeader();
+
+        clearHeaderCache();
+        try {
+          await fetchHeaderBlocks();
+        } catch (error) {
+          console.warn('Failed to refresh header blocks after save:', error);
+        }
+      }
+
       return true;
     } catch (error) {
       console.error('Error saving blocks:', error);

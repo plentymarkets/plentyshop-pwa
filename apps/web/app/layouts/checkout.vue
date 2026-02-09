@@ -1,5 +1,6 @@
 <template>
   <main data-testid="checkout-layout">
+    <EditableHeader :header="header" />
     <NuxtLazyHydrate when-visible>
       <NarrowContainer class="px-4 md:px-0 mb-20">
         <div class="flex items-center justify-between mt-8 mb-10 md:px-0">
@@ -35,7 +36,12 @@ const { data: cart, loading: isLoading } = useCart();
 const { setInitialData } = useInitialSetup();
 const { goToPreviousRoute } = useBrowserNavigation();
 const viewport = useViewport();
+const { headerCache, fetchHeaderBlocks } = useHeader();
 const { heading, backLabelMobile, backLabelDesktop } = defineProps<CheckoutLayoutProps>();
+
+if (!headerCache.value) await fetchHeaderBlocks();
+
+const header = computed(() => headerCache.value ?? []);
 
 onNuxtReady(async () => await setInitialData());
 </script>

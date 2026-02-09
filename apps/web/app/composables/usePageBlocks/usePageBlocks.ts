@@ -25,7 +25,15 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
     loading: false,
   }));
 
-  const injectGlobalHeader = (): Block[] => {
+  const injectGlobalHeader = async (): Promise<Block[]> => {
+    const { headerCache, fetchHeaderBlocks } = useHeader();
+
+    if (!headerCache.value) await fetchHeaderBlocks();
+
+    if (headerCache.value && headerCache.value.length > 0) {
+      return headerCache.value;
+    }
+
     const headerBlock: Block = {
       name: 'Header',
       type: 'content',
@@ -130,7 +138,7 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
 
       const { header, main, footer } = splitBlocksByArea(blocksToUse);
 
-      const finalHeader = header.length > 0 ? header : injectGlobalHeader();
+      const finalHeader = header.length > 0 ? header : await injectGlobalHeader();
       const finalFooter = footer.length > 0 ? footer : await injectGlobalFooter();
 
       state.value.header = finalHeader;
@@ -154,6 +162,28 @@ export const usePageBlocks: UsePageBlocksReturn = (identifier?: string, type?: s
         entityType: type,
         blocks: content,
       });
+
+      // Refresh header cache if header blocks were saved
+      if (content.includes('"name":"Header"')) {
+        const { clearHeaderCache, fetchHeaderBlocks } = useHeader();
+        clearHeaderCache();
+        try {
+          await fetchHeaderBlocks();
+        } catch (error) {
+          console.warn('Failed to refresh header blocks after save:', error);
+        }
+      }
+
+      // Refresh footer cache if footer blocks were saved
+      if (content.includes('"name":"Footer"')) {
+        const { clearFooterCache, fetchFooterSettings } = useFooter();
+        clearFooterCache();
+        try {
+          await fetchFooterSettings();
+        } catch (error) {
+          console.warn('Failed to refresh footer settings after save:', error);
+        }
+      }
 
       return true;
     } catch (error) {

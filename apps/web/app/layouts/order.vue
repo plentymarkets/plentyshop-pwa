@@ -1,5 +1,5 @@
 <template>
-  <UiNavbarTop />
+  <EditableHeader :header="header" />
   <main>
     <NarrowContainer>
       <slot />
@@ -13,4 +13,9 @@
 import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 
 const route = useRoute();
+const { headerCache, fetchHeaderBlocks } = useHeader();
+
+if (!headerCache.value) await fetchHeaderBlocks();
+
+const header = computed(() => headerCache.value ?? []);
 </script>

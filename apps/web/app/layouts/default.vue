@@ -1,7 +1,9 @@
 <template>
   <div>
     <main>
-      <slot name="header" />
+      <slot name="header">
+        <EditableHeader :header="header" />
+      </slot>
       <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
         <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
       </NarrowContainer>
@@ -27,6 +29,11 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 const route = useRoute();
+const { headerCache, fetchHeaderBlocks } = useHeader();
+
+if (!headerCache.value) await fetchHeaderBlocks();
+
+const header = computed(() => headerCache.value ?? []);
 
 setLogoMeta();
 </script>

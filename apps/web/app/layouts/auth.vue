@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiHeader />
+    <EditableHeader :header="header" />
     <main
       :class="[
         'mx-auto px-4 pt-4 md:px-0 md:mt-4',
@@ -31,4 +31,9 @@ defineProps<{
 
 const route = useRoute();
 const viewport = useViewport();
+const { headerCache, fetchHeaderBlocks } = useHeader();
+
+if (!headerCache.value) await fetchHeaderBlocks();
+
+const header = computed(() => headerCache.value ?? []);
 </script>
