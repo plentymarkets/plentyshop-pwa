@@ -1,5 +1,5 @@
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
-export interface UseCanonicalState {
+export interface UseUrlPageMetaState {
   loading: boolean;
 }
 
@@ -10,10 +10,10 @@ export type CategoriesPageMeta = (
   canonicalOverride?: string,
 ) => void;
 
-export interface UseCanonical {
+export interface UseUrlPageMeta {
   loading: Readonly<Ref<boolean>>;
   setStaticPageMeta: StaticPageMeta;
   setCategoriesPageMeta: CategoriesPageMeta;
 }
 
-export type UseCanonicalReturn = () => UseCanonical;
+export type UseUrlPageMetaReturn = () => UseUrlPageMeta;
