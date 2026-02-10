@@ -20,7 +20,7 @@ export * from './useApplePay';
 export * from './useBlockManager';
 export * from './useBlocksList';
 export * from './useBlocksVisibility';
-export * from './useCanonical';
+export * from './useUrlPageMeta';
 export * from './useCarousel';
 export * from './useCart';
 export * from './useCartShippingMethods';
