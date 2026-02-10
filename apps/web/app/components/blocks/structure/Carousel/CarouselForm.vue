@@ -159,18 +159,36 @@
         <div class="controls">
           <div class="mb-6 mt-4">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
-
-            <SfInput v-model="controls.color" type="text">
-              <template #suffix>
-                <label
-                  for="controls-color"
-                  :style="{ backgroundColor: controls.color }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
+            <div v-if="runtimeConfig.enableColorPicker">
+              <EditorColorPicker v-model="controls.color" class="w-full">
+                <template #trigger="{ color, toggle }">
+                  <SfInput v-model="controls.color" type="text">
+                    <template #suffix>
+                      <button
+                        type="button"
+                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                        :style="{ backgroundColor: color }"
+                        @mousedown.stop
+                        @click.stop="toggle"
+                      />
+                    </template>
+                  </SfInput>
+                </template>
+              </EditorColorPicker>
+            </div>
+            <div v-else>
+              <SfInput v-model="controls.color" type="text">
+                <template #suffix>
+                  <label
+                    for="controls-color"
+                    :style="{ backgroundColor: controls.color }"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer"
+                  >
+                    <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
+                  </label>
+                </template>
+              </SfInput>
+            </div>
           </div>
         </div>
       </UiAccordionItem>
@@ -207,6 +225,8 @@ import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
+
+const runtimeConfig = useRuntimeConfig().public;
 
 const { isOpen, open, close } = useDisclosure();
 const { blockUuid } = useSiteConfiguration();

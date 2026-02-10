@@ -7,3 +7,12 @@ export type UseRichTextEditorArgs = {
   onUpdateExpanded?: (v: boolean) => void;
   textAlign?: Ref<RteAlign | undefined>;
 };
+export type RteCommand =
+  | 'toggleBold'
+  | 'toggleItalic'
+  | 'toggleUnderline'
+  | 'toggleBlockquote'
+  | 'toggleStrike'
+  | 'toggleBulletList'
+  | 'toggleOrderedList'
+  | 'setHorizontalRule';

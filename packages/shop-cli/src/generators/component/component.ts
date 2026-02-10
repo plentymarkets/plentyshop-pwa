@@ -20,13 +20,27 @@ class ComponentGenerator extends BaseGenerator {
     return componentPrompts as GeneratorPrompt[];
   }
 
+  private resolveOptions(data: PromptAnswers) {
+    return {
+      skipTests: data.skipTests ?? process.env.PLENTYSHOP_SKIP_TESTS === 'true',
+      skipTypes: data.skipTypes ?? process.env.PLENTYSHOP_SKIP_TYPES === 'true',
+      withForm: data.withForm ?? process.env.PLENTYSHOP_WITH_FORM === 'true',
+      withView: data.withView ?? process.env.PLENTYSHOP_WITH_VIEW === 'true',
+      withToolbar: data.withToolbar ?? process.env.PLENTYSHOP_WITH_TOOLBAR === 'true',
+    };
+  }
+
   createActions(data: PromptAnswers): GeneratorAction[] {
-    return ActionBuilder.forGenerator('component', data.name, this.pathResolver)
-      .withData(data)
-      .addMainFile()
-      .addTypes()
-      .addTests()
-      .build();
+    const options = this.resolveOptions(data);
+    const builder = ActionBuilder.forGenerator('component', data.name, this.pathResolver).withData(data).addMainFile();
+
+    if (!options.skipTypes) builder.addTypes();
+    if (!options.skipTests) builder.addTests();
+    if (options.withForm) builder.addCustomFile(`${data.name}Form.vue`, 'component-form.vue.hbs');
+    if (options.withView) builder.addCustomFile('View.vue', 'component-view.vue.hbs');
+    if (options.withToolbar) builder.addCustomFile(`${data.name}ToolbarTrigger.vue`, 'component-toolbar.vue.hbs');
+
+    return builder.build();
   }
 
   validateInput(data: PromptAnswers): string | true {

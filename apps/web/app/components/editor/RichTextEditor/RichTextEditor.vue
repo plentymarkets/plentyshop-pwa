@@ -1,225 +1,94 @@
 <template>
-  <div class="flex items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200" data-testid="rte-toolbar">
-    <select
-      class="h-8 border border-gray-200 rounded px-2 bg-white text-sm"
-      :value="currentBlockType"
-      data-testid="rte-font-size"
-      @mousedown.stop
-      @click.stop
-      @change="onFontSizeChange(($event.target as HTMLSelectElement).value)"
-    >
-      <option value="paragraph">Normal</option>
-      <option value="h1">H1</option>
-      <option value="h2">H2</option>
-      <option value="h3">H3</option>
-    </select>
+  <div v-if="!modalOpen">
+    <div class="flex items-stretch gap-1.5 p-2 bg-gray-50 border-b border-gray-200 relative" data-testid="rte-toolbar">
+      <div class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
+        <EditorRichTextEditorBasicButtons
+          :cmd="cmd"
+          :is-active="isActive"
+          :current-block-type="currentBlockType"
+          :on-font-size-change="onFontSizeChange"
+          :text-color="textColor"
+          :set-font-color="setFontColor"
+          :toggle-link="toggleLink"
+        />
+      </div>
 
-    <label class="inline-flex items-center" @mousedown.stop @click.stop>
-      <span class="sr-only">Font color</span>
-      <input
-        type="color"
-        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
-        data-testid="rte-font-color"
-        :value="textColor"
-        @input="setFontColor(($event.target as HTMLInputElement).value)"
+      <div class="flex items-center gap-1.5 flex-shrink-0">
+        <span class="w-px self-stretch bg-gray-300" />
+
+        <UiButton
+          v-if="expandable"
+          variant="tertiary"
+          type="button"
+          class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+          :aria-expanded="expandedLocal"
+          data-testid="rte-expand"
+          @mousedown.prevent
+          @click="expandedLocal = !expandedLocal"
+        >
+          <span class="inline-block transition-transform duration-150" :class="{ 'rotate-180': expandedLocal }">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
+              <path d="M480-360 280-560h400L480-360Z" />
+            </svg>
+          </span>
+        </UiButton>
+      </div>
+    </div>
+
+    <div
+      v-if="expandable && expandedLocal"
+      class="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200"
+      data-testid="rte-toolbar-expanded"
+    >
+      <EditorRichTextEditorExtendedButtons
+        :cmd="cmd"
+        :is-active="isActive"
+        :highlight-color="highlightColor"
+        :set-highlight-color="setHighlightColor"
+        :set-align="setAlign"
+        :is-active-align="isActiveAlign"
+        :can-undo="canUndo"
+        :can-redo="canRedo"
+        :undo="undo"
+        :redo="redo"
+        :clear-formatting="clearFormatting"
       />
-    </label>
+      <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="toggleModal" />
+    </div>
 
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('bold') }"
-      @mousedown.prevent
-      @click="cmd('toggleBold')"
-    >
-      <b>B</b>
-    </button>
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('italic') }"
-      @mousedown.prevent
-      @click="cmd('toggleItalic')"
-    >
-      <i>I</i>
-    </button>
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('underline') }"
-      @mousedown.prevent
-      @click="cmd('toggleUnderline')"
-    >
-      <span class="underline">U</span>
-    </button>
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('link') }"
-      @mousedown.prevent
-      @click="toggleLink"
-    >
-      🔗
-    </button>
-
-    <button
-      v-if="expandable"
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100 ml-auto"
-      :aria-expanded="expandedLocal"
-      data-testid="rte-expand"
-      @mousedown.prevent
-      @click="expandedLocal = !expandedLocal"
-    >
-      <span class="inline-block transition-transform duration-150" :class="{ 'rotate-180': expandedLocal }">▾</span>
-    </button>
+    <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
+      <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
+    </div>
   </div>
 
-  <div
-    v-if="expandable && expandedLocal"
-    class="flex items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200"
-    data-testid="rte-toolbar-expanded"
-  >
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('blockquote') }"
-      @mousedown.prevent
-      @click="cmd('toggleBlockquote')"
-    >
-      ❝
-    </button>
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('strike') }"
-      @mousedown.prevent
-      @click="cmd('toggleStrike')"
-    >
-      S
-    </button>
-
-    <label class="inline-flex items-center" @mousedown.stop @click.stop>
-      <span class="sr-only">Highlight color</span>
-      <input
-        type="color"
-        class="w-9 h-8 border border-gray-200 rounded bg-white p-0.5 cursor-pointer"
-        data-testid="rte-highlight-color"
-        :value="highlightColor"
-        @input="setHighlightColor(($event.target as HTMLInputElement).value)"
-      />
-    </label>
-
-    <span class="w-px h-5 bg-gray-200 mx-0.5" />
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActiveAlign('left') }"
-      @mousedown.prevent
-      @click="setAlign('left')"
-    >
-      ⬅
-    </button>
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActiveAlign('center') }"
-      @mousedown.prevent
-      @click="setAlign('center')"
-    >
-      ⬌
-    </button>
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActiveAlign('right') }"
-      @mousedown.prevent
-      @click="setAlign('right')"
-    >
-      ➡
-    </button>
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActiveAlign('justify') }"
-      @mousedown.prevent
-      @click="setAlign('justify')"
-    >
-      ☰
-    </button>
-
-    <span class="w-px h-5 bg-gray-200 mx-0.5" />
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('bulletList') }"
-      @mousedown.prevent
-      @click="cmd('toggleBulletList')"
-    >
-      ••
-    </button>
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :class="{ 'bg-gray-200 border-gray-300': isActive('orderedList') }"
-      @mousedown.prevent
-      @click="cmd('toggleOrderedList')"
-    >
-      1.
-    </button>
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      @mousedown.prevent
-      @click="cmd('setHorizontalRule')"
-    >
-      ─
-    </button>
-
-    <span class="w-px h-5 bg-gray-200 mx-0.5" />
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :disabled="!canUndo"
-      @mousedown.prevent
-      @click="undo"
-    >
-      ↶
-    </button>
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
-      :disabled="!canRedo"
-      @mousedown.prevent
-      @click="redo"
-    >
-      ↷
-    </button>
-
-    <button
-      type="button"
-      class="w-8 h-8 rounded border border-transparent bg-transparent inline-flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100 ml-auto"
-      @mousedown.prevent
-      @click="clearFormatting"
-    >
-      ⌫
-    </button>
-  </div>
-
-  <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
-    <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
-  </div>
+  <EditorRichTextEditorRichtextEditorModal
+    v-if="modalOpen"
+    :editor="editor"
+    :editor-style="editorStyle"
+    :cmd="cmd"
+    :is-active="isActive"
+    :current-block-type="currentBlockType"
+    :on-font-size-change="onFontSizeChange"
+    :text-color="textColor"
+    :highlight-color="highlightColor"
+    :set-font-color="setFontColor"
+    :set-highlight-color="setHighlightColor"
+    :set-align="setAlign"
+    :is-active-align="isActiveAlign"
+    :can-undo="canUndo"
+    :can-redo="canRedo"
+    :undo="undo"
+    :redo="redo"
+    :toggle-link="toggleLink"
+    :clear-formatting="clearFormatting"
+    @close="toggleModal"
+  />
 </template>
 
 <script setup lang="ts">
 import { EditorContent } from '@tiptap/vue-3';
+
+const modalOpen = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -267,10 +136,8 @@ const {
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
   onUpdateModelValue: (v) => emit('update:modelValue', v),
-
   expanded: toRef(props, 'expanded'),
   onUpdateExpanded: (v) => emit('update:expanded', v),
-
   textAlign: toRef(props, 'textAlign'),
 });
 
@@ -280,4 +147,8 @@ const editorStyle = computed(() => ({
   minHeight: `${props.minHeight}px`,
   ...textAlignStyle.value,
 }));
+
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value;
+};
 </script>

@@ -7,6 +7,7 @@ import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
+import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -36,6 +37,7 @@ export default defineNuxtConfig({
         usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
+    plugins: [FailOnLargeChunksPlugin],
     optimizeDeps: {
       include: [
         '@floating-ui/vue',
@@ -71,6 +73,17 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
+            tiptap: [
+              '@tiptap/vue-3',
+              '@tiptap/core',
+              '@tiptap/starter-kit',
+              '@tiptap/extension-link',
+              '@tiptap/extension-underline',
+              '@tiptap/extension-text-style',
+              '@tiptap/extension-color',
+              '@tiptap/extension-highlight',
+              '@tiptap/extension-text-align',
+            ],
             vuetify: ['vuetify', '@mdi/js'],
             cmmain: ['codemirror'],
             cmplugins: [
@@ -135,6 +148,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     'vuetify-nuxt-module',
+    'nuxt-color-picker',
   ],
   vuetify: {
     moduleOptions: {
