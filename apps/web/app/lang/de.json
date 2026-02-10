@@ -1198,6 +1198,9 @@
       "vatServerBusy": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Bitte wenden Sie sich an den Shop-Betreiber.",
       "vatServerFallback": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Der Auftrag wird erneut geprüft."
     },
+    "blocks": {
+      "base64NotAllowed": "Das Bild wurde nicht korrekt hochgeladen. Bitte versuchen Sie es erneut."
+    },
     "cart": {
       "addToBasket": {
         "itemSetComponentMismatch": "Es liegt eine Unstimmigkeit bei den Komponenten des Artikelsets vor, und es kann somit nicht zum Warenkorb hinzugefügt werden.",
