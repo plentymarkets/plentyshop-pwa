@@ -1,13 +1,13 @@
-import type { UseCanonicalReturn, StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
+import type { UseUrlPageMetaReturn, StaticPageMeta, CategoriesPageMeta, UseUrlPageMetaState } from './types';
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 /**
- * @description Composable managing canonical data
- * @returns UseCanonicalReturn
+ * @description Composable managing canonical data, og:url and href alernates
+ * @returns UseUrlPageMetaReturn
  * @example
  * ``` ts
- * const { data, loading, setStaticPageMeta } = useCanonical();
+ * const { data, loading, setStaticPageMeta } = useUrlPageMeta();
  * ```
  */
 
@@ -46,8 +46,8 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
   }
 };
 
-export const useCanonical: UseCanonicalReturn = () => {
-  const state = useState<UseCanonicalState>(`useCanonical`, () => ({
+export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
+  const state = useState<UseUrlPageMetaState>(`useUrlPageMeta`, () => ({
     loading: false,
   }));
 
