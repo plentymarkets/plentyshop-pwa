@@ -5,3 +5,6 @@ export type UseHtmlEditorModeOptions = {
   commitOnValid?: boolean;
   maxErrors?: number;
 };
+export type HtmlToken =
+  | { kind: 'comment' | 'doctype' | 'processing-instruction' }
+  | { kind: 'tag'; tagName: string; attributesSource: string; isClosing: boolean; isSelfClosing: boolean };

@@ -511,7 +511,7 @@ watch([isTransparent, backgroundColor], () => {
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "Keep background transparent",
     "content-label": "Content",
-    "wysiwyg-label": "WYSIWYG",
+    "wysiwyg-label": "Rich Text",
     "html-label": "HTML",
     "html-editor-label": "HTML editor",
     "html-invalid-label": "HTML syntax issues"
@@ -541,7 +541,7 @@ watch([isTransparent, backgroundColor], () => {
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "or keep transparent",
     "content-label": "Content",
-    "wysiwyg-label": "WYSIWYG",
+    "wysiwyg-label": "Rich Text",
     "html-label": "HTML",
     "html-editor-label": "HTML editor",
     "html-invalid-label": "HTML syntax issues"
