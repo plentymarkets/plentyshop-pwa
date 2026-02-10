@@ -62,7 +62,7 @@ const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { drawerOpen, currentFont, placement } = useSiteConfiguration();
-const { setStaticPageMeta } = useCanonical();
+const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
 
 const clientPreview = computed(() => isInEditorClient.value);

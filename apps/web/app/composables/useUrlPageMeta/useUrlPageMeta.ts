@@ -1,13 +1,13 @@
-import type { UseCanonicalReturn, StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
+import type { UseUrlPageMetaReturn, StaticPageMeta, CategoriesPageMeta, UseUrlPageMetaState } from './types';
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 /**
- * @description Composable managing canonical data
- * @returns UseCanonicalReturn
+ * @description Composable managing canonical data, og:url and href alernates
+ * @returns UseUrlPageMetaReturn
  * @example
  * ``` ts
- * const { data, loading, setStaticPageMeta } = useCanonical();
+ * const { data, loading, setStaticPageMeta } = useUrlPageMeta();
  * ```
  */
 
@@ -46,8 +46,8 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
   }
 };
 
-export const useCanonical: UseCanonicalReturn = () => {
-  const state = useState<UseCanonicalState>(`useCanonical`, () => ({
+export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
+  const state = useState<UseUrlPageMetaState>(`useUrlPageMeta`, () => ({
     loading: false,
   }));
 
@@ -68,6 +68,8 @@ export const useCanonical: UseCanonicalReturn = () => {
     const { defaultLocale } = useI18n();
     const { getAvailableLocales } = useLocalization();
 
+    const canonicalUrl = `${runtimeConfig.public.domain}${localePath(route.fullPath)}`;
+
     const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
         rel: 'alternate',
@@ -78,7 +80,7 @@ export const useCanonical: UseCanonicalReturn = () => {
 
     useHead({
       link: [
-        { rel: 'canonical', href: `${runtimeConfig.public.domain}${localePath(route.fullPath)}` },
+        { rel: 'canonical', href: canonicalUrl },
         {
           rel: 'alternate',
           hreflang: 'x-default',
@@ -86,6 +88,10 @@ export const useCanonical: UseCanonicalReturn = () => {
         },
         ...alternateLocales,
       ],
+    });
+
+    useSeoMeta({
+      ogUrl: canonicalUrl,
     });
 
     state.value.loading = false;
@@ -122,6 +128,10 @@ export const useCanonical: UseCanonicalReturn = () => {
           href: canonicalLink,
         },
       ],
+    });
+
+    useSeoMeta({
+      ogUrl: canonicalLink,
     });
 
     if (productsCatalog.languageUrls) {
