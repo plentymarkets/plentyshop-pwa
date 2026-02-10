@@ -1198,6 +1198,9 @@
       "vatServerBusy": "Your VAT number could not be validated. Please contact the online store operator.",
       "vatServerFallback": "Your VAT number could not be validated. The order will be reviewed again."
     },
+    "blocks": {
+      "base64NotAllowed": "The image was incorrectly uploaded. Please try again."
+    },
     "cart": {
       "addToBasket": {
         "itemSetComponentMismatch": "There is a mismatch in the item set components, and it cannot be added to the cart.",
