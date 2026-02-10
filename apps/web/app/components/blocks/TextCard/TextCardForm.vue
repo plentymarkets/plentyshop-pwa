@@ -47,7 +47,6 @@
         />
       </div>
 
-
       <div v-else class="py-2">
         <UiFormLabel for="html-editor">
           {{ getEditorTranslation('html-editor-label') }}
