@@ -117,37 +117,21 @@
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-
-            <div v-if="runtimeConfig.enableColorPicker">
-              <EditorColorPicker v-model="banner.content.text.color" class="w-full">
-                <template #trigger="{ color, toggle }">
-                  <SfInput v-model="banner.content.text.color" type="text">
-                    <template #suffix>
-                      <button
-                        type="button"
-                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                        :style="{ backgroundColor: color }"
-                        @mousedown.stop
-                        @click.stop="toggle"
-                      />
-                    </template>
-                  </SfInput>
-                </template>
-              </EditorColorPicker>
-            </div>
-            <div v-else>
-              <SfInput v-model="banner.content.text.color" type="text">
-                <template #suffix>
-                  <label
-                    for="text-color"
-                    :style="{ backgroundColor: banner.content.text.color }"
-                    class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                  >
-                    <input id="text-color" v-model="banner.content.text.color" type="color" class="invisible w-8" />
-                  </label>
-                </template>
-              </SfInput>
-            </div>
+            <EditorColorPicker v-model="banner.content.text.color" class="w-full">
+              <template #trigger="{ color, toggle }">
+                <SfInput v-model="banner.content.text.color" type="text">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </template>
+            </EditorColorPicker>
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>
@@ -158,41 +142,21 @@
           </div>
           <div v-if="banner.content.text.background" class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-color-label') }}</UiFormLabel>
-            <div v-if="runtimeConfig.enableColorPicker">
-              <EditorColorPicker v-model="banner.content.text.bgcolor!" class="w-full">
-                <template #trigger="{ color, toggle }">
-                  <SfInput v-model="banner.content.text.bgcolor" type="text">
-                    <template #suffix>
-                      <button
-                        type="button"
-                        class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                        :style="{ backgroundColor: color }"
-                        @mousedown.stop
-                        @click.stop="toggle"
-                      />
-                    </template>
-                  </SfInput>
-                </template>
-              </EditorColorPicker>
-            </div>
-            <div v-else>
-              <SfInput v-model="banner.content.text.bgcolor" type="text">
-                <template #suffix>
-                  <label
-                    for="text-bg-color"
-                    :style="{ backgroundColor: banner.content.text.bgcolor }"
-                    class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                  >
-                    <input
-                      id="text-bg-color"
-                      v-model="banner.content.text.bgcolor"
-                      type="color"
-                      class="invisible w-8"
+            <EditorColorPicker v-model="banner.content.text.bgcolor!" class="w-full">
+              <template #trigger="{ color, toggle }">
+                <SfInput v-model="banner.content.text.bgcolor" type="text">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
                     />
-                  </label>
-                </template>
-              </SfInput>
-            </div>
+                  </template>
+                </SfInput>
+              </template>
+            </EditorColorPicker>
           </div>
           <div v-if="banner.content.text.background" class="mb-6">
             <label class="block text-sm font-medium mb-4">{{ getEditorTranslation('textbox-opacity-label') }}</label>
@@ -454,8 +418,6 @@
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
-
-const runtimeConfig = useRuntimeConfig().public;
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
