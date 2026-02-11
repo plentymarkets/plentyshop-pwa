@@ -1,7 +1,8 @@
 <template>
   <div>
     <slot name="header">
-      <UiHeader />
+      <UiSimplifiedHeader v-if="useSimplifiedHeader" />
+      <UiHeader v-else />
     </slot>
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -39,6 +40,18 @@ defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
+const route = useRoute();
+
+// Use simplified header (just logo) for checkout/cart flows
+const useSimplifiedHeader = computed(() => {
+  const path = route.path;
+  return (
+    path.includes('/cart') ||
+    path.includes('/checkout') ||
+    path.includes('/guest/login') ||
+    path.includes('/readonly-checkout')
+  );
+});
 
 // Get footer blocks from global cache for default footer slot
 const { globalBlocksCache } = useGlobalBlocks();

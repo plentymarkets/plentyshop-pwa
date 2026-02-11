@@ -1,18 +1,10 @@
 <template>
   <div>
     <UiHeader />
-    <main
-      :class="[
-        'mx-auto px-4 pt-4 md:px-0 md:mt-4',
-        { 'md:mb-8': heading },
-        heading ? 'md:max-w-[630px]' : 'md:max-w-[677px]',
-      ]"
-    >
-      <h1 v-if="heading" class="font-bold mb-10 typography-headline-3 md:typography-headline-2">{{ heading }}</h1>
+    <main>
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="viewport.isLessThan('md')" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
@@ -34,15 +26,15 @@
 <script setup lang="ts">
 import type { Block } from '@plentymarkets/shop-api';
 
-defineProps<{
-  heading: string;
-}>();
-
-const viewport = useViewport();
+usePageTitle();
+useStructuredData().setLogoMeta();
 
 // Get footer blocks from global cache
 const { globalBlocksCache } = useGlobalBlocks();
 const footerBlocks = computed(
   () => (globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? []) as Block[],
 );
+
+console.warn('[SIMPLIFIED LAYOUT] footerBlocks count:', footerBlocks.value.length);
+console.warn('[SIMPLIFIED LAYOUT] globalBlocksCache count:', globalBlocksCache.value?.length ?? 0);
 </script>
