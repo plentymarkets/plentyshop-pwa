@@ -9,7 +9,7 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
+    <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
       <fieldset class="py-2">
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <button
@@ -183,27 +183,43 @@
       </div>
 
       <fieldset class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('content-label') }}</UiFormLabel>
+        <legend class="text-sm font-medium text-black">{{ getEditorTranslation('text-align-label') }}</legend>
 
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-            data-testid="mode-wysiwyg"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'wysiwyg' }"
-            @click="editorMode = 'wysiwyg'"
+            for="text-align-left"
+            data-testid="text-align-left"
+            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'left' }"
+            @click="textCardBlock.text.textAlignment = 'left'"
           >
-            <SfIconCheck :class="{ invisible: editorMode !== 'wysiwyg' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('wysiwyg-label') }}
+            <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
+            {{ getEditorTranslation('text-align-option-left-label') }}
           </div>
 
           <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            data-testid="mode-html"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'html' }"
-            @click="editorMode = 'html'"
+            for="text-align-center"
+            data-testid="text-align-center"
+            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'center' }"
+            @click="textCardBlock.text.textAlignment = 'center'"
           >
-            <SfIconCheck :class="{ invisible: editorMode !== 'html' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('html-label') }}
+            <SfIconCheck
+              :class="{ invisible: textCardBlock.text.textAlignment !== 'center' }"
+              class="mr-1 w-[1.1rem]"
+            />
+            {{ getEditorTranslation('text-align-option-center-label') }}
+          </div>
+
+          <div
+            for="text-align-right"
+            data-testid="text-align-right"
+            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'right' }"
+            @click="textCardBlock.text.textAlignment = 'right'"
+          >
+            <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
+            {{ getEditorTranslation('text-align-option-right-label') }}
           </div>
         </div>
       </fieldset>
@@ -411,7 +427,6 @@ import {
 import type { TextCardFormProps, TextCardContent } from './types';
 
 const runtimeConfig = useRuntimeConfig().public;
-const config = useRuntimeConfig().public;
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
