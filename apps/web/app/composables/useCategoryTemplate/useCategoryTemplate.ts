@@ -100,7 +100,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     state.value.defaultTemplateData = blocks;
   };
 
-  // Computed area filters for separated block rendering
   const headerBlocks = computed(() => state.value.data.filter((block) => block.name === 'Header'));
   const mainBlocks = computed(() =>
     state.value.data.filter((block) => block.name !== 'Header' && block.name !== 'Footer'),

@@ -38,24 +38,17 @@ const { setDefaultTemplate, data, getBlocksServer, headerBlocks } = useCategoryT
   $i18n.locale.value,
 );
 
-// Check if header blocks exist
 const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
-
 const icon = 'home';
 const { setPageMeta } = usePageMeta();
 setPageMeta(t('homepage.title'), icon);
-
-// Set default template
 setDefaultTemplate(useLocaleSpecificHomepageTemplate($i18n.locale.value));
 
-// Fetch blocks and ensure global blocks are injected
 await getBlocksServer('index', 'immutable');
 
 const { ensureAllGlobalBlocks } = useGlobalBlocks();
 const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
-if (blocksWithGlobals.length !== data.value.length) {
-  data.value.splice(0, data.value.length, ...blocksWithGlobals);
-}
+if (blocksWithGlobals.length !== data.value.length) data.value.splice(0, data.value.length, ...blocksWithGlobals);
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();

@@ -40,7 +40,6 @@ defineProps<{
 
 const viewport = useViewport();
 
-// Get footer blocks from global cache
 const { globalBlocksCache } = useGlobalBlocks();
 const footerBlocks = computed(
   () => (globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? []) as Block[],

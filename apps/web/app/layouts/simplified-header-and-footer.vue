@@ -29,12 +29,8 @@ import type { Block } from '@plentymarkets/shop-api';
 usePageTitle();
 useStructuredData().setLogoMeta();
 
-// Get footer blocks from global cache
 const { globalBlocksCache } = useGlobalBlocks();
 const footerBlocks = computed(
   () => (globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? []) as Block[],
 );
-
-console.warn('[SIMPLIFIED LAYOUT] footerBlocks count:', footerBlocks.value.length);
-console.warn('[SIMPLIFIED LAYOUT] globalBlocksCache count:', globalBlocksCache.value?.length ?? 0);
 </script>

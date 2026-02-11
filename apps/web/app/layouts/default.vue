@@ -42,7 +42,6 @@ const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 const route = useRoute();
 
-// Use simplified header (just logo) for checkout/cart flows
 const useSimplifiedHeader = computed(() => {
   const path = route.path;
   return (
@@ -53,7 +52,6 @@ const useSimplifiedHeader = computed(() => {
   );
 });
 
-// Get footer blocks from global cache for default footer slot
 const { globalBlocksCache } = useGlobalBlocks();
 const footerBlocks = computed(
   () => (globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? []) as Block[],

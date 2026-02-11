@@ -37,35 +37,27 @@ const shouldRender = computed(() => props.shouldLoad === undefined || props.shou
 const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
 
 const getContentSource = () => {
-  const source = {
+  return {
     ...props.content.source,
     ...{
       categoryId: props.content.source?.categoryId || (categoryId || firstCategoryId || '').toString(),
       itemId: itemId.value,
     },
   };
-  return source;
 };
 
 const hasValidSource = computed(() => {
   const source = getContentSource();
-  // For category type, we need a valid categoryId
-  if (source.type === 'category') {
-    return Boolean(source.categoryId && source.categoryId !== '');
-  }
-  // For cross_selling type, we need a valid itemId
-  if (source.type === 'cross_selling') {
-    return Boolean(source.itemId);
-  }
+
+  if (source.type === 'category') return Boolean(source.categoryId && source.categoryId !== '');
+  if (source.type === 'cross_selling') return Boolean(source.itemId);
   return false;
 });
 
 watch(
   shouldFetch,
   (visible) => {
-    if (visible && hasValidSource.value) {
-      fetchProductRecommended(getContentSource());
-    }
+    if (visible && hasValidSource.value) fetchProductRecommended(getContentSource());
     shouldRenderAfterUpdate.value = true;
   },
   { immediate: true },

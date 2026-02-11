@@ -73,10 +73,8 @@ setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
 
-// Initialize blocks for product page
 const { $i18n } = useNuxtApp();
 const productIdentifier = '0';
-console.warn('[PRODUCT PAGE] productIdentifier:', productIdentifier, 'type:', typeof productIdentifier);
 
 const { data, getBlocksServer, setDefaultTemplate, headerBlocks } = useCategoryTemplate(
   productIdentifier,
@@ -84,36 +82,15 @@ const { data, getBlocksServer, setDefaultTemplate, headerBlocks } = useCategoryT
   $i18n.locale.value,
 );
 
-// Only provide header slot if Header blocks exist
 const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
 
-console.warn('[PRODUCT PAGE] State key:', `useCategoryTemplate-${productIdentifier}-product-${$i18n.locale.value}-all`);
-console.warn('[PRODUCT PAGE] Initial data length:', data.value.length);
-
-// Set default template before fetching
 setDefaultTemplate(productTemplateData as Block[]);
-console.warn('[PRODUCT PAGE] After setting default template, data length:', data.value.length);
-
-// Fetch blocks
-console.warn('[PRODUCT PAGE] Fetching blocks...');
 await getBlocksServer(productIdentifier, 'product');
-console.warn('[PRODUCT PAGE] After fetch, data length:', data.value.length);
-console.warn(
-  '[PRODUCT PAGE] Block names:',
-  data.value.map((b) => b.name),
-);
 
-// Inject global blocks
 const { ensureAllGlobalBlocks } = useGlobalBlocks();
 const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
-console.warn('[PRODUCT PAGE] After global injection, length:', blocksWithGlobals.length);
-if (blocksWithGlobals.length !== data.value.length) {
-  data.value.splice(0, data.value.length, ...blocksWithGlobals);
-}
-console.warn(
-  '[PRODUCT PAGE] Final data:',
-  data.value.map((b) => b.name),
-);
+
+if (blocksWithGlobals.length !== data.value.length) data.value.splice(0, data.value.length, ...blocksWithGlobals);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
