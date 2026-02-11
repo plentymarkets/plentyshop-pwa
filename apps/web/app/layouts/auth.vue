@@ -1,6 +1,5 @@
 <template>
   <div>
-    <UiHeader />
     <main
       :class="[
         'mx-auto px-4 pt-4 md:px-0 md:mt-4',
@@ -16,19 +15,13 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <ClientOnly>
-      <FooterBlock v-if="!route.meta.isBlockified" />
-    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
-import FooterBlock from '~/components/blocks/Footer/Footer.vue';
-
 defineProps<{
   heading: string;
 }>();
 
-const route = useRoute();
 const viewport = useViewport();
 </script>

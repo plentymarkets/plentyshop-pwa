@@ -16,9 +16,12 @@ export interface DragEvent<T = Block> {
   };
 }
 
+export type BlockArea = 'header' | 'main' | 'footer' | 'all';
+
 export type EditablePageProps = {
   identifier: string | number;
   type: string;
+  area?: BlockArea;
   hasEnabledActions?: boolean;
   preventBlocksRequest?: boolean;
 };

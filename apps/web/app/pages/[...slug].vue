@@ -5,14 +5,23 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
+    <template v-if="hasHeaderBlocks" #header>
+      <EditablePage :identifier="actualIdentifier" type="category" area="header" prevent-blocks-request />
+    </template>
+
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
     <EditablePage
-      :identifier="identifier"
-      :type="'category'"
+      :identifier="actualIdentifier"
+      type="category"
+      area="main"
       data-testid="category-page-content"
-      :prevent-blocks-request="productsCatalog.category?.type === 'item'"
+      prevent-blocks-request
     />
+
+    <template #footer>
+      <EditablePage :identifier="actualIdentifier" type="category" area="footer" prevent-blocks-request />
+    </template>
   </NuxtLayout>
 </template>
 
@@ -82,6 +91,50 @@ const categoryName = computed(() => categoryGetters.getCategoryName(productsCata
 const icon = 'sell';
 setPageMeta(categoryName.value, icon);
 
+// Initialize blocks for content categories
+const { $i18n } = useNuxtApp();
+const actualIdentifier = ref(identifier.value);
+console.warn('[CATEGORY PAGE] actualIdentifier:', actualIdentifier.value, 'type:', typeof actualIdentifier.value);
+console.warn('[CATEGORY PAGE] Category type:', productsCatalog.value.category?.type);
+
+const { data, getBlocksServer, headerBlocks } = useCategoryTemplate(
+  actualIdentifier.value.toString(),
+  'category',
+  $i18n.locale.value,
+);
+
+// Only provide header slot if Header blocks exist
+const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
+
+console.warn(
+  '[CATEGORY PAGE] State key:',
+  `useCategoryTemplate-${actualIdentifier.value.toString()}-category-${$i18n.locale.value}-all`,
+);
+console.warn('[CATEGORY PAGE] Initial data length:', data.value.length);
+
+// Fetch blocks only for content categories, not for item categories
+if (productsCatalog.value.category?.type !== 'item') {
+  console.warn('[CATEGORY PAGE] Fetching blocks for identifier:', actualIdentifier.value);
+  await getBlocksServer(actualIdentifier.value, 'category');
+  console.warn('[CATEGORY PAGE] After fetch, data length:', data.value.length);
+  console.warn(
+    '[CATEGORY PAGE] Block names:',
+    data.value.map((b) => b.name),
+  );
+}
+
+// Inject global blocks (header/footer) for ALL category types (content AND item)
+const { ensureAllGlobalBlocks } = useGlobalBlocks();
+const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
+console.warn('[CATEGORY PAGE] After global injection, length:', blocksWithGlobals.length);
+if (blocksWithGlobals.length !== data.value.length) {
+  data.value.splice(0, data.value.length, ...blocksWithGlobals);
+}
+console.warn(
+  '[CATEGORY PAGE] Final data:',
+  data.value.map((b) => b.name),
+);
+
 watch(
   () => locale.value,
   (changedLocale: string) => {
@@ -118,6 +171,33 @@ watch(
   () => route.query,
   async () => {
     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+  },
+);
+
+// Watch for category navigation to refetch blocks for new category
+watch(
+  () => identifier.value,
+  async (newIdentifier, oldIdentifier) => {
+    if (newIdentifier !== oldIdentifier && productsCatalog.value.category?.type !== 'item') {
+      // Update actualIdentifier for EditablePage components
+      actualIdentifier.value = newIdentifier;
+
+      // Fetch blocks for the new category
+      const { data: newData, getBlocksServer: refetchBlocks } = useCategoryTemplate(
+        newIdentifier.toString(),
+        'category',
+        $i18n.locale.value,
+      );
+
+      await refetchBlocks(newIdentifier, 'category');
+
+      // Inject global blocks
+      const { ensureAllGlobalBlocks } = useGlobalBlocks();
+      const blocksWithGlobals = await ensureAllGlobalBlocks(newData.value);
+      if (blocksWithGlobals.length !== newData.value.length) {
+        newData.value.splice(0, newData.value.length, ...blocksWithGlobals);
+      }
+    }
   },
 );
 

@@ -26,16 +26,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }),
   );
 
-  const ensureFooterBlock = async () => {
-    const { fetchFooterSettings } = useFooter();
-
-    try {
-      await fetchFooterSettings();
-    } catch (error) {
-      console.warn('Failed to ensure footer block:', error);
-    }
-  };
-
   const migrateAllBlocks = (blocks: Block[]) => {
     const config = useRuntimeConfig().public;
 
@@ -76,8 +66,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
 
     setupBlocks(data?.value?.data ?? []);
-
-    await ensureFooterBlock();
   };
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
@@ -111,6 +99,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   const setDefaultTemplate = (blocks: Block[]) => {
     state.value.defaultTemplateData = blocks;
   };
+
+  // Computed area filters for separated block rendering
+  const headerBlocks = computed(() => state.value.data.filter((block) => block.name === 'Header'));
+  const mainBlocks = computed(() =>
+    state.value.data.filter((block) => block.name !== 'Header' && block.name !== 'Footer'),
+  );
+  const footerBlocks = computed(() => state.value.data.filter((block) => block.name === 'Footer'));
 
   /**
    * @description Function for fetching the category template from a category id
@@ -175,6 +170,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     updateBlocks,
     setupBlocks,
     setDefaultTemplate,
+    headerBlocks,
+    mainBlocks,
+    footerBlocks,
     ...toRefs(state.value),
   };
 };

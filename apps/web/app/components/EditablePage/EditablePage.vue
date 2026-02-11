@@ -3,8 +3,8 @@
     <EmptyBlock v-if="isContentEmptyInEditor" />
     <CategoryEmptyState v-else-if="isContentEmptyInLive" />
     <draggable
-      v-if="data.length"
-      v-model="data"
+      v-if="blocksToRender.length"
+      v-model="blocksToRender"
       item-key="meta.uuid"
       handle=".drag-handle"
       class="content"
@@ -40,6 +40,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { Block } from '@plentymarkets/shop-api';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 
@@ -47,35 +48,109 @@ const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditablePageProps>(), {
+  area: 'all',
   hasEnabledActions: true,
   preventBlocksRequest: false,
 });
 
-const { data, getBlocksServer, cleanData } = useCategoryTemplate(
+console.warn(
+  '[EDITABLE_PAGE]',
+  props.area,
+  'identifier:',
+  props.identifier,
+  'type:',
+  typeof props.identifier,
+  'prevent:',
+  props.preventBlocksRequest,
+);
+
+const { data, headerBlocks, mainBlocks, footerBlocks, getBlocksServer } = useCategoryTemplate(
   props.identifier.toString(),
   props.type.toString(),
   useNuxtApp().$i18n.locale.value,
 );
-const dataIsEmpty = computed(() => data.value.length === 0);
 
-const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && isInEditor.value),
-);
+const stateKey = `useCategoryTemplate-${props.identifier.toString()}-${props.type.toString()}-${useNuxtApp().$i18n.locale.value}-all`;
+console.warn('[EDITABLE_PAGE]', props.area, 'State key:', stateKey);
+console.warn('[EDITABLE_PAGE]', props.area, 'data.length:', data.value.length);
 
-const isContentEmptyInLive = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer'),
-);
+// Select blocks based on area prop - writable computed for draggable v-model
+const blocksToRender = computed({
+  get: () => {
+    let result;
+    switch (props.area) {
+      case 'header':
+        result = headerBlocks.value;
+        break;
+      case 'main':
+        result = mainBlocks.value;
+        break;
+      case 'footer':
+        result = footerBlocks.value;
+        break;
+      default:
+        result = data.value;
+    }
+    console.warn(
+      '[EDITABLE_PAGE]',
+      props.area,
+      'blocksToRender.length:',
+      result.length,
+      'names:',
+      result.map((b) => b.name),
+    );
+    return result;
+  },
+  set: (value) => {
+    // Update the main data array based on which area is being edited
+    // This ensures drag-and-drop changes are persisted correctly
+    switch (props.area) {
+      case 'header':
+      case 'main':
+      case 'footer': {
+        // For specific areas, we need to reconstruct the full data array
+        const otherBlocks = data.value.filter((block) => {
+          if (props.area === 'header') return block.name !== 'Header';
+          if (props.area === 'footer') return block.name !== 'Footer';
+          return block.name === 'Header' || block.name === 'Footer';
+        });
+
+        // Reconstruct array with proper order: Header -> Main -> Footer
+        const newData: Block[] = [];
+        if (props.area === 'header') {
+          newData.push(...value);
+          newData.push(...otherBlocks.filter((b) => b.name !== 'Footer'));
+          newData.push(...otherBlocks.filter((b) => b.name === 'Footer'));
+        } else if (props.area === 'footer') {
+          newData.push(...otherBlocks.filter((b) => b.name === 'Header'));
+          newData.push(...otherBlocks.filter((b) => b.name !== 'Header' && b.name !== 'Footer'));
+          newData.push(...value);
+        } else {
+          // main area
+          newData.push(...otherBlocks.filter((b) => b.name === 'Header'));
+          newData.push(...value);
+          newData.push(...otherBlocks.filter((b) => b.name === 'Footer'));
+        }
+
+        data.value.splice(0, data.value.length, ...newData);
+        break;
+      }
+      default:
+        // For 'all', just replace everything
+        data.value.splice(0, data.value.length, ...value);
+    }
+  },
+});
+
+const dataIsEmpty = computed(() => blocksToRender.value.length === 0);
+
+// Don't show empty state when preventBlocksRequest is true - parent is responsible for data
+const isContentEmptyInEditor = computed(() => dataIsEmpty.value && !props.preventBlocksRequest);
+const isContentEmptyInLive = computed(() => dataIsEmpty.value && !props.preventBlocksRequest);
 
 if (!props.preventBlocksRequest) {
   await getBlocksServer(props.identifier, props.type);
 }
-
-const { footerCache } = useFooter();
-addFooterBlock({
-  data,
-  cachedFooter: footerCache,
-  cleanData,
-});
 
 const {
   isClicked,
@@ -89,15 +164,6 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
-  const lastIndex = data.value.length - 1;
-  if (footerIndex !== -1 && footerIndex !== lastIndex) {
-    const footerBlock = data.value.splice(footerIndex, 1)[0];
-    if (footerBlock) {
-      data.value.push(footerBlock);
-    }
-  }
-
   if (evt.moved) {
     const { newIndex } = evt.moved;
     const block = document.getElementById(`block-${newIndex}`);

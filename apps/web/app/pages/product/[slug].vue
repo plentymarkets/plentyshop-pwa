@@ -1,15 +1,22 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <template v-if="hasHeaderBlocks" #header>
+      <EditablePage :identifier="productIdentifier" type="product" area="header" prevent-blocks-request />
+    </template>
+    <EditablePage :identifier="productIdentifier" type="product" area="main" prevent-blocks-request />
+    <template #footer>
+      <EditablePage :identifier="productIdentifier" type="product" area="footer" prevent-blocks-request />
+    </template>
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, Block } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
@@ -65,6 +72,48 @@ setCurrentProduct(productForEditor.value || ({} as Product));
 setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
+
+// Initialize blocks for product page
+const { $i18n } = useNuxtApp();
+const productIdentifier = '0';
+console.warn('[PRODUCT PAGE] productIdentifier:', productIdentifier, 'type:', typeof productIdentifier);
+
+const { data, getBlocksServer, setDefaultTemplate, headerBlocks } = useCategoryTemplate(
+  productIdentifier,
+  'product',
+  $i18n.locale.value,
+);
+
+// Only provide header slot if Header blocks exist
+const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
+
+console.warn('[PRODUCT PAGE] State key:', `useCategoryTemplate-${productIdentifier}-product-${$i18n.locale.value}-all`);
+console.warn('[PRODUCT PAGE] Initial data length:', data.value.length);
+
+// Set default template before fetching
+setDefaultTemplate(productTemplateData as Block[]);
+console.warn('[PRODUCT PAGE] After setting default template, data length:', data.value.length);
+
+// Fetch blocks
+console.warn('[PRODUCT PAGE] Fetching blocks...');
+await getBlocksServer(productIdentifier, 'product');
+console.warn('[PRODUCT PAGE] After fetch, data length:', data.value.length);
+console.warn(
+  '[PRODUCT PAGE] Block names:',
+  data.value.map((b) => b.name),
+);
+
+// Inject global blocks
+const { ensureAllGlobalBlocks } = useGlobalBlocks();
+const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
+console.warn('[PRODUCT PAGE] After global injection, length:', blocksWithGlobals.length);
+if (blocksWithGlobals.length !== data.value.length) {
+  data.value.splice(0, data.value.length, ...blocksWithGlobals);
+}
+console.warn(
+  '[PRODUCT PAGE] Final data:',
+  data.value.map((b) => b.name),
+);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
