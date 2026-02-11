@@ -5,6 +5,7 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
+    <PayPalTestButton />
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
     <EditablePage
