@@ -105,6 +105,10 @@ defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
 
+definePageMeta({
+  pageType: 'static',
+});
+
 const ID_CHECKBOX = '#terms-checkbox';
 const localePath = useLocalePath();
 const route = useRoute();

@@ -3,8 +3,8 @@
     <EmptyBlock v-if="isContentEmptyInEditor" />
     <CategoryEmptyState v-else-if="isContentEmptyInLive" />
     <draggable
-      v-if="data.length"
-      v-model="data"
+      v-if="blocksToRender.length"
+      v-model="blocksToRender"
       item-key="meta.uuid"
       handle=".drag-handle"
       class="content"
@@ -40,42 +40,35 @@
 </template>
 
 <script lang="ts" setup>
+import type { Block } from '@plentymarkets/shop-api';
 import draggable from 'vuedraggable/src/vuedraggable';
-import type { DragEvent, EditablePageProps } from './types';
+import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
-const props = withDefaults(defineProps<EditablePageProps>(), {
+const props = withDefaults(defineProps<EditableBlocksProps>(), {
   hasEnabledActions: true,
-  preventBlocksRequest: false,
 });
 
-const { data, getBlocksServer, cleanData } = useCategoryTemplate(
-  props.identifier.toString(),
-  props.type.toString(),
-  useNuxtApp().$i18n.locale.value,
-);
-const dataIsEmpty = computed(() => data.value.length === 0);
-
-const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && isInEditor.value),
-);
-
-const isContentEmptyInLive = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer'),
-);
-
-if (!props.preventBlocksRequest) {
-  await getBlocksServer(props.identifier, props.type);
-}
-
-const { footerCache } = useFooter();
-addFooterBlock({
-  data,
-  cachedFooter: footerCache,
-  cleanData,
+const blocksToRender = computed({
+  get: () => {
+    const blocks = toValue(props.blocks);
+    return blocks;
+  },
+  set: (value: Block[]) => {
+    if (isRef(props.blocks)) {
+      (props.blocks as Ref<Block[]>).value = value;
+    } else {
+      const currentBlocks = toValue(props.blocks);
+      currentBlocks.splice(0, currentBlocks.length, ...value);
+    }
+  },
 });
+
+const isContentEmpty = computed(() => blocksToRender.value.length === 0);
+const isContentEmptyInEditor = computed(() => isContentEmpty.value);
+const isContentEmptyInLive = computed(() => isContentEmpty.value);
 
 const {
   isClicked,
@@ -89,24 +82,12 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
-  const lastIndex = data.value.length - 1;
-  if (footerIndex !== -1 && footerIndex !== lastIndex) {
-    const footerBlock = data.value.splice(footerIndex, 1)[0];
-    if (footerBlock) {
-      data.value.push(footerBlock);
-    }
-  }
+  if (!evt.moved) return;
 
-  if (evt.moved) {
-    const { newIndex } = evt.moved;
-    const block = document.getElementById(`block-${newIndex}`);
-    if (block) {
-      nextTick(() => {
-        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
-  }
+  const { newIndex } = evt.moved;
+  const block = document.getElementById(`block-${newIndex}`);
+
+  if (block) nextTick(() => block.scrollIntoView({ behavior: 'smooth', block: 'start' }));
 };
 
 const { closeDrawer } = useSiteConfiguration();
@@ -115,17 +96,16 @@ const { isEditingEnabled } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
-const enabledActions = computed(
-  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
-);
+const enabledActions = computed(() => {
+  const enabled = shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value;
+  return enabled;
+});
 
 onMounted(async () => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
 
-  if (isInEditor.value) {
-    await import('./draggable.css');
-  }
+  if (isInEditor.value) await import('./draggable.css');
 
   isHydrationComplete.value = true;
 });
@@ -135,26 +115,25 @@ onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
 
-const hasUnsavedChanges = () => {
-  return !isEditingEnabled.value && !settingsIsDirty.value;
-};
-
+const hasUnsavedChanges = () => isEditingEnabled.value || settingsIsDirty.value;
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  if (hasUnsavedChanges()) return;
+  if (!hasUnsavedChanges()) return;
   event.preventDefault();
 };
 
 onBeforeRouteLeave((to, from, next) => {
-  if (isEditingEnabled.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
-    } else {
-      next(false);
-    }
-  } else {
+  if (!isEditingEnabled.value) {
     next();
+    return;
+  }
+
+  const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+
+  if (confirmation) {
+    closeDrawer();
+    next();
+  } else {
+    next(false);
   }
 });
 </script>
