@@ -40,4 +40,3 @@ export interface UseCategoriesSearchMethods {
 }
 
 export type UseCategoriesSearchMethodsReturn = () => UseCategoriesSearchMethods;
-
