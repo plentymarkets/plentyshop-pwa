@@ -4,9 +4,6 @@
       <EditablePage :identifier="productIdentifier" type="product" area="header" prevent-blocks-request />
     </template>
     <EditablePage :identifier="productIdentifier" type="product" area="main" prevent-blocks-request />
-    <template #footer>
-      <EditablePage :identifier="productIdentifier" type="product" area="footer" prevent-blocks-request />
-    </template>
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
