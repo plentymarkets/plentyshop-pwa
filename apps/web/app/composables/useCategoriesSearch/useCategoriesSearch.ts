@@ -1,5 +1,5 @@
 import type { CategoryData, CategoryEntry, CategorySearchCriteria } from '@plentymarkets/shop-api';
-import type { UseCategoriesSearchMethodsReturn, UseCategoriesSearchState } from './types';
+import type { UseCategoriesSearchMethodsReturn, UseCategoriesSearchState, CategoryType } from './types';
 
 export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   const state = useState<UseCategoriesSearchState>('useCategoriesSearch', () => ({
@@ -102,6 +102,8 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     state.value.itemItems = deleteFromTree(id, state.value.itemItems);
   };
 
+  const ITEMS_PER_PAGE = 30;
+
   const createEmptyCategoryData = (): CategoryData => ({
     entries: [],
     isLastPage: true,
@@ -110,36 +112,30 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     lastPageNumber: 1,
     firstOnPage: 0,
     lastOnPage: 0,
-    itemsPerPage: 30,
+    itemsPerPage: ITEMS_PER_PAGE,
+  });
+
+  const buildSearchParams = (categoryType: CategoryType, page: number): CategorySearchCriteria => ({
+    type: categoryType,
+    page,
+    itemsPerPage: ITEMS_PER_PAGE,
+    sortBy: 'position_asc',
+    with: 'details,clients',
   });
 
   const { data: contentData, refresh: refreshContent } = useAsyncData(
     'categories-search-content',
-    () =>
-      useSdk().plentysystems.getCategoriesSearch({
-        type: 'content',
-        page: state.value.contentPage,
-        itemsPerPage: 30,
-        sortBy: 'position_asc',
-        with: 'details,clients',
-      }),
+    () => useSdk().plentysystems.getCategoriesSearch(buildSearchParams('content', state.value.contentPage)),
     { immediate: false },
   );
 
   const { data: itemData, refresh: refreshItem } = useAsyncData(
     'categories-search-item',
-    () =>
-      useSdk().plentysystems.getCategoriesSearch({
-        type: 'item',
-        page: state.value.itemPage,
-        itemsPerPage: 30,
-        sortBy: 'position_asc',
-        with: 'details,clients',
-      }),
+    () => useSdk().plentysystems.getCategoriesSearch(buildSearchParams('item', state.value.itemPage)),
     { immediate: false },
   );
 
-  const fetchCategories = async (categoryType: 'item' | 'content') => {
+  const fetchCategories = async (categoryType: CategoryType) => {
     const loadingKey = categoryType === 'item' ? 'loadingItem' : 'loadingContent';
     const hasMoreKey = categoryType === 'item' ? 'hasMoreItem' : 'hasMoreContent';
     const pageKey = categoryType === 'item' ? 'itemPage' : 'contentPage';
@@ -236,7 +232,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       try {
         const data = await useSdk().plentysystems.getCategoriesSearch({
           parentCategoryId: category.id,
-          itemsPerPage: 30,
+          itemsPerPage: ITEMS_PER_PAGE,
           page: page.value,
           with: 'details,clients',
         });
