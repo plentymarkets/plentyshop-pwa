@@ -9,8 +9,34 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <div v-if="config.enableRichTextEditorV2" data-testid="text-card-form-v2">
-      <div class="py-2">
+    <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
+      <fieldset class="py-2">
+        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+          <button
+            type="button"
+            class="flex items-center justify-center w-1/2 px-4 py-2 text-sm border-r"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'wysiwyg' }"
+            data-testid="mode-wysiwyg"
+            @click="editorMode = 'wysiwyg'"
+          >
+            <SfIconCheck :class="{ invisible: editorMode !== 'wysiwyg' }" class="mr-1 w-[1.1rem]" />
+            {{ getEditorTranslation('wysiwyg-label') }}
+          </button>
+
+          <button
+            type="button"
+            class="flex items-center justify-center w-1/2 px-4 py-2 text-sm"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'html' }"
+            data-testid="mode-html"
+            @click="editorMode = 'html'"
+          >
+            <SfIconCheck :class="{ invisible: editorMode !== 'html' }" class="mr-1 w-[1.1rem]" />
+            {{ getEditorTranslation('html-label') }}
+          </button>
+        </div>
+      </fieldset>
+
+      <div v-if="editorMode === 'wysiwyg'" class="py-2">
         <EditorRichTextEditor
           v-model="contentModel"
           v-model:expanded="expandedToolbars.content"
@@ -20,7 +46,38 @@
           data-testid="rte-content"
         />
       </div>
+
+      <div v-else class="py-2">
+        <UiFormLabel for="html-editor">
+          {{ getEditorTranslation('html-editor-label') }}
+        </UiFormLabel>
+
+        <SfTextarea
+          id="html-editor"
+          v-model="htmlDraft"
+          data-testid="html-editor"
+          rows="10"
+          class="min-h-[232px] mt-1 block w-full border rounded-md shadow-sm sm:text-sm font-mono"
+          :class="htmlErrors.length ? 'border-red-400' : 'border-gray-300'"
+          :aria-invalid="htmlErrors.length ? 'true' : 'false'"
+          :aria-describedby="ariaDescribedBy"
+        />
+
+        <div
+          v-if="htmlErrors.length"
+          id="html-editor-errors"
+          data-testid="html-editor-errors"
+          class="mt-2 rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800"
+          role="alert"
+        >
+          <div class="font-semibold">{{ getEditorTranslation('html-invalid-label') }}</div>
+          <ul class="list-disc ml-5 mt-1">
+            <li v-for="(e, idx) in htmlErrors.slice(0, 3)" :key="idx">{{ e }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
+
     <div v-else data-testid="text-card-form">
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -323,32 +380,26 @@ import {
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
 
+const runtimeConfig = useRuntimeConfig().public;
+
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
 );
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const props = defineProps<TextCardFormProps>();
 
-const config = useRuntimeConfig().public;
-
 const expandedToolbars = ref({
   content: true,
 });
 
-const contentModel = computed<string>({
-  get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (val) => {
-    textCardBlock.value.text.htmlDescription = val;
-  },
-});
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
-
   const content = rawContent as Partial<TextCardContent>;
 
   if (!content.text) content.text = {};
@@ -360,6 +411,7 @@ const textCardBlock = computed<TextCardContent>(() => {
   content.text.textAlignment = content.text.textAlignment ?? 'left';
 
   if (!content.button) content.button = {};
+
   if (!content.layout) {
     content.layout = {
       backgroundColor: '',
@@ -371,12 +423,20 @@ const textCardBlock = computed<TextCardContent>(() => {
     };
   }
 
-  content.text.pretitle ??= '';
-  content.text.title ??= '';
-  content.text.subtitle ??= '';
-  content.text.htmlDescription ??= '';
-
   return content as TextCardContent;
+});
+
+const contentModel = computed<string>({
+  get: () => textCardBlock.value.text.htmlDescription ?? '',
+  set: (val) => {
+    textCardBlock.value.text.htmlDescription = val ?? '';
+  },
+});
+
+const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy } = useHtmlEditorMode(contentModel, {
+  defaultMode: 'wysiwyg',
+  commitOnValid: true,
+  maxErrors: 5,
 });
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
@@ -419,7 +479,11 @@ watch([isTransparent, backgroundColor], () => {
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "Keep background transparent",
-    "content-label": "Content"
+    "content-label": "Content",
+    "wysiwyg-label": "Rich Text",
+    "html-label": "HTML",
+    "html-editor-label": "HTML editor",
+    "html-invalid-label": "HTML syntax issues"
   },
   "de": {
     "text-group-label": "Text",
@@ -445,7 +509,11 @@ watch([isTransparent, backgroundColor], () => {
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
     "keep-transparent-label": "or keep transparent",
-    "content-label": "Content"
+    "content-label": "Content",
+    "wysiwyg-label": "Rich Text",
+    "html-label": "HTML",
+    "html-editor-label": "HTML editor",
+    "html-invalid-label": "HTML syntax issues"
   }
 }
 </i18n>
