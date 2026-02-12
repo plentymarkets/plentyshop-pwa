@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiHeader />
+    <UiSimplifiedHeader />
     <main>
       <slot />
     </main>

@@ -1,8 +1,7 @@
 <template>
   <div>
     <slot name="header">
-      <UiSimplifiedHeader v-if="useSimplifiedHeader" />
-      <UiHeader v-else />
+      <UiHeader />
     </slot>
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -28,17 +27,6 @@ defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-const route = useRoute();
-
-const useSimplifiedHeader = computed(() => {
-  const path = route.path;
-  return (
-    path.includes('/cart') ||
-    path.includes('/checkout') ||
-    path.includes('/guest/login') ||
-    path.includes('/readonly-checkout')
-  );
-});
 
 setLogoMeta();
 </script>
