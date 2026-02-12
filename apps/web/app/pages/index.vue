@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <EditableBlocks :blocks="mainBlocks" />
-  </div>
+  <EditableBlocks :blocks="mainBlocks" />
 </template>
 
 <script lang="ts" setup>
