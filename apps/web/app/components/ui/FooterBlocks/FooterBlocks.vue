@@ -5,7 +5,7 @@
     :block="block"
     :index="index"
     :root="true"
-    :enable-actions="false"
+    :enable-actions="true"
     :is-clicked="false"
     :clicked-block-index="null"
     :is-tablet="false"
