@@ -58,7 +58,7 @@ const blocksToRender = computed({
   },
   set: (value: Block[]) => {
     if (isRef(props.blocks)) {
-      (props.blocks as any).value = value;
+      (props.blocks as Ref<Block[]>).value = value;
     } else {
       const currentBlocks = toValue(props.blocks);
       currentBlocks.splice(0, currentBlocks.length, ...value);
