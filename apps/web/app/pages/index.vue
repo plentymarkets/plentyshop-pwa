@@ -1,7 +1,7 @@
 <template>
-  <NuxtLayout name="default">
+  <div>
     <EditableBlocks :blocks="mainBlocks" />
-  </NuxtLayout>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -19,7 +19,6 @@ definePageMeta({
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
-  layout: false,
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
 });
 
