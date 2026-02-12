@@ -1,7 +1,7 @@
 import { PageObject } from './PageObject';
 
-export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
-export const secondBannerBlockUuid = 'd4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a';
+export const firstBannerBlockUuid = '2718ed71-4d01-45b1-b73f-82b1a266b385';
+export const secondBannerBlockUuid = '0a15aa43-480a-4110-82aa-931b0f36a95f';
 
 export class BannerSliderObject extends PageObject {
   openSlideActions() {
