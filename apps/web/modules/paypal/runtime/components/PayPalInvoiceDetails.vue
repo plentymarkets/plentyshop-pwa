@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PayPalInvoiceDetailsProps } from '~/components/PayPal/types';
+import type { PayPalInvoiceDetailsProps } from '../types';
 
 const props = defineProps<PayPalInvoiceDetailsProps>();
 
