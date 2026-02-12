@@ -1,5 +1,4 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { MaybeRefOrGetter } from 'vue';
 
 export interface DragEvent<T = Block> {
   added?: {
