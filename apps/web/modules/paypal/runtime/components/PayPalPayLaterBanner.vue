@@ -6,6 +6,7 @@
 import type { PayPalPayLaterBannerType } from '../types';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace } from '@paypal/paypal-js';
+import { usePayPal } from '../composables/usePayPal';
 
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));

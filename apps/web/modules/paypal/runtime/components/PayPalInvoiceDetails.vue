@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import type { PayPalInvoiceDetailsProps } from '../types';
+import { PayPalPayUponInvoiceKey } from '../types';
 
 const props = defineProps<PayPalInvoiceDetailsProps>();
 

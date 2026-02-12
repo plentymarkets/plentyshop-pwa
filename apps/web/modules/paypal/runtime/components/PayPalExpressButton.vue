@@ -6,9 +6,10 @@
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '../types';
+import { usePayPal } from '../composables/usePayPal';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const paypalUuid = ref(1011771158744557);
+const paypalUuid = ref(useId());
 const paypalScript = ref<PayPalNamespace | null>(null);
 
 const {
