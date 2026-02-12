@@ -52,12 +52,17 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
 });
 
 const blocksToRender = computed({
-  get: () => toValue(props.blocks),
+  get: () => {
+    const blocks = toValue(props.blocks);
+    return blocks;
+  },
   set: (value: Block[]) => {
-    // Get the current blocks array
-    const currentBlocks = toValue(props.blocks);
-    // Mutate the array in place to trigger reactivity
-    currentBlocks.splice(0, currentBlocks.length, ...value);
+    if (isRef(props.blocks)) {
+      (props.blocks as any).value = value;
+    } else {
+      const currentBlocks = toValue(props.blocks);
+      currentBlocks.splice(0, currentBlocks.length, ...value);
+    }
   },
 });
 
@@ -91,9 +96,10 @@ const { isEditingEnabled } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
-const enabledActions = computed(
-  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
-);
+const enabledActions = computed(() => {
+  const enabled = shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value;
+  return enabled;
+});
 
 onMounted(async () => {
   isEditingEnabled.value = false;
