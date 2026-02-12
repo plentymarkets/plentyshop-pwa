@@ -18,10 +18,6 @@
       data-testid="category-page-content"
       prevent-blocks-request
     />
-
-    <template #footer>
-      <EditablePage :identifier="actualIdentifier" type="category" area="footer" prevent-blocks-request />
-    </template>
   </NuxtLayout>
 </template>
 

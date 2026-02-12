@@ -116,6 +116,7 @@ export * from './useCustomAssets';
 export * from './useEditModeNotification';
 export * from './useItemDataTable';
 export * from './useFullWidthToggle';
+export * from './useGlobalBlocks';
 export * from './useBlockClasses';
 export * from './useRichTextEditor';
 export * from './useHtmlEditorMode';
