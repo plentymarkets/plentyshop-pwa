@@ -84,7 +84,7 @@ import {
   PayPalGooglePayKey,
   PayPalApplePayKey,
   PayPalPayUponInvoiceKey,
-  PayPalAlternativeFundingSourceMapper
+  PayPalAlternativeFundingSourceMapper,
 } from '#paypal/types';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import { keyBy } from '~/utils/keyBy';
