@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <template v-if="hasHeaderBlocks" #header>
-      <EditablePage :identifier="productIdentifier" type="product" area="header" prevent-blocks-request />
+      <EditableBlocks :blocks="headerBlocks" />
     </template>
-    <EditablePage :identifier="productIdentifier" type="product" area="main" prevent-blocks-request />
+    <EditableBlocks :blocks="mainBlocks" />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
@@ -73,7 +73,7 @@ setBreadcrumbs();
 const { $i18n } = useNuxtApp();
 const productIdentifier = '0';
 
-const { data, getBlocksServer, setDefaultTemplate, headerBlocks } = useCategoryTemplate(
+const { data, getBlocksServer, setDefaultTemplate, headerBlocks, mainBlocks } = useCategoryTemplate(
   productIdentifier,
   'product',
   $i18n.locale.value,

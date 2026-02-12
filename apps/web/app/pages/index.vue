@@ -1,9 +1,6 @@
 <template>
   <NuxtLayout name="default">
-    <EditablePage identifier="index" type="immutable" area="main" prevent-blocks-request />
-    <template #footer>
-      <EditablePage identifier="index" type="immutable" area="footer" prevent-blocks-request />
-    </template>
+    <EditableBlocks :blocks="mainBlocks" />
   </NuxtLayout>
 </template>
 
@@ -32,7 +29,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 const { $i18n } = useNuxtApp();
 const route = useRoute();
 
-const { setDefaultTemplate, data, getBlocksServer } = useCategoryTemplate(
+const { setDefaultTemplate, data, mainBlocks, getBlocksServer } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   $i18n.locale.value,

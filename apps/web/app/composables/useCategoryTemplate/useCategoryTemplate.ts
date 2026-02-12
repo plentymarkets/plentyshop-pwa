@@ -100,11 +100,32 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     state.value.defaultTemplateData = blocks;
   };
 
-  const headerBlocks = computed(() => state.value.data.filter((block) => block.name === 'Header'));
-  const mainBlocks = computed(() =>
-    state.value.data.filter((block) => block.name !== 'Header' && block.name !== 'Footer'),
-  );
-  const footerBlocks = computed(() => state.value.data.filter((block) => block.name === 'Footer'));
+  const headerBlocks = computed({
+    get: () => state.value.data.filter((block) => block.name === 'Header'),
+    set: (newHeaderBlocks: Block[]) => {
+      const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+      const footer = state.value.data.filter((b) => b.name === 'Footer');
+      state.value.data.splice(0, state.value.data.length, ...newHeaderBlocks, ...main, ...footer);
+    },
+  });
+
+  const mainBlocks = computed({
+    get: () => state.value.data.filter((block) => block.name !== 'Header' && block.name !== 'Footer'),
+    set: (newMainBlocks: Block[]) => {
+      const header = state.value.data.filter((b) => b.name === 'Header');
+      const footer = state.value.data.filter((b) => b.name === 'Footer');
+      state.value.data.splice(0, state.value.data.length, ...header, ...newMainBlocks, ...footer);
+    },
+  });
+
+  const footerBlocks = computed({
+    get: () => state.value.data.filter((block) => block.name === 'Footer'),
+    set: (newFooterBlocks: Block[]) => {
+      const header = state.value.data.filter((b) => b.name === 'Header');
+      const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+      state.value.data.splice(0, state.value.data.length, ...header, ...main, ...newFooterBlocks);
+    },
+  });
 
   /**
    * @description Function for fetching the category template from a category id

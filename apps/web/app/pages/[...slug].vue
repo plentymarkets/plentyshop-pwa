@@ -6,18 +6,12 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <template v-if="hasHeaderBlocks" #header>
-      <EditablePage :identifier="actualIdentifier" type="category" area="header" prevent-blocks-request />
+      <EditableBlocks :blocks="headerBlocks" />
     </template>
 
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <EditablePage
-      :identifier="actualIdentifier"
-      type="category"
-      area="main"
-      data-testid="category-page-content"
-      prevent-blocks-request
-    />
+    <EditableBlocks :blocks="mainBlocks" data-testid="category-page-content" />
   </NuxtLayout>
 </template>
 
@@ -90,7 +84,7 @@ setPageMeta(categoryName.value, icon);
 const { $i18n } = useNuxtApp();
 const actualIdentifier = ref(identifier.value);
 
-const { data, getBlocksServer, headerBlocks } = useCategoryTemplate(
+const { data, getBlocksServer, headerBlocks, mainBlocks } = useCategoryTemplate(
   actualIdentifier.value.toString(),
   'category',
   $i18n.locale.value,

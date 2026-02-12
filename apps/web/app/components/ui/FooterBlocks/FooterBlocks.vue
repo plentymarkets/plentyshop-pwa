@@ -1,24 +1,23 @@
 <template>
-  <PageBlock
-    v-for="(block, index) in footerBlocks"
-    :key="block.meta.uuid"
-    :block="block"
-    :index="index"
-    :root="true"
-    :enable-actions="true"
-    :is-clicked="false"
-    :clicked-block-index="null"
-    :is-tablet="false"
-    :change-block-position="() => {}"
-  />
+  <EditableBlocks :blocks="footerBlocks" />
 </template>
 
 <script setup lang="ts">
 import type { Block } from '@plentymarkets/shop-api';
+import type { Ref } from 'vue';
 
-const { globalBlocksCache } = useGlobalBlocks();
+// Footer blocks are global, fetched from homepage and cached
+const { globalBlocksCache, updateGlobalBlocks } = useGlobalBlocks();
 
-const footerBlocks = computed(
-  () => (globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? []) as Block[],
-);
+// Create a writable computed that filters footer blocks and syncs back to cache
+const footerBlocks: Ref<Block[]> = computed({
+  get: () => globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? [],
+  set: (newFooterBlocks: Block[]) => {
+    if (!globalBlocksCache.value) return;
+
+    // Preserve non-footer blocks and merge with new footer blocks
+    const otherBlocks = globalBlocksCache.value.filter((b: Block) => b.name !== 'Footer');
+    updateGlobalBlocks([...otherBlocks, ...newFooterBlocks]);
+  },
+});
 </script>

@@ -74,12 +74,18 @@ export const useGlobalBlocks = () => {
     return result;
   };
 
+  const updateGlobalBlocks = (newBlocks: Block[]) => {
+    if (!globalBlocksCache.value) return;
+    globalBlocksCache.value.splice(0, globalBlocksCache.value.length, ...newBlocks);
+  };
+
   return {
     fetchGlobalBlocks,
     clearGlobalBlocksCache,
     injectGlobalHeader,
     injectGlobalFooter,
     ensureAllGlobalBlocks,
+    updateGlobalBlocks,
     globalBlocksCache: readonly(globalBlocksCache),
   };
 };

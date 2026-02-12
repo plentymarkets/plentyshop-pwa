@@ -42,68 +42,28 @@
 <script lang="ts" setup>
 import type { Block } from '@plentymarkets/shop-api';
 import draggable from 'vuedraggable/src/vuedraggable';
-import type { BlockArea, DragEvent, EditablePageProps } from './types';
+import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
-const props = withDefaults(defineProps<EditablePageProps>(), {
-  area: 'all',
+const props = withDefaults(defineProps<EditableBlocksProps>(), {
   hasEnabledActions: true,
-  preventBlocksRequest: false,
 });
-
-const { data, headerBlocks, mainBlocks, footerBlocks, getBlocksServer } = useCategoryTemplate(
-  props.identifier.toString(),
-  props.type.toString(),
-  useNuxtApp().$i18n.locale.value,
-);
-
-const getBlocksByArea = (area: BlockArea = 'all'): Block[] => {
-  const areaBlocksMap: Record<BlockArea, Block[]> = {
-    header: headerBlocks.value,
-    main: mainBlocks.value,
-    footer: footerBlocks.value,
-    all: data.value,
-  };
-
-  return areaBlocksMap[area];
-};
-
-const partitionBlocks = (blocks: Block[]) => ({
-  header: blocks.filter((b) => b.name === 'Header'),
-  main: blocks.filter((b) => b.name !== 'Header' && b.name !== 'Footer'),
-  footer: blocks.filter((b) => b.name === 'Footer'),
-});
-
-const setBlocksByArea = (area: BlockArea = 'all', value: Block[]) => {
-  if (area === 'all') {
-    data.value.splice(0, data.value.length, ...value);
-    return;
-  }
-
-  const { header, main, footer } = partitionBlocks(data.value);
-
-  const areaOrderMap: Record<Exclude<BlockArea, 'all'>, Block[][]> = {
-    header: [value, main, footer],
-    main: [header, value, footer],
-    footer: [header, main, value],
-  };
-
-  const newData = areaOrderMap[area as Exclude<BlockArea, 'all'>].flat();
-  data.value.splice(0, data.value.length, ...newData);
-};
 
 const blocksToRender = computed({
-  get: () => getBlocksByArea(props.area),
-  set: (value) => setBlocksByArea(props.area, value),
+  get: () => toValue(props.blocks),
+  set: (value: Block[]) => {
+    // Get the current blocks array
+    const currentBlocks = toValue(props.blocks);
+    // Mutate the array in place to trigger reactivity
+    currentBlocks.splice(0, currentBlocks.length, ...value);
+  },
 });
 
-const isContentEmpty = computed(() => blocksToRender.value.length === 0 && !props.preventBlocksRequest);
+const isContentEmpty = computed(() => blocksToRender.value.length === 0);
 const isContentEmptyInEditor = computed(() => isContentEmpty.value);
 const isContentEmptyInLive = computed(() => isContentEmpty.value);
-
-if (!props.preventBlocksRequest) await getBlocksServer(props.identifier, props.type);
 
 const {
   isClicked,

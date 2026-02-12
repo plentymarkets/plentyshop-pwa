@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+import type { MaybeRefOrGetter } from 'vue';
 
 export interface DragEvent<T = Block> {
   added?: {
@@ -16,12 +17,7 @@ export interface DragEvent<T = Block> {
   };
 }
 
-export type BlockArea = 'header' | 'main' | 'footer' | 'all';
-
-export type EditablePageProps = {
-  identifier: string | number;
-  type: string;
-  area?: BlockArea;
+export type EditableBlocksProps = {
+  blocks: MaybeRefOrGetter<Block[]>;
   hasEnabledActions?: boolean;
-  preventBlocksRequest?: boolean;
 };
