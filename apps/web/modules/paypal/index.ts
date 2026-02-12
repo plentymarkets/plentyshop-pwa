@@ -9,7 +9,6 @@ export default defineNuxtModule({
 
     const typesTemplate = addTemplate({
       filename: 'types/paypal.d.ts',
-      write: true,
       getContents: () => {
         return `export * from '${resolver.resolve('./runtime/types/index')}';`;
       },
