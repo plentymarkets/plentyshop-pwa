@@ -3,7 +3,7 @@ import type { ApiError, PayPalCreateOrder, PayPalCreateOrderRequest, PayPalSetti
 import { paypalGetters } from '@plentymarkets/shop-api';
 import type { PayPalScript, PayPalLoadScript, PayPalVisibilityLocations } from '../../types';
 import { PayPalPayLaterKey, PayPalPaymentKey } from '../../types';
-import { usePayPalVisibility } from '.';
+import { usePayPalVisibility } from './usePayPalVisibility';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
