@@ -123,18 +123,6 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     with: 'details,clients',
   });
 
-  const { data: contentData, refresh: refreshContent } = useAsyncData(
-    'categories-search-content',
-    () => useSdk().plentysystems.getCategoriesSearch(buildSearchParams('content', state.value.contentPage)),
-    { immediate: false },
-  );
-
-  const { data: itemData, refresh: refreshItem } = useAsyncData(
-    'categories-search-item',
-    () => useSdk().plentysystems.getCategoriesSearch(buildSearchParams('item', state.value.itemPage)),
-    { immediate: false },
-  );
-
   const fetchCategories = async (categoryType: CategoryType) => {
     const loadingKey = categoryType === 'item' ? 'loadingItem' : 'loadingContent';
     const hasMoreKey = categoryType === 'item' ? 'hasMoreItem' : 'hasMoreContent';
@@ -148,14 +136,11 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     try {
       const currentPage = state.value[pageKey];
 
-      if (categoryType === 'content') {
-        await refreshContent();
-      } else {
-        await refreshItem();
-      }
+      const { data } = await useAsyncData(`categories-search-${categoryType}-${currentPage}`, () =>
+        useSdk().plentysystems.getCategoriesSearch(buildSearchParams(categoryType, currentPage)),
+      );
 
-      const response = categoryType === 'content' ? contentData.value : itemData.value;
-      const result: CategoryData = response?.data ?? createEmptyCategoryData();
+      const result: CategoryData = data.value?.data ?? createEmptyCategoryData();
       state.value[itemsKey].push(...filterNewlyAddedPages(result.entries));
       state.value[hasMoreKey] = !result.isLastPage;
       state.value[pageKey] = currentPage + 1;
