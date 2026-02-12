@@ -12,6 +12,14 @@ const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/block
 
 const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import: 'default' }) as Record<string, Loader>;
 
+const prototype1Blocks = import.meta.glob('@/prototype-1-be-driven/blocks/**/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
+
+const prototype2Blocks = import.meta.glob('@/prototype-2-fe-driven/blocks/**/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
+
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
 
@@ -24,6 +32,8 @@ const normalize = (path: string) => {
 export const blockLoaders: Record<string, Loader> = {};
 
 Object.entries(coreBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
+Object.entries(prototype1Blocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
+Object.entries(prototype2Blocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(nuxtModuleBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(customerBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 
