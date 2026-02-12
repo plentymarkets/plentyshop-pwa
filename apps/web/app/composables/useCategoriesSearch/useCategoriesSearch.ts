@@ -113,6 +113,32 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     itemsPerPage: 30,
   });
 
+  const { data: contentData, refresh: refreshContent } = useAsyncData(
+    'categories-search-content',
+    () =>
+      useSdk().plentysystems.getCategoriesSearch({
+        type: 'content',
+        page: state.value.contentPage,
+        itemsPerPage: 30,
+        sortBy: 'position_asc',
+        with: 'details,clients',
+      }),
+    { immediate: false },
+  );
+
+  const { data: itemData, refresh: refreshItem } = useAsyncData(
+    'categories-search-item',
+    () =>
+      useSdk().plentysystems.getCategoriesSearch({
+        type: 'item',
+        page: state.value.itemPage,
+        itemsPerPage: 30,
+        sortBy: 'position_asc',
+        with: 'details,clients',
+      }),
+    { immediate: false },
+  );
+
   const fetchCategories = async (categoryType: 'item' | 'content') => {
     const loadingKey = categoryType === 'item' ? 'loadingItem' : 'loadingContent';
     const hasMoreKey = categoryType === 'item' ? 'hasMoreItem' : 'hasMoreContent';
@@ -124,20 +150,19 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     state.value[loadingKey] = true;
 
     try {
-      const { data } = await useAsyncData(`categories-search-${categoryType}`, () =>
-        useSdk().plentysystems.getCategoriesSearch({
-          type: categoryType,
-          page: state.value[pageKey],
-          itemsPerPage: 30,
-          sortBy: 'position_asc',
-          with: 'details,clients',
-        }),
-      );
+      const currentPage = state.value[pageKey];
 
-      const result: CategoryData = data.value?.data ?? createEmptyCategoryData();
+      if (categoryType === 'content') {
+        await refreshContent();
+      } else {
+        await refreshItem();
+      }
+
+      const response = categoryType === 'content' ? contentData.value : itemData.value;
+      const result: CategoryData = response?.data ?? createEmptyCategoryData();
       state.value[itemsKey].push(...filterNewlyAddedPages(result.entries));
       state.value[hasMoreKey] = !result.isLastPage;
-      state.value[pageKey]++;
+      state.value[pageKey] = currentPage + 1;
     } catch (error) {
       console.error(`Error fetching ${categoryType} categories:`, error);
     } finally {
