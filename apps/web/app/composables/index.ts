@@ -117,3 +117,4 @@ export * from './useItemDataTable';
 export * from './useFullWidthToggle';
 export * from './useBlockClasses';
 export * from './useRichTextEditor';
+export * from './useHtmlEditorMode';
