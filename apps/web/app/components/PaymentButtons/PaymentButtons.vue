@@ -84,7 +84,7 @@ import {
   PayPalGooglePayKey,
   PayPalApplePayKey,
 } from '~/composables/usePayPal/types';
-import type { PayPalAddToCartCallback } from '../../../modules/paypal/runtime/types';
+import type { PayPalAddToCartCallback } from '#paypal/types';
 import { keyBy } from '~/utils/keyBy';
 import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
