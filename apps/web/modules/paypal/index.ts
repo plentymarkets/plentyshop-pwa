@@ -8,8 +8,8 @@ export default defineNuxtModule({
     const resolver = createResolver(import.meta.url);
 
     addComponent({
-      name: 'PayPalTestButton',
-      filePath: resolver.resolve('./runtime/components/testButton.vue'),
+      name: 'PayPalExpressButton',
+      filePath: resolver.resolve('./runtime/components/PayPalExpressButton.vue'),
     });
   },
 });

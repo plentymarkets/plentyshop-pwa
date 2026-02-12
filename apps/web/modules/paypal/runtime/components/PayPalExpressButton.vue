@@ -5,10 +5,10 @@
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '../types';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const paypalUuid = ref(useId());
+const paypalUuid = ref(1011771158744557);
 const paypalScript = ref<PayPalNamespace | null>(null);
 
 const {

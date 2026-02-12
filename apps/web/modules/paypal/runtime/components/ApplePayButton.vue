@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '../types';
 
 const { initialize, config, processPayment, getTransactionInfo } = useApplePay();
 const { getCurrentScript } = usePayPal();

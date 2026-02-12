@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PayPalPayLaterBannerType } from '~/components/PayPal/types';
+import type { PayPalPayLaterBannerType } from '../types';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace } from '@paypal/paypal-js';
 
