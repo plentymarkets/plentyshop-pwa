@@ -1,9 +1,6 @@
 <template>
   <div>
-    <UiHeader v-if="!hasHeaderBlocks" />
-    <EditablePage v-else identifier="index" type="immutable" area="header" prevent-blocks-request />
     <EditablePage identifier="index" type="immutable" area="main" prevent-blocks-request />
-    <EditablePage identifier="index" type="immutable" area="footer" prevent-blocks-request />
   </div>
 </template>
 
@@ -22,7 +19,6 @@ definePageMeta({
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
-  layout: false,
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
 });
 
@@ -32,13 +28,12 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 const { $i18n } = useNuxtApp();
 const route = useRoute();
 
-const { setDefaultTemplate, data, getBlocksServer, headerBlocks } = useCategoryTemplate(
+const { setDefaultTemplate, data, getBlocksServer } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   $i18n.locale.value,
 );
 
-const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
 const icon = 'home';
 const { setPageMeta } = usePageMeta();
 setPageMeta(t('homepage.title'), icon);
