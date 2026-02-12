@@ -1,13 +1,13 @@
 <template>
   <fieldset class="py-2">
     <legend v-if="legendKey" class="text-sm font-medium text-black">
-      {{ props.t(legendKey) }}
+      {{ t(legendKey) }}
     </legend>
 
     <div
       class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
       role="radiogroup"
-      :aria-label="legendKey ? props.t(legendKey) : undefined"
+      :aria-label="legendKey ? t(legendKey) : undefined"
     >
       <button
         v-for="(opt, idx) in props.options"
@@ -43,6 +43,7 @@ const props = withDefaults(
     legendKey: undefined,
   },
 );
+const { legendKey, t } = toRefs(props);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: OptionValue): void;
@@ -55,7 +56,7 @@ const onSelect = (value: OptionValue) => {
 
 const resolveLabel = (opt: Option) => {
   if (opt.label != null) return opt.label;
-  if (opt.labelKey != null) return props.t(opt.labelKey);
+  if (opt.labelKey != null) return t.value(opt.labelKey);
   return String(opt.value);
 };
 
