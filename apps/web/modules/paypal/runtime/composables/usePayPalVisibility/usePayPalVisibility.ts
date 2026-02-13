@@ -1,5 +1,5 @@
 import type { PayPalButtonSettings } from '@plentymarkets/shop-api';
-import type { PayPalVisibilityLocations } from './types';
+import type { PayPalVisibilityLocations } from '../../types';
 
 export const usePayPalVisibility = (type: string) => {
   const state = useState('usePayPalVisibility-' + type, () => ({

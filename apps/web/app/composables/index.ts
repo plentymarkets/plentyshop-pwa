@@ -68,7 +68,6 @@ export * from './usePageTitle';
 export * from './usePageMeta';
 export * from './usePages';
 export * from './usePaymentMethods';
-export * from './usePayPal';
 export * from './usePreferredDelivery';
 export * from './usePriceFormatter';
 export * from './useProcessingOrder';

@@ -11,8 +11,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '../types';
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import { usePayPal } from '../composables/usePayPal';
 
 const {
   initialize,

@@ -62,6 +62,7 @@
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CardFieldsOnApproveData } from '@paypal/paypal-js';
+import { usePayPal } from '../composables/usePayPal';
 
 const { data: cart, clearCartItems } = useCart();
 const { send } = useNotification();

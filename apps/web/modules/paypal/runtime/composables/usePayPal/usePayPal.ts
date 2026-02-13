@@ -1,7 +1,9 @@
 import { type PayPalNamespace, type FUNDING_SOURCE, loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import type { ApiError, PayPalCreateOrder, PayPalCreateOrderRequest, PayPalSettings } from '@plentymarkets/shop-api';
 import { paypalGetters } from '@plentymarkets/shop-api';
-import { PayPalPayLaterKey, PayPalPaymentKey } from './types';
+import type { PayPalScript, PayPalLoadScript, PayPalVisibilityLocations } from '../../types';
+import { PayPalPayLaterKey, PayPalPaymentKey } from '../../types';
+import { usePayPalVisibility } from '../usePayPalVisibility';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
