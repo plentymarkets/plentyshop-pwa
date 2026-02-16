@@ -43,7 +43,7 @@
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
-    "uptain-pwa-beta": "^1.0.0-beta.2",
+    "uptain-pwa-beta": "file:../../../../plentyPWA/uptain-pwa-beta/uptain-pwa-beta-1.0.0-beta.4.tgz",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
