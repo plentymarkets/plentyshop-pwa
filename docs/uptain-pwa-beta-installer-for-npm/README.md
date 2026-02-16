@@ -1,25 +1,48 @@
-# Uptain-PWA-Beta: Installer für npm-Publish
+# Uptain-PWA-Beta: Auto-Installer für npm-Publish
+
+**Alles läuft über die Installation.** Beim `npm install uptain-pwa-beta` richtet das Postinstall-Skript die komplette Integration in der PWA ein – es sind danach keine manuellen Änderungen im PWA-Repo nötig (und in Deployment-Umgebungen kann später ohnehin nichts nachträglich reingepackt werden).
 
 Diese Dateien ins **Modul-Quellrepo** (z. B. `plentyPWA/uptain-pwa-beta`) kopieren, dann Version hochziehen und publishen.
 
 ---
 
+## Was der Postinstall macht (idempotent)
+
+1. **Lokale UptainSettings.vue**  
+   Legt `apps/web/app/components/settings/seo/tracking-and-analytics/uptain/UptainSettings.vue` aus dem mitgelieferten Template an. Diese Komponente liegt damit im App-Code und erhält Auto-Imports (`useSiteSettings`, `computed`, etc.).
+
+2. **Settings-Discovery patchen**  
+   - `settings-groups-imports.ts`: `customerWorkspaceRoot`-Glob + **settingsOverrides**-Glob für die lokale Uptain-Komponente (Overrides werden zuletzt gemerged).
+   - `settings-translations-imports.ts`: `localeFilesCustomerWorkspaceRoot`.
+   - `triggers-imports.ts`: `customerWorkspaceRootTriggers`.
+
+3. **Provide-Plugin**  
+   Legt `apps/web/app/plugins/00.provide-editor-composables.client.ts` an (stellt `useSiteSettings` und `getEditorTranslation` bereit), falls noch nicht vorhanden.
+
+4. **nuxt.config.ts**  
+   Ergänzt bei Bedarf:
+   - `experimental.appManifest: false` (verhindert 404 beim App-Manifest in Deployment).
+   - `vite.ssr.noExternal: ['uptain-pwa-beta']`.
+
+---
+
 ## Checkliste
 
-1. **Skript übernehmen**
-   - `scripts/plentyshop-pwa-settings-patch.js` → im Paket-Repo nach `scripts/plentyshop-pwa-settings-patch.js` kopieren.
+1. **Skript + Template ins Paket kopieren**
+   - `scripts/plentyshop-pwa-settings-patch.js` → im Paket-Repo nach `scripts/plentyshop-pwa-settings-patch.js`.
+   - **`scripts/templates/UptainSettings.vue`** → im Paket-Repo nach `scripts/templates/UptainSettings.vue` (Ordner `templates` anlegen).
 
 2. **package.json anpassen**
-   - In `files` den Eintrag `"scripts"` hinzufügen.
+   - In `files` den Eintrag `"scripts"` hinzufügen (damit `scripts/` inkl. `templates/` mitpublisht wird).
    - Einen `scripts`-Block mit `postinstall` hinzufügen.
 
    Siehe unten: **package.json – Änderungen**.
 
-3. **README (optional)**
-   - Im Paket-README einen kurzen Hinweis einbauen, dass beim Install die Settings-Anpassung automatisch läuft (siehe **README-Snippet** unten).
+3. **README (optional)**  
+   Im Paket-README einen kurzen Hinweis, dass beim Install die komplette Uptain-Integration automatisch eingerichtet wird (siehe **README-Snippet** unten).
 
-4. **Version erhöhen**
-   - z. B. `1.0.0-beta.6` → `1.0.0-beta.7`.
+4. **Version erhöhen**  
+   z. B. `1.0.0-beta.11` → `1.0.0-beta.12`.
 
 5. **Publishen**
    ```bash
@@ -33,7 +56,7 @@ Diese Dateien ins **Modul-Quellrepo** (z. B. `plentyPWA/uptain-pwa-beta`) kopi
 
 Im bestehenden `package.json` des Moduls:
 
-**1. `files`-Array erweitern** – `"scripts"` aufnehmen:
+**1. `files`-Array** – `"scripts"` aufnehmen (enthält auch `templates/`):
 
 ```json
 "files": [
@@ -44,7 +67,7 @@ Im bestehenden `package.json` des Moduls:
 ],
 ```
 
-**2. Neuen Block `scripts` einfügen** (z. B. nach `files`):
+**2. Block `scripts`** (z. B. nach `files`):
 
 ```json
 "scripts": {
@@ -61,21 +84,10 @@ Falls schon ein `scripts`-Block existiert, nur die Zeile `"postinstall": "node s
 Unter „Setup“ / nach Punkt 2 z. B. einfügen:
 
 ```markdown
-2. **Settings im Editor:** Beim Installieren führt das Modul ein Postinstall-Skript aus und passt die PWA-Dateien für die Settings-Discovery an (damit unter **SEO → Tracking & analytics** die Uptain-Konfiguration erscheint). Der Vorgang ist idempotent und überschreibt keine manuellen Anpassungen.
+2. **Integration:** Beim Installieren führt das Modul ein Postinstall-Skript aus und richtet die Uptain-Integration in der PWA ein: lokale Settings-Komponente, Settings-Discovery-Patches, Editor-Plugin und nuxt.config-Anpassungen. Alles idempotent – keine manuellen Schritte nötig. Die Uptain-Konfiguration erscheint unter **SEO → Tracking & analytics**.
 
 3. Configure Uptain in your shop …
 ```
-
----
-
-## Editor-Composables (useSiteSettings / getEditorTranslation)
-
-Die Uptain-Settings-Komponente holt sich `useSiteSettings` und `getEditorTranslation` per **inject** aus der App. Die **Definition** liegt im **Plentyshop-PWA-Repo**:
-
-- **Plugin:** `apps/web/app/plugins/00.provide-editor-composables.client.ts`  
-  Stellt die beiden Composables bereit, damit Komponenten aus `node_modules` (z. B. uptain-pwa-beta) sie nutzen können, ohne auf Auto-Imports angewiesen zu sein.
-
-Im Modul bleibt die Komponente bei `inject('useSiteSettings')` / `inject('getEditorTranslation')` – keine `#imports` nötig. So gehört die „Quelle der Wahrheit“ zur PWA.
 
 ---
 
@@ -89,5 +101,9 @@ uptain-pwa-beta/
 ├── runtime/
 │   └── …
 └── scripts/
-    └── plentyshop-pwa-settings-patch.js   ← neu
+    ├── plentyshop-pwa-settings-patch.js   ← erweitertes Skript
+    └── templates/
+        └── UptainSettings.vue             ← Vorlage für lokale Komponente
 ```
+
+Ohne `scripts/templates/UptainSettings.vue` wird die lokale Komponente beim Postinstall nicht angelegt; die übrigen Patches (Settings, Plugin, nuxt.config) laufen weiter.

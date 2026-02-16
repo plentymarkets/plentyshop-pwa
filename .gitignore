@@ -66,3 +66,4 @@ apps/web/reference/
 
 # shop-cli config
 .plentyone/shop-cli.json
+docs/uptain-pwa-beta-installer-for-npm/scripts/templates/UptainSettings.vue
