@@ -26,7 +26,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 const { $i18n } = useNuxtApp();
 const route = useRoute();
 
-const { setDefaultTemplate, data, mainBlocks, getBlocksServer } = useCategoryTemplate(
+const { setDefaultTemplate, mainBlocks, setupBlocks } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   $i18n.locale.value,
@@ -37,11 +37,9 @@ const { setPageMeta } = usePageMeta();
 setPageMeta(t('homepage.title'), icon);
 setDefaultTemplate(useLocaleSpecificHomepageTemplate($i18n.locale.value));
 
-await getBlocksServer('index', 'immutable');
-
-const { ensureAllGlobalBlocks } = useGlobalBlocks();
-const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
-if (blocksWithGlobals.length !== data.value.length) data.value.splice(0, data.value.length, ...blocksWithGlobals);
+const { globalBlocksCache } = useGlobalBlocks();
+const clonedBlocks = globalBlocksCache.value ? JSON.parse(JSON.stringify(globalBlocksCache.value)) : [];
+setupBlocks(clonedBlocks);
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
@@ -49,4 +47,22 @@ setRobotForStaticPage('Homepage');
 
 const { setBlocksListContext } = useBlocksList();
 setBlocksListContext('content');
+
+const { closeDrawer } = useSiteConfiguration();
+const { isEditingEnabled } = useEditor();
+const { settingsIsDirty } = useSiteSettings();
+
+onBeforeRouteLeave((to, from, next) => {
+  if (isEditingEnabled.value || settingsIsDirty.value) {
+    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    if (confirmation) {
+      closeDrawer();
+      next();
+    } else {
+      next(false);
+    }
+  } else {
+    next();
+  }
+});
 </script>

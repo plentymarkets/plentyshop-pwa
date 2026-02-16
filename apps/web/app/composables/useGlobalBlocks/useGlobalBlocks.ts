@@ -33,18 +33,14 @@ export const useGlobalBlocks = () => {
     }
   };
 
-  const clearGlobalBlocksCache = () => {
-    globalBlocksCache.value = null;
-    isFetching.value = false;
-  };
-
   const injectGlobalHeader = async (blocks: Block[]): Promise<Block[]> => {
     const hasHeader = blocks.some((block) => block.name === 'Header');
     if (hasHeader) return blocks;
     if (!globalBlocksCache.value) await fetchGlobalBlocks();
 
     const headerBlocks = globalBlocksCache.value?.filter((block) => block.name === 'Header') ?? [];
-    if (headerBlocks.length > 0) return [...headerBlocks, ...blocks];
+    const clonedHeaderBlocks = headerBlocks.length > 0 ? JSON.parse(JSON.stringify(headerBlocks)) : [];
+    if (clonedHeaderBlocks.length > 0) return [...clonedHeaderBlocks, ...blocks];
 
     return blocks;
   };
@@ -81,9 +77,6 @@ export const useGlobalBlocks = () => {
 
   return {
     fetchGlobalBlocks,
-    clearGlobalBlocksCache,
-    injectGlobalHeader,
-    injectGlobalFooter,
     ensureAllGlobalBlocks,
     updateGlobalBlocks,
     globalBlocksCache: readonly(globalBlocksCache),

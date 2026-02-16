@@ -155,13 +155,6 @@ export const useBlockManager = () => {
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   };
 
-  const isLastNonFooterBlock = (index: number) => {
-    if (!data.value || data.value.length === 0) return false;
-    const hasFooter = data.value.length > 0 && data.value[data.value.length - 1]?.name === 'Footer';
-    const lastNonFooterIndex = hasFooter ? data.value.length - 2 : data.value.length - 1;
-    return index === lastNonFooterIndex;
-  };
-
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
     for (const [index, block] of blocks.entries()) {
       if (block.meta?.uuid === targetUuid) {
@@ -350,7 +343,6 @@ export const useBlockManager = () => {
     deleteBlock,
     updateBlock,
     changeBlockPosition,
-    isLastNonFooterBlock,
     addNewBlock,
     handleEdit,
     visiblePlaceholder,

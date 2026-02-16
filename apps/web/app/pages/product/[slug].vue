@@ -172,8 +172,24 @@ const observeRecommendedSection = () => {
   }
 };
 
-onBeforeRouteLeave(() => {
+const { closeDrawer } = useSiteConfiguration();
+const { isEditingEnabled } = useEditor();
+const { settingsIsDirty } = useSiteSettings();
+
+onBeforeRouteLeave((to, from, next) => {
   resetNotification();
+
+  if (isEditingEnabled.value || settingsIsDirty.value) {
+    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    if (confirmation) {
+      closeDrawer();
+      next();
+    } else {
+      next(false);
+    }
+  } else {
+    next();
+  }
 });
 
 onNuxtReady(() => observeRecommendedSection());

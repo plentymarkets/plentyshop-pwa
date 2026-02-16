@@ -26,6 +26,7 @@
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
+            :is-last-block="index === blocksToRender.length - 1"
             :change-block-position="changeBlockPosition"
             :root="getBlockDepth(block.meta.uuid) === 0"
             class="group"
@@ -120,20 +121,4 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (!hasUnsavedChanges()) return;
   event.preventDefault();
 };
-
-onBeforeRouteLeave((to, from, next) => {
-  if (!isEditingEnabled.value) {
-    next();
-    return;
-  }
-
-  const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-
-  if (confirmation) {
-    closeDrawer();
-    next();
-  } else {
-    next(false);
-  }
-});
 </script>

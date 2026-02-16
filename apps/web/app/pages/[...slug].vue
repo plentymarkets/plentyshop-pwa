@@ -171,6 +171,24 @@ watchEffect(() => {
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
 
+const { closeDrawer } = useSiteConfiguration();
+const { isEditingEnabled } = useEditor();
+const { settingsIsDirty } = useSiteSettings();
+
+onBeforeRouteLeave((to, from, next) => {
+  if (isEditingEnabled.value || settingsIsDirty.value) {
+    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    if (confirmation) {
+      closeDrawer();
+      next();
+    } else {
+      next(false);
+    }
+  } else {
+    next();
+  }
+});
+
 useHead({
   title: headTitle,
   meta: [
