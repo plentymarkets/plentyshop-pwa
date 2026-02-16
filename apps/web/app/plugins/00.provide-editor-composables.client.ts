@@ -1,12 +1,11 @@
 /**
- * Provides editor composables to the app so that components from npm modules
- * (e.g. uptain-pwa-beta) can inject them and do not rely on auto-imports.
+ * Stellt Editor-Composables für npm-Module (z. B. uptain-pwa-beta) bereit.
+ * Abruf in Modul-Komponenten: useNuxtApp().$useSiteSettings / .$getEditorTranslation
  */
 import { useSiteSettings } from '~/composables/useSiteSettings';
 import { getEditorTranslation } from '~/utils/sortingOptionsHelper';
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const app = nuxtApp.vueApp;
-  app.provide('useSiteSettings', useSiteSettings);
-  app.provide('getEditorTranslation', getEditorTranslation);
+  nuxtApp.provide('useSiteSettings', useSiteSettings);
+  nuxtApp.provide('getEditorTranslation', getEditorTranslation);
 });
