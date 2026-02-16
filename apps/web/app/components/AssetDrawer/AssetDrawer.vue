@@ -83,10 +83,20 @@
         </button>
       </div>
 
-      <EditorCodeEditor
+      <!-- <EditorCodeEditor
         v-if="isCodeAsset"
         ref="codeEditorRef"
         v-model="currentAsset.content"
+        :language="currentAsset.type as AssetType"
+        class="mb-4"
+        @update:model-value="() => addOrUpdate(currentAsset)"
+      /> -->
+
+      <LazyEditorCodeEditor
+        v-if="isCodeAsset"
+        ref="codeEditorRef"
+        v-model="currentAsset.content"
+        hydrate-on-visible
         :language="currentAsset.type as AssetType"
         class="mb-4"
         @update:model-value="() => addOrUpdate(currentAsset)"
