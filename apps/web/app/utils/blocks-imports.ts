@@ -10,7 +10,9 @@ const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/block
   import: 'default',
 }) as Record<string, Loader>;
 
-const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import: 'default' }) as Record<string, Loader>;
+const coreBlocks = import.meta.glob(['@/components/**/blocks/**/*.vue', '!@/components/**/blocks/**/*Form.vue'], {
+  import: 'default',
+}) as Record<string, Loader>;
 
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
