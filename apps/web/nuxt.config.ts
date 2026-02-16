@@ -132,7 +132,7 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       noCache: process.env.NO_CACHE || '',
-      configId: process.env.CONFIG_ID || '',
+      configId: process.env.CONFIG_ID || '1',
       uptainId: process.env.NUXT_PUBLIC_UPTAIN_ID || 'XXXXXXXXXXXXXXXX',
       uptainBlockCookiesInitially: process.env.NUXT_PUBLIC_UPTAIN_BLOCK_COOKIES_INITIALLY || 'false',
       uptainTransmitNewsletterData: process.env.NUXT_PUBLIC_UPTAIN_TRANSMIT_NEWSLETTER_DATA || 'false',
