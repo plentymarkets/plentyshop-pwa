@@ -87,7 +87,7 @@ await getBlocksServer(productIdentifier, 'product');
 const { ensureAllGlobalBlocks } = useGlobalBlocks();
 const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
 
-if (blocksWithGlobals.length !== data.value.length) data.value.splice(0, data.value.length, ...blocksWithGlobals);
+if (blocksWithGlobals !== data.value) data.value.splice(0, data.value.length, ...blocksWithGlobals);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
@@ -172,24 +172,11 @@ const observeRecommendedSection = () => {
   }
 };
 
-const { closeDrawer } = useSiteConfiguration();
-const { isEditingEnabled } = useEditor();
-const { settingsIsDirty } = useSiteSettings();
+const { guardRouteLeave } = useEditorUnsavedChangesGuard();
 
 onBeforeRouteLeave((to, from, next) => {
   resetNotification();
-
-  if (isEditingEnabled.value || settingsIsDirty.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
-    } else {
-      next(false);
-    }
-  } else {
-    next();
-  }
+  guardRouteLeave(to, from, next);
 });
 
 onNuxtReady(() => observeRecommendedSection());

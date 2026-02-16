@@ -96,7 +96,7 @@ if (productsCatalog.value.category?.type !== 'item') await getBlocksServer(ident
 const { ensureAllGlobalBlocks } = useGlobalBlocks();
 const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
 
-if (blocksWithGlobals.length !== data.value.length) {
+if (blocksWithGlobals !== data.value) {
   data.value.splice(0, data.value.length, ...blocksWithGlobals);
 }
 
@@ -147,23 +147,9 @@ watchEffect(() => {
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
 
-const { closeDrawer } = useSiteConfiguration();
-const { isEditingEnabled } = useEditor();
-const { settingsIsDirty } = useSiteSettings();
+const { guardRouteLeave } = useEditorUnsavedChangesGuard();
 
-onBeforeRouteLeave((to, from, next) => {
-  if (isEditingEnabled.value || settingsIsDirty.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
-    } else {
-      next(false);
-    }
-  } else {
-    next();
-  }
-});
+onBeforeRouteLeave(guardRouteLeave);
 
 useHead({
   title: headTitle,

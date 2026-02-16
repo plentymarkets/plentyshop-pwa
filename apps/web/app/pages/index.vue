@@ -48,21 +48,7 @@ setRobotForStaticPage('Homepage');
 const { setBlocksListContext } = useBlocksList();
 setBlocksListContext('content');
 
-const { closeDrawer } = useSiteConfiguration();
-const { isEditingEnabled } = useEditor();
-const { settingsIsDirty } = useSiteSettings();
+const { guardRouteLeave } = useEditorUnsavedChangesGuard();
 
-onBeforeRouteLeave((to, from, next) => {
-  if (isEditingEnabled.value || settingsIsDirty.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
-    } else {
-      next(false);
-    }
-  } else {
-    next();
-  }
-});
+onBeforeRouteLeave(guardRouteLeave);
 </script>
