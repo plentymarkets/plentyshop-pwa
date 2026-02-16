@@ -68,6 +68,17 @@ Unter „Setup“ / nach Punkt 2 z. B. einfügen:
 
 ---
 
+## Editor-Composables (useSiteSettings / getEditorTranslation)
+
+Die Uptain-Settings-Komponente holt sich `useSiteSettings` und `getEditorTranslation` per **inject** aus der App. Die **Definition** liegt im **Plentyshop-PWA-Repo**:
+
+- **Plugin:** `apps/web/app/plugins/00.provide-editor-composables.client.ts`  
+  Stellt die beiden Composables bereit, damit Komponenten aus `node_modules` (z. B. uptain-pwa-beta) sie nutzen können, ohne auf Auto-Imports angewiesen zu sein.
+
+Im Modul bleibt die Komponente bei `inject('useSiteSettings')` / `inject('getEditorTranslation')` – keine `#imports` nötig. So gehört die „Quelle der Wahrheit“ zur PWA.
+
+---
+
 ## Ordnerstruktur im Paket-Repo (nach dem Kopieren)
 
 ```
