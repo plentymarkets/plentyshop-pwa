@@ -133,6 +133,14 @@ export default defineNuxtConfig({
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
+      uptainId: process.env.NUXT_PUBLIC_UPTAIN_ID || 'XXXXXXXXXXXXXXXX',
+      uptainBlockCookiesInitially: process.env.NUXT_PUBLIC_UPTAIN_BLOCK_COOKIES_INITIALLY || 'false',
+      uptainTransmitNewsletterData: process.env.NUXT_PUBLIC_UPTAIN_TRANSMIT_NEWSLETTER_DATA || 'false',
+      uptainTransmitCustomerData: process.env.NUXT_PUBLIC_UPTAIN_TRANSMIT_CUSTOMER_DATA || 'false',
+      uptainTransmitRevenue: process.env.NUXT_PUBLIC_UPTAIN_TRANSMIT_REVENUE || 'false',
+      uptainEnabled: process.env.NUXT_PUBLIC_UPTAIN_ENABLED || '0',
+      uptainCookieGroup: process.env.NUXT_PUBLIC_UPTAIN_COOKIE_GROUP || 'CookieBar.marketing.label',
+      uptainDebugMode: process.env.NUXT_PUBLIC_UPTAIN_DEBUG_MODE || '0',
       ...settingsConfig,
       ...featureFlagsConfig,
     },
@@ -155,6 +163,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     'vuetify-nuxt-module',
     'nuxt-color-picker',
+    'uptain-pwa-beta',
   ],
   vuetify: {
     moduleOptions: {
