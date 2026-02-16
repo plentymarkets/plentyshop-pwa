@@ -1,5 +1,5 @@
 <template>
-  <div class="code-editor" data-testid="code-editor">
+  <div nuxt-client class="code-editor" data-testid="code-editor">
     <div ref="editorElement" class="editor-container" />
   </div>
 </template>
@@ -170,6 +170,7 @@ watch(currentLanguage, (newLanguage) => {
 });
 
 onMounted(initializeEditor);
+
 onUnmounted(() => {
   editorView?.destroy();
 });

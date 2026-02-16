@@ -23,12 +23,14 @@
       />
     </ClientOnly>
 
-    <component
-      :is="SiteConfigurationDrawer"
-      v-if="drawerOpen"
-      class="absolute lg:relative bg-white font-editor"
-      :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
-    />
+    <ClientOnly>
+      <component
+        :is="SiteConfigurationDrawer"
+        v-if="clientPreview && drawerOpen"
+        class="absolute lg:relative bg-white font-editor"
+        :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
+      />
+    </ClientOnly>
 
     <div
       class="bg-white w-full relative"

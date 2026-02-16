@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   app: appConfiguration,
   experimental: {
     asyncContext: true,
+    componentIslands: true,
   },
   appConfig: {
     titleSuffix: process.env.NAME || 'PlentyONE Shop',
@@ -97,6 +98,13 @@ export default defineNuxtConfig({
               '@tiptap/extension-highlight',
               '@tiptap/extension-text-align',
             ],
+            // richTextEditor: [
+            //   '~/components/editor/RichTextEditor/RichTextEditor.vue',
+            //   '~/components/editor/RichTextEditor/RichTextEditorBasicButtons.vue',
+            //   '~/components/editor/RichTextEditor/RichTextEditorExtendedButtons.vue',
+            //   '~/components/editor/RichTextEditor/RichTextEditorMenuButton.vue',
+            //   '~/components/editor/RichTextEditor/RichTextEditorModal.vue',
+            // ],
             vuetify: ['vuetify', '@mdi/js'],
             cmmain: ['codemirror'],
             cmplugins: [
