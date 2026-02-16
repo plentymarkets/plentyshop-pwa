@@ -53,18 +53,8 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
 });
 
 const blocksToRender = computed({
-  get: () => {
-    const blocks = toValue(props.blocks);
-    return blocks;
-  },
-  set: (value: Block[]) => {
-    if (isRef(props.blocks)) {
-      (props.blocks as Ref<Block[]>).value = value;
-    } else {
-      const currentBlocks = toValue(props.blocks);
-      currentBlocks.splice(0, currentBlocks.length, ...value);
-    }
-  },
+  get: () => toValue(props.blocks),
+  set: (value: Block[]) => ((props.blocks as Ref<Block[]>).value = value),
 });
 
 const isContentEmpty = computed(() => blocksToRender.value.length === 0);
