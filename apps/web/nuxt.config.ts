@@ -29,6 +29,9 @@ export default defineNuxtConfig({
     dirs: ['~/composables', '~/composables/**', '~/utils/**'],
   },
   vite: {
+    ssr: {
+      noExternal: ['uptain-pwa-beta'],
+    },
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
