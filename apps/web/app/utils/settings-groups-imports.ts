@@ -8,6 +8,10 @@ const customer = import.meta.glob('/node_modules/*/runtime/components/settings/*
   import: 'default',
 }) as Record<string, Loader>;
 
+const customerWorkspaceRoot = import.meta.glob('../../../../node_modules/*/runtime/components/settings/**/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
+
 const nuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/**/*.vue', {
   import: 'default',
 }) as Record<string, Loader>;
@@ -37,6 +41,7 @@ const modules: Record<string, Loader> = {};
 Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader));
+Object.entries(customerWorkspaceRoot).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 
 export const getSettingsGroups = (activeSetting: string, subCategory: string = '') => {
   const prefix = subCategory ? `${activeSetting}/${subCategory}/` : `${activeSetting}/`;

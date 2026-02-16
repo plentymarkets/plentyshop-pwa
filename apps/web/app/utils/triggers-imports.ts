@@ -6,6 +6,13 @@ const customerTriggers = import.meta.glob('/node_modules/*/runtime/components/**
   import: 'default',
 }) as Record<string, Loader>;
 
+const customerWorkspaceRootTriggers = import.meta.glob(
+  '../../../../node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue',
+  {
+    import: 'default',
+  },
+) as Record<string, Loader>;
+
 const nuxtModuleTriggers = import.meta.glob('~~/modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
 }) as Record<string, Loader>;
@@ -25,6 +32,7 @@ const ordered: Record<string, Loader> = {};
 Object.entries(coreTriggers).forEach(([path, loader]) => (ordered[slug(path)] = loader));
 Object.entries(nuxtModuleTriggers).forEach(([path, loader]) => (ordered[slug(path)] = loader));
 Object.entries(customerTriggers).forEach(([path, loader]) => (ordered[slug(path)] = loader));
+Object.entries(customerWorkspaceRootTriggers).forEach(([path, loader]) => (ordered[slug(path)] = loader));
 
 export const triggersModules = Object.entries(ordered).map(([slug, loader]) => ({
   slug: slug,
