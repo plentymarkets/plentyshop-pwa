@@ -1,5 +1,5 @@
 import type { Order } from '@plentymarkets/shop-api';
-import type { PayPalVisibilityLocations } from '~/composables';
+import type { PayPalVisibilityLocations } from '.';
 
 export type PaypalButtonPropsType = {
   type: string;

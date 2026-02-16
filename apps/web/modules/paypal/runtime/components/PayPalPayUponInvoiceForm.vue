@@ -66,6 +66,7 @@
 <script lang="ts" setup>
 import type { ApiError } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { usePayPal } from '../composables/usePayPal';
 
 const emit = defineEmits(['confirmCancel']);
 
