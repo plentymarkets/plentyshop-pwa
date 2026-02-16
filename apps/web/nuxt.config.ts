@@ -20,6 +20,9 @@ export default defineNuxtConfig({
   app: appConfiguration,
   experimental: {
     asyncContext: true,
+    // Verhindert 404 bei "Error fetching app manifest" in Deployment (z. B. PlentyONE),
+    // wo /_nuxt/builds/meta/*.json nicht bereitgestellt wird.
+    appManifest: false,
   },
   appConfig: {
     titleSuffix: process.env.NAME || 'PlentyONE Shop',
