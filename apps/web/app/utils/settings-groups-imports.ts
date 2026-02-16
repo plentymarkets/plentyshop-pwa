@@ -18,6 +18,11 @@ const nuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/*
 
 const core = import.meta.glob('@/components/**/settings/**/*.vue', { import: 'default' }) as Record<string, Loader>;
 
+/** Lokale Overrides (z. B. UptainSettings wie im Branch uptain-module) – überschreiben node_modules. */
+const settingsOverrides = import.meta.glob('@/components/settings/seo/tracking-and-analytics/uptain/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
+
 const stripPrefix = (raw: string): string => raw.replace(/^(\d+)\./, '');
 
 const formatTitle = (folderName: string): string => {
@@ -42,6 +47,7 @@ Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loa
 Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 Object.entries(customerWorkspaceRoot).forEach(([path, loader]) => (modules[normalize(path)] = loader));
+Object.entries(settingsOverrides).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 
 export const getSettingsGroups = (activeSetting: string, subCategory: string = '') => {
   const prefix = subCategory ? `${activeSetting}/${subCategory}/` : `${activeSetting}/`;
