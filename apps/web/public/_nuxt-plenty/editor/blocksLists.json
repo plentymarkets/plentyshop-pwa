@@ -960,10 +960,10 @@
       }
     ]
   },
-  "rich-text": {
-    "category": "rich-text",
+  "text": {
+    "category": "text",
     "accessControl": ["content", "productCategory", "product"],
-    "title": "Rich Text",
+    "title": "Text",
     "blockName": "TextCard",
     "variations": [
       {
@@ -1013,6 +1013,32 @@
               },
               "layout": {
                 "fullWidth": false
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Announcement Bar",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement_bar.png",
+        "template": {
+          "en": {
+            "name": "AnnouncementBar",
+            "type": "content",
+            "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "content": {
+              "text": {
+                "htmlDescription": "This is an example announcement."
+              }
+            }
+          },
+          "de": {
+            "name": "AnnouncementBar",
+            "type": "content",
+            "meta": { "uuid": "6c0b3304-7e15-44b4-a5a7-b25c5d8af6c4" },
+            "content": {
+              "text": {
+                "htmlDescription": "Dies ist ein Beispiel für eine Ankündigung."
               }
             }
           }
