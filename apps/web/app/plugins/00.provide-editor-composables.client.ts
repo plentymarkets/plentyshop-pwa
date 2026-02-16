@@ -6,6 +6,7 @@ import { useSiteSettings } from '~/composables/useSiteSettings';
 import { getEditorTranslation } from '~/utils/sortingOptionsHelper';
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.provide('useSiteSettings', useSiteSettings);
-  nuxtApp.provide('getEditorTranslation', getEditorTranslation);
+  const app = nuxtApp.vueApp;
+  app.provide('useSiteSettings', useSiteSettings);
+  app.provide('getEditorTranslation', getEditorTranslation);
 });
