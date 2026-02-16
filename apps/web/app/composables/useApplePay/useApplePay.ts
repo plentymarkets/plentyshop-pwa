@@ -1,5 +1,5 @@
 import type { PayPalApplePayTransactionInfo } from '@plentymarkets/shop-api';
-import type { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '#paypal/types';
 
 type ButtonClickedEmits = {
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;

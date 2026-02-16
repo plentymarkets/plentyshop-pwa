@@ -5,7 +5,7 @@ import type {
   GetBlocks,
   SaveBlocks,
 } from './types';
-import type { Block } from '@plentymarkets/shop-api';
+import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 
@@ -160,6 +160,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       }
       return true;
     } catch (error) {
+      useHandleError(error as ApiError);
       console.error('Error saving blocks:', error);
       return false;
     } finally {
