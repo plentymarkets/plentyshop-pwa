@@ -81,7 +81,6 @@ const scrollToBlock = (evt: DragEvent) => {
   if (block) nextTick(() => block.scrollIntoView({ behavior: 'smooth', block: 'start' }));
 };
 
-const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
 const { isEditingEnabled } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
