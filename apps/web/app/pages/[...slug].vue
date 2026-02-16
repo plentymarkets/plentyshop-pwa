@@ -82,17 +82,16 @@ const icon = 'sell';
 setPageMeta(categoryName.value, icon);
 
 const { $i18n } = useNuxtApp();
-const actualIdentifier = ref(identifier.value);
 
 const { data, getBlocksServer, headerBlocks, mainBlocks } = useCategoryTemplate(
-  actualIdentifier.value.toString(),
+  identifier.value.toString(),
   'category',
   $i18n.locale.value,
 );
 
 const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
 
-if (productsCatalog.value.category?.type !== 'item') await getBlocksServer(actualIdentifier.value, 'category');
+if (productsCatalog.value.category?.type !== 'item') await getBlocksServer(identifier.value, 'category');
 
 const { ensureAllGlobalBlocks } = useGlobalBlocks();
 const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
@@ -141,29 +140,6 @@ watch(
   async () => {
     await handleQueryUpdate();
     setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
-  },
-);
-
-watch(
-  () => identifier.value,
-  async (newIdentifier, oldIdentifier) => {
-    if (newIdentifier !== oldIdentifier && productsCatalog.value.category?.type !== 'item') {
-      actualIdentifier.value = newIdentifier;
-
-      const { data: newData, getBlocksServer: refetchBlocks } = useCategoryTemplate(
-        newIdentifier.toString(),
-        'category',
-        $i18n.locale.value,
-      );
-
-      await refetchBlocks(newIdentifier, 'category');
-
-      const { ensureAllGlobalBlocks } = useGlobalBlocks();
-      const blocksWithGlobals = await ensureAllGlobalBlocks(newData.value);
-      if (blocksWithGlobals.length !== newData.value.length) {
-        newData.value.splice(0, newData.value.length, ...blocksWithGlobals);
-      }
-    }
   },
 );
 
