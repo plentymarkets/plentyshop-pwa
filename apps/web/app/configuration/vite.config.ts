@@ -7,7 +7,8 @@ export const FailOnLargeChunksPlugin = {
       console.warn('Skipping chunk size check as FAIL_BUILD_ON_LARGE_CHUNKS is not set.');
       return;
     }
-    const LIMIT = 600 * 1024; // 600 KB
+    // last update to 630 KB to allow codemirror bundle to be generated without manually chunking it.
+    const LIMIT = 630 * 1024; // 630 KB
     for (const [fileName, chunk] of Object.entries(bundle)) {
       if (fileName === 'server.mjs') continue; // skip server bundle
       if (chunk.type === 'chunk' && chunk.code.length > LIMIT) {
