@@ -98,13 +98,6 @@ export default defineNuxtConfig({
               '@tiptap/extension-text-align',
             ],
             vuetify: ['vuetify', '@mdi/js'],
-            cmmain: ['codemirror'],
-            cmplugins: [
-              'js-beautify',
-              '@codemirror/lang-css',
-              '@codemirror/lang-javascript',
-              '@codemirror/theme-one-dark',
-            ],
           },
         },
       },
