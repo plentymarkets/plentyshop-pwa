@@ -5,7 +5,7 @@
       @click.self="emit('close')"
     >
       <div class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
-        <header class="flex items-center justify-between">
+        <header class="flex items-center justify-between mb-1">
           <h2 class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
           <UiButton variant="tertiary" class="!p-2" @click="emit('close')">
             <SfIconClose />
