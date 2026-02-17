@@ -95,7 +95,7 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^16.2.7",
-    "nuxt": "4.3.0",
+    "nuxt": "4.1.3",
     "nuxt-security": "2.5.1",
     "nuxt-viewport": "^2.3.1",
     "playwright-core": "^1.58.2",
