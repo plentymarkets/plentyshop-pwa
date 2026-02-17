@@ -5,14 +5,13 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
+    <template v-if="hasHeaderBlocks" #header>
+      <EditableBlocks :blocks="headerBlocks" />
+    </template>
+
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <EditablePage
-      :identifier="identifier"
-      :type="'category'"
-      data-testid="category-page-content"
-      :prevent-blocks-request="productsCatalog.category?.type === 'item'"
-    />
+    <EditableBlocks :blocks="mainBlocks" data-testid="category-page-content" />
   </NuxtLayout>
 </template>
 
@@ -62,7 +61,8 @@ const breadcrumbs = computed(() => {
 const canonicalDb = productsCatalog.value.category?.details?.[0]?.canonicalLink;
 
 const handleQueryUpdate = async () => {
-  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+  await fetchProducts(getFacetsFromURL());
+  checkFiltersInURL();
 
   if (!productsCatalog.value.category) {
     throw createError({
@@ -72,42 +72,63 @@ const handleQueryUpdate = async () => {
   }
 };
 
-await handleQueryUpdate().then(() => {
-  setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
-  setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
-});
+await handleQueryUpdate();
+setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
+setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
 
 const { setPageMeta } = usePageMeta();
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
 const icon = 'sell';
 setPageMeta(categoryName.value, icon);
 
+const { $i18n } = useNuxtApp();
+
+const { data, getBlocksServer, headerBlocks, mainBlocks } = useCategoryTemplate(
+  identifier.value.toString(),
+  'category',
+  $i18n.locale.value,
+);
+
+const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
+
+if (productsCatalog.value.category?.type !== 'item') await getBlocksServer(identifier.value, 'category');
+
+const { ensureAllGlobalBlocks } = useGlobalBlocks();
+const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
+
+if (blocksWithGlobals !== data.value) {
+  data.value.splice(0, data.value.length, ...blocksWithGlobals);
+}
+
 watch(
   () => locale.value,
   (changedLocale: string) => {
-    router.push({
-      path: buildCategoryLanguagePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
-      query: route.query,
-    });
+    const url = productsCatalog.value.languageUrls[changedLocale];
+    if (url) {
+      router.push({
+        path: buildCategoryLanguagePath(url),
+        query: route.query,
+      });
+    }
   },
 );
 
 const headTitle = computed(() =>
   productsCatalog.value?.category
-    ? ((categoryGetters.getMetaTitle(productsCatalog.value.category) || process.env.METATITLE) ?? '')
-    : (process.env.METATITLE ?? ''),
+    ? categoryGetters.getMetaTitle(productsCatalog.value.category) || process.env.METATITLE || ''
+    : process.env.METATITLE || '',
 );
 
 const descriptionContent = computed(() =>
   productsCatalog.value?.category
-    ? ((categoryGetters.getMetaDescription(productsCatalog.value.category) || process.env.METADESC) ?? '')
-    : (process.env.METADESC ?? ''),
+    ? categoryGetters.getMetaDescription(productsCatalog.value.category) || process.env.METADESC || ''
+    : process.env.METADESC || '',
 );
 
 const keywordsContent = computed((): string =>
   productsCatalog.value?.category
-    ? ((categoryGetters.getMetaKeywords(productsCatalog.value.category) || process.env.METAKEYWORDS) ?? '')
-    : (process.env.METAKEYWORDS ?? ''),
+    ? categoryGetters.getMetaKeywords(productsCatalog.value.category) || process.env.METAKEYWORDS || ''
+    : process.env.METAKEYWORDS || '',
 );
 
 const robotsContent = computed((): string =>
@@ -117,13 +138,18 @@ const robotsContent = computed((): string =>
 watch(
   () => route.query,
   async () => {
-    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+    await handleQueryUpdate();
+    setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
   },
 );
 
 watchEffect(() => {
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
+
+const { guardRouteLeave } = useEditorUnsavedChangesGuard();
+
+onBeforeRouteLeave(guardRouteLeave);
 
 useHead({
   title: headTitle,
