@@ -4,23 +4,25 @@ export type AnnouncementBarProps = {
   meta: {
     uuid: string;
   };
-  content: AnnouncementBarContent[];
+  content: AnnouncementBarContent;
+};
+
+export type AnnouncementBarContent = {
+  announcements: {
+    meta: {
+      uuid: string;
+    };
+    text: string;
+  }[];
   layout: {
     paddingTop: number;
     paddingBottom: number;
     paddingLeft: number;
     paddingRight: number;
-    fullWidth?: boolean;
-    stickyOnTop?: boolean;
-    backgroundColor?: string;
+    fullWidth: boolean;
+    stickyOnTop: boolean;
+    backgroundColor: string;
   };
-};
-
-export type AnnouncementBarContent = {
-  meta: {
-    uuid: string;
-  };
-  text: string;
 };
 
 export type AnnouncementBarFormProps = {

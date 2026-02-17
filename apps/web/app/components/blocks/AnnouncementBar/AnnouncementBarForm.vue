@@ -10,17 +10,17 @@
 
       <div class="p-4 flex flex-col gap-2">
         <div
-          v-for="(item, idx) in block.content"
+          v-for="(item, idx) in block.content.announcements"
           :key="item.meta.uuid"
           class="flex items-center justify-between p-2 border rounded-lg"
         >
           <span class="text-sm truncate flex-1">{{ item.text || t('empty-label') }}</span>
           <button
             class="p-1 hover:bg-gray-100 rounded-full ml-2 shrink-0"
-            :disabled="block.content.length === 1"
+            :disabled="block.content.announcements.length === 1"
             @click="deleteItem(idx)"
           >
-            <SfIconDelete class="text-neutral-500" :class="{ 'opacity-30': block.content.length === 1 }" />
+            <SfIconDelete class="text-neutral-500" :class="{ 'opacity-30': block.content.announcements.length === 1 }" />
           </button>
         </div>
 
@@ -36,7 +36,7 @@
     </UiAccordionItem>
 
     <UiAccordionItem
-      v-if="block.content.length"
+      v-if="block.content.announcements.length"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -45,7 +45,7 @@
       </template>
 
       <div class="p-4 flex flex-col gap-4">
-        <div v-for="(item, idx) in block.content" :key="item.meta.uuid">
+        <div v-for="(item, idx) in block.content.announcements" :key="item.meta.uuid">
           <UiFormLabel class="mb-1">{{ t('item-label') }} {{ idx + 1 }}</UiFormLabel>
           <SfInput v-model="item.text" type="text" />
         </div>
@@ -61,16 +61,17 @@
       </template>
 
       <div class="p-4 flex flex-col gap-4">
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
         <div class="flex items-center justify-between">
           <UiFormLabel>{{ t('sticky-label') }}</UiFormLabel>
-          <SfSwitch v-model="block.layout.stickyOnTop" />
+          <SfSwitch v-model="block.content.layout.stickyOnTop" />
         </div>
 
         <div class="mb-2">
           <UiFormLabel class="mb-1">{{ t('background-color-label') }}</UiFormLabel>
-          <EditorColorPicker v-model="block.layout.backgroundColor" class="w-full">
+          <EditorColorPicker v-model="block.content.layout.backgroundColor" class="w-full">
             <template #trigger="{ color, toggle }">
-              <SfInput v-model="block.layout.backgroundColor" type="text">
+              <SfInput v-model="block.content.layout.backgroundColor" type="text">
                 <template #suffix>
                   <button
                     type="button"
@@ -91,7 +92,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
               <input
-                v-model.number="block.layout.paddingTop"
+                v-model.number="block.content.layout.paddingTop"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="padding-top"
@@ -100,7 +101,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowDownward /></span>
               <input
-                v-model.number="block.layout.paddingBottom"
+                v-model.number="block.content.layout.paddingBottom"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="padding-bottom"
@@ -109,7 +110,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowBack /></span>
               <input
-                v-model.number="block.layout.paddingLeft"
+                v-model.number="block.content.layout.paddingLeft"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="padding-left"
@@ -118,7 +119,7 @@
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
               <span><SfIconArrowForward /></span>
               <input
-                v-model.number="block.layout.paddingRight"
+                v-model.number="block.content.layout.paddingRight"
                 type="number"
                 class="w-12 text-center outline-none"
                 data-testid="padding-right"
@@ -134,7 +135,7 @@
 <script setup lang="ts">
 import { SfIconDelete, SfIconAdd, SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward } from '@storefront-ui/vue';
 import { v4 as uuid } from 'uuid';
-import type { AnnouncementBarProps, AnnouncementBarContent } from './types';
+import type { AnnouncementBarProps } from './types';
 
 const { t } = useI18n();
 const { blockUuid } = useSiteConfiguration();
@@ -146,20 +147,29 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const block = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as AnnouncementBarProps,
-);
+
+const block = computed({
+  get: () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as AnnouncementBarProps,
+  set: (val) => {
+    const found = findOrDeleteBlockByUuid(data.value, blockUuid.value);
+    if (found) Object.assign(found, val);
+  }
+});
+
+const contentlayout = computed(() => block.value.content);
+
+const { isFullWidth } = useFullWidthToggleForContent(contentlayout);
 
 const addItem = () => {
-  block.value.content.push({
+  block.value.content.announcements.push({
     meta: { uuid: uuid() },
     text: 'New announcement',
-  } as AnnouncementBarContent);
+  });
 };
 
 const deleteItem = (idx: number) => {
-  if (block.value.content.length <= 1) return;
-  block.value.content.splice(idx, 1);
+  if (block.value.content.announcements.length <= 1) return;
+  block.value.content.announcements.splice(idx, 1);
 };
 </script>
 

@@ -1,12 +1,12 @@
 <template>
   <Swiper
     :slides-per-view="1"
-    :loop="props.content.length > 1"
+    :loop="props.content.announcements.length > 1"
     :modules="[Autoplay]"
     :autoplay="{ delay: 6000, disableOnInteraction: false }"
     :speed="900"
   >
-    <SwiperSlide v-for="(item, idx) in props.content" :key="idx">
+    <SwiperSlide v-for="(item, idx) in props.content.announcements" :key="idx">
       <div
         class="min-h-10 flex items-center justify-center"
         :style="inlineStyle"
@@ -25,7 +25,7 @@ import type { AnnouncementBarProps } from './types';
 const props = defineProps<AnnouncementBarProps>();
 
 const inlineStyle = computed(() => {
-  const layout = props.layout || {};
+  const layout = props.content.layout || {};
 
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,

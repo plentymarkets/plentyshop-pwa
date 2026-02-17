@@ -1026,7 +1026,8 @@
             "name": "AnnouncementBar",
             "type": "content",
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
-            "content": [
+            "content": {
+              "announcements": [
                 {
                   "meta": { "uuid": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" },
                   "text": "This is an example announcement."
@@ -1035,8 +1036,8 @@
                   "meta": { "uuid": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" },
                   "text": "This is another example announcement."
                 }
-            ],
-            "layout": {
+              ],
+              "layout": {
                 "fullWidth": true,
                 "stickyOnTop": false,
                 "paddingTop": 0,
@@ -1045,6 +1046,7 @@
                 "paddingRight": 0,
                 "backgroundColor": "#EDFF6C"
               }
+            }
           }
         }
       }
