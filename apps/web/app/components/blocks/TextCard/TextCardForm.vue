@@ -80,7 +80,13 @@
         </div>
       </div>
 
-      <EditorHtmlEditor v-if="modalOpen" :editor="editor" @close="toggleModal" />
+      <EditorHtmlEditor
+        v-if="modalOpen"
+        v-model="htmlDraft"
+        :aria-describedby="ariaDescribedBy"
+        :html-errors="htmlErrors"
+        @close="toggleModal"
+      />
     </div>
 
     <div v-else data-testid="text-card-form">
@@ -390,6 +396,8 @@ const modalOpen = ref(false);
 const toggleModal = () => {
   modalOpen.value = !modalOpen.value;
 };
+const props = defineProps<TextCardFormProps>();
+
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
@@ -397,18 +405,8 @@ const { data } = useCategoryTemplate(
   useNuxtApp().$i18n.locale.value,
 );
 
-const { editor } = useRichTextEditor({
-  modelValue: toRef(props, 'modelValue'),
-  onUpdateModelValue: (v) => emit('update:modelValue', v),
-  expanded: toRef(props, 'expanded'),
-  onUpdateExpanded: (v) => emit('update:expanded', v),
-  textAlign: toRef(props, 'textAlign'),
-});
-
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
-const props = defineProps<TextCardFormProps>();
 
 const expandedToolbars = ref({
   content: true,

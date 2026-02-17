@@ -12,9 +12,29 @@
           </UiButton>
         </header>
 
+        <div
+          v-if="htmlErrors && htmlErrors.length"
+          id="expert-html-editor-errors"
+          class="mt-2 mb-2 rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800"
+          role="alert"
+        >
+          <div class="font-semibold">{{ getEditorTranslation('html-invalid-label') }}</div>
+          <ul class="list-disc ml-5 mt-1">
+            <li v-for="(error, index) in htmlErrors.slice(0, 3)" :key="index">{{ error }}</li>
+          </ul>
+        </div>
+
         <main class="flex-1 overflow-hidden flex flex-col">
-          <div class="flex-1 overflow-y-auto p-4">
-            <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
+          <div class="flex-1 overflow-y-auto">
+            <SfTextarea
+              id="expert-html-editor"
+              v-model="localValue"
+              rows="20"
+              class="w-full h-full font-mono text-sm border rounded-md shadow-sm"
+              :class="htmlErrors && htmlErrors.length ? 'border-red-400' : 'border-gray-300'"
+              :aria-invalid="htmlErrors && htmlErrors.length ? 'true' : 'false'"
+              :aria-describedby="ariaDescribedBy"
+            />
           </div>
         </main>
       </div>
@@ -23,47 +43,35 @@
 </template>
 
 <script setup lang="ts">
-import type { Editor } from '@tiptap/vue-3';
-import type { RteCommand } from '~/composables/useRichTextEditor/types';
-import { EditorContent } from '@tiptap/vue-3';
-import { SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose, SfTextarea } from '@storefront-ui/vue';
 
-defineProps<{
-  editor: Editor | undefined;
-  editorStyle?: {
-    textAlign: globalThis.RteAlign;
-    minHeight: string;
-  };
-  cmd: (name: RteCommand) => void;
-  isActive: (name: string) => boolean;
-  currentBlockType: RteBlockType;
-  onFontSizeChange: (value: string) => void;
-  textColor: string;
-  highlightColor: string;
-  setFontColor: (color: string) => void;
-  setHighlightColor: (color: string) => void;
-  setAlign: (align: RteAlign) => void;
-  isActiveAlign: (align: RteAlign) => boolean;
-  canUndo: boolean;
-  canRedo: boolean;
-  undo: () => void;
-  redo: () => void;
-  toggleLink: () => void;
-  clearFormatting: () => void;
+const props = defineProps<{
+  modelValue: string;
+  ariaDescribedBy?: string;
+  htmlErrors?: string[];
 }>();
 
 const emit = defineEmits<{
-  (e: 'close'): void;
+  (event: 'update:modelValue', value: string): void;
+  (event: 'close'): void;
 }>();
+
+const localValue = computed({
+  get: () => props.modelValue ?? '',
+  set: (value: string) => emit('update:modelValue', value ?? ''),
+});
+
+const ariaDescribedBy = computed(() => props.ariaDescribedBy ?? undefined);
+const htmlErrors = computed(() => props.htmlErrors ?? []);
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "heading": "Editor"
+    "heading": "HTML editor"
   },
   "de": {
-    "heading": "Editor"
+    "heading": "HTML editor"
   }
 }
 </i18n>
