@@ -8,48 +8,34 @@
         <h2>{{ t('elements-label') }}</h2>
       </template>
 
-      <div class="p-4 flex flex-col gap-2">
-        <div
-          v-for="(item, idx) in block.content.announcements"
-          :key="item.meta.uuid"
-          class="flex items-center justify-between p-2 border rounded-lg"
-        >
-          <span class="text-sm truncate flex-1">{{ item.text || t('empty-label') }}</span>
-          <button
-            class="p-1 hover:bg-gray-100 rounded-full ml-2 shrink-0"
-            :disabled="block.content.announcements.length === 1"
-            @click="deleteItem(idx)"
-          >
-            <SfIconDelete class="text-neutral-500" :class="{ 'opacity-30': block.content.announcements.length === 1 }" />
-          </button>
-        </div>
+      <div
+        v-for="(item, idx) in block.content.announcements"
+        :key="item.meta.uuid"
+        class="flex items-center justify-between p-2 rounded-lg mb-2"
+      >
+        <button class="cursor-grab p-1 hover:bg-gray-100 rounded-full shrink-0 mr-1">
+          <NuxtImg width="18" height="18" :src="dragIcon" />
+        </button>
 
-        <UiButton
-          class="mt-4"
-          variant="secondary"
-          @click="addItem"
-        >
-          <SfIconAdd class="text-neutral-500" />
-          {{ t('add-label') }}
-        </UiButton>
+        <span class="text-sm truncate flex-1">{{ item.text || t('empty-label') }}</span>
+
+        <button class="p-1 hover:bg-gray-100 rounded-full shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+        </button>
+
+        <button class="p-1 hover:bg-gray-100 rounded-full shrink-0">
+          <SfIconMoreVert />
+        </button>
       </div>
-    </UiAccordionItem>
 
-    <UiAccordionItem
-      v-if="block.content.announcements.length"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ t('text-label') }}</h2>
-      </template>
-
-      <div class="p-4 flex flex-col gap-4">
-        <div v-for="(item, idx) in block.content.announcements" :key="item.meta.uuid">
-          <UiFormLabel class="mb-1">{{ t('item-label') }} {{ idx + 1 }}</UiFormLabel>
-          <SfInput v-model="item.text" type="text" />
-        </div>
-      </div>
+      <UiButton
+        class="mt-4 w-full"
+        variant="secondary"
+        @click="addItem"
+      >
+        <SfIconAdd class="text-neutral-500" />
+        {{ t('add-label') }}
+      </UiButton>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -133,7 +119,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconDelete, SfIconAdd, SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward } from '@storefront-ui/vue';
+import { SfIconAdd ,SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward, SfIconMoreVert } from '@storefront-ui/vue';
+import dragIcon from '~/assets/icons/paths/drag.svg';
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps } from './types';
 
