@@ -8,48 +8,55 @@
         <h2>{{ t('elements-label') }}</h2>
       </template>
 
-      <div
-        v-for="(item, idx) in block.content.announcements"
-        :key="item.meta.uuid"
-        class="flex items-center justify-between p-2 rounded-lg mb-2"
+      <draggable
+        v-model="announcements"
+        item-key="meta.uuid"
+        handle=".drag-handle"
       >
-        <button class="cursor-grab p-1 hover:bg-gray-100 rounded-full shrink-0 mr-1">
-          <NuxtImg width="18" height="18" :src="dragIcon" />
-        </button>
-
-        <span class="text-sm truncate flex-1">{{ item.text || t('empty-label') }}</span>
-
-        <button class="p-1 hover:bg-gray-100 rounded-full shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-        </button>
-
-        <div class="relative">
-          <button
-            class="p-1 hover:bg-gray-100 rounded-full shrink-0"
-            @click="toggleMenu(idx)"
-          >
-            <SfIconMoreVert />
-          </button>
-
+        <template #item="{ element: item, index: idx }">
           <div
-            v-if="openMenuIdx === idx"
-            class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+            :key="item.meta.uuid"
+            class="flex items-center justify-between p-2 rounded-lg mb-2"
           >
-            <div class="flex items-center justify-between px-4 py-3 border-b">
-              <span class="text-sm">{{ t('visibility-label') }}</span>
-              <SfSwitch v-model="item.visible" />
-            </div>
-            <button
-              class="w-full flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-gray-50 text-sm"
-              :disabled="block.content.announcements.length === 1"
-              @click="deleteItem(idx)"
-            >
-              <SfIconDelete class="text-red-500" />
-              {{ t('delete-label') }}
+            <button class="drag-handle cursor-grab p-1 hover:bg-gray-100 rounded-full shrink-0 mr-1">
+              <NuxtImg width="18" height="18" :src="dragIcon" />
             </button>
+
+            <span class="text-sm truncate flex-1">{{ item.text || t('empty-label') }}</span>
+
+            <button class="p-1 hover:bg-gray-100 rounded-full shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+            </button>
+
+            <div class="relative">
+              <button
+                class="p-1 hover:bg-gray-100 rounded-full shrink-0"
+                @click="toggleMenu(idx)"
+              >
+                <SfIconMoreVert />
+              </button>
+
+              <div
+                v-if="openMenuIdx === idx"
+                class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+              >
+                <div class="flex items-center justify-between px-4 py-3 border-b">
+                  <span class="text-sm">{{ t('visibility-label') }}</span>
+                  <SfSwitch v-model="item.visible" />
+                </div>
+                <button
+                  class="w-full flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-gray-50 text-sm"
+                  :disabled="announcements.length === 1"
+                  @click="deleteItem(idx)"
+                >
+                  <SfIconDelete class="text-red-500" />
+                  {{ t('delete-label') }}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </draggable>
 
       <UiButton
         class="mt-4 w-full"
@@ -143,6 +150,7 @@
 
 <script setup lang="ts">
 import { SfIconAdd, SfIconDelete, SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward, SfIconMoreVert } from '@storefront-ui/vue';
+import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps } from './types';
@@ -167,6 +175,11 @@ const block = computed({
   }
 });
 
+const announcements = computed({
+  get: () => block.value.content.announcements,
+  set: (val) => { block.value.content.announcements = val; }
+});
+
 const contentlayout = computed(() => block.value.content);
 const { isFullWidth } = useFullWidthToggleForContent(contentlayout);
 
@@ -175,7 +188,7 @@ const toggleMenu = (idx: number) => {
 };
 
 const addItem = () => {
-  block.value.content.announcements.push({
+  announcements.value.push({
     meta: { uuid: uuid() },
     text: 'New announcement',
     visible: true,
@@ -183,8 +196,8 @@ const addItem = () => {
 };
 
 const deleteItem = (idx: number) => {
-  if (block.value.content.announcements.length <= 1) return;
-  block.value.content.announcements.splice(idx, 1);
+  if (announcements.value.length <= 1) return;
+  announcements.value.splice(idx, 1);
   openMenuIdx.value = null;
 };
 </script>
