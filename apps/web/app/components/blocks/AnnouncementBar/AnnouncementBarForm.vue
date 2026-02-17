@@ -62,13 +62,13 @@
         <h2>{{ t('layout-label') }}</h2>
       </template>
 
-      <div class="p-4 flex flex-col gap-4 space-y-">
+      <div class="p-4 flex flex-col gap-4">
         <div class="flex items-center justify-between">
           <UiFormLabel>{{ t('sticky-label') }}</UiFormLabel>
           <SfSwitch v-model="block.layout.stickyOnTop" />
         </div>
 
-        <div>
+        <div class="mb-2">
           <UiFormLabel class="mb-1">{{ t('background-color-label') }}</UiFormLabel>
           <EditorColorPicker v-model="block.layout.backgroundColor" class="w-full">
             <template #trigger="{ color, toggle }">
@@ -85,8 +85,10 @@
               </SfInput>
             </template>
           </EditorColorPicker>
+        </div>
 
-          <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+        <div>
+          <UiFormLabel class="mb-1">{{ t('padding-label') }}</UiFormLabel>
           <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
@@ -132,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconDelete, SfIconAdd, SfInput, SfSwitch } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconAdd, SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward } from '@storefront-ui/vue';
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps, AnnouncementBarContent } from './types';
 
@@ -177,7 +179,8 @@ const deleteItem = (idx: number) => {
     "add-label": "Add element",
     "empty-label": "(empty)",
     "background-color-label": "Background color",
-    "sticky-label": "Sticky on top"
+    "sticky-label": "Sticky on top",
+    "padding-label": "Padding (px)"
   },
   "de": {
     "elements-label": "Elemente",
@@ -187,7 +190,8 @@ const deleteItem = (idx: number) => {
     "add-label": "Element hinzufügen",
     "empty-label": "(leer)",
     "background-color-label": "Hintergrundfarbe",
-    "sticky-label": "Am oberen Rand fixieren"
+    "sticky-label": "Am oberen Rand fixieren",
+    "padding-label": "Innenabstand (px)"
   }
 }
 </i18n>
