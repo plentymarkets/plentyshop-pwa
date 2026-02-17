@@ -1026,21 +1026,25 @@
             "name": "AnnouncementBar",
             "type": "content",
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
-            "content": {
-              "text": {
-                "htmlDescription": "This is an example announcement."
+            "content": [
+                {
+                  "meta": { "uuid": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" },
+                  "text": "This is an example announcement."
+                },
+                {
+                  "meta": { "uuid": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" },
+                  "text": "This is another example announcement."
+                }
+            ],
+            "layout": {
+                "fullWidth": true,
+                "stickyOnTop": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "backgroundColor": "#EDFF6C"
               }
-            }
-          },
-          "de": {
-            "name": "AnnouncementBar",
-            "type": "content",
-            "meta": { "uuid": "6c0b3304-7e15-44b4-a5a7-b25c5d8af6c4" },
-            "content": {
-              "text": {
-                "htmlDescription": "Dies ist ein Beispiel für eine Ankündigung."
-              }
-            }
           }
         }
       }

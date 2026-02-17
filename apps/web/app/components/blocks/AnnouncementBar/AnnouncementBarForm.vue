@@ -1,4 +1,8 @@
 <template>
+  Test
+</template>
+
+<!-- <template>
   <UiAccordionItem
     data-testid="announcement-bar-settings"
     summary-active-class="bg-neutral-100 border-t-0"
@@ -61,4 +65,4 @@ const announcementBarBlock = computed<AnnouncementBarContent>(() => {
     "html-description-label": "Ankündigungstext"
   }
 }
-</i18n>
+</i18n> -->
