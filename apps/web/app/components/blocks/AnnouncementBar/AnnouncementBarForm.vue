@@ -1,68 +1,193 @@
 <template>
-  Test
-</template>
+  <div class="sticky top-[52px] h-[80vh] overflow-y-auto">
+    <UiAccordionItem
+      v-model="elementsOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ t('elements-label') }}</h2>
+      </template>
 
-<!-- <template>
-  <UiAccordionItem
-    data-testid="announcement-bar-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('text-group-label') }}</h2>
-    </template>
+      <div class="p-4 flex flex-col gap-2">
+        <div
+          v-for="(item, idx) in block.content"
+          :key="item.meta.uuid"
+          class="flex items-center justify-between p-2 border rounded-lg"
+        >
+          <span class="text-sm truncate flex-1">{{ item.text || t('empty-label') }}</span>
+          <button
+            class="p-1 hover:bg-gray-100 rounded-full ml-2 shrink-0"
+            :disabled="block.content.length === 1"
+            @click="deleteItem(idx)"
+          >
+            <SfIconDelete class="text-neutral-500" :class="{ 'opacity-30': block.content.length === 1 }" />
+          </button>
+        </div>
 
-    <div class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
-      <SfTextarea
-        v-model="announcementBarBlock.text.htmlDescription"
-        class="min-h-[100px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
-      />
-    </div>
-  </UiAccordionItem>
+        <button
+          class="w-full mt-2 py-2 border border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:bg-gray-50 flex items-center justify-center gap-1"
+          @click="addItem"
+        >
+          <SfIconAdd class="text-neutral-500" />
+          {{ t('add-label') }}
+        </button>
+      </div>
+    </UiAccordionItem>
+
+    <UiAccordionItem
+      v-if="block.content.length"
+      v-model="textOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ t('text-label') }}</h2>
+      </template>
+
+      <div class="p-4 flex flex-col gap-4">
+        <div v-for="(item, idx) in block.content" :key="item.meta.uuid">
+          <UiFormLabel class="mb-1">{{ t('item-label') }} {{ idx + 1 }}</UiFormLabel>
+          <SfInput v-model="item.text" type="text" />
+        </div>
+      </div>
+    </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="layoutOpen"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ t('layout-label') }}</h2>
+      </template>
+
+      <div class="p-4 flex flex-col gap-4 space-y-">
+        <div class="flex items-center justify-between">
+          <UiFormLabel>{{ t('sticky-label') }}</UiFormLabel>
+          <SfSwitch v-model="block.layout.stickyOnTop" />
+        </div>
+
+        <div>
+          <UiFormLabel class="mb-1">{{ t('background-color-label') }}</UiFormLabel>
+          <EditorColorPicker v-model="block.layout.backgroundColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput v-model="block.layout.backgroundColor" type="text">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+
+          <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+          <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowUpward /></span>
+              <input
+                v-model.number="block.layout.paddingTop"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-top"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowDownward /></span>
+              <input
+                v-model.number="block.layout.paddingBottom"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-bottom"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowBack /></span>
+              <input
+                v-model.number="block.layout.paddingLeft"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-left"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+              <span><SfIconArrowForward /></span>
+              <input
+                v-model.number="block.layout.paddingRight"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-right"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </UiAccordionItem>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { SfTextarea } from '@storefront-ui/vue';
-import type { AnnouncementBarFormProps, AnnouncementBarContent } from './types';
+import { SfIconDelete, SfIconAdd, SfInput, SfSwitch } from '@storefront-ui/vue';
+import { v4 as uuid } from 'uuid';
+import type { AnnouncementBarProps, AnnouncementBarContent } from './types';
 
+const { t } = useI18n();
+const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
 );
-
-const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const props = defineProps<AnnouncementBarFormProps>();
+const elementsOpen = ref(true);
+const textOpen = ref(true);
+const layoutOpen = ref(true);
 
-const announcementBarBlock = computed<AnnouncementBarContent>(() => {
-  const uuid = props.uuid || blockUuid.value;
-  const foundBlock = findOrDeleteBlockByUuid(data.value, uuid);
+const block = computed(
+  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as AnnouncementBarProps,
+);
 
-  const rawContent = foundBlock?.content ?? {};
-  const content = rawContent as Partial<AnnouncementBarContent>;
+const addItem = () => {
+  block.value.content.push({
+    meta: { uuid: uuid() },
+    text: 'New announcement',
+  } as AnnouncementBarContent);
+};
 
-  if (!content.text) {
-    content.text = {};
-  }
-  content.text.htmlDescription = content.text.htmlDescription ?? '';
-
-  return content as AnnouncementBarContent;
-});
+const deleteItem = (idx: number) => {
+  if (block.value.content.length <= 1) return;
+  block.value.content.splice(idx, 1);
+};
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "text-group-label": "Announcement Bar",
-    "html-description-label": "Announcement Text"
+    "elements-label": "Elements",
+    "text-label": "Text",
+    "layout-label": "Layout settings",
+    "item-label": "Announcement",
+    "add-label": "Add element",
+    "empty-label": "(empty)",
+    "background-color-label": "Background color",
+    "sticky-label": "Sticky on top"
   },
   "de": {
-    "text-group-label": "Ankündigungsleiste",
-    "html-description-label": "Ankündigungstext"
+    "elements-label": "Elemente",
+    "text-label": "Text",
+    "layout-label": "Layout-Einstellungen",
+    "item-label": "Ankündigung",
+    "add-label": "Element hinzufügen",
+    "empty-label": "(leer)",
+    "background-color-label": "Hintergrundfarbe",
+    "sticky-label": "Am oberen Rand fixieren"
   }
 }
-</i18n> -->
+</i18n>
