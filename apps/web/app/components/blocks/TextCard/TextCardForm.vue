@@ -53,7 +53,12 @@
             {{ getEditorTranslation('html-editor-label') }}
           </UiFormLabel>
 
-          <EditorRichTextEditorMenuButton icon-name="fullscreen" class="ml-2" @click="toggleModal" />
+          <EditorRichTextEditorMenuButton
+            aria-label="Open HTML editor in fullscreen"
+            icon-name="fullscreen"
+            class="ml-2"
+            @click="toggleModal"
+          />
         </div>
         <SfTextarea
           id="html-editor"
@@ -390,13 +395,13 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
+const props = defineProps<TextCardFormProps>();
 
 const runtimeConfig = useRuntimeConfig().public;
 const modalOpen = ref(false);
 const toggleModal = () => {
   modalOpen.value = !modalOpen.value;
 };
-const props = defineProps<TextCardFormProps>();
 
 const route = useRoute();
 const { data } = useCategoryTemplate(

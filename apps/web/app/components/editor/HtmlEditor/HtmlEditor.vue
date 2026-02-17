@@ -4,10 +4,15 @@
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[200]"
       @click.self="emit('close')"
     >
-      <div class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
+      <div
+        class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="expert-html-editor-heading"
+      >
         <header class="flex items-center justify-between mb-1">
-          <h2 class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
-          <UiButton variant="tertiary" class="!p-2" @click="emit('close')">
+          <h2 id="expert-html-editor-heading" class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
+          <UiButton variant="tertiary" class="!p-2" aria-label="Close HTML editor" @click="emit('close')">
             <SfIconClose />
           </UiButton>
         </header>
@@ -63,6 +68,20 @@ const localValue = computed({
 
 const ariaDescribedBy = computed(() => props.ariaDescribedBy ?? undefined);
 const htmlErrors = computed(() => props.htmlErrors ?? []);
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    emit('close');
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
 </script>
 
 <i18n lang="json">
