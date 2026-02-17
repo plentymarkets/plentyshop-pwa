@@ -38,12 +38,14 @@
 
       <div v-if="editorMode === 'wysiwyg'" class="py-2">
         <EditorRichTextEditor
+          ref="contentRichTextEditor"
           v-model="contentModel"
           v-model:expanded="expandedToolbars.content"
           :min-height="232"
           :expandable="true"
           :text-align="textCardBlock.text.textAlignment"
           data-testid="rte-content"
+          @request-html-modal="handleRequestHtmlModal"
         />
       </div>
 
@@ -90,6 +92,7 @@
         v-model="htmlDraft"
         :aria-describedby="ariaDescribedBy"
         :html-errors="htmlErrors"
+        @switch-to-wysiwyg="handleSwitchToWysiwygFromModal"
         @close="toggleModal"
       />
     </div>
@@ -403,6 +406,10 @@ const toggleModal = () => {
   modalOpen.value = !modalOpen.value;
 };
 
+const contentRichTextEditor = ref<{
+  openModal: () => void;
+} | null>(null);
+
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
@@ -452,11 +459,26 @@ const contentModel = computed<string>({
   },
 });
 
-const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy } = useHtmlEditorMode(contentModel, {
-  defaultMode: 'wysiwyg',
-  commitOnValid: true,
-  maxErrors: 5,
-});
+const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy, switchToHtmlMode, switchToWysiwygMode } = useHtmlEditorMode(
+  contentModel,
+  {
+    defaultMode: 'wysiwyg',
+    commitOnValid: true,
+    maxErrors: 5,
+  },
+);
+
+const handleRequestHtmlModal = () => {
+  switchToHtmlMode();
+  if (!modalOpen.value) toggleModal();
+};
+
+const handleSwitchToWysiwygFromModal = async () => {
+  if (modalOpen.value) toggleModal();
+  switchToWysiwygMode();
+  await nextTick();
+  contentRichTextEditor.value?.openModal();
+};
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 

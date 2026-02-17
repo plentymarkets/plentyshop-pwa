@@ -15,15 +15,25 @@
           <h2 id="expert-html-editor-heading" class="text-lg font-bold" data-testid="html-editor-heading">
             {{ getEditorTranslation('heading') }}
           </h2>
-          <UiButton
-            variant="tertiary"
-            class="!p-2"
-            aria-label="Close HTML editor"
-            data-testid="html-editor-close"
-            @click="emit('close')"
-          >
-            <SfIconClose />
-          </UiButton>
+          <div class="flex items-center gap-2">
+            <UiButton
+              variant="secondary"
+              class="!px-3 !py-1 text-xs"
+              data-testid="html-editor-switch-to-wysiwyg"
+              @click="emit('switch-to-wysiwyg')"
+            >
+              {{ getEditorTranslation('switch-to-wysiwyg-label') }}
+            </UiButton>
+            <UiButton
+              variant="tertiary"
+              class="!p-2"
+              aria-label="Close HTML editor"
+              data-testid="html-editor-close"
+              @click="emit('close')"
+            >
+              <SfIconClose />
+            </UiButton>
+          </div>
         </header>
 
         <div
@@ -67,7 +77,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void;
-  (event: 'close'): void;
+  (event: 'close' | 'switch-to-wysiwyg'): void;
 }>();
 
 const localValue = computed({
@@ -97,11 +107,13 @@ onBeforeUnmount(() => {
 {
   "en": {
     "heading": "HTML editor",
-    "html-invalid-label": "The HTML you entered is invalid. Please fix the following errors:"
+    "html-invalid-label": "The HTML you entered is invalid. Please fix the following errors:",
+    "switch-to-wysiwyg-label": "Switch to Rich Text"
   },
   "de": {
     "heading": "HTML editor",
-    "html-invalid-label": "The HTML you entered is invalid. Please fix the following errors:"
+    "html-invalid-label": "The HTML you entered is invalid. Please fix the following errors:",
+    "switch-to-wysiwyg-label": "Switch to Rich Text"
   }
 }
 </i18n>
