@@ -49,7 +49,6 @@ describe('HtmlEditor', () => {
             htmlErrors: errors,
         });
 
-
         const alert = document.querySelector('[data-testid="html-editor-errors"]');
         expect(alert).not.toBeNull();
         expect(alert?.textContent).toContain('Error 1');
