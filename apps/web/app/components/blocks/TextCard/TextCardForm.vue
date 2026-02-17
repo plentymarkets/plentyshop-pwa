@@ -38,20 +38,30 @@
 
       <div v-if="editorMode === 'wysiwyg'" class="py-2">
         <EditorRichTextEditor
+          ref="contentRichTextEditor"
           v-model="contentModel"
           v-model:expanded="expandedToolbars.content"
           :min-height="232"
           :expandable="true"
           :text-align="textCardBlock.text.textAlignment"
           data-testid="rte-content"
+          @request-html-modal="handleRequestHtmlModal"
         />
       </div>
 
       <div v-else class="py-2">
-        <UiFormLabel for="html-editor">
-          {{ getEditorTranslation('html-editor-label') }}
-        </UiFormLabel>
+        <div class="flex items-center justify-between">
+          <UiFormLabel for="html-editor" class="m-0">
+            {{ getEditorTranslation('html-editor-label') }}
+          </UiFormLabel>
 
+          <EditorRichTextEditorMenuButton
+            aria-label="Open HTML editor in fullscreen"
+            icon-name="fullscreen"
+            class="ml-2"
+            @click="toggleModal"
+          />
+        </div>
         <SfTextarea
           id="html-editor"
           v-model="htmlDraft"
@@ -76,6 +86,15 @@
           </ul>
         </div>
       </div>
+
+      <EditorHtmlEditor
+        v-if="modalOpen"
+        v-model="htmlDraft"
+        :aria-describedby="ariaDescribedBy"
+        :html-errors="htmlErrors"
+        @switch-to-wysiwyg="handleSwitchToWysiwygFromModal"
+        @close="toggleModal"
+      />
     </div>
 
     <div v-else data-testid="text-card-form">
@@ -379,8 +398,17 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
+const props = defineProps<TextCardFormProps>();
 
 const runtimeConfig = useRuntimeConfig().public;
+const modalOpen = ref(false);
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value;
+};
+
+const contentRichTextEditor = ref<{
+  openModal: () => void;
+} | null>(null);
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -391,8 +419,6 @@ const { data } = useCategoryTemplate(
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
-const props = defineProps<TextCardFormProps>();
 
 const expandedToolbars = ref({
   content: true,
@@ -433,11 +459,26 @@ const contentModel = computed<string>({
   },
 });
 
-const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy } = useHtmlEditorMode(contentModel, {
-  defaultMode: 'wysiwyg',
-  commitOnValid: true,
-  maxErrors: 5,
-});
+const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy, switchToHtmlMode, switchToWysiwygMode } = useHtmlEditorMode(
+  contentModel,
+  {
+    defaultMode: 'wysiwyg',
+    commitOnValid: true,
+    maxErrors: 5,
+  },
+);
+
+const handleRequestHtmlModal = () => {
+  switchToHtmlMode();
+  if (!modalOpen.value) toggleModal();
+};
+
+const handleSwitchToWysiwygFromModal = async () => {
+  if (modalOpen.value) toggleModal();
+  switchToWysiwygMode();
+  await nextTick();
+  contentRichTextEditor.value?.openModal();
+};
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
