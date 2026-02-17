@@ -8,11 +8,10 @@
   >
     <SwiperSlide v-for="(item, idx) in props.content.announcements.filter(a => a.visible !== false)" :key="idx">
       <div
-        class="min-h-10 flex items-center justify-center"
+        class="min-h-10 flex items-center justify-center rte-prose rte-prose--render"
         :style="inlineStyle"
-      >
-        {{ item.text }}
-      </div>
+        v-html="item.text"
+      />
     </SwiperSlide>
   </Swiper>
 </template>
