@@ -1,7 +1,6 @@
 <template>
   <div class="sticky top-[52px] h-[80vh] overflow-y-auto">
     <UiAccordionItem
-      v-model="elementsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -25,19 +24,19 @@
           </button>
         </div>
 
-        <button
-          class="w-full mt-2 py-2 border border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:bg-gray-50 flex items-center justify-center gap-1"
+        <UiButton
+          class="mt-4"
+          variant="secondary"
           @click="addItem"
         >
           <SfIconAdd class="text-neutral-500" />
           {{ t('add-label') }}
-        </button>
+        </UiButton>
       </div>
     </UiAccordionItem>
 
     <UiAccordionItem
       v-if="block.content.length"
-      v-model="textOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -54,7 +53,6 @@
     </UiAccordionItem>
 
     <UiAccordionItem
-      v-model="layoutOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -147,10 +145,6 @@ const { data } = useCategoryTemplate(
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
-const elementsOpen = ref(true);
-const textOpen = ref(true);
-const layoutOpen = ref(true);
 
 const block = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as AnnouncementBarProps,
