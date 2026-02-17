@@ -68,10 +68,12 @@ const htmlErrors = computed(() => props.htmlErrors ?? []);
 <i18n lang="json">
 {
   "en": {
-    "heading": "HTML editor"
+    "heading": "HTML editor",
+    "html-invalid-label": "The HTML you entered is invalid. Please fix the following errors:"
   },
   "de": {
-    "heading": "HTML editor"
+    "heading": "HTML editor",
+    "html-invalid-label": "The HTML you entered is invalid. Please fix the following errors:"
   }
 }
 </i18n>
