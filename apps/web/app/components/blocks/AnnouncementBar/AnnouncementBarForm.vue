@@ -23,9 +23,32 @@
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
         </button>
 
-        <button class="p-1 hover:bg-gray-100 rounded-full shrink-0">
-          <SfIconMoreVert />
-        </button>
+        <div class="relative">
+          <button
+            class="p-1 hover:bg-gray-100 rounded-full shrink-0"
+            @click="toggleMenu(idx)"
+          >
+            <SfIconMoreVert />
+          </button>
+
+          <div
+            v-if="openMenuIdx === idx"
+            class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+          >
+            <div class="flex items-center justify-between px-4 py-3 border-b">
+              <span class="text-sm">{{ t('visibility-label') }}</span>
+              <SfSwitch v-model="item.visible" />
+            </div>
+            <button
+              class="w-full flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-gray-50 text-sm"
+              :disabled="block.content.announcements.length === 1"
+              @click="deleteItem(idx)"
+            >
+              <SfIconDelete class="text-red-500" />
+              {{ t('delete-label') }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <UiButton
@@ -119,7 +142,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconAdd ,SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward, SfIconMoreVert } from '@storefront-ui/vue';
+import { SfIconAdd, SfIconDelete, SfInput, SfSwitch, SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward, SfIconMoreVert } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps } from './types';
@@ -134,6 +157,7 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
+const openMenuIdx = ref<number | null>(null);
 
 const block = computed({
   get: () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as AnnouncementBarProps,
@@ -144,19 +168,24 @@ const block = computed({
 });
 
 const contentlayout = computed(() => block.value.content);
-
 const { isFullWidth } = useFullWidthToggleForContent(contentlayout);
+
+const toggleMenu = (idx: number) => {
+  openMenuIdx.value = openMenuIdx.value === idx ? null : idx;
+};
 
 const addItem = () => {
   block.value.content.announcements.push({
     meta: { uuid: uuid() },
     text: 'New announcement',
+    visible: true,
   });
 };
 
 const deleteItem = (idx: number) => {
   if (block.value.content.announcements.length <= 1) return;
   block.value.content.announcements.splice(idx, 1);
+  openMenuIdx.value = null;
 };
 </script>
 
@@ -164,25 +193,25 @@ const deleteItem = (idx: number) => {
 {
   "en": {
     "elements-label": "Elements",
-    "text-label": "Text",
     "layout-label": "Layout settings",
-    "item-label": "Announcement",
     "add-label": "Add element",
     "empty-label": "(empty)",
     "background-color-label": "Background color",
     "sticky-label": "Sticky on top",
-    "padding-label": "Padding (px)"
+    "padding-label": "Padding (px)",
+    "visibility-label": "Visibility",
+    "delete-label": "Delete"
   },
   "de": {
     "elements-label": "Elemente",
-    "text-label": "Text",
     "layout-label": "Layout-Einstellungen",
-    "item-label": "Ankündigung",
     "add-label": "Element hinzufügen",
     "empty-label": "(leer)",
     "background-color-label": "Hintergrundfarbe",
     "sticky-label": "Am oberen Rand fixieren",
-    "padding-label": "Innenabstand (px)"
+    "padding-label": "Innenabstand (px)",
+    "visibility-label": "Sichtbarkeit",
+    "delete-label": "Löschen"
   }
 }
 </i18n>

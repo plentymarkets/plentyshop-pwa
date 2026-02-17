@@ -6,7 +6,7 @@
     :autoplay="{ delay: 6000, disableOnInteraction: false }"
     :speed="900"
   >
-    <SwiperSlide v-for="(item, idx) in props.content.announcements" :key="idx">
+    <SwiperSlide v-for="(item, idx) in props.content.announcements.filter(a => a.visible !== false)" :key="idx">
       <div
         class="min-h-10 flex items-center justify-center"
         :style="inlineStyle"

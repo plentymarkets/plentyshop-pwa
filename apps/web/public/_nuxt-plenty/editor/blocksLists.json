@@ -1030,11 +1030,13 @@
               "announcements": [
                 {
                   "meta": { "uuid": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" },
-                  "text": "This is an example announcement."
+                  "text": "This is an example announcement.",
+                  "visible": true
                 },
                 {
                   "meta": { "uuid": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" },
-                  "text": "This is another example announcement."
+                  "text": "This is another example announcement.",
+                  "visible": true
                 }
               ],
               "layout": {

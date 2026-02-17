@@ -13,6 +13,7 @@ export type AnnouncementBarContent = {
       uuid: string;
     };
     text: string;
+    visible: boolean;
   }[];
   layout: {
     paddingTop: number;
