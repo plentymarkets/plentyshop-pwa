@@ -26,12 +26,12 @@
       :disabled="disableBuyButton || paypalCardDialog"
       @click="openPayPalCardDialog"
     />
-    <PayPalApplePayButton
+    <ApplePayButton
       v-else-if="selectedPaymentId === paypalApplePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
-    <PayPalGooglePayButton
+    <GooglePayButton
       v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
