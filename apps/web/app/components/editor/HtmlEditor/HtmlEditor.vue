@@ -9,17 +9,26 @@
         role="dialog"
         aria-modal="true"
         aria-labelledby="expert-html-editor-heading"
+        data-testid="html-editor-modal"
       >
         <header class="flex items-center justify-between mb-1">
-          <h2 id="expert-html-editor-heading" class="text-lg font-bold">{{ getEditorTranslation('heading') }}</h2>
-          <UiButton variant="tertiary" class="!p-2" aria-label="Close HTML editor" @click="emit('close')">
+          <h2 id="expert-html-editor-heading" class="text-lg font-bold" data-testid="html-editor-heading">
+            {{ getEditorTranslation('heading') }}
+          </h2>
+          <UiButton
+            variant="tertiary"
+            class="!p-2"
+            aria-label="Close HTML editor"
+            data-testid="html-editor-close"
+            @click="emit('close')"
+          >
             <SfIconClose />
           </UiButton>
         </header>
 
         <div
           v-if="htmlErrors && htmlErrors.length"
-          id="expert-html-editor-errors"
+          data-testid="html-editor-errors"
           class="mt-2 mb-2 rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800"
           role="alert"
         >
@@ -32,10 +41,10 @@
         <main class="flex-1 overflow-hidden flex flex-col">
           <div class="flex-1 overflow-y-auto">
             <SfTextarea
-              id="expert-html-editor"
               v-model="localValue"
               rows="20"
               class="w-full h-full font-mono text-sm border rounded-md shadow-sm"
+              data-testid="html-editor-textarea"
               :class="htmlErrors && htmlErrors.length ? 'border-red-400' : 'border-gray-300'"
               :aria-invalid="htmlErrors && htmlErrors.length ? 'true' : 'false'"
               :aria-describedby="ariaDescribedBy"
