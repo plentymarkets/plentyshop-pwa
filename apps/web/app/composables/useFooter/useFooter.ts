@@ -1,5 +1,5 @@
 import type { FooterSettings } from '~/components/blocks/Footer/types';
-import { createDefaultFooterSettings, extractFooterFromBlocks, addFooterBlock } from '~/utils/footerHelper';
+import { createDefaultFooterSettings, extractFooterFromBlocks } from '~/utils/footerHelper';
 import { callWithNuxt } from '#app';
 
 /**
@@ -61,6 +61,5 @@ export const useFooter = () => {
     clearFooterCache,
     updateFooterCache,
     extractFooterFromBlocks,
-    addFooterBlock,
   };
 };
