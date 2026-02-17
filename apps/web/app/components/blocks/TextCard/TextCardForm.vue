@@ -48,10 +48,13 @@
       </div>
 
       <div v-else class="py-2">
-        <UiFormLabel for="html-editor">
-          {{ getEditorTranslation('html-editor-label') }}
-        </UiFormLabel>
+        <div class="flex items-center justify-between">
+          <UiFormLabel for="html-editor" class="m-0">
+            {{ getEditorTranslation('html-editor-label') }}
+          </UiFormLabel>
 
+          <EditorRichTextEditorMenuButton icon-name="fullscreen" class="ml-2" @click="toggleModal" />
+        </div>
         <SfTextarea
           id="html-editor"
           v-model="htmlDraft"
@@ -76,6 +79,8 @@
           </ul>
         </div>
       </div>
+
+      <EditorHtmlEditor v-if="modalOpen" :editor="editor" @close="toggleModal" />
     </div>
 
     <div v-else data-testid="text-card-form">
@@ -381,13 +386,24 @@ import {
 import type { TextCardFormProps, TextCardContent } from './types';
 
 const runtimeConfig = useRuntimeConfig().public;
-
+const modalOpen = ref(false);
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value;
+};
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
 );
+
+const { editor } = useRichTextEditor({
+  modelValue: toRef(props, 'modelValue'),
+  onUpdateModelValue: (v) => emit('update:modelValue', v),
+  expanded: toRef(props, 'expanded'),
+  onUpdateExpanded: (v) => emit('update:expanded', v),
+  textAlign: toRef(props, 'textAlign'),
+});
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
