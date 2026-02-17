@@ -8,12 +8,13 @@ export const useEditorUnsavedChangesGuard = () => {
   const { closeDrawer } = useSiteConfiguration();
   const { isEditingEnabled } = useEditor();
   const { settingsIsDirty } = useSiteSettings();
+  const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
   const hasUnsavedChanges = computed(() => isEditingEnabled.value || settingsIsDirty.value);
 
   const guardRouteLeave = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     if (hasUnsavedChanges.value) {
-      const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+      const confirmation = window.confirm(confirmMessage);
 
       if (confirmation) {
         closeDrawer();

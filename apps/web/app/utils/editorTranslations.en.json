@@ -78,5 +78,6 @@
   "external-scripts": "External Scripts & Styles",
   "custom-code": "Custom Code",
   "block-reset-success": "Blocks reset successfully. Please refresh the page.",
-  "block-reset-error": "An error occurred while resetting the blocks. {error}"
+  "block-reset-error": "An error occurred while resetting the blocks. {error}",
+  "unsaved-changes-confirm": "You have unsaved changes. Are you sure you want to leave?"
 }
