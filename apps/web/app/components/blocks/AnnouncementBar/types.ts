@@ -21,7 +21,6 @@ export type AnnouncementBarContent = {
     paddingLeft: number;
     paddingRight: number;
     fullWidth: boolean;
-    stickyOnTop: boolean;
     backgroundColor: string;
   };
 };

@@ -1041,7 +1041,6 @@
               ],
               "layout": {
                 "fullWidth": true,
-                "stickyOnTop": false,
                 "paddingTop": 0,
                 "paddingBottom": 0,
                 "paddingLeft": 0,

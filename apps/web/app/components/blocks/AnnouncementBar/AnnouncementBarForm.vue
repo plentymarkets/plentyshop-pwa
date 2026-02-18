@@ -109,10 +109,6 @@
 
         <div class="p-4 flex flex-col gap-4">
           <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-          <div class="flex items-center justify-between">
-            <UiFormLabel>{{ t('sticky-label') }}</UiFormLabel>
-            <SfSwitch v-model="block.content.layout.stickyOnTop" />
-          </div>
 
           <div class="mb-2">
             <UiFormLabel class="mb-1">{{ t('background-color-label') }}</UiFormLabel>
