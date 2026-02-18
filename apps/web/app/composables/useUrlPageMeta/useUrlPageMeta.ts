@@ -68,13 +68,13 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const { defaultLocale } = useI18n();
     const { getAvailableLocales } = useLocalization();
 
-    const canonicalUrl = `${runtimeConfig.public.domain}${localePath(route.fullPath)}`;
+    const canonicalUrl = `${runtimeConfig.public.domain}${localePath(route.path)}`;
 
     const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
         rel: 'alternate',
         hreflang: locale,
-        href: `${runtimeConfig.public.domain}${localePath(route.fullPath, locale)}`,
+        href: `${runtimeConfig.public.domain}${localePath(route.path, locale)}`,
       };
     });
 
@@ -84,7 +84,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
         {
           rel: 'alternate',
           hreflang: 'x-default',
-          href: `${runtimeConfig.public.domain}${localePath(route.fullPath, defaultLocale)}`,
+          href: `${runtimeConfig.public.domain}${localePath(route.path, defaultLocale)}`,
         },
         ...alternateLocales,
       ],
@@ -119,7 +119,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const canonicalLink =
       canonicalOverride && canonicalOverride.trim() !== ''
         ? canonicalOverride
-        : `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
+        : `${runtimeConfig.public.domain}${localePath(route.path, $i18n.locale.value)}`;
 
     useHead({
       link: [
@@ -143,8 +143,8 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
               hreflang: key,
               href:
                 key === `x-default`
-                  ? `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`
-                  : `${runtimeConfig.public.domain}${localePath(route.fullPath, key as Locale)}`,
+                  ? `${runtimeConfig.public.domain}${localePath(route.path, $i18n.locale.value)}`
+                  : `${runtimeConfig.public.domain}${localePath(route.path, key as Locale)}`,
             },
           ],
         });
