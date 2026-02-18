@@ -1,7 +1,6 @@
 /**
  * Plugin to initialize and cache global blocks (header/footer) on app startup
  * Fetches once and distributes to caches
- * Refetches when locale changes
  */
 export default defineNuxtPlugin({
   name: 'global-blocks',
