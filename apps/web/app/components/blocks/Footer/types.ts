@@ -1,5 +1,3 @@
-import type { Block } from '@plentymarkets/shop-api';
-
 export type FooterProps = {
   content?: FooterSettings;
 };
@@ -46,11 +44,3 @@ export interface FooterSettings {
   footnoteAlign: 'left' | 'center' | 'right';
   colors: FooterSettingsColors;
 }
-
-type AddFooterBlockOptions = {
-  data: Ref<Block[]>;
-  cachedFooter: Ref<unknown>;
-  cleanData?: Ref<Block[]>;
-};
-
-export type AddFooterBlock = (options: AddFooterBlockOptions) => void;

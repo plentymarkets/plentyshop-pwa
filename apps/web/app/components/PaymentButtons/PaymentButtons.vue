@@ -3,6 +3,7 @@
     :is="component.componentName"
     v-for="(component, index) in filteredComponents"
     :key="index"
+    :payment-key="paymentKey"
     :disabled="disableBuyButton"
     @click="validateOnClickComponents($event, component)"
   />
@@ -26,12 +27,12 @@
       :disabled="disableBuyButton || paypalCardDialog"
       @click="openPayPalCardDialog"
     />
-    <PayPalApplePayButton
+    <ApplePayButton
       v-else-if="selectedPaymentId === paypalApplePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
     />
-    <PayPalGooglePayButton
+    <GooglePayButton
       v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
       @button-clicked="handlePreparePayment"
@@ -130,6 +131,12 @@ const disableBuyButton = computed(
     navigationInProgress.value ||
     processingOrder.value,
 );
+
+const paymentKey = computed(() => {
+  const paymentId = paymentProviderGetters.getMethodOfPaymentId(cart.value);
+  const paymentMethod = paymentProviderGetters.getPaymentMethodById(paymentMethods.value.list, Number(paymentId));
+  return paymentMethod ? paymentProviderGetters.getPaymentKey(paymentMethod) : null;
+});
 
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;

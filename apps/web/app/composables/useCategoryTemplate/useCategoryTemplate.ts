@@ -26,16 +26,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }),
   );
 
-  const ensureFooterBlock = async () => {
-    const { fetchFooterSettings } = useFooter();
-
-    try {
-      await fetchFooterSettings();
-    } catch (error) {
-      console.warn('Failed to ensure footer block:', error);
-    }
-  };
-
   const migrateAllBlocks = (blocks: Block[]) => {
     const config = useRuntimeConfig().public;
 
@@ -76,8 +66,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
 
     setupBlocks(data?.value?.data ?? []);
-
-    await ensureFooterBlock();
   };
 
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
@@ -111,6 +99,33 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   const setDefaultTemplate = (blocks: Block[]) => {
     state.value.defaultTemplateData = blocks;
   };
+
+  const headerBlocks = computed({
+    get: () => state.value.data.filter((block) => block.name === 'Header'),
+    set: (newHeaderBlocks: Block[]) => {
+      const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+      const footer = state.value.data.filter((b) => b.name === 'Footer');
+      state.value.data.splice(0, state.value.data.length, ...newHeaderBlocks, ...main, ...footer);
+    },
+  });
+
+  const mainBlocks = computed({
+    get: () => state.value.data.filter((block) => block.name !== 'Header' && block.name !== 'Footer'),
+    set: (newMainBlocks: Block[]) => {
+      const header = state.value.data.filter((b) => b.name === 'Header');
+      const footer = state.value.data.filter((b) => b.name === 'Footer');
+      state.value.data.splice(0, state.value.data.length, ...header, ...newMainBlocks, ...footer);
+    },
+  });
+
+  const footerBlocks = computed({
+    get: () => state.value.data.filter((block) => block.name === 'Footer'),
+    set: (newFooterBlocks: Block[]) => {
+      const header = state.value.data.filter((b) => b.name === 'Header');
+      const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+      state.value.data.splice(0, state.value.data.length, ...header, ...main, ...newFooterBlocks);
+    },
+  });
 
   /**
    * @description Function for fetching the category template from a category id
@@ -175,6 +190,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     updateBlocks,
     setupBlocks,
     setDefaultTemplate,
+    headerBlocks,
+    mainBlocks,
+    footerBlocks,
     ...toRefs(state.value),
   };
 };

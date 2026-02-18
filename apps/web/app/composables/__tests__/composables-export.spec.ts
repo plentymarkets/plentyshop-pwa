@@ -9,14 +9,37 @@ describe('composables index exports', () => {
 
   const exportedModules = Array.from(indexContent.matchAll(/export \* from '\.\/(.*?)';/g)).map((match) => match[1]);
 
-  const fileModules = fs
+  // Editor composables are intentionally excluded from barrel export to avoid unused JavaScript
+  const editorComposablesBlacklist = [
+    'useBlockManager',
+    'useBlocksList',
+    'useCategoryManagement',
+    'useCategoriesSearch',
+    'useCategorySettings',
+    'useCategorySettingsCollection',
+    'useDrawerState',
+    'useEditor',
+    'useEditorUnsavedChangesGuard',
+    'useJsonEditor',
+    'useToolbar',
+    'useUpdatePageTemplate',
+    'useAddPage',
+    'useBlockContentHelper',
+    'useEditModeNotification',
+    'useFullWidthToggle',
+    'useRichTextEditor',
+    'useHtmlEditorMode',
+  ];
+
+  const allFileModules = fs
     .readdirSync(dir)
     .filter((file) => /^use.*$/.test(file))
     .map((file) => file.replace(/\.ts$/, ''));
 
+  const fileModules = allFileModules.filter((module) => !editorComposablesBlacklist.includes(module));
   fileModules.push('defaults');
 
-  it('should export every use* composable file', () => {
+  it('should export every use* composable file except editor composables', () => {
     expect(exportedModules.sort()).toEqual(fileModules.sort());
   });
 });
