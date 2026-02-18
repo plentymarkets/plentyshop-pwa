@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const REQUIRED_API_ENDPOINT = 'https://n4u0i8phmei5.c14-01.plentymarkets.com';
+const REQUIRED_API_ENDPOINT = 'https://mevofvd5omld.c01-14.plentymarkets.com';
 const currentApiEndpoint = process.env.API_ENDPOINT;
 
 if (currentApiEndpoint !== REQUIRED_API_ENDPOINT) {
