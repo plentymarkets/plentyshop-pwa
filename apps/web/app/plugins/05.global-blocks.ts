@@ -8,6 +8,7 @@ export default defineNuxtPlugin({
   parallel: true,
   async setup() {
     const { fetchGlobalBlocks, clearGlobalBlocksCache } = useGlobalBlocks();
+    const { clearFooterCache } = useFooter();
     const { $i18n } = useNuxtApp();
 
     try {
@@ -19,8 +20,6 @@ export default defineNuxtPlugin({
     watch(
       () => $i18n.locale.value,
       async () => {
-        const { clearFooterCache } = useFooter();
-
         clearGlobalBlocksCache();
         clearFooterCache();
 
