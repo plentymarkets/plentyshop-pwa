@@ -16,6 +16,8 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
     loading: false,
   }));
 
+  const pendingRequest = useState<Promise<CategoryTreeItem[]> | null>('useCategoryTree-pending', () => null);
+
   /**
    * @description Function for fetching the category tree.
    * @example
@@ -24,16 +26,25 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
    * ```
    */
   const getCategoryTree: GetCategoryTree = async () => {
+    if (pendingRequest.value) return pendingRequest.value;
+
     state.value.loading = true;
-    try {
-      const data = await useSdk().plentysystems.getCategoryTree();
-      state.value.data = data?.data ?? state.value.data;
-      return state.value.data;
-    } catch (error) {
-      throw new Error(error as string);
-    } finally {
-      state.value.loading = false;
-    }
+
+    const request = (async () => {
+      try {
+        const data = await useSdk().plentysystems.getCategoryTree();
+        state.value.data = data?.data ?? state.value.data;
+        return state.value.data;
+      } catch (error) {
+        throw new Error(error as string);
+      } finally {
+        state.value.loading = false;
+        pendingRequest.value = null;
+      }
+    })();
+
+    pendingRequest.value = request;
+    return request;
   };
 
   /**

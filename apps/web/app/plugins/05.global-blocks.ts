@@ -24,8 +24,7 @@ export default defineNuxtPlugin({
         clearFooterCache();
 
         try {
-          await fetchGlobalBlocks();
-          await getCategoryTree();
+          await Promise.all([fetchGlobalBlocks(), getCategoryTree()]);
         } catch (error) {
           console.warn('Failed to refetch global blocks after locale change:', error);
         }
