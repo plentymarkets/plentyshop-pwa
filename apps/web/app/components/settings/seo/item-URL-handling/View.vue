@@ -17,11 +17,11 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Custom canonical URL for item pages",
+    "label": "Item URL Handling",
     "description": "Use this setting to determine a custom canonical URL for item pages."
   },
   "de": {
-    "label": "Custom canonical URL for item pages",
+    "label": "Item URL Handling",
     "description": "Use this setting to determine a custom canonical URL for item pages."
   }
 }
