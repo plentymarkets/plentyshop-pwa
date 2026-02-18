@@ -77,7 +77,7 @@
                 >
                   <div class="flex items-center justify-between px-4 py-3 border-b">
                     <span class="text-sm">{{ t('visibility-label') }}</span>
-                    <SfSwitch v-model="item.visible" />
+                    <SfSwitch v-model="item.visible" :disabled="isLastVisibleItem(idx)" />
                   </div>
                   <button
                     class="w-full flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-gray-50 text-sm"
@@ -201,6 +201,11 @@ const editingText = computed({
 
 const contentlayout = computed(() => block.value.content);
 const { isFullWidth } = useFullWidthToggleForContent(contentlayout);
+
+const isLastVisibleItem = (idx: number) => {
+  const visibleCount = announcements.value.filter((a) => a.visible !== false).length;
+  return visibleCount === 1 && announcements.value[idx]?.visible !== false;
+};
 
 const toggleMenu = (idx: number) => {
   openMenuIdx.value = openMenuIdx.value === idx ? null : idx;
