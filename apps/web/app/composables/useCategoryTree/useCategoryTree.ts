@@ -58,9 +58,22 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
     state.value.data = data;
   };
 
+  /**
+   * @description Function for clearing the category tree cache.
+   * @example
+   * ``` ts
+   * clearCategoryTree();
+   * ```
+   */
+  const clearCategoryTree = () => {
+    state.value.data = [];
+    pendingRequest.value = null;
+  };
+
   return {
     getCategoryTree,
     setCategoryTree,
+    clearCategoryTree,
     ...toRefs(state.value),
   };
 };
