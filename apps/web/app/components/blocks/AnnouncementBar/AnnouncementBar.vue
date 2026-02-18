@@ -1,11 +1,11 @@
 <template>
   <div class="relative">
     <Swiper
+      :key="enableNavigation ? 'nav' : 'no-nav'"
       :slides-per-view="1"
       :loop="enableNavigation"
       :modules="enableNavigation ? [Navigation] : []"
       :navigation="navigationConfig"
-      @swiper="onSwiper"
     >
       <SwiperSlide v-for="(item, idx) in visibleItems" :key="idx">
         <div
@@ -42,14 +42,11 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
 import { SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import type { AnnouncementBarProps } from './types';
-import type { Swiper as SwiperType } from 'swiper';
 
 const props = defineProps<AnnouncementBarProps>();
 
 const visibleItems = computed(() => props.content.filter((item) => item.content.visible !== false));
 const enableNavigation = computed(() => visibleItems.value.length > 1);
-
-const swiperInstance = ref<SwiperType | null>(null);
 
 const navigationConfig = computed(() => ({
   nextEl: '.swiper-button-next-announcement',
@@ -66,20 +63,5 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
     backgroundColor: layout.backgroundColor || 'transparent',
   };
-});
-
-const onSwiper = (swiper: SwiperType) => {
-  swiperInstance.value = swiper;
-};
-
-watch(enableNavigation, async (newVal) => {
-  if (swiperInstance.value && !swiperInstance.value.destroyed) {
-    await nextTick();
-
-    if (newVal && swiperInstance.value.navigation) {
-      swiperInstance.value.navigation.init();
-      swiperInstance.value.navigation.update();
-    }
-  }
 });
 </script>
