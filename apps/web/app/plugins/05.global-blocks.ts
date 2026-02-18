@@ -9,6 +9,7 @@ export default defineNuxtPlugin({
   async setup() {
     const { fetchGlobalBlocks, clearGlobalBlocksCache } = useGlobalBlocks();
     const { clearFooterCache } = useFooter();
+    const { getCategoryTree } = useCategoryTree();
     const { $i18n } = useNuxtApp();
 
     try {
@@ -25,6 +26,7 @@ export default defineNuxtPlugin({
 
         try {
           await fetchGlobalBlocks();
+          await getCategoryTree();
         } catch (error) {
           console.warn('Failed to refetch global blocks after locale change:', error);
         }
