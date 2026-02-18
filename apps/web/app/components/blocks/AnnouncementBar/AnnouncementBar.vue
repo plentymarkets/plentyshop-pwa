@@ -47,7 +47,7 @@ const props = defineProps<AnnouncementBarProps>();
 const visibleItems = computed(() => props.content.filter((item) => item.content.visible !== false));
 const enableNavigation = computed(() => visibleItems.value.length > 1);
 
-const swiperInstance = ref<SwiperType | null>(null)
+const swiperInstance = ref<SwiperType | null>(null);
 
 const navigationConfig = computed(() => ({
   nextEl: '.swiper-button-next-announcement',
