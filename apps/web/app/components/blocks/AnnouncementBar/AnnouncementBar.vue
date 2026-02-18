@@ -19,6 +19,7 @@
     <button
       v-if="enableNavigation"
       type="button"
+      data-testid="swiper-button-prev-announcement"
       class="swiper-button-prev-announcement absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center"
       :style="{ color: props.configuration.controls.color }"
     >
@@ -27,6 +28,7 @@
     <button
       v-if="enableNavigation"
       type="button"
+      data-testid="swiper-button-next-announcement"
       class="swiper-button-next-announcement absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center"
       :style="{ color: props.configuration.controls.color }"
     >

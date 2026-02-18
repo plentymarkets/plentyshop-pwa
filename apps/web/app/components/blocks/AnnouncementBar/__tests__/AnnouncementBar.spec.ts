@@ -78,8 +78,8 @@ describe('AnnouncementBar - Navigation', () => {
   it('should render navigation buttons when more than one item is visible', () => {
     const wrapper = mount(AnnouncementBar, { props: mockAnnouncementBar });
 
-    expect(wrapper.find('.swiper-button-prev-announcement').exists()).toBe(true);
-    expect(wrapper.find('.swiper-button-next-announcement').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="swiper-button-prev-announcement"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="swiper-button-next-announcement"]').exists()).toBe(true);
   });
 
   it('should not render navigation buttons when only one item is visible', () => {
@@ -103,14 +103,14 @@ describe('AnnouncementBar - Navigation', () => {
 
     const wrapper = mount(AnnouncementBar, { props: singleVisible });
 
-    expect(wrapper.find('.swiper-button-prev-announcement').exists()).toBe(false);
-    expect(wrapper.find('.swiper-button-next-announcement').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="swiper-button-prev-announcement"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="swiper-button-next-announcement"]').exists()).toBe(false);
   });
 
   it('should apply the controls color to navigation buttons', () => {
     const wrapper = mount(AnnouncementBar, { props: mockAnnouncementBar });
-    const prevButton = wrapper.find('.swiper-button-prev-announcement');
-    const nextButton = wrapper.find('.swiper-button-next-announcement');
+    const prevButton = wrapper.find('[data-testid="swiper-button-prev-announcement"]');
+    const nextButton = wrapper.find('[data-testid="swiper-button-next-announcement"]');
 
     expect(prevButton.attributes('style')).toContain(`color: ${mockAnnouncementBar.configuration.controls.color}`);
     expect(nextButton.attributes('style')).toContain(`color: ${mockAnnouncementBar.configuration.controls.color}`);
