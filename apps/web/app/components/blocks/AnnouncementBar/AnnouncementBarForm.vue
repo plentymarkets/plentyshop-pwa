@@ -49,7 +49,10 @@
                 <NuxtImg width="18" height="18" :src="dragIcon" />
               </button>
 
-              <span class="text-sm truncate flex-1 w-6" v-html="item.content.text || getEditorTranslation('empty-label')" />
+              <span
+                class="text-sm truncate flex-1 w-6"
+                v-html="item.content.text || getEditorTranslation('empty-label')"
+              />
 
               <button class="p-1 hover:bg-gray-100 rounded-full shrink-0" @click="editingIdx = idx">
                 <svg
