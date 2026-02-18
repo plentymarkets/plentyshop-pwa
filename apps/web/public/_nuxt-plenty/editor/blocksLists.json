@@ -1027,7 +1027,7 @@
             "type": "structure",
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
             "configuration": {
-              "controls": { "color": "#000" },
+              "controls": { "color": "#000000" },
               "layout": {
                 "fullWidth": true,
                 "paddingTop": 0,
@@ -1063,7 +1063,7 @@
             "type": "structure",
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
             "configuration": {
-              "controls": { "color": "#000" },
+              "controls": { "color": "#000000" },
               "layout": {
                 "fullWidth": true,
                 "paddingTop": 0,
