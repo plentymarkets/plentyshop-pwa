@@ -3,6 +3,7 @@
     :is="component.componentName"
     v-for="(component, index) in filteredComponents"
     :key="index"
+    :payment-key="paymentKey"
     :disabled="disableBuyButton"
     @click="validateOnClickComponents($event, component)"
   />
@@ -130,6 +131,12 @@ const disableBuyButton = computed(
     navigationInProgress.value ||
     processingOrder.value,
 );
+
+const paymentKey = computed(() => {
+  const paymentId = paymentProviderGetters.getMethodOfPaymentId(cart.value);
+  const paymentMethod = paymentProviderGetters.getPaymentMethodById(paymentMethods.value.list, Number(paymentId));
+  return paymentMethod ? paymentProviderGetters.getPaymentKey(paymentMethod) : null;
+});
 
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
