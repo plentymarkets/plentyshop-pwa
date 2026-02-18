@@ -10,7 +10,7 @@
         <div
           class="min-h-10 flex items-center justify-center rte-prose rte-prose--render"
           :style="inlineStyle"
-          v-html="item.text"
+          v-html="item.content.text"
         />
       </SwiperSlide>
     </Swiper>
@@ -19,15 +19,17 @@
       v-if="visibleItems.length > 1"
       type="button"
       class="swiper-button-prev-announcement absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center"
+      :style="{ color: props.configuration.controls.color }"
     >
-      <SfIconChevronLeft size="sm" class="text-black" />
+      <SfIconChevronLeft size="sm" />
     </button>
     <button
       v-if="visibleItems.length > 1"
       type="button"
       class="swiper-button-next-announcement absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center"
+      :style="{ color: props.configuration.controls.color }"
     >
-      <SfIconChevronRight size="sm" class="text-black" />
+      <SfIconChevronRight size="sm" />
     </button>
   </div>
 </template>
@@ -40,7 +42,7 @@ import type { AnnouncementBarProps } from './types';
 
 const props = defineProps<AnnouncementBarProps>();
 
-const visibleItems = computed(() => props.content.announcements.filter((a) => a.visible !== false));
+const visibleItems = computed(() => props.content.filter((item) => item.content.visible !== false));
 
 const navigationConfig = computed(() => ({
   nextEl: '.swiper-button-next-announcement',
@@ -48,7 +50,7 @@ const navigationConfig = computed(() => ({
 }));
 
 const inlineStyle = computed(() => {
-  const layout = props.content.layout || {};
+  const layout = props.configuration.layout || {};
 
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,

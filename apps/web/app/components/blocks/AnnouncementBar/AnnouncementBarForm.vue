@@ -6,7 +6,7 @@
         <button class="p-1 hover:bg-gray-100 rounded-full" @click="editingIdx = null">
           <SfIconArrowBack />
         </button>
-        <span class="text-sm font-medium truncate flex-1" v-html="announcements[editingIdx]?.text"/>
+        <span class="text-sm font-medium truncate flex-1" v-html="announcements[editingIdx]?.content.text"/>
         <button class="p-1 hover:bg-gray-100 rounded-full" @click="editingIdx = null">
           <SfIconClose />
         </button>
@@ -57,7 +57,7 @@
                 <NuxtImg width="18" height="18" :src="dragIcon" />
               </button>
 
-              <span class="text-sm truncate flex-1 w-6" v-html="item.text || t('empty-label')"/>
+              <span class="text-sm truncate flex-1 w-6" v-html="item.content.text || t('empty-label')"/>
 
               <button class="p-1 hover:bg-gray-100 rounded-full shrink-0" @click="editingIdx = idx">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
@@ -77,7 +77,7 @@
                 >
                   <div class="flex items-center justify-between px-4 py-3 border-b">
                     <span class="text-sm">{{ t('visibility-label') }}</span>
-                    <SfSwitch v-model="item.visible" :disabled="isLastVisibleItem(idx)" />
+                    <SfSwitch v-model="item.content.visible" :disabled="isLastVisibleItem(idx)" />
                   </div>
                   <button
                     class="w-full flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-gray-50 text-sm"
@@ -104,6 +104,35 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
+          <h2>{{ t('controls-label') }}</h2>
+        </template>
+
+        <div class="mb-2">
+            <UiFormLabel class="mb-1">{{ t('controls-color-label') }}</UiFormLabel>
+            <EditorColorPicker v-model="block.configuration.controls.color" class="w-full">
+              <template #trigger="{ color, toggle }">
+                <SfInput v-model="block.configuration.controls.color" type="text">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </template>
+            </EditorColorPicker>
+          </div>
+
+      </UiAccordionItem>
+
+      <UiAccordionItem
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
           <h2>{{ t('layout-label') }}</h2>
         </template>
 
@@ -112,9 +141,9 @@
 
           <div class="mb-2">
             <UiFormLabel class="mb-1">{{ t('background-color-label') }}</UiFormLabel>
-            <EditorColorPicker v-model="block.content.layout.backgroundColor" class="w-full">
+            <EditorColorPicker v-model="block.configuration.layout.backgroundColor" class="w-full">
               <template #trigger="{ color, toggle }">
-                <SfInput v-model="block.content.layout.backgroundColor" type="text">
+                <SfInput v-model="block.configuration.layout.backgroundColor" type="text">
                   <template #suffix>
                     <button
                       type="button"
@@ -134,19 +163,19 @@
             <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
               <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
                 <span><SfIconArrowUpward /></span>
-                <input v-model.number="block.content.layout.paddingTop" type="number" class="w-12 text-center outline-none" />
+                <input v-model.number="block.configuration.layout.paddingTop" type="number" class="w-12 text-center outline-none" />
               </div>
               <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
                 <span><SfIconArrowDownward /></span>
-                <input v-model.number="block.content.layout.paddingBottom" type="number" class="w-12 text-center outline-none" />
+                <input v-model.number="block.configuration.layout.paddingBottom" type="number" class="w-12 text-center outline-none" />
               </div>
               <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
                 <span><SfIconArrowBack /></span>
-                <input v-model.number="block.content.layout.paddingLeft" type="number" class="w-12 text-center outline-none" />
+                <input v-model.number="block.configuration.layout.paddingLeft" type="number" class="w-12 text-center outline-none" />
               </div>
               <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
                 <span><SfIconArrowForward /></span>
-                <input v-model.number="block.content.layout.paddingRight" type="number" class="w-12 text-center outline-none" />
+                <input v-model.number="block.configuration.layout.paddingRight" type="number" class="w-12 text-center outline-none" />
               </div>
             </div>
           </div>
@@ -161,7 +190,7 @@ import { SfIconAdd, SfIconDelete, SfIconClose, SfInput, SfSwitch, SfIconArrowUpw
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { v4 as uuid } from 'uuid';
-import type { AnnouncementBarProps } from './types';
+import type { AnnouncementBarProps, AnnouncementItem } from './types';
 
 const { t } = useI18n();
 const { blockUuid } = useSiteConfiguration();
@@ -186,25 +215,25 @@ const block = computed({
 });
 
 const announcements = computed({
-  get: () => block.value.content.announcements,
-  set: (val) => { block.value.content.announcements = val; }
+  get: () => block.value.content,
+  set: (val) => { block.value.content = val; }
 });
 
 const editingText = computed({
-  get: () => editingIdx.value !== null ? (announcements.value[editingIdx.value]?.text ?? '') : '',
+  get: () => editingIdx.value !== null ? (announcements.value[editingIdx.value]?.content.text ?? '') : '',
   set: (val) => {
     if (editingIdx.value !== null && announcements.value[editingIdx.value]) {
-      announcements.value[editingIdx.value]!.text = val;
+      announcements.value[editingIdx.value]!.content.text = val;
     }
   }
 });
 
-const contentlayout = computed(() => block.value.content);
-const { isFullWidth } = useFullWidthToggleForContent(contentlayout);
+const configlayout = computed(() => block.value.configuration);
+const { isFullWidth } = useFullWidthToggleForConfig(configlayout);
 
 const isLastVisibleItem = (idx: number) => {
-  const visibleCount = announcements.value.filter((a) => a.visible !== false).length;
-  return visibleCount === 1 && announcements.value[idx]?.visible !== false;
+  const visibleCount = announcements.value.filter((a) => a.content.visible !== false).length;
+  return visibleCount === 1 && announcements.value[idx]?.content.visible !== false;
 };
 
 const toggleMenu = (idx: number) => {
@@ -213,10 +242,14 @@ const toggleMenu = (idx: number) => {
 
 const addItem = () => {
   announcements.value.push({
+    name: 'Announcement',
+    type: 'content',
     meta: { uuid: uuid() },
-    text: 'New announcement',
-    visible: true,
-  });
+    content: {
+      text: 'New announcement',
+      visible: true,
+    }
+  } as AnnouncementItem);
 };
 
 const deleteItem = (idx: number) => {
@@ -232,10 +265,11 @@ const deleteItem = (idx: number) => {
     "elements-label": "Elements",
     "text-label": "Text",
     "layout-label": "Layout settings",
+    "controls-label": "Controls",
     "add-label": "Add element",
     "empty-label": "(empty)",
     "background-color-label": "Background color",
-    "sticky-label": "Sticky on top",
+    "controls-color-label": "Controls color",
     "padding-label": "Padding (px)",
     "visibility-label": "Visibility",
     "delete-label": "Delete"
@@ -244,10 +278,11 @@ const deleteItem = (idx: number) => {
     "elements-label": "Elemente",
     "text-label": "Text",
     "layout-label": "Layout-Einstellungen",
+    "controls-label": "Steuerelemente",
     "add-label": "Element hinzufügen",
     "empty-label": "(leer)",
     "background-color-label": "Hintergrundfarbe",
-    "sticky-label": "Am oberen Rand fixieren",
+    "controls-color-label": "Steuerelementfarbe",
     "padding-label": "Innenabstand (px)",
     "visibility-label": "Sichtbarkeit",
     "delete-label": "Löschen"

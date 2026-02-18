@@ -1024,21 +1024,10 @@
         "template": {
           "en": {
             "name": "AnnouncementBar",
-            "type": "content",
+            "type": "structure",
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
-            "content": {
-              "announcements": [
-                {
-                  "meta": { "uuid": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" },
-                  "text": "This is an example announcement.",
-                  "visible": true
-                },
-                {
-                  "meta": { "uuid": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" },
-                  "text": "This is another example announcement.",
-                  "visible": true
-                }
-              ],
+            "configuration": {
+              "controls": { "color": "#000" },
               "layout": {
                 "fullWidth": true,
                 "paddingTop": 0,
@@ -1047,7 +1036,63 @@
                 "paddingRight": 0,
                 "backgroundColor": "#EDFF6C"
               }
-            }
+            },
+            "content": [
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "58f6c782-0a16-48ff-a382-177686e9f5f8" },
+                "content": {
+                  "text": "This is an example announcement.",
+                  "visible": true
+                }
+              },
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "69g7d893-1b27-49g0-b493-288797f0g6g9" },
+                "content": {
+                  "text": "This is another example announcement.",
+                  "visible": true
+                }
+              }
+            ]
+          },
+          "de": {
+            "name": "AnnouncementBar",
+            "type": "structure",
+            "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": {
+                "fullWidth": true,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "backgroundColor": "#EDFF6C"
+              }
+            },
+            "content": [
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "58f6c782-0a16-48ff-a382-177686e9f5f8" },
+                "content": {
+                  "text": "This is an example announcement.",
+                  "visible": true
+                }
+              },
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "69g7d893-1b27-49g0-b493-288797f0g6g9" },
+                "content": {
+                  "text": "This is another example announcement.",
+                  "visible": true
+                }
+              }
+            ]
           }
         }
       }
