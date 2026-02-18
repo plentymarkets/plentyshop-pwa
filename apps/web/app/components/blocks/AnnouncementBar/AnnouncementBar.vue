@@ -62,7 +62,7 @@ const inlineStyle = computed(() => {
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
     paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
-    backgroundColor: layout.backgroundColor || 'transparent'
+    backgroundColor: layout.backgroundColor || 'transparent',
   };
 });
 
