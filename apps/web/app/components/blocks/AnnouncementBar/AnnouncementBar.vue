@@ -2,9 +2,10 @@
   <div class="relative">
     <Swiper
       :slides-per-view="1"
-      :loop="visibleItems.length > 1"
-      :modules="visibleItems.length > 1 ? [Navigation] : []"
+      :loop="enableNavigation"
+      :modules="enableNavigation ? [Navigation] : []"
       :navigation="navigationConfig"
+      @swiper="onSwiper"
     >
       <SwiperSlide v-for="(item, idx) in visibleItems" :key="idx">
         <div
@@ -16,7 +17,7 @@
     </Swiper>
 
     <button
-      v-if="visibleItems.length > 1"
+      v-if="enableNavigation"
       type="button"
       class="swiper-button-prev-announcement absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center"
       :style="{ color: props.configuration.controls.color }"
@@ -24,7 +25,7 @@
       <SfIconChevronLeft size="sm" />
     </button>
     <button
-      v-if="visibleItems.length > 1"
+      v-if="enableNavigation"
       type="button"
       class="swiper-button-next-announcement absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center"
       :style="{ color: props.configuration.controls.color }"
@@ -39,10 +40,14 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
 import { SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import type { AnnouncementBarProps } from './types';
+import type { Swiper as SwiperType } from 'swiper';
 
 const props = defineProps<AnnouncementBarProps>();
 
 const visibleItems = computed(() => props.content.filter((item) => item.content.visible !== false));
+const enableNavigation = computed(() => visibleItems.value.length > 1);
+
+let swiperInstance: SwiperType | null = null;
 
 const navigationConfig = computed(() => ({
   nextEl: '.swiper-button-next-announcement',
@@ -59,5 +64,20 @@ const inlineStyle = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
     backgroundColor: layout.backgroundColor || 'transparent'
   };
+});
+
+const onSwiper = (swiper: SwiperType) => {
+  swiperInstance = swiper;
+};
+
+watch(enableNavigation, async (newVal) => {
+  if (swiperInstance && !swiperInstance.destroyed) {
+    await nextTick();
+
+    if (newVal && swiperInstance.navigation) {
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }
 });
 </script>
