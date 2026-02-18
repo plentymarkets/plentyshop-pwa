@@ -47,7 +47,7 @@ const props = defineProps<AnnouncementBarProps>();
 const visibleItems = computed(() => props.content.filter((item) => item.content.visible !== false));
 const enableNavigation = computed(() => visibleItems.value.length > 1);
 
-let swiperInstance: SwiperType | null = null;
+const swiperInstance = ref<SwiperType | null>(null)
 
 const navigationConfig = computed(() => ({
   nextEl: '.swiper-button-next-announcement',
@@ -67,16 +67,16 @@ const inlineStyle = computed(() => {
 });
 
 const onSwiper = (swiper: SwiperType) => {
-  swiperInstance = swiper;
+  swiperInstance.value = swiper;
 };
 
 watch(enableNavigation, async (newVal) => {
-  if (swiperInstance && !swiperInstance.destroyed) {
+  if (swiperInstance.value && !swiperInstance.value.destroyed) {
     await nextTick();
 
-    if (newVal && swiperInstance.navigation) {
-      swiperInstance.navigation.init();
-      swiperInstance.navigation.update();
+    if (newVal && swiperInstance.value.navigation) {
+      swiperInstance.value.navigation.init();
+      swiperInstance.value.navigation.update();
     }
   }
 });

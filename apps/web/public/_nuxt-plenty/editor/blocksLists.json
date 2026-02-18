@@ -1041,7 +1041,7 @@
               {
                 "name": "Announcement",
                 "type": "content",
-                "meta": { "uuid": "58f6c782-0a16-48ff-a382-177686e9f5f8" },
+                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "content": {
                   "text": "This is an example announcement.",
                   "visible": true
@@ -1050,7 +1050,7 @@
               {
                 "name": "Announcement",
                 "type": "content",
-                "meta": { "uuid": "69g7d893-1b27-49g0-b493-288797f0g6g9" },
+                "meta": { "uuid": "6beeb2f6-d51d-420a-a2fb-9761d2db6130" },
                 "content": {
                   "text": "This is another example announcement.",
                   "visible": true
@@ -1077,7 +1077,7 @@
               {
                 "name": "Announcement",
                 "type": "content",
-                "meta": { "uuid": "58f6c782-0a16-48ff-a382-177686e9f5f8" },
+                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "content": {
                   "text": "This is an example announcement.",
                   "visible": true
@@ -1086,7 +1086,7 @@
               {
                 "name": "Announcement",
                 "type": "content",
-                "meta": { "uuid": "69g7d893-1b27-49g0-b493-288797f0g6g9" },
+                "meta": { "uuid": "6beeb2f6-d51d-420a-a2fb-9761d2db6130" },
                 "content": {
                   "text": "This is another example announcement.",
                   "visible": true
