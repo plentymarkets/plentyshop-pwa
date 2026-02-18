@@ -3,57 +3,52 @@ import { EditorObject } from '../../../../support/pageObjects/EditorObject';
 import { SeoSettingsObject } from '../../../../support/pageObjects/SeoSettingsObject';
 
 describe('RecommendedSorting', () => {
-    const editor = new EditorObject();
-    const seoSettings = new SeoSettingsObject();
-    const cookieBar = new CookieBarObject();
+  const editor = new EditorObject();
+  const seoSettings = new SeoSettingsObject();
+  const cookieBar = new CookieBarObject();
 
-    function seoEditorInit() {
-        editor.isToolbarVisible();
-        editor.toggleSeoSettings();
-        editor.seoSettingsButton
-            .trigger('mouseout', { force: true })
-            .trigger('mouseleave', { force: true });
-    }
+  function seoEditorInit() {
+    editor.isToolbarVisible();
+    editor.toggleSeoSettings();
+    editor.seoSettingsButton.trigger('mouseout', { force: true }).trigger('mouseleave', { force: true });
+  }
 
-    beforeEach(() => {
-        cy.clearCookies();
-        cy.visit('/');
-        cookieBar.delay(500).acceptAll();
-    });
+  beforeEach(() => {
+    cy.clearCookies();
+    cy.visit('/');
+    cookieBar.delay(500).acceptAll();
+  });
 
-    it('should check sidebar opens when user clicks on icon for SEO', () => {
-        seoEditorInit();
+  it('should check sidebar opens when user clicks on icon for SEO', () => {
+    seoEditorInit();
 
-        seoSettings.checkDrawerVisible()
-            .delay(500)
-            .closeDrawer();
-        seoSettings.checkDrawerNotVisible();
-    });
+    seoSettings.checkDrawerVisible().delay(500).closeDrawer();
+    seoSettings.checkDrawerNotVisible();
+  });
 
-    it('should open the item URL Handling section', () => {
-        seoEditorInit();
+  it('should open the item URL Handling section', () => {
+    seoEditorInit();
 
-        seoSettings.checkDrawerVisible()
-            .delay(500)
-            .selectItemUrlHandlingSection()
-            .toggleItemUrlHandlingSection()
-            .goBackSection()
-            .closeDrawer();
-        seoSettings.checkDrawerNotVisible();
-    });
+    seoSettings
+      .checkDrawerVisible()
+      .delay(500)
+      .selectItemUrlHandlingSection()
+      .toggleItemUrlHandlingSection()
+      .goBackSection()
+      .closeDrawer();
+    seoSettings.checkDrawerNotVisible();
+  });
 
-    it('should toggle between Modern and Legacy options', () => {
-        seoEditorInit();
+  it('should toggle between Modern and Legacy options', () => {
+    seoEditorInit();
 
-        seoSettings.checkDrawerVisible()
-            .delay(500)
-            .selectItemUrlHandlingSection()
-            .delay(500)
-            .toggleItemUrlHandlingSection();
+    seoSettings
+      .checkDrawerVisible()
+      .delay(500)
+      .selectItemUrlHandlingSection()
+      .delay(500)
+      .toggleItemUrlHandlingSection();
 
-
-        seoSettings
-            .checkLegacyButton()
-            .checkModernButton();
-    });
+    seoSettings.checkLegacyButton().checkModernButton();
+  });
 });

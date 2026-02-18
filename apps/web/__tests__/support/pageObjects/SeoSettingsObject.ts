@@ -17,8 +17,8 @@ export class SeoSettingsObject extends PageObject {
   }
 
   selectItemUrlHandlingSection() {
-    this.siteSettingsItemUrlHandling.should('be.visible').click()
-    return this
+    this.siteSettingsItemUrlHandling.should('be.visible').click();
+    return this;
   }
 
   toggleItemUrlHandlingSection() {
@@ -27,9 +27,7 @@ export class SeoSettingsObject extends PageObject {
   }
 
   checkLegacyButton() {
-    this.legacyBtn.click()
-        .should('have.class', 'bg-gray-100')
-        .and('have.class', 'font-semibold');
+    this.legacyBtn.click().should('have.class', 'bg-gray-100').and('have.class', 'font-semibold');
 
     this.legacyBtn.find('.invisible').should('not.exist');
     this.modernBtn.should('not.have.class', 'bg-gray-100');
@@ -38,9 +36,7 @@ export class SeoSettingsObject extends PageObject {
   }
 
   checkModernButton() {
-    this.modernBtn.click()
-        .should('have.class', 'bg-gray-100')
-        .and('have.class', 'font-semibold');;
+    this.modernBtn.click().should('have.class', 'bg-gray-100').and('have.class', 'font-semibold');
     //
     this.modernBtn.find('.invisible').should('not.exist');
     this.legacyBtn.should('not.have.class', 'bg-gray-100');
