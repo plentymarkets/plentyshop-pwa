@@ -9,6 +9,8 @@ export const useGlobalBlocks = () => {
 
   const fetchGlobalBlocks = async (): Promise<void> => {
     if (isFetching.value) return;
+    console.log('1globalBlocksCache.value', globalBlocksCache.value);
+
     if (globalBlocksCache.value) return;
 
     isFetching.value = true;
@@ -21,6 +23,7 @@ export const useGlobalBlocks = () => {
 
       const allBlocks = data.value?.data ?? [];
       globalBlocksCache.value = allBlocks;
+      console.log('1globalBlocksCache.value', globalBlocksCache.value);
 
       const { updateFooterCache } = useFooter();
       const footerBlock = allBlocks.find((block) => block.name === 'Footer');
