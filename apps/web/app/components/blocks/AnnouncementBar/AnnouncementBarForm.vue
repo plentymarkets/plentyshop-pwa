@@ -17,11 +17,11 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>{{ t('text-label') }}</h2>
+          <h2>{{ getEditorTranslation('text-label') }}</h2>
         </template>
 
         <div class="py-2 px-2">
-          <UiFormLabel class="mb-1">{{ t('text-label') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ getEditorTranslation('text-label') }}</UiFormLabel>
           <EditorRichTextEditor
             v-if="editingIdx !== null"
             v-model="editingText"
@@ -39,7 +39,7 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>{{ t('elements-label') }}</h2>
+          <h2>{{ getEditorTranslation('elements-label') }}</h2>
         </template>
 
         <draggable v-model="announcements" item-key="meta.uuid" handle=".drag-handle">
@@ -49,7 +49,7 @@
                 <NuxtImg width="18" height="18" :src="dragIcon" />
               </button>
 
-              <span class="text-sm truncate flex-1 w-6" v-html="item.content.text || t('empty-label')" />
+              <span class="text-sm truncate flex-1 w-6" v-html="item.content.text || getEditorTranslation('empty-label')" />
 
               <button class="p-1 hover:bg-gray-100 rounded-full shrink-0" @click="editingIdx = idx">
                 <svg
@@ -75,7 +75,7 @@
                   class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
                 >
                   <div class="flex items-center justify-between px-4 py-3 border-b">
-                    <span class="text-sm">{{ t('visibility-label') }}</span>
+                    <span class="text-sm">{{ getEditorTranslation('visibility-label') }}</span>
                     <SfSwitch v-model="item.content.visible" :disabled="isLastVisibleItem(idx)" />
                   </div>
                   <button
@@ -84,7 +84,7 @@
                     @click="deleteItem(idx)"
                   >
                     <SfIconDelete class="text-red-500" />
-                    {{ t('delete-label') }}
+                    {{ getEditorTranslation('delete-label') }}
                   </button>
                 </div>
               </div>
@@ -94,7 +94,7 @@
 
         <UiButton class="mt-4 w-full" variant="secondary" @click="addItem">
           <SfIconAdd class="text-neutral-500" />
-          {{ t('add-label') }}
+          {{ getEditorTranslation('add-label') }}
         </UiButton>
       </UiAccordionItem>
 
@@ -103,11 +103,11 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>{{ t('controls-label') }}</h2>
+          <h2>{{ getEditorTranslation('controls-label') }}</h2>
         </template>
 
         <div class="mb-2">
-          <UiFormLabel class="mb-1">{{ t('controls-color-label') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
           <EditorColorPicker v-model="block.configuration.controls.color" class="w-full">
             <template #trigger="{ color, toggle }">
               <SfInput v-model="block.configuration.controls.color" type="text">
@@ -131,14 +131,14 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>{{ t('layout-label') }}</h2>
+          <h2>{{ getEditorTranslation('layout-label') }}</h2>
         </template>
 
         <div class="p-4 flex flex-col gap-4">
           <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
 
           <div class="mb-2">
-            <UiFormLabel class="mb-1">{{ t('background-color-label') }}</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
             <EditorColorPicker v-model="block.configuration.layout.backgroundColor" class="w-full">
               <template #trigger="{ color, toggle }">
                 <SfInput v-model="block.configuration.layout.backgroundColor" type="text">
@@ -157,7 +157,7 @@
           </div>
 
           <div>
-            <UiFormLabel class="mb-1">{{ t('padding-label') }}</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('padding-label') }}</UiFormLabel>
             <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
               <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
                 <span><SfIconArrowUpward /></span>
@@ -217,7 +217,6 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps, AnnouncementItem } from './types';
 
-const { t } = useI18n();
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
 const { data } = useCategoryTemplate(

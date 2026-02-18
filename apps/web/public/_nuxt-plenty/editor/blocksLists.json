@@ -1079,7 +1079,7 @@
                 "type": "content",
                 "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "content": {
-                  "text": "This is an example announcement.",
+                  "text": "Das ist eine Beispielankündigung.",
                   "visible": true
                 }
               },
@@ -1088,7 +1088,7 @@
                 "type": "content",
                 "meta": { "uuid": "6beeb2f6-d51d-420a-a2fb-9761d2db6130" },
                 "content": {
-                  "text": "This is another example announcement.",
+                  "text": "Das ist eine weitere Beispielankündigung.",
                   "visible": true
                 }
               }
