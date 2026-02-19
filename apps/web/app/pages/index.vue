@@ -38,8 +38,10 @@ setPageMeta(t('homepage.title'), icon);
 setDefaultTemplate(useLocaleSpecificHomepageTemplate($i18n.locale.value));
 
 const { globalBlocksCache } = useGlobalBlocks();
-const clonedBlocks = globalBlocksCache.value ? JSON.parse(JSON.stringify(globalBlocksCache.value)) : [];
-setupBlocks(clonedBlocks);
+const contentBlocks = globalBlocksCache.value
+  ? JSON.parse(JSON.stringify(globalBlocksCache.value.filter((b: Block) => b.name !== 'Header' && b.name !== 'Footer')))
+  : [];
+setupBlocks(contentBlocks);
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();

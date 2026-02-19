@@ -13,20 +13,32 @@ export const useGlobalBlocks = () => {
 
     isFetching.value = true;
 
+    const { updateFooterCache } = useFooter();
+
     try {
       const { $i18n } = useNuxtApp();
-      const { data } = await useAsyncData(`global-blocks-${$i18n.locale.value}`, () =>
-        useSdk().plentysystems.getBlocks({ identifier: 'index', type: 'immutable' }),
+      const { data } = await useAsyncData(
+        `global-blocks-${$i18n.locale.value}`,
+        () => useSdk().plentysystems.getBlocks({ identifier: 'index', type: 'immutable' }),
+        {
+          getCachedData: () => undefined,
+        },
       );
 
       const allBlocks = data.value?.data ?? [];
       globalBlocksCache.value = allBlocks;
 
-      const { updateFooterCache } = useFooter();
       const footerBlock = allBlocks.find((block) => block.name === 'Footer');
-      if (footerBlock) updateFooterCache((footerBlock.content as FooterSettings) ?? createDefaultFooterSettings());
+
+      if (footerBlock) {
+        const footerContent = (footerBlock.content as FooterSettings) ?? createDefaultFooterSettings();
+        updateFooterCache(footerContent);
+      } else {
+        updateFooterCache(createDefaultFooterSettings());
+      }
     } catch (error) {
       console.error('Failed to fetch global blocks:', error);
+      updateFooterCache(createDefaultFooterSettings());
       globalBlocksCache.value = [];
     } finally {
       isFetching.value = false;

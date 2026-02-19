@@ -1,6 +1,5 @@
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 import { createDefaultFooterSettings, extractFooterFromBlocks } from '~/utils/footerHelper';
-import { callWithNuxt } from '#app';
 
 /**
  * Composable for accessing global footer settings
@@ -22,35 +21,7 @@ export const useFooter = () => {
   };
 
   const fetchFooterSettings = async (): Promise<FooterSettings> => {
-    if (footerCache.value) {
-      return footerCache.value;
-    }
-
-    const nuxtApp = useNuxtApp();
-
-    return callWithNuxt(nuxtApp, async () => {
-      try {
-        const { data } = await useAsyncData(`footer-settings-${nuxtApp.$i18n.locale}`, () =>
-          useSdk().plentysystems.getBlocks({
-            identifier: 'index',
-            type: 'immutable',
-            blocks: 'Footer',
-          }),
-        );
-
-        const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
-
-        if (footerBlock?.content) {
-          footerCache.value = footerBlock.content as FooterSettings;
-          return footerCache.value;
-        }
-      } catch (error) {
-        console.warn('Failed to fetch footer settings, using defaults:', error);
-      }
-
-      footerCache.value = getFooterSettings();
-      return footerCache.value;
-    });
+    return getFooterSettings();
   };
 
   return {
