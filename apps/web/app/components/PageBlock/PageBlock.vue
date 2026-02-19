@@ -43,7 +43,6 @@
           ]"
           :index="index"
           :block="block"
-          :is-last-block="isLastBlock"
           :actions="getBlockActions(block)"
           @change-position="changeBlockPosition"
         />
@@ -60,7 +59,6 @@
             :is-clicked="isClicked"
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
-            :is-last-block="false"
             :change-block-position="changeBlockPosition"
             :column-length="slotProps.columnLength"
             :is-row-hovered="slotProps.isRowHovered"
@@ -109,7 +107,6 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
-  isLastBlock: false,
 });
 
 const { isInEditorClient } = useEditorState();
