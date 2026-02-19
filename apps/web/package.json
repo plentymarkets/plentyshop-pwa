@@ -38,7 +38,7 @@
     "@types/js-beautify": "^1.14.3",
     "@nuxt/fonts": "^0.14.0",
     "@plentymarkets/tailwind-colors": "^1.0.1",
-    "@vueuse/core": "^10.11.0",
+    "@vueuse/core": "^14.2.1",
     "axios": "^1.13.5",
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
