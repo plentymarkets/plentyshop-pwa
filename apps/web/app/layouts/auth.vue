@@ -16,14 +16,19 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <UiFooterBlocks />
+    <ClientOnly>
+      <FooterBlock v-if="!route.meta.isBlockified" />
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+
 defineProps<{
   heading: string;
 }>();
 
+const route = useRoute();
 const viewport = useViewport();
 </script>
