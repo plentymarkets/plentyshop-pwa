@@ -1,19 +1,15 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <template v-if="hasHeaderBlocks" #header>
-      <EditableBlocks :blocks="headerBlocks" />
-    </template>
-    <EditableBlocks :blocks="mainBlocks" />
+    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import type { Product, Block } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
@@ -69,25 +65,6 @@ setCurrentProduct(productForEditor.value || ({} as Product));
 setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
-
-const { $i18n } = useNuxtApp();
-const productIdentifier = '0';
-
-const { data, getBlocksServer, setDefaultTemplate, headerBlocks, mainBlocks } = useCategoryTemplate(
-  productIdentifier,
-  'product',
-  $i18n.locale.value,
-);
-
-const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
-
-setDefaultTemplate(productTemplateData as Block[]);
-await getBlocksServer(productIdentifier, 'product');
-
-const { ensureAllGlobalBlocks } = useGlobalBlocks();
-const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
-
-if (blocksWithGlobals !== data.value) data.value.splice(0, data.value.length, ...blocksWithGlobals);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
@@ -172,11 +149,8 @@ const observeRecommendedSection = () => {
   }
 };
 
-const { guardRouteLeave } = useEditorUnsavedChangesGuard();
-
-onBeforeRouteLeave((to, from, next) => {
+onBeforeRouteLeave(() => {
   resetNotification();
-  guardRouteLeave(to, from, next);
 });
 
 onNuxtReady(() => observeRecommendedSection());

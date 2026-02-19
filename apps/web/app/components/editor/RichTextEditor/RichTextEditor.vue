@@ -56,7 +56,7 @@
       <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="openModal" />
     </div>
 
-    <div class="p-2.5" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
+    <div class="p-2.5 editor-parent" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
       <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
     </div>
   </div>
