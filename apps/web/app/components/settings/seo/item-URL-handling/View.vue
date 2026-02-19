@@ -1,14 +1,6 @@
 <template>
   <SiteConfigurationView>
     <template #setting-title>{{ getEditorTranslation('label') }}</template>
-
-    <template #setting-description>
-      <div class="flex flex-col px-4 text-sm">
-        <p class="pb-2">
-          <span class="align-middle font-bold">{{ getEditorTranslation('description') }}</span>
-        </p>
-      </div>
-    </template>
   </SiteConfigurationView>
 </template>
 
@@ -17,12 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Item URL Handling",
-    "description": "Use this setting to determine a custom canonical URL for item pages."
+    "label": "Item URL Handling"
   },
   "de": {
-    "label": "Item URL Handling",
-    "description": "Use this setting to determine a custom canonical URL for item pages."
+    "label": "Item URL Handling"
   }
 }
 </i18n>
