@@ -81,6 +81,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
   const setupBlocks = (fetchedBlocks: Block[]) => {
     const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
+    const usedDefaultTemplate = !fetchedBlocks.length && state.value.defaultTemplateData.length > 0;
 
     if (Array.isArray(blocks)) {
       migrateAllBlocks(blocks);
@@ -90,6 +91,36 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       state.value.data.splice(0, state.value.data.length, ...blocks);
     }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
+
+    const { globalBlocksCache: cache } = useGlobalBlocks();
+    const footerInCache = cache.value?.find((b) => b.name === 'Footer');
+    const footerInData = state.value.data.find((b) => b.name === 'Footer');
+
+    if (footerInCache && footerInData && footerInCache.meta?.uuid !== footerInData.meta?.uuid) {
+      const header = state.value.data.filter((b) => b.name === 'Header');
+      const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+      const footerClone = JSON.parse(JSON.stringify(footerInCache));
+      state.value.data.splice(0, state.value.data.length, ...header, ...main, footerClone);
+      state.value.cleanData = markRaw([...header, ...main, JSON.parse(JSON.stringify(footerInCache))]);
+    }
+
+    if (usedDefaultTemplate) {
+      const { updateGlobalBlocks } = useGlobalBlocks();
+      const { updateFooterCache } = useFooter();
+
+      const clonedBlocks = JSON.parse(JSON.stringify(blocks));
+
+      const hasGlobalBlocks = clonedBlocks.some((b: Block) => b.name === 'Header' || b.name === 'Footer');
+
+      if (hasGlobalBlocks) {
+        updateGlobalBlocks(clonedBlocks);
+
+        const footerBlock = clonedBlocks.find((b: Block) => b.name === 'Footer');
+        if (footerBlock) {
+          updateFooterCache(footerBlock.content);
+        }
+      }
+    }
   };
 
   const updateBlocks: UpdateBlocks = (blocks) => {
@@ -119,13 +150,57 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   });
 
   const footerBlocks = computed({
-    get: () => state.value.data.filter((block) => block.name === 'Footer'),
+    get: () => {
+      const filtered = state.value.data.filter((block) => block.name === 'Footer');
+      return filtered;
+    },
     set: (newFooterBlocks: Block[]) => {
       const header = state.value.data.filter((b) => b.name === 'Header');
       const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
       state.value.data.splice(0, state.value.data.length, ...header, ...main, ...newFooterBlocks);
+
+      const { updateGlobalBlocks, globalBlocksCache } = useGlobalBlocks();
+      if (globalBlocksCache.value) {
+        const otherBlocks = globalBlocksCache.value.filter((b) => b.name !== 'Footer');
+        updateGlobalBlocks([...otherBlocks, ...newFooterBlocks]);
+      }
     },
   });
+
+  const { globalBlocksCache } = useGlobalBlocks();
+  watch(
+    () => globalBlocksCache.value?.find((b) => b.name === 'Footer'),
+    (newFooter, _oldFooter) => {
+      if (!newFooter) {
+        return;
+      }
+
+      const footerInState = state.value.data.find((b) => b.name === 'Footer');
+      const footerInCleanData = state.value.cleanData.find((b) => b.name === 'Footer');
+
+      if (!footerInState) {
+        return;
+      }
+
+      if (footerInState.meta?.uuid !== newFooter.meta?.uuid) {
+        const header = state.value.data.filter((b) => b.name === 'Header');
+        const main = state.value.data.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+        state.value.data.splice(0, state.value.data.length, ...header, ...main, newFooter);
+
+        if (footerInCleanData && footerInCleanData.meta?.uuid !== newFooter.meta?.uuid) {
+          const headerClean = state.value.cleanData.filter((b) => b.name === 'Header');
+          const mainClean = state.value.cleanData.filter((b) => b.name !== 'Header' && b.name !== 'Footer');
+          state.value.cleanData = markRaw([...headerClean, ...mainClean, JSON.parse(JSON.stringify(newFooter))]);
+        }
+      } else {
+        const footerIndex = state.value.data.findIndex((b) => b.name === 'Footer');
+        if (footerIndex !== -1) {
+          state.value.data.splice(footerIndex, 1, JSON.parse(JSON.stringify(newFooter)));
+        }
+      }
+    },
+    { deep: true },
+  );
 
   /**
    * @description Function for fetching the category template from a category id

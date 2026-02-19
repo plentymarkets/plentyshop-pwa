@@ -5,7 +5,7 @@
  */
 export default defineNuxtPlugin({
   name: 'global-blocks',
-  parallel: true,
+  parallel: false,
   async setup() {
     const { fetchGlobalBlocks, clearGlobalBlocksCache } = useGlobalBlocks();
     const { clearFooterCache } = useFooter();

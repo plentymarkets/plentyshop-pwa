@@ -73,7 +73,7 @@ setBreadcrumbs();
 const { $i18n } = useNuxtApp();
 const productIdentifier = '0';
 
-const { data, getBlocksServer, setDefaultTemplate, headerBlocks, mainBlocks } = useCategoryTemplate(
+const { getBlocksServer, setDefaultTemplate, headerBlocks, mainBlocks } = useCategoryTemplate(
   productIdentifier,
   'product',
   $i18n.locale.value,
@@ -83,11 +83,6 @@ const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
 
 setDefaultTemplate(productTemplateData as Block[]);
 await getBlocksServer(productIdentifier, 'product');
-
-const { ensureAllGlobalBlocks } = useGlobalBlocks();
-const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
-
-if (blocksWithGlobals !== data.value) data.value.splice(0, data.value.length, ...blocksWithGlobals);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);

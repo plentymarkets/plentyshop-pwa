@@ -26,7 +26,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 const { $i18n } = useNuxtApp();
 const route = useRoute();
 
-const { setDefaultTemplate, mainBlocks, setupBlocks } = useCategoryTemplate(
+const { setDefaultTemplate, mainBlocks, getBlocksServer } = useCategoryTemplate(
   route?.meta?.identifier as string,
   route.meta.type as string,
   $i18n.locale.value,
@@ -37,9 +37,7 @@ const { setPageMeta } = usePageMeta();
 setPageMeta(t('homepage.title'), icon);
 setDefaultTemplate(useLocaleSpecificHomepageTemplate($i18n.locale.value));
 
-const { globalBlocksCache } = useGlobalBlocks();
-const clonedBlocks = globalBlocksCache.value ? JSON.parse(JSON.stringify(globalBlocksCache.value)) : [];
-setupBlocks(clonedBlocks);
+await getBlocksServer(route?.meta?.identifier as string, route.meta.type as string);
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();

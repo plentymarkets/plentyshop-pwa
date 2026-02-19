@@ -9,7 +9,6 @@ export const useGlobalBlocks = () => {
 
   const fetchGlobalBlocks = async (): Promise<void> => {
     if (isFetching.value) return;
-    if (globalBlocksCache.value) return;
 
     isFetching.value = true;
 
@@ -20,11 +19,38 @@ export const useGlobalBlocks = () => {
       );
 
       const allBlocks = data.value?.data ?? [];
-      globalBlocksCache.value = allBlocks;
 
       const { updateFooterCache } = useFooter();
       const footerBlock = allBlocks.find((block) => block.name === 'Footer');
-      if (footerBlock) updateFooterCache((footerBlock.content as FooterSettings) ?? createDefaultFooterSettings());
+
+      if (footerBlock) {
+        updateFooterCache((footerBlock.content as FooterSettings) ?? createDefaultFooterSettings());
+        globalBlocksCache.value = allBlocks;
+      } else {
+        const defaultFooter = createDefaultFooterSettings();
+        updateFooterCache(defaultFooter);
+
+        if (allBlocks.length > 0) {
+          globalBlocksCache.value = [
+            ...allBlocks,
+            {
+              name: 'Footer',
+              type: 'content',
+              meta: { uuid: uuid(), isGlobalTemplate: true },
+              content: defaultFooter,
+            },
+          ];
+        } else {
+          globalBlocksCache.value = [
+            {
+              name: 'Footer',
+              type: 'content',
+              meta: { uuid: uuid(), isGlobalTemplate: true },
+              content: defaultFooter,
+            },
+          ];
+        }
+      }
     } catch (error) {
       console.error('Failed to fetch global blocks:', error);
       globalBlocksCache.value = [];
@@ -47,10 +73,14 @@ export const useGlobalBlocks = () => {
 
   const injectGlobalFooter = async (blocks: Block[]): Promise<Block[]> => {
     const hasFooter = blocks.some((block) => block.name === 'Footer');
-    if (hasFooter) return blocks;
+    if (hasFooter) {
+      return blocks;
+    }
 
     const { footerCache, fetchFooterSettings } = useFooter();
-    if (!footerCache.value) await fetchFooterSettings();
+    if (!footerCache.value) {
+      await fetchFooterSettings();
+    }
 
     const footerContent = footerCache.value || createDefaultFooterSettings();
     const footerBlock: Block = {
@@ -71,7 +101,9 @@ export const useGlobalBlocks = () => {
   };
 
   const updateGlobalBlocks = (newBlocks: Block[]) => {
-    if (!globalBlocksCache.value) return;
+    if (!globalBlocksCache.value) {
+      globalBlocksCache.value = [];
+    }
     globalBlocksCache.value.splice(0, globalBlocksCache.value.length, ...newBlocks);
   };
 

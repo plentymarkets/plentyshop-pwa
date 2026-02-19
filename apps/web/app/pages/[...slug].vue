@@ -83,7 +83,7 @@ setPageMeta(categoryName.value, icon);
 
 const { $i18n } = useNuxtApp();
 
-const { data, getBlocksServer, headerBlocks, mainBlocks } = useCategoryTemplate(
+const { getBlocksServer, headerBlocks, mainBlocks } = useCategoryTemplate(
   identifier.value.toString(),
   'category',
   $i18n.locale.value,
@@ -92,13 +92,6 @@ const { data, getBlocksServer, headerBlocks, mainBlocks } = useCategoryTemplate(
 const hasHeaderBlocks = computed(() => headerBlocks.value.length > 0);
 
 if (productsCatalog.value.category?.type !== 'item') await getBlocksServer(identifier.value, 'category');
-
-const { ensureAllGlobalBlocks } = useGlobalBlocks();
-const blocksWithGlobals = await ensureAllGlobalBlocks(data.value);
-
-if (blocksWithGlobals !== data.value) {
-  data.value.splice(0, data.value.length, ...blocksWithGlobals);
-}
 
 watch(
   () => locale.value,
