@@ -2,7 +2,7 @@ import { CookieBarObject } from '../../../../support/pageObjects/CookieBarObject
 import { EditorObject } from '../../../../support/pageObjects/EditorObject';
 import { SeoSettingsObject } from '../../../../support/pageObjects/SeoSettingsObject';
 
-describe('RecommendedSorting', () => {
+describe('ItemUrlHandling', () => {
   const editor = new EditorObject();
   const seoSettings = new SeoSettingsObject();
   const cookieBar = new CookieBarObject();
