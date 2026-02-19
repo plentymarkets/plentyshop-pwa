@@ -2,6 +2,10 @@
   <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
+
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+        <SfIconInfo :size="'sm'" />
+      </SfTooltip>
     </div>
 
     <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
@@ -81,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconCheck } from '@storefront-ui/vue';
+import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 
 const { updateSetting, getSetting } = useSiteSettings('enableCallistoUrlScheme');
 
@@ -98,6 +102,7 @@ const urlScheme = computed({
 {
   "en": {
     "label": "Item URL Scheme",
+    "tooltip": "Defines whether item variants get their own URL or share the same URL",
     "button-modern-label": "Modern",
     "button-legacy-label": "Legacy",
 
@@ -119,6 +124,7 @@ const urlScheme = computed({
   },
   "de": {
     "label": "Item URL Scheme",
+    "tooltip": "Defines whether item variants get their own URL or share the same URL",
     "button-modern-label": "Modern",
     "button-legacy-label": "Legacy",
 
