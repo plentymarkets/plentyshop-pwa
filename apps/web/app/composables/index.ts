@@ -103,4 +103,3 @@ export * from './useCategoryData';
 export * from './useCustomAssets';
 export * from './useItemDataTable';
 export * from './useBlockClasses';
-export * from './useGlobalBlocks';
