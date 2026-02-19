@@ -2,7 +2,7 @@
   <NuxtErrorBoundary>
     <Swiper
       :id="`carousel-${index}`"
-      :key="content.length"
+      :key="visibleContent.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       v-bind="carouselProps"
@@ -16,12 +16,12 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide
-        v-for="(banner, slideIndex) in content"
+        v-for="(banner, slideIndex) in visibleContent"
         :key="slideIndex"
-        :aria-labelledby="content.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
+        :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
         :aria-label="
-          content.length > 1
-            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: content.length })
+          visibleContent.length > 1
+            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: visibleContent.length })
             : null
         "
         v-bind="carouselProps"
@@ -66,18 +66,23 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
 
+const visibleContent = computed(() => {
+  return (content as BannerProps[]).filter((slide) => slide.configuration?.visible !== false);
+});
+
 const handleArrows = () => {
   const viewport = useViewport();
   return !viewport.isLessThan('md');
 };
 
-const enableModules = computed(() => content.length > 1);
+const enableModules = computed(() => visibleContent.value.length > 1);
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
@@ -166,7 +171,7 @@ watch(
   { flush: 'post' },
 );
 watch(
-  () => content.length,
+  () => visibleContent.value.length,
   async (newLength, oldLength) => {
     if (oldLength <= 1 && newLength > 1) {
       await reinitializeSwiper();

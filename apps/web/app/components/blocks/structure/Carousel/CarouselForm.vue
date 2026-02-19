@@ -10,19 +10,19 @@
         <h2>{{ getEditorTranslation('elements-group-label') }}</h2>
       </template>
 
-      <div class="px-4 py-4">
+      <div>
         <draggable
           v-if="slides.length"
           v-model="slides"
           item-key="meta.uuid"
           handle=".drag-slides-handle"
-          class="space-y-2"
+          class=""
           :filter="'.no-drag'"
         >
           <template #item="{ element: slide, index }">
             <div
               :key="slide.meta.uuid"
-              class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              class="mb-3 flex items-center justify-between bg-white  rounded-lg  transition-colors"
             >
               <div class="flex items-center gap-3 flex-1 min-w-0">
                 <button
@@ -33,18 +33,21 @@
                   <NuxtImg width="18" height="18" :src="dragIcon" />
                 </button>
 
-                <span class="text-sm font-medium text-gray-700 truncate">
+                <span
+                  class="text-sm font-medium truncate"
+                  :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
+                >
                   {{ getEditorTranslation('slide-label') }} {{ index + 1 }}
                 </span>
               </div>
 
               <button
                 :data-testid="`actions-edit-slide-${index}`"
-                class="p-2 text-gray-500 hover:bg-gray-100 rounded-full no-drag"
+                class=" text-gray-500  rounded-full no-drag"
                 :aria-label="getEditorTranslation('edit-slide-aria')"
                 @click="editSlide(index)"
               >
-                <SfIconBase size="xs" viewBox="0 0 18 18" class="text-neutral-500">
+                <SfIconBase size="xs" viewBox="0 0 18 18">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path :d="editPath" fill="currentColor" />
                   </svg>
@@ -54,35 +57,28 @@
               <div class="relative">
                 <button
                   :data-testid="`actions-menu-slide-${index}`"
-                  class="p-2 text-gray-500 hover:bg-gray-100 rounded-full no-drag"
+                  class="text-gray-500  rounded-full no-drag"
                   @click="toggleSlideMenu(index)"
                 >
-                  <SfIconMoreVert class="text-neutral-500" />
+                  <SfIconMoreVert />
                 </button>
 
                 <div
                   v-if="openSlideMenuIndex === index"
                   class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
                 >
-                  <button
-                    v-if="index > 0"
-                    :data-testid="`actions-move-slide-up-${index}`"
-                    class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 border-b"
-                    @click="moveSlideUp(index)"
-                  >
-                    <SfIconExpandLess size="sm" />
-                    {{ getEditorTranslation('move-slide-up-label') }}
-                  </button>
-
-                  <button
-                    v-if="index < slides.length - 1"
-                    :data-testid="`actions-move-slide-down-${index}`"
-                    class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 border-b"
-                    @click="moveSlideDown(index)"
-                  >
-                    <SfIconExpandMore size="sm" />
-                    {{ getEditorTranslation('move-slide-down-label') }}
-                  </button>
+                  <div class="px-4 py-3 border-b">
+                    <div class="flex items-center justify-between">
+                      <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
+                      <SfSwitch
+                        :model-value="slides[index]?.configuration?.visible !== false"
+                        :data-testid="`actions-toggle-visibility-slide-${index}`"
+                        :aria-label="getEditorTranslation('toggle-visibility-aria')"
+                        class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+                        @update:model-value="toggleSlideVisibility(index)"
+                      />
+                    </div>
+                  </div>
 
                   <button
                     :data-testid="`actions-delete-slide-${index}`"
@@ -99,13 +95,13 @@
           </template>
         </draggable>
 
-        <div class="pt-4 border-t">
+        <div class="pt-4">
           <button
             data-testid="actions-add-slide-button"
-            class="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+            class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
             @click="addSlide"
           >
-            <SfIconAdd class="text-neutral-500" />
+            <SfIconAdd />
             {{ getEditorTranslation('add-slide-label') }}
           </button>
         </div>
@@ -113,64 +109,53 @@
     </UiAccordionItem>
 
     <div v-else-if="slides[editingSlideIndex]" class="space-y-0">
-      <div class="flex items-center gap-3 p-4 border-b bg-white sticky top-0 z-10">
-        <button
-          :data-testid="'actions-back-from-edit'"
-          class="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
-          :aria-label="getEditorTranslation('back-aria')"
-          @click="exitEditMode"
-        >
-          <SfIconChevronLeft class="text-neutral-500" />
-        </button>
-        <h2 class="text-sm font-medium">
-          {{ getEditorTranslation('slide-label') }} {{ editingSlideIndex + 1 }}
-        </h2>
-      </div>
-
       <BlocksBannerCarouselBannerForm :uuid="slides[editingSlideIndex]!.meta.uuid" />
     </div>
 
-    <UiAccordionItem
-      v-model="controlsOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('controls-group-label') }}</h2>
-      </template>
+    <template v-if="editingSlideIndex === undefined">
+      <UiAccordionItem
+        v-model="controlsOpen"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2>{{ getEditorTranslation('controls-group-label') }}</h2>
+        </template>
 
-      <div class="controls">
-        <div class="mb-6 mt-4">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
-          <EditorColorPicker v-model="controls.color" class="w-full">
-            <template #trigger="{ color, toggle }">
-              <SfInput v-model="controls.color" type="text">
-                <template #suffix>
-                  <button
-                    type="button"
-                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                    :style="{ backgroundColor: color }"
-                    @mousedown.stop
-                    @click.stop="toggle"
-                  />
-                </template>
-              </SfInput>
-            </template>
-          </EditorColorPicker>
+        <div class="controls">
+          <div class="mb-6 mt-4">
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
+            <EditorColorPicker v-model="controls.color" class="w-full">
+              <template #trigger="{ color, toggle }">
+                <SfInput v-model="controls.color" type="text">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </template>
+            </EditorColorPicker>
+          </div>
         </div>
-      </div>
-    </UiAccordionItem>
+      </UiAccordionItem>
 
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-    </UiAccordionItem>
+      <!-- Layout Section (Carousel-wide) -->
+      <UiAccordionItem
+        v-model="layoutOpen"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
+        </template>
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+      </UiAccordionItem>
+    </template>
   </div>
 </template>
 
@@ -180,10 +165,9 @@ import {
   SfIconDelete,
   SfInput,
   SfIconAdd,
-  SfIconExpandMore,
-  SfIconExpandLess,
   SfIconMoreVert,
   SfIconBase,
+  SfSwitch,
 } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
@@ -201,6 +185,11 @@ const { data } = useCategoryTemplate(
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
+
+const emit = defineEmits<{
+  'set-edit-title': [title: string];
+  'clear-edit-title': [];
+}>();
 
 const elementsOpen = ref(true);
 const editingSlideIndex = ref<number | undefined>(undefined);
@@ -221,7 +210,15 @@ const controls = computed(() => carouselStructure.value.configuration.controls);
 
 const slides = computed({
   get: () => {
-    return (carouselStructure.value?.content || []) as BannerProps[];
+    const content = (carouselStructure.value?.content || []) as BannerProps[];
+
+    return content.map((slide) => ({
+      ...slide,
+      configuration: {
+        ...slide.configuration,
+        visible: slide.configuration?.visible !== false,
+      },
+    }));
   },
   set: (value: BannerProps[]) => updateBannerItems(value, blockUuid.value),
 });
@@ -229,11 +226,15 @@ const slides = computed({
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
+  emit('set-edit-title', `Slide ${index + 1}`);
 };
 
-const exitEditMode = () => {
+const exitEditMode = (shouldEmit = true) => {
   editingSlideIndex.value = undefined;
   openSlideMenuIndex.value = undefined;
+  if (shouldEmit) {
+    emit('clear-edit-title');
+  }
 };
 
 const toggleSlideMenu = (index: number) => {
@@ -248,6 +249,9 @@ const addSlide = async () => {
   const newSlide: BannerProps = {
     name: 'Banner',
     type: 'content',
+    configuration: {
+      visible: true,
+    },
     content: {
       image: {
         wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -281,6 +285,7 @@ const addSlide = async () => {
     },
     lazyLoading: 'eager',
     index: slides.value.length,
+
   };
 
   slides.value = [...slides.value, newSlide] as BannerProps[];
@@ -302,45 +307,28 @@ const deleteSlide = async (index: number) => {
   }
 };
 
-const moveSlideUp = async (index: number) => {
-  if (index <= 0) return;
+const toggleSlideVisibility = (index: number) => {
+  const slide = slides.value[index];
 
-  const newSlides = [...slides.value] as BannerProps[];
-  const current = newSlides[index];
-  const previous = newSlides[index - 1];
-  if (!current || !previous) return;
+  if (!slide) return;
 
-  [newSlides[index - 1], newSlides[index]] = [current, previous];
-  slides.value = newSlides;
+  const updatedSlides = [...slides.value];
+  const slideToUpdate = updatedSlides[index];
 
-  if (editingSlideIndex.value === index) {
-    editingSlideIndex.value = index - 1;
+  if (!slideToUpdate) return;
+
+  if (!slideToUpdate.configuration) {
+    slideToUpdate.configuration = { visible: true };
   }
 
-  setIndex(blockUuid.value, index - 1);
-  openSlideMenuIndex.value = undefined;
-  await nextTick();
+  slideToUpdate.configuration.visible = !slideToUpdate.configuration.visible;
+
+  slides.value = updatedSlides;
 };
 
-const moveSlideDown = async (index: number) => {
-  if (index >= slides.value.length - 1) return;
-
-  const newSlides = [...slides.value] as BannerProps[];
-  const current = newSlides[index];
-  const next = newSlides[index + 1];
-  if (!current || !next) return;
-
-  [newSlides[index], newSlides[index + 1]] = [next, current];
-  slides.value = newSlides;
-
-  if (editingSlideIndex.value === index) {
-    editingSlideIndex.value = index + 1;
-  }
-
-  setIndex(blockUuid.value, index + 1);
-  openSlideMenuIndex.value = undefined;
-  await nextTick();
-};
+defineExpose({
+  exitEditMode,
+});
 </script>
 
 <style scoped>
@@ -367,8 +355,8 @@ input[type='number'] {
     "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour",
-    "move-slide-up-label": "Move Up",
-    "move-slide-down-label": "Move Down",
+    "visibility-label": "Visibility",
+    "toggle-visibility-aria": "Toggle slide visibility",
     "delete-slide-label": "Delete"
   },
   "de": {
@@ -381,8 +369,8 @@ input[type='number'] {
     "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour",
-    "move-slide-up-label": "Move Up",
-    "move-slide-down-label": "Move Down",
+    "visibility-label": "Visibility",
+    "toggle-visibility-aria": "Toggle slide visibility",
     "delete-slide-label": "Delete"
   }
 }

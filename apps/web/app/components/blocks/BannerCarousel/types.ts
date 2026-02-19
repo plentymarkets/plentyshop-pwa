@@ -55,6 +55,9 @@ export type BannerProps = {
       variant?: 'primary' | 'secondary';
     };
   };
+  configuration?: {
+    visible: boolean
+  };
   index: number;
   lazyLoading: 'lazy' | 'eager';
   meta: {
