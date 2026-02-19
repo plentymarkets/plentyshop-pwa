@@ -10,7 +10,7 @@
     </template>
 
     <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
-      <OptionsTabs
+      <EditorOptionsTabs
         :model-value="editorMode"
         test-id-prefix="mode"
         :legend="getEditorTranslation('content-label')"
@@ -380,7 +380,6 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
-import OptionsTabs from '~/components/editor/OptionsTabs/OptionsTabs.vue';
 const props = defineProps<TextCardFormProps>();
 
 const runtimeConfig = useRuntimeConfig().public;

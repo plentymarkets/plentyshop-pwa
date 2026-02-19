@@ -8,7 +8,6 @@ export type TextCardProps = {
     uuid: string;
   };
 };
-export type EditorMode = 'wysiwyg' | 'html';
 
 export type TextCardContent = {
   text: {
