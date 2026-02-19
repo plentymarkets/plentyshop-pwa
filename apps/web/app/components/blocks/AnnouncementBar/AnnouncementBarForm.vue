@@ -21,7 +21,6 @@
         </template>
 
         <div class="py-2 px-2">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('text-label') }}</UiFormLabel>
           <EditorRichTextEditor
             v-if="editingIdx !== null"
             v-model="editingText"
