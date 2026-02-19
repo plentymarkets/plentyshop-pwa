@@ -370,11 +370,12 @@ export class EditorObject extends PageObject {
 
   checkWrapperSpacings() {
     this.blockWrappers.each((el) => {
-      if (this.blockIsBanner(el) || this.isMultiGrid(el) || this.isInnerBlock(el) || this.blockIsFooter(el.get(0))) {
-        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
-        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+      const isFooter = this.blockIsFooter(el.get(0));
+      const hasMaxWidth = el.attr('class')?.match(/max-w-screen-(xl|2xl|3xl)/);
+      if (isFooter || !hasMaxWidth) {
+        cy.wrap(el).should('not.have.class', 'p-4');
       } else {
-        cy.wrap(el).should('have.class', 'p-4').and('have.class', 'md:px-6');
+        cy.wrap(el).should('have.class', 'p-4').and('have.class', 'md:px-6').and('have.class', 'lg:px-10');
       }
     });
   }
