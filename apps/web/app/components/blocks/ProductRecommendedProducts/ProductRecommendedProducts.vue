@@ -46,18 +46,10 @@ const getContentSource = () => {
   };
 };
 
-const hasValidSource = computed(() => {
-  const source = getContentSource();
-
-  if (source.type === 'category') return Boolean(source.categoryId && source.categoryId !== '');
-  if (source.type === 'cross_selling') return Boolean(source.itemId);
-  return false;
-});
-
 watch(
   shouldFetch,
   (visible) => {
-    if (visible && hasValidSource.value) fetchProductRecommended(getContentSource());
+    if (visible) fetchProductRecommended(getContentSource());
     shouldRenderAfterUpdate.value = true;
   },
   { immediate: true },
@@ -72,7 +64,11 @@ watch(
     () => locale.value,
   ],
   () => {
-    if (shouldFetch.value && hasValidSource.value) {
+    if (
+      shouldFetch.value &&
+      ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
+        (props.content.source?.categoryId && props.content.source?.type === 'category'))
+    ) {
       fetchProductRecommended(getContentSource());
     }
     shouldRenderAfterUpdate.value = true;

@@ -20,9 +20,6 @@ export interface UseCategoryTemplate {
   cleanData: Readonly<Ref<UseCategoryTemplateState['cleanData']>>;
   categoryTemplateData: Readonly<Ref<UseCategoryTemplateState['categoryTemplateData']>>;
   loading: Readonly<Ref<boolean>>;
-  headerBlocks: ComputedRef<Block[]>;
-  mainBlocks: ComputedRef<Block[]>;
-  footerBlocks: ComputedRef<Block[]>;
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
