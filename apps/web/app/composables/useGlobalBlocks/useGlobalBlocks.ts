@@ -75,16 +75,10 @@ export const useGlobalBlocks = () => {
     globalBlocksCache.value.splice(0, globalBlocksCache.value.length, ...newBlocks);
   };
 
-  const clearGlobalBlocksCache = () => {
-    globalBlocksCache.value = null;
-    isFetching.value = false;
-  };
-
   return {
     fetchGlobalBlocks,
     ensureAllGlobalBlocks,
     updateGlobalBlocks,
-    clearGlobalBlocksCache,
     globalBlocksCache: readonly(globalBlocksCache),
   };
 };
