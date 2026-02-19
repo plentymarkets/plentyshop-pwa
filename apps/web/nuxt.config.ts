@@ -176,8 +176,8 @@ export default defineNuxtConfig({
         enabled: true,
         verbose: true,
         serverOnly: true,
-      }
-    }
+      },
+    },
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
