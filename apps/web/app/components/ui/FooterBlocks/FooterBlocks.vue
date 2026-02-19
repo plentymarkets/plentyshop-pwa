@@ -8,7 +8,7 @@ import { v4 as uuid } from 'uuid';
 import type { FooterSettings } from '~/components/blocks/Footer/types';
 
 const { globalBlocksCache, updateGlobalBlocks } = useGlobalBlocks();
-const { footerCache } = useFooter();
+const { footerCache, updateFooterCache } = useFooter();
 
 const footerBlocks = computed({
   get: () => {
@@ -31,6 +31,9 @@ const footerBlocks = computed({
 
     const otherBlocks = globalBlocksCache.value.filter((b: Block) => b.name !== 'Footer');
     updateGlobalBlocks([...otherBlocks, ...newFooterBlocks]);
+
+    const firstFooter = newFooterBlocks[0];
+    if (firstFooter?.content) updateFooterCache(firstFooter.content as FooterSettings);
   },
 });
 </script>
