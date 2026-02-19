@@ -37,7 +37,6 @@ export class SeoSettingsObject extends PageObject {
 
   checkModernButton() {
     this.modernBtn.click().should('have.class', 'bg-gray-100').and('have.class', 'font-semibold');
-    //
     this.modernBtn.find('.invisible').should('not.exist');
     this.legacyBtn.should('not.have.class', 'bg-gray-100');
 
