@@ -106,21 +106,21 @@ const urlScheme = computed({
     "button-modern-label": "Modern",
     "button-legacy-label": "Legacy",
 
-    "description-modern-code": "Example: /item-name_itemID_itemVariantID",
-    "description-modern-body-one": "Use when variants should be individually discoverable.",
+    "description-modern-code": "Example: /item-name_itemID_variantID",
+    "description-modern-body-one": "Recommended if you use price comparison platforms like Google Shopping or want variants to be individually discoverable.",
     "description-modern-body-list-line-one": "Each variant gets its own URL",
     "description-modern-body-list-line-two": "Enables direct linking to specific variants",
     "description-modern-body-list-line-three": "Supports variant-level SEO potential",
-    "description-modern-body-list-line-four": "Useful for campaigns or ads targeting a specific option",
-    "description-modern-body-footer": "This is ideal when variants differ meaningfully (e.g. material, features, item texts, images) or when you want users and search engines to land directly on a preselected variant.",
+    "description-modern-body-list-line-four": "Safer when variants have different prices",
+    "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variant links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variants differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variant.",
 
     "description-legacy-code": "Example: /item-name/a-variantID",
-    "description-legacy-body-one": "Use when variants are mostly cosmetic and SEO simplicity matters.",
+    "description-legacy-body-one": "Use with caution if variants have different prices.",
     "description-legacy-body-list-line-one": "One shared URL for all variants",
     "description-legacy-body-list-line-two": "Prevents duplicate or near-identical pages",
     "description-legacy-body-list-line-three": "Consolidates SEO signals to a single product page",
     "description-legacy-body-list-line-four": "Simplifies analytics and maintenance",
-    "description-legacy-body-footer": "Best suited when variants don’t have unique content or search demand and you prefer stronger authority on one page over variant-level linking."
+    "description-legacy-body-footer": "Since the page loads one default variant, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variants differ. This can lead to price mismatch errors or product disapprovals. Best suited when variants are mostly cosmetic or share the same price."
   },
   "de": {
     "label": "Item URL Scheme",
@@ -128,21 +128,21 @@ const urlScheme = computed({
     "button-modern-label": "Modern",
     "button-legacy-label": "Legacy",
 
-    "description-modern-code": "Example: /item-name_itemID_itemVariantID",
-    "description-modern-body-one": "Use when variants should be individually discoverable.",
+    "description-modern-code": "Example: /item-name_itemID_variantID",
+    "description-modern-body-one": "Recommended if you use price comparison platforms like Google Shopping or want variants to be individually discoverable.",
     "description-modern-body-list-line-one": "Each variant gets its own URL",
     "description-modern-body-list-line-two": "Enables direct linking to specific variants",
     "description-modern-body-list-line-three": "Supports variant-level SEO potential",
-    "description-modern-body-list-line-four": "Useful for campaigns or ads targeting a specific option",
-    "description-modern-body-footer": "This is ideal when variants differ meaningfully (e.g. material, features, item texts, images) or when you want users and search engines to land directly on a preselected variant.",
+    "description-modern-body-list-line-four": "Safer when variants have different prices",
+    "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variant links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variants differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variant.",
 
     "description-legacy-code": "Example: /item-name/a-variantID",
-    "description-legacy-body-one": "Use when variants are mostly cosmetic and SEO simplicity matters.",
+    "description-legacy-body-one": "Use with caution if variants have different prices.",
     "description-legacy-body-list-line-one": "One shared URL for all variants",
     "description-legacy-body-list-line-two": "Prevents duplicate or near-identical pages",
     "description-legacy-body-list-line-three": "Consolidates SEO signals to a single product page",
     "description-legacy-body-list-line-four": "Simplifies analytics and maintenance",
-    "description-legacy-body-footer": "Best suited when variants don’t have unique content or search demand and you prefer stronger authority on one page over variant-level linking."
+    "description-legacy-body-footer": "Since the page loads one default variant, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variants differ. This can lead to price mismatch errors or product disapprovals. Best suited when variants are mostly cosmetic or share the same price."
   }
 }
 </i18n>
