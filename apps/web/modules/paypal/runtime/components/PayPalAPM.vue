@@ -13,9 +13,10 @@
 <script setup lang="ts">
 import { cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import type { PayPalAddToCartCallback, PaypalAPMPropsType } from '~/components/PayPal/types';
-import { PayPalAlternativeFundingSourceMapper } from '~/composables';
+import type { PayPalAddToCartCallback, PaypalAPMPropsType } from '../types';
+import { PayPalAlternativeFundingSourceMapper } from '../types';
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import { usePayPal } from '../composables/usePayPal';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(useId());

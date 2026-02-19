@@ -99,10 +99,14 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '#paypal/types';
 import type { Locale } from '#i18n';
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
+
+definePageMeta({
+  pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
