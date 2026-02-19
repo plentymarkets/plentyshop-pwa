@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import type { Product, Block } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
+import type { WatchStopHandle } from 'vue';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
@@ -33,10 +34,13 @@ const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
+const config = useRuntimeConfig().public;
+const { variationId } = useProductAttributes();
+let variationWatchHandler: WatchStopHandle | undefined;
 
 definePageMeta({
   layout: false,
-  path: '/:slug*_:itemId',
+  path: '/:slug*:sep(/a-|_):itemId',
   validate: async (route) => {
     return validateProductParams(route.params);
   },
@@ -56,6 +60,7 @@ await fetchProduct(productParams).then(() => {
     product: product.value,
   });
 });
+
 if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
 
@@ -177,7 +182,22 @@ const { guardRouteLeave } = useEditorUnsavedChangesGuard();
 onBeforeRouteLeave((to, from, next) => {
   resetNotification();
   guardRouteLeave(to, from, next);
+  if (variationWatchHandler) {
+    variationWatchHandler();
+  }
 });
 
-onNuxtReady(() => observeRecommendedSection());
+onNuxtReady(() => {
+  observeRecommendedSection();
+
+  if (import.meta.client && config.enableCallistoUrlScheme) {
+    variationWatchHandler = watch(variationId, async () => {
+      if (productParams.variationId !== variationId.value && variationId.value) {
+        productParams.variationId = variationId.value;
+        await fetchProduct(productParams);
+        setCurrentProduct(productForEditor.value || ({} as Product));
+      }
+    });
+  }
+});
 </script>
