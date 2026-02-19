@@ -1,4 +1,4 @@
-import type { FooterSettings, FooterSwitchDefinition } from '~/components/blocks/Footer/types';
+import type { FooterSettings, FooterSwitchDefinition, AddFooterBlock } from '~/components/blocks/Footer/types';
 import { v4 as uuid } from 'uuid';
 
 export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
@@ -107,6 +107,33 @@ export const extractFooterFromBlocks = (content: string): FooterSettings | null 
   } catch (error) {
     console.warn('Failed to extract footer from blocks:', error);
     return null;
+  }
+};
+
+export const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
+  const footerExists = data.value.some((block) => block.name === 'Footer');
+
+  if (!footerExists) {
+    const footerBlock = {
+      name: 'Footer',
+      type: 'content',
+      meta: {
+        uuid: uuid(),
+        isGlobalTemplate: true,
+      },
+      content: cachedFooter.value || {
+        ...createDefaultFooterSettings(),
+        meta: {
+          uuid: uuid(),
+          isGlobalTemplate: true,
+        },
+      },
+    };
+    data.value.push(footerBlock);
+
+    if (cleanData) {
+      cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
+    }
   }
 };
 
