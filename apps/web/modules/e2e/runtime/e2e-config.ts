@@ -1,6 +1,4 @@
 export default defineEventHandler((event) => {
-  if (!process.env.E2E_TEST) return;
-
   const overrideCookie = getCookie(event, '_e2e_config');
   if (!overrideCookie) return;
 
