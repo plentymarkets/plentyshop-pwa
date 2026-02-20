@@ -159,15 +159,16 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = useFooter();
+        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterBlocks } = useFooter();
 
-        const footerSettings = extractFooterFromBlocks(content);
-        if (footerSettings) {
-          updateFooterCache(footerSettings);
+        const footerBlocks = extractFooterFromBlocks(content);
+
+        if (footerBlocks) {
+          updateFooterCache(footerBlocks);
         } else {
           clearFooterCache();
           try {
-            await fetchFooterSettings();
+            await fetchFooterBlocks();
           } catch (error) {
             console.warn('Failed to refresh footer settings after save:', error);
           }

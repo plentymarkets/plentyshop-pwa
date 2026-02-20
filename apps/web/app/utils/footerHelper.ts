@@ -1,4 +1,4 @@
-import type { FooterSettings, FooterSwitchDefinition } from '~/components/blocks/Footer/types';
+import type { FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import { v4 as uuid } from 'uuid';
 
 export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
@@ -60,85 +60,75 @@ export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   },
 ];
 
-export const createDefaultFooterSettings = (): FooterSettings => {
+export const createDefaultFooterBlock = (): FooterBlock => {
   const runtimeConfig = useRuntimeConfig();
 
   return {
+    name: 'Footer',
+    type: 'content',
     meta: {
       uuid: uuid(),
       isGlobalTemplate: true,
     },
-    column1: {
-      title: t('footer.legal.label'),
-      showTermsAndConditions: true,
-      showCancellationRights: true,
-      showCancellationForm: true,
-      showLegalDisclosure: true,
-      showPrivacyPolicy: true,
-      showDeclarationOfAccessibility: true,
-    },
-    column2: {
-      title: t('footer.services.label'),
-      description: '',
-      showContactLink: true,
-      showRegisterLink: true,
-    },
-    column3: { title: '', description: '' },
-    column4: { title: '', description: '' },
-    footnote: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
-    footnoteAlign: 'right',
-    colors: {
-      background: '#cfe4ec',
-      text: '#1c1c1c',
-      footnoteBackground: '#161a16',
-      footnoteText: '#959795',
+    content: {
+      column1: {
+        title: t('footer.legal.label'),
+        showTermsAndConditions: true,
+        showCancellationRights: true,
+        showCancellationForm: true,
+        showLegalDisclosure: true,
+        showPrivacyPolicy: true,
+        showDeclarationOfAccessibility: true,
+      },
+      column2: {
+        title: t('footer.services.label'),
+        description: '',
+        showContactLink: true,
+        showRegisterLink: true,
+      },
+      column3: { title: '', description: '' },
+      column4: { title: '', description: '' },
+      footnote: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
+      footnoteAlign: 'right',
+      colors: {
+        background: '#cfe4ec',
+        text: '#1c1c1c',
+        footnoteBackground: '#161a16',
+        footnoteText: '#959795',
+      },
     },
   };
 };
 
-export const extractFooterFromBlocks = (content: string): FooterSettings | null => {
+export const extractFooterFromBlocks = (content: string): FooterBlock | null => {
   try {
     const blocks = JSON.parse(content);
     const footerBlock = Array.isArray(blocks)
       ? blocks.find((block: { name?: string }) => block.name === 'Footer')
       : null;
 
-    return footerBlock?.content || null;
+    return footerBlock || null;
   } catch (error) {
     console.warn('Failed to extract footer from blocks:', error);
     return null;
   }
 };
 
-export const mapFooterData = (data: FooterSettings | null): FooterSettings => {
-  const defaults = createDefaultFooterSettings();
+export const mapFooterData = (data: FooterBlock | null): FooterBlock => {
+  const defaults = createDefaultFooterBlock();
 
   return {
     ...defaults,
     ...data,
+    name: 'Footer',
+    type: 'content',
     meta: {
       ...defaults.meta,
       ...data?.meta,
     },
-    column1: {
-      ...defaults.column1,
-      ...data?.column1,
-    },
-    column2: {
-      ...defaults.column2,
-      ...data?.column2,
-    },
-    column3: {
-      ...defaults.column3,
-      ...data?.column3,
-    },
-    column4: {
-      ...defaults.column4,
-      ...data?.column4,
-    },
-    colors: {
-      ...defaults.colors,
-      ...data?.colors,
+    content: {
+      ...defaults.content,
+      ...data?.content,
     },
   };
 };

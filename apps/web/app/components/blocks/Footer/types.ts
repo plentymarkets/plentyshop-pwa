@@ -1,7 +1,6 @@
-export type FooterProps = {
-  content?: FooterSettings;
-};
+import type { Block } from '@plentymarkets/shop-api';
 
+export type FooterProps = FooterBlock;
 export interface FooterSwitchDefinition {
   columnGroup: 'legal' | 'services';
   key: string;
@@ -31,16 +30,20 @@ export interface FooterSettingsColors {
   footnoteText: string;
 }
 
-export interface FooterSettings {
+export interface FooterBlock extends Block {
+  name: string;
+  type: string;
   meta: {
     uuid: string;
     isGlobalTemplate?: boolean;
   };
-  column1: FooterSettingsColumn;
-  column2: FooterSettingsColumn;
-  column3: FooterSettingsColumn;
-  column4: FooterSettingsColumn;
-  footnote: string;
-  footnoteAlign: 'left' | 'center' | 'right';
-  colors: FooterSettingsColors;
+  content: {
+    column1: FooterSettingsColumn;
+    column2: FooterSettingsColumn;
+    column3: FooterSettingsColumn;
+    column4: FooterSettingsColumn;
+    footnote: string;
+    footnoteAlign: 'left' | 'center' | 'right';
+    colors: FooterSettingsColors;
+  };
 }

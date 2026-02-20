@@ -3,26 +3,26 @@
     v-if="resolvedContent"
     class="pt-10"
     :style="{
-      backgroundColor: resolvedContent.colors?.background,
-      color: resolvedContent.colors?.text,
+      backgroundColor: resolvedContent.content.colors?.background,
+      color: resolvedContent.content.colors?.text,
     }"
     data-testid="footer"
   >
     <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
+        <div v-if="getColumnSwitches(resolvedContent.content.column1).length" class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
-            {{ resolvedContent.column1?.title }}
+            {{ resolvedContent.content.column1?.title }}
           </div>
           <ul>
             <SfListItem
-              v-for="switchConfig in getColumnSwitches(resolvedContent.column1)"
+              v-for="switchConfig in getColumnSwitches(resolvedContent.content.column1)"
               :key="switchConfig.id"
               class="py-2 !bg-transparent typography-text-sm"
             >
               <SfLink
                 :tag="NuxtLink"
-                :style="{ color: resolvedContent.colors?.text || undefined }"
+                :style="{ color: resolvedContent.content.colors?.text || undefined }"
                 class="no-underline text-neutral-600 hover:underline active:underline"
                 variant="secondary"
                 :to="localePath(switchConfig.link)"
@@ -34,7 +34,11 @@
         </div>
 
         <div
-          v-for="(column, i) in [resolvedContent.column2, resolvedContent.column3, resolvedContent.column4]"
+          v-for="(column, i) in [
+            resolvedContent.content.column2,
+            resolvedContent.content.column3,
+            resolvedContent.content.column4,
+          ]"
           :key="i"
           class="max-w-[280px] break-words"
         >
@@ -52,7 +56,7 @@
                   :tag="NuxtLink"
                   variant="secondary"
                   class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
-                  :style="{ color: resolvedContent.colors?.text }"
+                  :style="{ color: resolvedContent.content.colors?.text }"
                   :to="localePath(switchConfig.link)"
                 >
                   {{ switchConfig.translationKey }}
@@ -70,18 +74,18 @@
     </div>
     <div>
       <div
-        v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
+        v-if="resolvedContent.content.footnote && resolvedContent.content.footnote.trim() !== ''"
         class="text-sm py-10 md:py-6 px-10"
         :class="{
-          'text-left': resolvedContent.footnoteAlign === 'left',
-          'text-center': resolvedContent.footnoteAlign === 'center',
-          'text-right': resolvedContent.footnoteAlign === 'right',
+          'text-left': resolvedContent.content.footnoteAlign === 'left',
+          'text-center': resolvedContent.content.footnoteAlign === 'center',
+          'text-right': resolvedContent.content.footnoteAlign === 'right',
         }"
         :style="{
-          color: resolvedContent.colors?.footnoteText,
-          backgroundColor: resolvedContent.colors?.footnoteBackground,
+          color: resolvedContent.content.colors?.footnoteText,
+          backgroundColor: resolvedContent.content.colors?.footnoteBackground,
         }"
-        v-html="resolvedContent.footnote"
+        v-html="resolvedContent.content.footnote"
       />
     </div>
   </footer>
@@ -89,21 +93,20 @@
 
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
-import type { FooterProps, FooterSettings, FooterSettingsColumn } from './types';
+import type { FooterProps, FooterBlock, FooterSettingsColumn } from './types';
 
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterSettings, footerCache } = useFooter();
-const resolvedContent = ref<FooterSettings | null>(null);
+const { getFooterBlocks, footerCache } = useFooter();
+const resolvedContent = ref<FooterBlock | null>(null);
 let stopWatch: (() => void) | null = null;
 
 onMounted(() => {
   stopWatch = watch(
     [() => props.content, footerCache],
     () => {
-      const content = props.content ?? getFooterSettings();
-      resolvedContent.value = mapFooterData(content);
+      resolvedContent.value = mapFooterData(props ?? getFooterBlocks());
     },
     { immediate: true, deep: true },
   );

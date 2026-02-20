@@ -1,7 +1,6 @@
-import { v4 as uuid } from 'uuid';
 import type { Block } from '@plentymarkets/shop-api';
-import { createDefaultFooterSettings } from '~/utils/footerHelper';
-import type { FooterSettings } from '~/components/blocks/Footer/types';
+import type { FooterBlock } from '~/components/blocks/Footer/types';
+import { createDefaultFooterBlock } from '~/utils/footerHelper';
 
 export const useGlobalBlocks = () => {
   const globalBlocksCache = useState<Block[] | null>('global-blocks-cache', () => null);
@@ -23,8 +22,13 @@ export const useGlobalBlocks = () => {
       globalBlocksCache.value = allBlocks;
 
       const { updateFooterCache } = useFooter();
-      const footerBlock = allBlocks.find((block) => block.name === 'Footer');
-      if (footerBlock) updateFooterCache((footerBlock.content as FooterSettings) ?? createDefaultFooterSettings());
+      const footerBlock = allBlocks.find((block) => block.name === 'Footer') as FooterBlock | undefined;
+      if (footerBlock) {
+        updateFooterCache(footerBlock);
+      } else {
+        const defaultFooter = createDefaultFooterBlock();
+        updateFooterCache(defaultFooter);
+      }
     } catch (error) {
       console.error('Failed to fetch global blocks:', error);
       globalBlocksCache.value = [];
@@ -49,16 +53,10 @@ export const useGlobalBlocks = () => {
     const hasFooter = blocks.some((block) => block.name === 'Footer');
     if (hasFooter) return blocks;
 
-    const { footerCache, fetchFooterSettings } = useFooter();
-    if (!footerCache.value) await fetchFooterSettings();
+    const { footerCache, fetchFooterBlocks } = useFooter();
+    if (!footerCache.value) await fetchFooterBlocks();
 
-    const footerContent = footerCache.value || createDefaultFooterSettings();
-    const footerBlock: Block = {
-      name: 'Footer',
-      type: 'content',
-      meta: { uuid: uuid(), isGlobalTemplate: true },
-      content: footerContent,
-    };
+    const footerBlock = footerCache.value || createDefaultFooterBlock();
 
     return [...blocks, footerBlock];
   };

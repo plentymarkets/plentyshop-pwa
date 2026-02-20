@@ -1,5 +1,5 @@
-import type { FooterSettings } from '~/components/blocks/Footer/types';
-import { createDefaultFooterSettings, extractFooterFromBlocks } from '~/utils/footerHelper';
+import type { FooterBlock } from '~/components/blocks/Footer/types';
+import { createDefaultFooterBlock, extractFooterFromBlocks } from '~/utils/footerHelper';
 import { callWithNuxt } from '#app';
 
 /**
@@ -7,21 +7,21 @@ import { callWithNuxt } from '#app';
  * Handles fetching and caching of footer configuration
  */
 export const useFooter = () => {
-  const footerCache = useState<FooterSettings | null>('footer-settings-cache', () => null);
+  const footerCache = useState<FooterBlock>('footer-settings-cache', () => ({}) as FooterBlock);
 
   const clearFooterCache = () => {
-    footerCache.value = null;
+    footerCache.value = {} as FooterBlock;
   };
 
-  const updateFooterCache = (newFooterSettings: FooterSettings) => {
+  const updateFooterCache = (newFooterSettings: FooterBlock) => {
     footerCache.value = newFooterSettings;
   };
 
-  const getFooterSettings = (): FooterSettings => {
-    return footerCache.value || createDefaultFooterSettings();
+  const getFooterBlocks = (): FooterBlock => {
+    return footerCache.value || createDefaultFooterBlock();
   };
 
-  const fetchFooterSettings = async (): Promise<FooterSettings> => {
+  const fetchFooterBlocks = async (): Promise<FooterBlock> => {
     if (footerCache.value) {
       return footerCache.value;
     }
@@ -38,26 +38,26 @@ export const useFooter = () => {
           }),
         );
 
-        const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
+        const footerBlock = data.value?.data?.find((block) => block.name === 'Footer') as FooterBlock;
 
         if (footerBlock?.content) {
-          footerCache.value = footerBlock.content as FooterSettings;
+          footerCache.value = footerBlock;
           return footerCache.value;
         }
       } catch (error) {
-        console.warn('Failed to fetch footer settings, using defaults:', error);
+        console.warn('Failed to fetch footer blocks, using defaults:', error);
       }
 
-      footerCache.value = getFooterSettings();
+      footerCache.value = getFooterBlocks();
       return footerCache.value;
     });
   };
 
   return {
-    footerCache: readonly(footerCache),
-    fetchFooterSettings,
-    getFooterSettings,
-    createDefaultFooterSettings,
+    footerCache,
+    fetchFooterBlocks,
+    getFooterBlocks,
+    createDefaultFooterBlock,
     clearFooterCache,
     updateFooterCache,
     extractFooterFromBlocks,

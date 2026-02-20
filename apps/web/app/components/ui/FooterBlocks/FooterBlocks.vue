@@ -6,11 +6,11 @@
 import type { Block } from '@plentymarkets/shop-api';
 
 const { globalBlocksCache, updateGlobalBlocks } = useGlobalBlocks();
+const { footerCache } = useFooter();
 
 const footerBlocks = computed({
   get: () => {
-    const filtered = globalBlocksCache.value?.filter((block: Block) => block.name === 'Footer') ?? [];
-    return filtered;
+    return [footerCache.value as Block];
   },
   set: (newFooterBlocks: Block[]) => {
     if (!globalBlocksCache.value) return;
