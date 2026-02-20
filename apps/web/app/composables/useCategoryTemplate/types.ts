@@ -27,6 +27,9 @@ export interface UseCategoryTemplate {
   updateBlocks: UpdateBlocks;
   setupBlocks: SetupBlocks;
   setDefaultTemplate: SetDefaultTemplate;
+  headerBlocks: ComputedRef<Block[]>;
+  mainBlocks: ComputedRef<Block[]>;
+  footerBlocks: ComputedRef<Block[]>;
 }
 
 export type UseCategoryTemplateReturn = (
