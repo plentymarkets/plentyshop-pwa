@@ -26,6 +26,8 @@ declare global {
       paypalFlow(email: string, password: string): Cypress.Chainable;
       firstIFrame(): Cypress.Chainable;
       resetPopupStub(): Cypress.Chainable;
+      setConfig(config: Record<string, unknown>): Chainable<void>;
+      clearConfig(): Chainable<void>;
     }
   }
 }
@@ -188,4 +190,12 @@ Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.popup().find('button#btnLogin').click();
   cy.wait(7000);
   cy.popup().find('button[data-id="payment-submit-btn"]').should('exist').click({ force: true });
+});
+
+Cypress.Commands.add('setConfig', (config: Record<string, unknown>) => {
+  cy.setCookie('_e2e_config', JSON.stringify(config));
+});
+
+Cypress.Commands.add('clearConfig', () => {
+  cy.clearCookie('_e2e_config');
 });

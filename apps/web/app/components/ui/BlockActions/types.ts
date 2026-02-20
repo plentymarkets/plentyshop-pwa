@@ -12,6 +12,5 @@ type BlockActionOptions = {
 export interface BlockActionsProps {
   index: number;
   block: Block;
-  isLastBlock?: boolean;
   actions?: BlockActionOptions;
 }
