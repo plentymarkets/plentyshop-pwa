@@ -171,6 +171,10 @@ const mapFooterData = (data: FooterSettings | null): FooterSettings => {
   };
 };
 
+/**
+ * Composable for accessing global footer settings
+ * Handles fetching and caching of footer configuration
+ */
 export const useFooter = () => {
   const footerCache = useState<FooterSettings | null>('footer-settings-cache', () => null);
 
