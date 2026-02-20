@@ -11,7 +11,7 @@ describe('ItemUrlHandling', () => {
     editor.isToolbarVisible();
     editor.toggleSeoSettings();
     editor.seoSettingsButton.trigger('mouseout', { force: true }).trigger('mouseleave', { force: true });
-  }
+  };
 
   beforeEach(() => {
     cy.clearCookies();
