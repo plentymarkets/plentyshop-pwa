@@ -156,7 +156,6 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
-  guardRouteLeave(to, from, next);
   if (variationWatchHandler) {
     variationWatchHandler();
   }
