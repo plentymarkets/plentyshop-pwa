@@ -166,7 +166,7 @@ onNuxtReady(() => {
 
   if (import.meta.client && config.enableCallistoUrlScheme) {
     variationWatchHandler = watch(variationId, async () => {
-      if (productParams.variationId !== variationId.value && variationId.value) {
+      if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
         productParams.variationId = variationId.value;
         await fetchProduct(productParams);
         setCurrentProduct(productForEditor.value || ({} as Product));
