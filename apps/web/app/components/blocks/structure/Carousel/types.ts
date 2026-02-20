@@ -12,7 +12,7 @@ export type CarouselStructureProps = {
     layout?: {
       fullWidth?: boolean;
     };
-    visible?: boolean
+    visible?: boolean;
   };
   index: number;
   meta: {

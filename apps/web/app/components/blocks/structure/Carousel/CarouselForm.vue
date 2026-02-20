@@ -22,7 +22,7 @@
           <template #item="{ element: slide, index }">
             <div
               :key="slide.meta.uuid"
-              class="mb-3 flex items-center justify-between bg-white  rounded-lg  transition-colors"
+              class="mb-3 flex items-center justify-between bg-white rounded-lg transition-colors"
             >
               <div class="flex items-center gap-3 flex-1 min-w-0">
                 <button
@@ -43,7 +43,7 @@
 
               <button
                 :data-testid="`actions-edit-slide-${index}`"
-                class=" text-gray-500  rounded-full no-drag"
+                class="text-gray-500 rounded-full no-drag"
                 :aria-label="getEditorTranslation('edit-slide-aria')"
                 @click="editSlide(index)"
               >
@@ -57,7 +57,7 @@
               <div :key="`menu-${index}`" class="relative">
                 <button
                   :data-testid="`actions-menu-slide-${index}`"
-                  class="text-gray-500  rounded-full no-drag"
+                  class="text-gray-500 rounded-full no-drag"
                   @click="toggleSlideMenu(index)"
                 >
                   <SfIconMoreVert />
@@ -161,14 +161,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfIconDelete,
-  SfInput,
-  SfIconAdd,
-  SfIconMoreVert,
-  SfIconBase,
-  SfSwitch,
-} from '@storefront-ui/vue';
+import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
@@ -254,12 +247,10 @@ onMounted(() => {
 
     const target = event.target as HTMLElement;
     // Get the currently open menu and button
-    const openMenuButton = document.querySelector(
-      `[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`
-    );
-    const openMenu = document.querySelector(
-      `[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`
-    )?.parentElement?.querySelector('.absolute.right-0');
+    const openMenuButton = document.querySelector(`[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`);
+    const openMenu = document
+      .querySelector(`[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`)
+      ?.parentElement?.querySelector('.absolute.right-0');
 
     // Check if click is outside both the button and the menu
     if (openMenuButton && openMenu) {
@@ -319,7 +310,6 @@ const addSlide = async () => {
     },
     lazyLoading: 'eager',
     index: slides.value.length,
-
   };
 
   slides.value = [...slides.value, newSlide] as BannerProps[];

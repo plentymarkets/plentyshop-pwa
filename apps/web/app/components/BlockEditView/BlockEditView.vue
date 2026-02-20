@@ -3,17 +3,12 @@
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3">
         <template v-if="customTitle">
-          <button
-            class=" rounded-full transition-colors"
-            @click="handleBackClick"
-          >
+          <button class="rounded-full transition-colors" @click="handleBackClick">
             <SfIconChevronLeft />
           </button>
           <span>{{ customTitle }}</span>
         </template>
-        <template v-else>
-          {{ getBlockTypeName(blockType) }}s
-        </template>
+        <template v-else> {{ getBlockTypeName(blockType) }}s </template>
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
