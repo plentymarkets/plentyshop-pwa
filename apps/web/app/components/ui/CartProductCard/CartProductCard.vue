@@ -248,10 +248,7 @@ const basePriceSingleValue = computed(
 );
 
 const path = computed(() => {
-  if (config.public.enableCallistoUrlScheme) {
-    return localePath(`/${cartItem.variation?.texts.urlPath}/a-${cartItem.variation?.item.id ?? 0}`);
-  }
-  return localePath('/' + cartGetters.getProductPath(cartItem));
+  return localePath('/' + cartGetters.getProductPath(cartItem, config.public.enableCallistoUrlScheme));
 });
 
 const imageAlt = computed(() => {
