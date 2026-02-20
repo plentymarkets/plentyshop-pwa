@@ -4,7 +4,6 @@ import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
 import cookieConfig from './app/configuration/cookie.config';
 import { paths } from './app/utils/paths';
-import { resolve } from 'pathe';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
@@ -322,16 +321,5 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
-  },
-  hooks: {
-    'pages:extend'(pages) {
-      if (process.env.E2E_TEST) {
-        pages.push({
-          name: 'e2e',
-          path: '/smoke-e2e',
-          file: resolve(__dirname, 'e2e/smoke-e2e.vue'),
-        });
-      }
-    },
   },
 });
