@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2 mb-2">
+  <div v-if="runtimeConfig.enableCallistoUrlScheme" class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -86,6 +86,7 @@
 
 <script setup lang="ts">
 import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+const runtimeConfig = useRuntimeConfig().public;
 
 const { updateSetting, getSetting } = useSiteSettings('enableCallistoUrlScheme');
 
