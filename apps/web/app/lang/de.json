@@ -1232,6 +1232,9 @@
     "coupon": {
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
     },
+    "editor": {
+      "invalidEditorHash": "Ungültige Editor Session."
+    },
     "feedback": {
       "notAllowedWithoutPurchase": "Sie müssen diesen Artikel kaufen, bevor Sie eine Bewertung abgeben können."
     },
