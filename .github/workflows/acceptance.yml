@@ -49,6 +49,7 @@ jobs:
           command: npm run test:cypress-feature
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
+          MOLLIE_TEST_MODE: true
 
       - name: E2E Editor
         uses: cypress-io/github-action@v7
