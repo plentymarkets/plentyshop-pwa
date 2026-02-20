@@ -5,7 +5,12 @@
       <slot />
     </NarrowContainer>
   </main>
-  <UiFooterBlocks />
+  <ClientOnly>
+    <FooterBlock v-if="!route.meta.isBlockified" />
+  </ClientOnly>
 </template>
+<script setup lang="ts">
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 
-<script setup lang="ts"></script>
+const route = useRoute();
+</script>
