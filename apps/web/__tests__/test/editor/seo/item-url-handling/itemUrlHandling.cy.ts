@@ -16,6 +16,7 @@ describe('ItemUrlHandling', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.visit('/');
+    cy.setConfig({ enableCallistoUrlScheme: true });
     cookieBar.delay(500).acceptAll();
   });
 
