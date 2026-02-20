@@ -136,7 +136,7 @@ const urlScheme = computed({
     "description-modern-body-list-line-four": "Safer when variants have different prices",
     "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variant links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variants differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variant.",
 
-    "description-legacy-code": "Example: /item-name/a-variantID",
+    "description-legacy-code": "Example: /item-name/a-itemID",
     "description-legacy-body-one": "Use with caution if variants have different prices.",
     "description-legacy-body-list-line-one": "One shared URL for all variants",
     "description-legacy-body-list-line-two": "Prevents duplicate or near-identical pages",
