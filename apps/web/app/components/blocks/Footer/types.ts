@@ -1,7 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 
 export type FooterProps = {
-  content?: FooterSettings;
+  block?: Block;
 };
 
 export interface FooterSwitchDefinition {
@@ -34,10 +34,6 @@ export interface FooterSettingsColors {
 }
 
 export interface FooterSettings {
-  meta: {
-    uuid: string;
-    isGlobalTemplate?: boolean;
-  };
   column1: FooterSettingsColumn;
   column2: FooterSettingsColumn;
   column3: FooterSettingsColumn;
@@ -49,7 +45,7 @@ export interface FooterSettings {
 
 type AddFooterBlockOptions = {
   data: Ref<Block[]>;
-  cachedFooter: Ref<unknown>;
+  cachedFooter: Ref<Block | null>;
   cleanData?: Ref<Block[]>;
 };
 

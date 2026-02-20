@@ -27,10 +27,10 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   );
 
   const ensureFooterBlock = async () => {
-    const { fetchFooterSettings } = useFooter();
+    const { fetchFooterBlock } = useFooter();
 
     try {
-      await fetchFooterSettings();
+      await fetchFooterBlock();
     } catch (error) {
       console.warn('Failed to ensure footer block:', error);
     }
@@ -144,17 +144,24 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
-        const { updateFooterCache, extractFooterFromBlocks, clearFooterCache, fetchFooterSettings } = useFooter();
+        const {
+          updateFooterCache,
+          extractFooterContentFromBlocks,
+          clearFooterCache,
+          fetchFooterBlock,
+          createFooterBlock,
+        } = useFooter();
 
-        const footerSettings = extractFooterFromBlocks(content);
+        const footerSettings = extractFooterContentFromBlocks(content);
         if (footerSettings) {
-          updateFooterCache(footerSettings);
+          const footerBlock = createFooterBlock(footerSettings);
+          updateFooterCache(footerBlock);
         } else {
           clearFooterCache();
           try {
-            await fetchFooterSettings();
+            await fetchFooterBlock();
           } catch (error) {
-            console.warn('Failed to refresh footer settings after save:', error);
+            console.warn('Failed to refresh footer block after save:', error);
           }
         }
       }
