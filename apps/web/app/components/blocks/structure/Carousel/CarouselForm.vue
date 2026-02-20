@@ -54,7 +54,7 @@
                 </SfIconBase>
               </button>
 
-              <div class="relative">
+              <div :key="`menu-${index}`" class="relative">
                 <button
                   :data-testid="`actions-menu-slide-${index}`"
                   class="text-gray-500  rounded-full no-drag"
@@ -66,6 +66,7 @@
                 <div
                   v-if="openSlideMenuIndex === index"
                   class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+                  @click.stop
                 >
                   <div class="px-4 py-3 border-b">
                     <div class="flex items-center justify-between">
@@ -161,7 +162,6 @@
 
 <script setup lang="ts">
 import {
-  SfIconChevronLeft,
   SfIconDelete,
   SfInput,
   SfIconAdd,
@@ -226,6 +226,8 @@ const slides = computed({
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
+  // Scroll the swiper to this slide
+  setIndex(blockUuid.value, index);
   emit('set-edit-title', `Slide ${index + 1}`);
 };
 
@@ -244,6 +246,38 @@ const toggleSlideMenu = (index: number) => {
     openSlideMenuIndex.value = index;
   }
 };
+
+// Handle click outside to close popover
+onMounted(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (openSlideMenuIndex.value === undefined) return;
+
+    const target = event.target as HTMLElement;
+    // Get the currently open menu and button
+    const openMenuButton = document.querySelector(
+      `[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`
+    );
+    const openMenu = document.querySelector(
+      `[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`
+    )?.parentElement?.querySelector('.absolute.right-0');
+
+    // Check if click is outside both the button and the menu
+    if (openMenuButton && openMenu) {
+      const isClickOnButton = openMenuButton.contains(target);
+      const isClickOnMenu = openMenu.contains(target);
+
+      if (!isClickOnButton && !isClickOnMenu) {
+        openSlideMenuIndex.value = undefined;
+      }
+    }
+  };
+
+  document.addEventListener('click', handleClickOutside);
+
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+  });
+});
 
 const addSlide = async () => {
   const newSlide: BannerProps = {
