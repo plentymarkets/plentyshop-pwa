@@ -70,7 +70,7 @@ if (!props.preventBlocksRequest) {
   await getBlocksServer(props.identifier, props.type);
 }
 
-const { footerCache } = useFooter();
+const { footerCache, addFooterBlock } = useFooter();
 addFooterBlock({
   data,
   cachedFooter: footerCache,

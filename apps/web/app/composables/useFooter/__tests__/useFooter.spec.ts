@@ -114,6 +114,7 @@ describe('useFooter', () => {
 
   describe('extractFooterFromBlocks', () => {
     it('should extract footer content from valid JSON blocks array', () => {
+      const { extractFooterFromBlocks } = useFooter();
       const blocksJson = JSON.stringify([
         { name: 'Header', content: { title: 'Header' } },
         { name: 'Footer', content: mockFooterData },
@@ -126,6 +127,7 @@ describe('useFooter', () => {
     });
 
     it('should return null if no footer block is found', () => {
+      const { extractFooterFromBlocks } = useFooter();
       const blocksJson = JSON.stringify([
         { name: 'Header', content: { title: 'Header' } },
         { name: 'Content', content: { body: 'Content' } },
@@ -137,6 +139,7 @@ describe('useFooter', () => {
     });
 
     it('should return null if blocks is not an array', () => {
+      const { extractFooterFromBlocks } = useFooter();
       const blocksJson = JSON.stringify({ name: 'Footer', content: mockFooterData });
 
       const result = extractFooterFromBlocks(blocksJson);
@@ -145,6 +148,7 @@ describe('useFooter', () => {
     });
 
     it('should return null and log warning for invalid JSON', () => {
+      const { extractFooterFromBlocks } = useFooter();
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       const invalidJson = 'invalid json string';
 
@@ -157,6 +161,7 @@ describe('useFooter', () => {
     });
 
     it('should return null if footer block has no content', () => {
+      const { extractFooterFromBlocks } = useFooter();
       const blocksJson = JSON.stringify([{ name: 'Footer' }]);
 
       const result = extractFooterFromBlocks(blocksJson);

@@ -94,7 +94,7 @@ import type { FooterProps, FooterSettings, FooterSettingsColumn } from './types'
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterSettings, footerCache } = useFooter();
+const { getFooterSettings, footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useFooter();
 const resolvedContent = ref<FooterSettings | null>(null);
 let stopWatch: (() => void) | null = null;
 
