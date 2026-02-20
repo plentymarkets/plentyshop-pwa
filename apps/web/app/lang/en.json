@@ -1232,6 +1232,9 @@
     "coupon": {
       "applyFailed": "The coupon could not be redeemed."
     },
+    "editor": {
+      "invalidEditorHash": "The editor session is invalid."
+    },
     "feedback": {
       "notAllowedWithoutPurchase": "You must purchase this item before leaving a review."
     },
