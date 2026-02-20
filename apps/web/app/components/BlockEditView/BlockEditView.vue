@@ -1,8 +1,14 @@
 <template>
   <div class="site-settings-view sticky top-[52px]" data-testid="block-edit-view">
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">
-        {{ getBlockTypeName(blockType) }}
+      <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3">
+        <template v-if="customTitle">
+          <button class="rounded-full transition-colors" @click="handleBackClick">
+            <SfIconChevronLeft />
+          </button>
+          <span>{{ customTitle }}</span>
+        </template>
+        <template v-else> {{ getBlockTypeName(blockType) }}s </template>
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
@@ -17,34 +23,68 @@
       </div>
     </header>
     <div class="h-[80vh] overflow-y-auto">
-      <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
+      <component
+        :is="currentComponent"
+        v-if="currentComponent"
+        ref="childComponentRef"
+        @set-edit-title="handleSetEditTitle"
+        @clear-edit-title="clearCustomTitle"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconDelete, SfIconClose } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue';
 
 const { drawerOpen, blockType, blockUuid } = useSiteConfiguration();
 const { deleteBlock } = useBlockManager();
+
+const customTitle = ref<string | null>(null);
+const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void } | null>(null);
+
+const handleSetEditTitle = (title: string) => {
+  customTitle.value = title;
+};
+
+const clearCustomTitle = () => {
+  customTitle.value = null;
+};
+
+const handleBackClick = () => {
+  if (childComponentRef.value?.exitEditMode) {
+    childComponentRef.value.exitEditMode(false);
+  }
+  clearCustomTitle();
+};
 
 const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
   string,
   () => Promise<{ default: unknown }>
 >;
 
+const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
+
 const getComponent = (name: string) => {
   if (!name) return null;
 
-  const regex = new RegExp(`${blockType.value}Form\\.vue$`, 'i');
+  if (componentCache.has(name)) {
+    return componentCache.get(name);
+  }
+
+  const regex = new RegExp(`${name}Form\\.vue$`, 'i');
   const matched = Object.keys(modules).find((path) => regex.test(path));
 
   if (matched && modules[matched]) {
-    return defineAsyncComponent(modules[matched]);
+    const component = defineAsyncComponent(modules[matched]);
+    componentCache.set(name, component);
+    return component;
   }
 
   return '';
 };
+
+const currentComponent = computed(() => getComponent(blockType.value));
 
 const blockTypeNames: Record<string, string> = {
   Carousel: 'Image Banner',
