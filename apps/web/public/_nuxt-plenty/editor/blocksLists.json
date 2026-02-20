@@ -960,10 +960,10 @@
       }
     ]
   },
-  "rich-text": {
-    "category": "rich-text",
+  "text": {
+    "category": "text",
     "accessControl": ["content", "productCategory", "product"],
-    "title": "Rich Text",
+    "title": "Text",
     "blockName": "TextCard",
     "variations": [
       {
@@ -1015,6 +1015,84 @@
                 "fullWidth": false
               }
             }
+          }
+        }
+      },
+      {
+        "title": "Announcement Bar",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement_bar.png",
+        "template": {
+          "en": {
+            "name": "AnnouncementBar",
+            "type": "content",
+            "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "configuration": {
+              "controls": { "color": "#000000" },
+              "layout": {
+                "fullWidth": true,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "backgroundColor": "#EDFF6C"
+              }
+            },
+            "content": [
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "content": {
+                  "text": "This is an example announcement.",
+                  "visible": true
+                }
+              },
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "6beeb2f6-d51d-420a-a2fb-9761d2db6130" },
+                "content": {
+                  "text": "This is another example announcement.",
+                  "visible": true
+                }
+              }
+            ]
+          },
+          "de": {
+            "name": "AnnouncementBar",
+            "type": "structure",
+            "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "configuration": {
+              "controls": { "color": "#000000" },
+              "layout": {
+                "fullWidth": true,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "backgroundColor": "#EDFF6C"
+              }
+            },
+            "content": [
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "content": {
+                  "text": "Das ist eine Beispielankündigung.",
+                  "visible": true
+                }
+              },
+              {
+                "name": "Announcement",
+                "type": "content",
+                "meta": { "uuid": "6beeb2f6-d51d-420a-a2fb-9761d2db6130" },
+                "content": {
+                  "text": "Das ist eine weitere Beispielankündigung.",
+                  "visible": true
+                }
+              }
+            ]
           }
         }
       }
