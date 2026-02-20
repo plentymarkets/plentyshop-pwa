@@ -7,7 +7,7 @@ describe('ItemUrlHandling', () => {
   const seoSettings = new SeoSettingsObject();
   const cookieBar = new CookieBarObject();
 
-  function seoEditorInit() {
+  const seoEditorInit = () => {
     editor.isToolbarVisible();
     editor.toggleSeoSettings();
     editor.seoSettingsButton.trigger('mouseout', { force: true }).trigger('mouseleave', { force: true });
