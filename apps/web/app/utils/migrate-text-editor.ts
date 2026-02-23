@@ -42,11 +42,11 @@ export const migrateTextCardContent = (
   const parts: string[] = [];
 
   if (pretitle?.trim()) {
-    parts.push(`<h2>${escapeHtml(pretitle.trim())}</h2>`);
+    parts.push(`<p>${escapeHtml(pretitle.trim())}</p>`);
   }
 
   if (title?.trim()) {
-    parts.push(`<h1>${escapeHtml(title.trim())}</h1>`);
+    parts.push(`<h2>${escapeHtml(title.trim())}</h2>`);
   }
 
   if (subtitle?.trim()) {
