@@ -104,14 +104,14 @@
           </template>
         </draggable>
 
-        <div class="pt-4">
+        <div class="pt-4 px-4">
           <button
             data-testid="actions-add-slide-button"
             class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
             @click="addSlide"
           >
             <SfIconAdd />
-            {{ getEditorTranslation('add-slide-label') }}
+            {{ getEditorTranslation('add-element-label') }}
           </button>
         </div>
       </div>
@@ -382,7 +382,7 @@ input[type='number'] {
   "en": {
     "elements-group-label": "Elements",
     "slide-label": "Slide",
-    "add-slide-label": "Add Slide",
+    "add-element-label": "Add Element",
     "drag-reorder-aria": "Drag to reorder slide",
     "edit-slide-aria": "Edit slide",
     "back-aria": "Go back to slides list",
@@ -396,7 +396,7 @@ input[type='number'] {
   "de": {
     "elements-group-label": "Elements",
     "slide-label": "Slide",
-    "add-slide-label": "Add Slide",
+    "add-element-label": "Add Element",
     "drag-reorder-aria": "Drag to reorder slide",
     "edit-slide-aria": "Edit slide",
     "back-aria": "Go back to slides list",
