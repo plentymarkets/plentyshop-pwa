@@ -36,7 +36,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
-  const migrateAllBlocks = (blocks: Block[]) => {
+  const migrateAllBlocks = (blocks: Block[], mainHeadingState = { value: false }) => {
     const config = useRuntimeConfig().public;
 
     for (const block of blocks) {
@@ -47,13 +47,18 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
       }
       if (block.name === 'TextCard' && block.content) {
+        const isFirstBlock = !mainHeadingState.value;
         block.content = migrateTextCardContent(
           block.content as Partial<TextCardContent>,
           config.enableRichTextEditorV2,
+          isFirstBlock,
         );
+        if (isFirstBlock) {
+          mainHeadingState.value = true;
+        }
       }
       if (Array.isArray(block.content)) {
-        migrateAllBlocks(block.content);
+        migrateAllBlocks(block.content, mainHeadingState);
       }
     }
   };
