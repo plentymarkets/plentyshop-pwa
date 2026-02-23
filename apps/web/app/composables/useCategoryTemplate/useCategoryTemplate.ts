@@ -141,8 +141,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         blocks: content,
       });
 
-      state.value.data = response?.data ?? state.value.data;
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(response?.data ?? state.value.data)));
+      const data = response?.data ?? state.value.data;
+
+      setupBlocks(data);
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
         const {
