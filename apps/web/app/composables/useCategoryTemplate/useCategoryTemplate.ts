@@ -123,9 +123,7 @@ const createFooterBlockHelper = (
   };
 };
 
-const createDefaultFooterBlockHelper = (): FooterBlock => {
-  return createFooterBlockHelper(createDefaultFooterContent());
-};
+const createDefaultFooterBlockHelper = (): FooterBlock => createFooterBlockHelper(createDefaultFooterContent());
 
 const extractFooterContentFromBlocksHelper = (content: string): FooterContent | null => {
   try {
@@ -142,9 +140,7 @@ const extractFooterContentFromBlocksHelper = (content: string): FooterContent | 
 };
 
 const mapFooterDataHelper = (data: Block | null): FooterBlock => {
-  if (!data) {
-    return createDefaultFooterBlockHelper();
-  }
+  if (!data) return createDefaultFooterBlockHelper();
 
   const defaultContent = createDefaultFooterContent();
   const dataContent = data.content as FooterContent | undefined;
@@ -203,19 +199,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   /** Clears the cached footer block, forcing a fresh fetch on next access */
-  const clearFooterCache = () => {
-    footerCache.value = null;
-  };
+  const clearFooterCache = () => (footerCache.value = null);
 
   /** Updates the cached footer block with a new footer configuration */
-  const updateFooterCache = (newFooterBlock: FooterBlock) => {
-    footerCache.value = newFooterBlock;
-  };
+  const updateFooterCache = (newFooterBlock: FooterBlock) => (footerCache.value = newFooterBlock);
 
   /** Returns the cached footer block or creates a default one if cache is empty */
-  const getFooterBlock = (): FooterBlock => {
-    return footerCache.value || createDefaultFooterBlockHelper();
-  };
+  const getFooterBlock = (): FooterBlock => footerCache.value || createDefaultFooterBlockHelper();
 
   const createFooterBlock = createFooterBlockHelper;
   const createDefaultFooterBlock = createDefaultFooterBlockHelper;
@@ -228,20 +218,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
     if (!footerExists) {
       const footerBlock = cachedFooter.value || createDefaultFooterBlockHelper();
-
       data.value.push(footerBlock);
-
-      if (cleanData) {
-        cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
-      }
+      if (cleanData) cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
     }
   };
 
   /** Fetches the footer block from the server or returns cached version */
   const fetchFooterBlock = async (): Promise<FooterBlock> => {
-    if (footerCache.value) {
-      return footerCache.value;
-    }
+    if (footerCache.value) return footerCache.value;
 
     return callWithNuxt(nuxtApp, async () => {
       try {
